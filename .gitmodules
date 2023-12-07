@@ -1,0 +1,9 @@
+[submodule "Dependencies/Detours"]
+	path = Dependencies/Detours
+	url = https://github.com/Nukem9/detours.git
+[submodule "Dependencies/mzip"]
+	path = Dependencies/mzip
+	url = https://github.com/kuba--/zip.git
+[submodule "Dependencies/mINI"]
+	path = Dependencies/mINI
+	url = https://github.com/Perchik71/mINI.git

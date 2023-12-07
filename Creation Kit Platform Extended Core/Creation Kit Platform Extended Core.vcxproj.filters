@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="DllMain.cpp" />
+    <ClCompile Include="Steam API\SteamAPI.cpp">
+      <Filter>Steam API</Filter>
+    </ClCompile>
+    <ClCompile Include="WinHttp Wrapper\Exports.cpp">
+      <Filter>WinHttp Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Engine.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ResultCoreErrNo.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\DebugLog.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Core\INIWrapper.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Module.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Relocator.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\RelocationDatabase.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\CommandLineParser.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\QuitHandlerPatch.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ModuleManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Version">
+      <UniqueIdentifier>{981d142a-0dac-43ec-8314-0fbe288435e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Steam API">
+      <UniqueIdentifier>{f4d86278-f357-4304-b0d3-c8ec8e8e2255}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WinHttp Wrapper">
+      <UniqueIdentifier>{f690f21b-f748-4466-ba93-64b2b27112f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{94992d4d-d8c4-4212-9508-d93b563fc7d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Patches">
+      <UniqueIdentifier>{1236b1e0-59f4-48b1-9193-a8aa2a417e38}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Version\resource_version.h">
+      <Filter>Version</Filter>
+    </ClInclude>
+    <ClInclude Include="Version\resource_version2.h">
+      <Filter>Version</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h" />
+    <ClInclude Include="Steam API\SteamAPI.h">
+      <Filter>Steam API</Filter>
+    </ClInclude>
+    <ClInclude Include="Steam API\SteamAPIConfig.h">
+      <Filter>Steam API</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Engine.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ResultCoreErrNo.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DebugLog.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="Types.h" />
+    <ClInclude Include="Core\INIWrapper.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Crc32.h" />
+    <ClInclude Include="Core\Module.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Relocator.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\RelocationDatabase.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\CommandLineParser.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\QuitHandlerPatch.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ModuleManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\CoreCommon.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Version\resource_version.rc">
+      <Filter>Version</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Version\build_version.txt">
+      <Filter>Version</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Version\resource_version2.tmp">
+      <Filter>Version</Filter>
+    </None>
+  </ItemGroup>
+</Project>

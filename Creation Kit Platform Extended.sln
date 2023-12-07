@@ -1,0 +1,70 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33801.447
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Creation Kit Platform Extended Core", "Creation Kit Platform Extended Core\Creation Kit Platform Extended Core.vcxproj", "{0794F1B4-68C6-4F5A-AD4A-767B1B4D9783}"
+	ProjectSection(ProjectDependencies) = postProject
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601} = {06E30C65-D79A-4FEC-8A60-B36D907E6601}
+		{1A04D2B1-EBB3-4569-BD03-915631B4BFB1} = {1A04D2B1-EBB3-4569-BD03-915631B4BFB1}
+		{2026AFE7-6063-466A-A335-C76A888DB202} = {2026AFE7-6063-466A-A335-C76A888DB202}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{DBF8B066-7523-44A5-8F55-02E3212A048F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "detours", "Dependencies\Detours\detours\detours.vcxproj", "{06E30C65-D79A-4FEC-8A60-B36D907E6601}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Zipper", "Zipper\Zipper.vcxproj", "{2026AFE7-6063-466A-A335-C76A888DB202}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Memory Manager", "Memory Manager\vmm.vcxproj", "{1A04D2B1-EBB3-4569-BD03-915631B4BFB1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0794F1B4-68C6-4F5A-AD4A-767B1B4D9783}.Debug|x64.ActiveCfg = Release|x64
+		{0794F1B4-68C6-4F5A-AD4A-767B1B4D9783}.Debug|x64.Build.0 = Release|x64
+		{0794F1B4-68C6-4F5A-AD4A-767B1B4D9783}.Debug|x86.ActiveCfg = Release|x64
+		{0794F1B4-68C6-4F5A-AD4A-767B1B4D9783}.Debug|x86.Build.0 = Release|x64
+		{0794F1B4-68C6-4F5A-AD4A-767B1B4D9783}.Release|x64.ActiveCfg = Release|x64
+		{0794F1B4-68C6-4F5A-AD4A-767B1B4D9783}.Release|x64.Build.0 = Release|x64
+		{0794F1B4-68C6-4F5A-AD4A-767B1B4D9783}.Release|x86.ActiveCfg = Release|x64
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601}.Debug|x64.ActiveCfg = Debug|x64
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601}.Debug|x64.Build.0 = Debug|x64
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601}.Debug|x86.ActiveCfg = Debug|Win32
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601}.Debug|x86.Build.0 = Debug|Win32
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601}.Release|x64.ActiveCfg = Release|x64
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601}.Release|x64.Build.0 = Release|x64
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601}.Release|x86.ActiveCfg = Release|Win32
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601}.Release|x86.Build.0 = Release|Win32
+		{2026AFE7-6063-466A-A335-C76A888DB202}.Debug|x64.ActiveCfg = Debug|x64
+		{2026AFE7-6063-466A-A335-C76A888DB202}.Debug|x64.Build.0 = Debug|x64
+		{2026AFE7-6063-466A-A335-C76A888DB202}.Debug|x86.ActiveCfg = Debug|x64
+		{2026AFE7-6063-466A-A335-C76A888DB202}.Release|x64.ActiveCfg = Release|x64
+		{2026AFE7-6063-466A-A335-C76A888DB202}.Release|x64.Build.0 = Release|x64
+		{2026AFE7-6063-466A-A335-C76A888DB202}.Release|x86.ActiveCfg = Release|x64
+		{1A04D2B1-EBB3-4569-BD03-915631B4BFB1}.Debug|x64.ActiveCfg = Debug|x64
+		{1A04D2B1-EBB3-4569-BD03-915631B4BFB1}.Debug|x64.Build.0 = Debug|x64
+		{1A04D2B1-EBB3-4569-BD03-915631B4BFB1}.Debug|x86.ActiveCfg = Debug|Win32
+		{1A04D2B1-EBB3-4569-BD03-915631B4BFB1}.Debug|x86.Build.0 = Debug|Win32
+		{1A04D2B1-EBB3-4569-BD03-915631B4BFB1}.Release|x64.ActiveCfg = Release|x64
+		{1A04D2B1-EBB3-4569-BD03-915631B4BFB1}.Release|x64.Build.0 = Release|x64
+		{1A04D2B1-EBB3-4569-BD03-915631B4BFB1}.Release|x86.ActiveCfg = Release|Win32
+		{1A04D2B1-EBB3-4569-BD03-915631B4BFB1}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{06E30C65-D79A-4FEC-8A60-B36D907E6601} = {DBF8B066-7523-44A5-8F55-02E3212A048F}
+		{2026AFE7-6063-466A-A335-C76A888DB202} = {DBF8B066-7523-44A5-8F55-02E3212A048F}
+		{1A04D2B1-EBB3-4569-BD03-915631B4BFB1} = {DBF8B066-7523-44A5-8F55-02E3212A048F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3D7FAA7F-23AA-467B-BFB7-39DF25721450}
+	EndGlobalSection
+EndGlobal

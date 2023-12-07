@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+# VS
+.vs/
+x64/
+Memory Manager/linkconf/
+*.lnk
+*.vcxproj.user
+*.tlog
+*.pdb
+*.ipdb
