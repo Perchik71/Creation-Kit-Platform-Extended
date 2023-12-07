@@ -11,4 +11,6 @@
 
 # License
 **GPLv3**: <a>https://www.gnu.org/licenses/gpl-3.0.html</a>. <br />
-Copyright © 2023-2024 aka perchik71. All rights reserved.
+Copyright © 2023-2024 aka perchik71. All rights reserved. <br />
+The memory manager is licensed under **LGPLv3**: <a>https://www.gnu.org/licenses/lgpl-3.0.html</a>. <br />
+Copyright © 2023 aka perchik71. All rights reserved.
