@@ -46,6 +46,8 @@ namespace CreationKitPlatformExtended
 				for (uint32_t nId = 0; nId < lpRelocationDatabaseItem->Count(); nId++)
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(nId),
 						(uintptr_t)&CreationKitPlatformExtended::Utils::Quit);
+
+				return true;
 			}
 			
 			return false;

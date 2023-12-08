@@ -97,7 +97,7 @@ namespace CreationKitPlatformExtended
 			if (!IsLock(r.base, r.size)) return;
 
 			r.flag_lock = CreationKitPlatformExtended::Utils::UnlockWP(r.base, r.size);
-			_MESSAGE("Removing protection from the region: %016X %llu", r.base, r.size);
+			//_MESSAGE("Removing protection from the region: %016X %llu", r.base, r.size);
 
 			Locks.push_back(r);
 		}
@@ -109,7 +109,7 @@ namespace CreationKitPlatformExtended
 				if ((It->base >= base) && ((It->base + It->size) >= (base + size)))
 				{
 					CreationKitPlatformExtended::Utils::LockWP(It->base, It->size, It->flag_lock);
-					_MESSAGE("Restore protection from the region: %016X %llu", It->base, It->size);
+					//_MESSAGE("Restore protection from the region: %016X %llu", It->base, It->size);
 					Locks.erase(It);
 
 					break;

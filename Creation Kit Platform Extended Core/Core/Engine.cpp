@@ -3,12 +3,15 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Version/resource_version2.h"
+#include "ConsoleWindow.h"
 #include "CommandLineParser.h"
 #include "RelocationDatabase.h"
 #include "Engine.h"
 
+#include "Patches/CrashDumpPatch.h"
 #include "Patches/MemoryManagerPatch.h"
 #include "Patches/QuitHandlerPatch.h"
+#include "Patches/ConsolePatch.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -78,11 +81,14 @@ namespace CreationKitPlatformExtended
 
 			GlobalRelocationDatabasePtr = new RelocationDatabase(this);
 			GlobalRelocatorPtr = new Relocator(this);
+			GlobalConsoleWindowPtr = new ConsoleWindow(this);
 
 			// Добавление патчей
 			PatchesManager->Append({
 				new CreationKitPlatformExtended::Patches::QuitHandlerPatch(),
 				new CreationKitPlatformExtended::Patches::MemoryManagerPatch(),
+				new CreationKitPlatformExtended::Patches::CrashDumpPatch(),
+				new CreationKitPlatformExtended::Patches::ConsolePatch(),
 			});
 
 			// Установка точки останова, чтобы дождаться расшифровки DRM приложения

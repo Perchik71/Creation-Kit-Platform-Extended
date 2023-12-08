@@ -21,6 +21,8 @@
 #include <errno.h>
 #include <stdint.h>
 #include <mmsystem.h>
+#include <commctrl.h>
+#include <richedit.h>
 
 #include <algorithm>
 #include <fstream>
@@ -29,6 +31,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <filesystem>
 #include <unordered_map>
 #include <initializer_list>
 
@@ -48,3 +51,4 @@
 #include "Core/DebugLog.h"
 #include "Core/INIWrapper.h"
 #include "Core/Relocator.h"
+#include "Core/ConsoleWindow.h"

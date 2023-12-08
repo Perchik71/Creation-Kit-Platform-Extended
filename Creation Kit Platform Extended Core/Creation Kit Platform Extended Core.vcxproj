@@ -71,6 +71,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Core\CommandLineParser.cpp" />
+    <ClCompile Include="Core\ConsoleWindow.cpp" />
     <ClCompile Include="Core\DebugLog.cpp" />
     <ClCompile Include="Core\Engine.cpp" />
     <ClCompile Include="Core\INIWrapper.cpp" />
@@ -80,6 +81,8 @@
     <ClCompile Include="Core\Relocator.cpp" />
     <ClCompile Include="Core\ResultCoreErrNo.cpp" />
     <ClCompile Include="DllMain.cpp" />
+    <ClCompile Include="Patches\ConsolePatch.cpp" />
+    <ClCompile Include="Patches\CrashDumpPatch.cpp" />
     <ClCompile Include="Patches\MemoryManagerPatch.cpp" />
     <ClCompile Include="Patches\QuitHandlerPatch.cpp" />
     <ClCompile Include="Steam API\SteamAPI.cpp" />
@@ -89,6 +92,7 @@
   <ItemGroup>
     <ClInclude Include="Common.h" />
     <ClInclude Include="Core\CommandLineParser.h" />
+    <ClInclude Include="Core\ConsoleWindow.h" />
     <ClInclude Include="Core\CoreCommon.h" />
     <ClInclude Include="Core\DebugLog.h" />
     <ClInclude Include="Core\Engine.h" />
@@ -99,6 +103,8 @@
     <ClInclude Include="Core\Relocator.h" />
     <ClInclude Include="Core\ResultCoreErrNo.h" />
     <ClInclude Include="Crc32.h" />
+    <ClInclude Include="Patches\ConsolePatch.h" />
+    <ClInclude Include="Patches\CrashDumpPatch.h" />
     <ClInclude Include="Patches\MemoryManagerPatch.h" />
     <ClInclude Include="Patches\QuitHandlerPatch.h" />
     <ClInclude Include="Steam API\SteamAPI.h" />

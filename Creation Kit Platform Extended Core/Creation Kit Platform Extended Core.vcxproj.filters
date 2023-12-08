@@ -42,6 +42,15 @@
     <ClCompile Include="Patches\MemoryManagerPatch.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\CrashDumpPatch.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ConsoleWindow.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\ConsolePatch.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -111,6 +120,15 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Patches\MemoryManagerPatch.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\CrashDumpPatch.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ConsoleWindow.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\ConsolePatch.h">
       <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>
