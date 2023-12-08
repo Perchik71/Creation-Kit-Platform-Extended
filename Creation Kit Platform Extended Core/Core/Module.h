@@ -26,6 +26,7 @@ namespace CreationKitPlatformExtended
 			inline bool HasActive() const { return _Active; }
 
 			virtual bool HasOption() const = 0;
+			virtual bool HasCanRuntimeDisabled() const = 0;
 			virtual const char* GetOptionName() const = 0;
 			virtual const char* GetName() const = 0;
 		protected:

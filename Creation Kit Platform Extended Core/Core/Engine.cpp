@@ -7,6 +7,7 @@
 #include "RelocationDatabase.h"
 #include "Engine.h"
 
+#include "Patches/MemoryManagerPatch.h"
 #include "Patches/QuitHandlerPatch.h"
 
 namespace CreationKitPlatformExtended
@@ -81,6 +82,7 @@ namespace CreationKitPlatformExtended
 			// Добавление патчей
 			PatchesManager->Append({
 				new CreationKitPlatformExtended::Patches::QuitHandlerPatch(),
+				new CreationKitPlatformExtended::Patches::MemoryManagerPatch(),
 			});
 
 			// Установка точки останова, чтобы дождаться расшифровки DRM приложения

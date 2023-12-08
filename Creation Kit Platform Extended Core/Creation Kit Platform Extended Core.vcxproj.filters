@@ -39,6 +39,9 @@
     <ClCompile Include="Core\ModuleManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\MemoryManagerPatch.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -106,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="Core\CoreCommon.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\MemoryManagerPatch.h">
+      <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -24,7 +24,7 @@ namespace CreationKitPlatformExtended
 		{
 			bool Ret = QueryFromPlatform(eEditorCurrentVersion, lpcstrPlatformRuntimeVersion);
 			if (!Ret)
-				_MESSAGE("Module \t\"%s\" rejected the query, most likely does not support the version of the editor or platform.", GetName());
+				_MESSAGE("Module \"%s\" rejected the query, most likely does not support the version of the editor or platform.", GetName());
 			return Ret;
 		}
 
@@ -84,21 +84,21 @@ namespace CreationKitPlatformExtended
 				_relocator = lpRelocator;
 				_relocationDatabaseItem = lpRelocationDatabaseItem;
 
-				_MESSAGE("Module \t\"%s\" initializing success", GetName());
+				_MESSAGE("Module \"%s\" initializing success", GetName());
 			}
 			else
-				_MESSAGE("Module \t\"%s\" initializing failed", GetName());
+				_MESSAGE("Module \"%s\" initializing failed", GetName());
 		}
 
 		void Module::Disable()
 		{
-			if (_Active && Shutdown(_relocator, _relocationDatabaseItem))
+			if (_Active && HasCanRuntimeDisabled() && Shutdown(_relocator, _relocationDatabaseItem))
 			{
 				_Active = false;
 				_relocator = nullptr;
 				_relocationDatabaseItem = nullptr;
 
-				_MESSAGE("Module \t\"%s\" released", GetName());
+				_MESSAGE("Module \"%s\" released", GetName());
 			}
 		}
 	}

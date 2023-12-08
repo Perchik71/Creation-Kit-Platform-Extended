@@ -80,6 +80,7 @@
     <ClCompile Include="Core\Relocator.cpp" />
     <ClCompile Include="Core\ResultCoreErrNo.cpp" />
     <ClCompile Include="DllMain.cpp" />
+    <ClCompile Include="Patches\MemoryManagerPatch.cpp" />
     <ClCompile Include="Patches\QuitHandlerPatch.cpp" />
     <ClCompile Include="Steam API\SteamAPI.cpp" />
     <ClCompile Include="Utils.cpp" />
@@ -98,6 +99,7 @@
     <ClInclude Include="Core\Relocator.h" />
     <ClInclude Include="Core\ResultCoreErrNo.h" />
     <ClInclude Include="Crc32.h" />
+    <ClInclude Include="Patches\MemoryManagerPatch.h" />
     <ClInclude Include="Patches\QuitHandlerPatch.h" />
     <ClInclude Include="Steam API\SteamAPI.h" />
     <ClInclude Include="Steam API\SteamAPIConfig.h" />

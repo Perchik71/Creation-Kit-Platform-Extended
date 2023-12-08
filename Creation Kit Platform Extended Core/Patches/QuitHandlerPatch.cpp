@@ -17,6 +17,11 @@ namespace CreationKitPlatformExtended
 			return false;
 		}
 
+		bool QuitHandlerPatch::HasCanRuntimeDisabled() const
+		{
+			return false;
+		}
+
 		const char* QuitHandlerPatch::GetOptionName() const
 		{
 			return nullptr;
@@ -40,7 +45,7 @@ namespace CreationKitPlatformExtended
 			{
 				for (uint32_t nId = 0; nId < lpRelocationDatabaseItem->Count(); nId++)
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(nId),
-						(uintptr_t)CreationKitPlatformExtended::Utils::Quit);
+						(uintptr_t)&CreationKitPlatformExtended::Utils::Quit);
 			}
 			
 			return false;
@@ -53,7 +58,3 @@ namespace CreationKitPlatformExtended
 		}
 	}
 }
-
-/*ScopeRelocator SectionTextProtectionRemove;
-			ScopeRelocator SectionReadOnlyDataProtectionRemove(Sections[SECTION_DATA_READONLY].base,
-				Sections[SECTION_DATA_READONLY].end - Sections[SECTION_DATA_READONLY].base);*/

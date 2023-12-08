@@ -422,9 +422,7 @@ namespace CreationKitPlatformExtended
 		char* StrDub(const char* s)
 		{
 			auto l = strlen(s);
-			char* sn = (char*)voltek::scalable_alloc(l + 1);
-			sn[l] = '\0';
-			return (char*)memcpy(sn, s, l);
+			return (char*)memcpy((char*)voltek::scalable_alloc(l + 1), s, l + 1);
 		}
 
 		void Quit()

@@ -25,7 +25,15 @@ namespace CreationKitPlatformExtended
 			bool DetourJump(uintptr_t rav, uintptr_t function) const;
 			bool DetourCall(uintptr_t rav, uintptr_t function) const;
 
-			template<class T> uintptr_t DetourFunctionClass(uintptr_t rav, T function) const;
+			template<class T> uintptr_t DetourFunctionClass(uintptr_t rav, T function) const
+			{
+				auto offset = Rav2Off(rav);
+
+				if (!IsLock(offset, 6))
+					return 0;
+
+				return Detours::X64::DetourFunctionClass(offset, function);
+			}
 
 			void Unlock();
 			void Unlock(uintptr_t base, uint64_t size);

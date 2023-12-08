@@ -69,17 +69,6 @@ namespace CreationKitPlatformExtended
 			return true;
 		}
 
-		template<class T>
-		uintptr_t Relocator::DetourFunctionClass(uintptr_t rav, T function) const
-		{
-			auto offset = Rav2Off(rav);
-
-			if (!IsLock(offset, 6))
-				return 0;
-
-			return Detours::X64::DetourFunctionClass(offset, function);
-		}
-
 		bool Relocator::IsLock(uintptr_t base, uint64_t size) const
 		{
 			for (auto It = Locks.begin(); It != Locks.end(); It++)
