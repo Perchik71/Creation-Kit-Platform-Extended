@@ -23,6 +23,7 @@
 #include <mmsystem.h>
 #include <commctrl.h>
 #include <richedit.h>
+#include <intrin.h>
 
 #include <algorithm>
 #include <fstream>
@@ -30,6 +31,9 @@
 #include <version>
 #include <vector>
 #include <list>
+#include <execution>
+#include <chrono>
+#include <array>
 #include <map>
 #include <set>
 #include <filesystem>
@@ -39,9 +43,9 @@
 
 #include <concurrent_vector.h>
 #include <concurrent_unordered_map.h>
+#include <detours/Detours.h>
 
 #include "Crc32.h"
-#include "Detours.h"
 #include "ini.h"
 #include "zip.h"
 #include "vmm.h"

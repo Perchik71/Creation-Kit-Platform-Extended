@@ -51,6 +51,12 @@
     <ClCompile Include="Patches\ConsolePatch.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Experimental\RuntimeOptimization.cpp">
+      <Filter>Experimental</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\EditorUI.cpp">
+      <Filter>Editor API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -67,6 +73,12 @@
     </Filter>
     <Filter Include="Patches">
       <UniqueIdentifier>{1236b1e0-59f4-48b1-9193-a8aa2a417e38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Experimental">
+      <UniqueIdentifier>{8317e033-6667-4c22-86dd-9e7f281625c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor API">
+      <UniqueIdentifier>{d8bcc1d7-37ef-465d-8211-d882f2d8f319}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +142,12 @@
     </ClInclude>
     <ClInclude Include="Patches\ConsolePatch.h">
       <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Experimental\RuntimeOptimization.h">
+      <Filter>Experimental</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\EditorUI.h">
+      <Filter>Editor API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

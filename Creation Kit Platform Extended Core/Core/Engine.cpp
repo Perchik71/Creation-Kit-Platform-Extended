@@ -8,10 +8,14 @@
 #include "RelocationDatabase.h"
 #include "Engine.h"
 
+#include "Editor API/EditorUI.h"
+
 #include "Patches/CrashDumpPatch.h"
 #include "Patches/MemoryManagerPatch.h"
 #include "Patches/QuitHandlerPatch.h"
 #include "Patches/ConsolePatch.h"
+
+#include "Experimental/RuntimeOptimization.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -249,10 +253,22 @@ namespace CreationKitPlatformExtended
 				return;
 			}
 
+			// Создание класса отвечающий за UI
+			EditorAPI::GlobalEditorUIPtr = new EditorAPI::EditorUI();
+			if (!EditorAPI::GlobalEditorUIPtr)
+			{
+				_FATALERROR("Failed to create a UI control class");
+				return;
+			}
+
 			// Запросы и проверка всех патчей на валидность
 			PatchesManager->QueryAll();
 			// Включение неотбракованных патчей
 			PatchesManager->EnableAll();
+
+			// После всех патчей и прочее, пересоберём бинарник в памяти.
+			// Убрать трамполины, установить DeferUI от Nukem9
+			Experimental::RunOptimizations();
 		}
 
 		IResult Engine::Initialize(HMODULE hModule, LPCSTR lpcstrAppName)
