@@ -19,6 +19,9 @@
 [Zydis](https://github.com/zyantific/zydis.git) URL **https://github.com/zyantific/zydis.git** IN **Dependencies/zydis**  
 [zipper](https://github.com/kuba--/zip.git) URL **https://github.com/kuba--/zip.git** IN **Dependencies/zipper**  
 
+# Credits
+[Nukem9](https://github.com/Nukem9) (for experimental functions, hash and so on, very useful)  
+
 # License
 **GPLv3**: <a>https://www.gnu.org/licenses/gpl-3.0.html</a>. <br />
 Copyright © 2023-2024 aka perchik71. All rights reserved. <br />
