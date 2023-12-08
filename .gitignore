@@ -34,9 +34,11 @@
 # VS
 .vs/
 x64/
+Memory Manager/bin/
 Memory Manager/linkconf/
 *.lnk
 *.vcxproj.user
 *.tlog
 *.pdb
 *.ipdb
+*.exp
