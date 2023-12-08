@@ -1,4 +1,4 @@
-// Copyright � 2023 aka perchik71. All rights reserved.
+﻿// Copyright © 2023 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -110,6 +110,7 @@ namespace CreationKitPlatformExtended
 		}
 
 		char* StrDub(const char* s);
+		uint64_t MurmurHash64A(const void* Key, size_t Len, uint64_t Seed = 0);
 
 		class ScopeFileStream
 		{

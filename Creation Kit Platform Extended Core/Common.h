@@ -1,4 +1,4 @@
-// Copyright � 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -31,8 +31,10 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <set>
 #include <filesystem>
 #include <unordered_map>
+#include <unordered_set>
 #include <initializer_list>
 
 #include <concurrent_vector.h>

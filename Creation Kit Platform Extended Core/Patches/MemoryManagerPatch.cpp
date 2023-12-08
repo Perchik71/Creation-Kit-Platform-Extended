@@ -1,4 +1,4 @@
-// Copyright © 2023-2024 aka perchik71. All rights reserved.
+п»ї// Copyright В© 2023-2024 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -14,8 +14,8 @@ namespace CreationKitPlatformExtended
 
 		class MemoryManager
 		{
-			// Не описываем конструкторы и деструкторы
-			// Класс - это просто оболочка
+			// РќРµ РѕРїРёСЃС‹РІР°РµРј РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹ Рё РґРµСЃС‚СЂСѓРєС‚РѕСЂС‹
+			// РљР»Р°СЃСЃ - СЌС‚Рѕ РїСЂРѕСЃС‚Рѕ РѕР±РѕР»РѕС‡РєР°
 		public:
 			static void* Allocate(MemoryManager* manager, size_t size, uint32_t alignment, bool aligned)
 			{
@@ -35,8 +35,8 @@ namespace CreationKitPlatformExtended
 
 		class ScrapHeap
 		{
-			// Не описываем конструкторы и деструкторы
-			// Класс - это просто оболочка
+			// РќРµ РѕРїРёСЃС‹РІР°РµРј РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹ Рё РґРµСЃС‚СЂСѓРєС‚РѕСЂС‹
+			// РљР»Р°СЃСЃ - СЌС‚Рѕ РїСЂРѕСЃС‚Рѕ РѕР±РѕР»РѕС‡РєР°
 		public:
 			static void* Allocate(ScrapHeap* manager, size_t size, uint32_t alignment)
 			{
@@ -126,7 +126,7 @@ namespace CreationKitPlatformExtended
 
 			void bhkThreadMemorySource::getMemoryStatistics(class MemoryStatistics& u)
 			{
-				// Ничего
+				// РќРёС‡РµРіРѕ
 			}
 
 			size_t bhkThreadMemorySource::getAllocatedSize(const void* obj, size_t nbytes)
@@ -137,7 +137,7 @@ namespace CreationKitPlatformExtended
 
 			void bhkThreadMemorySource::resetPeakMemoryStatistics()
 			{
-				// Ничего
+				// РќРёС‡РµРіРѕ
 			}
 		}
 
@@ -219,7 +219,7 @@ namespace CreationKitPlatformExtended
 
 			void bhkThreadMemorySource::getMemoryStatistics(class MemoryStatistics& u)
 			{
-				// Ничего
+				// РќРёС‡РµРіРѕ
 			}
 
 			size_t bhkThreadMemorySource::getAllocatedSize(const void* obj, size_t nbytes)
@@ -230,7 +230,7 @@ namespace CreationKitPlatformExtended
 
 			void bhkThreadMemorySource::resetPeakMemoryStatistics()
 			{
-				// Ничего
+				// РќРёС‡РµРіРѕ
 			}
 
 			void* bhkThreadMemorySource::getExtendedInterface()
@@ -321,7 +321,7 @@ namespace CreationKitPlatformExtended
 
 		void* MemoryManagerPatch::MemAlloc(size_t size, size_t alignment, bool aligned, bool zeroed)
 		{
-			// Если не задано, то будет 4
+			// Р•СЃР»Рё РЅРµ Р·Р°РґР°РЅРѕ, С‚Рѕ Р±СѓРґРµС‚ 4
 			if (!aligned)
 				alignment = 4;
 
@@ -333,7 +333,7 @@ namespace CreationKitPlatformExtended
 
 			AssertMsgVa(alignment != 0 && alignment % 2 == 0, "Alignment is fucked: %llu", alignment);
 
-			// Должно быть в степени 2, округлить его, если необходимо
+			// Р”РѕР»Р¶РЅРѕ Р±С‹С‚СЊ РІ СЃС‚РµРїРµРЅРё 2, РѕРєСЂСѓРіР»РёС‚СЊ РµРіРѕ, РµСЃР»Рё РЅРµРѕР±С…РѕРґРёРјРѕ
 			if ((alignment & (alignment - 1)) != 0)
 			{
 				alignment--;
@@ -345,7 +345,7 @@ namespace CreationKitPlatformExtended
 				alignment++;
 			}
 
-			// Размер должен быть кратен выравниванию с округлением до ближайшего
+			// Р Р°Р·РјРµСЂ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РєСЂР°С‚РµРЅ РІС‹СЂР°РІРЅРёРІР°РЅРёСЋ СЃ РѕРєСЂСѓРіР»РµРЅРёРµРј РґРѕ Р±Р»РёР¶Р°Р№С€РµРіРѕ
 			if ((size % alignment) != 0)
 				size = ((size + alignment - 1) / alignment) * alignment;
 
@@ -368,7 +368,7 @@ namespace CreationKitPlatformExtended
 		bool MemoryManagerPatch::Activate(const Relocator* lpRelocator,
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
-			// Принудительный вылет с сообщением для пользователя.
+			// РџСЂРёРЅСѓРґРёС‚РµР»СЊРЅС‹Р№ РІС‹Р»РµС‚ СЃ СЃРѕРѕР±С‰РµРЅРёРµРј РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
 			AssertMsg(LowPhysicalMemory(), "Not enough memory to run the program");
 
 			auto TotalGB = (double)(Utils::GetTotalPhysicalMemory()) / MEM_GB;
@@ -418,7 +418,7 @@ namespace CreationKitPlatformExtended
 					lpRelocator->Patch(lpRelocationDatabaseItem->At(9), { 0xC3 });
 				}
 
-				// Программа очень любит думать, а винде это не нравиться, скажем винде, чтоб не обращала внимание.
+				// РџСЂРѕРіСЂР°РјРјР° РѕС‡РµРЅСЊ Р»СЋР±РёС‚ РґСѓРјР°С‚СЊ, Р° РІРёРЅРґРµ СЌС‚Рѕ РЅРµ РЅСЂР°РІРёС‚СЊСЃСЏ, СЃРєР°Р¶РµРј РІРёРЅРґРµ, С‡С‚РѕР± РЅРµ РѕР±СЂР°С‰Р°Р»Р° РІРЅРёРјР°РЅРёРµ.
 				DisableProcessWindowsGhosting();
 
 				return true;

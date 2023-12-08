@@ -1,4 +1,4 @@
-// Copyright © 2023-2024 aka perchik71. All rights reserved.
+ï»¿// Copyright Â© 2023-2024 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -32,10 +32,10 @@ namespace CreationKitPlatformExtended
 
 		BOOL WINAPI hk_QueryPerformanceCounter(LARGE_INTEGER* lpPerformanceCount)
 		{
-			// Âûêëþ÷åíèå òî÷êè îñòàíîâà
+			// Ð’Ñ‹ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ðµ Ñ‚Ð¾Ñ‡ÐºÐ¸ Ð¾ÑÑ‚Ð°Ð½Ð¾Ð²Ð°
 			(GlobalEnginePtr->*VCoreDisableBreakpoint)();
 
-			// Îñòàíîâêà äëÿ îòëàä÷èêà
+			// ÐžÑÑ‚Ð°Ð½Ð¾Ð²ÐºÐ° Ð´Ð»Ñ Ð¾Ñ‚Ð»Ð°Ð´Ñ‡Ð¸ÐºÐ°
 			__try
 			{
 				__debugbreak();
@@ -50,7 +50,7 @@ namespace CreationKitPlatformExtended
 		LONG NTAPI hk_NtSetInformationThread(HANDLE ThreadHandle, LONG ThreadInformationClass,
 			PVOID ThreadInformation, ULONG ThreadInformationLength)
 		{
-			// Äëÿ Steam
+			// Ð”Ð»Ñ Steam
 			if (ThreadInformationClass == 0x11)
 				return 0;
 
@@ -75,7 +75,7 @@ namespace CreationKitPlatformExtended
 			_MESSAGE("The processor supports the SSE 4.1 instruction set: %s", (_hasSSE41 ? "true" : "false"));
 			_MESSAGE("The processor supports the AVX 2 instruction set: %s", (_hasAVX2 ? "true" : "false"));
 
-			// Ïåðåäà÷à ïðèâàòíûõ ôóíêöèé êëàññà, äëÿ ïðîäîëæåíèÿ èíèöèàëèçàöèè
+			// ÐŸÐµÑ€ÐµÐ´Ð°Ñ‡Ð° Ð¿Ñ€Ð¸Ð²Ð°Ñ‚Ð½Ñ‹Ñ… Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¹ ÐºÐ»Ð°ÑÑÐ°, Ð´Ð»Ñ Ð¿Ñ€Ð¾Ð´Ð¾Ð»Ð¶ÐµÐ½Ð¸Ñ Ð¸Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ð¸
 			VCoreDisableBreakpoint = &Engine::DisableBreakpoint;
 			VCoreContinueInitialize = &Engine::ContinueInitialize;
 
@@ -83,7 +83,7 @@ namespace CreationKitPlatformExtended
 			GlobalRelocatorPtr = new Relocator(this);
 			GlobalConsoleWindowPtr = new ConsoleWindow(this);
 
-			// Äîáàâëåíèå ïàò÷åé
+			// Ð”Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð¿Ð°Ñ‚Ñ‡ÐµÐ¹
 			PatchesManager->Append({
 				new CreationKitPlatformExtended::Patches::QuitHandlerPatch(),
 				new CreationKitPlatformExtended::Patches::MemoryManagerPatch(),
@@ -91,7 +91,7 @@ namespace CreationKitPlatformExtended
 				new CreationKitPlatformExtended::Patches::ConsolePatch(),
 			});
 
-			// Óñòàíîâêà òî÷êè îñòàíîâà, ÷òîáû äîæäàòüñÿ ðàñøèôðîâêè DRM ïðèëîæåíèÿ
+			// Ð£ÑÑ‚Ð°Ð½Ð¾Ð²ÐºÐ° Ñ‚Ð¾Ñ‡ÐºÐ¸ Ð¾ÑÑ‚Ð°Ð½Ð¾Ð²Ð°, Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð´Ð¾Ð¶Ð´Ð°Ñ‚ÑŒÑÑ Ñ€Ð°ÑÑˆÐ¸Ñ„Ñ€Ð¾Ð²ÐºÐ¸ DRM Ð¿Ñ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ
 			EnableBreakpoint();
 		}
 
@@ -102,7 +102,7 @@ namespace CreationKitPlatformExtended
 			PIMAGE_NT_HEADERS ntHeaders = (PIMAGE_NT_HEADERS)(_moduleBase +
 				((PIMAGE_DOS_HEADER)_moduleBase)->e_lfanew);
 
-			// Ïîëó÷èòü ðàçäåë êîíôèãóðàöèè çàãðóçêè, â êîòîðîì ñîäåðæèòñÿ àäðåñ security cookie
+			// ÐŸÐ¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ Ñ€Ð°Ð·Ð´ÐµÐ» ÐºÐ¾Ð½Ñ„Ð¸Ð³ÑƒÑ€Ð°Ñ†Ð¸Ð¸ Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ¸, Ð² ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð¼ ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ñ‚ÑÑ Ð°Ð´Ñ€ÐµÑ security cookie
 			auto dataDirectory = ntHeaders->OptionalHeader.DataDirectory;
 			auto sectionRVA = dataDirectory[IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG].VirtualAddress;
 			auto sectionSize = dataDirectory[IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG].Size;
@@ -111,7 +111,7 @@ namespace CreationKitPlatformExtended
 			Assert(sectionRVA > 0 && sectionSize > 0);
 			AssertMsg(loadConfig->SecurityCookie, "SecurityCookie is a null pointer!");
 
-			// Îïðåäåëèòü àäðåñà è ðàçìåðû ìîäóëåé/ðàçäåëîâ êîäà
+			// ÐžÐ¿Ñ€ÐµÐ´ÐµÐ»Ð¸Ñ‚ÑŒ Ð°Ð´Ñ€ÐµÑÐ° Ð¸ Ñ€Ð°Ð·Ð¼ÐµÑ€Ñ‹ Ð¼Ð¾Ð´ÑƒÐ»ÐµÐ¹/Ñ€Ð°Ð·Ð´ÐµÐ»Ð¾Ð² ÐºÐ¾Ð´Ð°
 
 			_moduleSize = ntHeaders->OptionalHeader.SizeOfImage;
 			Assert(Utils::GetPESectionRange(_moduleBase, ".text", &Sections[SECTION_TEXT].base, &Sections[SECTION_TEXT].end));
@@ -129,11 +129,11 @@ namespace CreationKitPlatformExtended
 			_MESSAGE("Section range \".rdata\": (base: %016X, end: %016X)", Sections[SECTION_DATA_READONLY].base, Sections[SECTION_DATA_READONLY].end);
 			_MESSAGE("Section range \".data\": (base: %016X, end: %016X)", Sections[SECTION_DATA].base, Sections[SECTION_DATA].end);
 
-			// Óñòàíîâèòü ìàãè÷åñêîå çíà÷åíèå, êîòîðîå çàïóñêàåò ðàííèé âûçîâ QueryPerformanceCounter
+			// Ð£ÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ Ð¼Ð°Ð³Ð¸Ñ‡ÐµÑÐºÐ¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ, ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ðµ Ð·Ð°Ð¿ÑƒÑÐºÐ°ÐµÑ‚ Ñ€Ð°Ð½Ð½Ð¸Ð¹ Ð²Ñ‹Ð·Ð¾Ð² QueryPerformanceCounter
 			*(uint64_t*)loadConfig->SecurityCookie = 0x2B992DDFA232;
 			PatchIAT(hk_QueryPerformanceCounter, "kernel32.dll", "QueryPerformanceCounter");
 
-			// Îòêëþ÷èòü âûçîâ ðàñïàêîâùèêà steam äëÿ NtSetInformationThread(ThreadHideFromDebugger)
+			// ÐžÑ‚ÐºÐ»ÑŽÑ‡Ð¸Ñ‚ÑŒ Ð²Ñ‹Ð·Ð¾Ð² Ñ€Ð°ÑÐ¿Ð°ÐºÐ¾Ð²Ñ‰Ð¸ÐºÐ° steam Ð´Ð»Ñ NtSetInformationThread(ThreadHideFromDebugger)
 			TempNTSITAddress = (uintptr_t)GetProcAddress(GetModuleHandle("ntdll.dll"), "NtSetInformationThread");
 			if (TempNTSITAddress)
 			{
@@ -144,11 +144,11 @@ namespace CreationKitPlatformExtended
 
 		void Engine::DisableBreakpoint()
 		{
-			// Âîññòàíîâèòü îðèãèíàë óêàçàòåëü íà QPC
+			// Ð’Ð¾ÑÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ Ð¾Ñ€Ð¸Ð³Ð¸Ð½Ð°Ð» ÑƒÐºÐ°Ð·Ð°Ñ‚ÐµÐ»ÑŒ Ð½Ð° QPC
 			PatchIAT(QueryPerformanceCounter, "kernel32.dll", "QueryPerformanceCounter");
 
 			if (TempNTSITAddress)
-				// Âîññòàíîâèòü èñõîäíûé êîä NtSetInformationThread
+				// Ð’Ð¾ÑÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ Ð¸ÑÑ…Ð¾Ð´Ð½Ñ‹Ð¹ ÐºÐ¾Ð´ NtSetInformationThread
 				Utils::PatchMemory(TempNTSITAddress, (PBYTE)&TempNTSIT, sizeof(TempNTSIT));
 		}
 
@@ -160,15 +160,15 @@ namespace CreationKitPlatformExtended
 			{
 				_MESSAGE("\tAccessing the console...");
 
-				// Îïðåäåëÿåì êîìàíäó
+				// ÐžÐ¿Ñ€ÐµÐ´ÐµÐ»ÑÐµÐ¼ ÐºÐ¾Ð¼Ð°Ð½Ð´Ñƒ
 				auto Command = CommandLine.At(0);
 				_MESSAGE("\tCommand: \"%s\"", Command.c_str());
 
 				if (!_stricmp(Command.c_str(), "-PECreateDatabase"))
 				{
-					// Ñîçäà¸ì áàçó
+					// Ð¡Ð¾Ð·Ð´Ð°Ñ‘Ð¼ Ð±Ð°Ð·Ñƒ
 					GlobalRelocationDatabasePtr->CreateDatabase();
-					// Çàêðûâàåì Creation Kit
+					// Ð—Ð°ÐºÑ€Ñ‹Ð²Ð°ÐµÐ¼ Creation Kit
 					CreationKitPlatformExtended::Utils::Quit();
 				}
 				else if (!_stricmp(Command.c_str(), "-PEUpdateDatabase"))
@@ -184,27 +184,27 @@ namespace CreationKitPlatformExtended
 					}
 					else
 					{
-						// Îòêðûâàåì áàçó äàííûõ
+						// ÐžÑ‚ÐºÑ€Ñ‹Ð²Ð°ÐµÐ¼ Ð±Ð°Ð·Ñƒ Ð´Ð°Ð½Ð½Ñ‹Ñ…
 						if (GlobalRelocationDatabasePtr->OpenDatabase())
 						{
 							auto Patch = GlobalRelocationDatabasePtr->GetByName(CommandLine.At(1).c_str());
-							// Ïàò÷à íåò?
+							// ÐŸÐ°Ñ‚Ñ‡Ð° Ð½ÐµÑ‚?
 							if (Patch.Empty())
 							{
 								Patch = GlobalRelocationDatabasePtr->Append(CommandLine.At(1).c_str(), new RelocationDatabaseItem());
 								if (Patch.Empty())
-									// Çàêðûâàåì Creation Kit
+									// Ð—Ð°ÐºÑ€Ñ‹Ð²Ð°ÐµÐ¼ Creation Kit
 									CreationKitPlatformExtended::Utils::Quit();
 							}
-							// Çàãðóæàåì
+							// Ð—Ð°Ð³Ñ€ÑƒÐ¶Ð°ÐµÐ¼
 							if (Patch->LoadFromFileDeveloped(CommandLine.At(2).c_str()))
-								// Ñîõðàíÿåì áàçó äàííûõ
+								// Ð¡Ð¾Ñ…Ñ€Ð°Ð½ÑÐµÐ¼ Ð±Ð°Ð·Ñƒ Ð´Ð°Ð½Ð½Ñ‹Ñ…
 								GlobalRelocationDatabasePtr->SaveDatabase();
 						}
 						else
 							_FATALERROR("The database is not loaded");
 					}
-					// Çàêðûâàåì Creation Kit
+					// Ð—Ð°ÐºÑ€Ñ‹Ð²Ð°ÐµÐ¼ Creation Kit
 					CreationKitPlatformExtended::Utils::Quit();
 				}
 				else if (!_stricmp(Command.c_str(), "-PEExtractFromDatabase"))
@@ -216,18 +216,18 @@ namespace CreationKitPlatformExtended
 					}
 					else
 					{
-						// Îòêðûâàåì áàçó äàííûõ
+						// ÐžÑ‚ÐºÑ€Ñ‹Ð²Ð°ÐµÐ¼ Ð±Ð°Ð·Ñƒ Ð´Ð°Ð½Ð½Ñ‹Ñ…
 						if (GlobalRelocationDatabasePtr->OpenDatabase())
 						{
 							auto Patch = GlobalRelocationDatabasePtr->GetByName(CommandLine.At(1).c_str());
-							// Ïàò÷à åñòü?
+							// ÐŸÐ°Ñ‚Ñ‡Ð° ÐµÑÑ‚ÑŒ?
 							if (!Patch.Empty())
 								Patch->SaveToFileDeveloped(CommandLine.At(2).c_str());
 						}
 						else
 							_FATALERROR("The database is not loaded");
 					}
-					// Çàêðûâàåì Creation Kit
+					// Ð—Ð°ÐºÑ€Ñ‹Ð²Ð°ÐµÐ¼ Creation Kit
 					CreationKitPlatformExtended::Utils::Quit();
 				}
 			}
@@ -249,9 +249,9 @@ namespace CreationKitPlatformExtended
 				return;
 			}
 
-			// Çàïðîñû è ïðîâåðêà âñåõ ïàò÷åé íà âàëèäíîñòü
+			// Ð—Ð°Ð¿Ñ€Ð¾ÑÑ‹ Ð¸ Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð²ÑÐµÑ… Ð¿Ð°Ñ‚Ñ‡ÐµÐ¹ Ð½Ð° Ð²Ð°Ð»Ð¸Ð´Ð½Ð¾ÑÑ‚ÑŒ
 			PatchesManager->QueryAll();
-			// Âêëþ÷åíèå íåîòáðàêîâàííûõ ïàò÷åé
+			// Ð’ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ðµ Ð½ÐµÐ¾Ñ‚Ð±Ñ€Ð°ÐºÐ¾Ð²Ð°Ð½Ð½Ñ‹Ñ… Ð¿Ð°Ñ‚Ñ‡ÐµÐ¹
 			PatchesManager->EnableAll();
 		}
 
@@ -262,10 +262,10 @@ namespace CreationKitPlatformExtended
 
 			IResult Result = RC_OK;
 
-			// Äîñòóïíûå èìåíà äëÿ Creation Kit
+			// Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ñ‹Ðµ Ð¸Ð¼ÐµÐ½Ð° Ð´Ð»Ñ Creation Kit
 			if (CheckFileNameProcess(lpcstrAppName))
 			{
-				// Èíèöèàëèçàöèÿ áèáëèîòåêè vmm
+				// Ð˜Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ Ð±Ð¸Ð±Ð»Ð¸Ð¾Ñ‚ÐµÐºÐ¸ vmm
 				voltek::scalable_memory_manager_initialize();
 					
 				GlobalDebugLogPtr = new DebugLog(L"CreationKitPlatformExtended.log");
@@ -307,26 +307,26 @@ namespace CreationKitPlatformExtended
 
 				LogCurrentTime();
 
-				// Ïîëó÷åíèå CRC32 ñ ôàéëà
+				// ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ CRC32 Ñ Ñ„Ð°Ð¹Ð»Ð°
 				uint32_t hash_crc32 = CRC32File((std::string(lpcstrAppName) + ".exe").c_str());
 				_MESSAGE("CRC32 executable file: 0x%08X", hash_crc32);
 
-				// Ïîëó÷åíèå íà÷àëüíîãî àäðåñà ïàìÿòè ãëàâíîãî ïðîöåññà
+				// ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½Ð¾Ð³Ð¾ Ð°Ð´Ñ€ÐµÑÐ° Ð¿Ð°Ð¼ÑÑ‚Ð¸ Ð³Ð»Ð°Ð²Ð½Ð¾Ð³Ð¾ Ð¿Ñ€Ð¾Ñ†ÐµÑÑÐ°
 				uintptr_t moduleBase = (uintptr_t)GetModuleHandle(NULL);
 
-				// Ïûòàåìñÿ îïðåäåëèòü ôàéë
+				// ÐŸÑ‹Ñ‚Ð°ÐµÐ¼ÑÑ Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»Ð¸Ñ‚ÑŒ Ñ„Ð°Ð¹Ð»
 				EDITOR_EXECUTABLE_TYPE editorVersion = EDITOR_UNKNOWN;
 				auto editorVersionIterator = allowedEditorVersion.find(hash_crc32);
 				if (editorVersionIterator == allowedEditorVersion.end())
 				{
-					// Ôàéë íå íàéäåí ñðåäè ðàçðåø¸ííûõ, ïîïûòêà îïðåäåëèòü ïî êëþ÷åâûì ìåñòàì
+					// Ð¤Ð°Ð¹Ð» Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½ ÑÑ€ÐµÐ´Ð¸ Ñ€Ð°Ð·Ñ€ÐµÑˆÑ‘Ð½Ð½Ñ‹Ñ…, Ð¿Ð¾Ð¿Ñ‹Ñ‚ÐºÐ° Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»Ð¸Ñ‚ÑŒ Ð¿Ð¾ ÐºÐ»ÑŽÑ‡ÐµÐ²Ñ‹Ð¼ Ð¼ÐµÑÑ‚Ð°Ð¼
 					_WARNING("CRC32 does not match any of the known ones, running a version check by signature");
 
 					for (auto editorVersionIterator2 = allowedEditorVersion2.begin();
 						editorVersionIterator2 != allowedEditorVersion2.end();
 						editorVersionIterator2++)
 					{
-						// Ñðàâíåíèå ïî óêàçàííîìó ñìåùåíèþ íóæíîé ñòðîêè
+						// Ð¡Ñ€Ð°Ð²Ð½ÐµÐ½Ð¸Ðµ Ð¿Ð¾ ÑƒÐºÐ°Ð·Ð°Ð½Ð½Ð¾Ð¼Ñƒ ÑÐ¼ÐµÑ‰ÐµÐ½Ð¸ÑŽ Ð½ÑƒÐ¶Ð½Ð¾Ð¹ ÑÑ‚Ñ€Ð¾ÐºÐ¸
 						if (!_stricmp((const char*)(moduleBase + editorVersionIterator2->first),
 							editorVersionIterator2->second.first.data()))
 						{

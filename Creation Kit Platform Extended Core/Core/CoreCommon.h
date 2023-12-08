@@ -1,4 +1,4 @@
-// Copyright © 2023-2024 aka perchik71. All rights reserved.
+п»ї// Copyright В© 2023-2024 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -13,27 +13,27 @@ namespace CreationKitPlatformExtended
 			EDITOR_SKYRIM_SE_1_6_1130
 		};
 
-		// Не использовать менеджер на данном этапе, считаем, что его ещё нет
-		// Связи с этим стандартные STL с обычным аллокатором
+		// РќРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РјРµРЅРµРґР¶РµСЂ РЅР° РґР°РЅРЅРѕРј СЌС‚Р°РїРµ, СЃС‡РёС‚Р°РµРј, С‡С‚Рѕ РµРіРѕ РµС‰С‘ РЅРµС‚
+		// РЎРІСЏР·Рё СЃ СЌС‚РёРј СЃС‚Р°РЅРґР°СЂС‚РЅС‹Рµ STL СЃ РѕР±С‹С‡РЅС‹Рј Р°Р»Р»РѕРєР°С‚РѕСЂРѕРј
 
-		// Список проверенных исполняемых файлов, допущенных к запуску
+		// РЎРїРёСЃРѕРє РїСЂРѕРІРµСЂРµРЅРЅС‹С… РёСЃРїРѕР»РЅСЏРµРјС‹С… С„Р°Р№Р»РѕРІ, РґРѕРїСѓС‰РµРЅРЅС‹С… Рє Р·Р°РїСѓСЃРєСѓ
 		static std::unordered_map<uint32_t, EDITOR_EXECUTABLE_TYPE> allowedEditorVersion = {
 			{ 0x2EF668CEul, EDITOR_SKYRIM_SE_1_6_1130 },
 		};
 
-		// Список ключевых смещений в исполняемых файлах, допущенных к запуску
+		// РЎРїРёСЃРѕРє РєР»СЋС‡РµРІС‹С… СЃРјРµС‰РµРЅРёР№ РІ РёСЃРїРѕР»РЅСЏРµРјС‹С… С„Р°Р№Р»Р°С…, РґРѕРїСѓС‰РµРЅРЅС‹С… Рє Р·Р°РїСѓСЃРєСѓ
 		static std::unordered_map<uint32_t,
 			std::pair<std::string_view, EDITOR_EXECUTABLE_TYPE>> allowedEditorVersion2 = {
 			{ 0x2F3E698ul, { "1.6.1130.0", EDITOR_SKYRIM_SE_1_6_1130 } },
 		};
 
-		// Список названий редакторов
+		// РЎРїРёСЃРѕРє РЅР°Р·РІР°РЅРёР№ СЂРµРґР°РєС‚РѕСЂРѕРІ
 		static std::vector<std::string_view> allowedEditorVersionStr = {
 			"Unknown version",
 			"Skyrim Special Edition (version: 1.6.1130)",
 		};
 
-		// Список имён файлов базы данных
+		// РЎРїРёСЃРѕРє РёРјС‘РЅ С„Р°Р№Р»РѕРІ Р±Р°Р·С‹ РґР°РЅРЅС‹С…
 		static std::unordered_map<EDITOR_EXECUTABLE_TYPE, std::string_view> allowedDatabaseVersion = {
 			{ EDITOR_SKYRIM_SE_1_6_1130, "CreationKitPlatformExtended_SSE_1_6_1130.database" },
 		};

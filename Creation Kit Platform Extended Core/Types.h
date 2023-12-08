@@ -1,4 +1,4 @@
-// Copyright � 2023 aka perchik71. All rights reserved.
+﻿// Copyright © 2023 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -29,6 +29,13 @@ namespace CreationKitPlatformExtended
 		typename _Equal = std::equal_to<_kTy>>
 	using ConcurrencyMap = concurrency::concurrent_unordered_map<_kTy, _Ty, 
 		_Hasher, _Equal, voltek::allocator<std::pair<const _kTy, _Ty>>>;
+
+	template<typename _kTy, typename _Pr = std::less<_kTy>>
+	using Set = std::set<_kTy, _Pr, voltek::allocator<_kTy>>;
+
+	template<typename _kTy, typename _Hasher = std::hash<_kTy>, 
+		typename _Equal = std::equal_to<_kTy>>
+	using UnorderedSet = std::unordered_set<_kTy, _Hasher, _Equal, voltek::allocator<_kTy>>;
 
 	template<typename _Ty>
 	class SmartPointerInfo

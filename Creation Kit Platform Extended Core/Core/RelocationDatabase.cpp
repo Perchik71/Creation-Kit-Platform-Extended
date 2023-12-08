@@ -1,4 +1,4 @@
-// Copyright © 2023-2024 aka perchik71. All rights reserved.
+п»ї// Copyright В© 2023-2024 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -76,14 +76,14 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
-			// Версия патча
+			// Р’РµСЂСЃРёСЏ РїР°С‚С‡Р°
 			if (!CreationKitPlatformExtended::Utils::FileReadBuffer(fileStream, &_version))
 			{
 				_ERROR(MESSAGE_FAILED_READ);
 				return false;
 			}
 
-			// Имя патча
+			// РРјСЏ РїР°С‚С‡Р°
 			if (!CreationKitPlatformExtended::Utils::FileReadString(fileStream, _name))
 			{
 				_ERROR(MESSAGE_FAILED_READ);
@@ -108,7 +108,7 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
-			// Чтение данных
+			// Р§С‚РµРЅРёРµ РґР°РЅРЅС‹С…
 			_rvaList.resize(Chunk.u32Size >> 2);	
 			if (!CreationKitPlatformExtended::Utils::FileReadBuffer(fileStream, _rvaList.data(), (uint32_t)_rvaList.size()))
 			{
@@ -135,14 +135,14 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
-			// Версия патча
+			// Р’РµСЂСЃРёСЏ РїР°С‚С‡Р°
 			if (!CreationKitPlatformExtended::Utils::FileWriteBuffer(fileStream, _version))
 			{
 				_ERROR(MESSAGE_FAILED_WRITE);
 				return false;
 			}
 
-			// Имя патча
+			// РРјСЏ РїР°С‚С‡Р°
 			if (!CreationKitPlatformExtended::Utils::FileWriteString(fileStream, _name))
 			{
 				_ERROR(MESSAGE_FAILED_WRITE);
@@ -159,7 +159,7 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
-			// Запись данных
+			// Р—Р°РїРёСЃСЊ РґР°РЅРЅС‹С…
 			for (auto It = _rvaList.begin(); It != _rvaList.end(); It++)
 			{
 				if (!CreationKitPlatformExtended::Utils::FileWriteBuffer(fileStream, *It))
@@ -240,12 +240,12 @@ namespace CreationKitPlatformExtended
 
 			_MESSAGE("\tThe beginning of unpacking the patch into a file: \"%s\"", filename);
 
-			// Запись имени патча
+			// Р—Р°РїРёСЃСЊ РёРјРµРЅРё РїР°С‚С‡Р°
 			fputs(_name.c_str(), fileStream);
 			fputc('\n', fileStream);
-			// Запись версии патча
+			// Р—Р°РїРёСЃСЊ РІРµСЂСЃРёРё РїР°С‚С‡Р°
 			fprintf(fileStream, "%u\n", _version);
-			// Запись данных
+			// Р—Р°РїРёСЃСЊ РґР°РЅРЅС‹С…
 			for (auto It = _rvaList.begin(); It != _rvaList.end(); It++)
 				fprintf(fileStream, "%X\n", *It);
 
@@ -385,7 +385,7 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
-			// Кол-во патчей в базе
+			// РљРѕР»-РІРѕ РїР°С‚С‡РµР№ РІ Р±Р°Р·Рµ
 			uint32_t nCount = 0;
 			if (!CreationKitPlatformExtended::Utils::FileReadBuffer(fileStream, &nCount))
 			{

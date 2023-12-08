@@ -1,4 +1,4 @@
-// Copyright © 2023-2024 aka perchik71. All rights reserved.
+п»ї// Copyright В© 2023-2024 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -43,7 +43,7 @@ namespace CreationKitPlatformExtended
 				{
 					auto info = reinterpret_cast<const CREATESTRUCT*>(lParam);
 
-					// Создание rich edit control (https://docs.microsoft.com/en-us/windows/desktop/Controls/rich-edit-controls)
+					// РЎРѕР·РґР°РЅРёРµ rich edit control (https://docs.microsoft.com/en-us/windows/desktop/Controls/rich-edit-controls)
 					uint32_t style = WS_VISIBLE | WS_CHILD | WS_VSCROLL | ES_MULTILINE | ES_LEFT | ES_NOHIDESEL |
 						ES_AUTOVSCROLL | ES_READONLY;
 
@@ -55,7 +55,7 @@ namespace CreationKitPlatformExtended
 					moduleConsole->SetRichEditHandle(richEditHwnd);
 					moduleConsole->SetAutoScroll(true);
 
-					// Установить лучший шрифт и преобразовать баллы в пункты (1 балл = 20 пункты)
+					// РЈСЃС‚Р°РЅРѕРІРёС‚СЊ Р»СѓС‡С€РёР№ С€СЂРёС„С‚ Рё РїСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ Р±Р°Р»Р»С‹ РІ РїСѓРЅРєС‚С‹ (1 Р±Р°Р»Р» = 20 РїСѓРЅРєС‚С‹)
 					CHARFORMAT2A format = { 0 };
 					format.cbSize = sizeof(format);
 					format.dwMask = CFM_FACE | CFM_SIZE | CFM_WEIGHT;
@@ -65,12 +65,12 @@ namespace CreationKitPlatformExtended
 
 					SendMessageA(richEditHwnd, EM_SETCHARFORMAT, SCF_ALL, reinterpret_cast<LPARAM>(&format));
 
-					//Подписаться на EN_MSGFILTER и EN_SELCHANGE
+					//РџРѕРґРїРёСЃР°С‚СЊСЃСЏ РЅР° EN_MSGFILTER Рё EN_SELCHANGE
 					SendMessageA(richEditHwnd, EM_SETEVENTMASK, 0, ENM_MOUSEEVENTS | ENM_SELCHANGE);
 
 					if (_READ_OPTION_BOOL("Log", "bShowWidow", true))
 					{
-						// Установить положение окна по умолчанию
+						// РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РїРѕР»РѕР¶РµРЅРёРµ РѕРєРЅР° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 						int winX = _READ_OPTION_INT("Log", "nX", info->x);
 						int winY = _READ_OPTION_INT("Log", "nY", info->y);
 						int winW = _READ_OPTION_INT("Log", "nWidth", info->cx);
@@ -127,14 +127,14 @@ namespace CreationKitPlatformExtended
 					else if (notification->code == EN_SELCHANGE)
 					{
 						auto selChange = reinterpret_cast<const SELCHANGE*>(notification);
-						// Двойной щелчок мыши с правильным выбором -> попробовать проанализировать идентификатор формы
+						// Р”РІРѕР№РЅРѕР№ С‰РµР»С‡РѕРє РјС‹С€Рё СЃ РїСЂР°РІРёР»СЊРЅС‹Рј РІС‹Р±РѕСЂРѕРј -> РїРѕРїСЂРѕР±РѕРІР°С‚СЊ РїСЂРѕР°РЅР°Р»РёР·РёСЂРѕРІР°С‚СЊ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С„РѕСЂРјС‹
 						if ((GetTickCount64() - lastClickTime > 1000) || selChange->seltyp == SEL_EMPTY)
 							break;
 
 						char lineData[2048] = { 0 };
 						*reinterpret_cast<uint16_t*>(&lineData[0]) = ARRAYSIZE(lineData);
 
-						// Получить номер строки и текст из выбранного диапазона
+						// РџРѕР»СѓС‡РёС‚СЊ РЅРѕРјРµСЂ СЃС‚СЂРѕРєРё Рё С‚РµРєСЃС‚ РёР· РІС‹Р±СЂР°РЅРЅРѕРіРѕ РґРёР°РїР°Р·РѕРЅР°
 						LRESULT lineIndex = SendMessageA(moduleConsole->GetRichEditHandle(), EM_LINEFROMCHAR,
 							selChange->chrg.cpMin, 0);
 						LRESULT charCount = SendMessageA(moduleConsole->GetRichEditHandle(), EM_GETLINE, lineIndex,
@@ -144,7 +144,7 @@ namespace CreationKitPlatformExtended
 						{
 							lineData[charCount - 1] = '\0';
 
-							// Захватить шестнадцатеричный идентификатор формы в формате "(XXXXXXXX)"
+							// Р—Р°С…РІР°С‚РёС‚СЊ С€РµСЃС‚РЅР°РґС†Р°С‚РµСЂРёС‡РЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С„РѕСЂРјС‹ РІ С„РѕСЂРјР°С‚Рµ "(XXXXXXXX)"
 							for (char* p = lineData; p[0] != '\0'; p++)
 							{
 								if (p[0] == '(' && strlen(p) >= 10 && p[9] == ')')
@@ -152,7 +152,7 @@ namespace CreationKitPlatformExtended
 									uint32_t id = strtoul(&p[1], nullptr, 16);
 
 
-									// Будущее
+									// Р‘СѓРґСѓС‰РµРµ
 									//PostMessageA(MainWindow::GetWindow(), WM_COMMAND, UI_EDITOR_OPENFORMBYID, id);
 								}
 							}
@@ -180,18 +180,18 @@ namespace CreationKitPlatformExtended
 					auto rich = moduleConsole->GetRichEditHandle();
 					SendMessageA(rich, WM_SETREDRAW, FALSE, 0);
 
-					// Сохранить старую позицию, если нет автоскроллинга
+					// РЎРѕС…СЂР°РЅРёС‚СЊ СЃС‚Р°СЂСѓСЋ РїРѕР·РёС†РёСЋ, РµСЃР»Рё РЅРµС‚ Р°РІС‚РѕСЃРєСЂРѕР»Р»РёРЅРіР°
 					POINT scrollRange = { 0 };
 
 					if (!moduleConsole->HasAutoScroll())
 						SendMessageA(rich, EM_GETSCROLLPOS, 0, reinterpret_cast<LPARAM>(&scrollRange));
 
-					// Получить копию всех элементов и очистить целевой список
+					// РџРѕР»СѓС‡РёС‚СЊ РєРѕРїРёСЋ РІСЃРµС… СЌР»РµРјРµРЅС‚РѕРІ Рё РѕС‡РёСЃС‚РёС‚СЊ С†РµР»РµРІРѕР№ СЃРїРёСЃРѕРє
 					auto messages(std::move(moduleConsole->GetPendingMessages()));
 
 					for (const char* message : messages)
 					{
-						// Переместить курсор в конец, затем написать
+						// РџРµСЂРµРјРµСЃС‚РёС‚СЊ РєСѓСЂСЃРѕСЂ РІ РєРѕРЅРµС†, Р·Р°С‚РµРј РЅР°РїРёСЃР°С‚СЊ
 						CHARRANGE range
 						{
 							.cpMin = LONG_MAX,
@@ -231,11 +231,11 @@ namespace CreationKitPlatformExtended
 
 		bool ConsoleWindow::SaveRichTextToFile(const char* _filename) const
 		{
-			// Изучено отсюда
+			// РР·СѓС‡РµРЅРѕ РѕС‚СЃСЋРґР°
 			// https://subscribe.ru/archive/comp.soft.prog.qandacpp/200507/10000511.html
 
-			// открываю\создаю файл, полностью заменяю его содержимое
-			// если файл существует
+			// РѕС‚РєСЂС‹РІР°СЋ\СЃРѕР·РґР°СЋ С„Р°Р№Р», РїРѕР»РЅРѕСЃС‚СЊСЋ Р·Р°РјРµРЅСЏСЋ РµРіРѕ СЃРѕРґРµСЂР¶РёРјРѕРµ
+			// РµСЃР»Рё С„Р°Р№Р» СЃСѓС‰РµСЃС‚РІСѓРµС‚
 			FILE* fileStream = _fsopen(_filename, "wt", _SH_DENYRW);
 			if (!fileStream)
 			{
@@ -245,43 +245,43 @@ namespace CreationKitPlatformExtended
 
 			CreationKitPlatformExtended::Utils::ScopeFileStream file(fileStream);
 
-			// функция обратного вызова для вывода в файл
+			// С„СѓРЅРєС†РёСЏ РѕР±СЂР°С‚РЅРѕРіРѕ РІС‹Р·РѕРІР° РґР»СЏ РІС‹РІРѕРґР° РІ С„Р°Р№Р»
 			auto MyOutFunction = [](
-				DWORD_PTR dwCookie, // то самое пользовательское значение которое
-									// мы указали в EDITSTREAM::dwCookie
-				LPBYTE pbBuff,		// буфер с данными которые передает RichEdit
-				LONG cb,			// размер буфера в байтах
-				LONG* pcb			// указатель на переменную в которую следует
-									// записать сколько функция MyOutFunction
-									// успешно обработала байтов из буфера pbBuff) -> DWORD 
+				DWORD_PTR dwCookie, // С‚Рѕ СЃР°РјРѕРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕРµ Р·РЅР°С‡РµРЅРёРµ РєРѕС‚РѕСЂРѕРµ
+									// РјС‹ СѓРєР°Р·Р°Р»Рё РІ EDITSTREAM::dwCookie
+				LPBYTE pbBuff,		// Р±СѓС„РµСЂ СЃ РґР°РЅРЅС‹РјРё РєРѕС‚РѕСЂС‹Рµ РїРµСЂРµРґР°РµС‚ RichEdit
+				LONG cb,			// СЂР°Р·РјРµСЂ Р±СѓС„РµСЂР° РІ Р±Р°Р№С‚Р°С…
+				LONG* pcb			// СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РїРµСЂРµРјРµРЅРЅСѓСЋ РІ РєРѕС‚РѕСЂСѓСЋ СЃР»РµРґСѓРµС‚
+									// Р·Р°РїРёСЃР°С‚СЊ СЃРєРѕР»СЊРєРѕ С„СѓРЅРєС†РёСЏ MyOutFunction
+									// СѓСЃРїРµС€РЅРѕ РѕР±СЂР°Р±РѕС‚Р°Р»Р° Р±Р°Р№С‚РѕРІ РёР· Р±СѓС„РµСЂР° pbBuff) -> DWORD 
 			) -> DWORD {
-					// в качестве dwCookie получаем указатель который мы
-					// установили в EDITSTREAM
+					// РІ РєР°С‡РµСЃС‚РІРµ dwCookie РїРѕР»СѓС‡Р°РµРј СѓРєР°Р·Р°С‚РµР»СЊ РєРѕС‚РѕСЂС‹Р№ РјС‹
+					// СѓСЃС‚Р°РЅРѕРІРёР»Рё РІ EDITSTREAM
 					FILE* stream = reinterpret_cast<FILE*>(dwCookie);
-					// записываем полученный буфер в файл, размер переданного нам
-					// буфера в переменной cb
+					// Р·Р°РїРёСЃС‹РІР°РµРј РїРѕР»СѓС‡РµРЅРЅС‹Р№ Р±СѓС„РµСЂ РІ С„Р°Р№Р», СЂР°Р·РјРµСЂ РїРµСЂРµРґР°РЅРЅРѕРіРѕ РЅР°Рј
+					// Р±СѓС„РµСЂР° РІ РїРµСЂРµРјРµРЅРЅРѕР№ cb
 					fwrite(pbBuff, 1, cb, stream);
-					// говорим RichEditу сколько мы обработали байтов
+					// РіРѕРІРѕСЂРёРј RichEditСѓ СЃРєРѕР»СЊРєРѕ РјС‹ РѕР±СЂР°Р±РѕС‚Р°Р»Рё Р±Р°Р№С‚РѕРІ
 					*pcb = cb;
-					// возвращаем ноль (у нас всё ОК)
+					// РІРѕР·РІСЂР°С‰Р°РµРј РЅРѕР»СЊ (Сѓ РЅР°СЃ РІСЃС‘ РћРљ)
 					return 0;
 			};
 			
 			EDITSTREAM es = { 0 };
-			// указываем функцию обратного вызова
+			// СѓРєР°Р·С‹РІР°РµРј С„СѓРЅРєС†РёСЋ РѕР±СЂР°С‚РЅРѕРіРѕ РІС‹Р·РѕРІР°
 			es.pfnCallback = static_cast<EDITSTREAMCALLBACK>(MyOutFunction);
-			// сбрасываем ошибки
+			// СЃР±СЂР°СЃС‹РІР°РµРј РѕС€РёР±РєРё
 			es.dwError = 0;
-			// в качестве Cookie передаем указатель на наш объект file
+			// РІ РєР°С‡РµСЃС‚РІРµ Cookie РїРµСЂРµРґР°РµРј СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РЅР°С€ РѕР±СЉРµРєС‚ file
 			es.dwCookie = (DWORD_PTR)&fileStream;
-			// посылаем сообщение окну RichEdit, WPARAM==флаги,
-			// LPARAM - указатель на EDITSTREAM
+			// РїРѕСЃС‹Р»Р°РµРј СЃРѕРѕР±С‰РµРЅРёРµ РѕРєРЅСѓ RichEdit, WPARAM==С„Р»Р°РіРё,
+			// LPARAM - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° EDITSTREAM
 			SendMessage(_richEditHwnd, EM_STREAMOUT,
-				SF_TEXT /*получать обычный текст*/,
+				SF_TEXT /*РїРѕР»СѓС‡Р°С‚СЊ РѕР±С‹С‡РЅС‹Р№ С‚РµРєСЃС‚*/,
 				(LPARAM)&es);
 
-			// true - если не было ошибок, иначе что-то где-то вдруг
-			// порою не в порядке.
+			// true - РµСЃР»Рё РЅРµ Р±С‹Р»Рѕ РѕС€РёР±РѕРє, РёРЅР°С‡Рµ С‡С‚Рѕ-С‚Рѕ РіРґРµ-С‚Рѕ РІРґСЂСѓРі
+			// РїРѕСЂРѕСЋ РЅРµ РІ РїРѕСЂСЏРґРєРµ.
 			return !es.dwError;
 		}
 
@@ -320,9 +320,11 @@ namespace CreationKitPlatformExtended
 			if (hWindow)
 				return false;
 
-			// Загрузка нового RichEdit
+			// Р—Р°РіСЂСѓР·РєР° РЅРѕРІРѕРіРѕ RichEdit
 			if (!LoadLibraryA("MSFTEDIT.dll"))
 				return false;
+
+			LoadWarningBlacklist();
 
 			auto fName = _READ_OPTION_USTR("Log", "sOutputFile", FILE_NONE);
 			if (fName != FILE_NONE)
@@ -333,13 +335,13 @@ namespace CreationKitPlatformExtended
 						"set the 'OutputFile' INI option to 'none'.", fName.c_str());
 			}
 
-			// В отдельном потоке создаём окно и там же для него отдельную очередь сообщений
-			// Поскольку, оно не имеет родительского окна (его ещё нет), окно живёт своей жизнью
-			// и не сворачивается вместе с окном Creation Kit, к примеру.
+			// Р’ РѕС‚РґРµР»СЊРЅРѕРј РїРѕС‚РѕРєРµ СЃРѕР·РґР°С‘Рј РѕРєРЅРѕ Рё С‚Р°Рј Р¶Рµ РґР»СЏ РЅРµРіРѕ РѕС‚РґРµР»СЊРЅСѓСЋ РѕС‡РµСЂРµРґСЊ СЃРѕРѕР±С‰РµРЅРёР№
+			// РџРѕСЃРєРѕР»СЊРєСѓ, РѕРЅРѕ РЅРµ РёРјРµРµС‚ СЂРѕРґРёС‚РµР»СЊСЃРєРѕРіРѕ РѕРєРЅР° (РµРіРѕ РµС‰С‘ РЅРµС‚), РѕРєРЅРѕ Р¶РёРІС‘С‚ СЃРІРѕРµР№ Р¶РёР·РЅСЊСЋ
+			// Рё РЅРµ СЃРІРѕСЂР°С‡РёРІР°РµС‚СЃСЏ РІРјРµСЃС‚Рµ СЃ РѕРєРЅРѕРј Creation Kit, Рє РїСЂРёРјРµСЂСѓ.
 
 			std::thread asyncLogThread([](HWND* window, ConsoleWindow* module)
 				{
-					// Окно вывода
+					// РћРєРЅРѕ РІС‹РІРѕРґР°
 					auto instance = static_cast<HINSTANCE>(GetModuleHandle(NULL));
 
 					WNDCLASSEXA wc
@@ -348,7 +350,7 @@ namespace CreationKitPlatformExtended
 						.style = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS,
 						.lpfnWndProc = WndProc,
 						.hInstance = instance,
-						.hIcon = LoadIconA(instance, MAKEINTRESOURCE(0x13E)),				// 0x13E всегда иконка Creation Kit
+						.hIcon = LoadIconA(instance, MAKEINTRESOURCE(0x13E)),				// 0x13E РІСЃРµРіРґР° РёРєРѕРЅРєР° Creation Kit
 						.hCursor = LoadCursor(NULL, IDC_ARROW),
 						.hbrBackground = static_cast<HBRUSH>(GetStockObject(WHITE_BRUSH)),
 						.lpszClassName = "RTEDITLOG",
@@ -364,7 +366,7 @@ namespace CreationKitPlatformExtended
 					if (!(*window))
 						return false;
 
-					// Опрашивайть каждые 100 мс на наличие новых строк
+					// РћРїСЂР°С€РёРІР°Р№С‚СЊ РєР°Р¶РґС‹Рµ 100 РјСЃ РЅР° РЅР°Р»РёС‡РёРµ РЅРѕРІС‹С… СЃС‚СЂРѕРє
 					SetTimer(*window, UI_LOG_CMD_ADDTEXT, 100, NULL);
 					::UpdateWindow(*window);
 
@@ -389,6 +391,31 @@ namespace CreationKitPlatformExtended
 				DestroyWindow(hWindow);
 		}
 
+		void ConsoleWindow::LoadWarningBlacklist()
+		{
+			FILE* fileStream = _wfsopen(L"CreationKitPlatformExtendedMessagesBlacklist.txt", L"rt", _SH_DENYWR);
+			if (!fileStream) return;
+
+			CreationKitPlatformExtended::Utils::ScopeFileStream file(fileStream);
+			auto szBuf = std::make_unique<char[]>(2049);
+			szBuf.get()[2048] = '\0';
+			
+			size_t nCount = 0;
+			String Message;
+			while (!feof(fileStream))
+			{
+				fgets(szBuf.get(), 2048, fileStream);
+				nCount++;
+
+				Message = CreationKitPlatformExtended::Utils::Trim(szBuf.get());
+				_messageBlacklist.emplace(CreationKitPlatformExtended::Utils::MurmurHash64A(Message.c_str(), Message.length()));
+			}
+
+			_MESSAGE("Messages Blacklist: %llu", _messageBlacklist.size());
+			if (nCount > _messageBlacklist.size())
+				_MESSAGE("Number of messages whose hash has already been added: %llu", (nCount - _messageBlacklist.size()));
+		}
+
 		void ConsoleWindow::InputLog(const char* Format, ...)
 		{
 			va_list va;
@@ -405,13 +432,13 @@ namespace CreationKitPlatformExtended
 			if (len <= 0)
 				return;
 
-			//if (MessageBlacklist.count(XUtil::MurmurHash64A(buffer, len)))
-			//	return;
-
 			auto line = Utils::Trim(buffer);
 			std::replace_if(line.begin(), line.end(), [](auto const& x) { return x == '\n' || x == '\r'; }, ' ');
 
 			if (!line.length())
+				return;
+
+			if (_messageBlacklist.count(CreationKitPlatformExtended::Utils::MurmurHash64A(line.c_str(), line.length())))
 				return;
 
 			line += "\n";

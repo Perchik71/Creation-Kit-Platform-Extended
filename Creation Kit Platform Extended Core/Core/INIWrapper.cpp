@@ -1,4 +1,4 @@
-// Copyright © 2023 aka perchik71. All rights reserved.
+п»ї// Copyright В© 2023 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -38,8 +38,8 @@ namespace CreationKitPlatformExtended
 
 		void INIConfig::Open(const wchar_t* filename)
 		{
-			// Библиотека не поддерживает нормальный юникод, поскольку, STL, а там почитают UTF8.
-			// Используем хак с установкой текущей директории.
+			// Р‘РёР±Р»РёРѕС‚РµРєР° РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ РЅРѕСЂРјР°Р»СЊРЅС‹Р№ СЋРЅРёРєРѕРґ, РїРѕСЃРєРѕР»СЊРєСѓ, STL, Р° С‚Р°Рј РїРѕС‡РёС‚Р°СЋС‚ UTF8.
+			// РСЃРїРѕР»СЊР·СѓРµРј С…Р°Рє СЃ СѓСЃС‚Р°РЅРѕРІРєРѕР№ С‚РµРєСѓС‰РµР№ РґРёСЂРµРєС‚РѕСЂРёРё.
 
 			auto currentPath = std::make_unique<wchar_t[]>(1025);
 			GetCurrentDirectoryW(1024, currentPath.get());
@@ -59,11 +59,11 @@ namespace CreationKitPlatformExtended
 				else
 					newPath += relPath;
 
-				// Изменяем текщую директорию
+				// РР·РјРµРЅСЏРµРј С‚РµРєС‰СѓСЋ РґРёСЂРµРєС‚РѕСЂРёСЋ
 				SetCurrentDirectoryW(newPath.c_str());
 
 				if (it != std::wstring::npos)
-					// Получаем имя файла
+					// РџРѕР»СѓС‡Р°РµРј РёРјСЏ С„Р°Р№Р»Р°
 					newPath = relPath.substr(it + 1);
 				else
 					newPath = relPath;
@@ -76,11 +76,11 @@ namespace CreationKitPlatformExtended
 				else
 					newPath = relPath;
 
-				// Изменяем текщую директорию
+				// РР·РјРµРЅСЏРµРј С‚РµРєС‰СѓСЋ РґРёСЂРµРєС‚РѕСЂРёСЋ
 				SetCurrentDirectoryW(newPath.c_str());
 
 				if (it != std::wstring::npos)
-					// Получаем имя файла
+					// РџРѕР»СѓС‡Р°РµРј РёРјСЏ С„Р°Р№Р»Р°
 					newPath = relPath.substr(it + 1);
 				else
 					newPath = relPath;
@@ -99,7 +99,7 @@ namespace CreationKitPlatformExtended
 				OpenFile(fname.get());
 			}
 
-			// Возвращаем назад
+			// Р’РѕР·РІСЂР°С‰Р°РµРј РЅР°Р·Р°Рґ
 			SetCurrentDirectoryW(currentPath.get());
 		}
 
@@ -182,7 +182,7 @@ namespace CreationKitPlatformExtended
 				{
 					auto val = sec.get(option);
 
-					// слово "Правда" я врядли увижу XD, так что ANSI онли.
+					// СЃР»РѕРІРѕ "РџСЂР°РІРґР°" СЏ РІСЂСЏРґР»Рё СѓРІРёР¶Сѓ XD, С‚Р°Рє С‡С‚Рѕ ANSI РѕРЅР»Рё.
 					std::transform(val.begin(), val.end(), val.begin(),
 						[](unsigned char c) { return std::tolower(c); });
 

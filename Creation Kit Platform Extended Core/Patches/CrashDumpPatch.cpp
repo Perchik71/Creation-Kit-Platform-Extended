@@ -1,4 +1,4 @@
-// Copyright © 2023-2024 aka perchik71. All rights reserved.
+п»ї// Copyright В© 2023-2024 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -71,7 +71,7 @@ namespace CreationKitPlatformExtended
 				PatchIAT((void(*)())purecallHandler, module, "_purecall");
 			};
 
-			// Патчим все известные библы используемые в CK
+			// РџР°С‚С‡РёРј РІСЃРµ РёР·РІРµСЃС‚РЅС‹Рµ Р±РёР±Р»С‹ РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ РІ CK
 
 			patchIAT("API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL");
 			patchIAT("MSVCR110.DLL");
@@ -146,13 +146,13 @@ namespace CreationKitPlatformExtended
 					CloseHandle(file);
 				}
 
-				// Закрыть и добавить в архив лог мода
+				// Р—Р°РєСЂС‹С‚СЊ Рё РґРѕР±Р°РІРёС‚СЊ РІ Р°СЂС…РёРІ Р»РѕРі РјРѕРґР°
 				GlobalDebugLogPtr->Close();
 				files[1] = new CHAR[14];
 				ZeroMemory(files[1], slen);
 				strcpy(files[1], "CreationKitPlatformExtended.log");
 
-				// Нужно 3-ий файл лог самого кита
+				// РќСѓР¶РЅРѕ 3-РёР№ С„Р°Р№Р» Р»РѕРі СЃР°РјРѕРіРѕ РєРёС‚Р°
 				if (Core::GlobalConsoleWindowPtr)
 				{
 					std::string slog = "CreationKitPlatformExtendedCrash.log";

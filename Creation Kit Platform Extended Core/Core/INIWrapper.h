@@ -1,4 +1,4 @@
-// Copyright © 2023 aka perchik71. All rights reserved.
+п»ї// Copyright В© 2023 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -44,9 +44,9 @@ namespace CreationKitPlatformExtended
 			unsigned long ReadUInt(const char* section, const char* option, unsigned long def);
 			unsigned long ReadHex(const char* section, const char* option, unsigned long def);
 			float ReadFloat(const char* section, const char* option, float def);
-			// Для чтения ansi строк
+			// Р”Р»СЏ С‡С‚РµРЅРёСЏ ansi СЃС‚СЂРѕРє
 			String ReadString(const char* section, const char* option, const char* def);
-			// Для чтения utf8 строк
+			// Р”Р»СЏ С‡С‚РµРЅРёСЏ utf8 СЃС‚СЂРѕРє
 			WideString ReadUnicodeString(const char* section, const char* option, const wchar_t* def);
 		private:
 			INIConfig(const INIConfig&) = default;
@@ -57,7 +57,7 @@ namespace CreationKitPlatformExtended
 			SmartPointer<mINI::INIStructure> _iniFile;
 		};
 
-		// Необходимо создать, чтобы использовать нижние функции
+		// РќРµРѕР±С…РѕРґРёРјРѕ СЃРѕР·РґР°С‚СЊ, С‡С‚РѕР±С‹ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РЅРёР¶РЅРёРµ С„СѓРЅРєС†РёРё
 
 		extern INIConfig* GlobalINIConfigPtr;
 	}

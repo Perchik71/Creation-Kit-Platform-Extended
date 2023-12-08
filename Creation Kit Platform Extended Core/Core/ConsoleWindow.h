@@ -1,4 +1,4 @@
-// Copyright � 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -26,6 +26,7 @@ namespace CreationKitPlatformExtended
 			inline HWND GetRichEditHandle() const { return _richEditHwnd; }
 			
 			bool SaveRichTextToFile(const char* _filename) const;
+			void LoadWarningBlacklist();
 
 			void InputLog(const char* Format, ...);
 			void InputLogVa(const char* Format, va_list Va);
@@ -47,6 +48,7 @@ namespace CreationKitPlatformExtended
 			bool _autoScroll;
 			FILE* _outputFileHandle;
 			ConcurrencyArray<const char*> _pendingMessages;
+			UnorderedSet<uint64_t> _messageBlacklist;
 		};
 
 		extern ConsoleWindow* GlobalConsoleWindowPtr;

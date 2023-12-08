@@ -1,4 +1,4 @@
-// Copyright © 2023 aka perchik71. All rights reserved.
+п»ї// Copyright В© 2023 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -104,7 +104,7 @@ namespace CreationKitPlatformExtended
 						return Pattern.second || (CurrentByte == Pattern.first);
 					});
 
-				// Не соответствует шаблону байтов, уходим
+				// РќРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ С€Р°Р±Р»РѕРЅСѓ Р±Р°Р№С‚РѕРІ, СѓС…РѕРґРёРј
 				if (ret == dataEnd)
 					break;
 
@@ -123,7 +123,7 @@ namespace CreationKitPlatformExtended
 				((PIMAGE_DOS_HEADER)ModuleBase)->e_lfanew);
 			PIMAGE_SECTION_HEADER section = IMAGE_FIRST_SECTION(ntHeaders);
 
-			// Предположим, что заголовок PE отсутствует, если раздел отсутствует
+			// РџСЂРµРґРїРѕР»РѕР¶РёРј, С‡С‚Рѕ Р·Р°РіРѕР»РѕРІРѕРє PE РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚, РµСЃР»Рё СЂР°Р·РґРµР» РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚
 			if (!Section || strlen(Section) <= 0) {
 				if (Start)
 					*Start = ModuleBase;
@@ -135,7 +135,7 @@ namespace CreationKitPlatformExtended
 			}
 
 			for (uint32_t i = 0; i < ntHeaders->FileHeader.NumberOfSections; i++, section++) {
-				// Имя может не заканчиваться нулем
+				// РРјСЏ РјРѕР¶РµС‚ РЅРµ Р·Р°РєР°РЅС‡РёРІР°С‚СЊСЃСЏ РЅСѓР»РµРј
 				char sectionName[sizeof(IMAGE_SECTION_HEADER::Name) + 1] = { };
 				memcpy(sectionName, section->Name, sizeof(IMAGE_SECTION_HEADER::Name));
 
@@ -428,6 +428,59 @@ namespace CreationKitPlatformExtended
 		void Quit()
 		{
 			TerminateProcess(GetCurrentProcess(), 0);
+		}
+
+		// Author: Nukem9
+		uint64_t MurmurHash64A(const void* Key, size_t Len, uint64_t Seed)
+		{
+			/*-----------------------------------------------------------------------------
+			// https://github.com/abrandoned/murmur2/blob/master/MurmurHash2.c#L65
+			// MurmurHash2, 64-bit versions, by Austin Appleby
+			//
+			// The same caveats as 32-bit MurmurHash2 apply here - beware of alignment
+			// and endian-ness issues if used across multiple platforms.
+			//
+			// 64-bit hash for 64-bit platforms
+			*/
+			const uint64_t m = 0xc6a4a7935bd1e995ull;
+			const int r = 47;
+
+			uint64_t h = Seed ^ (Len * m);
+
+			const uint64_t* data = (const uint64_t*)Key;
+			const uint64_t* end = data + (Len / 8);
+
+			while (data != end)
+			{
+				uint64_t k = *data++;
+
+				k *= m;
+				k ^= k >> r;
+				k *= m;
+
+				h ^= k;
+				h *= m;
+			}
+
+			const unsigned char* data2 = (const unsigned char*)data;
+
+			switch (Len & 7)
+			{
+			case 7: h ^= ((uint64_t)data2[6]) << 48;
+			case 6: h ^= ((uint64_t)data2[5]) << 40;
+			case 5: h ^= ((uint64_t)data2[4]) << 32;
+			case 4: h ^= ((uint64_t)data2[3]) << 24;
+			case 3: h ^= ((uint64_t)data2[2]) << 16;
+			case 2: h ^= ((uint64_t)data2[1]) << 8;
+			case 1: h ^= ((uint64_t)data2[0]);
+				h *= m;
+			}
+
+			h ^= h >> r;
+			h *= m;
+			h ^= h >> r;
+
+			return h;
 		}
 	}
 }
