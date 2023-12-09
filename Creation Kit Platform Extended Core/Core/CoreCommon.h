@@ -10,7 +10,10 @@ namespace CreationKitPlatformExtended
 	{
 		enum EDITOR_EXECUTABLE_TYPE {
 			EDITOR_UNKNOWN,
-			EDITOR_SKYRIM_SE_1_6_1130 = 1,
+			EDITOR_SKYRIM_SE_1_5_30,
+			EDITOR_SKYRIM_SE_1_5_73,
+			EDITOR_SKYRIM_SE_1_6_438,
+			EDITOR_SKYRIM_SE_1_6_1130 = EDITOR_SKYRIM_SE_1_6_438 + 1,
 			EDITOR_SKYRIM_SE_LAST = EDITOR_SKYRIM_SE_1_6_1130
 		};
 
@@ -31,16 +34,25 @@ namespace CreationKitPlatformExtended
 		// Список названий редакторов
 		static std::vector<std::string_view> allowedEditorVersionStr = {
 			"Unknown version",
+			"Skyrim Special Edition (version: 1.5.30)",
+			"Skyrim Special Edition (version: 1.5.73)",
+			"Skyrim Special Edition (version: 1.6.438)",
 			"Skyrim Special Edition (version: 1.6.1130)",
 		};
 
 		// Список имён файлов базы данных
 		static std::unordered_map<EDITOR_EXECUTABLE_TYPE, std::string_view> allowedDatabaseVersion = {
-			{ EDITOR_SKYRIM_SE_1_6_1130, "CreationKitPlatformExtended_SSE_1_6_1130.database" },
+			{ EDITOR_SKYRIM_SE_1_5_30,		"CreationKitPlatformExtended_SSE_1_5_30.database"	},
+			{ EDITOR_SKYRIM_SE_1_5_73,		"CreationKitPlatformExtended_SSE_1_5_73.database"	},
+			{ EDITOR_SKYRIM_SE_1_6_438,		"CreationKitPlatformExtended_SSE_1_6_438.database"	},
+			{ EDITOR_SKYRIM_SE_1_6_1130,	"CreationKitPlatformExtended_SSE_1_6_1130.database" },
 		};
 
 		static std::vector<std::string_view> allowedEditorFileNameStr = {
 			"creationkit",
+			"creationkit_se_1_5_30",
+			"creationkit_se_1_5_73",
+			"creationkit_se_1_6_438",
 			"creationkit_se_1_6_1130",
 		};
 

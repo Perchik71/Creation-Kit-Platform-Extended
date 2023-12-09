@@ -14,12 +14,15 @@
 #include "Patches/MemoryManagerPatch.h"
 #include "Patches/QuitHandlerPatch.h"
 #include "Patches/ConsolePatch.h"
+#include "Patches/FlowChartXPatch.h"
 
 #include "Patches/SSE/LoadOptimization.h"
 #include "Patches/SSE/FixRemoteDesktop.h"
 #include "Patches/SSE/FixLoadMore32KAnimation.h"
 #include "Patches/SSE/FixCrashLightingShader.h"
 #include "Patches/SSE/RenameCreationKitApp.h"
+#include "Patches/SSE/FixCrashInArmorAddon.h"
+#include "Patches/SSE/FixCrashMakeXYZCircles.h"
 
 #include "Experimental/RuntimeOptimization.h"
 
@@ -99,6 +102,7 @@ namespace CreationKitPlatformExtended
 				new CreationKitPlatformExtended::Patches::MemoryManagerPatch(),
 				new CreationKitPlatformExtended::Patches::CrashDumpPatch(),
 				new CreationKitPlatformExtended::Patches::ConsolePatch(),
+				new CreationKitPlatformExtended::Patches::FlowChartXPatch(),
 			});
 
 			// Добавление патчей только для редактора скайрима специального издания
@@ -110,6 +114,8 @@ namespace CreationKitPlatformExtended
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixLoadMore32KAnimationPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashLightingShaderPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::RenameCreationKitAppPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashInArmorAddonPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashMakeXYZCirclesPatch(),
 				});
 			}
 

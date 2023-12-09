@@ -78,6 +78,12 @@
     <ClCompile Include="Patches\SSE\FixCrashInArmorAddon.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\FixCrashMakeXYZCircles.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\FlowChartXPatch.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -199,6 +205,12 @@
     </ClInclude>
     <ClInclude Include="Patches\SSE\FixCrashInArmorAddon.h">
       <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixCrashMakeXYZCircles.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FlowChartXPatch.h">
+      <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

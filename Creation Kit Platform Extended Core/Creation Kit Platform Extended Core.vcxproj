@@ -87,10 +87,12 @@
     <ClCompile Include="Experimental\RuntimeOptimization.cpp" />
     <ClCompile Include="Patches\ConsolePatch.cpp" />
     <ClCompile Include="Patches\CrashDumpPatch.cpp" />
+    <ClCompile Include="Patches\FlowChartXPatch.cpp" />
     <ClCompile Include="Patches\MemoryManagerPatch.cpp" />
     <ClCompile Include="Patches\QuitHandlerPatch.cpp" />
     <ClCompile Include="Patches\SSE\FixCrashInArmorAddon.cpp" />
     <ClCompile Include="Patches\SSE\FixCrashLightingShader.cpp" />
+    <ClCompile Include="Patches\SSE\FixCrashMakeXYZCircles.cpp" />
     <ClCompile Include="Patches\SSE\FixLoadMore32KAnimation.cpp" />
     <ClCompile Include="Patches\SSE\FixRemoteDesktop.cpp" />
     <ClCompile Include="Patches\SSE\LoadOptimization.cpp" />
@@ -120,10 +122,12 @@
     <ClInclude Include="Experimental\RuntimeOptimization.h" />
     <ClInclude Include="Patches\ConsolePatch.h" />
     <ClInclude Include="Patches\CrashDumpPatch.h" />
+    <ClInclude Include="Patches\FlowChartXPatch.h" />
     <ClInclude Include="Patches\MemoryManagerPatch.h" />
     <ClInclude Include="Patches\QuitHandlerPatch.h" />
     <ClInclude Include="Patches\SSE\FixCrashInArmorAddon.h" />
     <ClInclude Include="Patches\SSE\FixCrashLightingShader.h" />
+    <ClInclude Include="Patches\SSE\FixCrashMakeXYZCircles.h" />
     <ClInclude Include="Patches\SSE\FixLoadMore32KAnimation.h" />
     <ClInclude Include="Patches\SSE\FixRemoteDesktop.h" />
     <ClInclude Include="Patches\SSE\LoadOptimization.h" />
