@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="libdeflate\lib\deflate_constants.h" />
+    <ClInclude Include="libdeflate\lib\gzip_constants.h" />
+    <ClInclude Include="libdeflate\lib\hc_matchfinder.h" />
+    <ClInclude Include="libdeflate\lib\ht_matchfinder.h" />
+    <ClInclude Include="libdeflate\lib\lib_common.h" />
+    <ClInclude Include="libdeflate\lib\matchfinder_common.h" />
+    <ClInclude Include="libdeflate\lib\zlib_constants.h" />
+    <ClInclude Include="libdeflate\lib\adler32_vec_template.h" />
+    <ClInclude Include="libdeflate\lib\bt_matchfinder.h" />
+    <ClInclude Include="libdeflate\lib\cpu_features_common.h" />
+    <ClInclude Include="libdeflate\lib\crc32_multipliers.h" />
+    <ClInclude Include="libdeflate\lib\crc32_tables.h" />
+    <ClInclude Include="libdeflate\lib\decompress_template.h" />
+    <ClInclude Include="libdeflate\lib\deflate_compress.h" />
+    <ClInclude Include="libdeflate\common_defs.h" />
+    <ClInclude Include="libdeflate\libdeflate.h" />
+    <ClInclude Include="libdeflate\lib\x86\decompress_impl.h" />
+    <ClInclude Include="libdeflate\lib\x86\matchfinder_impl.h" />
+    <ClInclude Include="libdeflate\lib\x86\adler32_impl.h" />
+    <ClInclude Include="libdeflate\lib\x86\cpu_features.h" />
+    <ClInclude Include="libdeflate\lib\x86\crc32_impl.h" />
+    <ClInclude Include="libdeflate\lib\x86\crc32_pclmul_template.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="libdeflate\lib\deflate_decompress.c" />
+    <ClCompile Include="libdeflate\lib\gzip_compress.c" />
+    <ClCompile Include="libdeflate\lib\gzip_decompress.c" />
+    <ClCompile Include="libdeflate\lib\utils.c" />
+    <ClCompile Include="libdeflate\lib\zlib_compress.c" />
+    <ClCompile Include="libdeflate\lib\zlib_decompress.c" />
+    <ClCompile Include="libdeflate\lib\adler32.c" />
+    <ClCompile Include="libdeflate\lib\crc32.c" />
+    <ClCompile Include="libdeflate\lib\deflate_compress.c" />
+    <ClCompile Include="libdeflate\lib\x86\cpu_features.c" />
+  </ItemGroup>
+</Project>

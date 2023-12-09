@@ -7,3 +7,6 @@
 [submodule "Dependencies/mINI"]
 	path = Dependencies/mINI
 	url = https://github.com/Perchik71/mINI.git
+[submodule "Dependencies/libdeflate"]
+	path = Dependencies/libdeflate
+	url = https://github.com/ebiggers/libdeflate.git

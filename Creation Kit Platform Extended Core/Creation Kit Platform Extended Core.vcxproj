@@ -36,7 +36,7 @@
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>winhttp</TargetName>
-    <IncludePath>$(SolutionDir)Dependencies\detours;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\detours;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\libdeflate;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -64,7 +64,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ws2_32.lib;uxtheme.lib;version.lib;detours.lib;shlwapi.lib;libzip.lib;libzydis.lib;vmm-x64.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;uxtheme.lib;version.lib;detours.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;vmm-x64.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\Version\scripts.ps1"</Command>
@@ -83,11 +83,13 @@
     <ClCompile Include="Core\ResultCoreErrNo.cpp" />
     <ClCompile Include="DllMain.cpp" />
     <ClCompile Include="Editor API\EditorUI.cpp" />
+    <ClCompile Include="Editor API\NiMemoryManager.cpp" />
     <ClCompile Include="Experimental\RuntimeOptimization.cpp" />
     <ClCompile Include="Patches\ConsolePatch.cpp" />
     <ClCompile Include="Patches\CrashDumpPatch.cpp" />
     <ClCompile Include="Patches\MemoryManagerPatch.cpp" />
     <ClCompile Include="Patches\QuitHandlerPatch.cpp" />
+    <ClCompile Include="Patches\SSE\LoadOptimization.cpp" />
     <ClCompile Include="Steam API\SteamAPI.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="WinHttp Wrapper\Exports.cpp" />
@@ -106,12 +108,16 @@
     <ClInclude Include="Core\Relocator.h" />
     <ClInclude Include="Core\ResultCoreErrNo.h" />
     <ClInclude Include="Crc32.h" />
+    <ClInclude Include="Editor API\BSTArray.h" />
+    <ClInclude Include="Editor API\BSTList.h" />
     <ClInclude Include="Editor API\EditorUI.h" />
+    <ClInclude Include="Editor API\NiMemoryManager.h" />
     <ClInclude Include="Experimental\RuntimeOptimization.h" />
     <ClInclude Include="Patches\ConsolePatch.h" />
     <ClInclude Include="Patches\CrashDumpPatch.h" />
     <ClInclude Include="Patches\MemoryManagerPatch.h" />
     <ClInclude Include="Patches\QuitHandlerPatch.h" />
+    <ClInclude Include="Patches\SSE\LoadOptimization.h" />
     <ClInclude Include="Steam API\SteamAPI.h" />
     <ClInclude Include="Steam API\SteamAPIConfig.h" />
     <ClInclude Include="Types.h" />

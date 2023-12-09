@@ -57,6 +57,12 @@
     <ClCompile Include="Editor API\EditorUI.cpp">
       <Filter>Editor API</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\LoadOptimization.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\NiMemoryManager.cpp">
+      <Filter>Editor API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -79,6 +85,9 @@
     </Filter>
     <Filter Include="Editor API">
       <UniqueIdentifier>{d8bcc1d7-37ef-465d-8211-d882f2d8f319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Patches\SSE">
+      <UniqueIdentifier>{20e52670-7554-4b25-8fc0-35e744ab9b4f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +156,18 @@
       <Filter>Experimental</Filter>
     </ClInclude>
     <ClInclude Include="Editor API\EditorUI.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\LoadOptimization.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\BSTList.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\BSTArray.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\NiMemoryManager.h">
       <Filter>Editor API</Filter>
     </ClInclude>
   </ItemGroup>

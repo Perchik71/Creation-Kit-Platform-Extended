@@ -15,6 +15,8 @@
 #include "Patches/QuitHandlerPatch.h"
 #include "Patches/ConsolePatch.h"
 
+#include "Patches/SSE/LoadOptimization.h"
+
 #include "Experimental/RuntimeOptimization.h"
 
 namespace CreationKitPlatformExtended
@@ -94,6 +96,14 @@ namespace CreationKitPlatformExtended
 				new CreationKitPlatformExtended::Patches::CrashDumpPatch(),
 				new CreationKitPlatformExtended::Patches::ConsolePatch(),
 			});
+
+			// Добавление патчей только для редактора скайрима специального издания
+			if (eEditorVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_1_6_1130)
+			{
+				PatchesManager->Append({
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::LoadOptimizationPatch(),
+				});
+			}
 
 			// Установка точки останова, чтобы дождаться расшифровки DRM приложения
 			EnableBreakpoint();
