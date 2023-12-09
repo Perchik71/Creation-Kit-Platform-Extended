@@ -16,6 +16,10 @@
 #include "Patches/ConsolePatch.h"
 
 #include "Patches/SSE/LoadOptimization.h"
+#include "Patches/SSE/FixRemoteDesktop.h"
+#include "Patches/SSE/FixLoadMore32KAnimation.h"
+#include "Patches/SSE/FixCrashLightingShader.h"
+#include "Patches/SSE/RenameCreationKitApp.h"
 
 #include "Experimental/RuntimeOptimization.h"
 
@@ -98,10 +102,14 @@ namespace CreationKitPlatformExtended
 			});
 
 			// Добавление патчей только для редактора скайрима специального издания
-			if (eEditorVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_1_6_1130)
+			if (eEditorVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST)
 			{
 				PatchesManager->Append({
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::LoadOptimizationPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixRemoteDesktopPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixLoadMore32KAnimationPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashLightingShaderPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::RenameCreationKitAppPatch(),
 				});
 			}
 

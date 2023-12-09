@@ -10,7 +10,8 @@ namespace CreationKitPlatformExtended
 	{
 		enum EDITOR_EXECUTABLE_TYPE {
 			EDITOR_UNKNOWN,
-			EDITOR_SKYRIM_SE_1_6_1130
+			EDITOR_SKYRIM_SE_1_6_1130 = 1,
+			EDITOR_SKYRIM_SE_LAST = EDITOR_SKYRIM_SE_1_6_1130
 		};
 
 		// Не использовать менеджер на данном этапе, считаем, что его ещё нет

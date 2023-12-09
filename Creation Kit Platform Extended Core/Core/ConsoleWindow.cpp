@@ -273,7 +273,7 @@ namespace CreationKitPlatformExtended
 			// сбрасываем ошибки
 			es.dwError = 0;
 			// в качестве Cookie передаем указатель на наш объект file
-			es.dwCookie = (DWORD_PTR)&fileStream;
+			es.dwCookie = (DWORD_PTR)fileStream;
 			// посылаем сообщение окну RichEdit, WPARAM==флаги,
 			// LPARAM - указатель на EDITSTREAM
 			SendMessage(_richEditHwnd, EM_STREAMOUT,

@@ -45,7 +45,7 @@ namespace CreationKitPlatformExtended
 			bool LoadOptimizationPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_1_6_1130;
+				return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST;
 			}
 
 			bool LoadOptimizationPatch::Activate(const Relocator* lpRelocator,
@@ -148,7 +148,8 @@ namespace CreationKitPlatformExtended
 				size_t outBytes = 0;
 				libdeflate_decompressor* decompressor = libdeflate_alloc_decompressor();
 
-				libdeflate_result result = libdeflate_zlib_decompress(decompressor, Stream->next_in, Stream->avail_in, Stream->next_out, Stream->avail_out, &outBytes);
+				libdeflate_result result = libdeflate_zlib_decompress(decompressor, Stream->next_in, 
+					Stream->avail_in, Stream->next_out, Stream->avail_out, &outBytes);
 				libdeflate_free_decompressor(decompressor);
 
 				if (result == LIBDEFLATE_SUCCESS)

@@ -63,6 +63,21 @@
     <ClCompile Include="Editor API\NiMemoryManager.cpp">
       <Filter>Editor API</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\FixRemoteDesktop.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixLoadMore32KAnimation.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixCrashLightingShader.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\RenameCreationKitApp.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixCrashInArmorAddon.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -169,6 +184,21 @@
     </ClInclude>
     <ClInclude Include="Editor API\NiMemoryManager.h">
       <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixRemoteDesktop.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixLoadMore32KAnimation.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixCrashLightingShader.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\RenameCreationKitApp.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixCrashInArmorAddon.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
