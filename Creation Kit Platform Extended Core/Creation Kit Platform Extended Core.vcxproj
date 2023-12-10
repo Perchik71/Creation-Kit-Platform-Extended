@@ -81,6 +81,7 @@
     <ClCompile Include="Core\RelocationDatabase.cpp" />
     <ClCompile Include="Core\Relocator.cpp" />
     <ClCompile Include="Core\ResultCoreErrNo.cpp" />
+    <ClCompile Include="Core\TypeInfo\ms_rtti.cpp" />
     <ClCompile Include="DllMain.cpp" />
     <ClCompile Include="Editor API\EditorUI.cpp" />
     <ClCompile Include="Editor API\NiMemoryManager.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="Core\RelocationDatabase.h" />
     <ClInclude Include="Core\Relocator.h" />
     <ClInclude Include="Core\ResultCoreErrNo.h" />
+    <ClInclude Include="Core\TypeInfo\ms_rtti.h" />
     <ClInclude Include="Crc32.h" />
     <ClInclude Include="Editor API\BSTArray.h" />
     <ClInclude Include="Editor API\BSTList.h" />

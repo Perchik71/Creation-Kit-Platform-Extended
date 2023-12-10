@@ -84,6 +84,9 @@
     <ClCompile Include="Patches\FlowChartXPatch.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Core\TypeInfo\ms_rtti.cpp">
+      <Filter>Core\TypeInfo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -109,6 +112,9 @@
     </Filter>
     <Filter Include="Patches\SSE">
       <UniqueIdentifier>{20e52670-7554-4b25-8fc0-35e744ab9b4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\TypeInfo">
+      <UniqueIdentifier>{ca1f27b0-36e0-4154-ade6-63bbc0d15483}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="Patches\FlowChartXPatch.h">
       <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\TypeInfo\ms_rtti.h">
+      <Filter>Core\TypeInfo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,8 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Version/resource_version2.h"
+#include "TypeInfo/ms_rtti.h"
+
 #include "ConsoleWindow.h"
 #include "CommandLineParser.h"
 #include "RelocationDatabase.h"
@@ -240,7 +242,7 @@ namespace CreationKitPlatformExtended
 					if (CommandLine.Count() != 3)
 					{
 						_ERROR("Invalid number of command arguments: %u", CommandLine.Count());
-						_MESSAGE("Example: CreationKit -PEUpdateDatabase \"test\" \"test.relb\"");
+						_MESSAGE("Example: CreationKit -PEExtractFromDatabase \"test\" \"test.relb\"");
 					}
 					else
 					{
@@ -258,11 +260,35 @@ namespace CreationKitPlatformExtended
 					// Закрываем Creation Kit
 					CreationKitPlatformExtended::Utils::Quit();
 				}
+				else if (!_stricmp(Command.c_str(), "-PEExportRTTI"))
+				{
+					if (CommandLine.Count() != 2)
+					{
+						_ERROR("Invalid number of command arguments: %u", CommandLine.Count());
+						_MESSAGE("Example: CreationKit -PEExportRTTI \"rtti.txt\"");
+					}
+
+					FILE* fileStream = _wfsopen(Utils::Utf82Wide((char8_t*)CommandLine.At(1).c_str()).c_str(), 
+						L"wt", _SH_DENYRW);
+					if (!fileStream)
+						_ERROR("It was not possible to create a file and write data there.");
+					else
+					{
+						Utils::ScopeFileStream file(fileStream);
+						MSRTTI::Dump(fileStream);
+					}
+
+					// Закрываем Creation Kit
+					CreationKitPlatformExtended::Utils::Quit();
+				}
 			}
 		}
 
 		void Engine::ContinueInitialize()
 		{
+			// Включение RTTI
+			MSRTTI::Initialize();
+			// Парсинг командной строки
 			CommandLineRun();
 			
 			if (!GlobalRelocationDatabasePtr->OpenDatabase())
