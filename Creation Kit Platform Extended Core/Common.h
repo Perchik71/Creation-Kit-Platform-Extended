@@ -4,6 +4,7 @@
 
 #pragma once
 #pragma warning (disable : 4477)
+#pragma warning (disable : 4996)
 #pragma warning (disable : 26812)
 
 #include <windows.h>
@@ -58,3 +59,5 @@
 #include "Core/INIWrapper.h"
 #include "Core/Relocator.h"
 #include "Core/ConsoleWindow.h"
+
+#undef StrToInt

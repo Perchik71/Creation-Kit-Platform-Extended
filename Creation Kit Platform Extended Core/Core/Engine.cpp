@@ -19,6 +19,7 @@
 #include "Patches/FlowChartXPatch.h"
 
 #include "Patches/SSE/AllowPlayerKnowsCondition.h"
+#include "Patches/SSE/NiCollisionObjectClonedWarning.h"
 #include "Patches/SSE/LoadOptimization.h"
 #include "Patches/SSE/FixRemoteDesktop.h"
 #include "Patches/SSE/FixLoadMore32KAnimation.h"
@@ -30,6 +31,10 @@
 #include "Patches/SSE/FixCrashPluginTXT.h"
 #include "Patches/SSE/FixBrightLightColor.h"
 #include "Patches/SSE/FixDialogueBranch.h"
+#include "Patches/SSE/FixMemoryLeakActorDlg.h"
+#include "Patches/SSE/FixRaceDlg.h"
+#include "Patches/SSE/FixClassDlg.h"
+#include "Patches/SSE/CheckD3D11.h"
 
 #include "Experimental/RuntimeOptimization.h"
 
@@ -128,6 +133,11 @@ namespace CreationKitPlatformExtended
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashPluginTXTPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixBrightLightColorPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixDialogueBranchPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixMemoryLeakActorDlgPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::CheckD3D11Patch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::NiCollisionObjectClonedWarningPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixRaceDlgPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixClassDlgPatch(),
 				});
 			}
 

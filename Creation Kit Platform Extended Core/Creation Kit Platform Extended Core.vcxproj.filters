@@ -102,6 +102,27 @@
     <ClCompile Include="Patches\SSE\AllowPlayerKnowsCondition.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\FixMemoryLeakActorDlg.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CheckD3D11.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\NiCollisionObjectClonedWarning.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixRaceDlg.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixClassDlg.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\SSE\TESForm.cpp">
+      <Filter>Editor API\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\BSString.cpp">
+      <Filter>Editor API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -130,6 +151,9 @@
     </Filter>
     <Filter Include="Core\TypeInfo">
       <UniqueIdentifier>{ca1f27b0-36e0-4154-ade6-63bbc0d15483}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor API\SSE">
+      <UniqueIdentifier>{793eabbd-dd4c-4fb1-b989-56b1248d4532}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +274,30 @@
     </ClInclude>
     <ClInclude Include="Patches\SSE\AllowPlayerKnowsCondition.h">
       <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixMemoryLeakActorDlg.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CheckD3D11.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\NiCollisionObjectClonedWarning.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixRaceDlg.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixClassDlg.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\TESForm.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\BSString.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\BSStringCache.h">
+      <Filter>Editor API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
