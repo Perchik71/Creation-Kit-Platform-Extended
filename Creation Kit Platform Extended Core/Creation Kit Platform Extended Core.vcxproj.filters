@@ -87,6 +87,21 @@
     <ClCompile Include="Core\TypeInfo\ms_rtti.cpp">
       <Filter>Core\TypeInfo</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\FixNiSkinInstance.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixCrashPluginTXT.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixBrightLightColor.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixDialogueBranch.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\AllowPlayerKnowsCondition.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -220,6 +235,21 @@
     </ClInclude>
     <ClInclude Include="Core\TypeInfo\ms_rtti.h">
       <Filter>Core\TypeInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixNiSkinInstance.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixCrashPluginTXT.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixBrightLightColor.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixDialogueBranch.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\AllowPlayerKnowsCondition.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,1 @@
+CreationKit -PEExportRTTI "rtti.txt"

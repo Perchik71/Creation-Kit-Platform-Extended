@@ -18,6 +18,7 @@
 #include "Patches/ConsolePatch.h"
 #include "Patches/FlowChartXPatch.h"
 
+#include "Patches/SSE/AllowPlayerKnowsCondition.h"
 #include "Patches/SSE/LoadOptimization.h"
 #include "Patches/SSE/FixRemoteDesktop.h"
 #include "Patches/SSE/FixLoadMore32KAnimation.h"
@@ -25,6 +26,10 @@
 #include "Patches/SSE/RenameCreationKitApp.h"
 #include "Patches/SSE/FixCrashInArmorAddon.h"
 #include "Patches/SSE/FixCrashMakeXYZCircles.h"
+#include "Patches/SSE/FixNiSkinInstance.h"
+#include "Patches/SSE/FixCrashPluginTXT.h"
+#include "Patches/SSE/FixBrightLightColor.h"
+#include "Patches/SSE/FixDialogueBranch.h"
 
 #include "Experimental/RuntimeOptimization.h"
 
@@ -111,6 +116,7 @@ namespace CreationKitPlatformExtended
 			if (eEditorVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST)
 			{
 				PatchesManager->Append({
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::AllowPlayerKnowsConditionPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::LoadOptimizationPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixRemoteDesktopPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixLoadMore32KAnimationPatch(),
@@ -118,6 +124,10 @@ namespace CreationKitPlatformExtended
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::RenameCreationKitAppPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashInArmorAddonPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashMakeXYZCirclesPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixNiSkinInstancePatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashPluginTXTPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixBrightLightColorPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixDialogueBranchPatch(),
 				});
 			}
 
