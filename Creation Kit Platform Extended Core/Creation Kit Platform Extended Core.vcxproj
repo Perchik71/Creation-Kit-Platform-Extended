@@ -111,6 +111,7 @@
     <ClCompile Include="Patches\SSE\LoadOptimization.cpp" />
     <ClCompile Include="Patches\SSE\NiCollisionObjectClonedWarning.cpp" />
     <ClCompile Include="Patches\SSE\RenameCreationKitApp.cpp" />
+    <ClCompile Include="Patches\UnicodePatch.cpp" />
     <ClCompile Include="Steam API\SteamAPI.cpp" />
     <ClCompile Include="UtfStr.cpp" />
     <ClCompile Include="Utils.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Patches\SSE\LoadOptimization.h" />
     <ClInclude Include="Patches\SSE\NiCollisionObjectClonedWarning.h" />
     <ClInclude Include="Patches\SSE\RenameCreationKitApp.h" />
+    <ClInclude Include="Patches\UnicodePatch.h" />
     <ClInclude Include="Steam API\SteamAPI.h" />
     <ClInclude Include="Steam API\SteamAPIConfig.h" />
     <ClInclude Include="Types.h" />

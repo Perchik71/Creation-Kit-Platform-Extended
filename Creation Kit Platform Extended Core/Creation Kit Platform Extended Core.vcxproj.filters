@@ -127,6 +127,9 @@
       <Filter>Editor API</Filter>
     </ClCompile>
     <ClCompile Include="UtfStr.cpp" />
+    <ClCompile Include="Patches\UnicodePatch.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -307,6 +310,9 @@
       <Filter>Editor API</Filter>
     </ClInclude>
     <ClInclude Include="UtfStr.h" />
+    <ClInclude Include="Patches\UnicodePatch.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version\resource_version.rc">

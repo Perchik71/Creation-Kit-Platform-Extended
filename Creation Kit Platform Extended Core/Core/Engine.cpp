@@ -17,6 +17,7 @@
 #include "Patches/QuitHandlerPatch.h"
 #include "Patches/ConsolePatch.h"
 #include "Patches/FlowChartXPatch.h"
+#include "Patches/UnicodePatch.h"
 
 #include "Patches/SSE/AllowPlayerKnowsCondition.h"
 #include "Patches/SSE/NiCollisionObjectClonedWarning.h"
@@ -115,6 +116,7 @@ namespace CreationKitPlatformExtended
 				new CreationKitPlatformExtended::Patches::CrashDumpPatch(),
 				new CreationKitPlatformExtended::Patches::ConsolePatch(),
 				new CreationKitPlatformExtended::Patches::FlowChartXPatch(),
+				new CreationKitPlatformExtended::Patches::UnicodePatch(),
 			});
 
 			// Добавление патчей только для редактора скайрима специального издания
