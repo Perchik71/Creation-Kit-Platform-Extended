@@ -26,6 +26,7 @@
 #include <richedit.h>
 #include <intrin.h>
 
+#include <atomic>
 #include <algorithm>
 #include <fstream>
 #include <memory>
@@ -53,6 +54,7 @@
 
 #include "Types.h"
 #include "Utils.h"
+#include "UtfStr.h"
 
 #include "Core/CoreCommon.h"
 #include "Core/DebugLog.h"

@@ -353,6 +353,9 @@ namespace CreationKitPlatformExtended
 			{
 				// Инициализация библиотеки vmm
 				voltek::scalable_memory_manager_initialize();
+				// Инициализация библиотеки vup
+				AssertMsg(Conversion::LazUnicodePluginInit(), 
+					"I can't find the library: \"vup-x86_64.dll\"\nReinstall the mod.");
 					
 				GlobalDebugLogPtr = new DebugLog(L"CreationKitPlatformExtended.log");
 				AssertMsg(GlobalDebugLogPtr, "Failed create the log file \"CreationKitPlatformExtended.log\"");

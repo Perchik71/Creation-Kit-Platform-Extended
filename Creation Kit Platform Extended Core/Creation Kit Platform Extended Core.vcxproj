@@ -83,6 +83,7 @@
     <ClCompile Include="Core\ResultCoreErrNo.cpp" />
     <ClCompile Include="Core\TypeInfo\ms_rtti.cpp" />
     <ClCompile Include="DllMain.cpp" />
+    <ClCompile Include="Editor API\BGStringLocalize.cpp" />
     <ClCompile Include="Editor API\BSString.cpp" />
     <ClCompile Include="Editor API\EditorUI.cpp" />
     <ClCompile Include="Editor API\NiMemoryManager.cpp" />
@@ -111,6 +112,7 @@
     <ClCompile Include="Patches\SSE\NiCollisionObjectClonedWarning.cpp" />
     <ClCompile Include="Patches\SSE\RenameCreationKitApp.cpp" />
     <ClCompile Include="Steam API\SteamAPI.cpp" />
+    <ClCompile Include="UtfStr.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="WinHttp Wrapper\Exports.cpp" />
   </ItemGroup>
@@ -129,6 +131,7 @@
     <ClInclude Include="Core\ResultCoreErrNo.h" />
     <ClInclude Include="Core\TypeInfo\ms_rtti.h" />
     <ClInclude Include="Crc32.h" />
+    <ClInclude Include="Editor API\BGStringLocalize.h" />
     <ClInclude Include="Editor API\BSString.h" />
     <ClInclude Include="Editor API\BSStringCache.h" />
     <ClInclude Include="Editor API\BSTArray.h" />
@@ -162,6 +165,7 @@
     <ClInclude Include="Steam API\SteamAPI.h" />
     <ClInclude Include="Steam API\SteamAPIConfig.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="UtfStr.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Version\resource_version.h" />
     <ClInclude Include="Version\resource_version2.h" />

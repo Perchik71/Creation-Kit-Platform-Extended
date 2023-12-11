@@ -42,3 +42,7 @@ Memory Manager/linkconf/
 *.pdb
 *.ipdb
 *.exp
+
+# Lazarus
+Unicode Plugin/linkconf/
+Unicode Plugin/backup/

@@ -123,6 +123,10 @@
     <ClCompile Include="Editor API\BSString.cpp">
       <Filter>Editor API</Filter>
     </ClCompile>
+    <ClCompile Include="Editor API\BGStringLocalize.cpp">
+      <Filter>Editor API</Filter>
+    </ClCompile>
+    <ClCompile Include="UtfStr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -299,6 +303,10 @@
     <ClInclude Include="Editor API\BSStringCache.h">
       <Filter>Editor API</Filter>
     </ClInclude>
+    <ClInclude Include="Editor API\BGStringLocalize.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="UtfStr.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version\resource_version.rc">

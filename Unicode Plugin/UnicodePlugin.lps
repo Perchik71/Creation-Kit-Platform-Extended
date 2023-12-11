@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Release"/>
+    <Units Count="5">
+      <Unit0>
+        <Filename Value="UnicodePlugin.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="28" Y="88"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="C:\Users\4918~1\AppData\Local\Temp\7zO4B219A28\CKUP_TranslatorString.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="223"/>
+        <CursorPos X="25" Y="248"/>
+        <UsageCount Value="10"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="C:\Users\4918~1\AppData\Local\Temp\7zO8822A4FD\CKUP_UnicodePlugin.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="123"/>
+        <UsageCount Value="10"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="E:\IDE\Lazarus64\components\lazutils\lazutf8.pas"/>
+        <UnitName Value="LazUTF8"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="119"/>
+        <CursorPos X="10" Y="134"/>
+        <UsageCount Value="10"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\Users\4918~1\AppData\Local\Temp\7zO455EC0E2\CreationKitUnicodePlugin.lpr"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="106"/>
+        <CursorPos X="75" Y="129"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+    </Units>
+    <JumpHistory Count="9" HistoryIndex="8">
+      <Position1>
+        <Filename Value="UnicodePlugin.lpr"/>
+        <Caret Line="13" Column="24"/>
+      </Position1>
+      <Position2>
+        <Filename Value="UnicodePlugin.lpr"/>
+        <Caret Line="12" Column="37"/>
+      </Position2>
+      <Position3>
+        <Filename Value="UnicodePlugin.lpr"/>
+        <Caret Line="13" Column="37"/>
+      </Position3>
+      <Position4>
+        <Filename Value="UnicodePlugin.lpr"/>
+        <Caret Line="50" Column="13"/>
+      </Position4>
+      <Position5>
+        <Filename Value="UnicodePlugin.lpr"/>
+        <Caret Line="13" Column="28"/>
+      </Position5>
+      <Position6>
+        <Filename Value="UnicodePlugin.lpr"/>
+        <Caret Line="41" Column="50" TopLine="22"/>
+      </Position6>
+      <Position7>
+        <Filename Value="UnicodePlugin.lpr"/>
+        <Caret Line="37" Column="60" TopLine="22"/>
+      </Position7>
+      <Position8>
+        <Filename Value="UnicodePlugin.lpr"/>
+        <Caret Line="42" Column="35" TopLine="22"/>
+      </Position8>
+      <Position9>
+        <Filename Value="UnicodePlugin.lpr"/>
+        <Caret Line="45" Column="38" TopLine="19"/>
+      </Position9>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

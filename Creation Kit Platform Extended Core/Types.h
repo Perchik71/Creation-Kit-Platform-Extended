@@ -15,6 +15,9 @@ namespace CreationKitPlatformExtended
 	using Array = std::vector<_Ty, voltek::allocator<_Ty>>;
 
 	template<typename _Ty>
+	using List = std::list<_Ty, voltek::allocator<_Ty>>;
+
+	template<typename _Ty>
 	using ConcurrencyArray = concurrency::concurrent_vector<_Ty, voltek::allocator<_Ty>>;
 
 	template<typename _kTy, typename _Ty, typename _Pr = std::less<_kTy>>
