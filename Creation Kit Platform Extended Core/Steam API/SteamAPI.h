@@ -11,6 +11,10 @@ extern "C"
 {
 #endif
 
+STEAM_API void* SteamUser();
+STEAM_API void* SteamUtils();
+STEAM_API void* SteamClient();
+STEAM_API void* SteamRemoteStorage();
 STEAM_API bool SteamAPI_Init();
 STEAM_API void SteamAPI_RunCallbacks();
 STEAM_API void SteamAPI_RegisterCallback(void* pCallbackBase, int32_t nCallbackIndex);

@@ -9,6 +9,26 @@ extern "C"
 {
 #endif
 
+STEAM_API void* SteamUser()
+{
+	return nullptr;
+}
+
+STEAM_API void* SteamUtils()
+{
+	return nullptr;
+}
+
+STEAM_API void* SteamClient()
+{
+	return nullptr;
+}
+
+STEAM_API void* SteamRemoteStorage()
+{
+	return nullptr;
+}
+
 STEAM_API bool SteamAPI_Init()
 {
 	return false;
