@@ -12,6 +12,7 @@
 # Fixed or added
 :white_check_mark: Fast file loading  
 :white_check_mark: Interception of warning messages in the console  
+:white_check_mark: Unicode support  
 
 # Dependencies
 [detours](https://github.com/Nukem9/detours.git) URL **https://github.com/Nukem9/detours.git** IN **Dependencies/detours**  
