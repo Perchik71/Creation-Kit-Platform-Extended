@@ -40,6 +40,12 @@
 #include "Patches/SSE/FixMusicTrackForm.h"
 #include "Patches/SSE/FixCrashTabControl.h"
 #include "Patches/SSE/FixRenderPass.h"
+#include "Patches/SSE/FixWaterOrtho.h"
+#include "Patches/SSE/FixActorDlg.h"
+#include "Patches/SSE/FixDataDlgWithPluginTXT.h"
+#include "Patches/SSE/FixCrashDuplicateForm.h"
+#include "Patches/SSE/CrashAfterMultipleMastersWarning.h"
+#include "Patches/SSE/MemoryLeakInPreviewWindow.h"
 
 #include "Experimental/RuntimeOptimization.h"
 
@@ -148,6 +154,12 @@ namespace CreationKitPlatformExtended
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixMusicTrackFormPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashTabControlPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixRenderPassPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixWaterOrthoPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixActorDlgPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixDataDlgWithPluginTXTPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashDuplicateFormPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::CrashAfterMultipleMastersWarningPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::MemoryLeakInPreviewWindowPatch(),
 				});
 			}
 

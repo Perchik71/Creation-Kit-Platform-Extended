@@ -151,6 +151,13 @@ namespace CreationKitPlatformExtended
 	__forceinline TR thisVirtualCall(size_t reloff, const void* ths, T1 a1, T2 a2, T3 a3, T4 a4) {
 		return (*(TR(__fastcall**)(const void*, T1, T2, T3, T4))(*(__int64*)ths + reloff))(ths, a1, a2, a3, a4);
 	}
+
+	template <size_t Offset, size_t RequiredOffset>
+	struct __declspec(empty_bases) CheckOffset
+	{
+		static_assert(Offset <= RequiredOffset, "Offset is larger than expected");
+		static_assert(Offset >= RequiredOffset, "Offset is smaller than expected");
+	};
 }
 
 #ifdef _UNICODE
@@ -163,6 +170,7 @@ namespace CreationKitPlatformExtended
 #define AssertMsgVa(Cond, Msg, ...)		if(!(Cond)) CreationKitPlatformExtended::Utils::__Assert(__FILE__, __LINE__, "%s\n\n" Msg, #Cond, ##__VA_ARGS__);
 #define AssertMsg(Cond, Msg)			AssertMsgVa(Cond, Msg)
 
+#define static_assert_offset(Structure, Member, Offset) struct __declspec(empty_bases) : CreationKitPlatformExtended::CheckOffset<offsetof(Structure, Member), Offset> { }
 #define PatchIAT(detour, module, procname) Detours::IATHook(GlobalEnginePtr->GetModuleBase(), (module), (procname), (uintptr_t)(detour));
 
 #define DECLARE_CONSTRUCTOR_HOOK(Class) \

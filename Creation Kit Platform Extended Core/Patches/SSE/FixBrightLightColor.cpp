@@ -51,7 +51,7 @@ namespace CreationKitPlatformExtended
 					// Fix for the "Bright Light Color" option having incorrect colors in the preferences window. The blue and green channels are swapped.
 					//
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0), (uintptr_t)&sub);
-					pointer_brightlightcolor_sub = lpRelocationDatabaseItem->At(1);
+					pointer_brightlightcolor_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
 
 					return true;
 				}

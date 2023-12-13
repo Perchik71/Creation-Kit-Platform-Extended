@@ -151,6 +151,30 @@
     <ClCompile Include="Editor API\BSSpinLock.cpp">
       <Filter>Editor API</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\FixWaterOrtho.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixActorDlg.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixDataDlgWithPluginTXT.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixCrashDuplicateForm.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashAfterMultipleMastersWarning.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\SSE\BSGraphicsRenderTargetManager.cpp">
+      <Filter>Editor API\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\SSE\BSGraphicsTypes.cpp">
+      <Filter>Editor API\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\MemoryLeakInPreviewWindow.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -366,6 +390,30 @@
     </ClInclude>
     <ClInclude Include="Editor API\NiRefObject.h">
       <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixWaterOrtho.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixActorDlg.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixDataDlgWithPluginTXT.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixCrashDuplicateForm.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashAfterMultipleMastersWarning.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BSGraphicsRenderTargetManager.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BSGraphicsTypes.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\MemoryLeakInPreviewWindow.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

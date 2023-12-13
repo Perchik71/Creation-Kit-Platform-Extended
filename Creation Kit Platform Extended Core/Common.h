@@ -12,6 +12,8 @@
 #include <shellapi.h>
 #include <shlwapi.h>
 #include <shlobj_core.h>
+#include <d3d11.h>
+#include <dxgi.h>
 #include <uxtheme.h>
 #include <strsafe.h>
 #include <stdlib.h>

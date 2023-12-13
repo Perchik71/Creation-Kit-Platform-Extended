@@ -25,6 +25,16 @@ namespace CreationKitPlatformExtended
 			bool DetourJump(uintptr_t rav, uintptr_t function) const;
 			bool DetourCall(uintptr_t rav, uintptr_t function) const;
 
+			template<class T> bool DetourJump(uintptr_t rav, T function) const
+			{
+				return DetourJump(rav, *(uintptr_t*)&function);
+			}
+
+			template<class T> bool DetourCall(uintptr_t rav, T function) const
+			{
+				return DetourCall(rav, *(uintptr_t*)&function);
+			}
+
 			template<class T> uintptr_t DetourFunctionClass(uintptr_t rav, T function) const
 			{
 				auto offset = Rav2Off(rav);
