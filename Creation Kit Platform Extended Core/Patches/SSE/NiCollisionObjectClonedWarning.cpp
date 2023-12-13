@@ -48,22 +48,15 @@ namespace CreationKitPlatformExtended
 			{
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
-					patch:
-
 					//
 					// Print a warning when a cloned NiCollisionObject has no name specified in its NIF file. 
 					// This comes from malformed/ported game assets.
 					//
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0), (uintptr_t)&sub);
-					pointer_NiCollisionObjectClonedWarning_sub = lpRelocationDatabaseItem->At(1);
+					pointer_NiCollisionObjectClonedWarning_sub = 
+						lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
 
 					return true;
-				} 
-				else if (lpRelocationDatabaseItem->Version() == 2)
-				{
-					// Delete new code
-					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(0), 0x69);
-					goto patch;
 				}
 
 				return false;

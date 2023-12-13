@@ -1,6 +1,6 @@
 //////////////////////////////////////////
 /*
-* Copyright (c) 2022 Perchik71 <email:perchik71@outlook.com>
+* Copyright (c) 2020-2021 Perchik71 <email:perchik71@outlook.com>
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy of this
 * software and associated documentation files (the "Software"), to deal in the Software
@@ -20,27 +20,19 @@
 */
 //////////////////////////////////////////
 
-#include "NiMemoryManager.h"
-// Only static function
-#include "Patches/MemoryManagerPatch.h"
+#pragma once
 
 namespace CreationKitPlatformExtended
 {
 	namespace EditorAPI
 	{
-		LPVOID NiMemoryManager::Alloc(const NiMemoryManager* lpManager, DWORD dwSize, DWORD dwAlignment)
+		namespace SkyrimSpectialEdition
 		{
-			return Patches::MemoryManagerPatch::MemAlloc(dwSize, dwAlignment, TRUE);
-		}
+			extern DLGPROC OldSpellDlgProc;
 
-		VOID NiMemoryManager::Free(const NiMemoryManager* lpManager, LPVOID lpPointer) 
-		{
-			Patches::MemoryManagerPatch::HkFree(lpPointer);
-		}
-
-		DWORD NiMemoryManager::Size(const NiMemoryManager* lpManager, LPVOID lpPointer) 
-		{
-			return (DWORD)Patches::MemoryManagerPatch::HkMemSize(lpPointer);
+			HWND GetWindow(VOID);
+			INT_PTR CALLBACK SpellDlgProc(HWND hDialogHwnd, UINT uMessage, 
+				WPARAM wParam, LPARAM lParam);
 		}
 	}
 }

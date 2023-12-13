@@ -32,7 +32,7 @@ namespace CreationKitPlatformExtended
 			NiMemoryManager(VOID) = default;
 			~NiMemoryManager(VOID) = default;
 		public:
-			static LPVOID Alloc(const NiMemoryManager* lpManager, DWORD dwSize);
+			static LPVOID Alloc(const NiMemoryManager* lpManager, DWORD dwSize, DWORD dwAlignment = 0);
 			static VOID	Free(const NiMemoryManager* lpManager, LPVOID lpPointer);
 			static DWORD Size(const NiMemoryManager* lpManager, LPVOID lpPointer);
 		};

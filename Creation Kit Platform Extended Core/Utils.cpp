@@ -8,7 +8,7 @@ namespace CreationKitPlatformExtended
 	{
 		void __Assert(LPCSTR File, int Line, LPCSTR Format, ...)
 		{
-			CHAR buffer[2048] = {0};
+			CHAR buffer[2048] = { 0 };
 			CHAR message[2048] = { 0 };
 
 			va_list ap;

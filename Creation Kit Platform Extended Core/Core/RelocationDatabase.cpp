@@ -90,6 +90,8 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
+			_name = Utils::Trim(_name.c_str());
+
 			if (!CreationKitPlatformExtended::Utils::FileReadBuffer(fileStream, &Chunk))
 			{
 				_ERROR(MESSAGE_FAILED_READ);

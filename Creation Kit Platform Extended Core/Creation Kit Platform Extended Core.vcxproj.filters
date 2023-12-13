@@ -130,6 +130,27 @@
     <ClCompile Include="Patches\UnicodePatch.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Editor API\SSE\TESDialogSpell.cpp">
+      <Filter>Editor API\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixSpellDlg.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixMusicTrackForm.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixCrashTabControl.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixRenderPass.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\BSReadWriteLock.cpp">
+      <Filter>Editor API</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\BSSpinLock.cpp">
+      <Filter>Editor API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -312,6 +333,39 @@
     <ClInclude Include="UtfStr.h" />
     <ClInclude Include="Patches\UnicodePatch.h">
       <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\TESDialogSpell.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixSpellDlg.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixMusicTrackForm.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixCrashTabControl.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixRenderPass.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\BSReadWriteLock.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\BSSpinLock.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\NiArray.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\NiTArray.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\NiPointer.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\NiRefObject.h">
+      <Filter>Editor API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

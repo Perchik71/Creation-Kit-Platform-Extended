@@ -36,6 +36,10 @@
 #include "Patches/SSE/FixRaceDlg.h"
 #include "Patches/SSE/FixClassDlg.h"
 #include "Patches/SSE/CheckD3D11.h"
+#include "Patches/SSE/FixSpellDlg.h"
+#include "Patches/SSE/FixMusicTrackForm.h"
+#include "Patches/SSE/FixCrashTabControl.h"
+#include "Patches/SSE/FixRenderPass.h"
 
 #include "Experimental/RuntimeOptimization.h"
 
@@ -140,6 +144,10 @@ namespace CreationKitPlatformExtended
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::NiCollisionObjectClonedWarningPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixRaceDlgPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixClassDlgPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixSpellDlgPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixMusicTrackFormPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashTabControlPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixRenderPassPatch(),
 				});
 			}
 

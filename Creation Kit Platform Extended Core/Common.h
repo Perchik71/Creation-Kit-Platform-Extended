@@ -25,6 +25,7 @@
 #include <commctrl.h>
 #include <richedit.h>
 #include <intrin.h>
+#include <xmmintrin.h>
 
 #include <atomic>
 #include <algorithm>

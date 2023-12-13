@@ -75,7 +75,7 @@ namespace CreationKitPlatformExtended
 
 			patchIAT("API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL");
 			patchIAT("MSVCR110.DLL");
-			patchIAT("VCRUNTIME140.DLL");
+			//patchIAT("VCRUNTIME140.DLL");
 
 			if (lpRelocationDatabaseItem->Version() == 1)
 			{

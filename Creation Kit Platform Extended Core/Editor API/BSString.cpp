@@ -555,17 +555,21 @@ namespace CreationKitPlatformExtended
 		}
 
 		BSString BSString::Converts::Utf8ToAnsi(const BSString& str) {
-			return ::CreationKitPlatformExtended::Utils::Wide2Ansi(
-				::CreationKitPlatformExtended::Utils::Utf82Wide((char8_t*)str.c_str()).c_str()).c_str();
+			if (Conversion::IsUtf8Valid(*str))
+				return Conversion::Utf8ToAnsi(*str).c_str();
+			else
+				return str;
 		}
 
 		BSString BSString::Converts::AnsiToUtf8(const BSString& str) {
-			return ::CreationKitPlatformExtended::Utils::Wide2Utf8(
-				::CreationKitPlatformExtended::Utils::Ansi2Wide(str.c_str()).c_str()).c_str();
+			if (!Conversion::IsUtf8Valid(*str))
+				return Conversion::AnsiToUtf8(*str).c_str();
+			else
+				return str;
 		}
 
 		BSString BSString::Converts::WideToAnsi(LPWSTR str) {
-			return ::CreationKitPlatformExtended::Utils::Wide2Ansi(str).c_str();
+			return Conversion::WideToAnsi(str).c_str();
 		}
 	}
 }
