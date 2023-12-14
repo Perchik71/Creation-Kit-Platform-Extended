@@ -97,24 +97,6 @@ namespace CreationKitPlatformExtended
 			{
 				return false;
 			}
-
-			void MemoryLeakInPreviewWindowPatch::HKCreateRenderTarget_CK1130(void* This, uint32_t TargetIndex, 
-				const void* Properties)
-			{
-				
-			}
-
-			void MemoryLeakInPreviewWindowPatch::HKCreateDepthStencil_CK1130(void* This, uint32_t TargetIndex, 
-				const void* Properties)
-			{
-				
-			}
-
-			void MemoryLeakInPreviewWindowPatch::HKCreateCubemapRenderTarget_CK1130(void* This, uint32_t TargetIndex, 
-				const void* Properties)
-			{
-				
-			}
 		}
 	}
 }
