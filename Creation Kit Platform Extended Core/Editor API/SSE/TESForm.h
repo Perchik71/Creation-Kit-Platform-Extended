@@ -1,10 +1,11 @@
+// Special thanks to Nukem: https://github.com/Nukem9/SkyrimSETest/blob/master/skyrim64_test/src/patches/CKSSE/TESForm_CK.h
+
 #pragma once
 
 #include "../BSTArray.h"
 #include "../BSString.h"
 #include "../BSStringCache.h"
-
-#pragma pack(push, 1)
+#include "../BSHandleRefObject.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -12,6 +13,7 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
+#pragma pack(push, 1)
 			class TESForm
 			{
 			public:
@@ -50,6 +52,21 @@ namespace CreationKitPlatformExtended
 				static void AlteredFormList_Insert(Array* Array, TESForm*& Entry);
 				static void AlteredFormList_RemoveEntry(Array* Array, uint32_t Index, uint32_t Unknown);
 				static bool AlteredFormList_ElementExists(Array* Array, TESForm*& Entry);
+
+				inline static TESForm* (*OldGetFormByNumericID)(uint32_t);
+				inline static void* (*OldAlteredFormList_Create)(Array*, uint32_t);
+				inline static void (*OldAlteredFormList_RemoveAllEntries)(Array*, bool);
+				inline static void (*OldAlteredFormList_Insert)(Array*, TESForm*&);
+				inline static void (*OldAlteredFormList_RemoveEntry)(Array*, uint32_t, uint32_t);
+
+				static void FormReferenceMap_RemoveAllEntries();
+				static Array* FormReferenceMap_FindOrCreate(uint64_t Key, bool Create);
+				static void FormReferenceMap_RemoveEntry(uint64_t Key);
+				static bool FormReferenceMap_Get(uint64_t Unused, uint64_t Key, Array** Value);
+
+				inline static Array* (*OldFormReferenceMap_Find)(uint64_t Key);
+				inline static Array* (*OldFormReferenceMap_Create)(Array*);
+				inline static void (*OldFormReferenceMap_RemoveEntry)(Array*, int);
 			private:
 				char _pad0[0x8];
 				uint32_t FormFlags;
@@ -59,6 +76,34 @@ namespace CreationKitPlatformExtended
 				char FormType;
 				char _pad1[0x1];
 			};
+			static_assert(sizeof(TESForm) == 0x28);
+#pragma pack(pop)
+
+			class TESChildCell
+			{
+			public:
+				virtual ~TESChildCell();
+				virtual void* GetSaveParentCell();
+			};
+			static_assert(sizeof(TESChildCell) == 0x8);
+
+			class TESObjectREFR_Original : public TESForm, public TESChildCell, public BSHandleRefObject_Original
+			{
+			public:
+				virtual ~TESObjectREFR_Original();
+				virtual void OtherTestFunction2();
+				char _pad0[0x5C];
+			};
+			static_assert(sizeof(TESObjectREFR_Original) == 0xA0);
+
+			class TESObjectREFR_Extremly : public TESForm, public TESChildCell, public BSHandleRefObject_Extremly
+			{
+			public:
+				virtual ~TESObjectREFR_Extremly();
+				virtual void OtherTestFunction2();
+				char _pad0[0x5C];
+			};
+			static_assert(sizeof(TESObjectREFR_Extremly) == 0xA0);
 		}
 	}
 }

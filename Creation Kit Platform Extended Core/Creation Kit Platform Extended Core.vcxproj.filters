@@ -172,6 +172,12 @@
     <ClCompile Include="Patches\SSE\MemoryLeakInPreviewWindow.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashInventoryIterators.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\AlteredFormList.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -410,6 +416,15 @@
       <Filter>Editor API\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SSE\MemoryLeakInPreviewWindow.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashInventoryIterators.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\BSHandleRefObject.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\AlteredFormList.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>

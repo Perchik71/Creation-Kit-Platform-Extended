@@ -46,6 +46,7 @@
 #include "Patches/SSE/FixCrashDuplicateForm.h"
 #include "Patches/SSE/CrashAfterMultipleMastersWarning.h"
 #include "Patches/SSE/MemoryLeakInPreviewWindow.h"
+#include "Patches/SSE/AlteredFormList.h"
 
 #include "Experimental/RuntimeOptimization.h"
 
@@ -133,6 +134,7 @@ namespace CreationKitPlatformExtended
 			if (eEditorVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST)
 			{
 				PatchesManager->Append({
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::AlteredFormListPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::AllowPlayerKnowsConditionPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::LoadOptimizationPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixRemoteDesktopPatch(),

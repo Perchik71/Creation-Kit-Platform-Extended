@@ -99,8 +99,10 @@
     <ClCompile Include="Patches\MemoryManagerPatch.cpp" />
     <ClCompile Include="Patches\QuitHandlerPatch.cpp" />
     <ClCompile Include="Patches\SSE\AllowPlayerKnowsCondition.cpp" />
+    <ClCompile Include="Patches\SSE\AlteredFormList.cpp" />
     <ClCompile Include="Patches\SSE\CheckD3D11.cpp" />
     <ClCompile Include="Patches\SSE\CrashAfterMultipleMastersWarning.cpp" />
+    <ClCompile Include="Patches\SSE\CrashInventoryIterators.cpp" />
     <ClCompile Include="Patches\SSE\FixActorDlg.cpp" />
     <ClCompile Include="Patches\SSE\FixBrightLightColor.cpp" />
     <ClCompile Include="Patches\SSE\FixClassDlg.cpp" />
@@ -147,6 +149,7 @@
     <ClInclude Include="Core\TypeInfo\ms_rtti.h" />
     <ClInclude Include="Crc32.h" />
     <ClInclude Include="Editor API\BGStringLocalize.h" />
+    <ClInclude Include="Editor API\BSHandleRefObject.h" />
     <ClInclude Include="Editor API\BSReadWriteLock.h" />
     <ClInclude Include="Editor API\BSSpinLock.h" />
     <ClInclude Include="Editor API\BSString.h" />
@@ -170,8 +173,10 @@
     <ClInclude Include="Patches\MemoryManagerPatch.h" />
     <ClInclude Include="Patches\QuitHandlerPatch.h" />
     <ClInclude Include="Patches\SSE\AllowPlayerKnowsCondition.h" />
+    <ClInclude Include="Patches\SSE\AlteredFormList.h" />
     <ClInclude Include="Patches\SSE\CheckD3D11.h" />
     <ClInclude Include="Patches\SSE\CrashAfterMultipleMastersWarning.h" />
+    <ClInclude Include="Patches\SSE\CrashInventoryIterators.h" />
     <ClInclude Include="Patches\SSE\FixActorDlg.h" />
     <ClInclude Include="Patches\SSE\FixBrightLightColor.h" />
     <ClInclude Include="Patches\SSE\FixClassDlg.h" />
