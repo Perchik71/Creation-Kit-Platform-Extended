@@ -166,9 +166,6 @@
     <ClCompile Include="Patches\SSE\CrashAfterMultipleMastersWarning.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
-    <ClCompile Include="Editor API\SSE\BSGraphicsRenderTargetManager.cpp">
-      <Filter>Editor API\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Editor API\SSE\BSGraphicsTypes.cpp">
       <Filter>Editor API\SSE</Filter>
     </ClCompile>

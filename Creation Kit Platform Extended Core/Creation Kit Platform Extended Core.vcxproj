@@ -89,7 +89,6 @@
     <ClCompile Include="Editor API\BSString.cpp" />
     <ClCompile Include="Editor API\EditorUI.cpp" />
     <ClCompile Include="Editor API\NiMemoryManager.cpp" />
-    <ClCompile Include="Editor API\SSE\BSGraphicsRenderTargetManager.cpp" />
     <ClCompile Include="Editor API\SSE\BSGraphicsTypes.cpp" />
     <ClCompile Include="Editor API\SSE\TESDialogSpell.cpp" />
     <ClCompile Include="Editor API\SSE\TESForm.cpp" />

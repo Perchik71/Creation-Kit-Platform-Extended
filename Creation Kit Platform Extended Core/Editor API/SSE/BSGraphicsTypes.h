@@ -22,6 +22,7 @@ namespace CreationKitPlatformExtended
 				namespace BSShaderRenderTargets
 				{
 					const char* GetRenderTargetName(uint32_t Index);
+					const char* GetRenderTargetName_1130(uint32_t Index);
 					const char* GetCubemapName(uint32_t Index);
 					const char* GetTexture3DName(uint32_t Index);
 					const char* GetDepthStencilName(uint32_t Index);
@@ -147,6 +148,14 @@ namespace CreationKitPlatformExtended
 
 					RENDER_TARGET_COUNT,
 					RENDER_TARGET_FRAMEBUFFER_COUNT = 1,
+				};
+
+				enum : uint32_t
+				{
+					RENDER_TARGET_UNKNOWN_1 = RENDER_TARGET_SNOW_SWAP + 1,
+					RENDER_TARGET_UNKNOWN_2,
+
+					RENDER_TARGET_COUNT_1130,
 				};
 
 				enum : uint32_t
@@ -356,82 +365,6 @@ namespace CreationKitPlatformExtended
 					CONSTANT_GROUP_LEVEL_PERFRAME = 0xC,		// PS/VS. Per-frame constants. Contains view projections and some other variables.
 				};
 
-				class CustomConstantGroup
-				{
-					friend class Renderer;
-					template<typename> friend class ConstantGroup;
-
-				private:
-					//
-					// Invalid constant offsets still need a place to be written to. This is supposed to
-					// be in ConstantGroup<T>, but it causes a compiler crash.
-					//
-					// See: ConstantGroup<T>::ParamVS, INVALID_CONSTANT_BUFFER_OFFSET
-					//
-					inline static char EmptyWriteBuffer[1024];
-
-					D3D11_MAPPED_SUBRESOURCE m_Map{};
-					ID3D11Buffer* m_Buffer = nullptr;
-					bool m_Unified = false;				// True if buffer is from global ring buffer
-					uint32_t m_UnifiedByteOffset = 0;	// Offset into ring buffer
-
-				public:
-					inline void* RawData() const
-					{
-						return m_Map.pData;
-					}
-				};
-
-				template<typename T>
-				class ConstantGroup : public CustomConstantGroup
-				{
-					friend class Renderer;
-
-				private:
-					T* m_Shader = nullptr;
-
-					template<typename U>
-					U& MapVar(uint32_t Offset) const
-					{
-						static_assert(sizeof(U) <= sizeof(EmptyWriteBuffer));
-
-						if (RawData() == nullptr || Offset == INVALID_CONSTANT_BUFFER_OFFSET)
-							return *(U*)EmptyWriteBuffer;
-
-						return *(U*)((uintptr_t)RawData() + (Offset * sizeof(float)));
-					}
-
-				public:
-					template<typename U, uint32_t ParamIndex>
-					U& ParamVS() const
-					{
-						static_assert(std::is_same<T, struct VertexShader>::value, "ParamVS() requires ConstantGroup<VertexShader>");
-						static_assert(ParamIndex < MAX_VS_CONSTANTS);
-
-						return MapVar<U>(m_Shader->m_ConstantOffsets[ParamIndex]);
-					}
-
-					template<typename U, uint32_t ParamIndex>
-					U& ParamPS() const
-					{
-						static_assert(std::is_same<T, struct PixelShader>::value, "ParamPS() requires ConstantGroup<PixelShader>");
-						static_assert(ParamIndex < MAX_PS_CONSTANTS);
-
-						return MapVar<U>(m_Shader->m_ConstantOffsets[ParamIndex]);
-					}
-
-					ConstantGroup<T>& operator=(const CustomConstantGroup& Other)
-					{
-						memcpy(&m_Map, &Other.m_Map, sizeof(m_Map));
-						m_Buffer = Other.m_Buffer;
-						m_Unified = Other.m_Unified;
-						m_UnifiedByteOffset = Other.m_UnifiedByteOffset;
-						m_Shader = nullptr;
-
-						return *this;
-					}
-				};
-
 				//
 				// Shaders
 				//
@@ -515,8 +448,6 @@ namespace CreationKitPlatformExtended
 					ID3D11DomainShader* m_Shader;				// DirectX handle
 				};
 
-				using VertexCGroup = ConstantGroup<VertexShader>;
-				using PixelCGroup = ConstantGroup<PixelShader>;
 #pragma warning(pop)
 
 				//

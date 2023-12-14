@@ -48,28 +48,43 @@ namespace CreationKitPlatformExtended
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
 				// In 1.6.1130 class changed and functions too
-				// Maybe bug exists, but I will check later
-				return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_1_6_438;
+				// Bug exists.
+				return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST;
 			}
 
 			bool MemoryLeakInPreviewWindowPatch::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
+				//
+				// Fix for memory leak when opening many preview windows or resizing them. 
+				// D3D11 render targets are recreated each time, but the old ones were never released.
+				//
+
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
 					EditorAPI::SkyrimSpectialEdition::pointer_Renderer = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
 					EditorAPI::SkyrimSpectialEdition::pointer_D3D11Device = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
 
-					//
-					// Fix for memory leak when opening many preview windows or resizing them. 
-					// D3D11 render targets are recreated each time, but the old ones were never released.
-					//
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(2),
 						&EditorAPI::SkyrimSpectialEdition::BSGraphicsRenderTargetManager_CK::CreateRenderTarget);
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
 						&EditorAPI::SkyrimSpectialEdition::BSGraphicsRenderTargetManager_CK::CreateDepthStencil);
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(4),
 						&EditorAPI::SkyrimSpectialEdition::BSGraphicsRenderTargetManager_CK::CreateCubemapRenderTarget);
+
+					return true;
+				}
+				else if (lpRelocationDatabaseItem->Version() == 2)
+				{
+					EditorAPI::SkyrimSpectialEdition::pointer_Renderer = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
+					EditorAPI::SkyrimSpectialEdition::pointer_D3D11Device = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
+
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(2),
+						&EditorAPI::SkyrimSpectialEdition::BSGraphicsRenderTargetManager_CK1130::CreateRenderTarget);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
+						&EditorAPI::SkyrimSpectialEdition::BSGraphicsRenderTargetManager_CK1130::CreateDepthStencil);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(4),
+						&EditorAPI::SkyrimSpectialEdition::BSGraphicsRenderTargetManager_CK1130::CreateCubemapRenderTarget);
 
 					return true;
 				}
@@ -81,6 +96,24 @@ namespace CreationKitPlatformExtended
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
 				return false;
+			}
+
+			void MemoryLeakInPreviewWindowPatch::HKCreateRenderTarget_CK1130(void* This, uint32_t TargetIndex, 
+				const void* Properties)
+			{
+				
+			}
+
+			void MemoryLeakInPreviewWindowPatch::HKCreateDepthStencil_CK1130(void* This, uint32_t TargetIndex, 
+				const void* Properties)
+			{
+				
+			}
+
+			void MemoryLeakInPreviewWindowPatch::HKCreateCubemapRenderTarget_CK1130(void* This, uint32_t TargetIndex, 
+				const void* Properties)
+			{
+				
 			}
 		}
 	}

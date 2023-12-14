@@ -25,6 +25,14 @@ namespace CreationKitPlatformExtended
 				virtual bool HasCanRuntimeDisabled() const;
 				virtual const char* GetOptionName() const;
 				virtual const char* GetName() const;
+
+				static void HKCreateRenderTarget_CK1130(void* This, uint32_t TargetIndex, const void* Properties);
+				static void HKCreateDepthStencil_CK1130(void* This, uint32_t TargetIndex, const void* Properties);
+				static void HKCreateCubemapRenderTarget_CK1130(void* This, uint32_t TargetIndex, const void* Properties);
+
+				inline static void (*CreateRenderTarget_CK1130)(void* This, uint32_t TargetIndex, const void* Properties);
+				inline static void (*CreateDepthStencil_CK1130)(void* This, uint32_t TargetIndex, const void* Properties);
+				inline static void (*CreateCubemapRenderTarget_CK1130)(void* This, uint32_t TargetIndex, const void* Properties);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
