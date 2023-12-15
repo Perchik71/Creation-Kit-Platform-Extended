@@ -18,6 +18,7 @@
 #include "Patches/ConsolePatch.h"
 #include "Patches/FlowChartXPatch.h"
 #include "Patches/UnicodePatch.h"
+#include "Patches/ThreadPatch.h"
 
 #include "Patches/SSE/AllowPlayerKnowsCondition.h"
 #include "Patches/SSE/NiCollisionObjectClonedWarning.h"
@@ -47,6 +48,7 @@
 #include "Patches/SSE/CrashAfterMultipleMastersWarning.h"
 #include "Patches/SSE/MemoryLeakInPreviewWindow.h"
 #include "Patches/SSE/AlteredFormList.h"
+#include "Patches/SSE/ReplaceBSPointerHandleAndManager.h"
 
 #include "Experimental/RuntimeOptimization.h"
 
@@ -128,6 +130,7 @@ namespace CreationKitPlatformExtended
 				new CreationKitPlatformExtended::Patches::ConsolePatch(),
 				new CreationKitPlatformExtended::Patches::FlowChartXPatch(),
 				new CreationKitPlatformExtended::Patches::UnicodePatch(),
+				new CreationKitPlatformExtended::Patches::ThreadPatch(),
 			});
 
 			// Добавление патчей только для редактора скайрима специального издания
@@ -162,6 +165,7 @@ namespace CreationKitPlatformExtended
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashDuplicateFormPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::CrashAfterMultipleMastersWarningPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::MemoryLeakInPreviewWindowPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::ReplaceBSPointerHandleAndManagerPatch(),
 				});
 			}
 

@@ -178,6 +178,12 @@
     <ClCompile Include="Patches\SSE\AlteredFormList.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\ThreadPatch.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\ReplaceBSPointerHandleAndManager.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -426,6 +432,15 @@
     </ClInclude>
     <ClInclude Include="Patches\SSE\AlteredFormList.h">
       <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\ThreadPatch.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\ReplaceBSPointerHandleAndManager.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BSPointerHandleManager.h">
+      <Filter>Editor API\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

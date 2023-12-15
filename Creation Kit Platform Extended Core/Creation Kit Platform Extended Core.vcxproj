@@ -127,6 +127,8 @@
     <ClCompile Include="Patches\SSE\MemoryLeakInPreviewWindow.cpp" />
     <ClCompile Include="Patches\SSE\NiCollisionObjectClonedWarning.cpp" />
     <ClCompile Include="Patches\SSE\RenameCreationKitApp.cpp" />
+    <ClCompile Include="Patches\SSE\ReplaceBSPointerHandleAndManager.cpp" />
+    <ClCompile Include="Patches\ThreadPatch.cpp" />
     <ClCompile Include="Patches\UnicodePatch.cpp" />
     <ClCompile Include="Steam API\SteamAPI.cpp" />
     <ClCompile Include="UtfStr.cpp" />
@@ -164,6 +166,7 @@
     <ClInclude Include="Editor API\NiRefObject.h" />
     <ClInclude Include="Editor API\SSE\BSGraphicsRenderTargetManager.h" />
     <ClInclude Include="Editor API\SSE\BSGraphicsTypes.h" />
+    <ClInclude Include="Editor API\SSE\BSPointerHandleManager.h" />
     <ClInclude Include="Editor API\SSE\TESDialogSpell.h" />
     <ClInclude Include="Editor API\SSE\TESForm.h" />
     <ClInclude Include="Experimental\RuntimeOptimization.h" />
@@ -201,6 +204,8 @@
     <ClInclude Include="Patches\SSE\MemoryLeakInPreviewWindow.h" />
     <ClInclude Include="Patches\SSE\NiCollisionObjectClonedWarning.h" />
     <ClInclude Include="Patches\SSE\RenameCreationKitApp.h" />
+    <ClInclude Include="Patches\SSE\ReplaceBSPointerHandleAndManager.h" />
+    <ClInclude Include="Patches\ThreadPatch.h" />
     <ClInclude Include="Patches\UnicodePatch.h" />
     <ClInclude Include="Steam API\SteamAPI.h" />
     <ClInclude Include="Steam API\SteamAPIConfig.h" />
