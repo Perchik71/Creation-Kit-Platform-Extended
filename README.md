@@ -20,6 +20,7 @@
 [Zydis](https://github.com/zyantific/zydis.git) URL **https://github.com/zyantific/zydis.git** IN **Dependencies/zydis**  
 [zipper](https://github.com/kuba--/zip.git) URL **https://github.com/kuba--/zip.git** IN **Dependencies/zipper**  
 [libdeflate](https://github.com/ebiggers/libdeflate.git) URL **https://github.com/ebiggers/libdeflate.git** IN **Dependencies/libdeflate**  
+[xbyak](https://github.com/herumi/xbyak.git) URL **https://github.com/herumi/xbyak.git** IN **Dependencies/xbyak**  
 
 # Credits
 [Nukem9](https://github.com/Nukem9) (for experimental functions, hash and so on, very useful)  

@@ -29,7 +29,13 @@ namespace CreationKitPlatformExtended
 				virtual const char* GetOptionName() const;
 				virtual const char* GetName() const;
 
-				static void sub(TESForm* Class, HWND WindowHandle);
+				static int sub1(__int64 a1, __int64 a2);
+				static int sub2(__int64 a1, __int64 a2);
+				static int sub1_Extremly(__int64 a1, __int64 a2);
+				static int sub2_Extremly(__int64 a1, __int64 a2);
+
+				static Array<TESObjectREFR_Original*> CreateCellPersistentMapCopy(__int64 List);
+				static Array<TESObjectREFR_Extremly*> CreateCellPersistentMapCopy_Extremly(__int64 List);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;

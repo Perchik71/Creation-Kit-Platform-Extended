@@ -49,6 +49,7 @@
 #include <concurrent_vector.h>
 #include <concurrent_unordered_map.h>
 #include <detours/Detours.h>
+#include <xbyak.h>
 
 #include "Crc32.h"
 #include "ini.h"
