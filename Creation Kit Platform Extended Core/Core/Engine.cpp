@@ -51,6 +51,9 @@
 #include "Patches/SSE/ReplaceBSPointerHandleAndManager.h"
 #include "Patches/SSE/CrashInventoryIterators.h"
 #include "Patches/SSE/FixObjectPalette.h"
+#include "Patches/SSE/FixVertexNormals.h"
+#include "Patches/SSE/FixSelectedPackageData.h"
+#include "Patches/SSE/FixMoveToTopic.h"
 
 #include "Experimental/RuntimeOptimization.h"
 
@@ -170,6 +173,9 @@ namespace CreationKitPlatformExtended
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::ReplaceBSPointerHandleAndManagerPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::CrashInventoryIteratorsPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixObjectPalettePatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixVertexNormalsPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixSelectedPackageDataPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixMoveToTopicPatch(),
 				});
 			}
 

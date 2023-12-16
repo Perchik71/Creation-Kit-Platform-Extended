@@ -187,6 +187,15 @@
     <ClCompile Include="Patches\SSE\FixObjectPalette.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\FixVertexNormals.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixSelectedPackageData.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixMoveToTopic.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -446,6 +455,15 @@
       <Filter>Editor API\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SSE\FixObjectPalette.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixVertexNormals.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixSelectedPackageData.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixMoveToTopic.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
