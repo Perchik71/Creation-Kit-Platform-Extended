@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/github/license/Perchik71/Creation-Kit-Platform-Extended?style=for-the-badge&color=007d34"></img> 
+  <a href="https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Perchik71/Creation-Kit-Platform-Extended?style=for-the-badge&color=007d34"></img></a>
   <img src="https://img.shields.io/github/languages/top/perchik71/Creation-Kit-Platform-Extended?style=for-the-badge&color=e8793e"></img> 
   <img src="https://img.shields.io/github/repo-size/Perchik71/Creation-Kit-Platform-Extended?style=for-the-badge"></img> 
   <img src="https://img.shields.io/github/last-commit/perchik71/Creation-Kit-Platform-Extended?style=for-the-badge"></img> 
