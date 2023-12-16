@@ -6,6 +6,13 @@
   A collection of modifications, enhancements, and reverse engineered resources for Creation Kit by Bethesda.
 </p>
 
+<p align="center">
+  <img src="https://img.shields.io/github/license/Perchik71/Creation-Kit-Platform-Extended?style=for-the-badge&color=007d34"></img> 
+  <img src="https://img.shields.io/github/languages/top/perchik71/Creation-Kit-Platform-Extended?style=for-the-badge&color=e8793e"></img> 
+  <img src="https://img.shields.io/github/repo-size/Perchik71/Creation-Kit-Platform-Extended?style=for-the-badge"></img> 
+  <img src="https://img.shields.io/github/last-commit/perchik71/Creation-Kit-Platform-Extended?style=for-the-badge"></img> 
+</p>
+
 # Description
 **The mod is in the early stages of development.** The platform will support all known versions of Creation Kit in the future, but the focus is first on the Creation Kit version SSE 1.6.1130. This is a continuation of two previously arhived projects, as I am already confused in the code. The new implementation is based on the principle of modularity, which will allow for better control of development.
 
