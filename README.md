@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/main/Resources/logo.png" alt="Creation Kit Platform Extended" border="0">
+  <img src="https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/master/Resources/logo.png" alt="Creation Kit Platform Extended" border="0">
 </p>
 
 <p align="center">
