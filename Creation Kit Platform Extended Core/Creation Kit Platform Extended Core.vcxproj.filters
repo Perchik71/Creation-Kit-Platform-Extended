@@ -184,6 +184,9 @@
     <ClCompile Include="Patches\SSE\ReplaceBSPointerHandleAndManager.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\FixObjectPalette.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -441,6 +444,9 @@
     </ClInclude>
     <ClInclude Include="Editor API\SSE\BSPointerHandleManager.h">
       <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixObjectPalette.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

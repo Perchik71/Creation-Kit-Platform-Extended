@@ -50,6 +50,7 @@
 #include "Patches/SSE/AlteredFormList.h"
 #include "Patches/SSE/ReplaceBSPointerHandleAndManager.h"
 #include "Patches/SSE/CrashInventoryIterators.h"
+#include "Patches/SSE/FixObjectPalette.h"
 
 #include "Experimental/RuntimeOptimization.h"
 
@@ -168,6 +169,7 @@ namespace CreationKitPlatformExtended
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::MemoryLeakInPreviewWindowPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::ReplaceBSPointerHandleAndManagerPatch(),
 					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::CrashInventoryIteratorsPatch(),
+					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixObjectPalettePatch(),
 				});
 			}
 

@@ -118,6 +118,7 @@
     <ClCompile Include="Patches\SSE\FixMemoryLeakActorDlg.cpp" />
     <ClCompile Include="Patches\SSE\FixMusicTrackForm.cpp" />
     <ClCompile Include="Patches\SSE\FixNiSkinInstance.cpp" />
+    <ClCompile Include="Patches\SSE\FixObjectPalette.cpp" />
     <ClCompile Include="Patches\SSE\FixRaceDlg.cpp" />
     <ClCompile Include="Patches\SSE\FixRemoteDesktop.cpp" />
     <ClCompile Include="Patches\SSE\FixRenderPass.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Patches\SSE\FixMemoryLeakActorDlg.h" />
     <ClInclude Include="Patches\SSE\FixMusicTrackForm.h" />
     <ClInclude Include="Patches\SSE\FixNiSkinInstance.h" />
+    <ClInclude Include="Patches\SSE\FixObjectPalette.h" />
     <ClInclude Include="Patches\SSE\FixRaceDlg.h" />
     <ClInclude Include="Patches\SSE\FixRemoteDesktop.h" />
     <ClInclude Include="Patches\SSE\FixRenderPass.h" />
