@@ -1,0 +1,98 @@
+// Copyright © 2023-2024 aka perchik71. All rights reserved.
+// Contacts: <email:timencevaleksej@gmail.com>
+// License: https://www.gnu.org/licenses/gpl-3.0.html
+
+#include "ModuleManager.h"
+
+#include "Patches/SSE/AllowPlayerKnowsCondition.h"
+#include "Patches/SSE/NiCollisionObjectClonedWarning.h"
+#include "Patches/SSE/LoadOptimization.h"
+#include "Patches/SSE/FixRemoteDesktop.h"
+#include "Patches/SSE/FixLoadMore32KAnimation.h"
+#include "Patches/SSE/FixCrashLightingShader.h"
+#include "Patches/SSE/RenameCreationKitApp.h"
+#include "Patches/SSE/FixCrashInArmorAddon.h"
+#include "Patches/SSE/FixCrashMakeXYZCircles.h"
+#include "Patches/SSE/FixNiSkinInstance.h"
+#include "Patches/SSE/FixCrashPluginTXT.h"
+#include "Patches/SSE/FixBrightLightColor.h"
+#include "Patches/SSE/FixDialogueBranch.h"
+#include "Patches/SSE/FixMemoryLeakActorDlg.h"
+#include "Patches/SSE/FixRaceDlg.h"
+#include "Patches/SSE/FixClassDlg.h"
+#include "Patches/SSE/CheckD3D11.h"
+#include "Patches/SSE/FixSpellDlg.h"
+#include "Patches/SSE/FixMusicTrackForm.h"
+#include "Patches/SSE/FixCrashTabControl.h"
+#include "Patches/SSE/FixRenderPass.h"
+#include "Patches/SSE/FixWaterOrtho.h"
+#include "Patches/SSE/FixActorDlg.h"
+#include "Patches/SSE/FixDataDlgWithPluginTXT.h"
+#include "Patches/SSE/FixCrashDuplicateForm.h"
+#include "Patches/SSE/CrashAfterMultipleMastersWarning.h"
+#include "Patches/SSE/MemoryLeakInPreviewWindow.h"
+#include "Patches/SSE/AlteredFormList.h"
+#include "Patches/SSE/ReplaceBSPointerHandleAndManager.h"
+#include "Patches/SSE/CrashInventoryIterators.h"
+#include "Patches/SSE/FixObjectPalette.h"
+#include "Patches/SSE/FixVertexNormals.h"
+#include "Patches/SSE/FixSelectedPackageData.h"
+#include "Patches/SSE/FixMoveToTopic.h"
+#include "Patches/SSE/IncreaseMaximumNavmesh.h"
+#include "Patches/SSE/FixSpellEffectsDuration.h"
+#include "Patches/SSE/FixBGSEntryPointFunctionDataTwoValue.h"
+#include "Patches/SSE/WeaponCriticalEffect.h"
+#include "Patches/SSE/FixFileInUse.h"
+
+namespace CreationKitPlatformExtended
+{
+	namespace Core
+	{
+		void SkyrimSpecialEdition_AppendPatches(ModuleManager* PatchesManager)
+		{
+			namespace Patches = CreationKitPlatformExtended::Patches::SkyrimSpectialEdition;
+
+			PatchesManager->Append({
+				new Patches::AlteredFormListPatch(),
+				new Patches::AllowPlayerKnowsConditionPatch(),
+				new Patches::LoadOptimizationPatch(),
+				new Patches::FixRemoteDesktopPatch(),
+				new Patches::FixLoadMore32KAnimationPatch(),
+				new Patches::FixCrashLightingShaderPatch(),
+				new Patches::RenameCreationKitAppPatch(),
+				new Patches::FixCrashInArmorAddonPatch(),
+				new Patches::FixCrashMakeXYZCirclesPatch(),
+				new Patches::FixNiSkinInstancePatch(),
+				new Patches::FixCrashPluginTXTPatch(),
+				new Patches::FixBrightLightColorPatch(),
+				new Patches::FixDialogueBranchPatch(),
+				new Patches::FixMemoryLeakActorDlgPatch(),
+				new Patches::CheckD3D11Patch(),
+				new Patches::NiCollisionObjectClonedWarningPatch(),
+				new Patches::FixRaceDlgPatch(),
+				new Patches::FixClassDlgPatch(),
+				new Patches::FixSpellDlgPatch(),
+				new Patches::FixMusicTrackFormPatch(),
+				new Patches::FixCrashTabControlPatch(),
+				new Patches::FixRenderPassPatch(),
+				new Patches::FixWaterOrthoPatch(),
+				new Patches::FixActorDlgPatch(),
+				new Patches::FixDataDlgWithPluginTXTPatch(),
+				new Patches::FixCrashDuplicateFormPatch(),
+				new Patches::CrashAfterMultipleMastersWarningPatch(),
+				new Patches::MemoryLeakInPreviewWindowPatch(),
+				new Patches::ReplaceBSPointerHandleAndManagerPatch(),
+				new Patches::CrashInventoryIteratorsPatch(),
+				new Patches::FixObjectPalettePatch(),
+				new Patches::FixVertexNormalsPatch(),
+				new Patches::FixSelectedPackageDataPatch(),
+				new Patches::FixMoveToTopicPatch(),
+				new Patches::IncreaseMaximumNavmeshPatch(),
+				new Patches::FixSpellEffectsDurationPatch(),
+				new Patches::FixBGSEntryPointFunctionDataTwoValuePatch(),
+				new Patches::WeaponCriticalEffectPatch(),
+				new Patches::FixFileInUsePatch(),
+			});
+		}
+	}
+}

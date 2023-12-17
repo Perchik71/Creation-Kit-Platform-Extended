@@ -20,47 +20,14 @@
 #include "Patches/UnicodePatch.h"
 #include "Patches/ThreadPatch.h"
 
-#include "Patches/SSE/AllowPlayerKnowsCondition.h"
-#include "Patches/SSE/NiCollisionObjectClonedWarning.h"
-#include "Patches/SSE/LoadOptimization.h"
-#include "Patches/SSE/FixRemoteDesktop.h"
-#include "Patches/SSE/FixLoadMore32KAnimation.h"
-#include "Patches/SSE/FixCrashLightingShader.h"
-#include "Patches/SSE/RenameCreationKitApp.h"
-#include "Patches/SSE/FixCrashInArmorAddon.h"
-#include "Patches/SSE/FixCrashMakeXYZCircles.h"
-#include "Patches/SSE/FixNiSkinInstance.h"
-#include "Patches/SSE/FixCrashPluginTXT.h"
-#include "Patches/SSE/FixBrightLightColor.h"
-#include "Patches/SSE/FixDialogueBranch.h"
-#include "Patches/SSE/FixMemoryLeakActorDlg.h"
-#include "Patches/SSE/FixRaceDlg.h"
-#include "Patches/SSE/FixClassDlg.h"
-#include "Patches/SSE/CheckD3D11.h"
-#include "Patches/SSE/FixSpellDlg.h"
-#include "Patches/SSE/FixMusicTrackForm.h"
-#include "Patches/SSE/FixCrashTabControl.h"
-#include "Patches/SSE/FixRenderPass.h"
-#include "Patches/SSE/FixWaterOrtho.h"
-#include "Patches/SSE/FixActorDlg.h"
-#include "Patches/SSE/FixDataDlgWithPluginTXT.h"
-#include "Patches/SSE/FixCrashDuplicateForm.h"
-#include "Patches/SSE/CrashAfterMultipleMastersWarning.h"
-#include "Patches/SSE/MemoryLeakInPreviewWindow.h"
-#include "Patches/SSE/AlteredFormList.h"
-#include "Patches/SSE/ReplaceBSPointerHandleAndManager.h"
-#include "Patches/SSE/CrashInventoryIterators.h"
-#include "Patches/SSE/FixObjectPalette.h"
-#include "Patches/SSE/FixVertexNormals.h"
-#include "Patches/SSE/FixSelectedPackageData.h"
-#include "Patches/SSE/FixMoveToTopic.h"
-
 #include "Experimental/RuntimeOptimization.h"
 
 namespace CreationKitPlatformExtended
 {
 	namespace Core
 	{
+		void SkyrimSpecialEdition_AppendPatches(ModuleManager* PatchesManager);
+
 		Engine* GlobalEnginePtr = nullptr;
 
 		CHAR TempNTSIT[16];
@@ -141,42 +108,7 @@ namespace CreationKitPlatformExtended
 			// Добавление патчей только для редактора скайрима специального издания
 			if (eEditorVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST)
 			{
-				PatchesManager->Append({
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::AlteredFormListPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::AllowPlayerKnowsConditionPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::LoadOptimizationPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixRemoteDesktopPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixLoadMore32KAnimationPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashLightingShaderPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::RenameCreationKitAppPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashInArmorAddonPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashMakeXYZCirclesPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixNiSkinInstancePatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashPluginTXTPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixBrightLightColorPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixDialogueBranchPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixMemoryLeakActorDlgPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::CheckD3D11Patch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::NiCollisionObjectClonedWarningPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixRaceDlgPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixClassDlgPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixSpellDlgPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixMusicTrackFormPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashTabControlPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixRenderPassPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixWaterOrthoPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixActorDlgPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixDataDlgWithPluginTXTPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixCrashDuplicateFormPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::CrashAfterMultipleMastersWarningPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::MemoryLeakInPreviewWindowPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::ReplaceBSPointerHandleAndManagerPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::CrashInventoryIteratorsPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixObjectPalettePatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixVertexNormalsPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixSelectedPackageDataPatch(),
-					new CreationKitPlatformExtended::Patches::SkyrimSpectialEdition::FixMoveToTopicPatch(),
-				});
+				SkyrimSpecialEdition_AppendPatches(PatchesManager);
 			}
 
 			// Установка точки останова, чтобы дождаться расшифровки DRM приложения

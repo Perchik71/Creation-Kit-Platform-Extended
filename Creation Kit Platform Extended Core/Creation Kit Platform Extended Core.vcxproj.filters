@@ -196,6 +196,24 @@
     <ClCompile Include="Patches\SSE\FixMoveToTopic.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\IncreaseMaximumNavmesh.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixSpellEffectsDuration.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\EngineSSEPatches.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\WeaponCriticalEffect.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixFileInUse.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -464,6 +482,21 @@
       <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SSE\FixMoveToTopic.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\IncreaseMaximumNavmesh.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixSpellEffectsDuration.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\WeaponCriticalEffect.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixFileInUse.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>

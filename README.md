@@ -31,9 +31,9 @@
 
 # Compilation
 Open a project in **Visual Studio 2019** or later. Build the project in **Release** mode.  
-Compile the Unicode Plugin to **Lazarus 1.8.2** or later. Take .dll's from the **x64** folder and move it to the folder with the game.  
-Take the database **CreationKitPlatformExtended_SSE_1_6_1130.database** from the folder **Database/1_6_1130/**.
-You will also need **CreationKitPlatformExtendedMessagesBlacklist.txt** and **CreationKitPlatformExtended.ini**.
+Compile the Unicode Plugin to **Lazarus 1.8.2** or later. Take .dll's from the **x64** folder and move it to the folder with the game. 
+Take the database **CreationKitPlatformExtended_SSE_1_6_1130.database** from the folder **Database/1_6_1130/**. 
+You will also need **CreationKitPlatformExtendedMessagesBlacklist.txt** and **CreationKitPlatformExtended.ini**. 
 
 # Credits
 [Nukem9](https://github.com/Nukem9) (for experimental functions, hash and so on, very useful)  
