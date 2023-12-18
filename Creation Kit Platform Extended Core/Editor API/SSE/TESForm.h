@@ -4,7 +4,7 @@
 
 #include "../BSTArray.h"
 #include "../BSString.h"
-#include "../BSStringCache.h"
+#include "BSStringCache.h"
 #include "../BSHandleRefObject.h"
 
 namespace CreationKitPlatformExtended

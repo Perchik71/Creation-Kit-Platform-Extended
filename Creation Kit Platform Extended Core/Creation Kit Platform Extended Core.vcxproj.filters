@@ -214,6 +214,30 @@
     <ClCompile Include="Patches\SSE\FixFileInUse.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashTestRadius.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\SSE\BSShaderProperty.cpp">
+      <Filter>Editor API\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\BSSimpleLock.cpp">
+      <Filter>Editor API</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\LoadDDSFile.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixUnableToFindVariable.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashFlowChartX.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\BrokenTerrainEditDlg.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashDuplicateWorldspace.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -387,9 +411,6 @@
     <ClInclude Include="Editor API\BSString.h">
       <Filter>Editor API</Filter>
     </ClInclude>
-    <ClInclude Include="Editor API\BSStringCache.h">
-      <Filter>Editor API</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\BGStringLocalize.h">
       <Filter>Editor API</Filter>
     </ClInclude>
@@ -497,6 +518,66 @@
       <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SSE\FixFileInUse.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashTestRadius.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BSShaderProperty.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BSShaderMaterial.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\NiPoint.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\NiObject.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BSStringCache.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\BSSimpleLock.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BSEntryString.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BSFixedString.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\NiObjectNET.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\NiAlphaProperty.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BSEffectShaderMaterial.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\NiSourceTexture.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\NiTexture.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\NiColor.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\LoadDDSFile.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixUnableToFindVariable.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashFlowChartX.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\BrokenTerrainEditDlg.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashDuplicateWorldspace.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>

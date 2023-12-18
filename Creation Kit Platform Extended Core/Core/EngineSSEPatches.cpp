@@ -43,6 +43,12 @@
 #include "Patches/SSE/FixBGSEntryPointFunctionDataTwoValue.h"
 #include "Patches/SSE/WeaponCriticalEffect.h"
 #include "Patches/SSE/FixFileInUse.h"
+#include "Patches/SSE/CrashTestRadius.h"
+#include "Patches/SSE/LoadDDSFile.h"
+#include "Patches/SSE/FixUnableToFindVariable.h"
+#include "Patches/SSE/CrashFlowChartX.h"
+#include "Patches/SSE/BrokenTerrainEditDlg.h"
+#include "Patches/SSE/CrashDuplicateWorldspace.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -92,6 +98,12 @@ namespace CreationKitPlatformExtended
 				new Patches::FixBGSEntryPointFunctionDataTwoValuePatch(),
 				new Patches::WeaponCriticalEffectPatch(),
 				new Patches::FixFileInUsePatch(),
+				new Patches::CrashTestRadiusPatch(),
+				new Patches::LoadDDSFilePatch(),
+				new Patches::FixUnableToFindVariablePatch(),
+				new Patches::CrashFlowChartXPatch(),
+				new Patches::BrokenTerrainEditDlgPatch(),
+				new Patches::CrashDuplicateWorldspacePatch(),
 			});
 		}
 	}
