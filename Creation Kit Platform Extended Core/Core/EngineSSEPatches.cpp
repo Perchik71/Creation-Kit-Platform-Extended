@@ -55,6 +55,11 @@
 #include "Patches/SSE/NavMeshInfoMap.h"
 #include "Patches/SSE/BGSPerkRankArray.h"
 #include "Patches/SSE/TESParameters_CTDA.h"
+#include "Patches/SSE/FixNavMesh.h"
+#include "Patches/SSE/CrashSortFunc.h"
+#include "Patches/SSE/UnEquipSound.h"
+#include "Patches/SSE/TESModelTextureSwapCorrectlyLoad.h"
+#include "Patches/SSE/FixCellViewObjectList.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -116,6 +121,11 @@ namespace CreationKitPlatformExtended
 				new Patches::NavMeshInfoMapPatch(),
 				new Patches::BGSPerkRankArrayPatch(),
 				new Patches::TESParameters_CTDAPatch(),
+				new Patches::FixNavMeshPatch(),
+				new Patches::CrashSortFuncPatch(),
+				new Patches::UnEquipSoundPatch(),
+				new Patches::TESModelTextureSwapCorrectlyLoadPatch(),
+				new Patches::FixCellViewObjectListPatch(),
 			});
 		}
 	}

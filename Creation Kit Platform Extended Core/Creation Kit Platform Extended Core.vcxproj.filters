@@ -256,6 +256,21 @@
     <ClCompile Include="Patches\SSE\WeaponCriticalEffect.cpp">
       <Filter>Patches\SSE\1-50</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\FixNavMesh.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashSortFunc.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\UnEquipSound.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixCellViewObjectList.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -639,6 +654,21 @@
     </ClInclude>
     <ClInclude Include="Patches\SSE\WeaponCriticalEffect.h">
       <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixNavMesh.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashSortFunc.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\UnEquipSound.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixCellViewObjectList.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

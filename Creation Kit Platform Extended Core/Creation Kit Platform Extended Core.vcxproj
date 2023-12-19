@@ -111,11 +111,13 @@
     <ClCompile Include="Patches\SSE\CrashDuplicateWorldspace.cpp" />
     <ClCompile Include="Patches\SSE\CrashFlowChartX.cpp" />
     <ClCompile Include="Patches\SSE\CrashInventoryIterators.cpp" />
+    <ClCompile Include="Patches\SSE\CrashSortFunc.cpp" />
     <ClCompile Include="Patches\SSE\CrashTestRadius.cpp" />
     <ClCompile Include="Patches\SSE\CrashUsingMore16NPCForFaceGen.cpp" />
     <ClCompile Include="Patches\SSE\FixActorDlg.cpp" />
     <ClCompile Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.cpp" />
     <ClCompile Include="Patches\SSE\FixBrightLightColor.cpp" />
+    <ClCompile Include="Patches\SSE\FixCellViewObjectList.cpp" />
     <ClCompile Include="Patches\SSE\FixClassDlg.cpp" />
     <ClCompile Include="Patches\SSE\FixCrashDuplicateForm.cpp" />
     <ClCompile Include="Patches\SSE\FixCrashInArmorAddon.cpp" />
@@ -130,6 +132,7 @@
     <ClCompile Include="Patches\SSE\FixMemoryLeakActorDlg.cpp" />
     <ClCompile Include="Patches\SSE\FixMoveToTopic.cpp" />
     <ClCompile Include="Patches\SSE\FixMusicTrackForm.cpp" />
+    <ClCompile Include="Patches\SSE\FixNavMesh.cpp" />
     <ClCompile Include="Patches\SSE\FixNiSkinInstance.cpp" />
     <ClCompile Include="Patches\SSE\FixObjectPalette.cpp" />
     <ClCompile Include="Patches\SSE\FixRaceDlg.cpp" />
@@ -150,7 +153,9 @@
     <ClCompile Include="Patches\SSE\NiCollisionObjectClonedWarning.cpp" />
     <ClCompile Include="Patches\SSE\RenameCreationKitApp.cpp" />
     <ClCompile Include="Patches\SSE\ReplaceBSPointerHandleAndManager.cpp" />
+    <ClCompile Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.cpp" />
     <ClCompile Include="Patches\SSE\TESParameters_CTDA.cpp" />
+    <ClCompile Include="Patches\SSE\UnEquipSound.cpp" />
     <ClCompile Include="Patches\SSE\WeaponCriticalEffect.cpp" />
     <ClCompile Include="Patches\ThreadPatch.cpp" />
     <ClCompile Include="Patches\UnicodePatch.cpp" />
@@ -229,11 +234,13 @@
     <ClInclude Include="Patches\SSE\CrashDuplicateWorldspace.h" />
     <ClInclude Include="Patches\SSE\CrashFlowChartX.h" />
     <ClInclude Include="Patches\SSE\CrashInventoryIterators.h" />
+    <ClInclude Include="Patches\SSE\CrashSortFunc.h" />
     <ClInclude Include="Patches\SSE\CrashTestRadius.h" />
     <ClInclude Include="Patches\SSE\CrashUsingMore16NPCForFaceGen.h" />
     <ClInclude Include="Patches\SSE\FixActorDlg.h" />
     <ClInclude Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.h" />
     <ClInclude Include="Patches\SSE\FixBrightLightColor.h" />
+    <ClInclude Include="Patches\SSE\FixCellViewObjectList.h" />
     <ClInclude Include="Patches\SSE\FixClassDlg.h" />
     <ClInclude Include="Patches\SSE\FixCrashDuplicateForm.h" />
     <ClInclude Include="Patches\SSE\FixCrashInArmorAddon.h" />
@@ -248,6 +255,7 @@
     <ClInclude Include="Patches\SSE\FixMemoryLeakActorDlg.h" />
     <ClInclude Include="Patches\SSE\FixMoveToTopic.h" />
     <ClInclude Include="Patches\SSE\FixMusicTrackForm.h" />
+    <ClInclude Include="Patches\SSE\FixNavMesh.h" />
     <ClInclude Include="Patches\SSE\FixNiSkinInstance.h" />
     <ClInclude Include="Patches\SSE\FixObjectPalette.h" />
     <ClInclude Include="Patches\SSE\FixRaceDlg.h" />
@@ -268,7 +276,9 @@
     <ClInclude Include="Patches\SSE\NiCollisionObjectClonedWarning.h" />
     <ClInclude Include="Patches\SSE\RenameCreationKitApp.h" />
     <ClInclude Include="Patches\SSE\ReplaceBSPointerHandleAndManager.h" />
+    <ClInclude Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.h" />
     <ClInclude Include="Patches\SSE\TESParameters_CTDA.h" />
+    <ClInclude Include="Patches\SSE\UnEquipSound.h" />
     <ClInclude Include="Patches\SSE\WeaponCriticalEffect.h" />
     <ClInclude Include="Patches\ThreadPatch.h" />
     <ClInclude Include="Patches\UnicodePatch.h" />
