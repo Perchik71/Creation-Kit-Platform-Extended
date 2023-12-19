@@ -16,13 +16,9 @@ namespace CreationKitPlatformExtended
 		class NiPoint3
 		{
 		public:
-			const static NiPoint3 ZERO;
+			float x, y, z;
 
-			float x = 0.0f;
-			float y = 0.0f;
-			float z = 0.0f;
-
-			inline NiPoint3() {}
+			inline NiPoint3() : x(0.0f), y(0.0f), z(0.0f) {}
 			inline NiPoint3(float fX, float fY, float fZ) : x(fX), y(fY), z(fZ) {}
 			inline NiPoint3(const NiPoint3& Src) : x(Src.x), y(Src.y), z(Src.z) {}
 
@@ -111,5 +107,7 @@ namespace CreationKitPlatformExtended
 		{
 			return NiPoint3(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
 		}
+
+		static NiPoint3 ZERO_P3;
 	}
 }

@@ -274,6 +274,15 @@
     <ClCompile Include="..\Dependencies\jDialogs\include\jdialogs.cpp">
       <Filter>Dependecies\jDialogs</Filter>
     </ClCompile>
+    <ClCompile Include="Editor API\SSE\BSShaderResourceManager.cpp">
+      <Filter>Editor API\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\NiCollisionUtils.cpp">
+      <Filter>Editor API</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixIntersectionTriangle.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -681,6 +690,21 @@
     </ClInclude>
     <ClInclude Include="..\Dependencies\jDialogs\include\jdialogs.h">
       <Filter>Dependecies\jDialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BSShaderResourceManager.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\NiPick.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BSDynamicTriShape.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\NiCollisionUtils.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixIntersectionTriangle.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

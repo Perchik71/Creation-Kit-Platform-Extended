@@ -92,9 +92,11 @@
     <ClCompile Include="Editor API\BSSpinLock.cpp" />
     <ClCompile Include="Editor API\BSString.cpp" />
     <ClCompile Include="Editor API\EditorUI.cpp" />
+    <ClCompile Include="Editor API\NiCollisionUtils.cpp" />
     <ClCompile Include="Editor API\NiMemoryManager.cpp" />
     <ClCompile Include="Editor API\SSE\BSGraphicsTypes.cpp" />
     <ClCompile Include="Editor API\SSE\BSShaderProperty.cpp" />
+    <ClCompile Include="Editor API\SSE\BSShaderResourceManager.cpp" />
     <ClCompile Include="Editor API\SSE\TESDialogSpell.cpp" />
     <ClCompile Include="Editor API\SSE\TESForm.cpp" />
     <ClCompile Include="Experimental\RuntimeOptimization.cpp" />
@@ -130,6 +132,7 @@
     <ClCompile Include="Patches\SSE\FixDataDlgWithPluginTXT.cpp" />
     <ClCompile Include="Patches\SSE\FixDialogueBranch.cpp" />
     <ClCompile Include="Patches\SSE\FixFileInUse.cpp" />
+    <ClCompile Include="Patches\SSE\FixIntersectionTriangle.cpp" />
     <ClCompile Include="Patches\SSE\FixLoadMore32KAnimation.cpp" />
     <ClCompile Include="Patches\SSE\FixMemoryLeakActorDlg.cpp" />
     <ClCompile Include="Patches\SSE\FixMoveToTopic.cpp" />
@@ -192,16 +195,19 @@
     <ClInclude Include="Editor API\BSTList.h" />
     <ClInclude Include="Editor API\EditorUI.h" />
     <ClInclude Include="Editor API\NiArray.h" />
+    <ClInclude Include="Editor API\NiCollisionUtils.h" />
     <ClInclude Include="Editor API\NiColor.h" />
     <ClInclude Include="Editor API\NiMatrix.h" />
     <ClInclude Include="Editor API\NiMemoryManager.h" />
     <ClInclude Include="Editor API\NiObject.h" />
+    <ClInclude Include="Editor API\NiPick.h" />
     <ClInclude Include="Editor API\NiPoint.h" />
     <ClInclude Include="Editor API\NiSkinInstance.h" />
     <ClInclude Include="Editor API\NiTArray.h" />
     <ClInclude Include="Editor API\NiPointer.h" />
     <ClInclude Include="Editor API\NiRefObject.h" />
     <ClInclude Include="Editor API\NiTransform.h" />
+    <ClInclude Include="Editor API\SSE\BSDynamicTriShape.h" />
     <ClInclude Include="Editor API\SSE\BSEffectShaderMaterial.h" />
     <ClInclude Include="Editor API\SSE\BSEntryString.h" />
     <ClInclude Include="Editor API\SSE\BSFixedString.h" />
@@ -211,6 +217,7 @@
     <ClInclude Include="Editor API\SSE\BSPointerHandleManager.h" />
     <ClInclude Include="Editor API\SSE\BSShaderMaterial.h" />
     <ClInclude Include="Editor API\SSE\BSShaderProperty.h" />
+    <ClInclude Include="Editor API\SSE\BSShaderResourceManager.h" />
     <ClInclude Include="Editor API\SSE\BSStringCache.h" />
     <ClInclude Include="Editor API\SSE\BSTriShape.h" />
     <ClInclude Include="Editor API\SSE\NiAlphaProperty.h" />
@@ -254,6 +261,7 @@
     <ClInclude Include="Patches\SSE\FixDataDlgWithPluginTXT.h" />
     <ClInclude Include="Patches\SSE\FixDialogueBranch.h" />
     <ClInclude Include="Patches\SSE\FixFileInUse.h" />
+    <ClInclude Include="Patches\SSE\FixIntersectionTriangle.h" />
     <ClInclude Include="Patches\SSE\FixLoadMore32KAnimation.h" />
     <ClInclude Include="Patches\SSE\FixMemoryLeakActorDlg.h" />
     <ClInclude Include="Patches\SSE\FixMoveToTopic.h" />

@@ -60,6 +60,7 @@
 #include "Patches/SSE/UnEquipSound.h"
 #include "Patches/SSE/TESModelTextureSwapCorrectlyLoad.h"
 #include "Patches/SSE/FixCellViewObjectList.h"
+#include "Patches/SSE/FixIntersectionTriangle.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -126,6 +127,7 @@ namespace CreationKitPlatformExtended
 				new Patches::UnEquipSoundPatch(),
 				new Patches::TESModelTextureSwapCorrectlyLoadPatch(),
 				new Patches::FixCellViewObjectListPatch(),
+				new Patches::FixIntersectionTrianglePatch(),
 			});
 		}
 	}
