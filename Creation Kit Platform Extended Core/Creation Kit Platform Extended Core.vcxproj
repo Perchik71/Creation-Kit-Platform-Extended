@@ -56,6 +56,7 @@
       <CallingConvention>StdCall</CallingConvention>
       <ForcedIncludeFiles>Common.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(SolutionDir)Creation Kit Platform Extended Core\;$(SolutionDir)Dependencies\mzip\src;$(SolutionDir)Dependencies\mINI\src\mini;$(SolutionDir)Memory Manager\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -71,6 +72,7 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Dependencies\jDialogs\include\jdialogs.cpp" />
     <ClCompile Include="Core\CommandLineParser.cpp" />
     <ClCompile Include="Core\ConsoleWindow.cpp" />
     <ClCompile Include="Core\DebugLog.cpp" />
@@ -165,6 +167,7 @@
     <ClCompile Include="WinHttp Wrapper\Exports.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Dependencies\jDialogs\include\jdialogs.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Core\CommandLineParser.h" />
     <ClInclude Include="Core\ConsoleWindow.h" />

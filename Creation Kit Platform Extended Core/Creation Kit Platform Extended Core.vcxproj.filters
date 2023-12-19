@@ -271,6 +271,9 @@
     <ClCompile Include="Patches\SSE\FixCellViewObjectList.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="..\Dependencies\jDialogs\include\jdialogs.cpp">
+      <Filter>Dependecies\jDialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -305,6 +308,12 @@
     </Filter>
     <Filter Include="Patches\SSE\1-50">
       <UniqueIdentifier>{6db0a7ea-41d9-4257-95fb-df8d0ce1735b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependecies">
+      <UniqueIdentifier>{2b068e11-402a-4b3d-8b32-7d84fd5695f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependecies\jDialogs">
+      <UniqueIdentifier>{30305feb-8279-4f4d-ad11-a2019bb7d38f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -669,6 +678,9 @@
     </ClInclude>
     <ClInclude Include="Patches\SSE\FixCellViewObjectList.h">
       <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\jDialogs\include\jdialogs.h">
+      <Filter>Dependecies\jDialogs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

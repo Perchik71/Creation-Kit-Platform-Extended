@@ -3,6 +3,8 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #pragma once
+
+#pragma warning (disable : 4244)
 #pragma warning (disable : 4477)
 #pragma warning (disable : 4996)
 #pragma warning (disable : 26812)
