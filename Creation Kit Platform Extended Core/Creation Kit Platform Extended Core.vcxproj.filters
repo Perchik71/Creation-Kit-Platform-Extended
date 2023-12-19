@@ -57,65 +57,14 @@
     <ClCompile Include="Editor API\EditorUI.cpp">
       <Filter>Editor API</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\LoadOptimization.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Editor API\NiMemoryManager.cpp">
       <Filter>Editor API</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixRemoteDesktop.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixLoadMore32KAnimation.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixCrashLightingShader.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\RenameCreationKitApp.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixCrashInArmorAddon.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixCrashMakeXYZCircles.cpp">
-      <Filter>Patches\SSE</Filter>
     </ClCompile>
     <ClCompile Include="Patches\FlowChartXPatch.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
     <ClCompile Include="Core\TypeInfo\ms_rtti.cpp">
       <Filter>Core\TypeInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixNiSkinInstance.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixCrashPluginTXT.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixBrightLightColor.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixDialogueBranch.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\AllowPlayerKnowsCondition.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixMemoryLeakActorDlg.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\CheckD3D11.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\NiCollisionObjectClonedWarning.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixRaceDlg.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixClassDlg.cpp">
-      <Filter>Patches\SSE</Filter>
     </ClCompile>
     <ClCompile Include="Editor API\SSE\TESForm.cpp">
       <Filter>Editor API\SSE</Filter>
@@ -133,89 +82,20 @@
     <ClCompile Include="Editor API\SSE\TESDialogSpell.cpp">
       <Filter>Editor API\SSE</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\FixSpellDlg.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixMusicTrackForm.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixCrashTabControl.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixRenderPass.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Editor API\BSReadWriteLock.cpp">
       <Filter>Editor API</Filter>
     </ClCompile>
     <ClCompile Include="Editor API\BSSpinLock.cpp">
       <Filter>Editor API</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\FixWaterOrtho.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixActorDlg.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixDataDlgWithPluginTXT.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixCrashDuplicateForm.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\CrashAfterMultipleMastersWarning.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Editor API\SSE\BSGraphicsTypes.cpp">
       <Filter>Editor API\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\MemoryLeakInPreviewWindow.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\CrashInventoryIterators.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\AlteredFormList.cpp">
-      <Filter>Patches\SSE</Filter>
     </ClCompile>
     <ClCompile Include="Patches\ThreadPatch.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\ReplaceBSPointerHandleAndManager.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixObjectPalette.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixVertexNormals.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixSelectedPackageData.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixMoveToTopic.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\IncreaseMaximumNavmesh.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixSpellEffectsDuration.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Core\EngineSSEPatches.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\WeaponCriticalEffect.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixFileInUse.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\CrashTestRadius.cpp">
-      <Filter>Patches\SSE</Filter>
     </ClCompile>
     <ClCompile Include="Editor API\SSE\BSShaderProperty.cpp">
       <Filter>Editor API\SSE</Filter>
@@ -223,20 +103,158 @@
     <ClCompile Include="Editor API\BSSimpleLock.cpp">
       <Filter>Editor API</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\LoadDDSFile.cpp">
-      <Filter>Patches\SSE</Filter>
+    <ClCompile Include="Patches\SSE\AllowPlayerKnowsCondition.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\FixUnableToFindVariable.cpp">
-      <Filter>Patches\SSE</Filter>
+    <ClCompile Include="Patches\SSE\AlteredFormList.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\CrashFlowChartX.cpp">
-      <Filter>Patches\SSE</Filter>
+    <ClCompile Include="Patches\SSE\BGSPerkRankArray.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\BNetConvertUnicodeString.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
     </ClCompile>
     <ClCompile Include="Patches\SSE\BrokenTerrainEditDlg.cpp">
-      <Filter>Patches\SSE</Filter>
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CheckD3D11.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashAfterMultipleMastersWarning.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
     </ClCompile>
     <ClCompile Include="Patches\SSE\CrashDuplicateWorldspace.cpp">
-      <Filter>Patches\SSE</Filter>
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashFlowChartX.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashInventoryIterators.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashTestRadius.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashUsingMore16NPCForFaceGen.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixActorDlg.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixBrightLightColor.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixClassDlg.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixCrashDuplicateForm.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixCrashInArmorAddon.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixCrashLightingShader.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixCrashMakeXYZCircles.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixCrashPluginTXT.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixCrashTabControl.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixDataDlgWithPluginTXT.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixDialogueBranch.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixFileInUse.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixLoadMore32KAnimation.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixMemoryLeakActorDlg.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixMoveToTopic.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixMusicTrackForm.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixNiSkinInstance.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixObjectPalette.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixRaceDlg.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixRemoteDesktop.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixRenderPass.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixSelectedPackageData.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixSpellDlg.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixSpellEffectsDuration.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixUnableToFindVariable.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixVertexNormals.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixWaterOrtho.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixWaterType.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\IncreaseMaximumNavmesh.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\LoadDDSFile.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\LoadOptimization.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\MemoryLeakInPreviewWindow.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\NavMeshInfoMap.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\NiCollisionObjectClonedWarning.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\RenameCreationKitApp.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\ReplaceBSPointerHandleAndManager.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\TESParameters_CTDA.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\WeaponCriticalEffect.cpp">
+      <Filter>Patches\SSE\1-50</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -269,6 +287,9 @@
     </Filter>
     <Filter Include="Editor API\SSE">
       <UniqueIdentifier>{793eabbd-dd4c-4fb1-b989-56b1248d4532}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Patches\SSE\1-50">
+      <UniqueIdentifier>{6db0a7ea-41d9-4257-95fb-df8d0ce1735b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -339,9 +360,6 @@
     <ClInclude Include="Editor API\EditorUI.h">
       <Filter>Editor API</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\LoadOptimization.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\BSTList.h">
       <Filter>Editor API</Filter>
     </ClInclude>
@@ -351,59 +369,11 @@
     <ClInclude Include="Editor API\NiMemoryManager.h">
       <Filter>Editor API</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\FixRemoteDesktop.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixLoadMore32KAnimation.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixCrashLightingShader.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\RenameCreationKitApp.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixCrashInArmorAddon.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixCrashMakeXYZCircles.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Patches\FlowChartXPatch.h">
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Core\TypeInfo\ms_rtti.h">
       <Filter>Core\TypeInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixNiSkinInstance.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixCrashPluginTXT.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixBrightLightColor.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixDialogueBranch.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\AllowPlayerKnowsCondition.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixMemoryLeakActorDlg.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\CheckD3D11.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\NiCollisionObjectClonedWarning.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixRaceDlg.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixClassDlg.h">
-      <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Editor API\SSE\TESForm.h">
       <Filter>Editor API\SSE</Filter>
@@ -420,18 +390,6 @@
     </ClInclude>
     <ClInclude Include="Editor API\SSE\TESDialogSpell.h">
       <Filter>Editor API\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixSpellDlg.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixMusicTrackForm.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixCrashTabControl.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixRenderPass.h">
-      <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Editor API\BSReadWriteLock.h">
       <Filter>Editor API</Filter>
@@ -451,77 +409,20 @@
     <ClInclude Include="Editor API\NiRefObject.h">
       <Filter>Editor API</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\FixWaterOrtho.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixActorDlg.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixDataDlgWithPluginTXT.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixCrashDuplicateForm.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\CrashAfterMultipleMastersWarning.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\SSE\BSGraphicsRenderTargetManager.h">
       <Filter>Editor API\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Editor API\SSE\BSGraphicsTypes.h">
       <Filter>Editor API\SSE</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\MemoryLeakInPreviewWindow.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\CrashInventoryIterators.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\BSHandleRefObject.h">
       <Filter>Editor API</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\AlteredFormList.h">
-      <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Patches\ThreadPatch.h">
       <Filter>Patches</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\ReplaceBSPointerHandleAndManager.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\SSE\BSPointerHandleManager.h">
       <Filter>Editor API\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixObjectPalette.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixVertexNormals.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixSelectedPackageData.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixMoveToTopic.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\IncreaseMaximumNavmesh.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixSpellEffectsDuration.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\WeaponCriticalEffect.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixFileInUse.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\CrashTestRadius.h">
-      <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Editor API\SSE\BSShaderProperty.h">
       <Filter>Editor API\SSE</Filter>
@@ -565,20 +466,179 @@
     <ClInclude Include="Editor API\NiColor.h">
       <Filter>Editor API</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\LoadDDSFile.h">
-      <Filter>Patches\SSE</Filter>
+    <ClInclude Include="Editor API\SSE\TESWater.h">
+      <Filter>Editor API\SSE</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\FixUnableToFindVariable.h">
-      <Filter>Patches\SSE</Filter>
+    <ClInclude Include="Editor API\SSE\BSGeometry.h">
+      <Filter>Editor API\SSE</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\CrashFlowChartX.h">
-      <Filter>Patches\SSE</Filter>
+    <ClInclude Include="Editor API\SSE\BSTriShape.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\NiAVObject.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\NiMatrix.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\NiTransform.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\NiSkinInstance.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\AllowPlayerKnowsCondition.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\AlteredFormList.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\BGSPerkRankArray.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\BNetConvertUnicodeString.h">
+      <Filter>Patches\SSE\1-50</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SSE\BrokenTerrainEditDlg.h">
-      <Filter>Patches\SSE</Filter>
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CheckD3D11.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashAfterMultipleMastersWarning.h">
+      <Filter>Patches\SSE\1-50</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SSE\CrashDuplicateWorldspace.h">
-      <Filter>Patches\SSE</Filter>
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashFlowChartX.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashInventoryIterators.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashTestRadius.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashUsingMore16NPCForFaceGen.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixActorDlg.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixBrightLightColor.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixClassDlg.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixCrashDuplicateForm.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixCrashInArmorAddon.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixCrashLightingShader.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixCrashMakeXYZCircles.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixCrashPluginTXT.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixCrashTabControl.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixDataDlgWithPluginTXT.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixDialogueBranch.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixFileInUse.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixLoadMore32KAnimation.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixMemoryLeakActorDlg.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixMoveToTopic.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixMusicTrackForm.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixNiSkinInstance.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixObjectPalette.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixRaceDlg.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixRemoteDesktop.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixRenderPass.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixSelectedPackageData.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixSpellDlg.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixSpellEffectsDuration.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixUnableToFindVariable.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixVertexNormals.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixWaterOrtho.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixWaterType.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\IncreaseMaximumNavmesh.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\LoadDDSFile.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\LoadOptimization.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\MemoryLeakInPreviewWindow.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\NavMeshInfoMap.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\NiCollisionObjectClonedWarning.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\RenameCreationKitApp.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\ReplaceBSPointerHandleAndManager.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\TESParameters_CTDA.h">
+      <Filter>Patches\SSE\1-50</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\WeaponCriticalEffect.h">
+      <Filter>Patches\SSE\1-50</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

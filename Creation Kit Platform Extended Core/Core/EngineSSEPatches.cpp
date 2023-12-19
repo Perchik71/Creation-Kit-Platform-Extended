@@ -49,6 +49,12 @@
 #include "Patches/SSE/CrashFlowChartX.h"
 #include "Patches/SSE/BrokenTerrainEditDlg.h"
 #include "Patches/SSE/CrashDuplicateWorldspace.h"
+#include "Patches/SSE/FixWaterType.h"
+#include "Patches/SSE/BNetConvertUnicodeString.h"
+#include "Patches/SSE/CrashUsingMore16NPCForFaceGen.h"
+#include "Patches/SSE/NavMeshInfoMap.h"
+#include "Patches/SSE/BGSPerkRankArray.h"
+#include "Patches/SSE/TESParameters_CTDA.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -104,6 +110,12 @@ namespace CreationKitPlatformExtended
 				new Patches::CrashFlowChartXPatch(),
 				new Patches::BrokenTerrainEditDlgPatch(),
 				new Patches::CrashDuplicateWorldspacePatch(),
+				new Patches::FixWaterTypePatch(),
+				new Patches::BNetConvertUnicodeStringPatch(),
+				new Patches::CrashUsingMore16NPCForFaceGenPatch(),
+				new Patches::NavMeshInfoMapPatch(),
+				new Patches::BGSPerkRankArrayPatch(),
+				new Patches::TESParameters_CTDAPatch(),
 			});
 		}
 	}
