@@ -10,3 +10,6 @@
 [submodule "Dependencies/libdeflate"]
 	path = Dependencies/libdeflate
 	url = https://github.com/ebiggers/libdeflate.git
+[submodule "Dependencies/jDialogs"]
+	path = Dependencies/jDialogs
+	url = https://github.com/Perchik71/jDialogs.git

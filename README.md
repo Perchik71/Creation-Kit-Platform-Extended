@@ -14,7 +14,7 @@
 </p>
 
 # Description
-**The mod is in the early stages of development.** The platform will support all known versions of Creation Kit in the future, but the focus is first on the Creation Kit version SSE 1.6.1130. This is a continuation of two previously arhived projects, as I am already confused in the code. The new implementation is based on the principle of modularity, which will allow for better control of development.
+The platform will support all known versions of Creation Kit in the future, but the focus is first on the Creation Kit version SSE 1.6.1130. This is a continuation of two previously arhived projects, as I am already confused in the code. The new implementation is based on the principle of modularity, which will allow for better control of development.
 
 # Fixed or added
 :white_check_mark: Fast file loading  
@@ -28,12 +28,13 @@
 [zipper](https://github.com/kuba--/zip.git) URL **https://github.com/kuba--/zip.git** IN **Dependencies/zipper**  
 [libdeflate](https://github.com/ebiggers/libdeflate.git) URL **https://github.com/ebiggers/libdeflate.git** IN **Dependencies/libdeflate**  
 [xbyak](https://github.com/herumi/xbyak.git) URL **https://github.com/herumi/xbyak.git** IN **Dependencies/xbyak**  
+[jDialogs](https://github.com/Perchik71/jDialogs.git) URL **https://github.com/Perchik71/jDialogs.git** IN **Dependencies/jDialogs** *(recursive)*
 
 # Compilation
 Open a project in **Visual Studio 2019** or later. Build the project in **Release** mode.  
 Compile the Unicode Plugin to **Lazarus 1.8.2** or later. Take .dll's from the **x64** folder and move it to the folder with the game. 
 Take the database **CreationKitPlatformExtended_SSE_1_6_1130.database** from the folder **Database/1_6_1130/**. 
-You will also need **CreationKitPlatformExtendedMessagesBlacklist.txt** and **CreationKitPlatformExtended.ini**. 
+You will also need **Stuffs/SSE/CreationKitPlatformExtendedMessagesBlacklist.txt** and **Stuffs/SSE/CreationKitPlatformExtended.ini** to the game folder. 
 
 # Credits
 [Nukem9](https://github.com/Nukem9) (for experimental functions, hash and so on, very useful)  
