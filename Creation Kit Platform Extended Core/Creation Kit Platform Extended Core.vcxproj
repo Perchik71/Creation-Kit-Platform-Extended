@@ -44,7 +44,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;ZYDIS_STATIC_DEFINE;CREATIOKITPLATFORMEXTENDEDCORE_EXPORTS;_WINDOWS;_USRDLL;XBYAK_NO_OP_NAMES;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;ZYDIS_STATIC_DEFINE;CREATIOKITPLATFORMEXTENDEDCORE_EXPORTS;_WINDOWS;_USRDLL;XBYAK_NO_OP_NAMES;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;JDIALOG_NO_MANIFEST_LINKER_COMMCTRL;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
@@ -112,11 +112,13 @@
     <ClCompile Include="Patches\SSE\BrokenTerrainEditDlg.cpp" />
     <ClCompile Include="Patches\SSE\CheckD3D11.cpp" />
     <ClCompile Include="Patches\SSE\CrashAfterMultipleMastersWarning.cpp" />
+    <ClCompile Include="Patches\SSE\CrashCCCFiles.cpp" />
     <ClCompile Include="Patches\SSE\CrashDuplicateWorldspace.cpp" />
     <ClCompile Include="Patches\SSE\CrashFlowChartX.cpp" />
     <ClCompile Include="Patches\SSE\CrashInventoryIterators.cpp" />
     <ClCompile Include="Patches\SSE\CrashSortFunc.cpp" />
     <ClCompile Include="Patches\SSE\CrashTestRadius.cpp" />
+    <ClCompile Include="Patches\SSE\CrashUploadBNetModWithArchive.cpp" />
     <ClCompile Include="Patches\SSE\CrashUsingMore16NPCForFaceGen.cpp" />
     <ClCompile Include="Patches\SSE\FixActorDlg.cpp" />
     <ClCompile Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.cpp" />
@@ -132,6 +134,7 @@
     <ClCompile Include="Patches\SSE\FixDataDlgWithPluginTXT.cpp" />
     <ClCompile Include="Patches\SSE\FixDialogueBranch.cpp" />
     <ClCompile Include="Patches\SSE\FixFileInUse.cpp" />
+    <ClCompile Include="Patches\SSE\FixIconsScriptProp.cpp" />
     <ClCompile Include="Patches\SSE\FixIntersectionTriangle.cpp" />
     <ClCompile Include="Patches\SSE\FixLoadMore32KAnimation.cpp" />
     <ClCompile Include="Patches\SSE\FixMemoryLeakActorDlg.cpp" />
@@ -156,6 +159,7 @@
     <ClCompile Include="Patches\SSE\MemoryLeakInPreviewWindow.cpp" />
     <ClCompile Include="Patches\SSE\NavMeshInfoMap.cpp" />
     <ClCompile Include="Patches\SSE\NiCollisionObjectClonedWarning.cpp" />
+    <ClCompile Include="Patches\SSE\Re-EnableFog.cpp" />
     <ClCompile Include="Patches\SSE\RenameCreationKitApp.cpp" />
     <ClCompile Include="Patches\SSE\ReplaceBSPointerHandleAndManager.cpp" />
     <ClCompile Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.cpp" />
@@ -241,11 +245,13 @@
     <ClInclude Include="Patches\SSE\BrokenTerrainEditDlg.h" />
     <ClInclude Include="Patches\SSE\CheckD3D11.h" />
     <ClInclude Include="Patches\SSE\CrashAfterMultipleMastersWarning.h" />
+    <ClInclude Include="Patches\SSE\CrashCCCFiles.h" />
     <ClInclude Include="Patches\SSE\CrashDuplicateWorldspace.h" />
     <ClInclude Include="Patches\SSE\CrashFlowChartX.h" />
     <ClInclude Include="Patches\SSE\CrashInventoryIterators.h" />
     <ClInclude Include="Patches\SSE\CrashSortFunc.h" />
     <ClInclude Include="Patches\SSE\CrashTestRadius.h" />
+    <ClInclude Include="Patches\SSE\CrashUploadBNetModWithArchive.h" />
     <ClInclude Include="Patches\SSE\CrashUsingMore16NPCForFaceGen.h" />
     <ClInclude Include="Patches\SSE\FixActorDlg.h" />
     <ClInclude Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.h" />
@@ -261,6 +267,7 @@
     <ClInclude Include="Patches\SSE\FixDataDlgWithPluginTXT.h" />
     <ClInclude Include="Patches\SSE\FixDialogueBranch.h" />
     <ClInclude Include="Patches\SSE\FixFileInUse.h" />
+    <ClInclude Include="Patches\SSE\FixIconsScriptProp.h" />
     <ClInclude Include="Patches\SSE\FixIntersectionTriangle.h" />
     <ClInclude Include="Patches\SSE\FixLoadMore32KAnimation.h" />
     <ClInclude Include="Patches\SSE\FixMemoryLeakActorDlg.h" />
@@ -285,6 +292,7 @@
     <ClInclude Include="Patches\SSE\MemoryLeakInPreviewWindow.h" />
     <ClInclude Include="Patches\SSE\NavMeshInfoMap.h" />
     <ClInclude Include="Patches\SSE\NiCollisionObjectClonedWarning.h" />
+    <ClInclude Include="Patches\SSE\Re-EnableFog.h" />
     <ClInclude Include="Patches\SSE\RenameCreationKitApp.h" />
     <ClInclude Include="Patches\SSE\ReplaceBSPointerHandleAndManager.h" />
     <ClInclude Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.h" />

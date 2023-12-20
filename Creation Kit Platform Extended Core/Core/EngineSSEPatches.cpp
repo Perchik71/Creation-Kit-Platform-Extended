@@ -61,6 +61,10 @@
 #include "Patches/SSE/TESModelTextureSwapCorrectlyLoad.h"
 #include "Patches/SSE/FixCellViewObjectList.h"
 #include "Patches/SSE/FixIntersectionTriangle.h"
+#include "Patches/SSE/FixIconsScriptProp.h"
+#include "Patches/SSE/CrashCCCFiles.h"
+#include "Patches/SSE/CrashUploadBNetModWithArchive.h"
+#include "Patches/SSE/Re-EnableFog.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -128,6 +132,10 @@ namespace CreationKitPlatformExtended
 				new Patches::TESModelTextureSwapCorrectlyLoadPatch(),
 				new Patches::FixCellViewObjectListPatch(),
 				new Patches::FixIntersectionTrianglePatch(),
+				new Patches::FixIconsScriptPropPatch(),
+				new Patches::CrashCCCFilesPatch(),
+				new Patches::CrashUploadBNetModWithArchivePatch(),
+				new Patches::ReEnableFogPatch(),
 			});
 		}
 	}

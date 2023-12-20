@@ -283,6 +283,18 @@
     <ClCompile Include="Patches\SSE\FixIntersectionTriangle.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\FixIconsScriptProp.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashCCCFiles.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashUploadBNetModWithArchive.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\Re-EnableFog.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -704,6 +716,18 @@
       <Filter>Editor API</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SSE\FixIntersectionTriangle.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixIconsScriptProp.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashCCCFiles.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashUploadBNetModWithArchive.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\Re-EnableFog.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
