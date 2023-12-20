@@ -19,6 +19,11 @@
 #include "Patches/FlowChartXPatch.h"
 #include "Patches/UnicodePatch.h"
 #include "Patches/ThreadPatch.h"
+#include "Patches/VersionControlMergeWorkaround.h"
+#include "Patches/RenderWindow60FPS.h"
+#include "Patches/DisableAssertion.h"
+#include "Patches/SkipTopicInfoValidation.h"
+#include "Patches/AllowMultipleWindowAndMaster.h"
 
 #include "Experimental/RuntimeOptimization.h"
 
@@ -103,6 +108,11 @@ namespace CreationKitPlatformExtended
 				new CreationKitPlatformExtended::Patches::FlowChartXPatch(),
 				new CreationKitPlatformExtended::Patches::UnicodePatch(),
 				new CreationKitPlatformExtended::Patches::ThreadPatch(),
+				new CreationKitPlatformExtended::Patches::VersionControlMergeWorkaroundPatch(),
+				new CreationKitPlatformExtended::Patches::RenderWindow60FPSPatch(),
+				new CreationKitPlatformExtended::Patches::DisableAssertionPatch(),
+				new CreationKitPlatformExtended::Patches::SkipTopicInfoValidationPatch(),
+				new CreationKitPlatformExtended::Patches::AllowMultipleWindowAndMasterPatch(),
 			});
 
 			// Добавление патчей только для редактора скайрима специального издания

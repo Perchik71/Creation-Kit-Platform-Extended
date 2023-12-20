@@ -65,6 +65,9 @@
 #include "Patches/SSE/CrashCCCFiles.h"
 #include "Patches/SSE/CrashUploadBNetModWithArchive.h"
 #include "Patches/SSE/Re-EnableFog.h"
+#include "Patches/SSE/Re-EnableLandShadows.h"
+#include "Patches/SSE/FixBSShadowDirectionalLight.h"
+#include "Patches/SSE/EnableStateParentWorkaround.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -136,6 +139,9 @@ namespace CreationKitPlatformExtended
 				new Patches::CrashCCCFilesPatch(),
 				new Patches::CrashUploadBNetModWithArchivePatch(),
 				new Patches::ReEnableFogPatch(),
+				new Patches::ReEnableLandShadowsPatch(),
+				new Patches::FixBSShadowDirectionalLightPatch(),
+				new Patches::EnableStateParentWorkaroundPatch(),
 			});
 		}
 	}

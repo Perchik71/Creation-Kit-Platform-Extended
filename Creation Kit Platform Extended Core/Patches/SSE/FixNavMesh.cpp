@@ -52,7 +52,7 @@ namespace CreationKitPlatformExtended
 					// Fix for incorrect NavMesh assertion while saving certain ESP files (i.e 3DNPC.esp).
 					//
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0), (uintptr_t)&sub);
-					pointer_FixNavMesh_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
+					pointer_FixNavMesh_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
 
 					return true;
 				}

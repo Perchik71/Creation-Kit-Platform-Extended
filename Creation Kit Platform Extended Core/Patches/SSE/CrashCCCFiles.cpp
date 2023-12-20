@@ -52,8 +52,8 @@ namespace CreationKitPlatformExtended
 					// Fix crash when loading new CC ESLs as master files. 
 					//
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(0), (uintptr_t)&GetCCFileCount);
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(0), (uintptr_t)&GetCCFile);
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(0), (uintptr_t)&IsCCFile);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(1), (uintptr_t)&GetCCFile);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(2), (uintptr_t)&IsCCFile);
 
 					return true;
 				}
