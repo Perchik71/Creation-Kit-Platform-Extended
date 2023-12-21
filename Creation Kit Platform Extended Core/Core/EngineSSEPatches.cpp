@@ -68,6 +68,8 @@
 #include "Patches/SSE/Re-EnableLandShadows.h"
 #include "Patches/SSE/FixBSShadowDirectionalLight.h"
 #include "Patches/SSE/EnableStateParentWorkaround.h"
+#include "Patches/SSE/AllowSaveESMandMasterESP.h"
+#include "Patches/SSE/RemoveUselessMessages.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -142,6 +144,8 @@ namespace CreationKitPlatformExtended
 				new Patches::ReEnableLandShadowsPatch(),
 				new Patches::FixBSShadowDirectionalLightPatch(),
 				new Patches::EnableStateParentWorkaroundPatch(),
+				new Patches::AllowSaveESMandMasterESPPatch(),
+				new Patches::RemoveUselessMessagesPatch(),
 			});
 		}
 	}

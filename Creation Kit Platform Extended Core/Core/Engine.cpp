@@ -24,6 +24,7 @@
 #include "Patches/DisableAssertion.h"
 #include "Patches/SkipTopicInfoValidation.h"
 #include "Patches/AllowMultipleWindowAndMaster.h"
+#include "Patches/UIPatch.h"
 
 #include "Experimental/RuntimeOptimization.h"
 
@@ -113,6 +114,7 @@ namespace CreationKitPlatformExtended
 				new CreationKitPlatformExtended::Patches::DisableAssertionPatch(),
 				new CreationKitPlatformExtended::Patches::SkipTopicInfoValidationPatch(),
 				new CreationKitPlatformExtended::Patches::AllowMultipleWindowAndMasterPatch(),
+				new CreationKitPlatformExtended::Patches::UIPatch(),
 			});
 
 			// Добавление патчей только для редактора скайрима специального издания

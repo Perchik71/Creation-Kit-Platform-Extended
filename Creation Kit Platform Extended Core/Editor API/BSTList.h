@@ -435,16 +435,16 @@ namespace CreationKitPlatformExtended
 
 			VOID Dump(VOID) {
 				_MESSAGE("BSSimpleList:");
-				_MESSAGE_FMT("> count: %d", Count());
+				_MESSAGE("> count: %d", Count());
 
 				const _Node* pCur = Head();
 				INT32 i = 0;
 				while (pCur) {
-					_MESSAGE_FMT("* %d :", i);
+					_MESSAGE("* %d :", i);
 					//_MESSAGE("\t\titem: %08X", pCur->item);
 					if (pCur->item)
-						_MESSAGE_FMT("\t\t*item: %d", *pCur->item);
-					_MESSAGE_FMT("\t\tnext: %08X", pCur->next);
+						_MESSAGE("\t\t*item: %d", *pCur->item);
+					_MESSAGE("\t\tnext: %08X", pCur->next);
 
 					i++;
 					pCur = pCur->next;

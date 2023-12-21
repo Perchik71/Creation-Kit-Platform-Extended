@@ -166,6 +166,9 @@ namespace CreationKitPlatformExtended
 #	define __VSTR(x) x
 #endif
 
+#define PROPERTY(read_func, write_func)	__declspec(property(get = read_func, put = write_func))
+#define READ_PROPERTY(read_func)		__declspec(property(get = read_func))
+
 #define Assert(Cond)					if(!(Cond)) CreationKitPlatformExtended::Utils::__Assert(__FILE__, __LINE__, #Cond);
 #define AssertMsgVa(Cond, Msg, ...)		if(!(Cond)) CreationKitPlatformExtended::Utils::__Assert(__FILE__, __LINE__, "%s\n\n" Msg, #Cond, ##__VA_ARGS__);
 #define AssertMsg(Cond, Msg)			AssertMsgVa(Cond, Msg)

@@ -65,7 +65,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ws2_32.lib;uxtheme.lib;version.lib;detours.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;vmm-x64.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;msimg32.lib;uxtheme.lib;version.lib;detours.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;vmm-x64.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\Version\scripts.ps1"</Command>
@@ -98,7 +98,13 @@
     <ClCompile Include="Editor API\SSE\BSShaderProperty.cpp" />
     <ClCompile Include="Editor API\SSE\BSShaderResourceManager.cpp" />
     <ClCompile Include="Editor API\SSE\TESDialogSpell.cpp" />
+    <ClCompile Include="Editor API\SSE\TESFile.cpp" />
     <ClCompile Include="Editor API\SSE\TESForm.cpp" />
+    <ClCompile Include="Editor API\UI\UIBaseWindow.cpp" />
+    <ClCompile Include="Editor API\UI\UICheckboxControl.cpp" />
+    <ClCompile Include="Editor API\UI\UIGraphics.cpp" />
+    <ClCompile Include="Editor API\UI\UIImageList.cpp" />
+    <ClCompile Include="Editor API\UI\UIMenus.cpp" />
     <ClCompile Include="Experimental\RuntimeOptimization.cpp" />
     <ClCompile Include="Patches\AllowMultipleWindowAndMaster.cpp" />
     <ClCompile Include="Patches\ConsolePatch.cpp" />
@@ -110,6 +116,7 @@
     <ClCompile Include="Patches\RenderWindow60FPS.cpp" />
     <ClCompile Include="Patches\SkipTopicInfoValidation.cpp" />
     <ClCompile Include="Patches\SSE\AllowPlayerKnowsCondition.cpp" />
+    <ClCompile Include="Patches\SSE\AllowSaveESMandMasterESP.cpp" />
     <ClCompile Include="Patches\SSE\AlteredFormList.cpp" />
     <ClCompile Include="Patches\SSE\BGSPerkRankArray.cpp" />
     <ClCompile Include="Patches\SSE\BNetConvertUnicodeString.cpp" />
@@ -168,6 +175,7 @@
     <ClCompile Include="Patches\SSE\Re-EnableFog.cpp" />
     <ClCompile Include="Patches\SSE\Re-EnableLandShadows.cpp" />
     <ClCompile Include="Patches\SSE\RefLinkGeometryHangWorkaround.cpp" />
+    <ClCompile Include="Patches\SSE\RemoveUselessMessages.cpp" />
     <ClCompile Include="Patches\SSE\RenameCreationKitApp.cpp" />
     <ClCompile Include="Patches\SSE\ReplaceBSPointerHandleAndManager.cpp" />
     <ClCompile Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.cpp" />
@@ -175,6 +183,7 @@
     <ClCompile Include="Patches\SSE\UnEquipSound.cpp" />
     <ClCompile Include="Patches\SSE\WeaponCriticalEffect.cpp" />
     <ClCompile Include="Patches\ThreadPatch.cpp" />
+    <ClCompile Include="Patches\UIPatch.cpp" />
     <ClCompile Include="Patches\UnicodePatch.cpp" />
     <ClCompile Include="Patches\VersionControlMergeWorkaround.cpp" />
     <ClCompile Include="Steam API\SteamAPI.cpp" />
@@ -239,8 +248,14 @@
     <ClInclude Include="Editor API\SSE\NiSourceTexture.h" />
     <ClInclude Include="Editor API\SSE\NiTexture.h" />
     <ClInclude Include="Editor API\SSE\TESDialogSpell.h" />
+    <ClInclude Include="Editor API\SSE\TESFile.h" />
     <ClInclude Include="Editor API\SSE\TESForm.h" />
     <ClInclude Include="Editor API\SSE\TESWater.h" />
+    <ClInclude Include="Editor API\UI\UIBaseWindow.h" />
+    <ClInclude Include="Editor API\UI\UICheckboxControl.h" />
+    <ClInclude Include="Editor API\UI\UIGraphics.h" />
+    <ClInclude Include="Editor API\UI\UIImageList.h" />
+    <ClInclude Include="Editor API\UI\UIMenus.h" />
     <ClInclude Include="Experimental\RuntimeOptimization.h" />
     <ClInclude Include="Patches\AllowMultipleWindowAndMaster.h" />
     <ClInclude Include="Patches\ConsolePatch.h" />
@@ -252,6 +267,7 @@
     <ClInclude Include="Patches\RenderWindow60FPS.h" />
     <ClInclude Include="Patches\SkipTopicInfoValidation.h" />
     <ClInclude Include="Patches\SSE\AllowPlayerKnowsCondition.h" />
+    <ClInclude Include="Patches\SSE\AllowSaveESMandMasterESP.h" />
     <ClInclude Include="Patches\SSE\AlteredFormList.h" />
     <ClInclude Include="Patches\SSE\BGSPerkRankArray.h" />
     <ClInclude Include="Patches\SSE\BNetConvertUnicodeString.h" />
@@ -310,6 +326,7 @@
     <ClInclude Include="Patches\SSE\Re-EnableFog.h" />
     <ClInclude Include="Patches\SSE\Re-EnableLandShadows.h" />
     <ClInclude Include="Patches\SSE\RefLinkGeometryHangWorkaround.h" />
+    <ClInclude Include="Patches\SSE\RemoveUselessMessages.h" />
     <ClInclude Include="Patches\SSE\RenameCreationKitApp.h" />
     <ClInclude Include="Patches\SSE\ReplaceBSPointerHandleAndManager.h" />
     <ClInclude Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.h" />
@@ -317,6 +334,7 @@
     <ClInclude Include="Patches\SSE\UnEquipSound.h" />
     <ClInclude Include="Patches\SSE\WeaponCriticalEffect.h" />
     <ClInclude Include="Patches\ThreadPatch.h" />
+    <ClInclude Include="Patches\UIPatch.h" />
     <ClInclude Include="Patches\UnicodePatch.h" />
     <ClInclude Include="Patches\VersionControlMergeWorkaround.h" />
     <ClInclude Include="Steam API\SteamAPI.h" />

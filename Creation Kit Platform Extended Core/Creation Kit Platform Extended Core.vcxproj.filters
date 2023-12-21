@@ -322,6 +322,33 @@
     <ClCompile Include="Patches\AllowMultipleWindowAndMaster.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Editor API\SSE\TESFile.cpp">
+      <Filter>Editor API\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\AllowSaveESMandMasterESP.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\RemoveUselessMessages.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\UI\UIGraphics.cpp">
+      <Filter>Editor API\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\UI\UIImageList.cpp">
+      <Filter>Editor API\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\UI\UIMenus.cpp">
+      <Filter>Editor API\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\UI\UIBaseWindow.cpp">
+      <Filter>Editor API\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\UI\UICheckboxControl.cpp">
+      <Filter>Editor API\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\UIPatch.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -362,6 +389,9 @@
     </Filter>
     <Filter Include="Dependecies\jDialogs">
       <UniqueIdentifier>{30305feb-8279-4f4d-ad11-a2019bb7d38f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor API\UI">
+      <UniqueIdentifier>{c6987bac-27e1-4e11-b90c-a555c25d9c79}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -782,6 +812,33 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Patches\AllowMultipleWindowAndMaster.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\TESFile.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\AllowSaveESMandMasterESP.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\RemoveUselessMessages.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\UI\UIGraphics.h">
+      <Filter>Editor API\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\UI\UIImageList.h">
+      <Filter>Editor API\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\UI\UIMenus.h">
+      <Filter>Editor API\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\UI\UIBaseWindow.h">
+      <Filter>Editor API\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\UI\UICheckboxControl.h">
+      <Filter>Editor API\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\UIPatch.h">
       <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>

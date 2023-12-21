@@ -8,6 +8,16 @@ namespace CreationKitPlatformExtended
 {
 	namespace EditorAPI
 	{
+		struct DialogOverrideData
+		{
+			DLGPROC DialogFunc;	// Original function pointer
+			bool IsDialog;		// True if it requires EndDialog()
+		};
+
+		std::recursive_mutex DialogOverrideMutex;
+		std::unordered_map<HWND, DialogOverrideData> DialogOverrides;
+		thread_local DialogOverrideData ThreadDialogData;
+
 		EditorUI* GlobalEditorUIPtr = nullptr;
 
 		EditorUI::EditorUI() : UseDeferredDialogInsert(false), DeferredListView(nullptr),
@@ -152,6 +162,142 @@ namespace CreationKitPlatformExtended
 		void EditorUI::HKEndUIDefer()
 		{
 			GlobalEditorUIPtr->EndUIDefer();
+		}
+
+		INT_PTR CALLBACK EditorUI::DialogFuncOverride(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
+		{
+			DLGPROC proc = nullptr;
+
+			DialogOverrideMutex.lock();
+			{
+				if (auto itr = DialogOverrides.find(hwndDlg); itr != DialogOverrides.end())
+					proc = itr->second.DialogFunc;
+
+				// if (is new entry)
+				if (!proc)
+				{
+					DialogOverrides[hwndDlg] = ThreadDialogData;
+					proc = ThreadDialogData.DialogFunc;
+
+					ThreadDialogData.DialogFunc = nullptr;
+					ThreadDialogData.IsDialog = false;
+				}
+
+				// Purge old entries every now and then
+				if (DialogOverrides.size() >= 50)
+				{
+					for (auto itr = DialogOverrides.begin(); itr != DialogOverrides.end();)
+					{
+						if (itr->first == hwndDlg || IsWindow(itr->first))
+						{
+							itr++;
+							continue;
+						}
+
+						itr = DialogOverrides.erase(itr);
+					}
+				}
+			}
+			DialogOverrideMutex.unlock();
+
+			return proc(hwndDlg, uMsg, wParam, lParam);
+		}
+
+		HWND EditorUI::HKCreateDialogParamA(HINSTANCE hInstance, LPCSTR lpTemplateName, 
+			HWND hWndParent, DLGPROC lpDialogFunc, LPARAM dwInitParam)
+		{
+			// EndDialog MUST NOT be used
+			ThreadDialogData.DialogFunc = lpDialogFunc;
+			ThreadDialogData.IsDialog = false;
+
+			//// Override certain default dialogs to use this DLL's resources
+			//switch (reinterpret_cast<uintptr_t>(lpTemplateName))
+			//{
+			//case 0x64:// "About"
+			//	lpTemplateName = (LPCSTR)0xEB;
+			//	ThreadDialogData.DialogFunc = DialogFuncAbout;
+			//	hInstance = reinterpret_cast<HINSTANCE>(&__ImageBase);
+			//	break;
+			//case 0xEB:// "Logo"
+			//	lpTemplateName = (LPCSTR)0xEB;
+			//	ThreadDialogData.DialogFunc = DialogFuncLogo;
+			//	hInstance = reinterpret_cast<HINSTANCE>(&__ImageBase);
+			//	break;
+			//case 0x7A:// "Object Window"
+			//case 0x8D:// "Reference"
+			//case 0xA2:// "Data"
+			//case 0xAF:// "Cell View"
+			//case 0xDC:// "Use Report"
+			//	hInstance = reinterpret_cast<HINSTANCE>(&__ImageBase);
+			//	break;
+			//}
+
+			return CreateDialogParamA(hInstance, lpTemplateName, hWndParent, DialogFuncOverride, dwInitParam);
+		}
+
+		INT_PTR EditorUI::HKDialogBoxParamA(HINSTANCE hInstance, LPCSTR lpTemplateName, HWND hWndParent, 
+			DLGPROC lpDialogFunc, LPARAM dwInitParam)
+		{
+			// EndDialog MUST be used
+			ThreadDialogData.DialogFunc = lpDialogFunc;
+			ThreadDialogData.IsDialog = true;
+
+			//// Override certain default dialogs to use this DLL's resources
+			//switch (reinterpret_cast<uintptr_t>(lpTemplateName))
+			//{
+			//case 0x64:// "About"
+			//	lpTemplateName = (LPCSTR)0xEB;
+			//	ThreadDialogData.DialogFunc = DialogFuncAbout;
+			//	hInstance = reinterpret_cast<HINSTANCE>(&__ImageBase);
+			//	break;
+			//case 0xEB:// "Logo"
+			//	lpTemplateName = (LPCSTR)0xEB;
+			//	ThreadDialogData.DialogFunc = DialogFuncLogo;
+			//	hInstance = reinterpret_cast<HINSTANCE>(&__ImageBase);
+			//	break;
+			//case 0x7A:// "Object Window"
+			//case 0x8D:// "Reference"
+			//case 0xA2:// "Data"
+			//case 0xAF:// "Cell View"
+			//case 0xDC:// "Use Report"
+			//	hInstance = reinterpret_cast<HINSTANCE>(&__ImageBase);
+			//	break;
+			//}
+
+			return DialogBoxParamA(hInstance, lpTemplateName, hWndParent, DialogFuncOverride, dwInitParam);
+		}
+
+		BOOL EditorUI::HKEndDialog(HWND hDlg, INT_PTR nResult)
+		{
+			std::lock_guard lock(DialogOverrideMutex);
+
+			// Fix for the CK calling EndDialog on a CreateDialogParamA window
+			if (auto itr = DialogOverrides.find(hDlg); itr != DialogOverrides.end() && !itr->second.IsDialog)
+			{
+				DestroyWindow(hDlg);
+				return TRUE;
+			}
+
+			return EndDialog(hDlg, nResult);
+		}
+
+		LRESULT EditorUI::HKSendMessageA(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+		{
+			if (hWnd && Msg == WM_DESTROY)
+			{
+				std::lock_guard lock(DialogOverrideMutex);
+
+				// If this is a dialog, we can't call DestroyWindow on it
+				if (auto itr = DialogOverrides.find(hWnd); itr != DialogOverrides.end())
+				{
+					if (!itr->second.IsDialog)
+						DestroyWindow(hWnd);
+				}
+
+				return 0;
+			}
+
+			return SendMessageA(hWnd, Msg, wParam, lParam);
 		}
 	}
 }

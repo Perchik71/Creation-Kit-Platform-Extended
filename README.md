@@ -20,6 +20,24 @@ The platform will support all known versions of Creation Kit in the future, but 
 :white_check_mark: Fast file loading  
 :white_check_mark: Interception of warning messages in the console  
 :white_check_mark: Unicode support  
+:white_check_mark: Multiple UI Fix View Menu section and etc  
+:white_check_mark: Create master files and open them as plugins  
+:white_check_mark: Opening plugins as master files if they are in dependencies  
+:white_check_mark: Many other fixes are also from the author of [@Nukem9](https://github.com/Nukem9)
+
+# ENB
+**CK** does not work well with **ENB**.  
+
+# Mod Settings
+To hide errors, create a file *CreationKitPlatformExtendedMessagesBlacklist.txt*.  
+**IMPORTANT**: Errors should be copied from the mod's Log window and one error is one line. The file must be in **ANSI** encoding.  
+*CreationKitPlatformExtended.ini* the main file with the settings and comes with the code, be sure to read.
+
+# Unicode
+**ONLY SURROGATE**: Support for English and native languages without special characters.
+For understanding, the application uses the ancient **ANSI** type string representation. The idea is to feed the text already in your native encoding. When loading .esp, .esl, .esm files all strings are translated from UTF-8 to WinCP, and when saved back. WinCP is the current encoding in your operating system.  
+**IMPORTANT**:  
+In **Win10**, in the language settings, there is now an option to work with UTF-8, you need to turn it off otherwise there will be only "?".
 
 # Dependencies
 [detours](https://github.com/Nukem9/detours.git) URL **https://github.com/Nukem9/detours.git** IN **Dependencies/detours**  
