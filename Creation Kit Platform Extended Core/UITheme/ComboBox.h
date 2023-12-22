@@ -22,29 +22,26 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
+#include "Editor API/UI/UIGraphics.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace ComboBox
 		{
-			namespace ComboBox
+			namespace Graphics = ::Core::Classes::UI;
+
+			namespace Render
 			{
-				namespace Graphics = Core::Classes::UI;
+				VOID DrawArrow_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF cColor, COLORREF cShadowColor);
+				VOID DrawArrow_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawArrow_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
+			}
 
-				namespace Render
-				{
-					VOID FIXAPI DrawArrow_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF cColor, COLORREF cShadowColor);
-					VOID FIXAPI DrawArrow_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawArrow_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
-				}
-
-				namespace Event
-				{
-					VOID FIXAPI OnBeforeDrawText(Graphics::CUICanvas& canvas, DWORD& flags, INT iStateId);
-				}
+			namespace Event
+			{
+				VOID OnBeforeDrawText(Graphics::CUICanvas& canvas, DWORD& flags, INT iStateId);
 			}
 		}
 	}

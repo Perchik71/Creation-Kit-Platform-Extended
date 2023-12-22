@@ -22,35 +22,32 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
+#include "Editor API/UI/UIGraphics.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace PageControl
 		{
-			namespace PageControl
+			namespace Graphics = ::Core::Classes::UI;
+
+			namespace Render
 			{
-				namespace Graphics = Core::Classes::UI;
-
-				namespace Render
-				{
-					VOID FIXAPI DrawBorder(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawButton_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF cColor);
-					VOID FIXAPI DrawButton_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawButton_SelectedAndFocused(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawButton_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawButton_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
-				}
-
-				namespace Event
-				{
-					VOID FIXAPI OnBeforeDrawText(Graphics::CUICanvas& canvas, DWORD& flags);
-				}
-
-				VOID FIXAPI Initialize(HWND hWnd);
+				VOID DrawBorder(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawButton_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF cColor);
+				VOID DrawButton_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawButton_SelectedAndFocused(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawButton_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawButton_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
 			}
+
+			namespace Event
+			{
+				VOID OnBeforeDrawText(Graphics::CUICanvas& canvas, DWORD& flags);
+			}
+
+			VOID Initialize(HWND hWnd);
 		}
 	}
 }

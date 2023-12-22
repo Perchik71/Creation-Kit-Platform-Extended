@@ -22,40 +22,37 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
+#include "Editor API/UI/UIGraphics.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace RadioButton
 		{
-			namespace RadioButton
+			namespace Graphics = ::Core::Classes::UI;
+
+			namespace Render
 			{
-				namespace Graphics = Core::Classes::UI;
+				VOID DrawPushButtonR_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect,
+					COLORREF clGradientColorStart, COLORREF clGradientColorEnd,
+					COLORREF clGradientHighlighterColorStart, COLORREF clGradientHighlighterColorEnd,
+					COLORREF clDividerColor, COLORREF clDividerHighlighterColor);
+				VOID DrawPushButtonR_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawPushButtonR_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawPushButtonR_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawPushButtonR_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
 
-				namespace Render
-				{
-					VOID FIXAPI DrawPushButtonR_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect,
-						COLORREF clGradientColorStart, COLORREF clGradientColorEnd,
-						COLORREF clGradientHighlighterColorStart, COLORREF clGradientHighlighterColorEnd,
-						COLORREF clDividerColor, COLORREF clDividerHighlighterColor);
-					VOID FIXAPI DrawPushButtonR_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawPushButtonR_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawPushButtonR_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawPushButtonR_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawRadioButton_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF clColor);
+				VOID DrawRadioButton_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawRadioButton_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawRadioButton_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawRadioButton_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
+			}
 
-					VOID FIXAPI DrawRadioButton_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF clColor);
-					VOID FIXAPI DrawRadioButton_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawRadioButton_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawRadioButton_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawRadioButton_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
-				}
-
-				namespace Event
-				{
-					VOID FIXAPI OnBeforeDrawText(Graphics::CUICanvas& canvas, DWORD& flags, INT iStateId);
-				}
+			namespace Event
+			{
+				VOID OnBeforeDrawText(Graphics::CUICanvas& canvas, DWORD& flags, INT iStateId);
 			}
 		}
 	}

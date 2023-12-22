@@ -22,29 +22,26 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
+#include "Editor API/UI/UIGraphics.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace ScrollBar
 		{
-			namespace ScrollBar
-			{
-				namespace Graphics = Core::Classes::UI;
+			namespace Graphics = ::Core::Classes::UI;
 
-				namespace Render
-				{
-					VOID FIXAPI DrawBackgroundHorz(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawBackgroundVert(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawSliderHorz_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawSliderHorz_Focused(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawSliderVert_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawSliderVert_Focused(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawButton_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawButton_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
-				}
+			namespace Render
+			{
+				VOID DrawBackgroundHorz(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawBackgroundVert(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawSliderHorz_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawSliderHorz_Focused(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawSliderVert_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawSliderVert_Focused(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawButton_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawButton_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
 			}
 		}
 	}

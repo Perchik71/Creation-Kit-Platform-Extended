@@ -349,6 +349,84 @@
     <ClCompile Include="Patches\UIPatch.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\UIThemePatch.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\ListBox.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\ListView.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\MDIClient.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\Memo.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\PageControl.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\PopupMenu.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\ProgressBar.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\PushButton.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\RadioButton.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\RichEdit20.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\ScrollBar.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\StatusBar.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\TimeOfDay.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\ToolBar.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\TrackBar.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\TreeView.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\UpDown.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\VarCommon.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\CheckBox.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\ComboBox.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\CustomBox.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\EditText.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\GroupBox.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="UITheme\Header.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\GDIPlusInit.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -392,6 +470,9 @@
     </Filter>
     <Filter Include="Editor API\UI">
       <UniqueIdentifier>{c6987bac-27e1-4e11-b90c-a555c25d9c79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UITheme">
+      <UniqueIdentifier>{3dd4e8a5-31e0-4799-a587-64ed548b9df1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -840,6 +921,84 @@
     </ClInclude>
     <ClInclude Include="Patches\UIPatch.h">
       <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\UIThemePatch.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\Header.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\ListBox.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\ListView.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\MDIClient.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\Memo.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\PageControl.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\PopupMenu.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\ProgressBar.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\PushButton.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\RadioButton.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\RichEdit20.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\ScrollBar.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\StatusBar.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\TimeOfDay.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\ToolBar.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\TrackBar.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\TreeView.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\UpDown.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\VarCommon.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\CheckBox.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\ComboBox.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\CustomBox.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\EditText.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="UITheme\GroupBox.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\GDIPlusInit.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

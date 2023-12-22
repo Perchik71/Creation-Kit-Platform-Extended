@@ -20,75 +20,70 @@
 */
 //////////////////////////////////////////
 
-#include "..\UIBaseWindow.h"
+#include "Editor API/UI/UIBaseWindow.h"
 #include "VarCommon.h"
 #include "StatusBar.h"
 
-#include <CommCtrl.h>
-
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace StatusBar
 		{
-			namespace StatusBar
+			namespace Render
 			{
-				namespace Render
+				VOID DrawBorder(Graphics::CUICanvas& canvas, LPCRECT pRect)
 				{
-					VOID FIXAPI DrawBorder(Graphics::CUICanvas& canvas, LPCRECT pRect)
-					{
-						// 12px by height can safely paint over
-						RECT rc = *pRect;
-						rc.bottom = rc.top + 12;
+					// 12px by height can safely paint over
+					RECT rc = *pRect;
+					rc.bottom = rc.top + 12;
 
-						canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_StatusBar_Back));
+					canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_StatusBar_Back));
 
-						// 1px by height from bottom can safely paint over
-						rc = *pRect;
-						rc.top = rc.bottom - 1;
+					// 1px by height from bottom can safely paint over
+					rc = *pRect;
+					rc.top = rc.bottom - 1;
 
-						canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_StatusBar_Back));
+					canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_StatusBar_Back));
 
-						// 17px needs to be painted over in the rightmost corner
-						rc = *pRect;
-						rc.left = rc.right - 17;
+					// 17px needs to be painted over in the rightmost corner
+					rc = *pRect;
+					rc.left = rc.right - 17;
 
-						canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_StatusBar_Back));
-					}
-
-					VOID FIXAPI DrawBackground(Graphics::CUICanvas& canvas, LPCRECT pRect)
-					{
-						canvas.Fill(*pRect, GetThemeSysColor(ThemeColor::ThemeColor_StatusBar_Back));
-					}
+					canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_StatusBar_Back));
 				}
 
-				namespace Event
+				VOID DrawBackground(Graphics::CUICanvas& canvas, LPCRECT pRect)
 				{
-					VOID FIXAPI OnBeforeDrawText(Graphics::CUICanvas& canvas, DWORD& flags)
-					{
-						flags |= DT_CENTER | DT_END_ELLIPSIS;
-						canvas.ColorText = GetThemeSysColor(ThemeColor_StatusBar_Text);
-					}
+					canvas.Fill(*pRect, GetThemeSysColor(ThemeColor::ThemeColor_StatusBar_Back));
 				}
+			}
 
-				namespace Func
+			namespace Event
+			{
+				VOID OnBeforeDrawText(Graphics::CUICanvas& canvas, DWORD& flags)
 				{
-					VOID FIXAPI AdjustHeightByTextHeight(HWND hWnd, HFONT hFont)
+					flags |= DT_CENTER | DT_END_ELLIPSIS;
+					canvas.ColorText = GetThemeSysColor(ThemeColor_StatusBar_Text);
+				}
+			}
+
+			namespace Func
+			{
+				VOID AdjustHeightByTextHeight(HWND hWnd, HFONT hFont)
+				{
+					SendMessageA(hWnd, WM_SETFONT, (WPARAM)hFont, FALSE);
+					if (HDC hDC = GetDC(hWnd); hDC)
 					{
-						SendMessageA(hWnd, WM_SETFONT, (WPARAM)hFont, FALSE);
-						if (HDC hDC = GetDC(hWnd); hDC)
+						Graphics::CUICanvas* Canvas = new Graphics::CUICanvas(hDC);
+						if (Canvas)
 						{
-							Graphics::CUICanvas* Canvas = new Graphics::CUICanvas(hDC);
-							if (Canvas)
-							{
-								SendMessageA(hWnd, SB_SETMINHEIGHT, Canvas->TextHeight("A") + 8, 0);
-								SendMessageA(hWnd, WM_SIZE, 0, 0);
-							}
-
-							delete Canvas;
-							ReleaseDC(hWnd, hDC);
+							SendMessageA(hWnd, SB_SETMINHEIGHT, Canvas->TextHeight("A") + 8, 0);
+							SendMessageA(hWnd, WM_SIZE, 0, 0);
 						}
+
+						delete Canvas;
+						ReleaseDC(hWnd, hDC);
 					}
 				}
 			}

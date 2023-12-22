@@ -1103,28 +1103,28 @@ namespace Core
 				SetBkMode(m_hDC, value ? TRANSPARENT : OPAQUE);
 			}
 
-			VOID CUICanvas::TextRect(RECT& area, LPCSTR text, UINT flags) const
+			VOID CUICanvas::TextRect(RECT& area, LPCSTR text, UINT flags, UINT len) const
 			{
 				if (text)
-					DrawTextA(m_hDC, text, (int)strlen(text), &area, flags);
+					DrawTextA(m_hDC, text, !len ? (int)strlen(text) : len, &area, flags);
 			}
 
-			VOID CUICanvas::TextRect(CRECT& area, LPCSTR text, UINT flags) const
+			VOID CUICanvas::TextRect(CRECT& area, LPCSTR text, UINT flags, UINT len) const
 			{
 				if (text)
-					DrawTextA(m_hDC, text, (int)strlen(text), (LPRECT)&area, flags);
+					DrawTextA(m_hDC, text, !len ? (int)strlen(text) : len, (LPRECT)&area, flags);
 			}
 
-			VOID CUICanvas::TextRect(RECT& area, LPCWSTR text, UINT flags) const
+			VOID CUICanvas::TextRect(RECT& area, LPCWSTR text, UINT flags, UINT len) const
 			{
 				if (text)
-					DrawTextW(m_hDC, text, (int)wcslen(text), &area, flags);
+					DrawTextW(m_hDC, text, !len ? (int)wcslen(text) : len, &area, flags);
 			}
 
-			VOID CUICanvas::TextRect(CRECT& area, LPCWSTR text, UINT flags) const
+			VOID CUICanvas::TextRect(CRECT& area, LPCWSTR text, UINT flags, UINT len) const
 			{
 				if (text)
-					DrawTextW(m_hDC, text, (int)wcslen(text), (LPRECT)&area, flags);
+					DrawTextW(m_hDC, text, !len ? (int)wcslen(text) : len, (LPRECT)&area, flags);
 			}
 
 			VOID CUICanvas::IncludeRect(const RECT& area) const

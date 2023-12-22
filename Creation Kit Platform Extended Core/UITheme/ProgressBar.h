@@ -22,27 +22,24 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
+#include "Editor API/UI/UIGraphics.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace ProgressBar
 		{
-			namespace ProgressBar
+			namespace Graphics = ::Core::Classes::UI;
+
+			namespace Render
 			{
-				namespace Graphics = Core::Classes::UI;
-
-				namespace Render
-				{
-					VOID FIXAPI DrawBar(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawFill(Graphics::CUICanvas& canvas, LPCRECT pRect);
-				}
-
-				VOID FIXAPI Initialize(HWND hWindow);
-				LRESULT CALLBACK ProgressBarSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
+				VOID DrawBar(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawFill(Graphics::CUICanvas& canvas, LPCRECT pRect);
 			}
+
+			VOID Initialize(HWND hWindow);
+			LRESULT CALLBACK ProgressBarSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
 		}
 	}
 }

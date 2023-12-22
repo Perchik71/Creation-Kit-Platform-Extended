@@ -22,34 +22,31 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
+#include "Editor API/UI/UIGraphics.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace CustomBox
 		{
-			namespace CustomBox
+			namespace Graphics = ::Core::Classes::UI;
+
+			enum AllowBox
 			{
-				namespace Graphics = Core::Classes::UI;
+				abNormal,
+				abColor
+			};
 
-				enum AllowBox
-				{
-					abNormal,
-					abColor
-				};
-
-				namespace Render
-				{
-					VOID FIXAPI DrawBorder(Graphics::CUICanvas& canvas, Graphics::CRECT& rc);
-				}
-
-				VOID FIXAPI Initialize(HWND hWindow, AllowBox eAllowBox);
-
-				LRESULT CALLBACK NormalBoxSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
-				LRESULT CALLBACK ColorBoxSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
+			namespace Render
+			{
+				VOID DrawBorder(Graphics::CUICanvas& canvas, Graphics::CRECT& rc);
 			}
+
+			VOID Initialize(HWND hWindow, AllowBox eAllowBox);
+
+			LRESULT CALLBACK NormalBoxSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
+			LRESULT CALLBACK ColorBoxSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
 		}
 	}
 }

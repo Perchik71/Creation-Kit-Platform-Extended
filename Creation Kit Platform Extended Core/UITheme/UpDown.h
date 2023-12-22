@@ -22,52 +22,50 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
+#include "Editor API/UI/UIGraphics.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace UpDown
 		{
-			namespace UpDown
+			namespace Graphics = ::Core::Classes::UI;
+
+			namespace Render
 			{
-				namespace Graphics = Core::Classes::UI;
+				VOID DrawUp_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF cColorBorder,
+					COLORREF cColorStart, COLORREF cColorEnd, COLORREF cColor, COLORREF cShadowColor);
+				VOID DrawUp_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawUp_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawUp_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawUp_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawDown_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF cColorBorder,
+					COLORREF cColorStart, COLORREF cColorEnd, COLORREF cColor, COLORREF cShadowColor);
+				VOID DrawDown_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawDown_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawDown_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawDown_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
 
-				namespace Render
-				{
-					VOID FIXAPI DrawUp_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF cColorBorder,
-						COLORREF cColorStart, COLORREF cColorEnd, COLORREF cColor, COLORREF cShadowColor);
-					VOID FIXAPI DrawUp_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawUp_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawUp_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawUp_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawDown_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF cColorBorder,
-						COLORREF cColorStart, COLORREF cColorEnd, COLORREF cColor, COLORREF cShadowColor);
-					VOID FIXAPI DrawDown_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawDown_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawDown_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawDown_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
-
-					VOID FIXAPI DrawLeft_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF cColorBorder,
-						COLORREF cColorStart, COLORREF cColorEnd, COLORREF cColor, COLORREF cShadowColor, 
-						COLORREF cHihglighter, BOOL drawHihglighter);
-					VOID FIXAPI DrawLeft_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawLeft_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawLeft_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawLeft_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawRight_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF cColorBorder,
-						COLORREF cColorStart, COLORREF cColorEnd, COLORREF cColor, COLORREF cShadowColor, 
-						COLORREF cHihglighter, BOOL drawHihglighter);
-					VOID FIXAPI DrawRight_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawRight_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawRight_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawRight_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
-				}
-
-				VOID FIXAPI Initialize(HWND hWindow);
-				LRESULT CALLBACK UpDownSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
+				VOID DrawLeft_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF cColorBorder,
+					COLORREF cColorStart, COLORREF cColorEnd, COLORREF cColor, COLORREF cShadowColor, 
+					COLORREF cHihglighter, BOOL drawHihglighter);
+				VOID DrawLeft_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawLeft_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawLeft_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawLeft_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawRight_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF cColorBorder,
+					COLORREF cColorStart, COLORREF cColorEnd, COLORREF cColor, COLORREF cShadowColor, 
+					COLORREF cHihglighter, BOOL drawHihglighter);
+				VOID DrawRight_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawRight_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawRight_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID  DrawRight_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
 			}
+
+			VOID Initialize(HWND hWindow);
+			LRESULT CALLBACK UpDownSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, 
+				UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
 		}
 	}
 }

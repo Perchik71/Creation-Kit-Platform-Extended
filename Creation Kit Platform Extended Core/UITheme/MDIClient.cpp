@@ -20,48 +20,45 @@
 */
 //////////////////////////////////////////
 
-#include "..\UIBaseWindow.h"
+#include "Editor API/UI/UIBaseWindow.h"
 #include "VarCommon.h"
 #include "MDIClient.h"
-#include <CommCtrl.h>
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace MDIClient
 		{
-			namespace MDIClient
+			HBRUSH generalMDIBackgroundBrush;
+
+			VOID Initialize(HWND hWindow)
 			{
-				HBRUSH generalMDIBackgroundBrush;
+				generalMDIBackgroundBrush = CreateSolidBrush(GetThemeSysColor(ThemeColor::ThemeColor_MDIWindow));
+				SetWindowSubclass(hWindow, MDIClientSubclass, 0, 0);
+				SetClassLongPtrA(hWindow, GCLP_HBRBACKGROUND, (LONG_PTR)generalMDIBackgroundBrush);
+			}
 
-				VOID FIXAPI Initialize(HWND hWindow)
+			LRESULT CALLBACK MDIClientSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, 
+				UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
+			{
+				switch (uMsg)
 				{
-					generalMDIBackgroundBrush = CreateSolidBrush(GetThemeSysColor(ThemeColor::ThemeColor_MDIWindow));
-					SetWindowSubclass(hWindow, MDIClientSubclass, 0, 0);
-					SetClassLongPtrA(hWindow, GCLP_HBRBACKGROUND, (LONG_PTR)generalMDIBackgroundBrush);
+				case WM_PAINT:
+				{
+					if (HDC hdc = GetDC(hWnd); hdc)
+					{
+						RECT windowArea;
+						GetClientRect(hWnd, &windowArea);
+
+						FillRect(hdc, &windowArea, generalMDIBackgroundBrush);
+						ReleaseDC(hWnd, hdc);
+					}
+				}
+				break;
 				}
 
-				LRESULT CALLBACK MDIClientSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
-				{
-					switch (uMsg)
-					{
-					case WM_PAINT:
-					{
-						if (HDC hdc = GetDC(hWnd); hdc)
-						{
-							RECT windowArea;
-							GetClientRect(hWnd, &windowArea);
-
-							FillRect(hdc, &windowArea, generalMDIBackgroundBrush);
-							ReleaseDC(hWnd, hdc);
-						}
-					}
-					break;
-					}
-
-					return DefSubclassProc(hWnd, uMsg, wParam, lParam);
-				}
+				return DefSubclassProc(hWnd, uMsg, wParam, lParam);
 			}
 		}
 	}

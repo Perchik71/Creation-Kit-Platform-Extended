@@ -22,29 +22,26 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
+#include "Editor API/UI/UIGraphics.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace Header
 		{
-			namespace Header
+			namespace Graphics = ::Core::Classes::UI;
+
+			namespace Render
 			{
-				namespace Graphics = Core::Classes::UI;
+				VOID DrawBack_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect,
+					COLORREF clGradientColorStart, COLORREF clGradientColorEnd, COLORREF cLighter);
+				VOID DrawBack_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawBack_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawBack_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawBack_Selected(Graphics::CUICanvas& canvas, LPCRECT pRect);
 
-				namespace Render
-				{
-					VOID FIXAPI DrawBack_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect,
-						COLORREF clGradientColorStart, COLORREF clGradientColorEnd, COLORREF cLighter);
-					VOID FIXAPI DrawBack_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawBack_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawBack_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawBack_Selected(Graphics::CUICanvas& canvas, LPCRECT pRect);
-
-					VOID FIXAPI DrawDiv(Graphics::CUICanvas& canvas, LPCRECT pRect);
-				}
+				VOID DrawDiv(Graphics::CUICanvas& canvas, LPCRECT pRect);
 			}
 		}
 	}

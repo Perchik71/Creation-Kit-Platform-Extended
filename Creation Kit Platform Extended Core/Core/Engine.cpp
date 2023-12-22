@@ -8,6 +8,7 @@
 #include "ConsoleWindow.h"
 #include "CommandLineParser.h"
 #include "RelocationDatabase.h"
+#include "GDIPlusInit.h"
 #include "Engine.h"
 
 #include "Editor API/EditorUI.h"
@@ -25,6 +26,7 @@
 #include "Patches/SkipTopicInfoValidation.h"
 #include "Patches/AllowMultipleWindowAndMaster.h"
 #include "Patches/UIPatch.h"
+#include "Patches/UIThemePatch.h"
 
 #include "Experimental/RuntimeOptimization.h"
 
@@ -99,6 +101,7 @@ namespace CreationKitPlatformExtended
 			GlobalRelocationDatabasePtr = new RelocationDatabase(this);
 			GlobalRelocatorPtr = new Relocator(this);
 			GlobalConsoleWindowPtr = new ConsoleWindow(this);
+			GlobalGDIPlusInitPtr = new GDIPlusInit(this);
 
 			// Добавление патчей
 			PatchesManager->Append({
@@ -115,6 +118,7 @@ namespace CreationKitPlatformExtended
 				new CreationKitPlatformExtended::Patches::SkipTopicInfoValidationPatch(),
 				new CreationKitPlatformExtended::Patches::AllowMultipleWindowAndMasterPatch(),
 				new CreationKitPlatformExtended::Patches::UIPatch(),
+				new CreationKitPlatformExtended::Patches::UIThemePatch(),
 			});
 
 			// Добавление патчей только для редактора скайрима специального издания

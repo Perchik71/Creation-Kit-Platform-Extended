@@ -22,37 +22,34 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
+#include "Editor API/UI/UIGraphics.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace CheckBox
 		{
-			namespace CheckBox
+			namespace Graphics = ::Core::Classes::UI;
+
+			namespace Render
 			{
-				namespace Graphics = Core::Classes::UI;
+				VOID DrawCheck_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF clShadow, COLORREF clColor);
+				VOID DrawCheck_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawCheck_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawCheck_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawCheck_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
 
-				namespace Render
-				{
-					VOID FIXAPI DrawCheck_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF clShadow, COLORREF clColor);
-					VOID FIXAPI DrawCheck_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawCheck_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawCheck_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawCheck_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawIdeterminate_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF clColor);
+				VOID DrawIdeterminate_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawIdeterminate_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawIdeterminate_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawIdeterminate_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
+			}
 
-					VOID FIXAPI DrawIdeterminate_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF clColor);
-					VOID FIXAPI DrawIdeterminate_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawIdeterminate_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawIdeterminate_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawIdeterminate_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
-				}
-
-				namespace Event
-				{
-					VOID FIXAPI OnBeforeDrawText(Graphics::CUICanvas& canvas, DWORD& flags, INT iStateId);
-				}
+			namespace Event
+			{
+				VOID OnBeforeDrawText(Graphics::CUICanvas& canvas, DWORD& flags, INT iStateId);
 			}
 		}
 	}

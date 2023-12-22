@@ -20,191 +20,197 @@
 */
 //////////////////////////////////////////
 
-#include "..\UIBaseWindow.h"
+#include "Editor API/UI/UIBaseWindow.h"
 #include "VarCommon.h"
 #include "ListView.h"
-#include "..\BSString.h"
-#include "..\EditorUI.h"
-#include "..\TESFile_CK.h"
-
-#include "..\LogWindow.h"
-#include "..\..\..\xutil.h"
+#include "Editor API/BSString.h"
+#include "Editor API/EditorUI.h"
+#include "Editor API/SSE/TESFile.h"
 
 #define UI_CONTROL_CONDITION_ID 0xFA0
 #define SIZEBUF 1024
 
-namespace Core {
-	namespace UI {
-		namespace Theme {
-			namespace ListView {
-				HTHEME FIXAPI Initialize(HWND hWindow) {
-					SetWindowSubclass(hWindow, ListViewSubclass, 0, 0);
+namespace CreationKitPlatformExtended
+{
+	namespace UITheme
+	{
+		namespace ListView 
+		{
+			HTHEME Initialize(HWND hWindow) 
+			{
+				SetWindowSubclass(hWindow, ListViewSubclass, 0, 0);
 
-					ListView_SetTextColor(hWindow, GetThemeSysColor(ThemeColor::ThemeColor_Text_4));
-					ListView_SetTextBkColor(hWindow, GetThemeSysColor(ThemeColor::ThemeColor_ListView_Color));
-					ListView_SetBkColor(hWindow, GetThemeSysColor(ThemeColor::ThemeColor_ListView_Color));
+				ListView_SetTextColor(hWindow, GetThemeSysColor(ThemeColor::ThemeColor_Text_4));
+				ListView_SetTextBkColor(hWindow, GetThemeSysColor(ThemeColor::ThemeColor_ListView_Color));
+				ListView_SetBkColor(hWindow, GetThemeSysColor(ThemeColor::ThemeColor_ListView_Color));
 
-					return OpenThemeData(hWindow, VSCLASS_SCROLLBAR);
-				}
+				return OpenThemeData(hWindow, VSCLASS_SCROLLBAR);
+			}
 
-				LRESULT CALLBACK ListViewSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData) {
-					if ((uMsg == WM_SETFOCUS) || (uMsg == WM_KILLFOCUS)) {
-						InvalidateRect(hWnd, NULL, TRUE);
-						UpdateWindow(hWnd);
-					}
-					else if (uMsg == WM_PAINT) {
-						// Paint border
-						LRESULT result = DefSubclassProc(hWnd, uMsg, wParam, lParam);
-
-						HDC hdc = GetWindowDC(hWnd);
-						Core::Classes::UI::CUICanvas Canvas(hdc);
-						Core::Classes::UI::CRECT rc, rc2;
-						GetWindowRect(hWnd, (LPRECT)& rc);
-						rc.Offset(-rc.Left, -rc.Top);
-
-						if (GetFocus() == hWnd)
-							Canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Pressed));
-						else
-							Canvas.GradientFrame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_Start), 
-								GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_End), Core::Classes::UI::gdVert);
-
-						rc.Inflate(-1, -1);
-						Canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Color));
-
-						// scrollbox detected grip
-						GetClientRect(hWnd, (LPRECT)& rc2);
-						if ((abs(rc2.Width - rc.Width) > 5) && (abs(rc2.Height - rc.Height) > 5)) {
-							rc.Left = rc.Width - GetSystemMetrics(SM_CXVSCROLL);
-							rc.Top = rc.Height - GetSystemMetrics(SM_CYHSCROLL);
-							rc.Width = GetSystemMetrics(SM_CXVSCROLL);
-							rc.Height = GetSystemMetrics(SM_CYHSCROLL);
-
-							Canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_Default));
-						}
-
-						ReleaseDC(hWnd, hdc);
-						return result;
-					}
-
-					return DefSubclassProc(hWnd, uMsg, wParam, lParam);
-				}
-
-				VOID FIXAPI OnCustomDrawItemPlugins(HWND hWindow, LPDRAWITEMSTRUCT lpDrawItem)
+			LRESULT CALLBACK ListViewSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, 
+				UINT_PTR uIdSubclass, DWORD_PTR dwRefData) 
+			{
+				if ((uMsg == WM_SETFOCUS) || (uMsg == WM_KILLFOCUS)) 
 				{
-					// If there are no list view items, skip this message. 
-					if (lpDrawItem->itemID == -1)
-						return;
+					InvalidateRect(hWnd, NULL, TRUE);
+					UpdateWindow(hWnd);
+				}
+				else if (uMsg == WM_PAINT) 
+				{
+					// Paint border
+					LRESULT result = DefSubclassProc(hWnd, uMsg, wParam, lParam);
 
-					RECT rc = lpDrawItem->rcItem;
-					Graphics::CUICanvas Canvas(lpDrawItem->hDC);
+					HDC hdc = GetWindowDC(hWnd);
+					Graphics::CUICanvas Canvas(hdc);
+					Graphics::CRECT rc, rc2;
+					GetWindowRect(hWnd, (LPRECT)& rc);
+					rc.Offset(-rc.Left, -rc.Top);
+
+					if (GetFocus() == hWnd)
+						Canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Pressed));
+					else
+						Canvas.GradientFrame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_Start), 
+							GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_End), Graphics::gdVert);
+
+					rc.Inflate(-1, -1);
+					Canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Color));
+
+					// scrollbox detected grip
+					GetClientRect(hWnd, (LPRECT)& rc2);
+					if ((abs(rc2.Width - rc.Width) > 5) && (abs(rc2.Height - rc.Height) > 5)) {
+						rc.Left = rc.Width - GetSystemMetrics(SM_CXVSCROLL);
+						rc.Top = rc.Height - GetSystemMetrics(SM_CYHSCROLL);
+						rc.Width = GetSystemMetrics(SM_CXVSCROLL);
+						rc.Height = GetSystemMetrics(SM_CYHSCROLL);
+
+						Canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_Default));
+					}
+
+					ReleaseDC(hWnd, hdc);
+					return result;
+				}
+
+				return DefSubclassProc(hWnd, uMsg, wParam, lParam);
+			}
+
+			VOID OnCustomDrawItemPlugins(HWND hWindow, LPDRAWITEMSTRUCT lpDrawItem)
+			{
+				// If there are no list view items, skip this message. 
+				if (lpDrawItem->itemID == -1)
+					return;
+
+				RECT rc = lpDrawItem->rcItem;
+				Graphics::CUICanvas Canvas(lpDrawItem->hDC);
+				
+				BOOL Selected = (lpDrawItem->itemState & ODS_SELECTED) == ODS_SELECTED;
+
+				Canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_ListView_Color));
+
+				EditorAPI::BSString FileName;
+				EditorAPI::BSString FileType;
+
+				if (!FileName.Reserved(SIZEBUF) || !FileType.Reserved(SIZEBUF))
+					return;
+
+				ListView_GetItemText(lpDrawItem->hwndItem, lpDrawItem->itemID, 0, const_cast<LPSTR>(FileName.Get()), SIZEBUF);
+				ListView_GetItemText(lpDrawItem->hwndItem, lpDrawItem->itemID, 1, const_cast<LPSTR>(FileType.Get()), SIZEBUF);
+
+				// In principle, this API is the same for all games, so it's safe to take Skyrim
+				using namespace EditorAPI::SkyrimSpectialEdition;
+
+				auto type = TESFile::GetTypeFile((EditorAPI::BSString::Utils::GetRelativeDataPath() + FileName).Get());
+				if ((type & TESFile::FILE_RECORD_ESM) == TESFile::FILE_RECORD_ESM)
+					Canvas.FillWithTransparent(rc, RGB(255, 0, 0), 10);
+				else if ((type & TESFile::FILE_RECORD_ESL) == TESFile::FILE_RECORD_ESL)
+					Canvas.FillWithTransparent(rc, RGB(0, 255, 0), 10);
+
+				// CHECKBOX
+
+				int icon_off = 0;
+				HIMAGELIST hImageList = ListView_GetImageList(lpDrawItem->hwndItem, LVSIL_SMALL);
+				if (hImageList)
+				{
+					int cx, cy;
+					ImageList_GetIconSize(hImageList, &cx, &cy);
 					
-					BOOL Selected = (lpDrawItem->itemState & ODS_SELECTED) == ODS_SELECTED;
-
-					Canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_ListView_Color));
-
-					BSString FileName;
-					BSString FileType;
-
-					if (!FileName.Reserved(SIZEBUF) || !FileType.Reserved(SIZEBUF))
-						return;
-
-					ListView_GetItemText(lpDrawItem->hwndItem, lpDrawItem->itemID, 0, const_cast<LPSTR>(FileName.Get()), SIZEBUF);
-					ListView_GetItemText(lpDrawItem->hwndItem, lpDrawItem->itemID, 1, const_cast<LPSTR>(FileType.Get()), SIZEBUF);
-
-					auto type = TESFile_CK::GetTypeFile((BSString::Utils::GetRelativeDataPath() + FileName).Get());
-					if ((type & TESFile_CK::FILE_RECORD_ESM) == TESFile_CK::FILE_RECORD_ESM)
-						Canvas.FillWithTransparent(rc, RGB(255, 0, 0), 10);
-					else if ((type & TESFile_CK::FILE_RECORD_ESL) == TESFile_CK::FILE_RECORD_ESL)
-						Canvas.FillWithTransparent(rc, RGB(0, 255, 0), 10);
-
-					// CHECKBOX
-
-					int icon_off = 0;
-					HIMAGELIST hImageList = ListView_GetImageList(lpDrawItem->hwndItem, LVSIL_SMALL);
-					if (hImageList)
+					if ((rc.bottom - rc.top > cy) && (rc.right - rc.left > (cx + 8)))
 					{
-						int cx, cy;
-						ImageList_GetIconSize(hImageList, &cx, &cy);
-						
-						if ((rc.bottom - rc.top > cy) && (rc.right - rc.left > (cx + 8)))
-						{
-							icon_off = cx;
-							cy = ((rc.bottom - rc.top) - cy) >> 1;
+						icon_off = cx;
+						cy = ((rc.bottom - rc.top) - cy) >> 1;
 
-							LVITEMA lvi = { 0 };
-							lvi.mask = LVIF_IMAGE;
-							lvi.iItem = lpDrawItem->itemID;
-							ListView_GetItem(lpDrawItem->hwndItem, &lvi);
+						LVITEMA lvi = { 0 };
+						lvi.mask = LVIF_IMAGE;
+						lvi.iItem = lpDrawItem->itemID;
+						ListView_GetItem(lpDrawItem->hwndItem, &lvi);
 
-							ImageList_Draw(hImageList, lvi.iImage, lpDrawItem->hDC, rc.left + 2, rc.top + cy, ILD_TRANSPARENT);
-						}
+						ImageList_Draw(hImageList, lvi.iImage, lpDrawItem->hDC, rc.left + 2, rc.top + cy, ILD_TRANSPARENT);
 					}
-
-					// TEXT
-
-					Canvas.Font.Assign(*ThemeFont);
-
-					SetBkMode(lpDrawItem->hDC, TRANSPARENT);
-					SetTextColor(lpDrawItem->hDC, GetThemeSysColor(ThemeColor::ThemeColor_Text_4));
-
-					Classes::UI::CRECT rcText;
-					ListView_GetSubItemRect(lpDrawItem->hwndItem, lpDrawItem->itemID, 0, LVIR_BOUNDS, (LPRECT)&rcText);
-					rcText.Inflate(-2, -2);
-					rcText.Left += 2 + icon_off;
-					Canvas.TextRect(rcText, FileName.Get(), DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS);
-
-					ListView_GetSubItemRect(lpDrawItem->hwndItem, lpDrawItem->itemID, 1, LVIR_BOUNDS, (LPRECT)&rcText);
-					rcText.Inflate(-2, -2);
-					rcText.Left += 2;
-
-					Canvas.TextRect(rcText, FileType.Get(), DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS);
-
-					if (Selected)
-						// blend 40%
-						Canvas.FillWithTransparent(rc, GetThemeSysColor(ThemeColor::ThemeColor_ListView_Owner_Selected), 40);
 				}
 
-				LRESULT FIXAPI OnCustomDraw(HWND hWindow, LPNMLVCUSTOMDRAW lpListView)
-				{
-					// skip it controls
+				// TEXT
+
+				Canvas.Font.Assign(*ThemeFont);
+
+				SetBkMode(lpDrawItem->hDC, TRANSPARENT);
+				SetTextColor(lpDrawItem->hDC, GetThemeSysColor(ThemeColor::ThemeColor_Text_4));
+
+				Graphics::CRECT rcText;
+				ListView_GetSubItemRect(lpDrawItem->hwndItem, lpDrawItem->itemID, 0, LVIR_BOUNDS, (LPRECT)&rcText);
+				rcText.Inflate(-2, -2);
+				rcText.Left += 2 + icon_off;
+				Canvas.TextRect(rcText, FileName.Get(), DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS);
+
+				ListView_GetSubItemRect(lpDrawItem->hwndItem, lpDrawItem->itemID, 1, LVIR_BOUNDS, (LPRECT)&rcText);
+				rcText.Inflate(-2, -2);
+				rcText.Left += 2;
+
+				Canvas.TextRect(rcText, FileType.Get(), DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS);
+
+				if (Selected)
+					// blend 40%
+					Canvas.FillWithTransparent(rc, GetThemeSysColor(ThemeColor::ThemeColor_ListView_Owner_Selected), 40);
+			}
+
+			LRESULT OnCustomDraw(HWND hWindow, LPNMLVCUSTOMDRAW lpListView)
+			{
+				// skip it controls
+				switch (lpListView->nmcd.hdr.idFrom) {
+				case 1041:
+				case 1155:
+				case 1156:
+					return DefSubclassProc(hWindow, WM_NOTIFY, 0, (LPARAM)lpListView);
+				}
+
+				Graphics::CUICanvas Canvas(lpListView->nmcd.hdc);
+
+				switch (lpListView->nmcd.dwDrawStage) {
+				//Before the paint cycle begins
+				case CDDS_PREPAINT: {
+					//request notifications for individual listview items
+					return CDRF_NOTIFYITEMDRAW;
+				}
+				//Before an item is drawn
+				case CDDS_ITEMPREPAINT: {
+					return CDRF_NOTIFYSUBITEMDRAW;
+				}
+				//Before a subitem is drawn
+				case CDDS_SUBITEM | CDDS_ITEMPREPAINT: {
 					switch (lpListView->nmcd.hdr.idFrom) {
-					case 1041:
-					case 1155:
-					case 1156:
-						return DefSubclassProc(hWindow, WM_NOTIFY, 0, (LPARAM)lpListView);
-					}
+					case UI_CONTROL_CONDITION_ID: {
+						if (lpListView->iSubItem == 0 || lpListView->iSubItem == 5)
+							lpListView->clrText = GetThemeSysColor(ThemeColor_Text_2);
+						else
+							lpListView->clrText = GetThemeSysColor(ThemeColor_Text_4);		
 
-					Graphics::CUICanvas Canvas(lpListView->nmcd.hdc);
-
-					switch (lpListView->nmcd.dwDrawStage) {
-					//Before the paint cycle begins
-					case CDDS_PREPAINT: {
-						//request notifications for individual listview items
-						return CDRF_NOTIFYITEMDRAW;
-					}
-					//Before an item is drawn
-					case CDDS_ITEMPREPAINT: {
-						return CDRF_NOTIFYSUBITEMDRAW;
-					}
-					//Before a subitem is drawn
-					case CDDS_SUBITEM | CDDS_ITEMPREPAINT: {
-						switch (lpListView->nmcd.hdr.idFrom) {
-						case UI_CONTROL_CONDITION_ID: {
-							if (lpListView->iSubItem == 0 || lpListView->iSubItem == 5)
-								lpListView->clrText = GetThemeSysColor(ThemeColor_Text_2);
-							else
-								lpListView->clrText = GetThemeSysColor(ThemeColor_Text_4);		
-
-							return CDRF_NEWFONT;
-						}
-						default:
-							lpListView->clrText = GetThemeSysColor(ThemeColor_Text_4);
-							return CDRF_NEWFONT;
-						}
+						return CDRF_NEWFONT;
 					}
 					default:
-						return CDRF_DODEFAULT;
+						lpListView->clrText = GetThemeSysColor(ThemeColor_Text_4);
+						return CDRF_NEWFONT;
 					}
+				}
+				default:
+					return CDRF_DODEFAULT;
 				}
 			}
 		}

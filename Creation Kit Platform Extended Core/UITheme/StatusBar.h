@@ -22,33 +22,30 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
+#include "Editor API/UI/UIGraphics.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace StatusBar
 		{
-			namespace StatusBar
+			namespace Graphics = ::Core::Classes::UI;
+
+			namespace Render
 			{
-				namespace Graphics = Core::Classes::UI;
+				VOID DrawBorder(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawBackground(Graphics::CUICanvas& canvas, LPCRECT pRect);
+			}
 
-				namespace Render
-				{
-					VOID FIXAPI DrawBorder(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawBackground(Graphics::CUICanvas& canvas, LPCRECT pRect);
-				}
+			namespace Event
+			{
+				VOID OnBeforeDrawText(Graphics::CUICanvas& canvas, DWORD& flags);
+			}
 
-				namespace Event
-				{
-					VOID FIXAPI OnBeforeDrawText(Graphics::CUICanvas& canvas, DWORD& flags);
-				}
-
-				namespace Func
-				{
-					VOID FIXAPI AdjustHeightByTextHeight(HWND hWnd, HFONT hFont);
-				}
+			namespace Func
+			{
+				VOID AdjustHeightByTextHeight(HWND hWnd, HFONT hFont);
 			}
 		}
 	}

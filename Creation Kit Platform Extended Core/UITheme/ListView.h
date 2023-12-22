@@ -22,26 +22,22 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
-#include <Uxtheme.h>
-#include <vssym32.h>
+#include "Editor API/UI/UIGraphics.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace ListView
 		{
-			namespace ListView
-			{
-				namespace Graphics = Core::Classes::UI;
+			namespace Graphics = ::Core::Classes::UI;
 
-				HTHEME FIXAPI Initialize(HWND hWindow);
-				LRESULT CALLBACK ListViewSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
+			HTHEME Initialize(HWND hWindow);
+			LRESULT CALLBACK ListViewSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, 
+				UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
 
-				VOID FIXAPI OnCustomDrawItemPlugins(HWND hWindow, LPDRAWITEMSTRUCT lpDrawItem);
-				LRESULT FIXAPI OnCustomDraw(HWND hWindow, LPNMLVCUSTOMDRAW lpListView);
-			}
+			VOID OnCustomDrawItemPlugins(HWND hWindow, LPDRAWITEMSTRUCT lpDrawItem);
+			LRESULT OnCustomDraw(HWND hWindow, LPNMLVCUSTOMDRAW lpListView);
 		}
 	}
 }

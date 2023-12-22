@@ -20,150 +20,145 @@
 */
 //////////////////////////////////////////
 
-#include "..\UIBaseWindow.h"
+#include "Editor API/UI/UIBaseWindow.h"
 #include "VarCommon.h"
 #include "ProgressBar.h"
-#include <Uxtheme.h>
-#include <vssym32.h>
 
 #define INTERNAL 5
 #define MARQUEE_TIMER_ID (WM_USER + 0x1000)
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace ProgressBar
 		{
-			namespace ProgressBar
+			typedef struct ProgressBarInfo
 			{
-				typedef struct ProgressBarInfo
-				{
-					HWND hWnd;
-					Graphics::CRECT rc_fill;
-				} *lpProgressBarInfo;
+				HWND hWnd;
+				Graphics::CRECT rc_fill;
+			} *lpProgressBarInfo;
 
-				namespace Render
+			namespace Render
+			{
+				VOID DrawBar(Graphics::CUICanvas& canvas, LPCRECT pRect)
 				{
-					VOID FIXAPI DrawBar(Graphics::CUICanvas& canvas, LPCRECT pRect)
+					Graphics::CRECT rc = *pRect;
+
+					if (GetTheme() != Theme::Theme_NightBlue)
 					{
-						Graphics::CRECT rc = *pRect;
+						canvas.GradientFill(rc, GetThemeSysColor(ThemeColor::ThemeColor_Button_Pressed_Gradient_Start),
+							GetThemeSysColor(ThemeColor::ThemeColor_Button_Pressed_Gradient_End),
+							Graphics::gdVert);
 
-						if (GetTheme() != Theme::Theme_NightBlue)
-						{
-							canvas.GradientFill(rc, GetThemeSysColor(ThemeColor::ThemeColor_Button_Pressed_Gradient_Start),
-								GetThemeSysColor(ThemeColor::ThemeColor_Button_Pressed_Gradient_End),
-								Graphics::gdVert);
-
-							canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Color));
-						}
-						else
-						{
-							canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_Edit_Color));
-							canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Color_Ver2));
-						}
+						canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Color));
 					}
-
-					VOID FIXAPI DrawFill(Graphics::CUICanvas& canvas, LPCRECT pRect)
+					else
 					{
-						Graphics::CRECT rc = *pRect;
-						rc.Inflate(-1, -1);
-
-						if (rc.Right > 0)
-						{
-							canvas.GradientFill(rc, GetThemeSysColor(ThemeColor::ThemeColor_Progress_Fill_Gradient_Start),
-								GetThemeSysColor(ThemeColor::ThemeColor_Progress_Fill_Gradient_End),
-								Graphics::gdVert);
-
-							canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Progress_Fill_Highlighter));
-							canvas.Pen.Color = GetThemeSysColor(ThemeColor::ThemeColor_Progress_Fill_Highlighter_Up);
-							canvas.MoveTo(rc.Left, rc.Top);
-							canvas.LineTo(rc.Right, rc.Top);
-						}
+						canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_Edit_Color));
+						canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Color_Ver2));
 					}
 				}
 
-				VOID FIXAPI Initialize(HWND hWindow)
+				VOID DrawFill(Graphics::CUICanvas& canvas, LPCRECT pRect)
 				{
-					// for marquee style
-					SetWindowSubclass(hWindow, ProgressBarSubclass, 0, 0);
-					// for standart progressbar (marquee does't draw)
-					OpenThemeData(hWindow, VSCLASS_PROGRESS);
-				}
+					Graphics::CRECT rc = *pRect;
+					rc.Inflate(-1, -1);
 
-				LRESULT CALLBACK ProgressBarSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
-				{
-					if (uMsg == PBM_SETMARQUEE)
+					if (rc.Right > 0)
 					{
-						if (wParam)
-						{
-							lpProgressBarInfo pbi = new ProgressBarInfo;
-							GetClientRect(hWnd, (LPRECT)&pbi->rc_fill);
-							pbi->rc_fill.Width = pbi->rc_fill.Width >> 2;
-							SetWindowLongPtrA(hWnd, GWLP_USERDATA, (LONG_PTR)pbi);
-							SetTimer(hWnd, MARQUEE_TIMER_ID, std::max((UINT)30, (UINT)lParam), NULL);
-						}
-						else
-						{
-							KillTimer(hWnd, MARQUEE_TIMER_ID);
-							delete (lpProgressBarInfo)GetWindowLongPtrA(hWnd, GWLP_USERDATA);
-							SetWindowLongPtrA(hWnd, GWLP_USERDATA, (LONG_PTR)NULL);
-						}
-							
-						return S_OK;
-					} 
-					else if (uMsg == WM_DESTROY)
+						canvas.GradientFill(rc, GetThemeSysColor(ThemeColor::ThemeColor_Progress_Fill_Gradient_Start),
+							GetThemeSysColor(ThemeColor::ThemeColor_Progress_Fill_Gradient_End),
+							Graphics::gdVert);
+
+						canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Progress_Fill_Highlighter));
+						canvas.Pen.Color = GetThemeSysColor(ThemeColor::ThemeColor_Progress_Fill_Highlighter_Up);
+						canvas.MoveTo(rc.Left, rc.Top);
+						canvas.LineTo(rc.Right, rc.Top);
+					}
+				}
+			}
+
+			VOID Initialize(HWND hWindow)
+			{
+				// for marquee style
+				SetWindowSubclass(hWindow, ProgressBarSubclass, 0, 0);
+				// for standart progressbar (marquee does't draw)
+				OpenThemeData(hWindow, VSCLASS_PROGRESS);
+			}
+
+			LRESULT CALLBACK ProgressBarSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
+			{
+				if (uMsg == PBM_SETMARQUEE)
+				{
+					if (wParam)
+					{
+						lpProgressBarInfo pbi = new ProgressBarInfo;
+						GetClientRect(hWnd, (LPRECT)&pbi->rc_fill);
+						pbi->rc_fill.Width = pbi->rc_fill.Width >> 2;
+						SetWindowLongPtrA(hWnd, GWLP_USERDATA, (LONG_PTR)pbi);
+						SetTimer(hWnd, MARQUEE_TIMER_ID, std::max((UINT)30, (UINT)lParam), NULL);
+					}
+					else
 					{
 						KillTimer(hWnd, MARQUEE_TIMER_ID);
 						delete (lpProgressBarInfo)GetWindowLongPtrA(hWnd, GWLP_USERDATA);
+						SetWindowLongPtrA(hWnd, GWLP_USERDATA, (LONG_PTR)NULL);
 					}
-					else if (uMsg == WM_TIMER)
-					{
-						if (MARQUEE_TIMER_ID == wParam)
-						{
-							lpProgressBarInfo pbi = (lpProgressBarInfo)GetWindowLongPtrA(hWnd, GWLP_USERDATA);
-
-							Graphics::CUIBaseWindow window = hWnd;
-							Graphics::CRECT rc = window.ClientRect(), need_redraw;
-							rc.Inflate(-1, -1);
-
-							need_redraw = pbi->rc_fill;
-							need_redraw.Inflate(INTERNAL, 0);
-
-							pbi->rc_fill.Left += INTERNAL;
-							if ((pbi->rc_fill.Left) >= (rc.Right + pbi->rc_fill.Width))
-								pbi->rc_fill.Left = -pbi->rc_fill.Width;
-
-							// to make it flicker less, redraw what you need
-							InvalidateRect(hWnd, (LPRECT)&need_redraw, TRUE);
-							UpdateWindow(hWnd);
-
-							return S_OK;
-						}				
-					}
-					else if (uMsg == WM_PAINT)
+						
+					return S_OK;
+				} 
+				else if (uMsg == WM_DESTROY)
+				{
+					KillTimer(hWnd, MARQUEE_TIMER_ID);
+					delete (lpProgressBarInfo)GetWindowLongPtrA(hWnd, GWLP_USERDATA);
+				}
+				else if (uMsg == WM_TIMER)
+				{
+					if (MARQUEE_TIMER_ID == wParam)
 					{
 						lpProgressBarInfo pbi = (lpProgressBarInfo)GetWindowLongPtrA(hWnd, GWLP_USERDATA);
 
-						if (pbi)
-						{
-							PAINTSTRUCT ps;
-							HDC hDC = BeginPaint(hWnd, &ps);
-							Graphics::CUICanvas canvas = hDC;
-							Graphics::CUIBaseWindow window = hWnd;
-							Graphics::CRECT rc = window.ClientRect();
+						Graphics::CUIBaseWindow window = hWnd;
+						Graphics::CRECT rc = window.ClientRect(), need_redraw;
+						rc.Inflate(-1, -1);
 
-							Render::DrawBar(canvas, (LPRECT)&rc);
-							Render::DrawFill(canvas, (LPRECT)&pbi->rc_fill);
+						need_redraw = pbi->rc_fill;
+						need_redraw.Inflate(INTERNAL, 0);
 
-							EndPaint(hWnd, &ps);
+						pbi->rc_fill.Left += INTERNAL;
+						if ((pbi->rc_fill.Left) >= (rc.Right + pbi->rc_fill.Width))
+							pbi->rc_fill.Left = -pbi->rc_fill.Width;
 
-							return S_OK;
-						}
-					}
+						// to make it flicker less, redraw what you need
+						InvalidateRect(hWnd, (LPRECT)&need_redraw, TRUE);
+						UpdateWindow(hWnd);
 
-					return DefSubclassProc(hWnd, uMsg, wParam, lParam);
+						return S_OK;
+					}				
 				}
+				else if (uMsg == WM_PAINT)
+				{
+					lpProgressBarInfo pbi = (lpProgressBarInfo)GetWindowLongPtrA(hWnd, GWLP_USERDATA);
+
+					if (pbi)
+					{
+						PAINTSTRUCT ps;
+						HDC hDC = BeginPaint(hWnd, &ps);
+						Graphics::CUICanvas canvas = hDC;
+						Graphics::CUIBaseWindow window = hWnd;
+						Graphics::CRECT rc = window.ClientRect();
+
+						Render::DrawBar(canvas, (LPRECT)&rc);
+						Render::DrawFill(canvas, (LPRECT)&pbi->rc_fill);
+
+						EndPaint(hWnd, &ps);
+
+						return S_OK;
+					}
+				}
+
+				return DefSubclassProc(hWnd, uMsg, wParam, lParam);
 			}
 		}
 	}

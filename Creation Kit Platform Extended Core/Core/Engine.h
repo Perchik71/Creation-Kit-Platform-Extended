@@ -27,6 +27,7 @@ namespace CreationKitPlatformExtended
 			Engine(HMODULE hModule, EDITOR_EXECUTABLE_TYPE eEditorVersion, uintptr_t nModuleBase);
 			~Engine() = default;
 			
+			inline HINSTANCE GetInstanceDLL() const { return (HINSTANCE)_module; }
 			inline uintptr_t GetModuleBase() const { return _moduleBase; }
 			inline uint64_t GetModuleSize() const { return _moduleSize; }
 			inline EDITOR_EXECUTABLE_TYPE GetEditorVersion() const { return _editorVersion; }

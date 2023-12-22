@@ -22,34 +22,31 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
+#include "Editor API/UI/UIGraphics.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace PushButton
 		{
-			namespace PushButton
+			namespace Graphics = ::Core::Classes::UI;
+
+			namespace Render
 			{
-				namespace Graphics = Core::Classes::UI;
+				VOID DrawPushButton_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect,
+					COLORREF clGradientColorStart, COLORREF clGradientColorEnd,
+					COLORREF clGradientHighlighterColorStart, COLORREF clGradientHighlighterColorEnd,
+					COLORREF clDividerColor, COLORREF clDividerHighlighterColor);
+				VOID DrawPushButton_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawPushButton_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawPushButton_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawPushButton_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
+			}
 
-				namespace Render
-				{
-					VOID FIXAPI DrawPushButton_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect,
-						COLORREF clGradientColorStart, COLORREF clGradientColorEnd,
-						COLORREF clGradientHighlighterColorStart, COLORREF clGradientHighlighterColorEnd,
-						COLORREF clDividerColor, COLORREF clDividerHighlighterColor);
-					VOID FIXAPI DrawPushButton_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawPushButton_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawPushButton_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawPushButton_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
-				}
-
-				namespace Event
-				{
-					VOID FIXAPI OnBeforeDrawText(Graphics::CUICanvas& canvas, DWORD& flags, INT iStateId);
-				}
+			namespace Event
+			{
+				VOID OnBeforeDrawText(Graphics::CUICanvas& canvas, DWORD& flags, INT iStateId);
 			}
 		}
 	}

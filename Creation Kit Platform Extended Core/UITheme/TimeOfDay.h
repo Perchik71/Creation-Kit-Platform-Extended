@@ -22,30 +22,29 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
-#include "..\UIBaseWindow.h"
+#include "Editor API/UI/UIGraphics.h"
+#include "Editor API/UI/UIBaseWindow.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace TimeOfDay
 		{
-			namespace TimeOfDay
+			namespace Graphics = ::Core::Classes::UI;
+
+			typedef struct UITimeOfDayComponentsTag
 			{
-				typedef struct UITimeOfDayComponentsTag
-				{
-					Core::Classes::UI::CUIToolWindow hWndToolBar;
-					Core::Classes::UI::CUIBaseControl hWndLabel, hWndTrackBar, hWndEdit;
-				} UITimeOfDayComponents, *LPUITimeOfDayComponents, *PUITimeOfDayComponents;
+				Graphics::CUIToolWindow hWndToolBar;
+				Graphics::CUIBaseControl hWndLabel, hWndTrackBar, hWndEdit;
+			} UITimeOfDayComponents, *LPUITimeOfDayComponents, *PUITimeOfDayComponents;
 
-				HWND FIXAPI Initialization(HWND hWnd);
+			HWND Initialization(HWND hWnd);
 
-				extern UITimeOfDayComponents OldUITimeOfDayComponents;
-				extern UITimeOfDayComponents NewUITimeOfDayComponents;
+			extern UITimeOfDayComponents OldUITimeOfDayComponents;
+			extern UITimeOfDayComponents NewUITimeOfDayComponents;
 
-				LRESULT CALLBACK TimeOfDayClassWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-			}
+			LRESULT CALLBACK TimeOfDayClassWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 		}
 	}
 }

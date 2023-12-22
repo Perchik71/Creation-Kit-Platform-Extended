@@ -22,34 +22,30 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
-#include <CommCtrl.h>
+#include "Editor API/UI/UIGraphics.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace ToolBar
 		{
-			namespace ToolBar
+			namespace Graphics = ::Core::Classes::UI;
+
+			namespace Render
 			{
-				namespace Graphics = Core::Classes::UI;
-
-				namespace Render
-				{
-					VOID FIXAPI DrawBackground(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawButton_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawButton_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawButton_Checked(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawButton_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawButton_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawButton_Icon(Graphics::CUICanvas& canvas, LPCRECT pRect, HIMAGELIST hImageList, INT nIndex);
-				}
-
-				VOID FIXAPI Initialize(HWND hWindow);
-
-				LRESULT FIXAPI OnCustomDraw(HWND hWindow, LPNMTBCUSTOMDRAW lpToolBar);
+				VOID DrawBackground(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawButton_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawButton_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawButton_Checked(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawButton_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawButton_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawButton_Icon(Graphics::CUICanvas& canvas, LPCRECT pRect, HIMAGELIST hImageList, INT nIndex);
 			}
+
+			VOID Initialize(HWND hWindow);
+
+			LRESULT OnCustomDraw(HWND hWindow, LPNMTBCUSTOMDRAW lpToolBar);
 		}
 	}
 }

@@ -360,7 +360,7 @@ namespace CreationKitPlatformExtended
 					if (!RegisterClassExA(&wc))
 						return false;
 
-					*window = CreateWindowExA(0, "RTEDITLOG", "Console Window", WS_OVERLAPPEDWINDOW,
+					*window = CreateWindowExA(0, "RTEDITLOG", "Log Window", WS_OVERLAPPEDWINDOW,
 						64, 64, 1024, 480, NULL, NULL, instance, module);
 
 					if (!(*window))

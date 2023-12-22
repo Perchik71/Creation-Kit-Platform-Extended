@@ -10,6 +10,7 @@
 #pragma warning (disable : 26812)
 
 #include <windows.h>
+#include <windowsx.h>
 #include <dbghelp.h>
 #include <shellapi.h>
 #include <shlwapi.h>
@@ -30,6 +31,14 @@
 #include <richedit.h>
 #include <intrin.h>
 #include <xmmintrin.h>
+#include <vssym32.h>
+#include <Richedit.h>
+
+// Microsoft: It's probably cool when you need to make several includes instead of one 
+// Perchik71: NO
+#include <gdiplusenums.h>
+#include <gdiplustypes.h>
+#include <gdiplus.h>
 
 #include <atomic>
 #include <algorithm>

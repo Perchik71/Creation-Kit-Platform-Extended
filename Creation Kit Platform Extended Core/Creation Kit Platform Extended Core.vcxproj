@@ -65,7 +65,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ws2_32.lib;msimg32.lib;uxtheme.lib;version.lib;detours.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;vmm-x64.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;msimg32.lib;uxtheme.lib;version.lib;detours.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;vmm-x64.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\Version\scripts.ps1"</Command>
@@ -78,6 +78,7 @@
     <ClCompile Include="Core\DebugLog.cpp" />
     <ClCompile Include="Core\Engine.cpp" />
     <ClCompile Include="Core\EngineSSEPatches.cpp" />
+    <ClCompile Include="Core\GDIPlusInit.cpp" />
     <ClCompile Include="Core\INIWrapper.cpp" />
     <ClCompile Include="Core\Module.cpp" />
     <ClCompile Include="Core\ModuleManager.cpp" />
@@ -184,9 +185,34 @@
     <ClCompile Include="Patches\SSE\WeaponCriticalEffect.cpp" />
     <ClCompile Include="Patches\ThreadPatch.cpp" />
     <ClCompile Include="Patches\UIPatch.cpp" />
+    <ClCompile Include="Patches\UIThemePatch.cpp" />
     <ClCompile Include="Patches\UnicodePatch.cpp" />
     <ClCompile Include="Patches\VersionControlMergeWorkaround.cpp" />
     <ClCompile Include="Steam API\SteamAPI.cpp" />
+    <ClCompile Include="UITheme\CheckBox.cpp" />
+    <ClCompile Include="UITheme\ComboBox.cpp" />
+    <ClCompile Include="UITheme\CustomBox.cpp" />
+    <ClCompile Include="UITheme\EditText.cpp" />
+    <ClCompile Include="UITheme\GroupBox.cpp" />
+    <ClCompile Include="UITheme\Header.cpp" />
+    <ClCompile Include="UITheme\ListBox.cpp" />
+    <ClCompile Include="UITheme\ListView.cpp" />
+    <ClCompile Include="UITheme\MDIClient.cpp" />
+    <ClCompile Include="UITheme\Memo.cpp" />
+    <ClCompile Include="UITheme\PageControl.cpp" />
+    <ClCompile Include="UITheme\PopupMenu.cpp" />
+    <ClCompile Include="UITheme\ProgressBar.cpp" />
+    <ClCompile Include="UITheme\PushButton.cpp" />
+    <ClCompile Include="UITheme\RadioButton.cpp" />
+    <ClCompile Include="UITheme\RichEdit20.cpp" />
+    <ClCompile Include="UITheme\ScrollBar.cpp" />
+    <ClCompile Include="UITheme\StatusBar.cpp" />
+    <ClCompile Include="UITheme\TimeOfDay.cpp" />
+    <ClCompile Include="UITheme\ToolBar.cpp" />
+    <ClCompile Include="UITheme\TrackBar.cpp" />
+    <ClCompile Include="UITheme\TreeView.cpp" />
+    <ClCompile Include="UITheme\UpDown.cpp" />
+    <ClCompile Include="UITheme\VarCommon.cpp" />
     <ClCompile Include="UtfStr.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="WinHttp Wrapper\Exports.cpp" />
@@ -199,6 +225,7 @@
     <ClInclude Include="Core\CoreCommon.h" />
     <ClInclude Include="Core\DebugLog.h" />
     <ClInclude Include="Core\Engine.h" />
+    <ClInclude Include="Core\GDIPlusInit.h" />
     <ClInclude Include="Core\INIWrapper.h" />
     <ClInclude Include="Core\Module.h" />
     <ClInclude Include="Core\ModuleManager.h" />
@@ -335,11 +362,36 @@
     <ClInclude Include="Patches\SSE\WeaponCriticalEffect.h" />
     <ClInclude Include="Patches\ThreadPatch.h" />
     <ClInclude Include="Patches\UIPatch.h" />
+    <ClInclude Include="Patches\UIThemePatch.h" />
     <ClInclude Include="Patches\UnicodePatch.h" />
     <ClInclude Include="Patches\VersionControlMergeWorkaround.h" />
     <ClInclude Include="Steam API\SteamAPI.h" />
     <ClInclude Include="Steam API\SteamAPIConfig.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="UITheme\CheckBox.h" />
+    <ClInclude Include="UITheme\ComboBox.h" />
+    <ClInclude Include="UITheme\CustomBox.h" />
+    <ClInclude Include="UITheme\EditText.h" />
+    <ClInclude Include="UITheme\GroupBox.h" />
+    <ClInclude Include="UITheme\Header.h" />
+    <ClInclude Include="UITheme\ListBox.h" />
+    <ClInclude Include="UITheme\ListView.h" />
+    <ClInclude Include="UITheme\MDIClient.h" />
+    <ClInclude Include="UITheme\Memo.h" />
+    <ClInclude Include="UITheme\PageControl.h" />
+    <ClInclude Include="UITheme\PopupMenu.h" />
+    <ClInclude Include="UITheme\ProgressBar.h" />
+    <ClInclude Include="UITheme\PushButton.h" />
+    <ClInclude Include="UITheme\RadioButton.h" />
+    <ClInclude Include="UITheme\RichEdit20.h" />
+    <ClInclude Include="UITheme\ScrollBar.h" />
+    <ClInclude Include="UITheme\StatusBar.h" />
+    <ClInclude Include="UITheme\TimeOfDay.h" />
+    <ClInclude Include="UITheme\ToolBar.h" />
+    <ClInclude Include="UITheme\TrackBar.h" />
+    <ClInclude Include="UITheme\TreeView.h" />
+    <ClInclude Include="UITheme\UpDown.h" />
+    <ClInclude Include="UITheme\VarCommon.h" />
     <ClInclude Include="UtfStr.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Version\resource_version.h" />

@@ -22,31 +22,28 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
+#include "Editor API/UI/UIGraphics.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace EditText
 		{
-			namespace EditText
+			namespace Graphics = ::Core::Classes::UI;
+
+			namespace Render
 			{
-				namespace Graphics = Core::Classes::UI;
+				VOID DrawEditText_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF clBorderColor,
+					COLORREF clColor, COLORREF clColorDividerStart, COLORREF clColorDividerEnd);
 
-				namespace Render
-				{
-					VOID FIXAPI DrawEditText_Stylesheet(Graphics::CUICanvas& canvas, LPCRECT pRect, COLORREF clBorderColor,
-						COLORREF clColor, COLORREF clColorDividerStart, COLORREF clColorDividerEnd);
-
-					VOID FIXAPI DrawEditText_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawEditText_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawEditText_Focused(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawEditText_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
-				}
-
-				INT_PTR FIXAPI OnCtlColorEdit(HDC hDC);
+				VOID DrawEditText_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawEditText_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawEditText_Focused(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawEditText_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
 			}
+
+			INT_PTR OnCtlColorEdit(HDC hDC);
 		}
 	}
 }

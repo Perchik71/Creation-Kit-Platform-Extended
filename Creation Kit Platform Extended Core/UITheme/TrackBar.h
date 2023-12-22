@@ -22,27 +22,24 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
+#include "Editor API/UI/UIGraphics.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace TrackBar
 		{
-			namespace TrackBar
-			{
-				namespace Graphics = Core::Classes::UI;
+			namespace Graphics = ::Core::Classes::UI;
 
-				namespace Render
-				{
-					VOID FIXAPI DrawTrack(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawSlider_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawSlider_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawSlider_Focused(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawSlider_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
-					VOID FIXAPI DrawSlider_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
-				}
+			namespace Render
+			{
+				VOID DrawTrack(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawSlider_Normal(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawSlider_Hot(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawSlider_Focused(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawSlider_Pressed(Graphics::CUICanvas& canvas, LPCRECT pRect);
+				VOID DrawSlider_Disabled(Graphics::CUICanvas& canvas, LPCRECT pRect);
 			}
 		}
 	}

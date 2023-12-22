@@ -18,9 +18,9 @@ The platform will support all known versions of Creation Kit in the future, but 
 
 # Fixed or added
 :white_check_mark: Fast file loading  
-:white_check_mark: Interception of warning messages in the console  
+:white_check_mark: Interception of warning messages in the log  
 :white_check_mark: Unicode support  
-:white_check_mark: Multiple UI Fix View Menu section and etc  
+:white_check_mark: Multiple UI Fix and etc  
 :white_check_mark: Create master files and open them as plugins  
 :white_check_mark: Opening plugins as master files if they are in dependencies  
 :white_check_mark: Many other fixes are also from the author of [@Nukem9](https://github.com/Nukem9)

@@ -338,10 +338,10 @@ namespace Core
 				VOID TextSize(LPCSTR text, INT& width, INT& height) const;
 				inline INT TextWidth(LPCSTR text) const { INT w, h; TextSize(text, w, h); return w; }
 				inline INT TextHeight(LPCSTR text) const { INT w, h; TextSize(text, w, h); return h; }
-				VOID TextRect(RECT& area, LPCSTR text, UINT flags) const;
-				VOID TextRect(CRECT& area, LPCSTR text, UINT flags) const;
-				VOID TextRect(RECT& area, LPCWSTR text, UINT flags) const;
-				VOID TextRect(CRECT& area, LPCWSTR text, UINT flags) const;
+				VOID TextRect(RECT& area, LPCSTR text, UINT flags, UINT len = 0) const;
+				VOID TextRect(CRECT& area, LPCSTR text, UINT flags, UINT len = 0) const;
+				VOID TextRect(RECT& area, LPCWSTR text, UINT flags, UINT len = 0) const;
+				VOID TextRect(CRECT& area, LPCWSTR text, UINT flags, UINT len = 0) const;
 				VOID TextInput(INT x, INT y, LPCSTR text);
 			public:
 				VOID ToFileBitmap(LPCSTR fname);

@@ -22,19 +22,17 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
+#include "Editor API/UI/UIGraphics.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace MDIClient
 		{
-			namespace MDIClient
-			{
-				VOID FIXAPI Initialize(HWND hWindow);
-				LRESULT CALLBACK MDIClientSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
-			}
+			VOID Initialize(HWND hWindow);
+			LRESULT CALLBACK MDIClientSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, 
+				UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
 		}
 	}
 }

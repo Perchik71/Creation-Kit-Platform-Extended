@@ -11,6 +11,8 @@ namespace CreationKitPlatformExtended
 		class EditorUI
 		{
 		public:
+			constexpr static uint32_t UI_DATA_DIALOG_PLUGINLISTVIEW = 1056;
+
 			EditorUI();
 
 			inline bool HasUseDeferredDialogInsert() const { return UseDeferredDialogInsert; }

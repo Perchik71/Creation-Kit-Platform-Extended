@@ -22,23 +22,21 @@
 
 #pragma once
 
-#include "..\UIGraphics.h"
-#include <Uxtheme.h>
-#include <vssym32.h>
+#include "Editor API/UI/UIGraphics.h"
 
-namespace Core
+namespace CreationKitPlatformExtended
 {
-	namespace UI
+	namespace UITheme
 	{
-		namespace Theme
+		namespace ListBox
 		{
-			namespace ListBox
-			{
-				HTHEME FIXAPI Initialize(HWND hWindow);
-				LRESULT CALLBACK ListBoxSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
+			namespace Graphics = ::Core::Classes::UI;
 
-				INT_PTR FIXAPI OnCtlColorListBox(HWND hWindow, HDC hDC);
-			}
+			HTHEME Initialize(HWND hWindow);
+			LRESULT CALLBACK ListBoxSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, 
+				UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
+
+			INT_PTR OnCtlColorListBox(HWND hWindow, HDC hDC);
 		}
 	}
 }
