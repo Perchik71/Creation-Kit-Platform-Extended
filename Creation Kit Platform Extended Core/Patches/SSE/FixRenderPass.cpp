@@ -96,6 +96,16 @@ namespace CreationKitPlatformExtended
 				return "Fix RenderPass";
 			}
 
+			bool FixRenderPassPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixRenderPassPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixRenderPassPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

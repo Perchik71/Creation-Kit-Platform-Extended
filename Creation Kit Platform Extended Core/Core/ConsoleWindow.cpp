@@ -3,6 +3,9 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Engine.h"
+#include "Editor API/EditorUI.h"
+#include "Patches/UIThemePatch.h"
+#include "Patches/Windows/SSE/MainWindow.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -151,9 +154,9 @@ namespace CreationKitPlatformExtended
 								{
 									uint32_t id = strtoul(&p[1], nullptr, 16);
 
-
-									// Будущее
-									//PostMessageA(MainWindow::GetWindow(), WM_COMMAND, UI_EDITOR_OPENFORMBYID, id);
+									if (GlobalEnginePtr->GetEditorVersion() <= EDITOR_SKYRIM_SE_LAST)
+										PostMessageA(Patches::SkyrimSpectialEdition::GlobalMainWindowPtr->Handle, 
+											WM_COMMAND, EditorAPI::EditorUI::UI_EDITOR_OPENFORMBYID, id);
 								}
 							}
 						}
@@ -343,6 +346,9 @@ namespace CreationKitPlatformExtended
 				{
 					// Окно вывода
 					auto instance = static_cast<HINSTANCE>(GetModuleHandle(NULL));
+					
+					if (_READ_OPTION_BOOL("CreationKit", "bUIDarkTheme", false))
+						Patches::UIThemePatch::InitializeThread();
 
 					WNDCLASSEXA wc
 					{

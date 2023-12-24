@@ -27,6 +27,7 @@
 #include "Patches/AllowMultipleWindowAndMaster.h"
 #include "Patches/UIPatch.h"
 #include "Patches/UIThemePatch.h"
+#include "Patches/UIThemePatchAdditional.h"
 
 #include "Experimental/RuntimeOptimization.h"
 
@@ -100,6 +101,15 @@ namespace CreationKitPlatformExtended
 
 			GlobalRelocationDatabasePtr = new RelocationDatabase(this);
 			GlobalRelocatorPtr = new Relocator(this);
+			
+			// Данный патч, является исключением от остальных, он инициализируется раньше, как
+			// системный модуль, но его можно отключать как патч. Это нужно для покрытия консоли новой темой.
+
+			// Инициализация темы, если это необходимо, раньше, чем окно консоли
+			_Theme = new CreationKitPlatformExtended::Patches::UIThemePatch();
+			// Отправка не нулевого адреса необходима, это специально, чтобы пропустить проверки
+			_Theme->Enable(GlobalRelocatorPtr, (RelocationDatabaseItem*)1);
+
 			GlobalConsoleWindowPtr = new ConsoleWindow(this);
 			GlobalGDIPlusInitPtr = new GDIPlusInit(this);
 
@@ -118,7 +128,7 @@ namespace CreationKitPlatformExtended
 				new CreationKitPlatformExtended::Patches::SkipTopicInfoValidationPatch(),
 				new CreationKitPlatformExtended::Patches::AllowMultipleWindowAndMasterPatch(),
 				new CreationKitPlatformExtended::Patches::UIPatch(),
-				new CreationKitPlatformExtended::Patches::UIThemePatch(),
+				new CreationKitPlatformExtended::Patches::UIThemePatchAdditional(),
 			});
 
 			// Добавление патчей только для редактора скайрима специального издания

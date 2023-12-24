@@ -36,6 +36,16 @@ namespace CreationKitPlatformExtended
 				return "Fix NavMesh";
 			}
 
+			bool FixNavMeshPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixNavMeshPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixNavMeshPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

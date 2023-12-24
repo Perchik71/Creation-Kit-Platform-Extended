@@ -104,6 +104,16 @@ namespace CreationKitPlatformExtended
 			return "Console";
 		}
 
+		bool ConsolePatch::HasDependencies() const
+		{
+			return false;
+		}
+
+		Array<String> ConsolePatch::GetDependencies() const
+		{
+			return {};
+		}
+
 		void ConsolePatch::Log(const char* Format, ...)
 		{
 			va_list va;

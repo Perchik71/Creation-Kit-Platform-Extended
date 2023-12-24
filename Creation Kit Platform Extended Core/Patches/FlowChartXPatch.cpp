@@ -32,6 +32,16 @@ namespace CreationKitPlatformExtended
 			return "FlowChartX Library";
 		}
 
+		bool FlowChartXPatch::HasDependencies() const
+		{
+			return false;
+		}
+
+		Array<String> FlowChartXPatch::GetDependencies() const
+		{
+			return {};
+		}
+
 		bool FlowChartXPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{

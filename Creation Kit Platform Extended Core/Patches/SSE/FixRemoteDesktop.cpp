@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Remote Desktop";
 			}
 
+			bool FixRemoteDesktopPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixRemoteDesktopPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixRemoteDesktopPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

@@ -37,6 +37,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Object Palette";
 			}
 
+			bool FixObjectPalettePatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixObjectPalettePatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixObjectPalettePatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

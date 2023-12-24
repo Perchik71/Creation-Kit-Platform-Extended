@@ -37,6 +37,16 @@ namespace CreationKitPlatformExtended
 				return "Weapon Critical Effect";
 			}
 
+			bool WeaponCriticalEffectPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> WeaponCriticalEffectPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool WeaponCriticalEffectPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "NavMesh Info Map";
 			}
 
+			bool NavMeshInfoMapPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> NavMeshInfoMapPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool NavMeshInfoMapPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

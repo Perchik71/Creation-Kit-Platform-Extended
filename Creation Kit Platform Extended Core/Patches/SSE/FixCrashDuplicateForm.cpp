@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Crash Duplicate Form";
 			}
 
+			bool FixCrashDuplicateFormPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixCrashDuplicateFormPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixCrashDuplicateFormPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

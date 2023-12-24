@@ -46,6 +46,11 @@ namespace CreationKitPlatformExtended
 				Append(*It);
 		}
 
+		void ModuleManager::Remove(const char* name)
+		{
+			_modules.erase(name);
+		}
+
 		SmartPointer<Module> ModuleManager::GetByName(const char* name) const
 		{
 			for (auto It = _modules.begin(); It != _modules.end(); It++)

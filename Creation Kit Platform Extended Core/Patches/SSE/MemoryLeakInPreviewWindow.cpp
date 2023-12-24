@@ -44,6 +44,16 @@ namespace CreationKitPlatformExtended
 				return "Memory Leak In Peview Window";
 			}
 
+			bool MemoryLeakInPreviewWindowPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> MemoryLeakInPreviewWindowPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool MemoryLeakInPreviewWindowPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

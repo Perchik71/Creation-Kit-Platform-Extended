@@ -40,6 +40,8 @@ namespace CreationKitPlatformExtended
 				virtual bool HasCanRuntimeDisabled() const;
 				virtual const char* GetOptionName() const;
 				virtual const char* GetName() const;
+				virtual bool HasDependencies() const;
+				virtual Array<String> GetDependencies() const;
 
 				static bool sub_141589150(__int64 a1, uint32_t* a2);
 				static int HKInflateInit(z_stream_s* Stream, const char* Version, int Mode);

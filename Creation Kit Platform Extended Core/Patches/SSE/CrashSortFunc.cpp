@@ -36,6 +36,16 @@ namespace CreationKitPlatformExtended
 				return "Crash Sort Function";
 			}
 
+			bool CrashSortFuncPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> CrashSortFuncPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool CrashSortFuncPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

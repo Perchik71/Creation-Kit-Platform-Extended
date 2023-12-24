@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Crash FlowChartX";
 			}
 
+			bool CrashFlowChartXPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> CrashFlowChartXPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool CrashFlowChartXPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

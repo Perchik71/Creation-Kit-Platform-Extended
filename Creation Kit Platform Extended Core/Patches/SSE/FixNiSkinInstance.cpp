@@ -36,6 +36,16 @@ namespace CreationKitPlatformExtended
 				return "NiSkinInstance Fix";
 			}
 
+			bool FixNiSkinInstancePatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixNiSkinInstancePatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixNiSkinInstancePatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

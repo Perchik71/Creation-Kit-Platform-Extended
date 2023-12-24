@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "BNet Convert Unicode String";
 			}
 
+			bool BNetConvertUnicodeStringPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> BNetConvertUnicodeStringPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool BNetConvertUnicodeStringPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

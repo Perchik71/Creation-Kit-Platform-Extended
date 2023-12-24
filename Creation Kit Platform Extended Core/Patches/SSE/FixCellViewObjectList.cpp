@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix CellView Object List";
 			}
 
+			bool FixCellViewObjectListPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixCellViewObjectListPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixCellViewObjectListPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

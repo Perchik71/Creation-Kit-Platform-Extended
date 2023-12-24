@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Increase the maximum navmesh";
 			}
 
+			bool IncreaseMaximumNavmeshPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> IncreaseMaximumNavmeshPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool IncreaseMaximumNavmeshPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

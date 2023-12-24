@@ -35,6 +35,16 @@ namespace CreationKitPlatformExtended
 				return "Crash Upload BNet Mod With Archive";
 			}
 
+			bool CrashUploadBNetModWithArchivePatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> CrashUploadBNetModWithArchivePatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool CrashUploadBNetModWithArchivePatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

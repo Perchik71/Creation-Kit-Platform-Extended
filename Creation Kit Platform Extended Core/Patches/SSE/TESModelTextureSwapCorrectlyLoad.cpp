@@ -35,6 +35,16 @@ namespace CreationKitPlatformExtended
 				return "TESModelTextureSwap Correctly Load";
 			}
 
+			bool TESModelTextureSwapCorrectlyLoadPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> TESModelTextureSwapCorrectlyLoadPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool TESModelTextureSwapCorrectlyLoadPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

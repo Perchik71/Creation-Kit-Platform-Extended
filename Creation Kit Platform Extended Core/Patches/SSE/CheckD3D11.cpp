@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Check D3D11";
 			}
 
+			bool CheckD3D11Patch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> CheckD3D11Patch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool CheckD3D11Patch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

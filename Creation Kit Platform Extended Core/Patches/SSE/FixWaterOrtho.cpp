@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Water In Ortho mode";
 			}
 
+			bool FixWaterOrthoPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixWaterOrthoPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixWaterOrthoPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

@@ -23,6 +23,8 @@ namespace CreationKitPlatformExtended
 			virtual bool HasCanRuntimeDisabled() const;
 			virtual const char* GetOptionName() const;
 			virtual const char* GetName() const;
+			virtual bool HasDependencies() const;
+			virtual Array<String> GetDependencies() const;
 
 			static BOOL HKSetThreadPriority(HANDLE hThread, int nPriority);
 			static DWORD_PTR HKSetThreadAffinityMask(HANDLE hThread, DWORD_PTR dwThreadAffinityMask);

@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Unable To Find Variable";
 			}
 
+			bool FixUnableToFindVariablePatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixUnableToFindVariablePatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixUnableToFindVariablePatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

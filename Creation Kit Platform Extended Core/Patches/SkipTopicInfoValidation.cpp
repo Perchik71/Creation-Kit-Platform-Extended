@@ -32,6 +32,16 @@ namespace CreationKitPlatformExtended
 			return "Skip Topic Info Validation";
 		}
 
+		bool SkipTopicInfoValidationPatch::HasDependencies() const
+		{
+			return false;
+		}
+
+		Array<String> SkipTopicInfoValidationPatch::GetDependencies() const
+		{
+			return {};
+		}
+
 		bool SkipTopicInfoValidationPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{

@@ -39,6 +39,16 @@ namespace CreationKitPlatformExtended
 				return "Crash Test Radius";
 			}
 
+			bool CrashTestRadiusPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> CrashTestRadiusPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool CrashTestRadiusPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

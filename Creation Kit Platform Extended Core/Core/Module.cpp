@@ -2,6 +2,7 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
+#include "Version/resource_version2.h"
 #include "Core/Engine.h"
 #include "Relocator.h"
 #include "RelocationDatabase.h"
@@ -31,6 +32,49 @@ namespace CreationKitPlatformExtended
 		void Module::Enable(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
 			if (_Active || !lpRelocator || !lpRelocationDatabaseItem) return;
+
+			if (HasDependencies())
+			{
+				auto PatchesManager = _engine->GetPatchesManager();
+				if (PatchesManager && (PatchesManager->Count() > 0))
+				{
+					auto Dependencies = GetDependencies();
+					for (auto it = Dependencies.begin(); it != Dependencies.end(); it++)
+					{
+						auto Depend = PatchesManager->GetByName(it->c_str());
+						if (Depend.Empty())
+						{
+							_ERROR("The dependent module \"%s\" was not detected: \"%s\"", it->c_str(), GetName());
+							return;
+						}
+						else
+						{
+							if (Depend->HasActive())
+								continue;
+
+							if (!Depend->Query(_engine->GetEditorVersion(), VER_FILE_VERSION_STR))
+							{
+								_ERROR("The dependent module \"%s\" has rejected its enabling, it may not support the current version of the editor or platform: \"%s\"", it->c_str(), GetName());
+								PatchesManager->Remove(it->c_str());
+								return;
+							}
+
+							Depend->Enable(lpRelocator, *Core::GlobalRelocationDatabasePtr->GetByName(it->c_str()));
+							if (!Depend->HasActive())
+							{
+								_ERROR("the dependent module \"%s\" has not been enabled, this module will not be enabled: \"%s\"", it->c_str(), GetName());
+								PatchesManager->Remove(it->c_str());
+								return;
+							}
+						}
+					}
+				}
+				else
+				{
+					_ERROR("The module indicated that it has a dependency, but did not specify which modules are needed, the module will not be enabled: \"%s\"", GetName());
+					return;
+				}
+			}
 
 			if (HasOption())
 			{

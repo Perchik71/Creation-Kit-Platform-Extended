@@ -49,6 +49,16 @@ namespace CreationKitPlatformExtended
 				return "Allow Save ESM and Master ESP";
 			}
 
+			bool AllowSaveESMandMasterESPPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> AllowSaveESMandMasterESPPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool AllowSaveESMandMasterESPPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

@@ -32,6 +32,16 @@ namespace CreationKitPlatformExtended
 			return "Disable Assertion";
 		}
 
+		bool DisableAssertionPatch::HasDependencies() const
+		{
+			return false;
+		}
+
+		Array<String> DisableAssertionPatch::GetDependencies() const
+		{
+			return {};
+		}
+
 		bool DisableAssertionPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{

@@ -45,6 +45,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Intersection Triangle";
 			}
 
+			bool FixIntersectionTrianglePatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixIntersectionTrianglePatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixIntersectionTrianglePatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

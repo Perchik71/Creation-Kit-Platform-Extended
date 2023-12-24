@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "BSShadowDirectionalLight Fix";
 			}
 
+			bool FixBSShadowDirectionalLightPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixBSShadowDirectionalLightPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixBSShadowDirectionalLightPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

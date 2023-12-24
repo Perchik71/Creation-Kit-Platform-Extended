@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Re-enable land shadows";
 			}
 
+			bool ReEnableLandShadowsPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> ReEnableLandShadowsPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool ReEnableLandShadowsPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

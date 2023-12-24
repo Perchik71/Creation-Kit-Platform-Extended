@@ -36,6 +36,16 @@ namespace CreationKitPlatformExtended
 				return "Crash Duplicate Worldspace";
 			}
 
+			bool CrashDuplicateWorldspacePatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> CrashDuplicateWorldspacePatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool CrashDuplicateWorldspacePatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

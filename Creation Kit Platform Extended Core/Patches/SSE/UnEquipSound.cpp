@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "UnEquip Sound";
 			}
 
+			bool UnEquipSoundPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> UnEquipSoundPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool UnEquipSoundPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

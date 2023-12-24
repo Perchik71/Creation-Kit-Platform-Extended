@@ -25,6 +25,8 @@ namespace CreationKitPlatformExtended
 				virtual bool HasCanRuntimeDisabled() const;
 				virtual const char* GetOptionName() const;
 				virtual const char* GetName() const;
+				virtual bool HasDependencies() const;
+				virtual Array<String> GetDependencies() const;
 
 				static void* sub_unknown(__int64 ResourceManager, uint32_t IndexCount, __int64 a3, __int64 a4,
 					__int64 a5, __int64 a6, __int64 a7);

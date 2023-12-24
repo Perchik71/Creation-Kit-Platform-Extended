@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Crash PluginTXT";
 			}
 
+			bool FixCrashPluginTXTPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixCrashPluginTXTPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixCrashPluginTXTPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

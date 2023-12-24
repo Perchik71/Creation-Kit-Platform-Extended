@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Broken Terrain Edit Dlg";
 			}
 
+			bool BrokenTerrainEditDlgPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> BrokenTerrainEditDlgPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool BrokenTerrainEditDlgPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

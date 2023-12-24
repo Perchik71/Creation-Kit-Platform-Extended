@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Icons Script Prop";
 			}
 
+			bool FixIconsScriptPropPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixIconsScriptPropPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixIconsScriptPropPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

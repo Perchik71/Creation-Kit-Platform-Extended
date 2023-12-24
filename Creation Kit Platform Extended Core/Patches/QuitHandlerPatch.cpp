@@ -32,6 +32,16 @@ namespace CreationKitPlatformExtended
 			return "Quit Handler";
 		}
 
+		bool QuitHandlerPatch::HasDependencies() const
+		{
+			return false;
+		}
+
+		Array<String> QuitHandlerPatch::GetDependencies() const
+		{
+			return {};
+		}
+
 		bool QuitHandlerPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{

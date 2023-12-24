@@ -23,6 +23,8 @@ namespace CreationKitPlatformExtended
 			virtual bool HasCanRuntimeDisabled() const;
 			virtual const char* GetOptionName() const;
 			virtual const char* GetName() const;
+			virtual bool HasDependencies() const;
+			virtual Array<String> GetDependencies() const;
 
 			static void sub_unknown();
 			static HRESULT HKCoGetClassObject(_In_ REFCLSID rclsid, _In_ DWORD dwClsContext, _In_opt_ LPVOID pvReserved,

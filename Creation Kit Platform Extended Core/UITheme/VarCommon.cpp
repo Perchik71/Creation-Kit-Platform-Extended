@@ -29,7 +29,7 @@ namespace CreationKitPlatformExtended
 {
 	namespace UITheme
 	{
-		::Core::Classes::UI::CUIFont* ThemeFont;
+		::Core::Classes::UI::CUIFont* ThemeFont = nullptr;
 
 		constexpr COLORREF szConstDark[66]
 		{
@@ -416,9 +416,6 @@ namespace CreationKitPlatformExtended
 				break;
 			case Theme_Dark:
 				szCurrentScheme = const_cast<COLORREF*>(szConstDark);
-				break;
-			case Theme_NightBlue:
-				szCurrentScheme = const_cast<COLORREF*>(szNightBlue);
 				break;
 			}
 

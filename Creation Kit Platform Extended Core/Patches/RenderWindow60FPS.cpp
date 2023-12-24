@@ -32,6 +32,16 @@ namespace CreationKitPlatformExtended
 			return "Render Window 60 FPS";
 		}
 
+		bool RenderWindow60FPSPatch::HasDependencies() const
+		{
+			return false;
+		}
+
+		Array<String> RenderWindow60FPSPatch::GetDependencies() const
+		{
+			return {};
+		}
+
 		bool RenderWindow60FPSPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{

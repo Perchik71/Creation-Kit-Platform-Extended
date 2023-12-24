@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Move to topic";
 			}
 
+			bool FixMoveToTopicPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixMoveToTopicPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixMoveToTopicPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Spell Dlg";
 			}
 
+			bool FixSpellDlgPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixSpellDlgPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixSpellDlgPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

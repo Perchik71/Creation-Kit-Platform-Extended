@@ -37,6 +37,16 @@ namespace CreationKitPlatformExtended
 				return "NiCollisionObject Cloned Warning";
 			}
 
+			bool NiCollisionObjectClonedWarningPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> NiCollisionObjectClonedWarningPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool NiCollisionObjectClonedWarningPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

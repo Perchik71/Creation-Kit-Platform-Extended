@@ -29,6 +29,9 @@ namespace CreationKitPlatformExtended
 			virtual bool HasCanRuntimeDisabled() const = 0;
 			virtual const char* GetOptionName() const = 0;
 			virtual const char* GetName() const = 0;
+
+			virtual bool HasDependencies() const = 0;
+			virtual Array<String> GetDependencies() const = 0;
 		protected:
 			virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion, const char* lpcstrPlatformRuntimeVersion) const = 0;
 			virtual bool Activate(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem) = 0;

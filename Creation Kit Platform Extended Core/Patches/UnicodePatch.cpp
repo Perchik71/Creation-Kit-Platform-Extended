@@ -33,6 +33,16 @@ namespace CreationKitPlatformExtended
 			return "Unicode";
 		}
 
+		bool UnicodePatch::HasDependencies() const
+		{
+			return false;
+		}
+
+		Array<String> UnicodePatch::GetDependencies() const
+		{
+			return {};
+		}
+
 		bool UnicodePatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{

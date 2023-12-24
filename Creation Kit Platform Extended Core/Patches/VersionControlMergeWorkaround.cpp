@@ -32,6 +32,16 @@ namespace CreationKitPlatformExtended
 			return "Version Control Merge Workaround";
 		}
 
+		bool VersionControlMergeWorkaroundPatch::HasDependencies() const
+		{
+			return false;
+		}
+
+		Array<String> VersionControlMergeWorkaroundPatch::GetDependencies() const
+		{
+			return {};
+		}
+
 		bool VersionControlMergeWorkaroundPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{

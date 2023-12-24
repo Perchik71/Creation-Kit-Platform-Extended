@@ -31,6 +31,7 @@ namespace CreationKitPlatformExtended
 			inline uintptr_t GetModuleBase() const { return _moduleBase; }
 			inline uint64_t GetModuleSize() const { return _moduleSize; }
 			inline EDITOR_EXECUTABLE_TYPE GetEditorVersion() const { return _editorVersion; }
+			inline ModuleManager* GetPatchesManager() const { return PatchesManager; }
 			inline bool HasAVX2() const { return _hasAVX2; }
 			inline bool HasSSE41() const { return _hasSSE41; }
 			inline Section GetSection(uint32_t nIndex) const { return Sections[nIndex]; }
@@ -53,6 +54,7 @@ namespace CreationKitPlatformExtended
 			HMODULE _module;
 			Section Sections[3];
 			ModuleManager* PatchesManager;
+			Module* _Theme;
 		};
 
 		extern Engine* GlobalEnginePtr;

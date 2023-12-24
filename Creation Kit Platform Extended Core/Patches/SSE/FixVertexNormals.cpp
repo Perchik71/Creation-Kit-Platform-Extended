@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Vertex Normals";
 			}
 
+			bool FixVertexNormalsPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixVertexNormalsPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixVertexNormalsPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

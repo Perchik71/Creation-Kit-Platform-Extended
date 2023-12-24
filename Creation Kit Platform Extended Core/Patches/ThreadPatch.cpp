@@ -32,6 +32,16 @@ namespace CreationKitPlatformExtended
 			return "Threads";
 		}
 
+		bool ThreadPatch::HasDependencies() const
+		{
+			return false;
+		}
+
+		Array<String> ThreadPatch::GetDependencies() const
+		{
+			return {};
+		}
+
 		bool ThreadPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{

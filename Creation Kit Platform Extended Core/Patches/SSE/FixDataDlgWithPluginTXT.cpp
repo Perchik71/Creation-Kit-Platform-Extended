@@ -36,6 +36,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Data Dlg with PluginTXT";
 			}
 
+			bool FixDataDlgWithPluginTXTPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixDataDlgWithPluginTXTPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixDataDlgWithPluginTXTPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

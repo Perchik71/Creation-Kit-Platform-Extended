@@ -262,6 +262,16 @@ namespace CreationKitPlatformExtended
 			return "Memory Manager";
 		}
 
+		bool MemoryManagerPatch::HasDependencies() const
+		{
+			return false;
+		}
+
+		Array<String> MemoryManagerPatch::GetDependencies() const
+		{
+			return {};
+		}
+
 		void* MemoryManagerPatch::HkCalloc(size_t count, size_t size)
 		{
 			return MemAlloc(count * size, 0, false, true);

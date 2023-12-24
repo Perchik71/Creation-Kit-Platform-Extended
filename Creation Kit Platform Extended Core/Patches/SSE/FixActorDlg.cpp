@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Actor Dlg";
 			}
 
+			bool FixActorDlgPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixActorDlgPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixActorDlgPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

@@ -40,6 +40,16 @@ namespace CreationKitPlatformExtended
 				return "Enable State Parent Workaround";
 			}
 
+			bool EnableStateParentWorkaroundPatch::HasDependencies() const
+			{
+				return true;
+			}
+
+			Array<String> EnableStateParentWorkaroundPatch::GetDependencies() const
+			{
+				return { "Console" };
+			}
+
 			bool EnableStateParentWorkaroundPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

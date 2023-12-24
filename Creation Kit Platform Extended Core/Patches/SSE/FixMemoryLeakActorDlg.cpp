@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Memory Leak ActorDlg";
 			}
 
+			bool FixMemoryLeakActorDlgPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixMemoryLeakActorDlgPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixMemoryLeakActorDlgPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

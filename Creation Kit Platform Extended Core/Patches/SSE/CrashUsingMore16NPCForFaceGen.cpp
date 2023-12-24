@@ -37,6 +37,16 @@ namespace CreationKitPlatformExtended
 				return "Crash Using More 16 NPC For FaceGen";
 			}
 
+			bool CrashUsingMore16NPCForFaceGenPatch::HasDependencies() const
+			{
+				return true;
+			}
+
+			Array<String> CrashUsingMore16NPCForFaceGenPatch::GetDependencies() const
+			{
+				return { "Console" };
+			}
+
 			bool CrashUsingMore16NPCForFaceGenPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

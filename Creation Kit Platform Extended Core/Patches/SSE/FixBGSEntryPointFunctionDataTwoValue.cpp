@@ -37,6 +37,16 @@ namespace CreationKitPlatformExtended
 				return "Fix BGSEntryPointFunctionDataTwoValue";
 			}
 
+			bool FixBGSEntryPointFunctionDataTwoValuePatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixBGSEntryPointFunctionDataTwoValuePatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixBGSEntryPointFunctionDataTwoValuePatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

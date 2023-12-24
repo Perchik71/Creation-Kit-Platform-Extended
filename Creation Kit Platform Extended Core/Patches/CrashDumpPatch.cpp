@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 			return "Crash Dump";
 		}
 
+		bool CrashDumpPatch::HasDependencies() const
+		{
+			return false;
+		}
+
+		Array<String> CrashDumpPatch::GetDependencies() const
+		{
+			return {};
+		}
+
 		bool CrashDumpPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{

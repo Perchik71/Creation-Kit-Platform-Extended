@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Dialogue Branch";
 			}
 
+			bool FixDialogueBranchPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixDialogueBranchPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixDialogueBranchPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

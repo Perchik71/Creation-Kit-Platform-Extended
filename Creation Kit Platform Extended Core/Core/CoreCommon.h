@@ -34,10 +34,10 @@ namespace CreationKitPlatformExtended
 		// Список названий редакторов
 		static std::vector<std::string_view> allowedEditorVersionStr = {
 			"Unknown version",
-			"Skyrim Special Edition (version: 1.5.3)",
-			"Skyrim Special Edition (version: 1.5.73)",
-			"Skyrim Special Edition (version: 1.6.438)",
-			"Skyrim Special Edition (version: 1.6.1130)",
+			"Skyrim Special Edition [v1.5.3]",
+			"Skyrim Special Edition [v1.5.73]",
+			"Skyrim Special Edition [v1.6.438]",
+			"Skyrim Special Edition [v1.6.1130]",
 		};
 
 		// Список имён файлов базы данных

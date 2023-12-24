@@ -186,8 +186,11 @@
     <ClCompile Include="Patches\ThreadPatch.cpp" />
     <ClCompile Include="Patches\UIPatch.cpp" />
     <ClCompile Include="Patches\UIThemePatch.cpp" />
+    <ClCompile Include="Patches\UIThemePatchAdditional.cpp" />
     <ClCompile Include="Patches\UnicodePatch.cpp" />
     <ClCompile Include="Patches\VersionControlMergeWorkaround.cpp" />
+    <ClCompile Include="Patches\Windows\BaseWindow.cpp" />
+    <ClCompile Include="Patches\Windows\SSE\MainWindow.cpp" />
     <ClCompile Include="Steam API\SteamAPI.cpp" />
     <ClCompile Include="UITheme\CheckBox.cpp" />
     <ClCompile Include="UITheme\ComboBox.cpp" />
@@ -363,8 +366,12 @@
     <ClInclude Include="Patches\ThreadPatch.h" />
     <ClInclude Include="Patches\UIPatch.h" />
     <ClInclude Include="Patches\UIThemePatch.h" />
+    <ClInclude Include="Patches\UIThemePatchAdditional.h" />
     <ClInclude Include="Patches\UnicodePatch.h" />
     <ClInclude Include="Patches\VersionControlMergeWorkaround.h" />
+    <ClInclude Include="Patches\Windows\BaseWindow.h" />
+    <ClInclude Include="Patches\Windows\SSE\MainWindow.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Steam API\SteamAPI.h" />
     <ClInclude Include="Steam API\SteamAPIConfig.h" />
     <ClInclude Include="Types.h" />
@@ -398,6 +405,7 @@
     <ClInclude Include="Version\resource_version2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="CoreRes.rc" />
     <ResourceCompile Include="Version\resource_version.rc" />
   </ItemGroup>
   <ItemGroup>
@@ -405,6 +413,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Version\resource_version2.tmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resources\check.bmp" />
+    <Image Include="..\Resources\check_darktheme.bmp" />
+    <Image Include="..\Resources\toolbar.bmp" />
+    <Image Include="..\Resources\types.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

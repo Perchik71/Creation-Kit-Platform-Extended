@@ -36,6 +36,16 @@ namespace CreationKitPlatformExtended
 				return "Crash CCC Files";
 			}
 
+			bool CrashCCCFilesPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> CrashCCCFilesPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool CrashCCCFilesPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

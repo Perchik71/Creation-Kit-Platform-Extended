@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix a spell effect duration";
 			}
 
+			bool FixSpellEffectsDurationPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixSpellEffectsDurationPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixSpellEffectsDurationPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

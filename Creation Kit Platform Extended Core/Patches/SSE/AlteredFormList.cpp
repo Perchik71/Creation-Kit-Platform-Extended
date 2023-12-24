@@ -37,6 +37,16 @@ namespace CreationKitPlatformExtended
 				return "Altered Form List And Reference Map";
 			}
 
+			bool AlteredFormListPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> AlteredFormListPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool AlteredFormListPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

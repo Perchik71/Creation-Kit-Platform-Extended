@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Crash MakeXYZCircles";
 			}
 
+			bool FixCrashMakeXYZCirclesPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixCrashMakeXYZCirclesPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixCrashMakeXYZCirclesPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

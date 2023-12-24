@@ -23,6 +23,8 @@ namespace CreationKitPlatformExtended
 			virtual bool HasCanRuntimeDisabled() const;
 			virtual const char* GetOptionName() const;
 			virtual const char* GetName() const;
+			virtual bool HasDependencies() const;
+			virtual Array<String> GetDependencies() const;
 
 			static void Log(const char* Format, ...);
 			static void LogVa(const char* Format, va_list Va);

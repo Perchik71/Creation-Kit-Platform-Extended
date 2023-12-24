@@ -11,6 +11,14 @@ namespace CreationKitPlatformExtended
 		class EditorUI
 		{
 		public:
+			constexpr static uint32_t UI_EDITOR_TOOLBAR = 1;
+			constexpr static uint32_t UI_EDITOR_STATUSBAR = 40139;
+			constexpr static uint32_t UI_EDITOR_TOGGLEOBJECTWND = 40199;
+			constexpr static uint32_t UI_EDITOR_TOGGLEFOG = 40937;			// "View" menu
+			constexpr static uint32_t UI_EDITOR_TOGGLEGRASS_BUTTON = 40960;	// Main toolbar
+			constexpr static uint32_t UI_EDITOR_TOGGLEGRASS = 40963;		// "View" menu
+			constexpr static uint32_t UI_EDITOR_OPENFORMBYID = 52001;		// Sent from the LogWindow on double click
+			
 			constexpr static uint32_t UI_DATA_DIALOG_PLUGINLISTVIEW = 1056;
 
 			EditorUI();

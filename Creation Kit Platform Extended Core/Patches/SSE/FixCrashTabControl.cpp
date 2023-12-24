@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Crash TabControl";
 			}
 
+			bool FixCrashTabControlPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixCrashTabControlPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixCrashTabControlPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

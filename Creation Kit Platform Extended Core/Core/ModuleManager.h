@@ -19,6 +19,7 @@ namespace CreationKitPlatformExtended
 			bool Has(const char* name) const;
 			bool Append(Module* lpModule);
 			void Append(std::initializer_list<Module*> modulesList);
+			void Remove(const char* name);
 
 			SmartPointer<Module> GetByName(const char* name) const;
 			inline uint32_t Count() const { return (uint32_t)_modules.size(); }

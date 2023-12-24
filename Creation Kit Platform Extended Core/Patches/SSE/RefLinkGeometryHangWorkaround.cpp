@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Ref Link Geometry Hang Workaround";
 			}
 
+			bool RefLinkGeometryHangWorkaroundPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> RefLinkGeometryHangWorkaroundPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool RefLinkGeometryHangWorkaroundPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

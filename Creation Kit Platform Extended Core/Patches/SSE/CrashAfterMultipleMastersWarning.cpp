@@ -37,6 +37,16 @@ namespace CreationKitPlatformExtended
 				return "Crash after Multiple Masters Warning";
 			}
 
+			bool CrashAfterMultipleMastersWarningPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> CrashAfterMultipleMastersWarningPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool CrashAfterMultipleMastersWarningPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

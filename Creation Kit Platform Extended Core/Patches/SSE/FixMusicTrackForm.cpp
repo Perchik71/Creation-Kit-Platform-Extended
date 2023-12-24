@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix MusicTrack Form";
 			}
 
+			bool FixMusicTrackFormPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixMusicTrackFormPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixMusicTrackFormPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

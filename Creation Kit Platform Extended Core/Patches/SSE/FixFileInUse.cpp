@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "File in use";
 			}
 
+			bool FixFileInUsePatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixFileInUsePatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixFileInUsePatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

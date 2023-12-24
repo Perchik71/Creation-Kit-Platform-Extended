@@ -36,6 +36,16 @@ namespace CreationKitPlatformExtended
 				return "Rename Creation Kit App";
 			}
 
+			bool RenameCreationKitAppPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> RenameCreationKitAppPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool RenameCreationKitAppPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

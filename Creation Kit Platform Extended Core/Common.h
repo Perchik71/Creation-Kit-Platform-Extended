@@ -28,6 +28,7 @@
 #include <stdint.h>
 #include <mmsystem.h>
 #include <commctrl.h>
+#include <commdlg.h>
 #include <richedit.h>
 #include <intrin.h>
 #include <xmmintrin.h>

@@ -119,7 +119,7 @@ namespace CreationKitPlatformExtended
 				if (!wNeedLen)
 					goto __dealloc;
 				else {
-					LPSTR newData = (LPSTR)NiMemoryManager::Alloc(NULL, wNeedBuf);
+					LPSTR newData = (LPSTR)NiMemoryManager::Alloc(NULL, wNeedBuf, 4);
 					memcpy(newData, string, wNeedLen);
 					newData[wNeedLen] = 0;
 

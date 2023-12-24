@@ -36,6 +36,16 @@ namespace CreationKitPlatformExtended
 				return "TESParameters CTDA";
 			}
 
+			bool TESParameters_CTDAPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> TESParameters_CTDAPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool TESParameters_CTDAPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

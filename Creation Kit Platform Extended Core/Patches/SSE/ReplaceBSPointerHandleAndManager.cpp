@@ -37,6 +37,16 @@ namespace CreationKitPlatformExtended
 				return "Replace BSPointerHandle And Manager";
 			}
 
+			bool ReplaceBSPointerHandleAndManagerPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> ReplaceBSPointerHandleAndManagerPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool ReplaceBSPointerHandleAndManagerPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

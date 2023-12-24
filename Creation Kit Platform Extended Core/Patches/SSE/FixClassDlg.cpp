@@ -36,6 +36,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Class Dlg";
 			}
 
+			bool FixClassDlgPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixClassDlgPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixClassDlgPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

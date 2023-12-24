@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Selected Package Data";
 			}
 
+			bool FixSelectedPackageDataPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixSelectedPackageDataPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixSelectedPackageDataPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

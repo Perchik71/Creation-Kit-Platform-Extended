@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Crash Lighting Shader";
 			}
 
+			bool FixCrashLightingShaderPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixCrashLightingShaderPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixCrashLightingShaderPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

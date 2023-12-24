@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Remove Useless Messages";
 			}
 
+			bool RemoveUselessMessagesPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> RemoveUselessMessagesPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool RemoveUselessMessagesPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

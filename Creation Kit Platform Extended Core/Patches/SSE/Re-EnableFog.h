@@ -25,8 +25,11 @@ namespace CreationKitPlatformExtended
 				virtual bool HasCanRuntimeDisabled() const;
 				virtual const char* GetOptionName() const;
 				virtual const char* GetName() const;
+				virtual bool HasDependencies() const;
+				virtual Array<String> GetDependencies() const;
 
 				static void sub(__int64 a1, __int64 a2, __int64 a3);
+				static bool IsFogEnabled();
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;

@@ -42,6 +42,16 @@ namespace CreationKitPlatformExtended
 				return "Load Optimization";
 			}
 
+			bool LoadOptimizationPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> LoadOptimizationPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool LoadOptimizationPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

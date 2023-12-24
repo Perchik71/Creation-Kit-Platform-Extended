@@ -43,6 +43,21 @@ namespace CreationKitPlatformExtended
 				return "Re-enable fog rendering";
 			}
 
+			bool ReEnableFogPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> ReEnableFogPatch::GetDependencies() const
+			{
+				return {};
+			}
+
+			bool ReEnableFogPatch::IsFogEnabled()
+			{
+				return *reinterpret_cast<bool*>(pointer_ReEnableFog_data);
+			}
+
 			bool ReEnableFogPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

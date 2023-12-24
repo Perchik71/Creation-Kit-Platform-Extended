@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Load More 32K Animation";
 			}
 
+			bool FixLoadMore32KAnimationPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixLoadMore32KAnimationPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixLoadMore32KAnimationPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

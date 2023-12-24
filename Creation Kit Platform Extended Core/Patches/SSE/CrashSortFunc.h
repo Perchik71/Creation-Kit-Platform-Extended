@@ -29,6 +29,8 @@ namespace CreationKitPlatformExtended
 				virtual bool HasCanRuntimeDisabled() const;
 				virtual const char* GetOptionName() const;
 				virtual const char* GetName() const;
+				virtual bool HasDependencies() const;
+				virtual Array<String> GetDependencies() const;
 
 				template<typename T, bool Stable = false>
 				static void sub(EditorAPI::BSTArray<T>& Array, int(*SortFunction)(const void*, const void*))

@@ -36,6 +36,16 @@ namespace CreationKitPlatformExtended
 				return "Load .DDS File";
 			}
 
+			bool LoadDDSFilePatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> LoadDDSFilePatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool LoadDDSFilePatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

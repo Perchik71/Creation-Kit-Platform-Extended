@@ -32,6 +32,16 @@ namespace CreationKitPlatformExtended
 			return "Allow Multiple Window And Master";
 		}
 
+		bool AllowMultipleWindowAndMasterPatch::HasDependencies() const
+		{
+			return false;
+		}
+
+		Array<String> AllowMultipleWindowAndMasterPatch::GetDependencies() const
+		{
+			return {};
+		}
+
 		bool AllowMultipleWindowAndMasterPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{

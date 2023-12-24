@@ -35,6 +35,16 @@ namespace CreationKitPlatformExtended
 			return "UI";
 		}
 
+		bool UIPatch::HasDependencies() const
+		{
+			return false;
+		}
+
+		Array<String> UIPatch::GetDependencies() const
+		{
+			return {};
+		}
+
 		bool UIPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{

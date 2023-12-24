@@ -20,7 +20,8 @@
 */
 //////////////////////////////////////////
 
-//#include "Editor API/UI/MainWindow.h"
+#include "Core/Engine.h"
+#include "Patches/Windows/SSE/MainWindow.h"
 #include "VarCommon.h"
 #include "TimeOfDay.h"
 
@@ -119,9 +120,12 @@ namespace CreationKitPlatformExtended
 							OldUITimeOfDayComponents.hWndTrackBar.Perform(TBM_SETPOS, TRUE, lPos);
 
 							// fake change time of day
-							/*auto hWndMain = MainWindow::GetWindow();
-							SendMessageA(hWndMain, WM_NOTIFY, 0x16D3, (LPARAM)&hdr);
-							SendMessageA(hWndMain, WM_NOTIFY, NM_RELEASEDCAPTURE, (LPARAM)&hdr);*/
+							if (Core::GlobalEnginePtr->GetEditorVersion() <= Core::EDITOR_SKYRIM_SE_LAST)
+							{
+								auto hWndMain = Patches::SkyrimSpectialEdition::GlobalMainWindowPtr->Handle;
+								SendMessageA(hWndMain, WM_NOTIFY, 0x16D3, (LPARAM)&hdr);
+								SendMessageA(hWndMain, WM_NOTIFY, NM_RELEASEDCAPTURE, (LPARAM)&hdr);
+							}
 
 							POINT Range = {
 								(LONG)OldUITimeOfDayComponents.hWndTrackBar.Perform(TBM_GETRANGEMIN, 0, 0),

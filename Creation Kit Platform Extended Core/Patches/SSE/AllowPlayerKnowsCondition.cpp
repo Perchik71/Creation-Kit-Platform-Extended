@@ -36,6 +36,16 @@ namespace CreationKitPlatformExtended
 				return "Allow PlayerKnows Condition";
 			}
 
+			bool AllowPlayerKnowsConditionPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> AllowPlayerKnowsConditionPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool AllowPlayerKnowsConditionPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

@@ -23,6 +23,8 @@ namespace CreationKitPlatformExtended
 			virtual bool HasCanRuntimeDisabled() const;
 			virtual const char* GetOptionName() const;
 			virtual const char* GetName() const;
+			virtual bool HasDependencies() const;
+			virtual Array<String> GetDependencies() const;
 		public:
 			static void* HkCalloc(size_t count, size_t size);
 			static void* HkMalloc(size_t size);

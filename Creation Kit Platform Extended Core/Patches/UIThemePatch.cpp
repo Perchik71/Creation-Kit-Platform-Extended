@@ -2,6 +2,8 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
+// Special thanks (very cool): https://github.com/adzm/win32-custom-menubar-aero-theme
+
 #include "Core/Engine.h"
 #include "Editor API/EditorUI.h"
 #include "Editor API/UI/UIBaseWindow.h"
@@ -32,6 +34,97 @@
 #include "UITheme/RichEdit20.h"
 #include "UITheme/Memo.h"
 
+// see https://github.com/adzm/win32-custom-menubar-aero-theme/blob/main/UAHMenuBar.h
+
+// window messages related to menu bar drawing
+#define WM_UAHDESTROYWINDOW    0x0090	// handled by DefWindowProc
+#define WM_UAHDRAWMENU         0x0091	// lParam is UAHMENU
+#define WM_UAHDRAWMENUITEM     0x0092	// lParam is UAHDRAWMENUITEM
+#define WM_UAHINITMENU         0x0093	// handled by DefWindowProc
+#define WM_UAHMEASUREMENUITEM  0x0094	// lParam is UAHMEASUREMENUITEM
+#define WM_UAHNCPAINTMENUPOPUP 0x0095	// handled by DefWindowProc
+
+// describes the sizes of the menu bar or menu item
+typedef union tagUAHMENUITEMMETRICS
+{
+	// cx appears to be 14 / 0xE less than rcItem's width!
+	// cy 0x14 seems stable, i wonder if it is 4 less than rcItem's height which is always 24 atm
+	struct {
+		DWORD cx;
+		DWORD cy;
+	} rgsizeBar[2];
+	struct {
+		DWORD cx;
+		DWORD cy;
+	} rgsizePopup[4];
+} UAHMENUITEMMETRICS;
+
+// not really used in our case but part of the other structures
+typedef struct tagUAHMENUPOPUPMETRICS
+{
+	DWORD rgcx[4];
+	DWORD fUpdateMaxWidths : 2; // from kernel symbols, padded to full dword
+} UAHMENUPOPUPMETRICS;
+
+// hmenu is the main window menu; hdc is the context to draw in
+typedef struct tagUAHMENU
+{
+	HMENU hmenu;
+	HDC hdc;
+	DWORD dwFlags; // no idea what these mean, in my testing it's either 0x00000a00 or sometimes 0x00000a10
+} UAHMENU;
+
+// menu items are always referred to by iPosition here
+typedef struct tagUAHMENUITEM
+{
+	int iPosition; // 0-based position of menu item in menubar
+	UAHMENUITEMMETRICS umim;
+	UAHMENUPOPUPMETRICS umpm;
+} UAHMENUITEM;
+
+// the DRAWITEMSTRUCT contains the states of the menu items, as well as
+// the position index of the item in the menu, which is duplicated in
+// the UAHMENUITEM's iPosition as well
+typedef struct UAHDRAWMENUITEM
+{
+	DRAWITEMSTRUCT dis; // itemID looks uninitialized
+	UAHMENU um;
+	UAHMENUITEM umi;
+} UAHDRAWMENUITEM;
+
+// the MEASUREITEMSTRUCT is intended to be filled with the size of the item
+// height appears to be ignored, but width can be modified
+typedef struct tagUAHMEASUREMENUITEM
+{
+	MEASUREITEMSTRUCT mis;
+	UAHMENU um;
+	UAHMENUITEM umi;
+} UAHMEASUREMENUITEM;
+
+void UAHDrawMenuNCBottomLine(HWND hWnd, HBRUSH hbrBarBackground)
+{
+	MENUBARINFO mbi = { sizeof(mbi) };
+	if (!GetMenuBarInfo(hWnd, OBJID_MENU, 0, &mbi))
+		return;
+
+	RECT rcClient = { 0 };
+	GetClientRect(hWnd, &rcClient);
+	MapWindowPoints(hWnd, nullptr, (POINT*)&rcClient, 2);
+
+	RECT rcWindow = { 0 };
+	GetWindowRect(hWnd, &rcWindow);
+	OffsetRect(&rcClient, -rcWindow.left, -rcWindow.top);
+
+	// the rcBar is offset by the window rect
+	RECT rcAnnoyingLine = rcClient;
+	rcAnnoyingLine.bottom = rcAnnoyingLine.top;
+	rcAnnoyingLine.top--;
+
+	HDC hdc = GetWindowDC(hWnd);
+	FillRect(hdc, &rcAnnoyingLine, hbrBarBackground);
+	ReleaseDC(hWnd, hdc);
+}
+
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
@@ -48,8 +141,10 @@ namespace CreationKitPlatformExtended
 		const UnorderedSet<std::string_view, std::hash<std::string_view>, std::equal_to<std::string_view>> PermanentWindowSubclasses
 		{
 			"Creation Kit",
-			"Creation Kit SE",
-			"Creation Kit SSE",
+			"Creation Kit Skyrim Special Edition [v1.5.3]",
+			"Creation Kit Skyrim Special Edition [v1.5.73]",
+			"Creation Kit Skyrim Special Edition [v1.6.438]",
+			"Creation Kit Skyrim Special Edition [v1.6.1130]",
 			"ActivatorClass",
 			"AlchemyClass",
 			"ArmorClass",
@@ -74,6 +169,9 @@ namespace CreationKitPlatformExtended
 
 		static WNDPROC OldPopupMenuWndClass = NULL;
 		static Graphics::CUIFont* listFont = NULL;
+		static HBRUSH g_brItemBackground = NULL;
+		static HBRUSH g_brItemBackgroundHot = NULL;
+		static HBRUSH g_brItemBackgroundSelected = NULL;
 
 		namespace hook_func {
 			COLORREF WINAPI SetTextColor(HDC hdc, COLORREF color) {
@@ -179,6 +277,16 @@ namespace CreationKitPlatformExtended
 			return "UI Dark Theme";
 		}
 
+		bool UIThemePatch::HasDependencies() const
+		{
+			return false;
+		}
+
+		Array<String> UIThemePatch::GetDependencies() const
+		{
+			return {};
+		}
+
 		bool UIThemePatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{
@@ -188,31 +296,32 @@ namespace CreationKitPlatformExtended
 		bool UIThemePatch::Activate(const Relocator* lpRelocator,
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
-			if (lpRelocationDatabaseItem->Version() == 1)
-			{
+			//if (lpRelocationDatabaseItem->Version() == 1)
+			//{
 				// I will new it once and forget about its existence
 				// I have no general idea where to destroy it. Yes, and it is not necessary, it will die along with the process.
-
-				UITheme::ThemeFont = new Graphics::CUIFont("Microsoft Sans Serif", 8, {},
-					_READ_OPTION_INT("CreationKit", "Charset", DEFAULT_CHARSET),
-					Graphics::fqClearTypeNatural, Graphics::fpVariable);
 
 				auto comDll = reinterpret_cast<uintptr_t>(GetModuleHandle("comctl32.dll"));
 				Assert(comDll);
 
-				UITheme::SetTheme(UITheme::Theme::Theme_NightBlue);
+				auto Id = _READ_OPTION_UINT("CreationKit", "uUIDarkThemeId", 0);
+				Id = std::min(Id, (unsigned long)1);
+
+				UITheme::SetTheme(UITheme::Theme(Id + 3));
 
 				Detours::IATHook(comDll, "USER32.dll", "GetSysColor", (uintptr_t)&Comctl32GetSysColor);
 				Detours::IATHook(comDll, "USER32.dll", "GetSysColorBrush", (uintptr_t)&Comctl32GetSysColorBrush);
 				Detours::IATDelayedHook(comDll, "UxTheme.dll", "DrawThemeBackground", (uintptr_t)&Comctl32DrawThemeBackground);
 				Detours::IATDelayedHook(comDll, "UxTheme.dll", "DrawThemeText", (uintptr_t)&Comctl32DrawThemeText);
 
-				InitializeThread();
+				g_brItemBackground = UITheme::Comctl32GetSysColorBrush(COLOR_BTNFACE);
+				g_brItemBackgroundHot = CreateSolidBrush(UITheme::GetThemeSysColor(UITheme::ThemeColor_Button_Hot_Gradient_End));
+				g_brItemBackgroundSelected = UITheme::Comctl32GetSysColorBrush(COLOR_HIGHLIGHT);
 
 				return true;
-			}
+			//}
 			
-			return false;
+			//return false;
 		}
 
 		bool UIThemePatch::Shutdown(const Relocator* lpRelocator,
@@ -223,6 +332,11 @@ namespace CreationKitPlatformExtended
 
 		void UIThemePatch::InitializeThread()
 		{
+			if (!UITheme::ThemeFont)
+				UITheme::ThemeFont = new Graphics::CUIFont("Microsoft Sans Serif", 8, {},
+					_READ_OPTION_INT("CreationKit", "Charset", DEFAULT_CHARSET),
+					Graphics::fqClearTypeNatural, Graphics::fpVariable);
+
 			SetWindowsHookExA(WH_CALLWNDPROC, CallWndProcCallback, NULL, GetCurrentThreadId());
 		}
 
@@ -359,8 +473,117 @@ namespace CreationKitPlatformExtended
 		LRESULT CALLBACK UIThemePatch::WindowSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,
 			UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
 		{
+			static HTHEME g_menuTheme = nullptr;
+
 			switch (uMsg) 
 			{
+				case WM_UAHDRAWMENU:
+				{
+					UAHMENU* pUDM = (UAHMENU*)lParam;
+					RECT rc = { 0 };
+
+					// get the menubar rect
+					{
+						MENUBARINFO mbi = { sizeof(mbi) };
+						GetMenuBarInfo(hWnd, OBJID_MENU, 0, &mbi);
+
+						RECT rcWindow;
+						GetWindowRect(hWnd, &rcWindow);
+
+						// the rcBar is offset by the window rect
+						rc = mbi.rcBar;
+						OffsetRect(&rc, -rcWindow.left, -rcWindow.top);
+					}
+
+					FillRect(pUDM->hdc, &rc, UITheme::Comctl32GetSysColorBrush(COLOR_BTNFACE));
+				}
+				return 0;
+				case WM_UAHDRAWMENUITEM:
+				{
+					UAHDRAWMENUITEM* pUDMI = (UAHDRAWMENUITEM*)lParam;
+
+					HBRUSH* pbrBackground = &g_brItemBackground;
+
+					// get the menu item string
+					wchar_t menuString[256] = { 0 };
+					MENUITEMINFOW mii = { sizeof(mii), MIIM_STRING };
+					{
+						mii.dwTypeData = menuString;
+						mii.cch = (sizeof(menuString) / 2) - 1;
+
+						GetMenuItemInfoW(pUDMI->um.hmenu, pUDMI->umi.iPosition, TRUE, &mii);
+					}
+
+					// get the item state for drawing
+
+					DWORD dwFlags = DT_CENTER | DT_SINGLELINE | DT_VCENTER;
+
+					int iTextStateID = 0;
+					int iBackgroundStateID = 0;
+					{
+						if ((pUDMI->dis.itemState & ODS_INACTIVE) | (pUDMI->dis.itemState & ODS_DEFAULT)) {
+							// normal display
+							iTextStateID = MPI_NORMAL;
+							iBackgroundStateID = MPI_NORMAL;
+						}
+						if (pUDMI->dis.itemState & ODS_HOTLIGHT) {
+							// hot tracking
+							iTextStateID = MPI_HOT;
+							iBackgroundStateID = MPI_HOT;
+
+							pbrBackground = &g_brItemBackgroundHot;
+						}
+						if (pUDMI->dis.itemState & ODS_SELECTED) {
+							// clicked -- MENU_POPUPITEM has no state for this, though MENU_BARITEM does
+							iTextStateID = MPI_HOT;
+							iBackgroundStateID = MPI_HOT;
+
+							pbrBackground = &g_brItemBackgroundSelected;
+						}
+						if ((pUDMI->dis.itemState & ODS_GRAYED) || (pUDMI->dis.itemState & ODS_DISABLED)) {
+							// disabled / grey text
+							iTextStateID = MPI_DISABLED;
+							iBackgroundStateID = MPI_DISABLED;
+						}
+						if (pUDMI->dis.itemState & ODS_NOACCEL) {
+							dwFlags |= DT_HIDEPREFIX;
+						}
+					}
+
+					if (!g_menuTheme)
+						g_menuTheme = OpenThemeData(hWnd, L"Menu");
+
+					DTTOPTS opts = { sizeof(opts), DTT_TEXTCOLOR, iTextStateID != MPI_DISABLED ? 
+						UITheme::Comctl32GetSysColor(COLOR_WINDOWTEXT) :
+						UITheme::Comctl32GetSysColor(COLOR_BTNTEXT) };
+					
+					FillRect(pUDMI->um.hdc, &pUDMI->dis.rcItem, *pbrBackground);
+					DrawThemeTextEx(g_menuTheme, pUDMI->um.hdc, MENU_BARITEM, MBI_NORMAL, menuString, mii.cch, 
+						dwFlags, &pUDMI->dis.rcItem, &opts);
+
+					return 0;
+				}
+				case WM_UAHMEASUREMENUITEM:
+				{
+					UAHMEASUREMENUITEM* pMmi = (UAHMEASUREMENUITEM*)lParam;
+
+					// allow the default window procedure to handle the message
+					// since we don't really care about changing the width
+					auto Res = DefSubclassProc(hWnd, uMsg, wParam, lParam);
+
+					// but we can modify it here to make it 1/3rd wider for example
+					pMmi->mis.itemWidth = (pMmi->mis.itemWidth * 4) / 3;
+
+					return Res;
+				}
+				case WM_NCPAINT:
+				case WM_NCACTIVATE:
+				{
+					auto Res = DefSubclassProc(hWnd, uMsg, wParam, lParam);
+					UAHDrawMenuNCBottomLine(hWnd, UITheme::Comctl32GetSysColorBrush(COLOR_BTNFACE));
+					return Res;
+				}
+
 				case WM_CTLCOLOREDIT: 
 				{
 					if (HDC hdc = reinterpret_cast<HDC>(wParam); hdc)
@@ -1213,12 +1436,12 @@ namespace CreationKitPlatformExtended
 							UITheme::CheckBox::Render::DrawCheck_Disabled(Canvas, pRect);
 							break;
 						case CBS_CHECKEDNORMAL:
-							UITheme::PushButton::Render::DrawPushButton_Pressed(Canvas, pRect);
+							UITheme::PushButton::Render::DrawPushButton_Normal(Canvas, pRect);
 							UITheme::CheckBox::Render::DrawCheck_Normal(Canvas, pRect);
 							break;
 						case CBS_CHECKEDHOT:
-							UITheme::PushButton::Render::DrawPushButton_Pressed(Canvas, pRect);
-							UITheme::CheckBox::Render::DrawCheck_Normal(Canvas, pRect);
+							UITheme::PushButton::Render::DrawPushButton_Hot(Canvas, pRect);
+							UITheme::CheckBox::Render::DrawCheck_Hot(Canvas, pRect);
 							break;
 						case CBS_CHECKEDPRESSED:
 							UITheme::PushButton::Render::DrawPushButton_Pressed(Canvas, pRect);

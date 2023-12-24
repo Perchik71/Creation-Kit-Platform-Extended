@@ -34,6 +34,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Race Dlg";
 			}
 
+			bool FixRaceDlgPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixRaceDlgPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixRaceDlgPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

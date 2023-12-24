@@ -42,6 +42,16 @@ namespace CreationKitPlatformExtended
 				return "Crash Inventory Iterators";
 			}
 
+			bool CrashInventoryIteratorsPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> CrashInventoryIteratorsPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool CrashInventoryIteratorsPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

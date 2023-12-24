@@ -40,6 +40,16 @@ namespace CreationKitPlatformExtended
 				return "BGSPerkRankArray";
 			}
 
+			bool BGSPerkRankArrayPatch::HasDependencies() const
+			{
+				return true;
+			}
+
+			Array<String> BGSPerkRankArrayPatch::GetDependencies() const
+			{
+				return { "Console" };
+			}
+
 			bool BGSPerkRankArrayPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

@@ -36,6 +36,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Crash In Armor Addon";
 			}
 
+			bool FixCrashInArmorAddonPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixCrashInArmorAddonPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixCrashInArmorAddonPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

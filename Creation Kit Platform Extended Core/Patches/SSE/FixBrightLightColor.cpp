@@ -36,6 +36,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Bright Light Color";
 			}
 
+			bool FixBrightLightColorPatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixBrightLightColorPatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixBrightLightColorPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{

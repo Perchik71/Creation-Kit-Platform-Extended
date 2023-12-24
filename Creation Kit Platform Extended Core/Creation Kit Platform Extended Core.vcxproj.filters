@@ -427,6 +427,15 @@
     <ClCompile Include="Core\GDIPlusInit.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\UIThemePatchAdditional.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\Windows\BaseWindow.cpp">
+      <Filter>Patches\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\Windows\SSE\MainWindow.cpp">
+      <Filter>Patches\Windows\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -473,6 +482,15 @@
     </Filter>
     <Filter Include="UITheme">
       <UniqueIdentifier>{3dd4e8a5-31e0-4799-a587-64ed548b9df1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{2519805f-7da8-47c6-87cf-e22529965190}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Patches\Windows">
+      <UniqueIdentifier>{e8a81898-034e-49e4-be8d-5399d7b253d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Patches\Windows\SSE">
+      <UniqueIdentifier>{6438625a-55e4-4f64-b9b5-1642fedab259}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1000,10 +1018,25 @@
     <ClInclude Include="Core\GDIPlusInit.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Patches\UIThemePatchAdditional.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\BaseWindow.h">
+      <Filter>Patches\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\SSE\MainWindow.h">
+      <Filter>Patches\Windows\SSE</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version\resource_version.rc">
       <Filter>Version</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="CoreRes.rc">
+      <Filter>Resources</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1015,5 +1048,19 @@
     <None Include="Version\resource_version2.tmp">
       <Filter>Version</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resources\check.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\check_darktheme.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\toolbar.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\types.bmp">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>

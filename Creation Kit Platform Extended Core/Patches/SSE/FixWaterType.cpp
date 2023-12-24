@@ -38,6 +38,16 @@ namespace CreationKitPlatformExtended
 				return "Fix Water Type";
 			}
 
+			bool FixWaterTypePatch::HasDependencies() const
+			{
+				return false;
+			}
+
+			Array<String> FixWaterTypePatch::GetDependencies() const
+			{
+				return {};
+			}
+
 			bool FixWaterTypePatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
