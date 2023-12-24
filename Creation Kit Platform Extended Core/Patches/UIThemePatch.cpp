@@ -521,29 +521,29 @@ namespace CreationKitPlatformExtended
 					int iTextStateID = 0;
 					int iBackgroundStateID = 0;
 					{
-						if ((pUDMI->dis.itemState & ODS_INACTIVE) | (pUDMI->dis.itemState & ODS_DEFAULT)) {
+						if ((pUDMI->dis.itemState & ODS_INACTIVE) || (pUDMI->dis.itemState & ODS_DEFAULT)) {
 							// normal display
-							iTextStateID = MPI_NORMAL;
-							iBackgroundStateID = MPI_NORMAL;
+							iTextStateID = MBI_NORMAL;
+							iBackgroundStateID = MBI_NORMAL;
 						}
 						if (pUDMI->dis.itemState & ODS_HOTLIGHT) {
 							// hot tracking
-							iTextStateID = MPI_HOT;
-							iBackgroundStateID = MPI_HOT;
+							iTextStateID = MBI_HOT;
+							iBackgroundStateID = MBI_HOT;
 
 							pbrBackground = &g_brItemBackgroundHot;
 						}
 						if (pUDMI->dis.itemState & ODS_SELECTED) {
 							// clicked -- MENU_POPUPITEM has no state for this, though MENU_BARITEM does
-							iTextStateID = MPI_HOT;
-							iBackgroundStateID = MPI_HOT;
+							iTextStateID = MBI_HOT;
+							iBackgroundStateID = MBI_HOT;
 
 							pbrBackground = &g_brItemBackgroundSelected;
 						}
 						if ((pUDMI->dis.itemState & ODS_GRAYED) || (pUDMI->dis.itemState & ODS_DISABLED)) {
 							// disabled / grey text
-							iTextStateID = MPI_DISABLED;
-							iBackgroundStateID = MPI_DISABLED;
+							iTextStateID = MBI_DISABLED;
+							iBackgroundStateID = MBI_DISABLED;
 						}
 						if (pUDMI->dis.itemState & ODS_NOACCEL) {
 							dwFlags |= DT_HIDEPREFIX;
@@ -553,7 +553,7 @@ namespace CreationKitPlatformExtended
 					if (!g_menuTheme)
 						g_menuTheme = OpenThemeData(hWnd, L"Menu");
 
-					DTTOPTS opts = { sizeof(opts), DTT_TEXTCOLOR, iTextStateID != MPI_DISABLED ? 
+					DTTOPTS opts = { sizeof(opts), DTT_TEXTCOLOR, iTextStateID != MBI_DISABLED ? 
 						UITheme::Comctl32GetSysColor(COLOR_WINDOWTEXT) :
 						UITheme::Comctl32GetSysColor(COLOR_BTNTEXT) };
 					

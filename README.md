@@ -21,6 +21,7 @@ The platform will support all known versions of Creation Kit in the future, but 
 :white_check_mark: Interception of warning messages in the log  
 :white_check_mark: Unicode support  
 :white_check_mark: Multiple UI Fix and etc  
+:white_check_mark: Dark theme  
 :white_check_mark: Create master files and open them as plugins  
 :white_check_mark: Opening plugins as master files if they are in dependencies  
 :white_check_mark: Many other fixes are also from the author of [@Nukem9](https://github.com/Nukem9)
@@ -56,6 +57,7 @@ You will also need **Stuffs/SSE/CreationKitPlatformExtendedMessagesBlacklist.txt
 
 # Credits
 [Nukem9](https://github.com/Nukem9) (for experimental functions, hash and so on, very useful)  
+[adzm](https://github.com/adzm) (I really appreciate your work, you have [done](https://github.com/adzm/win32-custom-menubar-aero-theme) what I have long wanted to do myself.)  
 
 # License
 **GPLv3**: <a>https://www.gnu.org/licenses/gpl-3.0.html</a>. <br />
