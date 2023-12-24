@@ -26,6 +26,11 @@ The platform will support all known versions of Creation Kit in the future, but 
 :white_check_mark: Opening plugins as master files if they are in dependencies  
 :white_check_mark: Many other fixes are also from the author of [@Nukem9](https://github.com/Nukem9)
 
+# Demonstration
+<p align="center">
+  <img src="https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/master/Resources/darktheme.png" width="640px" alt="Creation Kit Platform Extended" border="0">
+</p>
+
 # ENB
 **CK** does not work well with **ENB**.  
 
