@@ -1,4 +1,4 @@
-// Microsoft Visual C++ generated resource script.
+п»ї// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -13,7 +13,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Русский (Россия) resources
+// Р СѓСЃСЃРєРёР№ (Р РѕСЃСЃРёСЏ) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
 LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
@@ -58,7 +58,7 @@ IDB_BITMAP3             BITMAP                  "..\\Resources\\toolbar.bmp"
 
 IDB_BITMAP4             BITMAP                  "E:\\Projects\\Creation-Kit-Platform-Extended\\Resources\\types.bmp"
 
-#endif    // Русский (Россия) resources
+#endif    // Р СѓСЃСЃРєРёР№ (Р РѕСЃСЃРёСЏ) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

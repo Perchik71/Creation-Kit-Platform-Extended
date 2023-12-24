@@ -57,7 +57,7 @@ You will also need **Stuffs/SSE/CreationKitPlatformExtendedMessagesBlacklist.txt
 
 # Credits
 [Nukem9](https://github.com/Nukem9) (for experimental functions, hash and so on, very useful)  
-[adzm](https://github.com/adzm) (I really appreciate your work, you have [done](https://github.com/adzm/win32-custom-menubar-aero-theme) what I have long wanted to do myself.)  
+[adzm](https://github.com/adzm) (I really appreciate your work, you have [done](https://github.com/adzm/win32-custom-menubar-aero-theme) what I have long wanted to do myself)  
 
 # License
 **GPLv3**: <a>https://www.gnu.org/licenses/gpl-3.0.html</a>. <br />

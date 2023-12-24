@@ -1,6 +1,6 @@
-//{{NO_DEPENDENCIES}}
-// Включаемый файл, созданный в Microsoft Visual C++.
-// Используется CoreRes.rc
+п»ї//{{NO_DEPENDENCIES}}
+// В¬РєР»СЋС‡Р°РµРјС‹Р№ С„Р°Р№Р», СЃРѕР·РґР°РЅРЅС‹Р№ РІ Microsoft Visual C++.
+// В»СЃРїРѕР»СЊР·СѓРµС‚СЃВ¤ CoreRes.rc
 //
 #define IDB_BITMAP1                     101
 #define IDB_BITMAP2                     102
