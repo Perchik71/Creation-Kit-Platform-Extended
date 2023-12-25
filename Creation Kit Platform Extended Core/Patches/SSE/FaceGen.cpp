@@ -63,6 +63,8 @@ namespace CreationKitPlatformExtended
 			{
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
+					ScopeRelocator text; // fast patches
+
 					//
 					// FaceGen
 					//
