@@ -74,6 +74,9 @@
 #include "Patches/SSE/EnableGameButtonToVC.h"
 #include "Patches/SSE/ShowReloadShadersAlways.h"
 #include "Patches/SSE/StableSortForPerks.h"
+#include "Patches/SSE/LipGen.h"
+#include "Patches/SSE/CrashHairKS.h"
+#include "Patches/SSE/BSArchiveManagerModded.h"
 #include "Patches/Windows/SSE/MainWindow.h"
 
 namespace CreationKitPlatformExtended
@@ -155,6 +158,9 @@ namespace CreationKitPlatformExtended
 				new Patches::EnableGameButtonToVCPatch(),
 				new Patches::ShowReloadShadersAlwaysPatch(),
 				new Patches::StableSortForPerksPatch(),
+				new Patches::LipGenPatch(),
+				new Patches::CrashHairKSPatch(),
+				new Patches::BSArchiveManagerModdedPatch(),
 				new Patches::MainWindow(),
 			});
 		}

@@ -28,6 +28,9 @@ namespace CreationKitPlatformExtended
 			bool SaveRichTextToFile(const char* _filename) const;
 			void LoadWarningBlacklist();
 
+			inline HANDLE GetStdoutListenerPipe() const { return _ExternalPipeWriterHandle; }
+			bool CreateStdoutListener();
+
 			void InputLog(const char* Format, ...);
 			void InputLogVa(const char* Format, va_list Va);
 
@@ -47,6 +50,8 @@ namespace CreationKitPlatformExtended
 			HWND _richEditHwnd;
 			bool _autoScroll;
 			FILE* _outputFileHandle;
+			HANDLE _ExternalPipeWriterHandle;
+			HANDLE _ExternalPipeReaderHandle;
 			ConcurrencyArray<const char*> _pendingMessages;
 			UnorderedSet<uint64_t> _messageBlacklist;
 		};

@@ -451,6 +451,15 @@
     <ClCompile Include="Patches\SSE\FaceGen.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\LipGen.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashHairKS.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\BSArchiveManagerModded.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1059,6 +1068,15 @@
     </ClInclude>
     <ClInclude Include="Patches\SSE\FaceGen.h">
       <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\LipGen.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashHairKS.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\BSArchiveManagerModded.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

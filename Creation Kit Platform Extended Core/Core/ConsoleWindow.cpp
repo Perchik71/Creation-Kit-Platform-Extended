@@ -19,7 +19,8 @@ namespace CreationKitPlatformExtended
 		ConsoleWindow* GlobalConsoleWindowPtr = nullptr;
 
 		ConsoleWindow::ConsoleWindow(Engine* lpEngine) : _engine(nullptr), hWindow(NULL),
-			_richEditHwnd(NULL), _autoScroll(true), _outputFileHandle(nullptr)
+			_richEditHwnd(NULL), _autoScroll(true), _outputFileHandle(nullptr), _ExternalPipeWriterHandle(NULL),
+			_ExternalPipeReaderHandle(NULL)
 		{
 			Create();
 		}
@@ -27,6 +28,63 @@ namespace CreationKitPlatformExtended
 		ConsoleWindow::~ConsoleWindow()
 		{
 			Destroy();
+		}
+
+		bool ConsoleWindow::CreateStdoutListener()
+		{
+			SECURITY_ATTRIBUTES saAttr
+			{
+				.nLength = sizeof(SECURITY_ATTRIBUTES),
+				.lpSecurityDescriptor = nullptr,
+				.bInheritHandle = TRUE,
+			};
+
+			if (!CreatePipe(&_ExternalPipeReaderHandle, &_ExternalPipeWriterHandle, &saAttr, 0))
+				return false;
+
+			// Ensure the read handle to the pipe for STDOUT is not inherited
+			if (!SetHandleInformation(_ExternalPipeReaderHandle, HANDLE_FLAG_INHERIT, 0))
+				return false;
+
+			std::thread pipeReader([](HANDLE ExternalPipeReaderHandle, HANDLE ExternalPipeWriterHandle)
+				{
+					char logBuffer[16384] = {};
+
+					while (true)
+					{
+						char buffer[4096] = {};
+						DWORD bytesRead;
+
+						bool succeeded = ReadFile(ExternalPipeReaderHandle, buffer, ARRAYSIZE(buffer) - 1, &bytesRead, nullptr) != 0;
+
+						// Bail if there's nothing left or the process exited
+						if (!succeeded || bytesRead <= 0)
+							break;
+
+						strcat_s(logBuffer, buffer);
+
+						// Flush on every newline and skip empty/whitespace strings
+						while (char* end = strchr(logBuffer, '\n'))
+						{
+							*end = '\0';
+							auto len = static_cast<size_t>(end - logBuffer);
+
+							while (strchr(logBuffer, '\r'))
+								*strchr(logBuffer, '\r') = ' ';
+
+							if (len > 0 && (len > 1 || logBuffer[0] != ' '))
+								GlobalConsoleWindowPtr->InputLog("%s", logBuffer);
+
+							strcpy_s(logBuffer, end + 1);
+						}
+					}
+
+					CloseHandle(ExternalPipeReaderHandle);
+					CloseHandle(ExternalPipeWriterHandle);
+				}, _ExternalPipeReaderHandle, _ExternalPipeWriterHandle);
+
+			pipeReader.detach();
+			return true;
 		}
 
 		LRESULT CALLBACK ConsoleWindow::WndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)

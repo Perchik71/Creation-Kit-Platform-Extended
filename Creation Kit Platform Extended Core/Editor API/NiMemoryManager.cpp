@@ -30,7 +30,7 @@ namespace CreationKitPlatformExtended
 	{
 		LPVOID NiMemoryManager::Alloc(const NiMemoryManager* lpManager, DWORD dwSize, DWORD dwAlignment)
 		{
-			return Patches::MemoryManagerPatch::MemAlloc(dwSize, dwAlignment, TRUE);
+			return Patches::MemoryManagerPatch::MemAlloc(dwSize, dwAlignment, dwAlignment != 0);
 		}
 
 		VOID NiMemoryManager::Free(const NiMemoryManager* lpManager, LPVOID lpPointer) 
