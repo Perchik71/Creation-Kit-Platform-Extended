@@ -70,6 +70,7 @@
 #include "Patches/SSE/EnableStateParentWorkaround.h"
 #include "Patches/SSE/AllowSaveESMandMasterESP.h"
 #include "Patches/SSE/RemoveUselessMessages.h"
+#include "Patches/SSE/DeferredDlg.h"
 #include "Patches/Windows/SSE/MainWindow.h"
 
 namespace CreationKitPlatformExtended
@@ -147,6 +148,7 @@ namespace CreationKitPlatformExtended
 				new Patches::EnableStateParentWorkaroundPatch(),
 				new Patches::AllowSaveESMandMasterESPPatch(),
 				new Patches::RemoveUselessMessagesPatch(),
+				new Patches::DeferredDlgPatch(),
 				new Patches::MainWindow(),
 			});
 		}

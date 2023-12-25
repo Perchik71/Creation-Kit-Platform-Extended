@@ -436,6 +436,9 @@
     <ClCompile Include="Patches\Windows\SSE\MainWindow.cpp">
       <Filter>Patches\Windows\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\DeferredDlg.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1029,6 +1032,9 @@
     </ClInclude>
     <ClInclude Include="Patches\Windows\SSE\MainWindow.h">
       <Filter>Patches\Windows\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\DeferredDlg.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

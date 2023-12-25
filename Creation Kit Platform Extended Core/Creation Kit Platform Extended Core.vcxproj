@@ -132,6 +132,7 @@
     <ClCompile Include="Patches\SSE\CrashTestRadius.cpp" />
     <ClCompile Include="Patches\SSE\CrashUploadBNetModWithArchive.cpp" />
     <ClCompile Include="Patches\SSE\CrashUsingMore16NPCForFaceGen.cpp" />
+    <ClCompile Include="Patches\SSE\DeferredDlg.cpp" />
     <ClCompile Include="Patches\SSE\EnableStateParentWorkaround.cpp" />
     <ClCompile Include="Patches\SSE\FixActorDlg.cpp" />
     <ClCompile Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.cpp" />
@@ -312,6 +313,7 @@
     <ClInclude Include="Patches\SSE\CrashTestRadius.h" />
     <ClInclude Include="Patches\SSE\CrashUploadBNetModWithArchive.h" />
     <ClInclude Include="Patches\SSE\CrashUsingMore16NPCForFaceGen.h" />
+    <ClInclude Include="Patches\SSE\DeferredDlg.h" />
     <ClInclude Include="Patches\SSE\EnableStateParentWorkaround.h" />
     <ClInclude Include="Patches\SSE\FixActorDlg.h" />
     <ClInclude Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.h" />

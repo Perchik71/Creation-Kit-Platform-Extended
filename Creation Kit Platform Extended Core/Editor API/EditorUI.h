@@ -23,17 +23,23 @@ namespace CreationKitPlatformExtended
 
 			EditorUI();
 
-			inline bool HasUseDeferredDialogInsert() const { return UseDeferredDialogInsert; }
-			inline HWND GetDeferredListView() const { return DeferredListView; }
-			inline HWND GetDeferredComboBox() const { return DeferredComboBox; }
-			inline uintptr_t GetDeferredStringLength() const { return DeferredStringLength; }
-			inline bool HasDeferredAllowResize() const { return DeferredAllowResize; }
-			inline void SetUseDeferredDialogInsert(bool v) { UseDeferredDialogInsert = v; }
-			inline void SetDeferredListView(HWND v) { DeferredListView = v; }
-			inline void SetDeferredComboBox(HWND v) { DeferredComboBox = v; }
-			inline void SetDeferredStringLength(uintptr_t v) { DeferredStringLength = v; }
-			inline void SetDeferredAllowResize(bool v) { DeferredAllowResize = v; }
+			inline bool HasUseDeferredDialogInsert() const { return _UseDeferredDialogInsert; }
+			inline HWND GetDeferredListView() const { return _DeferredListView; }
+			inline HWND GetDeferredComboBox() const { return _DeferredComboBox; }
+			inline uintptr_t GetDeferredStringLength() const { return _DeferredStringLength; }
+			inline bool HasDeferredAllowResize() const { return _DeferredAllowResize; }
+			inline void SetUseDeferredDialogInsert(bool v) { _UseDeferredDialogInsert = v; }
+			inline void SetDeferredListView(HWND v) { _DeferredListView = v; }
+			inline void SetDeferredComboBox(HWND v) { _DeferredComboBox = v; }
+			inline void SetDeferredStringLength(uintptr_t v) { _DeferredStringLength = v; }
+			inline void SetDeferredAllowResize(bool v) { _DeferredAllowResize = v; }
 			inline Array<std::pair<const char*, void*>>& GetDeferredMenuItems() { return DeferredMenuItems; }
+
+			PROPERTY(HasUseDeferredDialogInsert, SetUseDeferredDialogInsert) bool UseDeferredDialogInsert;
+			PROPERTY(GetDeferredListView, SetDeferredListView) HWND DeferredListView;
+			PROPERTY(GetDeferredComboBox, SetDeferredComboBox) HWND DeferredComboBox;
+			PROPERTY(GetDeferredStringLength, SetDeferredStringLength) uintptr_t DeferredStringLength;
+			PROPERTY(HasDeferredAllowResize, SetDeferredAllowResize) bool DeferredAllowResize;
 
 			void ResetUIDefer();
 			void BeginUIDefer();
@@ -50,15 +56,19 @@ namespace CreationKitPlatformExtended
 			static void HKResetUIDefer();
 			static void HKBeginUIDefer();
 			static void HKEndUIDefer();
+			static void ComboBoxInsertItemDeferred(HWND ComboBoxHandle, const char* DisplayText,
+				void* Value, bool AllowResize);
+			static void ListViewInsertItemDeferred(HWND ListViewHandle, void* Parameter,
+				bool UseImage, int ItemIndex);
 		private:
 			EditorUI(const EditorUI&) = default;
 			EditorUI& operator=(const EditorUI&) = default;
 
-			bool UseDeferredDialogInsert;
-			HWND DeferredListView;
-			HWND DeferredComboBox;
-			uintptr_t DeferredStringLength;
-			bool DeferredAllowResize;
+			bool _UseDeferredDialogInsert;
+			HWND _DeferredListView;
+			HWND _DeferredComboBox;
+			uintptr_t _DeferredStringLength;
+			bool _DeferredAllowResize;
 			Array<std::pair<const char*, void*>> DeferredMenuItems;
 		};
 

@@ -62,7 +62,6 @@ namespace CreationKitPlatformExtended
 		{
 			if (lpRelocationDatabaseItem->Version() == 1)
 			{
-				InitCommonControls();
 				UIThemePatch::InitializeThread();
 
 				pointer_UIThemePatchAdditional_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
@@ -74,6 +73,9 @@ namespace CreationKitPlatformExtended
 
 				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(4), (uintptr_t)&HKInitializeTimeOfDay);
 				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(5), (uintptr_t)&HKSetNewValueTimeOfDay);
+
+				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(6), 7);				// Prevent setting redundant colors in the condition list view NM_CUSTOMDRAW (breaks dark theme)
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(7), { 0x74, 0x20 });	// ^
 
 				return true;
 			}

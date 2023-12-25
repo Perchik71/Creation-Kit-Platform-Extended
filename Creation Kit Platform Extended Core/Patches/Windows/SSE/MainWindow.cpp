@@ -8,6 +8,7 @@
 #include "Editor API/BSString.h"
 #include "Core/TypeInfo/ms_rtti.h"
 #include "Editor API/SSE/TESForm.h"
+#include "Editor API/SSE/BSPointerHandleManager.h"
 #include "Patches/SSE/Re-EnableFog.h"
 #include "Patches/ConsolePatch.h"
 #include "MainWindow.h"
@@ -163,7 +164,7 @@ namespace CreationKitPlatformExtended
 				Classes::CUIMenu ExtMenu = ExtensionMenuHandle;
 				ExtMenu.Append("Show Log", UI_EXTMENU_SHOWLOG);
 				ExtMenu.Append("Clear Log", UI_EXTMENU_CLEARLOG);
-				ExtMenu.Append("Autoscroll Log", UI_EXTMENU_CLEARLOG, true, true);
+				ExtMenu.Append("Autoscroll Log", UI_EXTMENU_AUTOSCROLL, true, true);
 				ExtMenu.AppendSeparator();
 				ExtMenu.Append("Dump RTTI Data", UI_EXTMENU_DUMPRTTI);
 				ExtMenu.Append("Dump SDM Info", UI_EXTMENU_SDM);
@@ -275,13 +276,10 @@ namespace CreationKitPlatformExtended
 							return 0;
 							case EditorAPI::EditorUI::UI_EDITOR_OPENFORMBYID:
 							{
-								if (GlobalEnginePtr->GetEditorVersion() <= EDITOR_SKYRIM_SE_LAST)
-								{
-									auto form = EditorAPI::SkyrimSpectialEdition::TESForm::GetFormByNumericID(static_cast<uint32_t>(lParam));
-									if (form)
-										(*(void(__fastcall**)(EditorAPI::SkyrimSpectialEdition::TESForm*, HWND, __int64, __int64))
-											(*(__int64*)form + 720i64))(form, Hwnd, 0, 1);
-								}
+								auto form = EditorAPI::SkyrimSpectialEdition::TESForm::GetFormByNumericID(static_cast<uint32_t>(lParam));
+								if (form)
+									(*(void(__fastcall**)(EditorAPI::SkyrimSpectialEdition::TESForm*, HWND, __int64, __int64))
+										(*(__int64*)form + 720i64))(form, Hwnd, 0, 1);
 							}
 							return 0;
 							case UI_EXTMENU_SHOWLOG:
@@ -352,12 +350,27 @@ namespace CreationKitPlatformExtended
 							return 0;
 							case UI_EXTMENU_SDM:
 							{
-								/*auto head = BSPointerHandleManager::GetHead();
-								auto tail = BSPointerHandleManager::GetTail();
+								bool ExtremlyMode = _READ_OPTION_BOOL("CreationKit", "bBSPointerHandleExtremly", false);
+								if (ExtremlyMode)
+								{
+									auto head = EditorAPI::SkyrimSpectialEdition::BSPointerHandleManager_Extended_Extremly::GetHead();
+									auto tail = EditorAPI::SkyrimSpectialEdition::BSPointerHandleManager_Extended_Extremly::GetTail();
 
-								LogWindow::Log("Dump SDM Info:\n\tHead: 0x%08X\n\tTail: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",
-									head, tail, BSUntypedPointerHandle::MAX_HANDLE_COUNT,
-									((((long double)head) * 100.0f) / (long double)BSUntypedPointerHandle::MAX_HANDLE_COUNT));*/
+									ConsolePatch::Log("Dump SDM Info:\n\tHead: 0x%08X\n\tTail: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",
+										head, tail, EditorAPI::SkyrimSpectialEdition::BSUntypedPointerHandle_Extended_Extremly::MAX_HANDLE_COUNT,
+										((((long double)head) * 100.0f) / 
+											(long double)EditorAPI::SkyrimSpectialEdition::BSUntypedPointerHandle_Extended_Extremly::MAX_HANDLE_COUNT));
+								}
+								else
+								{
+									auto head = EditorAPI::SkyrimSpectialEdition::BSPointerHandleManager_Original::GetHead();
+									auto tail = EditorAPI::SkyrimSpectialEdition::BSPointerHandleManager_Original::GetTail();
+
+									ConsolePatch::Log("Dump SDM Info:\n\tHead: 0x%08X\n\tTail: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",
+										head, tail, EditorAPI::SkyrimSpectialEdition::BSUntypedPointerHandle_Original::MAX_HANDLE_COUNT,
+										((((long double)head) * 100.0f) /
+											(long double)EditorAPI::SkyrimSpectialEdition::BSUntypedPointerHandle_Original::MAX_HANDLE_COUNT));
+								}
 							}
 							return 0;
 							case UI_EXTMENU_HARDCODEDFORMS:

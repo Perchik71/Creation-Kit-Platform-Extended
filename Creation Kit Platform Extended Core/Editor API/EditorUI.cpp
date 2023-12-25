@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "EditorUI.h"
+#include "NiMemoryManager.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -15,15 +16,96 @@ namespace CreationKitPlatformExtended
 		};
 
 		std::recursive_mutex DialogOverrideMutex;
-		std::unordered_map<HWND, DialogOverrideData> DialogOverrides;
+		UnorderedMap<HWND, DialogOverrideData> DialogOverrides;
 		thread_local DialogOverrideData ThreadDialogData;
 
 		EditorUI* GlobalEditorUIPtr = nullptr;
 
-		EditorUI::EditorUI() : UseDeferredDialogInsert(false), DeferredListView(nullptr),
-			DeferredComboBox(nullptr), DeferredStringLength(0), DeferredAllowResize(false)
+		EditorUI::EditorUI() : _UseDeferredDialogInsert(false), _DeferredListView(nullptr),
+			_DeferredComboBox(nullptr), _DeferredStringLength(0), _DeferredAllowResize(false)
 		{
 			InitCommonControls();
+		}
+
+		void EditorUI::ComboBoxInsertItemDeferred(HWND ComboBoxHandle, const char* DisplayText,
+			void* Value, bool AllowResize)
+		{
+			if (!ComboBoxHandle)
+				return;
+
+			if (!DisplayText)
+				DisplayText = "NONE";
+
+			if (GlobalEditorUIPtr->UseDeferredDialogInsert)
+			{
+				AssertMsg(!GlobalEditorUIPtr->DeferredComboBox || (GlobalEditorUIPtr->DeferredComboBox == ComboBoxHandle),
+					"Got handles to different combo boxes? Reset probably wasn't called.");
+
+				GlobalEditorUIPtr->DeferredComboBox = ComboBoxHandle;
+				GlobalEditorUIPtr->DeferredStringLength += strlen(DisplayText) + 1;
+				GlobalEditorUIPtr->DeferredAllowResize |= AllowResize;
+
+				// A copy must be created since lifetime isn't guaranteed after this function returns
+				GlobalEditorUIPtr->GetDeferredMenuItems().emplace_back(Utils::StrDub(DisplayText), Value);
+			}
+			else
+			{
+				if (AllowResize)
+				{
+					if (HDC hdc = GetDC(ComboBoxHandle); hdc)
+					{
+						if (SIZE size; GetTextExtentPoint32A(hdc, DisplayText, static_cast<int>(strlen(DisplayText)), &size))
+						{
+							LRESULT currentWidth = SendMessageA(ComboBoxHandle, CB_GETDROPPEDWIDTH, 0, 0);
+
+							if (size.cx > currentWidth)
+								SendMessageA(ComboBoxHandle, CB_SETDROPPEDWIDTH, size.cx, 0);
+						}
+
+						ReleaseDC(ComboBoxHandle, hdc);
+					}
+				}
+
+				LRESULT index = SendMessageA(ComboBoxHandle, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(DisplayText));
+
+				if (index != CB_ERR && index != CB_ERRSPACE)
+					SendMessageA(ComboBoxHandle, CB_SETITEMDATA, index, reinterpret_cast<LPARAM>(Value));
+			}
+		}
+
+		void EditorUI::ListViewInsertItemDeferred(HWND ListViewHandle, void* Parameter,
+			bool UseImage, int ItemIndex)
+		{
+			if (ItemIndex == -1)
+				ItemIndex = INT_MAX;
+
+			LVITEMA item
+			{
+				.mask = LVIF_PARAM | LVIF_TEXT,
+				.iItem = ItemIndex,
+				.pszText = LPSTR_TEXTCALLBACK,
+				.lParam = reinterpret_cast<LPARAM>(Parameter)
+			};
+
+			if (UseImage)
+			{
+				item.mask |= LVIF_IMAGE;
+				item.iImage = I_IMAGECALLBACK;
+			}
+
+			if (GlobalEditorUIPtr->UseDeferredDialogInsert)
+			{
+				AssertMsg(!GlobalEditorUIPtr->DeferredListView || (GlobalEditorUIPtr->DeferredListView == ListViewHandle),
+					"Got handles to different list views? Reset probably wasn't called.");
+
+				if (!GlobalEditorUIPtr->DeferredListView)
+				{
+					GlobalEditorUIPtr->DeferredListView = ListViewHandle;
+					SendMessage(ListViewHandle, WM_SETREDRAW, FALSE, 0);
+				}
+			}
+
+			ListView_InsertItem(ListViewHandle, &item);
 		}
 
 		void EditorUI::ResetUIDefer()
@@ -105,7 +187,7 @@ namespace CreationKitPlatformExtended
 
 						finalWidth = std::max(finalWidth, lineSize);
 
-						free(const_cast<char*>(display));
+						NiMemoryManager::Free(nullptr, const_cast<char*>(display));
 					}
 
 					SuspendComboBoxUpdates(control, false);
