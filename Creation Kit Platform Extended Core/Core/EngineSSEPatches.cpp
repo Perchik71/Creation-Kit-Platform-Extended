@@ -71,6 +71,9 @@
 #include "Patches/SSE/AllowSaveESMandMasterESP.h"
 #include "Patches/SSE/RemoveUselessMessages.h"
 #include "Patches/SSE/DeferredDlg.h"
+#include "Patches/SSE/EnableGameButtonToVC.h"
+#include "Patches/SSE/ShowReloadShadersAlways.h"
+#include "Patches/SSE/StableSortForPerks.h"
 #include "Patches/Windows/SSE/MainWindow.h"
 
 namespace CreationKitPlatformExtended
@@ -149,6 +152,9 @@ namespace CreationKitPlatformExtended
 				new Patches::AllowSaveESMandMasterESPPatch(),
 				new Patches::RemoveUselessMessagesPatch(),
 				new Patches::DeferredDlgPatch(),
+				new Patches::EnableGameButtonToVCPatch(),
+				new Patches::ShowReloadShadersAlwaysPatch(),
+				new Patches::StableSortForPerksPatch(),
 				new Patches::MainWindow(),
 			});
 		}

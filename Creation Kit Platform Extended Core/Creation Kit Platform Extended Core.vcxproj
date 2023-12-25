@@ -133,7 +133,9 @@
     <ClCompile Include="Patches\SSE\CrashUploadBNetModWithArchive.cpp" />
     <ClCompile Include="Patches\SSE\CrashUsingMore16NPCForFaceGen.cpp" />
     <ClCompile Include="Patches\SSE\DeferredDlg.cpp" />
+    <ClCompile Include="Patches\SSE\EnableGameButtonToVC.cpp" />
     <ClCompile Include="Patches\SSE\EnableStateParentWorkaround.cpp" />
+    <ClCompile Include="Patches\SSE\FaceGen.cpp" />
     <ClCompile Include="Patches\SSE\FixActorDlg.cpp" />
     <ClCompile Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.cpp" />
     <ClCompile Include="Patches\SSE\FixBrightLightColor.cpp" />
@@ -180,6 +182,8 @@
     <ClCompile Include="Patches\SSE\RemoveUselessMessages.cpp" />
     <ClCompile Include="Patches\SSE\RenameCreationKitApp.cpp" />
     <ClCompile Include="Patches\SSE\ReplaceBSPointerHandleAndManager.cpp" />
+    <ClCompile Include="Patches\SSE\ShowReloadShadersAlways.cpp" />
+    <ClCompile Include="Patches\SSE\StableSortForPerks.cpp" />
     <ClCompile Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.cpp" />
     <ClCompile Include="Patches\SSE\TESParameters_CTDA.cpp" />
     <ClCompile Include="Patches\SSE\UnEquipSound.cpp" />
@@ -314,7 +318,9 @@
     <ClInclude Include="Patches\SSE\CrashUploadBNetModWithArchive.h" />
     <ClInclude Include="Patches\SSE\CrashUsingMore16NPCForFaceGen.h" />
     <ClInclude Include="Patches\SSE\DeferredDlg.h" />
+    <ClInclude Include="Patches\SSE\EnableGameButtonToVC.h" />
     <ClInclude Include="Patches\SSE\EnableStateParentWorkaround.h" />
+    <ClInclude Include="Patches\SSE\FaceGen.h" />
     <ClInclude Include="Patches\SSE\FixActorDlg.h" />
     <ClInclude Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.h" />
     <ClInclude Include="Patches\SSE\FixBrightLightColor.h" />
@@ -361,6 +367,8 @@
     <ClInclude Include="Patches\SSE\RemoveUselessMessages.h" />
     <ClInclude Include="Patches\SSE\RenameCreationKitApp.h" />
     <ClInclude Include="Patches\SSE\ReplaceBSPointerHandleAndManager.h" />
+    <ClInclude Include="Patches\SSE\ShowReloadShadersAlways.h" />
+    <ClInclude Include="Patches\SSE\StableSortForPerks.h" />
     <ClInclude Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.h" />
     <ClInclude Include="Patches\SSE\TESParameters_CTDA.h" />
     <ClInclude Include="Patches\SSE\UnEquipSound.h" />

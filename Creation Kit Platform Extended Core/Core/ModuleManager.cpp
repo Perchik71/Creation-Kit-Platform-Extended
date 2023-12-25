@@ -84,6 +84,8 @@ namespace CreationKitPlatformExtended
 
 		void ModuleManager::EnableAll()
 		{
+			uint32_t count = 0;
+
 			for (auto It = _modules.begin(); It != _modules.end(); It++)
 			{
 				auto Patch = GlobalRelocationDatabasePtr->GetByName(It->first.c_str());
@@ -94,7 +96,11 @@ namespace CreationKitPlatformExtended
 				}
 
 				It->second->Enable(GlobalRelocatorPtr, *Patch);
+				if (It->second->HasActive())
+					count++;
 			}
+
+			_MESSAGE("Modules installed: %u from %llu", count, _modules.size());
 		}
 	}
 }
