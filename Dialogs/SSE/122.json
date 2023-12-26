@@ -1,0 +1,69 @@
+{
+  "ExStyle": [ "WS_EX_ACCEPTFILES" ],
+  "Style": [ "WS_SYSMENU", "WS_THICKFRAME", "WS_DLGFRAME", "DS_MODALFRAME", "WS_CAPTION" ],
+  "Title": "Object Window",
+  "Width": 364,
+  "Height": 466,
+  "FontName": "Microsoft Sans Serif",
+  "FontSize": 8,
+  "FontWeight": 400,
+  "FontItalic": 0,
+  "Controls": [
+    {
+      "Type": "EDITTEXT",
+      "Style": [ "ES_AUTOHSCROLL" ],
+      "Id": 2581,
+      "Title": "",
+      "x": 24,
+      "y": 2,
+      "Width": 72,
+      "Height": 12
+    },
+    {
+      "ExStyle": [ "WS_EX_CLIENTEDGE" ],
+      "Type": "TREEVIEW",
+      "Style": [ "TVS_HASBUTTONS", "TVS_HASLINES", "TVS_LINESATROOT", "TVS_DISABLEDRAGDROP", "TVS_SHOWSELALWAYS", "WS_BORDER", "WS_HSCROLL" ],
+      "Id": 2093,
+      "x": 2,
+      "y": 26,
+      "Width": 104,
+      "Height": 384
+    },
+    {
+      "ExStyle": [ "WS_EX_CLIENTEDGE" ],
+      "Type": "LISTVIEW",
+      "Id": 1041,
+      "Style": [ "LVS_REPORT", "LVS_SHOWSELALWAYS", "LVS_EDITLABELS", "WS_BORDER" ],
+      "x": 115,
+      "y": 2,
+      "Width": 249,
+      "Height": 466
+    },
+    {
+      "Type": "LTEXT",
+      "Title": "",
+      "Id": 2157,
+      "x": 105,
+      "y": 0,
+      "Width": 10,
+      "Height": 466
+    },
+    {
+      "Type": "LTEXT",
+      "Title": "Filter",
+      "x": 3,
+      "y": 4,
+      "Width": 22,
+      "Height": 12
+    },
+    {
+      "Type": "AUTOCHECKBUTTON",
+      "Id": 6329,
+      "Title": "Show only active (*) forms",
+      "x": 2,
+      "y": 14,
+      "Width": 104,
+      "Height": 12
+    }
+  ]
+}

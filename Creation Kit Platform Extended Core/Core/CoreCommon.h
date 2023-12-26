@@ -48,6 +48,14 @@ namespace CreationKitPlatformExtended
 			{ EDITOR_SKYRIM_SE_1_6_1130,	"CreationKitPlatformExtended_SSE_1_6_1130.database" },
 		};
 
+		// Список имён файлов базы данных
+		static std::unordered_map<EDITOR_EXECUTABLE_TYPE, std::string_view> allowedDialogsPackageFile = {
+			{ EDITOR_SKYRIM_SE_1_5_3,		"CreationKitPlatformExtended_SSE_Dialogs.pak"	},
+			{ EDITOR_SKYRIM_SE_1_5_73,		"CreationKitPlatformExtended_SSE_Dialogs.pak"	},
+			{ EDITOR_SKYRIM_SE_1_6_438,		"CreationKitPlatformExtended_SSE_Dialogs.pak"	},
+			{ EDITOR_SKYRIM_SE_1_6_1130,	"CreationKitPlatformExtended_SSE_Dialogs.pak"	},
+		};
+
 		static std::vector<std::string_view> allowedEditorFileNameStr = {
 			"creationkit",
 			"creationkit_se_1_5_3",

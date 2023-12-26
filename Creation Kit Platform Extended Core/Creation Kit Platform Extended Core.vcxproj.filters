@@ -460,6 +460,21 @@
     <ClCompile Include="Patches\SSE\BSArchiveManagerModded.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\NavMeshPseudoDelete.cpp">
+      <Filter>Editor API</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\Windows\SSE\RenderWindow.cpp">
+      <Filter>Patches\Windows\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.cpp">
+      <Filter>Editor API</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\DialogManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\Windows\SSE\ObjectWindow.cpp">
+      <Filter>Patches\Windows\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1077,6 +1092,21 @@
     </ClInclude>
     <ClInclude Include="Patches\SSE\BSArchiveManagerModded.h">
       <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\NavMeshPseudoDelete.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\SSE\RenderWindow.h">
+      <Filter>Patches\Windows\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DialogManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\SSE\ObjectWindow.h">
+      <Filter>Patches\Windows\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

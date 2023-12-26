@@ -62,6 +62,7 @@
 #include <concurrent_unordered_map.h>
 #include <detours/Detours.h>
 #include <xbyak.h>
+#include <jdialogs.h>
 
 #include "Crc32.h"
 #include "ini.h"

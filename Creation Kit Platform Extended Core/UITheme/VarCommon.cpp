@@ -29,6 +29,7 @@ namespace CreationKitPlatformExtended
 {
 	namespace UITheme
 	{
+		bool hasTheme = false;
 		::Core::Classes::UI::CUIFont* ThemeFont = nullptr;
 
 		constexpr COLORREF szConstDark[66]
@@ -401,6 +402,7 @@ namespace CreationKitPlatformExtended
 
 		VOID SetTheme(Theme theme)
 		{
+			hasTheme = true;
 			generalCurentTheme = theme;
 
 			switch (theme)
@@ -553,9 +555,7 @@ namespace CreationKitPlatformExtended
 
 		bool IsDarkTheme()
 		{
-			return
-				(generalCurentTheme == Theme_DarkGray) || (generalCurentTheme == Theme_Dark) ||
-				(generalCurentTheme == Theme_NightBlue);
+			return hasTheme;
 		}
 	}
 }

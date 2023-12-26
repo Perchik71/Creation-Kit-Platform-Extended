@@ -8,6 +8,7 @@
 #include "ConsoleWindow.h"
 #include "CommandLineParser.h"
 #include "RelocationDatabase.h"
+#include "DialogManager.h"
 #include "GDIPlusInit.h"
 #include "Engine.h"
 
@@ -101,6 +102,7 @@ namespace CreationKitPlatformExtended
 
 			GlobalRelocationDatabasePtr = new RelocationDatabase(this);
 			GlobalRelocatorPtr = new Relocator(this);
+			GlobalDialogManagerPtr = new DialogManager();
 			
 			// Данный патч, является исключением от остальных, он инициализируется раньше, как
 			// системный модуль, но его можно отключать как патч. Это нужно для покрытия консоли новой темой.
@@ -297,6 +299,18 @@ namespace CreationKitPlatformExtended
 					// Закрываем Creation Kit
 					CreationKitPlatformExtended::Utils::Quit();
 				}
+				else if (!_stricmp(Command.c_str(), "-PEPackedDialogs"))
+				{
+					if (CommandLine.Count() != 3)
+					{
+						_ERROR("Invalid number of command arguments: %u", CommandLine.Count());
+						_MESSAGE("Example: CreationKit -PEPackedDialogs \"dia.pak\" \"dia\\sse\\\"");
+					}
+
+					GlobalDialogManagerPtr->PackToFilePackage(CommandLine.At(1).c_str(), CommandLine.At(2).c_str());
+					// Закрываем Creation Kit
+					CreationKitPlatformExtended::Utils::Quit();
+				}
 			}
 		}
 
@@ -318,6 +332,15 @@ namespace CreationKitPlatformExtended
 				_FATALERROR("The patch manager has not been initialized");
 				return;
 			}
+
+			auto DialogIterator = allowedDialogsPackageFile.find(_editorVersion);
+			if (DialogIterator == allowedDialogsPackageFile.end())
+			{
+				_FATALERROR("The dialog file is not specified for this version of the editor");
+				return;
+			}
+
+			GlobalDialogManagerPtr->LoadFromFilePackage(DialogIterator->second.data());
 
 			// Создание класса отвечающий за UI
 			EditorAPI::GlobalEditorUIPtr = new EditorAPI::EditorUI();

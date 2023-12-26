@@ -10,6 +10,7 @@
 #include "Editor API/SSE/TESForm.h"
 #include "Editor API/SSE/BSPointerHandleManager.h"
 #include "Patches/SSE/Re-EnableFog.h"
+#include "Patches/Windows/SSE/ObjectWindow.h"
 #include "Patches/ConsolePatch.h"
 #include "MainWindow.h"
 
@@ -102,13 +103,13 @@ namespace CreationKitPlatformExtended
 
 			Array<String> MainWindow::GetDependencies() const
 			{
-				return { "Re-enable fog rendering", "Console" };
+				return { "Re-enable fog rendering", "Console", "Object Window" };
 			}
 
 			bool MainWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return true;
+				return eEditorCurrentVersion <= EDITOR_SKYRIM_SE_LAST;
 			}
 
 			bool MainWindow::Activate(const Relocator* lpRelocator,
@@ -294,17 +295,15 @@ namespace CreationKitPlatformExtended
 							return 0;
 							case EditorAPI::EditorUI::UI_EDITOR_TOGGLEOBJECTWND:
 							{
-								//ObjectWindow::OBJWNDS Wnds = ObjectWindow::GetAllWindowObj();
+								for (auto Wnd : ObjectWindows) {
+									Wnd.second->ObjectWindow.Visible = !Wnd.second->ObjectWindow.Visible;
+									if (Wnd.second->ObjectWindow.Visible)
+										Wnd.second->ObjectWindow.Foreground();
+								}
 
-								//for (auto Wnd : Wnds) {
-								//	Wnd.second->ObjectWindow.Visible = !Wnd.second->ObjectWindow.Visible;
-								//	if (Wnd.second->ObjectWindow.Visible)
-								//		Wnd.second->ObjectWindow.Foreground();
-								//}
-
-								//// Change the checkbox
-								//MenuItem = MainWindow.MainMenu.GetItem(EditorAPI::EditorUI::UI_EDITOR_TOGGLEOBJECTWND);
-								//MenuItem.Checked = !MenuItem.Checked;
+								// Change the checkbox
+								MenuItem = GlobalMainWindowPtr->MainMenu.GetItem(EditorAPI::EditorUI::UI_EDITOR_TOGGLEOBJECTWND);
+								MenuItem.Checked = !MenuItem.Checked;
 							}
 							return 0;
 							case UI_EXTMENU_AUTOSCROLL:

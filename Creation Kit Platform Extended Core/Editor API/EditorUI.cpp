@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "EditorUI.h"
+#include "Core\DialogManager.h"
 #include "NiMemoryManager.h"
 
 namespace CreationKitPlatformExtended
@@ -291,8 +292,18 @@ namespace CreationKitPlatformExtended
 			// EndDialog MUST NOT be used
 			ThreadDialogData.DialogFunc = lpDialogFunc;
 			ThreadDialogData.IsDialog = false;
+		
+			auto dialog = Core::GlobalDialogManagerPtr->GetDialog(reinterpret_cast<LONG_PTR>(lpTemplateName));
+			if (dialog)
+				return dialog->Show(hWndParent, DialogFuncOverride, dwInitParam, hInstance);
 
-			//// Override certain default dialogs to use this DLL's resources
+			return CreateDialogParamA(hInstance, lpTemplateName, hWndParent, DialogFuncOverride, dwInitParam);
+
+
+
+				// Override certain default dialogs to use this DLL's resources
+
+			//
 			//switch (reinterpret_cast<uintptr_t>(lpTemplateName))
 			//{
 			//case 0x64:// "About"
@@ -314,7 +325,7 @@ namespace CreationKitPlatformExtended
 			//	break;
 			//}
 
-			return CreateDialogParamA(hInstance, lpTemplateName, hWndParent, DialogFuncOverride, dwInitParam);
+			
 		}
 
 		INT_PTR EditorUI::HKDialogBoxParamA(HINSTANCE hInstance, LPCSTR lpTemplateName, HWND hWndParent, 
@@ -324,6 +335,12 @@ namespace CreationKitPlatformExtended
 			ThreadDialogData.DialogFunc = lpDialogFunc;
 			ThreadDialogData.IsDialog = true;
 
+			auto dialog = Core::GlobalDialogManagerPtr->GetDialog(reinterpret_cast<ULONG_PTR>(lpTemplateName));
+			if (dialog)
+				return dialog->ShowModal(hWndParent, DialogFuncOverride, dwInitParam, hInstance);
+
+			return DialogBoxParamA(hInstance, lpTemplateName, hWndParent, DialogFuncOverride, dwInitParam);
+
 			//// Override certain default dialogs to use this DLL's resources
 			//switch (reinterpret_cast<uintptr_t>(lpTemplateName))
 			//{
@@ -345,8 +362,6 @@ namespace CreationKitPlatformExtended
 			//	hInstance = reinterpret_cast<HINSTANCE>(&__ImageBase);
 			//	break;
 			//}
-
-			return DialogBoxParamA(hInstance, lpTemplateName, hWndParent, DialogFuncOverride, dwInitParam);
 		}
 
 		BOOL EditorUI::HKEndDialog(HWND hDlg, INT_PTR nResult)

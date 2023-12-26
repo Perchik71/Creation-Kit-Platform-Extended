@@ -77,7 +77,11 @@
 #include "Patches/SSE/LipGen.h"
 #include "Patches/SSE/CrashHairKS.h"
 #include "Patches/SSE/BSArchiveManagerModded.h"
+#include "Patches/SSE/NavMeshPseudoDelete.h"
+#include "Patches/SSE/SpellEnableCastingAndDeliveryAlways.h"
 #include "Patches/Windows/SSE/MainWindow.h"
+#include "Patches/Windows/SSE/RenderWindow.h"
+#include "Patches/Windows/SSE/ObjectWindow.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -161,7 +165,11 @@ namespace CreationKitPlatformExtended
 				new Patches::LipGenPatch(),
 				new Patches::CrashHairKSPatch(),
 				new Patches::BSArchiveManagerModdedPatch(),
+				new Patches::NavMeshPseudoDeletePatch(),
+				new Patches::SpellEnableCastingAndDeliveryAlwaysPatch(),
 				new Patches::MainWindow(),
+				new Patches::RenderWindow(),
+				new Patches::ObjectWindow(),
 			});
 		}
 	}

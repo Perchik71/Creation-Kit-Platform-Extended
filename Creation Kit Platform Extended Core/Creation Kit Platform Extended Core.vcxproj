@@ -36,7 +36,7 @@
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>winhttp</TargetName>
-    <IncludePath>$(SolutionDir)Dependencies\detours;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\libdeflate;$(SolutionDir)Dependencies\xbyak;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\detours;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\libdeflate;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)Dependencies\jDialogs\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -76,6 +76,7 @@
     <ClCompile Include="Core\CommandLineParser.cpp" />
     <ClCompile Include="Core\ConsoleWindow.cpp" />
     <ClCompile Include="Core\DebugLog.cpp" />
+    <ClCompile Include="Core\DialogManager.cpp" />
     <ClCompile Include="Core\Engine.cpp" />
     <ClCompile Include="Core\EngineSSEPatches.cpp" />
     <ClCompile Include="Core\GDIPlusInit.cpp" />
@@ -178,6 +179,7 @@
     <ClCompile Include="Patches\SSE\LoadOptimization.cpp" />
     <ClCompile Include="Patches\SSE\MemoryLeakInPreviewWindow.cpp" />
     <ClCompile Include="Patches\SSE\NavMeshInfoMap.cpp" />
+    <ClCompile Include="Patches\SSE\NavMeshPseudoDelete.cpp" />
     <ClCompile Include="Patches\SSE\NiCollisionObjectClonedWarning.cpp" />
     <ClCompile Include="Patches\SSE\Re-EnableFog.cpp" />
     <ClCompile Include="Patches\SSE\Re-EnableLandShadows.cpp" />
@@ -186,6 +188,7 @@
     <ClCompile Include="Patches\SSE\RenameCreationKitApp.cpp" />
     <ClCompile Include="Patches\SSE\ReplaceBSPointerHandleAndManager.cpp" />
     <ClCompile Include="Patches\SSE\ShowReloadShadersAlways.cpp" />
+    <ClCompile Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.cpp" />
     <ClCompile Include="Patches\SSE\StableSortForPerks.cpp" />
     <ClCompile Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.cpp" />
     <ClCompile Include="Patches\SSE\TESParameters_CTDA.cpp" />
@@ -199,6 +202,8 @@
     <ClCompile Include="Patches\VersionControlMergeWorkaround.cpp" />
     <ClCompile Include="Patches\Windows\BaseWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\MainWindow.cpp" />
+    <ClCompile Include="Patches\Windows\SSE\ObjectWindow.cpp" />
+    <ClCompile Include="Patches\Windows\SSE\RenderWindow.cpp" />
     <ClCompile Include="Steam API\SteamAPI.cpp" />
     <ClCompile Include="UITheme\CheckBox.cpp" />
     <ClCompile Include="UITheme\ComboBox.cpp" />
@@ -235,6 +240,7 @@
     <ClInclude Include="Core\ConsoleWindow.h" />
     <ClInclude Include="Core\CoreCommon.h" />
     <ClInclude Include="Core\DebugLog.h" />
+    <ClInclude Include="Core\DialogManager.h" />
     <ClInclude Include="Core\Engine.h" />
     <ClInclude Include="Core\GDIPlusInit.h" />
     <ClInclude Include="Core\INIWrapper.h" />
@@ -366,6 +372,7 @@
     <ClInclude Include="Patches\SSE\LoadOptimization.h" />
     <ClInclude Include="Patches\SSE\MemoryLeakInPreviewWindow.h" />
     <ClInclude Include="Patches\SSE\NavMeshInfoMap.h" />
+    <ClInclude Include="Patches\SSE\NavMeshPseudoDelete.h" />
     <ClInclude Include="Patches\SSE\NiCollisionObjectClonedWarning.h" />
     <ClInclude Include="Patches\SSE\Re-EnableFog.h" />
     <ClInclude Include="Patches\SSE\Re-EnableLandShadows.h" />
@@ -374,6 +381,7 @@
     <ClInclude Include="Patches\SSE\RenameCreationKitApp.h" />
     <ClInclude Include="Patches\SSE\ReplaceBSPointerHandleAndManager.h" />
     <ClInclude Include="Patches\SSE\ShowReloadShadersAlways.h" />
+    <ClInclude Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.h" />
     <ClInclude Include="Patches\SSE\StableSortForPerks.h" />
     <ClInclude Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.h" />
     <ClInclude Include="Patches\SSE\TESParameters_CTDA.h" />
@@ -387,6 +395,8 @@
     <ClInclude Include="Patches\VersionControlMergeWorkaround.h" />
     <ClInclude Include="Patches\Windows\BaseWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\MainWindow.h" />
+    <ClInclude Include="Patches\Windows\SSE\ObjectWindow.h" />
+    <ClInclude Include="Patches\Windows\SSE\RenderWindow.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Steam API\SteamAPI.h" />
     <ClInclude Include="Steam API\SteamAPIConfig.h" />

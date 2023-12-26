@@ -158,7 +158,7 @@ namespace CreationKitPlatformExtended
 			"ViewerClass",
 			"SpeakerClass",
 			"LandClass",
-			"RenderWindow",
+			"Render Window",
 			"#32770",
 		};
 
