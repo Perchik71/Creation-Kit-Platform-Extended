@@ -1,0 +1,16 @@
+{
+  "Style": [ "WS_SYSMENU", "WS_THICKFRAME", "WS_DLGFRAME", "WS_POPUP", "WS_CAPTION", "WS_CLIPSIBLINGS", "WS_CLIPCHILDREN" ],
+  "Title": "Use Report",
+  "Width": 321,
+  "Height": 361,
+  "FontName": "Microsoft Sans Serif",
+  "FontSize": 8,
+  "FontWeight": 400,
+  "FontItalic": 0,
+  "Controls": [
+    { "Type": "LISTVIEW", "Id": 1637, "Style": [ "LVS_REPORT", "WS_BORDER" ], "x": 8, "y": 21, "Width": 306, "Height": 150 },
+    { "Type": "LTEXT", "Title": "Used by these objects:", "x": 7, "y": 9, "Width": 89, "Height": 8 },
+	{ "Type": "LISTVIEW", "Id": 1638, "Style": [ "LVS_REPORT", "WS_BORDER" ], "x": 8, "y": 189, "Width": 306, "Height": 166 },
+    { "Type": "LTEXT", "Title": "Used in these Cells:", "Id": 5644, "x": 7, "y": 177, "Width": 89, "Height": 8 }
+  ]
+}

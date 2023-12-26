@@ -1,0 +1,37 @@
+{
+  "ExStyle": [ "WS_EX_TOPMOST" ],
+  "Style": [ "DS_SYSMODAL", "DS_MODALFRAME", "WS_SYSMENU", "DS_CENTER", "WS_DLGFRAME", "WS_POPUP", "WS_CAPTION", "WS_CLIPSIBLINGS", "WS_CLIPCHILDREN" ],
+  "Title": "Data",
+  "Width": 550,
+  "Height": 350,
+  "FontName": "Microsoft Sans Serif",
+  "FontSize": 8,
+  "FontWeight": 400,
+  "FontItalic": 0,
+  "Controls": [
+    { "Type": "LISTVIEW", "Id": 1056, "Style": [ "LVS_REPORT", "LVS_SHOWSELALWAYS" ], "ExStyle": [ "WS_EX_CLIENTEDGE" ], "x": 5, "y": 30, "Width": 250, "Height": 291 },
+	{ "Type": "PUSHBUTTON", "Title": "Set as Active File", "Id": 1121, "x": 5, "y": 330, "Width": 120, "Height": 14 },
+	{ "Type": "PUSHBUTTON", "Title": "Details...", "Id": 1185, "x": 135, "y": 330, "Width": 55, "Height": 14 },
+	{ "Type": "EDITTEXT", "Style": [ "ES_AUTOHSCROLL" ], "Id": 1025, "Title": "", "x": 260, "y": 15, "Width": 144, "Height": 12 },
+	{ "Type": "EDITTEXT", "Style": [ "ES_AUTOVSCROLL", "ES_WANTRETURN", "ES_MULTILINE" ], "Id": 1024, "Title": "", "x": 260, "y": 45, "Width": 144, "Height": 198 },
+	{ "Type": "LISTVIEW", "Id": 1057, "Style": [ "LVS_REPORT", "LVS_SHOWSELALWAYS", "LVS_EDITLABELS" ], "ExStyle": [ "WS_EX_CLIENTEDGE" ], "x": 410, "y": 15, "Width": 135, "Height": 228 },
+    { "Type": "DEFPUSHBUTTON", "Title": "OK", "Id": 1, "x": 440, "y": 330, "Width": 50, "Height": 14 },
+	{ "Type": "PUSHBUTTON", "Title": "Cancel", "Id": 2, "x": 495, "y": 330, "Width": 50, "Height": 14 },
+    { "Type": "LTEXT", "Title": "Plugin/Master Files", "x": 5, "y": 5, "Width": 66, "Height": 10 },
+	{ "Type": "LTEXT", "Title": "Created By", "x": 260, "y": 5, "Width": 36, "Height": 10 }, 
+    { "Type": "LTEXT", "Title": "Summary", "x": 260, "y": 35, "Width": 39, "Height": 10 },	
+	{ "Type": "LTEXT", "Title": "Parent Masters", "x": 410, "y": 5, "Width": 48, "Height": 8 },	
+	{ "Type": "LTEXT", "Title": "Created On:", "x": 260, "y": 250, "Width": 39, "Height": 10 },	
+	{ "Type": "LTEXT", "Title": "Last Modified:", "x": 260, "y": 262, "Width": 44, "Height": 10 },
+    { "Type": "LTEXT", "Title": "(Unknown)", "Id": 1026, "x": 308, "y": 250, "Width": 37, "Height": 8 },
+	{ "Type": "LTEXT", "Title": "(Unknown)", "Id": 1027, "x": 308, "y": 262, "Width": 37, "Height": 8 },
+	{ "Type": "RTEXT", "Title": "File Version:", "Id": 2406, "x": 260, "y": 274, "Width": 43, "Height": 10 },
+	{ "Type": "RTEXT", "Title": "Current:", "Id": 2407, "x": 275, "y": 285, "Width": 28, "Height": 8 },
+	{ "Type": "LTEXT", "Title": "", "Id": 1681, "x": 313, "y": 275, "Width": 36, "Height": 10 },
+	{ "Type": "LTEXT", "Title": "", "Id": 1682, "x": 313, "y": 286, "Width": 36, "Height": 10 },
+    { "Type": "LTEXT", "Title": "(Unknown)", "Id": 1028, "x": 347, "y": 250, "Width": 37, "Height": 8 },
+	{ "Type": "LTEXT", "Title": "(Unknown)", "Id": 1029, "x": 347, "y": 262, "Width": 37, "Height": 8 },
+	{ "Type": "EDITTEXT", "Style": [ "ES_AUTOHSCROLL" ], "Id": 1003, "Title": "", "x": 5, "y": 15, "Width": 250, "Height": 12 }
+  ]
+}
+
