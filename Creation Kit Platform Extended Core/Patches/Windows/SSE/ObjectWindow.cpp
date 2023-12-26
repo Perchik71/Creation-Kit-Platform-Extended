@@ -19,6 +19,7 @@ namespace CreationKitPlatformExtended
 		{
 			OBJWNDS ObjectWindows;
 			ObjectWindow* GlobalObjectWindowBasePtr = nullptr;
+			uintptr_t pointer_ObjectWindow_sub = 0;
 
 			void ResizeObjectWndChildControls(LPOBJWND lpObjWnd)
 			{
@@ -127,7 +128,8 @@ namespace CreationKitPlatformExtended
 			bool ObjectWindow::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
-				if (lpRelocationDatabaseItem->Version() == 1)
+				auto verPatch = lpRelocationDatabaseItem->Version();
+				if ((verPatch == 1) && (verPatch == 2))
 				{
 					*(uintptr_t*)&_oldWndProc =
 						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), &HKWndProc);
@@ -137,8 +139,17 @@ namespace CreationKitPlatformExtended
 					lpRelocator->PatchNop(OffsetTotal, 0x70);
 					lpRelocator->DetourCall(OffsetTotal, (uintptr_t)&HKMoveWindow);
 
+					// In 1.6.1130 the filter is no longer needed
+					if (verPatch == 1)
+					{
+						pointer_ObjectWindow_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(3));
+						// Allow forms to be filtered in EditorUI_ObjectWindowProc
+						lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&sub);
+					}
+
 					return true;
 				}
+
 
 				return false;
 			}
@@ -160,6 +171,20 @@ namespace CreationKitPlatformExtended
 				}
 
 				return bResult;
+			}
+
+			int ObjectWindow::sub(__int64 ObjectListInsertData, TESForm* Form)
+			{
+				const __int64 objectWindowInstance = *(__int64*)(ObjectListInsertData + 0x8) - 0x28;
+				const HWND objectWindowHandle = *(HWND*)(objectWindowInstance);
+
+				bool allowInsert = true;
+				SendMessageA(objectWindowHandle, UI_OBJECT_WINDOW_ADD_ITEM, (WPARAM)Form, (LPARAM)&allowInsert);
+
+				if (!allowInsert)
+					return 1;
+
+				return ((int(__fastcall*)(__int64, TESForm*))pointer_ObjectWindow_sub)(ObjectListInsertData, Form);
 			}
 
 			ObjectWindow::ObjectWindow() : BaseWindow(), Classes::CUIBaseWindow()

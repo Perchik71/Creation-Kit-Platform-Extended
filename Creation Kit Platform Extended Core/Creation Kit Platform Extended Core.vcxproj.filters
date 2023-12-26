@@ -475,6 +475,9 @@
     <ClCompile Include="Patches\Windows\SSE\ObjectWindow.cpp">
       <Filter>Patches\Windows\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\Windows\SSE\DataWindow.cpp">
+      <Filter>Patches\Windows\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1108,6 +1111,9 @@
     <ClInclude Include="Patches\Windows\SSE\ObjectWindow.h">
       <Filter>Patches\Windows\SSE</Filter>
     </ClInclude>
+    <ClInclude Include="Patches\Windows\SSE\DataWindow.h">
+      <Filter>Patches\Windows\SSE</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version\resource_version.rc">
@@ -1140,5 +1146,7 @@
     <Image Include="..\Resources\types.bmp">
       <Filter>Resources</Filter>
     </Image>
+    <Image Include="..\Resources\uncheck.bmp" />
+    <Image Include="..\Resources\uncheck_darktheme.bmp" />
   </ItemGroup>
 </Project>

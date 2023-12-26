@@ -5,8 +5,6 @@
 #pragma once
 
 #include "..\BaseWindow.h"
-#include "Editor API/UI/UICheckboxControl.h"
-#include "Editor API/SSE/TESForm.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -14,9 +12,7 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
-			using namespace CreationKitPlatformExtended::EditorAPI::SkyrimSpectialEdition;
-			
-			class ObjectWindow : public BaseWindow, public Classes::CUIBaseWindow
+			class DataWindow : public BaseWindow, public Classes::CUIBaseWindow
 			{
 			public:
 				virtual bool HasOption() const;
@@ -26,12 +22,9 @@ namespace CreationKitPlatformExtended
 				virtual bool HasDependencies() const;
 				virtual Array<String> GetDependencies() const;
 
-				ObjectWindow();
+				DataWindow();
 
 				static INT_PTR CALLBACK HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-				static BOOL WINAPI HKMoveWindow(HWND hWindow, INT32 X, INT32 Y, INT32 nWidth, INT32 nHeight, BOOL bRepaint);
-
-				static int sub(__int64 ObjectListInsertData, TESForm* Form);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
@@ -39,24 +32,7 @@ namespace CreationKitPlatformExtended
 				virtual bool Shutdown(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 			};
 
-			typedef struct tagOBJWND_CONTROLS
-			{
-				Classes::CUIBaseControl TreeList;
-				Classes::CUIBaseControl ItemList;
-				Classes::CUIBaseControl EditFilter;
-				Classes::CUIBaseControl Spliter;
-				Classes::CUICheckbox ActiveOnly;
-			} OBJWND_CONTROLS, *POBJWND_CONTROLS, *LPOBJWND_CONTROLS;
-
-			typedef struct tagOBJWND
-			{
-				BOOL StartResize;
-				OBJWND_CONTROLS Controls;
-				Classes::CUICustomWindow ObjectWindow;
-			} OBJWND, *POBJWND, *LPOBJWND;
-
-			typedef UnorderedMap<HWND, LPOBJWND> OBJWNDS;
-			extern OBJWNDS ObjectWindows;
+			extern DataWindow* GlobalDataWindowPtr;
 		}
 	}
 }

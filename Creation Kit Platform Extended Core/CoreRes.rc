@@ -1,5 +1,7 @@
-﻿// Microsoft Visual C++ generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
+#pragma code_page(65001)
+
 #include "resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
@@ -17,7 +19,6 @@
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
 LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
-#pragma code_page(1251)
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -56,7 +57,11 @@ IDB_BITMAP2             BITMAP                  "..\\Resources\\check_darktheme.
 
 IDB_BITMAP3             BITMAP                  "..\\Resources\\toolbar.bmp"
 
-IDB_BITMAP4             BITMAP                  "E:\\Projects\\Creation-Kit-Platform-Extended\\Resources\\types.bmp"
+IDB_BITMAP4             BITMAP                  "..\\Resources\\types.bmp"
+
+IDB_BITMAP5             BITMAP                  "..\\Resources\\uncheck.bmp"
+
+IDB_BITMAP6             BITMAP                  "..\\Resources\\uncheck_darktheme.bmp"
 
 #endif    // Русский (Россия) resources
 /////////////////////////////////////////////////////////////////////////////

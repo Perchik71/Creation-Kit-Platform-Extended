@@ -201,6 +201,7 @@
     <ClCompile Include="Patches\UnicodePatch.cpp" />
     <ClCompile Include="Patches\VersionControlMergeWorkaround.cpp" />
     <ClCompile Include="Patches\Windows\BaseWindow.cpp" />
+    <ClCompile Include="Patches\Windows\SSE\DataWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\MainWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\ObjectWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\RenderWindow.cpp" />
@@ -394,6 +395,7 @@
     <ClInclude Include="Patches\UnicodePatch.h" />
     <ClInclude Include="Patches\VersionControlMergeWorkaround.h" />
     <ClInclude Include="Patches\Windows\BaseWindow.h" />
+    <ClInclude Include="Patches\Windows\SSE\DataWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\MainWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\ObjectWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\RenderWindow.h" />
@@ -445,6 +447,8 @@
     <Image Include="..\Resources\check_darktheme.bmp" />
     <Image Include="..\Resources\toolbar.bmp" />
     <Image Include="..\Resources\types.bmp" />
+    <Image Include="..\Resources\uncheck.bmp" />
+    <Image Include="..\Resources\uncheck_darktheme.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

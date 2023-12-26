@@ -82,6 +82,7 @@
 #include "Patches/Windows/SSE/MainWindow.h"
 #include "Patches/Windows/SSE/RenderWindow.h"
 #include "Patches/Windows/SSE/ObjectWindow.h"
+#include "Patches/Windows/SSE/DataWindow.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -170,6 +171,7 @@ namespace CreationKitPlatformExtended
 				new Patches::MainWindow(),
 				new Patches::RenderWindow(),
 				new Patches::ObjectWindow(),
+				new Patches::DataWindow(),
 			});
 		}
 	}
