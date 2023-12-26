@@ -1,0 +1,38 @@
+{
+  "Style": [ "WS_SYSMENU", "WS_DLGFRAME", "DS_CENTER", "DS_MODALFRAME", "WS_CAPTION", "WS_POPUP" ],
+  "Title": "Reference",
+  "Width": 263,
+  "Height": 307,
+  "FontName": "Microsoft Sans Serif",
+  "FontSize": 8,
+  "FontWeight": 400,
+  "FontItalic": 0,
+  "Controls": [
+    { "Type": "EDITTEXT", "Style": [ "ES_AUTOHSCROLL" ], "Id": 5500, "Title": "", "x": 58, "y": 6, "Width": 136, "Height": 11 },
+	{ "Type": "CTEXT", "Id": 1582, "Title": "Reference Editor ID:", "x": 17, "y": 3, "Width": 34, "Height": 17 },
+	{ "Type": "CTEXT", "Id": 1585, "Title": "(00000000)", "x": 207, "y": 8, "Width": 41, "Height": 10 },
+	{ "Type": "CTEXT", "ExStyle": [ "WS_EX_CLIENTEDGE" ], "Style": [ "SS_CENTERIMAGE" ], "Id": 1584, "Title": "BaseObjectID (00000000)", "x": 58, "y": 22, "Width": 136, "Height": 12 },
+	{ "Type": "CTEXT", "Id": 1583, "Title": "Base Object:", "x": 14, "y": 19, "Width": 38, "Height": 18 },
+	{ "Type": "PUSHBUTTON", "Title": "Edit Base", "Id": 1489, "x": 201, "y": 22, "Width": 55, "Height": 12 },
+	{ "Type": "RTEXT", "Title": "Encounter Zone", "x": 15, "y": 39, "Width": 37, "Height": 18 },
+	{ "Type": "COMBOBOX", "Style": [ "CBS_DROPDOWNLIST", "CBS_AUTOHSCROLL", "CBS_SORT", "WS_VSCROLL" ], "Id": 2086, "x": 57, "y": 40, "Width": 137, "Height": 98 },
+	
+	{ "Type": "TABVIEW", "ExStyle": [ "WS_EX_ACCEPTFILES" ], "Style": [ "0x200" ] , "Id": 1777, "x": 7, "y": 62, "Width": 249, "Height": 160 },
+	{ "Type": "AUTOCHECKBUTTON", "Id": 1007, "Title": "Turn Off Fire", "x": 5, "y": 226, "Width": 78, "Height": 10 },
+	{ "Type": "AUTOCHECKBUTTON", "Id": 1689, "Title": "No AI Acquire", "x": 5, "y": 241, "Width": 78, "Height": 10 },
+	{ "Type": "AUTOCHECKBUTTON", "Id": 4019, "Title": "Initially Disabled", "x": 5, "y": 255, "Width": 78, "Height": 10 },
+	{ "Type": "AUTOCHECKBUTTON", "Id": 5275, "Title": "Hidden From Local Map", "Style": [ "BS_MULTILINE" ], "x": 5, "y": 267, "Width": 68, "Height": 16 },
+	{ "Type": "AUTOCHECKBUTTON", "Id": 5105, "Title": "Inaccessible", "x": 90, "y": 225, "Width": 66, "Height": 10 },
+	{ "Type": "AUTOCHECKBUTTON", "Id": 4023, "Title": "Open By Default", "x": 90, "y": 237, "Width": 66, "Height": 10 },
+	{ "Type": "AUTOCHECKBUTTON", "Id": 1688, "Title": "Motion Blur", "x": 90, "y": 249, "Width": 66, "Height": 10 },
+	{ "Type": "AUTOCHECKBUTTON", "Id": 1690, "Title": "Starts Dead", "x": 90, "y": 261, "Width": 66, "Height": 10 },
+	{ "Type": "AUTOCHECKBUTTON", "Id": 5062, "Title": "Reflected By Auto Water", "Style": [ "BS_MULTILINE" ], "x": 162, "y": 225, "Width": 95, "Height": 10 },
+	{ "Type": "AUTOCHECKBUTTON", "Id": 5132, "Title": "Ignored By Sandbox", "Style": [ "BS_MULTILINE" ], "x": 162, "y": 237, "Width": 90, "Height": 10 },
+	{ "Type": "AUTOCHECKBUTTON", "Id": 1702, "Title": "Is Full LOD", "x": 162, "y": 249, "Width": 66, "Height": 10 },
+	{ "Type": "AUTOCHECKBUTTON", "Id": 5695, "Title": "Don't Havok Settle", "x": 162, "y": 261, "Width": 72, "Height": 10 },
+	{ "Type": "AUTOCHECKBUTTON", "Id": 1216, "Title": "Respawns", "x": 90, "y": 273, "Width": 66, "Height": 10 },
+	
+	{ "Type": "DEFPUSHBUTTON", "Title": "OK", "Id": 1, "x": 54, "y": 287, "Width": 55, "Height": 14 },
+	{ "Type": "PUSHBUTTON", "Title": "Cancel", "Id": 2, "x": 154, "y": 287, "Width": 55, "Height": 14 }
+  ]
+}

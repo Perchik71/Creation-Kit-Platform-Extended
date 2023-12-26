@@ -40,10 +40,10 @@ namespace CreationKitPlatformExtended
 
 				lpObjWnd->Controls.ItemList.Left = w_tree + 5;
 				lpObjWnd->Controls.ItemList.Width = WndRect.Width - (w_tree + 5);
-				lpObjWnd->Controls.ItemList.Height = WndRect.Height - 2;
+				lpObjWnd->Controls.ItemList.Height = WndRect.Height;
 				lpObjWnd->Controls.TreeList.Height = WndRect.Height - TopT;
 				lpObjWnd->Controls.Spliter.Height = WndRect.Height - TopT;
-
+				
 				// fix bad pic
 				auto handle = lpObjWnd->ObjectWindow.Handle;
 				RECT r = { 0, 0, lpObjWnd->Controls.ItemList.Left, TopT };
