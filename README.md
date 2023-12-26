@@ -59,6 +59,7 @@ Open a project in **Visual Studio 2019** or later. Build the project in **Releas
 Compile the Unicode Plugin to **Lazarus 1.8.2** or later. Take .dll's from the **x64** folder and move it to the folder with the game. 
 Take the database **CreationKitPlatformExtended_SSE_1_6_1130.database** from the folder **Database/1_6_1130/**. 
 You will also need **Stuffs/SSE/CreationKitPlatformExtendedMessagesBlacklist.txt** and **Stuffs/SSE/CreationKitPlatformExtended.ini** to the game folder. 
+Move the dialog package **Dialogs/SSE/CreationKitPlatformExtended_SSE_Dialogs.pak** to the root folder of the game.  
 
 # Credits
 [Nukem9](https://github.com/Nukem9) (for experimental functions, hash and so on, very useful)  
