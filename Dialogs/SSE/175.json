@@ -1,0 +1,27 @@
+{
+  "Style": [ "WS_SYSMENU", "WS_THICKFRAME", "WS_DLGFRAME", "WS_POPUP", "WS_CAPTION", "WS_CLIPSIBLINGS", "WS_CLIPCHILDREN" ],
+  "Title": "Cell View",
+  "Width": 222,
+  "Height": 286,
+  "FontName": "Microsoft Sans Serif",
+  "FontSize": 8,
+  "FontWeight": 400,
+  "FontItalic": 0,
+  "Controls": [
+	{ "Type": "COMBOBOX", "Style": [ "CBS_DROPDOWNLIST", "CBS_AUTOHSCROLL", "CBS_SORT", "WS_VSCROLL" ], "Id": 2083, "x": 7, "y": 14, "Width": 95, "Height": 98 },
+	{ "Type": "EDITTEXT", "Style": [ "ES_AUTOHSCROLL" ], "Id": 5283, "Title": "", "x": 18, "y": 32, "Width": 24, "Height": 14 },
+	{ "Type": "EDITTEXT", "Style": [ "ES_AUTOHSCROLL" ], "Id": 5099, "Title": "", "x": 54, "y": 32, "Width": 24, "Height": 14 },
+	{ "Type": "PUSHBUTTON", "Title": "Trigger", "Id": 1007, "x": 82, "y": 32, "Width": 20, "Height": 14 },
+	{ "Type": "PUSHBUTTON", "Title": "Go", "Id": 3681, "x": 82, "y": 32, "Width": 20, "Height": 14 },
+	{ "Type": "AUTOCHECKBUTTON", "Id": 5662, "Title": "Loaded at top", "x": 110, "y": 27, "Width": 59, "Height": 12 },
+	{ "Type": "LISTVIEW", "Id": 1155, "Style": [ "LVS_REPORT", "LVS_SINGLESEL", "LVS_SHOWSELALWAYS", "LVS_EDITLABELS" ], "ExStyle": [ "WS_EX_CLIENTEDGE", "WS_EX_RIGHT" ], "x": 7, "y": 49, "Width": 95, "Height": 230 },
+	{ "Type": "EDITTEXT", "Style": [ "ES_AUTOHSCROLL" ], "Id": 2581, "Title": "", "x": 109, "y": 14, "Width": 106, "Height": 12 },
+	{ "Type": "LISTVIEW", "Id": 1156, "Style": [ "LVS_REPORT", "LVS_SHOWSELALWAYS", "LVS_EDITLABELS" ], "ExStyle": [ "WS_EX_CLIENTEDGE", "WS_EX_RIGHT" ], "x": 107, "y": 49, "Width": 108, "Height": 230 },	
+    { "Type": "CTEXT", "Style": [ "NOT WS_GROUP" ], "Id": 1163, "Title": "No Cell Selected", "x": 107, "y": 4, "Width": 108, "Height": 10 },
+	{ "Type": "LTEXT", "Style": [ "NOT WS_GROUP" ], "Title": "World Space", "Id": 1164, "x": 33, "y": 4, "Width": 45, "Height": 8 },	
+	{ "Type": "LTEXT", "Title": "X", "Id": 5281, "x": 9, "y": 35, "Width": 8, "Height": 8 }, 
+    { "Type": "LTEXT", "Title": "Y", "Id": 5282, "x": 46, "y": 35, "Width": 8, "Height": 8 },	
+	{ "Type": "AUTOCHECKBUTTON", "Id": 2580, "Title": "Show only active (*) cells", "x": 110, "y": 39, "Width": 90, "Height": 10 },
+	{ "Type": "AUTOCHECKBUTTON", "Id": 2582, "Title": "Show only active (*) objects", "x": 204, "y": 39, "Width": 100, "Height": 10 }
+  ]
+}

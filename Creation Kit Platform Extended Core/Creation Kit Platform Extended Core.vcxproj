@@ -73,6 +73,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\jDialogs\include\jdialogs.cpp" />
+    <ClCompile Include="Core\AboutWindow.cpp" />
     <ClCompile Include="Core\CommandLineParser.cpp" />
     <ClCompile Include="Core\ConsoleWindow.cpp" />
     <ClCompile Include="Core\DebugLog.cpp" />
@@ -114,6 +115,7 @@
     <ClCompile Include="Patches\DisableAssertion.cpp" />
     <ClCompile Include="Patches\FlowChartXPatch.cpp" />
     <ClCompile Include="Patches\MemoryManagerPatch.cpp" />
+    <ClCompile Include="Patches\PapyrusEditorLimit.cpp" />
     <ClCompile Include="Patches\QuitHandlerPatch.cpp" />
     <ClCompile Include="Patches\RenderWindow60FPS.cpp" />
     <ClCompile Include="Patches\SkipTopicInfoValidation.cpp" />
@@ -193,6 +195,7 @@
     <ClCompile Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.cpp" />
     <ClCompile Include="Patches\SSE\TESParameters_CTDA.cpp" />
     <ClCompile Include="Patches\SSE\UnEquipSound.cpp" />
+    <ClCompile Include="Patches\SSE\UpdateUIWhenFogToggled.cpp" />
     <ClCompile Include="Patches\SSE\WeaponCriticalEffect.cpp" />
     <ClCompile Include="Patches\ThreadPatch.cpp" />
     <ClCompile Include="Patches\UIPatch.cpp" />
@@ -201,6 +204,7 @@
     <ClCompile Include="Patches\UnicodePatch.cpp" />
     <ClCompile Include="Patches\VersionControlMergeWorkaround.cpp" />
     <ClCompile Include="Patches\Windows\BaseWindow.cpp" />
+    <ClCompile Include="Patches\Windows\SSE\CellViewWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\DataWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\MainWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\ObjectWindow.cpp" />
@@ -237,6 +241,7 @@
   <ItemGroup>
     <ClInclude Include="..\Dependencies\jDialogs\include\jdialogs.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="Core\AboutWindow.h" />
     <ClInclude Include="Core\CommandLineParser.h" />
     <ClInclude Include="Core\ConsoleWindow.h" />
     <ClInclude Include="Core\CoreCommon.h" />
@@ -308,6 +313,7 @@
     <ClInclude Include="Patches\DisableAssertion.h" />
     <ClInclude Include="Patches\FlowChartXPatch.h" />
     <ClInclude Include="Patches\MemoryManagerPatch.h" />
+    <ClInclude Include="Patches\PapyrusEditorLimit.h" />
     <ClInclude Include="Patches\QuitHandlerPatch.h" />
     <ClInclude Include="Patches\RenderWindow60FPS.h" />
     <ClInclude Include="Patches\SkipTopicInfoValidation.h" />
@@ -387,6 +393,7 @@
     <ClInclude Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.h" />
     <ClInclude Include="Patches\SSE\TESParameters_CTDA.h" />
     <ClInclude Include="Patches\SSE\UnEquipSound.h" />
+    <ClInclude Include="Patches\SSE\UpdateUIWhenFogToggled.h" />
     <ClInclude Include="Patches\SSE\WeaponCriticalEffect.h" />
     <ClInclude Include="Patches\ThreadPatch.h" />
     <ClInclude Include="Patches\UIPatch.h" />
@@ -395,6 +402,7 @@
     <ClInclude Include="Patches\UnicodePatch.h" />
     <ClInclude Include="Patches\VersionControlMergeWorkaround.h" />
     <ClInclude Include="Patches\Windows\BaseWindow.h" />
+    <ClInclude Include="Patches\Windows\SSE\CellViewWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\DataWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\MainWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\ObjectWindow.h" />
@@ -443,6 +451,7 @@
     <None Include="Version\resource_version2.tmp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Resources\about.png" />
     <Image Include="..\Resources\check.bmp" />
     <Image Include="..\Resources\check_darktheme.bmp" />
     <Image Include="..\Resources\toolbar.bmp" />

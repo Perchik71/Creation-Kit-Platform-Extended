@@ -79,10 +79,12 @@
 #include "Patches/SSE/BSArchiveManagerModded.h"
 #include "Patches/SSE/NavMeshPseudoDelete.h"
 #include "Patches/SSE/SpellEnableCastingAndDeliveryAlways.h"
+#include "Patches/SSE/UpdateUIWhenFogToggled.h"
 #include "Patches/Windows/SSE/MainWindow.h"
 #include "Patches/Windows/SSE/RenderWindow.h"
 #include "Patches/Windows/SSE/ObjectWindow.h"
 #include "Patches/Windows/SSE/DataWindow.h"
+#include "Patches/Windows/SSE/CellViewWindow.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -168,10 +170,12 @@ namespace CreationKitPlatformExtended
 				new Patches::BSArchiveManagerModdedPatch(),
 				new Patches::NavMeshPseudoDeletePatch(),
 				new Patches::SpellEnableCastingAndDeliveryAlwaysPatch(),
+				new Patches::UpdateUIWhenFogToggledPatch(),
 				new Patches::MainWindow(),
 				new Patches::RenderWindow(),
 				new Patches::ObjectWindow(),
 				new Patches::DataWindow(),
+				new Patches::CellViewWindow(),
 			});
 		}
 	}

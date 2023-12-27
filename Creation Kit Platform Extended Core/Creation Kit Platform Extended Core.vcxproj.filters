@@ -478,6 +478,18 @@
     <ClCompile Include="Patches\Windows\SSE\DataWindow.cpp">
       <Filter>Patches\Windows\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Core\AboutWindow.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\Windows\SSE\CellViewWindow.cpp">
+      <Filter>Patches\Windows\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\PapyrusEditorLimit.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\UpdateUIWhenFogToggled.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1114,6 +1126,18 @@
     <ClInclude Include="Patches\Windows\SSE\DataWindow.h">
       <Filter>Patches\Windows\SSE</Filter>
     </ClInclude>
+    <ClInclude Include="Core\AboutWindow.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\SSE\CellViewWindow.h">
+      <Filter>Patches\Windows\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\PapyrusEditorLimit.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\UpdateUIWhenFogToggled.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version\resource_version.rc">
@@ -1148,5 +1172,6 @@
     </Image>
     <Image Include="..\Resources\uncheck.bmp" />
     <Image Include="..\Resources\uncheck_darktheme.bmp" />
+    <Image Include="..\Resources\about.png" />
   </ItemGroup>
 </Project>

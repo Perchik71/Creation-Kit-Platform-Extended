@@ -129,7 +129,7 @@ namespace CreationKitPlatformExtended
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
 				auto verPatch = lpRelocationDatabaseItem->Version();
-				if ((verPatch == 1) && (verPatch == 2))
+				if ((verPatch == 1) || (verPatch == 2))
 				{
 					*(uintptr_t*)&_oldWndProc =
 						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), &HKWndProc);

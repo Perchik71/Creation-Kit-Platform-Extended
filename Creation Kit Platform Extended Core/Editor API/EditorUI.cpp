@@ -2,8 +2,10 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
+#include "Core/Engine.h"
+#include "Core/AboutWindow.h"
+#include "Core/DialogManager.h"
 #include "EditorUI.h"
-#include "Core\DialogManager.h"
 #include "NiMemoryManager.h"
 
 namespace CreationKitPlatformExtended
@@ -293,39 +295,26 @@ namespace CreationKitPlatformExtended
 			ThreadDialogData.DialogFunc = lpDialogFunc;
 			ThreadDialogData.IsDialog = false;
 		
+			// Override certain default dialogs to use this DLL's resources
+			switch (reinterpret_cast<uintptr_t>(lpTemplateName))
+			{
+			case 0x64:// "About"
+				lpTemplateName = (LPCSTR)0xEB;
+				ThreadDialogData.DialogFunc = Core::AboutWindow::WndProc2;
+				hInstance = Core::GlobalEnginePtr->GetInstanceDLL();
+				break;
+			case 0xEB:// "Logo"
+				lpTemplateName = (LPCSTR)0xEB;
+				ThreadDialogData.DialogFunc = Core::AboutWindow::WndProc;
+				hInstance = Core::GlobalEnginePtr->GetInstanceDLL();
+				break;
+			}
+
 			auto dialog = Core::GlobalDialogManagerPtr->GetDialog(reinterpret_cast<LONG_PTR>(lpTemplateName));
 			if (dialog)
 				return dialog->Show(hWndParent, DialogFuncOverride, dwInitParam, hInstance);
 
 			return CreateDialogParamA(hInstance, lpTemplateName, hWndParent, DialogFuncOverride, dwInitParam);
-
-
-
-				// Override certain default dialogs to use this DLL's resources
-
-			//
-			//switch (reinterpret_cast<uintptr_t>(lpTemplateName))
-			//{
-			//case 0x64:// "About"
-			//	lpTemplateName = (LPCSTR)0xEB;
-			//	ThreadDialogData.DialogFunc = DialogFuncAbout;
-			//	hInstance = reinterpret_cast<HINSTANCE>(&__ImageBase);
-			//	break;
-			//case 0xEB:// "Logo"
-			//	lpTemplateName = (LPCSTR)0xEB;
-			//	ThreadDialogData.DialogFunc = DialogFuncLogo;
-			//	hInstance = reinterpret_cast<HINSTANCE>(&__ImageBase);
-			//	break;
-			//case 0x7A:// "Object Window"
-			//case 0x8D:// "Reference"
-			//case 0xA2:// "Data"
-			//case 0xAF:// "Cell View"
-			//case 0xDC:// "Use Report"
-			//	hInstance = reinterpret_cast<HINSTANCE>(&__ImageBase);
-			//	break;
-			//}
-
-			
 		}
 
 		INT_PTR EditorUI::HKDialogBoxParamA(HINSTANCE hInstance, LPCSTR lpTemplateName, HWND hWndParent, 
@@ -335,33 +324,26 @@ namespace CreationKitPlatformExtended
 			ThreadDialogData.DialogFunc = lpDialogFunc;
 			ThreadDialogData.IsDialog = true;
 
+			// Override certain default dialogs to use this DLL's resources
+			switch (reinterpret_cast<uintptr_t>(lpTemplateName))
+			{
+			case 0x64:// "About"
+				lpTemplateName = (LPCSTR)0xEB;
+				ThreadDialogData.DialogFunc = Core::AboutWindow::WndProc2;
+				hInstance = Core::GlobalEnginePtr->GetInstanceDLL();
+				break;
+			case 0xEB:// "Logo"
+				lpTemplateName = (LPCSTR)0xEB;
+				ThreadDialogData.DialogFunc = Core::AboutWindow::WndProc;
+				hInstance = Core::GlobalEnginePtr->GetInstanceDLL();
+				break;
+			}
+
 			auto dialog = Core::GlobalDialogManagerPtr->GetDialog(reinterpret_cast<ULONG_PTR>(lpTemplateName));
 			if (dialog)
 				return dialog->ShowModal(hWndParent, DialogFuncOverride, dwInitParam, hInstance);
 
 			return DialogBoxParamA(hInstance, lpTemplateName, hWndParent, DialogFuncOverride, dwInitParam);
-
-			//// Override certain default dialogs to use this DLL's resources
-			//switch (reinterpret_cast<uintptr_t>(lpTemplateName))
-			//{
-			//case 0x64:// "About"
-			//	lpTemplateName = (LPCSTR)0xEB;
-			//	ThreadDialogData.DialogFunc = DialogFuncAbout;
-			//	hInstance = reinterpret_cast<HINSTANCE>(&__ImageBase);
-			//	break;
-			//case 0xEB:// "Logo"
-			//	lpTemplateName = (LPCSTR)0xEB;
-			//	ThreadDialogData.DialogFunc = DialogFuncLogo;
-			//	hInstance = reinterpret_cast<HINSTANCE>(&__ImageBase);
-			//	break;
-			//case 0x7A:// "Object Window"
-			//case 0x8D:// "Reference"
-			//case 0xA2:// "Data"
-			//case 0xAF:// "Cell View"
-			//case 0xDC:// "Use Report"
-			//	hInstance = reinterpret_cast<HINSTANCE>(&__ImageBase);
-			//	break;
-			//}
 		}
 
 		BOOL EditorUI::HKEndDialog(HWND hDlg, INT_PTR nResult)

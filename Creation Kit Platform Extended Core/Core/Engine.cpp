@@ -29,6 +29,7 @@
 #include "Patches/UIPatch.h"
 #include "Patches/UIThemePatch.h"
 #include "Patches/UIThemePatchAdditional.h"
+#include "Patches/PapyrusEditorLimit.h"
 
 #include "Experimental/RuntimeOptimization.h"
 
@@ -131,6 +132,7 @@ namespace CreationKitPlatformExtended
 				new CreationKitPlatformExtended::Patches::AllowMultipleWindowAndMasterPatch(),
 				new CreationKitPlatformExtended::Patches::UIPatch(),
 				new CreationKitPlatformExtended::Patches::UIThemePatchAdditional(),
+				new CreationKitPlatformExtended::Patches::PapyrusEditorLimitPatch(),
 			});
 
 			// Добавление патчей только для редактора скайрима специального издания
