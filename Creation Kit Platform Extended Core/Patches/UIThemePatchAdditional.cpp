@@ -43,12 +43,12 @@ namespace CreationKitPlatformExtended
 
 		bool UIThemePatchAdditional::HasDependencies() const
 		{
-			return false;
+			return true;
 		}
 
 		Array<String> UIThemePatchAdditional::GetDependencies() const
 		{
-			return {};
+			return { "UI Dark Theme" };
 		}
 
 		bool UIThemePatchAdditional::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
