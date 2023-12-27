@@ -14,7 +14,8 @@
 </p>
 
 # Description
-The platform will support all known versions of Creation Kit in the future, but the focus is first on the Creation Kit version SSE 1.6.1130. This is a continuation of two previously arhived projects, as I am already confused in the code. The new implementation is based on the principle of modularity, which will allow for better control of development.
+At the moment, the platform supports only *CK* version **1.6.1130**  
+The platform will support all known versions of Creation Kit in the future. This is a continuation of two previously arhived projects, as I am already confused in the code. The new implementation is based on the principle of modularity, which will allow for better control of development.
 
 # Fixed or added
 :white_check_mark: Fast file loading  
@@ -24,6 +25,8 @@ The platform will support all known versions of Creation Kit in the future, but 
 :white_check_mark: Dark theme  
 :white_check_mark: Create master files and open them as plugins  
 :white_check_mark: Opening plugins as master files if they are in dependencies  
+:white_check_mark: Filtering by active forms and cell  
+:white_check_mark: Filtering mods in the Data dialog  
 :white_check_mark: Many other fixes are also from the author of [@Nukem9](https://github.com/Nukem9)
 
 # Demonstration
