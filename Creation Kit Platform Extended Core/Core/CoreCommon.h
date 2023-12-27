@@ -23,8 +23,9 @@ namespace CreationKitPlatformExtended
 		// Список проверенных исполняемых файлов, допущенных к запуску
 		static std::unordered_map<uint32_t, EDITOR_EXECUTABLE_TYPE> allowedEditorVersion = {
 			{ 0x2EF668CEul, EDITOR_SKYRIM_SE_1_6_1130 },
+			{ 0x0085AA4Cul, EDITOR_SKYRIM_SE_1_6_1130 },
 		};
-
+		
 		// Список ключевых смещений в исполняемых файлах, допущенных к запуску
 		static std::unordered_map<uint32_t,
 			std::pair<std::string_view, EDITOR_EXECUTABLE_TYPE>> allowedEditorVersion2 = {

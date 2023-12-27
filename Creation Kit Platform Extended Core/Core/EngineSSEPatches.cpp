@@ -80,6 +80,7 @@
 #include "Patches/SSE/NavMeshPseudoDelete.h"
 #include "Patches/SSE/SpellEnableCastingAndDeliveryAlways.h"
 #include "Patches/SSE/UpdateUIWhenFogToggled.h"
+#include "Patches/SSE/UIHotkeys.h"
 #include "Patches/Windows/SSE/MainWindow.h"
 #include "Patches/Windows/SSE/RenderWindow.h"
 #include "Patches/Windows/SSE/ObjectWindow.h"
@@ -171,6 +172,7 @@ namespace CreationKitPlatformExtended
 				new Patches::NavMeshPseudoDeletePatch(),
 				new Patches::SpellEnableCastingAndDeliveryAlwaysPatch(),
 				new Patches::UpdateUIWhenFogToggledPatch(),
+				new Patches::UIHotkeysPatch(),
 				new Patches::MainWindow(),
 				new Patches::RenderWindow(),
 				new Patches::ObjectWindow(),

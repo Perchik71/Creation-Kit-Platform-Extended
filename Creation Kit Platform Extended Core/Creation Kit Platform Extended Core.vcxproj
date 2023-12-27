@@ -194,6 +194,7 @@
     <ClCompile Include="Patches\SSE\StableSortForPerks.cpp" />
     <ClCompile Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.cpp" />
     <ClCompile Include="Patches\SSE\TESParameters_CTDA.cpp" />
+    <ClCompile Include="Patches\SSE\UIHotkeys.cpp" />
     <ClCompile Include="Patches\SSE\UnEquipSound.cpp" />
     <ClCompile Include="Patches\SSE\UpdateUIWhenFogToggled.cpp" />
     <ClCompile Include="Patches\SSE\WeaponCriticalEffect.cpp" />
@@ -392,6 +393,7 @@
     <ClInclude Include="Patches\SSE\StableSortForPerks.h" />
     <ClInclude Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.h" />
     <ClInclude Include="Patches\SSE\TESParameters_CTDA.h" />
+    <ClInclude Include="Patches\SSE\UIHotkeys.h" />
     <ClInclude Include="Patches\SSE\UnEquipSound.h" />
     <ClInclude Include="Patches\SSE\UpdateUIWhenFogToggled.h" />
     <ClInclude Include="Patches\SSE\WeaponCriticalEffect.h" />
