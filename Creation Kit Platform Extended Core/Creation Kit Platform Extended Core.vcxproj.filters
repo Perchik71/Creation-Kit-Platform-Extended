@@ -466,9 +466,6 @@
     <ClCompile Include="Patches\Windows\SSE\RenderWindow.cpp">
       <Filter>Patches\Windows\SSE</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.cpp">
-      <Filter>Editor API</Filter>
-    </ClCompile>
     <ClCompile Include="Core\DialogManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -491,6 +488,9 @@
       <Filter>Patches\SSE</Filter>
     </ClCompile>
     <ClCompile Include="Patches\SSE\UIHotkeys.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1117,9 +1117,6 @@
     <ClInclude Include="Patches\Windows\SSE\RenderWindow.h">
       <Filter>Patches\Windows\SSE</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.h">
-      <Filter>Editor API</Filter>
-    </ClInclude>
     <ClInclude Include="Core\DialogManager.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -1142,6 +1139,9 @@
       <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SSE\UIHotkeys.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>

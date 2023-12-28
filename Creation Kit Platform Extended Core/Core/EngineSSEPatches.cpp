@@ -81,6 +81,7 @@
 #include "Patches/SSE/SpellEnableCastingAndDeliveryAlways.h"
 #include "Patches/SSE/UpdateUIWhenFogToggled.h"
 #include "Patches/SSE/UIHotkeys.h"
+#include "Patches/SSE/FaceGen.h"
 #include "Patches/Windows/SSE/MainWindow.h"
 #include "Patches/Windows/SSE/RenderWindow.h"
 #include "Patches/Windows/SSE/ObjectWindow.h"
@@ -173,6 +174,7 @@ namespace CreationKitPlatformExtended
 				new Patches::SpellEnableCastingAndDeliveryAlwaysPatch(),
 				new Patches::UpdateUIWhenFogToggledPatch(),
 				new Patches::UIHotkeysPatch(),
+				new Patches::FaceGenPatch(),
 				new Patches::MainWindow(),
 				new Patches::RenderWindow(),
 				new Patches::ObjectWindow(),

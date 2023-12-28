@@ -63,31 +63,45 @@ namespace CreationKitPlatformExtended
 			{
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
-					ScopeRelocator text; // fast patches
+					{
+						ScopeRelocator text; // fast patches
 
-					//
-					// FaceGen
-					//
-					// Disable automatic FaceGen on save
-					if (_READ_OPTION_BOOL("FaceGen", "bDisableAutoFaceGen", false))
-						lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xC3 });
+						//
+						// FaceGen
+						//
+						// Disable automatic FaceGen on save
+						if (_READ_OPTION_BOOL("FaceGen", "bDisableAutoFaceGen", false))
+						{
+							lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xC3 });
+							_MESSAGE("Disabling automatic calling FaceGen");
+						}
 
-					// Don't produce DDS files
-					if (_READ_OPTION_BOOL("FaceGen", "bDisableExportDDS", false))
-						lpRelocator->PatchNop(lpRelocationDatabaseItem->At(1), 5);
+						// Don't produce DDS files
+						if (_READ_OPTION_BOOL("FaceGen", "bDisableExportDDS", false))
+						{
+							lpRelocator->PatchNop(lpRelocationDatabaseItem->At(1), 5);
+							_MESSAGE("Disabling export FaceGen .DDS files");
+						}
 
-					// Don't produce TGA files
-					if (_READ_OPTION_BOOL("FaceGen", "bDisableExportTGA", false))
-						lpRelocator->PatchNop(lpRelocationDatabaseItem->At(2), 5);
+						// Don't produce TGA files
+						if (_READ_OPTION_BOOL("FaceGen", "bDisableExportTGA", false))
+						{
+							lpRelocator->PatchNop(lpRelocationDatabaseItem->At(2), 5);
+							_MESSAGE("Disabling export FaceGen .TGA files");
+						}
 
-					// Don't produce NIF files
-					if (_READ_OPTION_BOOL("FaceGen", "bDisableExportNIF", false))
-						lpRelocator->Patch(lpRelocationDatabaseItem->At(3), { 0xC3 });
+						// Don't produce NIF files
+						if (_READ_OPTION_BOOL("FaceGen", "bDisableExportNIF", false))
+						{
+							lpRelocator->Patch(lpRelocationDatabaseItem->At(3), { 0xC3 });
+							_MESSAGE("Disabling export FaceGen .NIF files");
+						}
 
-					// Allow variable tint mask resolution
-					uint32_t tintResolution = _READ_OPTION_UINT("FaceGen", "uTintMaskResolution", 512);
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(4), (uint8_t*)&tintResolution, sizeof(uint32_t));
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(5), (uint8_t*)&tintResolution, sizeof(uint32_t));
+						// Allow variable tint mask resolution
+						uint32_t tintResolution = _READ_OPTION_UINT("FaceGen", "uTintMaskResolution", 512);
+						lpRelocator->Patch(lpRelocationDatabaseItem->At(4), (uint8_t*)&tintResolution, sizeof(uint32_t));
+						lpRelocator->Patch(lpRelocationDatabaseItem->At(5), (uint8_t*)&tintResolution, sizeof(uint32_t));
+					}
 
 					// Prevent internal filesystem reloads when exporting FaceGen for many NPCs
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6), (uintptr_t)&sub);
