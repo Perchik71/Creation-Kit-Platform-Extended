@@ -419,7 +419,7 @@ namespace CreationKitPlatformExtended
 				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3), (uintptr_t)&ScrapHeap::Allocate);
 				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(4), (uintptr_t)&ScrapHeap::Deallocate);
 
-				lpRelocator->DetourFunctionClass(lpRelocationDatabaseItem->At(5), 
+				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5),
 					(uintptr_t)&Skyrim::bhkThreadMemorySource::__ctor__);
 
 				{

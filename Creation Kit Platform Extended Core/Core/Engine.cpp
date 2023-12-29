@@ -133,6 +133,7 @@ namespace CreationKitPlatformExtended
 				new CreationKitPlatformExtended::Patches::UIPatch(),
 				new CreationKitPlatformExtended::Patches::UIThemePatchAdditional(),
 				new CreationKitPlatformExtended::Patches::PapyrusEditorLimitPatch(),
+				_Theme
 			});
 
 			// Добавление патчей только для редактора скайрима специального издания
