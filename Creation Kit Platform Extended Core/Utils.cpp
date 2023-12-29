@@ -329,12 +329,28 @@ namespace CreationKitPlatformExtended
 			return (uint64_t)statex.ullTotalPhys;
 		}
 
+		uint64_t GetTotalPageFileMemory()
+		{
+			MEMORYSTATUSEX statex = { 0 };
+			statex.dwLength = sizeof(MEMORYSTATUSEX);
+			if (!GlobalMemoryStatusEx(&statex)) return 0;
+			return (uint64_t)statex.ullTotalPageFile;
+		}
+
 		uint64_t GetAvailableTotalPhysicalMemory()
 		{
 			MEMORYSTATUSEX statex = { 0 };
 			statex.dwLength = sizeof(MEMORYSTATUSEX);
 			if (!GlobalMemoryStatusEx(&statex)) return 0;
 			return (uint64_t)statex.ullAvailPhys;
+		}
+
+		uint64_t GetAvailableTotalPageFileMemory()
+		{
+			MEMORYSTATUSEX statex = { 0 };
+			statex.dwLength = sizeof(MEMORYSTATUSEX);
+			if (!GlobalMemoryStatusEx(&statex)) return 0;
+			return (uint64_t)statex.ullAvailPageFile;
 		}
 
 		String Wide2Ansi(const wchar_t* s)

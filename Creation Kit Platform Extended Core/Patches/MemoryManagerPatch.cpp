@@ -382,9 +382,12 @@ namespace CreationKitPlatformExtended
 			AssertMsg(LowPhysicalMemory(), "Not enough memory to run the program");
 
 			auto TotalGB = (double)(Utils::GetTotalPhysicalMemory()) / MEM_GB;
+			auto TotalPageFileGB = (double)(Utils::GetTotalPageFileMemory()) / MEM_GB;
 			auto AvailableTotalGB = (double)(Utils::GetAvailableTotalPhysicalMemory()) / MEM_GB;
+			auto AvailableTotalPageFileGB = (double)(Utils::GetAvailableTotalPageFileMemory()) / MEM_GB;
 
-			_MESSAGE("Memory (Total: %.1f Gb, Available: %.1f Gb)", TotalGB, AvailableTotalGB);
+			_MESSAGE("Physical Memory (Total: %.1f Gb, Available: %.1f Gb)", TotalGB, AvailableTotalGB);
+			_MESSAGE("PageFile Memory (Total: %.1f Gb, Available: %.1f Gb)", TotalPageFileGB, AvailableTotalPageFileGB);
 
 			auto patchIAT = [](const char* module)
 			{
@@ -445,7 +448,8 @@ namespace CreationKitPlatformExtended
 
 		bool MemoryManagerPatch::LowPhysicalMemory()
 		{
-			return Utils::GetAvailableTotalPhysicalMemory() > MEM_THRESHOLD;
+			return (Utils::GetAvailableTotalPhysicalMemory() + 
+				Utils::GetAvailableTotalPageFileMemory()) > MEM_THRESHOLD;
 		}
 	}
 }

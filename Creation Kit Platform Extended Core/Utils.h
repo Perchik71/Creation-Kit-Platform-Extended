@@ -41,7 +41,9 @@ namespace CreationKitPlatformExtended
 		bool DirectoryExists(const wchar_t* fileName);
 
 		uint64_t GetTotalPhysicalMemory();
+		uint64_t GetTotalPageFileMemory();
 		uint64_t GetAvailableTotalPhysicalMemory();
+		uint64_t GetAvailableTotalPageFileMemory();
 
 		String Wide2Ansi(const wchar_t* s);
 		WideString Ansi2Wide(const char* s);
