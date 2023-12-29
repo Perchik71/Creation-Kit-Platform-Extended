@@ -14,8 +14,16 @@
 </p>
 
 # Description
-At the moment, the platform supports only *CK* version **1.6.1130**  
-The platform will support all known versions of Creation Kit in the future. This is a continuation of two previously arhived projects, as I am already confused in the code. The new implementation is based on the principle of modularity, which will allow for better control of development.
+The powerful open-source platform makes numerous fixes and improvements to the Creation Kit editor from Bethesda.  
+The platform will support all known versions of Creation Kit in the future. This is a continuation of two previously arhived projects, as I am already confused in the code. The new implementation is based on the principle of modularity, which will allow for better control of development.  
+
+> [!NOTE]
+> At the moment, the platform supports **CK** version:  
+> **1.5.3.0**  
+> **1.6.1130**
+
+> [!IMPORTANT]
+> **CK** does not work well with **ENB**.  
 
 # Fixed or added
 :white_check_mark: Fast file loading  
@@ -33,9 +41,6 @@ The platform will support all known versions of Creation Kit in the future. This
 <p align="center">
   <img src="https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/master/Resources/darktheme.png" width="640px" alt="Creation Kit Platform Extended" border="0">
 </p>
-
-# ENB
-**CK** does not work well with **ENB**.  
 
 # Mod Settings
 To hide errors, create a file *CreationKitPlatformExtendedMessagesBlacklist.txt*.  
