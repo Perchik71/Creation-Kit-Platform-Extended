@@ -63,6 +63,7 @@ namespace CreationKitPlatformExtended
 					//
 					Detours::X64::DetourClassVTable(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), 
 						&sub, 86);
+					pointer_FixClassDlg_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
 
 					return true;
 				}
