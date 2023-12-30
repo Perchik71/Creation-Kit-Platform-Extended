@@ -19,7 +19,8 @@ The platform will support all known versions of Creation Kit in the future. This
 
 > [!NOTE]
 > At the moment, the platform supports **CK** version:  
-> **1.5.3.0**  
+> **1.5.3.0**
+> **1.5.73.0**  
 > **1.6.1130**
 
 > [!IMPORTANT]
