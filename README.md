@@ -14,14 +14,14 @@
 </p>
 
 # Description
-The powerful open-source platform makes numerous fixes and improvements to the Creation Kit editor from Bethesda.  
-The platform will support all known versions of Creation Kit in the future. This is a continuation of two previously arhived projects, as I am already confused in the code. The new implementation is based on the principle of modularity, which will allow for better control of development.  
+The powerful open-source platform makes numerous fixes and improvements to the **Creation Kit** editor from **Bethesda**. This is a continuation of two previously arhived projects, as I am already confused in the code. The new implementation is based on the principle of modularity, which will allow for better control of development.  
 
 > [!NOTE]
 > At the moment, the platform supports **CK** version:  
-> **1.5.3.0**  
-> **1.5.73.0**  
-> **1.6.1130**
+> **SSE 1.5.3.0**  
+> **SSE 1.5.73.0**  
+> **SSE 1.6.438.0**  
+> **SSE 1.6.1130.0**
 
 > [!IMPORTANT]
 > **CK** does not work well with **ENB**.  
@@ -51,8 +51,9 @@ To hide errors, create a file *CreationKitPlatformExtendedMessagesBlacklist.txt*
 # Unicode
 **ONLY SURROGATE**: Support for English and native languages without special characters.
 For understanding, the application uses the ancient **ANSI** type string representation. The idea is to feed the text already in your native encoding. When loading .esp, .esl, .esm files all strings are translated from UTF-8 to WinCP, and when saved back. WinCP is the current encoding in your operating system.  
-**IMPORTANT**:  
-In **Win10**, in the language settings, there is now an option to work with UTF-8, you need to turn it off otherwise there will be only "?".
+
+> [!IMPORTANT] 
+> In **Win10**, in the language settings, there is now an option to work with **UTF-8**, you need to turn it off otherwise there will be only **"?"**.
 
 # Dependencies
 [detours](https://github.com/Nukem9/detours.git) URL **https://github.com/Nukem9/detours.git** IN **Dependencies/detours**  
@@ -66,7 +67,7 @@ In **Win10**, in the language settings, there is now an option to work with UTF-
 # Compilation
 Open a project in **Visual Studio 2019** or later. Build the project in **Release** mode.  
 Compile the Unicode Plugin to **Lazarus 1.8.2** or later. Take .dll's from the **x64** folder and move it to the folder with the game. 
-Take the database **CreationKitPlatformExtended_SSE_1_6_1130.database** from the folder **Database/1_6_1130/**. 
+Take the database **CreationKitPlatformExtended_SSE_1_X_XXXX.database** from the folder **Database/1_X_XXXX/**. 
 You will also need **Stuffs/SSE/CreationKitPlatformExtendedMessagesBlacklist.txt** and **Stuffs/SSE/CreationKitPlatformExtended.ini** to the game folder. 
 Move the dialog package **Dialogs/SSE/CreationKitPlatformExtended_SSE_Dialogs.pak** to the root folder of the game.  
 
