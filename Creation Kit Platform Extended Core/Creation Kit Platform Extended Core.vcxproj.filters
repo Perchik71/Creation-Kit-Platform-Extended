@@ -442,12 +442,6 @@
     <ClCompile Include="Patches\SSE\EnableGameButtonToVC.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\ShowReloadShadersAlways.cpp">
-      <Filter>Patches</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\StableSortForPerks.cpp">
-      <Filter>Patches</Filter>
-    </ClCompile>
     <ClCompile Include="Patches\SSE\FaceGen.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -491,6 +485,12 @@
       <Filter>Patches\SSE</Filter>
     </ClCompile>
     <ClCompile Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\ShowReloadShadersAlways.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\StableSortForPerks.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1093,12 +1093,6 @@
     <ClInclude Include="Patches\SSE\EnableGameButtonToVC.h">
       <Filter>Patches</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\ShowReloadShadersAlways.h">
-      <Filter>Patches</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\StableSortForPerks.h">
-      <Filter>Patches</Filter>
-    </ClInclude>
     <ClInclude Include="Patches\SSE\FaceGen.h">
       <Filter>Patches</Filter>
     </ClInclude>
@@ -1142,6 +1136,12 @@
       <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\ShowReloadShadersAlways.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\StableSortForPerks.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
