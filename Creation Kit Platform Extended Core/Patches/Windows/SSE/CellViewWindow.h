@@ -30,11 +30,28 @@ namespace CreationKitPlatformExtended
 				static LRESULT CALLBACK HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 				static void sub1(HWND ListViewHandle, TESForm* Form, bool UseImage, int ItemIndex);
 				static int sub2(HWND** ListViewHandle, TESForm** Form, __int64 a3);
+
+				void ResizeWnd(UINT width, UINT height);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
 				virtual bool Activate(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 				virtual bool Shutdown(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
+			private:
+				Classes::CUIBaseControl m_WorldSpaceLabel;
+				Classes::CUIBaseControl m_WorldSpaceComboBox;
+				Classes::CUIBaseControl m_XEdit;
+				Classes::CUIBaseControl m_YEdit;
+				Classes::CUIBaseControl m_XLabel;
+				Classes::CUIBaseControl m_YLabel;
+				Classes::CUIBaseControl m_GoButton;
+				Classes::CUIBaseControl m_LoadedAtTop;
+				Classes::CUIBaseControl m_IdEdit;
+				Classes::CUIBaseControl m_SelectedObjectLabel;
+				Classes::CUIBaseControl m_ActiveCellsOnly;
+				Classes::CUIBaseControl m_ActiveObjectsOnly;
+				Classes::CUIBaseControl m_CellListView;
+				Classes::CUIBaseControl m_ObjectListView;
 			};
 
 			extern CellViewWindow* GlobalCellViewWindowPtr;

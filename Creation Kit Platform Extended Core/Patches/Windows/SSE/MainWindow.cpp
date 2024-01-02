@@ -11,6 +11,7 @@
 #include "Editor API/SSE/BSPointerHandleManager.h"
 #include "Patches/SSE/Re-EnableFog.h"
 #include "Patches/Windows/SSE/ObjectWindow.h"
+#include "Patches/Windows/SSE/CellViewWindow.h"
 #include "Patches/ConsolePatch.h"
 #include "MainWindow.h"
 
@@ -273,6 +274,13 @@ namespace CreationKitPlatformExtended
 							{
 								// Call the CTRL+F5 hotkey function directly
 								((void(__fastcall*)())pointer_MainWindow_sub1)();
+							}
+							return 0;
+							case EditorAPI::EditorUI::UI_EDITOR_TOGGLECELLVIEW:
+							{
+								GlobalCellViewWindowPtr->Visible = !GlobalCellViewWindowPtr->Visible;
+								auto MenuItem = GlobalMainWindowPtr->MainMenu.GetItem(EditorAPI::EditorUI::UI_EDITOR_TOGGLECELLVIEW);
+								MenuItem.Checked = !MenuItem.Checked;
 							}
 							return 0;
 							case EditorAPI::EditorUI::UI_EDITOR_OPENFORMBYID:

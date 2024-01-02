@@ -3,6 +3,8 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
+#include "Editor API/EditorUI.h"
+#include "Patches/Windows/SSE/MainWindow.h"
 #include "CellViewWindow.h"
 
 #define UI_CELL_VIEW_ADD_CELL_ITEM					2579
@@ -43,12 +45,12 @@ namespace CreationKitPlatformExtended
 
 			bool CellViewWindow::HasDependencies() const
 			{
-				return false;
+				return true;
 			}
 
 			Array<String> CellViewWindow::GetDependencies() const
 			{
-				return {};
+				return { "Main Window" };
 			}
 
 			bool CellViewWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
@@ -113,52 +115,115 @@ namespace CreationKitPlatformExtended
 				return ((int(__fastcall*)(HWND*, TESForm**))pointer_CellViewWindow_sub2)(*ListViewHandle, Form);
 			}
 
+			void CellViewWindow::ResizeWnd(UINT width, UINT height)
+			{
+				UINT uHalf = (width - 12) >> 1;
+				Classes::CRECT Bounds;
+
+				Bounds.Left = 4;
+				Bounds.Top = 90;
+				Bounds.Width = uHalf;
+				Bounds.Height = height - (Bounds.Top + 4);
+				m_CellListView.BoundsRect = Bounds;
+
+				Bounds.Left = 4;
+				Bounds.Top = 4;
+				Bounds.Height = 18;
+				m_WorldSpaceLabel.BoundsRect = Bounds;
+				m_WorldSpaceLabel.Refresh();
+
+				Bounds.Left = 4;
+				Bounds.Top = 22;
+				Bounds.Height = 95;
+				m_WorldSpaceComboBox.BoundsRect = Bounds;
+
+				Bounds.Left = 6;
+				Bounds.Top = 60;
+				Bounds.Height = 12;
+				Bounds.Width = 10;
+				m_XLabel.BoundsRect = Bounds;
+
+				Bounds.Left = 64;
+				m_YLabel.BoundsRect = Bounds;
+
+				Bounds.Left = 18;
+				Bounds.Top = 56;
+				Bounds.Width = 40;
+				Bounds.Height = 21;
+				m_XEdit.BoundsRect = Bounds;
+
+				Bounds.Left = 76;
+				m_YEdit.BoundsRect = Bounds;
+
+				Bounds.Top = 50;
+				Bounds.Left = 120;
+				Bounds.Width = 32;
+				Bounds.Height = 32;
+				m_GoButton.BoundsRect = Bounds;
+
+				Bounds.Left = 156;
+				Bounds.Height = 16;
+				Bounds.Width = 85;
+				m_LoadedAtTop.BoundsRect = Bounds;
+
+				Bounds.Top += 17;
+				Bounds.Width = 145;
+				m_ActiveCellsOnly.BoundsRect = Bounds;
+
+				Bounds.Top = 90;
+				Bounds.Left = uHalf + 8;
+				Bounds.Width = uHalf;
+				Bounds.Height = height - (Bounds.Top + 4);
+				m_ObjectListView.BoundsRect = Bounds;
+
+				Bounds.Top = 22;
+				Bounds.Height = 21;
+				m_IdEdit.BoundsRect = Bounds;
+
+				Bounds.Top = 4;
+				Bounds.Height = 18;
+				m_SelectedObjectLabel.BoundsRect = Bounds;
+				m_SelectedObjectLabel.Refresh();
+
+				Bounds.Top = 67;
+				Bounds.Height = 16;
+				m_ActiveObjectsOnly.BoundsRect = Bounds;
+			}
+
 			LRESULT CALLBACK CellViewWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 			{
 				if (Message == WM_INITDIALOG)
 				{
 					GlobalCellViewWindowPtr->m_hWnd = Hwnd;
+					GlobalCellViewWindowPtr->m_WorldSpaceLabel = GetDlgItem(Hwnd, 1164);
+					GlobalCellViewWindowPtr->m_WorldSpaceComboBox = GetDlgItem(Hwnd, 2083);
+					GlobalCellViewWindowPtr->m_XEdit = GetDlgItem(Hwnd, 5283);
+					GlobalCellViewWindowPtr->m_YEdit = GetDlgItem(Hwnd, 5099);
+					GlobalCellViewWindowPtr->m_XLabel = GetDlgItem(Hwnd, 5281);
+					GlobalCellViewWindowPtr->m_YLabel = GetDlgItem(Hwnd, 5282);
+					GlobalCellViewWindowPtr->m_GoButton = GetDlgItem(Hwnd, 3681);
+					GlobalCellViewWindowPtr->m_LoadedAtTop = GetDlgItem(Hwnd, 5662);
+					GlobalCellViewWindowPtr->m_IdEdit = GetDlgItem(Hwnd, 2581);
+					GlobalCellViewWindowPtr->m_SelectedObjectLabel = GetDlgItem(Hwnd, 1163);
+					GlobalCellViewWindowPtr->m_ActiveCellsOnly = GetDlgItem(Hwnd, 2580);
+					GlobalCellViewWindowPtr->m_ActiveObjectsOnly = GetDlgItem(Hwnd, 2582);
+					GlobalCellViewWindowPtr->m_CellListView = GetDlgItem(Hwnd, 1155);
+					GlobalCellViewWindowPtr->m_ObjectListView = GetDlgItem(Hwnd, 1156);
+
+					GlobalCellViewWindowPtr->m_WorldSpaceLabel.Style |= SS_CENTER;
 
 					// Eliminate the flicker when changing cells
-					ListView_SetExtendedListViewStyleEx(GetDlgItem(Hwnd, 1155), LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
-					ListView_SetExtendedListViewStyleEx(GetDlgItem(Hwnd, 1156), LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
+					ListView_SetExtendedListViewStyleEx(GlobalCellViewWindowPtr->m_CellListView.Handle, 
+						LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
+					ListView_SetExtendedListViewStyleEx(GlobalCellViewWindowPtr->m_ObjectListView.Handle,
+						LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
 
 					ShowWindow(GetDlgItem(Hwnd, 1007), SW_HIDE);
 				}
 				else if (Message == WM_SIZE)
 				{
-					auto labelRect = reinterpret_cast<RECT*>(pointer_CellViewWindow_data);
-					auto handle = GetDlgItem(Hwnd, 1164);
-
-					// Fix the "World Space" label positioning on window resize
-					RECT label;
-					GetClientRect(handle, &label);
-
-					RECT rect;
-					GetClientRect(GetDlgItem(Hwnd, 2083), &rect);
-
-					int ddMid = rect.left + ((rect.right - rect.left) / 2);
-					int labelMid = (label.right - label.left) / 2;
-
-					SetWindowPos(handle, nullptr, ddMid - (labelMid / 2), labelRect->top, 0, 0, SWP_NOSIZE);
-
-					// Force the dropdown to extend the full length of the column
-					labelRect->right = 0;
-
-					auto result = CallWindowProc(GlobalCellViewWindowPtr->GetOldWndProc(), Hwnd, Message, wParam, lParam);
-
-					Classes::CUIBaseControl editSearchObjs = GetDlgItem(Hwnd, 2581);
-					Classes::CUIBaseControl listObjs = GetDlgItem(Hwnd, 1156);
-					Classes::CUIBaseControl listCheckActiveObjs = GetDlgItem(Hwnd, UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX);
-
-					auto left = listObjs.Left;
-					auto width = listObjs.Width;
-					listCheckActiveObjs.Left = left;
-					listCheckActiveObjs.Width = width;
-					editSearchObjs.Left = left;
-					editSearchObjs.Width = width;
-
-					return result;
+					GlobalCellViewWindowPtr->ResizeWnd(LOWORD(lParam), HIWORD(lParam));
+					return S_OK;
 				}
 				else if (Message == WM_COMMAND)
 				{
@@ -215,14 +280,24 @@ namespace CreationKitPlatformExtended
 
 					return 1;
 				}
+				else if (Message == WM_CLOSE)
+				{
+					//
+					// hide the window and uncheck the checkbox in the main window menu
+					//
+					GlobalCellViewWindowPtr->Visible = false;
+					GlobalMainWindowPtr->MainMenu.GetSubMenuItem(2).GetItem(EditorAPI::EditorUI::UI_EDITOR_TOGGLECELLVIEW).Checked = false;
+
+					return S_OK;
+				}
 				// Don't let us reduce the window too much
 				else if (Message == WM_GETMINMAXINFO) 
 				{
 					if (lParam) 
 					{
 						LPMINMAXINFO lpMMI = (LPMINMAXINFO)lParam;
-						lpMMI->ptMinTrackSize.x = 738;
-						lpMMI->ptMinTrackSize.y = 315;
+						lpMMI->ptMinTrackSize.x = 369;
+						lpMMI->ptMinTrackSize.y = 157;
 					}
 
 					return S_OK;

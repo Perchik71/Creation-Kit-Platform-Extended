@@ -1,6 +1,6 @@
-//{{NO_DEPENDENCIES}}
-// Включаемый файл, созданный в Microsoft Visual C++.
-// Используется sseck_loader.rc
+п»ї//{{NO_DEPENDENCIES}}
+// В¬РєР»СЋС‡Р°РµРјС‹Р№ С„Р°Р№Р», СЃРѕР·РґР°РЅРЅС‹Р№ РІ Microsoft Visual C++.
+// В»СЃРїРѕР»СЊР·СѓРµС‚СЃВ¤ sseck_loader.rc
 //
 #define IDD_PLEASEWAIT                  101
 #define IDI_ICON1                       103
