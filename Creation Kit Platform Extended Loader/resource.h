@@ -1,6 +1,6 @@
 ﻿//{{NO_DEPENDENCIES}}
-// ¬ключаемый файл, созданный в Microsoft Visual C++.
-// »спользуетс¤ sseck_loader.rc
+// Включаемый файл, созданный в Microsoft Visual C++.
+// Используется ckpe_loader.rc
 //
 #define IDD_PLEASEWAIT                  101
 #define IDI_ICON1                       103

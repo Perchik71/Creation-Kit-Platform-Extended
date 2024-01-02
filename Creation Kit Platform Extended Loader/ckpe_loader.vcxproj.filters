@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="sseck_loader.cpp">
+    <ClCompile Include="ckpe_loader.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -25,12 +25,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="sseck_loader.rc">
+    <ResourceCompile Include="ckpe_loader.rc">
       <Filter>Файлы ресурсов</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resources\sseck.ico">
+    <Image Include="..\Resources\ckpe.ico">
       <Filter>Файлы ресурсов</Filter>
     </Image>
   </ItemGroup>

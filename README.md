@@ -14,7 +14,7 @@
 </p>
 
 # Description
-The powerful open-source platform makes numerous fixes and improvements to the **Creation Kit** editor from **Bethesda**. This is a continuation of two previously arhived projects, as I am already confused in the code. The new implementation is based on the principle of modularity, which will allow for better control of development.  
+The powerful open-source platform makes numerous fixes and improvements to the **Creation Kit** editor from **Bethesda**. This is a continuation of two previously archived projects, as I am already confused in the code. The new implementation is based on the principle of modularity, which will allow for better control of development.  
 
 > [!NOTE]
 > At the moment, the platform supports **CK** version:  
@@ -25,6 +25,7 @@ The powerful open-source platform makes numerous fixes and improvements to the *
 
 > [!IMPORTANT]
 > **CK** does not work well with **ENB**.  
+> I wrote **ckpe_loader**. This is console app, for 15 seconds renames from the known to me .dll files that harm the work of CK this time is enough to load the CK itself. All renames .dll files will be restored name after this time.
 
 # Fixed or added
 :white_check_mark: Fast file loading  

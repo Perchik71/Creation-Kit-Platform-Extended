@@ -12,6 +12,7 @@
     <ProjectGuid>{42e22f45-ac50-49bf-aabb-d0ffe480333c}</ProjectGuid>
     <RootNamespace>sseckloader</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Creation Kit Platform Extended Loader</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -34,6 +35,7 @@
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
+    <TargetName>ckpe_loader</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -55,16 +57,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="sseck_loader.cpp" />
+    <ClCompile Include="ckpe_loader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="sseck_loader.rc" />
+    <ResourceCompile Include="ckpe_loader.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resources\sseck.ico" />
+    <Image Include="..\Resources\ckpe.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

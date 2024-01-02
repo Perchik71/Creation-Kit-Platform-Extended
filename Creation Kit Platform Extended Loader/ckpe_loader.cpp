@@ -18,6 +18,7 @@
 #define CREATIONKIT L"CreationKit.exe"
 
 std::map<std::wstring, BOOL> dllENBs = {
+	{ L"d3d12.dll", FALSE },
 	{ L"d3d11.dll", FALSE },
 	{ L"d3d10.dll", FALSE },
 	{ L"d3d9.dll", FALSE },
@@ -52,7 +53,7 @@ VOID WaitCloseCKLoader(VOID) {
 
 	if (Process32First(snapshot, &entry) == TRUE) {
 		while (Process32Next(snapshot, &entry) == TRUE) {
-			if (entry.th32ProcessID != dwCurrentProcessID && !_wcsicmp(entry.szExeFile, L"sseck_loader.exe")) {
+			if (entry.th32ProcessID != dwCurrentProcessID && !_wcsicmp(entry.szExeFile, L"ckpe_loader.exe")) {
 				dwCount++;
 				if (dwCount >= 2)
 					// user spam run
@@ -105,7 +106,10 @@ void RestoreFiles()
 void RunCK()
 {
 	if (!FileExists(CREATIONKIT))
+	{
+		MessageBoxW(0, CREATIONKIT " was not found", L"Error", MB_OK | MB_ICONERROR);
 		return;
+	}
 	
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;

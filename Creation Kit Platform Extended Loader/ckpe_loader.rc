@@ -1,5 +1,7 @@
-﻿// Microsoft Visual C++ generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
+#pragma code_page(65001)
+
 #include "resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
@@ -17,7 +19,6 @@
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
 LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
-#pragma code_page(1251)
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -112,12 +113,13 @@ BEGIN
     BEGIN
         BLOCK "041904b0"
         BEGIN
-            VALUE "FileDescription", "Skyrim SE Creation Kit 64 Loader without ENBSeries mod"
+            VALUE "CompanyName", "aka perchik71"
+            VALUE "FileDescription", "Creation Kit Platform Extended Loader"
             VALUE "FileVersion", "0.1.0.0"
             VALUE "InternalName", "sseck_loader.exe"
-            VALUE "LegalCopyright", "Copyright 2023 aka Perchik71 developer. All Rights Reserved."
+            VALUE "LegalCopyright", "Copyright (C) aka perchik71 2023-2024"
             VALUE "OriginalFilename", "sseck_loader.exe"
-            VALUE "ProductName", "Skyrim SE Creation Kit 64 Loader for Windows"
+            VALUE "ProductName", "Creation Kit Platform Extended Project"
             VALUE "ProductVersion", "0.1.0.0"
         END
     END
@@ -135,7 +137,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON1               ICON                    "..\\Resources\\sseck.ico"
+IDI_ICON1               ICON                    "..\\Resources\\ckpe.ico"
 
 #endif    // Русский (Россия) resources
 /////////////////////////////////////////////////////////////////////////////
