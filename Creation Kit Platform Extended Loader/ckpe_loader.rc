@@ -116,7 +116,7 @@ BEGIN
             VALUE "CompanyName", "aka perchik71"
             VALUE "FileDescription", "Creation Kit Platform Extended Loader"
             VALUE "FileVersion", "0.1.0.0"
-            VALUE "InternalName", "sseck_loader.exe"
+            VALUE "InternalName", "ckpe_loader.exe"
             VALUE "LegalCopyright", "Copyright (C) aka perchik71 2023-2024"
             VALUE "OriginalFilename", "sseck_loader.exe"
             VALUE "ProductName", "Creation Kit Platform Extended Project"

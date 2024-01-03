@@ -493,6 +493,12 @@
     <ClCompile Include="Patches\SSE\StableSortForPerks.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Editor API\SSE\TESObjectLAND.cpp">
+      <Filter>Editor API\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixParamsATXT.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1142,6 +1148,12 @@
       <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SSE\StableSortForPerks.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\TESObjectLAND.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixParamsATXT.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>

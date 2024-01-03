@@ -103,6 +103,7 @@
     <ClCompile Include="Editor API\SSE\TESDialogSpell.cpp" />
     <ClCompile Include="Editor API\SSE\TESFile.cpp" />
     <ClCompile Include="Editor API\SSE\TESForm.cpp" />
+    <ClCompile Include="Editor API\SSE\TESObjectLAND.cpp" />
     <ClCompile Include="Editor API\UI\UIBaseWindow.cpp" />
     <ClCompile Include="Editor API\UI\UICheckboxControl.cpp" />
     <ClCompile Include="Editor API\UI\UIGraphics.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="Patches\SSE\FixNavMesh.cpp" />
     <ClCompile Include="Patches\SSE\FixNiSkinInstance.cpp" />
     <ClCompile Include="Patches\SSE\FixObjectPalette.cpp" />
+    <ClCompile Include="Patches\SSE\FixParamsATXT.cpp" />
     <ClCompile Include="Patches\SSE\FixRaceDlg.cpp" />
     <ClCompile Include="Patches\SSE\FixRemoteDesktop.cpp" />
     <ClCompile Include="Patches\SSE\FixRenderPass.cpp" />
@@ -301,6 +303,7 @@
     <ClInclude Include="Editor API\SSE\TESDialogSpell.h" />
     <ClInclude Include="Editor API\SSE\TESFile.h" />
     <ClInclude Include="Editor API\SSE\TESForm.h" />
+    <ClInclude Include="Editor API\SSE\TESObjectLAND.h" />
     <ClInclude Include="Editor API\SSE\TESWater.h" />
     <ClInclude Include="Editor API\UI\UIBaseWindow.h" />
     <ClInclude Include="Editor API\UI\UICheckboxControl.h" />
@@ -364,6 +367,7 @@
     <ClInclude Include="Patches\SSE\FixNavMesh.h" />
     <ClInclude Include="Patches\SSE\FixNiSkinInstance.h" />
     <ClInclude Include="Patches\SSE\FixObjectPalette.h" />
+    <ClInclude Include="Patches\SSE\FixParamsATXT.h" />
     <ClInclude Include="Patches\SSE\FixRaceDlg.h" />
     <ClInclude Include="Patches\SSE\FixRemoteDesktop.h" />
     <ClInclude Include="Patches\SSE\FixRenderPass.h" />
