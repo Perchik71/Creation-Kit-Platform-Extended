@@ -184,6 +184,7 @@
     <ClCompile Include="Patches\SSE\MemoryLeakInPreviewWindow.cpp" />
     <ClCompile Include="Patches\SSE\NavMeshInfoMap.cpp" />
     <ClCompile Include="Patches\SSE\NavMeshPseudoDelete.cpp" />
+    <ClCompile Include="Patches\SSE\NewFormat171.cpp" />
     <ClCompile Include="Patches\SSE\NiCollisionObjectClonedWarning.cpp" />
     <ClCompile Include="Patches\SSE\Re-EnableFog.cpp" />
     <ClCompile Include="Patches\SSE\Re-EnableLandShadows.cpp" />
@@ -385,6 +386,7 @@
     <ClInclude Include="Patches\SSE\MemoryLeakInPreviewWindow.h" />
     <ClInclude Include="Patches\SSE\NavMeshInfoMap.h" />
     <ClInclude Include="Patches\SSE\NavMeshPseudoDelete.h" />
+    <ClInclude Include="Patches\SSE\NewFormat171.h" />
     <ClInclude Include="Patches\SSE\NiCollisionObjectClonedWarning.h" />
     <ClInclude Include="Patches\SSE\Re-EnableFog.h" />
     <ClInclude Include="Patches\SSE\Re-EnableLandShadows.h" />

@@ -499,6 +499,9 @@
     <ClCompile Include="Patches\SSE\FixParamsATXT.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\NewFormat171.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1154,6 +1157,9 @@
       <Filter>Editor API\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SSE\FixParamsATXT.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\NewFormat171.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
