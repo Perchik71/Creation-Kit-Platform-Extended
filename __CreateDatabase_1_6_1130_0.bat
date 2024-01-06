@@ -100,3 +100,4 @@ CreationKit_se_1_6_1130 -PEUpdateDatabase "Crash HairKS" "1_6_1130\CrashHairKS.r
 CreationKit_se_1_6_1130 -PEUpdateDatabase "BSArchiveManager Modded" "1_6_1130\BSArchiveManagerModded.relb"
 CreationKit_se_1_6_1130 -PEUpdateDatabase "Fix Spell Dlg" "1_6_1130\FixSpellDlg.relb"
 CreationKit_se_1_6_1130 -PEUpdateDatabase "Unicode" "1_6_1130\Unicode.relb"
+CreationKit_se_1_6_1130 -PEUpdateDatabase "Fix ATXT params sections" "1_6_1130\FixATXTParamsSections.relb"

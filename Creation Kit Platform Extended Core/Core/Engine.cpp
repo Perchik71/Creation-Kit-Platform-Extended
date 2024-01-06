@@ -38,6 +38,7 @@ namespace CreationKitPlatformExtended
 	namespace Core
 	{
 		void SkyrimSpecialEdition_AppendPatches(ModuleManager* PatchesManager);
+		void Fallout4_AppendPatches(ModuleManager* PatchesManager);
 
 		Engine* GlobalEnginePtr = nullptr;
 
@@ -140,6 +141,12 @@ namespace CreationKitPlatformExtended
 			if (eEditorVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST)
 			{
 				SkyrimSpecialEdition_AppendPatches(PatchesManager);
+			}
+			else
+			// Добавление патчей только для редактора фолыча специального издания
+			if (eEditorVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_F4_LAST)
+			{
+				Fallout4_AppendPatches(PatchesManager);
 			}
 
 			// Установка точки останова, чтобы дождаться расшифровки DRM приложения

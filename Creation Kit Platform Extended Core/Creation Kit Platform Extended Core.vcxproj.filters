@@ -502,6 +502,9 @@
     <ClCompile Include="Patches\SSE\NewFormat171.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Core\EngineFO4Patches.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">

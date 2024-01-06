@@ -79,6 +79,7 @@
     <ClCompile Include="Core\DebugLog.cpp" />
     <ClCompile Include="Core\DialogManager.cpp" />
     <ClCompile Include="Core\Engine.cpp" />
+    <ClCompile Include="Core\EngineFO4Patches.cpp" />
     <ClCompile Include="Core\EngineSSEPatches.cpp" />
     <ClCompile Include="Core\GDIPlusInit.cpp" />
     <ClCompile Include="Core\INIWrapper.cpp" />

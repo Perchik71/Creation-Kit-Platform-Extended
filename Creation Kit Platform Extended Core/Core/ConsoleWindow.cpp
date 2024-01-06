@@ -16,6 +16,8 @@ namespace CreationKitPlatformExtended
 		constexpr static auto UI_LOG_CMD_CLEARTEXT = 0x23001;
 		constexpr static auto UI_LOG_CMD_AUTOSCROLL = 0x23002;
 
+		constexpr static size_t LINECOUNT_MAX = 50000;
+
 		ConsoleWindow* GlobalConsoleWindowPtr = nullptr;
 
 		ConsoleWindow::ConsoleWindow(Engine* lpEngine) : _engine(nullptr), hWindow(NULL),
@@ -28,6 +30,18 @@ namespace CreationKitPlatformExtended
 		ConsoleWindow::~ConsoleWindow()
 		{
 			Destroy();
+		}
+
+		void ConsoleWindow::Clear() const 
+		{ 
+			CHARRANGE range
+			{
+				.cpMin = (LONG)SendMessageA(_richEditHwnd, EM_LINEINDEX, 7, 0),
+				.cpMax = LONG_MAX,
+			};
+
+			SendMessageA(_richEditHwnd, EM_EXSETSEL, 0, reinterpret_cast<LPARAM>(&range));
+			SendMessageA(_richEditHwnd, EM_REPLACESEL, FALSE, reinterpret_cast<LPARAM>(""));
 		}
 
 		bool ConsoleWindow::CreateStdoutListener()
@@ -89,6 +103,8 @@ namespace CreationKitPlatformExtended
 
 		LRESULT CALLBACK ConsoleWindow::WndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 		{
+			static size_t LineCount = 0;
+
 			if (WM_NCCREATE == Message)
 			{
 				auto info = reinterpret_cast<const CREATESTRUCT*>(lParam);
@@ -229,6 +245,15 @@ namespace CreationKitPlatformExtended
 					if (wParam != UI_LOG_CMD_ADDTEXT)
 						break;
 
+					// Если очень много тысяч в лог окне, то разумно его почистить,
+					// Это освободит немного памяти.
+					if (LineCount >= LINECOUNT_MAX)
+					{
+						moduleConsole->Clear();
+						auto rich = moduleConsole->GetRichEditHandle();
+						LineCount = (size_t)SendMessageA(rich, EM_GETLINECOUNT, 0, 0);
+					}
+
 					if (moduleConsole->GetPendingMessages().size() <= 0)
 						break;
 
@@ -263,6 +288,7 @@ namespace CreationKitPlatformExtended
 						SendMessageA(rich, EM_REPLACESEL, FALSE, reinterpret_cast<LPARAM>(message));
 
 						voltek::scalable_free(message);
+						LineCount++;
 					}
 
 					if (!moduleConsole->HasAutoScroll())
@@ -513,7 +539,7 @@ namespace CreationKitPlatformExtended
 				fflush(_outputFileHandle);
 			}
 
-			if (_pendingMessages.size() < 50000)
+			if (_pendingMessages.size() < LINECOUNT_MAX)
 				_pendingMessages.push_back(Utils::StrDub(line.c_str()));
 		}
 	}

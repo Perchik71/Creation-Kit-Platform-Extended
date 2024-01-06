@@ -21,7 +21,7 @@ namespace CreationKitPlatformExtended
 			inline ConcurrencyArray<const char*>& GetPendingMessages() { return _pendingMessages; }
 			inline bool HasAutoScroll() const { return _autoScroll; }
 			inline void SetAutoScroll(bool value) { _autoScroll = value; }
-			inline void Clear() const { SendMessageA(_richEditHwnd, WM_SETTEXT, 0, reinterpret_cast<LPARAM>("")); }
+			void Clear() const;
 			inline void SetRichEditHandle(HWND richEditHwnd) { _richEditHwnd = richEditHwnd; }
 			inline HWND GetRichEditHandle() const { return _richEditHwnd; }
 			

@@ -98,6 +98,13 @@ namespace CreationKitPlatformExtended
 
 				return true;
 			}
+			else if (lpRelocationDatabaseItem->Version() == 2)
+			{
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xC3 });	// StackTrace::MemoryTraceWrite
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0xC3 });	// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(2), { 0xC3 });	// SetUnhandledExceptionFilter, Unknown
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(3), { 0xC3 });	// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
+			}
 
 			return false;
 		}
