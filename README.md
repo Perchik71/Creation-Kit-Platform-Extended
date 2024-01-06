@@ -17,11 +17,13 @@
 The powerful open-source platform makes numerous fixes and improvements to the **Creation Kit** editor from **Bethesda**. This is a continuation of two previously archived projects, as I am already confused in the code. The new implementation is based on the principle of modularity, which will allow for better control of development.  
 
 > [!NOTE]
-> At the moment, the platform supports **CK** version:  
-> **SSE 1.5.3.0**  
-> **SSE 1.5.73.0**  
-> **SSE 1.6.438.0**  
-> **SSE 1.6.1130.0**
+> At the moment, the platform supports **CK** version:
+> | Skyrim | Fallout 4 |
+> | ------------- | ------------- |
+> | **SSE 1.5.3.0** | **F4 1.10.162.0** *(the beginning)* |
+> | **SSE 1.5.73.0** |  |
+> | **SSE 1.6.438.0**  |  |
+> | **SSE 1.6.1130.0** |  |
 
 > [!IMPORTANT]
 > **CK** does not work well with **ENB**.  
