@@ -12,6 +12,7 @@ namespace CreationKitPlatformExtended
 		constexpr auto MEM_THRESHOLD = 2147483648;
 		constexpr auto MEM_GB = 1073741824;
 
+
 		class MemoryManager
 		{
 			// Не описываем конструкторы и деструкторы
@@ -336,10 +337,9 @@ namespace CreationKitPlatformExtended
 				alignment = 4;
 
 			if (!size)
-			{
-				size = 1;
-				alignment = 4;
-			}
+				// Creation Kit много раз требует памяти в 0 байт, данная функция вернёт ему память с
+				// постоянным адресом, не выделяя его в пулах.
+				return voltek::scalable_alloc(0);
 
 			AssertMsgVa(alignment != 0 && alignment % 2 == 0, "Alignment is fucked: %llu", alignment);
 

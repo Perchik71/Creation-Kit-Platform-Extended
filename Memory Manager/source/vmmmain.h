@@ -5,6 +5,7 @@
 #pragma once
 
 #include "vbase.h"
+#include "vmmblock.h"
 #include "vsimplelock.h"
 #include <stddef.h>
 
@@ -63,6 +64,8 @@ namespace voltek
 			// Менеджер один и уникален.
 			memory_manager& operator=(const memory_manager& ob);
 		private:
+			// Блок памяти, если запрашивают 0 размер.
+			block8_t zero_size_request_block;
 			// Массив пулов.
 			void** pools;
 			// Блокировщик для работы с множеством потоков.

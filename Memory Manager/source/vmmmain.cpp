@@ -5,7 +5,6 @@
 #pragma warning(disable : 26819)
 
 #include "vmmmain.h"
-#include "vmmblock.h"
 #include "vmmpool.h"
 #include <limits.h>
 #include <string.h>
@@ -81,6 +80,7 @@ namespace voltek
 		{
 			core::initialize();
 
+			create_default_block(&zero_size_request_block, 0);
 			//file_dbg_sniffer = fopen("vmm.log", "w+");
 
 			// Вся технология ускорения зависит от новых инструкций, если их нет, незачем
@@ -119,8 +119,11 @@ namespace voltek
 
 		void* memory_manager::alloc(size_t size)
 		{
-			if (!size || (ULONG_MAX < size))
+			if (ULONG_MAX < size)
 				return nullptr;
+
+			if (!size)
+				return get_ptr_from_block_handle(&zero_size_request_block);
 
 			// Блокируем. Снятие блокировки будет заботить компилятор.
 			//voltek::core::_internal::simple_scope_lock scope_lock(lock);
@@ -341,7 +344,7 @@ namespace voltek
 			realloc_def_label:
 				size_t old_size = msize(ptr);
 				new_ptr = alloc(size);
-				if (new_ptr) memcpy(new_ptr, ptr, old_size > size ? size : old_size);
+				if (new_ptr && (old_size > 0)) memcpy(new_ptr, ptr, old_size > size ? size : old_size);
 				free(ptr);
 			}
 			else
@@ -470,7 +473,8 @@ namespace voltek
 
 			if (is_used_default_ptr(ptr))
 			{
-				voltek::core::_internal::aligned_free(get_block_handle_from_ptr(ptr));
+				auto block = get_block_handle_from_ptr(ptr);
+				if (block->size > 0) voltek::core::_internal::aligned_free(block);
 				//_fsniff("Default memory block released");
 			}
 			else
