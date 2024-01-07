@@ -45,7 +45,7 @@ namespace CreationKitPlatformExtended
 		bool FlowChartXPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{
-			return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST;
+			return true;
 		}
 
 		bool FlowChartXPatch::Activate(const Relocator* lpRelocator,

@@ -45,7 +45,7 @@ namespace CreationKitPlatformExtended
 		bool DisableAssertionPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{
-			return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST;
+			return true;
 		}
 
 		bool DisableAssertionPatch::Activate(const Relocator* lpRelocator,
@@ -58,7 +58,11 @@ namespace CreationKitPlatformExtended
 				// Remove assertion message boxes
 				//
 				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(0), 5);
-				if (verPatch == 2) lpRelocator->PatchNop(lpRelocationDatabaseItem->At(1), 5);
+				if (verPatch == 2)
+				{
+					for (size_t i = 1; i < lpRelocationDatabaseItem->Count(); i++)
+						lpRelocator->PatchNop(lpRelocationDatabaseItem->At(i), 5);
+				}
 
 				return true;
 			}

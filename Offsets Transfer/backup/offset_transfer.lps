@@ -49,18 +49,6 @@
         <CursorPos X="14" Y="80"/>
         <UsageCount Value="9"/>
       </Unit>
-      <Unit>
-        <Filename Value="\\192.168.1.130\sub\Влад\!!!МОИ ТВОРЕНИЯ!!!\Готовые модули для программирования\Получение версии исполняемого файла\ApplicationVersion.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="27"/>
-        <UsageCount Value="10"/>
-      </Unit>
-      <Unit>
-        <Filename Value="\\192.168.1.130\sub\Влад\!!!МОИ ТВОРЕНИЯ!!!\Готовые модули для программирования\Получение версии исполняемого файла\AppVerUtils.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="6"/>
-        <UsageCount Value="10"/>
-      </Unit>
     </Units>
     <JumpHistory HistoryIndex="4">
       <Position>

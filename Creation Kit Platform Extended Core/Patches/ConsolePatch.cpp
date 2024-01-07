@@ -190,7 +190,8 @@ namespace CreationKitPlatformExtended
 		bool ConsolePatch::Activate(const Relocator* lpRelocator,
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
-			if (lpRelocationDatabaseItem->Version() == 1)
+			auto verPatch = lpRelocationDatabaseItem->Version();
+			if (verPatch == 1)
 			{
 				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(0),  (uintptr_t)&LogWarning);
 				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(1),  (uintptr_t)&LogWarning);
@@ -205,6 +206,18 @@ namespace CreationKitPlatformExtended
 				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(10), (uintptr_t)&LogWarningUnknown2);
 				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(11), (uintptr_t)&LogWarningUnknown2);
 				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(12), (uintptr_t)&LogAssert);
+
+				return true;
+			}
+			else if (verPatch == 2)
+			{
+				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(0), (uintptr_t)&LogWarningVa);
+				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(1), (uintptr_t)&LogWarningUnknown1);
+				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(2), (uintptr_t)&LogWarningUnknown1);
+				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3), (uintptr_t)&LogWarningUnknown1);
+				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(4), (uintptr_t)&LogWarningUnknown1);
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(5), (uintptr_t)&LogWarningUnknown2);
+				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6), (uintptr_t)&LogAssert);
 
 				return true;
 			}

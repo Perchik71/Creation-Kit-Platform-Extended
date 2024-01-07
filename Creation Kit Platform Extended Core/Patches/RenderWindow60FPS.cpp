@@ -45,21 +45,25 @@ namespace CreationKitPlatformExtended
 		bool RenderWindow60FPSPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{
-			return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST;
+			return true;
 		}
 
 		bool RenderWindow60FPSPatch::Activate(const Relocator* lpRelocator,
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
-			if (lpRelocationDatabaseItem->Version() == 1)
+			auto verPatch = lpRelocationDatabaseItem->Version();
+			if ((verPatch == 1) || (verPatch == 2))
 			{
 				//
 				// Force render window to draw at 60fps (SetTimer(10ms))
 				//
 				lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { USER_TIMER_MINIMUM });
 
+				if (verPatch == 2)
+					lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0x33, 0xD2, 0x90 });
+
 				return true;
-			}
+			} 
 
 			return false;
 		}

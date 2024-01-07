@@ -155,7 +155,7 @@ namespace CreationKitPlatformExtended
 
 		void Engine::EnableBreakpoint()
 		{
-			_MESSAGE("Module base: %016X", _moduleBase);
+			_MESSAGE("Module base: %p", _moduleBase);
 
 			PIMAGE_NT_HEADERS ntHeaders = (PIMAGE_NT_HEADERS)(_moduleBase +
 				((PIMAGE_DOS_HEADER)_moduleBase)->e_lfanew);
@@ -183,9 +183,9 @@ namespace CreationKitPlatformExtended
 				Sections[0].end = std::max(Sections[SECTION_TEXT].end, tempBssEnd);
 			}
 
-			_MESSAGE("Section range \".text\": (base: %016X, end: %016X)", Sections[SECTION_TEXT].base, Sections[SECTION_TEXT].end);
-			_MESSAGE("Section range \".rdata\": (base: %016X, end: %016X)", Sections[SECTION_DATA_READONLY].base, Sections[SECTION_DATA_READONLY].end);
-			_MESSAGE("Section range \".data\": (base: %016X, end: %016X)", Sections[SECTION_DATA].base, Sections[SECTION_DATA].end);
+			_MESSAGE("Section range \".text\": (base: %p, end: %p)", Sections[SECTION_TEXT].base, Sections[SECTION_TEXT].end);
+			_MESSAGE("Section range \".rdata\": (base: %p, end: %p)", Sections[SECTION_DATA_READONLY].base, Sections[SECTION_DATA_READONLY].end);
+			_MESSAGE("Section range \".data\": (base: %p, end: %p)", Sections[SECTION_DATA].base, Sections[SECTION_DATA].end);
 
 			// Установить магическое значение, которое запускает ранний вызов QueryPerformanceCounter
 			*(uint64_t*)loadConfig->SecurityCookie = 0x2B992DDFA232;

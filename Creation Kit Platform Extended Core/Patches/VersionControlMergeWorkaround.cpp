@@ -45,16 +45,38 @@ namespace CreationKitPlatformExtended
 		bool VersionControlMergeWorkaroundPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{
-			return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST;
+			return true;
 		}
 
 		bool VersionControlMergeWorkaroundPatch::Activate(const Relocator* lpRelocator,
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
-			if (lpRelocationDatabaseItem->Version() == 1)
+			//
+			// Workaround for version control not allowing merges when a plugin index is above 02.
+			// Bethesda's VC bitmap files determine heck-in status along with user IDs for each specific form in the game. 
+			// They're also hardcoded for 2 masters only. Using this hack for anything EXCEPT merging will break the bitmaps.
+			//
+
+			auto verPatch = lpRelocationDatabaseItem->Version();
+			if (verPatch == 1)
 			{
 				lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xEB });
 				lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0xEB });
+
+				return true;
+			}
+			else if (verPatch == 2)
+			{
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xEB });
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0xEB });
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(2), { 0xEB });
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(3), { 0xEB });
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(4), { 0xEB });
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(5), { 0xEB });
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(6), { 0xEB });
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(7), { 0xEB });
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(8), { 0xEB });
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(9), { 0xEB });
 
 				return true;
 			}

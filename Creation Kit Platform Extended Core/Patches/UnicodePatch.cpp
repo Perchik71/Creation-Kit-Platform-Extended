@@ -52,14 +52,15 @@ namespace CreationKitPlatformExtended
 		bool UnicodePatch::Activate(const Relocator* lpRelocator,
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
-			if (lpRelocationDatabaseItem->Version() == 1)
+			auto verPatch = lpRelocationDatabaseItem->Version();
+			if (verPatch == 1)
 			{
 				// Initial mode
 				// Initially, the original state must be set
 				EditorAPI::ConvertorString.SetMode(EditorAPI::BGSConvertorString::MODE_ANSI);
 
 				// Intercepting the receipt of a string
-				*(uintptr_t*)&EditorAPI::BGSLocalizedString_OldGetStrProc = 
+				*(uintptr_t*)&EditorAPI::BGSLocalizedString_OldGetStrProc =
 					Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)),
 						&EditorAPI::BGSLocalizedString::GetStr);
 
@@ -74,13 +75,58 @@ namespace CreationKitPlatformExtended
 
 				// In the "Data" dialog box, the "author" and "description" controls are independent, 
 				// and I'm forced to make a trap for WinAPI calls
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(4),	(uintptr_t)&HKSetDlgItemTextA);
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(5),	(uintptr_t)&HKSetDlgItemTextA);
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(6),	(uintptr_t)&HKSetDlgItemTextA);
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(7),	(uintptr_t)&HKSendDlgItemMessageA);
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(8),	(uintptr_t)&HKSendDlgItemMessageA);
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(9),	(uintptr_t)&HKSendDlgItemMessageA);
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(10),	(uintptr_t)&HKSendDlgItemMessageA);
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(4), (uintptr_t)&HKSetDlgItemTextA);
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(5), (uintptr_t)&HKSetDlgItemTextA);
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(6), (uintptr_t)&HKSetDlgItemTextA);
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(7), (uintptr_t)&HKSendDlgItemMessageA);
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(8), (uintptr_t)&HKSendDlgItemMessageA);
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(9), (uintptr_t)&HKSendDlgItemMessageA);
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(10), (uintptr_t)&HKSendDlgItemMessageA);
+
+				return true;
+			}
+			else if (verPatch == 2)
+			{
+				// Initial mode
+				// Initially, the original state must be set
+				EditorAPI::ConvertorString.SetMode(EditorAPI::BGSConvertorString::MODE_ANSI);
+
+				// Also delete it message "You must close all Dialoge Boxes",
+				// which has problems with programs that work with multiple monitors.
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0), (uintptr_t)&HKBeginPluginSave);
+				// I don't quite understand the meaning of calling SetCursor in this function, which deals with saving
+				// But we'll make the call in hook.
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1), (uintptr_t)&HKEndPluginSave);
+
+				// Introduction of string processing.
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(2), { 0x22 });
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(3), { 0x51, 0x48, 0x89, 0xC1 });
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(4), (uintptr_t)&EditorAPI::BGSLocalizedString::GetStr2);
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(5), { 0x59, 0xC3, 0x31, 0xC0, 0xC3 });
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(6), { 0xE9, 0x33, 0xB9, 0xFF, 0xFF });
+
+				// In the "Data" dialog box, the "author" and "description" controls are independent, 
+				// and I'm forced to make a trap for WinAPI calls
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(7), (uintptr_t)&HKSetDlgItemTextA);
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(8), (uintptr_t)&HKSetDlgItemTextA);
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(9), (uintptr_t)&HKSendDlgItemMessageA);
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(10), (uintptr_t)&HKSendDlgItemMessageA);
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(11), (uintptr_t)&HKSendDlgItemMessageA);
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(12), (uintptr_t)&HKSendDlgItemMessageA);
+
+				//
+				// Cut check spelling window
+				//
+
+				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(13), 5);
+				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(14), 5);
+				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(15), 5);
+				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(16), 5);
+				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(17), 5);
+				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(18), 5);
+				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(19), 5);
+				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(20), 5);
+				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(21), 5);
 
 				return true;
 			}

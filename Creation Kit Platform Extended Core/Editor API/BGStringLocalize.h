@@ -67,6 +67,10 @@ namespace CreationKitPlatformExtended
 			{
 				return ConvertorString.Convert(BGSLocalizedString_OldGetStrProc(str));
 			}
+			static LPCSTR GetStr2(LPCSTR str)
+			{
+				return ConvertorString.Convert(str);
+			}
 		};
 	}
 }

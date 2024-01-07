@@ -439,9 +439,6 @@
     <ClCompile Include="Patches\SSE\DeferredDlg.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\EnableGameButtonToVC.cpp">
-      <Filter>Patches</Filter>
-    </ClCompile>
     <ClCompile Include="Patches\SSE\FaceGen.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -504,6 +501,9 @@
     </ClCompile>
     <ClCompile Include="Core\EngineFO4Patches.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\EnableGameButtonToVC.cpp">
+      <Filter>Patches\SSE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1102,9 +1102,6 @@
     <ClInclude Include="Patches\SSE\DeferredDlg.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\EnableGameButtonToVC.h">
-      <Filter>Patches</Filter>
-    </ClInclude>
     <ClInclude Include="Patches\SSE\FaceGen.h">
       <Filter>Patches</Filter>
     </ClInclude>
@@ -1163,6 +1160,9 @@
       <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SSE\NewFormat171.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\EnableGameButtonToVC.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>

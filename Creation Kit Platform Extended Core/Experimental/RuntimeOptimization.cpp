@@ -2,6 +2,8 @@
 // Link: https://github.com/Nukem9/SkyrimSETest/blob/master/skyrim64_test/src/patches/CKSSE/Experimental.cpp
 
 #include <Zydis/Zydis.h>
+#include "Core/Engine.h"
+#include "Core/Relocator.h"
 #include "RuntimeOptimization.h"
 #include "Editor API/EditorUI.h"
 
@@ -14,37 +16,23 @@ namespace CreationKitPlatformExtended
 			auto Patch = Core::GlobalRelocationDatabasePtr->GetByName("Runtime Optimization");
 			if (Patch.Empty())
 			{
-				_WARNING("The patch was not found in the database: \"Runtime Optimization\"");
+				_WARNING("The module was not found in the database: \"Runtime Optimization\"");
 				return;
 			}
+			auto textSection = Core::GlobalEnginePtr->GetSection(Core::SECTION_TEXT);
+			auto dataSection = Core::GlobalEnginePtr->GetSection(Core::SECTION_DATA);
+			auto rdataSection = Core::GlobalEnginePtr->GetSection(Core::SECTION_DATA_READONLY);
 
-			struct
-			{
-				const char* Name;
-				uintptr_t Start;
-				uintptr_t End;
-				DWORD Protection;
-			} addressRanges[] =
-			{
-				{ nullptr, 0, 0, 0 },		// PE header
-				{ ".textbss", 0, 0, 0 },	// .textbss
-				{ ".text", 0, 0, 0 },		// .text
-				{ ".rdata", 0, 0, 0 },		// .rdata
-				{ ".data", 0, 0, 0 },		// .data
-			};
+			// Mark every page as writable
+			Core::ScopeRelocator text(textSection.base, textSection.end - textSection.base);
+			Core::ScopeRelocator data(dataSection.base, dataSection.end - dataSection.base);
+			Core::ScopeRelocator rdata(rdataSection.base, rdataSection.end - rdataSection.base);
+
+			using namespace std::chrono;
+			auto timerStart = high_resolution_clock::now();
 
 			if (Patch->Version() == 1)
 			{
-				using namespace std::chrono;
-				auto timerStart = high_resolution_clock::now();
-
-				// Mark every page as writable
-				for (auto& range : addressRanges)
-				{
-					Assert(Utils::GetPESectionRange(Core::GlobalEnginePtr->GetModuleBase(), range.Name, &range.Start, &range.End));
-					Assert(VirtualProtect((void*)range.Start, range.End - range.Start, PAGE_READWRITE, &range.Protection));
-				}
-
 				std::array<uint64_t, 4> counts
 				{
 					PatchMemInit(),
@@ -53,16 +41,21 @@ namespace CreationKitPlatformExtended
 					PatchEditAndContinue(Patch),
 				};
 
-				// Then restore the old permissions
-				for (auto& range : addressRanges)
-				{
-					Assert(VirtualProtect((void*)range.Start, range.End - range.Start, range.Protection, &range.Protection));
-					Assert(FlushInstructionCache(GetCurrentProcess(), (void*)range.Start, range.End - range.Start));
-				}
-
 				auto duration = duration_cast<milliseconds>(high_resolution_clock::now() - timerStart).count();
 				_CONSOLE("%s: (%llu + %llu + %llu + %llu) = %llu patches applied in %llums.\n", __FUNCTION__,
 					counts[0], counts[1], counts[2], counts[3], counts[0] + counts[1] + counts[2] + counts[3], duration);
+			}
+			else if (Patch->Version() == 2)
+			{
+				std::array<uint64_t, 2> counts
+				{
+					PatchMemInit(),
+					PatchEditAndContinue(Patch),
+				};
+
+				auto duration = duration_cast<milliseconds>(high_resolution_clock::now() - timerStart).count();
+				_CONSOLE("%s: (%llu + %llu) = %llu patches applied in %llums.\n", __FUNCTION__,
+					counts[0], counts[1], counts[0] + counts[1], duration);
 			}
 		}
 
