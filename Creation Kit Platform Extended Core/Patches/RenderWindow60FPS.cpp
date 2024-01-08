@@ -60,6 +60,7 @@ namespace CreationKitPlatformExtended
 				lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { USER_TIMER_MINIMUM });
 
 				if (verPatch == 2)
+					// no VSync
 					lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0x33, 0xD2, 0x90 });
 
 				return true;

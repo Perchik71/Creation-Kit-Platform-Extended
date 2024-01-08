@@ -58,25 +58,12 @@ namespace CreationKitPlatformExtended
 			//
 
 			auto verPatch = lpRelocationDatabaseItem->Version();
-			if (verPatch == 1)
+			if ((verPatch == 1) || (verPatch == 2))
 			{
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xEB });
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0xEB });
+				ScopeRelocator text;
 
-				return true;
-			}
-			else if (verPatch == 2)
-			{
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xEB });
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0xEB });
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(2), { 0xEB });
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(3), { 0xEB });
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(4), { 0xEB });
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(5), { 0xEB });
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(6), { 0xEB });
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(7), { 0xEB });
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(8), { 0xEB });
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(9), { 0xEB });
+				for (uint32_t i = 0; i < lpRelocationDatabaseItem->Count(); i++)
+					lpRelocator->Patch(lpRelocationDatabaseItem->At(i), { 0xEB });
 
 				return true;
 			}

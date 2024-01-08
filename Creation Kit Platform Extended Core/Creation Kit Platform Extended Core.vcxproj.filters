@@ -478,9 +478,6 @@
     <ClCompile Include="Patches\SSE\UpdateUIWhenFogToggled.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\UIHotkeys.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
@@ -504,6 +501,9 @@
     </ClCompile>
     <ClCompile Include="Patches\SSE\EnableGameButtonToVC.cpp">
       <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\UIHotkeys.cpp">
+      <Filter>Patches</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -560,6 +560,9 @@
     </Filter>
     <Filter Include="Patches\Windows\SSE">
       <UniqueIdentifier>{6438625a-55e4-4f64-b9b5-1642fedab259}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor API\FO4">
+      <UniqueIdentifier>{07e1ca85-a8f4-4b98-b1de-88e5d3415259}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1141,9 +1144,6 @@
     <ClInclude Include="Patches\SSE\UpdateUIWhenFogToggled.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\UIHotkeys.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
@@ -1164,6 +1164,18 @@
     </ClInclude>
     <ClInclude Include="Patches\SSE\EnableGameButtonToVC.h">
       <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\UIHotkeys.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BSFixedString.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BSStringCache.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BSEntryString.h">
+      <Filter>Editor API\FO4</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -30,6 +30,7 @@
 #include "Patches/UIThemePatch.h"
 #include "Patches/UIThemePatchAdditional.h"
 #include "Patches/PapyrusEditorLimit.h"
+#include "Patches/UIHotkeys.h"
 
 #include "Experimental/RuntimeOptimization.h"
 
@@ -132,6 +133,7 @@ namespace CreationKitPlatformExtended
 				new CreationKitPlatformExtended::Patches::SkipTopicInfoValidationPatch(),
 				new CreationKitPlatformExtended::Patches::AllowMultipleWindowAndMasterPatch(),
 				new CreationKitPlatformExtended::Patches::UIPatch(),
+				new CreationKitPlatformExtended::Patches::UIHotkeysPatch(),
 				new CreationKitPlatformExtended::Patches::UIThemePatchAdditional(),
 				new CreationKitPlatformExtended::Patches::PapyrusEditorLimitPatch(),
 				_Theme

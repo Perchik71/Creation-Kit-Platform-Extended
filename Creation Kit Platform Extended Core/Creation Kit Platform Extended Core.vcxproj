@@ -198,11 +198,11 @@
     <ClCompile Include="Patches\SSE\StableSortForPerks.cpp" />
     <ClCompile Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.cpp" />
     <ClCompile Include="Patches\SSE\TESParameters_CTDA.cpp" />
-    <ClCompile Include="Patches\SSE\UIHotkeys.cpp" />
     <ClCompile Include="Patches\SSE\UnEquipSound.cpp" />
     <ClCompile Include="Patches\SSE\UpdateUIWhenFogToggled.cpp" />
     <ClCompile Include="Patches\SSE\WeaponCriticalEffect.cpp" />
     <ClCompile Include="Patches\ThreadPatch.cpp" />
+    <ClCompile Include="Patches\UIHotkeys.cpp" />
     <ClCompile Include="Patches\UIPatch.cpp" />
     <ClCompile Include="Patches\UIThemePatch.cpp" />
     <ClCompile Include="Patches\UIThemePatchAdditional.cpp" />
@@ -271,6 +271,9 @@
     <ClInclude Include="Editor API\BSTArray.h" />
     <ClInclude Include="Editor API\BSTList.h" />
     <ClInclude Include="Editor API\EditorUI.h" />
+    <ClInclude Include="Editor API\FO4\BSEntryString.h" />
+    <ClInclude Include="Editor API\FO4\BSFixedString.h" />
+    <ClInclude Include="Editor API\FO4\BSStringCache.h" />
     <ClInclude Include="Editor API\NiArray.h" />
     <ClInclude Include="Editor API\NiCollisionUtils.h" />
     <ClInclude Include="Editor API\NiColor.h" />
@@ -400,11 +403,11 @@
     <ClInclude Include="Patches\SSE\StableSortForPerks.h" />
     <ClInclude Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.h" />
     <ClInclude Include="Patches\SSE\TESParameters_CTDA.h" />
-    <ClInclude Include="Patches\SSE\UIHotkeys.h" />
     <ClInclude Include="Patches\SSE\UnEquipSound.h" />
     <ClInclude Include="Patches\SSE\UpdateUIWhenFogToggled.h" />
     <ClInclude Include="Patches\SSE\WeaponCriticalEffect.h" />
     <ClInclude Include="Patches\ThreadPatch.h" />
+    <ClInclude Include="Patches\UIHotkeys.h" />
     <ClInclude Include="Patches\UIPatch.h" />
     <ClInclude Include="Patches\UIThemePatch.h" />
     <ClInclude Include="Patches\UIThemePatchAdditional.h" />

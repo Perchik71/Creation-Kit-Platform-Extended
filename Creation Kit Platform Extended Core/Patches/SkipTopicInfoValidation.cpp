@@ -45,19 +45,30 @@ namespace CreationKitPlatformExtended
 		bool SkipTopicInfoValidationPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{
-			return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST;
+			return true;
 		}
 
 		bool SkipTopicInfoValidationPatch::Activate(const Relocator* lpRelocator,
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
-			if (lpRelocationDatabaseItem->Version() == 1)
+			auto verPatch = lpRelocationDatabaseItem->Version();
+
+			if (verPatch == 1)
 			{
 				//
 				// Skip 'Topic Info' validation during load
 				//
 				lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xC3 });
 
+				return true;
+			}
+			else if (verPatch == 2)
+			{
+				//
+				// Skip 'Topic Info' and refs validation during load
+				//
+				lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xE9, 0xF8, 0x01, 0x00, 0x00, 0x90, 0x90 });
+				
 				return true;
 			}
 

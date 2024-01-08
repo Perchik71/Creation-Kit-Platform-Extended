@@ -80,7 +80,6 @@
 #include "Patches/SSE/NavMeshPseudoDelete.h"
 #include "Patches/SSE/SpellEnableCastingAndDeliveryAlways.h"
 #include "Patches/SSE/UpdateUIWhenFogToggled.h"
-#include "Patches/SSE/UIHotkeys.h"
 #include "Patches/SSE/FaceGen.h"
 #include "Patches/SSE/FixParamsATXT.h"
 #include "Patches/SSE/NewFormat171.h"
@@ -175,7 +174,6 @@ namespace CreationKitPlatformExtended
 				new Patches::NavMeshPseudoDeletePatch(),
 				new Patches::SpellEnableCastingAndDeliveryAlwaysPatch(),
 				new Patches::UpdateUIWhenFogToggledPatch(),
-				new Patches::UIHotkeysPatch(),
 				new Patches::FaceGenPatch(),
 				new Patches::FixParamsATXTPatch(),
 				new Patches::NewFormat171Patch(),

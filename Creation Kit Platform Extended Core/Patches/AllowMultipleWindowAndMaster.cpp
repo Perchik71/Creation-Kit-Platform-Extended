@@ -45,15 +45,23 @@ namespace CreationKitPlatformExtended
 		bool AllowMultipleWindowAndMasterPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{
-			return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST;
+			return true;
 		}
 
 		bool AllowMultipleWindowAndMasterPatch::Activate(const Relocator* lpRelocator,
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
-			if (lpRelocationDatabaseItem->Version() == 1)
+			auto verPatch = lpRelocationDatabaseItem->Version();
+
+			if ((verPatch == 1) || (verPatch == 2))
 			{
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xE9, 0xBA, 0x00, 0x00, 0x00, 0x90 });
+				ScopeRelocator text;
+
+				if (verPatch == 1)
+					lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xE9, 0xBA, 0x00, 0x00, 0x00, 0x90 });
+				else
+					lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xE9, 0xDE, 0x00, 0x00, 0x00, 0x90 });
+			
 				lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0xEB });
 
 				return true;

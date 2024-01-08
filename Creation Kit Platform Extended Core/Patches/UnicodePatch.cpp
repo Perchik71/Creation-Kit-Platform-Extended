@@ -118,15 +118,10 @@ namespace CreationKitPlatformExtended
 				// Cut check spelling window
 				//
 
-				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(13), 5);
-				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(14), 5);
-				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(15), 5);
-				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(16), 5);
-				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(17), 5);
-				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(18), 5);
-				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(19), 5);
-				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(20), 5);
-				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(21), 5);
+				ScopeRelocator text;
+
+				for (uint32_t i = 13; i < lpRelocationDatabaseItem->Count(); i++)
+					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(i), 5);
 
 				return true;
 			}
