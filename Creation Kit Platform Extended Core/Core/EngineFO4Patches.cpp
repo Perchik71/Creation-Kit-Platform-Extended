@@ -4,16 +4,23 @@
 
 #include "ModuleManager.h"
 
+#include "Patches/FO4/AllowSaveESMandMasterESPF4.h"
+#include "Patches/FO4/ReplaceBSPointerHandleAndManagerF4.h"
+#include "Patches/FO4/TESFormRE.h"
+
 namespace CreationKitPlatformExtended
 {
 	namespace Core
 	{
 		void Fallout4_AppendPatches(ModuleManager* PatchesManager)
 		{
-			//namespace Patches = CreationKitPlatformExtended::Patches::SkyrimSpectialEdition;
+			namespace Patches = CreationKitPlatformExtended::Patches::Fallout4;
 
-			/*PatchesManager->Append({
-			});*/
+			PatchesManager->Append({
+				new Patches::AllowSaveESMandMasterESPPatch(),
+				new Patches::ReplaceBSPointerHandleAndManagerPatch(),
+				new Patches::TESFormREPatch(),
+			});
 		}
 	}
 }

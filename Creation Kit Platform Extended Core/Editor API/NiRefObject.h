@@ -6,6 +6,7 @@ namespace CreationKitPlatformExtended
 {
 	namespace EditorAPI
 	{
+		// 10
 		class __declspec(align(8)) NiRefObject
 		{
 		protected:
@@ -49,6 +50,45 @@ namespace CreationKitPlatformExtended
 				Callback("This = 0x%p\n", this);
 				Callback("Ref Count = %u\n", m_uiRefCount);
 			}
+		};
+
+		// 10
+		class __declspec(align(8)) NiRefObject_64
+		{
+		public:
+			NiRefObject_64() : m_ll64RefCount(0)
+			{
+				InterlockedIncrement64(&m_ll64RefCount);
+			}
+
+			virtual ~NiRefObject_64()
+			{
+				InterlockedDecrement64(&m_ll64RefCount);
+			}
+
+			virtual void DeleteThis()
+			{
+				if (this)
+					this->~NiRefObject_64();
+			}
+
+			uint64_t IncRefCount()
+			{
+				return (uint64_t)InterlockedIncrement64(&m_ll64RefCount);
+			}
+
+			uint64_t DecRefCount()
+			{
+				uint64_t count = (uint64_t)InterlockedDecrement64(&m_ll64RefCount);
+
+				if (count <= 0)
+					DeleteThis();
+
+				return count;
+			}
+		protected:
+
+			volatile LONGLONG m_ll64RefCount;	// 08
 		};
 	}
 }

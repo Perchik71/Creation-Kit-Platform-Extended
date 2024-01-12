@@ -15,8 +15,8 @@ namespace CreationKitPlatformExtended
 			EDITOR_SKYRIM_SE_1_6_438,
 			EDITOR_SKYRIM_SE_1_6_1130 = EDITOR_SKYRIM_SE_1_6_438 + 1,
 			EDITOR_SKYRIM_SE_LAST = EDITOR_SKYRIM_SE_1_6_1130,
-			EDITOR_SKYRIM_F4_1_10_162_0,
-			EDITOR_SKYRIM_F4_LAST = EDITOR_SKYRIM_F4_1_10_162_0
+			EDITOR_FALLOUT_C4_1_10_162_0,
+			EDITOR_FALLOUT_C4_LAST = EDITOR_FALLOUT_C4_1_10_162_0
 		};
 
 		// Не использовать менеджер на данном этапе, считаем, что его ещё нет
@@ -24,27 +24,27 @@ namespace CreationKitPlatformExtended
 
 		// Список проверенных исполняемых файлов, допущенных к запуску
 		static std::unordered_map<uint32_t, EDITOR_EXECUTABLE_TYPE> allowedEditorVersion = {
-			{ 0xA9CD60C7ul, EDITOR_SKYRIM_SE_1_5_3		},	// Default
-			{ 0xED7DB054ul, EDITOR_SKYRIM_SE_1_5_3		},	// Redirect Steam
-			{ 0x624E8C84ul, EDITOR_SKYRIM_SE_1_5_73		},	// Default
-			{ 0xF7E929A4ul, EDITOR_SKYRIM_SE_1_5_73		},	// Redirect Steam
-			{ 0x668F3CB3ul, EDITOR_SKYRIM_SE_1_5_73		},	// Unoffical patch 6.3
-			{ 0x748A3CC4ul, EDITOR_SKYRIM_SE_1_6_438	},	// No Steam
-			{ 0x3FDB3994ul, EDITOR_SKYRIM_SE_1_6_438	},	// With Steam
-			{ 0xFDCAEE10ul, EDITOR_SKYRIM_SE_1_6_438	},	// No Steam and Redirect Steam
-			{ 0x2EF668CEul, EDITOR_SKYRIM_SE_1_6_1130	},	// Redirect Steam
-			{ 0x0085AA4Cul, EDITOR_SKYRIM_SE_1_6_1130	},	// Default
-			{ 0xDF67F346ul, EDITOR_SKYRIM_F4_1_10_162_0	},	// Default
+			{ 0xA9CD60C7ul, EDITOR_SKYRIM_SE_1_5_3			},	// Default
+			{ 0xED7DB054ul, EDITOR_SKYRIM_SE_1_5_3			},	// Redirect Steam
+			{ 0x624E8C84ul, EDITOR_SKYRIM_SE_1_5_73			},	// Default
+			{ 0xF7E929A4ul, EDITOR_SKYRIM_SE_1_5_73			},	// Redirect Steam
+			{ 0x668F3CB3ul, EDITOR_SKYRIM_SE_1_5_73			},	// Unoffical patch 6.3
+			{ 0x748A3CC4ul, EDITOR_SKYRIM_SE_1_6_438		},	// No Steam
+			{ 0x3FDB3994ul, EDITOR_SKYRIM_SE_1_6_438		},	// With Steam
+			{ 0xFDCAEE10ul, EDITOR_SKYRIM_SE_1_6_438		},	// No Steam and Redirect Steam
+			{ 0x2EF668CEul, EDITOR_SKYRIM_SE_1_6_1130		},	// Redirect Steam
+			{ 0x0085AA4Cul, EDITOR_SKYRIM_SE_1_6_1130		},	// Default
+			{ 0xDF67F346ul, EDITOR_FALLOUT_C4_1_10_162_0	},	// Default
 		};
 		
 		// Список ключевых смещений в исполняемых файлах, допущенных к запуску
 		static std::unordered_map<uint32_t,
 			std::pair<std::string_view, EDITOR_EXECUTABLE_TYPE>> allowedEditorVersion2 = {
-			{ 0x3078988ul, { "1.5.3.0",		EDITOR_SKYRIM_SE_1_5_3		} },
-			{ 0x3062CC8ul, { "1.5.73.0",	EDITOR_SKYRIM_SE_1_5_73		} },
-			{ 0x2E835D8ul, { "1.6.438.0",	EDITOR_SKYRIM_SE_1_6_438	} },
-			{ 0x2F3E698ul, { "1.6.1130.0",	EDITOR_SKYRIM_SE_1_6_1130	} },
-			{ 0x3896168ul, { "1.10.162.0",	EDITOR_SKYRIM_F4_1_10_162_0	} },
+			{ 0x3078988ul, { "1.5.3.0",		EDITOR_SKYRIM_SE_1_5_3			} },
+			{ 0x3062CC8ul, { "1.5.73.0",	EDITOR_SKYRIM_SE_1_5_73			} },
+			{ 0x2E835D8ul, { "1.6.438.0",	EDITOR_SKYRIM_SE_1_6_438		} },
+			{ 0x2F3E698ul, { "1.6.1130.0",	EDITOR_SKYRIM_SE_1_6_1130		} },
+			{ 0x3896168ul, { "1.10.162.0",	EDITOR_FALLOUT_C4_1_10_162_0	} },
 		};
 		
 		// Список названий редакторов
@@ -63,7 +63,7 @@ namespace CreationKitPlatformExtended
 			{ EDITOR_SKYRIM_SE_1_5_73,		"CreationKitPlatformExtended_SSE_1_5_73.database"	},
 			{ EDITOR_SKYRIM_SE_1_6_438,		"CreationKitPlatformExtended_SSE_1_6_438.database"	},
 			{ EDITOR_SKYRIM_SE_1_6_1130,	"CreationKitPlatformExtended_SSE_1_6_1130.database" },
-			{ EDITOR_SKYRIM_F4_1_10_162_0,	"CreationKitPlatformExtended_FO4_1_10_162.database" },
+			{ EDITOR_FALLOUT_C4_1_10_162_0,	"CreationKitPlatformExtended_FO4_1_10_162.database" },
 		};
 
 		// Список имён файлов базы данных
@@ -72,7 +72,7 @@ namespace CreationKitPlatformExtended
 			{ EDITOR_SKYRIM_SE_1_5_73,		"CreationKitPlatformExtended_SSE_Dialogs.pak"	},
 			{ EDITOR_SKYRIM_SE_1_6_438,		"CreationKitPlatformExtended_SSE_Dialogs.pak"	},
 			{ EDITOR_SKYRIM_SE_1_6_1130,	"CreationKitPlatformExtended_SSE_Dialogs.pak"	},
-			{ EDITOR_SKYRIM_F4_1_10_162_0,	"CreationKitPlatformExtended_FO4_Dialogs.pak"	},
+			{ EDITOR_FALLOUT_C4_1_10_162_0,	"CreationKitPlatformExtended_FO4_Dialogs.pak"	},
 		};
 
 		static std::vector<std::string_view> allowedEditorFileNameStr = {

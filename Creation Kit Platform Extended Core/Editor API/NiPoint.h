@@ -1,6 +1,7 @@
 // Special thanks to Nukem: https://github.com/Nukem9/SkyrimSETest/blob/master/skyrim64_test/src/patches/TES/NiMain/NiPoint.h
 
 #pragma once
+#pragma pack(push, 1)
 
 namespace CreationKitPlatformExtended
 {
@@ -12,6 +13,7 @@ namespace CreationKitPlatformExtended
 			float x;
 			float y;
 		};
+		static_assert(sizeof(NiPoint2) == 0x8);
 
 		class NiPoint3
 		{
@@ -111,3 +113,5 @@ namespace CreationKitPlatformExtended
 		static NiPoint3 ZERO_P3;
 	}
 }
+
+#pragma pack(pop)

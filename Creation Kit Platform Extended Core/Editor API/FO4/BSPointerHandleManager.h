@@ -1,69 +1,89 @@
-// Special thanks to Nukem: 
-// https://github.com/Nukem9/SkyrimSETest/blob/master/skyrim64_test/src/patches/CKSSE/BSPointerHandleManager.h
-// https://github.com/Nukem9/SkyrimSETest/blob/master/skyrim64_test/src/patches/CKSSE/BSPointerHandleManager.cpp
+//////////////////////////////////////////
+/*
+* Copyright (c) 2022 Perchik71 <email:perchik71@outlook.com>
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy of this
+* software and associated documentation files (the "Software"), to deal in the Software
+* without restriction, including without limitation the rights to use, copy, modify, merge,
+* publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+* persons to whom the Software is furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in all copies or
+* substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+* INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+* PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+* FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+* OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+* DEALINGS IN THE SOFTWARE.
+*/
+//////////////////////////////////////////
 
 #pragma once
 
-#include "..\NiPointer.h"
-#include "..\BSReadWriteLock.h"
-#include "TESForm.h"
+#include "..\\NiTypes.h"
+#include "..\\NiPointer.h"
+#include "..\\BSHandleRefObject.h"
+#include "TESObjectREFR.h"
+#include "NiClassesF4.h"
+#include "..\\NiRefObject.h"
 
 namespace CreationKitPlatformExtended
 {
 	namespace EditorAPI
 	{
-		namespace SkyrimSpectialEdition
+		namespace Fallout4
 		{
-			template<typename _Ty, int IndexBits = 20, int AgeCountBits = 6>
+			// vanilla --- class BSUntypedPointerHandle<21,5>
+
+			template <typename _Ty, int IndexBits = 21, int AgeCountBits = 5>
 			class IBSUntypedPointerHandle
 			{
 			public:
+				// NOTE: Handle index bits increased from 21 (vanilla)
 				//
-				// NOTE: Handle index bits increased from 20 (vanilla) to 21 (limit doubled) or to 23 (limit doubled)
+				// 27       26       21                   0
+				// |--------|--------|--------------------|
+				// | Active |    Age |    Handle Index    |
+				// |--------|--------|--------------------|
 				//
-				// 31       27       26    20             0
-				// |--------|--------|-----|--------------|
-				// | Unused | Active | Age | Handle Index |
-				// |--------|--------|-----|--------------|
-				//
-				constexpr static _Ty INDEX_BITS = IndexBits;
-				constexpr static _Ty AGE_BITS = AgeCountBits;
-				constexpr static _Ty UNUSED_BIT_START = INDEX_BITS + AGE_BITS;							// 26 in vanilla
-
-				constexpr static _Ty INDEX_MASK = (((_Ty)1) << INDEX_BITS) - ((_Ty)1);					// 0x00FFFFF
-				constexpr static _Ty AGE_MASK = ((((_Ty)1) << AGE_BITS) - ((_Ty)1)) << INDEX_BITS;		// 0x3F00000
-				constexpr static _Ty ACTIVE_BIT_MASK = ((_Ty)1) << UNUSED_BIT_START;					// 0x4000000
-
-				constexpr static _Ty MAX_HANDLE_COUNT = ((_Ty)1) << INDEX_BITS;
-
+				constexpr static _Ty INDEX_BIT = IndexBits;
+				constexpr static _Ty AGE_BIT = AgeCountBits;
+				constexpr static _Ty UNUSED_BIT_START = INDEX_BIT + AGE_BIT;							// 21 in vanilla
+								 
+				constexpr static _Ty MASK_INDEX_BIT = (((_Ty)1) << INDEX_BIT) - ((_Ty)1);				// 03FFFFFF
+				constexpr static _Ty MASK_AGE_BIT = ((((_Ty)1) << AGE_BIT) - ((_Ty)1)) << INDEX_BIT;	// 7C000000
+				constexpr static _Ty MASK_ACTIVE_BIT = ((_Ty)1) << UNUSED_BIT_START;					// 80000000
+				constexpr static _Ty MAX_HANDLE_COUNT = ((_Ty)1) << INDEX_BIT;							// 04000000
 			protected:
 				_Ty m_Bits;
 			public:
-				inline void SetBitwiseNull() { m_Bits = 0; }
-				inline bool IsBitwiseNull() const { return !m_Bits; }
-				inline _Ty GetIndex() const { return m_Bits & INDEX_MASK; }
-				inline _Ty GetAge() const { return m_Bits & AGE_MASK; }
-				inline void SetInUse() { m_Bits |= ACTIVE_BIT_MASK; }
-				inline void SetNotInUse() { m_Bits &= ~ACTIVE_BIT_MASK; }
-				inline bool IsInUse() const { return (m_Bits & ACTIVE_BIT_MASK) != 0; }
-				inline void IncrementAge() {
-					m_Bits = ((m_Bits << INDEX_BITS) & AGE_MASK) | (m_Bits & ~AGE_MASK);
+				void SetBitwiseNull() { m_Bits = 0; }
+				bool IsBitwiseNull() const { return !m_Bits; }
+				_Ty GetIndex() const { return m_Bits & MASK_INDEX_BIT; }
+				_Ty GetAge() const { return m_Bits & MASK_AGE_BIT; }
+				void SetInUse() { m_Bits |= MASK_ACTIVE_BIT; }
+				void SetNotInUse() { m_Bits &= ~MASK_ACTIVE_BIT; }
+				inline bool IsInUse() const { return (m_Bits & MASK_ACTIVE_BIT) != 0; }
+				inline void IncrementAge() 
+				{
+					m_Bits = ((m_Bits << INDEX_BIT) & MASK_AGE_BIT) | (m_Bits & ~MASK_AGE_BIT);
 				}
 
 				void Set(_Ty Index, _Ty Age)
 				{
-					AssertMsg(Index < MAX_HANDLE_COUNT, "BSUntypedPointerHandle::Set - parameter Index is too large");
+					AssertMsg(Index < MAX_HANDLE_COUNT, "IBSUntypedPointerHandle::Set - parameter Index is too large");
 
 					m_Bits = Index | Age;
 				}
 
 				void SetIndex(_Ty Index)
 				{
-					AssertMsg(Index < MAX_HANDLE_COUNT, "BSUntypedPointerHandle::Set - parameter Index is too large");
+					AssertMsg(Index < MAX_HANDLE_COUNT, "IBSUntypedPointerHandle::Set - parameter Index is too large");
 
-					m_Bits = (Index & INDEX_MASK) | (m_Bits & ~INDEX_MASK);
+					m_Bits = (Index & MASK_INDEX_BIT) | (m_Bits & ~MASK_INDEX_BIT);
 				}
-
 
 				IBSUntypedPointerHandle& operator=(const IBSUntypedPointerHandle& Other)
 				{
@@ -80,29 +100,16 @@ namespace CreationKitPlatformExtended
 				{
 					return m_Bits != Other.m_Bits;
 				}
-
+			public:
+				READ_PROPERTY(GetAge) _Ty Age;
+				PROPERTY(GetIndex, SetIndex) _Ty Index;
+			public:
 				IBSUntypedPointerHandle() : m_Bits(0) {}
 			};
 			static_assert(sizeof(IBSUntypedPointerHandle<uint32_t>) == 0x4);
 
-			typedef IBSUntypedPointerHandle<uint32_t, 20, 6> BSUntypedPointerHandle_Original;
-			typedef IBSUntypedPointerHandle<uint32_t, 21, 6> BSUntypedPointerHandle_Extended;
-			typedef IBSUntypedPointerHandle<uint32_t, 23, 6> BSUntypedPointerHandle_Extended_Extremly;
-
-			/*template<typename ObjectType, typename HandleType>
-			class BSPointerHandle : public HandleType
-			{};
-
-			typedef BSPointerHandle<TESObjectREFR_Original, 
-				BSUntypedPointerHandle_Original> BSPointerHandle_Original;
-			typedef BSPointerHandle<TESObjectREFR_Original, 
-				BSUntypedPointerHandle_Extended> BSPointerHandle_Extended;
-			typedef BSPointerHandle<TESObjectREFR_Extremly, 
-				BSUntypedPointerHandle_Extended_Extremly> BSPointerHandle_Extended_Extremly;
-
-			static_assert(sizeof(BSPointerHandle_Original) == 0x4);
-			static_assert(sizeof(BSPointerHandle_Extended) == 0x4);
-			static_assert(sizeof(BSPointerHandle_Extended_Extremly) == 0x4);*/
+			typedef IBSUntypedPointerHandle<uint32_t, 21, 5> BSUntypedPointerHandle_Original;
+			typedef IBSUntypedPointerHandle<uint32_t, 26, 5> BSUntypedPointerHandle_Extended;
 
 			template<typename _Ty, typename HandleType, typename HandleRef>
 			class IBSPointerHandleManagerEntry : public HandleType
@@ -112,12 +119,12 @@ namespace CreationKitPlatformExtended
 			public:
 				void SetNextFreeEntry(_Ty Index)
 				{
-					HandleType::m_Bits = (Index & HandleType::INDEX_MASK) | (HandleType::m_Bits & ~HandleType::INDEX_MASK);
+					HandleType::m_Bits = (Index & HandleType::MASK_INDEX_BIT) | (HandleType::m_Bits & ~HandleType::MASK_INDEX_BIT);
 				}
 
 				_Ty GetNextFreeEntry() const
 				{
-					return HandleType::m_Bits & HandleType::INDEX_MASK;
+					return HandleType::m_Bits & HandleType::MASK_INDEX_BIT;
 				}
 
 				void SetPointer(HandleRef* Pointer)
@@ -139,13 +146,10 @@ namespace CreationKitPlatformExtended
 			typedef IBSPointerHandleManagerEntry<uint32_t, BSUntypedPointerHandle_Original,
 				BSHandleRefObject_Original> BSPointerHandleManagerEntry_Original;
 			typedef IBSPointerHandleManagerEntry<uint32_t, BSUntypedPointerHandle_Extended,
-				BSHandleRefObject_Original> BSPointerHandleManagerEntry_Extended;
-			typedef IBSPointerHandleManagerEntry<uint32_t, BSUntypedPointerHandle_Extended_Extremly,
-				BSHandleRefObject_Extremly> BSPointerHandleManagerEntry_Extended_Extremly;
+				BSHandleRefObject_64_Extremly> BSPointerHandleManagerEntry_Extended;
 
 			static_assert(sizeof(BSPointerHandleManagerEntry_Original) == 0x10);
 			static_assert(sizeof(BSPointerHandleManagerEntry_Extended) == 0x10);
-			static_assert(sizeof(BSPointerHandleManagerEntry_Extended_Extremly) == 0x10);
 
 			template<typename _Ty, typename HandleType, typename HandleRef>
 			class IBSPointerHandleManager
@@ -179,7 +183,7 @@ namespace CreationKitPlatformExtended
 				}
 				static void KillSDM()
 				{
-					HandleManagerLock.LockForWrite();
+					HandleManagerLock.TryLockForWrite();
 
 					for (_Ty i = 0; i < HandleType::MAX_HANDLE_COUNT; i++)
 					{
@@ -203,16 +207,14 @@ namespace CreationKitPlatformExtended
 						FreeListTail = i;
 					}
 
-					HandleManagerLock.UnlockWrite();
+					HandleManagerLock.Unlock();
 				}
 			};
 
 			typedef IBSPointerHandleManager<uint32_t, BSUntypedPointerHandle_Original,
 				BSHandleRefObject_Original> BSPointerHandleManager_Original;
-			typedef IBSPointerHandleManager<uint32_t, BSUntypedPointerHandle_Extended,
-				BSHandleRefObject_Original> BSPointerHandleManager_Extended;
-			typedef IBSPointerHandleManager<uint32_t, BSUntypedPointerHandle_Extended_Extremly,
-				BSHandleRefObject_Extremly> BSPointerHandleManager_Extended_Extremly;
+			typedef IBSPointerHandleManager<uint64_t, BSUntypedPointerHandle_Extended,
+				BSHandleRefObject_64_Extremly> BSPointerHandleManager_Extended;
 
 			template<typename Manager>
 			class IBSHandleManager : public Manager
@@ -231,7 +233,6 @@ namespace CreationKitPlatformExtended
 
 			typedef IBSHandleManager<BSPointerHandleManager_Original> HandleManager_Original;
 			typedef IBSHandleManager<BSPointerHandleManager_Extended> HandleManager_Extended;
-			typedef IBSHandleManager<BSPointerHandleManager_Extended_Extremly> HandleManager_Extended_Extremly;
 
 			template<typename ObjectType, typename HandleType, typename Manager>
 			class IBSPointerHandleManagerInterface : public Manager
@@ -267,7 +268,7 @@ namespace CreationKitPlatformExtended
 						return untypedHandle;
 
 					// Wasn't present. Acquire lock and add it (unless someone else inserted it in the meantime)
-					Manager::HandleManagerLock.LockForWrite();
+					Manager::HandleManagerLock.TryLockForWrite();
 					{
 						untypedHandle = GetCurrentHandle(Refr);
 
@@ -306,7 +307,7 @@ namespace CreationKitPlatformExtended
 							}
 						}
 					}
-					Manager::HandleManagerLock.UnlockWrite();
+					Manager::HandleManagerLock.Unlock();
 
 					return untypedHandle;
 				}
@@ -316,7 +317,7 @@ namespace CreationKitPlatformExtended
 					if (Handle.IsBitwiseNull())
 						return;
 
-					Manager::HandleManagerLock.LockForWrite();
+					Manager::HandleManagerLock.TryLockForWrite();
 					{
 						const auto handleIndex = Handle.GetIndex();
 						auto& arrayHandle = Manager::HandleEntries[handleIndex];
@@ -336,7 +337,7 @@ namespace CreationKitPlatformExtended
 							Manager::FreeListTail = handleIndex;
 						}
 					}
-					Manager::HandleManagerLock.UnlockWrite();
+					Manager::HandleManagerLock.Unlock();
 				}
 
 				static void Destroy2(HandleType& Handle)
@@ -344,7 +345,7 @@ namespace CreationKitPlatformExtended
 					if (Handle.IsBitwiseNull())
 						return;
 
-					Manager::HandleManagerLock.LockForWrite();
+					Manager::HandleManagerLock.TryLockForWrite();
 					{
 						const auto handleIndex = Handle.GetIndex();
 						auto& arrayHandle = Manager::HandleEntries[handleIndex];
@@ -367,7 +368,7 @@ namespace CreationKitPlatformExtended
 						// Identical to Destroy1 except for this Handle.SetBitwiseNull();
 						Handle.SetBitwiseNull();
 					}
-					Manager::HandleManagerLock.UnlockWrite();
+					Manager::HandleManagerLock.Unlock();
 				}
 
 				static bool GetSmartPointer1(const HandleType& Handle, NiPointer<ObjectType>& Out)
@@ -425,18 +426,14 @@ namespace CreationKitPlatformExtended
 					return arrayHandle.GetPointer()->GetHandleEntryIndex() == handleIndex;
 				}
 			};
-		
-			typedef IBSPointerHandleManagerInterface<TESObjectREFR_Original, 
+
+			typedef IBSPointerHandleManagerInterface<TESObjectREFR_Original,
 				BSUntypedPointerHandle_Original, HandleManager_Original>
 				BSPointerHandleManagerInterface_Original;
 
-			typedef IBSPointerHandleManagerInterface<TESObjectREFR_Original,
+			typedef IBSPointerHandleManagerInterface<TESObjectREFR_Extremly,
 				BSUntypedPointerHandle_Extended, HandleManager_Extended>
 				BSPointerHandleManagerInterface_Extended;
-
-			typedef IBSPointerHandleManagerInterface<TESObjectREFR_Extremly,
-				BSUntypedPointerHandle_Extended_Extremly, HandleManager_Extended_Extremly>
-				BSPointerHandleManagerInterface_Extended_Extremly;
 		}
 	}
 }

@@ -146,7 +146,7 @@ namespace CreationKitPlatformExtended
 			}
 			else
 			// Добавление патчей только для редактора фолыча специального издания
-			if (eEditorVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_F4_LAST)
+			if (eEditorVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST)
 			{
 				Fallout4_AppendPatches(PatchesManager);
 			}

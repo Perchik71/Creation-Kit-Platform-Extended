@@ -505,6 +505,30 @@
     <ClCompile Include="Patches\UIHotkeys.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Editor API\FO4\TESFormComponents.cpp">
+      <Filter>Editor API\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\FO4\TESFormRE.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\FO4\TESFormF4.cpp">
+      <Filter>Editor API\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\FO4\TESFileF4.cpp">
+      <Filter>Editor API\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\FO4\NiClassesF4.cpp">
+      <Filter>Editor API\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\FO4\BGSLayer.cpp">
+      <Filter>Editor API\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\FO4\ReplaceBSPointerHandleAndManagerF4.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\FO4\AllowSaveESMandMasterESPF4.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -563,6 +587,12 @@
     </Filter>
     <Filter Include="Editor API\FO4">
       <UniqueIdentifier>{07e1ca85-a8f4-4b98-b1de-88e5d3415259}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Patches\Windows\FO4">
+      <UniqueIdentifier>{a1a91579-a57f-485d-be76-8766d3b616b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Patches\FO4">
+      <UniqueIdentifier>{524e8638-e42c-4663-82f1-0828a82c1b66}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1175,6 +1205,54 @@
       <Filter>Editor API\FO4</Filter>
     </ClInclude>
     <ClInclude Include="Editor API\FO4\BSEntryString.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESFormComponents.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\TESFormRE.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESFileF4.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESFormF4.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\NiTypes.h">
+      <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESActorValue.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\NiEvents.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\NiClassesF4.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BGSPrimitive.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BGSLayer.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\ReplaceBSPointerHandleAndManagerF4.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\AllowSaveESMandMasterESPF4.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BSPointerHandleManager.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESObjectREFR.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESObject.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESObjectCELL.h">
       <Filter>Editor API\FO4</Filter>
     </ClInclude>
   </ItemGroup>

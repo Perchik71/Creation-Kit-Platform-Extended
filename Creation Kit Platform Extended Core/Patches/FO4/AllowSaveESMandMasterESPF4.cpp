@@ -3,26 +3,26 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
-#include "AllowSaveESMandMasterESP.h"
-#include "Editor API/SSE/TESFile.h"
+#include "AllowSaveESMandMasterESPF4.h"
+#include "Editor API/FO4/TESFileF4.h"
 
 namespace CreationKitPlatformExtended
 {
 	namespace EditorAPI
 	{
-		namespace SkyrimSpectialEdition
+		namespace Fallout4
 		{
 			extern uintptr_t pointer_TESFile_sub1;
 			extern uintptr_t pointer_TESFile_sub2;
-			extern uintptr_t pointer_TESFile_sub3;
+			extern uintptr_t pointer_TESFile_data;
 		}
 	}
 
 	namespace Patches
 	{
-		namespace SkyrimSpectialEdition
+		namespace Fallout4
 		{
-			using namespace EditorAPI::SkyrimSpectialEdition;
+			using namespace EditorAPI::Fallout4;
 
 			uintptr_t pointer_AllowSaveESMandMasterESP_sub1 = 0;
 
@@ -62,7 +62,7 @@ namespace CreationKitPlatformExtended
 			bool AllowSaveESMandMasterESPPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST;
+				return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST;
 			}
 
 			bool AllowSaveESMandMasterESPPatch::Activate(const Relocator* lpRelocator,
@@ -72,7 +72,7 @@ namespace CreationKitPlatformExtended
 				{
 					pointer_TESFile_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
 					pointer_TESFile_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
-					pointer_TESFile_sub3 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2));
+					pointer_TESFile_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2));
 					pointer_AllowSaveESMandMasterESP_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(11));
 
 					TESFile::AllowSaveESM = _READ_OPTION_BOOL("CreationKit", "bAllowSaveESM", false);
@@ -91,13 +91,13 @@ namespace CreationKitPlatformExtended
 						{
 							// Also allow non-game ESMs to be set as "Active File"
 							lpRelocator->DetourCall(lpRelocationDatabaseItem->At(5),
-								&TESFile::IsActiveFileBlacklist);
+								&TESFile::IsMasterFileToBlacklist);
 							lpRelocator->PatchNop(lpRelocationDatabaseItem->At(6), 2);
 
 							// Disable: "File '%s' is a master file or is in use.\n\nPlease select another file to save to."
 							const char* newFormat = "File '%s' is in use.\n\nPlease select another file to save to.";
 
-							lpRelocator->PatchNop(lpRelocationDatabaseItem->At(7), 12);
+							lpRelocator->PatchNop(lpRelocationDatabaseItem->At(7), 13);
 							lpRelocator->Patch(lpRelocationDatabaseItem->At(8), (uint8_t*)newFormat, 
 								(uint32_t)(strlen(newFormat) + 1));
 
@@ -107,7 +107,7 @@ namespace CreationKitPlatformExtended
 
 						if (TESFile::AllowMasterESP)
 							// Remove the check for IsMaster()
-							lpRelocator->PatchNop(lpRelocationDatabaseItem->At(10), 12);
+							lpRelocator->PatchNop(lpRelocationDatabaseItem->At(10), 9);
 					}
 
 
@@ -140,7 +140,7 @@ namespace CreationKitPlatformExtended
 					extension = "esm";
 				}
 
-				auto result = ((bool(__fastcall*)(HWND, const char*, const char*, const char*,
+				auto result = ((bool(__fastcall*)(HWND, const char*, const char*, const char*, 
 					const char*, void*, bool, bool, char*, uint32_t, const char*, void*))
 					pointer_AllowSaveESMandMasterESP_sub1)(ParentWindow, BasePath, filter, title, extension, nullptr,
 						false, true, Buffer, BufferSize, Directory, nullptr);

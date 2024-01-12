@@ -8,19 +8,19 @@ namespace CreationKitPlatformExtended
 {
 	namespace EditorAPI
 	{
-		template<uint32_t RefCountBits>
+		template<typename _Ty, typename HandleRef, uint32_t RefCountBits>
 		class BSHandleRefObjectT : public NiRefObject
 		{
-		private:
+		public:
 			//
 			// 31             +1       RefCountBits    0
 			// |--------------|--------|---------------|
 			// | Handle Index | Active |   Ref Count   |
 			// |--------------|--------|---------------|
 			//
-			constexpr static uint32_t ACTIVE_BIT_INDEX = RefCountBits;
-			constexpr static uint32_t HANDLE_BIT_INDEX = ACTIVE_BIT_INDEX + 1;
-			constexpr static uint32_t REF_COUNT_MASK = (1ull << ACTIVE_BIT_INDEX) - 1ull;
+			constexpr static _Ty ACTIVE_BIT_INDEX = (_Ty)RefCountBits;
+			constexpr static _Ty HANDLE_BIT_INDEX = (_Ty)ACTIVE_BIT_INDEX + 1;
+			constexpr static _Ty REF_COUNT_MASK = (1ull << ACTIVE_BIT_INDEX) - 1ull;
 
 		public:
 			BSHandleRefObjectT()
@@ -33,35 +33,35 @@ namespace CreationKitPlatformExtended
 				ClearHandleEntryIndex();
 			}
 
-			uint32_t IncRefCount()
+			_Ty IncRefCount()
 			{
 				AssertMsg(GetRefCount() < REF_COUNT_MASK,
 					"BSHandleRefObject - IncRefCount is about to cause refcount wraparound to 0.");
 
-				return ((NiRefObject*)this)->IncRefCount();
+				return ((HandleRef*)this)->IncRefCount();
 			}
 
-			uint32_t DecRefCount()
+			_Ty DecRefCount()
 			{
 				AssertMsg(GetRefCount() != 0,
 					"BSHandleRefObject - DecRefCount called with refcount already 0.");
 
-				return ((NiRefObject*)this)->DecRefCount();
+				return ((HandleRef*)this)->DecRefCount();
 			}
 
-			uint32_t GetRefCount() const
+			_Ty GetRefCount() const
 			{
-				return ((uint32_t)m_uiRefCount) & REF_COUNT_MASK;
+				return ((_Ty)m_uiRefCount) & REF_COUNT_MASK;
 			}
 
-			void SetHandleEntryIndex(uint32_t HandleIndex)
+			void SetHandleEntryIndex(_Ty HandleIndex)
 			{
-				m_uiRefCount = (ULONG)((HandleIndex << HANDLE_BIT_INDEX) | (1ull << ACTIVE_BIT_INDEX) | GetRefCount());
+				m_uiRefCount = (_Ty)((HandleIndex << HANDLE_BIT_INDEX) | (1ull << ACTIVE_BIT_INDEX) | GetRefCount());
 			}
 
-			uint32_t GetHandleEntryIndex() const
+			_Ty GetHandleEntryIndex() const
 			{
-				return ((uint32_t)m_uiRefCount) >> HANDLE_BIT_INDEX;
+				return ((_Ty)m_uiRefCount) >> HANDLE_BIT_INDEX;
 			}
 
 			void ClearHandleEntryIndex()
@@ -74,9 +74,11 @@ namespace CreationKitPlatformExtended
 				return (m_uiRefCount & (1ull << ACTIVE_BIT_INDEX)) != 0;
 			}
 		};
-		static_assert(sizeof(BSHandleRefObjectT<10>) == 0x10);
+		static_assert(sizeof(BSHandleRefObjectT<uint32_t, NiRefObject, 10>) == 0x10);
+		static_assert(sizeof(BSHandleRefObjectT<uint64_t, NiRefObject_64, 10>) == 0x10);
 
-		typedef BSHandleRefObjectT<10> BSHandleRefObject_Original;
-		typedef BSHandleRefObjectT<8> BSHandleRefObject_Extremly;
+		typedef BSHandleRefObjectT<uint32_t, NiRefObject, 10> BSHandleRefObject_Original;
+		typedef BSHandleRefObjectT<uint32_t, NiRefObject, 8> BSHandleRefObject_Extremly;
+		typedef BSHandleRefObjectT<uint64_t, NiRefObject_64, 10> BSHandleRefObject_64_Extremly;
 	}
 }

@@ -60,7 +60,7 @@ namespace CreationKitPlatformExtended
 				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(0), 5);
 				if (verPatch == 2)
 				{
-					for (size_t i = 1; i < lpRelocationDatabaseItem->Count(); i++)
+					for (uint32_t i = 1; i < lpRelocationDatabaseItem->Count(); i++)
 						lpRelocator->PatchNop(lpRelocationDatabaseItem->At(i), 5);
 				}
 
