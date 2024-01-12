@@ -23,9 +23,25 @@ namespace CreationKitPlatformExtended
 				constexpr static auto UI_EXTMENU_LOADEDESPINFO = 51006;
 				constexpr static auto UI_EXTMENU_HARDCODEDFORMS = 51007;
 				constexpr static auto UI_EXTMENU_SDM = 51008;
-				constexpr static auto UI_EXTMENU_HIDE_FUNCTIONS = 51009;
 
-				constexpr static auto UI_EXTMENU_HIDE_FUNCTIONS_IMPORTDIALOGUE = 40468;
+				constexpr static auto UI_EXTMENU_IMPORT = 51009;
+				constexpr static auto UI_EXTMENU_IMPORT_DIALOGUE = 40468;
+				constexpr static auto UI_EXTMENU_IMPORT_QUESTSTAGES = 40469;
+				constexpr static auto UI_EXTMENU_IMPORT_QUESTOBJECTIVES = 40772;
+				constexpr static auto UI_EXTMENU_IMPORT_NAMES = 40473;
+				constexpr static auto UI_EXTMENU_IMPORT_TOPICS = 40738;
+				constexpr static auto UI_EXTMENU_IMPORT_SCRIPTSMSGBOX = 40475;
+				constexpr static auto UI_EXTMENU_IMPORT_GAMESETTINGS = 40492;
+				constexpr static auto UI_EXTMENU_IMPORT_BOOKS = 40535;
+				constexpr static auto UI_EXTMENU_IMPORT_DESCRIPTIONS = 40493;
+				constexpr static auto UI_EXTMENU_IMPORT_FACTIONRANKNAMES = 40538;
+				constexpr static auto UI_EXTMENU_IMPORT_NOTES = 40687;
+				constexpr static auto UI_EXTMENU_IMPORT_TERMINALS = 40731;
+				constexpr static auto UI_EXTMENU_IMPORT_MESSAGES = 40732;
+				constexpr static auto UI_EXTMENU_IMPORT_ACTORVALUES = 40761;
+				constexpr static auto UI_EXTMENU_IMPORT_AMMO = 40762;
+				constexpr static auto UI_EXTMENU_IMPORT_BODYPARTDATA = 40781;
+				constexpr static auto UI_EXTMENU_IMPORT_PERKS = 40783;
 
 				virtual bool HasOption() const;
 				virtual bool HasCanRuntimeDisabled() const;

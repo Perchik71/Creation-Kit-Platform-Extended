@@ -154,7 +154,23 @@ namespace CreationKitPlatformExtended
 				// Creating a submenu to open the hidden functions of the Creation Kit
 				ExtensionMenuHideFunctionsHandle = CreateMenu();
 				Classes::CUIMenu ExtMenuHideFunctions = ExtensionMenuHideFunctionsHandle;
-				ExtMenuHideFunctions.Append("Import Dialogue...", UI_EXTMENU_HIDE_FUNCTIONS_IMPORTDIALOGUE);
+				ExtMenuHideFunctions.Append("Dialogue", UI_EXTMENU_IMPORT_DIALOGUE);
+				ExtMenuHideFunctions.Append("Quest Stages", UI_EXTMENU_IMPORT_QUESTSTAGES);
+				ExtMenuHideFunctions.Append("Quest Objectives", UI_EXTMENU_IMPORT_QUESTOBJECTIVES);
+				ExtMenuHideFunctions.Append("Names", UI_EXTMENU_IMPORT_NAMES);
+				ExtMenuHideFunctions.Append("Topics", UI_EXTMENU_IMPORT_TOPICS);
+				ExtMenuHideFunctions.Append("Script Messageboxes", UI_EXTMENU_IMPORT_SCRIPTSMSGBOX);
+				ExtMenuHideFunctions.Append("Game Settings", UI_EXTMENU_IMPORT_GAMESETTINGS);
+				ExtMenuHideFunctions.Append("Books", UI_EXTMENU_IMPORT_BOOKS);
+				ExtMenuHideFunctions.Append("Descriptions", UI_EXTMENU_IMPORT_DESCRIPTIONS);
+				ExtMenuHideFunctions.Append("Faction Rank Names", UI_EXTMENU_IMPORT_FACTIONRANKNAMES);
+				ExtMenuHideFunctions.Append("Notes", UI_EXTMENU_IMPORT_NOTES);
+				ExtMenuHideFunctions.Append("Terminals", UI_EXTMENU_IMPORT_TERMINALS);
+				ExtMenuHideFunctions.Append("Messages", UI_EXTMENU_IMPORT_MESSAGES);
+				ExtMenuHideFunctions.Append("Actor Values", UI_EXTMENU_IMPORT_ACTORVALUES);
+				ExtMenuHideFunctions.Append("Ammo", UI_EXTMENU_IMPORT_AMMO);
+				ExtMenuHideFunctions.Append("Body Part Data", UI_EXTMENU_IMPORT_BODYPARTDATA);
+				ExtMenuHideFunctions.Append("Perks", UI_EXTMENU_IMPORT_PERKS);
 
 				// Create extended menu options
 				ExtensionMenuHandle = CreateMenu();
@@ -164,7 +180,7 @@ namespace CreationKitPlatformExtended
 				ExtMenu.Append("Clear Log", UI_EXTMENU_CLEARLOG);
 				ExtMenu.Append("Autoscroll Log", UI_EXTMENU_AUTOSCROLL, true, true);
 				ExtMenu.AppendSeparator();
-				ExtMenu.Append("Hidden functions", UI_EXTMENU_HIDE_FUNCTIONS, ExtMenuHideFunctions);
+				ExtMenu.Append("Import", UI_EXTMENU_IMPORT, ExtMenuHideFunctions);
 				ExtMenu.AppendSeparator();
 				ExtMenu.Append("Dump RTTI Data", UI_EXTMENU_DUMPRTTI);
 				ExtMenu.Append("Dump SDM Info", UI_EXTMENU_SDM);
@@ -210,7 +226,8 @@ namespace CreationKitPlatformExtended
 						GlobalMainWindowPtr->CreateExtensionMenu(Hwnd, createInfo->hMenu);
 
 						// All main menus change to uppercase letters
-						for (UINT i = 0; i < GlobalMainWindowPtr->MainMenu.Count(); i++) {
+						for (UINT i = 0; i < GlobalMainWindowPtr->MainMenu.Count(); i++) 
+						{
 							MenuItem = GlobalMainWindowPtr->MainMenu.GetItemByPos(i);
 							MenuItem.Text = EditorAPI::BSString(MenuItem.Text).UpperCase().c_str();
 						}
@@ -225,10 +242,10 @@ namespace CreationKitPlatformExtended
 						//MenuItem.Checked = TRUE;
 
 						// Fix display text hotkey toggle sound marker
-						//ViewMenu.GetItem(40677).Text = "Sound Marker\tCtrl-N";
+						ViewMenu.GetItem(40677).Text = "Sound Marker\tCtrl-N";
 						// Deprecated
-						//ViewMenu.GetItem(290).Enabled = FALSE;
-						//ViewMenu.GetItem(40032).Enabled = FALSE;
+						ViewMenu.GetItem(290).Enabled = FALSE;
+						ViewMenu.GetItem(40032).Enabled = FALSE;
 
 						return status;
 					}
