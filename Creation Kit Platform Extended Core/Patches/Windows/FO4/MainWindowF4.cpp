@@ -164,7 +164,7 @@ namespace CreationKitPlatformExtended
 				ExtMenu.Append("Clear Log", UI_EXTMENU_CLEARLOG);
 				ExtMenu.Append("Autoscroll Log", UI_EXTMENU_AUTOSCROLL, true, true);
 				ExtMenu.AppendSeparator();
-				ExtMenu.Append("Hidden functions", ExtMenuHideFunctions);
+				ExtMenu.Append("Hidden functions", UI_EXTMENU_HIDE_FUNCTIONS, ExtMenuHideFunctions);
 				ExtMenu.AppendSeparator();
 				ExtMenu.Append("Dump RTTI Data", UI_EXTMENU_DUMPRTTI);
 				ExtMenu.Append("Dump SDM Info", UI_EXTMENU_SDM);

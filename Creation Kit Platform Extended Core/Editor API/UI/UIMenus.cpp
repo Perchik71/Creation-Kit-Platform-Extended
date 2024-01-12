@@ -319,22 +319,22 @@ namespace Core
 				return Insert(Text, -1, MenuID, Enabled, Checked);
 			}
 
-			BOOL CUIMenu::Insert(const std::string& Text, const UINT Position, const CUIMenu& Menu, const BOOL Enabled)
+			BOOL CUIMenu::Insert(const std::string& Text, const UINT Position, const UINT MenuID, const CUIMenu& Menu, const BOOL Enabled)
 			{
 				MENUITEMINFOA minfo = { 0 };
 				minfo.cbSize = sizeof(MENUITEMINFOA);
 				minfo.fMask = MIIM_STRING | MIIM_ID | MIIM_SUBMENU | MIIM_STATE;
 				minfo.hSubMenu = Menu.Handle;
-				minfo.wID = (uint32_t)20;
+				minfo.wID = (uint32_t)MenuID;
 				minfo.cch = static_cast<uint32_t>(Text.length());
 				minfo.dwTypeData = const_cast<LPSTR>(&Text[0]);
 				minfo.fState = Enabled ? MFS_ENABLED : MFS_DISABLED;
 				return InsertMenuItemA(m_Handle, Position, TRUE, &minfo);
 			}
 
-			BOOL CUIMenu::Append(const std::string& Text, const CUIMenu& Menu, const BOOL Enabled)
+			BOOL CUIMenu::Append(const std::string& Text, const UINT MenuID, const CUIMenu& Menu, const BOOL Enabled)
 			{
-				return Insert(Text, -1, Menu, Enabled);
+				return Insert(Text, -1, MenuID, Menu, Enabled);
 			}
 
 			BOOL CUIMenu::InsertSeparator(const UINT Position)

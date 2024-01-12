@@ -23,6 +23,7 @@ namespace CreationKitPlatformExtended
 				constexpr static auto UI_EXTMENU_LOADEDESPINFO = 51006;
 				constexpr static auto UI_EXTMENU_HARDCODEDFORMS = 51007;
 				constexpr static auto UI_EXTMENU_SDM = 51008;
+				constexpr static auto UI_EXTMENU_HIDE_FUNCTIONS = 51009;
 
 				constexpr static auto UI_EXTMENU_HIDE_FUNCTIONS_IMPORTDIALOGUE = 40468;
 

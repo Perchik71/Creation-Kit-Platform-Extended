@@ -89,8 +89,8 @@ namespace Core
 				UINT Count(VOID) const;
 				BOOL Insert(const std::string &Text, const UINT Position, const UINT MenuID, const BOOL Enabled = TRUE, const BOOL Checked = FALSE);
 				BOOL Append(const std::string &Text, const UINT MenuID, const BOOL Enabled = TRUE, const BOOL Checked = FALSE);
-				BOOL Insert(const std::string& Text, const UINT Position, const CUIMenu &Menu, const BOOL Enabled = TRUE);
-				BOOL Append(const std::string& Text, const CUIMenu &Menu, const BOOL Enabled = TRUE);
+				BOOL Insert(const std::string& Text, const UINT Position, const UINT MenuID, const CUIMenu &Menu, const BOOL Enabled = TRUE);
+				BOOL Append(const std::string& Text, const UINT MenuID, const CUIMenu &Menu, const BOOL Enabled = TRUE);
 				BOOL InsertSeparator(const UINT Position);
 				BOOL AppendSeparator(VOID);
 				VOID Remove(const UINT MenuID);
