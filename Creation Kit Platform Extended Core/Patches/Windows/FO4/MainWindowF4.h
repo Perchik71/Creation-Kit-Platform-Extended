@@ -24,6 +24,8 @@ namespace CreationKitPlatformExtended
 				constexpr static auto UI_EXTMENU_HARDCODEDFORMS = 51007;
 				constexpr static auto UI_EXTMENU_SDM = 51008;
 
+				constexpr static auto UI_EXTMENU_HIDE_FUNCTIONS_IMPORTDIALOGUE = 40468;
+
 				virtual bool HasOption() const;
 				virtual bool HasCanRuntimeDisabled() const;
 				virtual const char* GetOptionName() const;
@@ -44,6 +46,7 @@ namespace CreationKitPlatformExtended
 				virtual bool Shutdown(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 			private:
 				HMENU ExtensionMenuHandle;
+				HMENU ExtensionMenuHideFunctionsHandle;
 			};
 
 			extern MainWindow* GlobalMainWindowPtr;

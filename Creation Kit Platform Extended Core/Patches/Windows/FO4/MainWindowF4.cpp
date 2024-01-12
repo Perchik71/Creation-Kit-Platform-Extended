@@ -7,13 +7,12 @@
 #include "Editor API/EditorUI.h"
 #include "Editor API/BSString.h"
 #include "Core/TypeInfo/ms_rtti.h"
-#include "Editor API/SSE/TESForm.h"
-#include "Editor API/SSE/BSPointerHandleManager.h"
-#include "Patches/SSE/Re-EnableFog.h"
-#include "Patches/Windows/SSE/ObjectWindow.h"
-#include "Patches/Windows/SSE/CellViewWindow.h"
+#include "Editor API/FO4/TESFormF4.h"
+#include "Editor API/FO4/BSPointerHandleManager.h"
+//#include "Patches/Windows/SSE/ObjectWindow.h"
+//#include "Patches/Windows/SSE/CellViewWindow.h"
 #include "Patches/ConsolePatch.h"
-#include "MainWindow.h"
+#include "MainWindowF4.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -104,13 +103,13 @@ namespace CreationKitPlatformExtended
 
 			Array<String> MainWindow::GetDependencies() const
 			{
-				return { "Re-enable fog rendering", "Console", "Object Window" };
+				return { "Console", /*"Object Window"*/ };
 			}
 
 			bool MainWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return eEditorCurrentVersion <= EDITOR_SKYRIM_SE_LAST;
+				return eEditorCurrentVersion <= EDITOR_FALLOUT_C4_LAST;
 			}
 
 			bool MainWindow::Activate(const Relocator* lpRelocator,
@@ -120,20 +119,12 @@ namespace CreationKitPlatformExtended
 				{
 					*(uintptr_t*)&_oldWndProc = 
 						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), &MainWindow::HKWndProc);
-					pointer_MainWindow_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
+					
+					/*pointer_MainWindow_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
 
-					//// Invoke the dialog, building form list
-					//auto callback = +[](void* p1, int p2, VersionControlListItem* Data)
-					//{
-					//	formList.push_back(*Data);
-					//	formList.back().EditorId = _strdup(Data->EditorId);
-
-					//	((void(__fastcall*)(void*, int, VersionControlListItem*))pointer_MainWindow_sub3)(p1, p2, Data);	
-					//};
-
-					//lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), callback);
+					
 					pointer_MainWindow_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(3));
-					pointer_MainWindow_sub3 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(4));
+					pointer_MainWindow_sub3 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(4));*/
 
 					return true;
 				}
@@ -160,6 +151,11 @@ namespace CreationKitPlatformExtended
 
 			void MainWindow::CreateExtensionMenu(HWND MainWindow, HMENU MainMenu)
 			{
+				// Creating a submenu to open the hidden functions of the Creation Kit
+				ExtensionMenuHideFunctionsHandle = CreateMenu();
+				Classes::CUIMenu ExtMenuHideFunctions = ExtensionMenuHideFunctionsHandle;
+				ExtMenuHideFunctions.Append("Import Dialogue...", UI_EXTMENU_HIDE_FUNCTIONS_IMPORTDIALOGUE);
+
 				// Create extended menu options
 				ExtensionMenuHandle = CreateMenu();
 
@@ -167,6 +163,8 @@ namespace CreationKitPlatformExtended
 				ExtMenu.Append("Show Log", UI_EXTMENU_SHOWLOG);
 				ExtMenu.Append("Clear Log", UI_EXTMENU_CLEARLOG);
 				ExtMenu.Append("Autoscroll Log", UI_EXTMENU_AUTOSCROLL, true, true);
+				ExtMenu.AppendSeparator();
+				ExtMenu.Append("Hidden functions", ExtMenuHideFunctions);
 				ExtMenu.AppendSeparator();
 				ExtMenu.Append("Dump RTTI Data", UI_EXTMENU_DUMPRTTI);
 				ExtMenu.Append("Dump SDM Info", UI_EXTMENU_SDM);
@@ -207,10 +205,6 @@ namespace CreationKitPlatformExtended
 						SendMessageA(GetDlgItem(Hwnd, EditorAPI::EditorUI::UI_EDITOR_TOOLBAR), TB_CHECKBUTTON,
 							EditorAPI::EditorUI::UI_EDITOR_TOGGLEGRASS_BUTTON, TRUE);
 
-						// Same for fog
-						CheckMenuItem(GetMenu(Hwnd), EditorAPI::EditorUI::UI_EDITOR_TOGGLEFOG,
-							ReEnableFogPatch::IsFogEnabled() ? MF_CHECKED : MF_UNCHECKED);
-
 						// Create custom menu controls
 						GlobalMainWindowPtr->MainMenu = createInfo->hMenu;
 						GlobalMainWindowPtr->CreateExtensionMenu(Hwnd, createInfo->hMenu);
@@ -227,14 +221,14 @@ namespace CreationKitPlatformExtended
 						ViewMenu.Remove(0xA043);
 
 						// Fix show/hide object window
-						MenuItem = ViewMenu.GetItemByPos(2);
-						MenuItem.Checked = TRUE;
+						//MenuItem = ViewMenu.GetItemByPos(2);
+						//MenuItem.Checked = TRUE;
 
 						// Fix display text hotkey toggle sound marker
-						ViewMenu.GetItem(40677).Text = "Sound Marker\tCtrl-N";
+						//ViewMenu.GetItem(40677).Text = "Sound Marker\tCtrl-N";
 						// Deprecated
-						ViewMenu.GetItem(290).Enabled = FALSE;
-						ViewMenu.GetItem(40032).Enabled = FALSE;
+						//ViewMenu.GetItem(290).Enabled = FALSE;
+						//ViewMenu.GetItem(40032).Enabled = FALSE;
 
 						return status;
 					}
@@ -273,22 +267,22 @@ namespace CreationKitPlatformExtended
 							case EditorAPI::EditorUI::UI_EDITOR_TOGGLEFOG:
 							{
 								// Call the CTRL+F5 hotkey function directly
-								((void(__fastcall*)())pointer_MainWindow_sub1)();
+								//((void(__fastcall*)())pointer_MainWindow_sub1)();
 							}
 							return 0;
 							case EditorAPI::EditorUI::UI_EDITOR_TOGGLECELLVIEW:
 							{
-								GlobalCellViewWindowPtr->Visible = !GlobalCellViewWindowPtr->Visible;
+								/*GlobalCellViewWindowPtr->Visible = !GlobalCellViewWindowPtr->Visible;
 								auto MenuItem = GlobalMainWindowPtr->MainMenu.GetItem(EditorAPI::EditorUI::UI_EDITOR_TOGGLECELLVIEW);
-								MenuItem.Checked = !MenuItem.Checked;
+								MenuItem.Checked = !MenuItem.Checked;*/
 							}
 							return 0;
 							case EditorAPI::EditorUI::UI_EDITOR_OPENFORMBYID:
 							{
-								auto form = EditorAPI::SkyrimSpectialEdition::TESForm::GetFormByNumericID(static_cast<uint32_t>(lParam));
+								/*auto form = EditorAPI::Fallout4::TESForm::GetFormByNumericID(static_cast<uint32_t>(lParam));
 								if (form)
 									(*(void(__fastcall**)(EditorAPI::SkyrimSpectialEdition::TESForm*, HWND, __int64, __int64))
-										(*(__int64*)form + 720i64))(form, Hwnd, 0, 1);
+										(*(__int64*)form + 720i64))(form, Hwnd, 0, 1);*/
 							}
 							return 0;
 							case UI_EXTMENU_SHOWLOG:
@@ -303,15 +297,15 @@ namespace CreationKitPlatformExtended
 							return 0;
 							case EditorAPI::EditorUI::UI_EDITOR_TOGGLEOBJECTWND:
 							{
-								for (auto Wnd : ObjectWindows) {
-									Wnd.second->ObjectWindow.Visible = !Wnd.second->ObjectWindow.Visible;
-									if (Wnd.second->ObjectWindow.Visible)
-										Wnd.second->ObjectWindow.Foreground();
-								}
+								//for (auto Wnd : ObjectWindows) {
+								//	Wnd.second->ObjectWindow.Visible = !Wnd.second->ObjectWindow.Visible;
+								//	if (Wnd.second->ObjectWindow.Visible)
+								//		Wnd.second->ObjectWindow.Foreground();
+								//}
 
-								// Change the checkbox
-								MenuItem = GlobalMainWindowPtr->MainMenu.GetItem(EditorAPI::EditorUI::UI_EDITOR_TOGGLEOBJECTWND);
-								MenuItem.Checked = !MenuItem.Checked;
+								//// Change the checkbox
+								//MenuItem = GlobalMainWindowPtr->MainMenu.GetItem(EditorAPI::EditorUI::UI_EDITOR_TOGGLEOBJECTWND);
+								//MenuItem.Checked = !MenuItem.Checked;
 							}
 							return 0;
 							case UI_EXTMENU_AUTOSCROLL:
@@ -360,36 +354,28 @@ namespace CreationKitPlatformExtended
 								bool ExtremlyMode = _READ_OPTION_BOOL("CreationKit", "bBSPointerHandleExtremly", false);
 								if (ExtremlyMode)
 								{
-									auto head = EditorAPI::SkyrimSpectialEdition::BSPointerHandleManager_Extended_Extremly::GetHead();
-									auto tail = EditorAPI::SkyrimSpectialEdition::BSPointerHandleManager_Extended_Extremly::GetTail();
+									auto head = EditorAPI::Fallout4::BSPointerHandleManagerInterface_Extended::GetHead();
+									auto tail = EditorAPI::Fallout4::BSPointerHandleManagerInterface_Extended::GetTail();
 
 									ConsolePatch::Log("Dump SDM Info:\n\tHead: 0x%08X\n\tTail: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",
-										head, tail, EditorAPI::SkyrimSpectialEdition::BSUntypedPointerHandle_Extended_Extremly::MAX_HANDLE_COUNT,
+										head, tail, EditorAPI::Fallout4::BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT,
 										((((long double)head) * 100.0f) / 
-											(long double)EditorAPI::SkyrimSpectialEdition::BSUntypedPointerHandle_Extended_Extremly::MAX_HANDLE_COUNT));
+											(long double)EditorAPI::Fallout4::BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT));
 								}
 								else
-								{
-									auto head = EditorAPI::SkyrimSpectialEdition::BSPointerHandleManager_Original::GetHead();
-									auto tail = EditorAPI::SkyrimSpectialEdition::BSPointerHandleManager_Original::GetTail();
-
-									ConsolePatch::Log("Dump SDM Info:\n\tHead: 0x%08X\n\tTail: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",
-										head, tail, EditorAPI::SkyrimSpectialEdition::BSUntypedPointerHandle_Original::MAX_HANDLE_COUNT,
-										((((long double)head) * 100.0f) /
-											(long double)EditorAPI::SkyrimSpectialEdition::BSUntypedPointerHandle_Original::MAX_HANDLE_COUNT));
-								}
+									MessageBoxA(0, "Not implemented for the original version of the manager", "Info", MB_OK | MB_ICONINFORMATION);
 							}
 							return 0;
 							case UI_EXTMENU_HARDCODEDFORMS:
 							{
 								for (uint32_t i = 0; i < 2048; i++)
 								{
-									auto form = EditorAPI::SkyrimSpectialEdition::TESForm::GetFormByNumericID(i);
+									/*auto form = EditorAPI::SkyrimSpectialEdition::TESForm::GetFormByNumericID(i);
 									if (form)
 									{
 										(*(void(__fastcall**)(EditorAPI::SkyrimSpectialEdition::TESForm*, __int64))(*(__int64*)form + 360))(form, 1);
 										ConsolePatch::Log("SetFormModified(%08X)", i);
-									}
+									}*/
 								}
 
 								// Fake the click on "Save"

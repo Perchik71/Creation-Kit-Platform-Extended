@@ -104,7 +104,7 @@ namespace CreationKitPlatformExtended
 
 			Array<String> MainWindow::GetDependencies() const
 			{
-				return { "Re-enable fog rendering", "Console", "Object Window" };
+				return { "Re-enable fog rendering", "Console", "Object Window", "Cell View Window" };
 			}
 
 			bool MainWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,

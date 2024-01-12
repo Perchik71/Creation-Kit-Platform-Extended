@@ -10,7 +10,6 @@
 #include "Patches/SSE/FixRemoteDesktop.h"
 #include "Patches/SSE/FixLoadMore32KAnimation.h"
 #include "Patches/SSE/FixCrashLightingShader.h"
-#include "Patches/SSE/RenameCreationKitApp.h"
 #include "Patches/SSE/FixCrashInArmorAddon.h"
 #include "Patches/SSE/FixCrashMakeXYZCircles.h"
 #include "Patches/SSE/FixNiSkinInstance.h"
@@ -104,7 +103,6 @@ namespace CreationKitPlatformExtended
 				new Patches::FixRemoteDesktopPatch(),
 				new Patches::FixLoadMore32KAnimationPatch(),
 				new Patches::FixCrashLightingShaderPatch(),
-				new Patches::RenameCreationKitAppPatch(),
 				new Patches::FixCrashInArmorAddonPatch(),
 				new Patches::FixCrashMakeXYZCirclesPatch(),
 				new Patches::FixNiSkinInstancePatch(),

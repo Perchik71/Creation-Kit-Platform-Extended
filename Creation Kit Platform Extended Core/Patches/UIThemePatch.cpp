@@ -145,6 +145,7 @@ namespace CreationKitPlatformExtended
 			"Creation Kit Skyrim Special Edition [v1.5.73]",
 			"Creation Kit Skyrim Special Edition [v1.6.438]",
 			"Creation Kit Skyrim Special Edition [v1.6.1130]",
+			"Creation Kit Fallout 4 [v1.10.162.0]",
 			"ActivatorClass",
 			"AlchemyClass",
 			"ArmorClass",

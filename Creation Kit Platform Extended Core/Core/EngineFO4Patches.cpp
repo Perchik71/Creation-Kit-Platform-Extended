@@ -8,6 +8,8 @@
 #include "Patches/FO4/ReplaceBSPointerHandleAndManagerF4.h"
 #include "Patches/FO4/TESFormRE.h"
 
+#include "Patches/Windows/FO4/MainWindowF4.h"
+
 namespace CreationKitPlatformExtended
 {
 	namespace Core
@@ -20,6 +22,8 @@ namespace CreationKitPlatformExtended
 				new Patches::AllowSaveESMandMasterESPPatch(),
 				new Patches::ReplaceBSPointerHandleAndManagerPatch(),
 				new Patches::TESFormREPatch(),
+
+				new Patches::MainWindow(),
 			});
 		}
 	}

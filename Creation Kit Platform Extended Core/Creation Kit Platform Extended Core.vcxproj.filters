@@ -244,9 +244,6 @@
     <ClCompile Include="Patches\SSE\NiCollisionObjectClonedWarning.cpp">
       <Filter>Patches\SSE\1-50</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\RenameCreationKitApp.cpp">
-      <Filter>Patches\SSE\1-50</Filter>
-    </ClCompile>
     <ClCompile Include="Patches\SSE\ReplaceBSPointerHandleAndManager.cpp">
       <Filter>Patches\SSE\1-50</Filter>
     </ClCompile>
@@ -528,6 +525,12 @@
     </ClCompile>
     <ClCompile Include="Patches\FO4\AllowSaveESMandMasterESPF4.cpp">
       <Filter>Patches\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\RenameCreationKitApp.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\Windows\FO4\MainWindowF4.cpp">
+      <Filter>Patches\Windows\FO4</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -931,9 +934,6 @@
     <ClInclude Include="Patches\SSE\NiCollisionObjectClonedWarning.h">
       <Filter>Patches\SSE\1-50</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\RenameCreationKitApp.h">
-      <Filter>Patches\SSE\1-50</Filter>
-    </ClInclude>
     <ClInclude Include="Patches\SSE\ReplaceBSPointerHandleAndManager.h">
       <Filter>Patches\SSE\1-50</Filter>
     </ClInclude>
@@ -1254,6 +1254,12 @@
     </ClInclude>
     <ClInclude Include="Editor API\FO4\TESObjectCELL.h">
       <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\RenameCreationKitApp.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\FO4\MainWindowF4.h">
+      <Filter>Patches\Windows\FO4</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

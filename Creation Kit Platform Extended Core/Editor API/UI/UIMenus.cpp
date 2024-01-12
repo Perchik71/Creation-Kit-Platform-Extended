@@ -306,10 +306,10 @@ namespace Core
 				MENUITEMINFOA minfo = { 0 };
 				minfo.cbSize = sizeof(MENUITEMINFOA);
 				minfo.fMask = MIIM_FTYPE | MIIM_STRING | MIIM_ID | MIIM_STATE;
-				minfo.wID = (UINT)MenuID;
-				minfo.cch = (UINT)Text.length();
+				minfo.wID = (uint32_t)MenuID;
+				minfo.cch = static_cast<uint32_t>(Text.length());
 				minfo.fType = MFT_STRING;
-				minfo.dwTypeData = const_cast<char*>(&Text[0]);
+				minfo.dwTypeData = const_cast<LPSTR>(&Text[0]);
 				minfo.fState = (Enabled ? MFS_ENABLED : MFS_DISABLED) | (Checked ? MFS_CHECKED : MFS_UNCHECKED);
 				return InsertMenuItemA(m_Handle, Position, TRUE, &minfo);
 			}
@@ -323,11 +323,11 @@ namespace Core
 			{
 				MENUITEMINFOA minfo = { 0 };
 				minfo.cbSize = sizeof(MENUITEMINFOA);
-				minfo.fMask = MIIM_FTYPE | MIIM_STRING | MIIM_SUBMENU | MIIM_STATE;
-				minfo.fType = MFT_STRING;
+				minfo.fMask = MIIM_STRING | MIIM_ID | MIIM_SUBMENU | MIIM_STATE;
 				minfo.hSubMenu = Menu.Handle;
-				minfo.cch = (UINT)Text.length();
-				minfo.dwTypeData = const_cast<char*>(&Text[0]);
+				minfo.wID = (uint32_t)20;
+				minfo.cch = static_cast<uint32_t>(Text.length());
+				minfo.dwTypeData = const_cast<LPSTR>(&Text[0]);
 				minfo.fState = Enabled ? MFS_ENABLED : MFS_DISABLED;
 				return InsertMenuItemA(m_Handle, Position, TRUE, &minfo);
 			}
