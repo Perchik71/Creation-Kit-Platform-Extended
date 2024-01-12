@@ -104,7 +104,7 @@ namespace CreationKitPlatformExtended
 
 			Array<String> MainWindow::GetDependencies() const
 			{
-				return { "Re-enable fog rendering", "Console", "Object Window", "Cell View Window" };
+				return { "Re-enable fog rendering", "Console", "Object Window" };
 			}
 
 			bool MainWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
@@ -160,6 +160,21 @@ namespace CreationKitPlatformExtended
 
 			void MainWindow::CreateExtensionMenu(HWND MainWindow, HMENU MainMenu)
 			{
+				// Creating a submenu to open the hidden functions of the Creation Kit
+				ExtensionMenuHideFunctionsHandle = CreateMenu();
+				Classes::CUIMenu ExtMenuHideFunctions = ExtensionMenuHideFunctionsHandle;
+				ExtMenuHideFunctions.Append("Dialogue", UI_EXTMENU_IMPORT_DIALOGUE);
+				ExtMenuHideFunctions.Append("Quest Stages", UI_EXTMENU_IMPORT_QUESTSTAGES);
+				ExtMenuHideFunctions.Append("Quest Objectives", UI_EXTMENU_IMPORT_QUESTOBJECTIVES);
+				ExtMenuHideFunctions.Append("Names", UI_EXTMENU_IMPORT_NAMES);
+				ExtMenuHideFunctions.Append("Topics", UI_EXTMENU_IMPORT_TOPICS);
+				ExtMenuHideFunctions.Append("Script Messageboxes", UI_EXTMENU_IMPORT_SCRIPTSMSGBOX);
+				ExtMenuHideFunctions.Append("Game Settings", UI_EXTMENU_IMPORT_GAMESETTINGS);
+				ExtMenuHideFunctions.Append("Descriptions", UI_EXTMENU_IMPORT_DESCRIPTIONS);
+				ExtMenuHideFunctions.Append("Faction Rank Names", UI_EXTMENU_IMPORT_FACTIONRANKNAMES);
+				ExtMenuHideFunctions.Append("Ammo", UI_EXTMENU_IMPORT_AMMO);
+				ExtMenuHideFunctions.Append("Body Part Data", UI_EXTMENU_IMPORT_BODYPARTDATA);
+
 				// Create extended menu options
 				ExtensionMenuHandle = CreateMenu();
 
@@ -167,6 +182,8 @@ namespace CreationKitPlatformExtended
 				ExtMenu.Append("Show Log", UI_EXTMENU_SHOWLOG);
 				ExtMenu.Append("Clear Log", UI_EXTMENU_CLEARLOG);
 				ExtMenu.Append("Autoscroll Log", UI_EXTMENU_AUTOSCROLL, true, true);
+				ExtMenu.AppendSeparator();
+				ExtMenu.Append("Import", UI_EXTMENU_IMPORT, ExtMenuHideFunctions);
 				ExtMenu.AppendSeparator();
 				ExtMenu.Append("Dump RTTI Data", UI_EXTMENU_DUMPRTTI);
 				ExtMenu.Append("Dump SDM Info", UI_EXTMENU_SDM);

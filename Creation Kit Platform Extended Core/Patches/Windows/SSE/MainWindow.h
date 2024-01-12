@@ -24,6 +24,19 @@ namespace CreationKitPlatformExtended
 				constexpr static auto UI_EXTMENU_HARDCODEDFORMS = 51007;
 				constexpr static auto UI_EXTMENU_SDM = 51008;
 
+				constexpr static auto UI_EXTMENU_IMPORT = 51009;
+				constexpr static auto UI_EXTMENU_IMPORT_DIALOGUE = 40468;
+				constexpr static auto UI_EXTMENU_IMPORT_QUESTSTAGES = 40469;
+				constexpr static auto UI_EXTMENU_IMPORT_QUESTOBJECTIVES = 40772;
+				constexpr static auto UI_EXTMENU_IMPORT_NAMES = 40473;
+				constexpr static auto UI_EXTMENU_IMPORT_TOPICS = 40738;
+				constexpr static auto UI_EXTMENU_IMPORT_SCRIPTSMSGBOX = 40475;
+				constexpr static auto UI_EXTMENU_IMPORT_GAMESETTINGS = 40492;
+				constexpr static auto UI_EXTMENU_IMPORT_DESCRIPTIONS = 40493;
+				constexpr static auto UI_EXTMENU_IMPORT_FACTIONRANKNAMES = 40538;
+				constexpr static auto UI_EXTMENU_IMPORT_AMMO = 40762;
+				constexpr static auto UI_EXTMENU_IMPORT_BODYPARTDATA = 40781;
+
 				virtual bool HasOption() const;
 				virtual bool HasCanRuntimeDisabled() const;
 				virtual const char* GetOptionName() const;
@@ -44,6 +57,7 @@ namespace CreationKitPlatformExtended
 				virtual bool Shutdown(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 			private:
 				HMENU ExtensionMenuHandle;
+				HMENU ExtensionMenuHideFunctionsHandle;
 			};
 
 			extern MainWindow* GlobalMainWindowPtr;

@@ -161,16 +161,10 @@ namespace CreationKitPlatformExtended
 				ExtMenuHideFunctions.Append("Topics", UI_EXTMENU_IMPORT_TOPICS);
 				ExtMenuHideFunctions.Append("Script Messageboxes", UI_EXTMENU_IMPORT_SCRIPTSMSGBOX);
 				ExtMenuHideFunctions.Append("Game Settings", UI_EXTMENU_IMPORT_GAMESETTINGS);
-				ExtMenuHideFunctions.Append("Books", UI_EXTMENU_IMPORT_BOOKS);
 				ExtMenuHideFunctions.Append("Descriptions", UI_EXTMENU_IMPORT_DESCRIPTIONS);
 				ExtMenuHideFunctions.Append("Faction Rank Names", UI_EXTMENU_IMPORT_FACTIONRANKNAMES);
-				ExtMenuHideFunctions.Append("Notes", UI_EXTMENU_IMPORT_NOTES);
-				ExtMenuHideFunctions.Append("Terminals", UI_EXTMENU_IMPORT_TERMINALS);
-				ExtMenuHideFunctions.Append("Messages", UI_EXTMENU_IMPORT_MESSAGES);
-				ExtMenuHideFunctions.Append("Actor Values", UI_EXTMENU_IMPORT_ACTORVALUES);
 				ExtMenuHideFunctions.Append("Ammo", UI_EXTMENU_IMPORT_AMMO);
 				ExtMenuHideFunctions.Append("Body Part Data", UI_EXTMENU_IMPORT_BODYPARTDATA);
-				ExtMenuHideFunctions.Append("Perks", UI_EXTMENU_IMPORT_PERKS);
 
 				// Create extended menu options
 				ExtensionMenuHandle = CreateMenu();
