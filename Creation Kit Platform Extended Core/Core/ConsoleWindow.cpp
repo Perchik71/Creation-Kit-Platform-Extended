@@ -22,7 +22,7 @@ namespace CreationKitPlatformExtended
 
 		ConsoleWindow::ConsoleWindow(Engine* lpEngine) : _engine(nullptr), hWindow(NULL),
 			_richEditHwnd(NULL), _autoScroll(true), _outputFileHandle(nullptr), _ExternalPipeWriterHandle(NULL),
-			_ExternalPipeReaderHandle(NULL)
+			_ExternalPipeReaderHandle(NULL), HashLastMsg(0)
 		{
 			Create();
 		}
@@ -528,9 +528,12 @@ namespace CreationKitPlatformExtended
 			if (!line.length())
 				return;
 
-			if (_messageBlacklist.count(CreationKitPlatformExtended::Utils::MurmurHash64A(line.c_str(), line.length())))
+			auto HashMsg = CreationKitPlatformExtended::Utils::MurmurHash64A(line.c_str(), line.length());
+			
+			if ((HashLastMsg == HashMsg) || (_messageBlacklist.count(HashMsg) > 0))
 				return;
 
+			HashLastMsg = HashMsg;
 			line += "\n";
 
 			if (_outputFileHandle)

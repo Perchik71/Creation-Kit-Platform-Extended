@@ -46,6 +46,7 @@ namespace CreationKitPlatformExtended
 			void Destroy();
 
 			HWND hWindow;
+			uint64_t HashLastMsg;
 			Engine* _engine;
 			HWND _richEditHwnd;
 			bool _autoScroll;
