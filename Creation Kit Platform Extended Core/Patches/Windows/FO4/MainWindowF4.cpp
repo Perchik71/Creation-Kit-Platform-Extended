@@ -20,6 +20,8 @@ namespace CreationKitPlatformExtended
 	{
 		namespace Fallout4
 		{
+			using namespace EditorAPI::Fallout4;
+
 			uintptr_t pointer_MainWindow_sub1 = 0;
 			uintptr_t pointer_MainWindow_sub2 = 0;
 			uintptr_t pointer_MainWindow_sub3 = 0;
@@ -290,10 +292,10 @@ namespace CreationKitPlatformExtended
 							return 0;
 							case EditorAPI::EditorUI::UI_EDITOR_OPENFORMBYID:
 							{
-								/*auto form = EditorAPI::Fallout4::TESForm::GetFormByNumericID(static_cast<uint32_t>(lParam));
+								auto form = GetFormByNumericID(static_cast<uint32_t>(lParam));
 								if (form)
-									(*(void(__fastcall**)(EditorAPI::SkyrimSpectialEdition::TESForm*, HWND, __int64, __int64))
-										(*(__int64*)form + 720i64))(form, Hwnd, 0, 1);*/
+									(*(void(__fastcall**)(TESForm*, HWND, __int64, __int64))(*(__int64*)form + 0x340))
+									  (form, Hwnd, 0, 1);
 							}
 							return 0;
 							case UI_EXTMENU_SHOWLOG:
@@ -379,14 +381,14 @@ namespace CreationKitPlatformExtended
 							return 0;
 							case UI_EXTMENU_HARDCODEDFORMS:
 							{
-								for (uint32_t i = 0; i < 2048; i++)
+								for (uint32_t i = 0; i < 4096; i++)
 								{
-									/*auto form = EditorAPI::SkyrimSpectialEdition::TESForm::GetFormByNumericID(i);
+									auto form = GetFormByNumericID(i);
 									if (form)
 									{
-										(*(void(__fastcall**)(EditorAPI::SkyrimSpectialEdition::TESForm*, __int64))(*(__int64*)form + 360))(form, 1);
+										form->MarkAsChanged(TRUE); 
 										ConsolePatch::Log("SetFormModified(%08X)", i);
-									}*/
+									}
 								}
 
 								// Fake the click on "Save"

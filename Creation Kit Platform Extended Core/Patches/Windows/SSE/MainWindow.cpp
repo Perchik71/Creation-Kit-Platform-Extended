@@ -399,7 +399,11 @@ namespace CreationKitPlatformExtended
 							return 0;
 							case UI_EXTMENU_HARDCODEDFORMS:
 							{
-								for (uint32_t i = 0; i < 2048; i++)
+								uint32_t count = (GlobalEnginePtr->GetEditorVersion() >= EDITOR_SKYRIM_SE_1_6_1130) ? 4096 : 2048;	
+								if ((count != 4096) && _READ_OPTION_BOOL("CreationKit", "bSupportFormat171", false))
+									count = 4096;
+								
+								for (uint32_t i = 0; i < count; i++)
 								{
 									auto form = EditorAPI::SkyrimSpectialEdition::TESForm::GetFormByNumericID(i);
 									if (form)

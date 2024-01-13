@@ -528,8 +528,7 @@ namespace CreationKitPlatformExtended
 			if (!line.length())
 				return;
 
-			auto HashMsg = CreationKitPlatformExtended::Utils::MurmurHash64A(line.c_str(), line.length());
-			
+			auto HashMsg = CreationKitPlatformExtended::Utils::MurmurHash64A(line.c_str(), line.length());	
 			if ((HashLastMsg == HashMsg) || (_messageBlacklist.count(HashMsg) > 0))
 				return;
 
