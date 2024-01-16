@@ -157,6 +157,7 @@
     <ClCompile Include="Patches\SSE\EnableStateParentWorkaround.cpp" />
     <ClCompile Include="Patches\SSE\FaceGen.cpp" />
     <ClCompile Include="Patches\SSE\FixActorDlg.cpp" />
+    <ClCompile Include="Patches\SSE\FixBethNetPS4.cpp" />
     <ClCompile Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.cpp" />
     <ClCompile Include="Patches\SSE\FixBrightLightColor.cpp" />
     <ClCompile Include="Patches\SSE\FixBSShadowDirectionalLight.cpp" />
@@ -387,6 +388,7 @@
     <ClInclude Include="Patches\SSE\EnableStateParentWorkaround.h" />
     <ClInclude Include="Patches\SSE\FaceGen.h" />
     <ClInclude Include="Patches\SSE\FixActorDlg.h" />
+    <ClInclude Include="Patches\SSE\FixBethNetPS4.h" />
     <ClInclude Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.h" />
     <ClInclude Include="Patches\SSE\FixBrightLightColor.h" />
     <ClInclude Include="Patches\SSE\FixBSShadowDirectionalLight.h" />

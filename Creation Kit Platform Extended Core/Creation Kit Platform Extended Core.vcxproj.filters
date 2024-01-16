@@ -553,6 +553,9 @@
     <ClCompile Include="Patches\Windows\FO4\DataWindowF4.cpp">
       <Filter>Patches\Windows\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\FixBethNetPS4.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1305,6 +1308,9 @@
     </ClInclude>
     <ClInclude Include="Patches\Windows\FO4\DataWindowF4.h">
       <Filter>Patches\Windows\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixBethNetPS4.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
