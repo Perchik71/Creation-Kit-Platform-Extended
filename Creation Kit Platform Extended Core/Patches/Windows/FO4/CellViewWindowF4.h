@@ -5,7 +5,7 @@
 #pragma once
 
 #include "..\BaseWindow.h"
-#include "Editor API/SSE/TESForm.h"
+#include "Editor API/FO4/TESFormF4.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -13,7 +13,7 @@ namespace CreationKitPlatformExtended
 	{
 		namespace Fallout4
 		{
-			//using namespace CreationKitPlatformExtended::EditorAPI::Fallout4;
+			using namespace CreationKitPlatformExtended::EditorAPI::Fallout4;
 
 			class CellViewWindow : public BaseWindow, public Classes::CUIBaseWindow
 			{
@@ -46,6 +46,9 @@ namespace CreationKitPlatformExtended
 				Classes::CUIBaseControl m_YLabel;
 				Classes::CUIBaseControl m_GoButton;
 				Classes::CUIBaseControl m_LoadedAtTop;
+				Classes::CUIBaseControl m_FilteredOnly;
+				Classes::CUIBaseControl m_VisibleOnly;
+				Classes::CUIBaseControl m_SelectedOnly;
 				Classes::CUIBaseControl m_IdEdit;
 				Classes::CUIBaseControl m_SelectedObjectLabel;
 				Classes::CUIBaseControl m_ActiveCellsOnly;

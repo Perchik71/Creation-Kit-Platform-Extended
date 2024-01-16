@@ -95,7 +95,7 @@ namespace CreationKitPlatformExtended
 
 			TESForm* GetFormByNumericID(const uint32_t SearchID)
 			{
-				((void(__fastcall*)(uint32_t))pointer_TESForm_sub)(SearchID);
+				return ((TESForm*(__fastcall*)(uint32_t))pointer_TESForm_sub)(SearchID);
 			}
 		}
 	}

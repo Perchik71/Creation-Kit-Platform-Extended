@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
-#include "Editor API/SSE/TESForm.h"
 #include "UITheme/VarCommon.h"
 #include "ObjectWindow.h"
 
@@ -41,7 +40,7 @@ namespace CreationKitPlatformExtended
 
 				lpObjWnd->Controls.ItemList.Left = w_tree + 5;
 				lpObjWnd->Controls.ItemList.Width = WndRect.Width - (w_tree + 5);
-				lpObjWnd->Controls.ItemList.Height = WndRect.Height;
+				lpObjWnd->Controls.ItemList.Height = WndRect.Height - 3;
 				lpObjWnd->Controls.TreeList.Height = WndRect.Height - TopT;
 				lpObjWnd->Controls.Spliter.Height = WndRect.Height - TopT;
 				

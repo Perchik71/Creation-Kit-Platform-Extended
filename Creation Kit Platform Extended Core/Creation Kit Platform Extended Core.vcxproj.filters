@@ -532,6 +532,27 @@
     <ClCompile Include="Patches\Windows\FO4\MainWindowF4.cpp">
       <Filter>Patches\Windows\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\Windows\FO4\ObjectWindowF4.cpp">
+      <Filter>Patches\Windows\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\Windows\FO4\CellViewWindowF4.cpp">
+      <Filter>Patches\Windows\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\FO4\BSArchiveManagerModdedF4.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\FO4\BSResourceLooseFilesF4.cpp">
+      <Filter>Editor API\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\FO4\BSResourceLooseFilesPatch.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\FO4\TESDataHandlerHook.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\Windows\FO4\DataWindowF4.cpp">
+      <Filter>Patches\Windows\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1261,6 +1282,30 @@
     <ClInclude Include="Patches\Windows\FO4\MainWindowF4.h">
       <Filter>Patches\Windows\FO4</Filter>
     </ClInclude>
+    <ClInclude Include="Patches\Windows\FO4\ObjectWindowF4.h">
+      <Filter>Patches\Windows\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\FO4\CellViewWindowF4.h">
+      <Filter>Patches\Windows\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESDataHandler.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\BSArchiveManagerModdedF4.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BSResourceLooseFilesF4.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\BSResourceLooseFilesPatch.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\TESDataHandlerHook.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\FO4\DataWindowF4.h">
+      <Filter>Patches\Windows\FO4</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version\resource_version.rc">
@@ -1293,8 +1338,15 @@
     <Image Include="..\Resources\types.bmp">
       <Filter>Resources</Filter>
     </Image>
-    <Image Include="..\Resources\uncheck.bmp" />
-    <Image Include="..\Resources\uncheck_darktheme.bmp" />
-    <Image Include="..\Resources\about.png" />
+    <Image Include="..\Resources\about.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\uncheck_darktheme.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\uncheck.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\aboutf4.png" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,104 @@
+{
+  "ExStyle": [ "WS_EX_ACCEPTFILES" ],
+  "Style": [ "WS_SYSMENU", "WS_THICKFRAME", "WS_DLGFRAME", "DS_MODALFRAME", "WS_CAPTION" ],
+  "Title": "Object Window",
+  "Width": 364,
+  "Height": 466,
+  "FontName": "Microsoft Sans Serif",
+  "FontSize": 8,
+  "FontWeight": 400,
+  "FontItalic": 0,
+  "Controls": [
+    {
+      "Type": "EDITTEXT",
+      "Style": [ "ES_AUTOHSCROLL" ],
+      "Id": 2581,
+      "Title": "",
+      "x": 29,
+      "y": 16,
+      "Width": 61,
+      "Height": 12
+    },
+    {
+      "ExStyle": [ "WS_EX_CLIENTEDGE" ],
+      "Type": "TREEVIEW",
+      "Style": [ "TVS_HASBUTTONS", "TVS_HASLINES", "TVS_LINESATROOT", "TVS_DISABLEDRAGDROP", "TVS_SHOWSELALWAYS", "WS_BORDER", "WS_HSCROLL" ],
+      "Id": 2093,
+      "x": 2,
+      "y": 41,
+      "Width": 104,
+      "Height": 384
+    },
+    {
+      "ExStyle": [ "WS_EX_CLIENTEDGE" ],
+      "Type": "LISTVIEW",
+      "Id": 1041,
+      "Style": [ "LVS_REPORT", "LVS_SHOWSELALWAYS", "LVS_EDITLABELS", "WS_BORDER" ],
+      "x": 115,
+      "y": 2,
+      "Width": 249,
+      "Height": 466
+    },
+    {
+      "Type": "LTEXT",
+      "Title": "",
+      "Id": 2157,
+      "x": 105,
+      "y": 0,
+      "Width": 10,
+      "Height": 466
+    },
+    {
+      "Type": "LTEXT",
+      "Title": "Filter",
+      "x": 4,
+      "y": 18,
+      "Width": 25,
+      "Height": 12
+    },
+    {
+      "Type": "COMBOBOX",
+      "Style": [ "CBS_AUTOHSCROLL", "CBS_SORT", "WS_VSCROLL" ],
+      "Id": 6024,
+      "x": 29,
+      "y": 3,
+      "Width": 61,
+      "Height": 60
+    },
+    {
+      "Type": "LTEXT",
+      "Title": "Layout",
+      "x": 4,
+      "y": 4,
+      "Width": 25,
+      "Height": 12
+    },
+    {
+      "Type": "PUSHBUTTON",
+      "Title": "...",
+      "Id": 6025,
+      "x": 93,
+      "y": 3,
+      "Width": 11,
+      "Height": 11
+    },
+    {
+      "Type": "PUSHBUTTON",
+      "Id": 6027,
+      "Title": "-",
+      "x": 93,
+      "y": 16,
+      "Width": 11,
+      "Height": 12
+    },
+    {
+      "Type": "AUTOCHECKBUTTON",
+      "Id": 6329,
+      "Title": "Show only active (*) forms",
+      "x": 4,
+      "y": 29,
+      "Width": 104,
+      "Height": 12
+    }
+  ]
+}

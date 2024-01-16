@@ -6,7 +6,7 @@
 #include "Core/Engine.h"
 #include "UITheme/VarCommon.h"
 #include "Editor API/UI/UIImageList.h"
-#include "DataWindow.h"
+#include "DataWindowF4.h"
 
 #define UI_DATA_DIALOG_PLUGINLISTVIEW		1056
 #define UI_DATA_DIALOG_FILTERBOX			1003	// See: resource.rc
@@ -60,7 +60,7 @@ namespace CreationKitPlatformExtended
 			bool DataWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return eEditorCurrentVersion <= EDITOR_SKYRIM_SE_LAST;
+				return eEditorCurrentVersion <= EDITOR_FALLOUT_C4_LAST;
 			}
 
 			bool DataWindow::Activate(const Relocator* lpRelocator,

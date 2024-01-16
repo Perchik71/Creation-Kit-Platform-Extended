@@ -97,6 +97,7 @@
     <ClCompile Include="Editor API\BSString.cpp" />
     <ClCompile Include="Editor API\EditorUI.cpp" />
     <ClCompile Include="Editor API\FO4\BGSLayer.cpp" />
+    <ClCompile Include="Editor API\FO4\BSResourceLooseFilesF4.cpp" />
     <ClCompile Include="Editor API\FO4\NiClassesF4.cpp" />
     <ClCompile Include="Editor API\FO4\TESFileF4.cpp" />
     <ClCompile Include="Editor API\FO4\TESFormComponents.cpp" />
@@ -122,7 +123,10 @@
     <ClCompile Include="Patches\DisableAssertion.cpp" />
     <ClCompile Include="Patches\FlowChartXPatch.cpp" />
     <ClCompile Include="Patches\FO4\AllowSaveESMandMasterESPF4.cpp" />
+    <ClCompile Include="Patches\FO4\BSArchiveManagerModdedF4.cpp" />
+    <ClCompile Include="Patches\FO4\BSResourceLooseFilesPatch.cpp" />
     <ClCompile Include="Patches\FO4\ReplaceBSPointerHandleAndManagerF4.cpp" />
+    <ClCompile Include="Patches\FO4\TESDataHandlerHook.cpp" />
     <ClCompile Include="Patches\FO4\TESFormRE.cpp" />
     <ClCompile Include="Patches\MemoryManagerPatch.cpp" />
     <ClCompile Include="Patches\PapyrusEditorLimit.cpp" />
@@ -217,7 +221,10 @@
     <ClCompile Include="Patches\UnicodePatch.cpp" />
     <ClCompile Include="Patches\VersionControlMergeWorkaround.cpp" />
     <ClCompile Include="Patches\Windows\BaseWindow.cpp" />
+    <ClCompile Include="Patches\Windows\FO4\CellViewWindowF4.cpp" />
+    <ClCompile Include="Patches\Windows\FO4\DataWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\MainWindowF4.cpp" />
+    <ClCompile Include="Patches\Windows\FO4\ObjectWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\SSE\CellViewWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\DataWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\MainWindow.cpp" />
@@ -285,10 +292,12 @@
     <ClInclude Include="Editor API\FO4\BSEntryString.h" />
     <ClInclude Include="Editor API\FO4\BSFixedString.h" />
     <ClInclude Include="Editor API\FO4\BSPointerHandleManager.h" />
+    <ClInclude Include="Editor API\FO4\BSResourceLooseFilesF4.h" />
     <ClInclude Include="Editor API\FO4\BSStringCache.h" />
     <ClInclude Include="Editor API\FO4\NiClassesF4.h" />
     <ClInclude Include="Editor API\FO4\NiEvents.h" />
     <ClInclude Include="Editor API\FO4\TESActorValue.h" />
+    <ClInclude Include="Editor API\FO4\TESDataHandler.h" />
     <ClInclude Include="Editor API\FO4\TESFileF4.h" />
     <ClInclude Include="Editor API\FO4\TESFormComponents.h" />
     <ClInclude Include="Editor API\FO4\TESFormF4.h" />
@@ -344,7 +353,10 @@
     <ClInclude Include="Patches\DisableAssertion.h" />
     <ClInclude Include="Patches\FlowChartXPatch.h" />
     <ClInclude Include="Patches\FO4\AllowSaveESMandMasterESPF4.h" />
+    <ClInclude Include="Patches\FO4\BSArchiveManagerModdedF4.h" />
+    <ClInclude Include="Patches\FO4\BSResourceLooseFilesPatch.h" />
     <ClInclude Include="Patches\FO4\ReplaceBSPointerHandleAndManagerF4.h" />
+    <ClInclude Include="Patches\FO4\TESDataHandlerHook.h" />
     <ClInclude Include="Patches\FO4\TESFormRE.h" />
     <ClInclude Include="Patches\MemoryManagerPatch.h" />
     <ClInclude Include="Patches\PapyrusEditorLimit.h" />
@@ -439,7 +451,10 @@
     <ClInclude Include="Patches\UnicodePatch.h" />
     <ClInclude Include="Patches\VersionControlMergeWorkaround.h" />
     <ClInclude Include="Patches\Windows\BaseWindow.h" />
+    <ClInclude Include="Patches\Windows\FO4\CellViewWindowF4.h" />
+    <ClInclude Include="Patches\Windows\FO4\DataWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\MainWindowF4.h" />
+    <ClInclude Include="Patches\Windows\FO4\ObjectWindowF4.h" />
     <ClInclude Include="Patches\Windows\SSE\CellViewWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\DataWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\MainWindow.h" />
@@ -490,6 +505,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Resources\about.png" />
+    <Image Include="..\Resources\aboutf4.png" />
     <Image Include="..\Resources\check.bmp" />
     <Image Include="..\Resources\check_darktheme.bmp" />
     <Image Include="..\Resources\toolbar.bmp" />

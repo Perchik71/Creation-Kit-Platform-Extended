@@ -7,8 +7,14 @@
 #include "Patches/FO4/AllowSaveESMandMasterESPF4.h"
 #include "Patches/FO4/ReplaceBSPointerHandleAndManagerF4.h"
 #include "Patches/FO4/TESFormRE.h"
+#include "Patches/FO4/BSResourceLooseFilesPatch.h"
+#include "Patches/FO4/TESDataHandlerHook.h"
+#include "Patches/FO4/BSArchiveManagerModdedF4.h"
 
 #include "Patches/Windows/FO4/MainWindowF4.h"
+#include "Patches/Windows/FO4/ObjectWindowF4.h"
+#include "Patches/Windows/FO4/CellViewWindowF4.h"
+#include "Patches/Windows/FO4/DataWindowF4.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -22,8 +28,14 @@ namespace CreationKitPlatformExtended
 				new Patches::AllowSaveESMandMasterESPPatch(),
 				new Patches::ReplaceBSPointerHandleAndManagerPatch(),
 				new Patches::TESFormREPatch(),
+				new Patches::BSResourceLooseFilesPatch(),
+				new Patches::TESDataHandlerPatch(),
+				new Patches::BSArchiveManagerModdedPatch(),
 
 				new Patches::MainWindow(),
+				new Patches::ObjectWindow(),
+				new Patches::CellViewWindow(),
+				new Patches::DataWindow(),
 			});
 		}
 	}

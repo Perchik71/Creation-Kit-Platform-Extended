@@ -4,8 +4,9 @@
 
 #include "Core/Engine.h"
 #include "Editor API/EditorUI.h"
-#include "Patches/Windows/SSE/MainWindow.h"
-#include "CellViewWindow.h"
+//#include "Editor API/FO4/TESDataHandler.h"
+#include "Patches/Windows/FO4/MainWindowF4.h"
+#include "CellViewWindowF4.h"
 
 #define UI_CELL_VIEW_ADD_CELL_ITEM					2579
 #define UI_CELL_VIEW_ADD_CELL_OBJECT_ITEM			2583
@@ -19,7 +20,6 @@ namespace CreationKitPlatformExtended
 		namespace Fallout4
 		{
 			CellViewWindow* GlobalCellViewWindowPtr = nullptr;
-			uintptr_t pointer_CellViewWindow_data = 0;
 			uintptr_t pointer_CellViewWindow_sub1 = 0;
 			uintptr_t pointer_CellViewWindow_sub2 = 0;
 
@@ -50,13 +50,13 @@ namespace CreationKitPlatformExtended
 
 			Array<String> CellViewWindow::GetDependencies() const
 			{
-				return { "Main Window" };
+				return { "Main Window"/*, "TESDataHandler"*/ };
 			}
 
 			bool CellViewWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return eEditorCurrentVersion <= EDITOR_SKYRIM_SE_LAST;
+				return eEditorCurrentVersion <= EDITOR_FALLOUT_C4_LAST;
 			}
 
 			bool CellViewWindow::Activate(const Relocator* lpRelocator,
@@ -66,14 +66,15 @@ namespace CreationKitPlatformExtended
 				{
 					*(uintptr_t*)&_oldWndProc =
 						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), &HKWndProc);
-					pointer_CellViewWindow_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
-
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&sub1); // Allow forms to be filtered in EditorUI_CellViewProc
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(3), (uintptr_t)&sub1); // ^
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(4), (uintptr_t)&sub2); // ^
-
-					pointer_CellViewWindow_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(5));
-					pointer_CellViewWindow_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(6));
+					
+					// Allow forms to be filtered in CellViewProc
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1), &CellViewWindow::sub1);
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), &CellViewWindow::sub1);
+					// Allow objects to be filtered in CellViewProc
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(3), &CellViewWindow::sub2);
+					//
+					pointer_CellViewWindow_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(4));
+					pointer_CellViewWindow_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(5));			
 
 					return true;
 				}
@@ -95,24 +96,30 @@ namespace CreationKitPlatformExtended
 
 			void CellViewWindow::sub1(HWND ListViewHandle, TESForm* Form, bool UseImage, int ItemIndex)
 			{
-				bool allowInsert = true;
-				SendMessageA(GetParent(ListViewHandle), UI_CELL_VIEW_ADD_CELL_ITEM, (WPARAM)Form, (LPARAM)&allowInsert);
+				//if (TESDataHandler::Instance->Mods->Count() > 0) 
+				{
+					bool allowInsert = true;
+					GlobalCellViewWindowPtr->Perform(UI_CELL_VIEW_ADD_CELL_ITEM, (WPARAM)Form, (LPARAM)&allowInsert);
 
-				if (!allowInsert)
-					return;
+					if (!allowInsert)
+						return;
+				}
 
 				((void(__fastcall*)(HWND, TESForm*, bool, int))pointer_CellViewWindow_sub1)(ListViewHandle, Form, UseImage, ItemIndex);
 			}
 
 			int CellViewWindow::sub2(HWND** ListViewHandle, TESForm** Form, __int64 a3)
 			{
-				bool allowInsert = true;
-				SendMessageA(GetParent(**ListViewHandle), UI_CELL_VIEW_ADD_CELL_OBJECT_ITEM, (WPARAM)*Form, (LPARAM)&allowInsert);
+				//if (TESDataHandler::Instance->Mods->Count() > 0)
+				{
+					bool allowInsert = true;
+					GlobalCellViewWindowPtr->Perform(UI_CELL_VIEW_ADD_CELL_OBJECT_ITEM, (WPARAM)*Form, (LPARAM)&allowInsert);
 
-				if (!allowInsert)
-					return 1;
+					if (!allowInsert)
+						return 1;
+				}
 
-				return ((int(__fastcall*)(HWND*, TESForm**))pointer_CellViewWindow_sub2)(*ListViewHandle, Form);
+				return ((int(__fastcall*)(HWND**, TESForm**, __int64))pointer_CellViewWindow_sub2)(ListViewHandle, Form, a3);
 			}
 
 			void CellViewWindow::ResizeWnd(UINT width, UINT height)
@@ -185,8 +192,20 @@ namespace CreationKitPlatformExtended
 				m_SelectedObjectLabel.BoundsRect = Bounds;
 				m_SelectedObjectLabel.Refresh();
 
-				Bounds.Top = 67;
+				Bounds.Top = 50;
 				Bounds.Height = 16;
+				Bounds.Width = 95;
+				m_FilteredOnly.BoundsRect = Bounds;
+
+				Bounds.Top = 67;
+				m_SelectedOnly.BoundsRect = Bounds;
+
+				Bounds.Top = 50;
+				Bounds.Left += 100;
+				Bounds.Width = 160;
+				m_VisibleOnly.BoundsRect = Bounds;
+
+				Bounds.Top = 67;
 				m_ActiveObjectsOnly.BoundsRect = Bounds;
 			}
 
@@ -203,6 +222,9 @@ namespace CreationKitPlatformExtended
 					GlobalCellViewWindowPtr->m_YLabel = GetDlgItem(Hwnd, 5282);
 					GlobalCellViewWindowPtr->m_GoButton = GetDlgItem(Hwnd, 3681);
 					GlobalCellViewWindowPtr->m_LoadedAtTop = GetDlgItem(Hwnd, 5662);
+					GlobalCellViewWindowPtr->m_FilteredOnly = GetDlgItem(Hwnd, 5664);
+					GlobalCellViewWindowPtr->m_VisibleOnly = GetDlgItem(Hwnd, 5666);
+					GlobalCellViewWindowPtr->m_SelectedOnly = GetDlgItem(Hwnd, 5665);
 					GlobalCellViewWindowPtr->m_IdEdit = GetDlgItem(Hwnd, 2581);
 					GlobalCellViewWindowPtr->m_SelectedObjectLabel = GetDlgItem(Hwnd, 1163);
 					GlobalCellViewWindowPtr->m_ActiveCellsOnly = GetDlgItem(Hwnd, 2580);
@@ -217,8 +239,6 @@ namespace CreationKitPlatformExtended
 						LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
 					ListView_SetExtendedListViewStyleEx(GlobalCellViewWindowPtr->m_ObjectListView.Handle,
 						LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
-
-					ShowWindow(GetDlgItem(Hwnd, 1007), SW_HIDE);
 				}
 				else if (Message == WM_SIZE)
 				{
@@ -258,7 +278,7 @@ namespace CreationKitPlatformExtended
 					// Skip the entry if "Show only active cells" is checked
 					if (static_cast<bool>(GetPropA(Hwnd, "ActiveCellsOnly")))
 					{
-						if (form && !form->GetActive())
+						if (form && !form->Active)
 							*allowInsert = false;
 					}
 
@@ -274,7 +294,7 @@ namespace CreationKitPlatformExtended
 					// Skip the entry if "Show only active objects" is checked
 					if (static_cast<bool>(GetPropA(Hwnd, "ActiveObjectsOnly")))
 					{
-						if (form && !form->GetActive())
+						if (form && !form->Active)
 							*allowInsert = false;
 					}
 
@@ -297,7 +317,7 @@ namespace CreationKitPlatformExtended
 					{
 						LPMINMAXINFO lpMMI = (LPMINMAXINFO)lParam;
 						lpMMI->ptMinTrackSize.x = 369;
-						lpMMI->ptMinTrackSize.y = 157;
+						lpMMI->ptMinTrackSize.y = 177;
 					}
 
 					return S_OK;

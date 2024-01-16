@@ -7,10 +7,9 @@
 #include "Editor API/EditorUI.h"
 #include "Editor API/BSString.h"
 #include "Core/TypeInfo/ms_rtti.h"
-#include "Editor API/FO4/TESFormF4.h"
 #include "Editor API/FO4/BSPointerHandleManager.h"
-//#include "Patches/Windows/SSE/ObjectWindow.h"
-//#include "Patches/Windows/SSE/CellViewWindow.h"
+#include "Patches/Windows/FO4/ObjectWindowF4.h"
+#include "Patches/Windows/FO4/CellViewWindowF4.h"
 #include "Patches/ConsolePatch.h"
 #include "MainWindowF4.h"
 
@@ -105,7 +104,7 @@ namespace CreationKitPlatformExtended
 
 			Array<String> MainWindow::GetDependencies() const
 			{
-				return { "Console", /*"Object Window"*/ };
+				return { "Console", "Object Window" };
 			}
 
 			bool MainWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
@@ -234,8 +233,8 @@ namespace CreationKitPlatformExtended
 						ViewMenu.Remove(0xA043);
 
 						// Fix show/hide object window
-						//MenuItem = ViewMenu.GetItemByPos(2);
-						//MenuItem.Checked = TRUE;
+						MenuItem = ViewMenu.GetItemByPos(2);
+						MenuItem.Checked = TRUE;
 
 						// Fix display text hotkey toggle sound marker
 						ViewMenu.GetItem(40677).Text = "Sound Marker\tCtrl-N";
@@ -285,9 +284,9 @@ namespace CreationKitPlatformExtended
 							return 0;
 							case EditorAPI::EditorUI::UI_EDITOR_TOGGLECELLVIEW:
 							{
-								/*GlobalCellViewWindowPtr->Visible = !GlobalCellViewWindowPtr->Visible;
+								GlobalCellViewWindowPtr->Visible = !GlobalCellViewWindowPtr->Visible;
 								auto MenuItem = GlobalMainWindowPtr->MainMenu.GetItem(EditorAPI::EditorUI::UI_EDITOR_TOGGLECELLVIEW);
-								MenuItem.Checked = !MenuItem.Checked;*/
+								MenuItem.Checked = !MenuItem.Checked;
 							}
 							return 0;
 							case EditorAPI::EditorUI::UI_EDITOR_OPENFORMBYID:
@@ -310,15 +309,15 @@ namespace CreationKitPlatformExtended
 							return 0;
 							case EditorAPI::EditorUI::UI_EDITOR_TOGGLEOBJECTWND:
 							{
-								//for (auto Wnd : ObjectWindows) {
-								//	Wnd.second->ObjectWindow.Visible = !Wnd.second->ObjectWindow.Visible;
-								//	if (Wnd.second->ObjectWindow.Visible)
-								//		Wnd.second->ObjectWindow.Foreground();
-								//}
+								for (auto Wnd : ObjectWindows) {
+									Wnd.second->ObjectWindow.Visible = !Wnd.second->ObjectWindow.Visible;
+									if (Wnd.second->ObjectWindow.Visible)
+										Wnd.second->ObjectWindow.Foreground();
+								}
 
-								//// Change the checkbox
-								//MenuItem = GlobalMainWindowPtr->MainMenu.GetItem(EditorAPI::EditorUI::UI_EDITOR_TOGGLEOBJECTWND);
-								//MenuItem.Checked = !MenuItem.Checked;
+								// Change the checkbox
+								MenuItem = GlobalMainWindowPtr->MainMenu.GetItem(EditorAPI::EditorUI::UI_EDITOR_TOGGLEOBJECTWND);
+								MenuItem.Checked = !MenuItem.Checked;
 							}
 							return 0;
 							case UI_EXTMENU_AUTOSCROLL:

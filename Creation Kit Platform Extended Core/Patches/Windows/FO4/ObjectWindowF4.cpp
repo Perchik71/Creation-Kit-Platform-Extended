@@ -3,9 +3,8 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
-#include "Editor API/SSE/TESForm.h"
 #include "UITheme/VarCommon.h"
-#include "ObjectWindow.h"
+#include "ObjectWindowF4.h"
 
 #define UI_OBJECT_WINDOW_CHECKBOX			6329
 #define UI_OBJECT_WINDOW_ADD_ITEM			2579
@@ -28,20 +27,27 @@ namespace CreationKitPlatformExtended
 				lpObjWnd->Controls.TreeList.LockUpdate();
 				lpObjWnd->Controls.ItemList.LockUpdate();
 				lpObjWnd->Controls.EditFilter.LockUpdate();
+				lpObjWnd->Controls.ToggleDecompose.LockUpdate();
+				lpObjWnd->Controls.BtnObjLayout.LockUpdate();
 
 				auto WndRect = lpObjWnd->ObjectWindow.ClientRect();
 
+				LONG w_btns = lpObjWnd->Controls.BtnObjLayout.Width;
 				LONG w_tree = lpObjWnd->Controls.TreeList.Width;
+				LONG w_left = w_tree - w_btns + 1;
+				lpObjWnd->Controls.BtnObjLayout.Left = w_left;
+				lpObjWnd->Controls.ToggleDecompose.Left = w_left;
 				lpObjWnd->Controls.ActiveOnly.Width = w_tree;
 
-				LONG w_left = w_tree - lpObjWnd->Controls.EditFilter.Left;
+				w_left = w_tree - lpObjWnd->Controls.EditFilter.Left - w_btns - 3;
 				lpObjWnd->Controls.EditFilter.Width = w_left;
+				lpObjWnd->Controls.ComboLayout.Width = w_left;
 
 				auto TopT = lpObjWnd->Controls.TreeList.Top;
 
 				lpObjWnd->Controls.ItemList.Left = w_tree + 5;
 				lpObjWnd->Controls.ItemList.Width = WndRect.Width - (w_tree + 5);
-				lpObjWnd->Controls.ItemList.Height = WndRect.Height;
+				lpObjWnd->Controls.ItemList.Height = WndRect.Height - 3;
 				lpObjWnd->Controls.TreeList.Height = WndRect.Height - TopT;
 				lpObjWnd->Controls.Spliter.Height = WndRect.Height - TopT;
 				
@@ -51,10 +57,14 @@ namespace CreationKitPlatformExtended
 				InvalidateRect(handle, &r, TRUE);
 				UpdateWindow(handle);
 
+				lpObjWnd->Controls.BtnObjLayout.UnlockUpdate();
+				lpObjWnd->Controls.ToggleDecompose.UnlockUpdate();
 				lpObjWnd->Controls.EditFilter.UnlockUpdate();
 				lpObjWnd->Controls.ItemList.UnlockUpdate();
 				lpObjWnd->Controls.TreeList.UnlockUpdate();
 				lpObjWnd->Controls.EditFilter.Repaint();
+				lpObjWnd->Controls.BtnObjLayout.Repaint();
+				lpObjWnd->Controls.ToggleDecompose.Repaint();
 			}
 
 			void SplitterResizeObjectWndChildControls(LPOBJWND lpObjWnd)
@@ -62,14 +72,21 @@ namespace CreationKitPlatformExtended
 				lpObjWnd->Controls.TreeList.LockUpdate();
 				lpObjWnd->Controls.ItemList.LockUpdate();
 				lpObjWnd->Controls.EditFilter.LockUpdate();
+				lpObjWnd->Controls.ToggleDecompose.LockUpdate();
+				lpObjWnd->Controls.BtnObjLayout.LockUpdate();
 
 				auto WndRect = lpObjWnd->ObjectWindow.ClientRect();
 
+				LONG w_btns = lpObjWnd->Controls.BtnObjLayout.Width;
 				LONG w_tree = lpObjWnd->Controls.TreeList.Width;
+				LONG w_left = w_tree - w_btns + 1;
+				lpObjWnd->Controls.BtnObjLayout.Left = w_left;
+				lpObjWnd->Controls.ToggleDecompose.Left = w_left;
 				lpObjWnd->Controls.ActiveOnly.Width = w_tree;
 
-				LONG w_left = w_tree - lpObjWnd->Controls.EditFilter.Left;
+				w_left = w_tree - lpObjWnd->Controls.EditFilter.Left - w_btns - 3;
 				lpObjWnd->Controls.EditFilter.Width = w_left;
+				lpObjWnd->Controls.ComboLayout.Width = w_left;
 
 				auto TopT = lpObjWnd->Controls.TreeList.Top;
 
@@ -82,11 +99,15 @@ namespace CreationKitPlatformExtended
 				InvalidateRect(handle, &r, TRUE);
 				UpdateWindow(handle);
 
+				lpObjWnd->Controls.BtnObjLayout.UnlockUpdate();
+				lpObjWnd->Controls.ToggleDecompose.UnlockUpdate();
 				lpObjWnd->Controls.EditFilter.UnlockUpdate();
 				lpObjWnd->Controls.ItemList.UnlockUpdate();
 				lpObjWnd->Controls.TreeList.UnlockUpdate();
 
 				lpObjWnd->Controls.EditFilter.Repaint();
+				lpObjWnd->Controls.BtnObjLayout.Repaint();
+				lpObjWnd->Controls.ToggleDecompose.Repaint();
 			}
 
 			bool ObjectWindow::HasOption() const
@@ -122,34 +143,28 @@ namespace CreationKitPlatformExtended
 			bool ObjectWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return eEditorCurrentVersion <= EDITOR_SKYRIM_SE_LAST;
+				return eEditorCurrentVersion <= EDITOR_FALLOUT_C4_LAST;
 			}
 
 			bool ObjectWindow::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
-				auto verPatch = lpRelocationDatabaseItem->Version();
-				if ((verPatch == 1) || (verPatch == 2))
+				if (lpRelocationDatabaseItem->Version() == 1)
 				{
 					*(uintptr_t*)&_oldWndProc =
-						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), &HKWndProc);
+						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)),
+							(uintptr_t)&HKWndProc);
 					
 					// Fix resize ObjectWindowProc
-					auto OffsetTotal = lpRelocationDatabaseItem->At(1);
-					lpRelocator->PatchNop(OffsetTotal, 0x70);
-					lpRelocator->DetourCall(OffsetTotal, (uintptr_t)&HKMoveWindow);
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1), (uintptr_t)&HKMoveWindow);
+					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(2), 0x46);
 
-					// In 1.6.1130 the filter is no longer needed
-					if (verPatch == 1)
-					{
-						pointer_ObjectWindow_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(3));
-						// Allow forms to be filtered in EditorUI_ObjectWindowProc
-						lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&sub);
-					}
+					// Allow forms to be filtered in ObjectWindowProc
+					pointer_ObjectWindow_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(3));
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(4), (uintptr_t)&sub);
 
 					return true;
 				}
-
 
 				return false;
 			}
@@ -175,8 +190,7 @@ namespace CreationKitPlatformExtended
 
 			int ObjectWindow::sub(__int64 ObjectListInsertData, TESForm* Form)
 			{
-				const __int64 objectWindowInstance = *(__int64*)(ObjectListInsertData + 0x8) - 0x28;
-				const HWND objectWindowHandle = *(HWND*)(objectWindowInstance);
+				const HWND objectWindowHandle = GetParent((*(HWND*)(ObjectListInsertData + 0x18)));
 
 				bool allowInsert = true;
 				SendMessageA(objectWindowHandle, UI_OBJECT_WINDOW_ADD_ITEM, (WPARAM)Form, (LPARAM)&allowInsert);
@@ -184,12 +198,26 @@ namespace CreationKitPlatformExtended
 				if (!allowInsert)
 					return 1;
 
-				return ((int(__fastcall*)(__int64, TESForm*))pointer_ObjectWindow_sub)(ObjectListInsertData, Form);
+				return ((int(__fastcall*)(__int64, TESForm*))pointer_ObjectWindow_sub)
+					(ObjectListInsertData, Form);
 			}
 
 			ObjectWindow::ObjectWindow() : BaseWindow(), Classes::CUIBaseWindow()
 			{
 				GlobalObjectWindowBasePtr = this;
+			}
+
+			void ObjectWindow::SetObjectWindowFilter(LPOBJWND lpObjWnd, const char* name,
+				const bool SkipText, const bool actived)
+			{
+				if (!SkipText)
+					lpObjWnd->Controls.EditFilter.Caption = name;
+
+				lpObjWnd->Controls.ActiveOnly.Checked = actived;
+				// Force the list items to update as if it was by timer
+				//lpObjWnd->ObjectWindow.Perform(WM_TIMER, 0x1B58, 0);
+				// This is a bit slower but works in multi windows
+				lpObjWnd->Controls.EditFilter.Caption = lpObjWnd->Controls.EditFilter.Caption;
 			}
 
 			INT_PTR CALLBACK ObjectWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
@@ -202,6 +230,9 @@ namespace CreationKitPlatformExtended
 
 					lpObjWnd->Controls.TreeList = lpObjWnd->ObjectWindow.GetControl(2093);
 					lpObjWnd->Controls.ItemList = lpObjWnd->ObjectWindow.GetControl(1041);
+					lpObjWnd->Controls.ToggleDecompose = lpObjWnd->ObjectWindow.GetControl(6027);
+					lpObjWnd->Controls.BtnObjLayout = lpObjWnd->ObjectWindow.GetControl(6025);
+					lpObjWnd->Controls.ComboLayout = lpObjWnd->ObjectWindow.GetControl(6024);
 					lpObjWnd->Controls.EditFilter = lpObjWnd->ObjectWindow.GetControl(2581);
 					lpObjWnd->Controls.Spliter = lpObjWnd->ObjectWindow.GetControl(2157);
 					lpObjWnd->Controls.ActiveOnly.CreateWnd(lpObjWnd->ObjectWindow, 
@@ -218,7 +249,7 @@ namespace CreationKitPlatformExtended
 					if (!ObjectWindows.size())
 						lpObjWnd->ObjectWindow.Style = WS_OVERLAPPED | WS_CAPTION | WS_THICKFRAME;
 					else
-						lpObjWnd->ObjectWindow.Style = WS_OVERLAPPED | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_SYSMENU;
+						lpObjWnd->ObjectWindow.Style = WS_OVERLAPPED | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_SYSMENU;	
 
 					ObjectWindows.emplace(Hwnd, lpObjWnd);
 				}
@@ -275,15 +306,18 @@ namespace CreationKitPlatformExtended
 				else if (Message == WM_COMMAND)
 				{
 					const uint32_t param = LOWORD(wParam);
-
-					if ((param == UI_OBJECT_WINDOW_CHECKBOX) && 
-						(Core::GlobalEnginePtr->GetEditorVersion() <= Core::EDITOR_SKYRIM_SE_1_6_438))
+					if (param == UI_OBJECT_WINDOW_CHECKBOX)
 					{
 						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
 						SetPropA(Hwnd, "ActiveOnly", reinterpret_cast<HANDLE>(enableFilter));
 
-						// Force the list items to update as if it was by timer
-						SendMessageA(Hwnd, WM_TIMER, 0x4D, 0);
+						if (auto iterator = ObjectWindows.find(Hwnd); iterator != ObjectWindows.end())
+						{
+							LPOBJWND lpObjWnd = (*iterator).second;
+							if (lpObjWnd) SetObjectWindowFilter(lpObjWnd, "", TRUE, 
+								!lpObjWnd->Controls.ActiveOnly.Checked);
+						}
+	
 						return 1;
 					}
 					else if (param == UI_CMD_CHANGE_SPLITTER_OBJECTWINDOW) {
@@ -297,7 +331,7 @@ namespace CreationKitPlatformExtended
 				}
 				else if (Message == UI_OBJECT_WINDOW_ADD_ITEM)
 				{
-					auto form = reinterpret_cast<const EditorAPI::SkyrimSpectialEdition::TESForm*>(wParam);
+					auto form = reinterpret_cast<const EditorAPI::Fallout4::TESForm*>(wParam);
 					auto allowInsert = reinterpret_cast<bool*>(lParam);
 
 					*allowInsert = true;
@@ -305,7 +339,7 @@ namespace CreationKitPlatformExtended
 					// Skip the entry if "Show only active forms" is checked
 					if (static_cast<bool>(GetPropA(Hwnd, "ActiveOnly")))
 					{
-						if (form && !form->GetActive())
+						if (form && !form->Active)
 							*allowInsert = false;
 					}
 

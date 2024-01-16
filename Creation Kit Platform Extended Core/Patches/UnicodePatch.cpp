@@ -153,7 +153,7 @@ namespace CreationKitPlatformExtended
 			case 1024:
 			case 1025:
 			{
-				if (!lpString || Conversion::IsUtf8Valid(lpString))
+				if (!lpString || !Conversion::IsUtf8Valid(lpString))
 					goto SetTextDef;
 
 				String wincp_str = Conversion::Utf8ToAnsi(lpString);
@@ -169,7 +169,7 @@ namespace CreationKitPlatformExtended
 			WPARAM wParam, LPARAM lParam) {
 			if (Msg != WM_GETTEXT && Msg != WM_GETTEXTLENGTH)
 				MsgTextDef:
-			return SendDlgItemMessageA(hDlg, nIDDlgItem, Msg, wParam, lParam);
+				return SendDlgItemMessageA(hDlg, nIDDlgItem, Msg, wParam, lParam);
 
 			HWND hCtrlWnd;
 
@@ -188,7 +188,7 @@ namespace CreationKitPlatformExtended
 				ansi_str.resize(maxlen);
 				ansi_str.resize(GetWindowTextA(hCtrlWnd, &ansi_str[0], maxlen));
 
-				if (Conversion::IsUtf8Valid(ansi_str))
+				if (!Conversion::IsUtf8Valid(ansi_str))
 					goto MsgTextDef;
 
 				String utf8_str = Conversion::AnsiToUtf8(ansi_str);

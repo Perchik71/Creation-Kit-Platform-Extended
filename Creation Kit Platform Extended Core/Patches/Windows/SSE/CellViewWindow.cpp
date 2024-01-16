@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
+#include "Editor API/BSString.h"
 #include "Editor API/EditorUI.h"
 #include "Patches/Windows/SSE/MainWindow.h"
 #include "CellViewWindow.h"
@@ -19,7 +20,7 @@ namespace CreationKitPlatformExtended
 		namespace SkyrimSpectialEdition
 		{
 			CellViewWindow* GlobalCellViewWindowPtr = nullptr;
-			uintptr_t pointer_CellViewWindow_data = 0;
+			//uintptr_t pointer_CellViewWindow_data = 0;
 			uintptr_t pointer_CellViewWindow_sub1 = 0;
 			uintptr_t pointer_CellViewWindow_sub2 = 0;
 
@@ -66,7 +67,7 @@ namespace CreationKitPlatformExtended
 				{
 					*(uintptr_t*)&_oldWndProc =
 						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), &HKWndProc);
-					pointer_CellViewWindow_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
+					//pointer_CellViewWindow_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
 
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&sub1); // Allow forms to be filtered in EditorUI_CellViewProc
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(3), (uintptr_t)&sub1); // ^
@@ -301,6 +302,29 @@ namespace CreationKitPlatformExtended
 					}
 
 					return S_OK;
+				}
+				else if (Message == WM_NOTIFY)
+				{
+					if (((LPNMHDR)lParam)->code == HDN_ITEMCHANGED)
+					{
+						// Bethesda удаляет столбцы, после их восстанавливает и считывает файла параметров их ширину.
+						// Естественно это приводит к потере ширины столбца всегда при открытии новой ячейки.
+						// Сохраним их в файл параметров, как только будут изменены.
+
+						LPNMHEADERA pNMHeader = (LPNMHEADERA)lParam;
+						auto ListView = GetParent(pNMHeader->hdr.hwndFrom);
+						if (ListView == GlobalCellViewWindowPtr->m_CellListView.Handle)
+						{
+							auto ColWidth = ListView_GetColumnWidth(ListView, pNMHeader->iItem);
+
+							EditorAPI::BSString OptionName;
+							OptionName.Format("Cell View Cell List Column %d width", pNMHeader->iItem);
+
+							WritePrivateProfileStringA("General", OptionName.c_str(),
+								EditorAPI::BSString::Transforms::IntToStr(ColWidth).c_str(), 
+								(EditorAPI::BSString::Utils::GetApplicationPath() + "CreationKitPrefs.ini").c_str());
+						}
+					}
 				}
 
 				return CallWindowProc(GlobalCellViewWindowPtr->GetOldWndProc(), Hwnd, Message, wParam, lParam);
