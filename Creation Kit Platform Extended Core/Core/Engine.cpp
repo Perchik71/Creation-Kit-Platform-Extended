@@ -24,6 +24,7 @@
 #include "Patches/VersionControlMergeWorkaround.h"
 #include "Patches/RenderWindow60FPS.h"
 #include "Patches/RenameCreationKitApp.h"
+#include "Patches/FaceGen.h"
 #include "Patches/DisableAssertion.h"
 #include "Patches/SkipTopicInfoValidation.h"
 #include "Patches/AllowMultipleWindowAndMaster.h"
@@ -134,6 +135,7 @@ namespace CreationKitPlatformExtended
 				new CreationKitPlatformExtended::Patches::SkipTopicInfoValidationPatch(),
 				new CreationKitPlatformExtended::Patches::AllowMultipleWindowAndMasterPatch(),
 				new CreationKitPlatformExtended::Patches::RenameCreationKitAppPatch(),
+				new CreationKitPlatformExtended::Patches::FaceGenPatch(),
 				new CreationKitPlatformExtended::Patches::UIPatch(),
 				new CreationKitPlatformExtended::Patches::UIHotkeysPatch(),
 				new CreationKitPlatformExtended::Patches::UIThemePatchAdditional(),

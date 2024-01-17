@@ -16,10 +16,10 @@ namespace CreationKitPlatformExtended
 		{
 			using namespace CreationKitPlatformExtended::Core;
 
-			class TESDataHandlerPatch : public Module
+			class FixSmoothValuePatch : public Module
 			{
 			public:
-				TESDataHandlerPatch();
+				FixSmoothValuePatch();
 
 				virtual bool HasOption() const;
 				virtual bool HasCanRuntimeDisabled() const;
@@ -27,14 +27,16 @@ namespace CreationKitPlatformExtended
 				virtual const char* GetName() const;
 				virtual bool HasDependencies() const;
 				virtual Array<String> GetDependencies() const;
+
+				static float sub(float a1, float a2);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
 				virtual bool Activate(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 				virtual bool Shutdown(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 			private:
-				TESDataHandlerPatch(const TESDataHandlerPatch&) = default;
-				TESDataHandlerPatch& operator=(const TESDataHandlerPatch&) = default;
+				FixSmoothValuePatch(const FixSmoothValuePatch&) = default;
+				FixSmoothValuePatch& operator=(const FixSmoothValuePatch&) = default;
 			};
 		}
 	}

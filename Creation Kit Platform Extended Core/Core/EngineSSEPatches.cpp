@@ -79,7 +79,6 @@
 #include "Patches/SSE/NavMeshPseudoDelete.h"
 #include "Patches/SSE/SpellEnableCastingAndDeliveryAlways.h"
 #include "Patches/SSE/UpdateUIWhenFogToggled.h"
-#include "Patches/SSE/FaceGen.h"
 #include "Patches/SSE/FixParamsATXT.h"
 #include "Patches/SSE/NewFormat171.h"
 #include "Patches/SSE/FixBethNetPS4.h"
@@ -173,10 +172,9 @@ namespace CreationKitPlatformExtended
 				new Patches::NavMeshPseudoDeletePatch(),
 				new Patches::SpellEnableCastingAndDeliveryAlwaysPatch(),
 				new Patches::UpdateUIWhenFogToggledPatch(),
-				new Patches::FaceGenPatch(),
 				new Patches::FixParamsATXTPatch(),
 				new Patches::NewFormat171Patch(),
-				new Patches::FixBethNetPS4Patch(),
+				//new Patches::FixBethNetPS4Patch(),
 				new Patches::MainWindow(),
 				new Patches::RenderWindow(),
 				new Patches::ObjectWindow(),

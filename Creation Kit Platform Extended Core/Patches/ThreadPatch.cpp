@@ -59,6 +59,13 @@ namespace CreationKitPlatformExtended
 
 				SetPriorityClass(GetCurrentProcess(), ABOVE_NORMAL_PRIORITY_CLASS);
 
+				// The system does not display the critical-error-handler message box. 
+				// Instead, the system sends the error to the calling process.
+				// Best practice is that all applications call the process - wide SetErrorMode 
+				// function with a parameter of SEM_FAILCRITICALERRORS at startup.
+				// This is to prevent error mode dialogs from hanging the application.
+				SetErrorMode(SEM_FAILCRITICALERRORS);
+
 				return true;
 			}
 			

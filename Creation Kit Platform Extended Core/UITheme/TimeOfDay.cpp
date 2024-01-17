@@ -22,6 +22,7 @@
 
 #include "Core/Engine.h"
 #include "Patches/Windows/SSE/MainWindow.h"
+#include "Patches/Windows/FO4/MainWindowF4.h"
 #include "VarCommon.h"
 #include "TimeOfDay.h"
 
@@ -123,6 +124,12 @@ namespace CreationKitPlatformExtended
 							if (Core::GlobalEnginePtr->GetEditorVersion() <= Core::EDITOR_SKYRIM_SE_LAST)
 							{
 								auto hWndMain = Patches::SkyrimSpectialEdition::GlobalMainWindowPtr->Handle;
+								SendMessageA(hWndMain, WM_NOTIFY, 0x16D3, (LPARAM)&hdr);
+								SendMessageA(hWndMain, WM_NOTIFY, NM_RELEASEDCAPTURE, (LPARAM)&hdr);
+							}
+							else if (Core::GlobalEnginePtr->GetEditorVersion() <= Core::EDITOR_FALLOUT_C4_LAST)
+							{
+								auto hWndMain = Patches::Fallout4::GlobalMainWindowPtr->Handle;
 								SendMessageA(hWndMain, WM_NOTIFY, 0x16D3, (LPARAM)&hdr);
 								SendMessageA(hWndMain, WM_NOTIFY, NM_RELEASEDCAPTURE, (LPARAM)&hdr);
 							}

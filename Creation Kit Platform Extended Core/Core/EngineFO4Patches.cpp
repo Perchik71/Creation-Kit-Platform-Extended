@@ -10,6 +10,12 @@
 #include "Patches/FO4/BSResourceLooseFilesPatch.h"
 #include "Patches/FO4/TESDataHandlerHook.h"
 #include "Patches/FO4/BSArchiveManagerModdedF4.h"
+#include "Patches/FO4/RemoveUselessMessagesF4.h"
+#include "Patches/FO4/FixVC.h"
+#include "Patches/FO4/FixLoadD3DCompiler.h"
+#include "Patches/FO4/FixSmoothValue.h"
+#include "Patches/FO4/FixCrashNoRootMat.h"
+#include "Patches/FO4/FixDeleteTintToRace.h"
 
 #include "Patches/Windows/FO4/MainWindowF4.h"
 #include "Patches/Windows/FO4/ObjectWindowF4.h"
@@ -31,6 +37,12 @@ namespace CreationKitPlatformExtended
 				new Patches::BSResourceLooseFilesPatch(),
 				new Patches::TESDataHandlerPatch(),
 				new Patches::BSArchiveManagerModdedPatch(),
+				new Patches::RemoveUselessMessagesPatch(),
+				new Patches::FixVCPatch(),
+				new Patches::FixLoadD3DCompilerPatch(),
+				new Patches::FixSmoothValuePatch(),
+				new Patches::FixCrashNoRootMatPatch(),
+				new Patches::FixDeleteTintToRacePatch(),
 
 				new Patches::MainWindow(),
 				new Patches::ObjectWindow(),

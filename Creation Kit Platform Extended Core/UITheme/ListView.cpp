@@ -155,12 +155,13 @@ namespace CreationKitPlatformExtended
 				SetTextColor(lpDrawItem->hDC, GetThemeSysColor(ThemeColor::ThemeColor_Text_4));
 
 				Graphics::CRECT rcText;
-				ListView_GetSubItemRect(lpDrawItem->hwndItem, lpDrawItem->itemID, 0, LVIR_BOUNDS, (LPRECT)&rcText);
+				ListView_GetSubItemRect(lpDrawItem->hwndItem, lpDrawItem->itemID, 0, LVIR_LABEL, (LPRECT)&rcText);
 				rcText.Inflate(-2, -2);
-				rcText.Left += 2 + icon_off;
+				rcText.Left += 2;
+		
 				Canvas.TextRect(rcText, FileName.Get(), DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS);
 
-				ListView_GetSubItemRect(lpDrawItem->hwndItem, lpDrawItem->itemID, 1, LVIR_BOUNDS, (LPRECT)&rcText);
+				ListView_GetSubItemRect(lpDrawItem->hwndItem, lpDrawItem->itemID, 1, LVIR_LABEL, (LPRECT)&rcText);
 				rcText.Inflate(-2, -2);
 				rcText.Left += 2;
 

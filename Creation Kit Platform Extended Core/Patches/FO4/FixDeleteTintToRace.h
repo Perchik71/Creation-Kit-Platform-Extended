@@ -12,14 +12,14 @@ namespace CreationKitPlatformExtended
 {
 	namespace Patches
 	{
-		namespace SkyrimSpectialEdition
+		namespace Fallout4
 		{
 			using namespace CreationKitPlatformExtended::Core;
 
-			class FaceGenPatch : public Module
+			class FixDeleteTintToRacePatch : public Module
 			{
 			public:
-				FaceGenPatch();
+				FixDeleteTintToRacePatch();
 
 				virtual bool HasOption() const;
 				virtual bool HasCanRuntimeDisabled() const;
@@ -28,15 +28,15 @@ namespace CreationKitPlatformExtended
 				virtual bool HasDependencies() const;
 				virtual Array<String> GetDependencies() const;
 
-				static void sub(__int64 a1, __int64 a2);
+				static void sub(int64_t count, int64_t item_id, HWND listview);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
 				virtual bool Activate(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 				virtual bool Shutdown(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 			private:
-				FaceGenPatch(const FaceGenPatch&) = default;
-				FaceGenPatch& operator=(const FaceGenPatch&) = default;
+				FixDeleteTintToRacePatch(const FixDeleteTintToRacePatch&) = default;
+				FixDeleteTintToRacePatch& operator=(const FixDeleteTintToRacePatch&) = default;
 			};
 		}
 	}

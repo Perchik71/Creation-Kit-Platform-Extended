@@ -16,10 +16,10 @@ namespace CreationKitPlatformExtended
 		{
 			using namespace CreationKitPlatformExtended::Core;
 
-			class TESDataHandlerPatch : public Module
+			class RemoveUselessMessagesPatch : public Module
 			{
 			public:
-				TESDataHandlerPatch();
+				RemoveUselessMessagesPatch();
 
 				virtual bool HasOption() const;
 				virtual bool HasCanRuntimeDisabled() const;
@@ -33,8 +33,8 @@ namespace CreationKitPlatformExtended
 				virtual bool Activate(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 				virtual bool Shutdown(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 			private:
-				TESDataHandlerPatch(const TESDataHandlerPatch&) = default;
-				TESDataHandlerPatch& operator=(const TESDataHandlerPatch&) = default;
+				RemoveUselessMessagesPatch(const RemoveUselessMessagesPatch&) = default;
+				RemoveUselessMessagesPatch& operator=(const RemoveUselessMessagesPatch&) = default;
 			};
 		}
 	}
