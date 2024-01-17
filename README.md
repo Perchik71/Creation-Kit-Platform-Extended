@@ -21,7 +21,7 @@ The powerful open-source platform makes numerous fixes and improvements to the *
 > At the moment, the platform supports **CK** version:
 > | Skyrim | Fallout 4 |
 > | ------------- | ------------- |
-> | **SSE 1.5.3.0** | **F4 1.10.162.0** *(the beginning)* |
+> | **SSE 1.5.3.0** | **F4 1.10.162.0** |
 > | **SSE 1.5.73.0** |  |
 > | **SSE 1.6.438.0**  |  |
 > | **SSE 1.6.1130.0** |  |
@@ -29,6 +29,10 @@ The powerful open-source platform makes numerous fixes and improvements to the *
 > [!IMPORTANT]
 > **CK** does not work well with **ENB**.  
 > I wrote **ckpe_loader**. This is console app, for 15 seconds renames from the known to me .dll files that harm the work of CK this time is enough to load the CK itself. All renames .dll files will be restored name after this time.
+
+> [!NOTE]
+> You can remove *Steam* from the **Creation Kit**.  
+> You just need to manually replace the string *`steam_api64.dll`* on *`winhttp.dll`* in any **HEX editor**. Since the new string is four bytes shorter, these bytes are set to **`0x00`**. Or compile the **NoSteam patch** in **Lazarus** and use it.
 
 # Fixed or added
 :white_check_mark: Fast file loading  
