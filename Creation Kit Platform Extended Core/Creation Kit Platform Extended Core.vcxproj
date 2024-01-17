@@ -128,6 +128,7 @@
     <ClCompile Include="Patches\FO4\BSResourceLooseFilesPatch.cpp" />
     <ClCompile Include="Patches\FO4\FixCrashNoRootMat.cpp" />
     <ClCompile Include="Patches\FO4\FixDeleteTintToRace.cpp" />
+    <ClCompile Include="Patches\FO4\FixInfiniteLoopPapyrusCompile.cpp" />
     <ClCompile Include="Patches\FO4\FixLoadD3DCompiler.cpp" />
     <ClCompile Include="Patches\FO4\FixSmoothValue.cpp" />
     <ClCompile Include="Patches\FO4\FixVC.cpp" />
@@ -365,6 +366,7 @@
     <ClInclude Include="Patches\FO4\BSResourceLooseFilesPatch.h" />
     <ClInclude Include="Patches\FO4\FixCrashNoRootMat.h" />
     <ClInclude Include="Patches\FO4\FixDeleteTintToRace.h" />
+    <ClInclude Include="Patches\FO4\FixInfiniteLoopPapyrusCompile.h" />
     <ClInclude Include="Patches\FO4\FixLoadD3DCompiler.h" />
     <ClInclude Include="Patches\FO4\FixSmoothValue.h" />
     <ClInclude Include="Patches\FO4\FixVC.h" />

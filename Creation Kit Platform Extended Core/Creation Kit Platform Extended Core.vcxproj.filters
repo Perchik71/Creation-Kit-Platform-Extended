@@ -574,6 +574,9 @@
     <ClCompile Include="Patches\FO4\FixDeleteTintToRace.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\FO4\FixInfiniteLoopPapyrusCompile.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1346,6 +1349,9 @@
       <Filter>Patches\FO4</Filter>
     </ClInclude>
     <ClInclude Include="Patches\FO4\FixDeleteTintToRace.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\FixInfiniteLoopPapyrusCompile.h">
       <Filter>Patches\FO4</Filter>
     </ClInclude>
   </ItemGroup>

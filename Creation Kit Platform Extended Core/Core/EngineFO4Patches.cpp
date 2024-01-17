@@ -16,6 +16,7 @@
 #include "Patches/FO4/FixSmoothValue.h"
 #include "Patches/FO4/FixCrashNoRootMat.h"
 #include "Patches/FO4/FixDeleteTintToRace.h"
+#include "Patches/FO4/FixInfiniteLoopPapyrusCompile.h"
 
 #include "Patches/Windows/FO4/MainWindowF4.h"
 #include "Patches/Windows/FO4/ObjectWindowF4.h"
@@ -43,7 +44,8 @@ namespace CreationKitPlatformExtended
 				new Patches::FixSmoothValuePatch(),
 				new Patches::FixCrashNoRootMatPatch(),
 				new Patches::FixDeleteTintToRacePatch(),
-
+				new Patches::FixInfiniteLoopPapyrusCompilePatch(),
+				
 				new Patches::MainWindow(),
 				new Patches::ObjectWindow(),
 				new Patches::CellViewWindow(),
