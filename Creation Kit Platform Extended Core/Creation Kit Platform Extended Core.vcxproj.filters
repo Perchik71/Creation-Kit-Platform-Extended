@@ -601,6 +601,12 @@
     <ClCompile Include="Patches\FO4\FixPluginTXT.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\FO4\PreCombined.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\FO4\FixQuoteCmdLine.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1400,6 +1406,12 @@
       <Filter>Patches\FO4</Filter>
     </ClInclude>
     <ClInclude Include="Patches\FO4\FixPluginTXT.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\PreCombined.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\FixQuoteCmdLine.h">
       <Filter>Patches\FO4</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "ModuleManager.h"
+#include "CommandLineParser.h"
 
 #include "Patches/FO4/AllowSaveESMandMasterESPF4.h"
 #include "Patches/FO4/ReplaceBSPointerHandleAndManagerF4.h"
@@ -25,6 +26,8 @@
 #include "Patches/FO4/SkipUpdateCheck.h"
 #include "Patches/FO4/FixBNet.h"
 #include "Patches/FO4/FixPluginTXT.h"
+#include "Patches/FO4/PreCombined.h"
+#include "Patches/FO4/FixQuoteCmdLine.h"
 
 #include "Patches/Windows/FO4/MainWindowF4.h"
 #include "Patches/Windows/FO4/ObjectWindowF4.h"
@@ -61,12 +64,31 @@ namespace CreationKitPlatformExtended
 				new Patches::SkipUpdateCheckPatch(),
 				new Patches::FixBNetPatch(),
 				new Patches::FixPluginTXTPatch(),
+				new Patches::FixQuoteCmdLinePatch(),
 				
 				new Patches::MainWindow(),
 				new Patches::ObjectWindow(),
 				new Patches::CellViewWindow(),
 				new Patches::DataWindow(),
 			});
+
+			CommandLineParser CommandLine;
+			if (CommandLine.Count() > 0)
+			{
+				auto Cmd = CommandLine.At(0);
+				auto Sep = Cmd.find_first_of(':');
+				if (Sep == String::npos)
+					return;
+
+				Cmd = Cmd.substr(0, Sep);
+				_MESSAGE("[FO4] Console command: %s", Cmd.c_str());
+				if (!_stricmp(Cmd.c_str(), "-GeneratePreCombined"))
+				{
+					_CONSOLE("The precombining operation has been launched");
+
+					PatchesManager->Append(new CreationKitPlatformExtended::Patches::Fallout4::PreCombinedPatch());
+				}
+			}
 		}
 	}
 }

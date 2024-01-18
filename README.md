@@ -76,9 +76,9 @@ For understanding, the application uses the ancient **ANSI** type string represe
 # Compilation
 Open a project in **Visual Studio 2019** or later. Build the project in **Release** mode.  
 Compile the Unicode Plugin to **Lazarus 1.8.2** or later. Take .dll's from the **x64** folder and move it to the folder with the game. 
-Take the database **CreationKitPlatformExtended_SSE_1_X_XXXX.database** from the folder **Database/1_X_XXXX/**. 
-You will also need **Stuffs/SSE/CreationKitPlatformExtendedMessagesBlacklist.txt** and **Stuffs/SSE/CreationKitPlatformExtended.ini** to the game folder. 
-Move the dialog package **Dialogs/SSE/CreationKitPlatformExtended_SSE_Dialogs.pak** to the root folder of the game.  
+Take the database **CreationKitPlatformExtended_<GAME>_1_X_XXXX.database** from the folder **Database/<GAME>/1_X_XXXX/**. 
+You will also need **Stuffs/<GAME>/CreationKitPlatformExtendedMessagesBlacklist.txt** and **Stuffs/<GAME>/CreationKitPlatformExtended.ini** to the game folder. 
+Move the dialog package **Dialogs/<GAME>/CreationKitPlatformExtended_<GAME>_Dialogs.pak** to the root folder of the game.  
 
 # Credits
 [Nukem9](https://github.com/Nukem9) (for experimental functions, hash and so on, very useful)  
@@ -88,4 +88,4 @@ Move the dialog package **Dialogs/SSE/CreationKitPlatformExtended_SSE_Dialogs.pa
 **GPLv3**: <a>https://www.gnu.org/licenses/gpl-3.0.html</a>. <br />
 Copyright © 2023-2024 aka perchik71. All rights reserved. <br />
 The memory manager is licensed under **LGPLv3**: <a>https://www.gnu.org/licenses/lgpl-3.0.html</a>. <br />
-Copyright © 2023 aka perchik71. All rights reserved.
+Copyright © 2023-2024 aka perchik71. All rights reserved.

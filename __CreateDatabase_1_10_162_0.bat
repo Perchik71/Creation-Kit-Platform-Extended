@@ -41,3 +41,5 @@ CreationKit -PEUpdateDatabase "Fixed recursive sorting function" "FixRecursiveSo
 CreationKit -PEUpdateDatabase "Skipping the program update check" "SkipUpdateCheck.relb"
 CreationKit -PEUpdateDatabase "Fix crash when Unicode string BNet" "FixBNet.relb"
 CreationKit -PEUpdateDatabase "Fix for crash when plugins.txt is present" "FixPluginTXT.relb"
+CreationKit -PEUpdateDatabase "PreCombined" "PreCombined.relb"
+CreationKit -PEUpdateDatabase "Fixed quote to cmdline" "FixQuoteCmdLine.relb"
