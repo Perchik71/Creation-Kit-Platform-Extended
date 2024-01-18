@@ -33,7 +33,7 @@ The powerful open-source platform makes numerous fixes and improvements to the *
 > [!NOTE]
 > You can remove *Steam* from the **Creation Kit**.  
 > You just need to manually replace the string *`steam_api64.dll`* on *`winhttp.dll`* in any **HEX editor**. Since the new string is four bytes shorter, the remaining bytes are set to **`0x00`**. Or compile the **NoSteam Patcher** in **Lazarus** and use it.  
-> For versions **`1.6.438.0`** and **`1.10.162.0`**, you first need to remove **Steam DRM**, for example, [Steamless](https://github.com/atom0s/Steamless). 
+> For versions **`1.6.438.0`** and **`1.10.162.0`**, you first need to remove **`Steam DRM`**, for example, [Steamless](https://github.com/atom0s/Steamless). 
 
 # Fixed or added
 :white_check_mark: Fast file loading  
@@ -58,11 +58,11 @@ To hide errors, create a file *CreationKitPlatformExtendedMessagesBlacklist.txt*
 *CreationKitPlatformExtended.ini* the main file with the settings and comes with the code, be sure to read.
 
 # Unicode
-**ONLY SURROGATE**: Support for English and native languages without special characters.
-For understanding, the application uses the ancient **ANSI** type string representation. The idea is to feed the text already in your native encoding. When loading .esp, .esl, .esm files all strings are translated from UTF-8 to WinCP, and when saved back. WinCP is the current encoding in your operating system.  
+**`ONLY SURROGATE`**: Support for English and native languages without special characters.
+For understanding, the application uses the ancient **`ANSI`** type string representation. The idea is to feed the text already in your native encoding. When loading `.esp`, `.esl`, `.esm` files all strings are translated from **`UTF-8`** to **`WinCP`**, and when saved back. **`WinCP`** is the current encoding in your operating system.  
 
 > [!IMPORTANT] 
-> In **Win10**, in the language settings, there is now an option to work with **UTF-8**, you need to turn it off otherwise there will be only **"?"**.
+> In **`Win10`**, in the language settings, there is now an option to work with **`UTF-8`**, you need to turn it off otherwise there will be only **`?`**.
 
 # Dependencies
 [detours](https://github.com/Nukem9/detours.git) URL **https://github.com/Nukem9/detours.git** IN **Dependencies/detours**  
@@ -74,11 +74,11 @@ For understanding, the application uses the ancient **ANSI** type string represe
 [jDialogs](https://github.com/Perchik71/jDialogs.git) URL **https://github.com/Perchik71/jDialogs.git** IN **Dependencies/jDialogs** *(recursive)*
 
 # Compilation
-Open a project in **Visual Studio 2019** or later. Build the project in **Release** mode.  
-Compile the Unicode Plugin to **Lazarus 1.8.2** or later. Take .dll's from the **x64** folder and move it to the folder with the game. 
-Take the database **CreationKitPlatformExtended_<GAME>_1_X_XXXX.database** from the folder **Database/<GAME>/1_X_XXXX/**. 
-You will also need **Stuffs/<GAME>/CreationKitPlatformExtendedMessagesBlacklist.txt** and **Stuffs/<GAME>/CreationKitPlatformExtended.ini** to the game folder. 
-Move the dialog package **Dialogs/<GAME>/CreationKitPlatformExtended_<GAME>_Dialogs.pak** to the root folder of the game.  
+Open a project in **`Visual Studio 2019`** or later. Build the project in **`Release`** mode.  
+Compile the Unicode Plugin to **`Lazarus 1.8.2`** or later. Take .dll's from the **`x64`** folder and move it to the folder with the game. 
+Take the database **`CreationKitPlatformExtended_<GAME>_1_X_XXXX.database`** from the folder **`Database/<GAME>/1_X_XXXX/`**. 
+You will also need **`Stuffs/<GAME>/CreationKitPlatformExtendedMessagesBlacklist.txt`** and **`Stuffs/<GAME>/CreationKitPlatformExtended.ini`** to the game folder. 
+Move the dialog package **`Dialogs/<GAME>/CreationKitPlatformExtended_<GAME>_Dialogs.pak`** to the root folder of the game.  
 
 # Credits
 [Nukem9](https://github.com/Nukem9) (for experimental functions, hash and so on, very useful)  
