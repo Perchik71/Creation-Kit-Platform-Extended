@@ -84,74 +84,74 @@ namespace CreationKitPlatformExtended
 
 		template<typename TR>
 		__forceinline TR fastCall(size_t reloff) {
-			return ((TR(__fastcall*)())GlobalRelocatorPtr->Rav2Off(reloff))();
+			return ((TR(__fastcall*)())(reloff))();
 		}
 
 		template<typename TR, typename T1>
 		__forceinline TR fastCall(size_t reloff, T1 a1) {
-			return ((TR(__fastcall*)(T1))GlobalRelocatorPtr->Rav2Off(reloff))(a1);
+			return ((TR(__fastcall*)(T1))(reloff))(a1);
 		}
 
 		template<typename TR, typename T1, typename T2>
 		__forceinline TR fastCall(size_t reloff, T1 a1, T2 a2) {
-			return ((TR(__fastcall*)(T1, T2))GlobalRelocatorPtr->Rav2Off(reloff))(a1, a2);
+			return ((TR(__fastcall*)(T1, T2))(reloff))(a1, a2);
 		}
 
 		template<typename TR, typename T1, typename T2, typename T3>
 		__forceinline TR fastCall(size_t reloff, T1 a1, T2 a2, T3 a3) {
-			return ((TR(__fastcall*)(T1, T2, T3))GlobalRelocatorPtr->Rav2Off(reloff))(a1, a2, a3);
+			return ((TR(__fastcall*)(T1, T2, T3))(reloff))(a1, a2, a3);
 		}
 
 		template<typename TR, typename T1, typename T2, typename T3, typename T4>
 		__forceinline TR fastCall(size_t reloff, T1 a1, T2 a2, T3 a3, T4 a4) {
-			return ((TR(__fastcall*)(T1, T2, T3, T4))GlobalRelocatorPtr->Rav2Off(reloff))(a1, a2, a3, a4);
+			return ((TR(__fastcall*)(T1, T2, T3, T4))(reloff))(a1, a2, a3, a4);
 		}
 
 		template<typename TR, typename T1, typename T2, typename T3, typename T4, typename T5>
 		__forceinline TR fastCall(size_t reloff, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5) {
-			return ((TR(__fastcall*)(T1, T2, T3, T4, T5))GlobalRelocatorPtr->Rav2Off(reloff))(a1, a2, a3, a4, a5);
+			return ((TR(__fastcall*)(T1, T2, T3, T4, T5))(reloff))(a1, a2, a3, a4, a5);
 		}
 
 		template<typename TR, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
 		__forceinline TR fastCall(size_t reloff, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6) {
-			return ((TR(__fastcall*)(T1, T2, T3, T4, T5, T6))GlobalRelocatorPtr->Rav2Off(reloff))(a1, a2, a3, a4, a5, a6);
+			return ((TR(__fastcall*)(T1, T2, T3, T4, T5, T6))(reloff))(a1, a2, a3, a4, a5, a6);
 		}
 
 		template<typename TR, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7>
 		__forceinline TR fastCall(size_t reloff, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7) {
-			return ((TR(__fastcall*)(T1, T2, T3, T4, T5, T6, T7))GlobalRelocatorPtr->Rav2Off(reloff))(a1, a2, a3, a4, a5, a6, a7);
+			return ((TR(__fastcall*)(T1, T2, T3, T4, T5, T6, T7))(reloff))(a1, a2, a3, a4, a5, a6, a7);
 		}
 
 		template<typename TR, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8>
 		__forceinline TR fastCall(size_t reloff, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7, T8 a8) {
-			return ((TR(__fastcall*)(T1, T2, T3, T4, T5, T6, T7, T8))GlobalRelocatorPtr->Rav2Off(reloff))(a1, a2, a3, a4, a5, a6, a7, a8);
+			return ((TR(__fastcall*)(T1, T2, T3, T4, T5, T6, T7, T8))(reloff))(a1, a2, a3, a4, a5, a6, a7, a8);
 		}
 
 		// thread-safe template versions of thisCall()
 
 		template<typename TR>
 		__forceinline TR thisCall(size_t reloff, const void* ths) {
-			return ((TR(__fastcall*)(const void*))GlobalRelocatorPtr->Rav2Off(reloff))(ths);
+			return ((TR(__fastcall*)(const void*))(reloff))(ths);
 		}
 
 		template<typename TR, typename T1>
 		__forceinline TR thisCall(size_t reloff, const void* ths, T1 a1) {
-			return ((TR(__fastcall*)(const void*, T1))GlobalRelocatorPtr->Rav2Off(reloff))(ths, a1);
+			return ((TR(__fastcall*)(const void*, T1))(reloff))(ths, a1);
 		}
 
 		template<typename TR, typename T1, typename T2>
 		__forceinline TR thisCall(size_t reloff, const void* ths, T1 a1, T2 a2) {
-			return ((TR(__fastcall*)(const void*, T1, T2))GlobalRelocatorPtr->Rav2Off(reloff))(ths, a1, a2);
+			return ((TR(__fastcall*)(const void*, T1, T2))(reloff))(ths, a1, a2);
 		}
 
 		template<typename TR, typename T1, typename T2, typename T3>
 		__forceinline TR thisCall(size_t reloff, const void* ths, T1 a1, T2 a2, T3 a3) {
-			return ((TR(__fastcall*)(const void*, T1, T2, T3))GlobalRelocatorPtr->Rav2Off(reloff))(ths, a1, a2, a3);
+			return ((TR(__fastcall*)(const void*, T1, T2, T3))(reloff))(ths, a1, a2, a3);
 		}
 
 		template<typename TR, typename T1, typename T2, typename T3, typename T4>
 		__forceinline TR thisCall(size_t reloff, const void* ths, T1 a1, T2 a2, T3 a3, T4 a4) {
-			return ((TR(__fastcall*)(const void*, T1, T2, T3, T4))GlobalRelocatorPtr->Rav2Off(reloff))(ths, a1, a2, a3, a4);
+			return ((TR(__fastcall*)(const void*, T1, T2, T3, T4))(reloff))(ths, a1, a2, a3, a4);
 		}
 	}
 }

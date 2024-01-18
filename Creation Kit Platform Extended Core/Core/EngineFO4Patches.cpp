@@ -17,6 +17,14 @@
 #include "Patches/FO4/FixCrashNoRootMat.h"
 #include "Patches/FO4/FixDeleteTintToRace.h"
 #include "Patches/FO4/FixInfiniteLoopPapyrusCompile.h"
+#include "Patches/FO4/AssertD3D11.h"
+#include "Patches/FO4/EnableGoInSelGame.h"
+#include "Patches/FO4/FixCrashMapMarkerCmd.h"
+#include "Patches/FO4/FixTabDeleteCrash.h"
+#include "Patches/FO4/FixRecursiveSorting.h"
+#include "Patches/FO4/SkipUpdateCheck.h"
+#include "Patches/FO4/FixBNet.h"
+#include "Patches/FO4/FixPluginTXT.h"
 
 #include "Patches/Windows/FO4/MainWindowF4.h"
 #include "Patches/Windows/FO4/ObjectWindowF4.h"
@@ -45,6 +53,14 @@ namespace CreationKitPlatformExtended
 				new Patches::FixCrashNoRootMatPatch(),
 				new Patches::FixDeleteTintToRacePatch(),
 				new Patches::FixInfiniteLoopPapyrusCompilePatch(),
+				new Patches::AssertD3D11Patch(),
+				new Patches::EnableGoInSelGamePatch(),
+				new Patches::FixCrashMapMarkerCmdPatch(),
+				new Patches::FixTabDeleteCrashPatch(),
+				new Patches::FixRecursiveSortingPatch(),
+				new Patches::SkipUpdateCheckPatch(),
+				new Patches::FixBNetPatch(),
+				new Patches::FixPluginTXTPatch(),
 				
 				new Patches::MainWindow(),
 				new Patches::ObjectWindow(),

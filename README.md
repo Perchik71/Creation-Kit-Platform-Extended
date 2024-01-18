@@ -32,7 +32,8 @@ The powerful open-source platform makes numerous fixes and improvements to the *
 
 > [!NOTE]
 > You can remove *Steam* from the **Creation Kit**.  
-> You just need to manually replace the string *`steam_api64.dll`* on *`winhttp.dll`* in any **HEX editor**. Since the new string is four bytes shorter, these bytes are set to **`0x00`**. Or compile the **NoSteam patch** in **Lazarus** and use it.
+> You just need to manually replace the string *`steam_api64.dll`* on *`winhttp.dll`* in any **HEX editor**. Since the new string is four bytes shorter, the remaining bytes are set to **`0x00`**. Or compile the **NoSteam Patcher** in **Lazarus** and use it.  
+> For versions **`1.6.438.0`** and **`1.10.162.0`**, you first need to remove **Steam DRM**, for example, [Steamless](https://github.com/atom0s/Steamless). 
 
 # Fixed or added
 :white_check_mark: Fast file loading  
