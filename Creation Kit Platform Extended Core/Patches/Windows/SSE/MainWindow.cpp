@@ -185,7 +185,6 @@ namespace CreationKitPlatformExtended
 				ExtMenu.AppendSeparator();
 				ExtMenu.Append("Import", UI_EXTMENU_IMPORT, ExtMenuHideFunctions);
 				ExtMenu.AppendSeparator();
-				ExtMenu.Append("Upload bethnet (TEST)", 41033);
 				ExtMenu.Append("Dump RTTI Data", UI_EXTMENU_DUMPRTTI);
 				ExtMenu.Append("Dump SDM Info", UI_EXTMENU_SDM);
 				ExtMenu.AppendSeparator();
