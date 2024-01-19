@@ -159,6 +159,11 @@ namespace CreationKitPlatformExtended
 			"ViewerClass",
 			"SpeakerClass",
 			"LandClass",
+			"TimeOfDayClass",
+			"DownloadClass",
+			"TreatAsClass",
+			"ViewControlClass",
+			"TreeviewToolTipClass",
 			"Render Window",
 			"#32770",
 		};
@@ -250,7 +255,7 @@ namespace CreationKitPlatformExtended
 				DWORD  iClipPrecision, DWORD iQuality, DWORD iPitchAndFamily, LPCSTR pszFaceName) 
 			{
 				return (HFONT)::CreateFontA(UITheme::ThemeFont->Height, 0, cEscapement, cOrientation, cWeight, bItalic, bUnderline,
-					bStrikeOut, _READ_OPTION_INT("CreationKit", "Charset", DEFAULT_CHARSET), iOutPrecision, iClipPrecision,
+					bStrikeOut, _READ_OPTION_INT("CreationKit", "nCharset", DEFAULT_CHARSET), iOutPrecision, iClipPrecision,
 					CLEARTYPE_NATURAL_QUALITY, VARIABLE_PITCH, UITheme::ThemeFont->Name.c_str());
 			}
 		}

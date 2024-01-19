@@ -101,3 +101,4 @@ CreationKit_se_1_6_1130 -PEUpdateDatabase "BSArchiveManager Modded" "1_6_1130\BS
 CreationKit_se_1_6_1130 -PEUpdateDatabase "Fix Spell Dlg" "1_6_1130\FixSpellDlg.relb"
 CreationKit_se_1_6_1130 -PEUpdateDatabase "Unicode" "1_6_1130\Unicode.relb"
 CreationKit_se_1_6_1130 -PEUpdateDatabase "Fix ATXT params sections" "1_6_1130\FixATXTParamsSections.relb"
+CreationKit_se_1_6_1130 -PEUpdateDatabase "Upload PS4 modded without assets" "FixBethNetPS4.relb"

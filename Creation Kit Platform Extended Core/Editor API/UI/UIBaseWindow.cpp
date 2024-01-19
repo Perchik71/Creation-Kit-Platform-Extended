@@ -547,6 +547,13 @@ namespace Core
 				FreeRelease();
 			}
 
+			// CUIBaseControl
+
+			WORD CUIBaseControl::GetID() const
+			{
+				return GetDlgCtrlID(m_hWnd);
+			}
+
 			// CUIMainWindow
 
 			void CUIMainWindow::FindToolWindow(void)

@@ -37,6 +37,10 @@ namespace Core
 				BOOL m_Checked;
 				UINT m_MenuId;
 			public:
+				CUICheckbox(void) : CUIBaseControl() {}
+				CUICheckbox(const HWND hWnd) : CUIBaseControl(hWnd) {}
+				CUICheckbox(const CUICheckbox& base) : CUIBaseControl(base) {}
+
 				VOID CreateWnd(const CUIBaseWindow &parent, const CUIBaseControl& control, const UINT menu_id);
 				VOID CreateWnd(const CUIBaseWindow &parent, const std::string &caption, const LONG l, const LONG t, const LONG w, const LONG h, const UINT menu_id);
 				VOID SetChecked(const BOOL value);

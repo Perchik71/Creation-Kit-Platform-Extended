@@ -550,9 +550,6 @@
     <ClCompile Include="Patches\Windows\FO4\DataWindowF4.cpp">
       <Filter>Patches\Windows\FO4</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\FixBethNetPS4.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Patches\FO4\RemoveUselessMessagesF4.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
@@ -606,6 +603,9 @@
     </ClCompile>
     <ClCompile Include="Patches\FO4\FixQuoteCmdLine.cpp">
       <Filter>Patches\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\Windows\SSE\BNetUploadWindow.cpp">
+      <Filter>Patches\Windows\SSE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1357,9 +1357,6 @@
     <ClInclude Include="Patches\Windows\FO4\DataWindowF4.h">
       <Filter>Patches\Windows\FO4</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\FixBethNetPS4.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Patches\FO4\RemoveUselessMessagesF4.h">
       <Filter>Patches\FO4</Filter>
     </ClInclude>
@@ -1413,6 +1410,9 @@
     </ClInclude>
     <ClInclude Include="Patches\FO4\FixQuoteCmdLine.h">
       <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\SSE\BNetUploadWindow.h">
+      <Filter>Patches\Windows\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

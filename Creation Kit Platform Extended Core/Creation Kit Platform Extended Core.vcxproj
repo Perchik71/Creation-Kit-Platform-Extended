@@ -174,7 +174,6 @@
     <ClCompile Include="Patches\SSE\EnableGameButtonToVC.cpp" />
     <ClCompile Include="Patches\SSE\EnableStateParentWorkaround.cpp" />
     <ClCompile Include="Patches\SSE\FixActorDlg.cpp" />
-    <ClCompile Include="Patches\SSE\FixBethNetPS4.cpp" />
     <ClCompile Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.cpp" />
     <ClCompile Include="Patches\SSE\FixBrightLightColor.cpp" />
     <ClCompile Include="Patches\SSE\FixBSShadowDirectionalLight.cpp" />
@@ -243,6 +242,7 @@
     <ClCompile Include="Patches\Windows\FO4\DataWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\MainWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\ObjectWindowF4.cpp" />
+    <ClCompile Include="Patches\Windows\SSE\BNetUploadWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\CellViewWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\DataWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\MainWindow.cpp" />
@@ -422,7 +422,6 @@
     <ClInclude Include="Patches\SSE\EnableGameButtonToVC.h" />
     <ClInclude Include="Patches\SSE\EnableStateParentWorkaround.h" />
     <ClInclude Include="Patches\SSE\FixActorDlg.h" />
-    <ClInclude Include="Patches\SSE\FixBethNetPS4.h" />
     <ClInclude Include="Patches\SSE\FixBGSEntryPointFunctionDataTwoValue.h" />
     <ClInclude Include="Patches\SSE\FixBrightLightColor.h" />
     <ClInclude Include="Patches\SSE\FixBSShadowDirectionalLight.h" />
@@ -491,6 +490,7 @@
     <ClInclude Include="Patches\Windows\FO4\DataWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\MainWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\ObjectWindowF4.h" />
+    <ClInclude Include="Patches\Windows\SSE\BNetUploadWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\CellViewWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\DataWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\MainWindow.h" />

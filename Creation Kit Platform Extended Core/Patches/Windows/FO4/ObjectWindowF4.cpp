@@ -213,7 +213,7 @@ namespace CreationKitPlatformExtended
 				if (!SkipText)
 					lpObjWnd->Controls.EditFilter.Caption = name;
 
-				lpObjWnd->Controls.ActiveOnly.Checked = actived;
+				//lpObjWnd->Controls.ActiveOnly.Checked = actived;
 				// Force the list items to update as if it was by timer
 				//lpObjWnd->ObjectWindow.Perform(WM_TIMER, 0x1B58, 0);
 				// This is a bit slower but works in multi windows
@@ -235,8 +235,7 @@ namespace CreationKitPlatformExtended
 					lpObjWnd->Controls.ComboLayout = lpObjWnd->ObjectWindow.GetControl(6024);
 					lpObjWnd->Controls.EditFilter = lpObjWnd->ObjectWindow.GetControl(2581);
 					lpObjWnd->Controls.Spliter = lpObjWnd->ObjectWindow.GetControl(2157);
-					lpObjWnd->Controls.ActiveOnly.CreateWnd(lpObjWnd->ObjectWindow, 
-						lpObjWnd->ObjectWindow.GetControl(UI_OBJECT_WINDOW_CHECKBOX), UI_OBJECT_WINDOW_CHECKBOX);
+					lpObjWnd->Controls.ActiveOnly = GetDlgItem(Hwnd, UI_OBJECT_WINDOW_CHECKBOX);
 
 					// Eliminate the flicker when changing categories
 					ListView_SetExtendedListViewStyleEx(lpObjWnd->Controls.ItemList.Handle, LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
@@ -310,7 +309,7 @@ namespace CreationKitPlatformExtended
 					{
 						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
 						SetPropA(Hwnd, "ActiveOnly", reinterpret_cast<HANDLE>(enableFilter));
-
+						
 						if (auto iterator = ObjectWindows.find(Hwnd); iterator != ObjectWindows.end())
 						{
 							LPOBJWND lpObjWnd = (*iterator).second;
@@ -318,7 +317,7 @@ namespace CreationKitPlatformExtended
 								!lpObjWnd->Controls.ActiveOnly.Checked);
 						}
 	
-						return 1;
+						return S_OK;
 					}
 					else if (param == UI_CMD_CHANGE_SPLITTER_OBJECTWINDOW) {
 						if (auto iterator = ObjectWindows.find(Hwnd); iterator != ObjectWindows.end())

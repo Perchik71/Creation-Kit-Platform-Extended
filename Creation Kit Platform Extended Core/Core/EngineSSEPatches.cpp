@@ -81,12 +81,13 @@
 #include "Patches/SSE/UpdateUIWhenFogToggled.h"
 #include "Patches/SSE/FixParamsATXT.h"
 #include "Patches/SSE/NewFormat171.h"
-#include "Patches/SSE/FixBethNetPS4.h"
+
 #include "Patches/Windows/SSE/MainWindow.h"
 #include "Patches/Windows/SSE/RenderWindow.h"
 #include "Patches/Windows/SSE/ObjectWindow.h"
 #include "Patches/Windows/SSE/DataWindow.h"
 #include "Patches/Windows/SSE/CellViewWindow.h"
+#include "Patches/Windows/SSE/BNetUploadWindow.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -174,12 +175,13 @@ namespace CreationKitPlatformExtended
 				new Patches::UpdateUIWhenFogToggledPatch(),
 				new Patches::FixParamsATXTPatch(),
 				new Patches::NewFormat171Patch(),
-				//new Patches::FixBethNetPS4Patch(),
+		
 				new Patches::MainWindow(),
 				new Patches::RenderWindow(),
 				new Patches::ObjectWindow(),
 				new Patches::DataWindow(),
 				new Patches::CellViewWindow(),
+				new Patches::BNetUploadWindow(),
 			});
 		}
 	}

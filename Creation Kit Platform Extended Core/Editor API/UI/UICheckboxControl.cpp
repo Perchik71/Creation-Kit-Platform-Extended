@@ -41,8 +41,6 @@ namespace Core
 
 				Assert(m_hWnd);
 				m_MenuId = menu_id;
-
-				m_Checked = IsDlgButtonChecked(Parent(), m_MenuId);
 			}
 
 			VOID CUICheckbox::CreateWnd(const CUIBaseWindow &parent, const std::string &caption, const LONG l, const LONG t, const LONG w, const LONG h, const UINT menu_id)
@@ -60,27 +58,23 @@ namespace Core
 
 				Assert(m_hWnd);
 
-				m_Checked = FALSE;
 				CheckDlgButton(m_hWnd, menu_id, BST_UNCHECKED);
 				m_MenuId = menu_id;
 			}
 
 			VOID CUICheckbox::SetChecked(const BOOL value)
 			{
-				if (m_Checked == value)
+				auto State = GetChecked();
+
+				if (State == value)
 					return;
 				
-				m_Checked = value;
-
-				if (m_Checked)
-					CheckDlgButton(Parent(), m_MenuId, BST_CHECKED);
-				else
-					CheckDlgButton(Parent(), m_MenuId, BST_UNCHECKED);
+				CheckDlgButton(Parent(), ID, (!State) ? BST_CHECKED : BST_UNCHECKED);
 			}
 
 			BOOL CUICheckbox::GetChecked(VOID) const
 			{
-				return m_Checked;
+				return IsDlgButtonChecked(Parent(), ID);
 			}
 
 			VOID CUICheckbox::Release(VOID)

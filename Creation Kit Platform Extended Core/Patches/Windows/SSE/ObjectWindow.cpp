@@ -283,7 +283,7 @@ namespace CreationKitPlatformExtended
 
 						// Force the list items to update as if it was by timer
 						SendMessageA(Hwnd, WM_TIMER, 0x4D, 0);
-						return 1;
+						return S_OK;
 					}
 					else if (param == UI_CMD_CHANGE_SPLITTER_OBJECTWINDOW) {
 						if (auto iterator = ObjectWindows.find(Hwnd); iterator != ObjectWindows.end())

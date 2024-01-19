@@ -217,6 +217,10 @@ namespace Core
 				CUIBaseControl(void) : CUIBaseWindow() {}
 				CUIBaseControl(const HWND hWnd) : CUIBaseWindow(hWnd) {}
 				CUIBaseControl(const CUIBaseControl &base) : CUIBaseWindow(base) {}
+
+				WORD GetID() const;
+
+				READ_PROPERTY(GetID) WORD ID;
 			};
 		}
 	}
