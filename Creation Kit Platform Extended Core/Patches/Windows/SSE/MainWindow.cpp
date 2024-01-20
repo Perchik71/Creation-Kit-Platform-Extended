@@ -189,7 +189,7 @@ namespace CreationKitPlatformExtended
 				ExtMenu.Append("Dump SDM Info", UI_EXTMENU_SDM);
 				ExtMenu.AppendSeparator();
 				ExtMenu.Append("Save Hardcoded Forms", UI_EXTMENU_HARDCODEDFORMS);
-
+				
 				MENUITEMINFO menuInfo
 				{
 					.cbSize = sizeof(MENUITEMINFO),

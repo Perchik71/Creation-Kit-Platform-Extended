@@ -146,6 +146,7 @@
     <ClCompile Include="Patches\FO4\SkipUpdateCheck.cpp" />
     <ClCompile Include="Patches\FO4\TESDataHandlerHook.cpp" />
     <ClCompile Include="Patches\FO4\TESFormRE.cpp" />
+    <ClCompile Include="Patches\FO4\UIDefferF4.cpp" />
     <ClCompile Include="Patches\MemoryManagerPatch.cpp" />
     <ClCompile Include="Patches\PapyrusEditorLimit.cpp" />
     <ClCompile Include="Patches\QuitHandlerPatch.cpp" />
@@ -394,6 +395,7 @@
     <ClInclude Include="Patches\FO4\SkipUpdateCheck.h" />
     <ClInclude Include="Patches\FO4\TESDataHandlerHook.h" />
     <ClInclude Include="Patches\FO4\TESFormRE.h" />
+    <ClInclude Include="Patches\FO4\UIDefferF4.h" />
     <ClInclude Include="Patches\MemoryManagerPatch.h" />
     <ClInclude Include="Patches\PapyrusEditorLimit.h" />
     <ClInclude Include="Patches\QuitHandlerPatch.h" />

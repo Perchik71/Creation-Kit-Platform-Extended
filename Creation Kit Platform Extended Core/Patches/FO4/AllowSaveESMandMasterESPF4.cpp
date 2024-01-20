@@ -51,12 +51,12 @@ namespace CreationKitPlatformExtended
 
 			bool AllowSaveESMandMasterESPPatch::HasDependencies() const
 			{
-				return false;
+				return true;
 			}
 
 			Array<String> AllowSaveESMandMasterESPPatch::GetDependencies() const
 			{
-				return {};
+				return { "Console" };
 			}
 
 			bool AllowSaveESMandMasterESPPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,

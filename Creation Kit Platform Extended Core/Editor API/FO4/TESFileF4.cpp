@@ -22,6 +22,7 @@
 //////////////////////////////////////////
 
 #include "..\NiMemoryManager.h"
+#include "Patches/ConsolePatch.h"
 #include "TESFileF4.h"
 
 namespace CreationKitPlatformExtended
@@ -46,7 +47,7 @@ namespace CreationKitPlatformExtended
 				{
 					if (IsMaster() && IsActive())
 					{
-						_CONSOLE("Loading master file '%s' as a plugin\n", m_FileName);
+						Patches::ConsolePatch::Log("Loading master file '%s' as a plugin\n", m_FileName);
 
 						// Strip ESM flag, clear loaded ONAM data
 						m_Flags &= ~FILE_RECORD_ESM;
@@ -59,7 +60,7 @@ namespace CreationKitPlatformExtended
 				{
 					if (!IsMaster() && !IsActive() && IsSelected())
 					{
-						_CONSOLE("Loading plugin file '%s' as a master\n", m_FileName);
+						Patches::ConsolePatch::Log("Loading plugin file '%s' as a master\n", m_FileName);
 						m_Flags |= FILE_RECORD_ESM;
 					}
 				}
@@ -79,7 +80,7 @@ namespace CreationKitPlatformExtended
 
 						if (extension && !_stricmp(extension, ".esm"))
 						{
-							_CONSOLE("Regenerating ONAM data for master file '%s'...\n", m_FileName);
+							Patches::ConsolePatch::Log("Regenerating ONAM data for master file '%s'...\n", m_FileName);
 
 							((void(__fastcall*)(TESFile*))pointer_TESFile_sub2)(this);
 							resetEsmFlag = true;
