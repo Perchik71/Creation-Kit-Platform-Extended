@@ -44,3 +44,4 @@ CreationKit -PEUpdateDatabase "Fix for crash when plugins.txt is present" "FixPl
 CreationKit -PEUpdateDatabase "PreCombined" "PreCombined.relb"
 CreationKit -PEUpdateDatabase "Fixed quote to cmdline" "FixQuoteCmdLine.relb"
 CreationKit -PEUpdateDatabase "UI Deffer" "UIDeffer.relb"
+CreationKit -PEUpdateDatabase "Optimization load" "OptimizationLoad.relb"

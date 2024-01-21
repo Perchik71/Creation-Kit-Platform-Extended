@@ -79,10 +79,10 @@ namespace CreationKitPlatformExtended
 			return std::distance(dataStart, ret) + StartAddress;
 		}
 
-		std::vector<uintptr_t> FindPatterns(uintptr_t StartAddress, uintptr_t MaxSize, const char* Mask)
+		Array<uintptr_t> FindPatterns(uintptr_t StartAddress, uintptr_t MaxSize, const char* Mask)
 		{
-			std::vector<uintptr_t> results;
-			std::vector<std::pair<uint8_t, bool>> pattern;
+			Array<uintptr_t> results;
+			Array<std::pair<uint8_t, bool>> pattern;
 
 			for (size_t i = 0; i < strlen(Mask);) {
 				if (Mask[i] != '?') {

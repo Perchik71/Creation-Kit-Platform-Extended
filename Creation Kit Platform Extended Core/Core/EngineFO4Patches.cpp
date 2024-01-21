@@ -29,6 +29,7 @@
 #include "Patches/FO4/PreCombined.h"
 #include "Patches/FO4/FixQuoteCmdLine.h"
 #include "Patches/FO4/UIDefferF4.h"
+#include "Patches/FO4/OptimizationLoadF4.h"
 
 #include "Patches/Windows/FO4/MainWindowF4.h"
 #include "Patches/Windows/FO4/ObjectWindowF4.h"
@@ -67,6 +68,7 @@ namespace CreationKitPlatformExtended
 				new Patches::FixPluginTXTPatch(),
 				new Patches::FixQuoteCmdLinePatch(),
 				new Patches::UIDefferPatch(),
+				new Patches::OptimizationLoadPatch(),
 				
 				new Patches::MainWindow(),
 				new Patches::ObjectWindow(),

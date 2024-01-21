@@ -97,6 +97,7 @@
     <ClCompile Include="Editor API\BSString.cpp" />
     <ClCompile Include="Editor API\EditorUI.cpp" />
     <ClCompile Include="Editor API\FO4\BGSLayer.cpp" />
+    <ClCompile Include="Editor API\FO4\BSFile.cpp" />
     <ClCompile Include="Editor API\FO4\BSResourceLooseFilesF4.cpp" />
     <ClCompile Include="Editor API\FO4\NiClassesF4.cpp" />
     <ClCompile Include="Editor API\FO4\TESFileF4.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="Patches\FO4\FixSmoothValue.cpp" />
     <ClCompile Include="Patches\FO4\FixTabDeleteCrash.cpp" />
     <ClCompile Include="Patches\FO4\FixVC.cpp" />
+    <ClCompile Include="Patches\FO4\OptimizationLoadF4.cpp" />
     <ClCompile Include="Patches\FO4\PreCombined.cpp" />
     <ClCompile Include="Patches\FO4\RemoveUselessMessagesF4.cpp" />
     <ClCompile Include="Patches\FO4\ReplaceBSPointerHandleAndManagerF4.cpp" />
@@ -309,6 +311,7 @@
     <ClInclude Include="Editor API\FO4\BGSLayer.h" />
     <ClInclude Include="Editor API\FO4\BGSPrimitive.h" />
     <ClInclude Include="Editor API\FO4\BSEntryString.h" />
+    <ClInclude Include="Editor API\FO4\BSFile.h" />
     <ClInclude Include="Editor API\FO4\BSFixedString.h" />
     <ClInclude Include="Editor API\FO4\BSPointerHandleManager.h" />
     <ClInclude Include="Editor API\FO4\BSResourceLooseFilesF4.h" />
@@ -389,6 +392,7 @@
     <ClInclude Include="Patches\FO4\FixSmoothValue.h" />
     <ClInclude Include="Patches\FO4\FixTabDeleteCrash.h" />
     <ClInclude Include="Patches\FO4\FixVC.h" />
+    <ClInclude Include="Patches\FO4\OptimizationLoadF4.h" />
     <ClInclude Include="Patches\FO4\PreCombined.h" />
     <ClInclude Include="Patches\FO4\RemoveUselessMessagesF4.h" />
     <ClInclude Include="Patches\FO4\ReplaceBSPointerHandleAndManagerF4.h" />

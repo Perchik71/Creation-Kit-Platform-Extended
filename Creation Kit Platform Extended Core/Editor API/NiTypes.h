@@ -59,12 +59,52 @@ namespace CreationKitPlatformExtended
 {
 	namespace EditorAPI
 	{
+		class NiBinaryStream {
+		public:
+			virtual ~NiBinaryStream();
+		public:
+			virtual bool IsValid() = 0;
+		};
+
+		class NiFile : public NiBinaryStream {
+		public:
+			virtual ~NiFile();
+		public:
+			enum FileModes {
+				kFileMode_ReadOnly = 0,
+				kFileMode_WriteOnly = 1,
+				kFileMode_AppendOnly = 2,
+			};
+		protected:
+			// members
+			/*000*/ // --vtbls
+			/*008*/ uint64_t _Pos;				// init to 0
+			/*010*/ uint64_t _BufferAllocSize;	// init to 0x800	(sent for reading/writing)
+			/*018*/ uint64_t _BufferReadSize;	// init to 0		(answered by the function)
+			/*020*/ uint64_t _BufferOffset;		// init to 0
+			/*028*/ uint64_t _SizeBuffer;		// init to 0
+			/*030*/ void* _Buffer;				// allocated/deallocated on form heap by constructor/destructor
+			/*038*/ uint64_t _dwUnk38;
+			/*040*/ HANDLE _FileHandle;
+			/*048*/ char _FileName[MAX_PATH];
+			/*14C*/ uint32_t _Good;				// true if file is exist or no error
+		public:
+			inline uint64_t GetPosition() const { return _Pos; }
+			inline uint64_t GetOffsetOfTheBuffer() const { return _BufferOffset; }
+			inline uint64_t GetSizeBuffer() const { return _SizeBuffer; }
+			inline HANDLE GetHandle() const { return _FileHandle; }
+			inline const char* GetFileName() const { return _FileName; }
+			inline bool IsGood() const { return (bool)_Good; }
+		public:
+			virtual bool IsValid() { return IsGood(); }
+		};
+
 		// 4
 		struct NiRGBA {
-			BYTE r;
-			BYTE g;
-			BYTE b;
-			BYTE a;
+			uint8_t r;
+			uint8_t g;
+			uint8_t b;
+			uint8_t a;
 		};
 
 		// 10

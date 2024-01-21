@@ -610,6 +610,12 @@
     <ClCompile Include="Patches\FO4\UIDefferF4.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\FO4\OptimizationLoadF4.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\FO4\BSFile.cpp">
+      <Filter>Editor API\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1419,6 +1425,12 @@
     </ClInclude>
     <ClInclude Include="Patches\FO4\UIDefferF4.h">
       <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\OptimizationLoadF4.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BSFile.h">
+      <Filter>Editor API\FO4</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
