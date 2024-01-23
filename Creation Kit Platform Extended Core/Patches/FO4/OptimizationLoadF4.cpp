@@ -68,12 +68,25 @@ namespace CreationKitPlatformExtended
 			{
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
+					//
+					// Plugin loading optimizations:
+					//
+					// - Eliminate millions of calls to update the statusbar, instead only updating to 250ms 
+					// - Replace old zlib decompression code with optimized libdeflate
+					// - Skip remove failed forms (This function is more likely to result in CTD)
+					// - Increasing the read memory buffer to reduce disk access
+					// - (Optional) Removing animation export when loading the mod, it will cause CTD if animation is needed
+					// - Replacing all unoptimized functions related to searching in index arrays, and maybe not only	
+					// - Replacing FindFirstNextA with a more optimized function FindFirstFileExA
+
 					// Spam in the status bar no more than 250ms
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0), (uintptr_t)&sub);
 					pointer_OptimizationLoad_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
 
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&HKInflateInit);
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(3), (uintptr_t)&HKInflate);
+
+					PatchIAT(HKFindFirstFileA, "kernel32.dll", "FindFirstFileA");
 
 					// Skip remove failed forms
 					lpRelocator->Patch(lpRelocationDatabaseItem->At(4), { 0xEB });
@@ -245,6 +258,12 @@ namespace CreationKitPlatformExtended
 					return -5;
 
 				return -2;
+			}
+
+			HANDLE OptimizationLoadPatch::HKFindFirstFileA(LPCSTR lpFileName, LPWIN32_FIND_DATAA lpFindFileData)
+			{
+				return FindFirstFileExA(lpFileName, FindExInfoStandard, lpFindFileData, FindExSearchNameMatch, 
+					NULL, FIND_FIRST_EX_LARGE_FETCH);
 			}
 
 			uint32_t OptimizationLoadPatch::HKSearchIndexOffset32(EditorAPI::BSTArray<uint32_t>& _array,

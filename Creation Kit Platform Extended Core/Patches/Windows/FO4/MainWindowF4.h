@@ -44,6 +44,8 @@ namespace CreationKitPlatformExtended
 				virtual bool HasDependencies() const;
 				virtual Array<String> GetDependencies() const;
 
+				static HWND GetToolbarHandle();
+
 				MainWindow();
 
 				void CreateExtensionMenu(HWND MainWindow, HMENU MainMenu);

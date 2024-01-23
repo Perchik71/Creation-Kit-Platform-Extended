@@ -46,6 +46,7 @@ namespace CreationKitPlatformExtended
 				static void sub(int64_t a1);
 				static int HKInflateInit(z_stream_s* Stream, const char* Version, int Mode);
 				static int HKInflate(z_stream_s* Stream, int Flush);
+				static HANDLE HKFindFirstFileA(LPCSTR lpFileName, LPWIN32_FIND_DATAA lpFindFileData);
 
 				static uint32_t HKSearchIndexOffset32(EditorAPI::BSTArray<uint32_t>& _array,
 					uint32_t& _target, uint32_t _start_index);

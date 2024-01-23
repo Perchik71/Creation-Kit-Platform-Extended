@@ -10,6 +10,7 @@
 #include "Editor API/FO4/BSPointerHandleManager.h"
 #include "Patches/Windows/FO4/ObjectWindowF4.h"
 #include "Patches/Windows/FO4/CellViewWindowF4.h"
+#include "Patches/FO4/FixFog.h"
 #include "Patches/ConsolePatch.h"
 #include "MainWindowF4.h"
 
@@ -21,7 +22,7 @@ namespace CreationKitPlatformExtended
 		{
 			using namespace EditorAPI::Fallout4;
 
-			uintptr_t pointer_MainWindow_sub1 = 0;
+			uintptr_t pointer_MainWindow_data = 0;
 			uintptr_t pointer_MainWindow_sub2 = 0;
 			uintptr_t pointer_MainWindow_sub3 = 0;
 
@@ -104,7 +105,7 @@ namespace CreationKitPlatformExtended
 
 			Array<String> MainWindow::GetDependencies() const
 			{
-				return { "Console", "Object Window" };
+				return { "Console", "Object Window", "Fix Fog" };
 			}
 
 			bool MainWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
@@ -121,9 +122,9 @@ namespace CreationKitPlatformExtended
 					*(uintptr_t*)&_oldWndProc = 
 						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), &MainWindow::HKWndProc);
 					
-					/*pointer_MainWindow_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
+					pointer_MainWindow_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
 
-					
+					/*
 					pointer_MainWindow_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(3));
 					pointer_MainWindow_sub3 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(4));*/
 
@@ -148,6 +149,11 @@ namespace CreationKitPlatformExtended
 					Core::allowedEditorVersionStr[(int)Core::GlobalEnginePtr->GetEditorVersion()].data());
 
 				GlobalMainWindowPtr = this;
+			}
+
+			HWND MainWindow::GetToolbarHandle()
+			{
+				return *(HWND*)pointer_MainWindow_data;
 			}
 
 			void MainWindow::CreateExtensionMenu(HWND MainWindow, HMENU MainMenu)
@@ -216,6 +222,10 @@ namespace CreationKitPlatformExtended
 						SendMessageA(GetDlgItem(Hwnd, EditorAPI::EditorUI::UI_EDITOR_TOOLBAR), TB_CHECKBUTTON,
 							EditorAPI::EditorUI::UI_EDITOR_TOGGLEGRASS_BUTTON, TRUE);
 
+						// Same for fog
+						CheckMenuItem(GetMenu(Hwnd), EditorAPI::EditorUI::UI_EDITOR_TOGGLEFOG,
+							FixFogPatch::IsFogEnabled() ? MF_CHECKED : MF_UNCHECKED);
+
 						// Create custom menu controls
 						GlobalMainWindowPtr->MainMenu = createInfo->hMenu;
 						GlobalMainWindowPtr->CreateExtensionMenu(Hwnd, createInfo->hMenu);
@@ -241,7 +251,7 @@ namespace CreationKitPlatformExtended
 						// Deprecated
 						ViewMenu.GetItem(290).Enabled = FALSE;
 						ViewMenu.GetItem(40032).Enabled = FALSE;
-
+						
 						return status;
 					}
 				}
@@ -278,8 +288,7 @@ namespace CreationKitPlatformExtended
 							{
 							case EditorAPI::EditorUI::UI_EDITOR_TOGGLEFOG:
 							{
-								// Call the CTRL+F5 hotkey function directly
-								//((void(__fastcall*)())pointer_MainWindow_sub1)();
+								FixFogPatch::ToggleFog();
 							}
 							return 0;
 							case EditorAPI::EditorUI::UI_EDITOR_TOGGLECELLVIEW:
