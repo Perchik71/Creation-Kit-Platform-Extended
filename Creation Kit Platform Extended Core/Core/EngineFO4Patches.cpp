@@ -32,12 +32,18 @@
 #include "Patches/FO4/OptimizationLoadF4.h"
 #include "Patches/FO4/FixSky.h"
 #include "Patches/FO4/FixFog.h"
+#include "Patches/FO4/FixCrashSpellEaxDur.h"
+#include "Patches/FO4/MiscF4.h"
+#include "Patches/FO4/FixEncounterZone.h"
+#include "Patches/FO4/WrongUpdateActorWnd.h"
 
 #include "Patches/Windows/FO4/MainWindowF4.h"
 #include "Patches/Windows/FO4/ObjectWindowF4.h"
 #include "Patches/Windows/FO4/CellViewWindowF4.h"
 #include "Patches/Windows/FO4/DataWindowF4.h"
 #include "Patches/Windows/FO4/RenderWindowF4.h"
+#include "Patches/Windows/FO4/LayersWindow.h"
+#include "Patches/Windows/FO4/ResponseWindowF4.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -74,12 +80,18 @@ namespace CreationKitPlatformExtended
 				new Patches::OptimizationLoadPatch(),
 				new Patches::FixSkyPatch(),
 				new Patches::FixFogPatch(),
+				new Patches::FixCrashSpellEaxDurPatch(),
+				new Patches::MiscPatch(),
+				new Patches::FixEncounterZonePatch(),
+				new Patches::WrongUpdateActorWndPatch(),
 				
 				new Patches::MainWindow(),
 				new Patches::ObjectWindow(),
 				new Patches::CellViewWindow(),
 				new Patches::DataWindow(),
 				new Patches::RenderWindow(),
+				new Patches::LayersWindow(),
+				new Patches::ResponseWindow(),
 			});
 
 			CommandLineParser CommandLine;

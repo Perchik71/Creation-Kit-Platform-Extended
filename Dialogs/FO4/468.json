@@ -1,0 +1,76 @@
+{
+  "ExStyle": 0,
+  "Style": [ "DS_FIXEDSYS", "WS_POPUPWINDOW", "WS_THICKFRAME", "WS_DLGFRAME" ],
+  "Title": "Layers",
+  "Width": 326,
+  "Height": 540,
+  "FontName": "Microsoft Sans Serif",
+  "FontSize": 8,
+  "FontWeight": 400,
+  "FontItalic": 0,
+  "Controls": [
+    {
+      "Type": "PUSHBUTTON",
+      "Title": "New layer",
+      "Id": 1124,
+      "x": 4,
+      "y": 4,
+      "Width": 105,
+      "Height": 14
+    },
+    {
+      "Type": "PUSHBUTTON",
+      "Title": "Add selection form",
+      "Id": 3682,
+      "x": 113,
+      "y": 4,
+      "Width": 105,
+      "Height": 14
+    },
+    {
+      "Type": "PUSHBUTTON",
+      "Title": "+",
+      "Id": 5593,
+      "x": 8,
+      "y": 38,
+      "Width": 10,
+      "Height": 10
+    },
+    {
+      "Type": "PUSHBUTTON",
+      "Title": "-",
+      "Id": 5594,
+      "x": 20,
+      "y": 38,
+      "Width": 10,
+      "Height": 10
+    },
+    {
+      "Type": "EDITTEXT",
+      "Id": 2581,
+      "x": 32,
+      "y": 22,
+      "Style": [ "ES_LEFT", "ES_AUTOHSCROLL" ],
+      "Width": 150,
+      "Height": 12
+    },
+    {
+      "Type": "CONTROL",
+      "ClassName": "STATIC",
+      "Id": 6086,
+      "Style": [ "SS_BLACKFRAME", "NOT WS_VISIBLE", "NOT WS_GROUP" ],
+      "x": 8,
+      "y": 52,
+      "Width": 310,
+      "Height": 62
+    },
+    {
+      "Type": "LTEXT",
+      "Title": "Filter:",
+      "x": 8,
+      "y": 24,
+      "Width": 24,
+      "Height": 8
+    }
+  ]
+}

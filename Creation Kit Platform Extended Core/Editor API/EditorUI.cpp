@@ -30,6 +30,24 @@ namespace CreationKitPlatformExtended
 			InitCommonControls();
 		}
 
+		void* EditorUI::ListViewGetSelectedItem(HWND ListViewHandle)
+		{
+			if (!ListViewHandle)
+				return NULL;
+
+			int index = ListView_GetNextItem(ListViewHandle, -1, LVNI_SELECTED);
+
+			if (index == -1)
+				return NULL;
+
+			LVITEMA item = { 0 };
+			item.mask = LVIF_PARAM;
+			item.iItem = index;
+
+			ListView_GetItem(ListViewHandle, &item);
+			return (void*)item.lParam;
+		}
+
 		void EditorUI::ComboBoxInsertItemDeferred(HWND ComboBoxHandle, const char* DisplayText,
 			void* Value, bool AllowResize)
 		{

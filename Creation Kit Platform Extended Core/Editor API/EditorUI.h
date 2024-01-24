@@ -61,6 +61,7 @@ namespace CreationKitPlatformExtended
 				void* Value, bool AllowResize);
 			static void ListViewInsertItemDeferred(HWND ListViewHandle, void* Parameter,
 				bool UseImage, int ItemIndex);
+			static void* ListViewGetSelectedItem(HWND ListViewHandle);
 		private:
 			EditorUI(const EditorUI&) = default;
 			EditorUI& operator=(const EditorUI&) = default;

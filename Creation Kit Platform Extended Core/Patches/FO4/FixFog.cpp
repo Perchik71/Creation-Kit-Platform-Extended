@@ -14,12 +14,6 @@ namespace CreationKitPlatformExtended
 	{
 		namespace Fallout4
 		{
-			struct SkyPropertyTag
-			{
-				char pad00[0x18];
-				EditorAPI::Fallout4::TES::SkyM* lpSky;
-			};
-
 			bool* globalFogEnabled = nullptr;
 			bool* globalSkyEnabled = nullptr;
 			static decltype(&FixFogPatch::sub) function_FixFogPatch_sub = nullptr;

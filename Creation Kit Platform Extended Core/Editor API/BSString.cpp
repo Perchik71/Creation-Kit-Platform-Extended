@@ -460,7 +460,7 @@ namespace CreationKitPlatformExtended
 			WORD it = fname.FindLastOf('.');
 
 			if (it != srNone)
-				return BSString(*fname, it - 1).Append(ext);
+				return BSString(*fname, it).Append(ext);
 
 			return BSString(fname).Append(ext);
 		}

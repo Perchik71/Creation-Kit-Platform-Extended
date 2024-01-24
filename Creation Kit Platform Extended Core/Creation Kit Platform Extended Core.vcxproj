@@ -133,7 +133,9 @@
     <ClCompile Include="Patches\FO4\FixBNet.cpp" />
     <ClCompile Include="Patches\FO4\FixCrashMapMarkerCmd.cpp" />
     <ClCompile Include="Patches\FO4\FixCrashNoRootMat.cpp" />
+    <ClCompile Include="Patches\FO4\FixCrashSpellEaxDur.cpp" />
     <ClCompile Include="Patches\FO4\FixDeleteTintToRace.cpp" />
+    <ClCompile Include="Patches\FO4\FixEncounterZone.cpp" />
     <ClCompile Include="Patches\FO4\FixFog.cpp" />
     <ClCompile Include="Patches\FO4\FixInfiniteLoopPapyrusCompile.cpp" />
     <ClCompile Include="Patches\FO4\FixLoadD3DCompiler.cpp" />
@@ -144,6 +146,7 @@
     <ClCompile Include="Patches\FO4\FixSmoothValue.cpp" />
     <ClCompile Include="Patches\FO4\FixTabDeleteCrash.cpp" />
     <ClCompile Include="Patches\FO4\FixVC.cpp" />
+    <ClCompile Include="Patches\FO4\MiscF4.cpp" />
     <ClCompile Include="Patches\FO4\OptimizationLoadF4.cpp" />
     <ClCompile Include="Patches\FO4\PreCombined.cpp" />
     <ClCompile Include="Patches\FO4\RemoveUselessMessagesF4.cpp" />
@@ -152,6 +155,7 @@
     <ClCompile Include="Patches\FO4\TESDataHandlerHook.cpp" />
     <ClCompile Include="Patches\FO4\TESFormRE.cpp" />
     <ClCompile Include="Patches\FO4\UIDefferF4.cpp" />
+    <ClCompile Include="Patches\FO4\WrongUpdateActorWnd.cpp" />
     <ClCompile Include="Patches\MemoryManagerPatch.cpp" />
     <ClCompile Include="Patches\PapyrusEditorLimit.cpp" />
     <ClCompile Include="Patches\QuitHandlerPatch.cpp" />
@@ -246,9 +250,11 @@
     <ClCompile Include="Patches\Windows\BaseWindow.cpp" />
     <ClCompile Include="Patches\Windows\FO4\CellViewWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\DataWindowF4.cpp" />
+    <ClCompile Include="Patches\Windows\FO4\LayersWindow.cpp" />
     <ClCompile Include="Patches\Windows\FO4\MainWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\ObjectWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\RenderWindowF4.cpp" />
+    <ClCompile Include="Patches\Windows\FO4\ResponseWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\SSE\BNetUploadWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\CellViewWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\DataWindow.cpp" />
@@ -388,7 +394,9 @@
     <ClInclude Include="Patches\FO4\FixBNet.h" />
     <ClInclude Include="Patches\FO4\FixCrashMapMarkerCmd.h" />
     <ClInclude Include="Patches\FO4\FixCrashNoRootMat.h" />
+    <ClInclude Include="Patches\FO4\FixCrashSpellEaxDur.h" />
     <ClInclude Include="Patches\FO4\FixDeleteTintToRace.h" />
+    <ClInclude Include="Patches\FO4\FixEncounterZone.h" />
     <ClInclude Include="Patches\FO4\FixFog.h" />
     <ClInclude Include="Patches\FO4\FixInfiniteLoopPapyrusCompile.h" />
     <ClInclude Include="Patches\FO4\FixLoadD3DCompiler.h" />
@@ -399,6 +407,7 @@
     <ClInclude Include="Patches\FO4\FixSmoothValue.h" />
     <ClInclude Include="Patches\FO4\FixTabDeleteCrash.h" />
     <ClInclude Include="Patches\FO4\FixVC.h" />
+    <ClInclude Include="Patches\FO4\MiscF4.h" />
     <ClInclude Include="Patches\FO4\OptimizationLoadF4.h" />
     <ClInclude Include="Patches\FO4\PreCombined.h" />
     <ClInclude Include="Patches\FO4\RemoveUselessMessagesF4.h" />
@@ -407,6 +416,7 @@
     <ClInclude Include="Patches\FO4\TESDataHandlerHook.h" />
     <ClInclude Include="Patches\FO4\TESFormRE.h" />
     <ClInclude Include="Patches\FO4\UIDefferF4.h" />
+    <ClInclude Include="Patches\FO4\WrongUpdateActorWnd.h" />
     <ClInclude Include="Patches\MemoryManagerPatch.h" />
     <ClInclude Include="Patches\PapyrusEditorLimit.h" />
     <ClInclude Include="Patches\QuitHandlerPatch.h" />
@@ -501,9 +511,11 @@
     <ClInclude Include="Patches\Windows\BaseWindow.h" />
     <ClInclude Include="Patches\Windows\FO4\CellViewWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\DataWindowF4.h" />
+    <ClInclude Include="Patches\Windows\FO4\LayersWindow.h" />
     <ClInclude Include="Patches\Windows\FO4\MainWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\ObjectWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\RenderWindowF4.h" />
+    <ClInclude Include="Patches\Windows\FO4\ResponseWindowF4.h" />
     <ClInclude Include="Patches\Windows\SSE\BNetUploadWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\CellViewWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\DataWindow.h" />

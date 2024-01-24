@@ -628,6 +628,24 @@
     <ClCompile Include="Patches\FO4\FixFog.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\FO4\FixCrashSpellEaxDur.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\FO4\MiscF4.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\FO4\FixEncounterZone.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\FO4\WrongUpdateActorWnd.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\Windows\FO4\LayersWindow.cpp">
+      <Filter>Patches\Windows\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\Windows\FO4\ResponseWindowF4.cpp">
+      <Filter>Patches\Windows\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1455,6 +1473,24 @@
     </ClInclude>
     <ClInclude Include="Patches\FO4\FixFog.h">
       <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\FixCrashSpellEaxDur.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\MiscF4.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\FixEncounterZone.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\WrongUpdateActorWnd.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\FO4\LayersWindow.h">
+      <Filter>Patches\Windows\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\FO4\ResponseWindowF4.h">
+      <Filter>Patches\Windows\FO4</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
