@@ -55,15 +55,18 @@ namespace CreationKitPlatformExtended
 		// 10
 		class __declspec(align(8)) NiRefObject_64
 		{
+		protected:
+			volatile LONGLONG m_uiRefCount;	// 08
+
 		public:
-			NiRefObject_64() : m_ll64RefCount(0)
+			NiRefObject_64() : m_uiRefCount(0)
 			{
-				InterlockedIncrement64(&m_ll64RefCount);
+				InterlockedIncrement64(&m_uiRefCount);
 			}
 
 			virtual ~NiRefObject_64()
 			{
-				InterlockedDecrement64(&m_ll64RefCount);
+				InterlockedDecrement64(&m_uiRefCount);
 			}
 
 			virtual void DeleteThis()
@@ -74,21 +77,18 @@ namespace CreationKitPlatformExtended
 
 			uint64_t IncRefCount()
 			{
-				return (uint64_t)InterlockedIncrement64(&m_ll64RefCount);
+				return (uint64_t)InterlockedIncrement64(&m_uiRefCount);
 			}
 
 			uint64_t DecRefCount()
 			{
-				uint64_t count = (uint64_t)InterlockedDecrement64(&m_ll64RefCount);
+				uint64_t count = (uint64_t)InterlockedDecrement64(&m_uiRefCount);
 
 				if (count <= 0)
 					DeleteThis();
 
 				return count;
 			}
-		protected:
-
-			volatile LONGLONG m_ll64RefCount;	// 08
 		};
 	}
 }

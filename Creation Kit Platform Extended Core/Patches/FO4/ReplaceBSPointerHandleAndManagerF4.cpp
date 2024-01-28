@@ -68,7 +68,7 @@ namespace CreationKitPlatformExtended
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(0),
 						(uintptr_t)&BSPointerHandleManager_Extended::InitSDM);
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1),
-						(uintptr_t)&HandleManager_Extended::KillSDM);
+						(uintptr_t)&BSPointerHandleManager_Extended::KillSDM);
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(2),
 						(uintptr_t)&BSPointerHandleManagerInterface_Extended::GetCurrentHandle);
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
