@@ -646,6 +646,12 @@
     <ClCompile Include="Patches\Windows\FO4\ResponseWindowF4.cpp">
       <Filter>Patches\Windows\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Core\MemoryManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashGenMaxHeightData.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1491,6 +1497,12 @@
     </ClInclude>
     <ClInclude Include="Patches\Windows\FO4\ResponseWindowF4.h">
       <Filter>Patches\Windows\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\MemoryManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashGenMaxHeightData.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

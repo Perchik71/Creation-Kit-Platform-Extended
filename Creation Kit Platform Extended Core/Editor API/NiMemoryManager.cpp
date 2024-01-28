@@ -30,17 +30,17 @@ namespace CreationKitPlatformExtended
 	{
 		LPVOID NiMemoryManager::Alloc(const NiMemoryManager* lpManager, DWORD dwSize, DWORD dwAlignment)
 		{
-			return Patches::MemoryManagerPatch::MemAlloc(dwSize, dwAlignment, dwAlignment != 0);
+			return Core::GlobalMemoryManagerPtr->MemAlloc(dwSize, dwAlignment, dwAlignment != 0);
 		}
 
 		VOID NiMemoryManager::Free(const NiMemoryManager* lpManager, LPVOID lpPointer) 
 		{
-			Patches::MemoryManagerPatch::HkFree(lpPointer);
+			Core::GlobalMemoryManagerPtr->MemFree(lpPointer);
 		}
 
 		DWORD NiMemoryManager::Size(const NiMemoryManager* lpManager, LPVOID lpPointer) 
 		{
-			return (DWORD)Patches::MemoryManagerPatch::HkMemSize(lpPointer);
+			return (DWORD)Core::GlobalMemoryManagerPtr->MemSize(lpPointer);
 		}
 	}
 }

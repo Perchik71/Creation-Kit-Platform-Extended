@@ -35,7 +35,6 @@ namespace CreationKitPlatformExtended
 			static void HkAlignedFree(void* block);
 			static size_t HkMemSize(void* block);
 			static char* HkStrDup(const char* str);
-			static void* MemAlloc(size_t size, size_t alignment = 0, bool aligned = false, bool zeroed = false);
 		protected:
 			virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const;

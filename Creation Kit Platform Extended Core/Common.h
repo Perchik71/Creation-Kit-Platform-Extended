@@ -78,5 +78,6 @@
 #include "Core/INIWrapper.h"
 #include "Core/Relocator.h"
 #include "Core/ConsoleWindow.h"
+#include "Core/MemoryManager.h"
 
 #undef StrToInt

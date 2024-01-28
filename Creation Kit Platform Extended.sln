@@ -24,7 +24,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libzydis", "Dependencies\li
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libdeflate", "Dependencies\libdeflate.vcxproj", "{9E771CA4-04D9-4ED8-80F2-FFD379413688}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sseck_loader", "Creation Kit Platform Extended Loader\ckpe_loader.vcxproj", "{42E22F45-AC50-49BF-AABB-D0FFE480333C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Creation Kit Platform Extended Loader", "Creation Kit Platform Extended Loader\ckpe_loader.vcxproj", "{42E22F45-AC50-49BF-AABB-D0FFE480333C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

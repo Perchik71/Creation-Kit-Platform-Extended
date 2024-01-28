@@ -7,7 +7,7 @@
 
 #include "ConsoleWindow.h"
 #include "CommandLineParser.h"
-#include "RelocationDatabase.h"
+#include "RelocationDatabase.h" 
 #include "DialogManager.h"
 #include "GDIPlusInit.h"
 #include "Engine.h"
@@ -386,8 +386,8 @@ namespace CreationKitPlatformExtended
 			// Доступные имена для Creation Kit
 			if (CheckFileNameProcess(lpcstrAppName))
 			{
-				// Инициализация библиотеки vmm
-				voltek::scalable_memory_manager_initialize();
+				// Инициализация менеджера памяти
+				GlobalMemoryManagerPtr = new MemoryManager();
 				// Инициализация библиотеки vup
 				AssertMsg(Conversion::LazUnicodePluginInit(), 
 					"I can't find the library: \"vup-x86_64.dll\"\nReinstall the mod.");
@@ -397,7 +397,7 @@ namespace CreationKitPlatformExtended
 				
 				GlobalINIConfigPtr = new INIConfig(L"CreationKitPlatformExtended.ini");
 				AssertMsg(GlobalINIConfigPtr, "Failed open the config file \"CreationKitPlatformExtended.ini\"");
-
+				
 				ULONG _osMajorVersion = 0;
 				ULONG _osMinorVersion = 0;
 				ULONG _osBuildNubmer = 0;

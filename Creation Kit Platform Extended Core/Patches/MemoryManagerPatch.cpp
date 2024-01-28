@@ -12,7 +12,6 @@ namespace CreationKitPlatformExtended
 		constexpr auto MEM_THRESHOLD = 2147483648;
 		constexpr auto MEM_GB = 1073741824;
 
-
 		class MemoryManager
 		{
 			// Не описываем конструкторы и деструкторы
@@ -20,17 +19,17 @@ namespace CreationKitPlatformExtended
 		public:
 			static void* Allocate(MemoryManager* manager, size_t size, uint32_t alignment, bool aligned)
 			{
-				return MemoryManagerPatch::MemAlloc(size, alignment, aligned, true);
+				return Core::GlobalMemoryManagerPtr->MemAlloc(size, alignment, aligned, true);
 			}
 
 			static void Deallocate(MemoryManager* manager, void* memory, bool aligned)
 			{
-				voltek::scalable_free(memory);
+				Core::GlobalMemoryManagerPtr->MemFree(memory);
 			}
 
 			static size_t Size(MemoryManager* manager, void* memory)
 			{
-				return voltek::scalable_msize(memory);
+				return Core::GlobalMemoryManagerPtr->MemSize(memory);
 			}
 		};
 
@@ -41,12 +40,12 @@ namespace CreationKitPlatformExtended
 		public:
 			static void* Allocate(ScrapHeap* manager, size_t size, uint32_t alignment)
 			{
-				return MemoryManagerPatch::MemAlloc(size, alignment, alignment != 0);
+				return Core::GlobalMemoryManagerPtr->MemAlloc(size, alignment, alignment != 0);
 			}
 
 			static void Deallocate(ScrapHeap* manager, void* memory)
 			{
-				voltek::scalable_free(memory);
+				Core::GlobalMemoryManagerPtr->MemFree(memory);
 			}
 		};
 
@@ -275,17 +274,17 @@ namespace CreationKitPlatformExtended
 
 		void* MemoryManagerPatch::HkCalloc(size_t count, size_t size)
 		{
-			return MemAlloc(count * size, 0, false, true);
+			return MemoryManager::Allocate(nullptr, count * size, 0, false);
 		}
 
 		void* MemoryManagerPatch::HkMalloc(size_t size)
 		{
-			return MemAlloc(size);
+			return MemoryManager::Allocate(nullptr, size, 0, false);
 		}
 
 		void* MemoryManagerPatch::HkAlignedMalloc(size_t size, size_t alignment)
 		{
-			return MemAlloc(size, alignment, true);
+			return MemoryManager::Allocate(nullptr, size, (uint32_t)alignment, true);
 		}
 
 		void* MemoryManagerPatch::HkRealloc(void* memory, size_t size)
@@ -295,13 +294,13 @@ namespace CreationKitPlatformExtended
 			if (size > 0)
 			{
 				// Recalloc behaves like calloc if there's no existing allocation. Realloc doesn't. Zero it either way.
-				newMemory = MemAlloc(size, 0, false, true);
+				newMemory = MemoryManager::Allocate(nullptr, size, 0, false);
 
 				if (memory)
 					memcpy(newMemory, memory, std::min(size, voltek::scalable_msize(memory)));
 			}
 
-			voltek::scalable_free(memory);
+			MemoryManager::Deallocate(nullptr, memory, false);
 			return newMemory;
 		}
 
@@ -312,61 +311,22 @@ namespace CreationKitPlatformExtended
 
 		void MemoryManagerPatch::HkFree(void* block)
 		{
-			voltek::scalable_free(block);
+			MemoryManager::Deallocate(nullptr, block, false);
 		}
 
 		void MemoryManagerPatch::HkAlignedFree(void* block)
 		{
-			voltek::scalable_free(block);
+			MemoryManager::Deallocate(nullptr, block, true);
 		}
 
 		size_t MemoryManagerPatch::HkMemSize(void* block)
 		{
-			return voltek::scalable_msize(block);
+			return MemoryManager::Size(nullptr, block);
 		}
 
 		char* MemoryManagerPatch::HkStrDup(const char* str)
 		{
 			return CreationKitPlatformExtended::Utils::StrDub(str);
-		}
-
-		void* MemoryManagerPatch::MemAlloc(size_t size, size_t alignment, bool aligned, bool zeroed)
-		{
-			// Если не задано, то будет 4
-			if (!aligned)
-				alignment = 4;
-
-			if (!size)
-				// Creation Kit много раз требует памяти в 0 байт, данная функция вернёт ему память с
-				// постоянным адресом, не выделяя его в пулах.
-				return voltek::scalable_alloc(0);
-
-			AssertMsgVa(alignment != 0 && alignment % 2 == 0, "Alignment is fucked: %llu", alignment);
-
-			// Должно быть в степени 2, округлить его, если необходимо
-			if ((alignment & (alignment - 1)) != 0)
-			{
-				alignment--;
-				alignment |= alignment >> 1;
-				alignment |= alignment >> 2;
-				alignment |= alignment >> 4;
-				alignment |= alignment >> 8;
-				alignment |= alignment >> 16;
-				alignment++;
-			}
-
-			// Размер должен быть кратен выравниванию с округлением до ближайшего
-			if ((size % alignment) != 0)
-				size = ((size + alignment - 1) / alignment) * alignment;
-
-			void* ptr = voltek::scalable_alloc(size);
-			if (ptr && zeroed) memset(ptr, 0, size);
-
-			if (!ptr && size <= (128 * 1024 * 1024))
-				AssertMsgVa(false, "A memory allocation failed. This is due to memory leaks in the Creation Kit or not"
-					" having enough free RAM.\n\nRequested chunk size: %llu bytes.", size);
-
-			return ptr;
 		}
 
 		bool MemoryManagerPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,

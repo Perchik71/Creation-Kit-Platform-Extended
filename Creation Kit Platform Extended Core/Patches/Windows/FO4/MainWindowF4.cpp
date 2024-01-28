@@ -23,8 +23,6 @@ namespace CreationKitPlatformExtended
 			using namespace EditorAPI::Fallout4;
 
 			uintptr_t pointer_MainWindow_data = 0;
-			uintptr_t pointer_MainWindow_sub2 = 0;
-			uintptr_t pointer_MainWindow_sub3 = 0;
 
 			struct VersionControlListItem
 			{
@@ -123,10 +121,6 @@ namespace CreationKitPlatformExtended
 						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), &MainWindow::HKWndProc);
 					
 					pointer_MainWindow_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
-
-					/*
-					pointer_MainWindow_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(3));
-					pointer_MainWindow_sub3 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(4));*/
 
 					return true;
 				}

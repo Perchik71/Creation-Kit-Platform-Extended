@@ -62,15 +62,6 @@ namespace CreationKitPlatformExtended
 
 				return true;
 			}
-			else if (verPatch == 2)
-			{
-				//
-				// Skip 'Topic Info' and refs validation during load
-				//
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xE9, 0xF8, 0x01, 0x00, 0x00, 0x90, 0x90 });
-				
-				return true;
-			}
 
 			return false;
 		}
