@@ -39,14 +39,15 @@ namespace CreationKitPlatformExtended
 			class TESDataHandler
 			{
 			public:
+				using TESFileList = BSSimpleList<TESFile>;
+				using TESFileArray = BSTArray<TESFile*>;
+
 				struct ModList {
-					BSSimpleList<TESFile> modInfoList;		// 00
-					BSTArray<TESFile*> loadedMods;			// 10
+					TESFileList modInfoList;				// 00
+					TESFileArray loadedMods;				// 10
 				};
 
 				using UnkArray = BSTArray<LPVOID>;
-				using TESFileList = BSSimpleList<TESFile>;
-				using TESFileArray = BSTArray<TESFile*>;
 			private:
 				INT64 unk00;								// 00
 				UnkArray unk08;								// 08

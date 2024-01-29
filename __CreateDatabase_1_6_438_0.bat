@@ -101,3 +101,4 @@ CreationKit_se_1_6_438 -PEUpdateDatabase "BSArchiveManager Modded" "1_6_438\BSAr
 CreationKit_se_1_6_438 -PEUpdateDatabase "Fix Spell Dlg" "1_6_438\FixSpellDlg.relb"
 CreationKit_se_1_6_438 -PEUpdateDatabase "Unicode" "1_6_438\Unicode.relb"
 CreationKit_se_1_6_438 -PEUpdateDatabase "Fix ATXT params sections" "1_6_438\FixATXTParamsSections.relb"
+CreationKit_se_1_6_438 -PEUpdateDatabase "TESDataHandler" "TESDataHandler.relb"

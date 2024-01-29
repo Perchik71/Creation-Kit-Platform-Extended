@@ -5,6 +5,7 @@
 #include "Core/Engine.h"
 #include "NewFormat171.h"
 #include "Patches/ConsolePatch.h"
+#include "Editor API/SSE/TESDataHandler.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -12,11 +13,13 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
+			using namespace EditorAPI::SkyrimSpectialEdition;
+
 			constexpr float fPluginVersion = 1.71f;
 			constexpr const char* sNotEslCapable = " <NOT ESL Capable - no more IDs remaining>";
 			constexpr const char* sEslCapable = " <ESL Capable - %d IDs remaining>";
 
-			uintptr_t pointer_NewFormat171_sub = 0;
+			//uintptr_t pointer_NewFormat171_sub = 0;
 			uintptr_t pointer_NewFormat171_data = 0;
 
 			NewFormat171Patch::NewFormat171Patch() : Module(GlobalEnginePtr)
@@ -49,7 +52,7 @@ namespace CreationKitPlatformExtended
 
 			Array<String> NewFormat171Patch::GetDependencies() const
 			{
-				return { "Console" };
+				return { "Console", "TESDataHandler" };
 			}
 
 			bool NewFormat171Patch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
@@ -69,7 +72,7 @@ namespace CreationKitPlatformExtended
 
 					// make the window title the same as in 16.1130
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1), (uintptr_t)&sub);
-					pointer_NewFormat171_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2));
+					//pointer_NewFormat171_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2));
 					pointer_NewFormat171_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(3));
 
 					// Making changes, from 1.6.1130, it's amazing that Bethesda fixed where I used to rule, 
@@ -99,12 +102,15 @@ namespace CreationKitPlatformExtended
 				strcat_s(dst, max_size, src);
 
 				// The function returns something very important, perhaps the main TES object
-				auto addr = *((void**(__fastcall*)())pointer_NewFormat171_sub)();
+				//auto addr = *((void**(__fastcall*)())pointer_NewFormat171_sub)();
 				// Checking for the current active plugin
-				auto active_plugin = *((char**)(((char*)addr) + 0xDB0));
+				//auto active_plugin = *((char**)(((char*)addr) + 0xDB0));
+				
+				// Checking for the current active plugin
+				auto active_plugin = TESDataHandler::GetInstance()->ActiveMod;
 				if (active_plugin && (*((uintptr_t*)pointer_NewFormat171_data)))
 				{
-					auto total = (uint32_t)((uintptr_t)(*(char**)(active_plugin + 0x430)));
+					auto total = (uint32_t)((uintptr_t)(*(char**)((char*)active_plugin + 0x430)));
 					auto avail = 0xFFF - total;
 					if (avail >= 0xFFF)
 						strcat_s(dst, max_size, sNotEslCapable);

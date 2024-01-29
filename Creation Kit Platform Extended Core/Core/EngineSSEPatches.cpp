@@ -82,6 +82,7 @@
 #include "Patches/SSE/FixParamsATXT.h"
 #include "Patches/SSE/NewFormat171.h"
 #include "Patches/SSE/CrashGenMaxHeightData.h"
+#include "Patches/SSE/TESDataHandlerHookSSE.h"
 
 #include "Patches/Windows/SSE/MainWindow.h"
 #include "Patches/Windows/SSE/RenderWindow.h"
@@ -177,6 +178,7 @@ namespace CreationKitPlatformExtended
 				new Patches::FixParamsATXTPatch(),
 				new Patches::NewFormat171Patch(),
 				new Patches::CrashGenMaxHeightDataPatch(),
+				new Patches::TESDataHandlerPatch(),
 		
 				new Patches::MainWindow(),
 				new Patches::RenderWindow(),

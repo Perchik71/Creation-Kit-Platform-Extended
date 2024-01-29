@@ -104,6 +104,9 @@ namespace CreationKitPlatformExtended
 				char _pad0[0x5C];
 			};
 			static_assert(sizeof(TESObjectREFR_Extremly) == 0xA0);
+
+			typedef BSTArray<TESForm*>	TESFormArray;
+			typedef BSTArray<uint32_t>	TESFormIDArray;
 		}
 	}
 }

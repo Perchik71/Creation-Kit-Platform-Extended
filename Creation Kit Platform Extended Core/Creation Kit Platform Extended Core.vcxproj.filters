@@ -652,6 +652,9 @@
     <ClCompile Include="Patches\SSE\CrashGenMaxHeightData.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\TESDataHandlerHookSSE.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1502,6 +1505,12 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SSE\CrashGenMaxHeightData.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\TESDataHandler.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\TESDataHandlerHookSSE.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
