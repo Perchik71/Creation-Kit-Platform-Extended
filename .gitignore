@@ -34,6 +34,7 @@
 # VS
 .vs/
 x64/
+MyFirstPlugin/x64/
 Memory Manager/bin/
 Memory Manager/linkconf/
 *.lnk
