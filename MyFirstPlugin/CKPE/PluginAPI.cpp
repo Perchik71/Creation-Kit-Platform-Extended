@@ -18,7 +18,7 @@ void _FATALERROR(const char* fmt, ...)
 	va_list args;
 
 	va_start(args, fmt);
-	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->Log(
+	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->LogVa(
 		CreationKitPlatformExtended::PluginAPI::vmlFatalError, fmt, args);
 	va_end(args);
 
@@ -31,7 +31,7 @@ void _ERROR(const char* fmt, ...)
 	va_list args;
 
 	va_start(args, fmt);
-	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->Log(
+	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->LogVa(
 		CreationKitPlatformExtended::PluginAPI::vmlError, fmt, args);
 	va_end(args);
 }
@@ -41,7 +41,7 @@ void _WARNING(const char* fmt, ...)
 	va_list args;
 
 	va_start(args, fmt);
-	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->Log(
+	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->LogVa(
 		CreationKitPlatformExtended::PluginAPI::vmlWarning, fmt, args);
 	va_end(args);
 }
@@ -51,7 +51,7 @@ void _MESSAGE(const char* fmt, ...)
 	va_list args;
 
 	va_start(args, fmt);
-	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->Log(
+	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->LogVa(
 		CreationKitPlatformExtended::PluginAPI::vmlMessage, fmt, args);
 	va_end(args);
 }
@@ -61,7 +61,7 @@ void _DMESSAGE(const char* fmt, ...)
 	va_list args;
 
 	va_start(args, fmt);
-	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->Log(
+	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->LogVa(
 		CreationKitPlatformExtended::PluginAPI::vmlDebugMessage, fmt, args);
 	va_end(args);
 }
@@ -71,7 +71,7 @@ void _FATALERROR(const wchar_t* fmt, ...)
 	va_list args;
 
 	va_start(args, fmt);
-	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->Log(
+	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->LogVa(
 		CreationKitPlatformExtended::PluginAPI::vmlFatalError, fmt, args);
 	va_end(args);
 
@@ -84,7 +84,7 @@ void _ERROR(const wchar_t* fmt, ...)
 	va_list args;
 
 	va_start(args, fmt);
-	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->Log(
+	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->LogVa(
 		CreationKitPlatformExtended::PluginAPI::vmlError, fmt, args);
 	va_end(args);
 }
@@ -94,7 +94,7 @@ void _WARNING(const wchar_t* fmt, ...)
 	va_list args;
 
 	va_start(args, fmt);
-	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->Log(
+	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->LogVa(
 		CreationKitPlatformExtended::PluginAPI::vmlWarning, fmt, args);
 	va_end(args);
 }
@@ -104,7 +104,7 @@ void _MESSAGE(const wchar_t* fmt, ...)
 	va_list args;
 
 	va_start(args, fmt);
-	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->Log(
+	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->LogVa(
 		CreationKitPlatformExtended::PluginAPI::vmlMessage, fmt, args);
 	va_end(args);
 }
@@ -114,7 +114,7 @@ void _DMESSAGE(const wchar_t* fmt, ...)
 	va_list args;
 
 	va_start(args, fmt);
-	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->Log(
+	CreationKitPlatformExtended::PluginAPI::DebugLog::Instance->LogVa(
 		CreationKitPlatformExtended::PluginAPI::vmlDebugMessage, fmt, args);
 	va_end(args);
 }

@@ -159,7 +159,7 @@ namespace CreationKitPlatformExtended
 				sprintf_s(szBuf, "[%s] ", MESSAGETYPE_STR[(int)level].data());
 				Message(szBuf, false);
 			}
-			FormattedMessage(fmt, args);
+			FormattedMessageVa(fmt, args);
 		}
 
 		void DebugLog::LogVa(DebugLogMessageLevel level, const wchar_t* fmt, va_list args)
@@ -170,7 +170,7 @@ namespace CreationKitPlatformExtended
 				sprintf_s(szBuf, "[%s] ", MESSAGETYPE_STR[(int)level].data());
 				Message(szBuf, false);
 			}
-			FormattedMessage(fmt, args);
+			FormattedMessageVa(fmt, args);
 		}
 
 		void DebugLog::Log(DebugLogMessageLevel level, const char* fmt, ...)

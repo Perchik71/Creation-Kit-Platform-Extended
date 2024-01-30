@@ -72,7 +72,7 @@ namespace CreationKitPlatformExtended
 		va_list args;
 
 		va_start(args, fmt);
-		Core::GlobalDebugLogPtr->Log(Core::vmlFatalError, fmt, args);
+		Core::GlobalDebugLogPtr->LogVa(Core::vmlFatalError, fmt, args);
 		va_end(args);
 
 		TerminateProcess(GetCurrentProcess(), 1);
@@ -84,7 +84,7 @@ namespace CreationKitPlatformExtended
 		va_list args;
 
 		va_start(args, fmt);
-		Core::GlobalDebugLogPtr->Log(Core::vmlError, fmt, args);
+		Core::GlobalDebugLogPtr->LogVa(Core::vmlError, fmt, args);
 		va_end(args);
 	}
 
@@ -93,7 +93,7 @@ namespace CreationKitPlatformExtended
 		va_list args;
 
 		va_start(args, fmt);
-		Core::GlobalDebugLogPtr->Log(Core::vmlWarning, fmt, args);
+		Core::GlobalDebugLogPtr->LogVa(Core::vmlWarning, fmt, args);
 		va_end(args);
 	}
 
@@ -102,7 +102,7 @@ namespace CreationKitPlatformExtended
 		va_list args;
 
 		va_start(args, fmt);
-		Core::GlobalDebugLogPtr->Log(Core::vmlMessage, fmt, args);
+		Core::GlobalDebugLogPtr->LogVa(Core::vmlMessage, fmt, args);
 		va_end(args);
 	}
 
@@ -111,7 +111,7 @@ namespace CreationKitPlatformExtended
 		va_list args;
 
 		va_start(args, fmt);
-		Core::GlobalDebugLogPtr->Log(Core::vmlDebugMessage, fmt, args);
+		Core::GlobalDebugLogPtr->LogVa(Core::vmlDebugMessage, fmt, args);
 		va_end(args);
 	}
 
@@ -120,7 +120,7 @@ namespace CreationKitPlatformExtended
 		va_list args;
 
 		va_start(args, fmt);
-		Core::GlobalDebugLogPtr->Log(Core::vmlFatalError, fmt, args);
+		Core::GlobalDebugLogPtr->LogVa(Core::vmlFatalError, fmt, args);
 		va_end(args);
 
 		TerminateProcess(GetCurrentProcess(), 1);
@@ -132,7 +132,7 @@ namespace CreationKitPlatformExtended
 		va_list args;
 
 		va_start(args, fmt);
-		Core::GlobalDebugLogPtr->Log(Core::vmlError, fmt, args);
+		Core::GlobalDebugLogPtr->LogVa(Core::vmlError, fmt, args);
 		va_end(args);
 	}
 
@@ -141,7 +141,7 @@ namespace CreationKitPlatformExtended
 		va_list args;
 
 		va_start(args, fmt);
-		Core::GlobalDebugLogPtr->Log(Core::vmlWarning, fmt, args);
+		Core::GlobalDebugLogPtr->LogVa(Core::vmlWarning, fmt, args);
 		va_end(args);
 	}
 
@@ -150,7 +150,7 @@ namespace CreationKitPlatformExtended
 		va_list args;
 
 		va_start(args, fmt);
-		Core::GlobalDebugLogPtr->Log(Core::vmlMessage, fmt, args);
+		Core::GlobalDebugLogPtr->LogVa(Core::vmlMessage, fmt, args);
 		va_end(args);
 	}
 
@@ -159,7 +159,7 @@ namespace CreationKitPlatformExtended
 		va_list args;
 
 		va_start(args, fmt);
-		Core::GlobalDebugLogPtr->Log(Core::vmlDebugMessage, fmt, args);
+		Core::GlobalDebugLogPtr->LogVa(Core::vmlDebugMessage, fmt, args);
 		va_end(args);
 	}
 
@@ -170,7 +170,7 @@ namespace CreationKitPlatformExtended
 		va_list args;
 
 		va_start(args, fmt);
-		Core::GlobalDebugLogPtr->Log(Core::vmlFatalError, (char*)fmt, args);
+		Core::GlobalDebugLogPtr->LogVa(Core::vmlFatalError, (char*)fmt, args);
 		va_end(args);
 
 		TerminateProcess(GetCurrentProcess(), 1);
@@ -182,7 +182,7 @@ namespace CreationKitPlatformExtended
 		va_list args;
 
 		va_start(args, fmt);
-		Core::GlobalDebugLogPtr->Log(Core::vmlError, (char*)fmt, args);
+		Core::GlobalDebugLogPtr->LogVa(Core::vmlError, (char*)fmt, args);
 		va_end(args);
 	}
 
@@ -191,7 +191,7 @@ namespace CreationKitPlatformExtended
 		va_list args;
 
 		va_start(args, fmt);
-		Core::GlobalDebugLogPtr->Log(Core::vmlWarning, (char*)fmt, args);
+		Core::GlobalDebugLogPtr->LogVa(Core::vmlWarning, (char*)fmt, args);
 		va_end(args);
 	}
 
@@ -200,7 +200,7 @@ namespace CreationKitPlatformExtended
 		va_list args;
 
 		va_start(args, fmt);
-		Core::GlobalDebugLogPtr->Log(Core::vmlMessage, (char*)fmt, args);
+		Core::GlobalDebugLogPtr->LogVa(Core::vmlMessage, (char*)fmt, args);
 		va_end(args);
 	}
 
@@ -209,7 +209,7 @@ namespace CreationKitPlatformExtended
 		va_list args;
 
 		va_start(args, fmt);
-		Core::GlobalDebugLogPtr->Log(Core::vmlDebugMessage, (char*)fmt, args);
+		Core::GlobalDebugLogPtr->LogVa(Core::vmlDebugMessage, (char*)fmt, args);
 		va_end(args);
 	}
 }
