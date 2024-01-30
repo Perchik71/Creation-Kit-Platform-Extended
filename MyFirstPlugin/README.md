@@ -2,14 +2,15 @@
 This is an example of a simple plugin for **CKPE** and serves solely to start your own plugin.  
 
 > [!NOTE]
-> All plugins must be in the folder: *<GAMEDIR>\\CKPEPlugins\\*
+> All plugins must be in the folder: *`<GAMEDIR>\CKPEPlugins\`*.
+> Your debug log is there too.
 
 > [!IMPORTANT]
 > All functions must be implemented, read the comments.
 
 # Compilation
 The code itself was developed in **`Visual Studio 2019`**.
-If you are going to make your own project, keep in mind that the **Common.h** file should be added as a must for everyone.
+If you are going to make your own project, keep in mind that the **`Common.h`** file should be added as a must for everyone.
 
 # License
 This file for a test project, and serves as a guide for creating plugins.
