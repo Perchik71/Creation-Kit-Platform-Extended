@@ -31,8 +31,8 @@ namespace CreationKitPlatformExtended
 			inline HANDLE GetStdoutListenerPipe() const { return _ExternalPipeWriterHandle; }
 			bool CreateStdoutListener();
 
-			void InputLog(const char* Format, ...);
-			void InputLogVa(const char* Format, va_list Va);
+			virtual void InputLog(const char* Format, ...);
+			virtual void InputLogVa(const char* Format, va_list Va);
 
 			void CloseOutputFile();
 			void UpdateWindow() const;

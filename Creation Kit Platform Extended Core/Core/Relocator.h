@@ -16,14 +16,14 @@ namespace CreationKitPlatformExtended
 			Relocator(Engine* lpEngine);
 			~Relocator() = default;
 
-			inline uintptr_t Rav2Off(uintptr_t rav) const { return _base + rav; }
+			virtual uintptr_t Rav2Off(uintptr_t rav) const;
 
-			void Patch(uintptr_t rav, uint8_t* bytes, uint32_t size) const;
-			void Patch(uintptr_t rav, std::initializer_list<uint8_t> data) const;
-			void PatchNop(uintptr_t rav, uint32_t size) const;
+			virtual void Patch(uintptr_t rav, uint8_t* bytes, uint32_t size) const;
+			virtual void Patch(uintptr_t rav, std::initializer_list<uint8_t> data) const;
+			virtual void PatchNop(uintptr_t rav, uint32_t size) const;
 
-			bool DetourJump(uintptr_t rav, uintptr_t function) const;
-			bool DetourCall(uintptr_t rav, uintptr_t function) const;
+			virtual bool DetourJump(uintptr_t rav, uintptr_t function) const;
+			virtual bool DetourCall(uintptr_t rav, uintptr_t function) const;
 
 			template<class T> bool DetourJump(uintptr_t rav, T function) const
 			{
@@ -35,21 +35,18 @@ namespace CreationKitPlatformExtended
 				return DetourCall(rav, *(uintptr_t*)&function);
 			}
 
+			virtual uintptr_t DetourFunction(uintptr_t rav, uintptr_t function) const;
+
 			template<class T> uintptr_t DetourFunctionClass(uintptr_t rav, T function) const
 			{
-				auto offset = Rav2Off(rav);
-
-				if (!IsLock(offset, 6))
-					return 0;
-
-				return Detours::X64::DetourFunctionClass(offset, function);
+				return DetourFunction(rav, *(uintptr_t*)&function);
 			}
 
-			void Unlock();
-			void Unlock(uintptr_t base, uint64_t size);
-			void Lock(uintptr_t base, uint64_t size);
+			virtual void Unlock();
+			virtual void Unlock(uintptr_t base, uint64_t size);
+			virtual void Lock(uintptr_t base, uint64_t size);
+			virtual bool IsLock(uintptr_t base, uint64_t size) const;
 
-			bool IsLock(uintptr_t base, uint64_t size) const;
 			inline Engine* GetEngine() const { return _engine; }
 			inline uintptr_t GetBase() const { return _base; }
 		private:

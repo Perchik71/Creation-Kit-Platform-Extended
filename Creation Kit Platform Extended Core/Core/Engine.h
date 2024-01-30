@@ -6,6 +6,7 @@
 
 #include "ResultCoreErrNo.h"
 #include "ModuleManager.h"
+#include "PluginManager.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -54,6 +55,7 @@ namespace CreationKitPlatformExtended
 			HMODULE _module;
 			Section Sections[3];
 			ModuleManager* PatchesManager;
+			PluginManager* UserPluginsManager;
 			Module* _Theme;
 		};
 

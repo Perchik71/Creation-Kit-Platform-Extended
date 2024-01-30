@@ -24,8 +24,9 @@ namespace CreationKitPlatformExtended
 		bool Module::Query(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion, const char* lpcstrPlatformRuntimeVersion) const
 		{
 			bool Ret = QueryFromPlatform(eEditorCurrentVersion, lpcstrPlatformRuntimeVersion);
-			if (!Ret)
-				_MESSAGE("Module \"%s\" rejected the query, most likely does not support the version of the editor or platform.", GetName());
+			auto Name = GetName();
+			if (!Ret && Name)
+				_MESSAGE("Module \"%s\" rejected the query, most likely does not support the version of the editor or platform.", Name);
 			return Ret;
 		}
 

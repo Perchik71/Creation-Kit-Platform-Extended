@@ -87,7 +87,8 @@ namespace CreationKitPlatformExtended
 		//////////////////////////////////////////////
 
 		Engine::Engine(HMODULE hModule, EDITOR_EXECUTABLE_TYPE eEditorVersion, uintptr_t nModuleBase) :
-			_module(hModule), _moduleBase(nModuleBase), _editorVersion(eEditorVersion), PatchesManager(new ModuleManager())
+			_module(hModule), _moduleBase(nModuleBase), _editorVersion(eEditorVersion), 
+			PatchesManager(new ModuleManager()), UserPluginsManager(new PluginManager())
 		{
 			GlobalEnginePtr = this;
 
@@ -349,6 +350,12 @@ namespace CreationKitPlatformExtended
 				return;
 			}
 
+			if (!UserPluginsManager)
+			{
+				_FATALERROR("The plugins manager has not been initialized");
+				return;
+			}
+
 			auto DialogIterator = allowedDialogsPackageFile.find(_editorVersion);
 			if (DialogIterator == allowedDialogsPackageFile.end())
 			{
@@ -370,6 +377,12 @@ namespace CreationKitPlatformExtended
 			PatchesManager->QueryAll();
 			// Включение неотбракованных патчей
 			PatchesManager->EnableAll();
+			// Поиск плагинов в корневой папке
+			UserPluginsManager->FindPlugins();
+			// Запросы и проверка всех плагинов на валидность
+			UserPluginsManager->QueryAll();
+			// Включение неотбракованных плагинов
+			UserPluginsManager->EnableAll();
 
 			// После всех патчей и прочее, пересоберём бинарник в памяти.
 			// Убрать трамполины, установить DeferUI от Nukem9

@@ -37,14 +37,16 @@ namespace CreationKitPlatformExtended
 			inline FILE* GetHandle() const { return _handleFile; }
 			inline void SetAutoFlush(bool inAutoFlush) { _autoFlush = inAutoFlush; }
 
-			void Message(const char* message, bool newLine = true);
-			void Message(const wchar_t* message, bool newLine = true);
-			void FormattedMessage(const char* fmt, ...);
-			void FormattedMessage(const wchar_t* fmt, ...);
-			void FormattedMessage(const char* fmt, va_list args);
-			void FormattedMessage(const wchar_t* fmt, va_list args);
-			void Log(DebugLogMessageLevel level, const char* fmt, va_list args);
-			void Log(DebugLogMessageLevel level, const wchar_t* fmt, va_list args);
+			virtual void Message(const char* message, bool newLine = true);
+			virtual void Message(const wchar_t* message, bool newLine = true);
+			virtual void FormattedMessage(const char* fmt, ...);
+			virtual void FormattedMessage(const wchar_t* fmt, ...);
+			virtual void FormattedMessageVa(const char* fmt, va_list args);
+			virtual void FormattedMessageVa(const wchar_t* fmt, va_list args);
+			virtual void LogVa(DebugLogMessageLevel level, const char* fmt, va_list args);
+			virtual void LogVa(DebugLogMessageLevel level, const wchar_t* fmt, va_list args);
+			virtual void Log(DebugLogMessageLevel level, const char* fmt, ...);
+			virtual void Log(DebugLogMessageLevel level, const wchar_t* fmt, ...);
 		private:
 			DebugLog(const DebugLog&) = default;
 			DebugLog& operator=(const DebugLog&) = default;

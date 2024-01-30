@@ -433,6 +433,8 @@ namespace CreationKitPlatformExtended
 				return Find(AcceptEqual(item)) != NULL;
 			}
 
+#ifdef _CKPE_MAIN
+
 			VOID Dump(VOID) {
 				_MESSAGE("BSSimpleList:");
 				_MESSAGE("> count: %d", Count());
@@ -450,6 +452,8 @@ namespace CreationKitPlatformExtended
 					pCur = pCur->next;
 				}
 			}
+
+#endif
 		};
 
 		static_assert(sizeof(BSSimpleList<LPVOID>) == 0x10);

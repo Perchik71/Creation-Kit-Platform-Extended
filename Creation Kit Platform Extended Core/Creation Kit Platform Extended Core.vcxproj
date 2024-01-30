@@ -44,7 +44,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;ZYDIS_STATIC_DEFINE;CREATIOKITPLATFORMEXTENDEDCORE_EXPORTS;_WINDOWS;_USRDLL;XBYAK_NO_OP_NAMES;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;JDIALOG_NO_MANIFEST_LINKER_COMMCTRL;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;ZYDIS_STATIC_DEFINE;CREATIOKITPLATFORMEXTENDEDCORE_EXPORTS;_WINDOWS;_USRDLL;XBYAK_NO_OP_NAMES;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;JDIALOG_NO_MANIFEST_LINKER_COMMCTRL;NOMINMAX;_CKPE_MAIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
@@ -86,6 +86,8 @@
     <ClCompile Include="Core\MemoryManager.cpp" />
     <ClCompile Include="Core\Module.cpp" />
     <ClCompile Include="Core\ModuleManager.cpp" />
+    <ClCompile Include="Core\Plugin.cpp" />
+    <ClCompile Include="Core\PluginManager.cpp" />
     <ClCompile Include="Core\RelocationDatabase.cpp" />
     <ClCompile Include="Core\Relocator.cpp" />
     <ClCompile Include="Core\ResultCoreErrNo.cpp" />
@@ -295,6 +297,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Dependencies\jDialogs\include\jdialogs.h" />
+    <ClInclude Include="..\MyFirstPlugin\CKPE\PluginAPI.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Core\AboutWindow.h" />
     <ClInclude Include="Core\CommandLineParser.h" />
@@ -308,6 +311,8 @@
     <ClInclude Include="Core\MemoryManager.h" />
     <ClInclude Include="Core\Module.h" />
     <ClInclude Include="Core\ModuleManager.h" />
+    <ClInclude Include="Core\Plugin.h" />
+    <ClInclude Include="Core\PluginManager.h" />
     <ClInclude Include="Core\RelocationDatabase.h" />
     <ClInclude Include="Core\Relocator.h" />
     <ClInclude Include="Core\ResultCoreErrNo.h" />

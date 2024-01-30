@@ -1,4 +1,4 @@
-﻿// Copyright � 2023 aka perchik71. All rights reserved.
+﻿// Copyright � 2023 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -139,19 +139,19 @@ namespace CreationKitPlatformExtended
 			va_end(argList);
 		}
 
-		void DebugLog::FormattedMessage(const char* fmt, va_list args)
+		void DebugLog::FormattedMessageVa(const char* fmt, va_list args)
 		{
 			vsprintf_s(_formatBufA.get(), FORMATBUF_SIZE, fmt, args);
 			Message(_formatBufA.get());
 		}
 
-		void DebugLog::FormattedMessage(const wchar_t* fmt, va_list args)
+		void DebugLog::FormattedMessageVa(const wchar_t* fmt, va_list args)
 		{
 			vswprintf_s(_formatBufW.get(), FORMATBUF_SIZE, fmt, args);
 			Message(_formatBufW.get());
 		}
 
-		void DebugLog::Log(DebugLogMessageLevel level, const char* fmt, va_list args)
+		void DebugLog::LogVa(DebugLogMessageLevel level, const char* fmt, va_list args)
 		{
 			char szBuf[64] = { 0 };
 			if (level != vmlMessage)
@@ -162,7 +162,7 @@ namespace CreationKitPlatformExtended
 			FormattedMessage(fmt, args);
 		}
 
-		void DebugLog::Log(DebugLogMessageLevel level, const wchar_t* fmt, va_list args)
+		void DebugLog::LogVa(DebugLogMessageLevel level, const wchar_t* fmt, va_list args)
 		{
 			char szBuf[64] = { 0 };
 			if (level != vmlMessage)
@@ -171,6 +171,22 @@ namespace CreationKitPlatformExtended
 				Message(szBuf, false);
 			}
 			FormattedMessage(fmt, args);
+		}
+
+		void DebugLog::Log(DebugLogMessageLevel level, const char* fmt, ...)
+		{
+			va_list	argList;
+			va_start(argList, fmt);
+			LogVa(level, fmt, argList);
+			va_end(argList);
+		}
+
+		void DebugLog::Log(DebugLogMessageLevel level, const wchar_t* fmt, ...)
+		{
+			va_list	argList;
+			va_start(argList, fmt);
+			LogVa(level, fmt, argList);
+			va_end(argList);
 		}
 
 		void DebugLog::PrintSpaces(int numSpaces)

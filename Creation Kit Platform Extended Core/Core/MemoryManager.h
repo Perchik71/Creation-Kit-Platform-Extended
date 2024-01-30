@@ -13,9 +13,9 @@ namespace CreationKitPlatformExtended
 		public:
 			MemoryManager();
 
-			void* MemAlloc(size_t size, size_t alignment = 0, bool aligned = false, bool zeroed = false);
-			void MemFree(void* block);
-			size_t MemSize(void* block);
+			virtual void* MemAlloc(size_t size, size_t alignment = 0, bool aligned = false, bool zeroed = false);
+			virtual void MemFree(void* block);
+			virtual size_t MemSize(void* block);
 		private:
 			MemoryManager(const MemoryManager&) = default;
 			MemoryManager& operator=(const MemoryManager&) = default;

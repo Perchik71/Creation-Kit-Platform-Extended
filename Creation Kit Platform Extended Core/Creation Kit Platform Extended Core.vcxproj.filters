@@ -655,6 +655,12 @@
     <ClCompile Include="Patches\SSE\TESDataHandlerHookSSE.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Plugin.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\PluginManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1512,6 +1518,13 @@
     </ClInclude>
     <ClInclude Include="Patches\SSE\TESDataHandlerHookSSE.h">
       <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Plugin.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MyFirstPlugin\CKPE\PluginAPI.h" />
+    <ClInclude Include="Core\PluginManager.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

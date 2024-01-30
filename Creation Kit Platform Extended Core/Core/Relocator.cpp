@@ -15,6 +15,11 @@ namespace CreationKitPlatformExtended
 			_base = _engine->GetModuleBase();
 		}
 
+		uintptr_t Relocator::Rav2Off(uintptr_t rav) const
+		{ 
+			return _base + rav;
+		}
+
 		void Relocator::Patch(uintptr_t rav, uint8_t* bytes, uint32_t size) const
 		{
 			auto offset = Rav2Off(rav);
@@ -67,6 +72,16 @@ namespace CreationKitPlatformExtended
 			CreationKitPlatformExtended::Utils::DetourCall(offset, function);
 
 			return true;
+		}
+
+		uintptr_t Relocator::DetourFunction(uintptr_t rav, uintptr_t function) const
+		{
+			auto offset = Rav2Off(rav);
+
+			if (!IsLock(offset, 6))
+				return 0;
+
+			return Detours::X64::DetourFunction(offset, function);
 		}
 
 		bool Relocator::IsLock(uintptr_t base, uint64_t size) const
