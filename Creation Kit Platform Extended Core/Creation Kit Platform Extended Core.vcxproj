@@ -202,6 +202,7 @@
     <ClCompile Include="Patches\SSE\FixDataDlgWithPluginTXT.cpp" />
     <ClCompile Include="Patches\SSE\FixDialogueBranch.cpp" />
     <ClCompile Include="Patches\SSE\FixFileInUse.cpp" />
+    <ClCompile Include="Patches\SSE\FixFormIDsInLoadFile.cpp" />
     <ClCompile Include="Patches\SSE\FixIconsScriptProp.cpp" />
     <ClCompile Include="Patches\SSE\FixIntersectionTriangle.cpp" />
     <ClCompile Include="Patches\SSE\FixLoadMore32KAnimation.cpp" />
@@ -470,6 +471,7 @@
     <ClInclude Include="Patches\SSE\FixDataDlgWithPluginTXT.h" />
     <ClInclude Include="Patches\SSE\FixDialogueBranch.h" />
     <ClInclude Include="Patches\SSE\FixFileInUse.h" />
+    <ClInclude Include="Patches\SSE\FixFormIDsInLoadFile.h" />
     <ClInclude Include="Patches\SSE\FixIconsScriptProp.h" />
     <ClInclude Include="Patches\SSE\FixIntersectionTriangle.h" />
     <ClInclude Include="Patches\SSE\FixLoadMore32KAnimation.h" />

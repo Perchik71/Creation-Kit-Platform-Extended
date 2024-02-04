@@ -508,6 +508,18 @@ namespace CreationKitPlatformExtended
 			return nullptr;
 		}
 
+		bool RelocationDatabase::Remove(const char* name)
+		{
+			try
+			{
+				return _patches.erase(name) > 0;
+			}
+			catch (const std::exception&)
+			{
+				return false;
+			}
+		}
+
 		void RelocationDatabase::Clear()
 		{
 			_patches.clear();
