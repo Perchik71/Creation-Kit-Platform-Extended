@@ -20,7 +20,7 @@ static const char szPluginName[] = "CKPEPlugin_MyFirstPlugin";
 // The version of the plugin in the form of a string, any kind, is needed to display in the log.
 static const char szPluginVersion[] = "0.2";
 // The full path to this dll.
-static char* szPluginDllFileName = nullptr;
+static char szPluginDllFileName[MAX_PATH];
 
 void __stdcall CKPEPlugin_MenuItemHandler(uint32_t u32MenuID)
 {
@@ -243,7 +243,6 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
     if (ul_reason_for_call == DLL_PROCESS_ATTACH)
     {
         // Getting the file name of this dll
-        szPluginDllFileName = new char[MAX_PATH];
         GetModuleFileNameA(hModule, szPluginDllFileName, MAX_PATH);
 
 #if CKPEPLUGIN_PERMANENT_LOAD
