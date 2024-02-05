@@ -31,9 +31,7 @@ namespace CreationKitPlatformExtended
 				virtual Array<String> GetDependencies() const;
 
 				static bool sub(TESForm* World, uint32_t* ParentFormIDs, uint32_t* FormIDs);
-				static void sub2(uintptr_t Stack);
-				static uint32_t sub3(TESForm* World, uint32_t* FormIDs);
-				static void sub4(uintptr_t Stack);
+				static uint32_t sub2(TESForm* World, uint32_t* FormIDs);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
