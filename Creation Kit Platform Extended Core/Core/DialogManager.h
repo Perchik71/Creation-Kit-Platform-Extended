@@ -16,14 +16,14 @@ namespace CreationKitPlatformExtended
 			using DialogList = ConcurrencyMap<ULONG_PTR, jDialog*>;
 			DialogList m_items;
 		public:
-			inline bool HasDialog(const LONG_PTR uid) const { return m_items.find(uid) != m_items.end(); }
-			bool AddDialog(const String& json_file, const ULONG_PTR uid);
-			bool AddDialogByCode(const String& json_code, const ULONG_PTR uid);
-			jDialog* GetDialog(const ULONG_PTR uid);
-			inline bool Empty() const { return !m_items.size(); }
+			virtual bool HasDialog(const LONG_PTR uid) const;
+			virtual bool AddDialog(const String& json_file, const ULONG_PTR uid);
+			virtual bool AddDialogByCode(const String& json_code, const ULONG_PTR uid);
+			virtual jDialog* GetDialog(const ULONG_PTR uid);
+			virtual bool Empty() const;
 
-			void LoadFromFilePackage(const char* fname);
-			void PackToFilePackage(const char* fname, const char* dir);
+			virtual void LoadFromFilePackage(const char* fname);
+			virtual void PackToFilePackage(const char* fname, const char* dir);
 	
 			DialogManager() = default;
 		};

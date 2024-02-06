@@ -61,13 +61,126 @@
 	__forceinline type Get##Name(VOID) const { return Var; } \
 	__declspec(property(get = Get##Name)) type Name
 
-void _FATALERROR(const char* fmt, ...);
-void _ERROR(const char* fmt, ...);
-void _WARNING(const char* fmt, ...);
-void _MESSAGE(const char* fmt, ...);
-void _DMESSAGE(const char* fmt, ...);
-void _FATALERROR(const wchar_t* fmt, ...);
-void _ERROR(const wchar_t* fmt, ...);
-void _WARNING(const wchar_t* fmt, ...);
-void _MESSAGE(const wchar_t* fmt, ...);
-void _DMESSAGE(const wchar_t* fmt, ...);
+#ifdef _ASSERT
+#undef _ASSERT
+#endif // _ASSERT
+
+void __stdcall _FATALERROR(const char* fmt, ...);
+void __stdcall _ERROR(const char* fmt, ...);
+void __stdcall _WARNING(const char* fmt, ...);
+void __stdcall _MESSAGE(const char* fmt, ...);
+void __stdcall _DMESSAGE(const char* fmt, ...);
+void __stdcall _FATALERROR(const wchar_t* fmt, ...);
+void __stdcall _ERROR(const wchar_t* fmt, ...);
+void __stdcall _WARNING(const wchar_t* fmt, ...);
+void __stdcall _MESSAGE(const wchar_t* fmt, ...);
+void __stdcall _DMESSAGE(const wchar_t* fmt, ...);
+void __stdcall __ASSERT(const char* File, int Line, const char* Format, ...);
+void __stdcall __ASSERT(const wchar_t* File, int Line, const wchar_t* Format, ...);
+
+#define _ASSERT(Cond)				if(!(Cond)) __ASSERT(__FILE__, __LINE__, #Cond)
+#define _ASSERTMSG(Cond, Msg, ...)	if(!(Cond)) __ASSERT(__FILE__, __LINE__, "%s\n\n" Msg, #Cond, ##__VA_ARGS__)
+
+// thread-safe template versions of thisVirtualCall()
+
+template<typename TR>
+__forceinline TR thisVirtualCall(size_t reloff, const void* ths) {
+	return (*(TR(__fastcall**)(const void*))(*(__int64*)ths + reloff))(ths);
+}
+
+template<typename TR, typename T1>
+__forceinline TR thisVirtualCall(size_t reloff, const void* ths, T1 a1) {
+	return (*(TR(__fastcall**)(const void*, T1))(*(__int64*)ths + reloff))(ths, a1);
+}
+
+template<typename TR, typename T1, typename T2>
+__forceinline TR thisVirtualCall(size_t reloff, const void* ths, T1 a1, T2 a2) {
+	return (*(TR(__fastcall**)(const void*, T1, T2))(*(__int64*)ths + reloff))(ths, a1, a2);
+}
+
+template<typename TR, typename T1, typename T2, typename T3>
+__forceinline TR thisVirtualCall(size_t reloff, const void* ths, T1 a1, T2 a2, T3 a3) {
+	return (*(TR(__fastcall**)(const void*, T1, T2, T3))(*(__int64*)ths + reloff))(ths, a1, a2, a3);
+}
+
+template<typename TR, typename T1, typename T2, typename T3, typename T4>
+__forceinline TR thisVirtualCall(size_t reloff, const void* ths, T1 a1, T2 a2, T3 a3, T4 a4) {
+	return (*(TR(__fastcall**)(const void*, T1, T2, T3, T4))(*(__int64*)ths + reloff))(ths, a1, a2, a3, a4);
+}
+
+//
+// All these functions use the full address, not the rva
+
+// thread-safe template versions of fastCall()
+
+template<typename TR>
+__forceinline TR fastCall(size_t reloff) {
+	return ((TR(__fastcall*)())(reloff))();
+}
+
+template<typename TR, typename T1>
+__forceinline TR fastCall(size_t reloff, T1 a1) {
+	return ((TR(__fastcall*)(T1))(reloff))(a1);
+}
+
+template<typename TR, typename T1, typename T2>
+__forceinline TR fastCall(size_t reloff, T1 a1, T2 a2) {
+	return ((TR(__fastcall*)(T1, T2))(reloff))(a1, a2);
+}
+
+template<typename TR, typename T1, typename T2, typename T3>
+__forceinline TR fastCall(size_t reloff, T1 a1, T2 a2, T3 a3) {
+	return ((TR(__fastcall*)(T1, T2, T3))(reloff))(a1, a2, a3);
+}
+
+template<typename TR, typename T1, typename T2, typename T3, typename T4>
+__forceinline TR fastCall(size_t reloff, T1 a1, T2 a2, T3 a3, T4 a4) {
+	return ((TR(__fastcall*)(T1, T2, T3, T4))(reloff))(a1, a2, a3, a4);
+}
+
+template<typename TR, typename T1, typename T2, typename T3, typename T4, typename T5>
+__forceinline TR fastCall(size_t reloff, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5) {
+	return ((TR(__fastcall*)(T1, T2, T3, T4, T5))(reloff))(a1, a2, a3, a4, a5);
+}
+
+template<typename TR, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+__forceinline TR fastCall(size_t reloff, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6) {
+	return ((TR(__fastcall*)(T1, T2, T3, T4, T5, T6))(reloff))(a1, a2, a3, a4, a5, a6);
+}
+
+template<typename TR, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7>
+__forceinline TR fastCall(size_t reloff, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7) {
+	return ((TR(__fastcall*)(T1, T2, T3, T4, T5, T6, T7))(reloff))(a1, a2, a3, a4, a5, a6, a7);
+}
+
+template<typename TR, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8>
+__forceinline TR fastCall(size_t reloff, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7, T8 a8) {
+	return ((TR(__fastcall*)(T1, T2, T3, T4, T5, T6, T7, T8))(reloff))(a1, a2, a3, a4, a5, a6, a7, a8);
+}
+
+// thread-safe template versions of thisCall()
+
+template<typename TR>
+__forceinline TR thisCall(size_t reloff, const void* ths) {
+	return ((TR(__fastcall*)(const void*))(reloff))(ths);
+}
+
+template<typename TR, typename T1>
+__forceinline TR thisCall(size_t reloff, const void* ths, T1 a1) {
+	return ((TR(__fastcall*)(const void*, T1))(reloff))(ths, a1);
+}
+
+template<typename TR, typename T1, typename T2>
+__forceinline TR thisCall(size_t reloff, const void* ths, T1 a1, T2 a2) {
+	return ((TR(__fastcall*)(const void*, T1, T2))(reloff))(ths, a1, a2);
+}
+
+template<typename TR, typename T1, typename T2, typename T3>
+__forceinline TR thisCall(size_t reloff, const void* ths, T1 a1, T2 a2, T3 a3) {
+	return ((TR(__fastcall*)(const void*, T1, T2, T3))(reloff))(ths, a1, a2, a3);
+}
+
+template<typename TR, typename T1, typename T2, typename T3, typename T4>
+__forceinline TR thisCall(size_t reloff, const void* ths, T1 a1, T2 a2, T3 a3, T4 a4) {
+	return ((TR(__fastcall*)(const void*, T1, T2, T3, T4))(reloff))(ths, a1, a2, a3, a4);
+}

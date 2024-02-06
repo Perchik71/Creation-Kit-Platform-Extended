@@ -272,6 +272,30 @@ namespace CreationKitPlatformExtended
 					// Закрываем Creation Kit
 					CreationKitPlatformExtended::Utils::Quit();
 				}
+				else if (!_stricmp(Command.c_str(), "-PERemoveFromDatabase"))
+				{
+					if (CommandLine.Count() != 2)
+					{
+						_ERROR("Invalid number of command arguments: %u", CommandLine.Count());
+						_MESSAGE("Example: CreationKit -PERemoveFromDatabase \"test\"");
+					}
+					else
+					{
+						// Открываем базу данных
+						if (GlobalRelocationDatabasePtr->OpenDatabase())
+						{
+							if (GlobalRelocationDatabasePtr->Remove(CommandLine.At(1).c_str()))
+								// Сохраняем базу данных
+								GlobalRelocationDatabasePtr->SaveDatabase();
+							// Закрываем Creation Kit
+							CreationKitPlatformExtended::Utils::Quit();
+						}
+						else
+							_FATALERROR("The database is not loaded");
+					}
+					// Закрываем Creation Kit
+					CreationKitPlatformExtended::Utils::Quit();
+				}
 				else if (!_stricmp(Command.c_str(), "-PEExtractFromDatabase"))
 				{
 					if (CommandLine.Count() != 3)
@@ -389,6 +413,36 @@ namespace CreationKitPlatformExtended
 			Experimental::RunOptimizations();
 		}
 
+		uintptr_t Engine::GetModuleBase() const
+		{ 
+			return _moduleBase; 
+		}
+
+		uint64_t Engine::GetModuleSize() const
+		{ 
+			return _moduleSize; 
+		}
+
+		EDITOR_EXECUTABLE_TYPE Engine::GetEditorVersion() const 
+		{ 
+			return _editorVersion; 
+		}
+
+		bool Engine::HasAVX2() const 
+		{ 
+			return _hasAVX2; 
+		}
+
+		bool Engine::HasSSE41() const 
+		{
+			return _hasSSE41; 
+		}
+
+		Section Engine::GetSection(uint32_t nIndex) const 
+		{ 
+			return Sections[nIndex]; 
+		}
+
 		IResult Engine::Initialize(HMODULE hModule, LPCSTR lpcstrAppName)
 		{
 			if (GlobalEnginePtr)
@@ -445,7 +499,7 @@ namespace CreationKitPlatformExtended
 				LogCurrentTime();
 
 				// Получение CRC32 с файла
-				uint32_t hash_crc32 = CRC32File((std::string(lpcstrAppName) + ".exe").c_str());
+				uint32_t hash_crc32 = CRC32File((String(lpcstrAppName) + ".exe").c_str());
 				_MESSAGE("CRC32 executable file: 0x%08X", hash_crc32);
 
 				// Получение начального адреса памяти главного процесса

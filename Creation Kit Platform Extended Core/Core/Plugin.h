@@ -10,6 +10,9 @@ namespace CreationKitPlatformExtended
 {
 	namespace Core
 	{
+		constexpr static uint32_t PLUGIN_MENUID_MIN = 54000;
+		constexpr static uint32_t PLUGIN_MENUID_MAX = 56000;
+
 		class Plugin : public Module
 		{
 		public:
@@ -25,6 +28,12 @@ namespace CreationKitPlatformExtended
 			virtual const char* GetOptionName() const;
 
 			inline bool IsOk() const { return IsInit; }
+			inline bool HasMenu() const { return Menu != nullptr; }
+			inline HMENU GetMenu() const { return Menu; }
+			inline const char* GetMenuName() const { return _MenuName.c_str(); }
+
+			READ_PROPERTY(GetMenu) HMENU SubMenu;
+			READ_PROPERTY(GetMenuName) const char* SubMenuName;
 		protected:
 			virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion, 
 				const char* lpcstrPlatformRuntimeVersion) const;
@@ -37,7 +46,9 @@ namespace CreationKitPlatformExtended
 			Plugin& operator=(const Plugin&) = default;
 
 			String _PluginDllName;
+			String _MenuName;
 			HMODULE _Handle;
+			HMENU Menu;
 			bool IsInit;
 			char szTemp[MAX_PATH];
 			SmartPointer<Core::DebugLog> _Log;

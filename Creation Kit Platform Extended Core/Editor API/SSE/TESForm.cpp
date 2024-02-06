@@ -23,6 +23,11 @@ namespace CreationKitPlatformExtended
 				return (FormFlags & FormFlags::fsDeleted) != 0;
 			}
 
+			char TESForm::GetFormType() const
+			{
+				return FormType;
+			}
+
 			uint32_t TESForm::GetFormID() const
 			{
 				return FormID;

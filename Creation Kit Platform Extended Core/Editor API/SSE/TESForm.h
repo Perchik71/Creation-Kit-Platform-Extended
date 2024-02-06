@@ -43,6 +43,7 @@ namespace CreationKitPlatformExtended
 				bool GetMarkedDelete() const;
 				uint32_t GetFormID() const;
 				BSString GetEditorID() const;
+				char GetFormType() const;
 
 				void SetNewFormID(uint32_t NewIndex, bool Unk = true);
 

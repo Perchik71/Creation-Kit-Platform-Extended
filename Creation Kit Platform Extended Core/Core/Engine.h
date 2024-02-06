@@ -29,13 +29,14 @@ namespace CreationKitPlatformExtended
 			~Engine() = default;
 			
 			inline HINSTANCE GetInstanceDLL() const { return (HINSTANCE)_module; }
-			inline uintptr_t GetModuleBase() const { return _moduleBase; }
-			inline uint64_t GetModuleSize() const { return _moduleSize; }
-			inline EDITOR_EXECUTABLE_TYPE GetEditorVersion() const { return _editorVersion; }
+			virtual uintptr_t GetModuleBase() const;
+			virtual uint64_t GetModuleSize() const;
+			virtual EDITOR_EXECUTABLE_TYPE GetEditorVersion() const;
 			inline ModuleManager* GetPatchesManager() const { return PatchesManager; }
-			inline bool HasAVX2() const { return _hasAVX2; }
-			inline bool HasSSE41() const { return _hasSSE41; }
-			inline Section GetSection(uint32_t nIndex) const { return Sections[nIndex]; }
+			inline PluginManager* GetUserPluginsManager() const { return UserPluginsManager; }
+			virtual bool HasAVX2() const;
+			virtual bool HasSSE41() const;
+			virtual Section GetSection(uint32_t nIndex) const;
 		public:
 			static IResult Initialize(HMODULE hModule, LPCSTR lpcstrAppName);
 		private:

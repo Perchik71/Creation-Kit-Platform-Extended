@@ -3,10 +3,11 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
+#include "Core/PluginManager.h"
 #include "Core/ConsoleWindow.h"
+#include "Core/TypeInfo/ms_rtti.h"
 #include "Editor API/EditorUI.h"
 #include "Editor API/BSString.h"
-#include "Core/TypeInfo/ms_rtti.h"
 #include "Editor API/FO4/BSPointerHandleManager.h"
 #include "Patches/Windows/FO4/ObjectWindowF4.h"
 #include "Patches/Windows/FO4/CellViewWindowF4.h"
@@ -193,6 +194,10 @@ namespace CreationKitPlatformExtended
 				};
 
 				AssertMsg(InsertMenuItem(MainMenu, -1, TRUE, &menuInfo), "Failed to create extension submenu");
+
+				// Create plug-ins menu options
+				auto Plugins = GlobalEnginePtr->GetUserPluginsManager();
+				Plugins->CreatePluginsMenu(MainMenu, UI_EXTMENU_ID + 1);
 			}
 
 			LRESULT CALLBACK MainWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
@@ -398,7 +403,13 @@ namespace CreationKitPlatformExtended
 							}
 							return 0;
 							default:
+							{
+								bool Continue = true;
+								auto Plugins = GlobalEnginePtr->GetUserPluginsManager();
+								auto Ret = Plugins->ProcessingMenuMessages(Hwnd, Message, wParam, lParam, Continue);
+								if (!Continue) return Ret;
 								return CallWindowProc(GlobalMainWindowPtr->GetOldWndProc(), Hwnd, Message, wParam, lParam);
+							}
 							}
 						}
 						break;

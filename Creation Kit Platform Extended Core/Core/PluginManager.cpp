@@ -7,18 +7,27 @@
 #include "PluginManager.h"
 #include "Relocator.h"
 
-#include "..\MyFirstPlugin\CKPE\PluginAPI.h"
+#include "Editor API/UI/UIMenus.h"
+#include "../MyFirstPlugin/CKPE/PluginAPI.h"
 
 namespace CreationKitPlatformExtended
 {
 	namespace Core
 	{
-		PluginManager::PluginManager()
-		{}
+		uint32_t GlobalPluginMenuStartId;
+		uint32_t GlobalPluginMenuEndId;
+
+		PluginManager::PluginManager() : _PluginsMenu(nullptr)
+		{
+			GlobalPluginMenuStartId = PLUGIN_MENUID_MIN;
+			GlobalPluginMenuEndId = GlobalPluginMenuStartId + 4;
+		}
 
 		PluginManager::~PluginManager()
 		{
 			Clear();
+			if (_PluginsMenu) 
+				DestroyMenu(_PluginsMenu);
 		}
 
 		bool PluginManager::Has(const char* name) const
@@ -93,6 +102,97 @@ namespace CreationKitPlatformExtended
 			}
 		}
 
+		void PluginManager::CreatePluginsMenu(HMENU MainMenu, uint32_t MenuID)
+		{
+			uint32_t Uses = 0;
+			_PluginsMenu = CreateMenu();
+			_PlugingsActionManager.clear();
+
+			for (auto It = _plugins.begin(); It != _plugins.end(); It++)
+			{
+				auto Plugin = It->second.Get();	
+				if (Plugin->HasMenu())
+				{
+					::Core::Classes::UI::CUIMenu SubMenu = Plugin->SubMenu;
+
+					// From the names of the menu items, take the address of the function and restore the name
+
+					for (UINT i = 0; i < SubMenu.Count(); i++)
+					{
+						auto Item = SubMenu.GetItemByPos(i);
+						
+						String Caption = Item.Text.c_str();
+						auto It = Caption.find_first_of('\1');
+						if (It == String::npos)
+							continue;
+
+						// Get address function
+						char* EndPrefix = nullptr;
+						_PlugingsActionManager[Item.ID] = 
+							(LONG_PTR)_strtoui64(Caption.substr(It + 1).c_str(), &EndPrefix, 16);
+						
+						// Restore name
+						Item.Text = Caption.substr(0, It).c_str();
+					}
+
+					MENUITEMINFOA mii = { 0 };
+					mii.cbSize = sizeof(MENUITEMINFOA);
+					mii.fMask = MIIM_STRING | MIIM_SUBMENU;
+					mii.dwTypeData = (LPSTR)Plugin->SubMenuName;
+					mii.cch = (UINT)strlen(mii.dwTypeData);
+					mii.hSubMenu = Plugin->SubMenu;
+			
+					if (InsertMenuItemA(_PluginsMenu, 0, TRUE, &mii))
+						Uses++;
+				}
+			}
+
+			if (!Uses)
+				DestroyMenu(_PluginsMenu);
+			else
+			{
+				MENUITEMINFO mii
+				{
+					.cbSize = sizeof(MENUITEMINFO),
+					.fMask = MIIM_SUBMENU | MIIM_ID | MIIM_STRING,
+					.wID = MenuID,
+					.hSubMenu = _PluginsMenu,
+					.dwTypeData = const_cast<LPSTR>("Plug-ins"),
+					.cch = static_cast<uint32_t>(strlen(mii.dwTypeData))
+				};
+
+				AssertMsg(InsertMenuItemA(MainMenu, -1, TRUE, &mii), "Failed to create plug-ins submenu");
+			}
+		}
+
+		LRESULT PluginManager::ProcessingMenuMessages(HWND Hwnd, UINT Message, WPARAM wParam,
+			LPARAM lParam, bool bContinue)
+		{
+			bContinue = true;
+
+			if (Message == WM_COMMAND)
+			{
+				const uint32_t menuID = LOWORD(wParam);
+				if ((menuID >= PLUGIN_MENUID_MIN) && (menuID < PLUGIN_MENUID_MAX))
+				{
+					if (_PlugingsActionManager.count(menuID) > 0)
+					{
+						auto Data = _PlugingsActionManager[menuID];
+						if (Data)
+						{
+							// Calling the plugin function from memory
+							fastCall<void>((uintptr_t)Data, menuID);
+							// This completes any processing
+							bContinue = false;
+							return S_OK;
+						}
+					}
+				}
+			}
+
+			return S_FALSE;
+		}
+
 		SmartPointer<Plugin> PluginManager::GetByName(const char* name) const
 		{
 			for (auto It = _plugins.begin(); It != _plugins.end(); It++)
@@ -107,6 +207,7 @@ namespace CreationKitPlatformExtended
 		void PluginManager::Clear()
 		{
 			_plugins.clear();
+			_PlugingsActionManager.clear();
 		}
 
 		void PluginManager::QueryAll()

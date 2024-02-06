@@ -13,6 +13,11 @@ namespace CreationKitPlatformExtended
 
 		DialogManager* GlobalDialogManagerPtr = nullptr;
 
+		bool DialogManager::HasDialog(const LONG_PTR uid) const 
+		{ 
+			return m_items.find(uid) != m_items.end(); 
+		}
+
 		bool DialogManager::AddDialog(const String& json_file, const ULONG_PTR uid)
 		{
 			if (HasDialog(uid))
@@ -55,6 +60,11 @@ namespace CreationKitPlatformExtended
 		{
 			auto it = m_items.find(uid);
 			return (it == m_items.end()) ? NULL : it->second;
+		}
+
+		bool DialogManager::Empty() const
+		{ 
+			return !m_items.size(); 
 		}
 
 		void DialogManager::LoadFromFilePackage(const char* fname)

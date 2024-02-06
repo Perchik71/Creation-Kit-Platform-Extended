@@ -52,6 +52,7 @@ namespace CreationKitPlatformExtended
 			bool Has(const char* name) const;
 			SmartPointer<RelocationDatabaseItem> Append(const char* name, RelocationDatabaseItem* Patch);
 			SmartPointer<RelocationDatabaseItem> GetByName(const char* name) const;
+			bool Remove(const char* name);
 
 			void Clear();
 		private:

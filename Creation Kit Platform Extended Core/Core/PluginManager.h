@@ -22,9 +22,13 @@ namespace CreationKitPlatformExtended
 			void Remove(const char* name);
 
 			void FindPlugins();
-
 			SmartPointer<Plugin> GetByName(const char* name) const;
 			inline uint32_t Count() const { return (uint32_t)_plugins.size(); }
+
+			void CreatePluginsMenu(HMENU MainMenu, uint32_t MenuID);
+			LRESULT ProcessingMenuMessages(HWND Hwnd, UINT Message, WPARAM wParam,
+				LPARAM lParam, bool bContinue);
+			inline HMENU GetPluginsMenu() const { return _PluginsMenu; }
 
 			void Clear();
 
@@ -35,6 +39,8 @@ namespace CreationKitPlatformExtended
 			PluginManager& operator=(const PluginManager&) = default;
 
 			Map<String, SmartPointer<Plugin>> _plugins;
+			Map<uint32_t, uintptr_t> _PlugingsActionManager;
+			HMENU _PluginsMenu;
 		};
 	}
 }

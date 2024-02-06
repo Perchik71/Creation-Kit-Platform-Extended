@@ -11,6 +11,8 @@
 
 #pragma once
 
+constexpr static uint32_t PLUGINAPI_CURRENT_VERSION = 2;
+
 #ifndef _CKPE_MAIN
 
 namespace CreationKitPlatformExtended
@@ -40,6 +42,11 @@ namespace CreationKitPlatformExtended
 		constexpr static uint32_t SECTION_DATA_READONLY = 1;
 		constexpr static uint32_t SECTION_DATA = 2;
 
+		typedef void(__stdcall* OnMenuItemEvent)(uint32_t u32MenuID);
+		bool __stdcall AppendMenuItem(HMENU hMenu, uint32_t u32MenuID,
+			String Caption, OnMenuItemEvent Function);
+		bool __stdcall AppendMenuSeperator(HMENU hMenu, uint32_t u32MenuID);
+
 		class MemoryManager
 		{
 		public:
@@ -53,10 +60,39 @@ namespace CreationKitPlatformExtended
 			MemoryManager& operator=(const MemoryManager&) = default;
 		};
 
+		class DialogManager
+		{
+		public:
+			~DialogManager() = default;
+
+			virtual bool HasDialog(const LONG_PTR uid) const;
+			virtual bool AddDialog(const String& json_file, const ULONG_PTR uid);
+			virtual bool AddDialogByCode(const String& json_code, const ULONG_PTR uid);
+			virtual void* GetDialog(const ULONG_PTR uid);
+			virtual bool Empty() const;
+
+			virtual void LoadFromFilePackage(const char* fname);
+			virtual void PackToFilePackage(const char* fname, const char* dir);
+		};
+
+		class Engine
+		{
+		public:
+			~Engine() = default;
+
+			virtual uintptr_t GetModuleBase() const;
+			virtual uint64_t GetModuleSize() const;
+			virtual EDITOR_EXECUTABLE_TYPE GetEditorVersion() const;
+			virtual bool HasAVX2() const;
+			virtual bool HasSSE41() const;
+			// Indexes: SECTION_TEXT, SECTION_DATA_READONLY, SECTION_DATA
+			virtual Section GetSection(uint32_t nIndex) const;
+		};
+
 		class Relocator
 		{
 		public:
-			Relocator(class Engine* lpEngine);
+			Relocator(Engine* lpEngine);
 			~Relocator() = default;
 
 			virtual uintptr_t Rav2Off(uintptr_t rav) const;
@@ -133,10 +169,22 @@ namespace CreationKitPlatformExtended
 
 struct CKPEPlugin_StructData
 {
+	// The version of this structure to be defined in your plugin
+	// Should be equal PLUGINAPI_CURRENT_VERSION
+	uint32_t Version;
+
 	CreationKitPlatformExtended::PluginAPI::MemoryManager* MemoryManager;
 	CreationKitPlatformExtended::PluginAPI::Relocator* Relocator;
 	CreationKitPlatformExtended::PluginAPI::ConsoleWindow* Console;
 	CreationKitPlatformExtended::PluginAPI::DebugLog* Log;
+	CreationKitPlatformExtended::PluginAPI::Engine* Engine;
+	CreationKitPlatformExtended::PluginAPI::DialogManager* DialogManager;
+
+	// Your menu, 5 indexes are reserved for each plugin
+	uint32_t MenuYourStartId;
+	uint32_t MenuYourEndId;
+	HMENU* SubMenu;
+	char szSubMenuName[33];
 };
 
 #else

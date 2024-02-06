@@ -5,6 +5,7 @@
 #include "Version/resource_version2.h"
 #include "Engine.h"
 #include "Plugin.h"
+#include "DialogManager.h"
 #include "Editor API/BSString.h"
 #include "../MyFirstPlugin/CKPE/PluginAPI.h"
 
@@ -12,8 +13,27 @@ namespace CreationKitPlatformExtended
 {
 	namespace Core
 	{
+		struct DataTAG
+		{
+			uint32_t Version;
+			Core::MemoryManager* MemoryManager;
+			Core::Relocator* Relocator;
+			Core::ConsoleWindow* Console;
+			Core::DebugLog* Log;
+			Core::Engine* Engine;
+			Core::DialogManager* DialogManager;
+			uint32_t MenuYourStartId;
+			uint32_t MenuYourEndId;
+			HMENU* SubMenu;
+			char szSubMenuName[33];
+		};
+
+		extern uint32_t GlobalPluginMenuStartId;
+		extern uint32_t GlobalPluginMenuEndId;
+
 		Plugin::Plugin(Engine* lpEngine, const char* lpcstrPluginDllName) :
-			Module(lpEngine), _PluginDllName(lpcstrPluginDllName), _Handle(nullptr), IsInit(true)
+			Module(lpEngine), _PluginDllName(lpcstrPluginDllName), _Handle(nullptr), IsInit(true),
+			Menu(nullptr)
 		{
 			_FuncMap.insert(std::make_pair<std::string_view, uintptr_t>("CKPEPlugin_HasCanRuntimeDisabled", 0));
 			_FuncMap.insert(std::make_pair<std::string_view, uintptr_t>("CKPEPlugin_GetName", 0));
@@ -157,38 +177,49 @@ namespace CreationKitPlatformExtended
 		bool Plugin::Activate(const Relocator* lpRelocator,
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
-			struct DataTAG
+			DataTAG Data = 
 			{
-				Core::MemoryManager* MemoryManager;
-				Core::Relocator* Relocator;
-				Core::ConsoleWindow* Console;
-				Core::DebugLog* Log;
-			} Data = { 
+				PLUGINAPI_CURRENT_VERSION,
 				Core::GlobalMemoryManagerPtr, 
 				const_cast<Relocator*>(lpRelocator),
 				Core::GlobalConsoleWindowPtr,
 				_Log.Get(),
+				Core::GlobalEnginePtr,
+				Core::GlobalDialogManagerPtr,
+				GlobalPluginMenuStartId,
+				GlobalPluginMenuEndId,
+				&Menu,
 			};
 
 			auto It = _FuncMap.find("CKPEPlugin_Init");
 			if ((It == _FuncMap.end()) || !It->second) return false;
-			return fastCall<bool>(It->second, &Data);
+			bool bRet = fastCall<bool>(It->second, &Data);
+
+			if (bRet && Menu)
+			{
+				_MenuName = Data.szSubMenuName;
+				GlobalPluginMenuStartId = std::min(GlobalPluginMenuEndId + 1, PLUGIN_MENUID_MAX);
+				GlobalPluginMenuEndId = std::min(GlobalPluginMenuStartId + 4, PLUGIN_MENUID_MAX);
+			}
+
+			return bRet;
 		}
 
 		bool Plugin::Shutdown(const Relocator* lpRelocator,
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
-			struct DataTAG
+			DataTAG Data =
 			{
-				Core::MemoryManager* MemoryManager;
-				Core::Relocator* Relocator;
-				Core::ConsoleWindow* Console;
-				Core::DebugLog* Log;
-			} Data = {
+				PLUGINAPI_CURRENT_VERSION,
 				Core::GlobalMemoryManagerPtr,
 				const_cast<Relocator*>(lpRelocator),
 				Core::GlobalConsoleWindowPtr,
 				_Log.Get(),
+				Core::GlobalEnginePtr,
+				Core::GlobalDialogManagerPtr,
+				0,
+				0,
+				nullptr,
 			};
 
 			auto It = _FuncMap.find("CKPEPlugin_Shutdown");
