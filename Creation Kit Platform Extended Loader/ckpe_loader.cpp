@@ -1,4 +1,6 @@
-﻿#include <iostream>
+﻿#pragma warning (disable : 6335)
+
+#include <iostream>
 #include <memory>
 #include <string>
 #include <map>
@@ -15,6 +17,7 @@
 
 #include "resource.h"
 
+#define DEBUGLOG	0
 #define CREATIONKIT L"CreationKit.exe"
 
 std::map<std::wstring, BOOL> dllENBs = {
@@ -27,22 +30,72 @@ std::map<std::wstring, BOOL> dllENBs = {
 	{ L"dinput8.dll", FALSE },
 };
 
-INT_PTR CALLBACK DlgPleaseWaitProc(HWND DialogHwnd, UINT Message, WPARAM wParam, LPARAM lParam) {
+#if DEBUGLOG
+
+FILE* DebugLog = nullptr;
+
+class ScopeFileStream
+{
+public:
+	ScopeFileStream(FILE* Stream) : _Stream(Stream) {}
+	~ScopeFileStream() { fclose(_Stream); }
+private:
+	FILE* _Stream;
+};
+
+void _MESSAGE(const wchar_t* Format, ...)
+{
+	if (DebugLog)
+	{
+		va_list ap;
+		va_start(ap, Format);
+		vfwprintf_s(DebugLog, Format, ap);
+		va_end(ap);
+		fputc('\n', DebugLog);
+		fflush(DebugLog);
+	}
+}
+
+class ScopeFunction
+{
+public:
+	ScopeFunction(const wchar_t* Name) : _Name(Name) { _MESSAGE(L"Start \"%s\"", _Name.c_str()); }
+	~ScopeFunction() { _MESSAGE(L"End \"%s\"", _Name.c_str()); }
+private:
+	std::wstring _Name;
+};
+
+#else
+#	define _MESSAGE(Format, ...)
+#endif
+
+INT_PTR CALLBACK DlgPleaseWaitProc(HWND DialogHwnd, UINT Message, WPARAM wParam, LPARAM lParam)
+{
 	return FALSE;
 }
 
 void HideConsole()
 {
+#if DEBUGLOG
+	ScopeFunction Foo(L"HideConsole");
+#endif
+
 	ShowWindow(GetConsoleWindow(), SW_HIDE);
 }
 
-BOOL FileExists(const std::wstring fname) {
+BOOL FileExists(const std::wstring fname) 
+{
 	auto dwAttrs = GetFileAttributes(fname.c_str());
 	if (dwAttrs == INVALID_FILE_ATTRIBUTES) return FALSE;
 	return (dwAttrs & FILE_ATTRIBUTE_DIRECTORY) == 0;
 }
 
-VOID WaitCloseCKLoader(VOID) {
+VOID WaitCloseCKLoader(VOID)
+{
+#if DEBUGLOG
+	ScopeFunction Foo(L"WaitCloseCKLoader");
+#endif
+
 	DWORD dwCount = 0;
 	PROCESSENTRY32 entry;
 	entry.dwSize = sizeof(PROCESSENTRY32);
@@ -79,6 +132,10 @@ VOID WaitCloseCKLoader(VOID) {
 
 void RenameFiles()
 {
+#if DEBUGLOG
+	ScopeFunction Foo(L"RenameFiles");
+#endif
+
 	for (auto it = dllENBs.begin(); it != dllENBs.end(); it++)
 	{
 		auto sname = it->first;
@@ -92,6 +149,10 @@ void RenameFiles()
 
 void RestoreFiles()
 {
+#if DEBUGLOG
+	ScopeFunction Foo(L"RestoreFiles");
+#endif
+
 	for (auto it = dllENBs.begin(); it != dllENBs.end(); it++)
 	{
 		if (it->second)
@@ -105,24 +166,43 @@ void RestoreFiles()
 
 void RunCK()
 {
-	if (!FileExists(CREATIONKIT))
+#if DEBUGLOG
+	ScopeFunction Foo(L"RunCK");
+#endif
+
+	std::wstring Cmd = GetCommandLineW();
+	if (Cmd.find_first_of(L"\"") == 0)
+		Cmd = Cmd.substr((Cmd.find_first_of(L"\"", 1)) + 1);
+	_MESSAGE(L"Command Line: %s", Cmd.empty() ? L"null" : Cmd.c_str());
+
+	std::wstring CurPath;
+	CurPath.resize(MAX_PATH);
+	GetCurrentDirectoryW((DWORD)CurPath.length(), CurPath.data());
+	_MESSAGE(L"Current Directory: %s", CurPath.c_str());
+
+	std::wstring AppPath;
+	AppPath.resize(MAX_PATH);
+	GetModuleFileNameW(GetModuleHandle(NULL), AppPath.data(), (DWORD)AppPath.length());
+	AppPath = AppPath.substr(0, AppPath.find_last_of(L"\\") + 1);
+	_MESSAGE(L"Application Directory: %s", AppPath.c_str());
+
+	if (!FileExists(AppPath + CREATIONKIT))
 	{
 		MessageBoxW(0, CREATIONKIT " was not found", L"Error", MB_OK | MB_ICONERROR);
 		return;
 	}
-	
-	STARTUPINFO si;
-	PROCESS_INFORMATION pi;
-	memset(&si, 0, sizeof(si)); si.cb = sizeof(si);
-	memset(&pi, 0, sizeof(pi));
 
-	std::wstring Cmd = GetCommandLine();
-	if (Cmd.find_first_of(L"\"") == 0)
-		Cmd = Cmd.substr((Cmd.find_first_of(L"\"", 1)) + 2);
+	STARTUPINFO si = { 0 };
+	PROCESS_INFORMATION pi = { 0 };
+	si.cb = sizeof(STARTUPINFO);
 
-	Cmd.insert(0, CREATIONKIT" ");
-	if (!CreateProcess(NULL, Cmd.data(), NULL, NULL,
-						FALSE, 0, NULL, NULL, &si, &pi))
+	std::wstring Command;
+	Command.resize(MAX_PATH);
+	Command.resize(swprintf_s(Command.data(), MAX_PATH, L"\"%s\\%s\"", AppPath.c_str(), CREATIONKIT));
+	if (!Cmd.empty()) Command.append(Cmd.c_str());
+	_MESSAGE(L"Command: %s", Command.c_str());
+
+	if (!CreateProcess(NULL, Command.data(), NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi))
 		return;
 
 	Sleep(15000);
@@ -130,6 +210,11 @@ void RunCK()
 
 int main(int argc, char* argv[])
 {
+#if DEBUGLOG
+	DebugLog = _wfopen(L"F:\\SteamLibrary\\steamapps\\common\\Skyrim Special Edition\\ckpe_loader.log", L"w+");
+	ScopeFileStream Stream(DebugLog);
+#endif
+
 	HideConsole();
 	WaitCloseCKLoader();
 
