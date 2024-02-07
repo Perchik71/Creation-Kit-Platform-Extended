@@ -550,11 +550,11 @@ namespace CreationKitPlatformExtended
 	{
 		va_list va;
 		va_start(va, fmt);
-		_CONSOLE(fmt, va);
+		_CONSOLEVA(fmt, va);
 		va_end(va);
 	}
 
-	void _CONSOLE(const char* fmt, va_list va)
+	void _CONSOLEVA(const char* fmt, va_list va)
 	{
 		if (Core::GlobalConsoleWindowPtr)
 			Core::GlobalConsoleWindowPtr->InputLogVa(fmt, va);

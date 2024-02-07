@@ -664,6 +664,9 @@
     <ClCompile Include="Patches\SSE\FixFormIDsInLoadFile.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Core\DynamicCast.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1531,6 +1534,9 @@
     </ClInclude>
     <ClInclude Include="Patches\SSE\FixFormIDsInLoadFile.h">
       <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DynamicCast.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

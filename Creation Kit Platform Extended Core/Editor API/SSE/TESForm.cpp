@@ -16,26 +16,21 @@ namespace CreationKitPlatformExtended
 
 			bool TESForm::GetActive() const
 			{
-				return (FormFlags & FormFlags::fsModified) != 0;
+				return (_FormFlags & FormFlags::fsModified) != 0;
 			}
 
 			bool TESForm::GetMarkedDelete() const {
-				return (FormFlags & FormFlags::fsDeleted) != 0;
+				return (_FormFlags & FormFlags::fsDeleted) != 0;
 			}
 
 			char TESForm::GetFormType() const
 			{
-				return FormType;
+				return _FormType;
 			}
 
 			uint32_t TESForm::GetFormID() const
 			{
-				return FormID;
-			}
-
-			BSString TESForm::GetEditorID() const 
-			{
-				return thisVirtualCall<char*>(0x1E8, this);
+				return _FormID;
 			}
 
 			void TESForm::SetNewFormID(uint32_t NewIndex, bool Unk) 

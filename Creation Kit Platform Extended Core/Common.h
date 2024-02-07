@@ -5,6 +5,9 @@
 #pragma once
 
 #pragma warning (disable : 4244)
+#pragma warning (disable : 4302)
+#pragma warning (disable : 4311)
+#pragma warning (disable : 4312)
 #pragma warning (disable : 4477)
 #pragma warning (disable : 4996)
 #pragma warning (disable : 26812)
@@ -57,6 +60,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <initializer_list>
+#include <regex>
 
 #include <concurrent_vector.h>
 #include <concurrent_unordered_map.h>
@@ -79,5 +83,6 @@
 #include "Core/Relocator.h"
 #include "Core/ConsoleWindow.h"
 #include "Core/MemoryManager.h"
+#include "Core/DynamicCast.h"
 
 #undef StrToInt

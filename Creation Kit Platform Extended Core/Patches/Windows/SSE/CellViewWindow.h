@@ -52,6 +52,7 @@ namespace CreationKitPlatformExtended
 				Classes::CUIBaseControl m_ActiveObjectsOnly;
 				Classes::CUIBaseControl m_CellListView;
 				Classes::CUIBaseControl m_ObjectListView;
+				Classes::CUIBaseControl m_FilterCellEdit;
 			};
 
 			extern CellViewWindow* GlobalCellViewWindowPtr;

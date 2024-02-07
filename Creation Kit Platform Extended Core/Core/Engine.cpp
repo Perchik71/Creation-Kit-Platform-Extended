@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Version/resource_version2.h"
-#include "TypeInfo/ms_rtti.h"
 
 #include "ConsoleWindow.h"
 #include "CommandLineParser.h"
@@ -11,6 +10,7 @@
 #include "DialogManager.h"
 #include "GDIPlusInit.h"
 #include "Engine.h"
+#include "DynamicCast.h"
 
 #include "Editor API/EditorUI.h"
 
@@ -327,15 +327,8 @@ namespace CreationKitPlatformExtended
 						_MESSAGE("Example: CreationKit -PEExportRTTI \"rtti.txt\"");
 					}
 
-					FILE* fileStream = _wfsopen(Utils::Utf82Wide((char8_t*)CommandLine.At(1).c_str()).c_str(), 
-						L"wt", _SH_DENYRW);
-					if (!fileStream)
+					if (!GlobalDynamicCastPtr || !GlobalDynamicCastPtr->Dump(CommandLine.At(1).c_str()))
 						_ERROR("It was not possible to create a file and write data there.");
-					else
-					{
-						Utils::ScopeFileStream file(fileStream);
-						MSRTTI::Dump(fileStream);
-					}
 
 					// Закрываем Creation Kit
 					CreationKitPlatformExtended::Utils::Quit();
@@ -358,7 +351,13 @@ namespace CreationKitPlatformExtended
 		void Engine::ContinueInitialize()
 		{
 			// Включение RTTI
-			MSRTTI::Initialize();
+			GlobalDynamicCastPtr = new DynamicCast();
+			if (!GlobalDynamicCastPtr)
+			{
+				_FATALERROR("Failed to create a class for RTTI");
+				return;
+			}
+
 			// Парсинг командной строки
 			CommandLineRun();
 			

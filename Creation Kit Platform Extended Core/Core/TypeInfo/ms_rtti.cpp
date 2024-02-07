@@ -19,7 +19,7 @@ namespace CreationKitPlatformExtended
 		{
 			using namespace detail;
 
-			std::vector<Info> Tables;
+			Array<Info> Tables;
 			uintptr_t g_RdataBase, g_RdataEnd, g_DataBase, g_DataEnd, g_CodeBase, g_CodeEnd;
 			uintptr_t g_ModuleBase;
 
@@ -98,11 +98,11 @@ namespace CreationKitPlatformExtended
 				return results.at(0);
 			}
 
-			std::vector<const Info*> FindAll(const char* Name, bool Exact)
+			Array<const Info*> FindAll(const char* Name, bool Exact)
 			{
 				// Multiple classes can have identical names but different vtable displacements,
 				// so return all that match
-				std::vector<const Info*> results;
+				Array<const Info*> results;
 
 				for (const Info& info : Tables)
 				{

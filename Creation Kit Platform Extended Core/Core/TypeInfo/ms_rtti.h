@@ -24,7 +24,7 @@ namespace CreationKitPlatformExtended
 			void Initialize();
 			void Dump(FILE* File);
 			const Info* Find(const char* Name, bool Exact = true);
-			std::vector<const Info*> FindAll(const char* Name, bool Exact = true);
+			Array<const Info*> FindAll(const char* Name, bool Exact = true);
 
 			namespace detail
 			{

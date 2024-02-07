@@ -12,6 +12,9 @@
 #define UI_CELL_VIEW_ADD_CELL_OBJECT_ITEM			2583
 #define UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX			2580	
 #define UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX	2582	
+#define UI_CELL_VIEW_FILTER_CELL					2584	
+
+#define UI_CELL_VIEW_FILTER_CELL_SIZE				1024
 
 namespace CreationKitPlatformExtended
 {
@@ -23,6 +26,8 @@ namespace CreationKitPlatformExtended
 			//uintptr_t pointer_CellViewWindow_data = 0;
 			uintptr_t pointer_CellViewWindow_sub1 = 0;
 			uintptr_t pointer_CellViewWindow_sub2 = 0;
+			char* str_CellViewWindow_Filter = nullptr;
+			char* str_CellViewWindow_FilterUser = nullptr;
 
 			bool CellViewWindow::HasOption() const
 			{
@@ -136,7 +141,14 @@ namespace CreationKitPlatformExtended
 				Bounds.Left = 4;
 				Bounds.Top = 22;
 				Bounds.Height = 95;
+				Bounds.Width = 148;
 				m_WorldSpaceComboBox.BoundsRect = Bounds;
+
+				Bounds.Left = 156;
+				Bounds.Top = 22;
+				Bounds.Height = 21;
+				Bounds.Right = uHalf + 4;
+				m_FilterCellEdit.BoundsRect = Bounds;
 
 				Bounds.Left = 6;
 				Bounds.Top = 60;
@@ -195,6 +207,11 @@ namespace CreationKitPlatformExtended
 			{
 				if (Message == WM_INITDIALOG)
 				{
+					str_CellViewWindow_Filter = (char*)GlobalMemoryManagerPtr->MemAlloc(UI_CELL_VIEW_FILTER_CELL);
+					AssertMsg(str_CellViewWindow_Filter, "Failed to allocate memory for the cells filter");
+					str_CellViewWindow_FilterUser = (char*)GlobalMemoryManagerPtr->MemAlloc(UI_CELL_VIEW_FILTER_CELL);
+					AssertMsg(str_CellViewWindow_FilterUser, "Failed to allocate memory for the text of the custom filter");
+
 					GlobalCellViewWindowPtr->m_hWnd = Hwnd;
 					GlobalCellViewWindowPtr->m_WorldSpaceLabel = GetDlgItem(Hwnd, 1164);
 					GlobalCellViewWindowPtr->m_WorldSpaceComboBox = GetDlgItem(Hwnd, 2083);
@@ -210,6 +227,7 @@ namespace CreationKitPlatformExtended
 					GlobalCellViewWindowPtr->m_ActiveObjectsOnly = GetDlgItem(Hwnd, 2582);
 					GlobalCellViewWindowPtr->m_CellListView = GetDlgItem(Hwnd, 1155);
 					GlobalCellViewWindowPtr->m_ObjectListView = GetDlgItem(Hwnd, 1156);
+					GlobalCellViewWindowPtr->m_FilterCellEdit = GetDlgItem(Hwnd, UI_CELL_VIEW_FILTER_CELL);
 
 					GlobalCellViewWindowPtr->m_WorldSpaceLabel.Style |= SS_CENTER;
 
@@ -248,6 +266,20 @@ namespace CreationKitPlatformExtended
 						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
 						return 1;
 					}
+					else if ((param == UI_CELL_VIEW_FILTER_CELL) && (HIWORD(wParam) == EN_CHANGE))
+					{
+						auto hFilter = GlobalCellViewWindowPtr->m_FilterCellEdit.Handle;
+						auto iLen = std::min(GetWindowTextLengthA(hFilter), UI_CELL_VIEW_FILTER_CELL_SIZE - 1);
+
+						SetPropA(Hwnd, "FilterCellsLen", reinterpret_cast<HANDLE>(iLen));
+
+						if (iLen)
+							GetWindowTextA(hFilter, str_CellViewWindow_FilterUser, iLen);
+
+						// Fake the dropdown list being activated
+						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2083, 1), 0);
+						return 1;
+					}
 				}
 				else if (Message == UI_CELL_VIEW_ADD_CELL_ITEM)
 				{
@@ -261,6 +293,28 @@ namespace CreationKitPlatformExtended
 					{
 						if (form && !form->GetActive())
 							*allowInsert = false;
+					}
+
+					// Skip if a filter is installed and the form does not meet the requirements
+					if (*allowInsert && reinterpret_cast<int>(GetPropA(Hwnd, "FilterCellsLen")) > 2)
+					{
+						if (form)
+						{
+							auto editorID = form->GetEditorID_NoVTable();
+							if (editorID)
+							{
+								TESFullName* fullname = (TESFullName*)_DYNAMIC_CAST(form, 0, "class TESForm", "class TESFullName");
+
+								if (fullname)
+									sprintf_s(str_CellViewWindow_Filter, UI_CELL_VIEW_FILTER_CELL, "%s %08X %s", 
+										editorID, form->GetFormID(), fullname->Name);
+								else
+									sprintf_s(str_CellViewWindow_Filter, UI_CELL_VIEW_FILTER_CELL, "%s %08X",
+										editorID, form->GetFormID());
+						
+								*allowInsert = StrStrI(str_CellViewWindow_Filter, str_CellViewWindow_FilterUser) != 0;
+							}
+						}
 					}
 
 					return 1;

@@ -124,7 +124,7 @@ namespace CreationKitPlatformExtended
 
 		void ConsolePatch::LogVa(const char* Format, va_list Va)
 		{
-			_CONSOLE(Format, Va);
+			_CONSOLEVA(Format, Va);
 		}
 
 		void ConsolePatch::LogWarning(int Type, const char* Format, ...)

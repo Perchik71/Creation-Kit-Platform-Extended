@@ -78,6 +78,7 @@
     <ClCompile Include="Core\ConsoleWindow.cpp" />
     <ClCompile Include="Core\DebugLog.cpp" />
     <ClCompile Include="Core\DialogManager.cpp" />
+    <ClCompile Include="Core\DynamicCast.cpp" />
     <ClCompile Include="Core\Engine.cpp" />
     <ClCompile Include="Core\EngineFO4Patches.cpp" />
     <ClCompile Include="Core\EngineSSEPatches.cpp" />
@@ -306,6 +307,7 @@
     <ClInclude Include="Core\CoreCommon.h" />
     <ClInclude Include="Core\DebugLog.h" />
     <ClInclude Include="Core\DialogManager.h" />
+    <ClInclude Include="Core\DynamicCast.h" />
     <ClInclude Include="Core\Engine.h" />
     <ClInclude Include="Core\GDIPlusInit.h" />
     <ClInclude Include="Core\INIWrapper.h" />

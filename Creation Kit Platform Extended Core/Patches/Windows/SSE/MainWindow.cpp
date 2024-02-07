@@ -309,8 +309,7 @@ namespace CreationKitPlatformExtended
 							{
 								auto form = EditorAPI::SkyrimSpectialEdition::TESForm::GetFormByNumericID(static_cast<uint32_t>(lParam));
 								if (form)
-									(*(void(__fastcall**)(EditorAPI::SkyrimSpectialEdition::TESForm*, HWND, __int64, __int64))
-										(*(__int64*)form + 720i64))(form, Hwnd, 0, 1);
+									form->EditFormToWindow(Hwnd, 0, 1);
 							}
 							return 0;
 							case UI_EXTMENU_SHOWLOG:

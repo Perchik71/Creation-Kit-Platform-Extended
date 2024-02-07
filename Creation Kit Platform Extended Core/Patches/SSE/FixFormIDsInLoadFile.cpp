@@ -111,7 +111,7 @@ namespace CreationKitPlatformExtended
 			{
 				auto verPatch = lpRelocationDatabaseItem->Version();
 
-				if (verPatch == 1)
+				if ((verPatch == 1) || (verPatch == 2))
 				{
 					// Numerous changes in the load. Changing the order of indexes, fixing bugs, where forms not found.
 
@@ -133,41 +133,11 @@ namespace CreationKitPlatformExtended
 						lpRelocator->Patch(Rva3, { 0x48, 0x8D, 0x0C, 0x24, 0x90 });
 					}
 
-					lpRelocator->DetourCall((uintptr_t)Rva + 8, (uintptr_t)&FindLocFormIDs<0x698, 0xF0>);
-					lpRelocator->DetourCall((uintptr_t)Rva2 + 0xD, (uintptr_t)&sub2);
-					lpRelocator->DetourCall((uintptr_t)Rva3 + 5, (uintptr_t)&FindLocFormIDs<0x150, 0x54>);
+					if (verPatch == 2)
+						lpRelocator->DetourCall((uintptr_t)Rva + 8, (uintptr_t)&FindLocFormIDs<0x688, 0xE8>);
+					else
+						lpRelocator->DetourCall((uintptr_t)Rva + 8, (uintptr_t)&FindLocFormIDs<0x698, 0xF0>);
 
-					pointer_FixFormIDsInLoadFile_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2));
-					pointer_FixFormIDsInLoadFile_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(3));
-
-					// Let's edit the function so that it finds the form correctly
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(4), (uintptr_t)&sub);
-
-					return true;
-				}
-				else if (verPatch == 2)
-				{
-					// Numerous changes in the load. Changing the order of indexes, fixing bugs, where forms not found.
-
-					auto Rva = lpRelocationDatabaseItem->At(0);
-					auto Rva2 = lpRelocationDatabaseItem->At(6);
-					auto Rva3 = lpRelocationDatabaseItem->At(7);
-
-					{
-						ScopeRelocator text;
-
-						// get stack for sub2 function
-						lpRelocator->Patch(Rva, { 0x48, 0x8D, 0x0C, 0x24, 0x90, 0x90, 0x90, 0x90 });
-
-						// 0000000141C370FE | 48:8D5424 30 | lea rdx,qword ptr ss:[rsp+30] |
-						lpRelocator->Patch(Rva2, { 0x48, 0x8D, 0x54, 0x24, 0x30 });
-						lpRelocator->PatchNop((uintptr_t)Rva2 + 0x12, 0xD);
-
-						// get stack for sub4 function
-						lpRelocator->Patch(Rva3, { 0x48, 0x8D, 0x0C, 0x24, 0x90 });
-					}
-
-					lpRelocator->DetourCall((uintptr_t)Rva + 8, (uintptr_t)&FindLocFormIDs<0x688, 0xE8>);
 					lpRelocator->DetourCall((uintptr_t)Rva2 + 0xD, (uintptr_t)&sub2);
 					lpRelocator->DetourCall((uintptr_t)Rva3 + 5, (uintptr_t)&FindLocFormIDs<0x150, 0x54>);
 

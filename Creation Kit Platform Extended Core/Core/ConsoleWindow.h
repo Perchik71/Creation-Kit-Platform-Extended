@@ -61,5 +61,5 @@ namespace CreationKitPlatformExtended
 	}
 
 	void _CONSOLE(const char* fmt, ...);
-	void _CONSOLE(const char* fmt, va_list va);
+	void _CONSOLEVA(const char* fmt, va_list va);
 }
