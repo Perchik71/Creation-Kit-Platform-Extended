@@ -8,177 +8,24 @@
   "FontWeight": 400,
   "FontItalic": 0,
   "Controls": [
-    {
-      "Type": "COMBOBOX",
-      "Style": [ "CBS_DROPDOWNLIST", "CBS_AUTOHSCROLL", "CBS_SORT", "WS_VSCROLL" ],
-      "Id": 2083,
-      "x": 4,
-      "y": 14,
-      "Width": 94,
-      "Height": 60
-    },
-    {
-      "Type": "EDITTEXT",
-      "Style": [ "ES_AUTOHSCROLL" ],
-      "Id": 5283,
-      "Title": "",
-      "x": 14,
-      "y": 29,
-      "Width": 24,
-      "Height": 14
-    },
-    {
-      "Type": "EDITTEXT",
-      "Style": [ "ES_AUTOHSCROLL" ],
-      "Id": 5099,
-      "Title": "",
-      "x": 50,
-      "y": 29,
-      "Width": 24,
-      "Height": 14
-    },
-    {
-      "Type": "PUSHBUTTON",
-	  "Style": [ "NOT WS_VISIBLE" ],
-      "Title": "Trigger",
-      "Id": 1007,
-      "x": 78,
-      "y": 29,
-      "Width": 20,
-      "Height": 14
-    },
-    {
-      "Type": "PUSHBUTTON",
-      "Id": 3681,
-      "Title": "Go",
-      "x": 78,
-      "y": 29,
-      "Width": 20,
-      "Height": 14
-    },
-    {
-      "Type": "AUTOCHECKBUTTON",
-      "Id": 5662,
-      "Title": "Loaded at top",
-      "x": 106,
-      "y": 27,
-      "Width": 75,
-      "Height": 10
-    },
-    {
-      "ExStyle": [ "WS_EX_CLIENTEDGE", "WS_EX_RIGHT" ],
-      "Type": "LISTVIEW",
-      "Id": 1155,
-      "Style": [ "LVS_REPORT", "LVS_SINGLESEL", "LVS_SHOWSELALWAYS", "LVS_EDITLABELS", "WS_BORDER" ],
-      "Title": "List4",
-      "x": 4,
-      "y": 47,
-      "Width": 98,
-      "Height": 474
-    },
-    {
-      "Type": "EDITTEXT",
-      "Style": [ "ES_AUTOHSCROLL" ],
-      "Id": 2581,
-      "Title": "",
-      "x": 104,
-      "y": 14,
-      "Width": 114,
-      "Height": 11
-    },
-    {
-      "ExStyle": [ "WS_EX_CLIENTEDGE", "WS_EX_RIGHT" ],
-      "Type": "LISTVIEW",
-      "Id": 1156,
-      "Style": [ "LVS_REPORT", "LVS_SHOWSELALWAYS", "LVS_EDITLABELS", "WS_BORDER" ],
-      "Title": "List4",
-      "x": 104,
-      "y": 47,
-      "Width": 114,
-      "Height": 474
-    },
-    {
-      "Type": "CTEXT",
-      "Title": "No Cell Selected",
-      "Style": [ "NOT WS_GROUP" ],
-      "Id": 1163,
-      "x": 108,
-      "y": 4,
-      "Width": 114,
-      "Height": 8
-    },
-    {
-      "Type": "LTEXT",
-      "Title": "World Space",
-      "Style": [ "NOT WS_GROUP" ],
-      "Id": 1164,
-      "x": 10,
-      "y": 4,
-      "Width": 45,
-      "Height": 8
-    },
-    {
-      "Type": "LTEXT",
-      "Title": "X",
-      "Id": 5281,
-      "x": 6,
-      "y": 32,
-      "Width": 8,
-      "Height": 8
-    },
-    {
-      "Type": "LTEXT",
-      "Title": "Y",
-      "Id": 5282,
-      "x": 41,
-      "y": 32,
-      "Width": 8,
-      "Height": 8
-    },
-    {
-      "Type": "AUTOCHECKBUTTON",
-      "Id": 2580,
-      "Title": "Show only active (*) cells",
-      "x": 106,
-      "y": 37,
-      "Width": 110,
-      "Height": 10
-    },
-    {
-      "Type": "AUTOCHECKBUTTON",
-      "Id": 5664,
-      "Title": "Filtered Only",
-      "x": 110,
-      "y": 27,
-      "Width": 70,
-      "Height": 10
-    },
-    {
-      "Type": "AUTOCHECKBUTTON",
-      "Id": 5665,
-      "Title": "Selected Only",
-      "x": 110,
-      "y": 36,
-      "Width": 70,
-      "Height": 10
-    },
-    {
-      "Type": "AUTOCHECKBUTTON",
-      "Id": 5666,
-      "Title": "Visible Only",
-      "x": 187,
-      "y": 27,
-      "Width": 75,
-      "Height": 10
-    },
-    {
-      "Type": "AUTOCHECKBUTTON",
-      "Id": 2582,
-      "Title": "Show only active (*) objects",
-      "x": 204,
-      "y": 36,
-      "Width": 120,
-      "Height": 10
-    }
+    { "Type": "COMBOBOX", "Style": [ "CBS_DROPDOWNLIST", "CBS_AUTOHSCROLL", "CBS_SORT", "WS_VSCROLL" ], "Id": 2083, "x": 4, "y": 14, "Width": 51, "Height": 60 },
+    { "Type": "EDITTEXT", "Style": [ "ES_AUTOHSCROLL" ], "Id": 5283, "Title": "", "x": 14, "y": 29, "Width": 24, "Height": 14 },
+    { "Type": "EDITTEXT", "Style": [ "ES_AUTOHSCROLL" ], "Id": 5099, "Title": "", "x": 50, "y": 29, "Width": 24, "Height": 14 },
+    { "Type": "PUSHBUTTON", "Style": [ "NOT WS_VISIBLE" ], "Title": "Trigger", "Id": 1007, "x": 78, "y": 29, "Width": 20, "Height": 14 },
+    { "Type": "PUSHBUTTON", "Id": 3681, "Title": "Go", "x": 78, "y": 29, "Width": 20, "Height": 14 },
+    { "Type": "AUTOCHECKBUTTON", "Id": 5662, "Title": "Loaded at top", "x": 106, "y": 27, "Width": 75, "Height": 10 },
+    { "ExStyle": [ "WS_EX_CLIENTEDGE", "WS_EX_RIGHT" ], "Type": "LISTVIEW", "Id": 1155, "Style": [ "LVS_REPORT", "LVS_SINGLESEL", "LVS_SHOWSELALWAYS", "LVS_EDITLABELS", "WS_BORDER" ], "Title": "List4", "x": 4, "y": 47, "Width": 98, "Height": 474 },
+    { "Type": "EDITTEXT", "Style": [ "ES_AUTOHSCROLL" ], "Id": 2581, "Title": "", "x": 104, "y": 14, "Width": 114, "Height": 11 },
+    { "ExStyle": [ "WS_EX_CLIENTEDGE", "WS_EX_RIGHT" ], "Type": "LISTVIEW", "Id": 1156, "Style": [ "LVS_REPORT", "LVS_SHOWSELALWAYS", "LVS_EDITLABELS", "WS_BORDER" ], "Title": "List4", "x": 104, "y": 47, "Width": 114, "Height": 474 },
+    { "Type": "CTEXT", "Title": "No Cell Selected", "Style": [ "NOT WS_GROUP" ], "Id": 1163, "x": 108, "y": 4, "Width": 114, "Height": 8 },
+    { "Type": "LTEXT", "Title": "World Space", "Style": [ "NOT WS_GROUP" ], "Id": 1164, "x": 10, "y": 4, "Width": 45, "Height": 8 },
+    { "Type": "LTEXT", "Title": "X", "Id": 5281, "x": 6, "y": 32, "Width": 8, "Height": 8 },
+    { "Type": "LTEXT", "Title": "Y", "Id": 5282, "x": 41, "y": 32, "Width": 8, "Height": 8 },
+    { "Type": "AUTOCHECKBUTTON", "Id": 2580, "Title": "Show only active (*) cells", "x": 106, "y": 37, "Width": 110, "Height": 10 },
+    { "Type": "AUTOCHECKBUTTON", "Id": 5664, "Title": "Filtered Only", "x": 110, "y": 27, "Width": 70, "Height": 10 },
+    { "Type": "AUTOCHECKBUTTON", "Id": 5665, "Title": "Selected Only", "x": 110, "y": 36, "Width": 70, "Height": 10 },
+    { "Type": "AUTOCHECKBUTTON", "Id": 5666, "Title": "Visible Only", "x": 187, "y": 27, "Width": 75, "Height": 10 },
+    { "Type": "AUTOCHECKBUTTON", "Id": 2582, "Title": "Show only active (*) objects", "x": 204, "y": 36, "Width": 120, "Height": 10 },
+	{ "Type": "EDITTEXT", "Style": [ "ES_AUTOHSCROLL" ], "Id": 2584, "Title": "", "x": 55, "y": 14, "Width": 96, "Height": 12 }
   ]
 }

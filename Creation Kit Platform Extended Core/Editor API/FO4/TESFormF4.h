@@ -259,6 +259,7 @@ namespace CreationKitPlatformExtended
 				BSString GetID() const;
 				inline uint32_t GetFormFlags() const { return _FormFlags; }
 				inline uint32_t GetFormID() const { return _FormID; }
+				inline const char* GetEditorID_NoVTable() const { return _EntryEditID ? _EntryEditID->Get<char>(TRUE) : nullptr; }
 			public:
 				READ_PROPERTY(IsModified) bool Active;
 				READ_PROPERTY(GetFormID) uint32_t FormID;
