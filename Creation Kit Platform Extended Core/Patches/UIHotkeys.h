@@ -29,8 +29,8 @@ namespace CreationKitPlatformExtended
 
 			static void sub(void* Thisptr, void(*Callback)(), const char** HotkeyFunction,
 				const char** DisplayText, char VirtualKey, bool Alt, bool Ctrl, bool Shift);
-			static void sub_ver2(LPVOID Thisptr, VOID(*Callback)(VOID), EditorAPI::Fallout4::BSEntryString** HotkeyFunction,
-				EditorAPI::Fallout4::BSEntryString** DisplayText, CHAR VirtualKey, bool Alt, bool Ctrl, bool Shift);
+			static void sub_ver2(void* Thisptr, void(*Callback)(), EditorAPI::Fallout4::BSEntryString** HotkeyFunction,
+				EditorAPI::Fallout4::BSEntryString** DisplayText, char VirtualKey, bool Alt, bool Ctrl, bool Shift);
 		protected:
 			virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const;

@@ -60,7 +60,6 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <initializer_list>
-#include <regex>
 
 #include <concurrent_vector.h>
 #include <concurrent_unordered_map.h>
