@@ -1,4 +1,5 @@
-﻿#pragma warning (disable : 6335)
+﻿#pragma warning (disable : 4390)
+#pragma warning (disable : 6335)
 
 #include <iostream>
 #include <memory>
@@ -130,7 +131,7 @@ VOID WaitCloseCKLoader(VOID)
 	}
 }
 
-void RenameFiles()
+void RenameFiles(const std::wstring& AppPath)
 {
 #if DEBUGLOG
 	ScopeFunction Foo(L"RenameFiles");
@@ -138,7 +139,7 @@ void RenameFiles()
 
 	for (auto it = dllENBs.begin(); it != dllENBs.end(); it++)
 	{
-		auto sname = it->first;
+		auto sname = AppPath + it->first;
 		if (FileExists(sname.c_str()))
 		{
 			MoveFile(sname.c_str(), sname.substr(0, sname.length() - 1).append(L"_").c_str());
@@ -147,7 +148,7 @@ void RenameFiles()
 	}
 }
 
-void RestoreFiles()
+void RestoreFiles(const std::wstring& AppPath)
 {
 #if DEBUGLOG
 	ScopeFunction Foo(L"RestoreFiles");
@@ -157,14 +158,14 @@ void RestoreFiles()
 	{
 		if (it->second)
 		{
-			auto sname = it->first;
+			auto sname = AppPath + it->first;
 			MoveFile(sname.substr(0, sname.length() - 1).append(L"_").c_str(), sname.c_str());
 			it->second = FALSE;
 		}
 	}
 }
 
-void RunCK()
+void RunCK(const std::wstring& AppPath)
 {
 #if DEBUGLOG
 	ScopeFunction Foo(L"RunCK");
@@ -180,11 +181,8 @@ void RunCK()
 	GetCurrentDirectoryW((DWORD)CurPath.length(), CurPath.data());
 	_MESSAGE(L"Current Directory: %s", CurPath.c_str());
 
-	std::wstring AppPath;
-	AppPath.resize(MAX_PATH);
-	GetModuleFileNameW(GetModuleHandle(NULL), AppPath.data(), (DWORD)AppPath.length());
-	AppPath = AppPath.substr(0, AppPath.find_last_of(L"\\") + 1);
-	_MESSAGE(L"Application Directory: %s", AppPath.c_str());
+	if (AppPath != CurPath)
+		_MESSAGE(L"The directories do not match, it is possible to run from the manager");
 
 	if (!FileExists(AppPath + CREATIONKIT))
 	{
@@ -215,12 +213,18 @@ int main(int argc, char* argv[])
 	ScopeFileStream Stream(DebugLog);
 #endif
 
+	std::wstring AppPath;
+	AppPath.resize(MAX_PATH);
+	GetModuleFileNameW(GetModuleHandle(NULL), AppPath.data(), (DWORD)AppPath.length());
+	AppPath = AppPath.substr(0, AppPath.find_last_of(L"\\") + 1);
+	_MESSAGE(L"Application Directory: %s", AppPath.c_str());
+
 	HideConsole();
 	WaitCloseCKLoader();
 
-	RenameFiles();
-	RunCK();
-	RestoreFiles();
+	RenameFiles(AppPath);
+	RunCK(AppPath);
+	RestoreFiles(AppPath);
 
 	return 0;
 }
