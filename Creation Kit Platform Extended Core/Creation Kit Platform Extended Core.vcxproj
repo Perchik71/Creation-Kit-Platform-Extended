@@ -133,12 +133,12 @@
     <ClCompile Include="Patches\FO4\AssertD3D11.cpp" />
     <ClCompile Include="Patches\FO4\BSArchiveManagerModdedF4.cpp" />
     <ClCompile Include="Patches\FO4\BSResourceLooseFilesPatch.cpp" />
+    <ClCompile Include="Patches\FO4\CreateDDS.cpp" />
     <ClCompile Include="Patches\FO4\EnableGoInSelGame.cpp" />
     <ClCompile Include="Patches\FO4\FixBNet.cpp" />
     <ClCompile Include="Patches\FO4\FixCrashMapMarkerCmd.cpp" />
     <ClCompile Include="Patches\FO4\FixCrashNoRootMat.cpp" />
     <ClCompile Include="Patches\FO4\FixCrashSpellEaxDur.cpp" />
-    <ClCompile Include="Patches\FO4\FixDataFiles.cpp" />
     <ClCompile Include="Patches\FO4\FixDeleteTintToRace.cpp" />
     <ClCompile Include="Patches\FO4\FixEncounterZone.cpp" />
     <ClCompile Include="Patches\FO4\FixFog.cpp" />
@@ -404,12 +404,12 @@
     <ClInclude Include="Patches\FO4\AssertD3D11.h" />
     <ClInclude Include="Patches\FO4\BSArchiveManagerModdedF4.h" />
     <ClInclude Include="Patches\FO4\BSResourceLooseFilesPatch.h" />
+    <ClInclude Include="Patches\FO4\CreateDDS.h" />
     <ClInclude Include="Patches\FO4\EnableGoInSelGame.h" />
     <ClInclude Include="Patches\FO4\FixBNet.h" />
     <ClInclude Include="Patches\FO4\FixCrashMapMarkerCmd.h" />
     <ClInclude Include="Patches\FO4\FixCrashNoRootMat.h" />
     <ClInclude Include="Patches\FO4\FixCrashSpellEaxDur.h" />
-    <ClInclude Include="Patches\FO4\FixDataFiles.h" />
     <ClInclude Include="Patches\FO4\FixDeleteTintToRace.h" />
     <ClInclude Include="Patches\FO4\FixEncounterZone.h" />
     <ClInclude Include="Patches\FO4\FixFog.h" />

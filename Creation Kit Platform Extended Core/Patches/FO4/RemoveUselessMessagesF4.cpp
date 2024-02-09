@@ -96,6 +96,8 @@ namespace CreationKitPlatformExtended
 					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(24), 5);
 					// MODEL Found geometry
 					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(25), 5);
+					// Always off option bAllowFileWrite:MESSAGES
+					lpRelocator->Patch(lpRelocationDatabaseItem->At(26), { 0x31, 0xC0, 0xC3, 0x90 });
 
 					return true;
 				}

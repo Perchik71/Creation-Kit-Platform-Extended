@@ -667,7 +667,7 @@
     <ClCompile Include="Core\DynamicCast.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\FO4\FixDataFiles.cpp">
+    <ClCompile Include="Patches\FO4\CreateDDS.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1541,7 +1541,7 @@
     <ClInclude Include="Core\DynamicCast.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\FO4\FixDataFiles.h">
+    <ClInclude Include="Patches\FO4\CreateDDS.h">
       <Filter>Patches\FO4</Filter>
     </ClInclude>
   </ItemGroup>

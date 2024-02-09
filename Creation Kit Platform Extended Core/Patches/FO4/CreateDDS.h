@@ -16,10 +16,10 @@ namespace CreationKitPlatformExtended
 		{
 			using namespace CreationKitPlatformExtended::Core;
 
-			class FixDataFilesPatch : public Module
+			class CreateDDSPatch : public Module
 			{
 			public:
-				FixDataFilesPatch();
+				CreateDDSPatch();
 
 				virtual bool HasOption() const;
 				virtual bool HasCanRuntimeDisabled() const;
@@ -27,14 +27,17 @@ namespace CreationKitPlatformExtended
 				virtual const char* GetName() const;
 				virtual bool HasDependencies() const;
 				virtual Array<String> GetDependencies() const;
+
+				static void sub(ID3D11Device* pContext, const D3D11_TEXTURE2D_DESC* pDesc,
+					const D3D11_SUBRESOURCE_DATA* pInitialData, ID3D11Texture2D** ppTexture);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
 				virtual bool Activate(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 				virtual bool Shutdown(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 			private:
-				FixDataFilesPatch(const FixDataFilesPatch&) = default;
-				FixDataFilesPatch& operator=(const FixDataFilesPatch&) = default;
+				CreateDDSPatch(const CreateDDSPatch&) = default;
+				CreateDDSPatch& operator=(const CreateDDSPatch&) = default;
 			};
 		}
 	}
