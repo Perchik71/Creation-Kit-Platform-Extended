@@ -28,7 +28,7 @@ namespace CreationKitPlatformExtended
 				virtual bool HasDependencies() const;
 				virtual Array<String> GetDependencies() const;
 
-				static void sub(ID3D11Device* pContext, const D3D11_TEXTURE2D_DESC* pDesc,
+				static void sub(ID3D11Device* pDevice, const D3D11_TEXTURE2D_DESC* pDesc,
 					const D3D11_SUBRESOURCE_DATA* pInitialData, ID3D11Texture2D** ppTexture);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
