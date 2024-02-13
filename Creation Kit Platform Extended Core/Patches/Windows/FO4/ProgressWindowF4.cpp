@@ -132,7 +132,7 @@ namespace CreationKitPlatformExtended
 			HWND ProgressWindow::sub1(HINSTANCE hInstance, LPCSTR lpTemplateName, HWND hWndParent,
 				DLGPROC lpDialogFunc, LPARAM dwInitParam)
 			{
-				return CreateDialogParam(hInstance, MAKEINTRESOURCE(3238), hWndParent,
+				return EditorAPI::EditorUI::HKCreateDialogParamA(hInstance, MAKEINTRESOURCE(3238), hWndParent,
 					HKWndProc, dwInitParam);
 			}
 

@@ -226,6 +226,7 @@
     <ClCompile Include="Patches\SSE\FixVertexNormals.cpp" />
     <ClCompile Include="Patches\SSE\FixWaterOrtho.cpp" />
     <ClCompile Include="Patches\SSE\FixWaterType.cpp" />
+    <ClCompile Include="Patches\SSE\IgnoreGroundHeightTest.cpp" />
     <ClCompile Include="Patches\SSE\IncreaseMaximumNavmesh.cpp" />
     <ClCompile Include="Patches\SSE\LipGen.cpp" />
     <ClCompile Include="Patches\SSE\LoadDDSFile.cpp" />
@@ -507,6 +508,7 @@
     <ClInclude Include="Patches\SSE\FixVertexNormals.h" />
     <ClInclude Include="Patches\SSE\FixWaterOrtho.h" />
     <ClInclude Include="Patches\SSE\FixWaterType.h" />
+    <ClInclude Include="Patches\SSE\IgnoreGroundHeightTest.h" />
     <ClInclude Include="Patches\SSE\IncreaseMaximumNavmesh.h" />
     <ClInclude Include="Patches\SSE\LipGen.h" />
     <ClInclude Include="Patches\SSE\LoadDDSFile.h" />

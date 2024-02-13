@@ -84,6 +84,7 @@
 #include "Patches/SSE/CrashGenMaxHeightData.h"
 #include "Patches/SSE/TESDataHandlerHookSSE.h"
 #include "Patches/SSE/FixFormIDsInLoadFile.h"
+#include "Patches/SSE/IgnoreGroundHeightTest.h"
 
 #include "Patches/Windows/SSE/MainWindow.h"
 #include "Patches/Windows/SSE/RenderWindow.h"
@@ -181,6 +182,7 @@ namespace CreationKitPlatformExtended
 				new Patches::CrashGenMaxHeightDataPatch(),
 				new Patches::TESDataHandlerPatch(),
 				new Patches::FixFormIDsInLoadFilePatch(),
+				new Patches::IgnoreGroundHeightTestPatch(),
 		
 				new Patches::MainWindow(),
 				new Patches::RenderWindow(),

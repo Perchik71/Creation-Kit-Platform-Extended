@@ -102,3 +102,5 @@ CreationKit_se_1_5_73 -PEUpdateDatabase "Fix Spell Dlg" "1_5_73\FixSpellDlg.relb
 CreationKit_se_1_5_73 -PEUpdateDatabase "Unicode" "1_5_73\Unicode.relb"
 CreationKit_se_1_5_73 -PEUpdateDatabase "Fix ATXT params sections" "1_5_73\FixATXTParamsSections.relb"
 CreationKit_se_1_5_73 -PEUpdateDatabase "TESDataHandler" "TESDataHandler.relb"
+CreationKit_se_1_5_73 -PEUpdateDatabase "Fix FormIDs In Load File" "FixFormIDs.relb"
+CreationKit_se_1_5_73 -PEUpdateDatabase "Ignore Ground Height Test" "IgnoreGroundHeightTest.relb"
