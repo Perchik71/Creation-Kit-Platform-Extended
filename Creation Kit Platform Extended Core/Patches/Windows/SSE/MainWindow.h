@@ -37,6 +37,8 @@ namespace CreationKitPlatformExtended
 				constexpr static auto UI_EXTMENU_IMPORT_AMMO = 40762;
 				constexpr static auto UI_EXTMENU_IMPORT_BODYPARTDATA = 40781;
 
+				constexpr static auto UI_EXTMENU_FORMINFOOUTPUT = 51010;
+
 				virtual bool HasOption() const;
 				virtual bool HasCanRuntimeDisabled() const;
 				virtual const char* GetOptionName() const;

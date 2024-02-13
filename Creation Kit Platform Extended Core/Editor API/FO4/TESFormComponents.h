@@ -132,26 +132,6 @@ namespace CreationKitPlatformExtended
 			static_assert(sizeof(TESCellUseList) == 0x10);
 			static_assert(sizeof(TESCellUseList::CellUseInfo) == 0x18);
 
-			// 0x10 -> RVA vtable 0x3819768
-			class BGSPreviewTransform {
-			private:
-				// members
-				TESForm* TransformForm;
-			public:
-				virtual ~BGSPreviewTransform(VOID);
-			};
-			static_assert(sizeof(BGSPreviewTransform) == 0x10);
-
-			// 0x10 -> RVA vtable 0x3819A48
-			__declspec(align(8)) class BGSSoundTagComponent {
-			public:
-				// members
-				INT32 Tag;
-			public:
-				virtual ~BGSSoundTagComponent(VOID);
-			};
-			static_assert(sizeof(BGSSoundTagComponent) == 0x10);
-
 			class BGSMod {
 			public:
 				class Template {

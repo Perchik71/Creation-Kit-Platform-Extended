@@ -31,6 +31,8 @@ std::map<std::wstring, BOOL> dllENBs = {
 	{ L"dinput8.dll", FALSE },
 };
 
+void RestoreFiles(const std::wstring& AppPath);
+
 #if DEBUGLOG
 
 FILE* DebugLog = nullptr;
@@ -142,8 +144,20 @@ void RenameFiles(const std::wstring& AppPath)
 		auto sname = AppPath + it->first;
 		if (FileExists(sname.c_str()))
 		{
-			MoveFile(sname.c_str(), sname.substr(0, sname.length() - 1).append(L"_").c_str());
-			it->second = TRUE;
+			if (MoveFile(sname.c_str(), sname.substr(0, sname.length() - 1).append(L"_").c_str()))
+				it->second = TRUE;
+			else
+			{
+				RestoreFiles(AppPath);
+
+				wchar_t* szBuf = new wchar_t[1024];
+				swprintf_s(szBuf, 1024, L"It was not possible to rename the file \"%s\", most likely it is occupied by another process. "
+					"There will be a forced shutdown of the application.", it->first.data());
+				MessageBox(0, szBuf, L"Error", MB_OK | MB_ICONERROR);
+				delete[] szBuf;
+
+				TerminateProcess(GetCurrentProcess(), 1);
+			}
 		}
 	}
 }
@@ -206,6 +220,30 @@ void RunCK(const std::wstring& AppPath)
 	Sleep(15000);
 }
 
+void SetAddressOfBaseFixed(const std::wstring& AppPath)
+{
+	if (!FileExists(AppPath + CREATIONKIT))
+		return;
+
+	FILE* Stream = nullptr;
+	_wfopen_s(&Stream, (AppPath + CREATIONKIT).c_str(), L"rb+");
+	if (!Stream)
+		return;
+
+	IMAGE_DOS_HEADER DosHeader = { 0 };
+	fread(&DosHeader, sizeof(IMAGE_DOS_HEADER), 1, Stream);
+	fseek(Stream, DosHeader.e_lfanew, SEEK_SET);
+
+	IMAGE_NT_HEADERS ntHeaders = { 0 };
+	fread(&ntHeaders, sizeof(IMAGE_NT_HEADERS), 1, Stream);
+	ntHeaders.FileHeader.Characteristics =
+		IMAGE_FILE_RELOCS_STRIPPED | IMAGE_FILE_EXECUTABLE_IMAGE | IMAGE_FILE_LARGE_ADDRESS_AWARE;
+	fseek(Stream, DosHeader.e_lfanew, SEEK_SET);
+	fwrite(&ntHeaders, sizeof(IMAGE_NT_HEADERS), 1, Stream);
+
+	fclose(Stream);
+}
+
 int main(int argc, char* argv[])
 {
 #if DEBUGLOG
@@ -221,6 +259,12 @@ int main(int argc, char* argv[])
 
 	HideConsole();
 	WaitCloseCKLoader();
+
+	if ((argc > 2) && !_stricmp(argv[1], "-c"))
+	{
+		if (!_stricmp(argv[2], "address_of_base_fixed"))
+			SetAddressOfBaseFixed(AppPath);
+	}
 
 	RenameFiles(AppPath);
 	RunCK(AppPath);

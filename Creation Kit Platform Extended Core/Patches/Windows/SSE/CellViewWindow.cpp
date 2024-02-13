@@ -274,7 +274,7 @@ namespace CreationKitPlatformExtended
 						SetPropA(Hwnd, "FilterCellsLen", reinterpret_cast<HANDLE>(iLen));
 
 						if (iLen)
-							GetWindowTextA(hFilter, str_CellViewWindow_FilterUser, iLen);
+							GetWindowTextA(hFilter, str_CellViewWindow_FilterUser, iLen + 1);
 
 						// Fake the dropdown list being activated
 						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2083, 1), 0);

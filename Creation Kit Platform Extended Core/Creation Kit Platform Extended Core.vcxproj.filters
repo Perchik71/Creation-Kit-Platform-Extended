@@ -670,6 +670,12 @@
     <ClCompile Include="Patches\FO4\CreateDDS.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Core\FormInfoOutputWindow.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\Windows\FO4\ProgressWindowF4.cpp">
+      <Filter>Patches\Windows\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1543,6 +1549,36 @@
     </ClInclude>
     <ClInclude Include="Patches\FO4\CreateDDS.h">
       <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\FormInfoOutputWindow.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BGSMaterialSwap.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BGSModelMaterialSwap.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESObjectARMO.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BGSPreviewTransform.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BGSTransform.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BGSSoundTagComponent.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESNPC.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BGSVoiceType.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\FO4\ProgressWindowF4.h">
+      <Filter>Patches\Windows\FO4</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

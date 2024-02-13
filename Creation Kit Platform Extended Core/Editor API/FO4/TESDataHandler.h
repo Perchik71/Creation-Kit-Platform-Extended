@@ -29,6 +29,10 @@
 #include "TESObjectREFR.h"
 #include "TESActorValue.h"
 #include "BGSLayer.h"
+#include "BGSMaterialSwap.h"
+#include "BGSTransform.h"
+#include "TESObjectARMO.h"
+#include "BGSVoiceType.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -62,7 +66,7 @@ namespace CreationKitPlatformExtended
 				TESFormArray arrKYWD;						// C8 Form Type 4
 				TESFormArray arrLCRT;						// E0 Form Type 5
 				TESFormArray arrAACT;						// F8 Form Type 6
-				TESFormArray arrTRNS;						// 110 Form Type 7
+				BSTArray<BGSTransform*> arrTRNS;			// 110 Form Type 7
 				TESFormArray arrCMPO;						// 128 Form Type 8
 				TESFormArray arrTXST;						// 140 Form Type 9
 				TESFormArray arrMICN;						// 158 Form Type 10
@@ -84,7 +88,7 @@ namespace CreationKitPlatformExtended
 				TESFormArray arrSCRL;						// 2D8 Form Type 26
 				TESFormArray arrACTI;						// 2F0 Form Type 27
 				TESFormArray arrTACT;						// 308 Form Type 28
-				TESFormArray arrARMO;						// 320 Form Type 29
+				BSTArray<TESObjectARMO*> arrARMO;			// 320 Form Type 29
 				TESFormArray arrBOOK;						// 338 Form Type 30
 				TESFormArray arrCONT;						// 350 Form Type 31
 				TESFormArray arrDOOR;						// 368 Form Type 32
@@ -156,7 +160,7 @@ namespace CreationKitPlatformExtended
 				BSTArray<TESActorValue*> arrAVIF;			// 998 Form Type 98 
 				TESFormArray arrCAMS;						// 9B0 Form Type 99
 				TESFormArray arrCPTH;						// 9C8 Form Type 100
-				TESFormArray arrVTYP;						// 9E0 Form Type 101
+				BSTArray<BGSVoiceType*> arrVTYP;			// 9E0 Form Type 101
 				TESFormArray arrMATT;						// 9F8 Form Type 102
 				TESFormArray arrIPCT;						// A10 Form Type 103
 				TESFormArray arrIPDS;						// A28 Form Type 104
@@ -200,7 +204,7 @@ namespace CreationKitPlatformExtended
 				BSTArray<BGSLayer*> arrLAYR;				// DB8 Form Type 142
 				TESFormArray arrCOBJ;						// DD0 Form Type 143
 				TESFormArray arrOMOD;						// DE8 Form Type 144
-				TESFormArray arrMSWP;						// E00 Form Type 145
+				BSTArray<BGSMaterialSwap*> arrMSWP;			// E00 Form Type 145
 				TESFormArray arrZOOM;						// E18 Form Type 146
 				TESFormArray arrINNR;						// E30 Form Type 147
 				TESFormArray arrKSSM;						// E48 Form Type 148

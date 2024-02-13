@@ -194,9 +194,6 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
-
-
-
             void CreateDDSPatch::sub(ID3D11Device* pDevice, const D3D11_TEXTURE2D_DESC* pDesc,
 				const D3D11_SUBRESOURCE_DATA* pInitialData, ID3D11Texture2D** ppTexture)
 			{
@@ -206,7 +203,7 @@ namespace CreationKitPlatformExtended
                 auto Ret = pDevice->CheckFormatSupport(pDesc->Format, &support);
                 if (FAILED(Ret) || !(support & D3D11_FORMAT_SUPPORT_TEXTURE2D))
                     AssertMsgVa(SUCCEEDED(Ret),
-                        "ID3D11CreateTexture2D: The format \"%s\" is not supported by your device. ",
+                        "ID3D11CreateTexture2D: The format \"%s\" is not supported by your device.",
                         (((int)pDesc->Format < _ARRAYSIZE(ArrayFormatDDS)) ? ArrayFormatDDS[(int)pDesc->Format] : ArrayFormatDDS[0]));
 
 				Ret = pDevice->CreateTexture2D(pDesc, pInitialData, ppTexture);

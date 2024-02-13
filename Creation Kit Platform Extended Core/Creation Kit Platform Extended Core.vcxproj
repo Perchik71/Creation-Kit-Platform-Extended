@@ -82,6 +82,7 @@
     <ClCompile Include="Core\Engine.cpp" />
     <ClCompile Include="Core\EngineFO4Patches.cpp" />
     <ClCompile Include="Core\EngineSSEPatches.cpp" />
+    <ClCompile Include="Core\FormInfoOutputWindow.cpp" />
     <ClCompile Include="Core\GDIPlusInit.cpp" />
     <ClCompile Include="Core\INIWrapper.cpp" />
     <ClCompile Include="Core\MemoryManager.cpp" />
@@ -261,6 +262,7 @@
     <ClCompile Include="Patches\Windows\FO4\LayersWindow.cpp" />
     <ClCompile Include="Patches\Windows\FO4\MainWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\ObjectWindowF4.cpp" />
+    <ClCompile Include="Patches\Windows\FO4\ProgressWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\RenderWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\ResponseWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\SSE\BNetUploadWindow.cpp" />
@@ -310,6 +312,7 @@
     <ClInclude Include="Core\DialogManager.h" />
     <ClInclude Include="Core\DynamicCast.h" />
     <ClInclude Include="Core\Engine.h" />
+    <ClInclude Include="Core\FormInfoOutputWindow.h" />
     <ClInclude Include="Core\GDIPlusInit.h" />
     <ClInclude Include="Core\INIWrapper.h" />
     <ClInclude Include="Core\MemoryManager.h" />
@@ -332,7 +335,13 @@
     <ClInclude Include="Editor API\BSTList.h" />
     <ClInclude Include="Editor API\EditorUI.h" />
     <ClInclude Include="Editor API\FO4\BGSLayer.h" />
+    <ClInclude Include="Editor API\FO4\BGSMaterialSwap.h" />
+    <ClInclude Include="Editor API\FO4\BGSModelMaterialSwap.h" />
+    <ClInclude Include="Editor API\FO4\BGSPreviewTransform.h" />
     <ClInclude Include="Editor API\FO4\BGSPrimitive.h" />
+    <ClInclude Include="Editor API\FO4\BGSSoundTagComponent.h" />
+    <ClInclude Include="Editor API\FO4\BGSTransform.h" />
+    <ClInclude Include="Editor API\FO4\BGSVoiceType.h" />
     <ClInclude Include="Editor API\FO4\BSEntryString.h" />
     <ClInclude Include="Editor API\FO4\BSFile.h" />
     <ClInclude Include="Editor API\FO4\BSFixedString.h" />
@@ -347,7 +356,9 @@
     <ClInclude Include="Editor API\FO4\TESFileF4.h" />
     <ClInclude Include="Editor API\FO4\TESFormComponents.h" />
     <ClInclude Include="Editor API\FO4\TESFormF4.h" />
+    <ClInclude Include="Editor API\FO4\TESNPC.h" />
     <ClInclude Include="Editor API\FO4\TESObject.h" />
+    <ClInclude Include="Editor API\FO4\TESObjectARMO.h" />
     <ClInclude Include="Editor API\FO4\TESObjectCELL.h" />
     <ClInclude Include="Editor API\FO4\TESObjectREFR.h" />
     <ClInclude Include="Editor API\NiArray.h" />
@@ -532,6 +543,7 @@
     <ClInclude Include="Patches\Windows\FO4\LayersWindow.h" />
     <ClInclude Include="Patches\Windows\FO4\MainWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\ObjectWindowF4.h" />
+    <ClInclude Include="Patches\Windows\FO4\ProgressWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\RenderWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\ResponseWindowF4.h" />
     <ClInclude Include="Patches\Windows\SSE\BNetUploadWindow.h" />

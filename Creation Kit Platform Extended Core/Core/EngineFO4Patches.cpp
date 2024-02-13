@@ -45,6 +45,7 @@
 #include "Patches/Windows/FO4/RenderWindowF4.h"
 #include "Patches/Windows/FO4/LayersWindow.h"
 #include "Patches/Windows/FO4/ResponseWindowF4.h"
+#include "Patches/Windows/FO4/ProgressWindowF4.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -94,6 +95,7 @@ namespace CreationKitPlatformExtended
 				new Patches::RenderWindow(),
 				new Patches::LayersWindow(),
 				new Patches::ResponseWindow(),
+				new Patches::ProgressWindow(),
 			});
 
 			CommandLineParser CommandLine;

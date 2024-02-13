@@ -5,6 +5,7 @@
 #include "Core/Engine.h"
 #include "Core/PluginManager.h"
 #include "Core/ConsoleWindow.h"
+#include "Core/FormInfoOutputWindow.h"
 #include "Core/TypeInfo/ms_rtti.h"
 #include "Editor API/EditorUI.h"
 #include "Editor API/BSString.h"
@@ -38,6 +39,26 @@ namespace CreationKitPlatformExtended
 			};
 			static_assert(sizeof(VersionControlListItem) == 0x28);
 			Array<VersionControlListItem> formList;
+
+			void OutputFormInfo(uint32_t FormID)
+			{
+				if (FormID > 0)
+				{
+					__try
+					{
+						auto form = GetFormByNumericID(FormID);
+						if (form)
+						{
+							_CONSOLE("Form info -> \"%s\" (0x%08X) type %02X ptr %p",
+								form->GetEditorID_NoVTable(), form->FormID, (uint16_t)form->TypeID, form);
+						}
+					}
+					__except (EXCEPTION_EXECUTE_HANDLER)
+					{
+						_CONSOLE("Form info -> Incorrect FormID");
+					}
+				}
+			}
 
 			bool GetFileVersion(LPCSTR pszFilePath, EditorAPI::BSString& result)
 			{
@@ -180,6 +201,7 @@ namespace CreationKitPlatformExtended
 				ExtMenu.AppendSeparator();
 				ExtMenu.Append("Dump RTTI Data", UI_EXTMENU_DUMPRTTI);
 				ExtMenu.Append("Dump SDM Info", UI_EXTMENU_SDM);
+				ExtMenu.Append("Form Info Output", UI_EXTMENU_FORMINFOOUTPUT);
 				ExtMenu.AppendSeparator();
 				ExtMenu.Append("Save Hardcoded Forms", UI_EXTMENU_HARDCODEDFORMS);
 
@@ -313,6 +335,12 @@ namespace CreationKitPlatformExtended
 							case UI_EXTMENU_CLEARLOG:
 							{
 								GlobalConsoleWindowPtr->Clear();
+							}
+							return 0;
+							case UI_EXTMENU_FORMINFOOUTPUT:
+							{
+								FormInfoOutputWindow Wnd;
+								OutputFormInfo((uint32_t)Wnd.OpenModal(Hwnd));
 							}
 							return 0;
 							case EditorAPI::EditorUI::UI_EDITOR_TOGGLEOBJECTWND:

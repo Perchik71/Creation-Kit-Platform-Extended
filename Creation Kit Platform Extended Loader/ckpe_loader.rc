@@ -97,8 +97,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,2,0,0
- PRODUCTVERSION 0,2,0,0
+ FILEVERSION 0,3,0,0
+ PRODUCTVERSION 0,3,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -115,12 +115,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "aka perchik71"
             VALUE "FileDescription", "Creation Kit Platform Extended Loader"
-            VALUE "FileVersion", "0.2.0.0"
-            VALUE "InternalName", "ckpe_loader.exe"
+            VALUE "FileVersion", "0.3.0.0"
+            VALUE "InternalName", "ckpe_loader"
             VALUE "LegalCopyright", "Copyright (C) aka perchik71 2023-2024"
-            VALUE "OriginalFilename", "sseck_loader.exe"
+            VALUE "OriginalFilename", "ckpe_loader.exe"
             VALUE "ProductName", "Creation Kit Platform Extended Project"
-            VALUE "ProductVersion", "0.2.0.0"
+            VALUE "ProductVersion", "0.3.0.0"
         END
     END
     BLOCK "VarFileInfo"

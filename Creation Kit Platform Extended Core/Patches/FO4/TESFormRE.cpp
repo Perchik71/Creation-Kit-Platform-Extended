@@ -68,8 +68,8 @@ namespace CreationKitPlatformExtended
 			{
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
-					pointer_TESForm_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
-					pointer_TESForm_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
+					pointer_TESForm_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
+					pointer_TESForm_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
 					pointer_TESForm_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2));
 
 					return true;

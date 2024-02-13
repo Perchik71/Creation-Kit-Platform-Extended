@@ -38,6 +38,9 @@
 #include <vssym32.h>
 #include <Richedit.h>
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 // Microsoft: It's probably cool when you need to make several includes instead of one 
 // Perchik71: NO
 #include <gdiplusenums.h>

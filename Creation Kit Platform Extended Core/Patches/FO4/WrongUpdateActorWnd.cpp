@@ -60,7 +60,7 @@ namespace CreationKitPlatformExtended
 					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(0), 6);
 					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(1), 6);
 					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(2), 0xF);
-					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(3), 0x1D);
+					//lpRelocator->PatchNop(lpRelocationDatabaseItem->At(3), 0x1D);
 
 					return true;
 				}

@@ -14,6 +14,11 @@ namespace CreationKitPlatformExtended
 				std::equal_to<uint64_t>, voltek::allocator<std::pair<const uint64_t,
 				TESForm::Array*>>> FormReferenceMap;
 
+			const char* TESFullName::GetName() const
+			{
+				return thisVirtualCall<const char*>(0x78, this);
+			}
+
 			bool TESForm::GetActive() const
 			{
 				return (_FormFlags & FormFlags::fsModified) != 0;
@@ -23,19 +28,19 @@ namespace CreationKitPlatformExtended
 				return (_FormFlags & FormFlags::fsDeleted) != 0;
 			}
 
-			char TESForm::GetFormType() const
-			{
-				return _FormType;
-			}
-
-			uint32_t TESForm::GetFormID() const
-			{
-				return _FormID;
-			}
-
 			void TESForm::SetNewFormID(uint32_t NewIndex, bool Unk) 
 			{
 				thisVirtualCall<char*>(0x310, this, NewIndex, Unk);
+			}
+
+			const char* TESForm::GetEditorID() const
+			{
+				return thisVirtualCall<const char*>(0x1E8, this);
+			}
+
+			void TESForm::EditFormToWindow(HWND hParentWnd, __int64 a1, __int64 a2)
+			{
+				thisVirtualCall<const char*>(0x2D0, this, hParentWnd, a1, a2);
 			}
 
 			TESForm* TESForm::GetFormByNumericID(uint32_t SearchID)
