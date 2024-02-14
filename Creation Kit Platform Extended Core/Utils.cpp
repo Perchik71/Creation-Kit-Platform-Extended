@@ -441,9 +441,72 @@ namespace CreationKitPlatformExtended
 			return (char*)memcpy((char*)Core::GlobalMemoryManagerPtr->MemAlloc(l + 1), s, l + 1);
 		}
 
+		String GetApplicationPath()
+		{
+			String Path;
+			Path.resize(MAX_PATH);
+			Path.resize(GetModuleFileName(GetModuleHandle(NULL), Path.data(), MAX_PATH));
+			return Path.substr(0, Path.find_last_of("\\/") + 1);
+		}
+
 		void Quit()
 		{
 			TerminateProcess(GetCurrentProcess(), 0);
+		}
+
+		bool GetProfileValue(const char* relfilename, const char* section, const char* option, bool defvalue)
+		{
+			return GetProfileValue(relfilename, section, option, (int)defvalue) > 0 ? 1 : 0;
+		}
+
+		int GetProfileValue(const char* relfilename, const char* section, const char* option, int defvalue)
+		{
+			return GetPrivateProfileInt(section, option, defvalue, (GetApplicationPath() + relfilename).c_str());
+		}
+
+		float GetProfileValue(const char* relfilename, const char* section, const char* option, float defvalue)
+		{
+			char szBuf[64] = { 0 };
+			GetPrivateProfileString(section, option, "-", szBuf, 64,
+				(GetApplicationPath() + relfilename).c_str());
+
+			if (strcmp(szBuf, "-"))
+				return defvalue;
+
+			char* EndPref = nullptr;
+			return strtof(szBuf, &EndPref);
+		}
+
+		String GetProfileValue(const char* relfilename, const char* section, const char* option, const char* defvalue)
+		{
+			char szBuf[MAX_PATH] = { 0 };
+			GetPrivateProfileString(section, option, defvalue, szBuf, MAX_PATH,
+				(GetApplicationPath() + relfilename).c_str());
+			return szBuf;
+		}
+
+		void UpdateProfileValue(const char* relfilename, const char* section, const char* option, bool value)
+		{
+			UpdateProfileValue(relfilename, section, option, value ? "1" : "0");
+		}
+
+		void UpdateProfileValue(const char* relfilename, const char* section, const char* option, int value)
+		{
+			char szBuf[64] = { 0 };
+			sprintf_s(szBuf, "%d", value);
+			UpdateProfileValue(relfilename, section, option, szBuf);
+		}
+
+		void UpdateProfileValue(const char* relfilename, const char* section, const char* option, float value)
+		{
+			char szBuf[64] = { 0 };
+			sprintf_s(szBuf, "%.4f", value);
+			UpdateProfileValue(relfilename, section, option, szBuf);
+		}
+
+		void UpdateProfileValue(const char* relfilename, const char* section, const char* option, const char* value)
+		{
+			WritePrivateProfileString(section, option, value, (GetApplicationPath() + relfilename).c_str());
 		}
 
 		// Author: Nukem9

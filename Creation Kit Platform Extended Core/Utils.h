@@ -53,7 +53,18 @@ namespace CreationKitPlatformExtended
 		String QuoteRemove(const char* s);
 		WideString QuoteRemove(const wchar_t* s);
 
+		String GetApplicationPath();
+
 		void Quit();
+
+		bool GetProfileValue(const char* relfilename, const char* section, const char* option, bool defvalue);
+		int GetProfileValue(const char* relfilename, const char* section, const char* option, int defvalue);
+		float GetProfileValue(const char* relfilename, const char* section, const char* option, float defvalue);
+		String GetProfileValue(const char* relfilename, const char* section, const char* option, const char* defvalue);
+		void UpdateProfileValue(const char* relfilename, const char* section, const char* option, bool value);
+		void UpdateProfileValue(const char* relfilename, const char* section, const char* option, int value);
+		void UpdateProfileValue(const char* relfilename, const char* section, const char* option, float value);
+		void UpdateProfileValue(const char* relfilename, const char* section, const char* option, const char* value);
 
 		template<typename T>
 		inline bool FileReadBuffer(FILE* fileStream, T* nValue, uint32_t nCount = 1)

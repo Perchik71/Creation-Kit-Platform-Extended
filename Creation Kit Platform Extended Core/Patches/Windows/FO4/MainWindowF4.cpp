@@ -26,6 +26,8 @@ namespace CreationKitPlatformExtended
 
 			uintptr_t pointer_MainWindow_data = 0;
 
+			extern bool* globalFogEnabled;
+
 			struct VersionControlListItem
 			{
 				char* EditorId;
@@ -244,8 +246,9 @@ namespace CreationKitPlatformExtended
 							EditorAPI::EditorUI::UI_EDITOR_TOGGLEGRASS_BUTTON, TRUE);
 
 						// Same for fog
+						bool bFog = Utils::GetProfileValue("CreationKitPrefs.ini", "Display", "bFogEnabled", true);
 						CheckMenuItem(GetMenu(Hwnd), EditorAPI::EditorUI::UI_EDITOR_TOGGLEFOG,
-							FixFogPatch::IsFogEnabled() ? MF_CHECKED : MF_UNCHECKED);
+							bFog ? MF_CHECKED : MF_UNCHECKED);
 
 						// Create custom menu controls
 						GlobalMainWindowPtr->MainMenu = createInfo->hMenu;

@@ -67,6 +67,8 @@ namespace CreationKitPlatformExtended
 					// Refresh state
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1), (uintptr_t)&sub);
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&sub);
+					// Replace hotkey
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(8), (uintptr_t)&ToggleFog);
 
 					{
 						ScopeRelocator text;
@@ -106,6 +108,7 @@ namespace CreationKitPlatformExtended
 			uint32_t FixFogPatch::InitSkyDisabled()
 			{
 				*globalSkyEnabled = false;
+				*globalFogEnabled = Utils::GetProfileValue("CreationKitPrefs.ini", "Display", "bFogEnabled", true);
 
 				// Return 0 as unspecified and unchecked toolbutton
 				return 0;
@@ -145,6 +148,8 @@ namespace CreationKitPlatformExtended
 					*globalFogEnabled ? MF_CHECKED : MF_UNCHECKED);
 
 				sub();
+
+				Utils::UpdateProfileValue("CreationKitPrefs.ini", "Display", "bFogEnabled", *globalFogEnabled);
 			}
 		}
 	}
