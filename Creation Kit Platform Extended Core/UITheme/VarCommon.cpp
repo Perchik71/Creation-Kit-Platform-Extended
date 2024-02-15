@@ -569,6 +569,11 @@ namespace CreationKitPlatformExtended
 
 			needDarkCheckbox = ThemeIni->ReadBool("Assets", "bNeedDarkCheckboxInData", false);
 
+			if (PathIsRelative(CustomTheme_FileName_Toolbar.c_str()))
+				CustomTheme_FileName_Toolbar = Utils::GetApplicationPath() + CustomTheme_FileName_Toolbar;
+			if (PathIsRelative(CustomTheme_FileName_Icons.c_str()))
+				CustomTheme_FileName_Icons = Utils::GetApplicationPath() + CustomTheme_FileName_Icons;
+
 			SetTheme(Theme_Custom);
 			return true;
 		}
