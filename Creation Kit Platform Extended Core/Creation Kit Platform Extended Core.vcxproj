@@ -335,6 +335,7 @@
     <ClInclude Include="Editor API\BSTArray.h" />
     <ClInclude Include="Editor API\BSTList.h" />
     <ClInclude Include="Editor API\EditorUI.h" />
+    <ClInclude Include="Editor API\FO4\BGSColorForm.h" />
     <ClInclude Include="Editor API\FO4\BGSLayer.h" />
     <ClInclude Include="Editor API\FO4\BGSMaterialSwap.h" />
     <ClInclude Include="Editor API\FO4\BGSModelMaterialSwap.h" />

@@ -43,6 +43,14 @@ namespace CreationKitPlatformExtended
 				UINT64 size;
 			};
 
+			class TESCondition
+			{
+			public:
+				virtual ~TESCondition(VOID) = default;
+			private:
+				void* _Conditions;
+			};
+
 			class TESPersistent {
 			public:
 				TESPersistent(VOID) = default;

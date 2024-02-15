@@ -39,15 +39,24 @@ namespace CreationKitPlatformExtended
 
 		enum Theme
 		{
-			Theme_Light = 1,
+			Theme_Custom = 0,
+			Theme_Light,
 			Theme_Gray,
 			Theme_DarkGray,
 			Theme_Dark,
 			Theme_NightBlue
 		};
 
-		Theme GetTheme(VOID);
-		VOID SetTheme(Theme theme);
+		Theme GetTheme();
+		void SetTheme(Theme theme);
+
+		bool IsCustomThemeExists();
+		bool OpenCustomTheme();
+		bool NeedDarkCheck();
+		COLORREF GetMaskColorToolbarForCustomTheme();
+		String GetFileNameToolbarForCustomTheme();
+		COLORREF GetMaskColorIconsForCustomTheme();
+		String GetFileNameIconsForCustomTheme();
 
 		enum ThemeColor
 		{

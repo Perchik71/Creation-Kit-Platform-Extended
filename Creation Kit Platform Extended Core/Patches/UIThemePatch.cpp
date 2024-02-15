@@ -311,9 +311,15 @@ namespace CreationKitPlatformExtended
 				Assert(comDll);
 
 				auto Id = _READ_OPTION_UINT("CreationKit", "uUIDarkThemeId", 0);
-				Id = std::min(Id, (unsigned long)1);
+				Id = std::min(Id, (unsigned long)2);
 
-				UITheme::SetTheme(UITheme::Theme(Id + 3));
+				if (Id == 2)
+				{
+					if (!UITheme::OpenCustomTheme())
+						UITheme::SetTheme(UITheme::Theme_DarkGray);
+				}
+				else
+					UITheme::SetTheme(UITheme::Theme(Id + 3));
 
 				Detours::IATHook(comDll, "USER32.dll", "GetSysColor", (uintptr_t)&Comctl32GetSysColor);
 				Detours::IATHook(comDll, "USER32.dll", "GetSysColorBrush", (uintptr_t)&Comctl32GetSysColorBrush);

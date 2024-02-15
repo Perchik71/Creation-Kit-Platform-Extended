@@ -7,6 +7,7 @@
 #include "Editor API/EditorUI.h"
 #include "UIThemePatch.h"
 #include "UIThemePatchAdditional.h"
+#include "UITheme/VarCommon.h"
 #include "UITheme/TimeOfDay.h"
 
 namespace CreationKitPlatformExtended
@@ -97,8 +98,26 @@ namespace CreationKitPlatformExtended
 			HINSTANCE hBMInst, UINT_PTR wBMID, LPCTBBUTTON lpButtons,
 			INT iNumButtons, INT dxButton, INT dyButton, INT dxBitmap, INT dyBitmap, UINT uStructSize)
 		{
-			HIMAGELIST hImageList = ImageList_LoadImageA(GlobalEnginePtr->GetInstanceDLL(), MAKEINTRESOURCEA(IDB_BITMAP3), 16, 0,
-				RGB(56, 56, 56), IMAGE_BITMAP, LR_CREATEDIBSECTION | LR_LOADTRANSPARENT);
+			HIMAGELIST hImageList;
+
+			if (UITheme::GetTheme() == UITheme::Theme_Custom)
+			{
+				auto fname = UITheme::GetFileNameToolbarForCustomTheme();
+				if (Utils::FileExists(fname.c_str()))
+				{
+					hImageList = ImageList_LoadImageA(NULL, fname.c_str(), 16, 0,
+						UITheme::GetMaskColorToolbarForCustomTheme(), IMAGE_BITMAP,
+						LR_CREATEDIBSECTION | LR_LOADTRANSPARENT | LR_LOADFROMFILE);
+					if (!hImageList)
+						goto jj1213;
+				}
+				else
+					goto jj1213;
+			}
+			else
+				jj1213:
+				hImageList = ImageList_LoadImageA(GlobalEnginePtr->GetInstanceDLL(), MAKEINTRESOURCEA(IDB_BITMAP3), 16, 0,
+					RGB(56, 56, 56), IMAGE_BITMAP, LR_CREATEDIBSECTION | LR_LOADTRANSPARENT);
 
 			HWND ret = CreateToolbarEx(hwnd, WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, wID, nBitmaps,
 				NULL, NULL, lpButtons, iNumButtons - 2 /*delete two divider*/, dxButton, dyButton, dxBitmap, dyBitmap, uStructSize);
@@ -116,8 +135,28 @@ namespace CreationKitPlatformExtended
 		HIMAGELIST UIThemePatchAdditional::Comctl32ImageList_LoadImageA_1(HINSTANCE hi, LPCSTR lpbmp, INT cx, INT cGrow,
 			COLORREF crMask, UINT uType, UINT uFlags)
 		{
-			return ImageList_LoadImageA(GlobalEnginePtr->GetInstanceDLL(), MAKEINTRESOURCEA(IDB_BITMAP4),
-				cx, cGrow, crMask, IMAGE_BITMAP, LR_CREATEDIBSECTION | LR_LOADTRANSPARENT);
+			HIMAGELIST hImageList;
+
+			if (UITheme::GetTheme() == UITheme::Theme_Custom)
+			{
+				auto fname = UITheme::GetFileNameIconsForCustomTheme();
+				if (Utils::FileExists(fname.c_str()))
+				{
+					hImageList = ImageList_LoadImageA(NULL, fname.c_str(), 16, 0,
+						UITheme::GetMaskColorIconsForCustomTheme(), IMAGE_BITMAP,
+						LR_CREATEDIBSECTION | LR_LOADTRANSPARENT | LR_LOADFROMFILE);
+					if (!hImageList)
+						goto jj1214;
+				}
+				else
+					goto jj1214;
+			}
+			else
+				jj1214:
+				hImageList = ImageList_LoadImageA(GlobalEnginePtr->GetInstanceDLL(), MAKEINTRESOURCEA(IDB_BITMAP4),
+					cx, cGrow, crMask, IMAGE_BITMAP, LR_CREATEDIBSECTION | LR_LOADTRANSPARENT);
+
+			return hImageList;
 		}
 
 		void UIThemePatchAdditional::HideOldTimeOfDayComponents()

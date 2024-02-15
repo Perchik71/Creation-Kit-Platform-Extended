@@ -505,16 +505,10 @@
     <ClCompile Include="Patches\FO4\TESFormRE.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
-    <ClCompile Include="Editor API\FO4\TESFormF4.cpp">
-      <Filter>Editor API\FO4</Filter>
-    </ClCompile>
     <ClCompile Include="Editor API\FO4\TESFileF4.cpp">
       <Filter>Editor API\FO4</Filter>
     </ClCompile>
     <ClCompile Include="Editor API\FO4\NiClassesF4.cpp">
-      <Filter>Editor API\FO4</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor API\FO4\BGSLayer.cpp">
       <Filter>Editor API\FO4</Filter>
     </ClCompile>
     <ClCompile Include="Patches\FO4\ReplaceBSPointerHandleAndManagerF4.cpp">
@@ -679,6 +673,12 @@
     <ClCompile Include="Patches\SSE\IgnoreGroundHeightTest.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Editor API\FO4\BGSLayer.cpp">
+      <Filter>Editor API\FO4\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\FO4\TESFormF4.cpp">
+      <Filter>Editor API\FO4\Forms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -743,6 +743,9 @@
     </Filter>
     <Filter Include="Patches\FO4">
       <UniqueIdentifier>{524e8638-e42c-4663-82f1-0828a82c1b66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor API\FO4\Forms">
+      <UniqueIdentifier>{f93c7e22-de57-498c-a2c8-b0d45ee57454}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1360,9 +1363,6 @@
     <ClInclude Include="Editor API\FO4\TESFileF4.h">
       <Filter>Editor API\FO4</Filter>
     </ClInclude>
-    <ClInclude Include="Editor API\FO4\TESFormF4.h">
-      <Filter>Editor API\FO4</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\NiTypes.h">
       <Filter>Editor API</Filter>
     </ClInclude>
@@ -1378,9 +1378,6 @@
     <ClInclude Include="Editor API\FO4\BGSPrimitive.h">
       <Filter>Editor API\FO4</Filter>
     </ClInclude>
-    <ClInclude Include="Editor API\FO4\BGSLayer.h">
-      <Filter>Editor API\FO4</Filter>
-    </ClInclude>
     <ClInclude Include="Patches\FO4\ReplaceBSPointerHandleAndManagerF4.h">
       <Filter>Patches\FO4</Filter>
     </ClInclude>
@@ -1388,15 +1385,6 @@
       <Filter>Patches\FO4</Filter>
     </ClInclude>
     <ClInclude Include="Editor API\FO4\BSPointerHandleManager.h">
-      <Filter>Editor API\FO4</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\FO4\TESObjectREFR.h">
-      <Filter>Editor API\FO4</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\FO4\TESObject.h">
-      <Filter>Editor API\FO4</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\FO4\TESObjectCELL.h">
       <Filter>Editor API\FO4</Filter>
     </ClInclude>
     <ClInclude Include="Patches\RenameCreationKitApp.h">
@@ -1556,28 +1544,13 @@
     <ClInclude Include="Core\FormInfoOutputWindow.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Editor API\FO4\BGSMaterialSwap.h">
-      <Filter>Editor API\FO4</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\FO4\BGSModelMaterialSwap.h">
-      <Filter>Editor API\FO4</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\FO4\TESObjectARMO.h">
       <Filter>Editor API\FO4</Filter>
     </ClInclude>
     <ClInclude Include="Editor API\FO4\BGSPreviewTransform.h">
       <Filter>Editor API\FO4</Filter>
     </ClInclude>
-    <ClInclude Include="Editor API\FO4\BGSTransform.h">
-      <Filter>Editor API\FO4</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\FO4\BGSSoundTagComponent.h">
-      <Filter>Editor API\FO4</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\FO4\TESNPC.h">
-      <Filter>Editor API\FO4</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\FO4\BGSVoiceType.h">
       <Filter>Editor API\FO4</Filter>
     </ClInclude>
     <ClInclude Include="Patches\Windows\FO4\ProgressWindowF4.h">
@@ -1585,6 +1558,39 @@
     </ClInclude>
     <ClInclude Include="Patches\SSE\IgnoreGroundHeightTest.h">
       <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BGSLayer.h">
+      <Filter>Editor API\FO4\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BGSMaterialSwap.h">
+      <Filter>Editor API\FO4\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BGSTransform.h">
+      <Filter>Editor API\FO4\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BGSVoiceType.h">
+      <Filter>Editor API\FO4\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESFormF4.h">
+      <Filter>Editor API\FO4\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESObjectREFR.h">
+      <Filter>Editor API\FO4\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESObjectARMO.h">
+      <Filter>Editor API\FO4\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESObjectCELL.h">
+      <Filter>Editor API\FO4\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESNPC.h">
+      <Filter>Editor API\FO4\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESObject.h">
+      <Filter>Editor API\FO4\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BGSColorForm.h">
+      <Filter>Editor API\FO4\Forms</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

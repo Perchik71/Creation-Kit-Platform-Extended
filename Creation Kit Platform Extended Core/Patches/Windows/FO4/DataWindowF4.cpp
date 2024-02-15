@@ -142,11 +142,17 @@ namespace CreationKitPlatformExtended
 
 					HINSTANCE hModule = Core::GlobalEnginePtr->GetInstanceDLL();
 
-					if (UITheme::IsDarkTheme()) {
+					if (UITheme::IsDarkTheme()) 
+					{
+						if ((UITheme::GetTheme() == UITheme::Theme_Custom) && UITheme::NeedDarkCheck())
+							goto DarkCheckIcons;
+						
 						ImageList.AddFromResource(hModule, MAKEINTRESOURCEA(IDB_BITMAP6), RGB(32, 32, 32));
 						ImageList.AddFromResource(hModule, MAKEINTRESOURCEA(IDB_BITMAP2), RGB(32, 32, 32));
 					}
-					else {
+					else 
+					{
+						DarkCheckIcons:
 						ImageList.AddFromResource(hModule, MAKEINTRESOURCEA(IDB_BITMAP5), RGB(255, 255, 255));
 						ImageList.AddFromResource(hModule, MAKEINTRESOURCEA(IDB_BITMAP1), RGB(255, 255, 255));
 					}

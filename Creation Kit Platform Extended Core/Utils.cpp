@@ -446,7 +446,7 @@ namespace CreationKitPlatformExtended
 			String Path;
 			Path.resize(MAX_PATH);
 			Path.resize(GetModuleFileName(GetModuleHandle(NULL), Path.data(), MAX_PATH));
-			return Path.substr(0, Path.find_last_of("\\/") + 1);
+			return DirNameOf(Path);
 		}
 
 		void Quit()

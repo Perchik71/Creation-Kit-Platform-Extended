@@ -26,8 +26,6 @@ namespace CreationKitPlatformExtended
 
 			uintptr_t pointer_MainWindow_data = 0;
 
-			extern bool* globalFogEnabled;
-
 			struct VersionControlListItem
 			{
 				char* EditorId;

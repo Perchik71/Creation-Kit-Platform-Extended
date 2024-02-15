@@ -26,6 +26,8 @@
 #include "TESFormF4.h"
 #include "TESActorValue.h"
 #include "TESObjectCELL.h"
+#include "BGSPreviewTransform.h"
+#include "BGSSoundTagComponent.h"
 
 namespace CreationKitPlatformExtended
 {

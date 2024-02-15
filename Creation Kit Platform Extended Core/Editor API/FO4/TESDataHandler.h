@@ -33,6 +33,7 @@
 #include "BGSTransform.h"
 #include "TESObjectARMO.h"
 #include "BGSVoiceType.h"
+#include "BGSColorForm.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -196,7 +197,7 @@ namespace CreationKitPlatformExtended
 				TESFormArray arrSNCT;						// CF8 Form Type 134
 				TESFormArray arrSOPM;						// D10 Form Type 135
 				TESFormArray arrCOLL;						// D28 Form Type 136
-				TESFormArray arrCLFM;						// D40 Form Type 137
+				BSTArray<BGSColorForm*> arrCLFM;			// D40 Form Type 137
 				TESFormArray arrREVB;						// D58 Form Type 138
 				TESFormArray arrPKIN;						// D70 Form Type 139
 				TESFormArray arrRFGP;						// D88 Form Type 140

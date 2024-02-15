@@ -32,7 +32,7 @@ namespace CreationKitPlatformExtended
 			size_t pos = path.find_last_of("\\/");
 			return (std::string::npos == pos)
 				? ""
-				: path.substr(0, pos);
+				: path.substr(0, pos + 1);
 		}
 
 		bool FileExists(const char* fileName);
