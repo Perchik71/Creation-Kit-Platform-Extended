@@ -85,6 +85,7 @@
 #include "Patches/SSE/TESDataHandlerHookSSE.h"
 #include "Patches/SSE/FixFormIDsInLoadFile.h"
 #include "Patches/SSE/IgnoreGroundHeightTest.h"
+#include "Patches/SSE/MemoryLeakBSString.h"
 
 #include "Patches/Windows/SSE/MainWindow.h"
 #include "Patches/Windows/SSE/RenderWindow.h"
@@ -183,6 +184,7 @@ namespace CreationKitPlatformExtended
 				new Patches::TESDataHandlerPatch(),
 				new Patches::FixFormIDsInLoadFilePatch(),
 				new Patches::IgnoreGroundHeightTestPatch(),
+				new Patches::MemoryLeakBSStringPatch(),
 		
 				new Patches::MainWindow(),
 				new Patches::RenderWindow(),

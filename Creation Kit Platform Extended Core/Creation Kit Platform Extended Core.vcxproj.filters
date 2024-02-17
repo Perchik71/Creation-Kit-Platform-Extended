@@ -679,6 +679,12 @@
     <ClCompile Include="Editor API\FO4\TESFormF4.cpp">
       <Filter>Editor API\FO4\Forms</Filter>
     </ClCompile>
+    <ClCompile Include="Core\TracerManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\MemoryLeakBSString.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1591,6 +1597,12 @@
     </ClInclude>
     <ClInclude Include="Editor API\FO4\BGSColorForm.h">
       <Filter>Editor API\FO4\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\TracerManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\MemoryLeakBSString.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

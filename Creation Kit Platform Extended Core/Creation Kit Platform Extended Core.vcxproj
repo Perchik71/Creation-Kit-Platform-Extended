@@ -93,6 +93,7 @@
     <ClCompile Include="Core\RelocationDatabase.cpp" />
     <ClCompile Include="Core\Relocator.cpp" />
     <ClCompile Include="Core\ResultCoreErrNo.cpp" />
+    <ClCompile Include="Core\TracerManager.cpp" />
     <ClCompile Include="Core\TypeInfo\ms_rtti.cpp" />
     <ClCompile Include="DllMain.cpp" />
     <ClCompile Include="Editor API\BGStringLocalize.cpp" />
@@ -231,6 +232,7 @@
     <ClCompile Include="Patches\SSE\LipGen.cpp" />
     <ClCompile Include="Patches\SSE\LoadDDSFile.cpp" />
     <ClCompile Include="Patches\SSE\LoadOptimization.cpp" />
+    <ClCompile Include="Patches\SSE\MemoryLeakBSString.cpp" />
     <ClCompile Include="Patches\SSE\MemoryLeakInPreviewWindow.cpp" />
     <ClCompile Include="Patches\SSE\NavMeshInfoMap.cpp" />
     <ClCompile Include="Patches\SSE\NavMeshPseudoDelete.cpp" />
@@ -324,6 +326,7 @@
     <ClInclude Include="Core\RelocationDatabase.h" />
     <ClInclude Include="Core\Relocator.h" />
     <ClInclude Include="Core\ResultCoreErrNo.h" />
+    <ClInclude Include="Core\TracerManager.h" />
     <ClInclude Include="Core\TypeInfo\ms_rtti.h" />
     <ClInclude Include="Crc32.h" />
     <ClInclude Include="Editor API\BGStringLocalize.h" />
@@ -514,6 +517,7 @@
     <ClInclude Include="Patches\SSE\LipGen.h" />
     <ClInclude Include="Patches\SSE\LoadDDSFile.h" />
     <ClInclude Include="Patches\SSE\LoadOptimization.h" />
+    <ClInclude Include="Patches\SSE\MemoryLeakBSString.h" />
     <ClInclude Include="Patches\SSE\MemoryLeakInPreviewWindow.h" />
     <ClInclude Include="Patches\SSE\NavMeshInfoMap.h" />
     <ClInclude Include="Patches\SSE\NavMeshPseudoDelete.h" />

@@ -5,6 +5,7 @@
 #include "Core/Engine.h"
 #include "Core/ConsoleWindow.h"
 #include "Core/PluginManager.h"
+#include "Core/TracerManager.h"
 #include "Core/TypeInfo/ms_rtti.h"
 #include "Core/FormInfoOutputWindow.h"
 #include "Editor API/EditorUI.h"
@@ -208,6 +209,18 @@ namespace CreationKitPlatformExtended
 				ExtMenu.Append("Dump RTTI Data", UI_EXTMENU_DUMPRTTI);
 				ExtMenu.Append("Dump SDM Info", UI_EXTMENU_SDM);
 				ExtMenu.Append("Form Info Output", UI_EXTMENU_FORMINFOOUTPUT);
+
+#if CKPE_USES_TRACER
+				// Create tracer menu
+				auto TracerMenuHandle = CreateMenu();
+				Classes::CUIMenu TracerMenu = TracerMenuHandle;
+				
+				TracerMenu.Append("Record", UI_EXTMENU_TRACER_RECORD);
+				TracerMenu.Append("Clear", UI_EXTMENU_TRACER_CLEAR);
+				TracerMenu.Append("Dump", UI_EXTMENU_TRACER_DUMP);
+				ExtMenu.Append("Tracer Memory", UI_EXTMENU_TRACER, TracerMenu);
+#endif
+
 				ExtMenu.AppendSeparator();
 				ExtMenu.Append("Save Hardcoded Forms", UI_EXTMENU_HARDCODEDFORMS);
 				
@@ -348,6 +361,30 @@ namespace CreationKitPlatformExtended
 								OutputFormInfo((uint32_t)Wnd.OpenModal(Hwnd));
 							}
 							return 0;
+#if CKPE_USES_TRACER
+							case UI_EXTMENU_TRACER_RECORD:
+							{
+								auto Item = GlobalMainWindowPtr->MainMenu.GetItem(UI_EXTMENU_TRACER_RECORD);
+								bool Checked = !Item.Checked;
+								Item.Checked = Checked;
+
+								if (Checked)
+									Core::GlobalTracerManagerPtr->Record();
+								else
+									Core::GlobalTracerManagerPtr->Stop();
+							}
+							return 0;							
+							case UI_EXTMENU_TRACER_CLEAR:
+							{
+								Core::GlobalTracerManagerPtr->Clear();
+							}
+							return 0;
+							case UI_EXTMENU_TRACER_DUMP:
+							{
+								Core::GlobalTracerManagerPtr->Dump();
+							}
+							return 0;
+#endif
 							case EditorAPI::EditorUI::UI_EDITOR_TOGGLEOBJECTWND:
 							{
 								for (auto Wnd : ObjectWindows) {

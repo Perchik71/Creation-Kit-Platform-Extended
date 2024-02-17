@@ -11,6 +11,7 @@
 #include "GDIPlusInit.h"
 #include "Engine.h"
 #include "DynamicCast.h"
+#include "TracerManager.h"
 
 #include "Editor API/EditorUI.h"
 
@@ -454,6 +455,8 @@ namespace CreationKitPlatformExtended
 			{
 				// Инициализация менеджера памяти
 				GlobalMemoryManagerPtr = new MemoryManager();
+				// Инициализация менеджера трассеровки памяти, для поиска утечек памяти
+				GlobalTracerManagerPtr = new TracerManager();
 				// Инициализация библиотеки vup
 				AssertMsg(Conversion::LazUnicodePluginInit(), 
 					"I can't find the library: \"vup-x86_64.dll\"\nReinstall the mod.");

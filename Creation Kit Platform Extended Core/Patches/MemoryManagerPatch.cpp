@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
+#include "Core/TracerManager.h"
 #include "MemoryManagerPatch.h"
 
 namespace CreationKitPlatformExtended
@@ -19,12 +20,15 @@ namespace CreationKitPlatformExtended
 		public:
 			static void* Allocate(MemoryManager* manager, size_t size, uint32_t alignment, bool aligned)
 			{
-				return Core::GlobalMemoryManagerPtr->MemAlloc(size, alignment, aligned, true);
+				auto ptr = Core::GlobalMemoryManagerPtr->MemAlloc(size, alignment, aligned, true);
+				_CKPE_TracerPush("MemoryManager", ptr, size);
+				return ptr;
 			}
 
 			static void Deallocate(MemoryManager* manager, void* memory, bool aligned)
 			{
 				Core::GlobalMemoryManagerPtr->MemFree(memory);
+				_CKPE_TracerPop(memory);
 			}
 
 			static size_t Size(MemoryManager* manager, void* memory)
@@ -40,12 +44,15 @@ namespace CreationKitPlatformExtended
 		public:
 			static void* Allocate(ScrapHeap* manager, size_t size, uint32_t alignment)
 			{
-				return Core::GlobalMemoryManagerPtr->MemAlloc(size, alignment, alignment != 0);
+				auto ptr = Core::GlobalMemoryManagerPtr->MemAlloc(size, alignment, alignment != 0);
+				_CKPE_TracerPush("ScrapHeap", ptr, size);
+				return ptr;
 			}
 
 			static void Deallocate(ScrapHeap* manager, void* memory)
 			{
 				Core::GlobalMemoryManagerPtr->MemFree(memory);
+				_CKPE_TracerPop(memory);
 			}
 		};
 
