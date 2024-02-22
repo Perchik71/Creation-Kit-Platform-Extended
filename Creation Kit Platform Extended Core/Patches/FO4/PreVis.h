@@ -17,10 +17,10 @@ namespace CreationKitPlatformExtended
 		{
 			using namespace CreationKitPlatformExtended::Core;
 
-			class PreCombinedPatch : public Module
+			class PreVisPatch : public Module
 			{
 			public:
-				PreCombinedPatch();
+				PreVisPatch();
 
 				virtual bool HasOption() const;
 				virtual bool HasCanRuntimeDisabled() const;
@@ -28,14 +28,16 @@ namespace CreationKitPlatformExtended
 				virtual const char* GetName() const;
 				virtual bool HasDependencies() const;
 				virtual Array<String> GetDependencies() const;
+
+				static EditorAPI::Fallout4::TESForm* sub(void* a1);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
 				virtual bool Activate(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 				virtual bool Shutdown(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 			private:
-				PreCombinedPatch(const PreCombinedPatch&) = default;
-				PreCombinedPatch& operator=(const PreCombinedPatch&) = default;
+				PreVisPatch(const PreVisPatch&) = default;
+				PreVisPatch& operator=(const PreVisPatch&) = default;
 			};
 		}
 	}

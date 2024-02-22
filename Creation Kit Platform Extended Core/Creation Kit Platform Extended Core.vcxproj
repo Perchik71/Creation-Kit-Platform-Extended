@@ -157,6 +157,7 @@
     <ClCompile Include="Patches\FO4\MiscF4.cpp" />
     <ClCompile Include="Patches\FO4\OptimizationLoadF4.cpp" />
     <ClCompile Include="Patches\FO4\PreCombined.cpp" />
+    <ClCompile Include="Patches\FO4\PreVis.cpp" />
     <ClCompile Include="Patches\FO4\RemoveUselessMessagesF4.cpp" />
     <ClCompile Include="Patches\FO4\ReplaceBSPointerHandleAndManagerF4.cpp" />
     <ClCompile Include="Patches\FO4\SkipUpdateCheck.cpp" />
@@ -381,6 +382,7 @@
     <ClInclude Include="Editor API\NiRefObject.h" />
     <ClInclude Include="Editor API\NiTransform.h" />
     <ClInclude Include="Editor API\NiTypes.h" />
+    <ClInclude Include="Editor API\SSE\BGSRenderWindow.h" />
     <ClInclude Include="Editor API\SSE\BSDynamicTriShape.h" />
     <ClInclude Include="Editor API\SSE\BSEffectShaderMaterial.h" />
     <ClInclude Include="Editor API\SSE\BSEntryString.h" />
@@ -443,6 +445,7 @@
     <ClInclude Include="Patches\FO4\MiscF4.h" />
     <ClInclude Include="Patches\FO4\OptimizationLoadF4.h" />
     <ClInclude Include="Patches\FO4\PreCombined.h" />
+    <ClInclude Include="Patches\FO4\PreVis.h" />
     <ClInclude Include="Patches\FO4\RemoveUselessMessagesF4.h" />
     <ClInclude Include="Patches\FO4\ReplaceBSPointerHandleAndManagerF4.h" />
     <ClInclude Include="Patches\FO4\SkipUpdateCheck.h" />

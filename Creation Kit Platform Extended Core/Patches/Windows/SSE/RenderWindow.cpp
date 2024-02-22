@@ -4,6 +4,7 @@
 
 #include "Core/Engine.h"
 #include "RenderWindow.h"
+#include "Editor API/SSE/BGSRenderWindow.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -58,6 +59,8 @@ namespace CreationKitPlatformExtended
 					*(uintptr_t*)&_oldWndProc =
 						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), &RenderWindow::HKWndProc);
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(1), &RenderWindow::setFlagLoadCell);
+					EditorAPI::SkyrimSpectialEdition::BGSRenderWindow::Instance = (EditorAPI::SkyrimSpectialEdition::BGSRenderWindow**)
+						lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2));
 
 					return true;
 				}

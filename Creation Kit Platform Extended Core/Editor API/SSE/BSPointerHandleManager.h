@@ -412,6 +412,18 @@ namespace CreationKitPlatformExtended
 					return Out != nullptr;
 				}
 
+				static ObjectType* GetPointer(uint32_t UniqueId)
+				{
+					const auto handleIndex = UniqueId & HandleType::INDEX_MASK;
+					auto& arrayHandle = Manager::HandleEntries[handleIndex];
+					auto Out = static_cast<ObjectType*>(arrayHandle.GetPointer());
+
+					if (Out->GetHandleEntryIndex() != handleIndex)
+						Out = nullptr;
+
+					return Out;
+				}
+
 				static bool IsValid(const HandleType& Handle)
 				{
 					const auto handleIndex = Handle.GetIndex();
@@ -437,6 +449,24 @@ namespace CreationKitPlatformExtended
 			typedef IBSPointerHandleManagerInterface<TESObjectREFR_Extremly,
 				BSUntypedPointerHandle_Extended_Extremly, HandleManager_Extended_Extremly>
 				BSPointerHandleManagerInterface_Extended_Extremly;
+
+			struct BSPointerHandleManagerCurrent
+			{
+				inline static uint8_t PointerHandleManagerCurrentId = 0;
+			};
+
+			static TESForm* GetRefFormByUniqueId(uint32_t UniqueId)
+			{
+				switch (BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId)
+				{
+				case 1:
+					return BSPointerHandleManagerInterface_Extended::GetPointer(UniqueId);
+				case 2:
+					return BSPointerHandleManagerInterface_Extended_Extremly::GetPointer(UniqueId);
+				default:
+					return BSPointerHandleManagerInterface_Original::GetPointer(UniqueId);
+				}
+			}
 		}
 	}
 }

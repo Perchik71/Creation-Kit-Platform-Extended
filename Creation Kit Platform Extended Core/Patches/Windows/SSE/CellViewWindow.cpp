@@ -5,6 +5,7 @@
 #include "Core/Engine.h"
 #include "Editor API/BSString.h"
 #include "Editor API/EditorUI.h"
+#include "Editor API/SSE/BGSRenderWindow.h"
 #include "Patches/Windows/SSE/MainWindow.h"
 #include "CellViewWindow.h"
 
@@ -12,6 +13,7 @@
 #define UI_CELL_VIEW_ADD_CELL_OBJECT_ITEM			2583
 #define UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX			2580	
 #define UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX	2582	
+#define UI_CELL_VIEW_SELECT_CELL_OBJECTS_CHECKBOX	5665	
 #define UI_CELL_VIEW_FILTER_CELL					2584	
 
 #define UI_CELL_VIEW_FILTER_CELL_SIZE				1024
@@ -198,8 +200,11 @@ namespace CreationKitPlatformExtended
 				m_SelectedObjectLabel.BoundsRect = Bounds;
 				m_SelectedObjectLabel.Refresh();
 
-				Bounds.Top = 67;
+				Bounds.Top = 50;
 				Bounds.Height = 16;
+				m_SelectObjectsOnly.BoundsRect = Bounds;
+
+				Bounds.Top = 67;
 				m_ActiveObjectsOnly.BoundsRect = Bounds;
 			}
 
@@ -223,8 +228,9 @@ namespace CreationKitPlatformExtended
 					GlobalCellViewWindowPtr->m_LoadedAtTop = GetDlgItem(Hwnd, 5662);
 					GlobalCellViewWindowPtr->m_IdEdit = GetDlgItem(Hwnd, 2581);
 					GlobalCellViewWindowPtr->m_SelectedObjectLabel = GetDlgItem(Hwnd, 1163);
-					GlobalCellViewWindowPtr->m_ActiveCellsOnly = GetDlgItem(Hwnd, 2580);
-					GlobalCellViewWindowPtr->m_ActiveObjectsOnly = GetDlgItem(Hwnd, 2582);
+					GlobalCellViewWindowPtr->m_ActiveCellsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX);
+					GlobalCellViewWindowPtr->m_ActiveObjectsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX);
+					GlobalCellViewWindowPtr->m_SelectObjectsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_SELECT_CELL_OBJECTS_CHECKBOX);
 					GlobalCellViewWindowPtr->m_CellListView = GetDlgItem(Hwnd, 1155);
 					GlobalCellViewWindowPtr->m_ObjectListView = GetDlgItem(Hwnd, 1156);
 					GlobalCellViewWindowPtr->m_FilterCellEdit = GetDlgItem(Hwnd, UI_CELL_VIEW_FILTER_CELL);
@@ -236,8 +242,6 @@ namespace CreationKitPlatformExtended
 						LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
 					ListView_SetExtendedListViewStyleEx(GlobalCellViewWindowPtr->m_ObjectListView.Handle,
 						LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
-
-					ShowWindow(GetDlgItem(Hwnd, 1007), SW_HIDE);
 				}
 				else if (Message == WM_SIZE)
 				{
@@ -266,6 +270,15 @@ namespace CreationKitPlatformExtended
 						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
 						return 1;
 					}
+					else if (param == UI_CELL_VIEW_SELECT_CELL_OBJECTS_CHECKBOX)
+					{
+						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
+						SetPropA(Hwnd, "SelectObjectsOnly", reinterpret_cast<HANDLE>(enableFilter));
+
+						// Fake a filter text box change
+						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
+						return 1;
+					}
 					else if ((param == UI_CELL_VIEW_FILTER_CELL) && (HIWORD(wParam) == EN_CHANGE))
 					{
 						auto hFilter = GlobalCellViewWindowPtr->m_FilterCellEdit.Handle;
@@ -285,35 +298,31 @@ namespace CreationKitPlatformExtended
 				{
 					auto form = reinterpret_cast<const TESForm*>(wParam);
 					auto allowInsert = reinterpret_cast<bool*>(lParam);
-
 					*allowInsert = true;
+
+					if (!form)
+						return 1;
 
 					// Skip the entry if "Show only active cells" is checked
 					if (static_cast<bool>(GetPropA(Hwnd, "ActiveCellsOnly")))
-					{
-						if (form && !form->GetActive())
-							*allowInsert = false;
-					}
+						*allowInsert = form->GetActive();
 
 					// Skip if a filter is installed and the form does not meet the requirements
 					if (*allowInsert && reinterpret_cast<int>(GetPropA(Hwnd, "FilterCellsLen")) > 2)
 					{
-						if (form)
+						auto editorID = form->GetEditorID_NoVTable();
+						if (editorID)
 						{
-							auto editorID = form->GetEditorID_NoVTable();
-							if (editorID)
-							{
-								TESFullName* fullname = (TESFullName*)_DYNAMIC_CAST(form, 0, "class TESForm", "class TESFullName");
+							TESFullName* fullname = (TESFullName*)_DYNAMIC_CAST(form, 0, "class TESForm", "class TESFullName");
 
-								if (fullname)
-									sprintf_s(str_CellViewWindow_Filter, UI_CELL_VIEW_FILTER_CELL, "%s %08X %s", 
-										editorID, form->GetFormID(), fullname->Name);
-								else
-									sprintf_s(str_CellViewWindow_Filter, UI_CELL_VIEW_FILTER_CELL, "%s %08X",
-										editorID, form->GetFormID());
+							if (fullname)
+								sprintf_s(str_CellViewWindow_Filter, UI_CELL_VIEW_FILTER_CELL, "%s %08X %s", 
+									editorID, form->GetFormID(), fullname->Name);
+							else
+								sprintf_s(str_CellViewWindow_Filter, UI_CELL_VIEW_FILTER_CELL, "%s %08X",
+									editorID, form->GetFormID());
 						
-								*allowInsert = StrStrI(str_CellViewWindow_Filter, str_CellViewWindow_FilterUser) != 0;
-							}
+							*allowInsert = StrStrI(str_CellViewWindow_Filter, str_CellViewWindow_FilterUser) != 0;
 						}
 					}
 
@@ -323,14 +332,24 @@ namespace CreationKitPlatformExtended
 				{
 					auto form = reinterpret_cast<const TESForm*>(wParam);
 					auto allowInsert = reinterpret_cast<bool*>(lParam);
-
 					*allowInsert = true;
+
+					if (!form)
+						return 1;
 
 					// Skip the entry if "Show only active objects" is checked
 					if (static_cast<bool>(GetPropA(Hwnd, "ActiveObjectsOnly")))
+						*allowInsert = form->GetActive();
+
+					// Skip the entry if "Selected Only" is checked
+					if (*allowInsert && static_cast<bool>(GetPropA(Hwnd, "SelectObjectsOnly")))
 					{
-						if (form && !form->GetActive())
-							*allowInsert = false;
+						auto Renderer = BGSRenderWindow::GetInstance();
+						if (Renderer)
+						{
+							if (!Renderer->PickHandler->Has(form))
+								*allowInsert = false;
+						}
 					}
 
 					return 1;

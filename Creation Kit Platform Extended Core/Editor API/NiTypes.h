@@ -59,6 +59,24 @@ namespace CreationKitPlatformExtended
 {
 	namespace EditorAPI
 	{
+		class NiNode {
+		public:
+			virtual ~NiNode() = default;
+		public:
+		};
+
+		class NiCamera
+		{
+		public:
+			virtual ~NiCamera() = default;
+		};
+
+		class NiWindow
+		{
+		public:
+			virtual ~NiWindow() = default;
+		};
+
 		class NiBinaryStream {
 		public:
 			virtual ~NiBinaryStream();

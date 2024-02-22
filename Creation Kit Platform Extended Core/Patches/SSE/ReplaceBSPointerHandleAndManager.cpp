@@ -83,6 +83,8 @@ namespace CreationKitPlatformExtended
 							(uintptr_t)&BSPointerHandleManagerInterface_Extended_Extremly::GetSmartPointer2);
 						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(26),
 							(uintptr_t)&BSPointerHandleManagerInterface_Extended_Extremly::IsValid);
+
+						BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 2;
 					}
 					else
 					{
@@ -108,6 +110,8 @@ namespace CreationKitPlatformExtended
 							(uintptr_t)&BSPointerHandleManagerInterface_Extended::GetSmartPointer2);
 						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(26),
 							(uintptr_t)&BSPointerHandleManagerInterface_Extended::IsValid);
+
+						BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 1;
 					}
 
 					ScopeRelocator textSection;

@@ -688,6 +688,9 @@
     <ClCompile Include="Patches\FO4\ESLTip.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\FO4\PreVis.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1608,6 +1611,12 @@
       <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Patches\FO4\ESLTip.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BGSRenderWindow.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\PreVis.h">
       <Filter>Patches\FO4</Filter>
     </ClInclude>
   </ItemGroup>

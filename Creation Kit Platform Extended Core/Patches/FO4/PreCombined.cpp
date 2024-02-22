@@ -11,8 +11,6 @@ namespace CreationKitPlatformExtended
 	{
 		namespace Fallout4
 		{
-			uintptr_t pointer_PreCombinedPatch_sub = 0;
-
 			PreCombinedPatch::PreCombinedPatch() : Module(GlobalEnginePtr)
 			{}
 
@@ -71,12 +69,6 @@ namespace CreationKitPlatformExtended
 						lpRelocator->Patch(lpRelocationDatabaseItem->At(2), (uint8_t*)&precomb_flag2, 4);
 					}
 
-					// This function returns Form, for preprocessing visibility, however, 
-					// sometimes this function returns a Form that is not a Cell. This is an error, 
-					// because in the body it is further revealedand coordinates in the world space are obtained.
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(3), (uintptr_t)&sub);
-					pointer_PreCombinedPatch_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(4));
-
 					return true;
 				}
 
@@ -87,17 +79,6 @@ namespace CreationKitPlatformExtended
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
 				return false;
-			}
-
-			EditorAPI::Fallout4::TESForm* PreCombinedPatch::sub(void* a1)
-			{
-				EditorAPI::Fallout4::TESForm* Ret = fastCall<EditorAPI::Fallout4::TESForm*>
-					(pointer_PreCombinedPatch_sub, a1);
-
-				if (Ret && (Ret->TypeID != EditorAPI::Fallout4::TESForm::ftCell))
-					return nullptr;
-
-				return Ret;
 			}
 		}
 	}

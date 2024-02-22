@@ -50,6 +50,7 @@ namespace CreationKitPlatformExtended
 				Classes::CUIBaseControl m_SelectedObjectLabel;
 				Classes::CUIBaseControl m_ActiveCellsOnly;
 				Classes::CUIBaseControl m_ActiveObjectsOnly;
+				Classes::CUIBaseControl m_SelectObjectsOnly;
 				Classes::CUIBaseControl m_CellListView;
 				Classes::CUIBaseControl m_ObjectListView;
 				Classes::CUIBaseControl m_FilterCellEdit;
