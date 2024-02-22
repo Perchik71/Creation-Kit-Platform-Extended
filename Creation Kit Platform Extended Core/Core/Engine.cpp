@@ -455,8 +455,12 @@ namespace CreationKitPlatformExtended
 			{
 				// Инициализация менеджера памяти
 				GlobalMemoryManagerPtr = new MemoryManager();
+				AssertMsg(GlobalMemoryManagerPtr, "Failed to initialize class \"MemoryManager\".");
+#if CKPE_USES_TRACER
 				// Инициализация менеджера трассеровки памяти, для поиска утечек памяти
 				GlobalTracerManagerPtr = new TracerManager();
+				AssertMsg(GlobalTracerManagerPtr, "Failed to initialize class \"TracerManager\".");
+#endif
 				// Инициализация библиотеки vup
 				AssertMsg(Conversion::LazUnicodePluginInit(), 
 					"I can't find the library: \"vup-x86_64.dll\"\nReinstall the mod.");

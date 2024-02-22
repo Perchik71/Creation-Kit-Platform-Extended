@@ -685,6 +685,9 @@
     <ClCompile Include="Patches\SSE\MemoryLeakBSString.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\FO4\ESLTip.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1603,6 +1606,9 @@
     </ClInclude>
     <ClInclude Include="Patches\SSE\MemoryLeakBSString.h">
       <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\ESLTip.h">
+      <Filter>Patches\FO4</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

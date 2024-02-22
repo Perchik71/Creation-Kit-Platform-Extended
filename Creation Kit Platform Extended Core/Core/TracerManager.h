@@ -19,7 +19,6 @@ namespace CreationKitPlatformExtended
 				uintptr_t RetAddress;
 				uintptr_t MemAddress;
 				size_t Size;
-				bool Active;
 			};
 		public:
 			TracerManager();
@@ -27,8 +26,8 @@ namespace CreationKitPlatformExtended
 			void Push(const char* _Name, uintptr_t _MemAddress, size_t _Size, uintptr_t _RetAddress = (uintptr_t)_ReturnAddress());
 			void Pop(uintptr_t _MemAddress);
 
-			inline void Record() { _Rec = true; }
-			inline void Stop() { _Rec = false; }
+			void Record();
+			void Stop();
 
 			void Dump();
 			void Clear();
@@ -36,7 +35,8 @@ namespace CreationKitPlatformExtended
 			TracerManager(const TracerManager&) = default;
 			TracerManager& operator=(const TracerManager&) = default;
 
-			concurrency::concurrent_vector<TracerInfo> _Items;
+			std::vector<TracerInfo> _Items;
+			std::recursive_mutex lock;
 			bool _Rec;
 		};
 

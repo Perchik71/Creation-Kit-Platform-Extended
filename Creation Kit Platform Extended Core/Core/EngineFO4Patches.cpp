@@ -37,6 +37,7 @@
 #include "Patches/FO4/FixEncounterZone.h"
 #include "Patches/FO4/WrongUpdateActorWnd.h"
 #include "Patches/FO4/CreateDDS.h"
+#include "Patches/FO4/ESLTip.h"
 
 #include "Patches/Windows/FO4/MainWindowF4.h"
 #include "Patches/Windows/FO4/ObjectWindowF4.h"
@@ -87,6 +88,7 @@ namespace CreationKitPlatformExtended
 				new Patches::FixEncounterZonePatch(),
 				new Patches::WrongUpdateActorWndPatch(),
 				new Patches::CreateDDSPatch(),
+				new Patches::ESLTipPatch(),
 				
 				new Patches::MainWindow(),
 				new Patches::ObjectWindow(),

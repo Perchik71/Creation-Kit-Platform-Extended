@@ -5,6 +5,7 @@
 #include "Core/Engine.h"
 #include "NewFormat171.h"
 #include "Patches/ConsolePatch.h"
+#include "Editor API/SSE/TESFile.h"
 #include "Editor API/SSE/TESDataHandler.h"
 
 namespace CreationKitPlatformExtended
@@ -70,7 +71,7 @@ namespace CreationKitPlatformExtended
 					// skip "File %s is a higher version than this EXE can load."
 					lpRelocator->Patch(lpRelocationDatabaseItem->At(0), (uint8_t*)&fPluginVersion, 4);
 
-					// make the window title the same as in 16.1130
+					// make the window title the same as in 1.6.1130
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1), (uintptr_t)&sub);
 					//pointer_NewFormat171_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2));
 					pointer_NewFormat171_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(3));
@@ -101,16 +102,11 @@ namespace CreationKitPlatformExtended
 			{
 				strcat_s(dst, max_size, src);
 
-				// The function returns something very important, perhaps the main TES object
-				//auto addr = *((void**(__fastcall*)())pointer_NewFormat171_sub)();
-				// Checking for the current active plugin
-				//auto active_plugin = *((char**)(((char*)addr) + 0xDB0));
-				
 				// Checking for the current active plugin
 				auto active_plugin = TESDataHandler::GetInstance()->ActiveMod;
 				if (active_plugin && (*((uintptr_t*)pointer_NewFormat171_data)))
 				{
-					auto total = (uint32_t)((uintptr_t)(*(char**)((char*)active_plugin + 0x430)));
+					auto total = active_plugin->GetHeaderInfo().numRecords;
 					auto avail = 0xFFF - total;
 					if (avail >= 0xFFF)
 						strcat_s(dst, max_size, sNotEslCapable);
@@ -123,10 +119,10 @@ namespace CreationKitPlatformExtended
 				}
 			}
 
-			void NewFormat171Patch::sub2(const class TESFile* load_file)
+			void NewFormat171Patch::sub2(const void* load_file)
 			{
 				auto IdPtr = (uint32_t*)((uintptr_t)load_file + 0x290);
-				auto DependObjs = (void*)((uintptr_t)load_file + 0x468);
+				auto DependObjs = ((const TESFile*)load_file)->GetDependArray();
 				auto DependId = *IdPtr >> 24;
 
 				if (DependId >= 0xFE)

@@ -104,3 +104,4 @@ CreationKit_se_1_6_438 -PEUpdateDatabase "Fix ATXT params sections" "1_6_438\Fix
 CreationKit_se_1_6_438 -PEUpdateDatabase "TESDataHandler" "TESDataHandler.relb"
 CreationKit_se_1_6_438 -PEUpdateDatabase "Fix FormIDs In Load File" "FixFormIDs.relb"
 CreationKit_se_1_6_438 -PEUpdateDatabase "Ignore Ground Height Test" "IgnoreGroundHeightTest.relb"
+CreationKit_se_1_6_438 -PEUpdateDatabase "Memory Leak class BSString" "MemoryLeakBSString.relb"

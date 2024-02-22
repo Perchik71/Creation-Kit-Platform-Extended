@@ -38,6 +38,10 @@ namespace CreationKitPlatformExtended
 				constexpr static auto UI_EXTMENU_IMPORT_BODYPARTDATA = 40781;
 
 				constexpr static auto UI_EXTMENU_FORMINFOOUTPUT = 51010;
+				constexpr static auto UI_EXTMENU_TRACER = 51011;
+				constexpr static auto UI_EXTMENU_TRACER_CLEAR = 51012;
+				constexpr static auto UI_EXTMENU_TRACER_DUMP = 51013;
+				constexpr static auto UI_EXTMENU_TRACER_RECORD = 51014;
 
 				virtual bool HasOption() const;
 				virtual bool HasCanRuntimeDisabled() const;

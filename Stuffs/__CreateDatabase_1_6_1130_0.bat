@@ -105,3 +105,4 @@ CreationKit_se_1_6_1130 -PEUpdateDatabase "Upload PS4 modded without assets" "Fi
 CreationKit_se_1_6_1130 -PEUpdateDatabase "TESDataHandler" "TESDataHandler.relb"
 CreationKit_se_1_6_1130 -PEUpdateDatabase "Fix FormIDs In Load File" "FixFormIDs.relb"
 CreationKit_se_1_6_1130 -PEUpdateDatabase "Ignore Ground Height Test" "IgnoreGroundHeightTest.relb"
+CreationKit_se_1_6_1130 -PEUpdateDatabase "Memory Leak class BSString" "MemoryLeakBSString.relb"

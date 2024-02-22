@@ -12,14 +12,14 @@ namespace CreationKitPlatformExtended
 {
 	namespace Patches
 	{
-		namespace SkyrimSpectialEdition
+		namespace Fallout4
 		{
 			using namespace CreationKitPlatformExtended::Core;
 
-			class NewFormat171Patch : public Module
+			class ESLTipPatch : public Module
 			{
 			public:
-				NewFormat171Patch();
+				ESLTipPatch();
 
 				virtual bool HasOption() const;
 				virtual bool HasCanRuntimeDisabled() const;
@@ -29,15 +29,14 @@ namespace CreationKitPlatformExtended
 				virtual Array<String> GetDependencies() const;
 
 				static void sub(char* dst, size_t max_size, char* src);
-				static void sub2(const void* load_file);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
 				virtual bool Activate(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 				virtual bool Shutdown(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 			private:
-				NewFormat171Patch(const NewFormat171Patch&) = default;
-				NewFormat171Patch& operator=(const NewFormat171Patch&) = default;
+				ESLTipPatch(const ESLTipPatch&) = default;
+				ESLTipPatch& operator=(const ESLTipPatch&) = default;
 			};
 		}
 	}

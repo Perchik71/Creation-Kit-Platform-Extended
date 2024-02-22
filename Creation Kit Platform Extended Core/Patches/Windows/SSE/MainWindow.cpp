@@ -239,6 +239,23 @@ namespace CreationKitPlatformExtended
 				// Create plug-ins menu options
 				auto Plugins = GlobalEnginePtr->GetUserPluginsManager();
 				Plugins->CreatePluginsMenu(MainMenu, UI_EXTMENU_ID + 1);
+
+				auto customTitle = std::make_unique<char[]>(100);	
+				EditorAPI::BSString versionApp;
+
+				char modulePath[MAX_PATH];
+				GetModuleFileNameA((HMODULE)GlobalEnginePtr->GetInstanceDLL(), modulePath, MAX_PATH);
+				GetFileVersion(modulePath, versionApp);
+
+				sprintf(customTitle.get(), "[CKPE: v%s]", versionApp.c_str());
+
+				ZeroMemory(&menuInfo, sizeof(MENUITEMINFO));
+				menuInfo.cbSize = sizeof(MENUITEMINFO),
+				menuInfo.fMask = MIIM_STRING | MIIM_ID;
+				menuInfo.wID = 40016;
+				menuInfo.dwTypeData = LPSTR(customTitle.get());
+				menuInfo.cch = static_cast<uint32_t>(strlen(menuInfo.dwTypeData));
+				AssertMsg(InsertMenuItem(MainMenu, -1, TRUE, &menuInfo), "Failed to create version menuitem");
 			}
 
 			LRESULT CALLBACK MainWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
@@ -511,21 +528,6 @@ namespace CreationKitPlatformExtended
 							((MINMAXINFO*)lParam)->ptMaxSize.y = (WorkArea.bottom - WorkArea.top);
 							((MINMAXINFO*)lParam)->ptMaxPosition.x = WorkArea.left;
 							((MINMAXINFO*)lParam)->ptMaxPosition.y = WorkArea.top;
-						}
-						break;
-						case WM_SETTEXT:
-						{
-							// Continue normal execution but with a custom string
-							char customTitle[1024];
-							EditorAPI::BSString versionApp;
-
-							char modulePath[MAX_PATH];
-							GetModuleFileNameA((HMODULE)GlobalEnginePtr->GetInstanceDLL(), modulePath, MAX_PATH);
-							GetFileVersion(modulePath, versionApp);
-
-							sprintf_s(customTitle, "%s [CKPE: v%s]", (LPCSTR)lParam, versionApp.c_str());
-
-							return CallWindowProc(GlobalMainWindowPtr->GetOldWndProc(), Hwnd, Message, wParam, reinterpret_cast<LPARAM>(customTitle));
 						}
 						break;
 						}

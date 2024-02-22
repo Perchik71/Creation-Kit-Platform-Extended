@@ -121,6 +121,7 @@ namespace CreationKitPlatformExtended
 				inline TESFile** GetDependArray(VOID) const { return m_dependArray; }
 				inline DWORD GetDependCount(VOID) const { return m_dependCount; }
 				inline DWORD GetFileSize(VOID) const { return m_fileSize; }
+				inline FileHeaderInfo GetHeaderInfo() const { return m_fileHeader; }
 				inline bool IsLoaded() const { return m_fileIndex != 0xFF; }
 				inline bool IsMaster() const { return m_RecordFlags & FILE_RECORD_ESM; }
 				inline bool IsSelected() const { return m_RecordFlags & FILE_RECORD_CHECKED; }

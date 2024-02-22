@@ -121,6 +121,7 @@ namespace CreationKitPlatformExtended
 				inline uint32_t GetDependCount() const { return m_dependCount; }
 				inline uint32_t GetFileSize() const { return m_fileSize; }
 				inline uint32_t GetFlags() const { return m_Flags; }
+				inline FileHeaderInfo GetHeaderInfo() const { return m_fileHeader; }
 				inline bool IsLoaded() const { return m_fileIndex != 0xFF; }
 				inline bool IsMaster() const { return m_Flags & FILE_RECORD_ESM; }
 				inline bool IsSelected() const { return m_Flags & FILE_RECORD_CHECKED; }

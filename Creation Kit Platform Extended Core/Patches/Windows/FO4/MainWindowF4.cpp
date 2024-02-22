@@ -5,6 +5,7 @@
 #include "Core/Engine.h"
 #include "Core/PluginManager.h"
 #include "Core/ConsoleWindow.h"
+#include "Core/TracerManager.h"
 #include "Core/FormInfoOutputWindow.h"
 #include "Core/TypeInfo/ms_rtti.h"
 #include "Editor API/EditorUI.h"
@@ -202,6 +203,18 @@ namespace CreationKitPlatformExtended
 				ExtMenu.Append("Dump RTTI Data", UI_EXTMENU_DUMPRTTI);
 				ExtMenu.Append("Dump SDM Info", UI_EXTMENU_SDM);
 				ExtMenu.Append("Form Info Output", UI_EXTMENU_FORMINFOOUTPUT);
+
+#if CKPE_USES_TRACER
+				// Create tracer menu
+				auto TracerMenuHandle = CreateMenu();
+				Classes::CUIMenu TracerMenu = TracerMenuHandle;
+
+				TracerMenu.Append("Record", UI_EXTMENU_TRACER_RECORD);
+				TracerMenu.Append("Clear", UI_EXTMENU_TRACER_CLEAR);
+				TracerMenu.Append("Dump", UI_EXTMENU_TRACER_DUMP);
+				ExtMenu.Append("Tracer Memory", UI_EXTMENU_TRACER, TracerMenu);
+#endif
+
 				ExtMenu.AppendSeparator();
 				ExtMenu.Append("Save Hardcoded Forms", UI_EXTMENU_HARDCODEDFORMS);
 
@@ -220,6 +233,23 @@ namespace CreationKitPlatformExtended
 				// Create plug-ins menu options
 				auto Plugins = GlobalEnginePtr->GetUserPluginsManager();
 				Plugins->CreatePluginsMenu(MainMenu, UI_EXTMENU_ID + 1);
+
+				auto customTitle = std::make_unique<char[]>(100);
+				EditorAPI::BSString versionApp;
+
+				char modulePath[MAX_PATH];
+				GetModuleFileNameA((HMODULE)GlobalEnginePtr->GetInstanceDLL(), modulePath, MAX_PATH);
+				GetFileVersion(modulePath, versionApp);
+
+				sprintf(customTitle.get(), "[CKPE: v%s]", versionApp.c_str());
+
+				ZeroMemory(&menuInfo, sizeof(MENUITEMINFO));
+				menuInfo.cbSize = sizeof(MENUITEMINFO),
+					menuInfo.fMask = MIIM_STRING | MIIM_ID;
+				menuInfo.wID = 40016;
+				menuInfo.dwTypeData = LPSTR(customTitle.get());
+				menuInfo.cch = static_cast<uint32_t>(strlen(menuInfo.dwTypeData));
+				AssertMsg(InsertMenuItem(MainMenu, -1, TRUE, &menuInfo), "Failed to create version menuitem");
 			}
 
 			LRESULT CALLBACK MainWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
@@ -344,6 +374,32 @@ namespace CreationKitPlatformExtended
 								OutputFormInfo((uint32_t)Wnd.OpenModal(Hwnd));
 							}
 							return 0;
+
+#if CKPE_USES_TRACER
+							case UI_EXTMENU_TRACER_RECORD:
+							{
+								auto Item = GlobalMainWindowPtr->MainMenu.GetItem(UI_EXTMENU_TRACER_RECORD);
+								bool Checked = !Item.Checked;
+								Item.Checked = Checked;
+
+								if (Checked)
+									Core::GlobalTracerManagerPtr->Record();
+								else
+									Core::GlobalTracerManagerPtr->Stop();
+							}
+							return 0;
+							case UI_EXTMENU_TRACER_CLEAR:
+							{
+								Core::GlobalTracerManagerPtr->Clear();
+							}
+							return 0;
+							case UI_EXTMENU_TRACER_DUMP:
+							{
+								Core::GlobalTracerManagerPtr->Dump();
+							}
+							return 0;
+#endif
+
 							case EditorAPI::EditorUI::UI_EDITOR_TOGGLEOBJECTWND:
 							{
 								for (auto Wnd : ObjectWindows) {
@@ -458,21 +514,6 @@ namespace CreationKitPlatformExtended
 							((MINMAXINFO*)lParam)->ptMaxSize.y = (WorkArea.bottom - WorkArea.top);
 							((MINMAXINFO*)lParam)->ptMaxPosition.x = WorkArea.left;
 							((MINMAXINFO*)lParam)->ptMaxPosition.y = WorkArea.top;
-						}
-						break;
-						case WM_SETTEXT:
-						{
-							// Continue normal execution but with a custom string
-							char customTitle[1024];
-							EditorAPI::BSString versionApp;
-
-							char modulePath[MAX_PATH];
-							GetModuleFileNameA((HMODULE)GlobalEnginePtr->GetInstanceDLL(), modulePath, MAX_PATH);
-							GetFileVersion(modulePath, versionApp);
-
-							sprintf_s(customTitle, "%s [CKPE: v%s]", (LPCSTR)lParam, versionApp.c_str());
-
-							return CallWindowProc(GlobalMainWindowPtr->GetOldWndProc(), Hwnd, Message, wParam, reinterpret_cast<LPARAM>(customTitle));
 						}
 						break;
 						}
