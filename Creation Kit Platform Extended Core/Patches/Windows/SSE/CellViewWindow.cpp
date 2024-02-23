@@ -28,6 +28,7 @@ namespace CreationKitPlatformExtended
 			//uintptr_t pointer_CellViewWindow_data = 0;
 			uintptr_t pointer_CellViewWindow_sub1 = 0;
 			uintptr_t pointer_CellViewWindow_sub2 = 0;
+			uintptr_t pointer_CellViewWindow_sub3 = 0;
 			char* str_CellViewWindow_Filter = nullptr;
 			char* str_CellViewWindow_FilterUser = nullptr;
 
@@ -58,7 +59,7 @@ namespace CreationKitPlatformExtended
 
 			Array<String> CellViewWindow::GetDependencies() const
 			{
-				return { "Main Window" };
+				return { "Main Window", "Render Window" };
 			}
 
 			bool CellViewWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
@@ -82,6 +83,11 @@ namespace CreationKitPlatformExtended
 
 					pointer_CellViewWindow_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(5));
 					pointer_CellViewWindow_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(6));
+
+					// Hook event add/rem from pick
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(7), (uintptr_t)&sub3);
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(9), (uintptr_t)&sub3);
+					pointer_CellViewWindow_sub3 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(8));
 
 					return true;
 				}
@@ -121,6 +127,23 @@ namespace CreationKitPlatformExtended
 					return 1;
 
 				return ((int(__fastcall*)(HWND*, TESForm**))pointer_CellViewWindow_sub2)(*ListViewHandle, Form);
+			}
+
+			__int64 CellViewWindow::sub3(__int64 a1, __int64 a2, __int64 a3)
+			{
+				auto Ret = fastCall<__int64>(pointer_CellViewWindow_sub3, a1, a2, a3);
+
+				if (GlobalCellViewWindowPtr)
+				{
+					auto Handle = GlobalCellViewWindowPtr->Handle;
+					auto SelOnly = static_cast<bool>(GetPropA(Handle, "SelectObjectsOnly"));
+
+					if (SelOnly)
+						// Fake a filter text box change
+						SendMessageA(Handle, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
+				}
+
+				return Ret;
 			}
 
 			void CellViewWindow::ResizeWnd(UINT width, UINT height)
