@@ -387,6 +387,7 @@
     <ClInclude Include="Editor API\SSE\TESFile.h" />
     <ClInclude Include="Editor API\SSE\TESForm.h" />
     <ClInclude Include="Editor API\SSE\TESObjectLAND.h" />
+    <ClInclude Include="Editor API\SSE\TESObjectREFR.h" />
     <ClInclude Include="Editor API\SSE\TESWater.h" />
     <ClInclude Include="Editor API\UI\UIBaseWindow.h" />
     <ClInclude Include="Editor API\UI\UICheckboxControl.h" />

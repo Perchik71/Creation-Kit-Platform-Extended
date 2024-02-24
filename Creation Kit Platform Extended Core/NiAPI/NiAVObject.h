@@ -24,6 +24,7 @@ namespace CreationKitPlatformExtended
 		public:
 			virtual ~NiAVObject();
 
+			inline NiAVObject* GetParent() const { return _Parent; }
 			inline const NiTransform& GetLocalTransform() const { return _Local; }
 			inline const NiTransform& GetWorldTransform() const { return _World; }
 			inline const NiTransform& GetPreviousWorldTransform() const { return _PreviousWorld; }

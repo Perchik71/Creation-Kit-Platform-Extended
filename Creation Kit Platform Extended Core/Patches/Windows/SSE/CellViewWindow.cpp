@@ -386,7 +386,7 @@ namespace CreationKitPlatformExtended
 					// Skip the entry if "Visible Only" is checked
 					if (*allowInsert && static_cast<bool>(GetPropA(Hwnd, "VisibleObjectsOnly")))
 					{
-						auto Node = form->GetFadeNode();
+						auto Node = ((TESObjectREFR*)(form))->GetFadeNode();
 						if (Node && (Node->QAppCulled() || Node->QNotVisible()))
 							*allowInsert = false;
 					}

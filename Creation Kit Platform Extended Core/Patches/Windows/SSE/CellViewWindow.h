@@ -5,7 +5,7 @@
 #pragma once
 
 #include "..\BaseWindow.h"
-#include "Editor API/SSE/TESForm.h"
+#include "Editor API/SSE/TESObjectREFR.h"
 
 namespace CreationKitPlatformExtended
 {

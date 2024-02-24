@@ -1622,6 +1622,9 @@
     <ClInclude Include="NiAPI\NiNode.h">
       <Filter>NiAPI</Filter>
     </ClInclude>
+    <ClInclude Include="Editor API\SSE\TESObjectREFR.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version\resource_version.rc">

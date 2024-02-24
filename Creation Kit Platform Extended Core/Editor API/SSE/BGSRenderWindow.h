@@ -6,7 +6,7 @@
 
 #include "NiAPI\NiTypes.h"
 #include "NiAPI\NiNode.h"
-#include "TESForm.h"
+#include "TESObjectREFR.h"
 #include "BSPointerHandleManager.h"
 
 namespace CreationKitPlatformExtended
@@ -149,8 +149,8 @@ namespace CreationKitPlatformExtended
 				inline static BGSRenderWindow* GetInstance() { return *Instance; }
 				inline static TESForm* GetRef(uint32_t UniqueId)
 				{
-					auto Ret = GetRefFormByUniqueId(UniqueId);
-					return (Ret && Ret->FormType == 0x3D) ? Ret : nullptr;
+					auto Ret = (TESObjectREFR*)GetRefFormByUniqueId(UniqueId);
+					return (Ret && Ret->FormType == TESObjectREFR::TYPE_ID) ? Ret : nullptr;
 				}
 
 				inline HWND GetWindowHandle() const { return _WindowHandle; }

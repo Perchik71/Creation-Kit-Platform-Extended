@@ -43,11 +43,6 @@ namespace CreationKitPlatformExtended
 				thisVirtualCall<const char*>(0x2D0, this, hParentWnd, a1, a2);
 			}
 
-			NiAPI::NiNode* TESForm::GetFadeNode() const
-			{
-				return thisVirtualCall<NiAPI::NiNode*>(0x458, this);
-			}
-
 			TESForm* TESForm::GetFormByNumericID(uint32_t SearchID)
 			{
 				return OldGetFormByNumericID(SearchID);

@@ -54,7 +54,6 @@ namespace CreationKitPlatformExtended
 				const char* GetEditorID() const;
 				void EditFormToWindow(HWND hParentWnd, __int64 a1, __int64 a2);
 				void SetNewFormID(uint32_t NewIndex, bool Unk = true);
-				NiAPI::NiNode* GetFadeNode() const;
 				inline uint32_t GetFormID() const { return _FormID; }
 				inline char GetFormType() const { return _FormType; }
 				inline const char* GetEditorID_NoVTable() const { return _EditorID; }
@@ -110,18 +109,18 @@ namespace CreationKitPlatformExtended
 			public:
 				virtual ~TESObjectREFR_Original() = default;
 				virtual void OtherTestFunction2();
-				char _pad0[0x5C];
+				char _pad0[0x10];
 			};
-			static_assert(sizeof(TESObjectREFR_Original) == 0xA0);
+			static_assert(sizeof(TESObjectREFR_Original) == 0x50);
 
 			class TESObjectREFR_Extremly : public TESForm, public TESChildCell, public BSHandleRefObject_Extremly
 			{
 			public:
 				virtual ~TESObjectREFR_Extremly() = default;
 				virtual void OtherTestFunction2();
-				char _pad0[0x5C];
+				char _pad0[0x10];
 			};
-			static_assert(sizeof(TESObjectREFR_Extremly) == 0xA0);
+			static_assert(sizeof(TESObjectREFR_Extremly) == 0x50);
 
 			typedef BSTArray<TESForm*>	TESFormArray;
 			typedef BSTArray<uint32_t>	TESFormIDArray;
