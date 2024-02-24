@@ -2,7 +2,7 @@
 
 namespace CreationKitPlatformExtended
 {
-	namespace EditorAPI
+	namespace NiAPI
 	{
 		// 18
 		template <typename T>

@@ -5,7 +5,7 @@
 #pragma once
 
 #include "TESFormF4.h"
-#include "..\NiTypes.h"
+#include "NiAPI\NiTypes.h"
 
 namespace CreationKitPlatformExtended
 {

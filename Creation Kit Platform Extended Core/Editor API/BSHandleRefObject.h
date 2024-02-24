@@ -1,6 +1,6 @@
 // Special thanks to Nukem: https://github.com/Nukem9/SkyrimSETest/blob/master/skyrim64_test/src/patches/CKSSE/BSHandleRefObject_CK.h
 
-#include "NiRefObject.h"
+#include "..\NiAPI\NiRefObject.h"
 
 #pragma once
 
@@ -9,7 +9,7 @@ namespace CreationKitPlatformExtended
 	namespace EditorAPI
 	{
 		template<uint32_t RefCountBits>
-		class BSHandleRefObject32T : public NiRefObject
+		class BSHandleRefObject32T : public NiAPI::NiRefObject
 		{
 		public:
 			//
@@ -81,7 +81,7 @@ namespace CreationKitPlatformExtended
 		typedef BSHandleRefObject32T<8> BSHandleRefObject_Extremly;
 
 		template<uint64_t RefCountBits>
-		class BSHandleRefObject64T : public NiRefObject_64
+		class BSHandleRefObject64T : public NiAPI::NiRefObject_64
 		{
 		public:
 			//

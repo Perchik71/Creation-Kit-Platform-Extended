@@ -3,7 +3,7 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
-#include "Editor API/NiMemoryManager.h"
+#include "NiAPI/NiMemoryManager.h"
 #include "Re-EnableFog.h"
 
 namespace CreationKitPlatformExtended
@@ -12,7 +12,7 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
-			using namespace EditorAPI;
+			using namespace NiAPI;
 
 			uintptr_t pointer_ReEnableFog_sub1 = 0;
 			uintptr_t pointer_ReEnableFog_data = 0;

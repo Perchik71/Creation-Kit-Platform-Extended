@@ -6,7 +6,7 @@
 
 namespace CreationKitPlatformExtended
 {
-	namespace EditorAPI
+	namespace NiAPI
 	{
 		class NiCollisionUtils
 		{

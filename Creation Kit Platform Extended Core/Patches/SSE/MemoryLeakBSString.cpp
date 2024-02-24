@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
-#include "Editor API/NiMemoryManager.h"
 #include "MemoryLeakBSString.h"
 
 namespace CreationKitPlatformExtended

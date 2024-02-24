@@ -54,17 +54,12 @@
 #include "NiTransform.h"
 #include "NiArray.h"
 #include "NiTArray.h"
+#include "NiRefObject.h"
 
 namespace CreationKitPlatformExtended
 {
-	namespace EditorAPI
+	namespace NiAPI
 	{
-		class NiNode {
-		public:
-			virtual ~NiNode() = default;
-		public:
-		};
-
 		class NiCamera
 		{
 		public:
@@ -130,9 +125,9 @@ namespace CreationKitPlatformExtended
 		class NiRect {
 		public:
 			T m_left;		// 00
-			T m_right;	// 04
+			T m_right;		// 04
 			T m_top;		// 08
-			T m_bottom;	// 0C
+			T m_bottom;		// 0C
 		};
 
 		// 1C

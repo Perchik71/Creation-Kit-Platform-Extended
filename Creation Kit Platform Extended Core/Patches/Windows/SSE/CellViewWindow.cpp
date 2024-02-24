@@ -14,6 +14,7 @@
 #define UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX			2580	
 #define UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX	2582	
 #define UI_CELL_VIEW_SELECT_CELL_OBJECTS_CHECKBOX	5665	
+#define UI_CELL_VIEW_VISIBLE_CELL_OBJECTS_CHECKBOX	5666	
 #define UI_CELL_VIEW_FILTER_CELL					2584	
 
 #define UI_CELL_VIEW_FILTER_CELL_SIZE				1024
@@ -225,9 +226,14 @@ namespace CreationKitPlatformExtended
 
 				Bounds.Top = 50;
 				Bounds.Height = 16;
-				m_SelectObjectsOnly.BoundsRect = Bounds;
+				Bounds.Width = 95;
+				m_VisibleObjectsOnly.BoundsRect = Bounds;
 
 				Bounds.Top = 67;
+				m_SelectObjectsOnly.BoundsRect = Bounds;
+
+				Bounds.Left += 100;
+				Bounds.Width = 160;
 				m_ActiveObjectsOnly.BoundsRect = Bounds;
 			}
 
@@ -254,6 +260,7 @@ namespace CreationKitPlatformExtended
 					GlobalCellViewWindowPtr->m_ActiveCellsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX);
 					GlobalCellViewWindowPtr->m_ActiveObjectsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX);
 					GlobalCellViewWindowPtr->m_SelectObjectsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_SELECT_CELL_OBJECTS_CHECKBOX);
+					GlobalCellViewWindowPtr->m_VisibleObjectsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_VISIBLE_CELL_OBJECTS_CHECKBOX);			
 					GlobalCellViewWindowPtr->m_CellListView = GetDlgItem(Hwnd, 1155);
 					GlobalCellViewWindowPtr->m_ObjectListView = GetDlgItem(Hwnd, 1156);
 					GlobalCellViewWindowPtr->m_FilterCellEdit = GetDlgItem(Hwnd, UI_CELL_VIEW_FILTER_CELL);
@@ -265,6 +272,9 @@ namespace CreationKitPlatformExtended
 						LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
 					ListView_SetExtendedListViewStyleEx(GlobalCellViewWindowPtr->m_ObjectListView.Handle,
 						LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
+
+					SendMessage(GlobalCellViewWindowPtr->m_VisibleObjectsOnly.Handle, BM_SETCHECK, BST_CHECKED, 0);
+					SetPropA(Hwnd, "VisibleObjectsOnly", reinterpret_cast<HANDLE>(true));
 				}
 				else if (Message == WM_SIZE)
 				{
@@ -297,6 +307,15 @@ namespace CreationKitPlatformExtended
 					{
 						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
 						SetPropA(Hwnd, "SelectObjectsOnly", reinterpret_cast<HANDLE>(enableFilter));
+
+						// Fake a filter text box change
+						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
+						return 1;
+					}
+					else if (param == UI_CELL_VIEW_VISIBLE_CELL_OBJECTS_CHECKBOX)
+					{
+						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
+						SetPropA(Hwnd, "VisibleObjectsOnly", reinterpret_cast<HANDLE>(enableFilter));
 
 						// Fake a filter text box change
 						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
@@ -363,6 +382,14 @@ namespace CreationKitPlatformExtended
 					// Skip the entry if "Show only active objects" is checked
 					if (static_cast<bool>(GetPropA(Hwnd, "ActiveObjectsOnly")))
 						*allowInsert = form->GetActive();
+
+					// Skip the entry if "Visible Only" is checked
+					if (*allowInsert && static_cast<bool>(GetPropA(Hwnd, "VisibleObjectsOnly")))
+					{
+						auto Node = form->GetFadeNode();
+						if (Node && (Node->QAppCulled() || Node->QNotVisible()))
+							*allowInsert = false;
+					}
 
 					// Skip the entry if "Selected Only" is checked
 					if (*allowInsert && static_cast<bool>(GetPropA(Hwnd, "SelectObjectsOnly")))

@@ -6,7 +6,7 @@
 
 namespace CreationKitPlatformExtended
 {
-	namespace EditorAPI
+	namespace NiAPI
 	{
 		template<typename T>
 		class NiPointer

@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "../NiPoint.h"
-#include "../NiPick.h"
+#include "NiAPI/NiPoint.h"
+#include "NiAPI/NiPick.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -11,6 +11,8 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
+			using namespace NiAPI;
+
 			class BSShaderResourceManager_CK
 			{
 			public:

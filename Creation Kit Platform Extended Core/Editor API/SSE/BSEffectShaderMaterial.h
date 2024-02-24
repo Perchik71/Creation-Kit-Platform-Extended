@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include "..\NiPointer.h"
-#include "..\NiColor.h"
-#include "NiSourceTexture.h"
+#include "NiAPI\NiPointer.h"
+#include "NiAPI\NiColor.h"
+#include "NiAPI\NiSourceTexture.h"
 #include "BSShaderMaterial.h"
 
 namespace CreationKitPlatformExtended
@@ -13,6 +13,8 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
+			using namespace NiAPI;
+
 			class BSEffectShaderMaterial : public BSShaderMaterial
 			{
 			public:

@@ -4,7 +4,7 @@
 
 namespace CreationKitPlatformExtended
 {
-	namespace EditorAPI
+	namespace NiAPI
 	{
 		// 10
 		class __declspec(align(8)) NiRefObject
@@ -88,6 +88,13 @@ namespace CreationKitPlatformExtended
 					DeleteThis();
 
 				return count;
+			}
+
+			void GetViewerStrings(void(*Callback)(const char*, ...), bool Recursive) const
+			{
+				Callback("-- NiRefObject --\n");
+				Callback("This = 0x%p\n", this);
+				Callback("Ref Count = %llu\n", m_uiRefCount);
 			}
 		};
 	}

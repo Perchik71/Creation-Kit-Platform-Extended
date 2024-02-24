@@ -48,7 +48,7 @@
 #pragma once
 #pragma pack(push, 1)
 
-#include "NiMemoryManager.h"
+#include "..\NiAPI\NiMemoryManager.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -77,7 +77,7 @@ namespace CreationKitPlatformExtended
 					if (pNext) {
 						item = pNext->item;
 						next = pNext->next;
-						NiMemoryManager::Free(NULL, pNext);
+						NiAPI::NiMemoryManager::Free(NULL, pNext);
 					}
 					// tail?
 					else {
@@ -87,7 +87,7 @@ namespace CreationKitPlatformExtended
 						// has precedessor, so tail != head
 						if (pred) {
 							pred->next = NULL;
-							NiMemoryManager::Free(NULL, this);
+							NiAPI::NiMemoryManager::Free(NULL, this);
 						}
 					}
 					return pRemoved;
@@ -167,7 +167,7 @@ namespace CreationKitPlatformExtended
 
 			// Allocate list as a single empty node
 			static BSSimpleList<T>* Create(VOID) {
-				BSSimpleList<T>* p = (BSSimpleList<T>*)NiMemoryManager::Alloc(NULL, sizeof(BSSimpleList<T>));
+				BSSimpleList<T>* p = (BSSimpleList<T>*)NiAPI::NiMemoryManager::Alloc(NULL, sizeof(BSSimpleList<T>));
 				Assert(p);
 
 				p->m_listHead.item = NULL;
@@ -178,7 +178,7 @@ namespace CreationKitPlatformExtended
 
 			VOID Delete(VOID) {
 				RemoveAll();
-				NiMemoryManager::Free(&m_listHead);
+				NiAPI::NiMemoryManager::Free(&m_listHead);
 			}
 
 			class Iterator {
@@ -203,7 +203,7 @@ namespace CreationKitPlatformExtended
 				// add new node if we aren't empty
 				if (m_listHead.item) {
 					// copy head in to new node
-					_Node* node = (_Node*)NiMemoryManager::Alloc(NULL, sizeof(_Node));
+					_Node* node = (_Node*)NiAPI::NiMemoryManager::Alloc(NULL, sizeof(_Node));
 					Assert(node);
 
 					node->item = m_listHead.item;
@@ -220,7 +220,7 @@ namespace CreationKitPlatformExtended
 
 				// add new node if we aren't empty
 				if (tail->item) {
-					_Node* node = (_Node*)NiMemoryManager::Alloc(NULL, sizeof(_Node));
+					_Node* node = (_Node*)NiAPI::NiMemoryManager::Alloc(NULL, sizeof(_Node));
 					Assert(node);
 
 					tail->next = node;
@@ -233,7 +233,7 @@ namespace CreationKitPlatformExtended
 			}
 
 			T* AddFront(VOID) {
-				T* item = (T*)NiMemoryManager::Alloc(NULL, sizeof(T));
+				T* item = (T*)NiAPI::NiMemoryManager::Alloc(NULL, sizeof(T));
 				if (!item)
 					return NULL;
 
@@ -244,7 +244,7 @@ namespace CreationKitPlatformExtended
 			}
 
 			T* AddBack(VOID) {
-				T* item = (T*)NiMemoryManager::Alloc(NULL, sizeof(T));
+				T* item = (T*)NiAPI::NiMemoryManager::Alloc(NULL, sizeof(T));
 				if (!item)
 					return NULL;
 
@@ -284,7 +284,7 @@ namespace CreationKitPlatformExtended
 
 				NodePos pos = GetNthNode(index);
 				_Node* pTargetNode = pos.node;
-				_Node* newNode = (_Node*)NiMemoryManager::Alloc(NULL, sizeof(newNode));
+				_Node* newNode = (_Node*)NiAPI::NiMemoryManager::Alloc(NULL, sizeof(newNode));
 				if (newNode && pTargetNode) {
 					if (index == eListEnd) {
 						pTargetNode->next = newNode;

@@ -4,7 +4,7 @@
 
 namespace CreationKitPlatformExtended
 {
-	namespace EditorAPI
+	namespace NiAPI
 	{
 		bool NiCollisionUtils::IntersectTriangle(const NiPoint3& kOrigin, const NiPoint3& kDir, 
 			const NiPoint3& kV1, const NiPoint3& kV2, const NiPoint3& kV3, bool bCull, NiPoint3& kIntersect, 

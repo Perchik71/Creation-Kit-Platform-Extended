@@ -24,7 +24,7 @@
 #pragma pack(push, 1)
 
 #include "TESObjectREFR.h"
-#include "..\NiTypes.h"
+#include "NiAPI\NiTypes.h"
 
 namespace CreationKitPlatformExtended
 {

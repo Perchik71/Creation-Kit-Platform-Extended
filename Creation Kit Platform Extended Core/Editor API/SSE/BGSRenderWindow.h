@@ -4,9 +4,10 @@
 
 #pragma once
 
-#include "..\NiTypes.h"
+#include "NiAPI\NiTypes.h"
+#include "NiAPI\NiNode.h"
 #include "TESForm.h"
-#include "Editor API/SSE/BSPointerHandleManager.h"
+#include "BSPointerHandleManager.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -14,6 +15,8 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
+			using namespace NiAPI;
+
 			class BGSPickHandler;
 			class BGSRenderWindow;
 

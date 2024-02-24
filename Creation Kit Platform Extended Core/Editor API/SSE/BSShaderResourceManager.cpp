@@ -3,7 +3,7 @@
 #include "BSTriShape.h"
 #include "BSDynamicTriShape.h"
 #include "BSShaderResourceManager.h"
-#include "../NiCollisionUtils.h"
+#include "NiAPI/NiCollisionUtils.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -11,6 +11,8 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
+			using namespace NiAPI;
+
 			uintptr_t pointer_PickGetRecord_sub = 0;
 
 			bool BSShaderResourceManager_CK::FindIntersectionsTriShapeFastPath(NiPoint3& kOrigin, const NiPoint3& kDir, 

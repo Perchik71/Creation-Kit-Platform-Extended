@@ -23,7 +23,7 @@
 #pragma once
 #pragma pack(push, 4)
 
-#include "..\NiTArray.h"
+#include "NiAPI\NiTArray.h"
 #include "TESFileF4.h"
 #include "TESFormF4.h"
 #include "TESObjectREFR.h"

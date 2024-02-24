@@ -6,7 +6,7 @@
 #include "Core/AboutWindow.h"
 #include "Core/DialogManager.h"
 #include "EditorUI.h"
-#include "NiMemoryManager.h"
+#include "..\NiAPI\NiMemoryManager.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -208,7 +208,7 @@ namespace CreationKitPlatformExtended
 
 						finalWidth = std::max(finalWidth, lineSize);
 
-						NiMemoryManager::Free(nullptr, const_cast<char*>(display));
+						NiAPI::NiMemoryManager::Free(nullptr, const_cast<char*>(display));
 					}
 
 					SuspendComboBoxUpdates(control, false);

@@ -20,23 +20,27 @@
 */
 //////////////////////////////////////////
 
-#pragma once
-#pragma pack(push, 1)
+#include "NiMemoryManager.h"
+// Only static function
+#include "Patches/MemoryManagerPatch.h"
 
 namespace CreationKitPlatformExtended
 {
-	namespace EditorAPI
+	namespace NiAPI
 	{
-		class NiMemoryManager {
-		public:
-			NiMemoryManager(VOID) = default;
-			~NiMemoryManager(VOID) = default;
-		public:
-			static LPVOID Alloc(const NiMemoryManager* lpManager, DWORD dwSize, DWORD dwAlignment = 0);
-			static VOID	Free(const NiMemoryManager* lpManager, LPVOID lpPointer);
-			static DWORD Size(const NiMemoryManager* lpManager, LPVOID lpPointer);
-		};
+		LPVOID NiMemoryManager::Alloc(const NiMemoryManager* lpManager, DWORD dwSize, DWORD dwAlignment)
+		{
+			return Core::GlobalMemoryManagerPtr->MemAlloc(dwSize, dwAlignment, dwAlignment != 0);
+		}
+
+		VOID NiMemoryManager::Free(const NiMemoryManager* lpManager, LPVOID lpPointer) 
+		{
+			Core::GlobalMemoryManagerPtr->MemFree(lpPointer);
+		}
+
+		DWORD NiMemoryManager::Size(const NiMemoryManager* lpManager, LPVOID lpPointer) 
+		{
+			return (DWORD)Core::GlobalMemoryManagerPtr->MemSize(lpPointer);
+		}
 	}
 }
-
-#pragma pack(pop)

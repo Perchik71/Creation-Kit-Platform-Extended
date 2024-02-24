@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "..\NiRefObject.h"
+#include "NiAPI\NiRefObject.h"
 #include "NiEvents.h"
-#include "..\\NiPoint.h"
+#include "NiAPI\NiPoint.h"
 #include "..\\BSHandleRefObject.h"
 #include "BGSPrimitive.h"
 #include "TESFormF4.h"
@@ -19,6 +19,8 @@ namespace CreationKitPlatformExtended
 	{
 		namespace Fallout4
 		{
+			using namespace NiAPI;
+
 			class TESObjectCELL;
 
 			template<class _Ty>

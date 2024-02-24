@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "..\NiTArray.h"
+#include "NiAPI\NiTArray.h"
 #include "TESFile.h"
 #include "TESForm.h"
 
@@ -15,7 +15,7 @@ namespace CreationKitPlatformExtended
 		namespace SkyrimSpectialEdition
 		{
 			template<typename _Ty>
-			using NiTPrimitiveArray = NiTArray<_Ty>;
+			using NiTPrimitiveArray = NiAPI::NiTArray<_Ty>;
 
 			class TESDataHandler
 			{

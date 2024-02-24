@@ -57,9 +57,6 @@
     <ClCompile Include="Editor API\EditorUI.cpp">
       <Filter>Editor API</Filter>
     </ClCompile>
-    <ClCompile Include="Editor API\NiMemoryManager.cpp">
-      <Filter>Editor API</Filter>
-    </ClCompile>
     <ClCompile Include="Patches\FlowChartXPatch.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -273,9 +270,6 @@
     </ClCompile>
     <ClCompile Include="Editor API\SSE\BSShaderResourceManager.cpp">
       <Filter>Editor API\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor API\NiCollisionUtils.cpp">
-      <Filter>Editor API</Filter>
     </ClCompile>
     <ClCompile Include="Patches\SSE\FixIntersectionTriangle.cpp">
       <Filter>Patches\SSE</Filter>
@@ -691,6 +685,12 @@
     <ClCompile Include="Patches\FO4\PreVis.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="NiAPI\NiCollisionUtils.cpp">
+      <Filter>NiAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="NiAPI\NiMemoryManager.cpp">
+      <Filter>NiAPI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -758,6 +758,9 @@
     </Filter>
     <Filter Include="Editor API\FO4\Forms">
       <UniqueIdentifier>{f93c7e22-de57-498c-a2c8-b0d45ee57454}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NiAPI">
+      <UniqueIdentifier>{6d3f9546-9646-43af-be6f-a6dfed55f9b0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -834,9 +837,6 @@
     <ClInclude Include="Editor API\BSTArray.h">
       <Filter>Editor API</Filter>
     </ClInclude>
-    <ClInclude Include="Editor API\NiMemoryManager.h">
-      <Filter>Editor API</Filter>
-    </ClInclude>
     <ClInclude Include="Patches\FlowChartXPatch.h">
       <Filter>Patches</Filter>
     </ClInclude>
@@ -865,18 +865,6 @@
     <ClInclude Include="Editor API\BSSpinLock.h">
       <Filter>Editor API</Filter>
     </ClInclude>
-    <ClInclude Include="Editor API\NiArray.h">
-      <Filter>Editor API</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\NiTArray.h">
-      <Filter>Editor API</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\NiPointer.h">
-      <Filter>Editor API</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\NiRefObject.h">
-      <Filter>Editor API</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\SSE\BSGraphicsRenderTargetManager.h">
       <Filter>Editor API\SSE</Filter>
     </ClInclude>
@@ -898,12 +886,6 @@
     <ClInclude Include="Editor API\SSE\BSShaderMaterial.h">
       <Filter>Editor API\SSE</Filter>
     </ClInclude>
-    <ClInclude Include="Editor API\NiPoint.h">
-      <Filter>Editor API</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\NiObject.h">
-      <Filter>Editor API</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\SSE\BSStringCache.h">
       <Filter>Editor API\SSE</Filter>
     </ClInclude>
@@ -916,23 +898,8 @@
     <ClInclude Include="Editor API\SSE\BSFixedString.h">
       <Filter>Editor API\SSE</Filter>
     </ClInclude>
-    <ClInclude Include="Editor API\SSE\NiObjectNET.h">
-      <Filter>Editor API\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\SSE\NiAlphaProperty.h">
-      <Filter>Editor API\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\SSE\BSEffectShaderMaterial.h">
       <Filter>Editor API\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\SSE\NiSourceTexture.h">
-      <Filter>Editor API\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\SSE\NiTexture.h">
-      <Filter>Editor API\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\NiColor.h">
-      <Filter>Editor API</Filter>
     </ClInclude>
     <ClInclude Include="Editor API\SSE\TESWater.h">
       <Filter>Editor API\SSE</Filter>
@@ -942,18 +909,6 @@
     </ClInclude>
     <ClInclude Include="Editor API\SSE\BSTriShape.h">
       <Filter>Editor API\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\SSE\NiAVObject.h">
-      <Filter>Editor API\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\NiMatrix.h">
-      <Filter>Editor API</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\NiTransform.h">
-      <Filter>Editor API</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\NiSkinInstance.h">
-      <Filter>Editor API</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SSE\AllowPlayerKnowsCondition.h">
       <Filter>Patches\SSE\1-50</Filter>
@@ -1126,14 +1081,8 @@
     <ClInclude Include="Editor API\SSE\BSShaderResourceManager.h">
       <Filter>Editor API\SSE</Filter>
     </ClInclude>
-    <ClInclude Include="Editor API\NiPick.h">
-      <Filter>Editor API</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\SSE\BSDynamicTriShape.h">
       <Filter>Editor API\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\NiCollisionUtils.h">
-      <Filter>Editor API</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SSE\FixIntersectionTriangle.h">
       <Filter>Patches\SSE</Filter>
@@ -1375,9 +1324,6 @@
     <ClInclude Include="Editor API\FO4\TESFileF4.h">
       <Filter>Editor API\FO4</Filter>
     </ClInclude>
-    <ClInclude Include="Editor API\NiTypes.h">
-      <Filter>Editor API</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\FO4\TESActorValue.h">
       <Filter>Editor API\FO4</Filter>
     </ClInclude>
@@ -1618,6 +1564,63 @@
     </ClInclude>
     <ClInclude Include="Patches\FO4\PreVis.h">
       <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiPoint.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiPointer.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiRefObject.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiTArray.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiTransform.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiArray.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiColor.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiMatrix.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiCollisionUtils.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiMemoryManager.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiPick.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiSkinInstance.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiTypes.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiObjectNET.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiSourceTexture.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiTexture.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiAlphaProperty.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiAVObject.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiNode.h">
+      <Filter>NiAPI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

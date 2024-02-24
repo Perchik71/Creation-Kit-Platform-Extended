@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "..\NiPointer.h"
+#include "NiAPI\NiPointer.h"
 #include "..\BSReadWriteLock.h"
 #include "TESForm.h"
 
@@ -14,6 +14,8 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
+			using namespace NiAPI;
+
 			template<typename _Ty, int IndexBits = 20, int AgeCountBits = 6>
 			class IBSUntypedPointerHandle
 			{

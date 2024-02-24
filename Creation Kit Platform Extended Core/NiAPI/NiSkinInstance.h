@@ -2,13 +2,13 @@
 
 #pragma once
 
-#include "NiObject.h"
+#include "NiRefObject.h"
 
 namespace CreationKitPlatformExtended
 {
-	namespace EditorAPI
+	namespace NiAPI
 	{
-		class NiSkinInstance : public NiObject
+		class NiSkinInstance : public NiRefObject_64
 		{
 		public:
 			class NiSkinData* m_spSkinData;

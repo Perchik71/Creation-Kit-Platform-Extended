@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "../NiPoint.h"
+#include "NiAPI/NiPoint.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -10,6 +10,8 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
+			using namespace NiAPI;
+
 			class BSIntrusiveRefCounted
 			{
 			public:

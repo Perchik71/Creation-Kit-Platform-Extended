@@ -6,6 +6,7 @@
 #include "../BSString.h"
 #include "BSStringCache.h"
 #include "../BSHandleRefObject.h"
+#include "NiAPI/NiNode.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -53,6 +54,7 @@ namespace CreationKitPlatformExtended
 				const char* GetEditorID() const;
 				void EditFormToWindow(HWND hParentWnd, __int64 a1, __int64 a2);
 				void SetNewFormID(uint32_t NewIndex, bool Unk = true);
+				NiAPI::NiNode* GetFadeNode() const;
 				inline uint32_t GetFormID() const { return _FormID; }
 				inline char GetFormType() const { return _FormType; }
 				inline const char* GetEditorID_NoVTable() const { return _EditorID; }

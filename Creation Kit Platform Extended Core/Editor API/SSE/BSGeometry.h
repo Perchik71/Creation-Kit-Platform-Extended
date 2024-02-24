@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include "..\NiPointer.h"
-#include "..\NiSkinInstance.h"
-#include "NiAVObject.h"
-#include "NiAlphaProperty.h"
+#include "NiAPI\NiPointer.h"
+#include "NiAPI\NiSkinInstance.h"
+#include "NiAPI\NiAVObject.h"
+#include "NiAPI\NiAlphaProperty.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -13,6 +13,8 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
+			using namespace NiAPI;
+
 			class NiShadeProperty;
 			class BSShaderProperty;
 

@@ -23,7 +23,8 @@
     { "Type": "LTEXT", "Title": "Y", "Id": 5282, "x": 46, "y": 35, "Width": 8, "Height": 8 },	
 	{ "Type": "AUTOCHECKBUTTON", "Id": 2580, "Title": "Show only active (*) cells", "x": 110, "y": 39, "Width": 90, "Height": 10 },
 	{ "Type": "AUTOCHECKBUTTON", "Id": 2582, "Title": "Show only active (*) objects", "x": 204, "y": 39, "Width": 100, "Height": 10 },
-	{ "Type": "AUTOCHECKBUTTON", "Id": 5665, "Title": "Selected Only", "x": 110, "y": 27, "Width": 70, "Height": 10 },
+	{ "Type": "AUTOCHECKBUTTON", "Id": 5665, "Title": "Selected Only", "x": 110, "y": 39, "Width": 70, "Height": 10 },
+	{ "Type": "AUTOCHECKBUTTON", "Id": 5666, "Title": "Visible Only", "x": 110, "y": 27, "Width": 75, "Height": 10 },
 	{ "Type": "EDITTEXT", "Style": [ "ES_AUTOHSCROLL" ], "Id": 2584, "Title": "", "x": 55, "y": 14, "Width": 96, "Height": 12 }
   ]
 }

@@ -3,7 +3,7 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "BSFile.h"
-#include "..\NiMemoryManager.h"
+#include "NiAPI\NiMemoryManager.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -17,7 +17,7 @@ namespace CreationKitPlatformExtended
 
 			BSFile* BSFile::CreateInstance(const char* fileName, uint32_t mode, uint64_t bufferSize, bool isTextFile) 
 			{
-				BSFile* NewInstance = (BSFile*)NiMemoryManager::Alloc(nullptr, sizeof(BSFile));
+				BSFile* NewInstance = (BSFile*)NiAPI::NiMemoryManager::Alloc(nullptr, sizeof(BSFile));
 				thisCall<bool, const char*, uint32_t, uint64_t, bool>(pointer_BSFile_sub, NewInstance, fileName,
 					mode, bufferSize, isTextFile);
 				return NewInstance;

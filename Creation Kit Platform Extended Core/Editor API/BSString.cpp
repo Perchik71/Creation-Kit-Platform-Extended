@@ -45,7 +45,7 @@
 */
 //////////////////////////////////////////
 
-#include "NiMemoryManager.h"
+#include "..\NiAPI\NiMemoryManager.h"
 #include "BSString.h"
 
 #include <sstream>
@@ -84,13 +84,13 @@ namespace CreationKitPlatformExtended
 		BOOL BSString::Reserved(WORD size) {
 			WORD newLen = size;
 			WORD newSize = newLen + 1;
-			auto newData = (LPSTR)NiMemoryManager::Alloc(NULL, newSize);
+			auto newData = (LPSTR)NiAPI::NiMemoryManager::Alloc(NULL, newSize);
 			if (!newData)
 				return FALSE;
 
 			if (m_bufLen) {
 				strncpy(newData, m_data, newLen);
-				NiMemoryManager::Free(NULL, (LPVOID)m_data);
+				NiAPI::NiMemoryManager::Free(NULL, (LPVOID)m_data);
 				newData[newLen] = 0;
 			}
 			else
@@ -119,14 +119,14 @@ namespace CreationKitPlatformExtended
 				if (!wNeedLen)
 					goto __dealloc;
 				else {
-					LPSTR newData = (LPSTR)NiMemoryManager::Alloc(NULL, wNeedBuf, 4);
+					LPSTR newData = (LPSTR)NiAPI::NiMemoryManager::Alloc(NULL, wNeedBuf, 4);
 					memcpy(newData, string, wNeedLen);
 					newData[wNeedLen] = 0;
 
 					if (m_data)
-						NiMemoryManager::Free(NULL, (LPVOID)m_data);
+						NiAPI::NiMemoryManager::Free(NULL, (LPVOID)m_data);
 
-					WORD wRealBuf = (WORD)NiMemoryManager::Size(NULL, newData);
+					WORD wRealBuf = (WORD)NiAPI::NiMemoryManager::Size(NULL, newData);
 
 					m_data = newData;
 					m_bufLen = wRealBuf > wNeedBuf ? wRealBuf : wNeedBuf;
@@ -137,7 +137,7 @@ namespace CreationKitPlatformExtended
 				if (!string) {
 				__dealloc:
 					if (m_data) {
-						NiMemoryManager::Free(NULL, (LPVOID)m_data);
+						NiAPI::NiMemoryManager::Free(NULL, (LPVOID)m_data);
 
 						m_data = NULL;
 						m_bufLen = 0;
@@ -161,7 +161,7 @@ namespace CreationKitPlatformExtended
 
 		VOID BSString::Clear(VOID) {
 			if (m_data) {
-				NiMemoryManager::Free(NULL, (LPVOID)m_data);
+				NiAPI::NiMemoryManager::Free(NULL, (LPVOID)m_data);
 				m_data = NULL;
 				m_dataLen = 0;
 				m_bufLen = 0;
@@ -185,7 +185,7 @@ namespace CreationKitPlatformExtended
 			if (size) {
 				m_bufLen = size + 1;
 				m_dataLen = size;
-				m_data = (LPSTR)NiMemoryManager::Alloc(NULL, m_bufLen);
+				m_data = (LPSTR)NiAPI::NiMemoryManager::Alloc(NULL, m_bufLen);
 				if (!m_data) {
 					m_bufLen = 0;
 					m_dataLen = 0;
@@ -205,7 +205,7 @@ namespace CreationKitPlatformExtended
 			if (size) {
 				m_bufLen = size + 1;
 				m_dataLen = size;
-				m_data = (LPSTR)NiMemoryManager::Alloc(NULL, m_bufLen);
+				m_data = (LPSTR)NiAPI::NiMemoryManager::Alloc(NULL, m_bufLen);
 				if (!m_data) {
 					m_bufLen = 0;
 					m_dataLen = 0;

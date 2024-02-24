@@ -21,7 +21,6 @@
 */
 //////////////////////////////////////////
 
-#include "..\NiMemoryManager.h"
 #include "Patches/ConsolePatch.h"
 #include "TESFileF4.h"
 

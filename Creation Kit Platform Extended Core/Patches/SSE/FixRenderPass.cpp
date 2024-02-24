@@ -3,7 +3,7 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
-#include "Editor API/NiMemoryManager.h"
+#include "NiAPI/NiMemoryManager.h"
 #include "FixRenderPass.h"
 
 namespace CreationKitPlatformExtended
@@ -153,7 +153,7 @@ namespace CreationKitPlatformExtended
 				uint32_t PassEnum, uint8_t NumLights, void** SceneLights)
 			{
 				uint32_t size = 0xC8;
-				void* data = EditorAPI::NiMemoryManager::Alloc(nullptr, size, 8);
+				void* data = NiAPI::NiMemoryManager::Alloc(nullptr, size, 8);
 				memset(data, 0, size);
 
 				auto pass = reinterpret_cast<BSRenderPass*>(data);
@@ -168,7 +168,7 @@ namespace CreationKitPlatformExtended
 
 			void FixRenderPassPatch::DeallocatePass(void* Pass)
 			{
-				EditorAPI::NiMemoryManager::Free(nullptr, Pass);
+				NiAPI::NiMemoryManager::Free(nullptr, Pass);
 			}
 		}
 	}

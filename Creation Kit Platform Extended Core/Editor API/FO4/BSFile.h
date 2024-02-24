@@ -5,7 +5,7 @@
 #pragma once
 #pragma pack(push, 1)
 
-#include "..\NiTypes.h"
+#include "NiAPI\NiTypes.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -13,7 +13,7 @@ namespace CreationKitPlatformExtended
 	{
 		namespace Fallout4
 		{
-			class BSFile : public NiFile {
+			class BSFile : public NiAPI::NiFile {
 			protected:
 				// members
 				/*000*/ // NiFile

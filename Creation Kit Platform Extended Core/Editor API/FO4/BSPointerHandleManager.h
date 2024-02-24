@@ -22,12 +22,11 @@
 
 #pragma once
 
-#include "..\\NiTypes.h"
-#include "..\\NiPointer.h"
+#include "NiAPI\NiTypes.h"
+#include "NiAPI\NiPointer.h"
 #include "..\\BSHandleRefObject.h"
 #include "TESObjectREFR.h"
 #include "NiClassesF4.h"
-#include "..\\NiRefObject.h"
 
 namespace CreationKitPlatformExtended
 {

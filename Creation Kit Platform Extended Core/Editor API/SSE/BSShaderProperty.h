@@ -3,7 +3,7 @@
 #pragma once
 
 #include "BSShaderMaterial.h"
-#include "NiAlphaProperty.h"
+#include "NiAPI\NiAlphaProperty.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -11,9 +11,11 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
+			using namespace NiAPI;
+
 			class BSRenderPass;
 
-			class BSShaderProperty : public NiShadeProperty
+			class BSShaderProperty : public NiAPI::NiShadeProperty
 			{
 			private:
 				static const uint32_t UniqueFlagIndexes[15];
