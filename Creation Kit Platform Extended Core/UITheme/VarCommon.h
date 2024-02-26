@@ -50,6 +50,7 @@ namespace CreationKitPlatformExtended
 		Theme GetTheme();
 		void SetTheme(Theme theme);
 
+		bool IsDarkThemeSystemSupported();
 		bool IsCustomThemeExists();
 		bool OpenCustomTheme();
 		bool NeedDarkCheck();

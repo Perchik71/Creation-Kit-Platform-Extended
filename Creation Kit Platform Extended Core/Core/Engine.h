@@ -18,6 +18,13 @@ namespace CreationKitPlatformExtended
 			uintptr_t end;
 		};
 
+		struct OsVersion
+		{
+			uint32_t MajorVersion;
+			uint32_t MinorVersion;
+			uint32_t BuildNubmer;
+		};
+
 		constexpr static uint32_t SECTION_TEXT = 0;
 		constexpr static uint32_t SECTION_DATA_READONLY = 1;
 		constexpr static uint32_t SECTION_DATA = 2;
@@ -37,6 +44,7 @@ namespace CreationKitPlatformExtended
 			virtual bool HasAVX2() const;
 			virtual bool HasSSE41() const;
 			virtual Section GetSection(uint32_t nIndex) const;
+			virtual OsVersion GetSystemVersion() const;
 		public:
 			static IResult Initialize(HMODULE hModule, LPCSTR lpcstrAppName);
 		private:
@@ -58,6 +66,7 @@ namespace CreationKitPlatformExtended
 			ModuleManager* PatchesManager;
 			PluginManager* UserPluginsManager;
 			Module* _Theme;
+			OsVersion _OsVersion;
 		};
 
 		extern Engine* GlobalEnginePtr;

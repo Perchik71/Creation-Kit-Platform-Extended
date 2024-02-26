@@ -93,6 +93,25 @@ namespace CreationKitPlatformExtended
 		{
 			GlobalEnginePtr = this;
 
+			auto OsVer = &_OsVersion;
+			ZeroMemory(OsVer, sizeof(OsVersion));
+
+			LONG(WINAPI *RtlGetVersion)(LPOSVERSIONINFOEXW) = nullptr;
+			OSVERSIONINFOEXW osInfo = { 0 };
+			*(FARPROC*)&RtlGetVersion = GetProcAddress(GetModuleHandleA("ntdll"), "RtlGetVersion");
+			if (RtlGetVersion)
+			{
+				osInfo.dwOSVersionInfoSize = sizeof(osInfo);
+				RtlGetVersion(&osInfo);
+
+				OsVer->MajorVersion = osInfo.dwMajorVersion;
+				OsVer->MinorVersion = osInfo.dwMinorVersion;
+				OsVer->BuildNubmer = osInfo.dwBuildNumber;
+			}
+
+			_MESSAGE("Creation Kit Platform Extended Runtime: Initialize (Version: %s, OS: %u.%u Build %u)",
+				VER_FILE_VERSION_STR, OsVer->MajorVersion, OsVer->MinorVersion, OsVer->BuildNubmer);
+
 			int info[4];
 			__cpuid(info, 7);
 			_hasAVX2 = (info[1] & (1 << 5)) != 0;
@@ -443,6 +462,11 @@ namespace CreationKitPlatformExtended
 			return Sections[nIndex]; 
 		}
 
+		OsVersion Engine::GetSystemVersion() const
+		{
+			return _OsVersion;
+		}
+
 		IResult Engine::Initialize(HMODULE hModule, LPCSTR lpcstrAppName)
 		{
 			if (GlobalEnginePtr)
@@ -470,26 +494,6 @@ namespace CreationKitPlatformExtended
 				
 				GlobalINIConfigPtr = new INIConfig(L"CreationKitPlatformExtended.ini");
 				AssertMsg(GlobalINIConfigPtr, "Failed open the config file \"CreationKitPlatformExtended.ini\"");
-				
-				ULONG _osMajorVersion = 0;
-				ULONG _osMinorVersion = 0;
-				ULONG _osBuildNubmer = 0;
-
-				LONG(WINAPI * RtlGetVersion)(LPOSVERSIONINFOEXW) = nullptr;
-				OSVERSIONINFOEXW osInfo = { 0 };
-				*(FARPROC*)&RtlGetVersion = GetProcAddress(GetModuleHandleA("ntdll"), "RtlGetVersion");
-				if (RtlGetVersion)
-				{
-					osInfo.dwOSVersionInfoSize = sizeof(osInfo);
-					RtlGetVersion(&osInfo);
-
-					_osMajorVersion = osInfo.dwMajorVersion;
-					_osMinorVersion = osInfo.dwMinorVersion;
-					_osBuildNubmer = osInfo.dwBuildNumber;
-				}
-
-				_MESSAGE("Creation Kit Platform Extended Runtime: Initialize (Version: %s, OS: %u.%u Build %u)",
-					VER_FILE_VERSION_STR, _osMajorVersion, _osMinorVersion, _osBuildNubmer);
 
 				auto LogCurrentTime = []() {
 					char timeBuffer[80];

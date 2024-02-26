@@ -51,7 +51,7 @@ namespace CreationKitPlatformExtended
 						if (form)
 						{
 							_CONSOLE("Form info -> \"%s\" (0x%08X) type %02X ptr %p",
-								form->GetEditorID_NoVTable(), form->FormID, (uint16_t)form->TypeID, form);
+								form->EditorID, form->FormID, (uint16_t)form->Type, form);
 						}
 					}
 					__except (EXCEPTION_EXECUTE_HANDLER)

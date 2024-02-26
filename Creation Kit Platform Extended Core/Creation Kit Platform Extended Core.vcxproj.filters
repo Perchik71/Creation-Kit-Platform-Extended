@@ -63,9 +63,6 @@
     <ClCompile Include="Core\TypeInfo\ms_rtti.cpp">
       <Filter>Core\TypeInfo</Filter>
     </ClCompile>
-    <ClCompile Include="Editor API\SSE\TESForm.cpp">
-      <Filter>Editor API\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Editor API\BSString.cpp">
       <Filter>Editor API</Filter>
     </ClCompile>
@@ -475,9 +472,6 @@
     <ClCompile Include="Patches\SSE\StableSortForPerks.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
-    <ClCompile Include="Editor API\SSE\TESObjectLAND.cpp">
-      <Filter>Editor API\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Patches\SSE\FixParamsATXT.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
@@ -492,9 +486,6 @@
     </ClCompile>
     <ClCompile Include="Patches\UIHotkeys.cpp">
       <Filter>Patches</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor API\FO4\TESFormComponents.cpp">
-      <Filter>Editor API\FO4</Filter>
     </ClCompile>
     <ClCompile Include="Patches\FO4\TESFormRE.cpp">
       <Filter>Patches\FO4</Filter>
@@ -691,6 +682,18 @@
     <ClCompile Include="NiAPI\NiMemoryManager.cpp">
       <Filter>NiAPI</Filter>
     </ClCompile>
+    <ClCompile Include="Editor API\SSE\TESForm.cpp">
+      <Filter>Editor API\SSE\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\SSE\TESObjectLAND.cpp">
+      <Filter>Editor API\SSE\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixParamsVTXT.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\FO4\TESFormComponents.cpp">
+      <Filter>Editor API\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -761,6 +764,9 @@
     </Filter>
     <Filter Include="NiAPI">
       <UniqueIdentifier>{6d3f9546-9646-43af-be6f-a6dfed55f9b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor API\SSE\Forms">
+      <UniqueIdentifier>{7e355e16-ce9e-40a7-8c46-38e3d326c800}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -842,9 +848,6 @@
     </ClInclude>
     <ClInclude Include="Core\TypeInfo\ms_rtti.h">
       <Filter>Core\TypeInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\SSE\TESForm.h">
-      <Filter>Editor API\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Editor API\BSString.h">
       <Filter>Editor API</Filter>
@@ -1291,9 +1294,6 @@
     <ClInclude Include="Patches\SSE\StableSortForPerks.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
-    <ClInclude Include="Editor API\SSE\TESObjectLAND.h">
-      <Filter>Editor API\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Patches\SSE\FixParamsATXT.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
@@ -1313,9 +1313,6 @@
       <Filter>Editor API\FO4</Filter>
     </ClInclude>
     <ClInclude Include="Editor API\FO4\BSEntryString.h">
-      <Filter>Editor API\FO4</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor API\FO4\TESFormComponents.h">
       <Filter>Editor API\FO4</Filter>
     </ClInclude>
     <ClInclude Include="Patches\FO4\TESFormRE.h">
@@ -1623,6 +1620,24 @@
       <Filter>NiAPI</Filter>
     </ClInclude>
     <ClInclude Include="Editor API\SSE\TESObjectREFR.h">
+      <Filter>Editor API\SSE\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\TESForm.h">
+      <Filter>Editor API\SSE\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\TESObjectLAND.h">
+      <Filter>Editor API\SSE\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixParamsVTXT.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\TESObjectCELL.h">
+      <Filter>Editor API\SSE\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESFormComponents.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BGSLocalizedString.h">
       <Filter>Editor API\SSE</Filter>
     </ClInclude>
   </ItemGroup>

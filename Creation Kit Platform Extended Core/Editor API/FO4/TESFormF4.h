@@ -235,13 +235,14 @@ namespace CreationKitPlatformExtended
 			public:
 				void LoadForm(TESFile* file);									// vtbl->0D0
 				void SaveForm(TESFile* file);									// vtbl->0D8
-				FormType GetType() const;										// vtbl->120
+				FormType GetFormType() const;									// vtbl->120
 				void DebugInfo(char* buffer, uint32_t dwSize) const;			// vtbl->128
 				void MarkAsDeleted(bool state = true);							// vtbl->198 
 				void MarkAsChanged(bool state = true);							// vtbl->1A0 
 				uint32_t GetEditIDLength() const;								// vtbl->230
-				const char* GetEditID() const;									// vtbl->238
-				BSString GetTypeShortStr() const;
+				const char* GetEditorID() const;								// vtbl->238
+				const char* GetFullName() const;
+				const char* GetFormTypeShortStr() const;
 			public:
 				// Deeply inaccurate, because there is a REFR class for this and it is of its own type (taken from SSE)
 				inline bool IsReference() const { return (_type == FormType::ftReference) || (_type == FormType::ftCharacter); }
@@ -264,9 +265,10 @@ namespace CreationKitPlatformExtended
 				READ_PROPERTY(IsModified) bool Active;
 				READ_PROPERTY(GetFormID) uint32_t FormID;
 				READ_PROPERTY(GetFormFlags) uint32_t FormFlag;
-				READ_PROPERTY(GetID) BSString EditID;
-				READ_PROPERTY(GetType) FormType TypeID;
-				READ_PROPERTY(GetTypeShortStr) BSString TypeStr;
+				READ_PROPERTY(GetEditorID) const char* EditorID;
+				READ_PROPERTY(GetFullName) const char* FullName;
+				READ_PROPERTY(GetFormType) FormType Type;
+				READ_PROPERTY(GetFormTypeShortStr) const char* TypeStr;
 			};
 			static_assert(sizeof(TESForm) == 0x28, "TESForm class should be the size of 0x28");
 

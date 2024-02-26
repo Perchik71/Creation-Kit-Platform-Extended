@@ -19,15 +19,6 @@ namespace CreationKitPlatformExtended
 				return thisVirtualCall<const char*>(0x78, this);
 			}
 
-			bool TESForm::GetActive() const
-			{
-				return (_FormFlags & FormFlags::fsModified) != 0;
-			}
-
-			bool TESForm::GetMarkedDelete() const {
-				return (_FormFlags & FormFlags::fsDeleted) != 0;
-			}
-
 			void TESForm::SetNewFormID(uint32_t NewIndex, bool Unk) 
 			{
 				thisVirtualCall<char*>(0x310, this, NewIndex, Unk);
@@ -36,6 +27,12 @@ namespace CreationKitPlatformExtended
 			const char* TESForm::GetEditorID() const
 			{
 				return thisVirtualCall<const char*>(0x1E8, this);
+			}
+
+			const char* TESForm::GetFullName() const
+			{
+				TESFullName* fullname = (TESFullName*)Core::_DYNAMIC_CAST(this, 0, "class TESForm", "class TESFullName");
+				return fullname ? fullname->Name : "";
 			}
 
 			void TESForm::EditFormToWindow(HWND hParentWnd, __int64 a1, __int64 a2)

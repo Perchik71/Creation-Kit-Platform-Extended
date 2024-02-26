@@ -41,7 +41,7 @@ namespace CreationKitPlatformExtended
 				thisVirtualCall<void>(0xD8, this, file);
 			}
 
-			TESForm::FormType TESForm::GetType() const
+			TESForm::FormType TESForm::GetFormType() const
 			{
 				return thisVirtualCall<TESForm::FormType>(0x120, this);
 			}
@@ -66,12 +66,18 @@ namespace CreationKitPlatformExtended
 				return thisVirtualCall<uint32_t>(0x230, this);
 			}
 
-			const char* TESForm::GetEditID() const 
+			const char* TESForm::GetEditorID() const 
 			{
 				return thisVirtualCall<const char*>(0x238, this);
 			}
 
-			BSString TESForm::GetTypeShortStr() const 
+			const char* TESForm::GetFullName() const
+			{
+				TESFullName* fullname = (TESFullName*)Core::_DYNAMIC_CAST(this, 0, "class TESForm", "class TESFullName");
+				return fullname ? fullname->c_str() : "";
+			}
+
+			const char* TESForm::GetFormTypeShortStr() const
 			{
 				struct BGSTypeConvertShortItem 
 				{
@@ -82,7 +88,7 @@ namespace CreationKitPlatformExtended
 				};
 				static_assert(sizeof(BGSTypeConvertShortItem) == 0x18);
 				BGSTypeConvertShortItem* arr = (BGSTypeConvertShortItem*)pointer_TESForm_data;
-				return arr[(DWORD)GetType()].Name;
+				return arr[(DWORD)GetFormType()].Name;
 			}
 
 			BSString TESForm::GetID() const 
@@ -90,7 +96,7 @@ namespace CreationKitPlatformExtended
 				if (!GetEditIDLength())
 					return "";
 				else
-					return GetEditID();
+					return GetEditorID();
 			}
 
 			TESForm* GetFormByNumericID(const uint32_t SearchID)

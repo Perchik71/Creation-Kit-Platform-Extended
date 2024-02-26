@@ -11,7 +11,7 @@
 
 #pragma once
 
-constexpr static uint32_t PLUGINAPI_CURRENT_VERSION = 2;
+constexpr static uint32_t PLUGINAPI_CURRENT_VERSION = 3;
 
 #ifndef _CKPE_MAIN
 
@@ -23,6 +23,13 @@ namespace CreationKitPlatformExtended
 		{
 			uintptr_t base;
 			uintptr_t end;
+		};
+
+		struct OsVersion
+		{
+			uint32_t MajorVersion;
+			uint32_t MinorVersion;
+			uint32_t BuildNubmer;
 		};
 
 		enum EDITOR_EXECUTABLE_TYPE {
@@ -87,6 +94,7 @@ namespace CreationKitPlatformExtended
 			virtual bool HasSSE41() const;
 			// Indexes: SECTION_TEXT, SECTION_DATA_READONLY, SECTION_DATA
 			virtual Section GetSection(uint32_t nIndex) const;
+			virtual OsVersion GetSystemVersion() const;
 		};
 
 		class Relocator

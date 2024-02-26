@@ -18,6 +18,12 @@
 #include "Patches/ConsolePatch.h"
 #include "MainWindow.h"
 
+#define CKPE_NEED_GEN_FORMDUMP_DBG 0
+
+#if CKPE_NEED_GEN_FORMDUMP_DBG
+#include "Editor API/SSE/TESObjectLAND.h"
+#endif
+
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
@@ -50,8 +56,14 @@ namespace CreationKitPlatformExtended
 					{
 						auto form = TESForm::GetFormByNumericID(FormID);
 						if (form)
+						{
 							_CONSOLE("Form info -> \"%s\" (0x%08X) type %02X ptr %p",
-								form->GetEditorID_NoVTable(), form->FormID, (uint16_t)form->FormType, form);
+								form->EditorID, form->FormID, (uint16_t)form->Type, form);
+#if CKPE_NEED_GEN_FORMDUMP_DBG
+							if (form->Type == TESForm::ftLandspace)
+								((TESObjectLAND*)form)->DumpLayers("land_layers.bin");
+#endif
+						}
 					}
 					__except (EXCEPTION_EXECUTE_HANDLER)
 					{

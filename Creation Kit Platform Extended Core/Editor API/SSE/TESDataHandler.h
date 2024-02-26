@@ -6,7 +6,9 @@
 
 #include "NiAPI\NiTArray.h"
 #include "TESFile.h"
-#include "TESForm.h"
+#include "TESObjectREFR.h"
+#include "TESObjectCELL.h"
+#include "TESObjectLAND.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -93,8 +95,8 @@ namespace CreationKitPlatformExtended
 				TESFormArray arrRFCT;						// 5C0 Form Type 57
 				TESFormArray arrREGN;						// 5D8 Form Type 58
 				TESFormArray arrNAVI;						// 5F0 Form Type 59
-				TESFormArray arrCELL;						// 608 Form Type 60
-				TESFormArray arrREFR;						// 620 Form Type 61
+				BSTArray<TESObjectCELL*> arrCELL;			// 608 Form Type 60
+				BSTArray<TESObjectREFR*> arrREFR;			// 620 Form Type 61
 				TESFormArray arrACHR;						// 638 Form Type 62
 				TESFormArray arrPMIS;						// 650 Form Type 63
 				TESFormArray arrPARW;						// 668 Form Type 64
@@ -105,7 +107,7 @@ namespace CreationKitPlatformExtended
 				TESFormArray arrPBAR;						// 6E0 Form Type 69
 				TESFormArray arrPHZD;						// 6F8 Form Type 70
 				TESFormArray arrWRLD;						// 710 Form Type 71
-				TESFormArray arrLAND;						// 728 Form Type 72
+				BSTArray<TESObjectLAND*> arrLAND;			// 728 Form Type 72 
 				TESFormArray arrNAVM;						// 740 Form Type 73
 				TESFormArray arrTLOD;						// 758 Form Type 74
 				TESFormArray arrDIAL;						// 770 Form Type 75

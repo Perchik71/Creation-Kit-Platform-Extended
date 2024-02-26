@@ -26,28 +26,54 @@ namespace CreationKitPlatformExtended
 
 			inline void Unitize()
 			{
-				// AKA vector normalization
-				float length = sqrt((x * x) + (y * y) + (z * z));
+				// I commented out the Nukem code, since it does not meet the optimization requirements, 
+				// but I will not delete the function, suddenly it is used somewhere.
 
-				if (length <= 0.000001f)
-				{
-					x = 0.0f;
-					y = 0.0f;
-					z = 0.0f;
-				}
-				else
-				{
-					const float invMag = 1.0f / length;
+				FastNormalize();
 
-					x *= invMag;
-					y *= invMag;
-					z *= invMag;
-				}
+				//// AKA vector normalization
+				//float length = sqrt((x * x) + (y * y) + (z * z));
+
+				//if (length <= 0.000001f)
+				//{
+				//	x = 0.0f;
+				//	y = 0.0f;
+				//	z = 0.0f;
+				//}
+				//else
+				//{
+				//	const float invMag = 1.0f / length;
+
+				//	x *= invMag;
+				//	y *= invMag;
+				//	z *= invMag;
+				//}
 			}
 
 			inline void Normalize()
 			{
 				Unitize();
+			}
+
+			inline void FastNormalize()
+			{
+				// perchik71: more productive normalization method 
+				// SSE2.1 it should be everywhere, in here I will postpone "dpps" since it is SSE4.1. 
+				// And as I understand it, not everyone has it... outdated hardware...
+
+				float length = (x * x) + (y * y) + (z * z);
+				
+				if (length <= 0.000001f)
+				{
+					x = 0.0f; y = 0.0f; z = 0.0f;
+				}
+				else
+				{
+					__m128 temp = _mm_set_ss(length);
+					temp = _mm_rsqrt_ss(temp);
+					auto mag = _mm_cvtss_f32(temp);
+					x *= mag; y *= mag; z *= mag;
+				}
 			}
 
 			NiPoint3 Cross(const NiPoint3& Pt) const

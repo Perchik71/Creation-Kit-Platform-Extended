@@ -137,9 +137,14 @@ namespace CreationKitPlatformExtended
 				if (GlobalCellViewWindowPtr)
 				{
 					auto Handle = GlobalCellViewWindowPtr->Handle;
-					auto SelOnly = static_cast<bool>(GetPropA(Handle, "SelectObjectsOnly"));
-
+					
+					auto SelOnly = static_cast<bool>(GetPropA(Handle, EditorAPI::EditorUI::UI_USER_DATA_SELECT_OBJECT_ONLY));
 					if (SelOnly)
+						// Fake a filter text box change
+						SendMessageA(Handle, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
+
+					auto VisOnly = static_cast<bool>(GetPropA(Handle, EditorAPI::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY));
+					if (VisOnly)
 						// Fake a filter text box change
 						SendMessageA(Handle, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
 				}
@@ -274,7 +279,7 @@ namespace CreationKitPlatformExtended
 						LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
 
 					SendMessage(GlobalCellViewWindowPtr->m_VisibleObjectsOnly.Handle, BM_SETCHECK, BST_CHECKED, 0);
-					SetPropA(Hwnd, "VisibleObjectsOnly", reinterpret_cast<HANDLE>(true));
+					SetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY, reinterpret_cast<HANDLE>(true));
 				}
 				else if (Message == WM_SIZE)
 				{
@@ -288,7 +293,7 @@ namespace CreationKitPlatformExtended
 					if (param == UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX)
 					{
 						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
-						SetPropA(Hwnd, "ActiveCellsOnly", reinterpret_cast<HANDLE>(enableFilter));
+						SetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_ACTIVE_CELLS_ONLY, reinterpret_cast<HANDLE>(enableFilter));
 
 						// Fake the dropdown list being activated
 						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2083, 1), 0);
@@ -297,7 +302,7 @@ namespace CreationKitPlatformExtended
 					else if (param == UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX)
 					{
 						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
-						SetPropA(Hwnd, "ActiveObjectsOnly", reinterpret_cast<HANDLE>(enableFilter));
+						SetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_ACTIVE_OBJECT_ONLY, reinterpret_cast<HANDLE>(enableFilter));
 
 						// Fake a filter text box change
 						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
@@ -306,7 +311,7 @@ namespace CreationKitPlatformExtended
 					else if (param == UI_CELL_VIEW_SELECT_CELL_OBJECTS_CHECKBOX)
 					{
 						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
-						SetPropA(Hwnd, "SelectObjectsOnly", reinterpret_cast<HANDLE>(enableFilter));
+						SetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_SELECT_OBJECT_ONLY, reinterpret_cast<HANDLE>(enableFilter));
 
 						// Fake a filter text box change
 						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
@@ -315,7 +320,7 @@ namespace CreationKitPlatformExtended
 					else if (param == UI_CELL_VIEW_VISIBLE_CELL_OBJECTS_CHECKBOX)
 					{
 						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
-						SetPropA(Hwnd, "VisibleObjectsOnly", reinterpret_cast<HANDLE>(enableFilter));
+						SetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY, reinterpret_cast<HANDLE>(enableFilter));
 
 						// Fake a filter text box change
 						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
@@ -326,7 +331,7 @@ namespace CreationKitPlatformExtended
 						auto hFilter = GlobalCellViewWindowPtr->m_FilterCellEdit.Handle;
 						auto iLen = std::min(GetWindowTextLengthA(hFilter), UI_CELL_VIEW_FILTER_CELL_SIZE - 1);
 
-						SetPropA(Hwnd, "FilterCellsLen", reinterpret_cast<HANDLE>(iLen));
+						SetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_FILTER_CELLS_LEN, reinterpret_cast<HANDLE>(iLen));
 
 						if (iLen)
 							GetWindowTextA(hFilter, str_CellViewWindow_FilterUser, iLen + 1);
@@ -346,23 +351,17 @@ namespace CreationKitPlatformExtended
 						return 1;
 
 					// Skip the entry if "Show only active cells" is checked
-					if (static_cast<bool>(GetPropA(Hwnd, "ActiveCellsOnly")))
-						*allowInsert = form->GetActive();
+					if (static_cast<bool>(GetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_ACTIVE_CELLS_ONLY)))
+						*allowInsert = form->Active;
 
 					// Skip if a filter is installed and the form does not meet the requirements
-					if (*allowInsert && reinterpret_cast<int>(GetPropA(Hwnd, "FilterCellsLen")) > 2)
+					if (*allowInsert && reinterpret_cast<int>(GetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_FILTER_CELLS_LEN)) > 2)
 					{
 						auto editorID = form->GetEditorID_NoVTable();
 						if (editorID)
 						{
-							TESFullName* fullname = (TESFullName*)_DYNAMIC_CAST(form, 0, "class TESForm", "class TESFullName");
-
-							if (fullname)
-								sprintf_s(str_CellViewWindow_Filter, UI_CELL_VIEW_FILTER_CELL, "%s %08X %s", 
-									editorID, form->GetFormID(), fullname->Name);
-							else
-								sprintf_s(str_CellViewWindow_Filter, UI_CELL_VIEW_FILTER_CELL, "%s %08X",
-									editorID, form->GetFormID());
+							sprintf_s(str_CellViewWindow_Filter, UI_CELL_VIEW_FILTER_CELL, "%s %08X %s",
+								editorID, form->FormID, form->FullName);
 						
 							*allowInsert = StrStrI(str_CellViewWindow_Filter, str_CellViewWindow_FilterUser) != 0;
 						}
@@ -380,11 +379,11 @@ namespace CreationKitPlatformExtended
 						return 1;
 
 					// Skip the entry if "Show only active objects" is checked
-					if (static_cast<bool>(GetPropA(Hwnd, "ActiveObjectsOnly")))
-						*allowInsert = form->GetActive();
+					if (static_cast<bool>(GetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_ACTIVE_OBJECT_ONLY)))
+						*allowInsert = form->Active;
 
 					// Skip the entry if "Visible Only" is checked
-					if (*allowInsert && static_cast<bool>(GetPropA(Hwnd, "VisibleObjectsOnly")))
+					if (*allowInsert && static_cast<bool>(GetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY)))
 					{
 						auto Node = ((TESObjectREFR*)(form))->GetFadeNode();
 						if (Node && (Node->QAppCulled() || Node->QNotVisible()))
@@ -392,7 +391,7 @@ namespace CreationKitPlatformExtended
 					}
 
 					// Skip the entry if "Selected Only" is checked
-					if (*allowInsert && static_cast<bool>(GetPropA(Hwnd, "SelectObjectsOnly")))
+					if (*allowInsert && static_cast<bool>(GetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_SELECT_OBJECT_ONLY)))
 					{
 						auto Renderer = BGSRenderWindow::GetInstance();
 						if (Renderer)

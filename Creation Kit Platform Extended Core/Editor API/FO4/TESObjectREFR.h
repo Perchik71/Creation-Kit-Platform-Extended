@@ -40,8 +40,8 @@ namespace CreationKitPlatformExtended
 			{
 			private:
 				enum { eTypeID = FormType::ftReference };
-				enum SpecialFlagsForm {
-					// https://github.com/shadeMe/Construction-Set-Extender/blob/master/EditorAPI/TESObjectREFR.h
+				enum SpecialFlagsForm 
+				{
 					fs3DInvisible = 1 << 31,
 					fsChildren3DInvisible = 1 << 30,
 					fsFrozen = 1 << 29,

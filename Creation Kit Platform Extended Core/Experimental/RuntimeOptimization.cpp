@@ -319,6 +319,14 @@ namespace CreationKitPlatformExtended
 				{ 0x0F, 0xB7, 0x04, 0x51, 0xC3 },																												// movzx eax, word ptr ds:[rcx+rdx*2]; retn;
 				{ 0x0F, 0xB7, 0x04, 0x51, 0x90 }																												// movzx eax, word ptr ds:[rcx+rdx*2]; nop;
 			},
+
+			// Added perchik71
+
+			{
+				{ 0xF3, 0x0F, 0x11, 0x44, 0x24, 0x08, 0xF3, 0x0F, 0x2C, 0x44, 0x24, 0x08, 0xC3 },		// return (int)arg1;
+				{ 0xF3, 0x0F, 0x2C, 0xC0, 0xC3 },														// cvttss2si eax, xmm0; retn;
+				{ 0xF3, 0x0F, 0x2C, 0xC0, 0x90 }														// cvttss2si eax, xmm0; nop;
+			},
 		};
 
 		const NullsubPatch* FindNullsubPatch(uintptr_t SourceAddress, uintptr_t TargetFunction)

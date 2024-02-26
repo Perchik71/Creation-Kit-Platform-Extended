@@ -11,6 +11,12 @@ namespace CreationKitPlatformExtended
 		class EditorUI
 		{
 		public:
+			constexpr static const char* UI_USER_DATA_ACTIVE_CELLS_ONLY = "ActiveCellsOnly";
+			constexpr static const char* UI_USER_DATA_FILTER_CELLS_LEN = "FilterCellsLen";
+			constexpr static const char* UI_USER_DATA_ACTIVE_OBJECT_ONLY = "ActiveObjectsOnly";
+			constexpr static const char* UI_USER_DATA_SELECT_OBJECT_ONLY = "SelectObjectsOnly";
+			constexpr static const char* UI_USER_DATA_VISIBLE_OBJECT_ONLY = "VisibleObjectsOnly";
+
 			constexpr static uint32_t UI_EDITOR_TOOLBAR = 1;
 			constexpr static uint32_t UI_EDITOR_STATUSBAR = 40139;
 			constexpr static uint32_t UI_EDITOR_TOGGLEOBJECTWND = 40199;	// Object Window's

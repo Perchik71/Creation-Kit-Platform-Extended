@@ -80,7 +80,7 @@ namespace CreationKitPlatformExtended
 				EditorAPI::Fallout4::TESForm* Ret = fastCall<EditorAPI::Fallout4::TESForm*>
 					(pointer_PreVisPatch_sub, a1);
 
-				if (Ret && (Ret->TypeID != EditorAPI::Fallout4::TESForm::ftCell))
+				if (Ret && (Ret->Type != EditorAPI::Fallout4::TESForm::ftCell))
 					return nullptr;
 
 				return Ret;

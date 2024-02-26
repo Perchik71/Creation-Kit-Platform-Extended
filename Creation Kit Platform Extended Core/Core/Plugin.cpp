@@ -69,26 +69,10 @@ namespace CreationKitPlatformExtended
 			if (IsInit)
 			{
 				_Log = new Core::DebugLog(EditorAPI::BSString::Utils::ChangeFileExt(lpcstrPluginDllName, ".log").c_str());
-			
-				ULONG _osMajorVersion = 0;
-				ULONG _osMinorVersion = 0;
-				ULONG _osBuildNubmer = 0;
-
-				LONG(WINAPI * RtlGetVersion)(LPOSVERSIONINFOEXW) = nullptr;
-				OSVERSIONINFOEXW osInfo = { 0 };
-				*(FARPROC*)&RtlGetVersion = GetProcAddress(GetModuleHandleA("ntdll"), "RtlGetVersion");
-				if (RtlGetVersion)
-				{
-					osInfo.dwOSVersionInfoSize = sizeof(osInfo);
-					RtlGetVersion(&osInfo);
-
-					_osMajorVersion = osInfo.dwMajorVersion;
-					_osMinorVersion = osInfo.dwMinorVersion;
-					_osBuildNubmer = osInfo.dwBuildNumber;
-				}
-
+				
+				auto OsVer = lpEngine->GetSystemVersion();		
 				_Log->FormattedMessage("Creation Kit Platform Extended Runtime: Initialize (Version: %s, OS: %u.%u Build %u)",
-					VER_FILE_VERSION_STR, _osMajorVersion, _osMinorVersion, _osBuildNubmer);
+					VER_FILE_VERSION_STR, OsVer.MajorVersion, OsVer.MinorVersion, OsVer.BuildNubmer);
 
 				char timeBuffer[80];
 				struct tm* timeInfo;

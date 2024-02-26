@@ -150,7 +150,7 @@ namespace CreationKitPlatformExtended
 				inline static TESForm* GetRef(uint32_t UniqueId)
 				{
 					auto Ret = (TESObjectREFR*)GetRefFormByUniqueId(UniqueId);
-					return (Ret && Ret->FormType == TESObjectREFR::TYPE_ID) ? Ret : nullptr;
+					return (Ret && Ret->Type == TESObjectREFR::TYPE_ID) ? Ret : nullptr;
 				}
 
 				inline HWND GetWindowHandle() const { return _WindowHandle; }

@@ -244,8 +244,8 @@ namespace CreationKitPlatformExtended
 					GlobalCellViewWindowPtr->m_SelectedOnly = GetDlgItem(Hwnd, 5665);
 					GlobalCellViewWindowPtr->m_IdEdit = GetDlgItem(Hwnd, 2581);
 					GlobalCellViewWindowPtr->m_SelectedObjectLabel = GetDlgItem(Hwnd, 1163);
-					GlobalCellViewWindowPtr->m_ActiveCellsOnly = GetDlgItem(Hwnd, 2580);
-					GlobalCellViewWindowPtr->m_ActiveObjectsOnly = GetDlgItem(Hwnd, 2582);
+					GlobalCellViewWindowPtr->m_ActiveCellsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX);
+					GlobalCellViewWindowPtr->m_ActiveObjectsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX);
 					GlobalCellViewWindowPtr->m_CellListView = GetDlgItem(Hwnd, 1155);
 					GlobalCellViewWindowPtr->m_ObjectListView = GetDlgItem(Hwnd, 1156);
 					GlobalCellViewWindowPtr->m_FilterCellEdit = GetDlgItem(Hwnd, UI_CELL_VIEW_FILTER_CELL);
@@ -270,7 +270,7 @@ namespace CreationKitPlatformExtended
 					if (param == UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX)
 					{
 						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
-						SetPropA(Hwnd, "ActiveCellsOnly", reinterpret_cast<HANDLE>(enableFilter));
+						SetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_ACTIVE_CELLS_ONLY, reinterpret_cast<HANDLE>(enableFilter));
 
 						// Fake the dropdown list being activated
 						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2083, 1), 0);
@@ -279,7 +279,7 @@ namespace CreationKitPlatformExtended
 					else if (param == UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX)
 					{
 						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
-						SetPropA(Hwnd, "ActiveObjectsOnly", reinterpret_cast<HANDLE>(enableFilter));
+						SetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_ACTIVE_OBJECT_ONLY, reinterpret_cast<HANDLE>(enableFilter));
 
 						// Fake a filter text box change
 						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
@@ -290,7 +290,7 @@ namespace CreationKitPlatformExtended
 						auto hFilter = GlobalCellViewWindowPtr->m_FilterCellEdit.Handle;
 						auto iLen = std::min(GetWindowTextLengthA(hFilter), UI_CELL_VIEW_FILTER_CELL_SIZE - 1);
 
-						SetPropA(Hwnd, "FilterCellsLen", reinterpret_cast<HANDLE>(iLen));
+						SetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_FILTER_CELLS_LEN, reinterpret_cast<HANDLE>(iLen));
 
 						if (iLen)
 							GetWindowTextA(hFilter, str_CellViewWindow_FilterUser, iLen + 1);
@@ -308,28 +308,22 @@ namespace CreationKitPlatformExtended
 					*allowInsert = true;
 
 					// Skip the entry if "Show only active cells" is checked
-					if (static_cast<bool>(GetPropA(Hwnd, "ActiveCellsOnly")))
+					if (static_cast<bool>(GetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_ACTIVE_CELLS_ONLY)))
 					{
 						if (form && !form->Active)
 							*allowInsert = false;
 					}
 
 					// Skip if a filter is installed and the form does not meet the requirements
-					if (*allowInsert && reinterpret_cast<int>(GetPropA(Hwnd, "FilterCellsLen")) > 2)
+					if (*allowInsert && reinterpret_cast<int>(GetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_FILTER_CELLS_LEN)) > 2)
 					{
 						if (form)
 						{
 							auto editorID = form->GetEditorID_NoVTable();
 							if (editorID)
 							{
-								TESFullName* fullname = (TESFullName*)_DYNAMIC_CAST(form, 0, "class TESForm", "class TESFullName");
-
-								if (fullname)
-									sprintf_s(str_CellViewWindow_Filter, UI_CELL_VIEW_FILTER_CELL, "%s %08X %s",
-										editorID, form->GetFormID(), fullname->c_str());
-								else
-									sprintf_s(str_CellViewWindow_Filter, UI_CELL_VIEW_FILTER_CELL, "%s %08X",
-										editorID, form->GetFormID());
+								sprintf_s(str_CellViewWindow_Filter, UI_CELL_VIEW_FILTER_CELL, "%s %08X %s",
+									editorID, form->FormID, form->FullName);
 
 								*allowInsert = StrStrI(str_CellViewWindow_Filter, str_CellViewWindow_FilterUser) != 0;
 							}
@@ -346,7 +340,7 @@ namespace CreationKitPlatformExtended
 					*allowInsert = true;
 
 					// Skip the entry if "Show only active objects" is checked
-					if (static_cast<bool>(GetPropA(Hwnd, "ActiveObjectsOnly")))
+					if (static_cast<bool>(GetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_ACTIVE_OBJECT_ONLY)))
 					{
 						if (form && !form->Active)
 							*allowInsert = false;

@@ -5,6 +5,7 @@
 #pragma once
 
 #include "TESForm.h"
+#include "TESObjectCELL.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -17,7 +18,13 @@ namespace CreationKitPlatformExtended
 			class TESObjectREFR : public TESObjectREFR_Original
 			{
 			public:
-				constexpr static uint8_t TYPE_ID = 0x3D;
+				constexpr static uint8_t TYPE_ID = ftReference;
+				enum SpecialFlagsForm 
+				{
+					fs3DInvisible = 1 << 31,
+					fsChildren3DInvisible = 1 << 30,
+					fsFrozen = 1 << 29,
+				};
 			public:
 				class ExtraDataList
 				{
@@ -33,16 +40,23 @@ namespace CreationKitPlatformExtended
 				inline TESForm* GetParent() const { return _Parent; }
 				inline NiAPI::NiPoint3 GetRotate() const { return _Rotate; }
 				inline NiAPI::NiPoint3 GetPosition() const { return _Position; }
-				inline TESForm* GetParentCell() const { return _ParentCell; }
+				inline float GetScale() const { return (float)_Scale / 100; }
+				inline TESObjectCELL* GetParentCell() const { return _ParentCell; }
+				inline bool IsInvisible() const { return (_FormFlags & SpecialFlagsForm::fs3DInvisible); }
+				inline bool IsChildrenInvisible() const { return (_FormFlags & SpecialFlagsForm::fsChildren3DInvisible); }
+				inline bool IsFrozen() const { return (_FormFlags & SpecialFlagsForm::fsFrozen); }
 			private:
 				TESForm* _Parent;
 				NiAPI::NiPoint3 _Rotate;
 				NiAPI::NiPoint3 _Position;
-				TESForm* _ParentCell;
+				TESObjectCELL* _ParentCell;
 				void* UnkPtr;
 				ExtraDataList ExtraData;
+				char pad90[0x10];
+				uint16_t _Scale;
+				uint16_t UnkNum;
 			};
-			static_assert(sizeof(TESObjectREFR) == 0x90);
+			static_assert(sizeof(TESObjectREFR) == 0xA8);
 		}
 	}
 }

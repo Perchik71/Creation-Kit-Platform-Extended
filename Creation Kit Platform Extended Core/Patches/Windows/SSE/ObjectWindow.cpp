@@ -304,7 +304,7 @@ namespace CreationKitPlatformExtended
 					// Skip the entry if "Show only active forms" is checked
 					if (static_cast<bool>(GetPropA(Hwnd, "ActiveOnly")))
 					{
-						if (form && !form->GetActive())
+						if (form && !form->Active)
 							*allowInsert = false;
 					}
 

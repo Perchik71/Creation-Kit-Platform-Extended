@@ -219,6 +219,7 @@
     <ClCompile Include="Patches\SSE\FixNiSkinInstance.cpp" />
     <ClCompile Include="Patches\SSE\FixObjectPalette.cpp" />
     <ClCompile Include="Patches\SSE\FixParamsATXT.cpp" />
+    <ClCompile Include="Patches\SSE\FixParamsVTXT.cpp" />
     <ClCompile Include="Patches\SSE\FixRaceDlg.cpp" />
     <ClCompile Include="Patches\SSE\FixRemoteDesktop.cpp" />
     <ClCompile Include="Patches\SSE\FixRenderPass.cpp" />
@@ -368,6 +369,7 @@
     <ClInclude Include="Editor API\FO4\TESObjectARMO.h" />
     <ClInclude Include="Editor API\FO4\TESObjectCELL.h" />
     <ClInclude Include="Editor API\FO4\TESObjectREFR.h" />
+    <ClInclude Include="Editor API\SSE\BGSLocalizedString.h" />
     <ClInclude Include="Editor API\SSE\BGSRenderWindow.h" />
     <ClInclude Include="Editor API\SSE\BSDynamicTriShape.h" />
     <ClInclude Include="Editor API\SSE\BSEffectShaderMaterial.h" />
@@ -386,6 +388,7 @@
     <ClInclude Include="Editor API\SSE\TESDialogSpell.h" />
     <ClInclude Include="Editor API\SSE\TESFile.h" />
     <ClInclude Include="Editor API\SSE\TESForm.h" />
+    <ClInclude Include="Editor API\SSE\TESObjectCELL.h" />
     <ClInclude Include="Editor API\SSE\TESObjectLAND.h" />
     <ClInclude Include="Editor API\SSE\TESObjectREFR.h" />
     <ClInclude Include="Editor API\SSE\TESWater.h" />
@@ -508,6 +511,7 @@
     <ClInclude Include="Patches\SSE\FixNiSkinInstance.h" />
     <ClInclude Include="Patches\SSE\FixObjectPalette.h" />
     <ClInclude Include="Patches\SSE\FixParamsATXT.h" />
+    <ClInclude Include="Patches\SSE\FixParamsVTXT.h" />
     <ClInclude Include="Patches\SSE\FixRaceDlg.h" />
     <ClInclude Include="Patches\SSE\FixRemoteDesktop.h" />
     <ClInclude Include="Patches\SSE\FixRenderPass.h" />

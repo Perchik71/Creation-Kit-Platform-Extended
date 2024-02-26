@@ -21,6 +21,7 @@
 //////////////////////////////////////////
 
 #include "VarCommon.h"
+#include "Core/Engine.h"
 
 #define CUSTOM_THEME "CreationKitPlatformExtendedCustomTheme.ini"
 
@@ -519,6 +520,12 @@ namespace CreationKitPlatformExtended
 			hThemeBorderWindowBrush = CreateSolidBrush(GetThemeSysColor(ThemeColor_Border_Window));
 			hThemeHighlightBrush = CreateSolidBrush(GetThemeSysColor(ThemeColor_SelectedItem_Back));
 			hThemeHighlightTextBrush = CreateSolidBrush(GetThemeSysColor(ThemeColor_SelectedItem_Text));
+		}
+
+		bool IsDarkThemeSystemSupported()
+		{
+			auto OsVer = Core::GlobalEnginePtr->GetSystemVersion();
+			return (OsVer.MajorVersion == 10 && OsVer.MinorVersion == 0 && 17763 <= OsVer.BuildNubmer);
 		}
 
 		bool IsCustomThemeExists()
