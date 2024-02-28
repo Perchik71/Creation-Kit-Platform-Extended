@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "TESForm.h"
+#include "TESLandTexture.h"
 #include "NiAPI/NiNode.h"
 
 #pragma pack(push, 1)
@@ -36,21 +36,11 @@ namespace CreationKitPlatformExtended
 					uint8_t x, y, z;
 				};
 
-				struct AlphaIndex
-				{
-					// In fact, only 2 bytes are used, but in algorithms it is used as 4 bytes. 
-					// This led to an error in ver. 1.6. Incorrect typing and ignoring compiler warnings. 
-					// In some places, 16-bit registers are used, and where 32-bit ones are used. 
-					// I consider 32 bits to be the standard, since it is in this form that they are stored in memory.
-					union 
-					{
-						//struct { uint16_t Pad, _16Index; };
-						//uint32_t Index;
-
-						// It turned out to be real numbers 0-288
-						float Index;
-					};
-				};
+				// It real numbers [-288 : 288]
+				// I don't know what it means if the index is negative, but I won't study it further.
+				// Also, since there is no fractional part, the highest 2 bytes are used.
+				// You can check it on the website https://www.h-schmidt.net/FloatConverter/IEEE754.html
+				typedef float AlphaIndex;
 
 				struct AlphaData
 				{
@@ -62,7 +52,7 @@ namespace CreationKitPlatformExtended
 				{
 					struct TextureList
 					{
-						TESForm* Items[MAX_TEXTURE_COUNT];
+						TESLandTexture* Items[MAX_TEXTURE_COUNT];
 					};
 
 					// Parts with tex ??? (if the location is not loaded, these are all nullptr)
@@ -76,10 +66,10 @@ namespace CreationKitPlatformExtended
 					// size 0xD8C (bytes)
 					VertexNormalsT VertexNormals[TOTAL_INDEX_ALL_PARTS];
 					char pad4860[0x30];
-					TESForm* LandTextureDefaultPart1;
-					TESForm* LandTextureDefaultPart2;
-					TESForm* LandTextureDefaultPart3;
-					TESForm* LandTextureDefaultPart4;
+					TESLandTexture* LandTextureDefaultPart1;
+					TESLandTexture* LandTextureDefaultPart2;
+					TESLandTexture* LandTextureDefaultPart3;
+					TESLandTexture* LandTextureDefaultPart4;
 					// A strange pointer, where there are 4 arrays packed to capacity with "1".
 					char pad48B0[0x8];
 					TextureList* _LandTextureListPart1;
@@ -102,12 +92,14 @@ namespace CreationKitPlatformExtended
 			public:
 				virtual ~TESObjectLAND() = default;
 
-				TESObjectCELL* GetParentCell() const { return _ParentCell; }
-				TESObjectLAND::Layers* GetLayers() const { return _Layers; }
+				inline TESObjectCELL* GetParentCell() const { return _ParentCell; }
+				inline TESObjectLAND::Layers* GetLayers() const { return _Layers; }
+				inline bool HasLoaded() const { return _Layers != nullptr; }
 
 				// This function is just for exploring the data. (DEBUG)
 				inline void DumpLayers(const char* fname) const
 				{
+					if (!_Layers) return;
 					FILE* f = _fsopen(fname, "wb+", _SH_DENYWR);
 					if (f)
 					{
@@ -119,7 +111,7 @@ namespace CreationKitPlatformExtended
 				char pad28[0x10];
 				TESObjectCELL* _ParentCell;
 				char pad40[0x8];
-				Layers* _Layers;
+				Layers* _Layers;				// Can be nullptr if cell not loaded
 			};
 			static_assert(sizeof(TESObjectLAND) == 0x50);
 			static_assert(sizeof(TESObjectLAND::Layers) == 0x4900);

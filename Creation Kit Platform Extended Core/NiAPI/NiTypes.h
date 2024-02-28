@@ -223,63 +223,6 @@ namespace CreationKitPlatformExtended
 			NiPoint3 m_kNormal;
 			float m_fConstant;
 		};
-
-		// 20
-		// derives from NiTMapBase, we don't bother
-		template <typename T_key, typename T_data>
-		class NiTMap {
-		public:
-			virtual ~NiTMap();
-
-			struct NiTMapItem {
-				NiTMapItem* next;
-				T_key		key;
-				T_data		data;
-			};
-
-			T_data Get(T_key key) {
-				uint32_t	bucket = GetBucket(key);
-
-				for (NiTMapItem* iter = buckets[bucket]; iter; iter = iter->next) {
-					if (Compare(iter->key, key))
-						return iter->data;
-				}
-
-				return T_data();
-			}
-
-			virtual uint32_t	GetBucket(T_key key);					// return hash % numBuckets;
-			virtual bool	Compare(T_key lhs, T_key rhs);				// return lhs == rhs;
-			virtual void	FillItem(NiTMapItem* item, T_key key, T_data data);
-			// item->key = key; item->data = data;
-			virtual void	Fn_04(uint32_t arg);						// nop
-			virtual NiTMapItem* AllocItem(void);						// return new NiTMapItem;
-			virtual void	FreeItem(NiTMapItem* item);					// item->data = 0; delete item;
-
-			void RemoveAll() {
-				for (uint32_t ui = 0; ui < numBuckets; ui++) {
-					while (buckets[ui]) {
-						NiTMapItem* pkSave = buckets[ui];
-						buckets[ui] = buckets[ui]->next;
-						DeleteItem(pkSave);
-					}
-				}
-
-				numEntries = 0;
-			}
-
-			//	void		** _vtbl;	// 00
-			uint32_t		numBuckets;	// 08
-			uint32_t		unk0C;		// 0C
-			NiTMapItem** buckets;		// 10
-			uint32_t		numEntries;	// 18
-		};
-
-		// 10
-		template <typename T_key, typename T_data>
-		class NiTPointerMap : public NiTMap <T_key, T_data> {
-		public:
-		};
 	}
 }
 

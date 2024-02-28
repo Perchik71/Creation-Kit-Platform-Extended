@@ -685,14 +685,14 @@
     <ClCompile Include="Editor API\SSE\TESForm.cpp">
       <Filter>Editor API\SSE\Forms</Filter>
     </ClCompile>
-    <ClCompile Include="Editor API\SSE\TESObjectLAND.cpp">
-      <Filter>Editor API\SSE\Forms</Filter>
-    </ClCompile>
     <ClCompile Include="Patches\SSE\FixParamsVTXT.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
     <ClCompile Include="Editor API\FO4\TESFormComponents.cpp">
       <Filter>Editor API\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\MiscNullptr.cpp">
+      <Filter>Patches\SSE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1639,6 +1639,24 @@
     </ClInclude>
     <ClInclude Include="Editor API\SSE\BGSLocalizedString.h">
       <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\TESLandTexture.h">
+      <Filter>Editor API\SSE\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BGSMaterialType.h">
+      <Filter>Editor API\SSE\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BGSImpactDataSet.h">
+      <Filter>Editor API\SSE\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiTMap.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BGSImpactData.h">
+      <Filter>Editor API\SSE\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\MiscNullptr.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

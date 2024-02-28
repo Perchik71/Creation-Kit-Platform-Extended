@@ -116,7 +116,6 @@
     <ClCompile Include="Editor API\SSE\TESDialogSpell.cpp" />
     <ClCompile Include="Editor API\SSE\TESFile.cpp" />
     <ClCompile Include="Editor API\SSE\TESForm.cpp" />
-    <ClCompile Include="Editor API\SSE\TESObjectLAND.cpp" />
     <ClCompile Include="Editor API\UI\UIBaseWindow.cpp" />
     <ClCompile Include="Editor API\UI\UICheckboxControl.cpp" />
     <ClCompile Include="Editor API\UI\UIGraphics.cpp" />
@@ -237,6 +236,7 @@
     <ClCompile Include="Patches\SSE\LoadOptimization.cpp" />
     <ClCompile Include="Patches\SSE\MemoryLeakBSString.cpp" />
     <ClCompile Include="Patches\SSE\MemoryLeakInPreviewWindow.cpp" />
+    <ClCompile Include="Patches\SSE\MiscNullptr.cpp" />
     <ClCompile Include="Patches\SSE\NavMeshInfoMap.cpp" />
     <ClCompile Include="Patches\SSE\NavMeshPseudoDelete.cpp" />
     <ClCompile Include="Patches\SSE\NewFormat171.cpp" />
@@ -369,7 +369,10 @@
     <ClInclude Include="Editor API\FO4\TESObjectARMO.h" />
     <ClInclude Include="Editor API\FO4\TESObjectCELL.h" />
     <ClInclude Include="Editor API\FO4\TESObjectREFR.h" />
+    <ClInclude Include="Editor API\SSE\BGSImpactData.h" />
+    <ClInclude Include="Editor API\SSE\BGSImpactDataSet.h" />
     <ClInclude Include="Editor API\SSE\BGSLocalizedString.h" />
+    <ClInclude Include="Editor API\SSE\BGSMaterialType.h" />
     <ClInclude Include="Editor API\SSE\BGSRenderWindow.h" />
     <ClInclude Include="Editor API\SSE\BSDynamicTriShape.h" />
     <ClInclude Include="Editor API\SSE\BSEffectShaderMaterial.h" />
@@ -388,6 +391,7 @@
     <ClInclude Include="Editor API\SSE\TESDialogSpell.h" />
     <ClInclude Include="Editor API\SSE\TESFile.h" />
     <ClInclude Include="Editor API\SSE\TESForm.h" />
+    <ClInclude Include="Editor API\SSE\TESLandTexture.h" />
     <ClInclude Include="Editor API\SSE\TESObjectCELL.h" />
     <ClInclude Include="Editor API\SSE\TESObjectLAND.h" />
     <ClInclude Include="Editor API\SSE\TESObjectREFR.h" />
@@ -416,6 +420,7 @@
     <ClInclude Include="NiAPI\NiTArray.h" />
     <ClInclude Include="NiAPI\NiTexture.h" />
     <ClInclude Include="NiAPI\NiTransform.h" />
+    <ClInclude Include="NiAPI\NiTMap.h" />
     <ClInclude Include="NiAPI\NiTypes.h" />
     <ClInclude Include="Patches\AllowMultipleWindowAndMaster.h" />
     <ClInclude Include="Patches\ConsolePatch.h" />
@@ -529,6 +534,7 @@
     <ClInclude Include="Patches\SSE\LoadOptimization.h" />
     <ClInclude Include="Patches\SSE\MemoryLeakBSString.h" />
     <ClInclude Include="Patches\SSE\MemoryLeakInPreviewWindow.h" />
+    <ClInclude Include="Patches\SSE\MiscNullptr.h" />
     <ClInclude Include="Patches\SSE\NavMeshInfoMap.h" />
     <ClInclude Include="Patches\SSE\NavMeshPseudoDelete.h" />
     <ClInclude Include="Patches\SSE\NewFormat171.h" />

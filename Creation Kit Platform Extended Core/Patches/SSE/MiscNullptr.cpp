@@ -3,8 +3,7 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
-#include "Editor API/SSE/TESObjectLAND.h"
-#include "FixParamsVTXT.h"
+#include "MiscNullptr.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -12,53 +11,56 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
-			FixParamsVTXTPatch::FixParamsVTXTPatch() : Module(GlobalEnginePtr)
+			static uintptr_t sub1_MiscPatch_ptr = 0;
+
+			MiscPatch::MiscPatch() : Module(GlobalEnginePtr)
 			{}
 
-			bool FixParamsVTXTPatch::HasOption() const
+			bool MiscPatch::HasOption() const
 			{
 				return false;
 			}
 
-			bool FixParamsVTXTPatch::HasCanRuntimeDisabled() const
+			bool MiscPatch::HasCanRuntimeDisabled() const
 			{
 				return false;
 			}
 
-			const char* FixParamsVTXTPatch::GetOptionName() const
+			const char* MiscPatch::GetOptionName() const
 			{
 				return nullptr;
 			}
 
-			const char* FixParamsVTXTPatch::GetName() const
+			const char* MiscPatch::GetName() const
 			{
-				return "Fix VTXT params sections";
+				return "Misc";
 			}
 
-			bool FixParamsVTXTPatch::HasDependencies() const
+			bool MiscPatch::HasDependencies() const
 			{
 				return false;
 			}
 
-			Array<String> FixParamsVTXTPatch::GetDependencies() const
+			Array<String> MiscPatch::GetDependencies() const
 			{
 				return {};
 			}
 
-			bool FixParamsVTXTPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
+			bool MiscPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
 				return (eEditorCurrentVersion >= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_1_6_438) &&
 					(eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST);
 			}
 
-			bool FixParamsVTXTPatch::Activate(const Relocator* lpRelocator,
+			bool MiscPatch::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(0), 
-						(uintptr_t)&EditorAPI::SkyrimSpectialEdition::TESObjectLAND::Layers::HKNormalize);
+					sub1_MiscPatch_ptr =
+						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)),
+							&MiscPatch::sub1);
 
 					return true;
 				}
@@ -66,10 +68,18 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
-			bool FixParamsVTXTPatch::Shutdown(const Relocator* lpRelocator,
+			bool MiscPatch::Shutdown(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
 				return false;
+			}
+
+			bool MiscPatch::sub1(int64_t* a1, int32_t a2)
+			{
+				if (!*a1)
+					return false;
+
+				return fastCall<bool>(sub1_MiscPatch_ptr, a1, a2);
 			}
 		}
 	}

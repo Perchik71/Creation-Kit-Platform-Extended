@@ -87,6 +87,7 @@
 #include "Patches/SSE/IgnoreGroundHeightTest.h"
 #include "Patches/SSE/MemoryLeakBSString.h"
 #include "Patches/SSE/FixParamsVTXT.h"
+#include "Patches/SSE/MiscNullptr.h"
 
 #include "Patches/Windows/SSE/MainWindow.h"
 #include "Patches/Windows/SSE/RenderWindow.h"
@@ -187,6 +188,7 @@ namespace CreationKitPlatformExtended
 				new Patches::IgnoreGroundHeightTestPatch(),
 				new Patches::MemoryLeakBSStringPatch(),
 				new Patches::FixParamsVTXTPatch(),
+				new Patches::MiscPatch(),
 		
 				new Patches::MainWindow(),
 				new Patches::RenderWindow(),

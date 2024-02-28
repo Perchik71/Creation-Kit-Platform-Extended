@@ -178,7 +178,6 @@ namespace CreationKitPlatformExtended
 					fsInitialDisabled		= /*0B*/ 0x800,			// Disable TESObjectREFR
 					fsIgnored				= /*0C*/ 0x1000,		// ?? (from CSE)
 					fsTemporary				= /*0E*/ 0x4000,		// not saved in CK
-					fsVisibleWhenDistant	= /*0F*/ 0x8000,		// ?? (from CSE)
 				};
 			protected:
 				// 06
@@ -214,7 +213,6 @@ namespace CreationKitPlatformExtended
 				inline bool IsIgnored() const { return (_FormFlags & FormFlags::fsIgnored); }
 				inline bool IsTemporary() const { return (_FormFlags & FormFlags::fsTemporary); }
 				inline bool IsQuestItem() const { return (_FormFlags & FormFlags::fsQuestItem); }
-				inline bool IsVisibleWhenDistant() const { return (_FormFlags & FormFlags::fsVisibleWhenDistant); }
 			public:
 				static TESForm* GetFormByNumericID(uint32_t SearchID);
 				static void* AlteredFormList_Create(Array* Array, uint32_t Unknown);

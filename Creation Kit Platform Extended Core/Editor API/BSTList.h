@@ -63,8 +63,8 @@ namespace CreationKitPlatformExtended
 				eListInvalid = -1,
 			};
 			struct _Node {
-				T* item;	// 00
-				_Node* next;	// 04
+				T* item;		// 00
+				_Node* next;	// 08
 
 				T* Item(VOID) const { return item; }
 				_Node* Next(VOID) const { return next; }
