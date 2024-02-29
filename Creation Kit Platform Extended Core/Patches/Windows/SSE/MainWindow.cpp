@@ -50,6 +50,7 @@ namespace CreationKitPlatformExtended
 
 			void OutputFormInfo(uint32_t FormID)
 			{
+				
 				if (FormID > 0)
 				{
 					__try
@@ -57,8 +58,11 @@ namespace CreationKitPlatformExtended
 						auto form = TESForm::GetFormByNumericID(FormID);
 						if (form)
 						{
-							_CONSOLE("Form info -> \"%s\" (0x%08X) type %02X ptr %p",
-								form->EditorID, form->FormID, (uint16_t)form->Type, form);
+							char szBuf[140] = { 0 };
+							form->DebugInfo(szBuf, 140);
+							
+							_CONSOLE("DebugInfo -> %s type %02X ptr %p",
+								szBuf, (uint16_t)form->Type, form);
 #if CKPE_NEED_GEN_FORMDUMP_DBG
 							if (form->Type == TESForm::ftLandspace)
 								((TESObjectLAND*)form)->DumpLayers("land_layers.bin");
@@ -67,7 +71,7 @@ namespace CreationKitPlatformExtended
 					}
 					__except (EXCEPTION_EXECUTE_HANDLER)
 					{
-						_CONSOLE("Form info -> Incorrect FormID");
+						_CONSOLE("DebugInfo -> Incorrect FormID");
 					}
 				}
 			}

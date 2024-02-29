@@ -38,6 +38,7 @@ namespace CreationKitPlatformExtended
 				// The function returns BSFadeNode, it has not been studied, I use parent class
 				inline NiAPI::NiNode* GetFadeNode() const { return thisVirtualCall<NiAPI::NiNode*>(0x458, this); }
 				inline TESForm* GetParent() const { return _Parent; }
+				inline void SetParent(TESForm* NewParentForm) { thisVirtualCall<void>(0x4F8, this, NewParentForm); MarkActive(); }
 				inline NiAPI::NiPoint3 GetRotate() const { return _Rotate; }
 				inline NiAPI::NiPoint3 GetPosition() const { return _Position; }
 				inline float GetScale() const { return (float)_Scale / 100; }
@@ -45,6 +46,9 @@ namespace CreationKitPlatformExtended
 				inline bool IsInvisible() const { return (_FormFlags & SpecialFlagsForm::fs3DInvisible); }
 				inline bool IsChildrenInvisible() const { return (_FormFlags & SpecialFlagsForm::fsChildren3DInvisible); }
 				inline bool IsFrozen() const { return (_FormFlags & SpecialFlagsForm::fsFrozen); }
+
+				// Added patch "Add Change Ref" (only 1.6 and newer)
+				inline static void (*SetParentWithRedraw)(TESObjectREFR*, TESForm*);
 			private:
 				TESForm* _Parent;
 				NiAPI::NiPoint3 _Rotate;

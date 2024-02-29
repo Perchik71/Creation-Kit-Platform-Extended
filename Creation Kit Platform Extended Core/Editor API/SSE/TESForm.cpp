@@ -40,6 +40,26 @@ namespace CreationKitPlatformExtended
 				thisVirtualCall<const char*>(0x2D0, this, hParentWnd, a1, a2);
 			}
 
+			bool TESForm::CanPreview() const
+			{
+				return thisVirtualCall<bool>(0x188, this);
+			}
+
+			void TESForm::DebugInfo(char* Buffer, uint32_t BufferSize) const
+			{
+				thisVirtualCall<void>(0xF8, this, Buffer, BufferSize);
+			}
+
+			void TESForm::MarkDelete(bool Value) const
+			{
+				thisVirtualCall<void>(0x160, this, Value);
+			}
+
+			void TESForm::MarkActive(bool Value) const
+			{
+				thisVirtualCall<void>(0x168, this, Value);
+			}
+
 			TESForm* TESForm::GetFormByNumericID(uint32_t SearchID)
 			{
 				return OldGetFormByNumericID(SearchID);

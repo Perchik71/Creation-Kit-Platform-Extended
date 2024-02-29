@@ -694,6 +694,9 @@
     <ClCompile Include="Patches\SSE\MiscNullptr.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\AddChangeRef.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1656,6 +1659,12 @@
       <Filter>Editor API\SSE\Forms</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SSE\MiscNullptr.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BGSSoundDescriptorForm.h">
+      <Filter>Editor API\SSE\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\AddChangeRef.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>

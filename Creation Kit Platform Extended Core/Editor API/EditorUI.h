@@ -17,6 +17,8 @@ namespace CreationKitPlatformExtended
 			constexpr static const char* UI_USER_DATA_SELECT_OBJECT_ONLY = "SelectObjectsOnly";
 			constexpr static const char* UI_USER_DATA_VISIBLE_OBJECT_ONLY = "VisibleObjectsOnly";
 
+			constexpr static const char* UI_EDITOR_CHANGEBASEFORM_STR = "Replace base for select Ref";
+
 			constexpr static uint32_t UI_EDITOR_TOOLBAR = 1;
 			constexpr static uint32_t UI_EDITOR_STATUSBAR = 40139;
 			constexpr static uint32_t UI_EDITOR_TOGGLEOBJECTWND = 40199;	// Object Window's
@@ -25,7 +27,8 @@ namespace CreationKitPlatformExtended
 			constexpr static uint32_t UI_EDITOR_TOGGLEGRASS_BUTTON = 40960;	// Main toolbar
 			constexpr static uint32_t UI_EDITOR_TOGGLEGRASS = 40963;		// "View" menu
 			constexpr static uint32_t UI_EDITOR_OPENFORMBYID = 52001;		// Sent from the LogWindow on double click
-			
+			constexpr static uint32_t UI_EDITOR_CHANGEBASEFORM = 40670;		// "Change Base Form"
+
 			constexpr static uint32_t UI_DATA_DIALOG_PLUGINLISTVIEW = 1056;
 
 			EditorUI();
