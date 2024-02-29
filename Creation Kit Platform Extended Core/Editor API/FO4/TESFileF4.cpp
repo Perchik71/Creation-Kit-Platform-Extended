@@ -77,6 +77,9 @@ namespace CreationKitPlatformExtended
 					{
 						LPCSTR extension = strrchr(m_FileName, '.');
 
+						// forced remove esm flag
+						m_Flags &= ~FILE_RECORD_ESM;
+
 						if (extension && !_stricmp(extension, ".esm"))
 						{
 							Patches::ConsolePatch::Log("Regenerating ONAM data for master file '%s'...\n", m_FileName);

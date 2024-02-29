@@ -82,6 +82,9 @@ namespace CreationKitPlatformExtended
 					{
 						const char* extension = strrchr(m_FileName, '.');
 
+						// forced remove esm flag
+						m_RecordFlags &= ~FILE_RECORD_ESM;
+
 						if (extension && !_stricmp(extension, ".esm"))
 						{
 							ConsolePatch::Log("Regenerating ONAM data for master file '%s'...\n", m_FileName);
