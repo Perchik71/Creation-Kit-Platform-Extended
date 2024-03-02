@@ -59,7 +59,7 @@ namespace CreationKitPlatformExtended
 			{
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
-					TESDataHandler::InstancePtr = (TESDataHandler**)lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
+					TESDataHandler::Singleton = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
 
 					return true;
 				}

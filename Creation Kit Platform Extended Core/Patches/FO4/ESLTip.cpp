@@ -82,7 +82,7 @@ namespace CreationKitPlatformExtended
 				strcat_s(dst, max_size, src);
 
 				// Checking for the current active plugin
-				auto active_plugin = TESDataHandler::Instance->ActiveMod;
+				auto active_plugin = TESDataHandler::Singleton.Singleton->ActiveMod;
 				if (active_plugin)
 				{
 					auto total = active_plugin->GetHeaderInfo().numRecords;

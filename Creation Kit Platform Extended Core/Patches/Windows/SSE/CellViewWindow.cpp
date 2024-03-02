@@ -393,7 +393,7 @@ namespace CreationKitPlatformExtended
 					// Skip the entry if "Selected Only" is checked
 					if (*allowInsert && static_cast<bool>(GetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_SELECT_OBJECT_ONLY)))
 					{
-						auto Renderer = BGSRenderWindow::GetInstance();
+						auto Renderer = BGSRenderWindow::Singleton.Singleton;
 						if (Renderer)
 						{
 							if (!Renderer->PickHandler->Has(form))

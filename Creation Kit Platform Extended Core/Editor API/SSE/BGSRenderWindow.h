@@ -4,8 +4,9 @@
 
 #pragma once
 
-#include "NiAPI\NiTypes.h"
-#include "NiAPI\NiNode.h"
+#include "Core/Singleton.h"
+#include "NiAPI/NiTypes.h"
+#include "NiAPI/NiNode.h"
 #include "TESObjectREFR.h"
 #include "BSPointerHandleManager.h"
 
@@ -145,8 +146,7 @@ namespace CreationKitPlatformExtended
 				virtual ~BGSRenderWindow() = default;
 				virtual void Refresh(const uint32_t& flag);		// flag always equal 2
 
-				inline static BGSRenderWindow** Instance;
-				inline static BGSRenderWindow* GetInstance() { return *Instance; }
+				inline static Core::ISingleton<BGSRenderWindow> Singleton;
 				inline static TESForm* GetRef(uint32_t UniqueId)
 				{
 					auto Ret = (TESObjectREFR*)GetRefFormByUniqueId(UniqueId);
@@ -163,8 +163,8 @@ namespace CreationKitPlatformExtended
 				inline BGSRenderWindowCamera* GetCamera() const { return _Camera; }
 				inline BGSRenderOrthoGrid* GetOrthoGrid() const { return _OrthoGrid; }
 				inline BGSPickHandler* GetPickHandler() const { return _PickHandler; }
-				inline TESForm* GetCurrentCell() const { return _CurrentCell[0]; }
-				inline TESForm* GetCurrentCellParentExt() const { return _CurrentCell[1]; }
+				inline TESObjectCELL* GetCurrentCell() const { return _CurrentCell[0]; }
+				inline TESObjectCELL* GetCurrentCellParentExt() const { return _CurrentCell[1]; }
 
 				READ_PROPERTY(GetWindowHandle) HWND WindowHandle;
 				READ_PROPERTY(GetWindowSize) SIZE WindowSize;
@@ -176,8 +176,8 @@ namespace CreationKitPlatformExtended
 				READ_PROPERTY(GetCamera) BGSRenderWindowCamera* Camera;
 				READ_PROPERTY(GetOrthoGrid) BGSRenderOrthoGrid* OrthoGrid;
 				READ_PROPERTY(GetPickHandler) BGSPickHandler* PickHandler;
-				READ_PROPERTY(GetCurrentCell) TESForm* CurrentCell;
-				READ_PROPERTY(GetCurrentCellParentExt) TESForm* CurrentCellParentExt;
+				READ_PROPERTY(GetCurrentCell) TESObjectCELL* CurrentCell;
+				READ_PROPERTY(GetCurrentCellParentExt) TESObjectCELL* CurrentCellParentExt;
 			private:
 				struct SceneTag
 				{
@@ -197,7 +197,7 @@ namespace CreationKitPlatformExtended
 				BSCullingProcess* _CullingProcess;
 				BSPortalGraphEntry* _PortalGraphEntry;
 				SceneTag* _Scene;
-				TESForm* _CurrentCell[2];
+				TESObjectCELL* _CurrentCell[2];
 				char pad98[0x04];
 				SIZE _WindowSize;
 				POINT _MousePos[2];
@@ -221,7 +221,7 @@ namespace CreationKitPlatformExtended
 					inline uint32_t GetIndex() const { return _index; }
 					inline TESForm* GetRef() const
 					{
-						auto Renderer = BGSRenderWindow::GetInstance();
+						auto Renderer = BGSRenderWindow::Singleton.Singleton;
 						if (!Renderer) return nullptr;
 						return Renderer->GetRef(_index);
 					}

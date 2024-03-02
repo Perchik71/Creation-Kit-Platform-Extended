@@ -4,6 +4,7 @@
 
 #include "Core/Engine.h"
 #include "UITheme/VarCommon.h"
+#include "Editor API/EditorUI.h"
 #include "ObjectWindowF4.h"
 
 #define UI_OBJECT_WINDOW_CHECKBOX			6329
@@ -325,6 +326,38 @@ namespace CreationKitPlatformExtended
 							LPOBJWND lpObjWnd = (*iterator).second;
 							if (lpObjWnd) SplitterResizeObjectWndChildControls(lpObjWnd);
 						}
+						return S_OK;
+					}
+					else if (param == EditorAPI::EditorUI::UI_EDITOR_CHANGEBASEFORM)
+					{
+						//auto Renderer = BGSRenderWindow::GetInstance();
+						//if (Renderer && Renderer->PickHandler)
+						//{
+						//	// get the desired form from the selected list
+						//	auto ItemList = GetDlgItem(Hwnd, 1041);
+						//	Assert(ItemList);
+						//	auto ItemCount = ListView_GetSelectedCount(ItemList);
+						//	if (ItemCount != 1)
+						//		MessageBoxA(0, "You have too many forms selected in the Object Window or not selected at all.\n"
+						//			"1 item must be selected.", "Error", MB_OK | MB_ICONERROR);
+						//	auto Pick = Renderer->PickHandler;
+						//	if (Pick->Count != 1)
+						//		MessageBoxA(0, "1 object must be selected in Render Window, but no more.",
+						//			"Error", MB_OK | MB_ICONERROR);
+						//	else
+						//	{
+						//		// get the Ref selected on the render window
+						//		auto Ref = (TESObjectREFR*)(Pick->Items->First->Ref);
+						//		Assert(Ref);
+
+						//		auto Form = (TESForm*)EditorAPI::EditorUI::ListViewGetSelectedItem(ItemList);
+						//		Assert(Form);
+
+						//		// Replace the parent form and update
+						//		TESObjectREFR::SetParentWithRedraw(Ref, Form);
+						//	}
+						//}
+
 						return S_OK;
 					}
 				}

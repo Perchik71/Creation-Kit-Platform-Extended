@@ -330,6 +330,7 @@
     <ClInclude Include="Core\RelocationDatabase.h" />
     <ClInclude Include="Core\Relocator.h" />
     <ClInclude Include="Core\ResultCoreErrNo.h" />
+    <ClInclude Include="Core\Singleton.h" />
     <ClInclude Include="Core\TracerManager.h" />
     <ClInclude Include="Core\TypeInfo\ms_rtti.h" />
     <ClInclude Include="Crc32.h" />
@@ -348,6 +349,7 @@
     <ClInclude Include="Editor API\FO4\BGSModelMaterialSwap.h" />
     <ClInclude Include="Editor API\FO4\BGSPreviewTransform.h" />
     <ClInclude Include="Editor API\FO4\BGSPrimitive.h" />
+    <ClInclude Include="Editor API\FO4\BGSRenderWindow.h" />
     <ClInclude Include="Editor API\FO4\BGSSoundTagComponent.h" />
     <ClInclude Include="Editor API\FO4\BGSTransform.h" />
     <ClInclude Include="Editor API\FO4\BGSVoiceType.h" />

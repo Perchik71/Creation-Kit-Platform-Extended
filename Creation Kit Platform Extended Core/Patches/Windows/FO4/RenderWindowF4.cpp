@@ -5,6 +5,7 @@
 #include "Core/Engine.h"
 #include "RenderWindowF4.h"
 #include "Editor API/FO4/TESF4.h"
+#include "Editor API/FO4/BGSRenderWindow.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -62,6 +63,7 @@ namespace CreationKitPlatformExtended
 						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), (uintptr_t)&HKWndProc);
 					_TempDrawArea = (Area*)lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
 					TESUnknown::Instance = (TESUnknown*)lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2));
+					BGSRenderWindow::Singleton = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(3));
 					
 					return true;
 				}

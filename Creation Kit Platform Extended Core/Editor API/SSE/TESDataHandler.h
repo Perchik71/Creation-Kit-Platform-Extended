@@ -4,7 +4,8 @@
 
 #pragma once
 
-#include "NiAPI\NiTArray.h"
+#include "NiAPI/NiTArray.h"
+#include "Core/Singleton.h"
 #include "TESFile.h"
 #include "TESObjectREFR.h"
 #include "TESObjectCELL.h"
@@ -191,8 +192,8 @@ namespace CreationKitPlatformExtended
 				inline const TESFileArray* GetLoadedMods() const { return &modList.loadedMods; }
 				inline TESFile* GetActiveMod() const { return activePlugin; }
 				inline bool IsActiveMod() const { return activePlugin != nullptr; }
-				inline static TESDataHandler* GetInstance() { return *InstancePtr; }
-				inline static TESDataHandler** InstancePtr;
+
+				inline static Core::ISingleton<TESDataHandler> Singleton;
 			public:
 				READ_PROPERTY(GetMods) TESFileList* Mods;
 				READ_PROPERTY(GetLoadedMods) const TESFileArray* LoadedMods;

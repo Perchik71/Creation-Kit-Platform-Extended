@@ -103,7 +103,7 @@ namespace CreationKitPlatformExtended
 				strcat_s(dst, max_size, src);
 
 				// Checking for the current active plugin
-				auto active_plugin = TESDataHandler::GetInstance()->ActiveMod;
+				auto active_plugin = TESDataHandler::Singleton.Singleton->ActiveMod;
 				if (active_plugin && (*((uintptr_t*)pointer_NewFormat171_data)))
 				{
 					auto total = active_plugin->GetHeaderInfo().numRecords;

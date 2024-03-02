@@ -15,6 +15,8 @@ namespace CreationKitPlatformExtended
 			using namespace CreationKitPlatformExtended::EditorAPI;
 			using namespace CreationKitPlatformExtended::EditorAPI::Fallout4;
 
+			uintptr_t pointer_TESDataHandler_data = 0;
+
 			TESDataHandlerPatch::TESDataHandlerPatch() : Module(GlobalEnginePtr)
 			{}
 
@@ -59,7 +61,8 @@ namespace CreationKitPlatformExtended
 			{
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
-					TESDataHandler::Instance = (TESDataHandler*)lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
+					pointer_TESDataHandler_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
+					TESDataHandler::Singleton = (uintptr_t)&pointer_TESDataHandler_data;
 
 					return true;
 				}

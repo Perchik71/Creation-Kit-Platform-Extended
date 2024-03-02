@@ -299,7 +299,7 @@ namespace CreationKitPlatformExtended
 					}
 					else if (param == EditorAPI::EditorUI::UI_EDITOR_CHANGEBASEFORM) 
 					{
-						auto Renderer = BGSRenderWindow::GetInstance();
+						auto Renderer = BGSRenderWindow::Singleton.Singleton;
 						if (Renderer && Renderer->PickHandler)
 						{
 							// get the desired form from the selected list

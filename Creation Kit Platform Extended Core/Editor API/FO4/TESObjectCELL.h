@@ -33,9 +33,8 @@ namespace CreationKitPlatformExtended
 		namespace Fallout4
 		{
 			class TESObjectCELL : public TESForm {
-			private:
-				enum { eTypeID = FormType::ftCell };
 			public:
+				constexpr static uint8_t TYPE_ID = ftCell;
 				// 08
 				struct CellCoordinates { int32_t X, Y; };
 				// 8C

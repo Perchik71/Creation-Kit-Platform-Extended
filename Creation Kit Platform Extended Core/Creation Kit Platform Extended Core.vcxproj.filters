@@ -1667,6 +1667,12 @@
     <ClInclude Include="Patches\SSE\AddChangeRef.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
+    <ClInclude Include="Editor API\FO4\BGSRenderWindow.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Singleton.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version\resource_version.rc">

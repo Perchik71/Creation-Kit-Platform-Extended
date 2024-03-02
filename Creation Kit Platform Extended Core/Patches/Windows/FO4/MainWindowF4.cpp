@@ -456,8 +456,8 @@ namespace CreationKitPlatformExtended
 							return 0;
 							case UI_EXTMENU_SDM:
 							{
-								bool ExtremlyMode = _READ_OPTION_BOOL("CreationKit", "bBSPointerHandleExtremly", false);
-								if (ExtremlyMode)
+								bool ExtremlyMode = EditorAPI::Fallout4::BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId;
+								if (ExtremlyMode == 1)
 								{
 									auto head = EditorAPI::Fallout4::BSPointerHandleManagerInterface_Extended::GetHead();
 									auto tail = EditorAPI::Fallout4::BSPointerHandleManagerInterface_Extended::GetTail();
@@ -468,7 +468,15 @@ namespace CreationKitPlatformExtended
 											(long double)EditorAPI::Fallout4::BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT));
 								}
 								else
-									MessageBoxA(0, "Not implemented for the original version of the manager", "Info", MB_OK | MB_ICONINFORMATION);
+								{
+									auto head = EditorAPI::Fallout4::BSPointerHandleManagerInterface_Original::GetHead();
+									auto tail = EditorAPI::Fallout4::BSPointerHandleManagerInterface_Original::GetTail();
+
+									ConsolePatch::Log("Dump SDM Info:\n\tHead: 0x%08X\n\tTail: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",
+										head, tail, EditorAPI::Fallout4::BSUntypedPointerHandle_Original::MAX_HANDLE_COUNT,
+										((((long double)head) * 100.0f) /
+											(long double)EditorAPI::Fallout4::BSUntypedPointerHandle_Original::MAX_HANDLE_COUNT));
+								}
 							}
 							return 0;
 							case UI_EXTMENU_HARDCODEDFORMS:

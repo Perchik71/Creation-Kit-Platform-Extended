@@ -38,8 +38,8 @@ namespace CreationKitPlatformExtended
 
 			class TESObjectREFR_Original : public TESObjectREFR_base_Original
 			{
-			private:
-				enum { eTypeID = FormType::ftReference };
+			public:
+				constexpr static uint8_t TYPE_ID = FormType::ftReference;
 				enum SpecialFlagsForm 
 				{
 					fs3DInvisible = 1 << 31,
@@ -87,8 +87,8 @@ namespace CreationKitPlatformExtended
 
 			class TESObjectREFR_Extremly : public TESObjectREFR_base_Extremly
 			{
-			private:
-				enum { eTypeID = FormType::ftReference };
+			public:
+				constexpr static uint8_t TYPE_ID = FormType::ftReference;
 				enum SpecialFlagsForm {
 					// https://github.com/shadeMe/Construction-Set-Extender/blob/master/EditorAPI/TESObjectREFR.h
 					fs3DInvisible = 1 << 31,
@@ -133,6 +133,9 @@ namespace CreationKitPlatformExtended
 				PROPERTY(GetScaleFloat, SetScaleFloat) float ScaleFloat;
 			};
 			static_assert(sizeof(TESObjectREFR_Extremly) == 0x140);
+
+			// IncRef and DefRef - NO USE!!!
+			typedef TESObjectREFR_Original TESObjectREFR;
 		}
 	}
 }
