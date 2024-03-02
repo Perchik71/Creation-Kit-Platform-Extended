@@ -396,7 +396,7 @@ namespace CreationKitPlatformExtended
 						auto Renderer = BGSRenderWindow::Singleton.Singleton;
 						if (Renderer)
 						{
-							if (!Renderer->PickHandler->Has(form))
+							if (!Renderer->PickHandler->Has((TESObjectREFR*)form))
 								*allowInsert = false;
 						}
 					}

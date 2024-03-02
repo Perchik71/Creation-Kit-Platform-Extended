@@ -130,6 +130,7 @@
     <ClCompile Include="Patches\DisableAssertion.cpp" />
     <ClCompile Include="Patches\FaceGen.cpp" />
     <ClCompile Include="Patches\FlowChartXPatch.cpp" />
+    <ClCompile Include="Patches\FO4\AddChangeRefF4.cpp" />
     <ClCompile Include="Patches\FO4\AllowSaveESMandMasterESPF4.cpp" />
     <ClCompile Include="Patches\FO4\AssertD3D11.cpp" />
     <ClCompile Include="Patches\FO4\BSArchiveManagerModdedF4.cpp" />
@@ -237,7 +238,6 @@
     <ClCompile Include="Patches\SSE\LoadOptimization.cpp" />
     <ClCompile Include="Patches\SSE\MemoryLeakBSString.cpp" />
     <ClCompile Include="Patches\SSE\MemoryLeakInPreviewWindow.cpp" />
-    <ClCompile Include="Patches\SSE\MiscNullptr.cpp" />
     <ClCompile Include="Patches\SSE\NavMeshInfoMap.cpp" />
     <ClCompile Include="Patches\SSE\NavMeshPseudoDelete.cpp" />
     <ClCompile Include="Patches\SSE\NewFormat171.cpp" />
@@ -334,6 +334,8 @@
     <ClInclude Include="Core\TracerManager.h" />
     <ClInclude Include="Core\TypeInfo\ms_rtti.h" />
     <ClInclude Include="Crc32.h" />
+    <ClInclude Include="Editor API\BGSClasses.h" />
+    <ClInclude Include="Editor API\BGSPickHandler.h" />
     <ClInclude Include="Editor API\BGStringLocalize.h" />
     <ClInclude Include="Editor API\BSHandleRefObject.h" />
     <ClInclude Include="Editor API\BSReadWriteLock.h" />
@@ -350,6 +352,7 @@
     <ClInclude Include="Editor API\FO4\BGSPreviewTransform.h" />
     <ClInclude Include="Editor API\FO4\BGSPrimitive.h" />
     <ClInclude Include="Editor API\FO4\BGSRenderWindow.h" />
+    <ClInclude Include="Editor API\FO4\BGSRenderWindowCamera.h" />
     <ClInclude Include="Editor API\FO4\BGSSoundTagComponent.h" />
     <ClInclude Include="Editor API\FO4\BGSTransform.h" />
     <ClInclude Include="Editor API\FO4\BGSVoiceType.h" />
@@ -377,6 +380,7 @@
     <ClInclude Include="Editor API\SSE\BGSLocalizedString.h" />
     <ClInclude Include="Editor API\SSE\BGSMaterialType.h" />
     <ClInclude Include="Editor API\SSE\BGSRenderWindow.h" />
+    <ClInclude Include="Editor API\SSE\BGSRenderWindowCamera.h" />
     <ClInclude Include="Editor API\SSE\BGSSoundDescriptorForm.h" />
     <ClInclude Include="Editor API\SSE\BSDynamicTriShape.h" />
     <ClInclude Include="Editor API\SSE\BSEffectShaderMaterial.h" />
@@ -432,6 +436,7 @@
     <ClInclude Include="Patches\DisableAssertion.h" />
     <ClInclude Include="Patches\FaceGen.h" />
     <ClInclude Include="Patches\FlowChartXPatch.h" />
+    <ClInclude Include="Patches\FO4\AddChangeRefF4.h" />
     <ClInclude Include="Patches\FO4\AllowSaveESMandMasterESPF4.h" />
     <ClInclude Include="Patches\FO4\AssertD3D11.h" />
     <ClInclude Include="Patches\FO4\BSArchiveManagerModdedF4.h" />
@@ -539,7 +544,6 @@
     <ClInclude Include="Patches\SSE\LoadOptimization.h" />
     <ClInclude Include="Patches\SSE\MemoryLeakBSString.h" />
     <ClInclude Include="Patches\SSE\MemoryLeakInPreviewWindow.h" />
-    <ClInclude Include="Patches\SSE\MiscNullptr.h" />
     <ClInclude Include="Patches\SSE\NavMeshInfoMap.h" />
     <ClInclude Include="Patches\SSE\NavMeshPseudoDelete.h" />
     <ClInclude Include="Patches\SSE\NewFormat171.h" />

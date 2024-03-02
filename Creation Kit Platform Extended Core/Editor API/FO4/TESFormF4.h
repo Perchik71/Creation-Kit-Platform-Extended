@@ -214,7 +214,6 @@ namespace CreationKitPlatformExtended
 					fsInitialDisabled		= /*0B*/ 0x800,			// Disable TESObjectREFR
 					fsIgnored				= /*0C*/ 0x1000,		// ?? (from CSE)
 					fsTemporary				= /*0E*/ 0x4000,		// not saved in CK
-					fsVisibleWhenDistant	= /*0F*/ 0x8000,		// ?? (from CSE)
 				};
 			protected:
 				// 06
@@ -236,6 +235,7 @@ namespace CreationKitPlatformExtended
 				void LoadForm(TESFile* file);									// vtbl->0D0
 				void SaveForm(TESFile* file);									// vtbl->0D8
 				FormType GetFormType() const;									// vtbl->120
+				bool CanPreview() const;										// vtbl->1D0
 				void DebugInfo(char* buffer, uint32_t dwSize) const;			// vtbl->128
 				void MarkAsDeleted(bool state = true);							// vtbl->198 
 				void MarkAsChanged(bool state = true);							// vtbl->1A0 
@@ -255,12 +255,13 @@ namespace CreationKitPlatformExtended
 				inline bool IsIgnored() const { return (_FormFlags & FormFlags::fsIgnored); }
 				inline bool IsTemporary() const { return (_FormFlags & FormFlags::fsTemporary); }
 				inline bool IsQuestItem() const { return (_FormFlags & FormFlags::fsQuestItem); }
-				inline bool IsVisibleWhenDistant() const { return (_FormFlags & FormFlags::fsVisibleWhenDistant); }
 			public:
 				BSString GetID() const;
 				inline uint32_t GetFormFlags() const { return _FormFlags; }
 				inline uint32_t GetFormID() const { return _FormID; }
 				inline const char* GetEditorID_NoVTable() const { return _EntryEditID ? _EntryEditID->Get<char>(TRUE) : nullptr; }
+
+				static TESForm* GetFormByNumericID(const uint32_t SearchID);
 			public:
 				READ_PROPERTY(IsModified) bool Active;
 				READ_PROPERTY(GetFormID) uint32_t FormID;
@@ -271,8 +272,6 @@ namespace CreationKitPlatformExtended
 				READ_PROPERTY(GetFormTypeShortStr) const char* TypeStr;
 			};
 			static_assert(sizeof(TESForm) == 0x28, "TESForm class should be the size of 0x28");
-
-			TESForm* GetFormByNumericID(const uint32_t SearchID);
 		}
 	}
 }

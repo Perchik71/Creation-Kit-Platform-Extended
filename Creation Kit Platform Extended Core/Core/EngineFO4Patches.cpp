@@ -39,6 +39,7 @@
 #include "Patches/FO4/CreateDDS.h"
 #include "Patches/FO4/ESLTip.h"
 #include "Patches/FO4/PreVis.h"
+#include "Patches/FO4/AddChangeRefF4.h"
 
 #include "Patches/Windows/FO4/MainWindowF4.h"
 #include "Patches/Windows/FO4/ObjectWindowF4.h"
@@ -91,6 +92,7 @@ namespace CreationKitPlatformExtended
 				new Patches::CreateDDSPatch(),
 				new Patches::ESLTipPatch(),
 				new Patches::PreVisPatch(),
+				new Patches::AddChangeRefPatch(),
 				
 				new Patches::MainWindow(),
 				new Patches::ObjectWindow(),

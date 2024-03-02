@@ -12,14 +12,14 @@ namespace CreationKitPlatformExtended
 {
 	namespace Patches
 	{
-		namespace SkyrimSpectialEdition
+		namespace Fallout4
 		{
 			using namespace CreationKitPlatformExtended::Core;
 
-			class MiscPatch : public Module
+			class AddChangeRefPatch : public Module
 			{
 			public:
-				MiscPatch();
+				AddChangeRefPatch();
 
 				virtual bool HasOption() const;
 				virtual bool HasCanRuntimeDisabled() const;
@@ -27,16 +27,17 @@ namespace CreationKitPlatformExtended
 				virtual const char* GetName() const;
 				virtual bool HasDependencies() const;
 				virtual Array<String> GetDependencies() const;
-
-				static bool sub1(int64_t* a1, int32_t a2);
+				
+				static bool HKInsertMenuA(HMENU hMenu, uint32_t uPosition, uint32_t uFlags, 
+					uintptr_t uIDNewItem, const char* lpNewItem);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
 				virtual bool Activate(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 				virtual bool Shutdown(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 			private:
-				MiscPatch(const MiscPatch&) = default;
-				MiscPatch& operator=(const MiscPatch&) = default;
+				AddChangeRefPatch(const AddChangeRefPatch&) = default;
+				AddChangeRefPatch& operator=(const AddChangeRefPatch&) = default;
 			};
 		}
 	}

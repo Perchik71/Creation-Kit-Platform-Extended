@@ -76,6 +76,8 @@ namespace CreationKitPlatformExtended
 				inline bool IsChildrenInvisible() const { return (_FormFlags & SpecialFlagsForm::fsChildren3DInvisible); }
 				inline bool IsFrozen() const { return (_FormFlags & SpecialFlagsForm::fsFrozen); }
 
+				inline static void (*SetParentWithRedraw)(TESObjectREFR_Original*, TESForm*);
+
 				READ_PROPERTY2(TESObjectCELL*, ParentCell, _parentCell);
 				READ_PROPERTY2(TESForm*, Parent, _baseForm);
 				PROPERTY(GetPosition, SetPosition) NiPoint3 Position;

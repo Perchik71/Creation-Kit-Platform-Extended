@@ -414,7 +414,7 @@ namespace CreationKitPlatformExtended
 
 				static ObjectType* GetPointer(uint32_t UniqueId)
 				{
-					const auto handleIndex = UniqueId & HandleType::INDEX_BIT;
+					const auto handleIndex = UniqueId & HandleType::MASK_INDEX_BIT;
 					auto& arrayHandle = Manager::HandleEntries[handleIndex];
 					auto Out = static_cast<ObjectType*>(arrayHandle.GetPointer());
 

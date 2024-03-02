@@ -47,11 +47,14 @@ namespace CreationKitPlatformExtended
 				{
 					__try
 					{
-						auto form = GetFormByNumericID(FormID);
+						auto form = TESForm::GetFormByNumericID(FormID);
 						if (form)
 						{
-							_CONSOLE("Form info -> \"%s\" (0x%08X) type %02X ptr %p",
-								form->EditorID, form->FormID, (uint16_t)form->Type, form);
+							char szBuf[140] = { 0 };
+							form->DebugInfo(szBuf, 140);
+							
+							_CONSOLE("DebugInfo -> %s type %02X ptr %p",
+								szBuf, (uint16_t)form->Type, form);
 						}
 					}
 					__except (EXCEPTION_EXECUTE_HANDLER)
@@ -352,7 +355,7 @@ namespace CreationKitPlatformExtended
 							return 0;
 							case EditorAPI::EditorUI::UI_EDITOR_OPENFORMBYID:
 							{
-								auto form = GetFormByNumericID(static_cast<uint32_t>(lParam));
+								auto form = TESForm::GetFormByNumericID(static_cast<uint32_t>(lParam));
 								if (form)
 									(*(void(__fastcall**)(TESForm*, HWND, __int64, __int64))(*(__int64*)form + 0x340))
 									  (form, Hwnd, 0, 1);
@@ -483,7 +486,7 @@ namespace CreationKitPlatformExtended
 							{
 								for (uint32_t i = 0; i < 4096; i++)
 								{
-									auto form = GetFormByNumericID(i);
+									auto form = TESForm::GetFormByNumericID(i);
 									if (form)
 									{
 										form->MarkAsChanged(TRUE); 

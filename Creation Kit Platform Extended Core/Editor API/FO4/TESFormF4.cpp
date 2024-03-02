@@ -46,6 +46,11 @@ namespace CreationKitPlatformExtended
 				return thisVirtualCall<TESForm::FormType>(0x120, this);
 			}
 
+			bool TESForm::CanPreview() const
+			{
+				return thisVirtualCall<bool>(0x1D0, this);
+			}
+
 			void TESForm::DebugInfo(char* buffer, uint32_t dwSize) const 
 			{
 				thisVirtualCall<void>(0x128, this, buffer, dwSize);
@@ -99,7 +104,7 @@ namespace CreationKitPlatformExtended
 					return GetEditorID();
 			}
 
-			TESForm* GetFormByNumericID(const uint32_t SearchID)
+			TESForm* TESForm::GetFormByNumericID(const uint32_t SearchID)
 			{
 				return ((TESForm*(__fastcall*)(uint32_t))pointer_TESForm_sub)(SearchID);
 			}
