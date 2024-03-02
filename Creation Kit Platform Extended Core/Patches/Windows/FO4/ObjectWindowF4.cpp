@@ -356,6 +356,8 @@ namespace CreationKitPlatformExtended
 
 								// Replace the parent form and update
 								TESObjectREFR::SetParentWithRedraw(Ref, Form);
+								// Fix no mark change
+								Ref->MarkAsChanged();
 							}
 						}
 
