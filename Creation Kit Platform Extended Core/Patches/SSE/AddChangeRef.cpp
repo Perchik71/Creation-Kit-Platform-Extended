@@ -63,6 +63,8 @@ namespace CreationKitPlatformExtended
 					*(uintptr_t*)&EditorAPI::SkyrimSpectialEdition::TESObjectREFR::SetParentWithRedraw =
 						lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
 
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&HKDeleteMenu);
+
 					return true;
 				}
 
@@ -81,6 +83,12 @@ namespace CreationKitPlatformExtended
 				InsertMenuA(hMenu, uPosition, uFlags, uIDNewItem, lpNewItem);
 				return InsertMenuA(hMenu, uPosition, uFlags, 
 					EditorAPI::EditorUI::UI_EDITOR_CHANGEBASEFORM, EditorAPI::EditorUI::UI_EDITOR_CHANGEBASEFORM_STR);
+			}
+
+			bool AddChangeRefPatch::HKDeleteMenu(HMENU hMenu, UINT uPosition, UINT uFlags)
+			{
+				DeleteMenu(hMenu, uPosition, uFlags);
+				return DeleteMenu(hMenu, EditorAPI::EditorUI::UI_EDITOR_CHANGEBASEFORM, MF_BYCOMMAND);
 			}
 		}
 	}

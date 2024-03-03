@@ -50,12 +50,12 @@ namespace CreationKitPlatformExtended
 				thisVirtualCall<void>(0xF8, this, Buffer, BufferSize);
 			}
 
-			void TESForm::MarkDelete(bool Value) const
+			void TESForm::MarkAsDeleted(bool Value) const
 			{
 				thisVirtualCall<void>(0x160, this, Value);
 			}
 
-			void TESForm::MarkActive(bool Value) const
+			void TESForm::MarkAsChanged(bool Value) const
 			{
 				thisVirtualCall<void>(0x168, this, Value);
 			}

@@ -199,8 +199,8 @@ namespace CreationKitPlatformExtended
 				void SetNewFormID(uint32_t NewIndex, bool Unk = true);
 				bool CanPreview() const;
 				void DebugInfo(char* Buffer, uint32_t BufferSize) const;
-				void MarkDelete(bool Value = true) const;
-				void MarkActive(bool Value = true) const;
+				void MarkAsDeleted(bool Value = true) const;
+				void MarkAsChanged(bool Value = true) const;
 
 				inline uint32_t GetFormID() const { return _FormID; }
 				inline FormType GetFormType() const { return _FormType; }

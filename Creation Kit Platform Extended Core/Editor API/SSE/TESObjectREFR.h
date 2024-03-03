@@ -38,7 +38,7 @@ namespace CreationKitPlatformExtended
 				// The function returns BSFadeNode, it has not been studied, I use parent class
 				inline NiAPI::NiNode* GetFadeNode() const { return thisVirtualCall<NiAPI::NiNode*>(0x458, this); }
 				inline TESForm* GetParent() const { return _Parent; }
-				inline void SetParent(TESForm* NewParentForm) { thisVirtualCall<void>(0x4F8, this, NewParentForm); MarkActive(); }
+				inline void SetParent(TESForm* NewParentForm) { thisVirtualCall<void>(0x4F8, this, NewParentForm); MarkAsChanged(); }
 				inline NiAPI::NiPoint3 GetRotate() const { return _Rotate; }
 				inline NiAPI::NiPoint3 GetPosition() const { return _Position; }
 				inline float GetScale() const { return (float)_Scale / 100; }

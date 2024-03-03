@@ -30,6 +30,7 @@ namespace CreationKitPlatformExtended
 				
 				static bool HKInsertMenuA(HMENU hMenu, uint32_t uPosition, uint32_t uFlags, 
 					uintptr_t uIDNewItem, const char* lpNewItem);
+				static bool HKDeleteMenu(HMENU hMenu, UINT uPosition, UINT uFlags);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
