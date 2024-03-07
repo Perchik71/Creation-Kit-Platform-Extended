@@ -4,13 +4,8 @@
 
 #include "Core/Engine.h"
 #include "FixFormIDsInLoadFile.h"
-
 #include "Editor API/SSE/TESFile.h"
-
-
 #include "Patches/ConsolePatch.h"
-
-
 #include "Editor API/SSE/TESDataHandler.h"
 
 namespace CreationKitPlatformExtended
@@ -21,29 +16,37 @@ namespace CreationKitPlatformExtended
 		{
 			using namespace EditorAPI::SkyrimSpectialEdition;
 
+			constexpr static uint32_t MASK_HIGH_INDEX = 0xFF000000;
+			constexpr static uint32_t MASK_FORM_INDEX = 0x00FFFFFF;
+			constexpr static uint32_t MAXF_LOOP_COUNT = 0x60;
+
 			uintptr_t pointer_FixFormIDsInLoadFile_sub1 = 0;
 			uintptr_t pointer_FixFormIDsInLoadFile_sub2 = 0;
 
-			template<uint32_t MainOff, uint32_t StoreOff, uint32_t LimitMaster = 0x60>
+			template<uint32_t MainOff, uint32_t StoreOff, uint32_t LimitMaster = MAXF_LOOP_COUNT>
 			void FindLocFormIDs(uintptr_t Stack)
 			{
 				auto LocForm = *(TESForm**)(Stack + MainOff);
 				auto FormIDs = (uint32_t*)(Stack + StoreOff);
 
-				if ((*FormIDs > 0) && LocForm)
+				if (*FormIDs > 0)
 				{
 					auto SafeFormIDs = *FormIDs;
 					bool Ret = false;
 					auto HighIndexLoop = 0;
-					auto HighIndex = LocForm->GetFormID() & 0xFF000000;
-					*FormIDs = HighIndex | (*FormIDs & 0x00FFFFFF);
+
+					if (LocForm)
+					{
+						auto HighIndex = LocForm->GetFormID() & MASK_HIGH_INDEX;
+						*FormIDs = HighIndex | (*FormIDs & MASK_FORM_INDEX);
+					}
 
 				Loop:
 					auto LocForm = fastCall<TESForm*>(pointer_FixFormIDsInLoadFile_sub1, *FormIDs);
 					if (LocForm)
 					{
 						// Need a location form, if this is not the case, then a mistake
-						Ret = LocForm->GetFormType() == 0x68;
+						Ret = LocForm->GetFormType() == TESForm::ftLocation;
 						if (Ret)
 							return;
 						else
@@ -55,7 +58,7 @@ namespace CreationKitPlatformExtended
 						// If can't find it, try to search in the loop
 						if (HighIndexLoop <= LimitMaster)	// Limit master
 						{
-							*FormIDs = HighIndexLoop | (*FormIDs & 0x00FFFFFF);
+							*FormIDs = (HighIndexLoop << 24) | (*FormIDs & MASK_FORM_INDEX);
 							HighIndexLoop++;
 
 							goto Loop;
@@ -169,13 +172,13 @@ namespace CreationKitPlatformExtended
 					return true;
 
 				// I assume that the location has an high-index of the world itself.
-				auto HighIndex = World->GetFormID() & 0xFF00000;
+				auto HighIndex = World->GetFormID() & MASK_HIGH_INDEX;
 
 				if (*FormIDs > 0)
-					*FormIDs = HighIndex | (*FormIDs & 0x00FFFFFF);
+					*FormIDs = HighIndex | (*FormIDs & MASK_FORM_INDEX);
 
 				if (*ParentFormIDs > 0)
-					*ParentFormIDs = HighIndex | (*ParentFormIDs & 0x00FFFFFF);
+					*ParentFormIDs = HighIndex | (*ParentFormIDs & MASK_FORM_INDEX);
 
 				return fastCall<bool>(pointer_FixFormIDsInLoadFile_sub2, World, ParentFormIDs, FormIDs);
 			}
@@ -186,8 +189,37 @@ namespace CreationKitPlatformExtended
 					return 0;
 
 				// I assume that the location has an high-index of the world itself.
-				auto HighIndex = World->GetFormID() & 0xFF000000;
-				*FormIDs = HighIndex | (*FormIDs & 0x00FFFFFF);
+				auto HighIndex = World->GetFormID() & MASK_HIGH_INDEX;
+				*FormIDs = HighIndex | (*FormIDs & MASK_FORM_INDEX);
+				uint32_t HighIndexLoop = 0;
+				bool HasFind = false;
+
+			Loop:
+				auto LocForm = fastCall<TESForm*>(pointer_FixFormIDsInLoadFile_sub1, *FormIDs);
+				if (LocForm)
+				{
+					// Need a location form, if this is not the case, then a mistake
+					auto HasFind = LocForm->GetFormType() == TESForm::ftLocation;
+					if (HasFind)
+						return *FormIDs;
+					else
+						goto NextLoop;
+				}
+				else
+				{
+				NextLoop:
+					// If can't find it, try to search in the loop
+					if (HighIndexLoop <= MAXF_LOOP_COUNT)	// Limit master
+					{
+						*FormIDs = (HighIndexLoop << 24) | (*FormIDs & MASK_FORM_INDEX);
+						HighIndexLoop++;
+
+						goto Loop;
+					}
+				}
+
+				if (!HasFind)
+					*FormIDs = 0;
 
 				return *FormIDs;
 			}
