@@ -104,6 +104,7 @@
     <ClCompile Include="Editor API\EditorUI.cpp" />
     <ClCompile Include="Editor API\FO4\BGSLayer.cpp" />
     <ClCompile Include="Editor API\FO4\BSFile.cpp" />
+    <ClCompile Include="Editor API\FO4\BSResourceArchive2.cpp" />
     <ClCompile Include="Editor API\FO4\BSResourceLooseFilesF4.cpp" />
     <ClCompile Include="Editor API\FO4\NiClassesF4.cpp" />
     <ClCompile Include="Editor API\FO4\TESF4.cpp" />
@@ -360,6 +361,7 @@
     <ClInclude Include="Editor API\FO4\BSFile.h" />
     <ClInclude Include="Editor API\FO4\BSFixedString.h" />
     <ClInclude Include="Editor API\FO4\BSPointerHandleManager.h" />
+    <ClInclude Include="Editor API\FO4\BSResourceArchive2.h" />
     <ClInclude Include="Editor API\FO4\BSResourceLooseFilesF4.h" />
     <ClInclude Include="Editor API\FO4\BSStringCache.h" />
     <ClInclude Include="Editor API\FO4\NiClassesF4.h" />

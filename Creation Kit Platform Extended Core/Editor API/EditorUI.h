@@ -17,7 +17,7 @@ namespace CreationKitPlatformExtended
 			constexpr static const char* UI_USER_DATA_SELECT_OBJECT_ONLY = "SelectObjectsOnly";
 			constexpr static const char* UI_USER_DATA_VISIBLE_OBJECT_ONLY = "VisibleObjectsOnly";
 
-			constexpr static const char* UI_EDITOR_CHANGEBASEFORM_STR = "Replace base for select Ref";
+			constexpr static const char* UI_EDITOR_CHANGEBASEFORM_STR = "Replace base for select Ref's";
 
 			constexpr static uint32_t UI_EDITOR_TOOLBAR = 1;
 			constexpr static uint32_t UI_EDITOR_STATUSBAR = 40139;

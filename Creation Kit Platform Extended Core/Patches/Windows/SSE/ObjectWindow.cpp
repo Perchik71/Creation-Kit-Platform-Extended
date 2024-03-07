@@ -300,27 +300,46 @@ namespace CreationKitPlatformExtended
 					else if (param == EditorAPI::EditorUI::UI_EDITOR_CHANGEBASEFORM) 
 					{
 						auto Renderer = BGSRenderWindow::Singleton.Singleton;
+	
 						if (Renderer && Renderer->PickHandler)
 						{
+							auto Pick = Renderer->PickHandler;
+							auto SelCount = Pick->Count;
+							if (!SelCount)
+								return S_OK;
+
+							auto SelItem = Pick->GetItems()->GetBeginIterator();
+
 							// get the desired form from the selected list
 							auto ItemList = GetDlgItem(Hwnd, 1041);
 							Assert(ItemList);
+
 							auto ItemCount = ListView_GetSelectedCount(ItemList);
-							if (ItemCount != 1)
-								MessageBoxA(0, "You have too many forms selected in the Object Window or not selected at all.\n"
-									"1 item must be selected.", "Error", MB_OK | MB_ICONERROR);
-							auto Pick = Renderer->PickHandler;
-							if (Pick->Count != 1)
-								MessageBoxA(0, "1 object must be selected in Render Window, but no more.", 
-									"Error", MB_OK | MB_ICONERROR);
-							else
+							if (!ItemCount)
+								return S_OK;
+		
+							if (ItemCount > 1)
 							{
-								// get the Ref selected on the render window
-								auto Ref = (TESObjectREFR*)(Pick->Items->First->Ref);
+								MessageBoxA(0, "You have too many selected forms in the Object Window.\n"
+									"Choose one thing.", "Error", MB_OK | MB_ICONERROR);
+								return S_OK;
+							}
+	
+							auto Form = (TESForm*)EditorAPI::EditorUI::ListViewGetSelectedItem(ItemList);
+							Assert(Form);
+
+							if (SelCount != 1)
+							{
+								auto str = std::make_unique<char[]>(120);
+								sprintf_s(str.get(), 120, "Do you really want to replace base form in %u refs?", SelCount);
+								if (MessageBoxA(0, str.get(), "Question", MB_YESNO | MB_ICONQUESTION) != IDYES)
+									return S_OK;
+							}
+
+							for (uint32_t i = 0; i < SelCount; i++)
+							{
+								auto Ref = *SelItem++;
 								Assert(Ref);
-								
-								auto Form = (TESForm*)EditorAPI::EditorUI::ListViewGetSelectedItem(ItemList);
-								Assert(Form);
 
 								// Replace the parent form and update
 								TESObjectREFR::SetParentWithRedraw(Ref, Form);

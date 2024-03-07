@@ -39,11 +39,41 @@ namespace CreationKitPlatformExtended
 		};
 
 		template<typename _FormT, typename _RenderClass>
+		class BGSPickIterator 
+		{
+		private:
+			BGSPickNode<_FormT, _RenderClass>* m_cur;
+		public:
+			BGSPickIterator() : m_cur(nullptr) {}
+			BGSPickIterator(BGSPickNode<_FormT, _RenderClass>* node) : m_cur(node) { }
+
+			inline BGSPickIterator operator++(int) { BGSPickIterator temp = *this; if (!End()) m_cur = m_cur->Next; return temp; }
+			inline BGSPickIterator operator--(int) { BGSPickIterator temp = *this; if (!End()) m_cur = m_cur->Prev; return temp; }
+			inline BGSPickIterator& operator++() { if (!End()) m_cur = m_cur->Next; return *this; }
+			inline BGSPickIterator& operator--() { if (!End()) m_cur = m_cur->Prev; return *this; }
+			
+			inline _FormT* operator->() { return (m_cur) ? m_cur->Ref : nullptr; }
+			inline _FormT* operator*() { return (m_cur) ? m_cur->Ref : nullptr; }
+
+			inline bool End() { return m_cur == nullptr; }
+
+			inline const BGSPickIterator& operator=(const BGSPickIterator& rhs)
+			{
+				m_cur = rhs.m_cur;
+				return *this;
+			}
+
+			inline _FormT* Get(VOID) { return (m_cur) ? m_cur->Ref : nullptr; }
+		};
+
+		template<typename _FormT, typename _RenderClass>
 		class BGSPickList : public BGSPickNode<_FormT, _RenderClass>
 		{
 		public:
 			inline BGSPickNode<_FormT, _RenderClass>* GetFirst() const { return this->_next; }
 			inline BGSPickNode<_FormT, _RenderClass>* GetEnd() const { return this->_prev; }
+			inline BGSPickIterator<_FormT, _RenderClass> GetBeginIterator() { return this->_next; }
+			inline BGSPickIterator<_FormT, _RenderClass> GetLastIterator() { return this->_prev; }
 
 			READ_PROPERTY(GetFirst) BGSPickNode<_FormT, _RenderClass>* First;
 			READ_PROPERTY(GetEnd) BGSPickNode<_FormT, _RenderClass>* End;

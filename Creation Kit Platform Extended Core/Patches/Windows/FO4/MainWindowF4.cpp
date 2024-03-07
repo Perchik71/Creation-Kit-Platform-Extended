@@ -15,6 +15,7 @@
 #include "Patches/Windows/FO4/CellViewWindowF4.h"
 #include "Patches/FO4/FixFog.h"
 #include "Patches/ConsolePatch.h"
+#include "RenderWindowF4.h"
 #include "MainWindowF4.h"
 
 namespace CreationKitPlatformExtended
@@ -334,6 +335,8 @@ namespace CreationKitPlatformExtended
 
 							SendMessageA(GetDlgItem(Hwnd, EditorAPI::EditorUI::UI_EDITOR_STATUSBAR), SB_SETPARTS,
 								spacing.size(), reinterpret_cast<LPARAM>(spacing.data()));
+
+							RenderWindow::UpdateWindowSize(LOWORD(lParam), HIWORD(lParam));
 						}
 						break;
 						case WM_COMMAND:

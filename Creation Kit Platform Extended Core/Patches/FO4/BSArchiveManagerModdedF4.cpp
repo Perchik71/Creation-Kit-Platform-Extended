@@ -3,13 +3,25 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
-#include "Editor API/BSString.h"
 #include "Editor API/EditorUI.h"
-#include "Editor API/FO4/BSResourceLooseFilesF4.h"
+#include "Editor API/FO4/TESFileF4.h"
+#include "Editor API/FO4/BSResourceArchive2.h"
 #include "BSArchiveManagerModdedF4.h"
 
 namespace CreationKitPlatformExtended
 {
+	namespace EditorAPI
+	{
+		namespace Fallout4
+		{
+			namespace BSResource
+			{
+				extern uintptr_t pointer_Archive2_sub1;
+				extern uintptr_t pointer_Archive2_sub2;
+			}
+		}
+	}
+
 	namespace Patches
 	{
 		namespace Fallout4
@@ -17,150 +29,8 @@ namespace CreationKitPlatformExtended
 			using namespace CreationKitPlatformExtended::EditorAPI;
 
 			Array<const TESFile*> g_SelectedFilesArray;
-			Array<BSString*> g_arrayArchivesAvailable;
-			BSResourceLooseFile* g_lastLoaded = nullptr;
-			bool IsLoaded;
-
 			uintptr_t pointer_BSArchiveManagerModded_sub = 0;
-
-			class BSResourceArchive
-			{
-			public:
-				typedef void* (*eventLoadArchive_t)(void*, BSResourceLooseFile*&, void*, int);
-				inline static eventLoadArchive_t OldLooseLoadArchive;
-				inline static uintptr_t OldLoadArchive;
-
-				static void GetFileSizeStr(unsigned int fileSize, BSString& fileSizeStr)
-				{
-					if (fileSize >= 0x40000000)
-						fileSizeStr.Format("%.3f GByte", ((long double)fileSize) / 0x40000000);
-					else if (fileSize >= 0x100000)
-						fileSizeStr.Format("%3.3f MByte", ((long double)fileSize) / 0x100000);
-					else if (fileSize >= 0x400)
-						fileSizeStr.Format("%3.3f KByte", ((long double)fileSize) / 0x400);
-					else
-						fileSizeStr.Format("%d Byte", fileSize);
-				}
-
-				static void* HKLooseLoadArchive(void* Loose, BSResourceLooseFile*& resFile, void* Unk1, int Unk2 = 1)
-				{
-					/* 
-						Кит обращается сюда множество раз, из абсолютно разных мест, как я понимаю,
-						он пытается найти необходимые файлы и шейдеры, но во всех архивах.
-					*/
-
-					if (g_lastLoaded == resFile)
-						return OldLooseLoadArchive(Loose, resFile, Unk1, Unk2);
-
-					/*
-					*	Сюда мы попадаем впервые, для архива и лишь раз (гарантировано).
-					*/
-
-					g_lastLoaded = resFile;
-					auto fileName = resFile->FileName->Get<CHAR>(TRUE);
-					AssertMsg(fileName, "There is no name of the load archive");
-
-					BSString filePath, fileSizeStr;
-					filePath.Format("%s%s%s", resFile->AppPath->Get<CHAR>(TRUE), resFile->DataPath->Get<CHAR>(TRUE), fileName);
-
-					if (BSString::Utils::FileExists(filePath))
-					{
-						unsigned int fileSize = 0;
-						WIN32_FILE_ATTRIBUTE_DATA fileData;
-						if (GetFileAttributesExA(*filePath, GetFileExInfoStandard, &fileData))
-							fileSize = (uint64_t)fileData.nFileSizeLow | ((uint64_t)fileData.nFileSizeHigh << 32);
-
-						GetFileSizeStr(fileSize, fileSizeStr);
-						_CONSOLE("Load an archive file \"%s\" (%s)...", fileName, *fileSizeStr);
-					}
-
-					return OldLooseLoadArchive(Loose, resFile, Unk1, Unk2);
-				}
-
-				static void LoadArchive(const char* file_name)
-				{
-					if (BSString::Utils::FileExists(BSString::Utils::GetDataPath() + file_name))
-						((void(__fastcall*)(const char*, int, int))OldLoadArchive)(file_name, 0, 0);
-				}
-
-				static void Initialize()
-				{
-					auto pathData = BSString::Utils::GetDataPath();
-
-					WIN32_FIND_DATA	FileFindData;
-					HANDLE hFindFile = FindFirstFileExA(*(pathData + "*.ba2"), FindExInfoStandard, &FileFindData,
-						FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH);
-					if (hFindFile != INVALID_HANDLE_VALUE) 
-					{
-						do 
-						{
-							g_arrayArchivesAvailable.push_back(new BSString(FileFindData.cFileName));
-						} while (FindNextFile(hFindFile, &FileFindData));
-					}
-
-					auto func = [](const String& svalue) {
-						BSString strName;
-
-						if (svalue.length() > 0) {
-							LPSTR s_c = new CHAR[svalue.length() + 1];
-							strcpy(s_c, svalue.c_str());
-
-							LPSTR stoken = strtok(s_c, ",");
-							if (stoken) {
-								do {
-									auto index = g_arrayArchivesAvailable.begin();
-									auto fname = Utils::Trim(stoken);
-
-									for (; index != g_arrayArchivesAvailable.end(); index++)
-									{
-										if (!_stricmp(fname.c_str(), (*index)->c_str()))
-											break;
-									}
-
-									if (index != g_arrayArchivesAvailable.end()) {
-										delete* index;
-										g_arrayArchivesAvailable.erase(index);
-									}
-
-									stoken = strtok(NULL, ",");
-								} while (stoken);
-							}
-
-							delete[] s_c;
-						}
-					};
-
-					static const char* SC_NONE = "<NONE>";
-
-					INIConfig _conf("CreationKit.ini");
-					INIConfig _User_conf("CreationKitCustom.ini");
-
-					auto s = _User_conf.ReadString("Archive", "sResourceArchiveList", SC_NONE);
-					func((s == SC_NONE) ? _conf.ReadString("Archive", "sResourceArchiveList", "") : s);
-					s = _User_conf.ReadString("Archive", "sResourceArchiveList2", SC_NONE);
-					func((s == SC_NONE) ? _conf.ReadString("Archive", "sResourceArchiveList2", "") : s);
-					s = _User_conf.ReadString("Archive", "sResourceArchiveMemoryCacheList", SC_NONE);
-					func((s == SC_NONE) ? _conf.ReadString("Archive", "sResourceArchiveMemoryCacheList", "") : s);
-					s = _User_conf.ReadString("Archive", "sResourceStartUpArchiveList", SC_NONE);
-					func((s == SC_NONE) ? _conf.ReadString("Archive", "sResourceStartUpArchiveList", "") : s);
-					s = _User_conf.ReadString("Archive", "sResourceIndexFileList", SC_NONE);
-					func((s == SC_NONE) ? _conf.ReadString("Archive", "sResourceIndexFileList", "") : s);
-				}
-
-				static bool IsAvailableForLoad(LPCSTR ArchiveName)
-				{
-					auto index = g_arrayArchivesAvailable.begin();
-					auto fname = Utils::Trim(ArchiveName);
-
-					for (; index != g_arrayArchivesAvailable.end(); index++)
-					{
-						if (!_stricmp(fname.c_str(), (*index)->c_str()))
-							break;
-					}
-
-					return index != g_arrayArchivesAvailable.end();
-				}
-			};
+			bool IsLoaded;
 
 			BSArchiveManagerModdedPatch::BSArchiveManagerModdedPatch() : Module(GlobalEnginePtr)
 			{}
@@ -206,17 +76,13 @@ namespace CreationKitPlatformExtended
 			{
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
-					//
-					// BSArchiveManager
-					//
+					EditorAPI::Fallout4::BSResource::pointer_Archive2_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(6));
+					EditorAPI::Fallout4::BSResource::pointer_Archive2_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
 
-					BSResourceArchive::OldLoadArchive = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));			
-					*(uintptr_t*)&BSResourceArchive::OldLooseLoadArchive =
-						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1)),
-							&BSResourceArchive::HKLooseLoadArchive);
+					EditorAPI::Fallout4::BSResource::Archive2::Initialize();
 
-					BSResourceArchive::Initialize();
-
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1),
+						(uintptr_t)&EditorAPI::Fallout4::BSResource::Archive2::HKLoadArchive);
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&LoadTesFile);
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3), (uintptr_t)&LoadTesFileFinal);
 
@@ -244,11 +110,11 @@ namespace CreationKitPlatformExtended
 
 			void BSArchiveManagerModdedPatch::AttachBA2File(LPCSTR _filename)
 			{
-				if (BSResourceArchive::IsAvailableForLoad(_filename))
+				if (EditorAPI::Fallout4::BSResource::Archive2::IsAvailableForLoad(_filename))
 					goto attach_ba2;
 				return;
 			attach_ba2:
-				BSResourceArchive::LoadArchive(_filename);
+				EditorAPI::Fallout4::BSResource::Archive2::LoadArchive(_filename);
 			}
 
 			void BSArchiveManagerModdedPatch::LoadTesFile(const TESFile* load_file)

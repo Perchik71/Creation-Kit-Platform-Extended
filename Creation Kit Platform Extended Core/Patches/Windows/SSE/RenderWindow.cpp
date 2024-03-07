@@ -4,6 +4,7 @@
 
 #include "Core/Engine.h"
 #include "RenderWindow.h"
+#include "MainWindow.h"
 #include "Editor API/SSE/BGSRenderWindow.h"
 
 namespace CreationKitPlatformExtended
@@ -12,7 +13,10 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
+			bool GlobalRenderWindowInMainWindow = false;
 			RenderWindow* GlobalRenderWindowPtr = nullptr;
+			LONG GlobalToolbarHeight = 0;
+			LONG GlobalStatusbarHeight = 0;
 
 			bool RenderWindow::HasOption() const
 			{
@@ -80,14 +84,47 @@ namespace CreationKitPlatformExtended
 				GlobalRenderWindowPtr = this;
 			}
 
+			void RenderWindow::UpdateWindowSize(LONG w, LONG h)
+			{
+				if (GlobalRenderWindowInMainWindow)
+				{
+					::Core::Classes::UI::CRECT NewArea = 
+					{ 
+						1, 
+						GlobalToolbarHeight, 
+						w - 1, 
+						h - (GlobalStatusbarHeight - 1)
+					};
+
+					GlobalRenderWindowPtr->SetBoundsRect(NewArea);
+				}
+			}
+
 			LRESULT CALLBACK RenderWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 			{
-				if (Message == WM_INITDIALOG) {
+				if (Message == WM_INITDIALOG) 
+				{
 					GlobalRenderWindowPtr->m_hWnd = Hwnd;
 					GlobalRenderWindowPtr->_BlockInputMessage = true;
+					auto Ret = CallWindowProc(GlobalRenderWindowPtr->GetOldWndProc(), Hwnd, Message, wParam, lParam);
+
+					if (GlobalMainWindowPtr && _READ_OPTION_BOOL("CreationKit", "bRenderWindowInMainWindow", false))
+					{
+						GlobalRenderWindowInMainWindow = true;
+						GlobalRenderWindowPtr->SetParent(*GlobalMainWindowPtr);
+						GlobalRenderWindowPtr->Style = WS_POPUP | WS_VISIBLE | WS_OVERLAPPED;
+						GlobalToolbarHeight = GlobalMainWindowPtr->Toolbar.Height;
+						GlobalStatusbarHeight = GlobalMainWindowPtr->Toolbar.Height;
+						auto ClientArea = GlobalMainWindowPtr->ClientRect();
+						UpdateWindowSize(ClientArea.Width, ClientArea.Height);	
+					}
+
+					return Ret;
 				}
-				else if (GlobalRenderWindowPtr->_BlockInputMessage) {
-					switch (Message) {
+				else if (GlobalRenderWindowPtr->_BlockInputMessage) 
+				{
+					switch (Message) 
+					{
 					case WM_KEYUP:
 					case WM_KEYDOWN:
 					case WM_SYSCHAR:

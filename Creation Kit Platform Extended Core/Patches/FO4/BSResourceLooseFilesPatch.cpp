@@ -72,7 +72,7 @@ namespace CreationKitPlatformExtended
 							mov(rcx, ptr[r11 + 0x18]);
 							mov(rdx, rbp);
 							sub(rsp, 0x40);
-							mov(rax, (uintptr_t)&LooseFileStream::CreateInstance);
+							mov(rax, (uintptr_t)&BSResource::LooseFileStream::CreateInstance);
 							call(rax);
 							add(rsp, 0x40);
 							pop(rax);

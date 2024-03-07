@@ -55,3 +55,4 @@ CreationKit -PEUpdateDatabase "Wrong Update Actor Window" "WrongUpdateActorWnd.r
 CreationKit -PEUpdateDatabase "Layers Window" "LayersWindow.relb"
 CreationKit -PEUpdateDatabase "Progress Window" "ProgressWindow.relb"
 CreationKit -PEUpdateDatabase "ESL Tip" "ESLTip.relb"
+CreationKit -PEUpdateDatabase "Add Change Ref" "AddChangeRef.relb"

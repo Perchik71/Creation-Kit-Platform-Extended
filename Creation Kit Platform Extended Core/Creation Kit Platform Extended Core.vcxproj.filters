@@ -697,6 +697,9 @@
     <ClCompile Include="Patches\FO4\AddChangeRefF4.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Editor API\FO4\BSResourceArchive2.cpp">
+      <Filter>Editor API\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1684,6 +1687,9 @@
     </ClInclude>
     <ClInclude Include="Patches\FO4\AddChangeRefF4.h">
       <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BSResourceArchive2.h">
+      <Filter>Editor API\FO4</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

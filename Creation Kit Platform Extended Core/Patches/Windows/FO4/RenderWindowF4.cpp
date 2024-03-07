@@ -4,6 +4,7 @@
 
 #include "Core/Engine.h"
 #include "RenderWindowF4.h"
+#include "MainWindowF4.h"
 #include "Editor API/FO4/TESF4.h"
 #include "Editor API/FO4/BGSRenderWindow.h"
 
@@ -15,7 +16,10 @@ namespace CreationKitPlatformExtended
 		{
 			using namespace CreationKitPlatformExtended::EditorAPI::Fallout4;
 
+			bool GlobalRenderWindowInMainWindow = false;
 			RenderWindow* GlobalRenderWindowPtr = nullptr;
+			LONG GlobalToolbarHeight = 0;
+			LONG GlobalStatusbarHeight = 0;
 			RenderWindow::Area rcSafeDrawArea;
 
 			bool RenderWindow::HasOption() const
@@ -83,13 +87,43 @@ namespace CreationKitPlatformExtended
 				GlobalRenderWindowPtr = this;
 			}
 
+			void RenderWindow::UpdateWindowSize(LONG w, LONG h)
+			{
+				if (GlobalRenderWindowInMainWindow)
+				{
+					::Core::Classes::UI::CRECT NewArea =
+					{
+						1,
+						GlobalToolbarHeight,
+						w - 1,
+						h - (GlobalStatusbarHeight - 1)
+					};
+
+					GlobalRenderWindowPtr->SetBoundsRect(NewArea);
+				}
+			}
+
 			LRESULT CALLBACK RenderWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 			{
 				switch (Message)
 				{
 					case WM_INITDIALOG:
+					{
 						GlobalRenderWindowPtr->m_hWnd = Hwnd;
-					break;
+						auto Ret = CallWindowProc(GlobalRenderWindowPtr->GetOldWndProc(), Hwnd, Message, wParam, lParam);
+
+						if (GlobalMainWindowPtr && _READ_OPTION_BOOL("CreationKit", "bRenderWindowInMainWindow", false))
+						{
+							GlobalRenderWindowInMainWindow = true;
+							GlobalRenderWindowPtr->SetParent(*GlobalMainWindowPtr);
+							//GlobalRenderWindowPtr->Style = WS_POPUP | WS_VISIBLE | WS_OVERLAPPED;
+							GlobalToolbarHeight = GlobalMainWindowPtr->Toolbar.Height;
+							GlobalStatusbarHeight = GlobalMainWindowPtr->Toolbar.Height;
+							GlobalMainWindowPtr->BoundsRect = GlobalMainWindowPtr->WindowRect();
+						}
+
+						return Ret;
+					}
 					case WM_ACTIVATE:
 					{
 						// Fix bug loss of window size

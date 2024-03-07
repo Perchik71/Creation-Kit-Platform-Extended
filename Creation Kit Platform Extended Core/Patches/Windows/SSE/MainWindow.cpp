@@ -16,6 +16,7 @@
 #include "Patches/Windows/SSE/ObjectWindow.h"
 #include "Patches/Windows/SSE/CellViewWindow.h"
 #include "Patches/ConsolePatch.h"
+#include "RenderWindow.h"
 #include "MainWindow.h"
 
 #define CKPE_NEED_GEN_FORMDUMP_DBG 0
@@ -351,6 +352,8 @@ namespace CreationKitPlatformExtended
 
 							SendMessageA(GetDlgItem(Hwnd, EditorAPI::EditorUI::UI_EDITOR_STATUSBAR), SB_SETPARTS,
 								spacing.size(), reinterpret_cast<LPARAM>(spacing.data()));
+
+							RenderWindow::UpdateWindowSize(LOWORD(lParam), HIWORD(lParam));
 						}
 						break;
 						case WM_COMMAND:

@@ -11,25 +11,28 @@ namespace CreationKitPlatformExtended
 	{
 		namespace Fallout4
 		{
-			void LooseFileStream::CreateInstance(const char* FileName, LooseFileStream** Instance)
+			namespace BSResource
 			{
-				if (!FileName || !(*Instance))
-					return;
+				void LooseFileStream::CreateInstance(const char* FileName, LooseFileStream** Instance)
+				{
+					if (!FileName || !(*Instance))
+						return;
 
-				auto stream = *Instance;
-				stream->Initialize64BitData(FileName);
-			}
+					auto stream = *Instance;
+					stream->Initialize64BitData(FileName);
+				}
 
-			void LooseFileStream::Initialize64BitData(const char* FileName)
-			{
-				dw64FileSize = 0;
-				dw64Position = 0;
+				void LooseFileStream::Initialize64BitData(const char* FileName)
+				{
+					dw64FileSize = 0;
+					dw64Position = 0;
 
-				auto path = BSString::Utils::GetApplicationPath() + FileName;
-				if (BSString::Utils::FileExists(path))
-					dw64FileSize = std::filesystem::file_size(*path);
-				else
-					dw64FileSize = dwFileSize;
+					auto path = BSString::Utils::GetApplicationPath() + FileName;
+					if (BSString::Utils::FileExists(path))
+						dw64FileSize = std::filesystem::file_size(*path);
+					else
+						dw64FileSize = dwFileSize;
+				}
 			}
 		}
 	}
