@@ -235,7 +235,7 @@ namespace CreationKitPlatformExtended
 				memset(&si, 0, sizeof(si)); si.cb = sizeof(si);
 				memset(&pi, 0, sizeof(pi));
 				
-				si.wShowWindow = SW_SHOW;
+				si.wShowWindow = SW_HIDE;
 
 				auto LipGenPath = BSString::Utils::GetApplicationPath() + V_TOOLPATH;
 				auto CmdLine = BSString::FormatString(V_CMD_FMT, (LipGenPath + V_WRAPPER).c_str(), AudioPath, LipPath, ResponseText);
@@ -255,12 +255,9 @@ namespace CreationKitPlatformExtended
 					return false;
 
 				WaitForSingleObject(pi.hProcess, INFINITE);
-
-				DWORD ExitCode = 0;
-				//GetExitCodeProcess(pi.hProcess, &ExitCode);
 				CloseHandle(pi.hProcess);
 
-				return !ExitCode;
+				return true;
 			}
 		}
 	}
