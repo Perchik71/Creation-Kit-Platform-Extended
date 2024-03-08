@@ -4,7 +4,9 @@
 
 #pragma once
 
-#include "BGSVoiceType.h"
+#include "TESFormF4.h"
+
+#pragma pack(push, 1)
 
 namespace CreationKitPlatformExtended
 {
@@ -12,20 +14,21 @@ namespace CreationKitPlatformExtended
 	{
 		namespace Fallout4
 		{
-			// size = 0x400
-			// func = 158
-			class TESNPC : public TESForm
+			// size = 0x270
+			// func = 129
+			class TESQuest : public TESForm
 			{
 			public:
-				virtual ~TESNPC() = default;
+				constexpr static uint8_t TYPE_ID = ftQuest;
+
+				virtual ~TESQuest() = default;
 			public:
-				
-			public:
-				
 			private:
-				
+				char pad28[0x248];
 			};
-			static_assert(sizeof(TESNPC) == 0x28);
+			static_assert(sizeof(TESQuest) == 0x270);
 		}
 	}
 }
+
+#pragma pack(pop)

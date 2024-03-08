@@ -26,6 +26,7 @@
 #include "..\BSString.h"
 #include "BSEntryString.h"
 #include "BSFixedString.h"
+#include "BGSLocalizedString.h"
 #include "..\BSTList.h"
 #include "..\BSTArray.h"
 
@@ -62,36 +63,6 @@ namespace CreationKitPlatformExtended
 				virtual VOID VT_Func04(VOID);	// 020 not implemented
 				virtual VOID VT_Func05(VOID);	// 028 not implemented
 				virtual VOID VT_Func06(VOID);	// 030 ---
-			};
-
-			// 0x8 5 functions RVA 0x38931A0
-			class IBGSLocalizedString {
-			public:
-				virtual ~IBGSLocalizedString(VOID);
-				// don't use in release the class IBGSLocalizedString, function call __purecall (abstract)
-				virtual LPCSTR Get(VOID) const;
-			};
-
-			// 0x10 5 functions RVA 0x38931E0
-			class BGSLocalizedString : public IBGSLocalizedString {
-			private:
-				// members
-				/*08*/ BSEntryString* String;
-			};
-
-			// 0x18 5 functions RVA 0x3893220
-			class BGSLocalizedStringDL : public IBGSLocalizedString {
-			private:
-				// members
-				/*08*/ LPVOID Unk08;
-				/*10*/ BSEntryString* String;
-			public:
-				VOID Set(LPCSTR str);
-			};
-
-			// 0x10 5 functions RVA 0x3893260
-			class BGSLocalizedStringIL : public BGSLocalizedString {
-			private:
 			};
 
 			// 0x18
@@ -193,8 +164,8 @@ namespace CreationKitPlatformExtended
 				/*0C*/ DWORD Unk0C;
 				/*10*/ BGSLocalizedStringDL LocalizedString;
 			public:
-				inline LPCSTR Get() const { return LocalizedString.Get(); }
-				inline void Set(LPCSTR str) { LocalizedString.Set(str); }
+				inline const char* Get() const { return LocalizedString.Get(); }
+				inline void Set(const char* str) { LocalizedString.Set(str); }
 				inline void Set(const BSString& str) { LocalizedString.Set(*str); }
 			public:
 				inline TESDescription& operator=(LPCSTR str) { Set(str); return *this; }

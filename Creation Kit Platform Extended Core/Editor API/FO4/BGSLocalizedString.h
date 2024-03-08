@@ -2,7 +2,7 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
-#include "..\BSSimpleLock.h"
+#include "BSEntryString.h"
 
 #pragma once
 
@@ -10,7 +10,7 @@ namespace CreationKitPlatformExtended
 {
 	namespace EditorAPI
 	{
-		namespace SkyrimSpectialEdition
+		namespace Fallout4
 		{
 			// size 0x8 
 			// func 5
@@ -27,19 +27,33 @@ namespace CreationKitPlatformExtended
 			{
 			private:
 				// members
-				/*08*/ char* _Data;
+				/*08*/ BSEntryString* _Data;
+			public:
+				inline const char* Get() const { return _Data ? _Data->Get<char>(true) : nullptr; }
 			};
 
-			// 0x18 5 functions RVA 0x3893220
+			// 0x18 5 functions
 			class BGSLocalizedStringDL : public IBGSLocalizedString
 			{
 			private:
 				// members
 				/*08*/ char pad08[0x8];
-				/*10*/ char* _Data;
+				/*10*/ BSEntryString* _Data;
+
+			public:
+				inline static uintptr_t OrigSet = 0;
+				inline const char* Get() const { return _Data ? _Data->Get<char>(true) : nullptr; }
+				inline void Set(const char* str)
+				{
+					((void(__fastcall*)(BGSLocalizedStringDL*, const char*))OrigSet)(this, str);
+				}
+				inline void Set(const BSEntryString* str)
+				{
+					((void(__fastcall*)(BGSLocalizedStringDL*, const char*))OrigSet)(this, str->Get<char>(true));
+				}
 			};
 
-			// 0x10 5 functions RVA 0x3893260
+			// 0x10 5 functions
 			class BGSLocalizedStringIL : public BGSLocalizedString 
 			{};
 		}

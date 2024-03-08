@@ -109,7 +109,6 @@
     <ClCompile Include="Editor API\FO4\NiClassesF4.cpp" />
     <ClCompile Include="Editor API\FO4\TESF4.cpp" />
     <ClCompile Include="Editor API\FO4\TESFileF4.cpp" />
-    <ClCompile Include="Editor API\FO4\TESFormComponents.cpp" />
     <ClCompile Include="Editor API\FO4\TESFormF4.cpp" />
     <ClCompile Include="Editor API\SSE\BSGraphicsTypes.cpp" />
     <ClCompile Include="Editor API\SSE\BSShaderProperty.cpp" />
@@ -348,6 +347,7 @@
     <ClInclude Include="Editor API\EditorUI.h" />
     <ClInclude Include="Editor API\FO4\BGSColorForm.h" />
     <ClInclude Include="Editor API\FO4\BGSLayer.h" />
+    <ClInclude Include="Editor API\FO4\BGSLocalizedString.h" />
     <ClInclude Include="Editor API\FO4\BGSMaterialSwap.h" />
     <ClInclude Include="Editor API\FO4\BGSModelMaterialSwap.h" />
     <ClInclude Include="Editor API\FO4\BGSPreviewTransform.h" />
@@ -377,6 +377,9 @@
     <ClInclude Include="Editor API\FO4\TESObjectARMO.h" />
     <ClInclude Include="Editor API\FO4\TESObjectCELL.h" />
     <ClInclude Include="Editor API\FO4\TESObjectREFR.h" />
+    <ClInclude Include="Editor API\FO4\TESQuest.h" />
+    <ClInclude Include="Editor API\FO4\TESTopic.h" />
+    <ClInclude Include="Editor API\FO4\TESTopicInfo.h" />
     <ClInclude Include="Editor API\SSE\BGSImpactData.h" />
     <ClInclude Include="Editor API\SSE\BGSImpactDataSet.h" />
     <ClInclude Include="Editor API\SSE\BGSLocalizedString.h" />
@@ -412,6 +415,7 @@
     <ClInclude Include="Editor API\UI\UIImageList.h" />
     <ClInclude Include="Editor API\UI\UIMenus.h" />
     <ClInclude Include="Experimental\RuntimeOptimization.h" />
+    <ClInclude Include="NiAPI\NiTSimpleArray.h" />
     <ClInclude Include="NiAPI\NiAlphaProperty.h" />
     <ClInclude Include="NiAPI\NiArray.h" />
     <ClInclude Include="NiAPI\NiAVObject.h" />

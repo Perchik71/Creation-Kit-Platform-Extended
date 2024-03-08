@@ -1,4 +1,4 @@
-// Copyright © 2023-2024 aka perchik71. All rights reserved.
+// Copyright Â© 2023-2024 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -34,7 +34,7 @@ namespace CreationKitPlatformExtended
 			public:
 				virtual ~BGSColorForm() = default;
 			
-				inline const char* GetName() const { return _Name.Get(); }
+				inline const char* GetName() const { return _Name.c_str(); }
 				inline bool HasPlayable() const { return (_Flags & FLAG_PLAYABLE) == FLAG_PLAYABLE; }
 				inline void SetPlayable(bool v) 
 				{ 

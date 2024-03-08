@@ -688,9 +688,6 @@
     <ClCompile Include="Patches\SSE\FixParamsVTXT.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
-    <ClCompile Include="Editor API\FO4\TESFormComponents.cpp">
-      <Filter>Editor API\FO4</Filter>
-    </ClCompile>
     <ClCompile Include="Patches\SSE\AddChangeRef.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
@@ -1690,6 +1687,21 @@
     </ClInclude>
     <ClInclude Include="Editor API\FO4\BSResourceArchive2.h">
       <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESTopicInfo.h">
+      <Filter>Editor API\FO4\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESTopic.h">
+      <Filter>Editor API\FO4\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESQuest.h">
+      <Filter>Editor API\FO4\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BGSLocalizedString.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiTSimpleArray.h">
+      <Filter>NiAPI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

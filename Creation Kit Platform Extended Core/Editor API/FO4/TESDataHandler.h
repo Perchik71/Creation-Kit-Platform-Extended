@@ -35,6 +35,8 @@
 #include "TESObjectARMO.h"
 #include "BGSVoiceType.h"
 #include "BGSColorForm.h"
+#include "TESTopic.h"
+#include "TESQuest.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -139,9 +141,9 @@ namespace CreationKitPlatformExtended
 				TESFormArray arrLAND;						// 770 Form Type 75
 				TESFormArray arrNAVM;						// 788 Form Type 76
 				TESFormArray arrTLOD;						// 7A0 Form Type 77
-				TESFormArray arrDIAL;						// 7B8 Form Type 78
-				TESFormArray arrINFO;						// 7D0 Form Type 79
-				TESFormArray arrQUST;						// 7E8 Form Type 80
+				BSTArray<TESTopic*> arrDIAL;				// 7B8 Form Type 78
+				BSTArray<TESTopicInfo*> arrINFO;			// 7D0 Form Type 79
+				BSTArray<TESQuest*> arrQUST;				// 7E8 Form Type 80
 				TESFormArray arrIDLE;						// 800 Form Type 81
 				TESFormArray arrPACK;						// 818 Form Type 82
 				TESFormArray arrCSTY;						// 830 Form Type 83
