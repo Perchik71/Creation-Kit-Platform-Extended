@@ -12,6 +12,7 @@
 #include "Editor API/BSString.h"
 #include "Editor API/SSE/TESForm.h"
 #include "Editor API/SSE/BSPointerHandleManager.h"
+#include "Editor API/SSE/TESDataHandler.h"
 #include "Patches/SSE/Re-EnableFog.h"
 #include "Patches/Windows/SSE/ObjectWindow.h"
 #include "Patches/Windows/SSE/CellViewWindow.h"
@@ -329,6 +330,23 @@ namespace CreationKitPlatformExtended
 					}
 				}
 				break;
+				case WM_CLOSE:
+				{
+					// Tired of CTD if a lot of windows are open...
+					if (*TESDataHandler::UserModdedSingleton.Singleton)
+					{
+						if (MessageBoxA(0, "You have unsaved progress, you will lose it.\n"
+							" Is that really what you want?", "Warning", MB_OKCANCEL | MB_ICONWARNING) == IDOK)
+							DestroyWindow(Hwnd);
+					}
+					else
+						DestroyWindow(Hwnd);
+				}
+				return S_OK;
+				case WM_DESTROY:
+					// Let's get out of here (JUST DO IT)
+					Utils::Quit();
+					return S_OK;
 				default:
 					if (GlobalMainWindowPtr->Handle == Hwnd)
 					{

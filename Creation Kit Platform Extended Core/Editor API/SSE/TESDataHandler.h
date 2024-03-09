@@ -193,6 +193,7 @@ namespace CreationKitPlatformExtended
 				inline TESFile* GetActiveMod() const { return activePlugin; }
 				inline bool IsActiveMod() const { return activePlugin != nullptr; }
 
+				inline static Core::ISingleton<bool> UserModdedSingleton;
 				inline static Core::ISingleton<TESDataHandler> Singleton;
 			public:
 				READ_PROPERTY(GetMods) TESFileList* Mods;
