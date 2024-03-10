@@ -319,7 +319,7 @@ namespace CreationKitPlatformExtended
 					if (*TESDataHandler::UserModdedSingleton.Singleton)
 					{
 						if (MessageBoxA(0, "You have unsaved progress, you will lose it.\n"
-							" Is that really what you want?", "Warning", MB_OKCANCEL | MB_ICONWARNING) == IDOK)
+							"Is that really what you want?", "Warning", MB_OKCANCEL | MB_ICONWARNING) == IDOK)
 							DestroyWindow(Hwnd);
 					}
 					else
