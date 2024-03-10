@@ -14,10 +14,6 @@ namespace CreationKitPlatformExtended
 	{
 		namespace Fallout4
 		{
-			uintptr_t pointer_FixQuoteCmdLine_sub1 = 0;
-			uintptr_t pointer_FixQuoteCmdLine_sub2 = 0;
-			uintptr_t pointer_FixQuoteCmdLine_data = 0;
-
 			FixQuoteCmdLinePatch::FixQuoteCmdLinePatch() : Module(GlobalEnginePtr)
 			{}
 
@@ -182,10 +178,6 @@ namespace CreationKitPlatformExtended
 					//	Should be: -BuildCDX:"<ESMFilename>"
 
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(38), (uintptr_t)&sub);
-
-					pointer_FixQuoteCmdLine_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(39));
-					pointer_FixQuoteCmdLine_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(40));
-					pointer_FixQuoteCmdLine_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(41));
 
 					return true;
 				}
