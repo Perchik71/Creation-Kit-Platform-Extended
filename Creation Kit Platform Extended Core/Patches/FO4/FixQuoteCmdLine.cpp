@@ -6,6 +6,7 @@
 #include "FixQuoteCmdLine.h"
 #include "Editor API/BSString.h"
 #include "Patches/Windows/FO4/MainWindowF4.h"
+#include "Patches/Windows/FO4/ResponseWindowF4.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -47,7 +48,7 @@ namespace CreationKitPlatformExtended
 
 			Array<String> FixQuoteCmdLinePatch::GetDependencies() const
 			{
-				return { "Main Window" };
+				return { "Main Window", "Response Window" };
 			}
 
 			bool FixQuoteCmdLinePatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
@@ -139,7 +140,7 @@ namespace CreationKitPlatformExtended
 
 					//	Add support quote to command line with -GenerateSingleLip
 					//	Should be: -GenerateSingleLip:"<WavFilename>" "<Text>"
-					//	Warning: /Data/Sound/ this is the directory relative to which it will be stored .lip file.
+					//	Warning: The .lip file will be created next to the audio file.
 
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(27), (uintptr_t)&sub2);
 
@@ -231,23 +232,26 @@ namespace CreationKitPlatformExtended
 			{
 				char* next_token = nullptr;
 				char* token = sub(lpCmdLine, " ", &next_token);
-				if (token) {
+				if (token) 
+				{
 					char* filename = token;
 					token = sub(nullptr, " ", &next_token);
-					if (token) {
+					if (token) 
+					{
+						Patches::Fallout4::ResponseWindow::ModuleInit();
 						auto pathAudioFile = EditorAPI::BSString::Utils::ChangeFileExt(filename, ".wav");
-						// Replacement by .wav
-						if (Utils::FileExists(pathAudioFile.c_str())) {
-							fastCall<bool, HWND, const char*, const char*>(pointer_FixQuoteCmdLine_sub1,
-								GlobalMainWindowPtr->Handle, pathAudioFile.c_str(), token);
-
-							return;
-						}
+						auto pathLipFile = EditorAPI::BSString::Utils::ChangeFileExt(filename, ".lip");
+						Patches::Fallout4::ResponseWindow::GenerationLip(pathAudioFile.c_str(), pathLipFile.c_str(), token);
+						Utils::Quit();
 					}
 				}
 
-				fastCall<void, const char*>(pointer_FixQuoteCmdLine_sub2, 
-					(const char*)pointer_FixQuoteCmdLine_data);
+				MessageBoxA(0,
+					"Error parsing command-line. Format should be -GenerateSingleLip:\"WAVFilePath\" \"Text For WAV File.\"",
+					"Error", 
+					MB_OK | MB_ICONERROR);
+
+				Utils::Quit();
 			}
 		}
 	}

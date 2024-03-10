@@ -138,37 +138,8 @@ namespace CreationKitPlatformExtended
 					GlobalResponseWindowPtr->m_hWnd = Hwnd;
 					GlobalResponseWindowPtr->ListViewItems = GetDlgItem(Hwnd, 2168);
 
-					EnableWindow(GetDlgItem(Hwnd, 1017), FALSE);
-					
-					/*
-					In the generation of.lip for Fallout 4, you need to consider the following:
-					For high - quality communication with voice and time, the audio file must be in mono
-					format at 16kHz per sample.
-					1. ffmpeg will help convert the audio file to a suitable format. Can't delete the original,
-					will need it in the future.
-					2. Do it .lip file. And delete the temporary audio file.
-					3. Improve the quality .wav to convert to the format .xwm in a higher quality form.
-					4. Assemble .fuz deleting the .xwm file, but leaving .lip file.
-					*/
-
-					auto LipGenPath = BSString::Utils::GetApplicationPath() + V_TOOLPATH;
-
-					EnableLipGeneration = 
-						Utils::FileExists((LipGenPath + V_WRAPPER).c_str()) &&
-						Utils::FileExists((LipGenPath + V_FXDATA).c_str());
-
-					EnableFuzGeneration =
-						Utils::FileExists((LipGenPath + V_XWMAENCD).c_str()) &&
-						Utils::FileExists((LipGenPath + V_FUZTOOLS).c_str()) &&
-						Utils::FileExists((LipGenPath + V_FFMPEG).c_str());
-
-					if (!EnableLipGeneration)
-						ConsolePatch::Log("LIPGEN: \"%s\", \"%s\", \"%s\" is missing from \"<GAMEDIR>%s\" directory."
-							" LIP generation will be disabled.", V_WRAPPER, V_FXDATA, V_FFMPEG, LipGenPath);
-
-					if (!EnableFuzGeneration)
-						ConsolePatch::Log("FUZGEN: \"%s\", \"%s\" is missing from \"<GAMEDIR>%s\" directory."
-							" FUZ generation will be disabled.", V_XWMAENCD, V_FUZTOOLS, LipGenPath);
+					EnableWindow(GetDlgItem(Hwnd, 1017), FALSE);		
+					ModuleInit();
 				}
 				else if (Message == WM_COMMAND)
 				{
@@ -298,6 +269,39 @@ namespace CreationKitPlatformExtended
 				}
 
 				EnableWindow(hWndButtonGenerate, bEnableGenerate);
+			}
+
+			void ResponseWindow::ModuleInit()
+			{
+				/*
+				In the generation of.lip for Fallout 4, you need to consider the following:
+				For high - quality communication with voice and time, the audio file must be in mono
+				format at 16kHz per sample.
+				1. ffmpeg will help convert the audio file to a suitable format. Can't delete the original,
+				will need it in the future.
+				2. Do it .lip file. And delete the temporary audio file.
+				3. Improve the quality .wav to convert to the format .xwm in a higher quality form.
+				4. Assemble .fuz deleting the .xwm file, but leaving .lip file.
+				*/
+
+				auto LipGenPath = BSString::Utils::GetApplicationPath() + V_TOOLPATH;
+
+				EnableLipGeneration =
+					Utils::FileExists((LipGenPath + V_WRAPPER).c_str()) &&
+					Utils::FileExists((LipGenPath + V_FXDATA).c_str());
+
+				EnableFuzGeneration =
+					Utils::FileExists((LipGenPath + V_XWMAENCD).c_str()) &&
+					Utils::FileExists((LipGenPath + V_FUZTOOLS).c_str()) &&
+					Utils::FileExists((LipGenPath + V_FFMPEG).c_str());
+
+				if (!EnableLipGeneration)
+					ConsolePatch::Log("LIPGEN: \"%s\", \"%s\", \"%s\" is missing from \"<GAMEDIR>%s\" directory."
+						" LIP generation will be disabled.", V_WRAPPER, V_FXDATA, V_FFMPEG, LipGenPath);
+
+				if (!EnableFuzGeneration)
+					ConsolePatch::Log("FUZGEN: \"%s\", \"%s\" is missing from \"<GAMEDIR>%s\" directory."
+						" FUZ generation will be disabled.", V_XWMAENCD, V_FUZTOOLS, LipGenPath);
 			}
 
 			bool ResponseWindow::ExecuteApplication(const char* CmdLine, bool Hide, uint32_t Timeout)
