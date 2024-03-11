@@ -88,15 +88,15 @@ namespace CreationKitPlatformExtended
 			{
 				if (GlobalRenderWindowInMainWindow)
 				{
-					::Core::Classes::UI::CRECT NewArea = 
-					{ 
-						1, 
-						GlobalToolbarHeight, 
-						w - 1, 
-						h - (GlobalStatusbarHeight - 1)
+					::Core::Classes::UI::CRECT NewRect =
+					{
+						1,
+						GlobalToolbarHeight,
+						w - 1,
+						h - (GlobalStatusbarHeight - 2)
 					};
 
-					GlobalRenderWindowPtr->SetBoundsRect(NewArea);
+					GlobalRenderWindowPtr->SetBoundsRect(NewRect);
 				}
 			}
 
@@ -116,11 +116,29 @@ namespace CreationKitPlatformExtended
 						GlobalToolbarHeight = GlobalMainWindowPtr->Toolbar.Height;
 						GlobalStatusbarHeight = GlobalMainWindowPtr->Toolbar.Height;
 						auto ClientArea = GlobalMainWindowPtr->ClientRect();
-						UpdateWindowSize(ClientArea.Width, ClientArea.Height);	
+						UpdateWindowSize(ClientArea.Width, ClientArea.Height);
 					}
 
 					return Ret;
 				}
+				////// Fix WHITE area (Eats my eyes at startup) (only 1.6.1130)
+				else if (Message == WM_PAINT)
+				{
+					PAINTSTRUCT ps;
+					HDC dc = BeginPaint(Hwnd, &ps);
+
+					::Core::Classes::UI::CUICanvas Canvas = dc;
+					Canvas.Fill(RGB(0x6A, 0x6A, 0x6A));
+					
+					EndPaint(Hwnd, &ps);
+					return S_OK;
+				}
+				else if (Message == WM_ERASEBKGND)
+				{
+					// An application should return nonzero if it erases the background; otherwise, it should return zero.
+					return S_FALSE;
+				}
+				///////
 				else if (GlobalRenderWindowPtr->_BlockInputMessage) 
 				{
 					switch (Message) 

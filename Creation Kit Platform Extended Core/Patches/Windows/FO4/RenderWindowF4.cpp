@@ -7,6 +7,7 @@
 #include "MainWindowF4.h"
 #include "Editor API/FO4/TESF4.h"
 #include "Editor API/FO4/BGSRenderWindow.h"
+#include "UITheme/VarCommon.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -91,15 +92,18 @@ namespace CreationKitPlatformExtended
 			{
 				if (GlobalRenderWindowInMainWindow)
 				{
-					::Core::Classes::UI::CRECT NewArea =
+					::Core::Classes::UI::CRECT NewRect =
 					{
 						1,
 						GlobalToolbarHeight,
 						w - 1,
-						h - (GlobalStatusbarHeight - 1)
+						h - (GlobalStatusbarHeight - 2)
 					};
 
-					GlobalRenderWindowPtr->SetBoundsRect(NewArea);
+					GlobalRenderWindowPtr->SetBoundsRect(NewRect);
+
+					_TempDrawArea->WindowSize = { NewRect.Width, NewRect.Height };
+					_TempDrawArea->WindowSize2 = { NewRect.Width, NewRect.Height };
 				}
 			}
 
@@ -116,10 +120,11 @@ namespace CreationKitPlatformExtended
 						{
 							GlobalRenderWindowInMainWindow = true;
 							GlobalRenderWindowPtr->SetParent(*GlobalMainWindowPtr);
-							//GlobalRenderWindowPtr->Style = WS_POPUP | WS_VISIBLE | WS_OVERLAPPED;
+							GlobalRenderWindowPtr->Style = WS_POPUP | WS_VISIBLE | WS_OVERLAPPED;
 							GlobalToolbarHeight = GlobalMainWindowPtr->Toolbar.Height;
 							GlobalStatusbarHeight = GlobalMainWindowPtr->Toolbar.Height;
-							GlobalMainWindowPtr->BoundsRect = GlobalMainWindowPtr->WindowRect();
+							auto ClientArea = GlobalMainWindowPtr->ClientRect();
+							UpdateWindowSize(ClientArea.Width, ClientArea.Height);
 						}
 
 						return Ret;
