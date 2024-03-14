@@ -107,3 +107,4 @@ CreationKit_se_1_6_438 -PEUpdateDatabase "Ignore Ground Height Test" "IgnoreGrou
 CreationKit_se_1_6_438 -PEUpdateDatabase "Memory Leak class BSString" "MemoryLeakBSString.relb"
 CreationKit_se_1_6_438 -PEUpdateDatabase "Fix VTXT params sections" "FixVTXTParamsSections.relb"
 CreationKit_se_1_6_438 -PEUpdateDatabase "Add Change Ref" "AddChangeRef.relb"
+CreationKit_se_1_6_438 -PEUpdateDatabase "VCBitArray" "VCBitArray.relb"

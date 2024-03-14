@@ -172,6 +172,7 @@
     <ClCompile Include="Patches\RenderWindow60FPS.cpp" />
     <ClCompile Include="Patches\SkipTopicInfoValidation.cpp" />
     <ClCompile Include="Patches\SSE\AddChangeRef.cpp" />
+    <ClCompile Include="Patches\SSE\AllowCreateBitArray.cpp" />
     <ClCompile Include="Patches\SSE\AllowPlayerKnowsCondition.cpp" />
     <ClCompile Include="Patches\SSE\AllowSaveESMandMasterESP.cpp" />
     <ClCompile Include="Patches\SSE\AlteredFormList.cpp" />
@@ -484,6 +485,7 @@
     <ClInclude Include="Patches\RenderWindow60FPS.h" />
     <ClInclude Include="Patches\SkipTopicInfoValidation.h" />
     <ClInclude Include="Patches\SSE\AddChangeRef.h" />
+    <ClInclude Include="Patches\SSE\AllowCreateBitArray.h" />
     <ClInclude Include="Patches\SSE\AllowPlayerKnowsCondition.h" />
     <ClInclude Include="Patches\SSE\AllowSaveESMandMasterESP.h" />
     <ClInclude Include="Patches\SSE\AlteredFormList.h" />

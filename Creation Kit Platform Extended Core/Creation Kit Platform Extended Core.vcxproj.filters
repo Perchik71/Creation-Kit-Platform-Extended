@@ -697,6 +697,9 @@
     <ClCompile Include="Editor API\FO4\BSResourceArchive2.cpp">
       <Filter>Editor API\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\AllowCreateBitArray.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1702,6 +1705,9 @@
     </ClInclude>
     <ClInclude Include="NiAPI\NiTSimpleArray.h">
       <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\AllowCreateBitArray.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -87,6 +87,9 @@ namespace CreationKitPlatformExtended
 					size = (uint8_t)(*(uintptr_t*)(lpRelocator->Rav2Off(rav + 2)));
 					lpRelocator->Patch(rav, { 0xE9, (uint8_t)(size + 1), 0x00, 0x00, 0x00, 0x90 });
 
+					// Disable "Unable to initialize perforce, check your logs for more information."
+					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(12), 6);
+
 					return true;
 				}
 
