@@ -330,26 +330,32 @@ namespace CreationKitPlatformExtended
 					}
 				}
 				break;
-				case WM_CLOSE:
-				{
-					// Tired of CTD if a lot of windows are open...
-					if (*TESDataHandler::UserModdedSingleton.Singleton)
-					{
-						if (MessageBoxA(0, "You have unsaved progress, you will lose it.\n"
-							"Is that really what you want?", "Warning", MB_OKCANCEL | MB_ICONWARNING) == IDOK)
-							DestroyWindow(Hwnd);
-					}
-					else
-						DestroyWindow(Hwnd);
-				}
-				return S_OK;
-				case WM_DESTROY:
-					// Let's get out of here (JUST DO IT)
-					Utils::Quit();
-					return S_OK;
 				default:
 					if (GlobalMainWindowPtr->Handle == Hwnd)
 					{
+						if (((Message == WM_CLOSE) || (Message == WM_DESTROY)) && !GlobalEnginePtr->HasCommandRun())
+						{
+							if (Message == WM_CLOSE)
+							{
+								// Tired of CTD if a lot of windows are open...
+								if (*TESDataHandler::UserModdedSingleton.Singleton)
+								{
+									if (MessageBoxA(0, "You have unsaved progress, you will lose it.\n"
+										"Is that really what you want?", "Warning", MB_OKCANCEL | MB_ICONWARNING) == IDOK)
+										DestroyWindow(Hwnd);
+								}
+								else
+									DestroyWindow(Hwnd);
+							}
+							else
+							{
+								// Let's get out of here (JUST DO IT)
+								Utils::Quit();
+							}
+
+							return S_OK;
+						}
+
 						switch (Message)
 						{
 						case WM_SIZE:

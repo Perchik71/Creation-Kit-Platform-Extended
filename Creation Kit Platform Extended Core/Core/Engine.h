@@ -43,6 +43,7 @@ namespace CreationKitPlatformExtended
 			inline PluginManager* GetUserPluginsManager() const { return UserPluginsManager; }
 			virtual bool HasAVX2() const;
 			virtual bool HasSSE41() const;
+			virtual bool HasCommandRun() const;
 			virtual Section GetSection(uint32_t nIndex) const;
 			virtual OsVersion GetSystemVersion() const;
 		public:
@@ -60,6 +61,7 @@ namespace CreationKitPlatformExtended
 			uint64_t _moduleSize;
 			bool _hasAVX2;
 			bool _hasSSE41;
+			bool _hasCommandRun;
 			EDITOR_EXECUTABLE_TYPE _editorVersion;
 			HMODULE _module;
 			Section Sections[3];

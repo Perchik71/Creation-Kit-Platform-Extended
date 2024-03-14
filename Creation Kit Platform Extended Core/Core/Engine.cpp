@@ -240,8 +240,9 @@ namespace CreationKitPlatformExtended
 		void Engine::CommandLineRun()
 		{
 			CommandLineParser CommandLine;
-
-			if (CommandLine.Count() > 0)
+			
+			_hasCommandRun = CommandLine.Count() > 0;
+			if (_hasCommandRun)
 			{
 				_MESSAGE("\tAccessing the console...");
 
@@ -455,6 +456,11 @@ namespace CreationKitPlatformExtended
 		bool Engine::HasSSE41() const 
 		{
 			return _hasSSE41; 
+		}
+
+		bool Engine::HasCommandRun() const
+		{
+			return _hasCommandRun;
 		}
 
 		Section Engine::GetSection(uint32_t nIndex) const 

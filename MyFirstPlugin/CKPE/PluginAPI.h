@@ -92,6 +92,7 @@ namespace CreationKitPlatformExtended
 			virtual EDITOR_EXECUTABLE_TYPE GetEditorVersion() const;
 			virtual bool HasAVX2() const;
 			virtual bool HasSSE41() const;
+			virtual bool HasCommandRun() const;
 			// Indexes: SECTION_TEXT, SECTION_DATA_READONLY, SECTION_DATA
 			virtual Section GetSection(uint32_t nIndex) const;
 			virtual OsVersion GetSystemVersion() const;
