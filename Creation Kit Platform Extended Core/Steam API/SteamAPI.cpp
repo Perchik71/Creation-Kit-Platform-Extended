@@ -9,6 +9,11 @@ extern "C"
 {
 #endif
 
+STEAM_API void* SteamApps()
+{
+	return nullptr;
+}
+
 STEAM_API void* SteamUser()
 {
 	return nullptr;

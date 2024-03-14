@@ -11,6 +11,7 @@ extern "C"
 {
 #endif
 
+STEAM_API void* SteamApps();
 STEAM_API void* SteamUser();
 STEAM_API void* SteamUtils();
 STEAM_API void* SteamClient();
