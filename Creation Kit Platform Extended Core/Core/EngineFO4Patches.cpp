@@ -105,9 +105,9 @@ namespace CreationKitPlatformExtended
 			});
 
 			CommandLineParser CommandLine;
-			if (CommandLine.Count() > 0)
+			if (CommandLine.HasCommandRun())
 			{
-				auto Cmd = CommandLine.At(0);
+				auto Cmd = CommandLine.GetCommand();
 				auto Sep = Cmd.find_first_of(':');
 				if (Sep == String::npos)
 					return;

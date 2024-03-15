@@ -316,9 +316,11 @@ namespace CreationKitPlatformExtended
 				default:
 					if (GlobalMainWindowPtr->Handle == Hwnd)
 					{
-						if (((Message == WM_CLOSE) || (Message == WM_DESTROY)) && !GlobalEnginePtr->HasCommandRun())
+						switch (Message)
 						{
-							if (Message == WM_CLOSE)
+						case WM_CLOSE:
+						{
+							if (!GlobalEnginePtr->HasCommandRun())
 							{
 								// Tired of CTD if a lot of windows are open...
 								if (*TESDataHandler::UserModdedSingleton.Singleton)
@@ -329,18 +331,17 @@ namespace CreationKitPlatformExtended
 								}
 								else
 									DestroyWindow(Hwnd);
-							}
-							else
-							{
-								// Let's get out of here (JUST DO IT)
-								Utils::Quit();
-							}
 
-							return S_OK;
+								return S_OK;
+							}
 						}
-
-						switch (Message)
+						break;
+						case WM_DESTROY:
 						{
+							// Let's get out of here (JUST DO IT)
+							Utils::Quit();
+						}
+						return S_OK;
 						case WM_SIZE:
 						{
 							// Scale the status bar segments to fit the window size

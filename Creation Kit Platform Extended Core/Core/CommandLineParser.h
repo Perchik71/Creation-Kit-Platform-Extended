@@ -18,6 +18,10 @@ namespace CreationKitPlatformExtended
 			inline uint32_t Count() const { return (uint32_t)_aArgs.size(); }
 
 			inline String operator[](uint32_t nId) const { return At(nId); }
+
+			int IndexArgWithCommand() const;
+			inline bool HasCommandRun() const { return IndexArgWithCommand() != -1; }
+			String GetCommand() const;
 		private:
 			Array<String> _aArgs;
 		};

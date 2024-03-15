@@ -241,13 +241,13 @@ namespace CreationKitPlatformExtended
 		{
 			CommandLineParser CommandLine;
 			
-			_hasCommandRun = CommandLine.Count() > 0;
+			_hasCommandRun = CommandLine.HasCommandRun();
 			if (_hasCommandRun)
 			{
 				_MESSAGE("\tAccessing the console...");
 
 				// Определяем команду
-				auto Command = CommandLine.At(0);
+				auto Command = CommandLine.GetCommand();
 				_MESSAGE("\tCommand: \"%s\"", Command.c_str());
 
 				if (!_stricmp(Command.c_str(), "-PECreateDatabase"))
@@ -264,26 +264,26 @@ namespace CreationKitPlatformExtended
 						_ERROR("Invalid number of command arguments: %u", CommandLine.Count());
 						_MESSAGE("Example: CreationKit -PEUpdateDatabase \"test\" \"test.relb\"");
 					}
-					else if (!CreationKitPlatformExtended::Utils::FileExists(CommandLine.At(2).c_str()))
+					else if (!CreationKitPlatformExtended::Utils::FileExists(CommandLine[2].c_str()))
 					{
-						_ERROR("The file does not exist: \"%s\"", CommandLine.At(2).c_str());
+						_ERROR("The file does not exist: \"%s\"", CommandLine[2].c_str());
 					}
 					else
 					{
 						// Открываем базу данных
 						if (GlobalRelocationDatabasePtr->OpenDatabase())
 						{
-							auto Patch = GlobalRelocationDatabasePtr->GetByName(CommandLine.At(1).c_str());
+							auto Patch = GlobalRelocationDatabasePtr->GetByName(CommandLine[1].c_str());
 							// Патча нет?
 							if (Patch.Empty())
 							{
-								Patch = GlobalRelocationDatabasePtr->Append(CommandLine.At(1).c_str(), new RelocationDatabaseItem());
+								Patch = GlobalRelocationDatabasePtr->Append(CommandLine[1].c_str(), new RelocationDatabaseItem());
 								if (Patch.Empty())
 									// Закрываем Creation Kit
 									CreationKitPlatformExtended::Utils::Quit();
 							}
 							// Загружаем
-							if (Patch->LoadFromFileDeveloped(CommandLine.At(2).c_str()))
+							if (Patch->LoadFromFileDeveloped(CommandLine[2].c_str()))
 								// Сохраняем базу данных
 								GlobalRelocationDatabasePtr->SaveDatabase();
 						}
@@ -305,7 +305,7 @@ namespace CreationKitPlatformExtended
 						// Открываем базу данных
 						if (GlobalRelocationDatabasePtr->OpenDatabase())
 						{
-							if (GlobalRelocationDatabasePtr->Remove(CommandLine.At(1).c_str()))
+							if (GlobalRelocationDatabasePtr->Remove(CommandLine[1].c_str()))
 								// Сохраняем базу данных
 								GlobalRelocationDatabasePtr->SaveDatabase();
 							// Закрываем Creation Kit
@@ -329,10 +329,10 @@ namespace CreationKitPlatformExtended
 						// Открываем базу данных
 						if (GlobalRelocationDatabasePtr->OpenDatabase())
 						{
-							auto Patch = GlobalRelocationDatabasePtr->GetByName(CommandLine.At(1).c_str());
+							auto Patch = GlobalRelocationDatabasePtr->GetByName(CommandLine[1].c_str());
 							// Патча есть?
 							if (!Patch.Empty())
-								Patch->SaveToFileDeveloped(CommandLine.At(2).c_str());
+								Patch->SaveToFileDeveloped(CommandLine[2].c_str());
 						}
 						else
 							_FATALERROR("The database is not loaded");
@@ -348,7 +348,7 @@ namespace CreationKitPlatformExtended
 						_MESSAGE("Example: CreationKit -PEExportRTTI \"rtti.txt\"");
 					}
 
-					if (!GlobalDynamicCastPtr || !GlobalDynamicCastPtr->Dump(CommandLine.At(1).c_str()))
+					if (!GlobalDynamicCastPtr || !GlobalDynamicCastPtr->Dump(CommandLine[1].c_str()))
 						_ERROR("It was not possible to create a file and write data there.");
 
 					// Закрываем Creation Kit
@@ -362,7 +362,7 @@ namespace CreationKitPlatformExtended
 						_MESSAGE("Example: CreationKit -PEPackedDialogs \"dia.pak\" \"dia\\sse\\\"");
 					}
 
-					GlobalDialogManagerPtr->PackToFilePackage(CommandLine.At(1).c_str(), CommandLine.At(2).c_str());
+					GlobalDialogManagerPtr->PackToFilePackage(CommandLine[1].c_str(), CommandLine[2].c_str());
 					// Закрываем Creation Kit
 					CreationKitPlatformExtended::Utils::Quit();
 				}
