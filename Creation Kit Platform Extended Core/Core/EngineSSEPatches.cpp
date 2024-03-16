@@ -89,6 +89,7 @@
 #include "Patches/SSE/FixParamsVTXT.h"
 #include "Patches/SSE/AddChangeRef.h"
 #include "Patches/SSE/AllowCreateBitArray.h"
+#include "Patches/SSE/CrashMergeForms.h"
 
 #include "Patches/Windows/SSE/MainWindow.h"
 #include "Patches/Windows/SSE/RenderWindow.h"
@@ -191,6 +192,7 @@ namespace CreationKitPlatformExtended
 				new Patches::FixParamsVTXTPatch(),
 				new Patches::AddChangeRefPatch(),
 				new Patches::AllowCreateBitArrayPatch(),
+				new Patches::CrashMergeFormsPatch(),
 		
 				new Patches::MainWindow(),
 				new Patches::RenderWindow(),

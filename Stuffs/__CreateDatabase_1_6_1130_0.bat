@@ -109,3 +109,4 @@ CreationKit_se_1_6_1130 -PEUpdateDatabase "Memory Leak class BSString" "MemoryLe
 CreationKit_se_1_6_1130 -PEUpdateDatabase "Fix VTXT params sections" "FixVTXTParamsSections.relb"
 CreationKit_se_1_6_1130 -PEUpdateDatabase "Add Change Ref" "AddChangeRef.relb"
 CreationKit_se_1_6_1130 -PEUpdateDatabase "VCBitArray" "VCBitArray.relb"
+CreationKit_se_1_6_1130 -PEUpdateDatabase "Crash Merge Forms" "CrashMergeForms.relb"

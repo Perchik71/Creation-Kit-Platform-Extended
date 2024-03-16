@@ -33,7 +33,7 @@ namespace CreationKitPlatformExtended
 		constexpr auto BSTARRAY_GROW_SIZE = 10;
 		constexpr auto BSTARRAY_SHRINK_SIZE = 10;
 
-		template <class _Ty>
+		template <class _Ty, uint32_t GROW = BSTARRAY_GROW_SIZE, uint32_t SHRINK = BSTARRAY_SHRINK_SIZE>
 		class BSTArray {
 			friend class __BSTArrayCheckOffsets;
 		public:
@@ -96,15 +96,15 @@ namespace CreationKitPlatformExtended
 
 			BOOL Grow(DWORD64 numEntries) {
 				if (!m_Buffer) {
-					m_Buffer = (_Ty*)NiAPI::NiMemoryManager::Alloc(NULL, sizeof(_Ty) * numEntries);
+					m_Buffer = (_Ty*)NiAPI::NiMemoryManager::Alloc(NULL, sizeof(_Ty) * (uint32_t)numEntries);
 					m_Size = 0;
-					m_AllocSize = numEntries;
+					m_AllocSize = (uint32_t)numEntries;
 					return TRUE;
 				}
 
 				try {
 					size_type oldSize = m_AllocSize;
-					size_type newSize = oldSize + numEntries;
+					size_type newSize = oldSize + (uint32_t)numEntries;
 					_Ty* oldArray = m_Buffer;
 					_Ty* newArray = (_Ty*)NiAPI::NiMemoryManager::Alloc(NULL, sizeof(_Ty) * newSize);				// Allocate new block
 					if (oldArray)
@@ -182,7 +182,7 @@ namespace CreationKitPlatformExtended
 
 			BOOL Push(const _Ty& entry) {
 				if (!m_Buffer || m_Size + 1 > m_AllocSize) {
-					if (!Grow(BSTARRAY_GROW_SIZE))
+					if (!Grow(GROW))
 						return FALSE;
 				}
 
@@ -197,7 +197,7 @@ namespace CreationKitPlatformExtended
 
 				size_type lastSize = m_Size;
 				if (m_Size + 1 > m_AllocSize) {						// Not enough space, grow
-					if (!Grow(BSTARRAY_GROW_SIZE))
+					if (!Grow(GROW))
 						return FALSE;
 				}
 
@@ -226,7 +226,7 @@ namespace CreationKitPlatformExtended
 				}
 				m_Size--;
 
-				if (m_AllocSize > m_Size + BSTARRAY_SHRINK_SIZE)
+				if (m_AllocSize > m_Size + SHRINK)
 					Shrink();
 
 				return TRUE;

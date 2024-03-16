@@ -158,12 +158,12 @@ namespace CreationKitPlatformExtended
 				return T;
 			}
 
-			SYSTEMTIME TESFile::GetCreationTime(VOID) const
+			SYSTEMTIME TESFile::GetCreationTime() const
 			{
 				return FileTimeToSystemTimeEx(m_findData.ftCreationTime);
 			}
 
-			SYSTEMTIME TESFile::GetLastWriteTime(VOID) const
+			SYSTEMTIME TESFile::GetLastWriteTime() const
 			{
 				return FileTimeToSystemTimeEx(m_findData.ftLastWriteTime);
 			}

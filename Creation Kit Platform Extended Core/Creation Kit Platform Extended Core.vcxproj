@@ -239,6 +239,7 @@
     <ClCompile Include="Patches\SSE\LoadOptimization.cpp" />
     <ClCompile Include="Patches\SSE\MemoryLeakBSString.cpp" />
     <ClCompile Include="Patches\SSE\MemoryLeakInPreviewWindow.cpp" />
+    <ClCompile Include="Patches\SSE\CrashMergeForms.cpp" />
     <ClCompile Include="Patches\SSE\NavMeshInfoMap.cpp" />
     <ClCompile Include="Patches\SSE\NavMeshPseudoDelete.cpp" />
     <ClCompile Include="Patches\SSE\NewFormat171.cpp" />
@@ -552,6 +553,7 @@
     <ClInclude Include="Patches\SSE\LoadOptimization.h" />
     <ClInclude Include="Patches\SSE\MemoryLeakBSString.h" />
     <ClInclude Include="Patches\SSE\MemoryLeakInPreviewWindow.h" />
+    <ClInclude Include="Patches\SSE\CrashMergeForms.h" />
     <ClInclude Include="Patches\SSE\NavMeshInfoMap.h" />
     <ClInclude Include="Patches\SSE\NavMeshPseudoDelete.h" />
     <ClInclude Include="Patches\SSE\NewFormat171.h" />

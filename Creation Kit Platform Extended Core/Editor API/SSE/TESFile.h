@@ -112,15 +112,20 @@ namespace CreationKitPlatformExtended
 				/* 479 */ char _pad8[0x7];
 				/* 480 */ BSString m_authorName;
 				/* 490 */ BSString m_description;
+				/* 4A0 */ char _pad9[0x20];
+				/* 4C0 */ TESFile* m_parentFile;
+				/* 4C8 */ char _pad10[0x8];
+				/* 4D0 */ uint32_t* m_FormIds;
+				/* 4D8 */ uint64_t m_countForm;
 			public:
-				inline BSString GetAuthorName(VOID) const { return *m_authorName ? m_authorName : "Bethesda Software"; }
-				inline BSString GetDescription(VOID) const { return *m_description ? m_description : ""; }
-				inline BSString GetFileName(VOID) const { return m_FileName ? m_FileName : ""; }
-				inline BSString GetFilePath(VOID) const { return m_FilePath ? m_FilePath : ""; }
-				inline CHAR GetFileLoadIndex(VOID) const { return m_fileIndex; }
-				inline TESFile** GetDependArray(VOID) const { return m_dependArray; }
-				inline DWORD GetDependCount(VOID) const { return m_dependCount; }
-				inline DWORD GetFileSize(VOID) const { return m_fileSize; }
+				inline BSString GetAuthorName() const { return *m_authorName ? m_authorName : "Bethesda Software"; }
+				inline BSString GetDescription() const { return *m_description ? m_description : ""; }
+				inline BSString GetFileName() const { return m_FileName ? m_FileName : ""; }
+				inline BSString GetFilePath() const { return m_FilePath ? m_FilePath : ""; }
+				inline CHAR GetFileLoadIndex() const { return m_fileIndex; }
+				inline TESFile** GetDependArray() const { return m_dependArray; }
+				inline DWORD GetDependCount() const { return m_dependCount; }
+				inline DWORD GetFileSize() const { return m_fileSize; }
 				inline FileHeaderInfo GetHeaderInfo() const { return m_fileHeader; }
 				inline bool IsLoaded() const { return m_fileIndex != 0xFF; }
 				inline bool IsMaster() const { return m_RecordFlags & FILE_RECORD_ESM; }
@@ -128,8 +133,13 @@ namespace CreationKitPlatformExtended
 				inline bool IsActive() const { return m_RecordFlags & FILE_RECORD_ACTIVE; }
 				inline bool IsLocalized() const { return m_RecordFlags & FILE_RECORD_LOCALIZED; }
 				inline bool IsSmallMaster() const { return m_RecordFlags & FILE_RECORD_ESL; }
-				SYSTEMTIME GetCreationTime(VOID) const;
-				SYSTEMTIME GetLastWriteTime(VOID) const;
+				SYSTEMTIME GetCreationTime() const;
+				SYSTEMTIME GetLastWriteTime() const;
+
+				inline TESFile* GetParentFile() { return m_parentFile; }
+				inline uint64_t CountForm() const { return m_countForm; }
+				inline void IncCountForm() { m_countForm++; }
+				inline void SetNewArrayFormIds(uint32_t* FormIds) { m_FormIds = FormIds; }
 
 				inline static int (*LoadTESInfo)(TESFile*);
 				inline static __int64 (*WriteTESInfo)(TESFile*);
@@ -145,6 +155,7 @@ namespace CreationKitPlatformExtended
 				static bool ReadFirstChunk(const char* fileName, TESChunk& chunk);
 				static uint32_t GetTypeFile(const char* fileName);
 			};
+			static_assert(sizeof(TESFile) == 0x4E0);
 		}
 	}
 }

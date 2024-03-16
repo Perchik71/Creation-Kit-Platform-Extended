@@ -700,6 +700,9 @@
     <ClCompile Include="Patches\SSE\AllowCreateBitArray.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashMergeForms.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1707,6 +1710,9 @@
       <Filter>NiAPI</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SSE\AllowCreateBitArray.h">
+      <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashMergeForms.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
