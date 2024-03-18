@@ -115,8 +115,8 @@ namespace CreationKitPlatformExtended
 				/* 4A0 */ char _pad9[0x20];
 				/* 4C0 */ TESFile* m_parentFile;
 				/* 4C8 */ char _pad10[0x8];
-				/* 4D0 */ uint32_t* m_FormIds;
-				/* 4D8 */ uint64_t m_countForm;
+				/* 4D0 */ uint32_t* m_ownedIds;
+				/* 4D8 */ uint64_t m_countOwned;
 			public:
 				inline BSString GetAuthorName() const { return *m_authorName ? m_authorName : "Bethesda Software"; }
 				inline BSString GetDescription() const { return *m_description ? m_description : ""; }
@@ -133,13 +133,14 @@ namespace CreationKitPlatformExtended
 				inline bool IsActive() const { return m_RecordFlags & FILE_RECORD_ACTIVE; }
 				inline bool IsLocalized() const { return m_RecordFlags & FILE_RECORD_LOCALIZED; }
 				inline bool IsSmallMaster() const { return m_RecordFlags & FILE_RECORD_ESL; }
+				inline TESFile* GetParentFile() { return m_parentFile; }
+				inline void IncCountOwnedIds() { m_countOwned++; }
+				inline uint64_t CountOwnedIds() const { return m_countOwned; }
+				inline void CleanCountOwnedIds() { m_countOwned = 0; }
+				inline uint32_t* GetArrayOwnedIds() const { return m_ownedIds; }
+				inline void SetArrayOwnedIds(uint32_t* FormIds) { m_ownedIds = FormIds; }
 				SYSTEMTIME GetCreationTime() const;
 				SYSTEMTIME GetLastWriteTime() const;
-
-				inline TESFile* GetParentFile() { return m_parentFile; }
-				inline uint64_t CountForm() const { return m_countForm; }
-				inline void IncCountForm() { m_countForm++; }
-				inline void SetNewArrayFormIds(uint32_t* FormIds) { m_FormIds = FormIds; }
 
 				inline static int (*LoadTESInfo)(TESFile*);
 				inline static __int64 (*WriteTESInfo)(TESFile*);

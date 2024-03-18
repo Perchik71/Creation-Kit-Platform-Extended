@@ -43,7 +43,7 @@ namespace CreationKitPlatformExtended
 
 			const char* CrashMergeFormsPatch::GetOptionName() const
 			{
-				return "CreationKit:bOwnMergeFormsOverlaps";
+				return "CreationKit:bOverlapsGenerateONAM";
 			}
 
 			const char* CrashMergeFormsPatch::GetName() const
@@ -98,19 +98,19 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
-			class scope_lock
-			{
-			private:
-				std::recursive_mutex* _lock;
-			public:
-				scope_lock(std::recursive_mutex* lock) : _lock(lock) { _lock->lock(); }
-				~scope_lock() { _lock->unlock(); }
-			};
-
 			std::recursive_mutex lock;
 
 			void CrashMergeFormsPatch::sub(TESFile* PluginFile)
 			{
+				class scope_lock
+				{
+				private:
+					std::recursive_mutex* _lock;
+				public:
+					scope_lock(std::recursive_mutex* lock) : _lock(lock) { _lock->lock(); }
+					~scope_lock() { _lock->unlock(); }
+				};
+
 				struct IteratorT
 				{
 					uint32_t* FormId;
@@ -118,7 +118,7 @@ namespace CreationKitPlatformExtended
 				};
 
 				// Redoing the master files merge function.
-				// In the original, it is allowed to merge no more than 65536 forms.
+				// In the original, it is allowed no more than 65536 ids to array [ONAM].
 
 				// block for thread
 				scope_lock locker(&lock);
@@ -131,7 +131,7 @@ namespace CreationKitPlatformExtended
 					if (!SomePluginFile)
 						SomePluginFile = PluginFile;
 
-					_CONSOLE("...... [CKPE] Restructuring an array of form ids");
+					_CONSOLE("......[CKPE] Updating owned ID array (File: %s)", PluginFile->GetFileName().c_str());
 
 					// I refuse from NiArray in favor of BSTArray (limited to 4 billion elements)
 					BSTArray<uint32_t, 128, 128> FormIds;
@@ -146,6 +146,7 @@ namespace CreationKitPlatformExtended
 					fastCall<void>(pointer_CrashMergeForms_sub2, *UnkClass1, &Iterator);
 					fastCall<void>(pointer_CrashMergeForms_sub3, *UnkClass1, &IteratorEnd);
 
+					SomePluginFile->CleanCountOwnedIds();
 					// Go through to the end
 					while (fastCall<bool>(pointer_CrashMergeForms_sub4, &Iterator, &IteratorEnd))
 					{
@@ -160,22 +161,22 @@ namespace CreationKitPlatformExtended
 						// Lots of checks
 						if (FormId && Form &&
 							fastCall<bool>(pointer_CrashMergeForms_sub7, Form, SomePluginFile) &&
-							(fastCall<TESFile*>(pointer_CrashMergeForms_sub8, Form, 0) == SomePluginFile))
+							(fastCall<TESFile*>(pointer_CrashMergeForms_sub8, Form, 0) != SomePluginFile))
 						{
 							// All conditions are original
 
 							bool NeedModded = false;
-
 							auto FType = Form->Type;
-							if (FType == TESForm::ftReference)
-								goto addr_14162056b_2;
-							if (FType > TESForm::ftCharacter)
+
+							if ((FType >= TESForm::ftReference) && (FType <= TESForm::ftNavMesh))
 							{
-								if (FType <= TESForm::ftPHZD)
-									addr_14162056b_2:
-									NeedModded = !fastCall<bool>(pointer_CrashMergeForms_sub9, Form);
-								else
-									NeedModded = (FType > TESForm::ftWorldSpace) && (FType <= TESForm::ftNavMesh);
+								if ((FType != TESForm::ftCharacter) && (FType != TESForm::ftWorldSpace))
+								{
+									if (FType >= TESForm::ftLandspace)
+										NeedModded = true;
+									else
+										NeedModded = !fastCall<bool>(pointer_CrashMergeForms_sub9, Form);
+								}
 							}
 
 							// If the form needs to be added...
@@ -184,14 +185,14 @@ namespace CreationKitPlatformExtended
 								// Added
 								FormIds.Push(FormId);
 								// Inc count to temp object
-								SomePluginFile->IncCountForm();
+								SomePluginFile->IncCountOwnedIds();
 							}
 						}
 					}
 
 					// Get count total
-					size_t size = SomePluginFile->CountForm();
-					_CONSOLE("...... [CKPE] Total new forms %llu", size);
+					size_t size = SomePluginFile->CountOwnedIds();
+					_CONSOLE("......[CKPE] Total owned ID (%llu)", size);
 
 					if (size)
 					{
@@ -201,17 +202,15 @@ namespace CreationKitPlatformExtended
 						if (data)
 						{
 							memcpy(data, FormIds.QBuffer(), size);
-							FormIds.Clear();
-
+	
 							// Set new array for temp
-							SomePluginFile->SetNewArrayFormIds(data);
-							_CONSOLE("...... [CKPE] The array has been successfully modified", size);
+							SomePluginFile->SetArrayOwnedIds(data);
+							_CONSOLE("......[CKPE] The array has been successfully update", size);
 						}
 						else
-						{
-							_CONSOLE("...... [CKPE] Failure to update the array of forms, lack of memory. Call CTD.", size);
-							AssertMsg(data, "Failure to update the array of forms, lack of memory");
-						}
+							_CONSOLE("......[CKPE] Failure to update owned ID array, lack of memory.", size);
+
+						FormIds.Clear();
 					}
 				}
 			}
