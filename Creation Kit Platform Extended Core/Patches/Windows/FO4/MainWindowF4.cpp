@@ -360,8 +360,6 @@ namespace CreationKitPlatformExtended
 
 							SendMessageA(GetDlgItem(Hwnd, EditorAPI::EditorUI::UI_EDITOR_STATUSBAR), SB_SETPARTS,
 								spacing.size(), reinterpret_cast<LPARAM>(spacing.data()));
-
-							RenderWindow::UpdateWindowSize(LOWORD(lParam), HIWORD(lParam));
 						}
 						break;
 						case WM_COMMAND:

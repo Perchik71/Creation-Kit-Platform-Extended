@@ -20,7 +20,7 @@ namespace CreationKitPlatformExtended
 
 		ConsoleWindow* GlobalConsoleWindowPtr = nullptr;
 
-		ConsoleWindow::ConsoleWindow(Engine* lpEngine) : _engine(nullptr), hWindow(NULL),
+		ConsoleWindow::ConsoleWindow(Engine* lpEngine) : _engine(lpEngine), hWindow(NULL),
 			_richEditHwnd(NULL), _autoScroll(true), _outputFileHandle(nullptr), _ExternalPipeWriterHandle(NULL),
 			_ExternalPipeReaderHandle(NULL), HashLastMsg(0)
 		{

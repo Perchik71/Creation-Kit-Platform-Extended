@@ -25,7 +25,6 @@ namespace CreationKitPlatformExtended
 
 				RenderWindow();
 
-				static void UpdateWindowSize(LONG w, LONG h);
 				static LRESULT CALLBACK HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,

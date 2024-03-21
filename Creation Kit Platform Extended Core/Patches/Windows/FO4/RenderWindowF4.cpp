@@ -17,10 +17,7 @@ namespace CreationKitPlatformExtended
 		{
 			using namespace CreationKitPlatformExtended::EditorAPI::Fallout4;
 
-			bool GlobalRenderWindowInMainWindow = false;
 			RenderWindow* GlobalRenderWindowPtr = nullptr;
-			LONG GlobalToolbarHeight = 0;
-			LONG GlobalStatusbarHeight = 0;
 			RenderWindow::Area rcSafeDrawArea;
 
 			bool RenderWindow::HasOption() const
@@ -88,25 +85,6 @@ namespace CreationKitPlatformExtended
 				GlobalRenderWindowPtr = this;
 			}
 
-			void RenderWindow::UpdateWindowSize(LONG w, LONG h)
-			{
-				if (GlobalRenderWindowInMainWindow)
-				{
-					::Core::Classes::UI::CRECT NewRect =
-					{
-						1,
-						GlobalToolbarHeight,
-						w - 1,
-						h - (GlobalStatusbarHeight - 2)
-					};
-
-					GlobalRenderWindowPtr->SetBoundsRect(NewRect);
-
-					_TempDrawArea->WindowSize = { NewRect.Width, NewRect.Height };
-					_TempDrawArea->WindowSize2 = { NewRect.Width, NewRect.Height };
-				}
-			}
-
 			LRESULT CALLBACK RenderWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 			{
 				switch (Message)
@@ -114,20 +92,18 @@ namespace CreationKitPlatformExtended
 					case WM_INITDIALOG:
 					{
 						GlobalRenderWindowPtr->m_hWnd = Hwnd;
-						auto Ret = CallWindowProc(GlobalRenderWindowPtr->GetOldWndProc(), Hwnd, Message, wParam, lParam);
-
-						if (GlobalMainWindowPtr && _READ_OPTION_BOOL("CreationKit", "bRenderWindowInMainWindow", false))
+						return CallWindowProc(GlobalRenderWindowPtr->GetOldWndProc(), Hwnd, Message, wParam, lParam);
+					}
+					// Don't let us reduce the window too much
+					case WM_GETMINMAXINFO:
+					{
+						if (lParam)
 						{
-							GlobalRenderWindowInMainWindow = true;
-							GlobalRenderWindowPtr->SetParent(*GlobalMainWindowPtr);
-							GlobalRenderWindowPtr->Style = WS_POPUP | WS_VISIBLE | WS_OVERLAPPED;
-							GlobalToolbarHeight = GlobalMainWindowPtr->Toolbar.Height;
-							GlobalStatusbarHeight = GlobalMainWindowPtr->Toolbar.Height;
-							auto ClientArea = GlobalMainWindowPtr->ClientRect();
-							UpdateWindowSize(ClientArea.Width, ClientArea.Height);
+							LPMINMAXINFO lpMMI = (LPMINMAXINFO)lParam;
+							lpMMI->ptMinTrackSize.x = 96;	// 96 min tex size
+							lpMMI->ptMinTrackSize.y = 96;
 						}
-
-						return Ret;
+						return S_OK;
 					}
 					case WM_ACTIVATE:
 					{

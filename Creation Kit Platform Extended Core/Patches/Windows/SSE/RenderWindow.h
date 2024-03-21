@@ -23,8 +23,7 @@ namespace CreationKitPlatformExtended
 				virtual Array<String> GetDependencies() const;
 
 				RenderWindow();
-
-				static void UpdateWindowSize(LONG w, LONG h);
+				
 				static LRESULT CALLBACK HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 				static void setFlagLoadCell();
 			protected:
