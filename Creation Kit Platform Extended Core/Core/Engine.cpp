@@ -170,7 +170,7 @@ namespace CreationKitPlatformExtended
 				SkyrimSpecialEdition_AppendPatches(PatchesManager);
 			}
 			else
-			// Добавление патчей только для редактора фолыча специального издания
+			// Добавление патчей только для редактора фолыча
 			if (eEditorVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST)
 			{
 				Fallout4_AppendPatches(PatchesManager);

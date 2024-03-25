@@ -29,6 +29,9 @@ namespace CreationKitPlatformExtended
 			static HWND Comctl32CreateToolbarEx_1(HWND hwnd, DWORD ws, UINT wID, INT nBitmaps, 
 				HINSTANCE hBMInst, UINT_PTR wBMID, LPCTBBUTTON lpButtons,
 				INT iNumButtons, INT dxButton, INT dyButton, INT dxBitmap, INT dyBitmap, UINT uStructSize);
+			static HWND Comctl32CreateToolbarEx_NavMesh(HWND hwnd, DWORD ws, UINT wID, INT nBitmaps,
+				HINSTANCE hBMInst, UINT_PTR wBMID, LPTBBUTTON lpButtons,
+				INT iNumButtons, INT dxButton, INT dyButton, INT dxBitmap, INT dyBitmap, UINT uStructSize);
 			static HIMAGELIST Comctl32ImageList_LoadImageA_1(HINSTANCE hi, LPCSTR lpbmp, INT cx, INT cGrow,
 				COLORREF crMask, UINT uType, UINT uFlags);
 			static void HideOldTimeOfDayComponents();

@@ -69,17 +69,18 @@ namespace CreationKitPlatformExtended
 				pointer_UIThemePatchAdditional_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
 				// replace main toolbar
 				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1), (uintptr_t)&Comctl32CreateToolbarEx_1);
-				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(2), (uintptr_t)&HideOldTimeOfDayComponents);
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&Comctl32CreateToolbarEx_NavMesh);
+				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3), (uintptr_t)&HideOldTimeOfDayComponents);
 				// replace ImageList_LoadImage for item type
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(3), (uintptr_t)&Comctl32ImageList_LoadImageA_1);
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(4), (uintptr_t)&Comctl32ImageList_LoadImageA_1);
 
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(4), (uintptr_t)&HKInitializeTimeOfDay);
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(5), (uintptr_t)&HKSetNewValueTimeOfDay);
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(5), (uintptr_t)&HKInitializeTimeOfDay);
+				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(6), (uintptr_t)&HKSetNewValueTimeOfDay);
 
 				if (verPatch != 2)
 				{
-					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(6), 7);				// Prevent setting redundant colors in the condition list view NM_CUSTOMDRAW (breaks dark theme)
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(7), { 0x74, 0x20 });	// ^
+					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(7), 7);				// Prevent setting redundant colors in the condition list view NM_CUSTOMDRAW (breaks dark theme)
+					lpRelocator->Patch(lpRelocationDatabaseItem->At(8), { 0x74, 0x20 });	// ^
 				}
 
 				return true;
@@ -128,6 +129,47 @@ namespace CreationKitPlatformExtended
 			SetWindowPos(ret, NULL, 0, 24, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
 			Initialization(ret);
+
+			return ret;
+		}
+
+		HWND UIThemePatchAdditional::Comctl32CreateToolbarEx_NavMesh(HWND hwnd, DWORD ws, UINT wID, INT nBitmaps,
+			HINSTANCE hBMInst, UINT_PTR wBMID, LPTBBUTTON lpButtons,
+			INT iNumButtons, INT dxButton, INT dyButton, INT dxBitmap, INT dyBitmap, UINT uStructSize)
+		{
+			HIMAGELIST hImageList;
+
+			if (UITheme::GetTheme() == UITheme::Theme_Custom)
+			{
+				auto fname = UITheme::GetFileNameToolbarNavMeshForCustomTheme();
+				if (Utils::FileExists(fname.c_str()))
+				{
+					hImageList = ImageList_LoadImageA(NULL, fname.c_str(), 16, 0,
+						UITheme::GetMaskColorToolbarNavMeshForCustomTheme(), IMAGE_BITMAP,
+						LR_CREATEDIBSECTION | LR_LOADTRANSPARENT | LR_LOADFROMFILE);
+					if (!hImageList)
+						goto jj1214;
+				}
+				else
+					goto jj1214;
+			}
+			else
+				jj1214:
+				hImageList = ImageList_LoadImageA(GlobalEnginePtr->GetInstanceDLL(), MAKEINTRESOURCEA(IDB_BITMAP7), 16, 0,
+					RGB(56, 56, 56), IMAGE_BITMAP, LR_CREATEDIBSECTION | LR_LOADTRANSPARENT);
+
+			// Swap Balance for Opt. with Test navmesh
+			/*auto temp = lpButtons[8];
+			lpButtons[8] = lpButtons[9];
+			lpButtons[9] = temp;*/
+
+			HWND ret = CreateToolbarEx(hwnd, ws, wID, nBitmaps, NULL, NULL, lpButtons, 
+				iNumButtons, dxButton, dyButton, dxBitmap, dyBitmap, uStructSize);
+			
+			SendMessageA(ret, TB_SETIMAGELIST, 0, (LPARAM)hImageList);
+			SendMessageA(ret, TB_SETBITMAPSIZE, 0, MAKELPARAM(16, 16));
+			ShowWindow(ret, SW_SHOWNORMAL);
+			SetWindowPos(ret, NULL, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
 			return ret;
 		}

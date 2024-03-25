@@ -63,6 +63,8 @@ IDB_BITMAP5             BITMAP                  "..\\Resources\\uncheck.bmp"
 
 IDB_BITMAP6             BITMAP                  "..\\Resources\\uncheck_darktheme.bmp"
 
+IDB_BITMAP7             BITMAP                  "..\\Resources\\navmesh.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //

@@ -706,6 +706,12 @@
     <ClCompile Include="Patches\SSE\CrashNullptrFaceGen.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\Windows\SSE\NavMeshWindow.cpp">
+      <Filter>Patches\Windows\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\Windows\FO4\NavMeshWindowF4.cpp">
+      <Filter>Patches\Windows\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1721,6 +1727,12 @@
     <ClInclude Include="Patches\SSE\CrashNullptrFaceGen.h">
       <Filter>Patches\SSE</Filter>
     </ClInclude>
+    <ClInclude Include="Patches\Windows\SSE\NavMeshWindow.h">
+      <Filter>Patches\Windows\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\FO4\NavMeshWindowF4.h">
+      <Filter>Patches\Windows\FO4</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version\resource_version.rc">
@@ -1762,6 +1774,11 @@
     <Image Include="..\Resources\uncheck.bmp">
       <Filter>Resources</Filter>
     </Image>
-    <Image Include="..\Resources\aboutf4.png" />
+    <Image Include="..\Resources\navmesh.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\aboutf4.png">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>

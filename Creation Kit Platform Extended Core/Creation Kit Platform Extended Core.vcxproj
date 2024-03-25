@@ -271,6 +271,7 @@
     <ClCompile Include="Patches\Windows\FO4\DataWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\LayersWindow.cpp" />
     <ClCompile Include="Patches\Windows\FO4\MainWindowF4.cpp" />
+    <ClCompile Include="Patches\Windows\FO4\NavMeshWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\ObjectWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\ProgressWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\RenderWindowF4.cpp" />
@@ -279,6 +280,7 @@
     <ClCompile Include="Patches\Windows\SSE\CellViewWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\DataWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\MainWindow.cpp" />
+    <ClCompile Include="Patches\Windows\SSE\NavMeshWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\ObjectWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\RenderWindow.cpp" />
     <ClCompile Include="Steam API\SteamAPI.cpp" />
@@ -586,6 +588,7 @@
     <ClInclude Include="Patches\Windows\FO4\DataWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\LayersWindow.h" />
     <ClInclude Include="Patches\Windows\FO4\MainWindowF4.h" />
+    <ClInclude Include="Patches\Windows\FO4\NavMeshWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\ObjectWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\ProgressWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\RenderWindowF4.h" />
@@ -594,6 +597,7 @@
     <ClInclude Include="Patches\Windows\SSE\CellViewWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\DataWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\MainWindow.h" />
+    <ClInclude Include="Patches\Windows\SSE\NavMeshWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\ObjectWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\RenderWindow.h" />
     <ClInclude Include="resource.h" />
@@ -644,6 +648,7 @@
     <Image Include="..\Resources\aboutf4.png" />
     <Image Include="..\Resources\check.bmp" />
     <Image Include="..\Resources\check_darktheme.bmp" />
+    <Image Include="..\Resources\navmesh.bmp" />
     <Image Include="..\Resources\toolbar.bmp" />
     <Image Include="..\Resources\types.bmp" />
     <Image Include="..\Resources\uncheck.bmp" />

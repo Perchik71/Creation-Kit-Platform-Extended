@@ -108,6 +108,8 @@ namespace CreationKitPlatformExtended
 
 		COLORREF CustomTheme_MaskColor_Toolbar;
 		String CustomTheme_FileName_Toolbar;
+		COLORREF CustomTheme_MaskColor_Toolbar_NavMesh;
+		String CustomTheme_FileName_Toolbar_NavMesh;
 		COLORREF CustomTheme_MaskColor_Icons;
 		String CustomTheme_FileName_Icons;
 
@@ -569,6 +571,12 @@ namespace CreationKitPlatformExtended
 			ScanColorFromString(Text, "rMaskToolbar", &r, &g, &b);
 			CustomTheme_MaskColor_Toolbar = RGB(r, g, b);
 			CustomTheme_FileName_Toolbar = ThemeIni->ReadString("Assets", "sImageForToolbar", "");
+
+			Text = ThemeIni->ReadString("Assets", "rMaskToolbarNavMesh", "0,0,0");
+			ScanColorFromString(Text, "rMaskToolbar", &r, &g, &b);
+			CustomTheme_MaskColor_Toolbar_NavMesh = RGB(r, g, b);
+			CustomTheme_FileName_Toolbar_NavMesh = ThemeIni->ReadString("Assets", "sImageForToolbarNavMesh", "");
+
 			Text = ThemeIni->ReadString("Assets", "rMaskIcons", "0,0,0");
 			ScanColorFromString(Text, "rMaskIcons", &r, &g, &b);
 			CustomTheme_MaskColor_Icons = RGB(r, g, b);
@@ -598,6 +606,16 @@ namespace CreationKitPlatformExtended
 		String GetFileNameToolbarForCustomTheme()
 		{
 			return CustomTheme_FileName_Toolbar;
+		}
+
+		COLORREF GetMaskColorToolbarNavMeshForCustomTheme()
+		{
+			return CustomTheme_MaskColor_Toolbar_NavMesh;
+		}
+
+		String GetFileNameToolbarNavMeshForCustomTheme()
+		{
+			return CustomTheme_FileName_Toolbar_NavMesh;
 		}
 
 		COLORREF GetMaskColorIconsForCustomTheme()

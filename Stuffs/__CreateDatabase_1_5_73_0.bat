@@ -107,3 +107,4 @@ CreationKit_se_1_5_73 -PEUpdateDatabase "Ignore Ground Height Test" "IgnoreGroun
 CreationKit_se_1_5_73 -PEUpdateDatabase "Memory Leak class BSString" "MemoryLeakBSString.relb"
 CreationKit_se_1_5_73 -PEUpdateDatabase "VCBitArray" "VCBitArray.relb"
 CreationKit_se_1_5_73 -PEUpdateDatabase "Crash Nullptr FaceGen" "CrashNullptrFaceGen.relb"
+CreationKit_se_1_5_73 -PEUpdateDatabase "NavMesh Window" "NavMeshWindow.relb"

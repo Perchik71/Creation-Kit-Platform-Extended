@@ -109,3 +109,4 @@ CreationKit_se_1_6_438 -PEUpdateDatabase "Fix VTXT params sections" "FixVTXTPara
 CreationKit_se_1_6_438 -PEUpdateDatabase "Add Change Ref" "AddChangeRef.relb"
 CreationKit_se_1_6_438 -PEUpdateDatabase "VCBitArray" "VCBitArray.relb"
 CreationKit_se_1_6_438 -PEUpdateDatabase "Crash Nullptr FaceGen" "CrashNullptrFaceGen.relb"
+CreationKit_se_1_6_438 -PEUpdateDatabase "NavMesh Window" "NavMeshWindow.relb"

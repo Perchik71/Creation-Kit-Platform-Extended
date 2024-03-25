@@ -56,6 +56,8 @@ namespace CreationKitPlatformExtended
 		bool NeedDarkCheck();
 		COLORREF GetMaskColorToolbarForCustomTheme();
 		String GetFileNameToolbarForCustomTheme();
+		COLORREF GetMaskColorToolbarNavMeshForCustomTheme();
+		String GetFileNameToolbarNavMeshForCustomTheme();
 		COLORREF GetMaskColorIconsForCustomTheme();
 		String GetFileNameIconsForCustomTheme();
 
