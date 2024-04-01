@@ -102,15 +102,6 @@ namespace CreationKitPlatformExtended
 
 			void CrashMergeFormsPatch::sub(TESFile* PluginFile)
 			{
-				class scope_lock
-				{
-				private:
-					std::recursive_mutex* _lock;
-				public:
-					scope_lock(std::recursive_mutex* lock) : _lock(lock) { _lock->lock(); }
-					~scope_lock() { _lock->unlock(); }
-				};
-
 				struct IteratorT
 				{
 					uint32_t* FormId;
@@ -121,7 +112,7 @@ namespace CreationKitPlatformExtended
 				// In the original, it is allowed no more than 65536 ids to array [ONAM].
 
 				// block for thread
-				scope_lock locker(&lock);
+				std::lock_guard locker(lock);
 				{
 					// Erasing the previous array form ids
 					fastCall<void>(pointer_CrashMergeForms_sub1, PluginFile);
@@ -140,8 +131,10 @@ namespace CreationKitPlatformExtended
 					//
 
 					auto UnkClass1 = (uintptr_t*)pointer_CrashMergeForms_data;
-					IteratorT Iterator = { 0 };
-					IteratorT IteratorEnd = { 0 };
+					IteratorT Iterator;
+					IteratorT IteratorEnd;
+					memset(&Iterator, 0, sizeof(IteratorT));
+					memset(&IteratorEnd, 0, sizeof(IteratorT));
 
 					fastCall<void>(pointer_CrashMergeForms_sub2, *UnkClass1, &Iterator);
 					fastCall<void>(pointer_CrashMergeForms_sub3, *UnkClass1, &IteratorEnd);
@@ -165,7 +158,7 @@ namespace CreationKitPlatformExtended
 						{
 							// All conditions are original
 
-							bool NeedModded = false;
+							bool NeedAdd= false;
 							auto FType = Form->Type;
 
 							if ((FType >= TESForm::ftReference) && (FType <= TESForm::ftNavMesh))
@@ -173,14 +166,14 @@ namespace CreationKitPlatformExtended
 								if ((FType != TESForm::ftCharacter) && (FType != TESForm::ftWorldSpace))
 								{
 									if (FType >= TESForm::ftLandspace)
-										NeedModded = true;
+										NeedAdd = true;
 									else
-										NeedModded = !fastCall<bool>(pointer_CrashMergeForms_sub9, Form);
+										NeedAdd = !fastCall<bool>(pointer_CrashMergeForms_sub9, Form);
 								}
 							}
 
 							// If the form needs to be added...
-							if (NeedModded)
+							if (NeedAdd)
 							{
 								// Added
 								FormIds.Push(FormId);
@@ -203,8 +196,8 @@ namespace CreationKitPlatformExtended
 						{
 							memcpy(data, FormIds.QBuffer(), size);
 	
-							// Set new array for temp
-							SomePluginFile->SetArrayOwnedIds(data);
+							// Set new array
+							PluginFile->SetArrayOwnedIds(data, SomePluginFile->CountOwnedIds());
 							_CONSOLE("......[CKPE] The array has been successfully update", size);
 						}
 						else

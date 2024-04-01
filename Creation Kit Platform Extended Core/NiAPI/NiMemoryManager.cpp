@@ -21,8 +21,6 @@
 //////////////////////////////////////////
 
 #include "NiMemoryManager.h"
-// Only static function
-#include "Patches/MemoryManagerPatch.h"
 
 namespace CreationKitPlatformExtended
 {

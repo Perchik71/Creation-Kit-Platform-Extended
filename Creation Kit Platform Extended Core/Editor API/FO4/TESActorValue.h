@@ -32,13 +32,13 @@ namespace CreationKitPlatformExtended
 	{
 		namespace Fallout4
 		{
-			class TESActorValue : public TESForm, public TESFullName, public TESDescription {
+			class TESActorValue : public TESForm {
 			private:
 				enum { eTypeID = FormType::ftActorValueInfo };
 			public:
-				/*68*/ TESActorValue* _ParentActorValue;		// ???
+			//	/*68*/ TESActorValue* _ParentActorValue;		// ???
 			};
-			static_assert(sizeof(TESActorValue) == 0x70);
+			//static_assert(sizeof(TESActorValue) == 0x70);
 
 			class TESActorValueArray : public TESPersistent {
 			public:

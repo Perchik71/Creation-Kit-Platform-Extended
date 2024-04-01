@@ -80,7 +80,7 @@ namespace CreationKitPlatformExtended
 				READ_PROPERTY(GetInfos) NiAPI::NiTSimpleArray<TESTopicInfo*>& Infos;
 			private:
 				char pad28[0x8];
-				BGSLocalizedStringIL _TopicText;
+				BGSLocalizedStringIL<BSEntryString> _TopicText;
 				char pad40[0x2];
 				SubtypeT _Subtype;
 				char pad43[0x4];

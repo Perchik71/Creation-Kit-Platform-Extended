@@ -26,7 +26,7 @@
 #include "..\BSString.h"
 #include "BSEntryString.h"
 #include "BSFixedString.h"
-#include "BGSLocalizedString.h"
+#include "..\BGSLocalizedString.h"
 #include "..\BSTList.h"
 #include "..\BSTArray.h"
 
@@ -66,32 +66,17 @@ namespace CreationKitPlatformExtended
 			};
 
 			// 0x18
-			class TESFullName : public TESPersistent, public BGSLocalizedString {
+			class TESFullName
+			{
 			public:
-				virtual ~TESFullName(VOID);														// 000
-			public:
-				virtual VOID VT_Func07(VOID);													// 038
-				virtual VOID VT_Func08(VOID);													// 040
-				virtual VOID VT_Func09(VOID);													// 048
-				virtual VOID VT_Func10(VOID);													// 050
-				virtual VOID VT_Func11(VOID);													// 058	not implemented
-				virtual VOID VT_Func12(VOID);													// 060	not implemented
-				virtual VOID VT_Func13(VOID);													// 068	not implemented
-				virtual VOID VT_Func14(VOID);													// 070
-				// Checking for the existence of a control
-				// control UID 1060(0x424)
-				virtual VOID Debug_CheckExistsControl_DisplayName_N1060(HWND hDialog) const;	// 078
-				virtual VOID VT_Func16(VOID);													// 080
-				// The function is passed a window descriptor where there is an edit IDC_FULL_NAME window. 
-				// She takes the text from there and saves it.
-				// control UID 1060(0x424)
-				virtual VOID UpdateStringFromControl_DisplayName_N1060(HWND hDialog) const;		// 088
-				virtual VOID VT_Func18(VOID);													// 090	not implemented
-				virtual VOID VT_Func19(VOID);													// 098	not implemented
-				virtual VOID VT_Func20(VOID);													// 0A0	not implemented
-				virtual VOID VT_Func21(VOID);													// 0A8	
-				// return full name
-				virtual LPCSTR c_str(VOID) const;												// 0B0
+				inline const char* GetName() const
+				{
+					return thisVirtualCall<const char*>(0xB0, this);
+				}
+
+				READ_PROPERTY(GetName) const char* Name;
+			private:
+				BGSLocalizedString<BSEntryString> _Str;
 			};
 
 			// 0x10
@@ -162,14 +147,10 @@ namespace CreationKitPlatformExtended
 				// members
 				/*08*/ DWORD Unk08;
 				/*0C*/ DWORD Unk0C;
-				/*10*/ BGSLocalizedStringDL LocalizedString;
+				/*10*/ BGSLocalizedStringDL<BSEntryString> LocalizedString;
 			public:
-				inline const char* Get() const { return LocalizedString.Get(); }
-				inline void Set(const char* str) { LocalizedString.Set(str); }
-				inline void Set(const BSString& str) { LocalizedString.Set(*str); }
+				inline const char* Get() const { return LocalizedString.c_str(); }
 			public:
-				inline TESDescription& operator=(LPCSTR str) { Set(str); return *this; }
-				inline TESDescription& operator=(const BSString& str) { Set(*str); return *this; }
 				inline LPCSTR operator*() const { return Get(); }
 			};
 			static_assert(sizeof(TESDescription) == 0x28);

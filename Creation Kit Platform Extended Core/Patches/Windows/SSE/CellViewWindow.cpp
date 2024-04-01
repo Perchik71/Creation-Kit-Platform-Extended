@@ -1,8 +1,9 @@
-// Copyright © 2023-2024 aka perchik71. All rights reserved.
+ï»¿// Copyright Â© 2023-2024 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
+#include "Core/RegistratorWindow.h"
 #include "Editor API/BSString.h"
 #include "Editor API/EditorUI.h"
 #include "Editor API/SSE/BGSRenderWindow.h"
@@ -251,6 +252,7 @@ namespace CreationKitPlatformExtended
 					str_CellViewWindow_FilterUser = (char*)GlobalMemoryManagerPtr->MemAlloc(UI_CELL_VIEW_FILTER_CELL);
 					AssertMsg(str_CellViewWindow_FilterUser, "Failed to allocate memory for the text of the custom filter");
 
+					GlobalRegistratorWindowPtr->RegisterMajor(Hwnd, "CellViewWindow");
 					GlobalCellViewWindowPtr->m_hWnd = Hwnd;
 					GlobalCellViewWindowPtr->m_WorldSpaceLabel = GetDlgItem(Hwnd, 1164);
 					GlobalCellViewWindowPtr->m_WorldSpaceComboBox = GetDlgItem(Hwnd, 2083);
@@ -429,9 +431,9 @@ namespace CreationKitPlatformExtended
 				{
 					if (((LPNMHDR)lParam)->code == HDN_ITEMCHANGED)
 					{
-						// Bethesda óäàëÿåò ñòîëáöû, ïîñëå èõ âîññòàíàâëèâàåò è ñ÷èòûâàåò ôàéëà ïàðàìåòðîâ èõ øèðèíó.
-						// Åñòåñòâåííî ýòî ïðèâîäèò ê ïîòåðå øèðèíû ñòîëáöà âñåãäà ïðè îòêðûòèè íîâîé ÿ÷åéêè.
-						// Ñîõðàíèì èõ â ôàéë ïàðàìåòðîâ, êàê òîëüêî áóäóò èçìåíåíû.
+						// Bethesda ÑƒÐ´Ð°Ð»Â¤ÐµÑ‚ ÑÑ‚Ð¾Ð»Ð±Ñ†Ñ‹, Ð¿Ð¾ÑÐ»Ðµ Ð¸Ñ… Ð²Ð¾ÑÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÑ‚ Ð¸ ÑÑ‡Ð¸Ñ‚Ñ‹Ð²Ð°ÐµÑ‚ Ñ„Ð°Ð¹Ð»Ð° Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð² Ð¸Ñ… ÑˆÐ¸Ñ€Ð¸Ð½Ñƒ.
+						// â‰ˆÑÑ‚ÐµÑÑ‚Ð²ÐµÐ½Ð½Ð¾ ÑÑ‚Ð¾ Ð¿Ñ€Ð¸Ð²Ð¾Ð´Ð¸Ñ‚ Ðº Ð¿Ð¾Ñ‚ÐµÑ€Ðµ ÑˆÐ¸Ñ€Ð¸Ð½Ñ‹ ÑÑ‚Ð¾Ð»Ð±Ñ†Ð° Ð²ÑÐµÐ³Ð´Ð° Ð¿Ñ€Ð¸ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð¸Ð¸ Ð½Ð¾Ð²Ð¾Ð¹ Â¤Ñ‡ÐµÐ¹ÐºÐ¸.
+						// â€”Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ð¼ Ð¸Ñ… Ð² Ñ„Ð°Ð¹Ð» Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð², ÐºÐ°Ðº Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð±ÑƒÐ´ÑƒÑ‚ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ñ‹.
 
 						LPNMHEADERA pNMHeader = (LPNMHEADERA)lParam;
 						auto ListView = GetParent(pNMHeader->hdr.hwndFrom);

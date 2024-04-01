@@ -1,4 +1,4 @@
-// Copyright � 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -8,6 +8,7 @@
 #include "Core/TracerManager.h"
 #include "Core/TypeInfo/ms_rtti.h"
 #include "Core/FormInfoOutputWindow.h"
+#include "Core/RegistratorWindow.h"
 #include "Editor API/EditorUI.h"
 #include "Editor API/BSString.h"
 #include "Editor API/SSE/TESForm.h"
@@ -290,6 +291,7 @@ namespace CreationKitPlatformExtended
 					{
 						// Initialize the original window before adding anything
 						LRESULT status = CallWindowProc(GlobalMainWindowPtr->GetOldWndProc(), Hwnd, Message, wParam, lParam);
+						GlobalRegistratorWindowPtr->RegisterMajor(Hwnd, "MainWindow");
 						GlobalMainWindowPtr->m_hWnd = Hwnd;
 
 						// Grass is always enabled by default, make the UI buttons match
@@ -338,19 +340,7 @@ namespace CreationKitPlatformExtended
 						case WM_CLOSE:
 						{
 							if (!GlobalEnginePtr->HasCommandRun())
-							{
-								// Tired of CTD if a lot of windows are open...
-								if (*TESDataHandler::UserModdedSingleton.Singleton)
-								{
-									if (MessageBoxA(0, "You have unsaved progress, you will lose it.\n"
-										"Is that really what you want?", "Warning", MB_OKCANCEL | MB_ICONWARNING) == IDOK)
-										DestroyWindow(Hwnd);
-								}
-								else
-									DestroyWindow(Hwnd);
-
-								return S_OK;
-							}
+								GlobalRegistratorWindowPtr->CloseWindowExceptForMajor(Hwnd);
 						}
 						break;
 						case WM_DESTROY:

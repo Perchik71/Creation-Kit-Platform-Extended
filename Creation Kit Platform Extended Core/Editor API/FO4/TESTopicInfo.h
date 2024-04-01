@@ -5,7 +5,7 @@
 #pragma once
 
 #include "TESFormF4.h"
-#include "BGSLocalizedString.h"
+#include "..\BGSLocalizedString.h"
 
 #pragma pack(push, 1)
 
@@ -27,7 +27,7 @@ namespace CreationKitPlatformExtended
 			public:
 				struct Response
 				{
-					BGSLocalizedStringIL ResponseText;
+					BGSLocalizedStringIL<BSEntryString> ResponseText;
 					Response* Next;
 					char pad18[0x2];
 					uint8_t Index;

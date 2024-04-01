@@ -6,7 +6,7 @@
 
 #include "NiAPI/NiTypes.h"
 #include "TESForm.h"
-#include "BGSLocalizedString.h"
+#include "..\BGSLocalizedString.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -123,7 +123,7 @@ namespace CreationKitPlatformExtended
 				READ_PROPERTY(GetLighting) LightingData* Lighting;
 			private:
 				char pad28[0x8];
-				BGSLocalizedString _FullName;
+				BGSLocalizedString<char> _FullName;
 				char pad40[0x10];
 				CellFlags _cell_flags;
 				CellProcessLevels _cell_process_level;

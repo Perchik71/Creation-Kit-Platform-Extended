@@ -1,10 +1,10 @@
-// Copyright � 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
 #include "Editor API/EditorUI.h"
-//#include "Editor API/FO4/TESDataHandler.h"
+#include "Core/RegistratorWindow.h"
 #include "Patches/Windows/FO4/MainWindowF4.h"
 #include "CellViewWindowF4.h"
 
@@ -55,7 +55,7 @@ namespace CreationKitPlatformExtended
 
 			Array<String> CellViewWindow::GetDependencies() const
 			{
-				return { "Main Window"/*, "TESDataHandler"*/ };
+				return { "Main Window" };
 			}
 
 			bool CellViewWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
@@ -230,6 +230,7 @@ namespace CreationKitPlatformExtended
 					str_CellViewWindow_FilterUser = (char*)GlobalMemoryManagerPtr->MemAlloc(UI_CELL_VIEW_FILTER_CELL);
 					AssertMsg(str_CellViewWindow_FilterUser, "Failed to allocate memory for the text of the custom filter");
 
+					GlobalRegistratorWindowPtr->RegisterMajor(Hwnd, "CellViewWindow");
 					GlobalCellViewWindowPtr->m_hWnd = Hwnd;
 					GlobalCellViewWindowPtr->m_WorldSpaceLabel = GetDlgItem(Hwnd, 1164);
 					GlobalCellViewWindowPtr->m_WorldSpaceComboBox = GetDlgItem(Hwnd, 2083);
@@ -324,7 +325,7 @@ namespace CreationKitPlatformExtended
 							{
 								sprintf_s(str_CellViewWindow_Filter, UI_CELL_VIEW_FILTER_CELL, "%s %08X %s",
 									editorID, form->FormID, form->FullName);
-
+								
 								*allowInsert = StrStrI(str_CellViewWindow_Filter, str_CellViewWindow_FilterUser) != 0;
 							}
 						}

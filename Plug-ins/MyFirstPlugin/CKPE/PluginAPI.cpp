@@ -206,3 +206,30 @@ bool __stdcall CreationKitPlatformExtended::PluginAPI::AppendMenuSeperator(HMENU
 {
 	return AppendMenuA(hMenu, MF_SEPARATOR, u32MenuID, "-");
 }
+
+void* __stdcall _DYNAMIC_CAST(const void* InPtr, long VfDelta, const char* lpstrFromType,
+	const char* lpstrTargetType, bool isReference)
+{
+	return CreationKitPlatformExtended::PluginAPI::DynamicCast::Instance->Cast(InPtr, VfDelta, 
+		lpstrFromType, lpstrTargetType, isReference);
+}
+
+void* __stdcall _DYNAMIC_CAST2(const void* InPtr, long VfDelta, const char* lpstrFromType,
+	const char* lpstrTargetType, bool isReference)
+{
+	return CreationKitPlatformExtended::PluginAPI::DynamicCast::Instance->CastNoCache(InPtr, VfDelta, 
+		lpstrFromType, lpstrTargetType, isReference);
+}
+
+void __stdcall _CONSOLE(const char* fmt, ...)
+{
+	va_list ap;
+	va_start(ap, fmt);
+	_CONSOLEVA(fmt, ap);
+	va_end(ap);
+}
+
+void __stdcall _CONSOLEVA(const char* fmt, va_list va)
+{
+	CreationKitPlatformExtended::PluginAPI::ConsoleWindow::Instance->InputLogVa(fmt, va);
+}

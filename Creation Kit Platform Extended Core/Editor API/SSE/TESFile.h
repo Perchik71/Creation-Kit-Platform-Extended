@@ -138,7 +138,7 @@ namespace CreationKitPlatformExtended
 				inline uint64_t CountOwnedIds() const { return m_countOwned; }
 				inline void CleanCountOwnedIds() { m_countOwned = 0; }
 				inline uint32_t* GetArrayOwnedIds() const { return m_ownedIds; }
-				inline void SetArrayOwnedIds(uint32_t* FormIds) { m_ownedIds = FormIds; }
+				inline void SetArrayOwnedIds(uint32_t* FormIds, uint32_t Count) { m_ownedIds = FormIds; m_countOwned = Count; }
 				SYSTEMTIME GetCreationTime() const;
 				SYSTEMTIME GetLastWriteTime() const;
 

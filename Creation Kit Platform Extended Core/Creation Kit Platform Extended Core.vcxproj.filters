@@ -712,6 +712,21 @@
     <ClCompile Include="Patches\Windows\FO4\NavMeshWindowF4.cpp">
       <Filter>Patches\Windows\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="ProfileUtil.cpp" />
+    <ClCompile Include="StringUtil.cpp" />
+    <ClCompile Include="FileUtil.cpp" />
+    <ClCompile Include="UITheme\Colored.cpp">
+      <Filter>UITheme</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\SSE\TESDataHandlerSSE.cpp">
+      <Filter>Editor API\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\FO4\TESDataHandlerF4.cpp">
+      <Filter>Editor API\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\RegistratorWindow.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1501,7 +1516,6 @@
     <ClInclude Include="Core\Plugin.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\MyFirstPlugin\CKPE\PluginAPI.h" />
     <ClInclude Include="Core\PluginManager.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -1655,9 +1669,6 @@
     <ClInclude Include="Editor API\FO4\TESFormComponents.h">
       <Filter>Editor API\FO4</Filter>
     </ClInclude>
-    <ClInclude Include="Editor API\SSE\BGSLocalizedString.h">
-      <Filter>Editor API\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\SSE\TESLandTexture.h">
       <Filter>Editor API\SSE\Forms</Filter>
     </ClInclude>
@@ -1712,9 +1723,6 @@
     <ClInclude Include="Editor API\FO4\TESQuest.h">
       <Filter>Editor API\FO4\Forms</Filter>
     </ClInclude>
-    <ClInclude Include="Editor API\FO4\BGSLocalizedString.h">
-      <Filter>Editor API\FO4</Filter>
-    </ClInclude>
     <ClInclude Include="NiAPI\NiTSimpleArray.h">
       <Filter>NiAPI</Filter>
     </ClInclude>
@@ -1732,6 +1740,25 @@
     </ClInclude>
     <ClInclude Include="Patches\Windows\FO4\NavMeshWindowF4.h">
       <Filter>Patches\Windows\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Plug-ins\MyFirstPlugin\CKPE\PluginAPI.h" />
+    <ClInclude Include="ProfileUtil.h" />
+    <ClInclude Include="StringUtil.h" />
+    <ClInclude Include="FileUtil.h" />
+    <ClInclude Include="UITheme\Colored.h">
+      <Filter>UITheme</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\TESTopic.h">
+      <Filter>Editor API\SSE\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\TESTopicInfo.h">
+      <Filter>Editor API\SSE\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\RegistratorWindow.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\BGSLocalizedString.h">
+      <Filter>Editor API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

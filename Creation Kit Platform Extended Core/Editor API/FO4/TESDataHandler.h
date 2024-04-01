@@ -249,6 +249,13 @@ namespace CreationKitPlatformExtended
 				READ_PROPERTY(GetLoadedMods) const TESFileArray* LoadedMods;
 				READ_PROPERTY(GetActiveMod) TESFile* ActiveMod;
 			};
+
+			class TESDataHandler_CKPEIntf
+			{
+			public:
+				virtual TESDataHandler* GetSingleton();
+				virtual TESForm* GetFormById(uint32_t FormId);
+			};
 		}
 	}
 }

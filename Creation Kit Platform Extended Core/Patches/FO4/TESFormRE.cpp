@@ -5,7 +5,6 @@
 #include "Core/Engine.h"
 #include "TESFormRE.h"
 #include "Editor API/FO4/TESFormF4.h"
-#include "Editor API/FO4/BGSLocalizedString.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -70,7 +69,6 @@ namespace CreationKitPlatformExtended
 				{
 					pointer_TESForm_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
 					pointer_TESForm_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
-					BGSLocalizedStringDL::OrigSet = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2));
 
 					return true;
 				}

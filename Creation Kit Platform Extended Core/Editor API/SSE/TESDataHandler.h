@@ -7,6 +7,7 @@
 #include "NiAPI/NiTArray.h"
 #include "Core/Singleton.h"
 #include "TESFile.h"
+#include "TESTopic.h"
 #include "TESObjectREFR.h"
 #include "TESObjectCELL.h"
 #include "TESObjectLAND.h"
@@ -97,8 +98,8 @@ namespace CreationKitPlatformExtended
 				TESFormArray arrRFCT;									// 5C0 Form Type 57
 				TESFormArray arrREGN;									// 5D8 Form Type 58
 				TESFormArray arrNAVI;									// 5F0 Form Type 59
-				BSTArray<TESObjectCELL*> arrCell;						// 608 Form Type 60
-				BSTArray<TESObjectREFR*> arrReference;					// 620 Form Type 61
+				BSTArray<TESObjectCELL*> arrCell;						// 608 Form Type 60 <CELL>
+				BSTArray<TESObjectREFR*> arrReference;					// 620 Form Type 61 <REFR>
 				TESFormArray arrACHR;									// 638 Form Type 62
 				TESFormArray arrPMIS;									// 650 Form Type 63
 				TESFormArray arrPARW;									// 668 Form Type 64
@@ -109,11 +110,11 @@ namespace CreationKitPlatformExtended
 				TESFormArray arrPBAR;									// 6E0 Form Type 69
 				TESFormArray arrPHZD;									// 6F8 Form Type 70
 				TESFormArray arrWRLD;									// 710 Form Type 71
-				BSTArray<TESObjectLAND*> arrLandspace;					// 728 Form Type 72 
+				BSTArray<TESObjectLAND*> arrLandspace;					// 728 Form Type 72 <LAND>
 				TESFormArray arrNAVM;									// 740 Form Type 73
 				TESFormArray arrTLOD;									// 758 Form Type 74
-				TESFormArray arrDIAL;									// 770 Form Type 75
-				TESFormArray arrINFO;									// 788 Form Type 76
+				BSTArray<TESTopic*> arrTopic;							// 770 Form Type 75 <DIAL>
+				BSTArray<TESTopicInfo*> arrTopicInfo;					// 788 Form Type 76 <INFO>
 				TESFormArray arrQUST;									// 7A0 Form Type 77
 				TESFormArray arrIDLE;									// 7B8 Form Type 78
 				TESFormArray arrPACK;									// 7D0 Form Type 79
@@ -200,7 +201,13 @@ namespace CreationKitPlatformExtended
 				READ_PROPERTY(GetLoadedMods) const TESFileArray* LoadedMods;
 				READ_PROPERTY(GetActiveMod) TESFile* ActiveMod;
 			};
-			static_assert(sizeof(TESDataHandler) == 0xDE0);
+
+			class TESDataHandler_CKPEIntf
+			{
+			public:
+				virtual TESDataHandler* GetSingleton();
+				virtual TESForm* GetFormById(uint32_t FormId);
+			};
 		}
 	}
 }

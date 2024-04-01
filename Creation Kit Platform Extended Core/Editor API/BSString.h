@@ -77,57 +77,60 @@ namespace CreationKitPlatformExtended
 				sfInsensitiveCase = 1,
 			};
 		public:
-			BSString(VOID);
+			BSString();
 			BSString(LPCSTR string, WORD size = 0);
 			BSString(const std::string& string, WORD size = 0);
 			BSString(const BSString& string, WORD size);
 			BSString(const BSString& string);
-			~BSString(VOID);
+			~BSString();
 		public:
 			BOOL Reserved(WORD size);
 			BOOL Set(LPCSTR string, WORD size = 0);				// 0 to allocate automatically
 			BOOL Set(const BSString& string, WORD size = 0);	// 0 to allocate automatically
-			inline LPCSTR Get(VOID) const { return m_data ? m_data : ""; }
-			inline LPCSTR c_str(VOID) const { return m_data ? m_data : ""; }
-			inline WORD Length(VOID) const { return m_dataLen; }
-			inline WORD Size(VOID) const { return m_bufLen; }
+			inline LPCSTR Get() const { return m_data ? m_data : ""; }
+			inline LPCSTR c_str() const { return m_data ? m_data : ""; }
+			inline WORD Length() const { return m_dataLen; }
+			inline WORD Size() const { return m_bufLen; }
 			INT Compare(LPCSTR string, BOOL ignoreCase = TRUE) const;
 			inline INT Compare(const BSString& string, BOOL ignoreCase = TRUE) const { return Compare(string, ignoreCase); }
-			VOID Clear(VOID);
-			BSString Reverse(VOID) const;
-			BSString UpperCase(VOID) const;
-			BSString LowerCase(VOID) const;
+			void Clear();
+			BSString Reverse() const;
+			BSString UpperCase() const;
+			BSString LowerCase() const;
 			static void UpperCase(LPCSTR str);
 			static void LowerCase(LPCSTR str);
 			BSString& Assign(LPCSTR str, WORD start = 0, WORD len = 0);
 			BSString& AssignUnsafe(LPCSTR str, WORD start = 0, WORD len = 0);
 			BSString& Append(LPCSTR str);
+			BSString& Append(LPCSTR str, WORD len);
 			BSString& Append(const BSString& string);
+			BSString& Append(const BSString& string, WORD len);
 			BSString& Append(CHAR ch);
 			BSString& AppendFormat(LPCSTR format, ...);
-			BSString& AppendFormat(LPCSTR format, va_list ap);
+			BSString& AppendFormatVa(LPCSTR format, va_list ap);
 			BSString& Copy(WORD start = 0, WORD len = 0);
 			BSString& Erase(WORD start = 0, WORD len = 0);
 			BSString& Format(LPCSTR format, ...);
-			BSString& Format(LPCSTR format, va_list ap);
-			BSString Trim(VOID) const;
+			BSString& FormatVa(LPCSTR format, va_list ap);
+			BSString Trim() const;
 			WORD FindLastOf(CHAR ch, WORD offset = 0) const;
 			WORD FindFirstOf(CHAR ch, WORD offset = 0) const;
 			WORD FindLastOf(LPCSTR chs, WORD offset = 0) const;
 			WORD FindFirstOf(LPCSTR chs, WORD offset = 0) const;
 			WORD Find(LPCSTR substr, EFlags flags = sfNone) const;
-			inline BOOL IsEmpty(VOID) const { return !m_dataLen; }
+			inline BOOL IsEmpty() const { return !m_dataLen; }
 		public:
 			struct Utils {
 				static BSString ExtractFilePath(const BSString& fname);
 				static BSString ExtractFileName(const BSString& fname);
 				static BSString ExtractFileExt(const BSString& fname);
 
-				static BSString GetCurrentPath(VOID);
+				static BSString GetCurrentPath();
 				static BSString GetFileNameModule(const BSString& mname);
-				static BSString GetApplicationPath(VOID);
-				static BSString GetRelativeDataPath(VOID);
-				static BSString GetDataPath(VOID);
+				static BSString GetApplicationPath();
+				static BSString GetPluginsPath();
+				static BSString GetRelativeDataPath();
+				static BSString GetDataPath();
 
 				static BSString ChangeFileExt(const BSString& fname, const BSString& ext);
 
@@ -157,7 +160,7 @@ namespace CreationKitPlatformExtended
 			};
 		public:
 			static BSString FormatString(LPCSTR format, ...);
-			static BSString FormatString(LPCSTR format, va_list ap) { return BSString().Format(format, ap); }
+			static BSString FormatStringVa(LPCSTR format, va_list ap) { return BSString().FormatVa(format, ap); }
 		public:
 			inline CHAR& operator[](const WORD Pos) { return m_data[Pos]; }
 			inline const CHAR operator[](const WORD Pos) const { return m_data[Pos]; }

@@ -4,6 +4,10 @@
 
 #pragma once
 
+#include "ProfileUtil.h"
+#include "StringUtil.h"
+#include "FileUtil.h"
+
 namespace CreationKitPlatformExtended
 {
 	namespace Utils
@@ -23,96 +27,12 @@ namespace CreationKitPlatformExtended
 		void LockWP(uintptr_t Address, size_t Size, DWORD OldFlags);
 		void SetThreadName(uint32_t ThreadID, LPCSTR ThreadName);
 
-		// https://docs.microsoft.com/en-us/windows/win32/debug/retrieving-the-last-error-code
-		String GetLastErrorToStr(DWORD err, const String& namefunc);
-		String GetLastErrorToStr(const String& namefunc);
-
-		// DirNameOf https://stackoverflow.com/questions/8518743/get-directory-from-file-path-c/34740989
-		static inline String DirNameOf(const String& path) {
-			size_t pos = path.find_last_of("\\/");
-			return (std::string::npos == pos)
-				? ""
-				: path.substr(0, pos + 1);
-		}
-
-		bool FileExists(const char* fileName);
-		bool FileExists(const wchar_t* fileName);
-		bool DirectoryExists(const char* fileName);
-		bool DirectoryExists(const wchar_t* fileName);
-
 		uint64_t GetTotalPhysicalMemory();
 		uint64_t GetTotalPageFileMemory();
 		uint64_t GetAvailableTotalPhysicalMemory();
 		uint64_t GetAvailableTotalPageFileMemory();
 
-		String Wide2Ansi(const wchar_t* s);
-		WideString Ansi2Wide(const char* s);
-		WideString Utf82Wide(const char8_t* s);
-		String Wide2Utf8(const wchar_t* s);
-
-		String QuoteRemove(const char* s);
-		WideString QuoteRemove(const wchar_t* s);
-
-		String GetApplicationPath();
-
 		void Quit();
-
-		bool GetProfileValue(const char* relfilename, const char* section, const char* option, bool defvalue);
-		int GetProfileValue(const char* relfilename, const char* section, const char* option, int defvalue);
-		float GetProfileValue(const char* relfilename, const char* section, const char* option, float defvalue);
-		String GetProfileValue(const char* relfilename, const char* section, const char* option, const char* defvalue);
-		void UpdateProfileValue(const char* relfilename, const char* section, const char* option, bool value);
-		void UpdateProfileValue(const char* relfilename, const char* section, const char* option, int value);
-		void UpdateProfileValue(const char* relfilename, const char* section, const char* option, float value);
-		void UpdateProfileValue(const char* relfilename, const char* section, const char* option, const char* value);
-
-		template<typename T>
-		inline bool FileReadBuffer(FILE* fileStream, T* nValue, uint32_t nCount = 1)
-		{
-			return fread(nValue, sizeof(T), nCount, fileStream) == nCount;
-		}
-
-		template<typename T>
-		inline bool FileWriteBuffer(FILE* fileStream, T nValue, uint32_t nCount = 1)
-		{
-			return fwrite(&nValue, sizeof(T), nCount, fileStream) == nCount;
-		}
-
-		inline bool FileReadString(FILE* fileStream, String& sStr)
-		{
-			uint16_t nLen = 0;
-			if (fread(&nLen, sizeof(uint16_t), 1, fileStream) != 1)
-				return false;
-
-			sStr.resize((size_t)nLen + 1);
-			sStr[nLen] = '\0';
-
-			return fread(sStr.data(), 1, nLen, fileStream) == nLen;
-		}
-
-		inline bool FileWriteString(FILE* fileStream, const String& sStr)
-		{
-			uint16_t nLen = (uint16_t)sStr.length();
-			if (fwrite(&nLen, sizeof(uint16_t), 1, fileStream) != 1)
-				return false;
-
-			return fwrite(sStr.c_str(), 1, nLen, fileStream) == nLen;
-		}
-
-		static const char* whitespaceDelimiters = " \t\n\r\f\v";
-
-		inline String& Trim(String& str) {
-
-			str.erase(str.find_last_not_of(whitespaceDelimiters) + 1);
-			str.erase(0, str.find_first_not_of(whitespaceDelimiters));
-
-			return str;
-		}
-
-		inline String Trim(const char* s) {
-			String str(s);
-			return Trim(str);
-		}
 
 		inline void DetourJump(uintptr_t Target, uintptr_t Destination) {
 			Detours::X64::DetourFunction(Target, Destination, Detours::X64Option::USE_REL32_JUMP);
@@ -123,19 +43,6 @@ namespace CreationKitPlatformExtended
 		}
 
 		char* StrDub(const char* s);
-		uint64_t MurmurHash64A(const void* Key, size_t Len, uint64_t Seed = 0);
-
-		class ScopeFileStream
-		{
-		public:
-			inline ScopeFileStream(FILE* fileStream) : _fileStream(fileStream) {}
-			inline ~ScopeFileStream() { if (_fileStream) fclose(_fileStream); }
-		private:
-			ScopeFileStream(const ScopeFileStream&) = default;
-			ScopeFileStream& operator=(const ScopeFileStream&) = default;
-
-			FILE* _fileStream;
-		};
 	}
 
 	// thread-safe template versions of thisVirtualCall()

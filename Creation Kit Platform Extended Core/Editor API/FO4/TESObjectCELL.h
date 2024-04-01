@@ -133,7 +133,6 @@ namespace CreationKitPlatformExtended
 				inline bool IsInterior() const { return _cell_flags & CellFlags::cfInterior; }
 				inline bool IsExterior() const { return _cell_flags & CellFlags::cfExterior; }
 				inline bool IsFragment() const { return _cell_flags & CellFlags::cfFragment; }
-				inline String GetFullName() const { return _fullName.c_str(); }
 			public:
 				READ_PROPERTY(GetNavMeshes) TESForm** NavMeshes;
 				READ_PROPERTY(GetNavMeshesConst) const TESForm** NavMeshesConst;

@@ -79,7 +79,7 @@ namespace CreationKitPlatformExtended
 			const char* TESForm::GetFullName() const
 			{
 				TESFullName* fullname = (TESFullName*)Core::_DYNAMIC_CAST(this, 0, "class TESForm", "class TESFullName");
-				return fullname ? fullname->c_str() : "";
+				return fullname ? fullname->Name : "";
 			}
 
 			const char* TESForm::GetFormTypeShortStr() const

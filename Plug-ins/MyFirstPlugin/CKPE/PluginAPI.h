@@ -11,7 +11,7 @@
 
 #pragma once
 
-constexpr static uint32_t PLUGINAPI_CURRENT_VERSION = 3;
+constexpr static uint32_t PLUGINAPI_CURRENT_VERSION = 4;
 
 #ifndef _CKPE_MAIN
 
@@ -54,24 +54,39 @@ namespace CreationKitPlatformExtended
 			String Caption, OnMenuItemEvent Function);
 		bool __stdcall AppendMenuSeperator(HMENU hMenu, uint32_t u32MenuID);
 
+		static inline bool __stdcall IsEditorFallout4(EDITOR_EXECUTABLE_TYPE editor)
+		{
+			return editor <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST;
+		}
+
+		static inline bool __stdcall IsEditorSkyrimSpecialEdition(EDITOR_EXECUTABLE_TYPE editor)
+		{
+			return editor <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST;
+		}
+
+		static inline bool __stdcall CheckRuntimePlatformVersion(const char* platform_ver, 
+			uint32_t major_rv, uint32_t minor_rv, uint32_t bug_fixes, uint32_t build)
+		{
+			uint32_t ver[4] = { 0 };
+			if (sscanf(platform_ver, "%u.%u.%u.%u", &ver[0], &ver[1], &ver[2], &ver[3]) != 4)
+				return false;
+
+			return (ver[0] >= major_rv) && (ver[1] >= minor_rv) && (ver[2] >= bug_fixes) && (ver[3] >= build);
+		}
+
 		class MemoryManager
 		{
 		public:
-			MemoryManager() = default;
-
 			virtual void* MemAlloc(size_t size, size_t alignment = 0, bool aligned = false, bool zeroed = false);
 			virtual void MemFree(void* block);
 			virtual size_t MemSize(void* block);
-		private:
-			MemoryManager(const MemoryManager&) = default;
-			MemoryManager& operator=(const MemoryManager&) = default;
+
+			inline static MemoryManager* Instance;
 		};
 
 		class DialogManager
 		{
 		public:
-			~DialogManager() = default;
-
 			virtual bool HasDialog(const LONG_PTR uid) const;
 			virtual bool AddDialog(const String& json_file, const ULONG_PTR uid);
 			virtual bool AddDialogByCode(const String& json_code, const ULONG_PTR uid);
@@ -80,13 +95,13 @@ namespace CreationKitPlatformExtended
 
 			virtual void LoadFromFilePackage(const char* fname);
 			virtual void PackToFilePackage(const char* fname, const char* dir);
+
+			inline static DialogManager* Instance;
 		};
 
 		class Engine
 		{
 		public:
-			~Engine() = default;
-
 			virtual uintptr_t GetModuleBase() const;
 			virtual uint64_t GetModuleSize() const;
 			virtual EDITOR_EXECUTABLE_TYPE GetEditorVersion() const;
@@ -96,14 +111,15 @@ namespace CreationKitPlatformExtended
 			// Indexes: SECTION_TEXT, SECTION_DATA_READONLY, SECTION_DATA
 			virtual Section GetSection(uint32_t nIndex) const;
 			virtual OsVersion GetSystemVersion() const;
+			virtual bool HasPatch(const char* lpstrName) const;
+			virtual bool HasPlugin(const char* lpstrName) const;
+
+			inline static Engine* Instance;
 		};
 
 		class Relocator
 		{
 		public:
-			Relocator(Engine* lpEngine);
-			~Relocator() = default;
-
 			virtual uintptr_t Rav2Off(uintptr_t rav) const;
 
 			virtual void Patch(uintptr_t rav, uint8_t * bytes, uint32_t size) const;
@@ -139,11 +155,10 @@ namespace CreationKitPlatformExtended
 		class ConsoleWindow
 		{
 		public:
-			ConsoleWindow(Engine* lpEngine);
-			~ConsoleWindow() = default;
-
 			virtual void InputLog(const char* Format, ...);
 			virtual void InputLogVa(const char* Format, va_list Va);
+
+			inline static ConsoleWindow* Instance;
 		};
 
 		enum DebugLogMessageLevel
@@ -158,8 +173,6 @@ namespace CreationKitPlatformExtended
 		class DebugLog
 		{
 		public:
-			~DebugLog() = default;
-
 			virtual void Message(const char* message, bool newLine = true);
 			virtual void Message(const wchar_t* message, bool newLine = true);
 			virtual void FormattedMessage(const char* fmt, ...);
@@ -172,6 +185,27 @@ namespace CreationKitPlatformExtended
 			virtual void Log(DebugLogMessageLevel level, const wchar_t* fmt, ...);
 
 			inline static DebugLog* Instance;
+		};
+
+		class DynamicCast
+		{
+		public:
+			virtual bool Dump(const char* FileName) const;
+			virtual void* Cast(const void* InPtr, long VfDelta,
+				const char* lpstrFromType, const char* lpstrTargetType, bool isReference = false);
+			virtual void* CastNoCache(const void* InPtr, long VfDelta,
+				const char* lpstrFromType, const char* lpstrTargetType, bool isReference = false);
+
+			inline static DynamicCast* Instance;
+		};
+
+		class RegistratorWindow
+		{
+		public:
+			virtual bool Has(HWND hWnd) const;
+			virtual bool HasMajor(HWND hWnd) const;	
+			virtual HWND Get(uint32_t Id) const;
+			virtual HWND GetMajor(const char* sName) const;
 		};
 	}
 }
@@ -194,6 +228,12 @@ struct CKPEPlugin_StructData
 	uint32_t MenuYourEndId;
 	HMENU* SubMenu;
 	char szSubMenuName[33];
+
+	// SSE or FO4 Interface (NEED CKPE RE)
+	void* DataHandler;
+
+	CreationKitPlatformExtended::PluginAPI::DynamicCast* DynamicCast;
+	CreationKitPlatformExtended::PluginAPI::RegistratorWindow* RegistratorWindow;
 };
 
 #else

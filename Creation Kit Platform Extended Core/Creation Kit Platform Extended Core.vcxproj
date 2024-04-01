@@ -90,6 +90,7 @@
     <ClCompile Include="Core\ModuleManager.cpp" />
     <ClCompile Include="Core\Plugin.cpp" />
     <ClCompile Include="Core\PluginManager.cpp" />
+    <ClCompile Include="Core\RegistratorWindow.cpp" />
     <ClCompile Include="Core\RelocationDatabase.cpp" />
     <ClCompile Include="Core\Relocator.cpp" />
     <ClCompile Include="Core\ResultCoreErrNo.cpp" />
@@ -107,12 +108,14 @@
     <ClCompile Include="Editor API\FO4\BSResourceArchive2.cpp" />
     <ClCompile Include="Editor API\FO4\BSResourceLooseFilesF4.cpp" />
     <ClCompile Include="Editor API\FO4\NiClassesF4.cpp" />
+    <ClCompile Include="Editor API\FO4\TESDataHandlerF4.cpp" />
     <ClCompile Include="Editor API\FO4\TESF4.cpp" />
     <ClCompile Include="Editor API\FO4\TESFileF4.cpp" />
     <ClCompile Include="Editor API\FO4\TESFormF4.cpp" />
     <ClCompile Include="Editor API\SSE\BSGraphicsTypes.cpp" />
     <ClCompile Include="Editor API\SSE\BSShaderProperty.cpp" />
     <ClCompile Include="Editor API\SSE\BSShaderResourceManager.cpp" />
+    <ClCompile Include="Editor API\SSE\TESDataHandlerSSE.cpp" />
     <ClCompile Include="Editor API\SSE\TESDialogSpell.cpp" />
     <ClCompile Include="Editor API\SSE\TESFile.cpp" />
     <ClCompile Include="Editor API\SSE\TESForm.cpp" />
@@ -122,6 +125,7 @@
     <ClCompile Include="Editor API\UI\UIImageList.cpp" />
     <ClCompile Include="Editor API\UI\UIMenus.cpp" />
     <ClCompile Include="Experimental\RuntimeOptimization.cpp" />
+    <ClCompile Include="FileUtil.cpp" />
     <ClCompile Include="NiAPI\NiCollisionUtils.cpp" />
     <ClCompile Include="NiAPI\NiMemoryManager.cpp" />
     <ClCompile Include="Patches\AllowMultipleWindowAndMaster.cpp" />
@@ -283,8 +287,11 @@
     <ClCompile Include="Patches\Windows\SSE\NavMeshWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\ObjectWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\RenderWindow.cpp" />
+    <ClCompile Include="ProfileUtil.cpp" />
     <ClCompile Include="Steam API\SteamAPI.cpp" />
+    <ClCompile Include="StringUtil.cpp" />
     <ClCompile Include="UITheme\CheckBox.cpp" />
+    <ClCompile Include="UITheme\Colored.cpp" />
     <ClCompile Include="UITheme\ComboBox.cpp" />
     <ClCompile Include="UITheme\CustomBox.cpp" />
     <ClCompile Include="UITheme\EditText.cpp" />
@@ -314,7 +321,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Dependencies\jDialogs\include\jdialogs.h" />
-    <ClInclude Include="..\MyFirstPlugin\CKPE\PluginAPI.h" />
+    <ClInclude Include="..\Plug-ins\MyFirstPlugin\CKPE\PluginAPI.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Core\AboutWindow.h" />
     <ClInclude Include="Core\CommandLineParser.h" />
@@ -332,6 +339,7 @@
     <ClInclude Include="Core\ModuleManager.h" />
     <ClInclude Include="Core\Plugin.h" />
     <ClInclude Include="Core\PluginManager.h" />
+    <ClInclude Include="Core\RegistratorWindow.h" />
     <ClInclude Include="Core\RelocationDatabase.h" />
     <ClInclude Include="Core\Relocator.h" />
     <ClInclude Include="Core\ResultCoreErrNo.h" />
@@ -340,6 +348,7 @@
     <ClInclude Include="Core\TypeInfo\ms_rtti.h" />
     <ClInclude Include="Crc32.h" />
     <ClInclude Include="Editor API\BGSClasses.h" />
+    <ClInclude Include="Editor API\BGSLocalizedString.h" />
     <ClInclude Include="Editor API\BGSPickHandler.h" />
     <ClInclude Include="Editor API\BGStringLocalize.h" />
     <ClInclude Include="Editor API\BSHandleRefObject.h" />
@@ -352,7 +361,6 @@
     <ClInclude Include="Editor API\EditorUI.h" />
     <ClInclude Include="Editor API\FO4\BGSColorForm.h" />
     <ClInclude Include="Editor API\FO4\BGSLayer.h" />
-    <ClInclude Include="Editor API\FO4\BGSLocalizedString.h" />
     <ClInclude Include="Editor API\FO4\BGSMaterialSwap.h" />
     <ClInclude Include="Editor API\FO4\BGSModelMaterialSwap.h" />
     <ClInclude Include="Editor API\FO4\BGSPreviewTransform.h" />
@@ -387,7 +395,6 @@
     <ClInclude Include="Editor API\FO4\TESTopicInfo.h" />
     <ClInclude Include="Editor API\SSE\BGSImpactData.h" />
     <ClInclude Include="Editor API\SSE\BGSImpactDataSet.h" />
-    <ClInclude Include="Editor API\SSE\BGSLocalizedString.h" />
     <ClInclude Include="Editor API\SSE\BGSMaterialType.h" />
     <ClInclude Include="Editor API\SSE\BGSRenderWindow.h" />
     <ClInclude Include="Editor API\SSE\BGSRenderWindowCamera.h" />
@@ -413,6 +420,8 @@
     <ClInclude Include="Editor API\SSE\TESObjectCELL.h" />
     <ClInclude Include="Editor API\SSE\TESObjectLAND.h" />
     <ClInclude Include="Editor API\SSE\TESObjectREFR.h" />
+    <ClInclude Include="Editor API\SSE\TESTopic.h" />
+    <ClInclude Include="Editor API\SSE\TESTopicInfo.h" />
     <ClInclude Include="Editor API\SSE\TESWater.h" />
     <ClInclude Include="Editor API\UI\UIBaseWindow.h" />
     <ClInclude Include="Editor API\UI\UICheckboxControl.h" />
@@ -420,6 +429,7 @@
     <ClInclude Include="Editor API\UI\UIImageList.h" />
     <ClInclude Include="Editor API\UI\UIMenus.h" />
     <ClInclude Include="Experimental\RuntimeOptimization.h" />
+    <ClInclude Include="FileUtil.h" />
     <ClInclude Include="NiAPI\NiTSimpleArray.h" />
     <ClInclude Include="NiAPI\NiAlphaProperty.h" />
     <ClInclude Include="NiAPI\NiArray.h" />
@@ -600,11 +610,14 @@
     <ClInclude Include="Patches\Windows\SSE\NavMeshWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\ObjectWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\RenderWindow.h" />
+    <ClInclude Include="ProfileUtil.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Steam API\SteamAPI.h" />
     <ClInclude Include="Steam API\SteamAPIConfig.h" />
+    <ClInclude Include="StringUtil.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="UITheme\CheckBox.h" />
+    <ClInclude Include="UITheme\Colored.h" />
     <ClInclude Include="UITheme\ComboBox.h" />
     <ClInclude Include="UITheme\CustomBox.h" />
     <ClInclude Include="UITheme\EditText.h" />

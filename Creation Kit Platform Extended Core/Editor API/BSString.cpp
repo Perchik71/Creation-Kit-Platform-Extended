@@ -57,7 +57,7 @@ namespace CreationKitPlatformExtended
 {
 	namespace EditorAPI
 	{
-		BSString::BSString(VOID) :
+		BSString::BSString() :
 			m_data(NULL), m_dataLen(0), m_bufLen(0)
 		{}
 
@@ -77,7 +77,7 @@ namespace CreationKitPlatformExtended
 			Set(string, string.m_bufLen);
 		}
 
-		BSString::~BSString(VOID) {
+		BSString::~BSString() {
 			Clear();
 		}
 
@@ -108,9 +108,8 @@ namespace CreationKitPlatformExtended
 
 			WORD wNeedLen, wNeedBuf;
 
-			if (!size)
-				wNeedLen = (string) ? (WORD)strlen(string) : 0;
-			else
+			wNeedLen = (string) ? (WORD)strlen(string) : 0;
+			if (size && (wNeedLen > size))
 				wNeedLen = size;
 
 			wNeedBuf = wNeedLen + 1;
@@ -159,7 +158,7 @@ namespace CreationKitPlatformExtended
 			return Set(string.m_data ? *string : "", size);
 		}
 
-		VOID BSString::Clear(VOID) {
+		void BSString::Clear() {
 			if (m_data) {
 				NiAPI::NiMemoryManager::Free(NULL, (LPVOID)m_data);
 				m_data = NULL;
@@ -168,7 +167,7 @@ namespace CreationKitPlatformExtended
 			}
 		}
 
-		BSString BSString::Reverse(VOID) const {
+		BSString BSString::Reverse() const {
 			if (!m_dataLen)
 				return "";
 
@@ -200,7 +199,7 @@ namespace CreationKitPlatformExtended
 			return *this;
 		}
 
-		BSString& BSString::Format(LPCSTR format, va_list ap) {
+		BSString& BSString::FormatVa(LPCSTR format, va_list ap) {
 			auto size = _vsnprintf(NULL, 0, format, ap);
 			if (size) {
 				m_bufLen = size + 1;
@@ -242,8 +241,80 @@ namespace CreationKitPlatformExtended
 			return *this;
 		}
 
-		BSString& BSString::Append(const BSString& string) {
-			return Append(string.m_dataLen ? *string : "");
+		BSString& BSString::Append(LPCSTR str, WORD len)
+		{
+			if (str)
+			{
+				WORD dwLen = (WORD)strlen(str);
+				if (dwLen) 
+				{
+					if (m_dataLen) 
+					{
+						if (dwLen <= len)
+						{
+							if (Reserved(m_dataLen + dwLen + 1))
+								strcat(m_data, str);
+						}
+						else
+						{
+							if (Reserved(m_dataLen + len + 1))
+								strncat(m_data, str, len);
+						}
+					}
+					else
+						Set(str, len);
+				}
+			}
+
+			return *this;
+		}
+
+		BSString& BSString::Append(const BSString& string) 
+		{
+			if (!string.IsEmpty())
+			{
+				WORD dwLen = (WORD)string.m_dataLen;
+				if (dwLen) 
+				{
+					if (m_dataLen) 
+					{
+						if (Reserved(m_dataLen + dwLen + 1))
+							strcat(m_data, string.m_data);
+					}
+					else
+						Set(string.m_data);
+				}
+			}
+
+			return *this;
+		}
+
+		BSString& BSString::Append(const BSString& string, WORD len)
+		{
+			if (!string.IsEmpty())
+			{
+				WORD dwLen = (WORD)string.m_dataLen;
+				if (dwLen)
+				{
+					if (m_dataLen)
+					{
+						if (dwLen <= len)
+						{
+							if (Reserved(m_dataLen + dwLen + 1))
+								strcat(m_data, string.m_data);
+						}
+						else
+						{
+							if (Reserved(m_dataLen + len + 1))
+								strncat(m_data, string.m_data, len);
+						}
+					}
+					else
+						Set(string.m_data, len);
+				}
+			}
+
+			return *this;
 		}
 
 		BSString& BSString::Append(CHAR ch) {
@@ -255,15 +326,15 @@ namespace CreationKitPlatformExtended
 			BSString fmt;
 			va_list va;
 			va_start(va, format);
-			fmt.Format(format, va);
+			fmt.FormatVa(format, va);
 			va_end(va);
 
 			return fmt.IsEmpty() ? *this : Append(fmt);
 		}
 
-		BSString& BSString::AppendFormat(LPCSTR format, va_list ap) {
+		BSString& BSString::AppendFormatVa(LPCSTR format, va_list ap) {
 			BSString fmt;
-			fmt.Format(format, ap);
+			fmt.FormatVa(format, ap);
 			return fmt.IsEmpty() ? *this : Append(fmt);
 		}
 
@@ -342,7 +413,7 @@ namespace CreationKitPlatformExtended
 			return Ret ? (WORD)(Ret - m_data) : srNone;
 		}
 
-		BSString BSString::UpperCase(VOID) const {
+		BSString BSString::UpperCase() const {
 			if (IsEmpty())
 				return "";
 
@@ -351,7 +422,7 @@ namespace CreationKitPlatformExtended
 			return s;
 		}
 
-		BSString BSString::LowerCase(VOID) const {
+		BSString BSString::LowerCase() const {
 			if (IsEmpty())
 				return "";
 
@@ -387,7 +458,7 @@ namespace CreationKitPlatformExtended
 			return Ret ? (WORD)(Ret - m_data) : srNone;
 		}
 
-		BSString BSString::Trim(VOID) const {
+		BSString BSString::Trim() const {
 			if (IsEmpty())
 				return "";
 
@@ -399,7 +470,7 @@ namespace CreationKitPlatformExtended
 			va_list va;
 
 			va_start(va, format);
-			fmt.Format(format, va);
+			fmt.FormatVa(format, va);
 			va_end(va);
 
 			return fmt;
@@ -432,7 +503,7 @@ namespace CreationKitPlatformExtended
 			return "";
 		}
 
-		BSString BSString::Utils::GetCurrentPath(VOID) {
+		BSString BSString::Utils::GetCurrentPath() {
 			constexpr auto SIZE = 1024;
 			CHAR szTemp[SIZE];
 
@@ -452,8 +523,14 @@ namespace CreationKitPlatformExtended
 			return "";
 		}
 
-		BSString BSString::Utils::GetApplicationPath(VOID) {
+		BSString BSString::Utils::GetApplicationPath() 
+		{
 			return ExtractFilePath(GetFileNameModule(""));
+		}
+
+		BSString BSString::Utils::GetPluginsPath()
+		{
+			return GetApplicationPath() + "CKPEPlugins\\";
 		}
 
 		BSString BSString::Utils::ChangeFileExt(const BSString& fname, const BSString& ext) {
@@ -465,12 +542,12 @@ namespace CreationKitPlatformExtended
 			return BSString(fname).Append(ext);
 		}
 
-		BSString BSString::Utils::GetRelativeDataPath(VOID) 
+		BSString BSString::Utils::GetRelativeDataPath() 
 		{
 			return "Data\\";
 		}
 
-		BSString BSString::Utils::GetDataPath(VOID)
+		BSString BSString::Utils::GetDataPath()
 		{
 			return GetApplicationPath() + "Data\\";
 		}

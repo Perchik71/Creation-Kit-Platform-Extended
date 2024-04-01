@@ -6,8 +6,14 @@
 #include "Engine.h"
 #include "Plugin.h"
 #include "DialogManager.h"
+#include "RegistratorWindow.h"
 #include "Editor API/BSString.h"
-#include "../MyFirstPlugin/CKPE/PluginAPI.h"
+#include "../Plug-ins/MyFirstPlugin/CKPE/PluginAPI.h"
+
+#pragma warning(disable : 4742)
+
+#include "Editor API/SSE/TESDataHandler.h"
+#include "Editor API/FO4/TESDataHandler.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -26,6 +32,9 @@ namespace CreationKitPlatformExtended
 			uint32_t MenuYourEndId;
 			HMENU* SubMenu;
 			char szSubMenuName[33];
+			void* DataHandler;
+			Core::DynamicCast* DynamicCast;
+			Core::RegistratorWindow* RegistratorWindow;
 		};
 
 		extern uint32_t GlobalPluginMenuStartId;
@@ -161,6 +170,13 @@ namespace CreationKitPlatformExtended
 		bool Plugin::Activate(const Relocator* lpRelocator,
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
+			void* DataHandler = nullptr;
+			auto editorVer = Core::GlobalEnginePtr->GetEditorVersion();
+			if (editorVer <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST)
+				DataHandler = new EditorAPI::SkyrimSpectialEdition::TESDataHandler_CKPEIntf;
+			else if (editorVer <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST)
+				DataHandler = new EditorAPI::Fallout4::TESDataHandler_CKPEIntf;
+	
 			DataTAG Data = 
 			{
 				PLUGINAPI_CURRENT_VERSION,
@@ -173,6 +189,10 @@ namespace CreationKitPlatformExtended
 				GlobalPluginMenuStartId,
 				GlobalPluginMenuEndId,
 				&Menu,
+				"",
+				DataHandler,
+				Core::GlobalDynamicCastPtr,
+				Core::GlobalRegistratorWindowPtr
 			};
 
 			auto It = _FuncMap.find("CKPEPlugin_Init");
@@ -184,6 +204,14 @@ namespace CreationKitPlatformExtended
 				_MenuName = Data.szSubMenuName;
 				GlobalPluginMenuStartId = std::min(GlobalPluginMenuEndId + 1, PLUGIN_MENUID_MAX);
 				GlobalPluginMenuEndId = std::min(GlobalPluginMenuStartId + 4, PLUGIN_MENUID_MAX);
+			}
+
+			if (!bRet)
+			{
+				if (editorVer <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST)
+					delete (EditorAPI::SkyrimSpectialEdition::TESDataHandler_CKPEIntf*)DataHandler;
+				else if (editorVer <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST)
+					delete (EditorAPI::Fallout4::TESDataHandler_CKPEIntf*)DataHandler;
 			}
 
 			return bRet;
@@ -204,6 +232,10 @@ namespace CreationKitPlatformExtended
 				0,
 				0,
 				nullptr,
+				"",
+				nullptr,
+				Core::GlobalDynamicCastPtr,
+				Core::GlobalRegistratorWindowPtr
 			};
 
 			auto It = _FuncMap.find("CKPEPlugin_Shutdown");
@@ -212,3 +244,5 @@ namespace CreationKitPlatformExtended
 		}
 	}
 }
+
+#pragma warning(default : 4742)

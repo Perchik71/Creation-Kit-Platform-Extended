@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="..\MyFirstPlugin\CKPE\PluginAPI.cpp">
+      <Filter>CKPE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Creation Kit Platform Extended Core\UtfStr.cpp">
+      <Filter>CKPE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Creation Kit Platform Extended Core\FileUtil.cpp">
+      <Filter>CKPE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Creation Kit Platform Extended Core\ProfileUtil.cpp">
+      <Filter>CKPE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Creation Kit Platform Extended Core\StringUtil.cpp">
+      <Filter>CKPE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Creation Kit Platform Extended Core\NiAPI\NiMemoryManager.cpp">
+      <Filter>CKPE\NiAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Creation Kit Platform Extended Core\Editor API\BSString.cpp">
+      <Filter>CKPE\Editor API</Filter>
+    </ClCompile>
+    <ClCompile Include="CKPE\Common.cpp">
+      <Filter>CKPE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Creation Kit Platform Extended Core\UITheme\Colored.cpp">
+      <Filter>CKPE\Core\UITheme</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CKPE\Common.h">
+      <Filter>CKPE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MyFirstPlugin\CKPE\PluginAPI.h">
+      <Filter>CKPE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Creation Kit Platform Extended Core\StringUtil.h">
+      <Filter>CKPE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Creation Kit Platform Extended Core\UtfStr.h">
+      <Filter>CKPE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Creation Kit Platform Extended Core\FileUtil.h">
+      <Filter>CKPE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Creation Kit Platform Extended Core\ProfileUtil.h">
+      <Filter>CKPE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Creation Kit Platform Extended Core\NiAPI\NiMemoryManager.h">
+      <Filter>CKPE\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Creation Kit Platform Extended Core\Editor API\BSString.h">
+      <Filter>CKPE\Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Creation Kit Platform Extended Core\UITheme\Colored.h">
+      <Filter>CKPE\Core\UITheme</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CKPE">
+      <UniqueIdentifier>{8d6eefa4-c44f-41d3-bdf8-14091c0909f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CKPE\NiAPI">
+      <UniqueIdentifier>{528d4abb-422b-49f4-b273-9e583426e402}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CKPE\Editor API">
+      <UniqueIdentifier>{4532cbf8-ab80-4147-bcbd-62fa1930f3d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CKPE\Core">
+      <UniqueIdentifier>{f1490f3a-6a04-4983-b73f-507d57f79765}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CKPE\Core\UITheme">
+      <UniqueIdentifier>{4049134f-82b7-44bf-b7d1-c4664dfc6f28}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

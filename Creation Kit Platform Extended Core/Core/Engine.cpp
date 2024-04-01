@@ -12,6 +12,7 @@
 #include "Engine.h"
 #include "DynamicCast.h"
 #include "TracerManager.h"
+#include "RegistratorWindow.h"
 
 #include "Editor API/EditorUI.h"
 
@@ -129,6 +130,11 @@ namespace CreationKitPlatformExtended
 			GlobalRelocationDatabasePtr = new RelocationDatabase(this);
 			GlobalRelocatorPtr = new Relocator(this);
 			GlobalDialogManagerPtr = new DialogManager();
+
+			// Нужно управлять над окнами, так как, похоже сам CK это делает плохо.
+			// В первую очередь нужно отделить окна: главные и обычные, поможет при закрытии программы.
+			// К слову, также можно ими будет манипулировать, скрыть все окна и т.д.
+			GlobalRegistratorWindowPtr = new RegistratorWindow();
 			
 			// Данный патч, является исключением от остальных, он инициализируется раньше, как
 			// системный модуль, но его можно отключать как патч. Это нужно для покрытия консоли новой темой.
@@ -471,6 +477,16 @@ namespace CreationKitPlatformExtended
 		OsVersion Engine::GetSystemVersion() const
 		{
 			return _OsVersion;
+		}
+
+		bool Engine::HasPatch(const char* lpstrName) const
+		{
+			return PatchesManager->Has(lpstrName);
+		}
+
+		bool Engine::HasPlugin(const char* lpstrName) const
+		{
+			return UserPluginsManager->Has(lpstrName);
 		}
 
 		IResult Engine::Initialize(HMODULE hModule, LPCSTR lpcstrAppName)

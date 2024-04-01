@@ -1,8 +1,9 @@
-// Copyright � 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
+#include "Core/RegistratorWindow.h"
 #include "RenderWindow.h"
 #include "MainWindow.h"
 #include "Editor API/SSE/BGSRenderWindow.h"
@@ -85,6 +86,7 @@ namespace CreationKitPlatformExtended
 			{
 				if (Message == WM_INITDIALOG) 
 				{
+					GlobalRegistratorWindowPtr->RegisterMajor(Hwnd, "RenderWindow");
 					GlobalRenderWindowPtr->m_hWnd = Hwnd;
 					GlobalRenderWindowPtr->_BlockInputMessage = true;
 					return CallWindowProc(GlobalRenderWindowPtr->GetOldWndProc(), Hwnd, Message, wParam, lParam);

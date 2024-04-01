@@ -87,7 +87,7 @@ namespace CreationKitPlatformExtended
 				PROPERTY(GetRawColor, SetRawColor) RawColorT RawColor;
 			private:
 				char pad28[0x8];
-				BGSLocalizedString _Name;
+				BGSLocalizedString<BSEntryString> _Name;
 				union
 				{
 					float _RemappingIndex;

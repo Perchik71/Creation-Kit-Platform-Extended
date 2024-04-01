@@ -1,4 +1,4 @@
-// Copyright � 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -186,7 +186,7 @@ namespace CreationKitPlatformExtended
 								// Abandoning CreationKit32
 								// fastCall<bool>(pointer_ResponseWindow_sub3, Hwnd, AudioFilePath.c_str(), InputText.c_str());
 
-								if (!GenerationLip(AudioFilePath.c_str(), LipFilePath.c_str(), data->ResponseTemp->ResponseText.Get()) ||
+								if (!GenerationLip(AudioFilePath.c_str(), LipFilePath.c_str(), data->ResponseTemp->ResponseText.c_str()) ||
 									!Utils::FileExists(LipFilePath.c_str()))
 								{
 									ConsolePatch::Log("LIPGEN: File \"%s\" LIP generation failed.", LipFilePath.c_str());

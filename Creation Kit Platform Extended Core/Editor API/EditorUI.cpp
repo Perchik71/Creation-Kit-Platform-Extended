@@ -5,6 +5,7 @@
 #include "Core/Engine.h"
 #include "Core/AboutWindow.h"
 #include "Core/DialogManager.h"
+#include "Core/RegistratorWindow.h"
 #include "EditorUI.h"
 #include "..\NiAPI\NiMemoryManager.h"
 
@@ -330,9 +331,11 @@ namespace CreationKitPlatformExtended
 
 			auto dialog = Core::GlobalDialogManagerPtr->GetDialog(reinterpret_cast<LONG_PTR>(lpTemplateName));
 			if (dialog)
-				return dialog->Show(hWndParent, DialogFuncOverride, dwInitParam, hInstance);
+				return Core::GlobalRegistratorWindowPtr->Register(
+					dialog->Show(hWndParent, DialogFuncOverride, dwInitParam, hInstance));
 
-			return CreateDialogParamA(hInstance, lpTemplateName, hWndParent, DialogFuncOverride, dwInitParam);
+			return Core::GlobalRegistratorWindowPtr->Register(
+				CreateDialogParamA(hInstance, lpTemplateName, hWndParent, DialogFuncOverride, dwInitParam));
 		}
 
 		INT_PTR EditorUI::HKDialogBoxParamA(HINSTANCE hInstance, LPCSTR lpTemplateName, HWND hWndParent, 
@@ -371,6 +374,7 @@ namespace CreationKitPlatformExtended
 			// Fix for the CK calling EndDialog on a CreateDialogParamA window
 			if (auto itr = DialogOverrides.find(hDlg); itr != DialogOverrides.end() && !itr->second.IsDialog)
 			{
+				Core::GlobalRegistratorWindowPtr->Unregister(hDlg);
 				DestroyWindow(hDlg);
 				return TRUE;
 			}
@@ -388,7 +392,10 @@ namespace CreationKitPlatformExtended
 				if (auto itr = DialogOverrides.find(hWnd); itr != DialogOverrides.end())
 				{
 					if (!itr->second.IsDialog)
+					{
+						Core::GlobalRegistratorWindowPtr->Unregister(hWnd);
 						DestroyWindow(hWnd);
+					}
 				}
 
 				return 0;

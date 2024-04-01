@@ -46,6 +46,8 @@ namespace CreationKitPlatformExtended
 			virtual bool HasCommandRun() const;
 			virtual Section GetSection(uint32_t nIndex) const;
 			virtual OsVersion GetSystemVersion() const;
+			virtual bool HasPatch(const char* lpstrName) const;
+			virtual bool HasPlugin(const char* lpstrName) const;
 		public:
 			static IResult Initialize(HMODULE hModule, LPCSTR lpcstrAppName);
 		private:

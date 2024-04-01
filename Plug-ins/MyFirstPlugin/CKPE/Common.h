@@ -81,6 +81,10 @@ void __stdcall __ASSERT(const wchar_t* File, int Line, const wchar_t* Format, ..
 #define _ASSERT(Cond)				if(!(Cond)) __ASSERT(__FILE__, __LINE__, #Cond)
 #define _ASSERTMSG(Cond, Msg, ...)	if(!(Cond)) __ASSERT(__FILE__, __LINE__, "%s\n\n" Msg, #Cond, ##__VA_ARGS__)
 
+#define Assert(Cond)				if(!(Cond)) __ASSERT(__FILE__, __LINE__, #Cond);
+#define AssertMsgVa(Cond, Msg, ...)	if(!(Cond)) __ASSERT(__FILE__, __LINE__, "%s\n\n" Msg, #Cond, ##__VA_ARGS__);
+#define AssertMsg(Cond, Msg)		AssertMsgVa(Cond, Msg)
+
 // thread-safe template versions of thisVirtualCall()
 
 template<typename TR>

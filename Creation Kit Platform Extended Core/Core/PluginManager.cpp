@@ -8,7 +8,7 @@
 #include "Relocator.h"
 
 #include "Editor API/UI/UIMenus.h"
-#include "../MyFirstPlugin/CKPE/PluginAPI.h"
+#include "../Plug-ins/MyFirstPlugin/CKPE/PluginAPI.h"
 
 namespace CreationKitPlatformExtended
 {

@@ -1,8 +1,9 @@
-// Copyright � 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
+#include "Core/RegistratorWindow.h"
 #include "UITheme/VarCommon.h"
 #include "Editor API/EditorUI.h"
 #include "Editor API/FO4/BGSRenderWindow.h"
@@ -237,6 +238,7 @@ namespace CreationKitPlatformExtended
 				{
 					LPOBJWND lpObjWnd = new OBJWND;
 
+					GlobalRegistratorWindowPtr->RegisterMajor(Hwnd, "ObjectWindow");
 					lpObjWnd->ObjectWindow = Hwnd;
 
 					lpObjWnd->Controls.TreeList = lpObjWnd->ObjectWindow.GetControl(2093);
@@ -421,6 +423,7 @@ namespace CreationKitPlatformExtended
 					LPOBJWND lpObjWnd = ObjectWindows.at(Hwnd);
 					if (lpObjWnd)
 					{
+						GlobalRegistratorWindowPtr->Unregister(Hwnd, true);
 						ObjectWindows.erase(Hwnd);
 
 						delete lpObjWnd;
