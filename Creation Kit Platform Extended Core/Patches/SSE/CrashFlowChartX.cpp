@@ -68,12 +68,10 @@ namespace CreationKitPlatformExtended
 				}
 				else if (lpRelocationDatabaseItem->Version() == 2)
 				{
-					//
 					// Bethesda has changed the code, let's make a jump and omit the entire code
-					//
-					auto addr = lpRelocationDatabaseItem->At(0);
-					lpRelocator->DetourCall(addr, (uintptr_t)&sub);
-					lpRelocator->Patch((uintptr_t)addr + 5, { 0xEB, 0x7B, 0x90 });
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(0), (uintptr_t)&sub);
+
+					return true;
 				}
 
 				return false;
