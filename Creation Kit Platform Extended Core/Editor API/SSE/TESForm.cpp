@@ -14,6 +14,8 @@ namespace CreationKitPlatformExtended
 				std::equal_to<uint64_t>, voltek::allocator<std::pair<const uint64_t,
 				TESForm::Array*>>> FormReferenceMap;
 
+			using namespace CreationKitPlatformExtended::Core;
+
 			const char* TESFullName::GetName() const
 			{
 				return thisVirtualCall<const char*>(0x78, this);
@@ -31,7 +33,7 @@ namespace CreationKitPlatformExtended
 
 			const char* TESForm::GetFullName() const
 			{
-				TESFullName* fullname = (TESFullName*)Core::_DYNAMIC_CAST(this, 0, "class TESForm", "class TESFullName");
+				TESFullName* fullname = (TESFullName*)_DYNAMIC_CAST(this, 0, "class TESForm", "class TESFullName");
 				return fullname ? fullname->Name : "";
 			}
 

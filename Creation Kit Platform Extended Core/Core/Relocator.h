@@ -152,3 +152,6 @@ namespace CreationKitPlatformExtended
 		}
 	}
 }
+
+#define _RELDATA_RAV(x) lpRelocationDatabaseItem->At(x)
+#define _RELDATA_ADDR(x) lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(x))

@@ -69,7 +69,7 @@ public:
 
     void CleanData();
 
-    static EditorAPI::BSString GenAudionName(EditorAPI::BSString& QuestEditID, EditorAPI::BSString& TopicEditID, 
+    static EditorAPI::BSString GenAudioName(const EditorAPI::BSString& QuestEditID, const EditorAPI::BSString& TopicEditID,
         uint32_t FormID, uint32_t ResponseID);
 private:
     HWND hWnd;
@@ -101,12 +101,13 @@ void QPluginWindow::CleanData()
     }
 }
 
-EditorAPI::BSString QPluginWindow::GenAudionName(EditorAPI::BSString& QuestEditID, EditorAPI::BSString& TopicEditID,
+EditorAPI::BSString QPluginWindow::GenAudioName(const EditorAPI::BSString& QuestEditID, const EditorAPI::BSString& TopicEditID,
     uint32_t FormID, uint32_t ResponseID)
 {
-   // EditorAPI::BSString Ret(QuestEditID, 10);
-   // /(
-    return "";
+    EditorAPI::BSString Ret(QuestEditID, 10);
+    uint32_t len = Ret.Length();
+    Ret.Append('_').Append(TopicEditID, 25 - len).Append('_');
+    return Ret.AppendFormat("%08X_%u.fuz", FormID, ResponseID);
 }
 
 bool QPluginWindow::Create()
@@ -210,13 +211,10 @@ bool QPluginWindow::Create()
                             {
                                 ExportDialogInfoT* esxp = new ExportDialogInfoT;
                                 memset(esxp, 0, sizeof(ExportDialogInfoT));
-                                
 
+                                esxp->AudioName = GenAudioName(Topic->Quest->EditorID, Topic->EditorID, Info->FormID, itResp->ResponseId);
 
-
-                                esxp->AudioName.Format("%08X_%u.fuz", Info->FormID, itResp->ResponseId);
-
-                                Topic->Quest->EditorID
+                                //Topic->Quest->EditorID
 
                                 /*if (!Utils::FileExists(esxp->AudioName.c_str()))
                                 {
@@ -233,7 +231,7 @@ bool QPluginWindow::Create()
                                 }*/
 
 
-                              //  esxp->DialogText = itResp->ResponseText.c_str();
+                                esxp->DialogText = itResp->ResponseText.c_str();
                                 esxp->rcForm = Info;
 
                                 _MESSAGE("%p %s %s", esxp->rcForm, esxp->AudioName.c_str(), esxp->DialogText.c_str());

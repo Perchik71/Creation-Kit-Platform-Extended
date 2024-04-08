@@ -727,6 +727,9 @@
     <ClCompile Include="Core\RegistratorWindow.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\FixReverbParameters.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1759,6 +1762,12 @@
     </ClInclude>
     <ClInclude Include="Editor API\BGSLocalizedString.h">
       <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BGSVoiceType.h">
+      <Filter>Editor API\SSE\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixReverbParameters.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

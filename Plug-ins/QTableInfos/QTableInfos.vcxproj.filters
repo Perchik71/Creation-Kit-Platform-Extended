@@ -29,6 +29,12 @@
     <ClCompile Include="..\..\Creation Kit Platform Extended Core\UITheme\Colored.cpp">
       <Filter>CKPE\Core\UITheme</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Creation Kit Platform Extended Core\Editor API\SSE\TESForm.cpp">
+      <Filter>CKPE\Editor API\SSE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Creation Kit Platform Extended Core\Editor API\FO4\TESFormF4.cpp">
+      <Filter>CKPE\Editor API\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CKPE\Common.h">
@@ -58,6 +64,12 @@
     <ClInclude Include="..\..\Creation Kit Platform Extended Core\UITheme\Colored.h">
       <Filter>CKPE\Core\UITheme</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Creation Kit Platform Extended Core\Editor API\SSE\TESForm.h">
+      <Filter>CKPE\Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Creation Kit Platform Extended Core\Editor API\FO4\TESFormF4.h">
+      <Filter>CKPE\Editor API\FO4</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CKPE">
@@ -74,6 +86,12 @@
     </Filter>
     <Filter Include="CKPE\Core\UITheme">
       <UniqueIdentifier>{4049134f-82b7-44bf-b7d1-c4664dfc6f28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CKPE\Editor API\SSE">
+      <UniqueIdentifier>{05f852f0-438f-4694-8ab1-01c97bf913c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CKPE\Editor API\FO4">
+      <UniqueIdentifier>{78ab3060-9802-4b42-ba20-a9cfd15395df}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

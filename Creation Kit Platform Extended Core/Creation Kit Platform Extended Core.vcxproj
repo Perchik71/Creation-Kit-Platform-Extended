@@ -230,6 +230,7 @@
     <ClCompile Include="Patches\SSE\FixRaceDlg.cpp" />
     <ClCompile Include="Patches\SSE\FixRemoteDesktop.cpp" />
     <ClCompile Include="Patches\SSE\FixRenderPass.cpp" />
+    <ClCompile Include="Patches\SSE\FixReverbParameters.cpp" />
     <ClCompile Include="Patches\SSE\FixSelectedPackageData.cpp" />
     <ClCompile Include="Patches\SSE\FixSpellDlg.cpp" />
     <ClCompile Include="Patches\SSE\FixSpellEffectsDuration.cpp" />
@@ -399,6 +400,7 @@
     <ClInclude Include="Editor API\SSE\BGSRenderWindow.h" />
     <ClInclude Include="Editor API\SSE\BGSRenderWindowCamera.h" />
     <ClInclude Include="Editor API\SSE\BGSSoundDescriptorForm.h" />
+    <ClInclude Include="Editor API\SSE\BGSVoiceType.h" />
     <ClInclude Include="Editor API\SSE\BSDynamicTriShape.h" />
     <ClInclude Include="Editor API\SSE\BSEffectShaderMaterial.h" />
     <ClInclude Include="Editor API\SSE\BSEntryString.h" />
@@ -553,6 +555,7 @@
     <ClInclude Include="Patches\SSE\FixRaceDlg.h" />
     <ClInclude Include="Patches\SSE\FixRemoteDesktop.h" />
     <ClInclude Include="Patches\SSE\FixRenderPass.h" />
+    <ClInclude Include="Patches\SSE\FixReverbParameters.h" />
     <ClInclude Include="Patches\SSE\FixSelectedPackageData.h" />
     <ClInclude Include="Patches\SSE\FixSpellDlg.h" />
     <ClInclude Include="Patches\SSE\FixSpellEffectsDuration.h" />

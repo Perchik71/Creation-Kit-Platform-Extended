@@ -11,6 +11,7 @@
 #include "TESObjectREFR.h"
 #include "TESObjectCELL.h"
 #include "TESObjectLAND.h"
+#include "BGSVoiceType.h"
 #include "BGSMaterialType.h"
 
 namespace CreationKitPlatformExtended
@@ -136,7 +137,7 @@ namespace CreationKitPlatformExtended
 				TESFormArray arrAVIF;									// 950 Form Type 95
 				TESFormArray arrCAMS;									// 968 Form Type 96
 				TESFormArray arrCPTH;									// 980 Form Type 97
-				TESFormArray arrVTYP;									// 998 Form Type 98
+				BSTArray<BGSVoiceType*> arrVoiceType;					// 998 Form Type 98 <VTYP>
 				BSTArray<BGSMaterialType*> arrMaterialType;				// 9B0 Form Type 99 
 				BSTArray<BGSImpactData*> arrImpactData;					// 9C8 Form Type 100
 				BSTArray<BGSImpactDataSet*> arrImpactDataSet;			// 9E0 Form Type 101

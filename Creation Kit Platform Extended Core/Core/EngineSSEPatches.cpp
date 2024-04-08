@@ -91,6 +91,7 @@
 #include "Patches/SSE/AllowCreateBitArray.h"
 #include "Patches/SSE/CrashMergeForms.h"
 #include "Patches/SSE/CrashNullptrFaceGen.h"
+#include "Patches/SSE/FixReverbParameters.h"
 
 #include "Patches/Windows/SSE/MainWindow.h"
 #include "Patches/Windows/SSE/RenderWindow.h"
@@ -196,6 +197,7 @@ namespace CreationKitPlatformExtended
 				new Patches::AllowCreateBitArrayPatch(),
 				new Patches::CrashMergeFormsPatch(),
 				new Patches::CrashNullptrFaceGenPatch(),
+				new Patches::FixReverbParametersPatch(),
 		
 				new Patches::MainWindow(),
 				new Patches::RenderWindow(),

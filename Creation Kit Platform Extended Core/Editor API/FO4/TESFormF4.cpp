@@ -31,6 +31,8 @@ namespace CreationKitPlatformExtended
 			uintptr_t pointer_TESForm_sub = 0;
 			uintptr_t pointer_TESForm_data = 0;
 
+			using namespace CreationKitPlatformExtended::Core;
+
 			void TESForm::LoadForm(TESFile* file)
 			{
 				thisVirtualCall<void>(0xD0, this, file);
@@ -78,7 +80,7 @@ namespace CreationKitPlatformExtended
 
 			const char* TESForm::GetFullName() const
 			{
-				TESFullName* fullname = (TESFullName*)Core::_DYNAMIC_CAST(this, 0, "class TESForm", "class TESFullName");
+				TESFullName* fullname = (TESFullName*)_DYNAMIC_CAST(this, 0, "class TESForm", "class TESFullName");
 				return fullname ? fullname->Name : "";
 			}
 

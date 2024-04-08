@@ -105,6 +105,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Creation Kit Platform Extended Core\Editor API\BSString.h" />
+    <ClInclude Include="..\..\Creation Kit Platform Extended Core\Editor API\FO4\TESFormF4.h" />
+    <ClInclude Include="..\..\Creation Kit Platform Extended Core\Editor API\SSE\TESForm.h" />
     <ClInclude Include="..\..\Creation Kit Platform Extended Core\FileUtil.h" />
     <ClInclude Include="..\..\Creation Kit Platform Extended Core\NiAPI\NiMemoryManager.h" />
     <ClInclude Include="..\..\Creation Kit Platform Extended Core\ProfileUtil.h" />
@@ -116,6 +118,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Creation Kit Platform Extended Core\Editor API\BSString.cpp" />
+    <ClCompile Include="..\..\Creation Kit Platform Extended Core\Editor API\FO4\TESFormF4.cpp" />
+    <ClCompile Include="..\..\Creation Kit Platform Extended Core\Editor API\SSE\TESForm.cpp" />
     <ClCompile Include="..\..\Creation Kit Platform Extended Core\FileUtil.cpp" />
     <ClCompile Include="..\..\Creation Kit Platform Extended Core\NiAPI\NiMemoryManager.cpp" />
     <ClCompile Include="..\..\Creation Kit Platform Extended Core\ProfileUtil.cpp" />
