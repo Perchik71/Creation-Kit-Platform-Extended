@@ -165,6 +165,7 @@
     <ClCompile Include="Patches\FO4\RemoveUselessMessagesF4.cpp" />
     <ClCompile Include="Patches\FO4\ReplaceBSPointerHandleAndManagerF4.cpp" />
     <ClCompile Include="Patches\FO4\SkipUpdateCheck.cpp" />
+    <ClCompile Include="Patches\FO4\SortCrashCombined.cpp" />
     <ClCompile Include="Patches\FO4\TESDataHandlerHook.cpp" />
     <ClCompile Include="Patches\FO4\TESFormRE.cpp" />
     <ClCompile Include="Patches\FO4\UIDefferF4.cpp" />
@@ -490,6 +491,7 @@
     <ClInclude Include="Patches\FO4\RemoveUselessMessagesF4.h" />
     <ClInclude Include="Patches\FO4\ReplaceBSPointerHandleAndManagerF4.h" />
     <ClInclude Include="Patches\FO4\SkipUpdateCheck.h" />
+    <ClInclude Include="Patches\FO4\SortCrashCombined.h" />
     <ClInclude Include="Patches\FO4\TESDataHandlerHook.h" />
     <ClInclude Include="Patches\FO4\TESFormRE.h" />
     <ClInclude Include="Patches\FO4\UIDefferF4.h" />

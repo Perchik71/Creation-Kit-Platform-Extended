@@ -12,8 +12,6 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
-			uintptr_t pointer_FixReverbParametersPatch_sub = 0;
-
 			FixReverbParametersPatch::FixReverbParametersPatch() : Module(GlobalEnginePtr)
 			{}
 
@@ -72,11 +70,9 @@ namespace CreationKitPlatformExtended
 							auto Class = (uint64_t*)(*it)->VTableAddress;
 							Class[84] = Class[101];
 
-							break;
+							return true;
 						}
 					}
-
-					return true;
 				}
 
 				return false;
