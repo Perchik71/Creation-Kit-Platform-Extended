@@ -57,11 +57,9 @@ namespace CreationKitPlatformExtended
 			{
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
-					Detours::X64::DetourClassVTable(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)),
-						&NiSkinInstance_LinkObject, 25);
-					Detours::X64::DetourClassVTable(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1)),
-						&NiSkinInstance_LinkObject, 25);
-					pointer1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2));
+					voltek::detours_function_class_vtable(_RELDATA_ADDR(0), &NiSkinInstance_LinkObject, 25);
+					voltek::detours_function_class_vtable(_RELDATA_ADDR(1), &NiSkinInstance_LinkObject, 25);
+					pointer1 = _RELDATA_ADDR(2);
 
 					return true;
 				}

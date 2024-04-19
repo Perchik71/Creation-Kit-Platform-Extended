@@ -49,6 +49,20 @@ namespace CreationKitPlatformExtended
 			return fwrite(sStr.c_str(), 1, nLen, fileStream) == nLen;
 		}
 
+		inline bool FileGetString(char* buffer, size_t bufferMaxSize, FILE* fileStream)
+		{
+			if (!fgets(buffer, (int)bufferMaxSize, fileStream))
+				return false;
+
+			buffer[bufferMaxSize-1] = '\0';
+			return true;
+		}
+
+		inline void FileNextString(FILE* fileStream)
+		{
+			while (fgetc(fileStream) != '\n') {}
+		}
+
 		class ScopeFileStream
 		{
 		public:

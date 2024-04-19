@@ -66,21 +66,21 @@ namespace CreationKitPlatformExtended
 			{
 				UIThemePatch::InitializeThread();
 
-				pointer_UIThemePatchAdditional_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
+				pointer_UIThemePatchAdditional_sub = _RELDATA_ADDR(0);
 				// replace main toolbar
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1), (uintptr_t)&Comctl32CreateToolbarEx_1);
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&Comctl32CreateToolbarEx_NavMesh);
-				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3), (uintptr_t)&HideOldTimeOfDayComponents);
+				lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&Comctl32CreateToolbarEx_1);
+				lpRelocator->DetourCall(_RELDATA_RAV(2), (uintptr_t)&Comctl32CreateToolbarEx_NavMesh);
+				lpRelocator->DetourJump(_RELDATA_RAV(3), (uintptr_t)&HideOldTimeOfDayComponents);
 				// replace ImageList_LoadImage for item type
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(4), (uintptr_t)&Comctl32ImageList_LoadImageA_1);
+				lpRelocator->DetourCall(_RELDATA_RAV(4), (uintptr_t)&Comctl32ImageList_LoadImageA_1);
 
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(5), (uintptr_t)&HKInitializeTimeOfDay);
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(6), (uintptr_t)&HKSetNewValueTimeOfDay);
+				lpRelocator->DetourCall(_RELDATA_RAV(5), (uintptr_t)&HKInitializeTimeOfDay);
+				lpRelocator->DetourCall(_RELDATA_RAV(6), (uintptr_t)&HKSetNewValueTimeOfDay);
 
 				if (verPatch != 2)
 				{
-					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(7), 7);				// Prevent setting redundant colors in the condition list view NM_CUSTOMDRAW (breaks dark theme)
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(8), { 0x74, 0x20 });	// ^
+					lpRelocator->PatchNop(_RELDATA_RAV(7), 7);				// Prevent setting redundant colors in the condition list view NM_CUSTOMDRAW (breaks dark theme)
+					lpRelocator->Patch(_RELDATA_RAV(8), { 0x74, 0x20 });	// ^
 				}
 
 				return true;

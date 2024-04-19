@@ -69,7 +69,6 @@
     <ClCompile Include="Editor API\BGStringLocalize.cpp">
       <Filter>Editor API</Filter>
     </ClCompile>
-    <ClCompile Include="UtfStr.cpp" />
     <ClCompile Include="Patches\UnicodePatch.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -894,7 +893,6 @@
     <ClInclude Include="Editor API\BGStringLocalize.h">
       <Filter>Editor API</Filter>
     </ClInclude>
-    <ClInclude Include="UtfStr.h" />
     <ClInclude Include="Patches\UnicodePatch.h">
       <Filter>Patches</Filter>
     </ClInclude>

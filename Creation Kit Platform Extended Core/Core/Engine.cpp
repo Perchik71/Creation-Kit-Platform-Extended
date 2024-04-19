@@ -205,12 +205,12 @@ namespace CreationKitPlatformExtended
 			// Определить адреса и размеры модулей/разделов кода
 
 			_moduleSize = ntHeaders->OptionalHeader.SizeOfImage;
-			Assert(Utils::GetPESectionRange(_moduleBase, ".text", &Sections[SECTION_TEXT].base, &Sections[SECTION_TEXT].end));
-			Assert(Utils::GetPESectionRange(_moduleBase, ".rdata", &Sections[SECTION_DATA_READONLY].base, &Sections[SECTION_DATA_READONLY].end));
-			Assert(Utils::GetPESectionRange(_moduleBase, ".data", &Sections[SECTION_DATA].base, &Sections[SECTION_DATA].end));
+			Assert(voltek::get_pe_section_range(_moduleBase, ".text", &Sections[SECTION_TEXT].base, &Sections[SECTION_TEXT].end));
+			Assert(voltek::get_pe_section_range(_moduleBase, ".rdata", &Sections[SECTION_DATA_READONLY].base, &Sections[SECTION_DATA_READONLY].end));
+			Assert(voltek::get_pe_section_range(_moduleBase, ".data", &Sections[SECTION_DATA].base, &Sections[SECTION_DATA].end));
 
 			uintptr_t tempBssStart, tempBssEnd;
-			if (Utils::GetPESectionRange(_moduleBase, ".textbss", &tempBssStart, &tempBssEnd))
+			if (voltek::get_pe_section_range(_moduleBase, ".textbss", &tempBssStart, &tempBssEnd))
 			{
 				Sections[0].base = std::min(Sections[SECTION_TEXT].base, tempBssStart);
 				Sections[0].end = std::max(Sections[SECTION_TEXT].end, tempBssEnd);
@@ -229,7 +229,7 @@ namespace CreationKitPlatformExtended
 			if (TempNTSITAddress)
 			{
 				memcpy(&TempNTSIT, (LPVOID)TempNTSITAddress, sizeof(TempNTSIT));
-				*(uintptr_t*)&NtSetInformationThread = Detours::X64::DetourFunctionClass(TempNTSITAddress, &hk_NtSetInformationThread);
+				*(uintptr_t*)&NtSetInformationThread = voltek::detours_function_class_jump(TempNTSITAddress, &hk_NtSetInformationThread);
 			}
 		}
 
@@ -240,13 +240,13 @@ namespace CreationKitPlatformExtended
 
 			if (TempNTSITAddress)
 				// Восстановить исходный код NtSetInformationThread
-				Utils::PatchMemory(TempNTSITAddress, (PBYTE)&TempNTSIT, sizeof(TempNTSIT));
+				voltek::detours_patch_memory(TempNTSITAddress, (PBYTE)&TempNTSIT, sizeof(TempNTSIT));
 		}
 
 		void Engine::CommandLineRun()
 		{
 			CommandLineParser CommandLine;
-			
+
 			_hasCommandRun = CommandLine.HasCommandRun();
 			if (_hasCommandRun)
 			{
@@ -265,33 +265,27 @@ namespace CreationKitPlatformExtended
 				}
 				else if (!_stricmp(Command.c_str(), "-PEUpdateDatabase"))
 				{
-					if (CommandLine.Count() != 3)
+					if (CommandLine.Count() != 2)
 					{
 						_ERROR("Invalid number of command arguments: %u", CommandLine.Count());
-						_MESSAGE("Example: CreationKit -PEUpdateDatabase \"test\" \"test.relb\"");
+						_MESSAGE("Example: CreationKit -PEUpdateDatabase \"test.relb\"");
 					}
-					else if (!CreationKitPlatformExtended::Utils::FileExists(CommandLine[2].c_str()))
+					else if (!CreationKitPlatformExtended::Utils::FileExists(CommandLine[1].c_str()))
 					{
-						_ERROR("The file does not exist: \"%s\"", CommandLine[2].c_str());
+						_ERROR("The file does not exist: \"%s\"", CommandLine[1].c_str());
 					}
 					else
 					{
 						// Открываем базу данных
 						if (GlobalRelocationDatabasePtr->OpenDatabase())
 						{
-							auto Patch = GlobalRelocationDatabasePtr->GetByName(CommandLine[1].c_str());
+							auto Patch = GlobalRelocationDatabasePtr->Append(CommandLine[1].c_str());
 							// Патча нет?
 							if (Patch.Empty())
-							{
-								Patch = GlobalRelocationDatabasePtr->Append(CommandLine[1].c_str(), new RelocationDatabaseItem());
-								if (Patch.Empty())
-									// Закрываем Creation Kit
-									CreationKitPlatformExtended::Utils::Quit();
-							}
-							// Загружаем
-							if (Patch->LoadFromFileDeveloped(CommandLine[2].c_str()))
-								// Сохраняем базу данных
-								GlobalRelocationDatabasePtr->SaveDatabase();
+								// Закрываем Creation Kit
+								CreationKitPlatformExtended::Utils::Quit();
+							// Сохраняем базу данных
+							GlobalRelocationDatabasePtr->SaveDatabase();
 						}
 						else
 							_FATALERROR("The database is not loaded");

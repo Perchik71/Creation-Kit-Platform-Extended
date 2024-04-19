@@ -135,7 +135,7 @@ namespace CreationKitPlatformExtended
 				if ((verPatch == 1) || (verPatch == 2))
 				{
 					*(uintptr_t*)&_oldWndProc =
-						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), &HKWndProc);
+						voltek::detours_function_class_jump(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), &HKWndProc);
 					
 					// Fix resize ObjectWindowProc
 					auto OffsetTotal = lpRelocationDatabaseItem->At(1);

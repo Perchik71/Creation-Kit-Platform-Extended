@@ -58,9 +58,8 @@ namespace CreationKitPlatformExtended
 					//
 					// Fix charset Spell/Scroll/Ench etc dialoges
 					//
-					OldSpellDlgProc = (DLGPROC)Detours::X64::DetourFunctionClass(
-						lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), 
-						&EditorAPI::SkyrimSpectialEdition::SpellDlgProc);
+					OldSpellDlgProc = (DLGPROC)voltek::detours_function_class_jump(
+						_RELDATA_ADDR(0), &EditorAPI::SkyrimSpectialEdition::SpellDlgProc);
 	
 					return true;
 				}

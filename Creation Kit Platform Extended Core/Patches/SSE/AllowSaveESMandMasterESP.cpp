@@ -70,10 +70,10 @@ namespace CreationKitPlatformExtended
 			{
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
-					pointer_TESFile_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
-					pointer_TESFile_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
-					pointer_TESFile_sub3 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2));
-					pointer_AllowSaveESMandMasterESP_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(11));
+					pointer_TESFile_sub1 = _RELDATA_ADDR(0);
+					pointer_TESFile_sub2 = _RELDATA_ADDR(1);
+					pointer_TESFile_sub3 = _RELDATA_ADDR(2);
+					pointer_AllowSaveESMandMasterESP_sub1 = _RELDATA_ADDR(11);
 
 					TESFile::AllowSaveESM = _READ_OPTION_BOOL("CreationKit", "bAllowSaveESM", false);
 					TESFile::AllowMasterESP = _READ_OPTION_BOOL("CreationKit", "bAllowMasterESP", false);
@@ -81,33 +81,27 @@ namespace CreationKitPlatformExtended
 					if (TESFile::AllowSaveESM || TESFile::AllowMasterESP)
 					{
 						*(uintptr_t*)&TESFile::LoadTESInfo =
-							Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(3)),
-								&TESFile::hk_LoadTESInfo);
+							voltek::detours_function_class_jump(_RELDATA_ADDR(3), &TESFile::hk_LoadTESInfo);
 						*(uintptr_t*)&TESFile::WriteTESInfo = 
-							Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(4)),
-								&TESFile::hk_WriteTESInfo);
+							voltek::detours_function_class_jump(_RELDATA_ADDR(4), &TESFile::hk_WriteTESInfo);
 
 						if (TESFile::AllowSaveESM)
 						{
 							// Also allow non-game ESMs to be set as "Active File"
-							lpRelocator->DetourCall(lpRelocationDatabaseItem->At(5),
-								&TESFile::IsActiveFileBlacklist);
-							lpRelocator->PatchNop(lpRelocationDatabaseItem->At(6), 2);
+							lpRelocator->DetourCall(_RELDATA_RAV(5), &TESFile::IsActiveFileBlacklist);
+							lpRelocator->PatchNop(_RELDATA_RAV(6), 2);
 
 							// Disable: "File '%s' is a master file or is in use.\n\nPlease select another file to save to."
 							const char* newFormat = "File '%s' is in use.\n\nPlease select another file to save to.";
 
-							lpRelocator->PatchNop(lpRelocationDatabaseItem->At(7), 12);
-							lpRelocator->Patch(lpRelocationDatabaseItem->At(8), (uint8_t*)newFormat, 
-								(uint32_t)(strlen(newFormat) + 1));
-
-							lpRelocator->DetourJump(lpRelocationDatabaseItem->At(9),
-								(uintptr_t)&OpenPluginSaveDialog);
+							lpRelocator->PatchNop(_RELDATA_RAV(7), 12);
+							lpRelocator->Patch(_RELDATA_RAV(8), (uint8_t*)newFormat, (uint32_t)(strlen(newFormat) + 1));
+							lpRelocator->DetourJump(_RELDATA_RAV(9), (uintptr_t)&OpenPluginSaveDialog);
 						}
 
 						if (TESFile::AllowMasterESP)
 							// Remove the check for IsMaster()
-							lpRelocator->PatchNop(lpRelocationDatabaseItem->At(10), 12);
+							lpRelocator->PatchNop(_RELDATA_RAV(10), 12);
 					}
 
 

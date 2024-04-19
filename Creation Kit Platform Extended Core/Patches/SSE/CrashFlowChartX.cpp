@@ -93,7 +93,7 @@ namespace CreationKitPlatformExtended
 					AssertMsg(*(uint8_t*)(flowchartBase + 0x5FF89) == 0x48 && *(uint8_t*)(flowchartBase + 0x5FF8A) == 0x8B, "Unknown FlowChartX64.dll version");
 
 					// Prevent the XML element <Tag Type="14">16745094784</Tag> from being written
-					Utils::PatchMemoryNop(flowchartBase + 0x5FF9A, 60);
+					voltek::detours_patch_memory_nop(flowchartBase + 0x5FF9A, 60);
 				}
 
 				// Return null so the branch directly after is never taken

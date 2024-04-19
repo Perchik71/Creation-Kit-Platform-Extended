@@ -61,9 +61,9 @@ namespace CreationKitPlatformExtended
 			if ((verPatch == 1) || (verPatch == 2))
 			{
 				ScopeRelocator text;
-
+				
 				for (uint32_t i = 0; i < lpRelocationDatabaseItem->Count(); i++)
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(i), { 0xEB });
+					lpRelocator->Patch(_RELDATA_RAV(i), { 0xEB });
 
 				return true;
 			}

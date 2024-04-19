@@ -380,22 +380,20 @@ namespace CreationKitPlatformExtended
 
 			if (lpRelocationDatabaseItem->Version() == 1)
 			{
-				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(0), (uintptr_t)&MemoryManager::Allocate);
-				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(1), (uintptr_t)&MemoryManager::Deallocate);
-				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(2), (uintptr_t)&MemoryManager::Size);
-				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3), (uintptr_t)&ScrapHeap::Allocate);
-				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(4), (uintptr_t)&ScrapHeap::Deallocate);
-
-				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5),
-					(uintptr_t)&Skyrim::bhkThreadMemorySource::__ctor__);
+				lpRelocator->DetourJump(_RELDATA_RAV(0), (uintptr_t)&MemoryManager::Allocate);
+				lpRelocator->DetourJump(_RELDATA_RAV(1), (uintptr_t)&MemoryManager::Deallocate);
+				lpRelocator->DetourJump(_RELDATA_RAV(2), (uintptr_t)&MemoryManager::Size);
+				lpRelocator->DetourJump(_RELDATA_RAV(3), (uintptr_t)&ScrapHeap::Allocate);
+				lpRelocator->DetourJump(_RELDATA_RAV(4), (uintptr_t)&ScrapHeap::Deallocate);
+				lpRelocator->DetourJump(_RELDATA_RAV(5), (uintptr_t)&Skyrim::bhkThreadMemorySource::__ctor__);
 
 				{
 					ScopeRelocator SectionTextProtectionRemove;
 
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(6), { 0xC3 });
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(7), { 0xC3 });
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(8), { 0xC3 });
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(9), { 0xC3 });
+					lpRelocator->Patch(_RELDATA_RAV(6), { 0xC3 });
+					lpRelocator->Patch(_RELDATA_RAV(7), { 0xC3 });
+					lpRelocator->Patch(_RELDATA_RAV(8), { 0xC3 });
+					lpRelocator->Patch(_RELDATA_RAV(9), { 0xC3 });
 				}
 
 				// Программа очень любит думать, а винде это не нравиться, скажем винде, чтоб не обращала внимание.

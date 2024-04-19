@@ -81,10 +81,10 @@ namespace CreationKitPlatformExtended
 					if (TESFile::AllowSaveESM || TESFile::AllowMasterESP)
 					{
 						*(uintptr_t*)&TESFile::LoadTESInfo =
-							Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(3)),
+							voltek::detours_function_class_jump(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(3)),
 								&TESFile::hk_LoadTESInfo);
 						*(uintptr_t*)&TESFile::WriteTESInfo = 
-							Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(4)),
+							voltek::detours_function_class_jump(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(4)),
 								&TESFile::hk_WriteTESInfo);
 
 						if (TESFile::AllowSaveESM)

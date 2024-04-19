@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <Voltek.RelocationDatabase.h>
+
 namespace CreationKitPlatformExtended
 {
 	namespace Core
@@ -14,29 +16,26 @@ namespace CreationKitPlatformExtended
 		{
 		public:
 			RelocationDatabaseItem();
-			RelocationDatabaseItem(const char* lpcstrName, uint32_t nVersion, std::initializer_list<uint32_t> rvaList);
-			~RelocationDatabaseItem();
+			RelocationDatabaseItem(voltek::reldb_stream* stm, voltek::reldb_patch* pch);
+			~RelocationDatabaseItem() = default;
 		public:
-			bool LoadFromFileStream(FILE* fileStream);
-			bool SaveToFileStream(FILE* fileStream);
 			void Clear();
 
-			bool LoadFromFileDeveloped(const char* filename);
 			bool SaveToFileDeveloped(const char* filename);
 
-			inline uint32_t Version() const { return _version; }
-			inline String Name() const { return _name; }
-			inline uint32_t At(uint32_t nId) const { return _rvaList[nId]; }
-			inline uint32_t Count() const { return (uint32_t)_rvaList.size(); }
+			inline uint32_t Version() const { return (uint32_t)voltek::reldb_get_version_patch(patch); }
+			String Name() const;
+			uint32_t At(uint32_t nId) const;
+			String PatternAt(uint32_t nId) const;
+			inline uint32_t Count() const { return (uint32_t)voltek::reldb_count_signatures_in_patch(patch); }
 
 			inline uint32_t operator[](uint32_t nId) const { return At(nId); }
 		private:
 			RelocationDatabaseItem(const RelocationDatabaseItem&) = default;
 			RelocationDatabaseItem& operator=(const RelocationDatabaseItem&) = default;
 
-			uint32_t _version;
-			String _name;
-			Array<uint32_t> _rvaList;
+			voltek::reldb_stream* stream;
+			voltek::reldb_patch* patch;
 		};
 
 		class RelocationDatabase
@@ -49,15 +48,15 @@ namespace CreationKitPlatformExtended
 			bool OpenDatabase();
 			bool SaveDatabase();
 
-			bool Has(const char* name) const;
-			SmartPointer<RelocationDatabaseItem> Append(const char* name, RelocationDatabaseItem* Patch);
+			inline bool Has(const char* name) const { return voltek::reldb_has_patch(_stm, name); }
+			SmartPointer<RelocationDatabaseItem> Append(const char* filename);
 			SmartPointer<RelocationDatabaseItem> GetByName(const char* name) const;
 			bool Remove(const char* name);
 
 			void Clear();
 		private:
 			Engine* _engine;
-			Map<String, SmartPointer<RelocationDatabaseItem>> _patches;
+			voltek::reldb_stream* _stm;
 		};
 
 		extern RelocationDatabase* GlobalRelocationDatabasePtr;

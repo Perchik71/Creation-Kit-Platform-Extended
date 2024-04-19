@@ -33,7 +33,7 @@ namespace CreationKitPlatformExtended
 
 		void INIConfig::Open(const char* filename)
 		{
-			Open(Utils::Ansi2Wide(filename).c_str());
+			Open(Conversion::AnsiToWide(filename).c_str());
 		}
 
 		void INIConfig::Open(const wchar_t* filename)
@@ -105,7 +105,7 @@ namespace CreationKitPlatformExtended
 
 		void INIConfig::OpenRelative(int folderID, const char* relPath)
 		{
-			OpenRelative(folderID, Utils::Ansi2Wide(relPath).c_str());
+			OpenRelative(folderID, Conversion::AnsiToWide(relPath).c_str());
 		}
 
 		void INIConfig::OpenRelative(int folderID, const wchar_t* relPath)
@@ -283,7 +283,7 @@ namespace CreationKitPlatformExtended
 			{
 				auto sec = _iniFile->get(section);
 				if (sec.has(option))
-					return Utils::Utf82Wide((const char8_t*)(sec.get(option).c_str()));
+					return Conversion::Utf8ToUtf16(sec.get(option).c_str());
 			}
 
 			return def;

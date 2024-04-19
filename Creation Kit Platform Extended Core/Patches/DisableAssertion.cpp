@@ -57,11 +57,11 @@ namespace CreationKitPlatformExtended
 				//
 				// Remove assertion message boxes
 				//
-				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(0), 5);
+				lpRelocator->PatchNop(_RELDATA_RAV(0), 5);
 				if (verPatch == 2)
 				{
 					for (uint32_t i = 1; i < lpRelocationDatabaseItem->Count(); i++)
-						lpRelocator->PatchNop(lpRelocationDatabaseItem->At(i), 5);
+						lpRelocator->PatchNop(_RELDATA_RAV(i), 5);
 				}
 
 				return true;

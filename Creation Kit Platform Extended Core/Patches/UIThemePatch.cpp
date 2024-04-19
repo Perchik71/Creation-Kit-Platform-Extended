@@ -321,10 +321,10 @@ namespace CreationKitPlatformExtended
 				else
 					UITheme::SetTheme(UITheme::Theme(Id + 3));
 
-				Detours::IATHook(comDll, "USER32.dll", "GetSysColor", (uintptr_t)&Comctl32GetSysColor);
-				Detours::IATHook(comDll, "USER32.dll", "GetSysColorBrush", (uintptr_t)&Comctl32GetSysColorBrush);
-				Detours::IATDelayedHook(comDll, "UxTheme.dll", "DrawThemeBackground", (uintptr_t)&Comctl32DrawThemeBackground);
-				Detours::IATDelayedHook(comDll, "UxTheme.dll", "DrawThemeText", (uintptr_t)&Comctl32DrawThemeText);
+				voltek::detours_patch_iat(comDll, "USER32.dll", "GetSysColor", (uintptr_t)&Comctl32GetSysColor);
+				voltek::detours_patch_iat(comDll, "USER32.dll", "GetSysColorBrush", (uintptr_t)&Comctl32GetSysColorBrush);
+				voltek::detours_patch_iat_delayed(comDll, "UxTheme.dll", "DrawThemeBackground", (uintptr_t)&Comctl32DrawThemeBackground);
+				voltek::detours_patch_iat_delayed(comDll, "UxTheme.dll", "DrawThemeText", (uintptr_t)&Comctl32DrawThemeText);
 
 				g_brItemBackground = UITheme::Comctl32GetSysColorBrush(COLOR_BTNFACE);
 				g_brItemBackgroundHot = CreateSolidBrush(UITheme::GetThemeSysColor(UITheme::ThemeColor_Button_Hot_Gradient_End));

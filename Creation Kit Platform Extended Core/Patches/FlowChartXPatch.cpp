@@ -57,7 +57,7 @@ namespace CreationKitPlatformExtended
 				// FlowChartX needs to be registered as a COM server dll (DllRegisterServer), 
 				// but it never tells you that administrator permissions are required.
 				//
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0), (uintptr_t)&sub_unknown);
+				lpRelocator->DetourCall(_RELDATA_RAV(0), (uintptr_t)&sub_unknown);
 
 				return true;
 			}
@@ -68,7 +68,7 @@ namespace CreationKitPlatformExtended
 				// Okay...
 				//
 
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0), (uintptr_t)&HKCoGetClassObject);
+				lpRelocator->DetourCall(_RELDATA_RAV(0), (uintptr_t)&HKCoGetClassObject);
 
 				return true;
 			}

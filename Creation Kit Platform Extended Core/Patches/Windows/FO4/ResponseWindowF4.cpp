@@ -98,7 +98,7 @@ namespace CreationKitPlatformExtended
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
 					*(uintptr_t*)&_oldWndProc =
-						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)),
+						voltek::detours_function_class_jump(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)),
 							(uintptr_t)&HKWndProc);
 
 					pointer_ResponseWindow_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
@@ -315,11 +315,11 @@ namespace CreationKitPlatformExtended
 				si.wShowWindow = Hide ? SW_HIDE : SW_SHOW;
 
 				int argc = 0;
-				auto ArgsCmdLine = CommandLineToArgvW(Utils::Utf82Wide((const char8_t*)CmdLine).c_str(), &argc);
+				auto ArgsCmdLine = CommandLineToArgvW(Conversion::Utf8ToUtf16(CmdLine).c_str(), &argc);
 				if (argc < 1)
 					return false;
 
-				auto ParentPath = BSString::Utils::ExtractFilePath(Utils::Wide2Utf8(ArgsCmdLine[0]).c_str());
+				auto ParentPath = BSString::Utils::ExtractFilePath(Conversion::Utf16ToUtf8(ArgsCmdLine[0]).c_str());
 
 				if (!CreateProcessA(
 					NULL,

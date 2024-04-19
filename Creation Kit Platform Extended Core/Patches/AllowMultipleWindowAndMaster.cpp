@@ -58,11 +58,11 @@ namespace CreationKitPlatformExtended
 				ScopeRelocator text;
 
 				if (verPatch == 1)
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xE9, 0xBA, 0x00, 0x00, 0x00, 0x90 });
+					lpRelocator->Patch(_RELDATA_RAV(0), { 0xE9, 0xBA, 0x00, 0x00, 0x00, 0x90 });
 				else
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xE9, 0xDE, 0x00, 0x00, 0x00, 0x90 });
+					lpRelocator->Patch(_RELDATA_RAV(0), { 0xE9, 0xDE, 0x00, 0x00, 0x00, 0x90 });
 			
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0xEB });
+				lpRelocator->Patch(_RELDATA_RAV(1), { 0xEB });
 
 				return true;
 			}

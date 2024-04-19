@@ -54,7 +54,7 @@ namespace CreationKitPlatformExtended
 
 		void DebugLog::Open(const char* path)
 		{
-			Open(Utils::Ansi2Wide(path).c_str());
+			Open(Conversion::AnsiToUtf16(path).c_str());
 		}
 
 		void DebugLog::Open(const wchar_t* path)
@@ -76,7 +76,7 @@ namespace CreationKitPlatformExtended
 
 		void DebugLog::OpenRelative(int folderID, const char* relPath)
 		{
-			OpenRelative(folderID, Utils::Ansi2Wide(relPath).c_str());
+			OpenRelative(folderID, Conversion::AnsiToUtf16(relPath).c_str());
 		}
 
 		void DebugLog::OpenRelative(int folderID, const wchar_t* relPath)
@@ -211,7 +211,7 @@ namespace CreationKitPlatformExtended
 		{
 			if (!_handleFile || !buf) return;
 
-			fputs(Utils::Wide2Utf8(buf).c_str(), _handleFile);
+			fputs(Conversion::Utf16ToUtf8(buf).c_str(), _handleFile);
 			AutoFlush();
 		}
 

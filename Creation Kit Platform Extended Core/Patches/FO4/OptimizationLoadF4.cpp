@@ -98,7 +98,7 @@ namespace CreationKitPlatformExtended
 						EditorAPI::Fallout4::pointer_BSFile_sub = lpRelocator->Rav2Off(rva);
 						// 2 kb -> x kb >= 256 kb
 						*(uintptr_t*)&EditorAPI::Fallout4::BSFile::ICreateInstance =
-							Detours::X64::DetourFunctionClass(EditorAPI::Fallout4::pointer_BSFile_sub,
+							voltek::detours_function_class_jump(EditorAPI::Fallout4::pointer_BSFile_sub,
 								(uintptr_t)&EditorAPI::Fallout4::BSFile::HKCreateInstance);
 						// 2 kb -> 256 kb
 						lpRelocator->Patch(lpRelocationDatabaseItem->At(13), { 0x41, 0xB9, 0x00, 0x00, 0x04, 0x00, 0x90 });
@@ -123,20 +123,20 @@ namespace CreationKitPlatformExtended
 
 						auto Sec = _engine->GetSection(Core::SECTION_TEXT);
 
-						Array<uintptr_t>::iterator match;
-						Array<uintptr_t> matches = Utils::FindPatterns(Sec.base, Sec.end - Sec.base,
+						std::vector<uintptr_t>::iterator match;
+						std::vector<uintptr_t> matches = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
 							"48 83 C5 08 41 3B FE 72 9F 48 8B 6C 24 50 8B C3 48 8B 5C 24 58 48 8B 74"
 							" 24 60 48 83 C4 30 41 5F 41 5E 5F C3 8B C3 EB E8");
 
 						std::for_each(match = matches.begin(), matches.end(), [&count](auto it) 
-							{ Utils::DetourJump(it - 0x8A, (uintptr_t)&HKSearchIndex64); count++; });
+							{ voltek::detours_jump(it - 0x8A, (uintptr_t)&HKSearchIndex64); count++; });
 
-						matches = Utils::FindPatterns(Sec.base, Sec.end - Sec.base,
+						matches = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
 							"48 83 C5 08 41 3B FE 72 9F 48 8B 6C 24 58 48 8B 74 24 60 8B C3 48 8B 5C"
 							" 24 50 48 83 C4 30 41 5F 41 5E 5F C3");
 
 						std::for_each(match = matches.begin(), matches.end(), [&count](auto it)
-							{ Utils::DetourJump(it - 0x8D, (uintptr_t)&HKSearchIndexOffset64); count++; });
+							{ voltek::detours_jump(it - 0x8D, (uintptr_t)&HKSearchIndexOffset64); count++; });
 
 						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5), (uintptr_t)&HKSearchIndex32);
 						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6), (uintptr_t)&HKSearchIndex32);

@@ -14,17 +14,7 @@ namespace CreationKitPlatformExtended
 	{
 		void __Assert(LPCSTR File, int Line, LPCSTR Format, ...);
 		void __Assert(LPCWSTR File, int Line, LPCWSTR Format, ...);
-		uintptr_t FindPattern(uintptr_t StartAddress, uintptr_t MaxSize, const char* Mask);
-		Array<uintptr_t> FindPatterns(uintptr_t StartAddress, uintptr_t MaxSize, const char* Mask);
-		bool GetPESectionRange(uintptr_t ModuleBase, const char* Section, uintptr_t* Start, uintptr_t* End);
-		void PatchMemory(uintptr_t Address, uint8_t* Data, size_t Size);
-		void PatchMemory(uintptr_t Address, std::initializer_list<uint8_t> Data);
-		void PatchMemoryNop(uintptr_t Address, size_t Size);
-		void PatchMemoryWP(uintptr_t Address, uint8_t* Data, size_t Size);
-		void PatchMemoryWP(uintptr_t Address, std::initializer_list<uint8_t> Data);
-		void PatchMemoryNopWP(uintptr_t Address, size_t Size);
-		DWORD UnlockWP(uintptr_t Address, size_t Size);
-		void LockWP(uintptr_t Address, size_t Size, DWORD OldFlags);
+		
 		void SetThreadName(uint32_t ThreadID, LPCSTR ThreadName);
 
 		uint64_t GetTotalPhysicalMemory();
@@ -33,15 +23,6 @@ namespace CreationKitPlatformExtended
 		uint64_t GetAvailableTotalPageFileMemory();
 
 		void Quit();
-
-		inline void DetourJump(uintptr_t Target, uintptr_t Destination) {
-			Detours::X64::DetourFunction(Target, Destination, Detours::X64Option::USE_REL32_JUMP);
-		}
-
-		inline void DetourCall(uintptr_t Target, uintptr_t Destination) {
-			Detours::X64::DetourFunction(Target, Destination, Detours::X64Option::USE_REL32_CALL);
-		}
-
 		char* StrDub(const char* s);
 	}
 
@@ -78,6 +59,7 @@ namespace CreationKitPlatformExtended
 		static_assert(Offset <= RequiredOffset, "Offset is larger than expected");
 		static_assert(Offset >= RequiredOffset, "Offset is smaller than expected");
 	};
+
 }
 
 #ifdef _UNICODE
@@ -97,7 +79,7 @@ namespace CreationKitPlatformExtended
 #define AssertMsg(Cond, Msg)			AssertMsgVa(Cond, Msg)
 
 #define static_assert_offset(Structure, Member, Offset) struct __declspec(empty_bases) : CreationKitPlatformExtended::CheckOffset<offsetof(Structure, Member), Offset> { }
-#define PatchIAT(detour, module, procname) Detours::IATHook(GlobalEnginePtr->GetModuleBase(), (module), (procname), (uintptr_t)(detour));
+#define PatchIAT(detour, module, procname) voltek::detours_patch_iat(GlobalEnginePtr->GetModuleBase(), (module), (procname), (uintptr_t)(detour));
 
 #define DECLARE_CONSTRUCTOR_HOOK(Class) \
 	static Class *__ctor__(void *Instance) \

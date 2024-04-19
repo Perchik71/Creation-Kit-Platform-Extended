@@ -156,7 +156,7 @@ namespace CreationKitPlatformExtended
 			void ReplaceBSPointerHandleAndManagerPatch::IncRefPatch()
 			{
 				auto Sec = GlobalEnginePtr->GetSection(SECTION_TEXT);
-				auto SignIncRef = Utils::FindPatterns(Sec.base, Sec.end - Sec.base,
+				auto SignIncRef = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
 					"4C 8D 05 ? ? ? ? 48 8D 0D ? ? ? ? BA 3B 00 00 00 E8");
 				size_t patched = 0, need_p = 0;
 				uint8_t szbuff[64];
@@ -217,7 +217,7 @@ namespace CreationKitPlatformExtended
 
 				auto refmask = (DWORD)EditorAPI::BSHandleRefObject_64_Extremly::REF_COUNT_MASK;
 				auto Sec = GlobalEnginePtr->GetSection(SECTION_TEXT);
-				auto SignDecRef = Utils::FindPatterns(Sec.base, Sec.end - Sec.base, "83 ? FF F0 0F ? ? ? FF ? ? FF 03 00 00");
+				auto SignDecRef = voltek::find_patterns(Sec.base, Sec.end - Sec.base, "83 ? FF F0 0F ? ? ? FF ? ? FF 03 00 00");
 
 				for (auto sign : SignDecRef)
 				{
@@ -282,7 +282,7 @@ namespace CreationKitPlatformExtended
 					}
 				}
 
-				SignDecRef = Utils::FindPatterns(Sec.base, Sec.end - Sec.base, "83 ? FF F0 0F ? ? ? FF ? F7 ? FF 03 00 00");
+				SignDecRef = voltek::find_patterns(Sec.base, Sec.end - Sec.base, "83 ? FF F0 0F ? ? ? FF ? F7 ? FF 03 00 00");
 
 				for (auto sign : SignDecRef)
 				{
@@ -332,7 +332,7 @@ namespace CreationKitPlatformExtended
 					}
 				}
 
-				SignDecRef = Utils::FindPatterns(Sec.base, Sec.end - Sec.base, "83 ? FF F0 ? 0F ? ? ? FF ? ? FF 03 00 00");
+				SignDecRef = voltek::find_patterns(Sec.base, Sec.end - Sec.base, "83 ? FF F0 ? 0F ? ? ? FF ? ? FF 03 00 00");
 
 				for (auto sign : SignDecRef)
 				{
@@ -366,7 +366,7 @@ namespace CreationKitPlatformExtended
 					}
 				}
 
-				SignDecRef = Utils::FindPatterns(Sec.base, Sec.end - Sec.base, "8B ? F0 0F ? ? ? FF ? ? FF 03 00 00");
+				SignDecRef = voltek::find_patterns(Sec.base, Sec.end - Sec.base, "8B ? F0 0F ? ? ? FF ? ? FF 03 00 00");
 
 				// or r??, FF
 				// lock xadd qword ptr ss:[r??+38], r??
@@ -452,7 +452,7 @@ namespace CreationKitPlatformExtended
 					}
 				}
 
-				SignDecRef = Utils::FindPatterns(Sec.base, Sec.end - Sec.base, "41 8B ? F0 ? 0F ? ? ? FF ? ? FF 03 00 00");
+				SignDecRef = voltek::find_patterns(Sec.base, Sec.end - Sec.base, "41 8B ? F0 ? 0F ? ? ? FF ? ? FF 03 00 00");
 
 				for (auto sign : SignDecRef)
 				{
@@ -498,7 +498,7 @@ namespace CreationKitPlatformExtended
 					}
 				}
 
-				SignDecRef = Utils::FindPatterns(Sec.base, Sec.end - Sec.base, "F0 ? 0F ? ? ? 41 FF ? 41 F7 ? FF 03 00 00");
+				SignDecRef = voltek::find_patterns(Sec.base, Sec.end - Sec.base, "F0 ? 0F ? ? ? 41 FF ? 41 F7 ? FF 03 00 00");
 
 				// or r??, FF
 				// lock xadd qword ptr ss:[r??+38], r??
@@ -555,7 +555,7 @@ namespace CreationKitPlatformExtended
 					}
 				}
 
-				SignDecRef = Utils::FindPatterns(Sec.base, Sec.end - Sec.base, "F0 0F ? ? ? FF ? F7 ? FF 03 00 00");
+				SignDecRef = voltek::find_patterns(Sec.base, Sec.end - Sec.base, "F0 0F ? ? ? FF ? F7 ? FF 03 00 00");
 
 				for (auto sign : SignDecRef)
 				{
@@ -601,7 +601,7 @@ namespace CreationKitPlatformExtended
 					}
 				}
 
-				SignDecRef = Utils::FindPatterns(Sec.base, Sec.end - Sec.base, "8B ? F0 ? 0F ? ? ? FF ? ? FF 03 00 00");
+				SignDecRef = voltek::find_patterns(Sec.base, Sec.end - Sec.base, "8B ? F0 ? 0F ? ? ? FF ? ? FF 03 00 00");
 
 				for (auto sign : SignDecRef)
 				{

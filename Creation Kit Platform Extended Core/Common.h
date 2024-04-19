@@ -67,18 +67,20 @@
 
 #include <concurrent_vector.h>
 #include <concurrent_unordered_map.h>
-#include <detours/Detours.h>
+
+// VoltekLib
+#include <Voltek.Detours.h>
+#include <Voltek.MemoryManager.h>
+
 #include <xbyak.h>
 #include <jdialogs.h>
 
 #include "Crc32.h"
 #include "ini.h"
 #include "zip.h"
-#include "vmm.h"
 
 #include "Types.h"
 #include "Utils.h"
-#include "UtfStr.h"
 
 #include "Core/CoreCommon.h"
 #include "Core/DebugLog.h"

@@ -78,13 +78,13 @@ namespace CreationKitPlatformExtended
 					// 
 					// modify in 1.6.438:
 					//
-					pointer_PickGetRecord_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
+					pointer_PickGetRecord_sub = _RELDATA_ADDR(0);
 
 					if (verPatch == 2)
-						Detours::X64::DetourClassVTable(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1)),
+						voltek::detours_function_class_vtable(_RELDATA_ADDR(1),
 							&BSShaderResourceManager_CK::FindIntersectionsTriShapeFastPathEx, 34);
 					else
-						Detours::X64::DetourClassVTable(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1)),
+						voltek::detours_function_class_vtable(_RELDATA_ADDR(1),
 							&BSShaderResourceManager_CK::FindIntersectionsTriShapeFastPath, 34);
 
 					return true;

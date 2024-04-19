@@ -57,11 +57,11 @@ namespace CreationKitPlatformExtended
 				//
 				// Force render window to draw at 60fps (SetTimer(10ms))
 				//
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { USER_TIMER_MINIMUM });
+				lpRelocator->Patch(_RELDATA_RAV(0), { USER_TIMER_MINIMUM });
 
 				if (verPatch == 2)
 					// no VSync
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0x33, 0xD2, 0x90 });
+					lpRelocator->Patch(_RELDATA_RAV(1), { 0x33, 0xD2, 0x90 });
 
 				return true;
 			} 

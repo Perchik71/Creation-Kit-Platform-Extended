@@ -112,7 +112,7 @@ namespace CreationKitPlatformExtended
 							auto destination = Target + *(int32_t*)(Target + 1) + 5;
 							auto hook = new FormIteratorHook(destination);
 
-							Utils::DetourJump(Target, (uintptr_t)hook->getCode());
+							voltek::detours_jump(Target, (uintptr_t)hook->getCode());
 						}
 					};
 

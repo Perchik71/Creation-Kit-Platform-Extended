@@ -65,7 +65,7 @@ For understanding, the application uses the ancient **`ANSI`** type string repre
 > In **`Win10`**, in the language settings, there is now an option to work with **`UTF-8`**, you need to turn it off otherwise there will be only **`?`**.
 
 # Dependencies
-[detours](https://github.com/Nukem9/detours.git) URL **https://github.com/Nukem9/detours.git** IN **Dependencies/detours**  
+[VoltekLib](https://github.com/Perchik71/VoltekLib.git) URL **https://github.com/Perchik71/VoltekLib.git** IN **Dependencies/Voltek**  
 [mINI](https://github.com/Perchik71/mINI.git) URL **https://github.com/Perchik71/mINI.git** IN **Dependencies/mINI**  
 [Zydis](https://github.com/zyantific/zydis.git) URL **https://github.com/zyantific/zydis.git** IN **Dependencies/zydis**  
 [zipper](https://github.com/kuba--/zip.git) URL **https://github.com/kuba--/zip.git** IN **Dependencies/zipper**  
@@ -75,7 +75,7 @@ For understanding, the application uses the ancient **`ANSI`** type string repre
 
 # Compilation
 Open a project in **`Visual Studio 2019`** or later. Build the project in **`Release`** mode.  
-Compile the Unicode Plugin to **`Lazarus 1.8.2`** or later. Take .dll's from the **`x64`** folder and move it to the folder with the game. 
+Take .dll's from the **`x64`** folder also take all **`VoltekLib.XXXX.dll`**, from the **`x64/Release`** and move it to the folder with the game. 
 Take the database **`CreationKitPlatformExtended_<GAME>_1_X_XXXX.database`** from the folder **`Database/<GAME>/1_X_XXXX/`**. 
 You will also need **`Stuffs/<GAME>/CreationKitPlatformExtendedMessagesBlacklist.txt`** and **`Stuffs/<GAME>/CreationKitPlatformExtended.ini`** to the game folder. 
 Move the dialog package **`Dialogs/<GAME>/CreationKitPlatformExtended_<GAME>_Dialogs.pak`** to the root folder of the game.  
@@ -86,6 +86,4 @@ Move the dialog package **`Dialogs/<GAME>/CreationKitPlatformExtended_<GAME>_Dia
 
 # License
 **GPLv3**: <a>https://www.gnu.org/licenses/gpl-3.0.html</a>. <br />
-Copyright © 2023-2024 aka perchik71. All rights reserved. <br />
-The memory manager is licensed under **LGPLv3**: <a>https://www.gnu.org/licenses/lgpl-3.0.html</a>. <br />
-Copyright © 2023-2024 aka perchik71. All rights reserved.
+Copyright © 2023-2024 aka perchik71. All rights reserved. 

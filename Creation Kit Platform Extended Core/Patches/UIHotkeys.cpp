@@ -123,16 +123,16 @@ namespace CreationKitPlatformExtended
 			auto verPatch = lpRelocationDatabaseItem->Version();
 			if (verPatch == 1)
 			{
-				Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), &sub);
-				pointer_UIHotkeys_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
+				voltek::detours_function_class_jump(_RELDATA_ADDR(0), &sub);
+				pointer_UIHotkeys_sub = _RELDATA_ADDR(1);
 
 				return true;
 			}
 			else if (verPatch == 2)
 			{
-				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(0), 0x19);
-				Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1)), &sub_ver2);
-				pointer_UIHotkeys_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2));
+				lpRelocator->PatchNop(_RELDATA_RAV(0), 0x19);
+				voltek::detours_function_class_jump(_RELDATA_ADDR(1), &sub_ver2);
+				pointer_UIHotkeys_sub = _RELDATA_ADDR(2);
 
 				return true;
 			}

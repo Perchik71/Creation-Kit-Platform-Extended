@@ -71,47 +71,47 @@ namespace CreationKitPlatformExtended
 					// Disable automatic FaceGen on save
 					if (_READ_OPTION_BOOL("FaceGen", "bDisableAutoFaceGen", false))
 					{
-						lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xC3 });
+						lpRelocator->Patch(_RELDATA_RAV(0), { 0xC3 });
 						_MESSAGE("Disabling automatic calling FaceGen");
 					}
 
 					// Don't produce DDS files
 					if (_READ_OPTION_BOOL("FaceGen", "bDisableExportDDS", false))
 					{
-						lpRelocator->PatchNop(lpRelocationDatabaseItem->At(1), 5);
+						lpRelocator->PatchNop(_RELDATA_RAV(1), 5);
 						_MESSAGE("Disabling export FaceGen .DDS files");
 					}
 
 					// Don't produce TGA files
 					if (_READ_OPTION_BOOL("FaceGen", "bDisableExportTGA", false))
 					{
-						lpRelocator->PatchNop(lpRelocationDatabaseItem->At(2), 5);
+						lpRelocator->PatchNop(_RELDATA_RAV(2), 5);
 						_MESSAGE("Disabling export FaceGen .TGA files");
 					}
 
 					// Don't produce NIF files
 					if (_READ_OPTION_BOOL("FaceGen", "bDisableExportNIF", false))
 					{
-						lpRelocator->Patch(lpRelocationDatabaseItem->At(3), { 0xC3 });
+						lpRelocator->Patch(_RELDATA_RAV(3), { 0xC3 });
 						_MESSAGE("Disabling export FaceGen .NIF files");
 					}
 
 					// Allow variable tint mask resolution
 					uint32_t tintResolution = _READ_OPTION_UINT("FaceGen", "uTintMaskResolution", 512);
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(4), (uint8_t*)&tintResolution, sizeof(uint32_t));
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(5), (uint8_t*)&tintResolution, sizeof(uint32_t));
+					lpRelocator->Patch(_RELDATA_RAV(4), (uint8_t*)&tintResolution, sizeof(uint32_t));
+					lpRelocator->Patch(_RELDATA_RAV(5), (uint8_t*)&tintResolution, sizeof(uint32_t));
 				}
 
 				// Prevent internal filesystem reloads when exporting FaceGen for many NPCs
-				lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6), (uintptr_t)&sub);
-				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(7), 5);
+				lpRelocator->DetourJump(_RELDATA_RAV(6), (uintptr_t)&sub);
+				lpRelocator->PatchNop(_RELDATA_RAV(7), 5);
 
-				pointer_FaceGen_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(8));
-				pointer_FaceGen_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(9));
-				pointer_FaceGen_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(10));
-				pointer_FaceGen_sub3 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(11));
-				pointer_FaceGen_sub4 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(12));
-				pointer_FaceGen_sub5 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(13));
+				pointer_FaceGen_data = _RELDATA_ADDR(8);
+				pointer_FaceGen_sub1 = _RELDATA_ADDR(9);
+				pointer_FaceGen_sub2 = _RELDATA_ADDR(10);
+				pointer_FaceGen_sub3 = _RELDATA_ADDR(11);
+				pointer_FaceGen_sub4 = _RELDATA_ADDR(12);
+				pointer_FaceGen_sub5 = _RELDATA_ADDR(13);
 				
 				return true;
 			}
@@ -121,32 +121,32 @@ namespace CreationKitPlatformExtended
 
 				// Don't produce DDS files
 				if (_READ_OPTION_BOOL("FaceGen", "bDisableExportDDS", false)) {
-					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(0), 5);
-					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(1), 5);
-					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(2), 5);
-					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(3), 5);
-					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(4), 5);
-					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(5), 5);
+					lpRelocator->PatchNop(_RELDATA_RAV(0), 5);
+					lpRelocator->PatchNop(_RELDATA_RAV(1), 5);
+					lpRelocator->PatchNop(_RELDATA_RAV(2), 5);
+					lpRelocator->PatchNop(_RELDATA_RAV(3), 5);
+					lpRelocator->PatchNop(_RELDATA_RAV(4), 5);
+					lpRelocator->PatchNop(_RELDATA_RAV(5), 5);
 				}
 
 				// Don't produce TGA files
 				if (_READ_OPTION_BOOL("FaceGen", "bDisableExportTGA", false)) {
-					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(6), 5);
-					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(7), 5);
-					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(8), 5);
-					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(9), 5);
-					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(10), 5);
-					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(11), 5);
+					lpRelocator->PatchNop(_RELDATA_RAV(6), 5);
+					lpRelocator->PatchNop(_RELDATA_RAV(7), 5);
+					lpRelocator->PatchNop(_RELDATA_RAV(8), 5);
+					lpRelocator->PatchNop(_RELDATA_RAV(9), 5);
+					lpRelocator->PatchNop(_RELDATA_RAV(10), 5);
+					lpRelocator->PatchNop(_RELDATA_RAV(11), 5);
 				}
 
 				// Don't produce NIF files
 				if (_READ_OPTION_BOOL("FaceGen", "bDisableExportNIF", false))
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(12), { 0xC3 });
+					lpRelocator->Patch(_RELDATA_RAV(12), { 0xC3 });
 
 				// Allow variable tint mask resolution
 				uint32_t tintResolution = _READ_OPTION_UINT("FaceGen", "uTintMaskResolution", 1024);
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(13), (uint8_t*)&tintResolution, sizeof(uint32_t));
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(14), (uint8_t*)&tintResolution, sizeof(uint32_t));
+				lpRelocator->Patch(_RELDATA_RAV(13), (uint8_t*)&tintResolution, sizeof(uint32_t));
+				lpRelocator->Patch(_RELDATA_RAV(14), (uint8_t*)&tintResolution, sizeof(uint32_t));
 
 				return true;
 			}

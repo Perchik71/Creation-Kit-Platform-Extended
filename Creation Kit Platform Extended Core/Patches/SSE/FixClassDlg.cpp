@@ -61,9 +61,8 @@ namespace CreationKitPlatformExtended
 					// Fix for the "Class" edit dialog not filling in the "Training" checkbox.
 					// Also hide the unused "Recharge" option.
 					//
-					Detours::X64::DetourClassVTable(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), 
-						&sub, 86);
-					pointer_FixClassDlg_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
+					voltek::detours_function_class_vtable(_RELDATA_ADDR(0), &sub, 86);
+					pointer_FixClassDlg_sub = _RELDATA_ADDR(1);
 
 					return true;
 				}

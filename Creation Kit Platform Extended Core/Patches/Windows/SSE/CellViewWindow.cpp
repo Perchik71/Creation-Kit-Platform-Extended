@@ -75,21 +75,19 @@ namespace CreationKitPlatformExtended
 			{
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
-					*(uintptr_t*)&_oldWndProc =
-						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), &HKWndProc);
-					//pointer_CellViewWindow_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
+					*(uintptr_t*)&_oldWndProc = voltek::detours_function_class_jump(_RELDATA_ADDR(0), &HKWndProc);
 
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&sub1); // Allow forms to be filtered in EditorUI_CellViewProc
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(3), (uintptr_t)&sub1); // ^
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(4), (uintptr_t)&sub2); // ^
+					lpRelocator->DetourCall(_RELDATA_RAV(2), (uintptr_t)&sub1); // Allow forms to be filtered in EditorUI_CellViewProc
+					lpRelocator->DetourCall(_RELDATA_RAV(3), (uintptr_t)&sub1); // ^
+					lpRelocator->DetourCall(_RELDATA_RAV(4), (uintptr_t)&sub2); // ^
 
-					pointer_CellViewWindow_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(5));
-					pointer_CellViewWindow_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(6));
+					pointer_CellViewWindow_sub1 = _RELDATA_ADDR(5);
+					pointer_CellViewWindow_sub2 = _RELDATA_ADDR(6);
 
 					// Hook event add/rem from pick
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(7), (uintptr_t)&sub3);
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(9), (uintptr_t)&sub3);
-					pointer_CellViewWindow_sub3 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(8));
+					lpRelocator->DetourCall(_RELDATA_RAV(7), (uintptr_t)&sub3);
+					lpRelocator->DetourCall(_RELDATA_RAV(9), (uintptr_t)&sub3);
+					pointer_CellViewWindow_sub3 = _RELDATA_ADDR(8);
 
 					return true;
 				}

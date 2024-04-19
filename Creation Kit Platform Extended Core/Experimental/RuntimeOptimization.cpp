@@ -163,7 +163,7 @@ namespace CreationKitPlatformExtended
 			//     sub_140C00D30((__int64)&unk_141ED6800, &dword_141ED6C88);
 			//
 			auto Sec = Core::GlobalEnginePtr->GetSection(Core::SECTION_TEXT);
-			auto matches = Utils::FindPatterns(Sec.base, Sec.end - Sec.base,
+			auto matches = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
 				"83 3D ? ? ? ? 02 74 13 48 8D 15 ? ? ? ? 48 8D 0D ? ? ? ? E8");
 
 			for (uintptr_t match : matches)
@@ -187,7 +187,7 @@ namespace CreationKitPlatformExtended
 				" 0F B6 04 24 48 83 C4 18 C3";
 
 			auto Sec = Core::GlobalEnginePtr->GetSection(Core::SECTION_TEXT);
-			auto matches = Utils::FindPatterns(Sec.base, Sec.end - Sec.base, pattern);
+			auto matches = voltek::find_patterns(Sec.base, Sec.end - Sec.base, pattern);
 
 			for (uintptr_t match : matches)
 			{
@@ -214,7 +214,7 @@ namespace CreationKitPlatformExtended
 			const char* pattern = "E8 ? ? ? ? 48 89 44 24 30 48 8B 44 24 30 48 89 44 24 38 48 8B 54 24 38 48 8D 4C 24 28";
 
 			auto Sec = Core::GlobalEnginePtr->GetSection(Core::SECTION_TEXT);
-			auto matches = Utils::FindPatterns(Sec.base, Sec.end - Sec.base, pattern);
+			auto matches = voltek::find_patterns(Sec.base, Sec.end - Sec.base, pattern);
 
 			for (uintptr_t addr : matches)
 			{
@@ -226,11 +226,11 @@ namespace CreationKitPlatformExtended
 					continue;
 
 				// Now look for the matching destructor call
-				uintptr_t end = Utils::FindPattern(addr, std::min<uintptr_t>(Sec.end - addr, 512), 
+				uintptr_t end = voltek::find_pattern(addr, std::min<uintptr_t>(Sec.end - addr, 512),
 					"E8 ? ? ? ? 0F B6 ? ? ? 48 81 C4 ? ? ? ? C3"); // sub_140FF81CE, movzx return
 
 				if (!end)
-					end = Utils::FindPattern(addr, std::min<uintptr_t>(Sec.end - addr, 512), 
+					end = voltek::find_pattern(addr, std::min<uintptr_t>(Sec.end - addr, 512), 
 						"E8 ? ? ? ? 48 81 C4 ? ? ? ? C3"); // sub_140FF81CE
 
 				if (!end)
@@ -242,8 +242,8 @@ namespace CreationKitPlatformExtended
 					(addr == Core::GlobalRelocatorPtr->Rav2Off(patch->At(4))))
 					continue;
 
-				Utils::DetourCall(addr, (uintptr_t)&EditorAPI::EditorUI::HKBeginUIDefer);
-				Utils::DetourCall(end, (uintptr_t)&EditorAPI::EditorUI::HKEndUIDefer);
+				voltek::detours_call(addr, (uintptr_t)&EditorAPI::EditorUI::HKBeginUIDefer);
+				voltek::detours_call(end, (uintptr_t)&EditorAPI::EditorUI::HKEndUIDefer);
 
 				patchCount += 2;
 			}

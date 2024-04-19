@@ -58,8 +58,7 @@ namespace CreationKitPlatformExtended
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
 					*(uintptr_t*)&pointer_SortCrashCombinedPatch_sub =
-						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)),
-							&sub);
+						voltek::detours_function_class_jump(_RELDATA_ADDR(0), &sub);
 
 					return true;
 				}

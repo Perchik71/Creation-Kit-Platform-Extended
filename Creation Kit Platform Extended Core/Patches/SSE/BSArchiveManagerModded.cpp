@@ -188,17 +188,16 @@ namespace CreationKitPlatformExtended
 					// BSArchiveManager
 					//
 
-					BSResourceArchive::OldLoadArchive = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
+					BSResourceArchive::OldLoadArchive = _RELDATA_ADDR(0);
 					*(uintptr_t*)&BSResourceArchive::OldLooseLoadArchive =
-						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1)),
-							&BSResourceArchive::HKLooseLoadArchive);
+						voltek::detours_function_class_jump(_RELDATA_ADDR(1), &BSResourceArchive::HKLooseLoadArchive);
 
 					BSResourceArchive::Initialize();
 
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&LoadTesFile);
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3), (uintptr_t)&LoadTesFileFinal);
+					lpRelocator->DetourCall(_RELDATA_RAV(2), (uintptr_t)&LoadTesFile);
+					lpRelocator->DetourJump(_RELDATA_RAV(3), (uintptr_t)&LoadTesFileFinal);
 
-					pointer_BSArchiveManagerModded_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(4));
+					pointer_BSArchiveManagerModded_sub = _RELDATA_ADDR(4);
 
 					return true;
 				}

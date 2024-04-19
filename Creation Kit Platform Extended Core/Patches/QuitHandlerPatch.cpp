@@ -54,7 +54,7 @@ namespace CreationKitPlatformExtended
 			if (lpRelocationDatabaseItem->Version() == 1)
 			{
 				for (uint32_t nId = 0; nId < lpRelocationDatabaseItem->Count(); nId++)
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(nId),
+					lpRelocator->DetourCall(_RELDATA_RAV(nId),
 						(uintptr_t)&CreationKitPlatformExtended::Utils::Quit);
 
 				return true;

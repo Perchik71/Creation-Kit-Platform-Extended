@@ -29,7 +29,7 @@ namespace CreationKitPlatformExtended
 
 		bool DynamicCast::Dump(const char* FileName) const
 		{
-			FILE* fileStream = _wfsopen(Utils::Utf82Wide((char8_t*)FileName).c_str(), L"wt", _SH_DENYRW);
+			FILE* fileStream = _wfsopen(Conversion::Utf8ToUtf16(FileName).c_str(), L"wt", _SH_DENYRW);
 			if (fileStream)
 			{
 				Utils::ScopeFileStream file(fileStream);

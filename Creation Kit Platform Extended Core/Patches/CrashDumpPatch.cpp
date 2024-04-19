@@ -92,19 +92,19 @@ namespace CreationKitPlatformExtended
 			{
 				ScopeRelocator SectionTextProtectionRemove;
 
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xC3 });	// StackTrace::MemoryTraceWrite
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0xC3 });	// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(2), { 0xC3 });	// SetUnhandledExceptionFilter, Unknown
-				lpRelocator->PatchNop(lpRelocationDatabaseItem->At(3), 6);		// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
+				lpRelocator->Patch(_RELDATA_RAV(0), { 0xC3 });	// StackTrace::MemoryTraceWrite
+				lpRelocator->Patch(_RELDATA_RAV(1), { 0xC3 });	// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
+				lpRelocator->Patch(_RELDATA_RAV(2), { 0xC3 });	// SetUnhandledExceptionFilter, Unknown
+				lpRelocator->PatchNop(_RELDATA_RAV(3), 6);		// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
 
 				return true;
 			}
 			else if (verPatch == 2)
 			{
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xC3 });	// StackTrace::MemoryTraceWrite
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0xC3 });	// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(2), { 0xC3 });	// SetUnhandledExceptionFilter, Unknown
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(3), { 0xC3 });	// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
+				lpRelocator->Patch(_RELDATA_RAV(0), { 0xC3 });	// StackTrace::MemoryTraceWrite
+				lpRelocator->Patch(_RELDATA_RAV(1), { 0xC3 });	// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
+				lpRelocator->Patch(_RELDATA_RAV(2), { 0xC3 });	// SetUnhandledExceptionFilter, Unknown
+				lpRelocator->Patch(_RELDATA_RAV(3), { 0xC3 });	// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
 			
 				return true;
 			}
@@ -188,7 +188,7 @@ namespace CreationKitPlatformExtended
 				filezip = WideString(std::filesystem::path(fileName).stem().c_str());
 				filezip.append(L".zip");
 
-				zip_create(Utils::Wide2Ansi(filezip.c_str()).c_str(), (LPCSTR*)files, 
+				zip_create(Conversion::WideToAnsi(filezip.c_str()).c_str(), (LPCSTR*)files, 
 					Core::GlobalConsoleWindowPtr ? 3 : 2);
 
 				DeleteFileA(files[0]);

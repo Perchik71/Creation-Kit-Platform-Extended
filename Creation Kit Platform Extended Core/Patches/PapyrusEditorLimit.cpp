@@ -54,7 +54,7 @@ namespace CreationKitPlatformExtended
 			if (lpRelocationDatabaseItem->Version() == 1)
 			{
 				// Raise the papyrus script editor text limit to 500k characters from 64k
-				lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0), (uintptr_t)&sub);
+				lpRelocator->DetourCall(_RELDATA_RAV(0), (uintptr_t)&sub);
 
 				return true;
 			}

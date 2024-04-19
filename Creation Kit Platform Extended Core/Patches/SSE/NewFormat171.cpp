@@ -81,10 +81,10 @@ namespace CreationKitPlatformExtended
 					lpRelocator->Patch(lpRelocationDatabaseItem->At(4), { 0x83, 0xC8, 0x01, 0x90 });
 					lpRelocator->Patch(lpRelocationDatabaseItem->At(5), { 0x83, 0xC8, 0x01, 0x90, 0x90 });
 
-					auto addr = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(6));
-					Utils::PatchMemoryNop(addr, 0x34);
-					Utils::PatchMemory(addr - 3, { 0x4C });
-					Utils::DetourCall(addr, (uintptr_t)&sub2);
+					auto addr = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(6));	
+					voltek::detours_patch_memory_nop(addr, 0x34);
+					voltek::detours_patch_memory(addr - 3, { 0x4C });
+					voltek::detours_call(addr, (uintptr_t)&sub2);
 
 					return true;
 				}

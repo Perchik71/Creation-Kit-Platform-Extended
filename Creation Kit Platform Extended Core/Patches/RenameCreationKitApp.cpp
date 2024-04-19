@@ -59,7 +59,7 @@ namespace CreationKitPlatformExtended
 				//
 				char* newWindowClass = new char[250];
 				sprintf_s(newWindowClass, 250, "Creation Kit %s", allowedEditorVersionStr[(int)_versionEditor].data());
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(0), (uint8_t*)&newWindowClass, sizeof(newWindowClass));
+				lpRelocator->Patch(_RELDATA_RAV(0), (uint8_t*)&newWindowClass, sizeof(newWindowClass));
 
 				return true;
 			}

@@ -15,7 +15,7 @@ namespace CreationKitPlatformExtended
 			auto cmdLine = CommandLineToArgvW(lpstrCommandLine, &argc);
 
 			for (int i = 1; i < argc; i++)
-				_aArgs.push_back(Utils::Wide2Utf8(cmdLine[i]));
+				_aArgs.push_back(Conversion::Utf16ToUtf8(cmdLine[i]));
 		}
 
 		CommandLineParser::~CommandLineParser()

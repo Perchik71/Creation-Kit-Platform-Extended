@@ -1,6 +1,3 @@
-[submodule "Dependencies/Detours"]
-	path = Dependencies/Detours
-	url = https://github.com/Nukem9/detours.git
 [submodule "Dependencies/mzip"]
 	path = Dependencies/mzip
 	url = https://github.com/kuba--/zip.git
@@ -13,3 +10,6 @@
 [submodule "Dependencies/jDialogs"]
 	path = Dependencies/jDialogs
 	url = https://github.com/Perchik71/jDialogs.git
+[submodule "Dependencies/Voltek"]
+	path = Dependencies/Voltek
+	url = https://github.com/Perchik71/VoltekLib.git

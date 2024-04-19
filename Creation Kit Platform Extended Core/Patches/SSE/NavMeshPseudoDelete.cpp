@@ -272,22 +272,21 @@ namespace CreationKitPlatformExtended
 			{
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
-					pointer_NavMeshPseudoDelete_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
-					pointer_NavMeshPseudoDelete_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
+					pointer_NavMeshPseudoDelete_sub1 = _RELDATA_ADDR(0);
+					pointer_NavMeshPseudoDelete_sub2 = _RELDATA_ADDR(1);
 
 					*(uintptr_t*)&NavMesh::DeleteTriangle = 
-						Detours::X64::DetourFunctionClass(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2)),
-							&NavMesh::HKDeleteTriangle);
+						voltek::detours_function_class_jump(_RELDATA_ADDR(2), &NavMesh::HKDeleteTriangle);
 
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(3), &BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_DegenerateCheck);
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(4), &BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_DegenerateCheck);
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(5), &BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_DegenerateCheck);
+					lpRelocator->DetourCall(_RELDATA_RAV(3), &BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_DegenerateCheck);
+					lpRelocator->DetourCall(_RELDATA_RAV(4), &BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_DegenerateCheck);
+					lpRelocator->DetourCall(_RELDATA_RAV(5), &BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_DegenerateCheck);
 
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(6), &BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_VertexCheck);
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(7), &BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_VertexCheck);
+					lpRelocator->DetourCall(_RELDATA_RAV(6), &BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_VertexCheck);
+					lpRelocator->DetourCall(_RELDATA_RAV(7), &BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_VertexCheck);
 
 					// Prevent vertices from being deleted separately
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(8), { 0xE9, 0xA1, 0x01, 0x00, 0x00 });
+					lpRelocator->Patch(_RELDATA_RAV(8), { 0xE9, 0xA1, 0x01, 0x00, 0x00 });
 				}
 
 				return false;

@@ -58,7 +58,7 @@ namespace CreationKitPlatformExtended
 				//
 				// Skip 'Topic Info' validation during load
 				//
-				lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xC3 });
+				lpRelocator->Patch(_RELDATA_RAV(0), { 0xC3 });
 
 				return true;
 			}
