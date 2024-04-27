@@ -197,8 +197,9 @@ namespace CreationKitPlatformExtended
 			auto resultErrno = voltek::reldb_open_dev_file_patch(_stm, &patch, filename);
 			if (resultErrno)
 			{
-				_ERROR("The file could not be opened: \"%s\" message \"%s\"",
-					filename,
+				_ERROR("The file could not be opened: \"%s\" message (%i)\"%s\"",
+					filename, 
+					resultErrno,
 					voltek::reldb_get_error_text(resultErrno));
 				return nullptr;
 			}
@@ -209,8 +210,9 @@ namespace CreationKitPlatformExtended
 			resultErrno = voltek::reldb_update_patch(_stm, patch);
 			if (resultErrno)
 			{
-				_ERROR("The patch could not be added or updated: \"%s\" message \"%s\"",
+				_ERROR("The patch could not be added or updated: \"%s\" message (%i)\"%s\"",
 					szBuf,
+					resultErrno,
 					voltek::reldb_get_error_text(resultErrno));
 				return nullptr;
 			}

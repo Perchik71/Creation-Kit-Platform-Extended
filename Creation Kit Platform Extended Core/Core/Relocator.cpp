@@ -22,6 +22,8 @@ namespace CreationKitPlatformExtended
 
 		void Relocator::Patch(uintptr_t rav, uint8_t* bytes, uint32_t size) const
 		{
+			if (!rav) return;
+
 			auto offset = Rav2Off(rav);
 
 			if (IsLock(offset, size))
@@ -32,6 +34,8 @@ namespace CreationKitPlatformExtended
 
 		void Relocator::Patch(uintptr_t rav, std::initializer_list<uint8_t> data) const
 		{
+			if (!rav) return;
+
 			auto offset = Rav2Off(rav);
 
 			if (IsLock(offset, data.size()))
@@ -42,6 +46,8 @@ namespace CreationKitPlatformExtended
 
 		void Relocator::PatchNop(uintptr_t rav, uint32_t size) const
 		{
+			if (!rav) return;
+
 			auto offset = Rav2Off(rav);
 
 			if (IsLock(offset, size))
@@ -52,6 +58,8 @@ namespace CreationKitPlatformExtended
 
 		bool Relocator::DetourJump(uintptr_t rav, uintptr_t function) const
 		{
+			if (!rav) return false;
+
 			auto offset = Rav2Off(rav);
 
 			if (!IsLock(offset, 5))
@@ -64,6 +72,8 @@ namespace CreationKitPlatformExtended
 
 		bool Relocator::DetourCall(uintptr_t rav, uintptr_t function) const
 		{
+			if (!rav) return false;
+
 			auto offset = Rav2Off(rav);
 
 			if (!IsLock(offset, 5))
@@ -76,6 +86,8 @@ namespace CreationKitPlatformExtended
 
 		uintptr_t Relocator::DetourFunction(uintptr_t rav, uintptr_t function) const
 		{
+			if (!rav) return 0;
+
 			auto offset = Rav2Off(rav);
 
 			if (!IsLock(offset, 6))

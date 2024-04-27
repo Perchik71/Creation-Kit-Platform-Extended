@@ -209,11 +209,17 @@ namespace CreationKitPlatformExtended
 			Assert(voltek::get_pe_section_range(_moduleBase, ".rdata", &Sections[SECTION_DATA_READONLY].base, &Sections[SECTION_DATA_READONLY].end));
 			Assert(voltek::get_pe_section_range(_moduleBase, ".data", &Sections[SECTION_DATA].base, &Sections[SECTION_DATA].end));
 
-			uintptr_t tempBssStart, tempBssEnd;
-			if (voltek::get_pe_section_range(_moduleBase, ".textbss", &tempBssStart, &tempBssEnd))
+			uintptr_t tempStart, tempEnd;
+			if (voltek::get_pe_section_range(_moduleBase, ".textbss", &tempStart, &tempEnd))
 			{
-				Sections[0].base = std::min(Sections[SECTION_TEXT].base, tempBssStart);
-				Sections[0].end = std::max(Sections[SECTION_TEXT].end, tempBssEnd);
+				Sections[SECTION_TEXT].base = std::min(Sections[SECTION_TEXT].base, tempStart);
+				Sections[SECTION_TEXT].end = std::max(Sections[SECTION_TEXT].end, tempEnd);
+			}
+
+			if (voltek::get_pe_section_range(_moduleBase, ".interpr", &tempStart, &tempEnd))
+			{
+				Sections[SECTION_TEXT].base = std::min(Sections[SECTION_TEXT].base, tempStart);
+				Sections[SECTION_TEXT].end = std::max(Sections[SECTION_TEXT].end, tempEnd);
 			}
 
 			_MESSAGE("Section range \".text\": (base: %p, end: %p)", Sections[SECTION_TEXT].base, Sections[SECTION_TEXT].end);
