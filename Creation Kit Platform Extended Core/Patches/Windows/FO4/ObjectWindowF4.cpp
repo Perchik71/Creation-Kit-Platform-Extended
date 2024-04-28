@@ -161,19 +161,33 @@ namespace CreationKitPlatformExtended
 			bool ObjectWindow::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
-				if (lpRelocationDatabaseItem->Version() == 1)
+				auto verPatch = lpRelocationDatabaseItem->Version();
+
+				if ((verPatch == 1) || (verPatch == 2))
 				{
 					*(uintptr_t*)&_oldWndProc =
 						voltek::detours_function_class_jump(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)),
 							(uintptr_t)&HKWndProc);
-					
+
 					// Fix resize ObjectWindowProc
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1), (uintptr_t)&HKMoveWindow);
 					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(2), 0x46);
 
-					// Allow forms to be filtered in ObjectWindowProc
-					pointer_ObjectWindow_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(3));
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(4), (uintptr_t)&sub);
+					if (verPatch == 1)
+					{
+						// Allow forms to be filtered in ObjectWindowProc
+						pointer_ObjectWindow_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(3));
+						lpRelocator->DetourCall(lpRelocationDatabaseItem->At(4), (uintptr_t)&sub);		
+					}
+					else
+					{
+						pointer_ObjectWindow_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(4));
+						// Restore function
+						auto rva = lpRelocationDatabaseItem->At(3);
+						lpRelocator->PatchNop((uintptr_t)rva + 0x10, 0x33);
+						lpRelocator->Patch(rva, { 0x48, 0x8B, 0x4C, 0x24, 0x40, 0x48, 0x89, 0xFA, 0x49, 0x89, 0xF0 });
+						lpRelocator->DetourCall((uintptr_t)rva + 0xB, (uintptr_t)&sub2);
+					}
 
 					return true;
 				}
@@ -212,6 +226,29 @@ namespace CreationKitPlatformExtended
 
 				return ((int(__fastcall*)(__int64, TESForm*))pointer_ObjectWindow_sub)
 					(ObjectListInsertData, Form);
+			}
+
+			int ObjectWindow::sub2(HWND Hwnd, TESForm* Form, const char* filterText)
+			{
+				const HWND objectWindowHandle = GetParent(Hwnd);
+
+				bool allowInsert = true;
+				SendMessageA(objectWindowHandle, UI_OBJECT_WINDOW_ADD_ITEM, (WPARAM)Form, (LPARAM)&allowInsert);
+
+				if (!allowInsert)
+					return 0;
+
+				auto EditorID = Form->GetEditorID_NoVTable();
+
+				if (!fastCall<int>(pointer_ObjectWindow_sub, EditorID, filterText, 0))
+				{
+					char szBuf[12];
+					sprintf_s(szBuf, "%08X", Form->FormID);
+					if (!fastCall<int>(pointer_ObjectWindow_sub, szBuf, filterText, 0))
+						return 0;
+				}
+
+				return 1;
 			}
 
 			ObjectWindow::ObjectWindow() : BaseWindow(), Classes::CUIBaseWindow()

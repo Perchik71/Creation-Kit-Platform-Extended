@@ -22,7 +22,7 @@ The powerful open-source platform makes numerous fixes and improvements to the *
 > | Skyrim | Fallout 4 |
 > | ------------- | ------------- |
 > | **SSE 1.5.3.0** | **F4 1.10.162.0** |
-> | **SSE 1.5.73.0** | **F4 1.10.943.1** `(In early development)` |
+> | **SSE 1.5.73.0** | **F4 1.10.943.1** |
 > | **SSE 1.6.438.0**  |  |
 > | **SSE 1.6.1130.0** |  |
 

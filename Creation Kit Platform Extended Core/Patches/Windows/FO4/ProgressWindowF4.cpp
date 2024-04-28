@@ -60,7 +60,9 @@ namespace CreationKitPlatformExtended
 			bool ProgressWindow::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
-				if (lpRelocationDatabaseItem->Version() == 1)
+				auto verPatch = lpRelocationDatabaseItem->Version();
+
+				if ((verPatch == 1) || (verPatch == 2))
 				{
 					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(5), 2);
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0), (uintptr_t)&sub1);
@@ -73,6 +75,16 @@ namespace CreationKitPlatformExtended
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(4), (uintptr_t)&sub2);
 					// Hook Validating forms...
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(6), (uintptr_t)&sub2);
+
+					if (verPatch == 2)
+						// Idk what kind of gifted UI/UX specialist is sitting at Bethesda, 
+						// but this is the most shitty solution.
+						// 
+						// bUseVersionControl=0 by the way...
+						// 
+						// The output of a message to the user, every time you load something, 
+						// should only be in the form of an error, and postpone the load of something.
+						lpRelocator->Patch(lpRelocationDatabaseItem->At(7), { 0xEB });
 
 					pointer_ProgressWindow_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2));
 

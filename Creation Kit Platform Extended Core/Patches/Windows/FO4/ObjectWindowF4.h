@@ -56,6 +56,7 @@ namespace CreationKitPlatformExtended
 				static void SetObjectWindowFilter(LPOBJWND lpObjWnd, const char* name,
 					const bool SkipText, const bool actived);
 				static int sub(__int64 ObjectListInsertData, TESForm* Form);
+				static int sub2(HWND Hwnd, TESForm* Form, const char* filterText);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;

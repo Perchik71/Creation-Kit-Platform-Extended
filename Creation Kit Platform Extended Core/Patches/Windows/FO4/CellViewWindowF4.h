@@ -30,6 +30,7 @@ namespace CreationKitPlatformExtended
 				static LRESULT CALLBACK HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 				static void sub1(HWND ListViewHandle, TESForm* Form, bool UseImage, int ItemIndex);
 				static int sub2(HWND** ListViewHandle, TESForm** Form, __int64 a3);
+				static void sub2_ver2(HWND ListViewHandle, TESForm* Form);
 
 				void ResizeWnd(UINT width, UINT height);
 			protected:

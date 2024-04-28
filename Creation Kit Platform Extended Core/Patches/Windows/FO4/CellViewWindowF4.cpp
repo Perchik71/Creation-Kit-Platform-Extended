@@ -67,19 +67,33 @@ namespace CreationKitPlatformExtended
 			bool CellViewWindow::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
-				if (lpRelocationDatabaseItem->Version() == 1)
+				auto verPatch = lpRelocationDatabaseItem->Version();
+
+				if ((verPatch == 1) || (verPatch == 2))
 				{
 					*(uintptr_t*)&_oldWndProc =
 						voltek::detours_function_class_jump(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), &HKWndProc);
-					
+
 					// Allow forms to be filtered in CellViewProc
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1), &CellViewWindow::sub1);
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), &CellViewWindow::sub1);
-					// Allow objects to be filtered in CellViewProc
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(3), &CellViewWindow::sub2);
-					//
+
 					pointer_CellViewWindow_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(4));
-					pointer_CellViewWindow_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(5));			
+
+					if ((verPatch == 2))
+					{
+						// Allow objects to be filtered in CellViewProc
+						lpRelocator->DetourCall(lpRelocationDatabaseItem->At(3), &CellViewWindow::sub2_ver2);
+						//
+						pointer_CellViewWindow_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(5));
+					}
+					else
+					{
+						// Allow objects to be filtered in CellViewProc
+						lpRelocator->DetourCall(lpRelocationDatabaseItem->At(3), &CellViewWindow::sub2);
+						//
+						pointer_CellViewWindow_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(5));
+					}
 
 					return true;
 				}
@@ -125,6 +139,19 @@ namespace CreationKitPlatformExtended
 				}
 
 				return ((int(__fastcall*)(HWND**, TESForm**, __int64))pointer_CellViewWindow_sub2)(ListViewHandle, Form, a3);
+			}
+
+			void CellViewWindow::sub2_ver2(HWND ListViewHandle, TESForm* Form)
+			{
+				{
+					bool allowInsert = true;
+					GlobalCellViewWindowPtr->Perform(UI_CELL_VIEW_ADD_CELL_OBJECT_ITEM, (WPARAM)Form, (LPARAM)&allowInsert);
+
+					if (!allowInsert)
+						return;
+				}
+
+				fastCall<void>(pointer_CellViewWindow_sub2, ListViewHandle, Form);
 			}
 
 			void CellViewWindow::ResizeWnd(UINT width, UINT height)

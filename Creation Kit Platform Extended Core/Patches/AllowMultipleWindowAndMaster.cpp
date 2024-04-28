@@ -53,21 +53,26 @@ namespace CreationKitPlatformExtended
 		{
 			auto verPatch = lpRelocationDatabaseItem->Version();
 
-			if ((verPatch == 1) || (verPatch == 2))
+			ScopeRelocator text;
+
+			switch (verPatch)
 			{
-				ScopeRelocator text;
-
-				if (verPatch == 1)
-					lpRelocator->Patch(_RELDATA_RAV(0), { 0xE9, 0xBA, 0x00, 0x00, 0x00, 0x90 });
-				else
-					lpRelocator->Patch(_RELDATA_RAV(0), { 0xE9, 0xDE, 0x00, 0x00, 0x00, 0x90 });
-			
-				lpRelocator->Patch(_RELDATA_RAV(1), { 0xEB });
-
-				return true;
+			case 1:
+				lpRelocator->Patch(_RELDATA_RAV(0), { 0xE9, 0xBA, 0x00, 0x00, 0x00, 0x90 });
+				break;
+			case 2:
+				lpRelocator->Patch(_RELDATA_RAV(0), { 0xE9, 0xDE, 0x00, 0x00, 0x00, 0x90 });
+				break;
+			case 3:
+				lpRelocator->Patch(_RELDATA_RAV(0), { 0xE9, 0xD4, 0x00, 0x00, 0x00, 0x90 });
+				break;
+			default:
+				return false;
 			}
 
-			return false;
+			lpRelocator->Patch(_RELDATA_RAV(1), { 0xEB });
+
+			return true;
 		}
 
 		bool AllowMultipleWindowAndMasterPatch::Shutdown(const Relocator* lpRelocator,
