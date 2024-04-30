@@ -98,11 +98,13 @@ namespace CreationKitPlatformExtended
 				lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&HKEndPluginSave);
 
 				// Introduction of string processing.
+				auto lOff = (uintptr_t)_RELDATA_RAV(3);
+
 				lpRelocator->Patch(_RELDATA_RAV(2), { 0x22 });
-				lpRelocator->Patch(_RELDATA_RAV(3), { 0x51, 0x48, 0x89, 0xC1 });
+				lpRelocator->Patch(lOff, { 0x51, 0x48, 0x89, 0xC1 });
 				lpRelocator->DetourCall(_RELDATA_RAV(4), (uintptr_t)&EditorAPI::BGSLocalizedString::GetStr2);
 				lpRelocator->Patch(_RELDATA_RAV(5), { 0x59, 0xC3, 0x31, 0xC0, 0xC3 });
-				lpRelocator->Patch(_RELDATA_RAV(6), { 0xE9, 0x33, 0xB9, 0xFF, 0xFF });
+				lpRelocator->PatchJump(_RELDATA_RAV(6), lOff);
 
 				// In the "Data" dialog box, the "author" and "description" controls are independent, 
 				// and I'm forced to make a trap for WinAPI calls

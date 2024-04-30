@@ -21,6 +21,8 @@ namespace CreationKitPlatformExtended
 			virtual void Patch(uintptr_t rav, uint8_t* bytes, uint32_t size) const;
 			virtual void Patch(uintptr_t rav, std::initializer_list<uint8_t> data) const;
 			virtual void PatchNop(uintptr_t rav, uint32_t size) const;
+			virtual void PatchJump(uintptr_t rav_from, uintptr_t rav_to) const;
+			virtual void PatchCall(uintptr_t rav_from, uintptr_t rav_to) const;
 
 			virtual bool DetourJump(uintptr_t rav, uintptr_t function) const;
 			virtual bool DetourCall(uintptr_t rav, uintptr_t function) const;

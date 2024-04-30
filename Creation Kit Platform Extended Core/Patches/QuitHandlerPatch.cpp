@@ -53,6 +53,8 @@ namespace CreationKitPlatformExtended
 		{
 			if (lpRelocationDatabaseItem->Version() == 1)
 			{
+				ScopeRelocator text;
+
 				for (uint32_t nId = 0; nId < lpRelocationDatabaseItem->Count(); nId++)
 					lpRelocator->DetourCall(_RELDATA_RAV(nId),
 						(uintptr_t)&CreationKitPlatformExtended::Utils::Quit);

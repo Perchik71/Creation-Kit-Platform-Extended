@@ -55,8 +55,11 @@ namespace CreationKitPlatformExtended
 			{
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
+					ScopeRelocator text;
+
 					// Fixed failed load d3dcompiler.dll
-					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(0), 6);
+					for (uint32_t nId = 0; nId < lpRelocationDatabaseItem->Count(); nId++)
+						lpRelocator->PatchNop(lpRelocationDatabaseItem->At(nId), 6);
 
 					return true;
 				}

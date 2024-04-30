@@ -53,20 +53,32 @@ namespace CreationKitPlatformExtended
 			bool PreCombinedPatch::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
-				if (lpRelocationDatabaseItem->Version() == 1)
+				auto verPatch = lpRelocationDatabaseItem->Version();
+
+				if ((verPatch == 1) || (verPatch == 2))
 				{
 					{
-						int precomb_flag1 = _READ_OPTION_INT("PreCombined", "nGenerationVersion1", 0);
-						int precomb_flag2 = _READ_OPTION_INT("PreCombined", "nGenerationVersion2", 0);
+						int precomb_flag = _READ_OPTION_INT("PreCombined", "nGenerationVersion", 0);
 
 						ScopeRelocator text;
 
-						//
-						// Fix for the -GeneratePreCombined command line option creating files for the XB1 (2) format. 
-						//
-						lpRelocator->Patch(lpRelocationDatabaseItem->At(0), (uint8_t*)&precomb_flag1, 4);
-						lpRelocator->Patch(lpRelocationDatabaseItem->At(1), (uint8_t*)&precomb_flag2, 4);
-						lpRelocator->Patch(lpRelocationDatabaseItem->At(2), (uint8_t*)&precomb_flag2, 4);
+						// This of option control the output of the havok collision information generated during the precombine process, which is stuck at mode 1 unpatched.
+						// This will not magically make your plugin the same format. - BenRierimanu
+						// 0 - 64bit havok little endian[PC or XB1, default setting with CKPEand recommended for PRPand related patches]
+						// 1 - 64bit havok big endian[PS4, default setting unpatched.Untested and not recommended unless you can somehow get the files on that platform]
+						// 2 - 32bit havok little endian[PC or XB1, default setting when using the user interface generation commands as the XB1 was originally a 32bit platform at one point, will still work, but obsolete]
+
+						lpRelocator->Patch(lpRelocationDatabaseItem->At(0), (uint8_t*)&precomb_flag, 4);
+						lpRelocator->Patch(lpRelocationDatabaseItem->At(1), (uint8_t*)&precomb_flag, 4);
+						lpRelocator->Patch(lpRelocationDatabaseItem->At(2), (uint8_t*)&precomb_flag, 4);
+					}
+
+					if ((verPatch == 2) && _READ_OPTION_BOOL("PreCombined", "bRemoveSpam", false))
+					{
+						// Removing spam
+
+						lpRelocator->PatchNop(lpRelocationDatabaseItem->At(3), 5);
+						lpRelocator->PatchNop(lpRelocationDatabaseItem->At(4), 5);
 					}
 
 					return true;
