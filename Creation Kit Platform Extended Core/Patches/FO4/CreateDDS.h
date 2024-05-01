@@ -30,6 +30,7 @@ namespace CreationKitPlatformExtended
 
 				static void sub(ID3D11Device* pDevice, const D3D11_TEXTURE2D_DESC* pDesc,
 					const D3D11_SUBRESOURCE_DATA* pInitialData, ID3D11Texture2D** ppTexture);
+				static void sub2();
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;

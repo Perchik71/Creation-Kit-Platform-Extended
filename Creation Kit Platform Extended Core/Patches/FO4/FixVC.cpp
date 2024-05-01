@@ -53,11 +53,19 @@ namespace CreationKitPlatformExtended
 			bool FixVCPatch::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
-				if (lpRelocationDatabaseItem->Version() == 1)
+				auto verPatch = lpRelocationDatabaseItem->Version();
+
+				if ((verPatch == 1) || (verPatch == 2))
 				{
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0), (uintptr_t)&sub);
+
 					// By disabling version control, allow the start
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0xEB, 0x81 });	// skip msgbox 
+
+					if (verPatch == 1)
+						lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0xEB, 0x81 });	// skip msgbox 
+					else
+						lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0xEB, 0x82 });	// skip msgbox 
+
 					lpRelocator->Patch(lpRelocationDatabaseItem->At(2), { 0xEB, 0xD9 });	// skip msgbox
 
 					return true;

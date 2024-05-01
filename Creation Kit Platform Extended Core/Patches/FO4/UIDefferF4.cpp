@@ -58,64 +58,66 @@ namespace CreationKitPlatformExtended
 			bool UIDefferPatch::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
-				if (lpRelocationDatabaseItem->Version() == 1)
-				{
-					// Deferred dialog loading (batched UI updates)
+				auto verPatch = lpRelocationDatabaseItem->Version();
+				
+				// Deferred dialog loading (batched UI updates)
 
-					class FormIteratorHook : public Xbyak::CodeGenerator {
-					public:
-						FormIteratorHook(uintptr_t Callback) : Xbyak::CodeGenerator()
+				class FormIteratorHook : public Xbyak::CodeGenerator {
+				public:
+					FormIteratorHook(uintptr_t Callback) : Xbyak::CodeGenerator()
+					{
+						// Allocate enough space for 8 copied parameters (4 regs)
+						mov(ptr[rsp + 0x8], rbx);
+						mov(ptr[rsp + 0x10], rbp);
+						mov(ptr[rsp + 0x18], rsi);
+						push(rdi);
+						sub(rsp, 0x50);
+
+						mov(rbp, rcx);
+						mov(rsi, rdx);
+						mov(rdi, r8);
+						mov(rbx, r9);
+						mov(rax, (uintptr_t)&EditorAPI::EditorUI::HKBeginUIDefer);
+						call(rax);
+						mov(rcx, rbp);
+						mov(rdx, rsi);
+						mov(r8, rdi);
+						mov(r9, rbx);
+
+						for (uint32_t i = 0; i < 6; i++)
 						{
-							// Allocate enough space for 8 copied parameters (4 regs)
-							mov(ptr[rsp + 0x8], rbx);
-							mov(ptr[rsp + 0x10], rbp);
-							mov(ptr[rsp + 0x18], rsi);
-							push(rdi);
-							sub(rsp, 0x50);
-
-							mov(rbp, rcx);
-							mov(rsi, rdx);
-							mov(rdi, r8);
-							mov(rbx, r9);
-							mov(rax, (uintptr_t)&EditorAPI::EditorUI::HKBeginUIDefer);
-							call(rax);
-							mov(rcx, rbp);
-							mov(rdx, rsi);
-							mov(r8, rdi);
-							mov(r9, rbx);
-
-							for (uint32_t i = 0; i < 6; i++)
-							{
-								mov(rax, ptr[rsp + (0xA8 - i * 0x8)]);
-								mov(ptr[rsp + (0x48 - i * 0x8)], rax);
-							}
-
-							mov(rax, Callback); // Callback (X params)
-							call(rax);
-							mov(rbx, rax);
-
-							mov(rax, (uintptr_t)&EditorAPI::EditorUI::HKEndUIDefer);
-							call(rax);
-							mov(rax, rbx);
-							add(rsp, 0x50);
-							pop(rdi);
-							mov(rsi, ptr[rsp + 0x18]);
-							mov(rbp, ptr[rsp + 0x10]);
-							mov(rbx, ptr[rsp + 0x8]);
-							ret();
+							mov(rax, ptr[rsp + (0xA8 - i * 0x8)]);
+							mov(ptr[rsp + (0x48 - i * 0x8)], rax);
 						}
 
-						static VOID Generate(uintptr_t Target) {
-							// Manually resolve the called function address. NOTE: This is leaking memory on purpose. It's a mess.
-							Assert(*(uint8_t*)Target == 0xE9);
+						mov(rax, Callback); // Callback (X params)
+						call(rax);
+						mov(rbx, rax);
 
-							auto destination = Target + *(int32_t*)(Target + 1) + 5;
-							auto hook = new FormIteratorHook(destination);
+						mov(rax, (uintptr_t)&EditorAPI::EditorUI::HKEndUIDefer);
+						call(rax);
+						mov(rax, rbx);
+						add(rsp, 0x50);
+						pop(rdi);
+						mov(rsi, ptr[rsp + 0x18]);
+						mov(rbp, ptr[rsp + 0x10]);
+						mov(rbx, ptr[rsp + 0x8]);
+						ret();
+					}
 
-							voltek::detours_jump(Target, (uintptr_t)hook->getCode());
-						}
-					};
+					static VOID Generate(uintptr_t Target) {
+						// Manually resolve the called function address. NOTE: This is leaking memory on purpose. It's a mess.
+						Assert(*(uint8_t*)Target == 0xE9);
 
+						auto destination = Target + *(int32_t*)(Target + 1) + 5;
+						auto hook = new FormIteratorHook(destination);
+
+						voltek::detours_jump(Target, (uintptr_t)hook->getCode());
+					}
+				};
+
+				if (verPatch == 1)
+				{
 					// List view
 					FormIteratorHook::Generate(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)));
 					FormIteratorHook::Generate(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1)));
@@ -142,6 +144,25 @@ namespace CreationKitPlatformExtended
 					pointer_UIDeffer_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(16));
 					pointer_UIDeffer_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(17));
 					pointer_UIDeffer_sub3 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(18));
+
+					return true;
+				}
+				else if (verPatch == 2)
+				{
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(0),
+						(uintptr_t)&EditorAPI::EditorUI::ComboBoxInsertItemDeferred);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(1),
+						(uintptr_t)&EditorAPI::EditorUI::ListViewInsertItemDeferred);
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&sub1);
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(3), (uintptr_t)&sub2);
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(4), (uintptr_t)&sub3);
+
+					pointer_UIDeffer_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(5));
+					pointer_UIDeffer_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(6));
+					pointer_UIDeffer_sub3 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(7));
+
+					for (uint32_t nId = 8; nId < lpRelocationDatabaseItem->Count(); nId++)
+						FormIteratorHook::Generate(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(nId)));
 
 					return true;
 				}

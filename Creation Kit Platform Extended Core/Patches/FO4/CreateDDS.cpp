@@ -174,7 +174,9 @@ namespace CreationKitPlatformExtended
 			bool CreateDDSPatch::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
-				if (lpRelocationDatabaseItem->Version() == 1)
+                auto verPatch = lpRelocationDatabaseItem->Version();
+
+				if (verPatch == 1)
 				{
                     auto rva = lpRelocationDatabaseItem->At(0);
 
@@ -184,6 +186,13 @@ namespace CreationKitPlatformExtended
 
 					return true;
 				}
+                else if (verPatch == 2)
+                {
+                    // Bethesda has finally added a check. Let's make it so that it causes a crash.
+                    lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0), (uintptr_t)&sub2);
+
+                    return true;
+                }
 
 				return false;
 			}
@@ -233,6 +242,13 @@ namespace CreationKitPlatformExtended
                 // This return value is ignored. If it fails it returns a null pointer (ppTexture) and crashes later on.
                 fastCall<void>(pointer_CreateDDS_sub, *ppTexture);
 			}
+
+            void CreateDDSPatch::sub2()
+            {
+                AssertMsg(0,
+                    "ID3D11CreateTexture2D: A fatal error occurred while creating the texture. "
+                    "Perhaps your device does not directly support texture formats.");
+            }
 		}
 	}
 }

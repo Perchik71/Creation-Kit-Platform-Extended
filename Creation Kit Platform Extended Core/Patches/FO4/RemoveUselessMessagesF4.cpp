@@ -53,7 +53,9 @@ namespace CreationKitPlatformExtended
 			bool RemoveUselessMessagesPatch::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
-				if (lpRelocationDatabaseItem->Version() == 1)
+				auto verPatch = lpRelocationDatabaseItem->Version();
+
+				if ((verPatch == 1) || (verPatch == 2))
 				{
 					ScopeRelocator text;
 
@@ -98,6 +100,13 @@ namespace CreationKitPlatformExtended
 					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(25), 5);
 					// Always off option bAllowFileWrite:MESSAGES
 					lpRelocator->Patch(lpRelocationDatabaseItem->At(26), { 0x31, 0xC0, 0xC3, 0x90 });
+
+					if (verPatch == 2)
+					{
+						// SHADER Could not find material
+						lpRelocator->PatchNop(lpRelocationDatabaseItem->At(27), 5);
+						lpRelocator->PatchNop(lpRelocationDatabaseItem->At(28), 5);
+					}
 
 					return true;
 				}

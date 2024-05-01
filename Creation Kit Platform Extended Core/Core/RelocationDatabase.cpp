@@ -139,9 +139,12 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
-			_MESSAGE("Total patches: %u", voltek::reldb_count_patches(_stm));
+			auto total_patches = voltek::reldb_count_patches(_stm);
+			long total_sign = 0;
 
-			for (long i = 0; i < voltek::reldb_count_patches(_stm); i++)
+			_MESSAGE("Total patches: %i", total_patches);
+
+			for (long i = 0; i < total_patches; i++)
 			{
 				voltek::reldb_patch* patch = nullptr;
 				resultErrno = voltek::reldb_get_patch_by_id(_stm, &patch, i);
@@ -155,11 +158,17 @@ namespace CreationKitPlatformExtended
 
 				char szBuf[60];
 				voltek::reldb_get_name_patch(patch, szBuf, 60);
+
+				long sign_count = voltek::reldb_count_signatures_in_patch(patch);
+				total_sign += sign_count;
+
 				_MESSAGE("\t%s (version %i) -> signature count %i", 
 					szBuf, 
 					voltek::reldb_get_version_patch(patch),
-					voltek::reldb_count_signatures_in_patch(patch));
+					sign_count);
 			}
+
+			_MESSAGE("Total signatures: %i", total_sign);
 
 			return true;
 		}

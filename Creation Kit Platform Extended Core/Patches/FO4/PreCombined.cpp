@@ -73,14 +73,6 @@ namespace CreationKitPlatformExtended
 						lpRelocator->Patch(lpRelocationDatabaseItem->At(2), (uint8_t*)&precomb_flag, 4);
 					}
 
-					if ((verPatch == 2) && _READ_OPTION_BOOL("PreCombined", "bRemoveSpam", false))
-					{
-						// Removing spam
-
-						lpRelocator->PatchNop(lpRelocationDatabaseItem->At(3), 5);
-						lpRelocator->PatchNop(lpRelocationDatabaseItem->At(4), 5);
-					}
-
 					return true;
 				}
 
