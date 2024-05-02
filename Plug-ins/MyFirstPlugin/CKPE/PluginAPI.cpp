@@ -221,15 +221,15 @@ void* __stdcall _DYNAMIC_CAST2(const void* InPtr, long VfDelta, const char* lpst
 		lpstrFromType, lpstrTargetType, isReference);
 }
 
+void __stdcall _CONSOLEVA(const char* fmt, va_list va)
+{
+	CreationKitPlatformExtended::PluginAPI::ConsoleWindow::Instance->InputLogVa(fmt, va);
+}
+
 void __stdcall _CONSOLE(const char* fmt, ...)
 {
 	va_list ap;
 	va_start(ap, fmt);
 	_CONSOLEVA(fmt, ap);
 	va_end(ap);
-}
-
-void __stdcall _CONSOLEVA(const char* fmt, va_list va)
-{
-	CreationKitPlatformExtended::PluginAPI::ConsoleWindow::Instance->InputLogVa(fmt, va);
 }
