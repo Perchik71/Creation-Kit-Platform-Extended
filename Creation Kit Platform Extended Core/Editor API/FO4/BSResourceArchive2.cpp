@@ -119,6 +119,30 @@ namespace CreationKitPlatformExtended
 					return resultNo;
 				}
 
+				Archive2::EResultError Archive2::HKLoadArchiveEx(void* arrayDataList, InfoEx* infoRes,
+					void* Unk1, uint32_t Unk2)
+				{
+					auto fileName2 = infoRes->fileName->Get<CHAR>(true);
+					AssertMsg(fileName2, "There is no name of the load archive");
+
+					BSString filePath, fileSizeStr;
+					filePath.Format("%s%s%s", BSString::Utils::GetApplicationPath().c_str(), "Data\\", fileName2);
+					AssertMsgVa(BSString::Utils::FileExists(filePath), "Can't found file %s", *filePath);
+
+					uint64_t fileSize = 0;
+					WIN32_FILE_ATTRIBUTE_DATA fileData;
+					if (GetFileAttributesExA(*filePath, GetFileExInfoStandard, &fileData))
+						fileSize = (uint64_t)fileData.nFileSizeLow | ((uint64_t)fileData.nFileSizeHigh << 32);
+
+					GetFileSizeStr(fileSize, fileSizeStr);
+					_CONSOLE("Load an archive file \"%s\" (%s)...", fileName2, *fileSizeStr);
+
+					auto resultNo = fastCall<EResultError, void*, InfoEx*, void*, uint32_t>
+						(pointer_Archive2_sub1, arrayDataList, infoRes, Unk1, Unk2);
+					AssertMsgVa(resultNo == EC_NONE, "Failed load an archive file %s", fileName2);
+					return resultNo;
+				}
+
 				void Archive2::LoadArchive(const char* fileName)
 				{
 					if (BSString::Utils::FileExists(BSString::Utils::GetDataPath() + fileName))

@@ -74,15 +74,22 @@ namespace CreationKitPlatformExtended
 			bool BSArchiveManagerModdedPatch::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
-				if (lpRelocationDatabaseItem->Version() == 1)
+				auto verPatch = lpRelocationDatabaseItem->Version();
+
+				if ((verPatch == 1) || (verPatch == 2))
 				{
 					EditorAPI::Fallout4::BSResource::pointer_Archive2_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(6));
 					EditorAPI::Fallout4::BSResource::pointer_Archive2_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
 
 					EditorAPI::Fallout4::BSResource::Archive2::Initialize();
 
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1),
-						(uintptr_t)&EditorAPI::Fallout4::BSResource::Archive2::HKLoadArchive);
+					if (verPatch == 1)
+						lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1),
+							(uintptr_t)&EditorAPI::Fallout4::BSResource::Archive2::HKLoadArchive);
+					else
+						lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1),
+							(uintptr_t)&EditorAPI::Fallout4::BSResource::Archive2::HKLoadArchiveEx);
+
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&LoadTesFile);
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3), (uintptr_t)&LoadTesFileFinal);
 

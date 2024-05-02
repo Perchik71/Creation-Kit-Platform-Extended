@@ -17,6 +17,14 @@ namespace CreationKitPlatformExtended
 		{
 			namespace BSResource
 			{
+				struct InfoEx
+				{
+					LooseFileStream* resFile;
+					uint64_t unk08;
+					BSEntryString* fileName;
+					uint64_t unk18;
+				};
+
 				class Archive2
 				{
 				public:
@@ -28,6 +36,7 @@ namespace CreationKitPlatformExtended
 					static void Initialize();
 					static void GetFileSizeStr(uint64_t fileSize, BSString& fileSizeStr);
 					static EResultError HKLoadArchive(void* arrayDataList, LooseFileStream*& resFile, void* Unk1, uint32_t Unk2);
+					static EResultError HKLoadArchiveEx(void* arrayDataList, InfoEx* infoRes, void* Unk1, uint32_t Unk2);
 					static void LoadArchive(const char* fileName);
 					static bool IsAvailableForLoad(const char* fileName);
 				};

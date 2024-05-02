@@ -66,7 +66,9 @@ namespace CreationKitPlatformExtended
 			bool OptimizationLoadPatch::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
-				if (lpRelocationDatabaseItem->Version() == 1)
+				auto verPatch = lpRelocationDatabaseItem->Version();
+
+				if ((verPatch == 1) || (verPatch == 2))
 				{
 					//
 					// Plugin loading optimizations:
@@ -119,86 +121,89 @@ namespace CreationKitPlatformExtended
 					// Without SIMD support, there is no pointand
 					if (_engine->HasSSE41())
 					{
-						std::size_t count = 0;
+						if (verPatch == 1)
+						{
+							std::size_t count = 0;
 
-						auto Sec = _engine->GetSection(Core::SECTION_TEXT);
+								auto Sec = _engine->GetSection(Core::SECTION_TEXT);
 
-						std::vector<uintptr_t>::iterator match;
-						std::vector<uintptr_t> matches = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-							"48 83 C5 08 41 3B FE 72 9F 48 8B 6C 24 50 8B C3 48 8B 5C 24 58 48 8B 74"
-							" 24 60 48 83 C4 30 41 5F 41 5E 5F C3 8B C3 EB E8");
+								std::vector<uintptr_t>::iterator match;
+								std::vector<uintptr_t> matches = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+									"48 83 C5 08 41 3B FE 72 9F 48 8B 6C 24 50 8B C3 48 8B 5C 24 58 48 8B 74"
+									" 24 60 48 83 C4 30 41 5F 41 5E 5F C3 8B C3 EB E8");
 
-						std::for_each(match = matches.begin(), matches.end(), [&count](auto it) 
-							{ voltek::detours_jump(it - 0x8A, (uintptr_t)&HKSearchIndex64); count++; });
+								std::for_each(match = matches.begin(), matches.end(), [&count](auto it)
+									{ voltek::detours_jump(it - 0x8A, (uintptr_t)&HKSearchIndex64); count++; });
 
-						matches = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-							"48 83 C5 08 41 3B FE 72 9F 48 8B 6C 24 58 48 8B 74 24 60 8B C3 48 8B 5C"
-							" 24 50 48 83 C4 30 41 5F 41 5E 5F C3");
+							matches = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+								"48 83 C5 08 41 3B FE 72 9F 48 8B 6C 24 58 48 8B 74 24 60 8B C3 48 8B 5C"
+								" 24 50 48 83 C4 30 41 5F 41 5E 5F C3");
 
-						std::for_each(match = matches.begin(), matches.end(), [&count](auto it)
-							{ voltek::detours_jump(it - 0x8D, (uintptr_t)&HKSearchIndexOffset64); count++; });
+							std::for_each(match = matches.begin(), matches.end(), [&count](auto it)
+								{ voltek::detours_jump(it - 0x8D, (uintptr_t)&HKSearchIndexOffset64); count++; });
 
-						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5), (uintptr_t)&HKSearchIndex32);
-						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6), (uintptr_t)&HKSearchIndex32);
-						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(7), (uintptr_t)&HKSearchIndex32);
+							lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5), (uintptr_t)&HKSearchIndex32);
+							lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6), (uintptr_t)&HKSearchIndex32);
+							lpRelocator->DetourJump(lpRelocationDatabaseItem->At(7), (uintptr_t)&HKSearchIndex32);
 
-						class Search_IA128 : public Xbyak::CodeGenerator {
-						public:
-							Search_IA128(VOID) : Xbyak::CodeGenerator() {
-								mov(ptr[rsp + 0x10], rbx);
-								mov(ptr[rsp + 0x18], rsi);
-								push(rdi);
-								push(r14);
-								push(r15);
-								sub(rsp, 0x30);
-								mov(r14d, dword[rcx + 0x10]);
-								or_(ebx, 0xFFFFFFFF);
-								xor_(edi, edi);
-								mov(r15, rdx);
-								mov(rsi, rcx);
-								test(r14d, r14d);
-								je(".quit_no");
-								push(rbp);
-								mov(ebp, edi);
-								mov(rcx, qword[r15]);
-								mov(rdx, qword[rsi]);
-								L(".c1");
-								cmp(ebx, -1);
-								jne(".quit_yes");
-								cmp(qword[rdx + rbp], rcx);
-								cmove(ebx, edi);
-								inc(edi);
-								lea(rbp, qword[rbp + 0x10]);
-								cmp(edi, r14d);
-								jb(".c1");
-								L(".quit_yes");
-								pop(rbp);
-								L(".quit_no");
-								mov(eax, ebx);
-								mov(rbx, qword[rsp + 0x58]);
-								mov(rsi, qword[rsp + 0x60]);
-								add(rsp, 0x30);
-								pop(r15);
-								pop(r14);
-								pop(rdi);
-								ret();
-							}
+							class Search_IA128 : public Xbyak::CodeGenerator {
+							public:
+								Search_IA128(VOID) : Xbyak::CodeGenerator() {
+									mov(ptr[rsp + 0x10], rbx);
+									mov(ptr[rsp + 0x18], rsi);
+									push(rdi);
+									push(r14);
+									push(r15);
+									sub(rsp, 0x30);
+									mov(r14d, dword[rcx + 0x10]);
+									or_(ebx, 0xFFFFFFFF);
+									xor_(edi, edi);
+									mov(r15, rdx);
+									mov(rsi, rcx);
+									test(r14d, r14d);
+									je(".quit_no");
+									push(rbp);
+									mov(ebp, edi);
+									mov(rcx, qword[r15]);
+									mov(rdx, qword[rsi]);
+									L(".c1");
+									cmp(ebx, -1);
+									jne(".quit_yes");
+									cmp(qword[rdx + rbp], rcx);
+									cmove(ebx, edi);
+									inc(edi);
+									lea(rbp, qword[rbp + 0x10]);
+									cmp(edi, r14d);
+									jb(".c1");
+									L(".quit_yes");
+									pop(rbp);
+									L(".quit_no");
+									mov(eax, ebx);
+									mov(rbx, qword[rsp + 0x58]);
+									mov(rsi, qword[rsp + 0x60]);
+									add(rsp, 0x30);
+									pop(r15);
+									pop(r14);
+									pop(rdi);
+									ret();
+								}
 
-							static VOID Generate(uintptr_t Target) {
-								auto hook = new Search_IA128();
-								GlobalRelocatorPtr->DetourJump(Target, (uintptr_t)hook->getCode());
-							}
+								static VOID Generate(uintptr_t Target) {
+									auto hook = new Search_IA128();
+									GlobalRelocatorPtr->DetourJump(Target, (uintptr_t)hook->getCode());
+								}
 
-						};
+							};
 
-						Search_IA128::Generate(lpRelocationDatabaseItem->At(8));
-						Search_IA128::Generate(lpRelocationDatabaseItem->At(9));
-						Search_IA128::Generate(lpRelocationDatabaseItem->At(10));
-						Search_IA128::Generate(lpRelocationDatabaseItem->At(11));
+							Search_IA128::Generate(lpRelocationDatabaseItem->At(8));
+							Search_IA128::Generate(lpRelocationDatabaseItem->At(9));
+							Search_IA128::Generate(lpRelocationDatabaseItem->At(10));
+							Search_IA128::Generate(lpRelocationDatabaseItem->At(11));
 
-						count += 3;
+							count += 3;
 
-						_MESSAGE("Replaced function with SIMD function: %d.", count);
+							_MESSAGE("Replaced function with SIMD function: %d.", count);
+						}
 					}
 
 					return true;

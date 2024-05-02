@@ -47,7 +47,8 @@ namespace CreationKitPlatformExtended
 			bool EnableGoInSelGamePatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST;
+				// remove 1.10.943.1
+				return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_1_10_162_0;
 			}
 
 			bool EnableGoInSelGamePatch::Activate(const Relocator* lpRelocator,
