@@ -1,6 +1,6 @@
 //////////////////////////////////////////
 /*
-* Copyright (c) 2022 Perchik71 <email:perchik71@outlook.com>
+* Copyright (c) 2022-2024 Perchik71 <email:perchik71@outlook.com>
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy of this
 * software and associated documentation files (the "Software"), to deal in the Software
@@ -165,7 +165,7 @@ namespace CreationKitPlatformExtended
 				inline static _Ty GetHead() { return FreeListHead; }
 				inline static _Ty GetTail() { return FreeListTail; }
 
-				static void InitSDM()
+				static IBSPointerHandleManagerEntry<_Ty, HandleType, HandleRef>* InitSDM()
 				{
 					FreeListHead = 0;
 					HandleEntries.resize(HandleType::MAX_HANDLE_COUNT);
@@ -179,7 +179,9 @@ namespace CreationKitPlatformExtended
 					}
 
 					FreeListTail = HandleType::MAX_HANDLE_COUNT - 1;
+					return HandleEntries.data();
 				}
+
 				static void KillSDM()
 				{
 					HandleManagerLock.TryLockForWrite();
@@ -308,6 +310,19 @@ namespace CreationKitPlatformExtended
 					}
 					Manager::HandleManagerLock.Unlock();
 
+					return untypedHandle;
+				}
+
+				// Bethesda combined two operations into one, why?
+				static HandleType GetCurrentHandleOrCreate(uint32_t MaybeId, ObjectType* Refr)
+				{
+					UNREFERENCED_PARAMETER(MaybeId);
+
+					HandleType untypedHandle;
+					if (!Refr) return untypedHandle;
+
+					untypedHandle = GetCurrentHandle(Refr);
+					if (!untypedHandle) return CreateHandle(Refr);
 					return untypedHandle;
 				}
 

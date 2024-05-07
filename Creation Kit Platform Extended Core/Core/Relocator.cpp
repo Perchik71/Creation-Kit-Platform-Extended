@@ -74,6 +74,15 @@ namespace CreationKitPlatformExtended
 			Patch(rav_from + 1, (uint8_t*)&RelOff, 4);
 		}
 
+		void Relocator::PatchMovFromRax(uintptr_t rav_from, uintptr_t rav_to) const
+		{
+			if (!rav_from || !rav_to) return;
+
+			Patch(rav_from, { 0x48, 0x89, 0x05 });
+			auto RelOff = (uint32_t)(rav_to - (rav_from + 7));
+			Patch(rav_from + 3, (uint8_t*)&RelOff, 4);
+		}
+
 		bool Relocator::DetourJump(uintptr_t rav, uintptr_t function) const
 		{
 			if (!rav) return false;

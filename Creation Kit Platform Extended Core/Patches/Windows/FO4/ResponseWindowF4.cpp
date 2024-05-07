@@ -95,7 +95,9 @@ namespace CreationKitPlatformExtended
 			bool ResponseWindow::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
-				if (lpRelocationDatabaseItem->Version() == 1)
+				auto verPatch = lpRelocationDatabaseItem->Version();
+
+				if ((verPatch == 1) || (verPatch == 2))
 				{
 					*(uintptr_t*)&_oldWndProc =
 						voltek::detours_function_class_jump(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)),
@@ -107,11 +109,16 @@ namespace CreationKitPlatformExtended
 					pointer_ResponseWindow_sub3 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(4));
 
 					// Hooking the jump. I don't allow the deny button.
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5), (uintptr_t)&sub);
+					if (verPatch == 1)
+						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5), (uintptr_t)&sub);
+					else
+						lpRelocator->DetourCall(lpRelocationDatabaseItem->At(5), (uintptr_t)&sub);
 					// Then continue in the same spirit, remove the button.... skip it
 					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(6), 25);
 					// In case of cancellation .wav triggers and closes the button, we will remove everything
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(7), (uintptr_t)&sub);
+					// Hook generate via LipGenerator (By the way, Bethesda does not post it)
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(8), (uintptr_t)&sub2);
 					
 					return true;
 				}
@@ -192,6 +199,10 @@ namespace CreationKitPlatformExtended
 									ConsolePatch::Log("LIPGEN: File \"%s\" LIP generation failed.", LipFilePath.c_str());
 									return S_FALSE;
 								}
+
+								MessageBoxA(0, "Done!", "Message", MB_OK);
+
+								return S_OK;
 							}
 							// "Generate Lip File"
 							else if (param == 1017)
@@ -229,6 +240,10 @@ namespace CreationKitPlatformExtended
 									ConsolePatch::Log("FUZGEN: File \"%s\" FUZ generation failed.", FuzFilePath.c_str());
 									return S_FALSE;
 								}
+
+								MessageBoxA(0, "Done!", "Message", MB_OK);
+
+								return S_OK;
 							}
 						}
 					}
@@ -269,6 +284,14 @@ namespace CreationKitPlatformExtended
 				}
 
 				EnableWindow(hWndButtonGenerate, bEnableGenerate);
+			}
+
+			bool ResponseWindow::sub2(const char* AudioPath, const char* ResponseText, const char* LipPath)
+			{
+				return !GenerationLip(
+					(BSString::Utils::GetApplicationPath() + AudioPath).c_str(), 
+					(BSString::Utils::GetApplicationPath() + LipPath).c_str(),
+					ResponseText);
 			}
 
 			void ResponseWindow::ModuleInit()

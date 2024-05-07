@@ -42,9 +42,9 @@ namespace CreationKitPlatformExtended
 					///////////////////////////////
 					/// F4CK FIXED ADDED
 					///////////////////////////////
-					/* 160 */ uint64_t dw64FileSize;		// If zero, then the file is not found or inside the archive
-					/* 168 */ uint64_t dw64Position;		// while unused
-					/* 170 */ char szReserved[0x10];
+					/* 160 */ char szReserved[0x10];
+					/* 170 */ uint64_t dw64FileSize;		// If zero, then the file is not found or inside the archive
+					/* 178 */ uint64_t dw64Position;		// while unused
 				public:
 					static void CreateInstance(const char* FileName, LooseFileStream** Instance);
 				public:

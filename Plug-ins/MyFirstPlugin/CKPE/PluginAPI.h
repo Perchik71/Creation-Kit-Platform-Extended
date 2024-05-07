@@ -127,6 +127,7 @@ namespace CreationKitPlatformExtended
 			virtual void PatchNop(uintptr_t rav, uint32_t size) const;
 			virtual void PatchJump(uintptr_t rav_from, uintptr_t rav_to) const;
 			virtual void PatchCall(uintptr_t rav_from, uintptr_t rav_to) const;
+			virtual void PatchMovFromRax(uintptr_t rav_from, uintptr_t rav_to) const;
 
 			virtual bool DetourJump(uintptr_t rav, uintptr_t function) const;
 			virtual bool DetourCall(uintptr_t rav, uintptr_t function) const;

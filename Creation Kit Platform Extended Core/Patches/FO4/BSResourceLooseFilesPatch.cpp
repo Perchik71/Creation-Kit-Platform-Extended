@@ -56,43 +56,44 @@ namespace CreationKitPlatformExtended
 			bool BSResourceLooseFilesPatch::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
-				if (lpRelocationDatabaseItem->Version() == 1)
+				// I will add initialization to fill in the new fields with data
+				class LooseFileStreamHook : public Xbyak::CodeGenerator
+				{
+				public:
+					LooseFileStreamHook(VOID) : Xbyak::CodeGenerator()
+					{
+						push(r11);
+						push(rax);
+						mov(rcx, ptr[r11 + 0x18]);
+						mov(rdx, rbp);
+						sub(rsp, 0x40);
+						mov(rax, (uintptr_t)&BSResource::LooseFileStream::CreateInstance);
+						call(rax);
+						add(rsp, 0x40);
+						pop(rax);
+						pop(r11);
+						mov(rbx, ptr[r11 + 0x10]);
+						mov(rbp, ptr[r11 + 0x18]);
+						mov(rsi, ptr[r11 + 0x20]);
+						mov(rsp, r11);
+						pop(rdi);
+						ret();
+					}
+
+					static VOID Generate(uintptr_t Target)
+					{
+						auto hook = new LooseFileStreamHook();
+						GlobalRelocatorPtr->DetourJump(Target, (uintptr_t)hook->getCode());
+					}
+				};
+
+				auto verPatch = lpRelocationDatabaseItem->Version();
+				if (verPatch == 1)
 				{
 					// Set new size class 0x160 to 0x180
 					lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0x80 });
 
-					// I will add initialization to fill in the new fields with data
-					class LooseFileStreamHook : public Xbyak::CodeGenerator 
-					{
-					public:
-						LooseFileStreamHook(VOID) : Xbyak::CodeGenerator()
-						{
-							push(r11);
-							push(rax);
-							mov(rcx, ptr[r11 + 0x18]);
-							mov(rdx, rbp);
-							sub(rsp, 0x40);
-							mov(rax, (uintptr_t)&BSResource::LooseFileStream::CreateInstance);
-							call(rax);
-							add(rsp, 0x40);
-							pop(rax);
-							pop(r11);
-							mov(rbx, ptr[r11 + 0x10]);
-							mov(rbp, ptr[r11 + 0x18]);
-							mov(rsi, ptr[r11 + 0x20]);
-							mov(rsp, r11);
-							pop(rdi);
-							ret();
-						}
-
-						static VOID Generate(uintptr_t Target) 
-						{
-							auto hook = new LooseFileStreamHook();
-							GlobalRelocatorPtr->DetourJump(Target, (uintptr_t)hook->getCode());
-						}
-					};
 					LooseFileStreamHook::Generate(lpRelocationDatabaseItem->At(1));
-
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(8), (uintptr_t)&sub);
 
 					ScopeRelocator text;
@@ -100,10 +101,10 @@ namespace CreationKitPlatformExtended
 					// As I understand it, CK evaluates the amount of useful data with the file size, 
 					// since I will now adjust the 64-bit size, sacrificing checking for NullPtr.
 					//
-					// mov rax, qword ptr ds:[rcx+0x160]
+					// mov rax, qword ptr ds:[rcx+0x170]
 					// jmp -> cmp rsi, rax
 					lpRelocator->Patch(lpRelocationDatabaseItem->At(2), 
-						{ 0x48, 0x8B, 0x81, 0x60, 0x01, 0x00, 0x00, 0xEB, 0x1D });
+						{ 0x48, 0x8B, 0x81, 0x70, 0x01, 0x00, 0x00, 0xEB, 0x1D });
 
 					// Ignoring the correctness check is not useful
 					lpRelocator->Patch(lpRelocationDatabaseItem->At(3), { 0xEB });
@@ -113,6 +114,31 @@ namespace CreationKitPlatformExtended
 					lpRelocator->Patch(lpRelocationDatabaseItem->At(7), { 0xC3 });
 
 					return true;
+				}
+				else if (verPatch == 2)
+				{
+					{
+						ScopeRelocator text;
+
+						// Ignoring the correctness check is not useful
+
+						for (uint32_t i = 0; i < 4; i++)
+							lpRelocator->Patch(lpRelocationDatabaseItem->At(i), { 0xEB });
+
+						// As I understand it, CK evaluates the amount of useful data with the file size, 
+						// since I will now adjust the 64-bit size, sacrificing checking for NullPtr.
+						//
+						// mov rax, qword ptr ds:[rcx+0x170]
+						// jmp -> cmp rbx, rax
+						lpRelocator->Patch(lpRelocationDatabaseItem->At(5),
+							{ 0x48, 0x8B, 0x81, 0x70, 0x01, 0x00, 0x00, 0xEB, 0x19 });
+
+						// Set new size class 0x168 to 0x180
+						lpRelocator->Patch(lpRelocationDatabaseItem->At(6), { 0x80 });
+					}
+
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(4), (uintptr_t)&sub);
+					LooseFileStreamHook::Generate(lpRelocationDatabaseItem->At(7));
 				}
 
 				return false;

@@ -27,6 +27,7 @@ namespace CreationKitPlatformExtended
 
 				static LRESULT CALLBACK HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 				static void sub(HWND hWndButtonGenerate);
+				static bool sub2(const char* AudioPath, const char* ResponseText, const char* LipPath);
 
 				static void ModuleInit();
 				static bool ExecuteApplication(const char* CmdLine, bool Hide = true, uint32_t Timeout = INFINITE);
