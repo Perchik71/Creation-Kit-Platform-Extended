@@ -17,7 +17,8 @@ namespace CreationKitPlatformExtended
 			EDITOR_SKYRIM_SE_LAST = EDITOR_SKYRIM_SE_1_6_1130,
 			EDITOR_FALLOUT_C4_1_10_162_0,
 			EDITOR_FALLOUT_C4_1_10_943_1,
-			EDITOR_FALLOUT_C4_LAST = EDITOR_FALLOUT_C4_1_10_943_1
+			EDITOR_FALLOUT_C4_1_10_982_3,
+			EDITOR_FALLOUT_C4_LAST = EDITOR_FALLOUT_C4_1_10_982_3
 		};
 
 		// Не использовать менеджер на данном этапе, считаем, что его ещё нет
@@ -38,6 +39,8 @@ namespace CreationKitPlatformExtended
 			{ 0xDF67F346ul, EDITOR_FALLOUT_C4_1_10_162_0	},	// Default
 			{ 0x4BA2E086ul, EDITOR_FALLOUT_C4_1_10_943_1	},	// Redirect Steam
 			{ 0xBAAF1B07ul, EDITOR_FALLOUT_C4_1_10_943_1	},	// No Steam and Redirect Steam
+			{ 0x481CCE95ul, EDITOR_FALLOUT_C4_1_10_982_3	},	// Redirect Steam
+			{ 0x55F7F580ul, EDITOR_FALLOUT_C4_1_10_982_3	},	// No Steam and Redirect Steam
 		};
 		
 		// Список ключевых смещений в исполняемых файлах, допущенных к запуску
@@ -49,6 +52,7 @@ namespace CreationKitPlatformExtended
 			{ 0x2F3E698ul, { "1.6.1130.0",	EDITOR_SKYRIM_SE_1_6_1130		} },
 			{ 0x3896168ul, { "1.10.162.0",	EDITOR_FALLOUT_C4_1_10_162_0	} },
 			{ 0x2F8D1C8ul, { "1.10.943.1",	EDITOR_FALLOUT_C4_1_10_943_1	} },
+			{ 0x2F8D298ul, { "1.10.982.3",	EDITOR_FALLOUT_C4_1_10_982_3	} },
 		};
 		
 		// Список названий редакторов
@@ -60,6 +64,7 @@ namespace CreationKitPlatformExtended
 			"Skyrim Special Edition [v1.6.1130]",
 			"Fallout 4 [v1.10.162.0]",
 			"Fallout 4 [v1.10.943.1]",
+			"Fallout 4 [v1.10.982.3]",
 		};
 
 		// Список имён файлов базы данных
@@ -70,6 +75,7 @@ namespace CreationKitPlatformExtended
 			{ EDITOR_SKYRIM_SE_1_6_1130,	"CreationKitPlatformExtended_SSE_1_6_1130.database"		},
 			{ EDITOR_FALLOUT_C4_1_10_162_0,	"CreationKitPlatformExtended_FO4_1_10_162.database"		},
 			{ EDITOR_FALLOUT_C4_1_10_943_1,	"CreationKitPlatformExtended_FO4_1_10_943_1.database"	},
+			{ EDITOR_FALLOUT_C4_1_10_982_3,	"CreationKitPlatformExtended_FO4_1_10_982_3.database"	},
 		};
 
 		// Список имён файлов базы данных
@@ -80,6 +86,7 @@ namespace CreationKitPlatformExtended
 			{ EDITOR_SKYRIM_SE_1_6_1130,	"CreationKitPlatformExtended_SSE_Dialogs.pak"	},
 			{ EDITOR_FALLOUT_C4_1_10_162_0,	"CreationKitPlatformExtended_FO4_Dialogs.pak"	},
 			{ EDITOR_FALLOUT_C4_1_10_943_1,	"CreationKitPlatformExtended_FO4_Dialogs.pak"	},
+			{ EDITOR_FALLOUT_C4_1_10_982_3,	"CreationKitPlatformExtended_FO4_Dialogs.pak"	},
 		};
 
 		static std::vector<std::string_view> allowedEditorFileNameStr = {
@@ -90,6 +97,7 @@ namespace CreationKitPlatformExtended
 			"creationkit_se_1_6_1130",
 			"creationkit_f4_1_10_162",
 			"creationkit_f4_1_10_943_1",
+			"creationkit_f4_1_10_982_3",
 		};
 
 		inline bool CheckFileNameProcess(const char* name)
