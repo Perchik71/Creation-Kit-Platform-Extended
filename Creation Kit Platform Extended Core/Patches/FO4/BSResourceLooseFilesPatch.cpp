@@ -139,6 +139,8 @@ namespace CreationKitPlatformExtended
 
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(4), (uintptr_t)&sub);
 					LooseFileStreamHook::Generate(lpRelocationDatabaseItem->At(7));
+
+					return true;
 				}
 
 				return false;

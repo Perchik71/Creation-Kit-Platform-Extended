@@ -6,6 +6,7 @@
 #include "Editor API/FO4/BSPointerHandleManager.h"
 #include "ReplaceBSPointerHandleAndManagerF4.h"
 
+
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
@@ -18,6 +19,21 @@ namespace CreationKitPlatformExtended
 			uintptr_t pointer_ReplaceBSPointerHandleAndManager_code2 = 0;
 			uintptr_t pointer_ReplaceBSPointerHandleAndManager_code3 = 0;
 			uintptr_t pointer_ReplaceBSPointerHandleAndManager_code4 = 0;
+
+			class HandleManager
+			{
+			public:
+				template<typename HandleType>
+				static NiPointer<ObjectType> GetSmartPtr(const HandleType& Handle, bool Exist)
+				{
+					Exist = false;
+					NiPointer<ObjectType> ObjectPtr;
+					if (!BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId)
+						Exist = BSPointerHandleManagerInterface_Original::GetSmartPointer1(Handle, ObjectPtr);
+					else
+						Exist = BSPointerHandleManagerInterface_Extended::GetSmartPointer1(Handle, ObjectPtr);
+				}
+			};
 
 			ReplaceBSPointerHandleAndManagerPatch::ReplaceBSPointerHandleAndManagerPatch() : Module(GlobalEnginePtr)
 			{}
@@ -58,95 +74,366 @@ namespace CreationKitPlatformExtended
 				return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST;
 			}
 
-			bool ReplaceBSPointerHandleAndManagerPatch::Activate(const Relocator* lpRelocator,
-				const RelocationDatabaseItem* lpRelocationDatabaseItem)
+			bool ReplaceBSPointerHandleAndManagerPatch::IsVersionValid(const RelocationDatabaseItem* lpRelocationDatabaseItem) const
 			{
-				auto Extremly = _READ_OPTION_BOOL("CreationKit", "bBSPointerHandleExtremly", false);
 				auto verPatch = lpRelocationDatabaseItem->Version();
+				return (verPatch == 1) || (verPatch == 2);
+			}
 
-				if (verPatch == 1)
+			bool ReplaceBSPointerHandleAndManagerPatch::Install_163(const Relocator* lpRelocator,
+				const RelocationDatabaseItem* lpRelocationDatabaseItem, bool Extremly)
+			{
+				if (Extremly)
 				{
-					if (Extremly)
-					{
-						_CONSOLE("[WARNING] An extended set of refs has been included. You use it at your own risk.");
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(0),
+						(uintptr_t)&BSPointerHandleManager_Extended::InitSDM);
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1),
+						(uintptr_t)&BSPointerHandleManager_Extended::KillSDM);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(2),
+						(uintptr_t)&BSPointerHandleManagerInterface_Extended::GetCurrentHandle);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
+						(uintptr_t)&BSPointerHandleManagerInterface_Extended::CreateHandle);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(4),
+						(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5),
+						(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy2);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6),
+						(uintptr_t)&BSPointerHandleManagerInterface_Extended::GetSmartPointer1);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(7),
+						(uintptr_t)&BSPointerHandleManagerInterface_Extended::GetSmartPointer2);
 
-						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(0),
-							(uintptr_t)&BSPointerHandleManager_Extended::InitSDM);
-						lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1),
-							(uintptr_t)&BSPointerHandleManager_Extended::KillSDM);
-						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(2),
-							(uintptr_t)&BSPointerHandleManagerInterface_Extended::GetCurrentHandle);
-						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
-							(uintptr_t)&BSPointerHandleManagerInterface_Extended::CreateHandle);
-						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(4),
-							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
-						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5),
-							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy2);
-						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6),
-							(uintptr_t)&BSPointerHandleManagerInterface_Extended::GetSmartPointer1);
-						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(7),
-							(uintptr_t)&BSPointerHandleManagerInterface_Extended::GetSmartPointer2);
+					pointer_ReplaceBSPointerHandleAndManager_code1 =
+						lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(9));
+					pointer_ReplaceBSPointerHandleAndManager_code2 =
+						lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(10));
+					pointer_ReplaceBSPointerHandleAndManager_code3 =
+						lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(11));
+					pointer_ReplaceBSPointerHandleAndManager_code4 =
+						lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(12));
 
-						pointer_ReplaceBSPointerHandleAndManager_code1 =
-							lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(9));
-						pointer_ReplaceBSPointerHandleAndManager_code2 =
-							lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(10));
-						pointer_ReplaceBSPointerHandleAndManager_code3 =
-							lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(11));
-						pointer_ReplaceBSPointerHandleAndManager_code4 =
-							lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(12));
+					ScopeRelocator textSection;
 
-						ScopeRelocator textSection;
+					// Stub out the rest of the functions which shouldn't ever be called now
+					lpRelocator->Patch(lpRelocationDatabaseItem->At(8), { 0xCC });	// BSUntypedPointerHandle::Set
 
-						// Stub out the rest of the functions which shouldn't ever be called now
-						lpRelocator->Patch(lpRelocationDatabaseItem->At(8), { 0xCC });	// BSUntypedPointerHandle::Set
+					// Conversion BSHandleRefObject::IncRef and BSHandleRefObject::DecRef to 64bit
 
-						// Conversion BSHandleRefObject::IncRef and BSHandleRefObject::DecRef to 64bit
+					IncRefPatch();
+					DecRefPatch();
 
-						IncRefPatch();
-						DecRefPatch();
-
-						BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 1;
-					}
-					else
-					{
-						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(0),
-							(uintptr_t)&BSPointerHandleManager_Original::InitSDM);
-						lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1),
-							(uintptr_t)&BSPointerHandleManager_Original::KillSDM);
-						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(2),
-							(uintptr_t)&BSPointerHandleManagerInterface_Original::GetCurrentHandle);
-						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
-							(uintptr_t)&BSPointerHandleManagerInterface_Original::CreateHandle);
-						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(4),
-							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5),
-							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy2);
-						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6),
-							(uintptr_t)&BSPointerHandleManagerInterface_Original::GetSmartPointer1);
-						lpRelocator->DetourJump(lpRelocationDatabaseItem->At(7),
-							(uintptr_t)&BSPointerHandleManagerInterface_Original::GetSmartPointer2);
-
-						pointer_ReplaceBSPointerHandleAndManager_code1 =
-							lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(9));
-						pointer_ReplaceBSPointerHandleAndManager_code2 =
-							lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(10));
-						pointer_ReplaceBSPointerHandleAndManager_code3 =
-							lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(11));
-						pointer_ReplaceBSPointerHandleAndManager_code4 =
-							lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(12));
-
-						ScopeRelocator textSection;
-
-						// Stub out the rest of the functions which shouldn't ever be called now
-						lpRelocator->Patch(lpRelocationDatabaseItem->At(8), { 0xCC });	// BSUntypedPointerHandle::Set
-
-						BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 0;
-					}
-
-					return true;
+					BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 1;
 				}
-				else if (verPatch == 2)
+				else
+				{
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(0),
+						(uintptr_t)&BSPointerHandleManager_Original::InitSDM);
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1),
+						(uintptr_t)&BSPointerHandleManager_Original::KillSDM);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(2),
+						(uintptr_t)&BSPointerHandleManagerInterface_Original::GetCurrentHandle);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
+						(uintptr_t)&BSPointerHandleManagerInterface_Original::CreateHandle);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(4),
+						(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5),
+						(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy2);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6),
+						(uintptr_t)&BSPointerHandleManagerInterface_Original::GetSmartPointer1);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(7),
+						(uintptr_t)&BSPointerHandleManagerInterface_Original::GetSmartPointer2);
+
+					pointer_ReplaceBSPointerHandleAndManager_code1 =
+						lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(9));
+					pointer_ReplaceBSPointerHandleAndManager_code2 =
+						lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(10));
+					pointer_ReplaceBSPointerHandleAndManager_code3 =
+						lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(11));
+					pointer_ReplaceBSPointerHandleAndManager_code4 =
+						lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(12));
+
+					ScopeRelocator textSection;
+
+					// Stub out the rest of the functions which shouldn't ever be called now
+					lpRelocator->Patch(lpRelocationDatabaseItem->At(8), { 0xCC });	// BSUntypedPointerHandle::Set
+
+					BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 0;
+				}
+
+				return true;
+			}
+
+			bool ReplaceBSPointerHandleAndManagerPatch::Install_980(const Relocator* lpRelocator,
+				const RelocationDatabaseItem* lpRelocationDatabaseItem, bool Extremly)
+			{
+				auto restoring_destroy1 = [&lpRelocator](uintptr_t rva, uint32_t removal_size, uintptr_t func)
+				{
+					lpRelocator->PatchNop(rva, removal_size);
+					lpRelocator->Patch(rva, { 0x48, 0x89, 0xC1 });
+					lpRelocator->DetourCall(rva + 3, func);
+				};
+
+				auto restoring_destroy2 = [&lpRelocator](uintptr_t rva, uint8_t off_rsp, uint32_t removal_size, uintptr_t func)
+				{
+					lpRelocator->PatchNop(rva, removal_size);
+					lpRelocator->Patch(rva, { 0x48, 0x8D, 0x4C, 0x24, off_rsp });
+					lpRelocator->DetourCall(rva + 5, func);
+				};
+
+				auto restoring_getsmartptr1 = [&lpRelocator](uintptr_t rva, uint32_t removal_size, uintptr_t func)
+				{
+					lpRelocator->PatchNop(rva, removal_size);
+					lpRelocator->DetourCall(rva + 5, func);
+				};
+
+				if (Extremly)
+				{
+					BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 1;
+
+					{
+						ScopeRelocator textSection;
+
+						// Preparation, removal of all embedded pieces of code
+						lpRelocator->PatchNop((uintptr_t)lpRelocationDatabaseItem->At(0) + 12, 0x81);
+						lpRelocator->PatchMovFromRax((uintptr_t)lpRelocationDatabaseItem->At(0) + 5, lpRelocationDatabaseItem->At(1));
+
+						// Stub out the rest of the functions which shouldn't ever be called now
+						lpRelocator->Patch(lpRelocationDatabaseItem->At(4), { 0xCC });	// BSUntypedPointerHandle::Set			
+					}
+
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0),
+						(uintptr_t)&BSPointerHandleManager_Extended::InitSDM);
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2),
+						(uintptr_t)&BSPointerHandleManager_Extended::KillSDM);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
+						(uintptr_t)&BSPointerHandleManagerInterface_Extended::CreateHandle);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5),
+						(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6),
+						(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy2);
+
+					{
+						ScopeRelocator textSection;
+
+						//
+						// Deleting the code, restoring the function
+						//
+						restoring_destroy1(lpRelocationDatabaseItem->At(7), 0xF2,
+							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
+						restoring_destroy1(lpRelocationDatabaseItem->At(8), 0xFE,
+							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
+						restoring_destroy1(lpRelocationDatabaseItem->At(9), 0xFE,
+							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
+						restoring_destroy1(lpRelocationDatabaseItem->At(10), 0xFE,
+							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
+						restoring_destroy1(lpRelocationDatabaseItem->At(11), 0xEF,
+							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
+						restoring_destroy1(lpRelocationDatabaseItem->At(12), 0xFE,
+							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
+						restoring_destroy1(lpRelocationDatabaseItem->At(13), 0xEF,
+							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
+						restoring_destroy2(lpRelocationDatabaseItem->At(14), 0x30, 0x10B,
+							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy2);
+
+						auto textRange = GlobalEnginePtr->GetSection(SECTION_TEXT);
+
+						//
+						// Change AGE
+						// 
+						size_t total = 0;
+
+						{
+							// test ??, 0x3E00000
+							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"A9 00 00 E0 03");
+							for (size_t i = 0; i < patterns.size(); i++)
+								memcpy((void*)(patterns[i] + 1), &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
+							total += patterns.size();
+
+							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"F7 ? 00 00 E0 03");
+							for (size_t i = 0; i < patterns.size(); i++)
+								memcpy((void*)(patterns[i] + 2), &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
+							total += patterns.size();
+						}
+						
+						{
+							// and r??, 0x3E00000
+							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"25 00 00 E0 03");
+							for (size_t i = 0; i < patterns.size(); i++)
+								memcpy((void*)(patterns[i] + 1), &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
+							total += patterns.size();
+
+							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"81 ? 00 00 E0 03");
+							for (size_t i = 0; i < patterns.size(); i++)
+								memcpy((void*)(patterns[i] + 2), &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
+							total += patterns.size();
+						}
+
+						// should be 660
+						Assert(total == 660);
+						//_CONSOLE("AGE_MASK change: %llu", total);
+
+						//
+						// Change INDEX
+						// 
+						total = 0;
+
+						{
+							// and r???, 0x1FFFFF
+							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"41 81 ? FF FF 1F 00");
+							for (size_t i = 0; i < patterns.size(); i++)
+								memcpy((void*)(patterns[i] + 3), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+							total += patterns.size();
+
+							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"81 E1 FF FF 1F 00");
+							for (size_t i = 3; i < patterns.size() - 1; i++)
+								memcpy((void*)(patterns[i] + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+							total += patterns.size() - 4;
+
+							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"81 E5 FF FF 1F 00");
+							for (size_t i = 0; i < patterns.size(); i++)
+							{
+								if ((i == 4) || (i == 8)) continue;
+								memcpy((void*)(patterns[i] + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+							}
+							total += patterns.size() - 2;
+
+							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"81 E6 FF FF 1F 00");
+							Assert(patterns.size() == 7);
+							for (size_t i = 3; i < patterns.size() - 2; i++)
+							{
+								if ((i == 4) || (i == 8)) continue;
+								memcpy((void*)(patterns[i] + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+							}
+							total += 2;
+
+							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"81 E7 FF FF 1F 00");
+							Assert(patterns.size() == 3);
+							memcpy((void*)(patterns[2] + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+							total++;
+
+							auto addr = voltek::find_pattern(textRange.base, textRange.end - textRange.base,
+								"8B C7 25 FF FF 1F 00 8B D8");
+							if (addr)
+							{
+								memcpy((void*)(addr + 3), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+								total++;
+							}
+						}
+
+						// should be 334
+						Assert(total == 334);
+						//_CONSOLE("INDEX_MASK change: %llu", total);
+
+						//
+						// Change UNUSED_BIT_START
+						// 
+						total = 0;
+
+						{
+							// bt ???, 0x1A
+							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"0F BA E0 1A");
+							Assert(patterns.size() == 322);
+							for (size_t i = 0; i < patterns.size() - 5; i++)
+								*(uint8_t*)(patterns[i] + 3) = (uint8_t)BSUntypedPointerHandle_Extended::UNUSED_BIT_START;
+							total += patterns.size() - 5;
+
+							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"0F BA ?? 1A");
+							Assert(patterns.size() == 104);
+							for (size_t i = 0; i < 57; i++)
+							{
+								switch (i)
+								{
+								case 16:
+								case 17:
+								case 21:
+								case 22:
+								case 26:
+								case 32:
+								case 33:
+								case 35:
+								case 40:
+								case 41:
+								case 50:
+								case 51:
+								case 52:
+								case 53:
+								case 54:
+								case 55:
+									break;
+								default:
+								{
+									*(uint8_t*)(patterns[i] + 3) = (uint8_t)BSUntypedPointerHandle_Extended::UNUSED_BIT_START;
+									total++;
+								}
+								}
+							}
+						}
+
+						// should be 358
+						//_CONSOLE("UNUSED_BIT_START change: %llu", total);
+						Assert(total == 358);
+
+						//
+						// Change REFR test eax -> rax
+						// 
+						total = 0;
+
+						{
+							// mov eax, dword ptr ds:[r??+0x38]
+							// and eax, 0x3FF
+							// cmp eax, 0x3FF
+							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"8B ? 38 25 FF 03 00 00 3D FF 03 00 00");
+							for (size_t i = 0; i < patterns.size(); i++)
+							{
+								auto reg = *(uint8_t*)(patterns[i] + 1);
+								memcpy((void*)(patterns[i]),
+									"\x48\x8B\x00\x38\x66\x25\xFF\x03\x66\x3D\xFF\x03\x90", 13);
+								*(uint8_t*)(patterns[i] + 2) = reg;
+							}
+							total += patterns.size();
+						}
+						
+						// should be 280
+						//_CONSOLE("Change REFR test eax -> rax: %llu", total);
+						Assert(total == 280);
+
+						//
+						// Change REFR test handle index
+						// 
+						total = 0;
+
+						{
+							// mov eax, dword ptr ds:[r??+0x38]
+							// shr eax, 0xB
+							// cmp eax, r??
+							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"8B ? 38 C1 E8 0B 41 3B ?");
+							for (size_t i = 0; i < patterns.size(); i++)
+							{
+								*(uint8_t*)(patterns[i] + 2) = (uint8_t)0x39;
+								*(uint8_t*)(patterns[i] + 5) = (uint8_t)0x3;
+							}
+
+							total += patterns.size();
+						}
+
+						// should be 229
+						//_CONSOLE("Change REFR test handle index: %llu", total);
+						Assert(total == 229);
+					}
+				}
+				else
 				{
 					BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 0;
 
@@ -158,61 +445,64 @@ namespace CreationKitPlatformExtended
 						lpRelocator->PatchMovFromRax((uintptr_t)lpRelocationDatabaseItem->At(0) + 5, lpRelocationDatabaseItem->At(1));
 
 						// Stub out the rest of the functions which shouldn't ever be called now
-						//lpRelocator->Patch(lpRelocationDatabaseItem->At(8), { 0xCC });	// BSUntypedPointerHandle::Set			
+						lpRelocator->Patch(lpRelocationDatabaseItem->At(4), { 0xCC });	// BSUntypedPointerHandle::Set			
 					}
 
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0),
 						(uintptr_t)&BSPointerHandleManager_Original::InitSDM);
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2),
 						(uintptr_t)&BSPointerHandleManager_Original::KillSDM);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
+						(uintptr_t)&BSPointerHandleManagerInterface_Original::CreateHandle);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5),
+						(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6),
+						(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy2);
 
-					//lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
-					//	(uintptr_t)&BSPointerHandleManagerInterface_Original::GetCurrentHandleOrCreate); 
-					//lpRelocator->DetourJump(lpRelocationDatabaseItem->At(4),
-					//	(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-					//lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5),
-					//	(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy2);
+					{
+						ScopeRelocator textSection;
 
-					//{
-					//	ScopeRelocator textSection;
-
-					//	//
-					//	// Deleting the code, restoring the function
-					//	//
-					//	
-					//	auto restoring_destroy1 = [&lpRelocator](uintptr_t rva, uint32_t removal_size)
-					//	{
-					//		lpRelocator->PatchNop(rva, removal_size);
-					//		lpRelocator->Patch(rva, { 0x48, 0x89, 0xC1 });
-					//		lpRelocator->DetourCall(rva + 3, (uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-					//	};
-
-					//	restoring_destroy1(lpRelocationDatabaseItem->At(6), 0xF2);
-					//	restoring_destroy1(lpRelocationDatabaseItem->At(7), 0xFE);
-					//	restoring_destroy1(lpRelocationDatabaseItem->At(8), 0xFE);
-					//	restoring_destroy1(lpRelocationDatabaseItem->At(9), 0xFE);
-					//	restoring_destroy1(lpRelocationDatabaseItem->At(10), 0xEF);
-					//	restoring_destroy1(lpRelocationDatabaseItem->At(11), 0xFE);
-					//	restoring_destroy1(lpRelocationDatabaseItem->At(12), 0xEF);
-
-					//	auto restoring_destroy2 = [&lpRelocator](uintptr_t rva, uint8_t off_rsp, uint32_t removal_size)
-					//	{
-					//		lpRelocator->PatchNop(rva, removal_size);
-					//		lpRelocator->Patch(rva, { 0x48, 0x8D, 0x4C, 0x24, off_rsp });
-					//		lpRelocator->DetourCall(rva + 5, (uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy2);
-					//	};
-					//	
-					//	restoring_destroy2(lpRelocationDatabaseItem->At(13), 0x30, 0x10B);
-					//}
-			
-					//lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6),
-					//	(uintptr_t)&BSPointerHandleManagerInterface_Original::GetSmartPointer1);
-					//lpRelocator->DetourJump(lpRelocationDatabaseItem->At(7),
-					//	(uintptr_t)&BSPointerHandleManagerInterface_Original::GetSmartPointer2);
-
-
-					return true;
+						//
+						// Deleting the code, restoring the function
+						//
+						restoring_destroy1(lpRelocationDatabaseItem->At(7), 0xF2,
+							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
+						restoring_destroy1(lpRelocationDatabaseItem->At(8), 0xFE,
+							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
+						restoring_destroy1(lpRelocationDatabaseItem->At(9), 0xFE,
+							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
+						restoring_destroy1(lpRelocationDatabaseItem->At(10), 0xFE,
+							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
+						restoring_destroy1(lpRelocationDatabaseItem->At(11), 0xEF,
+							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
+						restoring_destroy1(lpRelocationDatabaseItem->At(12), 0xFE,
+							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
+						restoring_destroy1(lpRelocationDatabaseItem->At(13), 0xEF,
+							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
+						restoring_destroy2(lpRelocationDatabaseItem->At(14), 0x30, 0x10B,
+							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy2);
+					}
 				}
+
+				return true;
+			}
+
+			bool ReplaceBSPointerHandleAndManagerPatch::Activate(const Relocator* lpRelocator,
+				const RelocationDatabaseItem* lpRelocationDatabaseItem)
+			{
+				if (!IsVersionValid(lpRelocationDatabaseItem))
+					return false;
+				
+				auto Extremly = _READ_OPTION_BOOL("CreationKit", "bBSPointerHandleExtremly", false);
+				auto verPatch = lpRelocationDatabaseItem->Version();
+
+				if (Extremly)
+					_CONSOLE("[WARNING] An extended set of refs has been included. You use it at your own risk.");
+
+				if (verPatch == 1)
+					return Install_163(lpRelocator, lpRelocationDatabaseItem, Extremly);
+				else if (verPatch == 2)
+					return Install_980(lpRelocator, lpRelocationDatabaseItem, Extremly);
 				
 				return false;
 			}

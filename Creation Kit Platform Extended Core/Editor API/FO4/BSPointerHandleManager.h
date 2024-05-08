@@ -313,19 +313,6 @@ namespace CreationKitPlatformExtended
 					return untypedHandle;
 				}
 
-				// Bethesda combined two operations into one, why?
-				static HandleType GetCurrentHandleOrCreate(uint32_t MaybeId, ObjectType* Refr)
-				{
-					UNREFERENCED_PARAMETER(MaybeId);
-
-					HandleType untypedHandle;
-					if (!Refr) return untypedHandle;
-
-					untypedHandle = GetCurrentHandle(Refr);
-					if (!untypedHandle) return CreateHandle(Refr);
-					return untypedHandle;
-				}
-
 				static void Destroy1(const HandleType& Handle)
 				{
 					if (Handle.IsBitwiseNull())

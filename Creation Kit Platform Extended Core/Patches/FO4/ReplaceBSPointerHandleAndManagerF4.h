@@ -28,6 +28,12 @@ namespace CreationKitPlatformExtended
 				virtual bool HasDependencies() const;
 				virtual Array<String> GetDependencies() const;
 
+				bool IsVersionValid(const RelocationDatabaseItem* lpRelocationDatabaseItem) const;
+				bool Install_163(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem,
+					bool Extremly);
+				bool Install_980(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem,
+					bool Extremly);
+
 				static void IncRefPatch();
 				static void DecRefPatch();
 			protected:
