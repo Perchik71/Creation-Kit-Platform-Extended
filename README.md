@@ -27,7 +27,7 @@ The powerful open-source platform makes numerous fixes and improvements to the *
 > | **SSE 1.6.1130.0** |  |
 
 > [!IMPORTANT]
-> **CK** F4 version 1.10.9XX.X and newer tested only on the **NG** version of the game, it probably won't work on the old version of the game.
+> **CK F4** version **1.10.9XX.X** and newer tested only on the **NG** version of the game, it probably won't work on the old version of the game.  
 > **CK** does not work well with **ENB**.  
 > I wrote **ckpe_loader**. This is console app, for 15 seconds renames from the known to me .dll files that harm the work of CK this time is enough to load the CK itself. All renames .dll files will be restored name after this time.
 
