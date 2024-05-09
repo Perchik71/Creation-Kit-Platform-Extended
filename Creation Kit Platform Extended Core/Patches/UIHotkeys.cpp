@@ -160,6 +160,8 @@ namespace CreationKitPlatformExtended
 		void UIHotkeysPatch::sub_ver2(void* Thisptr, void(*Callback)(), EditorAPI::Fallout4::BSEntryString** HotkeyFunction,
 			EditorAPI::Fallout4::BSEntryString** DisplayText, char VirtualKey, bool Alt, bool Ctrl, bool Shift)
 		{
+			//_MESSAGE("%s %p", (*HotkeyFunction)->Get<char>(true), Callback);
+
 			if (!ReplaceHotkeys((*HotkeyFunction)->Get<char>(true), (*DisplayText)->Get<char>(true),
 				&VirtualKey, &Alt, &Ctrl, &Shift))
 				_MESSAGE("Can't find this hotkeys ""%s"" in the mod settings. (%X), %d, %d, %d, %s)",

@@ -54,16 +54,26 @@ namespace CreationKitPlatformExtended
 			bool FixSkyPatch::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
-				if (lpRelocationDatabaseItem->Version() == 1)
+				auto verPatch = lpRelocationDatabaseItem->Version();
+
+				if ((verPatch == 1) || (verPatch == 2))
 				{
 					ScopeRelocator text;
 
 					// Fix for crash (nullptr no test) when close CK with Sky enable 
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xEB, 0x4D, 0x90 });
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0x48, 0x85, 0xC9, 0x74, 0xB5,
-						0x48, 0x8B, 0x01, 0xEB, 0xAA });
-					// Skipping Imagespace rendering
-					//lpRelocator->Patch(lpRelocationDatabaseItem->At(2), { 0xE9, 0x8C, 0x00, 0x00, 0x00, 0x90 });
+
+					if (verPatch == 1)
+					{
+						lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xEB, 0x4D, 0x90 });
+						lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0x48, 0x85, 0xC9, 0x74, 0xB5,
+							0x48, 0x8B, 0x01, 0xEB, 0xAA });
+					}
+					else
+					{
+						lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0xEB, 0x54, 0x90 });
+						lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0x48, 0x85, 0xC9, 0x74, 0xAE,
+							0x48, 0x8B, 0x01, 0xEB, 0xA3 });
+					}
 
 					return true;
 				}

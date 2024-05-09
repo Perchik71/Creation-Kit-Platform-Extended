@@ -8,6 +8,7 @@
 #include "Editor API/EditorUI.h"
 #include "Editor API/FO4/TESF4.h"
 
+
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
@@ -63,12 +64,14 @@ namespace CreationKitPlatformExtended
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
 					globalFogEnabled = (bool*)lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
+					globalSkyEnabled = (bool*)lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(7));
 
 					// Refresh state
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1), (uintptr_t)&sub);
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&sub);
 					// Replace hotkey
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(8), (uintptr_t)&ToggleFog);
+					//lpRelocator->DetourJump(lpRelocationDatabaseItem->At(9), (uintptr_t)&ToggleSky);
 
 					{
 						ScopeRelocator text;
@@ -91,8 +94,7 @@ namespace CreationKitPlatformExtended
 					// but this is how the fog was separated from the sky.
 					//
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(6), (uintptr_t)&InitSkyDisabled);
-					globalSkyEnabled = (bool*)lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(7));
-
+					
 					return true;
 				}
 
@@ -135,12 +137,18 @@ namespace CreationKitPlatformExtended
 			void FixFogPatch::ToggleFog()
 			{
 				EditorAPI::Fallout4::TESUnknown* Inst = EditorAPI::Fallout4::TESUnknown::Instance;
-				if (!Inst && Inst->Main->IsEmpty())
+				if (!Inst || Inst->Main->IsEmpty())
 					return;
 
 				auto SkyProperty = Inst->Main->Sky;
 				if (!SkyProperty)
 					return;
+
+				/*if (*globalSkyEnabled && *globalFogEnabled)
+				{
+					_CONSOLE("[WARNING] With Sky turned off, you cannot turn off the fog.");
+					return;
+				}*/
 
 				*globalFogEnabled = !(*globalFogEnabled);
 				CheckMenuItem(GlobalMainWindowPtr->MainMenu.Handle,
@@ -150,6 +158,26 @@ namespace CreationKitPlatformExtended
 				sub();
 
 				Utils::UpdateProfileValue("CreationKitPrefs.ini", "Display", "bFogEnabled", *globalFogEnabled);
+			}
+
+			void FixFogPatch::ToggleSky()
+			{
+				EditorAPI::Fallout4::TESUnknown* Inst = EditorAPI::Fallout4::TESUnknown::Instance;
+				if (!Inst || Inst->Main->IsEmpty())
+					return;
+				
+				if (Inst->Main->HasInterior())
+				{
+					if (*globalSkyEnabled)
+						GlobalMainWindowPtr->Perform(0x111, 0x9D24, 0);
+				}
+				else
+				{
+					if (!*globalSkyEnabled && !*globalFogEnabled)
+						ToggleFog();
+
+					GlobalMainWindowPtr->Perform(0x111, 0x9D24, 0);
+				}
 			}
 		}
 	}

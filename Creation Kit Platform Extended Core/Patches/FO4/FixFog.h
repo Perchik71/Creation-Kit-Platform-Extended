@@ -31,6 +31,7 @@ namespace CreationKitPlatformExtended
 				static void sub();
 				static bool IsFogEnabled();
 				static void ToggleFog();
+				static void ToggleSky();
 				static uint32_t InitSkyDisabled();
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
