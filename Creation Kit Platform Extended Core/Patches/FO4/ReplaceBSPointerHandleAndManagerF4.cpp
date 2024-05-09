@@ -396,10 +396,16 @@ namespace CreationKitPlatformExtended
 								"8B ? 38 25 FF 03 00 00 3D FF 03 00 00");
 							for (size_t i = 0; i < patterns.size(); i++)
 							{
-								auto reg = *(uint8_t*)(patterns[i] + 1);
-								memcpy((void*)(patterns[i]),
-									"\x48\x8B\x00\x38\x66\x25\xFF\x03\x66\x3D\xFF\x03\x90", 13);
-								*(uint8_t*)(patterns[i] + 2) = reg;
+								auto prefix = *(uint8_t*)(patterns[i] - 1);
+								if (prefix == 0x41)
+									*(uint8_t*)(patterns[i] - 1) = 0x49;
+								else
+								{
+									auto reg = *(uint8_t*)(patterns[i] + 1);
+									memcpy((void*)(patterns[i]),
+										"\x48\x8B\x00\x38\x66\x25\xFF\x03\x66\x3D\xFF\x03\x90", 13);
+									*(uint8_t*)(patterns[i] + 2) = reg;
+								}
 							}
 							total += patterns.size();
 						}
