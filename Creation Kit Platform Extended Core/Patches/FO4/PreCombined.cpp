@@ -69,7 +69,12 @@ namespace CreationKitPlatformExtended
 						// 2 - 32bit havok little endian[PC or XB1, default setting when using the user interface generation commands as the XB1 was originally a 32bit platform at one point, will still work, but obsolete]
 
 						lpRelocator->Patch(lpRelocationDatabaseItem->At(0), (uint8_t*)&precomb_flag, 4);
-						lpRelocator->Patch(lpRelocationDatabaseItem->At(1), (uint8_t*)&precomb_flag, 4);
+						
+						if (verPatch == 2)
+							lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0x6A, (uint8_t)precomb_flag, 0x59 });
+						else
+							lpRelocator->Patch(lpRelocationDatabaseItem->At(1), (uint8_t*)&precomb_flag, 4);
+						
 						lpRelocator->Patch(lpRelocationDatabaseItem->At(2), (uint8_t*)&precomb_flag, 4);
 					}
 
