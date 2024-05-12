@@ -5,6 +5,7 @@
 #include "Engine.h"
 #include "Editor API/EditorUI.h"
 #include "Patches/UIThemePatch.h"
+#include "Patches/UIThemeClassicPatch.h"
 #include "Patches/Windows/SSE/MainWindow.h"
 
 namespace CreationKitPlatformExtended
@@ -429,10 +430,19 @@ namespace CreationKitPlatformExtended
 			std::thread asyncLogThread([](HWND* window, ConsoleWindow* module)
 				{
 					// Окно вывода
-					auto instance = static_cast<HINSTANCE>(GetModuleHandle(NULL));
+					auto instance = static_cast<HINSTANCE>(GetModuleHandle(NULL));	
+					auto darkmode = _READ_OPTION_BOOL("CreationKit", "bUIDarkTheme", false);
+					auto classicmode = _READ_OPTION_BOOL("CreationKit", "bUIClassicTheme", false);
 					
-					if (_READ_OPTION_BOOL("CreationKit", "bUIDarkTheme", false))
-						Patches::UIThemePatch::InitializeThread();
+					if (darkmode && classicmode)
+						_WARNING("You cannot use classic mode and dark mode together.");
+					else
+					{
+						if (darkmode)
+							Patches::UIThemePatch::InitializeThread();
+						else if (classicmode)
+							Patches::UIThemeClassicPatch::InitializeThread();
+					}
 
 					WNDCLASSEXA wc
 					{

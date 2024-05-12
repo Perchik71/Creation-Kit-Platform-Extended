@@ -55,7 +55,7 @@ namespace CreationKitPlatformExtended
 		bool UIThemePatchAdditional::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{
-			return true;
+			return !_READ_OPTION_BOOL("CreationKit", "bUIClassicTheme", false);
 		}
 
 		bool UIThemePatchAdditional::Activate(const Relocator* lpRelocator,

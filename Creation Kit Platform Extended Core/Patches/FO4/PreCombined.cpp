@@ -64,7 +64,7 @@ namespace CreationKitPlatformExtended
 
 						// This of option control the output of the havok collision information generated during the precombine process, which is stuck at mode 1 unpatched.
 						// This will not magically make your plugin the same format. - BenRierimanu
-						// 0 - 64bit havok little endian[PC or XB1, default setting with CKPEand recommended for PRPand related patches]
+						// 0 - 64bit havok little endian[PC or XB1, default setting with CKPE and recommended for PRP and related patches]
 						// 1 - 64bit havok big endian[PS4, default setting unpatched.Untested and not recommended unless you can somehow get the files on that platform]
 						// 2 - 32bit havok little endian[PC or XB1, default setting when using the user interface generation commands as the XB1 was originally a 32bit platform at one point, will still work, but obsolete]
 

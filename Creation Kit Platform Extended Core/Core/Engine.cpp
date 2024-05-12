@@ -32,6 +32,7 @@
 #include "Patches/AllowMultipleWindowAndMaster.h"
 #include "Patches/UIPatch.h"
 #include "Patches/UIThemePatch.h"
+#include "Patches/UIThemeClassicPatch.h"
 #include "Patches/UIThemePatchAdditional.h"
 #include "Patches/PapyrusEditorLimit.h"
 #include "Patches/UIHotkeys.h"
@@ -141,8 +142,11 @@ namespace CreationKitPlatformExtended
 
 			// Инициализация темы, если это необходимо, раньше, чем окно консоли
 			_Theme = new CreationKitPlatformExtended::Patches::UIThemePatch();
+			_ClassicTheme = new CreationKitPlatformExtended::Patches::UIThemeClassicPatch();
 			// Отправка не нулевого адреса необходима, это специально, чтобы пропустить проверки
-			_Theme->Enable(GlobalRelocatorPtr, (RelocationDatabaseItem*)1);
+			_ClassicTheme->Enable(GlobalRelocatorPtr, (RelocationDatabaseItem*)1);
+			if (!_ClassicTheme->HasActive())
+				_Theme->Enable(GlobalRelocatorPtr, (RelocationDatabaseItem*)1);	
 
 			GlobalConsoleWindowPtr = new ConsoleWindow(this);
 			GlobalGDIPlusInitPtr = new GDIPlusInit(this);
@@ -167,7 +171,8 @@ namespace CreationKitPlatformExtended
 				new CreationKitPlatformExtended::Patches::UIHotkeysPatch(),
 				new CreationKitPlatformExtended::Patches::UIThemePatchAdditional(),
 				new CreationKitPlatformExtended::Patches::PapyrusEditorLimitPatch(),
-				_Theme
+				_Theme,
+				_ClassicTheme
 			});
 
 			// Добавление патчей только для редактора скайрима специального издания

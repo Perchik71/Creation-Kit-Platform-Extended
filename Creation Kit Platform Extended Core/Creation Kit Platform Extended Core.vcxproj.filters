@@ -732,6 +732,9 @@
     <ClCompile Include="Patches\FO4\SortCrashCombined.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\UIThemeClassicPatch.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1772,6 +1775,9 @@
     </ClInclude>
     <ClInclude Include="Patches\FO4\SortCrashCombined.h">
       <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\UIThemeClassicPatch.h">
+      <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

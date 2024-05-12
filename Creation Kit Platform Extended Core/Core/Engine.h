@@ -70,6 +70,7 @@ namespace CreationKitPlatformExtended
 			ModuleManager* PatchesManager;
 			PluginManager* UserPluginsManager;
 			Module* _Theme;
+			Module* _ClassicTheme;
 			OsVersion _OsVersion;
 		};
 
