@@ -204,6 +204,9 @@ namespace CreationKitPlatformExtended
 						(uintptr_t)&BSPointerHandleManager_Extended::InitSDM);
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2),
 						(uintptr_t)&BSPointerHandleManager_Extended::KillSDM);
+					// Unfortunately, the array cleanup is not going through, so let's reset it ourselves
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(15),
+						(uintptr_t)&BSPointerHandleManager_Extended::InitSDM);
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
 						(uintptr_t)&BSPointerHandleManagerInterface_Extended::CreateHandle);
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5),
@@ -420,11 +423,21 @@ namespace CreationKitPlatformExtended
 						total = 0;
 
 						{
-							// mov eax, dword ptr ds:[r??+0x38]
-							// shr eax, 0xB
-							// cmp eax, r??
+							// mov e??, dword ptr ds:[r??+0x38]
+							// shr e??, 0xB
+							// cmp e??, r??
 							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"8B ? 38 C1 E8 0B 41 3B ?");
+								"8B ? 38 C1 ? 0B 41 3B ?");
+							for (size_t i = 0; i < patterns.size(); i++)
+							{
+								*(uint8_t*)(patterns[i] + 2) = (uint8_t)0x39;
+								*(uint8_t*)(patterns[i] + 5) = (uint8_t)0x3;
+							}
+
+							total += patterns.size();
+
+							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"8B ? 38 C1 ? 0B 3B ?");
 							for (size_t i = 0; i < patterns.size(); i++)
 							{
 								*(uint8_t*)(patterns[i] + 2) = (uint8_t)0x39;
@@ -434,9 +447,9 @@ namespace CreationKitPlatformExtended
 							total += patterns.size();
 						}
 
-						// should be 229
+						// should be 308
 						//_CONSOLE("Change REFR test handle index: %llu", total);
-						Assert(total == 229);
+						Assert(total == 308);
 					}
 				}
 				else
@@ -458,6 +471,9 @@ namespace CreationKitPlatformExtended
 						(uintptr_t)&BSPointerHandleManager_Original::InitSDM);
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2),
 						(uintptr_t)&BSPointerHandleManager_Original::KillSDM);
+					// Unfortunately, the array cleanup is not going through, so let's reset it ourselves
+					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(15),
+						(uintptr_t)&BSPointerHandleManager_Extended::InitSDM);
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
 						(uintptr_t)&BSPointerHandleManagerInterface_Original::CreateHandle);
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5),
