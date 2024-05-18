@@ -53,14 +53,36 @@ namespace CreationKitPlatformExtended
 			bool FixCrashNoRootMatPatch::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
-				if (lpRelocationDatabaseItem->Version() == 1)
+				auto verPatch = lpRelocationDatabaseItem->Version();
+
+				if (verPatch == 1)
 				{
 					ScopeRelocator text;
-
+					
 					// Fixed crash when by load plugin in which there is no root parent to materials
 					lpRelocator->Patch(lpRelocationDatabaseItem->At(0), { 0x0F, 0xC6, 0x1D, 0x1C, 0xC0, 0x30, 0x01, 0xEE,
 						0x0F, 0xC6, 0x05, 0x14, 0xC0, 0x30, 0x01, 0x44, 0x31, 0xC0, 0xEB, 0x4B });
 					lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0xEB, 0x6F });
+					lpRelocator->Patch(lpRelocationDatabaseItem->At(2), { 0xEB });
+
+					return true;
+				}
+				else if (verPatch == 2)
+				{
+					ScopeRelocator text;
+					// Fixed crash when by load plugin in which there is no root parent to materials
+					auto rva = lpRelocationDatabaseItem->At(0);
+					auto rva_data = lpRelocationDatabaseItem->At(3);
+					lpRelocator->Patch(rva, { 0x0F, 0xC6, 0x1D });
+					auto RelOff = (uint32_t)(rva_data - (rva + 8));
+					lpRelocator->Patch((uintptr_t)rva + 3, (uint8_t*)&RelOff, 4);
+					lpRelocator->Patch((uintptr_t)rva + 7, { 0xEE });	
+					rva += 8;
+					lpRelocator->Patch(rva, { 0x0F, 0xC6, 0x05 });
+					RelOff = (uint32_t)(rva_data - (rva + 8));
+					lpRelocator->Patch((uintptr_t)rva + 3, (uint8_t*)&RelOff, 4);
+					lpRelocator->Patch((uintptr_t)rva + 7, { 0x44, 0x31, 0xC0, 0xEB, 0x4D });
+					lpRelocator->Patch(lpRelocationDatabaseItem->At(1), { 0xEB, 0x74 });
 					lpRelocator->Patch(lpRelocationDatabaseItem->At(2), { 0xEB });
 
 					return true;
