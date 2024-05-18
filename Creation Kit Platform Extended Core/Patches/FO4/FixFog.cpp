@@ -16,8 +16,7 @@ namespace CreationKitPlatformExtended
 		namespace Fallout4
 		{
 			bool* globalFogEnabled = nullptr;
-			bool* globalSkyEnabled = nullptr;
-			static decltype(&FixFogPatch::sub) function_FixFogPatch_sub = nullptr;
+			static uintptr_t function_FixFogPatch_sub02 = 0;
 
 			FixFogPatch::FixFogPatch() : Module(GlobalEnginePtr)
 			{}
@@ -64,36 +63,11 @@ namespace CreationKitPlatformExtended
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
 					globalFogEnabled = (bool*)lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
-					globalSkyEnabled = (bool*)lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(7));
-
-					// Refresh state
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1), (uintptr_t)&sub);
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&sub);
 					// Replace hotkey
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(8), (uintptr_t)&ToggleFog);
-					//lpRelocator->DetourJump(lpRelocationDatabaseItem->At(9), (uintptr_t)&ToggleSky);
-
-					{
-						ScopeRelocator text;
-
-						// Remove useless
-						lpRelocator->PatchNop(lpRelocationDatabaseItem->At(3), 6);
-						lpRelocator->PatchNop(lpRelocationDatabaseItem->At(4), 6);
-
-						// No sky
-						lpRelocator->Patch(lpRelocationDatabaseItem->At(5), 
-							{ 0x45, 0x31, 0xC9, 0x90, 0x90, 0x90, 0x90, 0x90 });
-						lpRelocator->Patch(lpRelocationDatabaseItem->At(6),
-							{ 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 });
-					}
-
-					//
-					// When the sky is turned on, there is an unpleasant effect in the form of a pink render window. 
-					// This is fixed when you turn on the sky again, so turn it off by default.
-					// Of course, the bug appeared due to the removal of some code, 
-					// but this is how the fog was separated from the sky.
-					//
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(6), (uintptr_t)&InitSkyDisabled);
+					function_FixFogPatch_sub02 =
+						lpRelocator->DetourFunctionClass(lpRelocationDatabaseItem->At(1), (uintptr_t)&ToggleFog);
+					// Initializing fog from an setting
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&InitializeFogSettings);
 					
 					return true;
 				}
@@ -107,28 +81,6 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
-			uint32_t FixFogPatch::InitSkyDisabled()
-			{
-				*globalSkyEnabled = false;
-				*globalFogEnabled = Utils::GetProfileValue("CreationKitPrefs.ini", "Display", "bFogEnabled", true);
-
-				// Return 0 as unspecified and unchecked toolbutton
-				return 0;
-			}
-
-			void FixFogPatch::sub()
-			{
-				EditorAPI::Fallout4::TESUnknown* Inst = EditorAPI::Fallout4::TESUnknown::Instance;
-
-				if (!Inst && Inst->Main->IsEmpty())
-					return;
-
-				if (*globalFogEnabled)
-					Inst->Main->Sky->Enable();
-				else
-					Inst->Main->Sky->Disable();
-			}
-
 			bool FixFogPatch::IsFogEnabled()
 			{
 				return *globalFogEnabled;
@@ -136,48 +88,19 @@ namespace CreationKitPlatformExtended
 
 			void FixFogPatch::ToggleFog()
 			{
-				EditorAPI::Fallout4::TESUnknown* Inst = EditorAPI::Fallout4::TESUnknown::Instance;
-				if (!Inst || Inst->Main->IsEmpty())
-					return;
+				fastCall<void>(function_FixFogPatch_sub02);
 
-				auto SkyProperty = Inst->Main->Sky;
-				if (!SkyProperty)
-					return;
-
-				/*if (*globalSkyEnabled && *globalFogEnabled)
-				{
-					_CONSOLE("[WARNING] With Sky turned off, you cannot turn off the fog.");
-					return;
-				}*/
-
-				*globalFogEnabled = !(*globalFogEnabled);
 				CheckMenuItem(GlobalMainWindowPtr->MainMenu.Handle,
 					EditorAPI::EditorUI::UI_EDITOR_TOGGLEFOG,
 					*globalFogEnabled ? MF_CHECKED : MF_UNCHECKED);
 
-				sub();
-
 				Utils::UpdateProfileValue("CreationKitPrefs.ini", "Display", "bFogEnabled", *globalFogEnabled);
 			}
 
-			void FixFogPatch::ToggleSky()
+			int FixFogPatch::InitializeFogSettings(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			{
-				EditorAPI::Fallout4::TESUnknown* Inst = EditorAPI::Fallout4::TESUnknown::Instance;
-				if (!Inst || Inst->Main->IsEmpty())
-					return;
-				
-				if (Inst->Main->HasInterior())
-				{
-					if (*globalSkyEnabled)
-						GlobalMainWindowPtr->Perform(0x111, 0x9D24, 0);
-				}
-				else
-				{
-					if (!*globalSkyEnabled && !*globalFogEnabled)
-						ToggleFog();
-
-					GlobalMainWindowPtr->Perform(0x111, 0x9D24, 0);
-				}
+				*globalFogEnabled = Utils::GetProfileValue("CreationKitPrefs.ini", "Display", "bFogEnabled", true);
+				return EditorAPI::EditorUI::HKSendMessageA(hWnd, uMsg, wParam, lParam);
 			}
 		}
 	}

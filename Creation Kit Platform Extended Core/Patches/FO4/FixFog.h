@@ -28,11 +28,9 @@ namespace CreationKitPlatformExtended
 				virtual bool HasDependencies() const;
 				virtual Array<String> GetDependencies() const;
 
-				static void sub();
 				static bool IsFogEnabled();
 				static void ToggleFog();
-				static void ToggleSky();
-				static uint32_t InitSkyDisabled();
+				static int InitializeFogSettings(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;

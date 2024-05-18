@@ -29,6 +29,7 @@ namespace CreationKitPlatformExtended
 			static BOOL HKSetThreadPriority(HANDLE hThread, int nPriority);
 			static DWORD_PTR HKSetThreadAffinityMask(HANDLE hThread, DWORD_PTR dwThreadAffinityMask);
 			static void HKSleep(DWORD dwMilliseconds);
+			static void HKAdvancedSleep(DWORD dwMilliseconds);
 		protected:
 			virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const;
