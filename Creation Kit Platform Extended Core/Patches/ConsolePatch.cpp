@@ -81,6 +81,8 @@ namespace CreationKitPlatformExtended
 			"WORKSHOP",
 		};
 
+		static LPCSTR* currentTypeList = nullptr;
+
 		ConsolePatch::ConsolePatch() : Module(GlobalEnginePtr)
 		{}
 
@@ -137,17 +139,13 @@ namespace CreationKitPlatformExtended
 
 		void ConsolePatch::LogWarningVa(int Type, const char* Format, va_list& Va)
 		{
-			LPCSTR* typeList = nullptr;
-
-			if (GlobalEnginePtr->GetEditorVersion() <= (int)Core::EDITOR_SKYRIM_SE_1_6_1130)
-				typeList = typeListSkyrim;
-			else
+			if (!currentTypeList)
 				return;
 
 			char buffer[2048];
 			_vsnprintf_s(buffer, _TRUNCATE, Format, Va);
 
-			Log("%s: %s", typeList[Type], buffer);
+			Log("%s: %s", currentTypeList[Type], buffer);
 		}
 
 		void ConsolePatch::LogWarningUnknown1(const char* Format, ...)
@@ -190,6 +188,11 @@ namespace CreationKitPlatformExtended
 		bool ConsolePatch::Activate(const Relocator* lpRelocator,
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
+			if (GlobalEnginePtr->GetEditorVersion() <= (int)Core::EDITOR_SKYRIM_SE_LAST)
+				currentTypeList = typeListSkyrim;
+			else if (GlobalEnginePtr->GetEditorVersion() <= (int)Core::EDITOR_FALLOUT_C4_LAST)
+				currentTypeList = typeListFO4;
+
 			auto verPatch = lpRelocationDatabaseItem->Version();
 			if (verPatch == 1)
 			{

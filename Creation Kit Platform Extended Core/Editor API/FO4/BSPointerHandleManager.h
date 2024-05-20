@@ -167,9 +167,18 @@ namespace CreationKitPlatformExtended
 
 				static IBSPointerHandleManagerEntry<_Ty, HandleType, HandleRef>* InitSDM()
 				{
-					FreeListHead = 0;
-					HandleEntries.resize(HandleType::MAX_HANDLE_COUNT);
+					// Alloc
+					HandleEntries.resize(HandleType::MAX_HANDLE_COUNT + 1);
+					// Reset
+					CleanSDM();
+					// Return address
+					return HandleEntries.data();
+				}
 
+				static void CleanSDM()
+				{
+					FreeListHead = 0;
+					
 					for (_Ty i = 0; i < HandleType::MAX_HANDLE_COUNT; i++)
 					{
 						if ((i + 1) >= HandleType::MAX_HANDLE_COUNT)
@@ -179,7 +188,6 @@ namespace CreationKitPlatformExtended
 					}
 
 					FreeListTail = HandleType::MAX_HANDLE_COUNT - 1;
-					return HandleEntries.data();
 				}
 
 				static void KillSDM()

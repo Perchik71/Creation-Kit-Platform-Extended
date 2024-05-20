@@ -206,7 +206,7 @@ namespace CreationKitPlatformExtended
 						(uintptr_t)&BSPointerHandleManager_Extended::KillSDM);
 					// Unfortunately, the array cleanup is not going through, so let's reset it ourselves
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(15),
-						(uintptr_t)&BSPointerHandleManager_Extended::InitSDM);
+						(uintptr_t)&BSPointerHandleManager_Extended::CleanSDM);
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
 						(uintptr_t)&BSPointerHandleManagerInterface_Extended::CreateHandle);
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5),
@@ -473,7 +473,7 @@ namespace CreationKitPlatformExtended
 						(uintptr_t)&BSPointerHandleManager_Original::KillSDM);
 					// Unfortunately, the array cleanup is not going through, so let's reset it ourselves
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(15),
-						(uintptr_t)&BSPointerHandleManager_Extended::InitSDM);
+						(uintptr_t)&BSPointerHandleManager_Original::CleanSDM);
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
 						(uintptr_t)&BSPointerHandleManagerInterface_Original::CreateHandle);
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5),
