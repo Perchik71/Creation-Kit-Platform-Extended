@@ -31,6 +31,7 @@ namespace CreationKitPlatformExtended
 			Array<const TESFile*> g_SelectedFilesArray;
 			uintptr_t pointer_BSArchiveManagerModded_sub = 0;
 			bool IsLoaded;
+			uint8_t supportedBA2Version = 8;
 
 			BSArchiveManagerModdedPatch::BSArchiveManagerModdedPatch() : Module(GlobalEnginePtr)
 			{}
@@ -78,25 +79,31 @@ namespace CreationKitPlatformExtended
 
 				if ((verPatch == 1) || (verPatch == 2))
 				{
-					EditorAPI::Fallout4::BSResource::pointer_Archive2_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(6));
-					EditorAPI::Fallout4::BSResource::pointer_Archive2_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
-
+					EditorAPI::Fallout4::BSResource::pointer_Archive2_sub1 = _RELDATA_ADDR(6);
+					EditorAPI::Fallout4::BSResource::pointer_Archive2_sub2 = _RELDATA_ADDR(0);
 					EditorAPI::Fallout4::BSResource::Archive2::Initialize();
 
 					if (verPatch == 1)
-						lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1),
+						// Первая версия патча для 1.10.162.0
+						lpRelocator->DetourCall(_RELDATA_RAV(1),
 							(uintptr_t)&EditorAPI::Fallout4::BSResource::Archive2::HKLoadArchive);
 					else
-						lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1),
+						lpRelocator->DetourCall(_RELDATA_RAV(1),
 							(uintptr_t)&EditorAPI::Fallout4::BSResource::Archive2::HKLoadArchiveEx);
 
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&LoadTesFile);
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3), (uintptr_t)&LoadTesFileFinal);
+					lpRelocator->DetourCall(_RELDATA_RAV(2), (uintptr_t)&LoadTesFile);
+					lpRelocator->DetourJump(_RELDATA_RAV(3), (uintptr_t)&LoadTesFileFinal);
 
-					pointer_BSArchiveManagerModded_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(4));
+					pointer_BSArchiveManagerModded_sub = _RELDATA_ADDR(4);
 
 					// Пропуск загрузки архивов, что не имеют отношения к загружаемому моду, но является предыдущей работой
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(5), { 0xC3 });
+					lpRelocator->Patch(_RELDATA_RAV(5), { 0xC3 });
+
+					// Так как разница между первой и 8 версией лишь, то что был удалён GNF формат для PlayStation.
+					// То очевидно, 8 версии с GNF форматом просто не будет, то вполне безопасно, открывать любые версии архивы.
+					if (verPatch == 1)
+						// Первая версия патча для 1.10.162.0
+						lpRelocator->Patch(_RELDATA_RAV(7), &supportedBA2Version, 1);
 
 					return true;
 				}
