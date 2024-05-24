@@ -90,6 +90,7 @@
     <ClCompile Include="Core\ModuleManager.cpp" />
     <ClCompile Include="Core\Plugin.cpp" />
     <ClCompile Include="Core\PluginManager.cpp" />
+    <ClCompile Include="Core\ProgressTaskBar.cpp" />
     <ClCompile Include="Core\RegistratorWindow.cpp" />
     <ClCompile Include="Core\RelocationDatabase.cpp" />
     <ClCompile Include="Core\Relocator.cpp" />
@@ -289,6 +290,7 @@
     <ClCompile Include="Patches\Windows\SSE\MainWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\NavMeshWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\ObjectWindow.cpp" />
+    <ClCompile Include="Patches\Windows\SSE\ProgressWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\RenderWindow.cpp" />
     <ClCompile Include="ProfileUtil.cpp" />
     <ClCompile Include="Steam API\SteamAPI.cpp" />
@@ -341,6 +343,7 @@
     <ClInclude Include="Core\ModuleManager.h" />
     <ClInclude Include="Core\Plugin.h" />
     <ClInclude Include="Core\PluginManager.h" />
+    <ClInclude Include="Core\ProgressTaskBar.h" />
     <ClInclude Include="Core\RegistratorWindow.h" />
     <ClInclude Include="Core\RelocationDatabase.h" />
     <ClInclude Include="Core\Relocator.h" />
@@ -615,6 +618,7 @@
     <ClInclude Include="Patches\Windows\SSE\MainWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\NavMeshWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\ObjectWindow.h" />
+    <ClInclude Include="Patches\Windows\SSE\ProgressWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\RenderWindow.h" />
     <ClInclude Include="ProfileUtil.h" />
     <ClInclude Include="resource.h" />

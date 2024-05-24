@@ -100,6 +100,7 @@
 #include "Patches/Windows/SSE/CellViewWindow.h"
 #include "Patches/Windows/SSE/BNetUploadWindow.h"
 #include "Patches/Windows/SSE/NavMeshWindow.h"
+#include "Patches/Windows/SSE/ProgressWindow.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -206,6 +207,7 @@ namespace CreationKitPlatformExtended
 				new Patches::CellViewWindow(),
 				new Patches::BNetUploadWindow(),
 				new Patches::NavMeshWindow(),
+				new Patches::ProgressWindow(),
 			});
 		}
 	}

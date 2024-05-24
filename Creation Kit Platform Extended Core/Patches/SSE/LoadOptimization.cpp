@@ -4,6 +4,7 @@
 
 #include "Core/Engine.h"
 #include "LoadOptimization.h"
+#include "../Windows/SSE/ProgressWindow.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -187,6 +188,7 @@ namespace CreationKitPlatformExtended
 				if (abs(lastPercent - newPercent) <= 0.25f)
 					return;
 
+				GlobalProgressWindowPtr->step();
 				UpdateProgressBar();
 				lastPercent = newPercent;
 			}

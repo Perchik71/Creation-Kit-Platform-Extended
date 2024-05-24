@@ -3,8 +3,10 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
+#include "Core/ProgressTaskBar.h"
 #include "Editor API/EditorUI.h"
 #include "Patches/UIThemePatch.h"
+#include "MainWindowF4.h"
 #include "ProgressWindowF4.h"
 
 namespace CreationKitPlatformExtended
@@ -14,6 +16,7 @@ namespace CreationKitPlatformExtended
 		namespace Fallout4
 		{
 			ProgressWindow* GlobalProgressWindowPtr = nullptr;
+			ProgressTaskBar* ProgressTaskBarPtr = nullptr;
 
 			uintptr_t pointer_ProgressWindow_sub = 0;
 			long value_ProgressWindow_pos = 0;
@@ -124,12 +127,24 @@ namespace CreationKitPlatformExtended
 						GlobalProgressWindowPtr->Progress.Perform(PBM_SETPOS, 0, 0);
 						value_ProgressWindow_pos = 0;
 
+						if (GlobalMainWindowPtr)
+						{
+							ProgressTaskBarPtr = new ProgressTaskBar(GlobalMainWindowPtr->Handle);
+							if (ProgressTaskBarPtr) ProgressTaskBarPtr->Begin();
+						}
+						
 						ShowWindow(Hwnd, SW_SHOW);
 						UpdateWindow(Hwnd);
 					}
 					return 0;
 					case WM_DESTROY:
 					{
+						if (ProgressTaskBarPtr)
+						{
+							delete ProgressTaskBarPtr;
+							ProgressTaskBarPtr = nullptr;
+						}
+
 						GlobalProgressWindowPtr->isOpen = false;
 						GlobalProgressWindowPtr->m_hWnd = nullptr;
 						GlobalProgressWindowPtr->ProgressLabel = nullptr;
@@ -153,8 +168,10 @@ namespace CreationKitPlatformExtended
 				if (GlobalProgressWindowPtr->isOpen)
 				{
 					GlobalProgressWindowPtr->ProgressLabel.Caption = lpcstrText;
-					GlobalProgressWindowPtr->Progress.Perform(PBM_SETPOS, 100, 0);
+					GlobalProgressWindowPtr->Progress.Perform(PBM_SETPOS, 95, 0);
 					GlobalProgressWindowPtr->Progress.Refresh();
+
+					if (ProgressTaskBarPtr) ProgressTaskBarPtr->SetPosition(95);
 				}
 
 				return fastCall<void>(pointer_ProgressWindow_sub, nPartId, lpcstrText);
@@ -172,7 +189,10 @@ namespace CreationKitPlatformExtended
 					if (value_ProgressWindow_pos < step)
 					{
 						for (auto i = 0; i < (step - value_ProgressWindow_pos); i++)
+						{
 							GlobalProgressWindowPtr->Progress.Perform(PBM_STEPIT, 0, 0);
+							if (ProgressTaskBarPtr) ProgressTaskBarPtr->Step();
+						}
 			
 						value_ProgressWindow_pos = step;
 						GlobalProgressWindowPtr->Progress.Refresh();

@@ -6,6 +6,7 @@
 
 #include "NiAPI\NiRefObject.h"
 #include "NiEvents.h"
+#include "NiAPI\NiNode.h"
 #include "NiAPI\NiPoint.h"
 #include "..\\BSHandleRefObject.h"
 #include "BGSPrimitive.h"
@@ -64,6 +65,8 @@ namespace CreationKitPlatformExtended
 				uint16_t _scale;						// 0x118
 				char _pad118[0x26];						// 0x11A
 			public:
+				// The function returns BSFadeNode, it has not been studied, I use parent class
+				inline NiAPI::NiNode* GetFadeNode() const { return thisVirtualCall<NiAPI::NiNode*>(0x558, this); }
 				inline NiPoint3 GetPosition() const { return _position; }
 				inline void SetPosition(const NiPoint3& val) { _position = val; }
 				inline NiPoint3 GetRotate() const { return _rotate; }

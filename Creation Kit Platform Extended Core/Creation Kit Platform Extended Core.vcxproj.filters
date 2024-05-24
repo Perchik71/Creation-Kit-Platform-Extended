@@ -735,6 +735,12 @@
     <ClCompile Include="Patches\UIThemeClassicPatch.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Core\ProgressTaskBar.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\Windows\SSE\ProgressWindow.cpp">
+      <Filter>Patches\Windows\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1778,6 +1784,12 @@
     </ClInclude>
     <ClInclude Include="Patches\UIThemeClassicPatch.h">
       <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ProgressTaskBar.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\SSE\ProgressWindow.h">
+      <Filter>Patches\Windows\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

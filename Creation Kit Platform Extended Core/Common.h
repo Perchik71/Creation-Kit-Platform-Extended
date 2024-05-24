@@ -15,6 +15,7 @@
 
 #include <windows.h>
 #include <windowsx.h>
+#include <wrl/client.h>		// Microsoft::WRL::ComPtr
 #include <dbghelp.h>
 #include <shellapi.h>
 #include <shlwapi.h>
