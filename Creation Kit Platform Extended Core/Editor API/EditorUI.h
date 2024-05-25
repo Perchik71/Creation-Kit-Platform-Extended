@@ -71,6 +71,10 @@ namespace CreationKitPlatformExtended
 			static void ListViewInsertItemDeferred(HWND ListViewHandle, void* Parameter,
 				bool UseImage, int ItemIndex);
 			static void* ListViewGetSelectedItem(HWND ListViewHandle);
+			static bool ListViewSetItemState(HWND ListViewHandle, WPARAM Index, UINT Data, UINT Mask);
+			static void ListViewSelectItem(HWND ListViewHandle, int ItemIndex, bool KeepOtherSelections);
+			static void ListViewFindAndSelectItem(HWND ListViewHandle, void* Parameter, bool KeepOtherSelections);
+			static void ListViewDeselectItem(HWND ListViewHandle, void* Parameter);
 		private:
 			EditorUI(const EditorUI&) = default;
 			EditorUI& operator=(const EditorUI&) = default;

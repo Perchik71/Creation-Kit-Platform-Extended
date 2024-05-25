@@ -20,12 +20,11 @@ namespace CreationKitPlatformExtended
 				auto Stream = _fsopen(Path.c_str(), "rt", _SH_DENYRD);
 				Utils::ScopeFileStream fileStream(Stream);
 				auto Line = std::make_unique<char[]>(260);
-				while (!feof(Stream))
+				auto LinePtr = Line.get();
+				while (fgets(LinePtr, 260, Stream))
 				{
-					auto LinePtr = Line.get();
-					fgets(LinePtr, 260, Stream);
 					LinePtr[259] = 0;
-					_filter.push_back(LinePtr);
+					_filter.push_back(Utils::Trim(LinePtr));
 				}
 			}
 		}

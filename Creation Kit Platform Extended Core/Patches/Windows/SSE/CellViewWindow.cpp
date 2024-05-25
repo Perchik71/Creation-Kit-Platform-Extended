@@ -101,7 +101,7 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
-			CellViewWindow::CellViewWindow() : BaseWindow(), Classes::CUIBaseWindow()
+			CellViewWindow::CellViewWindow() : BaseWindow(), Classes::CUIBaseWindow(), lock(false)
 			{
 				Assert(!GlobalCellViewWindowPtr);
 				GlobalCellViewWindowPtr = this;
@@ -136,16 +136,12 @@ namespace CreationKitPlatformExtended
 				if (GlobalCellViewWindowPtr)
 				{
 					auto Handle = GlobalCellViewWindowPtr->Handle;
-					
-					auto SelOnly = static_cast<bool>(GetPropA(Handle, EditorAPI::EditorUI::UI_USER_DATA_SELECT_OBJECT_ONLY));
-					if (SelOnly)
-						// Fake a filter text box change
-						SendMessageA(Handle, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
 
+					auto SelOnly = static_cast<bool>(GetPropA(Handle, EditorAPI::EditorUI::UI_USER_DATA_SELECT_OBJECT_ONLY));
 					auto VisOnly = static_cast<bool>(GetPropA(Handle, EditorAPI::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY));
-					if (VisOnly)
-						// Fake a filter text box change
-						SendMessageA(Handle, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
+
+					if (SelOnly || VisOnly)
+						GlobalCellViewWindowPtr->UpdateObjectList();
 				}
 
 				return Ret;
@@ -241,6 +237,20 @@ namespace CreationKitPlatformExtended
 				m_ActiveObjectsOnly.BoundsRect = Bounds;
 			}
 
+			void CellViewWindow::UpdateCellList()
+			{
+				if (!lock)
+					// Fake the dropdown list being activated
+					SendMessageA(Handle, WM_COMMAND, MAKEWPARAM(2083, 1), 0);
+			}
+
+			void CellViewWindow::UpdateObjectList()
+			{
+				if (!lock)
+					// Fake a filter text box change
+					SendMessageA(Handle, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
+			}
+
 			LRESULT CALLBACK CellViewWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 			{
 				if (Message == WM_INITDIALOG)
@@ -294,36 +304,28 @@ namespace CreationKitPlatformExtended
 					{
 						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
 						SetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_ACTIVE_CELLS_ONLY, reinterpret_cast<HANDLE>(enableFilter));
-
-						// Fake the dropdown list being activated
-						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2083, 1), 0);
+						GlobalCellViewWindowPtr->UpdateCellList();
 						return 1;
 					}
 					else if (param == UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX)
 					{
 						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
 						SetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_ACTIVE_OBJECT_ONLY, reinterpret_cast<HANDLE>(enableFilter));
-
-						// Fake a filter text box change
-						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
+						GlobalCellViewWindowPtr->UpdateObjectList();
 						return 1;
 					}
 					else if (param == UI_CELL_VIEW_SELECT_CELL_OBJECTS_CHECKBOX)
 					{
 						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
 						SetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_SELECT_OBJECT_ONLY, reinterpret_cast<HANDLE>(enableFilter));
-
-						// Fake a filter text box change
-						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
+						GlobalCellViewWindowPtr->UpdateObjectList();
 						return 1;
 					}
 					else if (param == UI_CELL_VIEW_VISIBLE_CELL_OBJECTS_CHECKBOX)
 					{
 						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
 						SetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY, reinterpret_cast<HANDLE>(enableFilter));
-
-						// Fake a filter text box change
-						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
+						GlobalCellViewWindowPtr->UpdateObjectList();
 						return 1;
 					}
 					else if ((param == UI_CELL_VIEW_FILTER_CELL) && (HIWORD(wParam) == EN_CHANGE))
@@ -336,8 +338,7 @@ namespace CreationKitPlatformExtended
 						if (iLen)
 							GetWindowTextA(hFilter, str_CellViewWindow_FilterUser, iLen + 1);
 
-						// Fake the dropdown list being activated
-						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2083, 1), 0);
+						GlobalCellViewWindowPtr->UpdateCellList();
 						return 1;
 					}
 				}

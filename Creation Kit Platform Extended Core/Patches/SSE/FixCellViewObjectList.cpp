@@ -3,6 +3,8 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
+#include "Editor API/EditorUI.h"
+#include "..\Windows\SSE\CellViewWindow.h"
 #include "FixCellViewObjectList.h"
 
 namespace CreationKitPlatformExtended
@@ -11,6 +13,23 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
+			using namespace CreationKitPlatformExtended::EditorAPI;
+
+			class ScopeFilterLock
+			{
+			public:
+				ScopeFilterLock()
+				{
+					GlobalCellViewWindowPtr->LockUpdateLists();
+				}
+				~ScopeFilterLock()
+				{
+					GlobalCellViewWindowPtr->UnlockUpdateLists();
+				}
+			};
+
+			uintptr_t pointer_FixCellViewObjectListPatch_sub = 0;
+
 			FixCellViewObjectListPatch::FixCellViewObjectListPatch() : Module(GlobalEnginePtr)
 			{}
 
@@ -36,12 +55,12 @@ namespace CreationKitPlatformExtended
 
 			bool FixCellViewObjectListPatch::HasDependencies() const
 			{
-				return false;
+				return true;
 			}
 
 			Array<String> FixCellViewObjectListPatch::GetDependencies() const
 			{
-				return {};
+				return { "Cell View Window" };
 			}
 
 			bool FixCellViewObjectListPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
@@ -58,9 +77,11 @@ namespace CreationKitPlatformExtended
 					//
 					// Fix the "Cell View" object list current selection not being synced with the render window
 					//
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(0), (uintptr_t)&ListViewSelectItem);
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(1), (uintptr_t)&ListViewFindAndSelectItem);
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(2), (uintptr_t)&ListViewDeselectItem);
+					lpRelocator->DetourJump(_RELDATA_RAV(0), (uintptr_t)&ListViewSelectItem);
+					lpRelocator->DetourJump(_RELDATA_RAV(1), (uintptr_t)&ListViewFindAndSelectItem);
+					lpRelocator->DetourJump(_RELDATA_RAV(2), (uintptr_t)&ListViewDeselectItem);
+					
+					pointer_FixCellViewObjectListPatch_sub = voltek::detours_function_class_jump(_RELDATA_ADDR(3), &sub1);
 
 					return true;
 				}
@@ -74,60 +95,25 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
-			bool FixCellViewObjectListPatch::ListViewSetItemState(HWND ListViewHandle, WPARAM Index, UINT Data, UINT Mask)
-			{
-				// Microsoft's implementation of this define is broken (ListView_SetItemState)
-				LVITEMA item
-				{
-					.mask = LVIF_STATE,
-					.state = Data,
-					.stateMask = Mask
-				};
-
-				return static_cast<BOOL>(SendMessageA(ListViewHandle, LVM_SETITEMSTATE, Index, reinterpret_cast<LPARAM>(&item)));
-			}
-
 			void FixCellViewObjectListPatch::ListViewSelectItem(HWND ListViewHandle, int ItemIndex, bool KeepOtherSelections)
 			{
-				if (!KeepOtherSelections)
-					ListViewSetItemState(ListViewHandle, -1, 0, LVIS_SELECTED);
-
-				if (ItemIndex != -1)
-				{
-					ListView_EnsureVisible(ListViewHandle, ItemIndex, FALSE);
-					ListViewSetItemState(ListViewHandle, ItemIndex, LVIS_SELECTED, LVIS_SELECTED);
-				}
+				EditorUI::ListViewSelectItem(ListViewHandle, ItemIndex, KeepOtherSelections);
 			}
 
 			void FixCellViewObjectListPatch::ListViewFindAndSelectItem(HWND ListViewHandle, void* Parameter, bool KeepOtherSelections)
 			{
-				if (!KeepOtherSelections)
-					ListViewSetItemState(ListViewHandle, -1, 0, LVIS_SELECTED);
-
-				LVFINDINFOA findInfo
-				{
-					.flags = LVFI_PARAM,
-					.lParam = reinterpret_cast<LPARAM>(Parameter)
-				};
-
-				int index = ListView_FindItem(ListViewHandle, -1, &findInfo);
-
-				if (index != -1)
-					ListViewSelectItem(ListViewHandle, index, KeepOtherSelections);
+				EditorUI::ListViewFindAndSelectItem(ListViewHandle, Parameter, KeepOtherSelections);
 			}
 
 			void FixCellViewObjectListPatch::ListViewDeselectItem(HWND ListViewHandle, void* Parameter)
 			{
-				LVFINDINFOA findInfo
-				{
-					.flags = LVFI_PARAM,
-					.lParam = reinterpret_cast<LPARAM>(Parameter)
-				};
+				EditorUI::ListViewDeselectItem(ListViewHandle, Parameter);
+			}
 
-				int index = ListView_FindItem(ListViewHandle, -1, &findInfo);
-
-				if (index != -1)
-					ListViewSetItemState(ListViewHandle, index, 0, LVIS_SELECTED);
+			void FixCellViewObjectListPatch::sub1(uint64_t a1, uint64_t a2, uint64_t a3)
+			{
+				ScopeFilterLock Locker;
+				fastCall<void>(pointer_FixCellViewObjectListPatch_sub, a1, a2, a3);
 			}
 		}
 	}

@@ -28,10 +28,10 @@ namespace CreationKitPlatformExtended
 				virtual bool HasDependencies() const;
 				virtual Array<String> GetDependencies() const;
 
-				static bool ListViewSetItemState(HWND ListViewHandle, WPARAM Index, UINT Data, UINT Mask);
 				static void ListViewSelectItem(HWND ListViewHandle, int ItemIndex, bool KeepOtherSelections);
 				static void ListViewFindAndSelectItem(HWND ListViewHandle, void* Parameter, bool KeepOtherSelections);
 				static void ListViewDeselectItem(HWND ListViewHandle, void* Parameter);
+				static void sub1(uint64_t a1, uint64_t a2, uint64_t a3);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;

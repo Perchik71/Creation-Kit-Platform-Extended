@@ -95,6 +95,62 @@ namespace CreationKitPlatformExtended
 			}
 		}
 
+		bool EditorUI::ListViewSetItemState(HWND ListViewHandle, WPARAM Index, UINT Data, UINT Mask)
+		{
+			// Microsoft's implementation of this define is broken (ListView_SetItemState)
+			LVITEMA item
+			{
+				.mask = LVIF_STATE,
+				.state = Data,
+				.stateMask = Mask
+			};
+
+			return static_cast<BOOL>(SendMessageA(ListViewHandle, LVM_SETITEMSTATE, Index, reinterpret_cast<LPARAM>(&item)));
+		}
+
+		void EditorUI::ListViewSelectItem(HWND ListViewHandle, int ItemIndex, bool KeepOtherSelections)
+		{
+			if (!KeepOtherSelections)
+				ListViewSetItemState(ListViewHandle, -1, 0, LVIS_SELECTED);
+
+			if (ItemIndex != -1)
+			{
+				ListView_EnsureVisible(ListViewHandle, ItemIndex, FALSE);
+				ListViewSetItemState(ListViewHandle, ItemIndex, LVIS_SELECTED, LVIS_SELECTED);
+			}
+		}
+
+		void EditorUI::ListViewFindAndSelectItem(HWND ListViewHandle, void* Parameter, bool KeepOtherSelections)
+		{
+			if (!KeepOtherSelections)
+				ListViewSetItemState(ListViewHandle, -1, 0, LVIS_SELECTED);
+
+			LVFINDINFOA findInfo
+			{
+				.flags = LVFI_PARAM,
+				.lParam = reinterpret_cast<LPARAM>(Parameter)
+			};
+
+			int index = ListView_FindItem(ListViewHandle, -1, &findInfo);
+
+			if (index != -1)
+				ListViewSelectItem(ListViewHandle, index, KeepOtherSelections);
+		}
+
+		void EditorUI::ListViewDeselectItem(HWND ListViewHandle, void* Parameter)
+		{
+			LVFINDINFOA findInfo
+			{
+				.flags = LVFI_PARAM,
+				.lParam = reinterpret_cast<LPARAM>(Parameter)
+			};
+
+			int index = ListView_FindItem(ListViewHandle, -1, &findInfo);
+
+			if (index != -1)
+				ListViewSetItemState(ListViewHandle, index, 0, LVIS_SELECTED);
+		}
+
 		void EditorUI::ListViewInsertItemDeferred(HWND ListViewHandle, void* Parameter,
 			bool UseImage, int ItemIndex)
 		{

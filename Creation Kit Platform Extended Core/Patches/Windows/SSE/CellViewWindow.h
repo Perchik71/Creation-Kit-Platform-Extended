@@ -33,6 +33,10 @@ namespace CreationKitPlatformExtended
 				static __int64 sub3(__int64 a1, __int64 a2, __int64 a3);
 
 				void ResizeWnd(UINT width, UINT height);
+				inline void LockUpdateLists() { lock = true; }
+				inline void UnlockUpdateLists() { lock = false; }
+				void UpdateCellList();
+				void UpdateObjectList();
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
@@ -56,6 +60,7 @@ namespace CreationKitPlatformExtended
 				Classes::CUIBaseControl m_CellListView;
 				Classes::CUIBaseControl m_ObjectListView;
 				Classes::CUIBaseControl m_FilterCellEdit;
+				bool lock;
 			};
 
 			extern CellViewWindow* GlobalCellViewWindowPtr;
