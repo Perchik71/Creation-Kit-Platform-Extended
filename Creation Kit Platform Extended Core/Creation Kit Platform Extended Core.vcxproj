@@ -76,6 +76,7 @@
     <ClCompile Include="Core\AboutWindow.cpp" />
     <ClCompile Include="Core\CommandLineParser.cpp" />
     <ClCompile Include="Core\ConsoleWindow.cpp" />
+    <ClCompile Include="Core\D3D11Proxy.cpp" />
     <ClCompile Include="Core\DebugLog.cpp" />
     <ClCompile Include="Core\DialogManager.cpp" />
     <ClCompile Include="Core\DynamicCast.cpp" />
@@ -132,6 +133,7 @@
     <ClCompile Include="Patches\AllowMultipleWindowAndMaster.cpp" />
     <ClCompile Include="Patches\ConsolePatch.cpp" />
     <ClCompile Include="Patches\CrashDumpPatch.cpp" />
+    <ClCompile Include="Patches\D3D11Patch.cpp" />
     <ClCompile Include="Patches\DisableAssertion.cpp" />
     <ClCompile Include="Patches\FaceGen.cpp" />
     <ClCompile Include="Patches\FlowChartXPatch.cpp" />
@@ -331,6 +333,7 @@
     <ClInclude Include="Core\CommandLineParser.h" />
     <ClInclude Include="Core\ConsoleWindow.h" />
     <ClInclude Include="Core\CoreCommon.h" />
+    <ClInclude Include="Core\D3D11Proxy.h" />
     <ClInclude Include="Core\DebugLog.h" />
     <ClInclude Include="Core\DialogManager.h" />
     <ClInclude Include="Core\DynamicCast.h" />
@@ -460,6 +463,7 @@
     <ClInclude Include="Patches\AllowMultipleWindowAndMaster.h" />
     <ClInclude Include="Patches\ConsolePatch.h" />
     <ClInclude Include="Patches\CrashDumpPatch.h" />
+    <ClInclude Include="Patches\D3D11Patch.h" />
     <ClInclude Include="Patches\DisableAssertion.h" />
     <ClInclude Include="Patches\FaceGen.h" />
     <ClInclude Include="Patches\FlowChartXPatch.h" />

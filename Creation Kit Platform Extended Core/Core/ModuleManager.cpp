@@ -13,7 +13,22 @@ namespace CreationKitPlatformExtended
 	namespace Core
 	{
 		ModuleManager::ModuleManager()
-		{}
+		{
+			auto Path = Utils::GetApplicationPath() + "CreationKitPlatformExtendedFilter.txt";
+			if (Utils::FileExists(Path.c_str()))
+			{
+				auto Stream = _fsopen(Path.c_str(), "rt", _SH_DENYRD);
+				Utils::ScopeFileStream fileStream(Stream);
+				auto Line = std::make_unique<char[]>(260);
+				while (!feof(Stream))
+				{
+					auto LinePtr = Line.get();
+					fgets(LinePtr, 260, Stream);
+					LinePtr[259] = 0;
+					_filter.push_back(LinePtr);
+				}
+			}
+		}
 
 		ModuleManager::~ModuleManager()
 		{
@@ -65,6 +80,7 @@ namespace CreationKitPlatformExtended
 		void ModuleManager::Clear()
 		{
 			_modules.clear();
+			_filter.clear();
 		}
 
 		void ModuleManager::QueryAll()
@@ -73,6 +89,14 @@ namespace CreationKitPlatformExtended
 
 			for (auto It = _modules.begin(); It != _modules.end(); It++)
 			{
+				if (std::find(_filter.begin(), _filter.end(), It->first.c_str()) != _filter.end())
+				{
+					RejectedModules.push_back(It);
+
+					_WARNING("The patch \"%s\" exists in list exclude. Skip.", It->first.c_str());
+					continue;
+				}
+
 				if (!It->second->Query(GlobalEnginePtr->GetEditorVersion(), VER_FILE_VERSION_STR))
 					RejectedModules.push_back(It);
 			}

@@ -33,6 +33,7 @@ namespace CreationKitPlatformExtended
 			ModuleManager& operator=(const ModuleManager&) = default;
 
 			Map<String, SmartPointer<Module>> _modules;
+			Array<String> _filter;
 		};
 	}
 }

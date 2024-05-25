@@ -741,6 +741,12 @@
     <ClCompile Include="Patches\Windows\SSE\ProgressWindow.cpp">
       <Filter>Patches\Windows\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Core\D3D11Proxy.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\D3D11Patch.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1790,6 +1796,12 @@
     </ClInclude>
     <ClInclude Include="Patches\Windows\SSE\ProgressWindow.h">
       <Filter>Patches\Windows\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\D3D11Proxy.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\D3D11Patch.h">
+      <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
