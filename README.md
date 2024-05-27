@@ -18,7 +18,7 @@
 The powerful open-source platform makes numerous fixes and improvements to the **Creation Kit** editor from **Bethesda**. This is a continuation of two previously archived projects, as I am already confused in the code. The new implementation is based on the principle of modularity, which will allow for better control of development.  
 
 <p align="left">
-  <img src="https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/master/Resources/ckpe_ai.png" alt="Creation Kit Platform Extended" border="0" align="left" height=367>
+  <img src="https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/master/Resources/ckpe_ai.png" alt="Creation Kit Platform Extended" border="0" align="left" height=393>
   <table>
   <caption>
     At the moment, the platform supports <b>CK</b> version:</br>
@@ -75,6 +75,7 @@ The powerful open-source platform makes numerous fixes and improvements to the *
 </table>
 </p>
 
+# 
 > [!IMPORTANT]
 > 1. **CK F4** version **1.10.9XX.X** and newer worked only on the **NG** version of the game. There is no compatibility with **Fallout4 - Shaders.ba2**.  
 > 2. **CK** does not work well with **ENB**. I wrote **ckpe_loader**. This is console app, for 15 seconds renames from the known to me .dll files that harm the work of CK this time is enough to load the CK itself. All renames .dll files will be restored name after this time.
