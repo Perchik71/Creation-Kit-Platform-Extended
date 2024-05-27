@@ -18,7 +18,7 @@
 The powerful open-source platform makes numerous fixes and improvements to the **Creation Kit** editor from **Bethesda**. This is a continuation of two previously archived projects, as I am already confused in the code. The new implementation is based on the principle of modularity, which will allow for better control of development.  
 
 <p align="left">
-  <img src="https://i.ibb.co/MVtb4m0/tan.png" alt="Creation Kit Platform Extended" border="0" align="left" height=367>
+  <img src="https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/master/Resources/ckpe_ai.png" alt="Creation Kit Platform Extended" border="0" align="left" height=367>
   <table>
   <caption>
     At the moment, the platform supports <b>CK</b> version:</br>
@@ -30,45 +30,34 @@ The powerful open-source platform makes numerous fixes and improvements to the *
       <th scope="col">State</th>
       <th scope="col">Version</th>
       <th scope="col">State</th>
-      <th scope="col">Version</th>
-      <th scope="col">State</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row" colspan="2">Skyrim SE</th>
       <th scope="row" colspan="2">Fallout 4</th>
-      <th scope="row" colspan="2">Starfield</th>
     </tr>
     <tr>
       <td>1.5.3.0</td>
       <td>Active</td>
       <td>1.10.162.0</td>
       <td>Deprecated</td>
-      <td></td>
-      <td></td>
     </tr>
     <tr>
       <td>1.5.73.0</td>
       <td>Active</td>
       <td>1.10.943.1</td>
       <td>Deprecated</td>
-      <td></td>
-      <td></td>
     </tr>
     <tr>
       <td>1.6.438.0</td>
       <td>Active</td>
       <td>1.10.982.3</td>
       <td>Active</td>
-      <td></td>
-      <td></td>
     </tr>
     <tr>
       <td>1.6.1130.0</td>
       <td>Active</td>
-      <td></td>
-      <td></td>
       <td></td>
       <td></td>
     </tr>
@@ -77,12 +66,10 @@ The powerful open-source platform makes numerous fixes and improvements to the *
     <tr>
       <th scope="row" colspan="2">Status platform</th>
       <th scope="row" colspan="2">Status platform</th>
-      <th scope="row" colspan="2">Status platform</th>
     </tr>
     <tr>
       <th scope="row" colspan="2">Stable</th>
       <th scope="row" colspan="2">Stable</th>
-      <th scope="row" colspan="2">Assumption, waiting for the release</th>
     </tr>
   </tfoot>
 </table>
