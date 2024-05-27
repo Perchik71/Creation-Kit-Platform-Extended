@@ -179,12 +179,6 @@ namespace CreationKitPlatformExtended
 					lpRelocator->DetourCall(rva + 5, func);
 				};
 
-				/*auto restoring_getsmartptr1 = [&lpRelocator](uintptr_t rva, uint32_t removal_size, uintptr_t func)
-				{
-					lpRelocator->PatchNop(rva, removal_size);
-					lpRelocator->DetourCall(rva + 5, func);
-				};*/
-
 				if (Extremly && (GlobalEnginePtr->GetEditorVersion() >= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_1_10_982_3))
 				{
 					BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 1;
