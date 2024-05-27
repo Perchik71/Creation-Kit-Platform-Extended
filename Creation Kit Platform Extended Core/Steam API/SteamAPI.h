@@ -13,6 +13,7 @@ extern "C"
 
 STEAM_API void* SteamApps();
 STEAM_API void* SteamUser();
+STEAM_API void* SteamUserStats();
 STEAM_API void* SteamUtils();
 STEAM_API void* SteamClient();
 STEAM_API void* SteamRemoteStorage();

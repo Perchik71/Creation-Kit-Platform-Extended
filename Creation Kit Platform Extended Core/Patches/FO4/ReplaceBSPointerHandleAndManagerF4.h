@@ -34,6 +34,7 @@ namespace CreationKitPlatformExtended
 				bool Install_980(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem,
 					bool Extremly);
 
+				static uint32_t Check(uintptr_t unused, uintptr_t refr);
 				static void IncRefPatch();
 				static void DecRefPatch();
 			protected:

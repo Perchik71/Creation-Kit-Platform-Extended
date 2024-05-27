@@ -179,13 +179,13 @@ namespace CreationKitPlatformExtended
 					lpRelocator->DetourCall(rva + 5, func);
 				};
 
-				auto restoring_getsmartptr1 = [&lpRelocator](uintptr_t rva, uint32_t removal_size, uintptr_t func)
+				/*auto restoring_getsmartptr1 = [&lpRelocator](uintptr_t rva, uint32_t removal_size, uintptr_t func)
 				{
 					lpRelocator->PatchNop(rva, removal_size);
 					lpRelocator->DetourCall(rva + 5, func);
-				};
+				};*/
 
-				if (Extremly)
+				if (Extremly && (GlobalEnginePtr->GetEditorVersion() >= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_1_10_982_3))
 				{
 					BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 1;
 
@@ -213,6 +213,8 @@ namespace CreationKitPlatformExtended
 						(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6),
 						(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy2);
+
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(16), (uintptr_t)&Check);
 
 					{
 						ScopeRelocator textSection;
@@ -329,10 +331,41 @@ namespace CreationKitPlatformExtended
 								memcpy((void*)(addr + 3), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
 								total++;
 							}
+
+							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"81 ? FF FF 1F 00 ? ? 48 ? ? 04");
+							Assert(patterns.size() == 8);
+							for (size_t i = 0; i < patterns.size(); i++)
+								memcpy((void*)(patterns[i] + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+							total += patterns.size();
+
+							addr = voltek::find_pattern(textRange.base, textRange.end - textRange.base,
+								"81 ? FF FF 1F 00 ? ? ? ? ? ? 48 ? ? 04");
+							if (addr)
+							{
+								memcpy((void*)(addr + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+								total++;
+							}
+
+							addr = voltek::find_pattern(textRange.base, textRange.end - textRange.base,
+								"81 ? FF FF 1F 00 ? ? ? ? ? ? 44 ? ? 41 ? 00 00 00 00 49 ? ? 04");
+							if (addr)
+							{
+								memcpy((void*)(addr + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+								total++;
+							}
+
+							addr = voltek::find_pattern(textRange.base, textRange.end - textRange.base,
+								"81 ? FF FF 1F 00 ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? 49 ? ? 04");
+							if (addr)
+							{
+								memcpy((void*)(addr + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+								total++;
+							}
 						}
 
-						// should be 334
-						Assert(total == 334);
+						// should be 345
+						Assert(total == 345);
 						//_CONSOLE("INDEX_MASK change: %llu", total);
 
 						//
@@ -411,11 +444,29 @@ namespace CreationKitPlatformExtended
 								}
 							}
 							total += patterns.size();
+
+							// mov e??, dword ptr ds:[r??+0x38]
+							// and e??, 0x3FF
+							// cmp e??, 0x3FF
+							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"8B ? 38 81 ? FF 03 00 00 81 ? FF 03 00 00");
+							for (size_t i = 0; i < patterns.size(); i++)
+							{
+								auto reg1 = *(uint8_t*)(patterns[i] + 1);
+								auto reg2 = *(uint8_t*)(patterns[i] + 4);
+								auto reg3 = *(uint8_t*)(patterns[i] + 10);
+								memcpy((void*)(patterns[i]),
+									"\x48\x8B\x00\x38\x66\x81\x00\xFF\x03\x66\x81\x00\xFF\x03\x90", 15);
+								*(uint8_t*)(patterns[i] + 2) = reg1;
+								*(uint8_t*)(patterns[i] + 6) = reg2;
+								*(uint8_t*)(patterns[i] + 11) = reg3;
+							}
+							total += patterns.size();
 						}
 						
-						// should be 280
+						// should be 298
 						//_CONSOLE("Change REFR test eax -> rax: %llu", total);
-						Assert(total == 280);
+						Assert(total == 298);
 
 						//
 						// Change REFR test handle index
@@ -449,7 +500,7 @@ namespace CreationKitPlatformExtended
 
 						// should be 308
 						//_CONSOLE("Change REFR test handle index: %llu", total);
-						Assert(total == 308);
+						Assert(total == 307);
 					}
 				}
 				else
@@ -533,6 +584,14 @@ namespace CreationKitPlatformExtended
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
 				return false;
+			}
+
+			uint32_t ReplaceBSPointerHandleAndManagerPatch::Check(uintptr_t unused, uintptr_t refr)
+			{
+				if (!refr)
+					return 0;
+
+				return ((TESObjectREFR_base_Extremly*)refr)->GetHandleEntryIndex();
 			}
 
 			void ReplaceBSPointerHandleAndManagerPatch::IncRefPatch()

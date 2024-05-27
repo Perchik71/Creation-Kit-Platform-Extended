@@ -14,7 +14,17 @@ STEAM_API void* SteamApps()
 	return nullptr;
 }
 
+STEAM_API void* SteamFriends()
+{
+	return nullptr;
+}
+
 STEAM_API void* SteamUser()
+{
+	return nullptr;
+}
+
+STEAM_API void* SteamUserStats()
 {
 	return nullptr;
 }
