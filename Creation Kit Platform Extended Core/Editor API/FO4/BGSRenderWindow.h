@@ -12,6 +12,7 @@
 #include "TESObjectREFR.h"
 #include "BGSRenderWindowCamera.h"
 #include "BSPointerHandleManager.h"
+#include "BGSRenderWindowEditModuleManager.h"
 
 #pragma pack(push, 1)
 
@@ -40,7 +41,7 @@ namespace CreationKitPlatformExtended
 				inline POINT GetMousePos() const { return _MousePos[0]; }
 				inline POINT GetMousePosBefore() const { return _MousePos[1]; }
 
-				inline BGSRenderWindowEditModuleManager<BGSRenderWindow>* GetEditModuleManager() const { return _EditModuleManager; }
+				inline BGSRenderWindowEditModuleManager* GetEditModuleManager() const { return _EditModuleManager; }
 				inline BGSRenderWindowBorder* GetBorder() const { return _Border; }
 				inline BGSRenderWindowCamera* GetCamera() const { return _Camera; }
 				inline BGSRenderOrthoGrid* GetOrthoGrid() const { return _OrthoGrid; }
@@ -52,7 +53,7 @@ namespace CreationKitPlatformExtended
 				READ_PROPERTY(GetMousePos) POINT MousePos;
 				READ_PROPERTY(GetMousePosBefore) POINT MousePosBefore;
 
-				READ_PROPERTY(GetEditModuleManager) BGSRenderWindowEditModuleManager<BGSRenderWindow>* EditModuleManager;
+				READ_PROPERTY(GetEditModuleManager) BGSRenderWindowEditModuleManager* EditModuleManager;
 				READ_PROPERTY(GetBorder) BGSRenderWindowBorder* Border;
 				READ_PROPERTY(GetCamera) BGSRenderWindowCamera* Camera;
 				READ_PROPERTY(GetOrthoGrid) BGSRenderOrthoGrid* OrthoGrid;
@@ -64,7 +65,7 @@ namespace CreationKitPlatformExtended
 				/* 0x028 */ char pad28[0x48];
 				/* 0x070 */ HWND _WindowHandle;
 				/* 0x078 */ char pad78[0x30];
-				/* 0x0A8 */ BGSRenderWindowEditModuleManager<BGSRenderWindow>* _EditModuleManager;
+				/* 0x0A8 */ BGSRenderWindowEditModuleManager* _EditModuleManager;
 				/* 0x0B0 */ BGSRenderOrthoGrid* _OrthoGrid;
 				/* 0x0B8 */ BGSRenderWindowBorder* _Border;
 				/* 0x0C0 */ BGSRenderWindowCamera* _Camera;

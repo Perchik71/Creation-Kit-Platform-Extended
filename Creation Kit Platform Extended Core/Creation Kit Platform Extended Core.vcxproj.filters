@@ -747,6 +747,12 @@
     <ClCompile Include="Patches\D3D11Patch.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\FO4\FakeMoveLight.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\FO4\BGSRenderWindowReferenceEditModule.cpp">
+      <Filter>Editor API\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1802,6 +1808,21 @@
     </ClInclude>
     <ClInclude Include="Patches\D3D11Patch.h">
       <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BSFadeNode.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\FakeMoveLight.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BGSRenderWindowReferenceEditModule.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BGSRenderWindowEditModuleManager.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\BGSUniqueObjectRef.h">
+      <Filter>Editor API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

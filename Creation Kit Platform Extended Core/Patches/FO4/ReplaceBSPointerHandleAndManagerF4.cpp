@@ -6,7 +6,6 @@
 #include "Editor API/FO4/BSPointerHandleManager.h"
 #include "ReplaceBSPointerHandleAndManagerF4.h"
 
-
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
@@ -71,7 +70,7 @@ namespace CreationKitPlatformExtended
 			bool ReplaceBSPointerHandleAndManagerPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST;
+				return eEditorCurrentVersion != EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_1_10_943_1;
 			}
 
 			bool ReplaceBSPointerHandleAndManagerPatch::IsVersionValid(const RelocationDatabaseItem* lpRelocationDatabaseItem) const
@@ -179,7 +178,7 @@ namespace CreationKitPlatformExtended
 					lpRelocator->DetourCall(rva + 5, func);
 				};
 
-				if (Extremly && (GlobalEnginePtr->GetEditorVersion() >= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_1_10_982_3))
+				if (Extremly)
 				{
 					BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 1;
 
@@ -208,7 +207,7 @@ namespace CreationKitPlatformExtended
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6),
 						(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy2);
 
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(16), (uintptr_t)&Check);
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(16), (uintptr_t)&CheckEx);
 
 					{
 						ScopeRelocator textSection;
@@ -526,6 +525,8 @@ namespace CreationKitPlatformExtended
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6),
 						(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy2);
 
+					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(16), (uintptr_t)&Check);
+
 					{
 						ScopeRelocator textSection;
 
@@ -580,12 +581,20 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
-			uint32_t ReplaceBSPointerHandleAndManagerPatch::Check(uintptr_t unused, uintptr_t refr)
+			uint32_t ReplaceBSPointerHandleAndManagerPatch::CheckEx(uintptr_t unused, uintptr_t refr)
 			{
 				if (!refr)
 					return 0;
 
 				return ((TESObjectREFR_base_Extremly*)refr)->GetHandleEntryIndex();
+			}
+
+			uint32_t ReplaceBSPointerHandleAndManagerPatch::Check(uintptr_t unused, uintptr_t refr)
+			{
+				if (!refr)
+					return 0;
+
+				return ((TESObjectREFR_base_Original*)refr)->GetHandleEntryIndex();
 			}
 
 			void ReplaceBSPointerHandleAndManagerPatch::IncRefPatch()

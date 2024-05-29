@@ -17,5 +17,16 @@ namespace CreationKitPlatformExtended
 		
 		};
 		static_assert(sizeof(NiNode) == 0x110);
+
+		namespace Fallout4
+		{
+			class NiNode : public NiAVObject
+			{
+			public:
+				virtual ~NiNode() = default;
+
+			};
+			static_assert(sizeof(NiNode) == 0x118);
+		}
 	}
 }

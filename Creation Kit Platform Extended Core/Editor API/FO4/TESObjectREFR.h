@@ -4,9 +4,8 @@
 
 #pragma once
 
-#include "NiAPI\NiRefObject.h"
 #include "NiEvents.h"
-#include "NiAPI\NiNode.h"
+#include "BSFadeNode.h"
 #include "NiAPI\NiPoint.h"
 #include "..\\BSHandleRefObject.h"
 #include "BGSPrimitive.h"
@@ -29,6 +28,11 @@ namespace CreationKitPlatformExtended
 			{
 			public:
 				virtual ~TESObjectREFR_base() = default;
+
+				inline static void (*SetParentWithRedraw)(void*, TESForm*);
+				inline static void (*SetPosition)(void*, const NiPoint3* val);
+				inline BSFadeNode* GetFadeNode() const { return thisVirtualCall<BSFadeNode*>(0x558, this); }
+				inline BSFadeNode* GetFadeNode2(uint32_t unk = 0) const { return thisVirtualCall<BSFadeNode*>(0x528, this, unk); }
 			};
 
 			typedef TESObjectREFR_base<BSHandleRefObject_Original> TESObjectREFR_base_Original;
@@ -65,10 +69,7 @@ namespace CreationKitPlatformExtended
 				uint16_t _scale;						// 0x118
 				char _pad118[0x26];						// 0x11A
 			public:
-				// The function returns BSFadeNode, it has not been studied, I use parent class
-				inline NiAPI::NiNode* GetFadeNode() const { return thisVirtualCall<NiAPI::NiNode*>(0x558, this); }
 				inline NiPoint3 GetPosition() const { return _position; }
-				inline void SetPosition(const NiPoint3& val) { _position = val; }
 				inline NiPoint3 GetRotate() const { return _rotate; }
 				inline void SetRotate(const NiPoint3& val) { _rotate = val; }
 				inline uint16_t GetScale() const { return _scale; }
@@ -78,8 +79,6 @@ namespace CreationKitPlatformExtended
 				inline bool IsInvisible() const { return (_FormFlags & SpecialFlagsForm::fs3DInvisible); }
 				inline bool IsChildrenInvisible() const { return (_FormFlags & SpecialFlagsForm::fsChildren3DInvisible); }
 				inline bool IsFrozen() const { return (_FormFlags & SpecialFlagsForm::fsFrozen); }
-
-				inline static void (*SetParentWithRedraw)(TESObjectREFR_Original*, TESForm*);
 
 				READ_PROPERTY2(TESObjectCELL*, ParentCell, _parentCell);
 				READ_PROPERTY2(TESForm*, Parent, _baseForm);
@@ -119,7 +118,6 @@ namespace CreationKitPlatformExtended
 				char _pad118[0x26];						// 0x11A
 			public:
 				inline NiPoint3 GetPosition() const { return _position; }
-				inline void SetPosition(const NiPoint3& val) { _position = val; }
 				inline NiPoint3 GetRotate() const { return _rotate; }
 				inline void SetRotate(const NiPoint3& val) { _rotate = val; }
 				inline uint16_t GetScale() const { return _scale; }

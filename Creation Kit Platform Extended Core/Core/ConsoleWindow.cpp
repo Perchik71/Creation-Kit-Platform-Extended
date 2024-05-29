@@ -146,7 +146,7 @@ namespace CreationKitPlatformExtended
 					//Подписаться на EN_MSGFILTER и EN_SELCHANGE
 					SendMessageA(richEditHwnd, EM_SETEVENTMASK, 0, ENM_MOUSEEVENTS | ENM_SELCHANGE);
 
-					if (_READ_OPTION_BOOL("Log", "bShowWidow", true))
+					if (_READ_OPTION_BOOL("Log", "bShowWindow", true))
 					{
 						// Установить положение окна по умолчанию
 						int winX = _READ_OPTION_INT("Log", "nX", info->x);

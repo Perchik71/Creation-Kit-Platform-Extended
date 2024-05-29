@@ -106,6 +106,7 @@
     <ClCompile Include="Editor API\BSString.cpp" />
     <ClCompile Include="Editor API\EditorUI.cpp" />
     <ClCompile Include="Editor API\FO4\BGSLayer.cpp" />
+    <ClCompile Include="Editor API\FO4\BGSRenderWindowReferenceEditModule.cpp" />
     <ClCompile Include="Editor API\FO4\BSFile.cpp" />
     <ClCompile Include="Editor API\FO4\BSResourceArchive2.cpp" />
     <ClCompile Include="Editor API\FO4\BSResourceLooseFilesF4.cpp" />
@@ -145,6 +146,7 @@
     <ClCompile Include="Patches\FO4\CreateDDS.cpp" />
     <ClCompile Include="Patches\FO4\EnableGoInSelGame.cpp" />
     <ClCompile Include="Patches\FO4\ESLTip.cpp" />
+    <ClCompile Include="Patches\FO4\FakeMoveLight.cpp" />
     <ClCompile Include="Patches\FO4\FixBNet.cpp" />
     <ClCompile Include="Patches\FO4\FixCrashMapMarkerCmd.cpp" />
     <ClCompile Include="Patches\FO4\FixCrashNoRootMat.cpp" />
@@ -359,6 +361,7 @@
     <ClInclude Include="Editor API\BGSLocalizedString.h" />
     <ClInclude Include="Editor API\BGSPickHandler.h" />
     <ClInclude Include="Editor API\BGStringLocalize.h" />
+    <ClInclude Include="Editor API\BGSUniqueObjectRef.h" />
     <ClInclude Include="Editor API\BSHandleRefObject.h" />
     <ClInclude Include="Editor API\BSReadWriteLock.h" />
     <ClInclude Include="Editor API\BSSimpleLock.h" />
@@ -375,10 +378,13 @@
     <ClInclude Include="Editor API\FO4\BGSPrimitive.h" />
     <ClInclude Include="Editor API\FO4\BGSRenderWindow.h" />
     <ClInclude Include="Editor API\FO4\BGSRenderWindowCamera.h" />
+    <ClInclude Include="Editor API\FO4\BGSRenderWindowEditModuleManager.h" />
+    <ClInclude Include="Editor API\FO4\BGSRenderWindowReferenceEditModule.h" />
     <ClInclude Include="Editor API\FO4\BGSSoundTagComponent.h" />
     <ClInclude Include="Editor API\FO4\BGSTransform.h" />
     <ClInclude Include="Editor API\FO4\BGSVoiceType.h" />
     <ClInclude Include="Editor API\FO4\BSEntryString.h" />
+    <ClInclude Include="Editor API\FO4\BSFadeNode.h" />
     <ClInclude Include="Editor API\FO4\BSFile.h" />
     <ClInclude Include="Editor API\FO4\BSFixedString.h" />
     <ClInclude Include="Editor API\FO4\BSPointerHandleManager.h" />
@@ -475,6 +481,7 @@
     <ClInclude Include="Patches\FO4\CreateDDS.h" />
     <ClInclude Include="Patches\FO4\EnableGoInSelGame.h" />
     <ClInclude Include="Patches\FO4\ESLTip.h" />
+    <ClInclude Include="Patches\FO4\FakeMoveLight.h" />
     <ClInclude Include="Patches\FO4\FixBNet.h" />
     <ClInclude Include="Patches\FO4\FixCrashMapMarkerCmd.h" />
     <ClInclude Include="Patches\FO4\FixCrashNoRootMat.h" />

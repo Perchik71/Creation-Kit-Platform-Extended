@@ -24,6 +24,16 @@ namespace CreationKitPlatformExtended
 			inline NiPoint3(float fX, float fY, float fZ) : x(fX), y(fY), z(fZ) {}
 			inline NiPoint3(const NiPoint3& Src) : x(Src.x), y(Src.y), z(Src.z) {}
 
+			inline float Magnitude2()
+			{
+				return (x * x) + (y * y) + (z * z);
+			}
+
+			inline float Magnitude()
+			{
+				return sqrt(Magnitude2());
+			}
+
 			inline void Unitize()
 			{
 				// I commented out the Nukem code, since it does not meet the optimization requirements, 
@@ -61,7 +71,7 @@ namespace CreationKitPlatformExtended
 				// SSE2.1 it should be everywhere, in here I will postpone "dpps" since it is SSE4.1. 
 				// And as I understand it, not everyone has it... outdated hardware...
 
-				float length = (x * x) + (y * y) + (z * z);
+				float length = Magnitude2();
 				
 				if (length <= 0.000001f)
 				{
