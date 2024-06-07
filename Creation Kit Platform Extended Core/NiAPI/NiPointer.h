@@ -72,6 +72,17 @@ namespace CreationKitPlatformExtended
 			{
 				return m_pObject != Other;
 			}
+
+			inline bool Empty() const
+			{
+				return m_pObject == nullptr;
+			}
+
+			template<typename T>
+			inline T* GetPtr() const
+			{
+				return (T*)m_pObject;
+			}
 		};
 		static_assert(sizeof(NiPointer<NiRefObject>) == 0x8);
 	}

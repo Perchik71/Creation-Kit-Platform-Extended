@@ -108,8 +108,13 @@ namespace CreationKitPlatformExtended
 						!str.Compare("dlccoast.esm") ||
 						!str.Compare("dlcworkshop01.esm") ||
 						!str.Compare("dlcworkshop02.esm") ||
-						!str.Compare("dlcworkshop03.esm")) {
-						MessageBoxA(NULL, "Base game master files cannot be set as the active file.", "Warning", MB_OK | MB_ICONWARNING);
+						!str.Compare("dlcworkshop03.esm")) 
+					{
+						MessageBoxA(GetForegroundWindow(), 
+							"Base game master files cannot be set as the active file.", 
+							"Warning", 
+							MB_OK | MB_ICONWARNING);
+
 						return true;
 					}
 

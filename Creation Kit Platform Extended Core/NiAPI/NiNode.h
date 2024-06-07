@@ -26,7 +26,7 @@ namespace CreationKitPlatformExtended
 				virtual ~NiNode() = default;
 
 			};
-			static_assert(sizeof(NiNode) == 0x118);
+			static_assert(sizeof(NiNode) == 0x120);
 		}
 	}
 }

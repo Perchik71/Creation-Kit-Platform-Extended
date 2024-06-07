@@ -14,6 +14,7 @@ namespace CreationKitPlatformExtended
 		{
 			extern uintptr_t pointer_TESForm_sub;
 			extern uintptr_t pointer_TESForm_data;
+			extern uintptr_t pointer_TESForm_sub1;
 		}
 	}
 
@@ -67,8 +68,9 @@ namespace CreationKitPlatformExtended
 			{
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
-					pointer_TESForm_sub = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
-					pointer_TESForm_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
+					pointer_TESForm_sub = _RELDATA_ADDR(1);
+					pointer_TESForm_data = _RELDATA_ADDR(0);
+					pointer_TESForm_sub1 = _RELDATA_ADDR(3);
 
 					return true;
 				}

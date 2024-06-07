@@ -124,8 +124,9 @@ namespace CreationKitPlatformExtended
 				char padC0[0x8];
 				uint64_t m_uFlags;
 				void* FormRef;
+				char pad118[0x8];
 			};
-			static_assert(sizeof(NiAVObject) == 0x118);
+			static_assert(sizeof(NiAVObject) == 0x120);
 		}
 	}
 }

@@ -753,6 +753,15 @@
     <ClCompile Include="Editor API\FO4\BGSRenderWindowReferenceEditModule.cpp">
       <Filter>Editor API\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\FO4\IncreaseChunkSizeForSNAMPatch.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="NiAPI\NiRTTI.cpp">
+      <Filter>NiAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\FO4\FixUsesReadyFaceGen.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1667,7 +1676,7 @@
     <ClInclude Include="NiAPI\NiTexture.h">
       <Filter>NiAPI</Filter>
     </ClInclude>
-    <ClInclude Include="NiAPI\NiAlphaProperty.h">
+    <ClInclude Include="NiAPI\NiProperty.h">
       <Filter>NiAPI</Filter>
     </ClInclude>
     <ClInclude Include="NiAPI\NiAVObject.h">
@@ -1823,6 +1832,42 @@
     </ClInclude>
     <ClInclude Include="Editor API\BGSUniqueObjectRef.h">
       <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\IncreaseChunkSizeForSNAMPatch.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiObject.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiAPI\NiRTTI.h">
+      <Filter>NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BSLightingShaderProperty.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BSShaderProperty.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BSGeometry.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BSTriShape.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BSDynamicTriShape.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BSSkin.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BSShaderMaterial.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\BSTextureSet.h">
+      <Filter>Editor API\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\FixUsesReadyFaceGen.h">
+      <Filter>Patches\FO4</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

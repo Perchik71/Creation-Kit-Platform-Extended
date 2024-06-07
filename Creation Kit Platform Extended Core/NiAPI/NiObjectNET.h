@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "NiRefObject.h"
-#include "Editor API/FO4/BSEntryString.h"
+#include "NiObject.h"
+#include "Editor API/FO4/BSFixedString.h"
 
 #pragma pack(push, 1)
 
@@ -22,7 +22,7 @@ namespace CreationKitPlatformExtended
 		static_assert(sizeof(NiExtraData) == 0x20);
 
 		// 30
-		class NiObjectNET : public NiRefObject_64
+		class NiObjectNET : public NiObject
 		{
 		public:
 			virtual ~NiObjectNET() = default;
@@ -52,15 +52,10 @@ namespace CreationKitPlatformExtended
 
 		namespace Fallout4
 		{
-			class NiObjectNET : public NiRefObject_64
+			class NiObjectNET : public NiObject
 			{
 			public:
-				virtual ~NiObjectNET() = default;
-
-				inline const char* GetName() const
-				{
-					return _ObjectName ? _ObjectName->Get<char>(TRUE) : "UNKNOWN";
-				}
+				inline const char* GetName() const { return _Name.c_str(); }
 
 				inline void GetViewerStrings(void(*Callback)(const char*, ...), bool Recursive) const
 				{
@@ -71,7 +66,7 @@ namespace CreationKitPlatformExtended
 					Callback("Name = %s\n", GetName());
 				}
 			private:
-				EditorAPI::Fallout4::BSEntryString* _ObjectName;
+				EditorAPI::Fallout4::BSFixedString _Name;
 				char _pad18[0x10];
 			};
 			static_assert(sizeof(NiObjectNET) == 0x28);

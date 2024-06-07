@@ -3,7 +3,7 @@
 #pragma once
 
 #include "BSShaderMaterial.h"
-#include "NiAPI\NiAlphaProperty.h"
+#include "NiAPI\NiProperty.h"
 
 namespace CreationKitPlatformExtended
 {

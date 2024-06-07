@@ -6,7 +6,8 @@
 
 #include "NiEvents.h"
 #include "BSFadeNode.h"
-#include "NiAPI\NiPoint.h"
+#include "NiAPI/NiPoint.h"
+#include "NiAPI/NiPointer.h"
 #include "..\\BSHandleRefObject.h"
 #include "BGSPrimitive.h"
 #include "TESFormF4.h"
@@ -31,8 +32,8 @@ namespace CreationKitPlatformExtended
 
 				inline static void (*SetParentWithRedraw)(void*, TESForm*);
 				inline static void (*SetPosition)(void*, const NiPoint3* val);
-				inline BSFadeNode* GetFadeNode() const { return thisVirtualCall<BSFadeNode*>(0x558, this); }
-				inline BSFadeNode* GetFadeNode2(uint32_t unk = 0) const { return thisVirtualCall<BSFadeNode*>(0x528, this, unk); }
+				inline NiAPI::NiPointer<BSFadeNode> GetFadeNode() const { return thisVirtualCall<BSFadeNode*>(0x558, this); }
+				inline NiAPI::NiPointer<BSFadeNode> GetFadeNode2(uint32_t unk = 0) const { return thisVirtualCall<BSFadeNode*>(0x528, this, unk); }
 			};
 
 			typedef TESObjectREFR_base<BSHandleRefObject_Original> TESObjectREFR_base_Original;

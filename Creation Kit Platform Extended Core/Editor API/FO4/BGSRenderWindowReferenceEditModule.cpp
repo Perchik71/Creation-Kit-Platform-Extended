@@ -21,7 +21,7 @@ namespace CreationKitPlatformExtended
 				{
 					auto FormRef = BGSUniqueObjectRef((TESObjectREFR_Original*)It->GetRef());
 					if (FormRef.Empty()) continue;
-					auto NodeRef = BGSUniqueObjectRef(FormRef->GetFadeNode());
+					auto NodeRef = FormRef->GetFadeNode();
 					if (NodeRef.Empty()) continue;
 		
 					if (_TempPosition.Magnitude2() >= 0.001f)
@@ -46,7 +46,7 @@ namespace CreationKitPlatformExtended
 				{
 					auto FormRef = BGSUniqueObjectRef((TESObjectREFR_Extremly*)It->GetRef());
 					if (FormRef.Empty()) continue;
-					auto NodeRef = BGSUniqueObjectRef(FormRef->GetFadeNode());
+					auto NodeRef = FormRef->GetFadeNode();
 					if (NodeRef.Empty()) continue;
 
 					if (_TempPosition.Magnitude2() >= 0.001f)

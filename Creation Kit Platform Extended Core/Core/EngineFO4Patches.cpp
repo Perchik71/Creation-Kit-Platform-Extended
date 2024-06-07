@@ -42,6 +42,8 @@
 #include "Patches/FO4/AddChangeRefF4.h"
 #include "Patches/FO4/SortCrashCombined.h"
 #include "Patches/FO4/FakeMoveLight.h"
+#include "Patches/FO4/IncreaseChunkSizeForSNAMPatch.h"
+#include "Patches/FO4/FixUsesReadyFaceGen.h"
 
 #include "Patches/Windows/FO4/MainWindowF4.h"
 #include "Patches/Windows/FO4/ObjectWindowF4.h"
@@ -98,6 +100,8 @@ namespace CreationKitPlatformExtended
 				new Patches::AddChangeRefPatch(),
 				new Patches::SortCrashCombinedPatch(),
 				new Patches::FakeMoveLightPatch(),
+				new Patches::IncreaseChunkSizeForSNAMPatch(),
+				new Patches::FixUsesReadyFaceGenPatch(),
 				
 				new Patches::MainWindow(),
 				new Patches::ObjectWindow(),

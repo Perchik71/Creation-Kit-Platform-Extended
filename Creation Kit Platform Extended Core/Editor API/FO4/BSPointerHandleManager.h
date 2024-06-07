@@ -114,6 +114,7 @@ namespace CreationKitPlatformExtended
 			class IBSPointerHandleManagerEntry : public HandleType
 			{
 			private:
+				char pad04[4];
 				NiPointer<HandleRef> m_Pointer;
 			public:
 				void SetNextFreeEntry(_Ty Index)

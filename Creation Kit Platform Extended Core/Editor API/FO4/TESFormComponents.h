@@ -112,25 +112,6 @@ namespace CreationKitPlatformExtended
 			};
 			static_assert(sizeof(BGSMod::Template::Items) == 0x20);
 
-			// 0x18 -> RVA vtable 0x3908058
-			class TESModel : public BSFixedString {
-			private:
-				// members
-				/*10*/ LPVOID textures_hash;
-				/*18*/ LPVOID materials_hash;
-				/*20*/ LPVOID unk20;
-				/*28*/ DWORD dwUnk28;
-				/*2C*/ DWORD dwUnk2C;
-				/*30*/ DWORD dwUnk30;
-				/*34*/ DWORD dwUnk34;
-				/*38*/ DWORD dwUnk38;
-				/*3C*/ DWORD dwUnk3C;
-				/*40*/ TESForm* MaterialSwapForm;
-				/*48*/ DWORD dwUnk48;
-				/*4C*/ DWORD dwUnk4C;
-			};
-			static_assert(sizeof(TESModel) == 0x50);
-
 			// 10
 			class TESForcedLocRef : public TESPersistent {
 			public:

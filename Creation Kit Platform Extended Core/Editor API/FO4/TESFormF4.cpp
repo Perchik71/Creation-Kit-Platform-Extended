@@ -30,6 +30,7 @@ namespace CreationKitPlatformExtended
 		{
 			uintptr_t pointer_TESForm_sub = 0;
 			uintptr_t pointer_TESForm_data = 0;
+			uintptr_t pointer_TESForm_sub1 = 0;
 
 			using namespace CreationKitPlatformExtended::Core;
 
@@ -76,6 +77,11 @@ namespace CreationKitPlatformExtended
 			const char* TESForm::GetEditorID() const 
 			{
 				return thisVirtualCall<const char*>(0x238, this);
+			}
+
+			TESFile* TESForm::GetBelongsToPlugin() const
+			{
+				return thisCall<TESFile*>(pointer_TESForm_sub1, this);
 			}
 
 			const char* TESForm::GetFullName() const

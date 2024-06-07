@@ -54,10 +54,13 @@ namespace CreationKitPlatformExtended
 	{
 		namespace Fallout4
 		{
-			class BSStringCache {
+			class BSStringCache
+			{
 			public:
-				struct Entry {
-					enum {
+				struct Entry 
+				{
+					enum 
+					{
 						kState_RefcountMask = 0x3FFF,
 						kState_External = 0x4000,
 						kState_Wide = 0x8000
@@ -98,28 +101,20 @@ namespace CreationKitPlatformExtended
 					}
 				};
 
-				struct Ref {
+				class Ref 
+				{
+				private:
 					Entry* data;
-
-					virtual ~Ref(VOID);					// 000
-					virtual UINT ToUInt(VOID) const;	// 008	
-					virtual VOID VT_Func2(VOID);		// 010	
-					virtual VOID VT_Func3(VOID);		// 018	<=ID ??? and FFFFFF3
-					// Returns and converts a string if conversion is allowed
-					virtual LPCSTR ToStr(VOID) const;	// 020
-
+				public:
 					BOOL operator==(const Ref& lhs) const { return data == lhs.data; }
 					BOOL operator<(const Ref& lhs) const { return data < lhs.data; }
 
-					//
-					// It is better not to use it....
-					// Does not convert the string, just returns the string as is, but it may already be converted
-					//
-					LPCSTR c_str(VOID) const { return operator LPCSTR(); }
-					operator LPCSTR(VOID) const { return data ? data->Get<CHAR>() : NULL; }
+					LPCSTR c_str() const { return operator LPCSTR(); }
+					operator LPCSTR() const { return data ? data->Get<CHAR>() : NULL; }
 				};
 
-				struct Lock {
+				struct Lock 
+				{
 					DWORD unk00;	// 00 - set to 80000000 when locked
 					DWORD pad04;	// 04
 					DWORD64 pad08;	// 08
@@ -129,6 +124,8 @@ namespace CreationKitPlatformExtended
 				Lock	lock[0x80];		// 80000
 				BYTE	isInit;			// 80800
 			};
+			static_assert(sizeof(BSStringCache::Entry) == 0x28);
+			static_assert(sizeof(BSStringCache::Ref) == 0x8);
 		}
 	}
 }

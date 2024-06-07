@@ -5,7 +5,7 @@
 #include "NiAPI\NiPointer.h"
 #include "NiAPI\NiSkinInstance.h"
 #include "NiAPI\NiAVObject.h"
-#include "NiAPI\NiAlphaProperty.h"
+#include "NiAPI\NiProperty.h"
 
 namespace CreationKitPlatformExtended
 {
