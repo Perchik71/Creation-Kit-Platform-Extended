@@ -39,6 +39,7 @@ namespace CreationKitPlatformExtended
 				inline void SetBinaryData(void* Buffer) { _BinaryData = Buffer; }
 
 				inline static NiTexture* (*CreateTexture)(BSEntryString*, uint32_t, uint32_t);
+				inline static void (*CreateTexture2)(const char*, NiTexture*&, uint32_t);
 			private:
 				BSFixedString	_FileName;		// 10
 				char			_Pad18[8];		// 18

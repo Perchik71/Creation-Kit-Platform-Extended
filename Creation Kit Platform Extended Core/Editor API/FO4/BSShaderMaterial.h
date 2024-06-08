@@ -82,7 +82,7 @@ namespace CreationKitPlatformExtended
 					*u = _TextCoordScale[0].x;
 					*v = _TextCoordScale[0].y;
 				}
-			private:
+			protected:
 				volatile uint32_t	_RefCount;				// 08
 				NiAPI::NiPoint2		_TextCoordOffset[2];	// 0C
 				NiAPI::NiPoint2		_TextCoordScale[2];		// 1C
@@ -102,7 +102,7 @@ namespace CreationKitPlatformExtended
 				inline void SaveToStream(NiStream* Stream) const { thisVirtualCall<void>(0x80, this, Stream); }
 				inline void LoadFromStream(NiStream* Stream) const { thisVirtualCall<void>(0x88, this, Stream); }
 				inline void PrefetchTextures() const { thisVirtualCall<void>(0x90, this); }
-				inline void LoadTextureSet(BSTextureSet* TextureSet) const { thisVirtualCall<void>(0xA0, this, TextureSet); }
+				inline void LoadTextureSet(BSShaderTextureSet* TextureSet) const { thisVirtualCall<void>(0xA0, this, TextureSet); }
 				inline NiAPI::NiColor& SpecularColor() { return _SpecularColor; }
 				inline NiAPI::NiPointer<Texture> GetDiffuseTexture() const { return _DiffuseTexture; }
 				inline NiAPI::NiPointer<Texture> GetNormalTexture() const { return _NormalTexture; }
@@ -110,7 +110,7 @@ namespace CreationKitPlatformExtended
 				inline NiAPI::NiPointer<Texture> GetSmoothnessSpecMaskTexture() const { return _SmoothnessSpecMaskTexture; }
 				inline NiAPI::NiPointer<Texture> GetLookupTexture() const { return _LookupTexture; }
 				inline uint64_t& TextureClampMode() { return _TextureClampMode; }
-				inline NiAPI::NiPointer<BSTextureSet> GetTextureSet() const { return _TextureSet; }
+				inline NiAPI::NiPointer<BSShaderTextureSet> GetTextureSet() const { return _TextureSet; }
 				inline float& MaterialAlpha() { return _MaterialAlpha; }
 				inline float& RefractionPower() { return _RefractionPower; }
 				inline float& Smoothness() { return _Smoothness; }
@@ -126,32 +126,32 @@ namespace CreationKitPlatformExtended
 				inline float& RimLightPower() { return _RimLightPower; }
 				inline float& BackLightPower() { return _BackLightPower; }
 				inline float& LookupScale() { return _LookupScale; }
-			private:
-				NiAPI::NiColor					_SpecularColor;				// 38
-				char							_Pad44[4];					// 44
-				NiAPI::NiPointer<Texture>		_DiffuseTexture;			// 48
-				NiAPI::NiPointer<Texture>		_NormalTexture;				// 50
-				NiAPI::NiPointer<Texture>		_RimSoftLightingTexture;	// 58
-				NiAPI::NiPointer<Texture>		_SmoothnessSpecMaskTexture;	// 60
-				NiAPI::NiPointer<Texture>		_LookupTexture;				// 68
-				uint64_t						_TextureClampMode;			// 70
-				NiAPI::NiPointer<BSTextureSet>	_TextureSet;				// 78
-				float							_MaterialAlpha;				// 80
-				float							_RefractionPower;			// 84
-				float							_Smoothness;				// 88
-				float							_SpecularColorScale;		// 8C
-				float							_FresnelPower;				// 90
-				float							_Wetness_SpecScale;			// 94
-				float							_Wetness_SpecPowerScale;	// 98
-				float							_Wetness_SpecMin;			// 9C
-				float							_Wetness_EnvMapScale;		// A0
-				float							_Wetness_FresnelPower;		// A4
-				float							_Wetness_Metalness;			// A8
-				float							_SubsurfaceLightRolloff;	// AC
-				float							_RimLightPower;				// B0
-				float							_BackLightPower;			// B4
-				float							_LookupScale;				// B8
-				uint32_t						_Unk;						// BC
+			protected:
+				NiAPI::NiColor							_SpecularColor;				// 38
+				char									_Pad44[4];					// 44
+				NiAPI::NiPointer<Texture>				_DiffuseTexture;			// 48
+				NiAPI::NiPointer<Texture>				_NormalTexture;				// 50
+				NiAPI::NiPointer<Texture>				_RimSoftLightingTexture;	// 58
+				NiAPI::NiPointer<Texture>				_SmoothnessSpecMaskTexture;	// 60
+				NiAPI::NiPointer<Texture>				_LookupTexture;				// 68
+				uint64_t								_TextureClampMode;			// 70
+				NiAPI::NiPointer<BSShaderTextureSet>	_TextureSet;				// 78
+				float									_MaterialAlpha;				// 80
+				float									_RefractionPower;			// 84
+				float									_Smoothness;				// 88
+				float									_SpecularColorScale;		// 8C
+				float									_FresnelPower;				// 90
+				float									_Wetness_SpecScale;			// 94
+				float									_Wetness_SpecPowerScale;	// 98
+				float									_Wetness_SpecMin;			// 9C
+				float									_Wetness_EnvMapScale;		// A0
+				float									_Wetness_FresnelPower;		// A4
+				float									_Wetness_Metalness;			// A8
+				float									_SubsurfaceLightRolloff;	// AC
+				float									_RimLightPower;				// B0
+				float									_BackLightPower;			// B4
+				float									_LookupScale;				// B8
+				uint32_t								_Unk;						// BC
 			};
 			static_assert(sizeof(BSLightingShaderMaterialBase) == 0xC0);
 

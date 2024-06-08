@@ -32,8 +32,12 @@ namespace CreationKitPlatformExtended
 			// 60
 			class BSShaderTextureSet : public BSTextureSet
 			{
-			private:
-				BSFixedString Textures[10];	// 10
+			public:
+				constexpr static uint32_t MAX = 10;
+				inline const char* At(uint32_t Index) const { return Textures[Index].c_str_ref(); };
+				inline const char* operator[](uint32_t Index) const { return At(Index); };
+			protected:
+				BSFixedString Textures[MAX];	// 10
 			};
 			static_assert(sizeof(BSShaderTextureSet) == 0x60);
 		}

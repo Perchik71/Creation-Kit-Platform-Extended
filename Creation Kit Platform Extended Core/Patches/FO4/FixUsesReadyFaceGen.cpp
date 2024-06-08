@@ -71,21 +71,24 @@ namespace CreationKitPlatformExtended
 			{
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
-					//
+					// Replacing the original function
 					lpRelocator->DetourJump(_RELDATA_RAV(0), (uintptr_t)&sub);
-					//
+					// RTTI address BSLightingShaderProperty
 					BSLightingShaderProperty::NIRTTI_BSLightingShaderProperty = (NiAPI::NiRTTI*)_RELDATA_ADDR(1);
 
 					pointer_FixUsesReadyFaceGen_sub0 = _RELDATA_ADDR(2);
 					pointer_FixUsesReadyFaceGen_data = _RELDATA_ADDR(3);
 					pointer_FixUsesReadyFaceGen_sub1 = _RELDATA_ADDR(4);
 					pointer_FixUsesReadyFaceGen_sub2 = _RELDATA_ADDR(5);
-					*(uintptr_t*)&NiTexture::CreateTexture = _RELDATA_ADDR(6);
 					pointer_FixUsesReadyFaceGen_sub4 = _RELDATA_ADDR(7);
 					pointer_FixUsesReadyFaceGen_sub5 = _RELDATA_ADDR(8);
 					pointer_FixUsesReadyFaceGen_sub6 = _RELDATA_ADDR(9);
 					pointer_FixUsesReadyFaceGen_sub3 = _RELDATA_ADDR(10);
 					pointer_FixUsesReadyFaceGen_sub7 = _RELDATA_ADDR(11);
+
+					// The functions create a new texture (I linked from to NiTexture, but I'm not sure about the original)
+					*(uintptr_t*)&NiTexture::CreateTexture = _RELDATA_ADDR(6);
+					*(uintptr_t*)&NiTexture::CreateTexture2 = _RELDATA_ADDR(12);
 
 					return true;
 				}
@@ -220,22 +223,25 @@ namespace CreationKitPlatformExtended
 						}
 					}
 
-					auto PluginFile = NPC->GetBelongsToPlugin();
-					if (PluginFile)
+					if (!NPC->HasCharGenFacePreset())
 					{
-						// Getting an identifier for a name
-						auto FormID = NPC->FormID;
-						FormID = PluginFile->IsSmallMaster() ? FormID & 0xFFF : FormID & 0xFFFFFF;
-						auto TextureSet = ShaderFace->GetTextureSet();
-						
-						for (uint32_t i = 0; i < 3; i++)
+						auto PluginFile = NPC->GetBelongsToPlugin();
+						if (PluginFile)
 						{
-							auto FileName = BSString::FormatString(FORMAT_PATH_FACEGEN[i], PluginFile->FileName.c_str(), FormID);
-							TextureSet->SetTextureFilename((i == 2) ? 7 : i, FileName.c_str());
-						}
+							// Getting an identifier for a name
+							auto FormID = NPC->FormID;
+							FormID = PluginFile->IsSmallMaster() ? FormID & 0xFFF : FormID & 0xFFFFFF;
+							auto TextureSet = ShaderFace->GetTextureSet();
 
-						// Loading textures
-						ShaderFace->LoadTextureSet(TextureSet);
+							for (uint32_t i = 0; i < 3; i++)
+							{
+								auto FileName = BSString::FormatString(FORMAT_PATH_FACEGEN[i], PluginFile->FileName.c_str(), FormID);
+								TextureSet->SetTextureFilename((i == 2) ? 7 : i, FileName.c_str());
+							}
+
+							// Loading textures
+							ShaderFace->LoadTextureSet(TextureSet);
+						}
 					}
 
 					// Apply

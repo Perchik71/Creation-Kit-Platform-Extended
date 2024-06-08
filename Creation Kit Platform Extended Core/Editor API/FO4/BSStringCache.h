@@ -110,6 +110,7 @@ namespace CreationKitPlatformExtended
 					BOOL operator<(const Ref& lhs) const { return data < lhs.data; }
 
 					LPCSTR c_str() const { return operator LPCSTR(); }
+					LPCSTR c_str_ref() const { return data ? data->Get<CHAR>(TRUE) : NULL; }
 					operator LPCSTR() const { return data ? data->Get<CHAR>() : NULL; }
 				};
 
