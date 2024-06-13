@@ -762,6 +762,9 @@
     <ClCompile Include="Patches\FO4\FixUsesReadyFaceGen.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\FO4\FixSortPropObjectMod.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1867,6 +1870,9 @@
       <Filter>Editor API\FO4</Filter>
     </ClInclude>
     <ClInclude Include="Patches\FO4\FixUsesReadyFaceGen.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\FixSortPropObjectMod.h">
       <Filter>Patches\FO4</Filter>
     </ClInclude>
   </ItemGroup>

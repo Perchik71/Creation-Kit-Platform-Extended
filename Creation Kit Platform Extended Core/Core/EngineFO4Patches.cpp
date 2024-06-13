@@ -2,6 +2,7 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
+#include "Engine.h"
 #include "ModuleManager.h"
 #include "CommandLineParser.h"
 
@@ -44,6 +45,7 @@
 #include "Patches/FO4/FakeMoveLight.h"
 #include "Patches/FO4/IncreaseChunkSizeForSNAMPatch.h"
 #include "Patches/FO4/FixUsesReadyFaceGen.h"
+#include "Patches/FO4/FixSortPropObjectMod.h"
 
 #include "Patches/Windows/FO4/MainWindowF4.h"
 #include "Patches/Windows/FO4/ObjectWindowF4.h"
@@ -59,8 +61,16 @@ namespace CreationKitPlatformExtended
 {
 	namespace Core
 	{
+		void Fallout4_CheckCKDeprecated()
+		{
+			if (GlobalEnginePtr->GetEditorVersion() < EDITOR_FALLOUT_C4_1_10_982_3)
+				_CONSOLE("[WARNING] This version has been declared outdated, is no longer supported, and there may be errors.");
+		}
+
 		void Fallout4_AppendPatches(ModuleManager* PatchesManager)
 		{
+			Fallout4_CheckCKDeprecated();
+
 			namespace Patches = CreationKitPlatformExtended::Patches::Fallout4;
 
 			PatchesManager->Append({
@@ -102,6 +112,7 @@ namespace CreationKitPlatformExtended
 				new Patches::FakeMoveLightPatch(),
 				new Patches::IncreaseChunkSizeForSNAMPatch(),
 				new Patches::FixUsesReadyFaceGenPatch(),
+				new Patches::FixSortPropObjectModPatch(),
 				
 				new Patches::MainWindow(),
 				new Patches::ObjectWindow(),

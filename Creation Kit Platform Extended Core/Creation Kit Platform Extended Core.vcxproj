@@ -162,6 +162,7 @@
     <ClCompile Include="Patches\FO4\FixRecursiveSorting.cpp" />
     <ClCompile Include="Patches\FO4\FixSky.cpp" />
     <ClCompile Include="Patches\FO4\FixSmoothValue.cpp" />
+    <ClCompile Include="Patches\FO4\FixSortPropObjectMod.cpp" />
     <ClCompile Include="Patches\FO4\FixTabDeleteCrash.cpp" />
     <ClCompile Include="Patches\FO4\FixUsesReadyFaceGen.cpp" />
     <ClCompile Include="Patches\FO4\FixVC.cpp" />
@@ -509,6 +510,7 @@
     <ClInclude Include="Patches\FO4\FixRecursiveSorting.h" />
     <ClInclude Include="Patches\FO4\FixSky.h" />
     <ClInclude Include="Patches\FO4\FixSmoothValue.h" />
+    <ClInclude Include="Patches\FO4\FixSortPropObjectMod.h" />
     <ClInclude Include="Patches\FO4\FixTabDeleteCrash.h" />
     <ClInclude Include="Patches\FO4\FixUsesReadyFaceGen.h" />
     <ClInclude Include="Patches\FO4\FixVC.h" />
