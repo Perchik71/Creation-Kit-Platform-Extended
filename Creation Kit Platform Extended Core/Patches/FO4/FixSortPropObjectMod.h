@@ -27,6 +27,9 @@ namespace CreationKitPlatformExtended
 				virtual const char* GetName() const;
 				virtual bool HasDependencies() const;
 				virtual Array<String> GetDependencies() const;
+
+				static void sub1(HWND hWnd);
+				static void sub2(HWND hWnd, const RECT* lpRect, BOOL bErase);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;

@@ -54,8 +54,8 @@ namespace CreationKitPlatformExtended
 			void ResetUIDefer();
 			void BeginUIDefer();
 			void EndUIDefer();
-			void SuspendComboBoxUpdates(HWND ComboHandle, bool Suspend);
 		public:
+			static void SuspendComboBoxUpdates(HWND ComboHandle, bool Suspend);
 			static HWND HKCreateDialogParamA(HINSTANCE hInstance, LPCSTR lpTemplateName, HWND hWndParent, 
 				DLGPROC lpDialogFunc, LPARAM dwInitParam);
 			static INT_PTR HKDialogBoxParamA(HINSTANCE hInstance, LPCSTR lpTemplateName, HWND hWndParent, 
