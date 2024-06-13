@@ -106,15 +106,15 @@ namespace CreationKitPlatformExtended
 					ftRegion,
 					ftNavMeshInfoMap,
 					ftCell,
-					ftReference,
-					ftCharacter,
-					ftMissile,
-					ftArrow,
-					ftGrenade,
-					ftBeam,
-					ftFlame,
-					ftCone,
-					ftBarrier,
+					ftReference,				// 0x40
+					ftCharacter,				// 0x41
+					ftMissile,					// 0x42
+					ftArrow,					// 0x43
+					ftGrenade,					// 0x44
+					ftBeam,						// 0x45
+					ftFlame,					// 0x46
+					ftCone,						// 0x47
+					ftBarrier,					// 0x48
 					ftHazard073,				// Hazard ?
 					ftWorldSpace,
 					ftLandspace,

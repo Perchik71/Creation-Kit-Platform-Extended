@@ -59,13 +59,12 @@ namespace CreationKitPlatformExtended
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
 					// Removing stuff that messes up the index selected item.
-					uintptr_t Rva1 = _RELDATA_RAV(0);
-					lpRelocator->PatchNop(Rva1, 0xF);
+					lpRelocator->PatchNop(_RELDATA_RAV(0), 0xF);
 
 					// Flickering is visible as the list is being re-elected and rebuilt. Let's turn on redrawing tracking.
-					uintptr_t Rva2 = _RELDATA_RAV(1);
-					lpRelocator->Patch(Rva2, { 0x4C, 0x89, 0xF9 });
-					lpRelocator->DetourCall(Rva2 + 3, (uintptr_t)&sub1);
+					uintptr_t Rva = _RELDATA_RAV(1);
+					lpRelocator->Patch(Rva, { 0x4C, 0x89, 0xF9 });
+					lpRelocator->DetourCall(Rva + 3, (uintptr_t)&sub1);
 					lpRelocator->DetourCall(_RELDATA_RAV(2), (uintptr_t)&sub2);
 
 					return true;

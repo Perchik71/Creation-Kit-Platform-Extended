@@ -33,7 +33,20 @@ namespace CreationKitPlatformExtended
 				inline static TESForm* GetRef(uint32_t UniqueId)
 				{
 					auto Ret = (TESObjectREFR*)GetRefFormByUniqueId(UniqueId);
-					return (Ret && Ret->Type == TESObjectREFR::TYPE_ID) ? Ret : nullptr;
+					if (!Ret) return nullptr;
+					
+					// It does not always return 0x40, it depends on the parent
+
+					switch (Ret->Type)
+					{
+					case TESObjectREFR::TYPE_ID:	// 0x40
+					case TESForm::ftCharacter:		// 0x41
+						break;
+					default:
+						return nullptr;
+					}
+
+					return Ret;
 				}
 
 				inline HWND GetWindowHandle() const { return _WindowHandle; }
