@@ -7,6 +7,7 @@
 #include "Editor API/FO4/TESNPC.h"
 #include "Editor API/FO4/BSDynamicTriShape.h"
 #include "Editor API/FO4/BSLightingShaderProperty.h"
+#include "Editor API/FO4/BSResourceEntryDB.h"
 #include "FixUsesReadyFaceGen.h"
 
 namespace CreationKitPlatformExtended
@@ -52,12 +53,12 @@ namespace CreationKitPlatformExtended
 
 			bool FixUsesReadyFaceGenPatch::HasDependencies() const
 			{
-				return false;
+				return true;
 			}
 
 			Array<String> FixUsesReadyFaceGenPatch::GetDependencies() const
 			{
-				return {};
+				return { "BSResource Texture DB RE" };
 			}
 
 			bool FixUsesReadyFaceGenPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
@@ -223,11 +224,13 @@ namespace CreationKitPlatformExtended
 						}
 					}
 
+					// Skip npc with protect
 					if (!NPC->HasCharGenFacePreset())
 					{
 						auto PluginFile = NPC->GetBelongsToPlugin();
 						if (PluginFile)
 						{
+							bool Done = true;
 							// Getting an identifier for a name
 							auto FormID = NPC->FormID;
 							FormID = PluginFile->IsSmallMaster() ? FormID & 0xFFF : FormID & 0xFFFFFF;
@@ -236,11 +239,22 @@ namespace CreationKitPlatformExtended
 							for (uint32_t i = 0; i < 3; i++)
 							{
 								auto FileName = BSString::FormatString(FORMAT_PATH_FACEGEN[i], PluginFile->FileName.c_str(), FormID);
+
+								if (!BSResource::BSTextureDB::Exists(FileName.c_str()))
+								{
+									_CONSOLE("[FACEGEN] Unable to find texture set '%s' on '%s' (%08X)", FileName.c_str(),
+										NPC->GetEditorID_NoVTable(), NPC->FormID);
+									Done = false;
+
+									break;
+								}
+
 								TextureSet->SetTextureFilename((i == 2) ? 7 : i, FileName.c_str());
 							}
 
 							// Loading textures
-							ShaderFace->LoadTextureSet(TextureSet);
+							if (Done)
+								ShaderFace->LoadTextureSet(TextureSet);
 						}
 					}
 

@@ -46,6 +46,7 @@
 #include "Patches/FO4/IncreaseChunkSizeForSNAMPatch.h"
 #include "Patches/FO4/FixUsesReadyFaceGen.h"
 #include "Patches/FO4/FixSortPropObjectMod.h"
+#include "Patches/FO4/BSResourceTextureDB_RE.h"
 
 #include "Patches/Windows/FO4/MainWindowF4.h"
 #include "Patches/Windows/FO4/ObjectWindowF4.h"
@@ -113,6 +114,7 @@ namespace CreationKitPlatformExtended
 				new Patches::IncreaseChunkSizeForSNAMPatch(),
 				new Patches::FixUsesReadyFaceGenPatch(),
 				new Patches::FixSortPropObjectModPatch(),
+				new Patches::BSResourceTextureDBREPatch(),
 				
 				new Patches::MainWindow(),
 				new Patches::ObjectWindow(),

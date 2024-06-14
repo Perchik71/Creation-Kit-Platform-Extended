@@ -31,7 +31,7 @@ namespace CreationKitPlatformExtended
 				{
 					auto Ret = (TESObjectREFR*)GetRefFormByUniqueId(UniqueId);
 					
-					// It does not always return 0x40, it depends on the parent
+					// It does not always return 0x3D, it depends on the parent
 
 					switch (Ret->Type)
 					{

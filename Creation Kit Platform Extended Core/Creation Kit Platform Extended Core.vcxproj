@@ -109,6 +109,7 @@
     <ClCompile Include="Editor API\FO4\BGSRenderWindowReferenceEditModule.cpp" />
     <ClCompile Include="Editor API\FO4\BSFile.cpp" />
     <ClCompile Include="Editor API\FO4\BSResourceArchive2.cpp" />
+    <ClCompile Include="Editor API\FO4\BSResourceEntryDB.cpp" />
     <ClCompile Include="Editor API\FO4\BSResourceLooseFilesF4.cpp" />
     <ClCompile Include="Editor API\FO4\NiClassesF4.cpp" />
     <ClCompile Include="Editor API\FO4\TESDataHandlerF4.cpp" />
@@ -144,6 +145,7 @@
     <ClCompile Include="Patches\FO4\AssertD3D11.cpp" />
     <ClCompile Include="Patches\FO4\BSArchiveManagerModdedF4.cpp" />
     <ClCompile Include="Patches\FO4\BSResourceLooseFilesPatch.cpp" />
+    <ClCompile Include="Patches\FO4\BSResourceTextureDB_RE.cpp" />
     <ClCompile Include="Patches\FO4\CreateDDS.cpp" />
     <ClCompile Include="Patches\FO4\EnableGoInSelGame.cpp" />
     <ClCompile Include="Patches\FO4\ESLTip.cpp" />
@@ -396,6 +398,7 @@
     <ClInclude Include="Editor API\FO4\BSLightingShaderProperty.h" />
     <ClInclude Include="Editor API\FO4\BSPointerHandleManager.h" />
     <ClInclude Include="Editor API\FO4\BSResourceArchive2.h" />
+    <ClInclude Include="Editor API\FO4\BSResourceEntryDB.h" />
     <ClInclude Include="Editor API\FO4\BSResourceLooseFilesF4.h" />
     <ClInclude Include="Editor API\FO4\BSShaderMaterial.h" />
     <ClInclude Include="Editor API\FO4\BSShaderProperty.h" />
@@ -492,6 +495,7 @@
     <ClInclude Include="Patches\FO4\AssertD3D11.h" />
     <ClInclude Include="Patches\FO4\BSArchiveManagerModdedF4.h" />
     <ClInclude Include="Patches\FO4\BSResourceLooseFilesPatch.h" />
+    <ClInclude Include="Patches\FO4\BSResourceTextureDB_RE.h" />
     <ClInclude Include="Patches\FO4\CreateDDS.h" />
     <ClInclude Include="Patches\FO4\EnableGoInSelGame.h" />
     <ClInclude Include="Patches\FO4\ESLTip.h" />
