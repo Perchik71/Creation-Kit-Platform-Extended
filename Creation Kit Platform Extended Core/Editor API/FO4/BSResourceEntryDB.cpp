@@ -58,9 +58,9 @@ namespace CreationKitPlatformExtended
 						Traits.Unk0C[2] = 0x18;
 						// Getting a texture by hash
 						Result = GetTextureDBTraits(&Hash, &Traits);	
-						if (!Result)
-							// If it is not found, we will try to find it in the cache.
-							Result = GetTextureDBTraitsFromCache((*(uint8_t**)Cache) + 0x100, &Hash, &Traits) != 0;						
+						if (!Result && (*(uint8_t**)Cache))
+							// If it is not found, try to find it in the cache.
+							Result = (bool)GetTextureDBTraitsFromCache((*(uint8_t**)Cache) + 0x100, &Hash, &Traits);						
 						// Relese hash
 						ReleaseHashDB(&Hash);
 					}
