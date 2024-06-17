@@ -57,10 +57,12 @@ namespace CreationKitPlatformExtended
 						// I have no idea what it is or what it's for.
 						Traits.Unk0C[2] = 0x18;
 						// Getting a texture by hash
+						// Note: It looks like the function returns everything in the archives
 						Result = GetTextureDBTraits(&Hash, &Traits);	
-						if (!Result && (*(uint8_t**)Cache))
-							// If it is not found, try to find it in the cache.
-							Result = (bool)GetTextureDBTraitsFromCache((*(uint8_t**)Cache) + 0x100, &Hash, &Traits);						
+						// Note: Removed, does not work well, requires study
+						//if (!Result && (*(uint8_t**)Cache))
+						//	// If it is not found, try to find it in the cache.
+						//	Result = (bool)GetTextureDBTraitsFromCache((*(uint8_t**)Cache) + 0x100, &Hash, &Traits);						
 						// Relese hash
 						ReleaseHashDB(&Hash);
 					}
@@ -70,6 +72,7 @@ namespace CreationKitPlatformExtended
 
 					if (!Result)
 						// It's hopeless, trying to find something using Windows
+						// Note: It finds loose files perfectly (maybe no MO2)
 						Result = BSString::Utils::FileExists(BSString::Utils::GetDataPath() + FilePath);
 
 					return Result;

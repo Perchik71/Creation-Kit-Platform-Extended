@@ -98,7 +98,7 @@ namespace CreationKitPlatformExtended
 
 				inline bool IsLightingShaderMaterialEnvmap() const { thisVirtualCall<void>(0x68, this); }
 				inline void ClearTextures() const { thisVirtualCall<void>(0x70, this); }
-				inline void GetTextures(NiAPI::NiTexture** Textures, uint32_t MaxSize) const { thisVirtualCall<void>(0x78, this, Textures, MaxSize); }
+				inline void GetTextures(Texture** Textures, uint32_t MaxSize) const { thisVirtualCall<void>(0x78, this, Textures, MaxSize); }
 				inline void SaveToStream(NiStream* Stream) const { thisVirtualCall<void>(0x80, this, Stream); }
 				inline void LoadFromStream(NiStream* Stream) const { thisVirtualCall<void>(0x88, this, Stream); }
 				inline void PrefetchTextures() const { thisVirtualCall<void>(0x90, this); }

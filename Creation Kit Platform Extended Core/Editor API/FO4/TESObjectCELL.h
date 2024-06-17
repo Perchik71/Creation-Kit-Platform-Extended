@@ -32,6 +32,7 @@ namespace CreationKitPlatformExtended
 	{
 		namespace Fallout4
 		{
+			class TESObjectLAND;
 			class TESObjectCELL : public TESForm {
 			public:
 				constexpr static uint8_t TYPE_ID = ftCell;
@@ -107,7 +108,7 @@ namespace CreationKitPlatformExtended
 				char _pad2[0x3];
 				void* _extradata;
 				CellData _celldata;
-				TESForm* _landspace;
+				TESObjectLAND* _landspace;
 				char _pad3[0x8];
 				TESFormArray* _navmeshes;
 				BSTArray<TESObjectREFR_Original*> _items;
@@ -115,8 +116,8 @@ namespace CreationKitPlatformExtended
 				inline const TESObjectREFR_Original** GetItemsConst() const { return (const TESObjectREFR_Original**)_items.QBuffer(); }
 				inline TESObjectREFR_Original** GetItems() { return (TESObjectREFR_Original**)_items.QBuffer(); }
 				inline uint32_t GetItemsCount() const { return (uint32_t)_items.QSize(); }
-				inline const TESForm* GetLandspaceConst() const { return _landspace; }
-				inline TESForm* GetLandspace() { return _landspace; }
+				inline const TESObjectLAND* GetLandspaceConst() const { return _landspace; }
+				inline TESObjectLAND* GetLandspace() { return _landspace; }
 				inline bool IsNavMesh() const { return _navmeshes != NULL; }
 				inline uint32_t GetNavMeshesCount() const { return (uint32_t)_navmeshes->QSize(); }
 				inline const TESForm** GetNavMeshesConst() const { return (const TESForm**)_navmeshes->QBuffer(); }
@@ -140,8 +141,8 @@ namespace CreationKitPlatformExtended
 				READ_PROPERTY(GetItems) TESObjectREFR_Original** Items;
 				READ_PROPERTY(GetItemsConst) const TESObjectREFR_Original** ItemsConst;
 				READ_PROPERTY(GetItemsCount) uint32_t ItemsCount;
-				READ_PROPERTY(GetLandspaceConst) const TESForm* LandspaceConst;
-				READ_PROPERTY(GetLandspace) TESForm* Landspace;
+				READ_PROPERTY(GetLandspaceConst) const TESObjectLAND* LandspaceConst;
+				READ_PROPERTY(GetLandspace) TESObjectLAND* Landspace;
 				READ_PROPERTY(GetGridX) int32_t GridX;
 				READ_PROPERTY(GetGridY) int32_t GridY;
 				READ_PROPERTY(GetLighting) LightingData* Lighting;

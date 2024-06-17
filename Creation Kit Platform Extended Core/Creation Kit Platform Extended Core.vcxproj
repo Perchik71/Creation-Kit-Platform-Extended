@@ -158,6 +158,7 @@
     <ClCompile Include="Patches\FO4\FixEncounterZone.cpp" />
     <ClCompile Include="Patches\FO4\FixFog.cpp" />
     <ClCompile Include="Patches\FO4\FixInfiniteLoopPapyrusCompile.cpp" />
+    <ClCompile Include="Patches\FO4\FixLandspaceVNML.cpp" />
     <ClCompile Include="Patches\FO4\FixLoadD3DCompiler.cpp" />
     <ClCompile Include="Patches\FO4\FixPluginTXT.cpp" />
     <ClCompile Include="Patches\FO4\FixQuoteCmdLine.cpp" />
@@ -414,10 +415,12 @@
     <ClInclude Include="Editor API\FO4\TESFileF4.h" />
     <ClInclude Include="Editor API\FO4\TESFormComponents.h" />
     <ClInclude Include="Editor API\FO4\TESFormF4.h" />
+    <ClInclude Include="Editor API\FO4\TESLandTexture.h" />
     <ClInclude Include="Editor API\FO4\TESNPC.h" />
     <ClInclude Include="Editor API\FO4\TESObject.h" />
     <ClInclude Include="Editor API\FO4\TESObjectARMO.h" />
     <ClInclude Include="Editor API\FO4\TESObjectCELL.h" />
+    <ClInclude Include="Editor API\FO4\TESObjectLAND.h" />
     <ClInclude Include="Editor API\FO4\TESObjectREFR.h" />
     <ClInclude Include="Editor API\FO4\TESQuest.h" />
     <ClInclude Include="Editor API\FO4\TESTopic.h" />
@@ -508,6 +511,7 @@
     <ClInclude Include="Patches\FO4\FixEncounterZone.h" />
     <ClInclude Include="Patches\FO4\FixFog.h" />
     <ClInclude Include="Patches\FO4\FixInfiniteLoopPapyrusCompile.h" />
+    <ClInclude Include="Patches\FO4\FixLandspaceVNML.h" />
     <ClInclude Include="Patches\FO4\FixLoadD3DCompiler.h" />
     <ClInclude Include="Patches\FO4\FixPluginTXT.h" />
     <ClInclude Include="Patches\FO4\FixQuoteCmdLine.h" />

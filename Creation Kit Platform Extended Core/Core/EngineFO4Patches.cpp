@@ -47,6 +47,7 @@
 #include "Patches/FO4/FixUsesReadyFaceGen.h"
 #include "Patches/FO4/FixSortPropObjectMod.h"
 #include "Patches/FO4/BSResourceTextureDB_RE.h"
+#include "Patches/FO4/FixLandspaceVNML.h"
 
 #include "Patches/Windows/FO4/MainWindowF4.h"
 #include "Patches/Windows/FO4/ObjectWindowF4.h"
@@ -115,6 +116,7 @@ namespace CreationKitPlatformExtended
 				new Patches::FixUsesReadyFaceGenPatch(),
 				new Patches::FixSortPropObjectModPatch(),
 				new Patches::BSResourceTextureDBREPatch(),
+				new Patches::FixLandspaceVNMLPatch(),
 				
 				new Patches::MainWindow(),
 				new Patches::ObjectWindow(),

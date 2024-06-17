@@ -225,7 +225,7 @@ namespace CreationKitPlatformExtended
 					}
 
 					// Skip npc with protect
-					if (!NPC->HasCharGenFacePreset())
+					//if (!NPC->HasCharGenFacePreset())
 					{
 						auto PluginFile = NPC->GetBelongsToPlugin();
 						if (PluginFile)
@@ -242,10 +242,11 @@ namespace CreationKitPlatformExtended
 
 								if (!BSResource::BSTextureDB::Exists(FileName.c_str()))
 								{
-									_CONSOLE("[FACEGEN] Unable to find texture set '%s' on '%s' (%08X)", FileName.c_str(),
-										NPC->GetEditorID_NoVTable(), NPC->FormID);
-									Done = false;
+									if (!NPC->HasCharGenFacePreset())
+										_CONSOLE("FACEGEN: Unable to find texture set '%s' on '%s' (%08X)", FileName.c_str(),
+											NPC->GetEditorID_NoVTable(), NPC->FormID);
 
+									Done = false;
 									break;
 								}
 
