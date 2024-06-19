@@ -61,6 +61,8 @@ namespace CreationKitPlatformExtended
 
 					*(uintptr_t*)&EditorAPI::Fallout4::TESObjectREFR::SetParentWithRedraw =
 						lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
+					*(uintptr_t*)&EditorAPI::Fallout4::TESObjectREFR_Extremly::SetParentWithRedraw =
+						lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
 
 					return true;
 				}

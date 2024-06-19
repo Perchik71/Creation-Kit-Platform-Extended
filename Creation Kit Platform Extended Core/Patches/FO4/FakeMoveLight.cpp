@@ -74,6 +74,7 @@ namespace CreationKitPlatformExtended
 						lpRelocator->DetourJump(_RELDATA_RAV(0), &BGSRenderWindowReferenceEditModule::MoveSelectObjectsExtremly);
 
 					*(uintptr_t*)&TESObjectREFR::SetPosition = _RELDATA_ADDR(1);
+					*(uintptr_t*)&TESObjectREFR_Extremly::SetPosition = _RELDATA_ADDR(1);
 
 					return true;
 				}
