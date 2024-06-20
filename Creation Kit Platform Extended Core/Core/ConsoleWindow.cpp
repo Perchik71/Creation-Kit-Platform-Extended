@@ -324,7 +324,7 @@ namespace CreationKitPlatformExtended
 
 			// открываю\создаю файл, полностью заменяю его содержимое
 			// если файл существует
-			FILE* fileStream = _fsopen(_filename, "wt", _SH_DENYRW);
+			FILE* fileStream = _fsopen(_filename, "wb", _SH_DENYRW);
 			if (!fileStream)
 			{
 				_ERROR("I can't open the file for writing: \"%s\"", _filename);

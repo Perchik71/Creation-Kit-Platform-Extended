@@ -116,7 +116,7 @@ namespace CreationKitPlatformExtended
 
 					xNormalize_Hook::Generate(Rva1);
 
-					lpRelocator->DetourCall(_RELDATA_RAV(1),
+					lpRelocator->DetourJump(_RELDATA_RAV(1),
 						(uintptr_t)&EditorAPI::Fallout4::TESObjectLAND::Layers::HKNormalize);
 
 					return true;

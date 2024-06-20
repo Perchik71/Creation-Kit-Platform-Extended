@@ -25,9 +25,6 @@ namespace CreationKitPlatformExtended
 			virtual const char* GetName() const;
 			virtual bool HasDependencies() const;
 			virtual Array<String> GetDependencies() const;
-
-			static DWORD WINAPI DumpWriterThread(LPVOID Arg);
-			static LONG WINAPI DumpExceptionHandler(PEXCEPTION_POINTERS ExceptionInfo);
 		protected:
 			virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const;

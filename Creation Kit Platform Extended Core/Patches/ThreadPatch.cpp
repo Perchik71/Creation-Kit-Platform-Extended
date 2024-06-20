@@ -57,13 +57,9 @@ namespace CreationKitPlatformExtended
 				PatchIAT(HKSetThreadAffinityMask, "kernel32.dll", "SetThreadAffinityMask");
 				
 				if (_READ_OPTION_BOOL("CreationKit", "bThreadShortSpinlock", false))
-				{
-					PatchIAT(HKAdvancedSleep, "kernel32.dll", "Sleep");
-				}
+					PatchIAT(HKAdvancedSleep, "kernel32.dll", "Sleep")
 				else
-				{
 					PatchIAT(HKSleep, "kernel32.dll", "Sleep");
-				}
 
 				SetPriorityClass(GetCurrentProcess(), ABOVE_NORMAL_PRIORITY_CLASS);
 
@@ -72,7 +68,8 @@ namespace CreationKitPlatformExtended
 				// Best practice is that all applications call the process - wide SetErrorMode 
 				// function with a parameter of SEM_FAILCRITICALERRORS at startup.
 				// This is to prevent error mode dialogs from hanging the application.
-				SetErrorMode(SEM_FAILCRITICALERRORS);
+				DWORD OldErrMode;
+				AssertMsg(SetThreadErrorMode(SEM_FAILCRITICALERRORS, &OldErrMode), "Can't set the error mode for the application.");
 
 				return true;
 			}

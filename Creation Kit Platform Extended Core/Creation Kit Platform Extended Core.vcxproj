@@ -76,6 +76,7 @@
     <ClCompile Include="Core\AboutWindow.cpp" />
     <ClCompile Include="Core\CommandLineParser.cpp" />
     <ClCompile Include="Core\ConsoleWindow.cpp" />
+    <ClCompile Include="Core\CrashHandler.cpp" />
     <ClCompile Include="Core\D3D11Proxy.cpp" />
     <ClCompile Include="Core\DebugLog.cpp" />
     <ClCompile Include="Core\DialogManager.cpp" />
@@ -342,6 +343,7 @@
     <ClInclude Include="Core\CommandLineParser.h" />
     <ClInclude Include="Core\ConsoleWindow.h" />
     <ClInclude Include="Core\CoreCommon.h" />
+    <ClInclude Include="Core\CrashHandler.h" />
     <ClInclude Include="Core\D3D11Proxy.h" />
     <ClInclude Include="Core\DebugLog.h" />
     <ClInclude Include="Core\DialogManager.h" />

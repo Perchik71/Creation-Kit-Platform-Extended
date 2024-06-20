@@ -13,6 +13,7 @@
 #include "DynamicCast.h"
 #include "TracerManager.h"
 #include "RegistratorWindow.h"
+#include "CrashHandler.h"
 
 #include "Editor API/EditorUI.h"
 
@@ -129,6 +130,7 @@ namespace CreationKitPlatformExtended
 			VCoreDisableBreakpoint = &Engine::DisableBreakpoint;
 			VCoreContinueInitialize = &Engine::ContinueInitialize;
 
+			GlobalCrashHandlerPtr = new CrashHandler();
 			GlobalRelocationDatabasePtr = new RelocationDatabase(this);
 			GlobalRelocatorPtr = new Relocator(this);
 			GlobalDialogManagerPtr = new DialogManager();
