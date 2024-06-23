@@ -133,25 +133,24 @@ namespace CreationKitPlatformExtended
 
 		inline EDITOR_EXECUTABLE_TYPE GetEditorVersionByOffsetSign(uintptr_t basedAddress)
 		{
-			// Защита в случаи выхода за пределы при проверке
-			__try
+			for (auto editorVersionIterator2 = allowedEditorVersion2.begin();
+				editorVersionIterator2 != allowedEditorVersion2.end();
+				editorVersionIterator2++)
 			{
-				for (auto editorVersionIterator2 = allowedEditorVersion2.begin();
-					editorVersionIterator2 != allowedEditorVersion2.end();
-					editorVersionIterator2++)
+				// Защита в случаи выхода за пределы при проверке
+				__try
 				{
 					// Сравнение по указанному смещению нужной строки
 					if (!_stricmp((const char*)(basedAddress + editorVersionIterator2->first),
 						editorVersionIterator2->second.first.data()))
 						return editorVersionIterator2->second.second;
 				}
+				__except (EXCEPTION_EXECUTE_HANDLER)
+				{
+				}
+			}
 
-				return EDITOR_UNKNOWN;
-			}
-			__except (EXCEPTION_EXECUTE_HANDLER)
-			{
-				return EDITOR_UNKNOWN;
-			}
+			return EDITOR_UNKNOWN;
 		}
 	}
 }
