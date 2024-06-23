@@ -71,17 +71,19 @@ namespace CreationKitPlatformExtended
 
 		void CrashHandler::SetThreadExceptionHandlers()
 		{
+#if _HAS_EXCEPTIONS
 			// Catch terminate() calls
 			set_terminate([]()
 				{
 					RaiseException('TERM', EXCEPTION_NONCONTINUABLE, 0, NULL);
 				});
-
+#else
 			// Catch unexpected() calls
 			set_unexpected([]()
 				{
 					RaiseException('UNEX', EXCEPTION_NONCONTINUABLE, 0, NULL);
 				});
+#endif // ^^^ !_HAS_EXCEPTIONS ^^^
 
 			// Catch a floating point error
 			signal(SIGFPE, [](int)

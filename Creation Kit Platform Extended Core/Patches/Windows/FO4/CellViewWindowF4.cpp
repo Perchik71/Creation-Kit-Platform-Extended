@@ -4,6 +4,7 @@
 
 #include "Core/Engine.h"
 #include "Editor API/EditorUI.h"
+#include "Editor API/BSString.h"
 #include "Core/RegistratorWindow.h"
 #include "Patches/Windows/FO4/MainWindowF4.h"
 #include "CellViewWindowF4.h"
@@ -13,6 +14,7 @@
 #define UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX			2580	
 #define UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX	2582	
 #define UI_CELL_VIEW_FILTER_CELL					2584	
+#define UI_CELL_VIEW_GO_BUTTON						3681	
 
 #define UI_CELL_VIEW_FILTER_CELL_SIZE				1024
 
@@ -265,7 +267,7 @@ namespace CreationKitPlatformExtended
 					GlobalCellViewWindowPtr->m_YEdit = GetDlgItem(Hwnd, 5099);
 					GlobalCellViewWindowPtr->m_XLabel = GetDlgItem(Hwnd, 5281);
 					GlobalCellViewWindowPtr->m_YLabel = GetDlgItem(Hwnd, 5282);
-					GlobalCellViewWindowPtr->m_GoButton = GetDlgItem(Hwnd, 3681);
+					GlobalCellViewWindowPtr->m_GoButton = GetDlgItem(Hwnd, UI_CELL_VIEW_GO_BUTTON);
 					GlobalCellViewWindowPtr->m_LoadedAtTop = GetDlgItem(Hwnd, 5662);
 					GlobalCellViewWindowPtr->m_FilteredOnly = GetDlgItem(Hwnd, 5664);
 					GlobalCellViewWindowPtr->m_VisibleOnly = GetDlgItem(Hwnd, 5666);
@@ -278,7 +280,7 @@ namespace CreationKitPlatformExtended
 					GlobalCellViewWindowPtr->m_ObjectListView = GetDlgItem(Hwnd, 1156);
 					GlobalCellViewWindowPtr->m_FilterCellEdit = GetDlgItem(Hwnd, UI_CELL_VIEW_FILTER_CELL);
 
-					GlobalCellViewWindowPtr->m_WorldSpaceLabel.Style |= SS_CENTER;
+					GlobalCellViewWindowPtr->m_WorldSpaceLabel.Style |= SS_CENTER;		
 
 					// Eliminate the flicker when changing cells
 					ListView_SetExtendedListViewStyleEx(GlobalCellViewWindowPtr->m_CellListView.Handle, 
@@ -326,6 +328,12 @@ namespace CreationKitPlatformExtended
 						// Fake the dropdown list being activated
 						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2083, 1), 0);
 						return 1;
+					}
+					else if (param == UI_CELL_VIEW_GO_BUTTON)
+					{						
+						if ((GlobalCellViewWindowPtr->m_XEdit.Caption.length() <= 1) ||
+							(GlobalCellViewWindowPtr->m_YEdit.Caption.length() <= 1))
+							return 1;
 					}
 				}
 				else if (Message == UI_CELL_VIEW_ADD_CELL_ITEM)

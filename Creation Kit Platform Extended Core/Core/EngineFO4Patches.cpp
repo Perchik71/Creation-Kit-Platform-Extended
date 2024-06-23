@@ -143,7 +143,7 @@ namespace CreationKitPlatformExtended
 				{
 					_CONSOLE("The precombining operation has been launched");
 
-					PatchesManager->Append(new CreationKitPlatformExtended::Patches::Fallout4::PreCombinedPatch());
+					PatchesManager->Append(new Patches::PreCombinedPatch());
 				}
 			}
 		}

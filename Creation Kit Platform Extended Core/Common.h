@@ -11,7 +11,10 @@
 #pragma warning (disable : 4477)
 #pragma warning (disable : 4742)
 #pragma warning (disable : 4996)
+#pragma warning (disable : 6387)
+#pragma warning (disable : 26495)
 #pragma warning (disable : 26812)
+#pragma warning (disable : 26813)
 
 #include <windows.h>
 #include <windowsx.h>

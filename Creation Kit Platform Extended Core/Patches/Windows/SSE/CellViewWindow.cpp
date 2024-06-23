@@ -17,6 +17,7 @@
 #define UI_CELL_VIEW_SELECT_CELL_OBJECTS_CHECKBOX	5665	
 #define UI_CELL_VIEW_VISIBLE_CELL_OBJECTS_CHECKBOX	5666	
 #define UI_CELL_VIEW_FILTER_CELL					2584	
+#define UI_CELL_VIEW_GO_BUTTON						3681
 
 #define UI_CELL_VIEW_FILTER_CELL_SIZE				1024
 
@@ -340,6 +341,12 @@ namespace CreationKitPlatformExtended
 
 						GlobalCellViewWindowPtr->UpdateCellList();
 						return 1;
+					}
+					else if (param == UI_CELL_VIEW_GO_BUTTON)
+					{
+						if ((GlobalCellViewWindowPtr->m_XEdit.Caption.length() <= 1) ||
+							(GlobalCellViewWindowPtr->m_YEdit.Caption.length() <= 1))
+							return 1;
 					}
 				}
 				else if (Message == UI_CELL_VIEW_ADD_CELL_ITEM)

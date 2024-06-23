@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.33801.447
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Creation Kit Platform Extended Core", "Creation Kit Platform Extended Core\Creation Kit Platform Extended Core.vcxproj", "{0794F1B4-68C6-4F5A-AD4A-767B1B4D9783}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -22,8 +22,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Creation Kit Platform Extended Loader", "Creation Kit Platform Extended Loader\ckpe_loader.vcxproj", "{42E22F45-AC50-49BF-AABB-D0FFE480333C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyFirstPlugin", "Plug-ins\MyFirstPlugin\MyFirstPlugin.vcxproj", "{D9D13FA6-38C4-443A-A610-18A0DB488DB5}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QTableInfos", "Plug-ins\QTableInfos\QTableInfos.vcxproj", "{4DA60C6C-A470-4FB6-955D-E1E3A4F1AE8C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Detours", "Dependencies\Voltek\Detours\Detours.vcxproj", "{5E4F0CA1-5093-48F0-8660-E649765D6A1E}"
 EndProject
@@ -86,12 +84,6 @@ Global
 		{D9D13FA6-38C4-443A-A610-18A0DB488DB5}.Release|x64.Build.0 = Release|x64
 		{D9D13FA6-38C4-443A-A610-18A0DB488DB5}.Release|x86.ActiveCfg = Release|Win32
 		{D9D13FA6-38C4-443A-A610-18A0DB488DB5}.Release|x86.Build.0 = Release|Win32
-		{4DA60C6C-A470-4FB6-955D-E1E3A4F1AE8C}.Debug|x64.ActiveCfg = Debug|x64
-		{4DA60C6C-A470-4FB6-955D-E1E3A4F1AE8C}.Debug|x64.Build.0 = Debug|x64
-		{4DA60C6C-A470-4FB6-955D-E1E3A4F1AE8C}.Debug|x86.ActiveCfg = Debug|x64
-		{4DA60C6C-A470-4FB6-955D-E1E3A4F1AE8C}.Release|x64.ActiveCfg = Release|x64
-		{4DA60C6C-A470-4FB6-955D-E1E3A4F1AE8C}.Release|x64.Build.0 = Release|x64
-		{4DA60C6C-A470-4FB6-955D-E1E3A4F1AE8C}.Release|x86.ActiveCfg = Release|x64
 		{5E4F0CA1-5093-48F0-8660-E649765D6A1E}.Debug|x64.ActiveCfg = Debug|x64
 		{5E4F0CA1-5093-48F0-8660-E649765D6A1E}.Debug|x64.Build.0 = Debug|x64
 		{5E4F0CA1-5093-48F0-8660-E649765D6A1E}.Debug|x86.ActiveCfg = Debug|Win32

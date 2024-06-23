@@ -256,6 +256,7 @@ namespace CreationKitPlatformExtended
 				inline bool IsTemporary() const { return (_FormFlags & FormFlags::fsTemporary); }
 				inline bool IsQuestItem() const { return (_FormFlags & FormFlags::fsQuestItem); }
 			public:
+				void ShowInPreviewWindow(uint32_t Unk = 0);
 				TESFile* GetBelongsToPlugin() const;
 				BSString GetID() const;
 				inline uint32_t GetFormFlags() const { return _FormFlags; }

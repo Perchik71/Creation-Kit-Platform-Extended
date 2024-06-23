@@ -15,6 +15,7 @@ namespace CreationKitPlatformExtended
 			extern uintptr_t pointer_TESForm_sub;
 			extern uintptr_t pointer_TESForm_data;
 			extern uintptr_t pointer_TESForm_sub1;
+			extern uintptr_t pointer_TESForm_sub2;
 		}
 	}
 
@@ -71,6 +72,7 @@ namespace CreationKitPlatformExtended
 					pointer_TESForm_sub = _RELDATA_ADDR(1);
 					pointer_TESForm_data = _RELDATA_ADDR(0);
 					pointer_TESForm_sub1 = _RELDATA_ADDR(3);
+					pointer_TESForm_sub2 = _RELDATA_ADDR(4);
 
 					return true;
 				}

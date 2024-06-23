@@ -31,6 +31,7 @@ namespace CreationKitPlatformExtended
 			uintptr_t pointer_TESForm_sub = 0;
 			uintptr_t pointer_TESForm_data = 0;
 			uintptr_t pointer_TESForm_sub1 = 0;
+			uintptr_t pointer_TESForm_sub2 = 0;
 
 			using namespace CreationKitPlatformExtended::Core;
 
@@ -115,6 +116,11 @@ namespace CreationKitPlatformExtended
 			TESForm* TESForm::GetFormByNumericID(const uint32_t SearchID)
 			{
 				return ((TESForm*(__fastcall*)(uint32_t))pointer_TESForm_sub)(SearchID);
+			}
+
+			void TESForm::ShowInPreviewWindow(uint32_t Unk)
+			{
+				thisCall<void>(pointer_TESForm_sub2, this, Unk);
 			}
 		}
 	}
