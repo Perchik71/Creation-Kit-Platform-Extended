@@ -15,17 +15,33 @@
 </p>
 
 # Description
-The powerful open-source platform makes numerous fixes and improvements to the **Creation Kit** editor from **Bethesda**. This is a continuation of two previously archived projects, as I am already confused in the code. The new implementation is based on the principle of modularity, which will allow for better control of development.  
-
 <p align="left">
-  <img src="https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/master/Resources/ckpe_ai.png" alt="Creation Kit Platform Extended" border="0" align="left" height=393>
-  <table>
+<img src="https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/master/Resources/ckpe_ai.png" alt="Creation Kit Platform Extended" border="0" align="left" height=393>
+</p>
+
+The powerful open-source platform makes numerous fixes and improvements to the **Creation Kit** editor from **Bethesda**. This is a continuation of two previously archived projects, as I am already confused in the code. The new implementation is based on the principle of modularity, which will allow for better control of development.  
+  
+The important thing that CKPE adds and fixes:  
+:white_check_mark: Fast file loading  
+:white_check_mark: Interception of warning messages in the log  
+:white_check_mark: Unicode support  
+:white_check_mark: Multiple UI Fix and etc  
+:white_check_mark: Dark theme  
+:white_check_mark: Create master files and open them as plugins  
+:white_check_mark: Opening plugins as master files if they are in dependencies  
+:white_check_mark: Filtering by active forms and cell  
+:white_check_mark: Filtering mods in the Data dialog  
+:white_check_mark: Many other fixes are also from the author of [@Nukem9](https://github.com/Nukem9)  
+This is not a complete list of improvements.
+
+<table>
   <caption>
-    At the moment, the platform supports <b>CK</b> version:</br>
-    Marked as <b>deprecated</b>, means that there will be nothing new for these versions, older versions, as an option, are more stable. Attention detailed information is relevant for the current commit.
+    At the moment, the platform supports <b>CK</b> version:
   </caption>
   <thead>
     <tr>
+      <th scope="col">Version</th>
+      <th scope="col">State</th>
       <th scope="col">Version</th>
       <th scope="col">State</th>
       <th scope="col">Version</th>
@@ -36,70 +52,55 @@ The powerful open-source platform makes numerous fixes and improvements to the *
     <tr>
       <th scope="row" colspan="2">Skyrim SE</th>
       <th scope="row" colspan="2">Fallout 4</th>
+      <th scope="row" colspan="2">Starfield</th>
     </tr>
     <tr>
       <td>1.5.3.0</td>
       <td>Active</td>
       <td>1.10.162.0</td>
       <td>Deprecated</td>
+      <td>1.12.32.0</td>
+      <td>Active</td>
     </tr>
     <tr>
       <td>1.5.73.0</td>
       <td>Active</td>
       <td>1.10.943.1</td>
       <td>Deprecated</td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>1.6.438.0</td>
       <td>Active</td>
       <td>1.10.982.3</td>
       <td>Active</td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>1.6.1130.0</td>
       <td>Active</td>
       <td></td>
       <td></td>
+      <td></td>
+      <td></td>
     </tr>
   </tbody>
   <tfoot>
     <tr>
       <th scope="row" colspan="2">Status platform</th>
       <th scope="row" colspan="2">Status platform</th>
-    </tr>
-    <tr>
-      <th scope="row" colspan="2">Stable</th>
-      <th scope="row" colspan="2">Stable</th>
-    </tr>
-  </tfoot>
-</table>
-</p>
-</br>
-<table>
-  <thead>
-    <tr>
-      <th scope="col">Version</th>
-      <th scope="col">State</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row" colspan="2">Starfield</th>
-    </tr>
-    <tr>
-      <td>1.12.32.0</td>
-      <td>Active</td>
-    </tr>
-  </tbody>
-  <tfoot>
-    <tr>
       <th scope="row" colspan="2">Status platform</th>
     </tr>
     <tr>
+      <th scope="row" colspan="2">Stable</th>
+      <th scope="row" colspan="2">Stable</th>
       <th scope="row" colspan="2"> Unstable</th>
     </tr>
   </tfoot>
 </table>
+Marked as <b>deprecated</b>, means that there will be nothing new for these versions, older versions, as an option, are more stable. Attention detailed information is relevant for the current commit.  
 
 # 
 > [!IMPORTANT]
@@ -110,19 +111,7 @@ The powerful open-source platform makes numerous fixes and improvements to the *
 > You can remove *Steam* from the **Creation Kit**.  
 > You just need to manually replace the string *`steam_api64.dll`* on *`winhttp.dll`* in any **HEX editor**. Since the new string is four bytes shorter, the remaining bytes are set to **`0x00`**. Or compile the **NoSteam Patcher** in **Lazarus** and use it.  
 > For versions **`1.6.438.0`** and **`1.10.162.0`**, you first need to remove **`Steam DRM`**, for example, [Steamless](https://github.com/atom0s/Steamless). 
-
-# Fixed or added
-:white_check_mark: Fast file loading  
-:white_check_mark: Interception of warning messages in the log  
-:white_check_mark: Unicode support  
-:white_check_mark: Multiple UI Fix and etc  
-:white_check_mark: Dark theme  
-:white_check_mark: Create master files and open them as plugins  
-:white_check_mark: Opening plugins as master files if they are in dependencies  
-:white_check_mark: Filtering by active forms and cell  
-:white_check_mark: Filtering mods in the Data dialog  
-:white_check_mark: Many other fixes are also from the author of [@Nukem9](https://github.com/Nukem9)
-
+  
 # Demonstration
 <p align="center">
   <img src="https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/master/Resources/darktheme.png" width="640px" alt="Creation Kit Platform Extended" border="0">
