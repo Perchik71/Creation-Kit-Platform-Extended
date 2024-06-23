@@ -74,6 +74,32 @@ The powerful open-source platform makes numerous fixes and improvements to the *
   </tfoot>
 </table>
 </p>
+</br>
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Version</th>
+      <th scope="col">State</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row" colspan="2">Starfield</th>
+    </tr>
+    <tr>
+      <td>1.12.32.0</td>
+      <td>Active</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th scope="row" colspan="2">Status platform</th>
+    </tr>
+    <tr>
+      <th scope="row" colspan="2"> Unstable</th>
+    </tr>
+  </tfoot>
+</table>
 
 # 
 > [!IMPORTANT]
