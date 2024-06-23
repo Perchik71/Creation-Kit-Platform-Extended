@@ -432,6 +432,12 @@ namespace CreationKitPlatformExtended
 				return;
 			}
 
+			if (CheckOutdatedEditor(_editorVersion))
+			{
+				_WARNING("This version has been declared outdated, is no longer supported, and there may be errors.");
+				_CONSOLE("[WARNING] This version has been declared outdated, is no longer supported, and there may be errors.");
+			}
+
 			// Запросы и проверка всех патчей на валидность
 			PatchesManager->QueryAll();
 			// Включение неотбракованных патчей
@@ -553,19 +559,8 @@ namespace CreationKitPlatformExtended
 				{
 					// Файл не найден среди разрешённых, попытка определить по ключевым местам
 					_WARNING("CRC32 does not match any of the known ones, running a version check by signature");
-
-					for (auto editorVersionIterator2 = allowedEditorVersion2.begin();
-						editorVersionIterator2 != allowedEditorVersion2.end();
-						editorVersionIterator2++)
-					{
-						// Сравнение по указанному смещению нужной строки
-						if (!_stricmp((const char*)(moduleBase + editorVersionIterator2->first),
-							editorVersionIterator2->second.first.data()))
-						{
-							editorVersion = editorVersionIterator2->second.second;
-							break;
-						}
-					}
+					// Определение версии по смещению в файле нужной сигнатуры
+					editorVersion = GetEditorVersionByOffsetSign(moduleBase);
 				}
 				else
 					editorVersion = editorVersionIterator->second;

@@ -63,16 +63,8 @@ namespace CreationKitPlatformExtended
 {
 	namespace Core
 	{
-		void Fallout4_CheckCKDeprecated()
-		{
-			if (GlobalEnginePtr->GetEditorVersion() < EDITOR_FALLOUT_C4_1_10_982_3)
-				_CONSOLE("[WARNING] This version has been declared outdated, is no longer supported, and there may be errors.");
-		}
-
 		void Fallout4_AppendPatches(ModuleManager* PatchesManager)
 		{
-			Fallout4_CheckCKDeprecated();
-
 			namespace Patches = CreationKitPlatformExtended::Patches::Fallout4;
 
 			PatchesManager->Append({

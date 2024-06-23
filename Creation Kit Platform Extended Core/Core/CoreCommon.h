@@ -18,7 +18,9 @@ namespace CreationKitPlatformExtended
 			EDITOR_FALLOUT_C4_1_10_162_0,
 			EDITOR_FALLOUT_C4_1_10_943_1,
 			EDITOR_FALLOUT_C4_1_10_982_3,
-			EDITOR_FALLOUT_C4_LAST = EDITOR_FALLOUT_C4_1_10_982_3
+			EDITOR_FALLOUT_C4_LAST = EDITOR_FALLOUT_C4_1_10_982_3,
+			EDITOR_STARFIELD_1_12_32_0,
+			EDITOR_STARFIELD_LAST = EDITOR_STARFIELD_1_12_32_0,
 		};
 
 		// Не использовать менеджер на данном этапе, считаем, что его ещё нет
@@ -41,6 +43,13 @@ namespace CreationKitPlatformExtended
 			{ 0xBAAF1B07ul, EDITOR_FALLOUT_C4_1_10_943_1	},	// No Steam and Redirect Steam
 			{ 0x481CCE95ul, EDITOR_FALLOUT_C4_1_10_982_3	},	// Redirect Steam
 			{ 0x55F7F580ul, EDITOR_FALLOUT_C4_1_10_982_3	},	// No Steam and Redirect Steam
+			{ 0x5CE4E852ul, EDITOR_STARFIELD_1_12_32_0		},	// Redirect Steam
+		};
+
+		// Список устаревших версий редакторов
+		static std::vector<EDITOR_EXECUTABLE_TYPE> outdatedEditorVersion = {
+			EDITOR_FALLOUT_C4_1_10_162_0,
+			EDITOR_FALLOUT_C4_1_10_943_1,
 		};
 		
 		// Список ключевых смещений в исполняемых файлах, допущенных к запуску
@@ -53,6 +62,7 @@ namespace CreationKitPlatformExtended
 			{ 0x3896168ul, { "1.10.162.0",	EDITOR_FALLOUT_C4_1_10_162_0	} },
 			{ 0x2F8D1C8ul, { "1.10.943.1",	EDITOR_FALLOUT_C4_1_10_943_1	} },
 			{ 0x2F8D298ul, { "1.10.982.3",	EDITOR_FALLOUT_C4_1_10_982_3	} },
+			{ 0x864FDF0ul, { "1.12.32.0",	EDITOR_STARFIELD_1_12_32_0		} },
 		};
 		
 		// Список названий редакторов
@@ -65,6 +75,7 @@ namespace CreationKitPlatformExtended
 			"Fallout 4 [v1.10.162.0]",
 			"Fallout 4 [v1.10.943.1]",
 			"Fallout 4 [v1.10.982.3]",
+			"Starfield [v1.12.32.0]",
 		};
 
 		// Список имён файлов базы данных
@@ -76,6 +87,7 @@ namespace CreationKitPlatformExtended
 			{ EDITOR_FALLOUT_C4_1_10_162_0,	"CreationKitPlatformExtended_FO4_1_10_162.database"		},
 			{ EDITOR_FALLOUT_C4_1_10_943_1,	"CreationKitPlatformExtended_FO4_1_10_943_1.database"	},
 			{ EDITOR_FALLOUT_C4_1_10_982_3,	"CreationKitPlatformExtended_FO4_1_10_982_3.database"	},
+			{ EDITOR_STARFIELD_1_12_32_0,	"CreationKitPlatformExtended_SF_1_12_32_0.database"		},
 		};
 
 		// Список имён файлов базы данных
@@ -87,6 +99,7 @@ namespace CreationKitPlatformExtended
 			{ EDITOR_FALLOUT_C4_1_10_162_0,	"CreationKitPlatformExtended_FO4_Dialogs.pak"	},
 			{ EDITOR_FALLOUT_C4_1_10_943_1,	"CreationKitPlatformExtended_FO4_Dialogs.pak"	},
 			{ EDITOR_FALLOUT_C4_1_10_982_3,	"CreationKitPlatformExtended_FO4_Dialogs.pak"	},
+			{ EDITOR_STARFIELD_1_12_32_0,	"CreationKitPlatformExtended_SF_Dialogs.pak"	},
 		};
 
 		static std::vector<std::string_view> allowedEditorFileNameStr = {
@@ -98,6 +111,7 @@ namespace CreationKitPlatformExtended
 			"creationkit_f4_1_10_162",
 			"creationkit_f4_1_10_943_1",
 			"creationkit_f4_1_10_982_3",
+			"creationkit_sf_1_12_32_0",
 		};
 
 		inline bool CheckFileNameProcess(const char* name)
@@ -110,6 +124,34 @@ namespace CreationKitPlatformExtended
 			}
 
 			return false;
+		}
+
+		inline bool CheckOutdatedEditor(EDITOR_EXECUTABLE_TYPE editorVersion)
+		{
+			return std::find(outdatedEditorVersion.begin(), outdatedEditorVersion.end(), editorVersion) != outdatedEditorVersion.end();
+		}
+
+		inline EDITOR_EXECUTABLE_TYPE GetEditorVersionByOffsetSign(uintptr_t basedAddress)
+		{
+			// Защита в случаи выхода за пределы при проверке
+			__try
+			{
+				for (auto editorVersionIterator2 = allowedEditorVersion2.begin();
+					editorVersionIterator2 != allowedEditorVersion2.end();
+					editorVersionIterator2++)
+				{
+					// Сравнение по указанному смещению нужной строки
+					if (!_stricmp((const char*)(basedAddress + editorVersionIterator2->first),
+						editorVersionIterator2->second.first.data()))
+						return editorVersionIterator2->second.second;
+				}
+
+				return EDITOR_UNKNOWN;
+			}
+			__except (EXCEPTION_EXECUTE_HANDLER)
+			{
+				return EDITOR_UNKNOWN;
+			}
 		}
 	}
 }
