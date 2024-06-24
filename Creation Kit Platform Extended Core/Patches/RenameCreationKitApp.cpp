@@ -5,6 +5,8 @@
 #include "Core/Engine.h"
 #include "RenameCreationKitApp.h"
 
+#include <QtCore/qstring.h>
+
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
@@ -52,7 +54,9 @@ namespace CreationKitPlatformExtended
 		bool RenameCreationKitAppPatch::Activate(const Relocator* lpRelocator,
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
-			if (lpRelocationDatabaseItem->Version() == 1)
+			auto verPatch = lpRelocationDatabaseItem->Version();
+
+			if ((verPatch == 1) || (verPatch == 2))
 			{
 				//
 				// Change the default window class name so legacy editors can be opened without using bAllowMultipleEditors
@@ -60,6 +64,17 @@ namespace CreationKitPlatformExtended
 				char* newWindowClass = new char[250];
 				sprintf_s(newWindowClass, 250, "Creation Kit %s", allowedEditorVersionStr[(int)_versionEditor].data());
 				lpRelocator->Patch(_RELDATA_RAV(0), (uint8_t*)&newWindowClass, sizeof(newWindowClass));
+
+				if (verPatch == 2)
+				{
+					// In Qt, it would be necessary to give the name of the window initially, for something acceptable
+					lpRelocator->Patch(_RELDATA_RAV(1), (uint8_t*)"Creation Kit\0", 13);
+					// Cut a useless entry [Branch: <some>, Version: <CKVer>]
+					lpRelocator->PatchNop(_RELDATA_RAV(2), 0xA7);
+					lpRelocator->PatchNop(_RELDATA_RAV(4), 0x6);
+					// Cut a useless entry [Admin]
+					lpRelocator->DetourCall(_RELDATA_RAV(3), &QString::sprintf);
+				}
 
 				return true;
 			}
