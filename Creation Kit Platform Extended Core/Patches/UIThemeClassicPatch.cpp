@@ -60,7 +60,7 @@ namespace CreationKitPlatformExtended
 			icc.dwICC = ICC_WIN95_CLASSES;
 			InitCommonControlsEx(&icc);
 
-			InitializeThread();
+			InitializeCurrentThread();
 
 			return true;
 		}
@@ -71,9 +71,14 @@ namespace CreationKitPlatformExtended
 			return false;
 		}
 
-		void UIThemeClassicPatch::InitializeThread()
+		void UIThemeClassicPatch::InitializeCurrentThread()
 		{
-			SetWindowsHookExA(WH_CALLWNDPROC, CallWndProcCallback, NULL, GetCurrentThreadId());
+			InitializeThread(GetCurrentThreadId());
+		}
+
+		void UIThemeClassicPatch::InitializeThread(uint32_t u32ThreadId)
+		{
+			SetWindowsHookExA(WH_CALLWNDPROC, CallWndProcCallback, NULL, u32ThreadId);
 		}
 
 		LRESULT CALLBACK UIThemeClassicPatch::CallWndProcCallback(INT nCode, WPARAM wParam, LPARAM lParam)

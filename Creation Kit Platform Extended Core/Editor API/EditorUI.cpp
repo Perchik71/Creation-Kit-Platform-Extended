@@ -7,7 +7,7 @@
 #include "Core/DialogManager.h"
 #include "Core/RegistratorWindow.h"
 #include "EditorUI.h"
-#include "..\NiAPI\NiMemoryManager.h"
+#include "../NiAPI/NiMemoryManager.h"
 
 namespace CreationKitPlatformExtended
 {

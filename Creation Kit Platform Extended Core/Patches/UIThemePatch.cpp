@@ -5,6 +5,7 @@
 // Special thanks (very cool): https://github.com/adzm/win32-custom-menubar-aero-theme
 
 #include "Core/Engine.h"
+#include "Core/RegistratorWindow.h"
 #include "Editor API/EditorUI.h"
 #include "Editor API/UI/UIBaseWindow.h"
 #include "UIThemePatch.h"
@@ -304,8 +305,8 @@ namespace CreationKitPlatformExtended
 		bool UIThemePatch::Activate(const Relocator* lpRelocator,
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
-			//if (lpRelocationDatabaseItem->Version() == 1)
-			//{
+			if (GlobalRegistratorWindowPtr)
+			{
 				// I will new it once and forget about its existence
 				// I have no general idea where to destroy it. Yes, and it is not necessary, it will die along with the process.
 
@@ -328,14 +329,30 @@ namespace CreationKitPlatformExtended
 				voltek::detours_patch_iat_delayed(comDll, "UxTheme.dll", "DrawThemeBackground", (uintptr_t)&Comctl32DrawThemeBackground);
 				voltek::detours_patch_iat_delayed(comDll, "UxTheme.dll", "DrawThemeText", (uintptr_t)&Comctl32DrawThemeText);
 
+				// Bethesda began to move forward, but abandoned its UI in favor of Qt.
+				// Perhaps this is justified, since it first forced them to redo the UI, and Qt is a reliable library.
+				// However, there is one drawback, the size of the application is more than 64 MB,
+				// which significantly reduces the start of the application.
+				// It doesn't matter, we redefine the functions if this library exists.
+				auto qt5Widgets = reinterpret_cast<uintptr_t>(GetModuleHandle("qt5widgets.dll"));
+				if (qt5Widgets)
+				{
+					voltek::detours_patch_iat(qt5Widgets, "USER32.dll", "GetSysColor", (uintptr_t)&Comctl32GetSysColor);
+					voltek::detours_patch_iat(qt5Widgets, "UxTheme.dll", "DrawThemeBackground", (uintptr_t)&Comctl32DrawThemeBackground);
+					voltek::detours_patch_iat(qt5Widgets, "UxTheme.dll", "DrawThemeTextEx", (uintptr_t)&Comctl32DrawThemeTextEx);
+				}
+
 				g_brItemBackground = UITheme::Comctl32GetSysColorBrush(COLOR_BTNFACE);
 				g_brItemBackgroundHot = CreateSolidBrush(UITheme::GetThemeSysColor(UITheme::ThemeColor_Button_Hot_Gradient_End));
 				g_brItemBackgroundSelected = UITheme::Comctl32GetSysColorBrush(COLOR_HIGHLIGHT);
 
+				// Setting the listener if there will be initialization for a new thread
+				GlobalRegistratorWindowPtr->SetListenerNewThread(&InitializeThread);
+
 				return true;
-			//}
+			}
 			
-			//return false;
+			return false;
 		}
 
 		bool UIThemePatch::Shutdown(const Relocator* lpRelocator,
@@ -344,14 +361,19 @@ namespace CreationKitPlatformExtended
 			return false;
 		}
 
-		void UIThemePatch::InitializeThread()
+		void UIThemePatch::InitializeCurrentThread()
+		{
+			InitializeThread(GetCurrentThreadId());
+		}
+
+		void UIThemePatch::InitializeThread(uint32_t u32ThreadId)
 		{
 			if (!UITheme::ThemeFont)
 				UITheme::ThemeFont = new Graphics::CUIFont("Microsoft Sans Serif", 8, {},
 					_READ_OPTION_INT("CreationKit", "Charset", DEFAULT_CHARSET),
 					Graphics::fqClearTypeNatural, Graphics::fpVariable);
 
-			SetWindowsHookExA(WH_CALLWNDPROC, CallWndProcCallback, NULL, GetCurrentThreadId());
+			SetWindowsHookExA(WH_CALLWNDPROC, CallWndProcCallback, 0, u32ThreadId);
 		}
 
 		bool UIThemePatch::ExcludeSubclassKnownWindows(HWND hWindow, BOOL bRemoved)
@@ -1002,6 +1024,12 @@ namespace CreationKitPlatformExtended
 				Canvas.TransparentMode = FALSE;
 			}
 
+			return S_OK;
+		}
+
+		HRESULT UIThemePatch::Comctl32DrawThemeTextEx(HTHEME hTheme, HDC hdc, INT iPartId, INT iStateId,
+			LPCWSTR pszText, INT cchText, DWORD dwTextFlags, LPRECT pRect, const DTTOPTS* pOptions)
+		{
 			return S_OK;
 		}
 

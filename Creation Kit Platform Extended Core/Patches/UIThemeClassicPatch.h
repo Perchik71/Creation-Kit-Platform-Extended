@@ -26,7 +26,8 @@ namespace CreationKitPlatformExtended
 			virtual bool HasDependencies() const;
 			virtual Array<String> GetDependencies() const;
 
-			static void InitializeThread();
+			static void InitializeCurrentThread();
+			static void InitializeThread(uint32_t u32ThreadId);
 
 			static LRESULT CALLBACK CallWndProcCallback(INT nCode, WPARAM wParam, LPARAM lParam);
 		protected:

@@ -35,6 +35,8 @@ namespace CreationKitPlatformExtended
 				return hWnd;
 
 			_aWnds.push_back(hWnd);
+			// Регистрируем индетификатор потока или инкреминируем счётчик
+			AddWndThread(hWnd);
 
 			return hWnd;
 		}
@@ -47,6 +49,8 @@ namespace CreationKitPlatformExtended
 				return hWnd;
 
 			_aMajorWnds.insert(std::pair<HWND, String>(hWnd, sName));
+			// Регистрируем индетификатор потока или инкреминируем счётчик
+			AddWndThread(hWnd);
 
 			return hWnd;
 		}
@@ -60,6 +64,7 @@ namespace CreationKitPlatformExtended
 				auto it = _aMajorWnds.find(hWnd);
 				if (it != _aMajorWnds.end())
 				{
+					RemoveWndThread(hWnd);
 					_aMajorWnds.erase(it);
 					return true;
 				}
@@ -69,6 +74,7 @@ namespace CreationKitPlatformExtended
 				auto it = std::find(_aWnds.begin(), _aWnds.end(), hWnd);
 				if (it != _aWnds.end())
 				{
+					RemoveWndThread(hWnd);
 					_aWnds.erase(it);
 					return true;
 				}
@@ -117,6 +123,45 @@ namespace CreationKitPlatformExtended
 
 				// Типо нажимаем "крестик"
 				SendMessage(*itWnd, WM_CLOSE, 0, 0);
+			}
+		}
+
+		void RegistratorWindow::AddWndThread(HWND hWnd)
+		{
+			// Извлекаем индетификатор потока, который создал окно из HWND
+			auto ThreadId = (uint32_t)GetWindowThreadProcessId(hWnd, NULL);
+
+			auto It = _aThreadWnds.find(ThreadId);
+			if (It == _aThreadWnds.end())
+			{
+				_aThreadWnds.insert(std::make_pair(ThreadId, (uint32_t)1));
+				// Вызов для всех слушателей
+				for(auto Invoke : _aRegInvoke)
+					Invoke(ThreadId);
+			}
+			else
+				It->second++;
+		}
+
+		void RegistratorWindow::RemoveWndThread(HWND hWnd)
+		{
+			// Извлекаем индетификатор потока, который создал окно из HWND
+			auto ThreadId = (uint32_t)GetWindowThreadProcessId(hWnd, NULL);
+
+			auto It = _aThreadWnds.find(ThreadId);
+			if (It == _aThreadWnds.end())
+				_ERROR("There is no registered window with such a thread index [%u]", ThreadId);
+			else
+			{
+				if (It->second == 1)
+				{
+					_aThreadWnds.erase(It);
+					// Вызов для всех слушателей
+					for (auto Invoke : _aUnregInvoke)
+						Invoke(ThreadId);
+				}
+				else
+					It->second--;
 			}
 		}
 	}

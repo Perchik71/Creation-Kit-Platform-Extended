@@ -439,9 +439,9 @@ namespace CreationKitPlatformExtended
 					else
 					{
 						if (darkmode)
-							Patches::UIThemePatch::InitializeThread();
+							Patches::UIThemePatch::InitializeCurrentThread();
 						else if (classicmode)
-							Patches::UIThemeClassicPatch::InitializeThread();
+							Patches::UIThemeClassicPatch::InitializeCurrentThread();
 					}
 
 					WNDCLASSEXA wc

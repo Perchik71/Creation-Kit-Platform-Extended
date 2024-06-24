@@ -53,9 +53,14 @@ namespace CreationKitPlatformExtended
 		bool D3D11Patch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{
-			auto SystemVersion = _engine->GetSystemVersion();
-			// Win 8.1 and newer
-			return ((SystemVersion.MajorVersion > 6) || ((SystemVersion.MajorVersion == 6) && (SystemVersion.MinorVersion == 3)));
+			if (eEditorCurrentVersion < EDITOR_STARFIELD_1_12_32_0)
+			{
+				auto SystemVersion = _engine->GetSystemVersion();
+				// Win 8.1 and newer
+				return ((SystemVersion.MajorVersion > 6) || ((SystemVersion.MajorVersion == 6) && (SystemVersion.MinorVersion == 3)));
+			}
+
+			return false;
 		}
 
 		bool D3D11Patch::Activate(const Relocator* lpRelocator,

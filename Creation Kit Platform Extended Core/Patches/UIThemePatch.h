@@ -49,7 +49,8 @@ namespace CreationKitPlatformExtended
 			virtual bool HasDependencies() const;
 			virtual Array<String> GetDependencies() const;
 
-			static void InitializeThread();
+			static void InitializeCurrentThread();
+			static void InitializeThread(uint32_t u32ThreadId);
 			static bool ExcludeSubclassKnownWindows(HWND hWindow, BOOL bRemoved = FALSE);
 			static ThemeType GetThemeTypeFromWindow(HWND hWindow);
 			static bool RegisterThemeHandle(HWND hWindow, ThemeType eTheme);
@@ -65,6 +66,8 @@ namespace CreationKitPlatformExtended
 			static HBRUSH Comctl32GetSysColorBrush(INT nIndex);
 			static HRESULT Comctl32DrawThemeText(HTHEME hTheme, HDC hdc, INT iPartId, INT iStateId, 
 				LPCWSTR pszText, INT cchText, DWORD dwTextFlags, DWORD dwTextFlags2, LPCRECT pRect);
+			static HRESULT Comctl32DrawThemeTextEx(HTHEME hTheme, HDC hdc, INT iPartId, INT iStateId,
+				LPCWSTR pszText, INT cchText, DWORD dwTextFlags, LPRECT pRect, const DTTOPTS* pOptions);
 			static HRESULT Comctl32DrawThemeBackground(HTHEME hTheme, HDC hdc, INT iPartId, INT iStateId, 
 				LPCRECT pRect, LPCRECT pClipRect);
 		protected:
