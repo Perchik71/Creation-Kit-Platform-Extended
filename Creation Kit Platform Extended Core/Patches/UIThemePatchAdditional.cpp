@@ -85,6 +85,12 @@ namespace CreationKitPlatformExtended
 
 				return true;
 			}
+			else if (verPatch == 3)
+			{
+				UIThemePatch::InitializeCurrentThread();
+
+
+			}
 			
 			return false;
 		}
