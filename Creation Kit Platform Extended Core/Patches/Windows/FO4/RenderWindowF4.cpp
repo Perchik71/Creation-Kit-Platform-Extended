@@ -21,6 +21,8 @@ namespace CreationKitPlatformExtended
 			RenderWindow* GlobalRenderWindowPtr = nullptr;
 			RenderWindow::Area rcSafeDrawArea;
 
+			uintptr_t pointer_RenderWindow_Mov_data[11];
+
 			bool RenderWindow::HasOption() const
 			{
 				return false;
@@ -63,11 +65,26 @@ namespace CreationKitPlatformExtended
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
 					*(uintptr_t*)&_oldWndProc =
-						voltek::detours_function_class_jump(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), (uintptr_t)&HKWndProc);
-					_TempDrawArea = (Area*)lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
-					TESUnknown::Instance = (TESUnknown*)lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2));
-					BGSRenderWindow::Singleton = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(3));
+						voltek::detours_function_class_jump(_RELDATA_ADDR(0), (uintptr_t)&HKWndProc);
+					_TempDrawArea = (Area*)_RELDATA_ADDR(1);
+					TESUnknown::Instance = (TESUnknown*)_RELDATA_ADDR(2);
+					BGSRenderWindow::Singleton = _RELDATA_ADDR(3);
+				
+					for (uint32_t i = 4; i < lpRelocationDatabaseItem->Count() && i < 14; i++)
+						pointer_RenderWindow_Mov_data[i - 4] = _RELDATA_ADDR(i);
 					
+					BGSRenderWindow::Settings::Movement::FlagsSingleton = (uintptr_t)&pointer_RenderWindow_Mov_data[0];
+					BGSRenderWindow::Settings::Movement::SnapGridValueSingleton = (uintptr_t)&pointer_RenderWindow_Mov_data[1];
+					BGSRenderWindow::Settings::Movement::SnapAngleValueSingleton = (uintptr_t)&pointer_RenderWindow_Mov_data[2];
+					BGSRenderWindow::Settings::Movement::ArrowSnapValueSingleton = (uintptr_t)&pointer_RenderWindow_Mov_data[3];
+					BGSRenderWindow::Settings::Movement::ObjectRotateValueSingleton = (uintptr_t)&pointer_RenderWindow_Mov_data[4];
+					BGSRenderWindow::Settings::Movement::ObjectMoveValueSingleton = (uintptr_t)&pointer_RenderWindow_Mov_data[5];
+					BGSRenderWindow::Settings::Movement::CameraRotateValueSingleton = (uintptr_t)&pointer_RenderWindow_Mov_data[6];
+					BGSRenderWindow::Settings::Movement::CameraZoomValueSingleton = (uintptr_t)&pointer_RenderWindow_Mov_data[7];
+					BGSRenderWindow::Settings::Movement::CameraZoomOrthoValueSingleton = (uintptr_t)&pointer_RenderWindow_Mov_data[8];
+					BGSRenderWindow::Settings::Movement::CameraPanValueSingleton = (uintptr_t)&pointer_RenderWindow_Mov_data[9];
+					BGSRenderWindow::Settings::Movement::LandspaceMultValueSingleton = (uintptr_t)&pointer_RenderWindow_Mov_data[10];
+
 					return true;
 				}
 

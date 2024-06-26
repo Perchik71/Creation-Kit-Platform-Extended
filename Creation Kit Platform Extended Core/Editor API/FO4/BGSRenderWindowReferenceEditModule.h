@@ -16,13 +16,16 @@ namespace CreationKitPlatformExtended
 			public:
 				virtual ~BGSRenderWindowReferenceEditModule() = default;
 
-				void MoveSelectObjects(NiPoint3* NewPosition);
-				void MoveSelectObjectsExtremly(NiPoint3* NewPosition);
+				void MoveSelectObjects(NiPoint3* NewPosition, int32_t Unk = 0);
+				void MoveSelectObjectsExtremly(NiPoint3* NewPosition, int32_t Unk = 0);
+
+				bool ComputeGridOrConnectPoint(const NiPoint3& Position, NiPoint3& NewPosition) const;
 			private:
-				BGSRenderWindow* _Renderer;
-				char pad10[0x60];
-				NiPoint3 _TempPosition;
-				char pad7C[0x4];
+				//								00 - vtable
+				BGSRenderWindow* _Renderer;	//	08 - render	
+				char pad10[0x60];			//	10
+				NiPoint3 _TempPosition;		//	70 - position	
+				char pad7C[0x4];			//	7C
 			};
 			static_assert(sizeof(BGSRenderWindowReferenceEditModule) == 0x80);
 		}

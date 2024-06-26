@@ -109,7 +109,7 @@ namespace CreationKitPlatformExtended
 		void SkyrimSpecialEdition_AppendPatches(ModuleManager* PatchesManager)
 		{
 			namespace Patches = CreationKitPlatformExtended::Patches::SkyrimSpectialEdition;
-
+			
 			PatchesManager->Append({
 				new Patches::AlteredFormListPatch(),
 				new Patches::AllowPlayerKnowsConditionPatch(),

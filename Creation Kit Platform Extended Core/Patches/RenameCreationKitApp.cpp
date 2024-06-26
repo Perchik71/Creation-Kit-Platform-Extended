@@ -4,8 +4,9 @@
 
 #include "Core/Engine.h"
 #include "RenameCreationKitApp.h"
-
+#ifdef _CKPE_WITH_QT5
 #include <QtCore/qstring.h>
+#endif // !_CKPE_WITH_QT5
 
 namespace CreationKitPlatformExtended
 {
@@ -65,6 +66,7 @@ namespace CreationKitPlatformExtended
 				sprintf_s(newWindowClass, 250, "Creation Kit %s", allowedEditorVersionStr[(int)_versionEditor].data());
 				lpRelocator->Patch(_RELDATA_RAV(0), (uint8_t*)&newWindowClass, sizeof(newWindowClass));
 
+#ifdef _CKPE_WITH_QT5
 				if (verPatch == 2)
 				{
 					// In Qt, it would be necessary to give the name of the window initially, for something acceptable
@@ -75,6 +77,7 @@ namespace CreationKitPlatformExtended
 					// Cut a useless entry [Admin]
 					lpRelocator->DetourCall(_RELDATA_RAV(3), &QString::sprintf);
 				}
+#endif // !_CKPE_WITH_QT5
 
 				return true;
 			}

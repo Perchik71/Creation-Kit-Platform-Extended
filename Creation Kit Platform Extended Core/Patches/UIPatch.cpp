@@ -63,6 +63,9 @@ namespace CreationKitPlatformExtended
 				PatchIAT(EditorUI::HKDialogBoxParamA, "USER32.DLL", "DialogBoxParamA");
 				PatchIAT(EditorUI::HKEndDialog, "USER32.DLL", "EndDialog");
 				PatchIAT(EditorUI::HKSendMessageA, "USER32.DLL", "SendMessageA");
+				PatchIAT(EditorUI::HKCreateWindowA, "USER32.DLL", "CreateWindowA");
+				PatchIAT(EditorUI::HKCreateWindowExA, "USER32.DLL", "CreateWindowExA");
+				PatchIAT(EditorUI::HKDestroyWindow, "USER32.DLL", "DestroyWindow");
 
 				return true;
 			}

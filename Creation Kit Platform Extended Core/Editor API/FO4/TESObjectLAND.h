@@ -81,7 +81,7 @@ namespace CreationKitPlatformExtended
 						// Offset == 0xC == sizeof(NiAPI::NiPoint3)
 
 						for (int32_t i = 0; i < Size; i++)
-							Normals[i].FastNormalize();
+							Normals[i].Normalize();
 					}
 				};
 			private:

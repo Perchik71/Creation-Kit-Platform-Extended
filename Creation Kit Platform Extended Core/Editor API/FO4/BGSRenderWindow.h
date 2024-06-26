@@ -8,6 +8,7 @@
 #include "NiAPI/NiTypes.h"
 #include "../BGSClasses.h"
 #include "../BGSPickHandler.h"
+#include "../Settings.h"
 #include "TESObjectCELL.h"
 #include "TESObjectREFR.h"
 #include "BGSRenderWindowCamera.h"
@@ -26,6 +27,12 @@ namespace CreationKitPlatformExtended
 			{
 			public:
 				typedef BGSPickHandler<TESObjectREFR, BGSRenderWindow, 0x30> PickHandlerT;
+
+				enum : uint8_t {
+					rwsSnapToGrid = 0x1,
+					rwsSnapToAngle = 0x2,
+					rwsSnapToConnectPoints = 0x8,
+				};
 
 				virtual ~BGSRenderWindow() = default;
 
@@ -53,6 +60,40 @@ namespace CreationKitPlatformExtended
 				inline SIZE GetWindowSize() const { return _WindowSize; }
 				inline POINT GetMousePos() const { return _MousePos[0]; }
 				inline POINT GetMousePosBefore() const { return _MousePos[1]; }
+
+				struct Settings
+				{
+					struct Movement
+					{
+						inline static Core::ISingleton<EditorAPI::Setting> FlagsSingleton;
+						inline static Core::ISingleton<EditorAPI::Setting> SnapGridValueSingleton;
+						inline static Core::ISingleton<EditorAPI::Setting> SnapAngleValueSingleton;
+						inline static Core::ISingleton<EditorAPI::Setting> ArrowSnapValueSingleton;
+						inline static Core::ISingleton<EditorAPI::Setting> ObjectRotateValueSingleton;
+						inline static Core::ISingleton<EditorAPI::Setting> ObjectMoveValueSingleton;
+						inline static Core::ISingleton<EditorAPI::Setting> CameraRotateValueSingleton;
+						inline static Core::ISingleton<EditorAPI::Setting> CameraZoomValueSingleton;
+						inline static Core::ISingleton<EditorAPI::Setting> CameraZoomOrthoValueSingleton;
+						inline static Core::ISingleton<EditorAPI::Setting> CameraPanValueSingleton;
+						inline static Core::ISingleton<EditorAPI::Setting> LandspaceMultValueSingleton;
+
+						inline static uint32_t GetFlags() { return FlagsSingleton.Singleton->GetUnsignedInt(); }
+						inline static uint32_t GetSnapGrid() { return SnapGridValueSingleton.Singleton->GetUnsignedInt(); }
+						inline static float GetSnapAngle() { return SnapAngleValueSingleton.Singleton->GetFloat(); }
+						inline static uint32_t GetArrowSnap() { return ArrowSnapValueSingleton.Singleton->GetUnsignedInt(); }
+						inline static float GetObjectRotate() { return ObjectRotateValueSingleton.Singleton->GetFloat(); }
+						inline static float GetObjectMove() { return ObjectMoveValueSingleton.Singleton->GetFloat(); }
+						inline static float GetCameraRotate() { return CameraRotateValueSingleton.Singleton->GetFloat(); }
+						inline static float GetCameraZoom() { return CameraZoomValueSingleton.Singleton->GetFloat(); }
+						inline static float GetCameraZoomOrtho() { return CameraZoomOrthoValueSingleton.Singleton->GetFloat(); }
+						inline static float GetCameraPan() { return CameraPanValueSingleton.Singleton->GetFloat(); }
+						inline static float GetLandspaceMult() { return LandspaceMultValueSingleton.Singleton->GetFloat(); }
+					};
+				};
+
+				inline static bool HasSnapToGrid() { return (Settings::Movement::GetFlags() & rwsSnapToGrid) == rwsSnapToGrid; }
+				inline static bool HasSnapToAngle() { return (Settings::Movement::GetFlags() & rwsSnapToAngle) == rwsSnapToAngle; }
+				inline static bool HasSnapToConnectPoints() { return (Settings::Movement::GetFlags() & rwsSnapToConnectPoints) == rwsSnapToConnectPoints; }
 
 				inline BGSRenderWindowEditModuleManager* GetEditModuleManager() const { return _EditModuleManager; }
 				inline BGSRenderWindowBorder* GetBorder() const { return _Border; }

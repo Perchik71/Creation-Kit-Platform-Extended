@@ -34,7 +34,9 @@ namespace CreationKitPlatformExtended
 			TrackBar,
 			ProgressBar,
 			PopupMenu,
-			Spin
+			Spin,
+			PropGrid,
+			Tooltips
 		};
 
 		class UIThemePatch : public Module

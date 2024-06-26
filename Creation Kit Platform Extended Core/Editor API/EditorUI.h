@@ -56,11 +56,18 @@ namespace CreationKitPlatformExtended
 			void EndUIDefer();
 		public:
 			static void SuspendComboBoxUpdates(HWND ComboHandle, bool Suspend);
+			static HWND HKCreateWindowA(LPCSTR lpClassName, LPCSTR lpWindowName,
+				DWORD dwStyle, INT nX, INT nY, INT nWidth, INT nHeight, HWND hWndParent,
+				HMENU hMenu, HINSTANCE hInstance, LPVOID lpParam);
+			static HWND HKCreateWindowExA(DWORD dwExStyle, LPCSTR lpClassName, LPCSTR lpWindowName,
+				DWORD dwStyle, INT nX, INT nY, INT nWidth, INT nHeight, HWND hWndParent,
+				HMENU hMenu, HINSTANCE hInstance, LPVOID lpParam);
 			static HWND HKCreateDialogParamA(HINSTANCE hInstance, LPCSTR lpTemplateName, HWND hWndParent, 
 				DLGPROC lpDialogFunc, LPARAM dwInitParam);
 			static INT_PTR HKDialogBoxParamA(HINSTANCE hInstance, LPCSTR lpTemplateName, HWND hWndParent, 
 				DLGPROC lpDialogFunc, LPARAM dwInitParam);
 			static BOOL HKEndDialog(HWND hDlg, INT_PTR nResult);
+			static BOOL HKDestroyWindow(HWND hDlg);
 			static LRESULT HKSendMessageA(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 			static INT_PTR CALLBACK DialogFuncOverride(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 			static void HKResetUIDefer();

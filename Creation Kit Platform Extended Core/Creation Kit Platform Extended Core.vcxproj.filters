@@ -777,6 +777,9 @@
     <ClCompile Include="Core\CrashHandler.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Editor API\Settings.cpp">
+      <Filter>Editor API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1904,6 +1907,9 @@
     </ClInclude>
     <ClInclude Include="Core\CrashHandler.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\Settings.h">
+      <Filter>Editor API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

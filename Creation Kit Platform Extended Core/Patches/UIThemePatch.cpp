@@ -141,6 +141,7 @@ namespace CreationKitPlatformExtended
 
 		const UnorderedSet<std::string_view, std::hash<std::string_view>, std::equal_to<std::string_view>> PermanentWindowSubclasses
 		{
+			// Main class Creation Kit
 			"Creation Kit",
 			"Creation Kit Skyrim Special Edition [v1.5.3]",
 			"Creation Kit Skyrim Special Edition [v1.5.73]",
@@ -149,6 +150,12 @@ namespace CreationKitPlatformExtended
 			"Creation Kit Fallout 4 [v1.10.162.0]",
 			"Creation Kit Fallout 4 [v1.10.943.1]",
 			"Creation Kit Fallout 4 [v1.10.982.3]",
+			"Creation Kit Starfield [v1.12.32.0]",				// Qt5 makes it not valid
+			// Classes CK 2.0
+			"CicMarshalWndClass",
+			"SystemUserAdapterWindowClass",						// A dummy window to check your hardware, it is it that checks the 
+																// shader model so that it is at least 6.6.
+			// Classes CK 
 			"ActivatorClass",
 			"AlchemyClass",
 			"ArmorClass",
@@ -167,8 +174,17 @@ namespace CreationKitPlatformExtended
 			"TreatAsClass",
 			"ViewControlClass",
 			"TreeviewToolTipClass",
-			"Render Window",
+			// "Render Window",
+			// Windows Popup
 			"#32770",
+			// Qt5
+			"Qt5QWindow",
+			"Qt5QWindowIcon",
+			"Qt5ClipboardView",
+			//"qtopengltest",									// also SystemUserAdapterWindowClass from Qt
+			//"Qt5QWindowOwnDCIcon",							// Render Window ??
+			//"QtOpenGLDummyWindow",							// idk
+			//"QTreeViewThemeHelperWindowClass",				// maybe from Bethesda
 		};
 
 		// List of created windows
@@ -385,7 +401,7 @@ namespace CreationKitPlatformExtended
 			CHAR szBuffer[MAX_PATH];
 			GetWindowTextA(hWindow, szBuffer, MAX_PATH);
 
-			static std::unordered_map<std::string_view, SUBCLASSPROC, std::hash<std::string_view>, string_equal_to> KnownWindows{
+			static std::unordered_map<std::string_view, SUBCLASSPROC, std::hash<std::string_view>, string_equal_to> KnownWindows {
 				{ "Render Window", NULL },
 			};
 
@@ -402,7 +418,7 @@ namespace CreationKitPlatformExtended
 
 		ThemeType UIThemePatch::GetThemeTypeFromWindow(HWND hWindow)
 		{
-			static std::unordered_map<std::string_view, ThemeType, std::hash<std::string_view>, string_equal_to> TargetWindowThemes{
+			static std::unordered_map<std::string_view, ThemeType, std::hash<std::string_view>, string_equal_to> TargetWindowThemes {
 			{ STATUSCLASSNAMEA, ThemeType::StatusBar },
 			{ "mdiclient", ThemeType::MDIClient },
 			{ WC_STATICA, ThemeType::Static },
@@ -421,6 +437,9 @@ namespace CreationKitPlatformExtended
 			{ WC_TABCONTROLA, ThemeType::TabControl },
 			{ TOOLBARCLASSNAMEA, ThemeType::ToolBar },
 			{ TRACKBAR_CLASSA, ThemeType::TrackBar },
+			{ TOOLTIPS_CLASSA, ThemeType::Tooltips },
+			{ "PropGridCtl", ThemeType::PropGrid },
+			{ "EditorPropertyGridCtl", ThemeType::PropGrid },
 			{ "#32768", ThemeType::PopupMenu },
 			};
 
@@ -473,6 +492,11 @@ namespace CreationKitPlatformExtended
 							(lpCreateStruct->hInstance != GetModuleHandleA("comdlg32.dll"))) {
 							if (WindowHandles.find(messageData->hwnd) == WindowHandles.end()) {
 								SetWindowSubclass(messageData->hwnd, WindowSubclass, 0, reinterpret_cast<DWORD_PTR>(WindowSubclass));
+
+								//_CONSOLE("cw %p <%s> <%s>", lpCreateStruct->lpszClass,
+								//	(((uintptr_t)lpCreateStruct->lpszClass > 0xFFFFull) ? lpCreateStruct->lpszClass : ""),
+								//	(lpCreateStruct->lpszName ? lpCreateStruct->lpszName : ""));
+
 								WindowHandles.insert(std::make_pair(messageData->hwnd, FALSE));
 							}
 						}

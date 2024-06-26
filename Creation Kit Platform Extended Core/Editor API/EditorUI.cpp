@@ -363,6 +363,23 @@ namespace CreationKitPlatformExtended
 			return proc(hwndDlg, uMsg, wParam, lParam);
 		}
 
+		HWND EditorUI::HKCreateWindowA(LPCSTR lpClassName, LPCSTR lpWindowName,
+			DWORD dwStyle, INT nX, INT nY, INT nWidth, INT nHeight, HWND hWndParent,
+			HMENU hMenu, HINSTANCE hInstance, LPVOID lpParam)
+		{
+			return HKCreateWindowExA(0L, lpClassName, lpWindowName, dwStyle, nX, nY, 
+				nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam);
+		}
+
+		HWND EditorUI::HKCreateWindowExA(DWORD dwExStyle, LPCSTR lpClassName, LPCSTR lpWindowName,
+			DWORD dwStyle, INT nX, INT nY, INT nWidth, INT nHeight, HWND hWndParent,
+			HMENU hMenu, HINSTANCE hInstance, LPVOID lpParam)
+		{
+			return Core::GlobalRegistratorWindowPtr->Register(
+				CreateWindowExA(dwExStyle, lpClassName, lpWindowName, dwStyle, nX, nY, nWidth, nHeight,
+					hWndParent, hMenu, hInstance, lpParam));
+		}
+
 		HWND EditorUI::HKCreateDialogParamA(HINSTANCE hInstance, LPCSTR lpTemplateName, 
 			HWND hWndParent, DLGPROC lpDialogFunc, LPARAM dwInitParam)
 		{
@@ -436,6 +453,12 @@ namespace CreationKitPlatformExtended
 			}
 
 			return EndDialog(hDlg, nResult);
+		}
+
+		BOOL EditorUI::HKDestroyWindow(HWND hDlg)
+		{
+			Core::GlobalRegistratorWindowPtr->Unregister(hDlg);
+			return DestroyWindow(hDlg);
 		}
 
 		LRESULT EditorUI::HKSendMessageA(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)

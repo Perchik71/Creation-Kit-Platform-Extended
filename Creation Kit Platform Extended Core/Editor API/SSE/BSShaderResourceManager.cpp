@@ -179,7 +179,7 @@ namespace CreationKitPlatformExtended
 									normal = v0.Cross(v1);
 								}
 
-								normal.Unitize();
+								normal.Normalize();
 
 								if (kPick.GetCoordinateType() == NiPick::WORLD_COORDINATES)
 									normal = kWorld.m_Rotate * normal;
@@ -372,7 +372,7 @@ namespace CreationKitPlatformExtended
 									normal = v0.Cross(v1);
 								}
 
-								normal.Unitize();
+								normal.Normalize();
 
 								if (kPick.GetCoordinateType() == NiPick::WORLD_COORDINATES)
 									normal = kWorld.m_Rotate * normal;
