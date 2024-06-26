@@ -139,7 +139,7 @@ For understanding, the application uses the ancient **`ANSI`** type string repre
 [jDialogs](https://github.com/Perchik71/jDialogs.git) URL **https://github.com/Perchik71/jDialogs.git** IN **Dependencies/jDialogs** *(recursive)*
 
 # Compilation
-Open a project in **`Visual Studio 2022`** or later. Build the project in **`Release`** mode.  
+Open a project in **`Visual Studio 2022`** or later. Build the project in **`Release`** mode or **`Release-Qt`** for `Starfield`.  
 Take .dll's from the **`x64`** folder also take all **`VoltekLib.XXXX.dll`**, from the **`x64/Release`** and move it to the folder with the game. 
 Take the database **`CreationKitPlatformExtended_<GAME>_1_X_XXXX.database`** from the folder **`Database/<GAME>/1_X_XXXX/`**. 
 You will also need **`Stuffs/<GAME>/CreationKitPlatformExtendedMessagesBlacklist.txt`** and **`Stuffs/<GAME>/CreationKitPlatformExtended.ini`** to the game folder. 
