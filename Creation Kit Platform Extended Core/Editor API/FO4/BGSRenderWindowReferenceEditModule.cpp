@@ -41,7 +41,7 @@ namespace CreationKitPlatformExtended
 					if (BGSRenderWindow::HasSnapToGrid() || BGSRenderWindow::HasSnapToConnectPoints())
 					{
 						NiPoint3 NewPos;
-						if (ComputeGridOrConnectPoint(ObjectPosition, NewPos))
+						if (ComputeGridOrConnectPoint(ObjectPosition, *NewPosition, NewPos))
 							FormRef->SetPosition(FormRef.Get(), &NewPos);
 					}
 					else
@@ -81,7 +81,7 @@ namespace CreationKitPlatformExtended
 					if (BGSRenderWindow::HasSnapToGrid() || BGSRenderWindow::HasSnapToConnectPoints())
 					{
 						NiPoint3 NewPos;
-						if (ComputeGridOrConnectPoint(ObjectPosition, NewPos))
+						if (ComputeGridOrConnectPoint(ObjectPosition, *NewPosition, NewPos))
 							FormRef->SetPosition(FormRef.Get(), &NewPos);
 					}
 					else
@@ -92,7 +92,8 @@ namespace CreationKitPlatformExtended
 				}
 			}
 
-			bool BGSRenderWindowReferenceEditModule::ComputeGridOrConnectPoint(const NiPoint3& Position, NiPoint3& NewPosition) const
+			bool BGSRenderWindowReferenceEditModule::ComputeGridOrConnectPoint(const NiPoint3& Position, NiPoint3& OffsetInstant,
+				NiPoint3& NewPosition) const
 			{
 				if (BGSRenderWindow::HasSnapToGrid())
 				{
@@ -137,7 +138,13 @@ namespace CreationKitPlatformExtended
 				}
 				else if (BGSRenderWindow::HasSnapToConnectPoints())
 				{
-					// DEV
+					// This function also performs Snap To Grid, however, 
+					// But I couldn't get it to work, so this part is implemented,
+					// it does not matter, I know for sure that for the point binding function, 
+					// only 2 arguments are needed.
+
+					NewPosition = Position + OffsetInstant;
+					return thisVirtualCall<bool>(0xB0, this, (NiPoint3*)&NewPosition);
 				}
 
 				return false;

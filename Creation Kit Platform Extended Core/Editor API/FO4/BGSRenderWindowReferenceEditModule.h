@@ -19,7 +19,7 @@ namespace CreationKitPlatformExtended
 				void MoveSelectObjects(NiPoint3* NewPosition, int32_t Unk = 0);
 				void MoveSelectObjectsExtremly(NiPoint3* NewPosition, int32_t Unk = 0);
 
-				bool ComputeGridOrConnectPoint(const NiPoint3& Position, NiPoint3& NewPosition) const;
+				bool ComputeGridOrConnectPoint(const NiPoint3& Position, NiPoint3& OffsetInstant, NiPoint3& NewPosition) const;
 			private:
 				//								00 - vtable
 				BGSRenderWindow* _Renderer;	//	08 - render	
