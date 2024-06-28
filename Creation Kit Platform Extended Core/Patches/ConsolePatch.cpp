@@ -334,7 +334,11 @@ namespace CreationKitPlatformExtended
 				lpRelocator->DetourJump(_RELDATA_RAV(5), (uintptr_t)&LogWarningUnknown1);
 				lpRelocator->DetourJump(_RELDATA_RAV(6), (uintptr_t)&LogWarningUnknown1);
 				lpRelocator->DetourJump(_RELDATA_RAV(7), (uintptr_t)&LogWarningUnknown1);
-				lpRelocator->DetourJump(_RELDATA_RAV(8), (uintptr_t)&LogWarningUnknown1);
+
+				if (_READ_OPTION_BOOL("Console", "bAllowOutputNetworkActivity", false))
+					// this spam [BDK] --> It looks like Bethesda is constantly sending user info to its server
+					lpRelocator->DetourJump(_RELDATA_RAV(8), (uintptr_t)&LogWarningUnknown1);		
+
 				lpRelocator->DetourJump(_RELDATA_RAV(9), (uintptr_t)&LogWarningUnknown2);
 				lpRelocator->DetourJump(_RELDATA_RAV(10), (uintptr_t)&LogWarningUnknown2);
 
