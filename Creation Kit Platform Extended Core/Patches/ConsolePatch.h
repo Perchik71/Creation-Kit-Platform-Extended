@@ -29,6 +29,10 @@ namespace CreationKitPlatformExtended
 			static void Log(const char* Format, ...);
 			static void LogVa(const char* Format, va_list Va);
 			static void LogWarning(int Type, const char* Format, ...);
+			static void LogWarningWithDebugInfo1(const char* File, int Line, int Type, const char* Format, ...);
+			static void LogWarningWithDebugInfo1Va(const char* File, int Line, int Type, const char* Format, va_list& Va);
+			static void LogWarningWithDebugInfo2(__int64 Unused, const char* File, int Line, const char* Format, ...);
+			static void LogWarningWithDebugInfo2Va(__int64 Unused, const char* File, int Line, const char* Format, va_list& Va);
 			static void LogWarningVa(int Type, const char* Format, va_list& Va);
 			static void LogWarningUnknown1(const char* Format, ...);
 			static void LogWarningUnknown2(__int64 Unused, const char* Format, ...);

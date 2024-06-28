@@ -9,7 +9,7 @@ namespace CreationKitPlatformExtended
 {
 	namespace Patches
 	{
-		static LPCSTR typeListSkyrim[30] =
+		static LPCSTR typeListSkyrim[] =
 		{
 			"DEFAULT",
 			"COMBAT",
@@ -43,7 +43,7 @@ namespace CreationKitPlatformExtended
 			"SYSTEM"
 		};
 
-		static LPCSTR typeListFO4[34] =
+		static LPCSTR typeListFO4[] =
 		{
 			"DEFAULT",
 			"SYSTEM",
@@ -79,6 +79,61 @@ namespace CreationKitPlatformExtended
 			"DISMEMBER",
 			"COMPANION",
 			"WORKSHOP",
+		};
+
+		static LPCSTR typeListSF[] =
+		{
+			"DEFAULT",
+			"SYSTEM",
+			"COMBAT",
+			"ANIMATION",
+			"AI",
+			"SCRIPTS",
+			"SAVELOAD",
+			"DIALOGUE",
+			"QUESTS",
+			"PACKAGES",
+			"EDITOR",
+			"MODELS",
+			"TEXTURES",
+			"PLUGINS",
+			"MASTERFILE",
+			"FORMS",
+			"MAGIC",
+			"SHADERS",
+			"RENDERING",
+			"PATHFINDING",
+			"MENUS",
+			"AUDIO",
+			"CELLS",
+			"HAVOK",
+			"FACEGEN",
+			"WATER",
+			"INGAME",	
+			"MEMORY",
+			"PERFORMANCE",
+			"LOOTJOY",
+			"VATS",
+			"DISMEMBER",
+			"COMPANION",
+			"WORKSHOP",
+			"GALAXY",
+			"TERRAIN",
+			"PLANETS",
+			"PROCGEN",		
+			"LODGENERATION",
+			"MATERIALS",
+			"PARTICLE_ENGINE",
+			"BINDING",
+			"SHIP_BUILDER",		
+			"HOUDINI",
+			"SEQUENCE",	
+			"MORPH",
+			"VFX",
+			"BNET",
+			"BPS",
+			"HOTLOADING",
+			"AVMS",
 		};
 
 		static LPCSTR* currentTypeList = nullptr;
@@ -137,6 +192,47 @@ namespace CreationKitPlatformExtended
 			va_end(va);
 		}
 
+		void ConsolePatch::LogWarningWithDebugInfo1(const char* File, int Line, int Type, const char* Format, ...)
+		{
+			va_list va;
+			va_start(va, Format);
+			LogWarningWithDebugInfo1Va(File, Line, Type, Format, va);
+			va_end(va);
+		}
+
+		void ConsolePatch::LogWarningWithDebugInfo1Va(const char* File, int Line, int Type, const char* Format, va_list& Va)
+		{
+			// This is redundant
+			UNREFERENCED_PARAMETER(File);
+			UNREFERENCED_PARAMETER(Line);
+			
+			if (!currentTypeList)
+				return;
+
+			char buffer[2048];
+			_vsnprintf_s(buffer, _TRUNCATE, Format, Va);
+
+			Log("%s: %s", currentTypeList[Type], buffer);
+		}
+
+		void ConsolePatch::LogWarningWithDebugInfo2(__int64 Unused, const char* File, int Line, const char* Format, ...)
+		{
+			va_list va;
+			va_start(va, Format);
+			LogWarningWithDebugInfo2Va(Unused, File, Line, Format, va);
+			va_end(va);
+		}
+
+		void ConsolePatch::LogWarningWithDebugInfo2Va(__int64 Unused, const char* File, int Line, const char* Format, va_list& Va)
+		{
+			// This is redundant
+			UNREFERENCED_PARAMETER(Unused);
+			UNREFERENCED_PARAMETER(File);
+			UNREFERENCED_PARAMETER(Line);
+
+			LogVa(Format, Va);
+		}
+
 		void ConsolePatch::LogWarningVa(int Type, const char* Format, va_list& Va)
 		{
 			if (!currentTypeList)
@@ -179,6 +275,8 @@ namespace CreationKitPlatformExtended
 			Log("ASSERTION: %s (%s line %d)", buffer, File, Line);
 		}
 
+
+
 		bool ConsolePatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{
@@ -192,6 +290,8 @@ namespace CreationKitPlatformExtended
 				currentTypeList = typeListSkyrim;
 			else if (GlobalEnginePtr->GetEditorVersion() <= (int)Core::EDITOR_FALLOUT_C4_LAST)
 				currentTypeList = typeListFO4;
+			else if (GlobalEnginePtr->GetEditorVersion() <= (int)Core::EDITOR_STARFIELD_LAST)
+				currentTypeList = typeListSF;
 
 			auto verPatch = lpRelocationDatabaseItem->Version();
 			if (verPatch == 1)
@@ -221,6 +321,22 @@ namespace CreationKitPlatformExtended
 				lpRelocator->DetourJump(_RELDATA_RAV(4), (uintptr_t)&LogWarningUnknown1);
 				lpRelocator->DetourCall(_RELDATA_RAV(5), (uintptr_t)&LogWarningUnknown2);
 				lpRelocator->DetourJump(_RELDATA_RAV(6), (uintptr_t)&LogAssert);
+
+				return true;
+			}
+			else if (verPatch == 3)
+			{
+				lpRelocator->DetourJump(_RELDATA_RAV(0), (uintptr_t)&LogWarning);
+				lpRelocator->DetourJump(_RELDATA_RAV(1), (uintptr_t)&LogWarningWithDebugInfo1Va);
+				lpRelocator->DetourJump(_RELDATA_RAV(2), (uintptr_t)&LogWarningWithDebugInfo1Va);
+				lpRelocator->DetourJump(_RELDATA_RAV(3), (uintptr_t)&LogWarningWithDebugInfo2);
+				lpRelocator->DetourJump(_RELDATA_RAV(4), (uintptr_t)&LogWarningUnknown1);
+				lpRelocator->DetourJump(_RELDATA_RAV(5), (uintptr_t)&LogWarningUnknown1);
+				lpRelocator->DetourJump(_RELDATA_RAV(6), (uintptr_t)&LogWarningUnknown1);
+				lpRelocator->DetourJump(_RELDATA_RAV(7), (uintptr_t)&LogWarningUnknown1);
+				lpRelocator->DetourJump(_RELDATA_RAV(8), (uintptr_t)&LogWarningUnknown1);
+				lpRelocator->DetourJump(_RELDATA_RAV(9), (uintptr_t)&LogWarningUnknown2);
+				lpRelocator->DetourJump(_RELDATA_RAV(10), (uintptr_t)&LogWarningUnknown2);
 
 				return true;
 			}

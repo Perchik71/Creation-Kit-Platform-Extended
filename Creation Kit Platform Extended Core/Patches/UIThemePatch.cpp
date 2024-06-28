@@ -192,6 +192,7 @@ namespace CreationKitPlatformExtended
 		// List of registered visual styles themes
 		ConcurrencyMap<HTHEME, ThemeType, std::hash<HTHEME>, std::equal_to<HTHEME>> ThemeHandles;
 
+		static HHOOK g_hkWndProcHandle = NULL;
 		static WNDPROC OldPopupMenuWndClass = NULL;
 		static Graphics::CUIFont* listFont = NULL;
 		static HBRUSH g_brItemBackground = NULL;
@@ -389,7 +390,7 @@ namespace CreationKitPlatformExtended
 					_READ_OPTION_INT("CreationKit", "Charset", DEFAULT_CHARSET),
 					Graphics::fqClearTypeNatural, Graphics::fpVariable);
 
-			SetWindowsHookExA(WH_CALLWNDPROC, CallWndProcCallback, 0, u32ThreadId);
+			g_hkWndProcHandle = SetWindowsHookExA(WH_CALLWNDPROC, CallWndProcCallback, 0, u32ThreadId);
 		}
 
 		bool UIThemePatch::ExcludeSubclassKnownWindows(HWND hWindow, BOOL bRemoved)
@@ -483,51 +484,59 @@ namespace CreationKitPlatformExtended
 			if (nCode == HC_ACTION) 
 			{
 				auto messageData = reinterpret_cast<CWPSTRUCT*>(lParam);
-				if (messageData->message == WM_CREATE) 
+				if (messageData)
 				{
-					LPCREATESTRUCTA lpCreateStruct = (LPCREATESTRUCTA)messageData->lParam;
-					if (lpCreateStruct) 
+					switch (messageData->message)
 					{
-						if ((lpCreateStruct->hInstance) &&
-							(lpCreateStruct->hInstance != GetModuleHandleA("comdlg32.dll"))) {
-							if (WindowHandles.find(messageData->hwnd) == WindowHandles.end()) {
-								SetWindowSubclass(messageData->hwnd, WindowSubclass, 0, reinterpret_cast<DWORD_PTR>(WindowSubclass));
+					case WM_CREATE:
+					{
+						LPCREATESTRUCTA lpCreateStruct = (LPCREATESTRUCTA)messageData->lParam;
+						if (lpCreateStruct)
+						{
+							if ((lpCreateStruct->hInstance) &&
+								(lpCreateStruct->hInstance != GetModuleHandleA("comdlg32.dll"))) {
+								if (WindowHandles.find(messageData->hwnd) == WindowHandles.end()) {
+									SetWindowSubclass(messageData->hwnd, WindowSubclass, 0, reinterpret_cast<DWORD_PTR>(WindowSubclass));
 
-								//_CONSOLE("cw %p <%s> <%s>", lpCreateStruct->lpszClass,
-								//	(((uintptr_t)lpCreateStruct->lpszClass > 0xFFFFull) ? lpCreateStruct->lpszClass : ""),
-								//	(lpCreateStruct->lpszName ? lpCreateStruct->lpszName : ""));
+									/*_CONSOLE("cw %p <%s> <%s>", lpCreateStruct->lpszClass,
+										(((uintptr_t)lpCreateStruct->lpszClass > 0xFFFFull) ? lpCreateStruct->lpszClass : ""),
+										(lpCreateStruct->lpszName ? lpCreateStruct->lpszName : ""));*/
 
-								WindowHandles.insert(std::make_pair(messageData->hwnd, FALSE));
+									WindowHandles.insert(std::make_pair(messageData->hwnd, FALSE));
+								}
 							}
 						}
+						break;
 					}
-				}
-				else if (messageData->message == WM_INITDIALOG) 
-				{
-					auto wnd = WindowHandles.find(messageData->hwnd);
-					if (wnd == WindowHandles.end()) 
+					case WM_INITDIALOG:
 					{
-						if (!ExcludeSubclassKnownWindows(messageData->hwnd))
+						auto wnd = WindowHandles.find(messageData->hwnd);
+						if (wnd == WindowHandles.end())
 						{
-							SetWindowSubclass(messageData->hwnd, DialogSubclass, 0, reinterpret_cast<DWORD_PTR>(DialogSubclass));
-							WindowHandles.insert(std::make_pair(messageData->hwnd, TRUE));
-						}
-					}
-					else 
-					{
-						if (!ExcludeSubclassKnownWindows(messageData->hwnd, TRUE))
-						{
-							RemoveWindowSubclass(messageData->hwnd, WindowSubclass, 0);
-							SetWindowSubclass(messageData->hwnd, DialogSubclass, 0, reinterpret_cast<DWORD_PTR>(DialogSubclass));
-							wnd->second = TRUE;
+							if (!ExcludeSubclassKnownWindows(messageData->hwnd))
+							{
+								SetWindowSubclass(messageData->hwnd, DialogSubclass, 0, reinterpret_cast<DWORD_PTR>(DialogSubclass));
+								WindowHandles.insert(std::make_pair(messageData->hwnd, TRUE));
+							}
 						}
 						else
-							wnd->second = TRUE;
+						{
+							if (!ExcludeSubclassKnownWindows(messageData->hwnd, TRUE))
+							{
+								RemoveWindowSubclass(messageData->hwnd, WindowSubclass, 0);
+								SetWindowSubclass(messageData->hwnd, DialogSubclass, 0, reinterpret_cast<DWORD_PTR>(DialogSubclass));
+								wnd->second = TRUE;
+							}
+							else
+								wnd->second = TRUE;
+						}
+						break;
 					}
-				}
+					}
+				}				
 			}
 
-			return CallNextHookEx(NULL, nCode, wParam, lParam);
+			return CallNextHookEx(g_hkWndProcHandle, nCode, wParam, lParam);
 		}
 
 		LRESULT CALLBACK UIThemePatch::WindowSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,
