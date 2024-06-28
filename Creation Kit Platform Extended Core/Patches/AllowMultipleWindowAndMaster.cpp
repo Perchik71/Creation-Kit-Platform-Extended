@@ -66,6 +66,9 @@ namespace CreationKitPlatformExtended
 			case 3:
 				lpRelocator->Patch(_RELDATA_RAV(0), { 0xE9, 0xD4, 0x00, 0x00, 0x00, 0x90 });
 				break;
+			case 4:
+				lpRelocator->Patch(_RELDATA_RAV(0), { 0xE9, 0x5B, 0x01, 0x00, 0x00, 0x90 });
+				break;
 			default:
 				return false;
 			}
