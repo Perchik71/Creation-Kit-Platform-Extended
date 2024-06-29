@@ -96,7 +96,7 @@ This is not a complete list of improvements.
     <tr>
       <th scope="row" colspan="2">Stable</th>
       <th scope="row" colspan="2">Stable</th>
-      <th scope="row" colspan="2"> Unstable</th>
+      <th scope="row" colspan="2">Stable</th>
     </tr>
   </tfoot>
 </table>
