@@ -57,9 +57,15 @@ namespace CreationKitPlatformExtended
 				PatchIAT(HKSetThreadAffinityMask, "kernel32.dll", "SetThreadAffinityMask");
 				
 				if (_READ_OPTION_BOOL("CreationKit", "bThreadShortSpinlock", false))
-					PatchIAT(HKAdvancedSleep, "kernel32.dll", "Sleep")
+				{
+					PatchIAT(HKAdvancedSleep, "kernel32.dll", "Sleep");
+					PatchIAT(HKAdvancedSleepEx, "kernel32.dll", "SleepEx");
+				}
 				else
+				{
 					PatchIAT(HKSleep, "kernel32.dll", "Sleep");
+					PatchIAT(HKSleepEx, "kernel32.dll", "SleepEx");
+				}
 
 				SetPriorityClass(GetCurrentProcess(), ABOVE_NORMAL_PRIORITY_CLASS);
 
@@ -113,6 +119,26 @@ namespace CreationKitPlatformExtended
 				return;
 
 			SleepEx(1, FALSE);
+		}
+
+		void ThreadPatch::HKSleepEx(DWORD dwMilliseconds, BOOL bAlertable)
+		{
+			// Bethesda's spinlock calls Sleep(0) every iteration until 10,000. Then it
+			// uses Sleep(1). Even with 0ms waits, there's a tiny performance penalty.
+			if (dwMilliseconds == 0)
+				return;
+
+			SleepEx(dwMilliseconds, bAlertable);
+		}
+
+		void ThreadPatch::HKAdvancedSleepEx(DWORD dwMilliseconds, BOOL bAlertable)
+		{
+			// Bethesda's spinlock calls Sleep(0) every iteration until 10,000. Then it
+			// uses Sleep(1). Even with 0ms waits, there's a tiny performance penalty.
+			if (dwMilliseconds == 0)
+				return;
+
+			SleepEx(1, bAlertable);
 		}
 	}
 }
