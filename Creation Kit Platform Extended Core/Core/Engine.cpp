@@ -47,6 +47,7 @@ namespace CreationKitPlatformExtended
 	{
 		void SkyrimSpecialEdition_AppendPatches(ModuleManager* PatchesManager);
 		void Fallout4_AppendPatches(ModuleManager* PatchesManager);
+		void Starfield_AppendPatches(ModuleManager* PatchesManager);
 
 		Engine* GlobalEnginePtr = nullptr;
 
@@ -181,15 +182,15 @@ namespace CreationKitPlatformExtended
 
 			// Добавление патчей только для редактора скайрима специального издания
 			if (eEditorVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST)
-			{
 				SkyrimSpecialEdition_AppendPatches(PatchesManager);
-			}
 			else
 			// Добавление патчей только для редактора фолыча
 			if (eEditorVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST)
-			{
 				Fallout4_AppendPatches(PatchesManager);
-			}
+			else
+			// Добавление патчей только для редактора старфилда
+			if (eEditorVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_STARFIELD_LAST)
+				Starfield_AppendPatches(PatchesManager);
 
 			// Установка точки останова, чтобы дождаться расшифровки DRM приложения
 			EnableBreakpoint();

@@ -150,6 +150,17 @@ namespace CreationKitPlatformExtended
 
 				return true;
 			}
+			else if (verPatch == 3)
+			{
+				ScopeRelocator text; // fast patches
+
+				auto Rva1 = (uintptr_t)_RELDATA_RAV(0);
+				// Remove useless stuff	
+				lpRelocator->PatchNop(Rva1, 0xC4);
+				// Set args for function and call
+				lpRelocator->Patch(Rva1, { 0x4C, 0x89, 0xF1, 0x48, 0x8D, 0x95, 0xC0, 0x07, 0x00, 0x00 });
+				lpRelocator->DetourCall(Rva1 + 10, (uintptr_t)&sub_sf);
+			}
 
 			return false;
 		}
@@ -195,6 +206,39 @@ namespace CreationKitPlatformExtended
 			sub_141617680(*(__int64*)pointer_FaceGen_data);
 
 			sub_1418F5320();
+		}
+
+		void FaceGenPatch::sub_sf(__int64 a1, __int64 a2)
+		{
+			HWND listHandle = *(HWND*)(a1 + 0x3168);
+			int itemIndex = ListView_GetNextItem(listHandle, -1, LVNI_SELECTED);
+			int itemCount = 0;
+			
+			for (bool flag = true; itemIndex >= 0 && flag; itemCount++)
+			{
+				// get form
+				LVITEM item;
+				memset(&item, 0, sizeof(LVITEM));
+				item.mask = LVIF_PARAM;
+				item.iItem = itemIndex;
+				ListView_GetItem(listHandle, &item);
+				
+				// dev
+				_CONSOLE("%p", item.lParam);
+				flag = true;
+
+				if (flag)
+				{
+					int oldIndex = itemIndex;
+					itemIndex = ListView_GetNextItem(listHandle, itemIndex, LVNI_SELECTED);
+
+					if (itemIndex == oldIndex)
+						itemIndex = -1;
+				}
+			}
+
+			// Reload loose file paths manually since it's patched out
+			ConsolePatch::Log("Exported FaceGen for %d NPCs. Reloading loose file paths...", itemCount);
 		}
 	}
 }

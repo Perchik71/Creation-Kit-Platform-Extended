@@ -27,6 +27,7 @@ namespace CreationKitPlatformExtended
 			virtual Array<String> GetDependencies() const;
 
 			static void sub(__int64 a1, __int64 a2);
+			static void sub_sf(__int64 a1, __int64 a2);
 		protected:
 			virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const;

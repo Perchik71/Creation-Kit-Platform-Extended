@@ -84,7 +84,7 @@ namespace CreationKitPlatformExtended
 			auto verPatch = lpRelocationDatabaseItem->Version();
 			if (verPatch == 1)
 			{
-				ScopeRelocator SectionTextProtectionRemove;
+				ScopeRelocator text; // fast patches
 
 				lpRelocator->Patch(_RELDATA_RAV(0), { 0xC3 });	// StackTrace::MemoryTraceWrite
 				lpRelocator->Patch(_RELDATA_RAV(1), { 0xC3 });	// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
@@ -98,13 +98,10 @@ namespace CreationKitPlatformExtended
 			}
 			else if (verPatch == 2)
 			{
+				ScopeRelocator text; // fast patches
+
 				for (uint32_t i = 0; i < lpRelocationDatabaseItem->Count(); i++)
 					lpRelocator->Patch(_RELDATA_RAV(i), { 0xC3 });
-
-				//lpRelocator->Patch(_RELDATA_RAV(0), { 0xC3 });	// StackTrace::MemoryTraceWrite
-				//lpRelocator->Patch(_RELDATA_RAV(1), { 0xC3 });	// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
-				//lpRelocator->Patch(_RELDATA_RAV(2), { 0xC3 });	// SetUnhandledExceptionFilter, Unknown
-				//lpRelocator->Patch(_RELDATA_RAV(3), { 0xC3 });	// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
 
 				// Test
 				//RaiseException('PARM', EXCEPTION_NONCONTINUABLE, 0, NULL);

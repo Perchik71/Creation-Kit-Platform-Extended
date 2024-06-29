@@ -780,6 +780,12 @@
     <ClCompile Include="Editor API\Settings.cpp">
       <Filter>Editor API</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SF\TESFormRESF.cpp">
+      <Filter>Patches\SF</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\EngineSFPatches.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -853,6 +859,12 @@
     </Filter>
     <Filter Include="Editor API\SSE\Forms">
       <UniqueIdentifier>{7e355e16-ce9e-40a7-8c46-38e3d326c800}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor API\SF">
+      <UniqueIdentifier>{0ac105d6-2c5b-41fa-b7a2-ba10a3a36e9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Patches\SF">
+      <UniqueIdentifier>{cc042b50-201e-4019-8256-4b525058aadf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1910,6 +1922,12 @@
     </ClInclude>
     <ClInclude Include="Editor API\Settings.h">
       <Filter>Editor API</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SF\TESForm.h">
+      <Filter>Editor API\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SF\TESFormRESF.h">
+      <Filter>Patches\SF</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

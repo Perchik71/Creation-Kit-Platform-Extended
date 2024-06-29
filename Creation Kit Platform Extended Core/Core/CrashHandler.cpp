@@ -243,13 +243,13 @@ namespace CreationKitPlatformExtended
 
 		void CrashHandler::ContextWriteToCrashLog(FILE* Stream, PEXCEPTION_POINTERS ExceptionInfo)
 		{
-			fprintf(Stream, "====== CRASH INFO ======\nException:\n");
+			fprintf(Stream, "\n====== CRASH INFO ======\nException:\n");
 
 			PEXCEPTION_RECORD pExceptionRecord = ExceptionInfo->ExceptionRecord;
 
 			while (pExceptionRecord)
 			{
-				fprintf(Stream, "\tCode: %u\n\tAddress: %p\n\t",
+				fprintf(Stream, "\tCode: %X\n\tAddress: %p\n\t",
 					pExceptionRecord->ExceptionCode, pExceptionRecord->ExceptionAddress);
 
 				switch (pExceptionRecord->ExceptionCode)

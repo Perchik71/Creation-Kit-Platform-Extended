@@ -137,6 +137,7 @@
     <ClCompile Include="Core\DynamicCast.cpp" />
     <ClCompile Include="Core\Engine.cpp" />
     <ClCompile Include="Core\EngineFO4Patches.cpp" />
+    <ClCompile Include="Core\EngineSFPatches.cpp" />
     <ClCompile Include="Core\EngineSSEPatches.cpp" />
     <ClCompile Include="Core\FormInfoOutputWindow.cpp" />
     <ClCompile Include="Core\GDIPlusInit.cpp" />
@@ -243,6 +244,7 @@
     <ClCompile Include="Patches\QuitHandlerPatch.cpp" />
     <ClCompile Include="Patches\RenameCreationKitApp.cpp" />
     <ClCompile Include="Patches\RenderWindow60FPS.cpp" />
+    <ClCompile Include="Patches\SF\TESFormRESF.cpp" />
     <ClCompile Include="Patches\SkipTopicInfoValidation.cpp" />
     <ClCompile Include="Patches\SSE\AddChangeRef.cpp" />
     <ClCompile Include="Patches\SSE\AllowCreateBitArray.cpp" />
@@ -483,6 +485,7 @@
     <ClInclude Include="Editor API\FO4\TESTopic.h" />
     <ClInclude Include="Editor API\FO4\TESTopicInfo.h" />
     <ClInclude Include="Editor API\Settings.h" />
+    <ClInclude Include="Editor API\SF\TESForm.h" />
     <ClInclude Include="Editor API\SSE\BGSImpactData.h" />
     <ClInclude Include="Editor API\SSE\BGSImpactDataSet.h" />
     <ClInclude Include="Editor API\SSE\BGSMaterialType.h" />
@@ -598,6 +601,7 @@
     <ClInclude Include="Patches\QuitHandlerPatch.h" />
     <ClInclude Include="Patches\RenameCreationKitApp.h" />
     <ClInclude Include="Patches\RenderWindow60FPS.h" />
+    <ClInclude Include="Patches\SF\TESFormRESF.h" />
     <ClInclude Include="Patches\SkipTopicInfoValidation.h" />
     <ClInclude Include="Patches\SSE\AddChangeRef.h" />
     <ClInclude Include="Patches\SSE\AllowCreateBitArray.h" />
