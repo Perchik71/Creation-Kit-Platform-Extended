@@ -50,6 +50,10 @@ namespace CreationKitPlatformExtended
 			virtual void Lock(uintptr_t base, uint64_t size);
 			virtual bool IsLock(uintptr_t base, uint64_t size) const;
 
+			// Added ckpe v0.4
+			virtual bool PatchString(uintptr_t rav, const char* new_str) const;
+			virtual bool PatchStringRef(uintptr_t rav, const char* new_str) const;
+
 			inline Engine* GetEngine() const { return _engine; }
 			inline uintptr_t GetBase() const { return _base; }
 		private:

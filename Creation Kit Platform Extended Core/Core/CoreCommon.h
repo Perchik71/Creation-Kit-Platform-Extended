@@ -13,7 +13,7 @@ namespace CreationKitPlatformExtended
 			EDITOR_SKYRIM_SE_1_5_3,
 			EDITOR_SKYRIM_SE_1_5_73,
 			EDITOR_SKYRIM_SE_1_6_438,
-			EDITOR_SKYRIM_SE_1_6_1130 = EDITOR_SKYRIM_SE_1_6_438 + 1,
+			EDITOR_SKYRIM_SE_1_6_1130,
 			EDITOR_SKYRIM_SE_LAST = EDITOR_SKYRIM_SE_1_6_1130,
 			EDITOR_FALLOUT_C4_1_10_162_0,
 			EDITOR_FALLOUT_C4_1_10_943_1,
@@ -21,6 +21,13 @@ namespace CreationKitPlatformExtended
 			EDITOR_FALLOUT_C4_LAST = EDITOR_FALLOUT_C4_1_10_982_3,
 			EDITOR_STARFIELD_1_12_32_0,
 			EDITOR_STARFIELD_LAST = EDITOR_STARFIELD_1_12_32_0,
+		};
+
+		enum EDITOR_EXECUTABLE_SHORT_TYPE {
+			EDITOR_SHORT_UNKNOWN,
+			EDITOR_SHORT_SKYRIM_SE,
+			EDITOR_SHORT_FALLOUT_C4,
+			EDITOR_SHORT_STARFIELD,
 		};
 
 		// Не использовать менеджер на данном этапе, считаем, что его ещё нет
@@ -91,15 +98,15 @@ namespace CreationKitPlatformExtended
 		};
 
 		// Список имён файлов базы данных
-		static std::unordered_map<EDITOR_EXECUTABLE_TYPE, std::string_view> allowedDialogsPackageFile = {
-			{ EDITOR_SKYRIM_SE_1_5_3,		"CreationKitPlatformExtended_SSE_Dialogs.pak"	},
-			{ EDITOR_SKYRIM_SE_1_5_73,		"CreationKitPlatformExtended_SSE_Dialogs.pak"	},
-			{ EDITOR_SKYRIM_SE_1_6_438,		"CreationKitPlatformExtended_SSE_Dialogs.pak"	},
-			{ EDITOR_SKYRIM_SE_1_6_1130,	"CreationKitPlatformExtended_SSE_Dialogs.pak"	},
-			{ EDITOR_FALLOUT_C4_1_10_162_0,	"CreationKitPlatformExtended_FO4_Dialogs.pak"	},
-			{ EDITOR_FALLOUT_C4_1_10_943_1,	"CreationKitPlatformExtended_FO4_Dialogs.pak"	},
-			{ EDITOR_FALLOUT_C4_1_10_982_3,	"CreationKitPlatformExtended_FO4_Dialogs.pak"	},
-			{ EDITOR_STARFIELD_1_12_32_0,	"CreationKitPlatformExtended_SF_Dialogs.pak"	},
+		static std::unordered_map<EDITOR_EXECUTABLE_SHORT_TYPE, std::string_view> allowedDialogsPackageFile = {
+			{ EDITOR_SHORT_SKYRIM_SE,	"CreationKitPlatformExtended_SSE_Dialogs.pak"	},
+			{ EDITOR_SHORT_FALLOUT_C4,	"CreationKitPlatformExtended_FO4_Dialogs.pak"	},
+			{ EDITOR_SHORT_STARFIELD,	"CreationKitPlatformExtended_SF_Dialogs.pak"	},
+		};
+
+		// Список имён файлов внешних ресурсов для qt
+		static std::unordered_map<EDITOR_EXECUTABLE_SHORT_TYPE, std::string_view> qtExternalResourcePackageFile = {
+			{ EDITOR_SHORT_STARFIELD,	"CreationKitPlatformExtended_SF_QResources.pak"	},
 		};
 
 		static std::vector<std::string_view> allowedEditorFileNameStr = {
@@ -113,6 +120,31 @@ namespace CreationKitPlatformExtended
 			"creationkit_f4_1_10_982_3",
 			"creationkit_sf_1_12_32_0",
 		};
+
+		inline EDITOR_EXECUTABLE_SHORT_TYPE GetShortExecutableTypeFromFull(EDITOR_EXECUTABLE_TYPE editorVersion)
+		{
+			switch (editorVersion)
+			{
+			case EDITOR_SKYRIM_SE_1_5_3:
+				return EDITOR_SHORT_SKYRIM_SE;
+			case EDITOR_SKYRIM_SE_1_5_73:
+				return EDITOR_SHORT_SKYRIM_SE;
+			case EDITOR_SKYRIM_SE_1_6_438:
+				return EDITOR_SHORT_SKYRIM_SE;
+			case EDITOR_SKYRIM_SE_1_6_1130:
+				return EDITOR_SHORT_SKYRIM_SE;
+			case EDITOR_FALLOUT_C4_1_10_162_0:
+				return EDITOR_SHORT_FALLOUT_C4;
+			case EDITOR_FALLOUT_C4_1_10_943_1:
+				return EDITOR_SHORT_FALLOUT_C4;
+			case EDITOR_FALLOUT_C4_1_10_982_3:
+				return EDITOR_SHORT_FALLOUT_C4;
+			case EDITOR_STARFIELD_1_12_32_0:
+				return EDITOR_SHORT_STARFIELD;
+			default:
+				return EDITOR_SHORT_UNKNOWN;
+			}
+		}
 
 		inline bool CheckFileNameProcess(const char* name)
 		{

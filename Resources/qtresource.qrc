@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/CKPE">
+        <file>aboutsf.png</file>
+    </qresource>
+</RCC>

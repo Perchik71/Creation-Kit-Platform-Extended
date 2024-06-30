@@ -41,6 +41,10 @@
 
 #include "Experimental/RuntimeOptimization.h"
 
+#ifdef _CKPE_WITH_QT5
+#	include "QtCore/qresource.h"
+#endif // !_CKPE_WITH_QT5
+
 namespace CreationKitPlatformExtended
 {
 	namespace Core
@@ -416,7 +420,14 @@ namespace CreationKitPlatformExtended
 				return;
 			}
 
-			auto DialogIterator = allowedDialogsPackageFile.find(_editorVersion);
+			auto editorShortVersion = GetShortExecutableTypeFromFull(_editorVersion);
+			if (editorShortVersion == EDITOR_SHORT_UNKNOWN)
+			{
+				_FATALERROR("The version of the game for the editor is not defined");
+				return;
+			}
+
+			auto DialogIterator = allowedDialogsPackageFile.find(editorShortVersion);
 			if (DialogIterator == allowedDialogsPackageFile.end())
 			{
 				_FATALERROR("The dialog file is not specified for this version of the editor");
@@ -424,6 +435,27 @@ namespace CreationKitPlatformExtended
 			}
 
 			GlobalDialogManagerPtr->LoadFromFilePackage(DialogIterator->second.data());
+
+#ifdef _CKPE_WITH_QT5
+			auto QExternalResourceIterator = qtExternalResourcePackageFile.find(editorShortVersion);
+			if (QExternalResourceIterator != allowedDialogsPackageFile.end())
+			{
+				if (!Utils::FileExists(QExternalResourceIterator->second.data()))
+				{
+					_FATALERROR("This version uses Qt and requires resources for this, the file \"%s\" was not found",
+						QExternalResourceIterator->second.data());
+					return;
+				}
+
+				if (!QResource::registerResource(QExternalResourceIterator->second.data()))
+				{
+					_FATALERROR("QRESOURCE: Failed to load external resource file \"%s\"", QExternalResourceIterator->second.data());
+					return;
+				}
+				else
+					_MESSAGE("QRESOURCE: Open external resource file \"%s\"", QExternalResourceIterator->second.data());
+			}
+#endif // !_CKPE_WITH_QT5
 
 			// Создание класса отвечающий за UI
 			EditorAPI::GlobalEditorUIPtr = new EditorAPI::EditorUI();

@@ -6,6 +6,7 @@
 #include "ModuleManager.h"
 
 #include "Patches/SF/TESFormRESF.h"
+#include "Patches/SF/ReplaceImgQSplashWnd.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -17,6 +18,7 @@ namespace CreationKitPlatformExtended
 
 			PatchesManager->Append({
 				new Patches::TESFormREPatch(),
+				new Patches::ReplaceImgQSplashWndPatch(),
 			});
 		}
 	}

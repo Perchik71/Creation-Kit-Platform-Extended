@@ -64,11 +64,13 @@ namespace CreationKitPlatformExtended
 				//
 				char* newWindowClass = new char[250];
 				sprintf_s(newWindowClass, 250, "Creation Kit %s", allowedEditorVersionStr[(int)_versionEditor].data());
-				lpRelocator->Patch(_RELDATA_RAV(0), (uint8_t*)&newWindowClass, sizeof(newWindowClass));
+				lpRelocator->PatchStringRef(_RELDATA_RAV(0), newWindowClass);
 
 #ifdef _CKPE_WITH_QT5
 				if (verPatch == 2)
 				{
+					// Initial QCoreApplication
+					lpRelocator->PatchString(_RELDATA_RAV(5), "Creation Kit");
 					// In Qt, it would be necessary to give the name of the window initially, for something acceptable
 					lpRelocator->Patch(_RELDATA_RAV(1), (uint8_t*)"Creation Kit\0", 13);
 					// Cut a useless entry [Branch: <some>, Version: <CKVer>]

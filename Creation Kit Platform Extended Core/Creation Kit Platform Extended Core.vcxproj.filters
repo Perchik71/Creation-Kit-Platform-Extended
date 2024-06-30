@@ -786,6 +786,9 @@
     <ClCompile Include="Core\EngineSFPatches.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SF\ReplaceImgQSplashWnd.cpp">
+      <Filter>Patches\SF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1927,6 +1930,9 @@
       <Filter>Editor API\SF</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SF\TESFormRESF.h">
+      <Filter>Patches\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SF\ReplaceImgQSplashWnd.h">
       <Filter>Patches\SF</Filter>
     </ClInclude>
   </ItemGroup>

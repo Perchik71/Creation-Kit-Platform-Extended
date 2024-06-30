@@ -171,6 +171,20 @@ namespace CreationKitPlatformExtended
 			}
 		}
 
+		bool Relocator::PatchString(uintptr_t rav, const char* new_str) const
+		{
+			if (!rav || !new_str) return false;
+			Patch(rav, (uint8_t*)new_str, (uint32_t)(strlen(new_str) + 1));
+			return true;
+		}
+
+		bool Relocator::PatchStringRef(uintptr_t rav, const char* new_str) const
+		{
+			if (!rav || !new_str) return false;
+			Patch(rav, (uint8_t*)&new_str, (uint32_t)sizeof(new_str));
+			return true;
+		}
+
 		ScopeRelocator::ScopeRelocator() : _base(0), _size(0)
 		{
 			auto Sec = GlobalRelocatorPtr->GetEngine()->GetSection(SECTION_TEXT);
