@@ -66,9 +66,10 @@ namespace CreationKitPlatformExtended
 					// This patch adds additional information to the log, nothing more.
 
 					pointer_CrashMHDTMoreThan70Patch_sub1 = _RELDATA_ADDR(1);
+					pointer_CrashMHDTMoreThan70Patch_sub2 = _RELDATA_ADDR(3);
 
 					lpRelocator->DetourCall(_RELDATA_RAV(0), (uintptr_t)&sub1);
-					//lpRelocator->DetourCall(_RELDATA_RAV(2), (uintptr_t)&sub2);
+					lpRelocator->DetourCall(_RELDATA_RAV(2), (uintptr_t)&sub2);
 
 					return true;
 				}
@@ -102,23 +103,22 @@ namespace CreationKitPlatformExtended
 				return (void*)cellForm;
 			}
 
-			int CrashMHDTMoreThan70Patch::sub2(void* shape, NiAPI::NiPoint3* vec, NiAPI::NiPoint2* point, void* unk1, int unk2)
+			void CrashMHDTMoreThan70Patch::sub2(void* shape, NiAPI::NiPoint3* vec, NiAPI::NiPoint2* point, void* unk1, int unk2)
 			{
 				// It is necessary to get the stack of the calling function.
 				auto rsp = (uintptr_t)_AddressOfReturnAddress() + 8;
 				
-				_CONSOLE("rsp %llX", rsp);
+				float coord_x = *(float*)(rsp + 0x64);
+				float coord_y = *(float*)(rsp + 0x60);
 
-				int step = 0x80;
-				//int index = *(int*)(rsp + 0x3C);
-				//float max = *(float*)(rsp + 0xB4);
-				//float coord_x = max - (step * index);		// It will be write in the rsp + 0x64
-				//float coord_y = *(float*)(rsp + 0x60);
-
-				//_CONSOLE("......... Calculating the height for the point (%.0f, %.0f)", coord_x, coord_y);
-
-				// This function returns a step
-				return step;
+				__try
+				{
+					fastCall<void>(pointer_CrashMHDTMoreThan70Patch_sub2, shape, vec, point, unk1, unk2);
+				}
+				__except (1)
+				{
+					_CONSOLE("ASSERTION: Fatal calculating the height for the point (%.0f, %.0f) of (%.0f, %.0f)", coord_x, coord_y, point->x, point->y);
+				}
 			}
 		}
 	}

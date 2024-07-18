@@ -31,7 +31,7 @@ namespace CreationKitPlatformExtended
 				virtual Array<String> GetDependencies() const;
 
 				static void* sub1(void* world, int x, int y);
-				static int sub2(void* shape, NiAPI::NiPoint3* vec, NiAPI::NiPoint2* point, void* unk1, int unk2);
+				static void sub2(void* shape, NiAPI::NiPoint3* vec, NiAPI::NiPoint2* point, void* unk1, int unk2);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
