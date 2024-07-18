@@ -38,8 +38,7 @@ namespace CreationKitPlatformExtended
 
 					rc_temp.Offset(0, 1);
 					rc_temp.Inflate(1, 0);
-					canvas.GradientFrame(rc_temp, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_Start),
-						GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_End), Graphics::gdVert);
+					canvas.Frame(rc_temp, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_End));
 					rc_temp = *pRect;
 					canvas.Fill(rc_temp, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Color));
 					rc_temp.Inflate(-1, -1);

@@ -89,7 +89,8 @@ namespace CreationKitPlatformExtended
 			{
 				UIThemePatch::InitializeCurrentThread();
 
-
+				// replace ImageList_LoadImage for item type
+				lpRelocator->DetourCall(_RELDATA_RAV(4), (uintptr_t)&Comctl32ImageList_LoadImageA_1);
 			}
 			
 			return false;

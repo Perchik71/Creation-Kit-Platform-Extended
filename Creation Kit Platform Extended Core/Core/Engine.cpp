@@ -128,6 +128,17 @@ namespace CreationKitPlatformExtended
 			__cpuid(info, 1);
 			_hasSSE41 = (info[2] & (1 << 19)) != 0;
 
+			// Detect hyper-threads and cores
+			_hyperThreads = info[3] & (1 << 28);
+			_threads = (info[1] >> 16) & 0xff;
+			if (_hyperThreads) _threads;
+			_logicalCores = _threads;
+			_physicalCores = _logicalCores >> 1;
+
+			_MESSAGE("The processor has a number of threads: %u", _threads);
+			_MESSAGE("The processor has a number of logical cores: %u", _logicalCores);
+			_MESSAGE("The processor has a number of physical cores: %u", _physicalCores);
+			_MESSAGE("The processor implements hyper-threads technology: %s", (_hyperThreads ? "true" : "false"));
 			_MESSAGE("The processor supports the SSE 4.1 instruction set: %s", (_hasSSE41 ? "true" : "false"));
 			_MESSAGE("The processor supports the AVX 2 instruction set: %s", (_hasAVX2 ? "true" : "false"));
 
@@ -535,6 +546,26 @@ namespace CreationKitPlatformExtended
 		bool Engine::HasPlugin(const char* lpstrName) const
 		{
 			return UserPluginsManager->Has(lpstrName);
+		}
+
+		bool Engine::HasHyperThreads() const noexcept
+		{
+			return _hyperThreads;
+		}
+
+		unsigned char Engine::GetTotalThreadsProcessor() const noexcept
+		{
+			return _threads;
+		}
+
+		unsigned char Engine::GetTotalLogicalCores() const noexcept
+		{
+			return _logicalCores;
+		}
+
+		unsigned char Engine::GetTotalPhysicalCores() const noexcept
+		{
+			return _physicalCores;
 		}
 
 		IResult Engine::Initialize(HMODULE hModule, LPCSTR lpcstrAppName)

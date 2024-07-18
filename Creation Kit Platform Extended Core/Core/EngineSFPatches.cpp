@@ -7,6 +7,10 @@
 
 #include "Patches/SF/TESFormRESF.h"
 #include "Patches/SF/ReplaceImgQSplashWnd.h"
+#include "Patches/SF/RunAppWithoutNet.h"
+#include "Patches/SF/TESDataHandlerHookSF.h"
+
+#include "Patches/Windows/SF/DataWindowSF.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -19,6 +23,10 @@ namespace CreationKitPlatformExtended
 			PatchesManager->Append({
 				new Patches::TESFormREPatch(),
 				new Patches::ReplaceImgQSplashWndPatch(),
+				new Patches::RunAppWithoutNetPatch(),
+				new Patches::TESDataHandlerPatch(),
+
+				new Patches::DataWindow(),
 			});
 		}
 	}

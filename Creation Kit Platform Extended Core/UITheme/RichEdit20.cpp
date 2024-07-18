@@ -30,6 +30,10 @@ namespace CreationKitPlatformExtended
 	{
 		namespace RichEdit
 		{
+			static std::recursive_mutex locker;
+			static Graphics::CRECT rc, rc2;
+			static Graphics::CUICanvas Canvas(nullptr);
+
 			HTHEME Initialize(HWND hWindow)
 			{
 				SetWindowSubclass(hWindow, RichEditSubclass, 0, 0);
@@ -67,34 +71,39 @@ namespace CreationKitPlatformExtended
 				}
 				else if (uMsg == WM_NCPAINT)
 				{
+					std::lock_guard lock(locker);
+
 					// Paint border
 					LRESULT result = DefSubclassProc(hWnd, uMsg, wParam, lParam);
 
 					HDC hdc = GetWindowDC(hWnd);
-					Graphics::CUICanvas Canvas(hdc);
-					Graphics::CRECT rc, rc2;
-					GetWindowRect(hWnd, (LPRECT)&rc);
-					rc.Offset(-rc.Left, -rc.Top);
+					*(HDC*)(((uintptr_t)&Canvas + 0x8)) = hdc;
 
-					if (GetFocus() == hWnd)
-						Canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Pressed));
-					else
-						Canvas.GradientFrame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_Start),
-							GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_End), Graphics::gdVert);
+					if (GetWindowRect(hWnd, (LPRECT)&rc))
+					{
+						rc.Offset(-rc.Left, -rc.Top);
 
-					rc.Inflate(-1, -1);
-					Canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Color));
+						if (GetFocus() == hWnd)
+							Canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Pressed));
+						else
+							Canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_End));
+
+						rc.Inflate(-1, -1);
+						Canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Color));
+					}
 
 					// scrollbox detected grip
-					GetClientRect(hWnd, (LPRECT)&rc2);
-					if ((abs(rc2.Width - rc.Width) > 5) && (abs(rc2.Height - rc.Height) > 5))
+					if (GetClientRect(hWnd, (LPRECT)&rc2))
 					{
-						rc.Left = rc.Width - GetSystemMetrics(SM_CXVSCROLL);
-						rc.Top = rc.Height - GetSystemMetrics(SM_CYHSCROLL);
-						rc.Width = GetSystemMetrics(SM_CXVSCROLL);
-						rc.Height = GetSystemMetrics(SM_CYHSCROLL);
+						if ((abs(rc2.Width - rc.Width) > 5) && (abs(rc2.Height - rc.Height) > 5))
+						{
+							rc.Left = rc.Width - GetSystemMetrics(SM_CXVSCROLL);
+							rc.Top = rc.Height - GetSystemMetrics(SM_CYHSCROLL);
+							rc.Width = GetSystemMetrics(SM_CXVSCROLL);
+							rc.Height = GetSystemMetrics(SM_CYHSCROLL);
 
-						Canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_Default));
+							Canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_Default));
+						}
 					}
 
 					ReleaseDC(hWnd, hdc);

@@ -137,11 +137,8 @@ namespace CreationKitPlatformExtended
 				{
 					Graphics::CRECT rc = *pRect;
 
-					canvas.Pen.Color = cColorBorder;
-					canvas.MoveTo(rc.Left, rc.Top);
-					canvas.LineTo(rc.Left, rc.Bottom);
-
 					rc.Left++;
+					rc.Bottom++;
 
 					if (cColorStart == cColorEnd)
 						canvas.Fill(rc, cColorStart);
@@ -192,11 +189,15 @@ namespace CreationKitPlatformExtended
 				{
 					Graphics::CRECT rc = *pRect;
 
-					canvas.Pen.Color = cColorBorder;
-					canvas.MoveTo(rc.Left, rc.Top);
-					canvas.LineTo(rc.Left, rc.Bottom);
-
 					rc.Left++;
+					/*canvas.Frame(rc, cColorBorder);
+					rc.Right++;
+
+					if ((rc.Width % 2) == 0)
+						rc.Inflate(-1, 0);
+
+					if ((rc.Height % 2) == 0)
+						rc.Height--;*/
 
 					if (cColorStart == cColorEnd)
 						canvas.Fill(rc, cColorStart);

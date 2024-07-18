@@ -168,10 +168,10 @@ namespace Core
 
 			VOID __imGradientFill_V(HDC hdc, const COLORREF start_color, const COLORREF end_color, const LPRECT rc)
 			{
-				GRADIENT_RECT rects = { 0 };
+				GRADIENT_RECT rects = { 0, 1 };
 				TRIVERTEX vertices[2];
+				ZeroMemory(&vertices, sizeof(TRIVERTEX) << 1);
 
-				ZeroMemory(&vertices, sizeof(vertices));
 				vertices[0].Red = ((COLOR16)GetRValue(start_color)) << 8;
 				vertices[0].Green = ((COLOR16)GetGValue(start_color)) << 8;
 				vertices[0].Blue = ((COLOR16)GetBValue(start_color)) << 8;
@@ -183,19 +183,16 @@ namespace Core
 				vertices[1].Blue = ((COLOR16)GetBValue(end_color)) << 8;
 				vertices[1].x = rc->right;
 				vertices[1].y = rc->bottom;
-
-				rects.UpperLeft = 0;
-				rects.LowerRight = 1;
 
 				::GradientFill(hdc, vertices, 2, &rects, 1, GRADIENT_FILL_RECT_V);
 			}
 
 			VOID __imGradientFill_H(HDC hdc, const COLORREF start_color, const COLORREF end_color, const LPRECT rc)
 			{
-				GRADIENT_RECT rects = { 0 };
+				GRADIENT_RECT rects = { 0, 1 };
 				TRIVERTEX vertices[2];
+				ZeroMemory(&vertices, sizeof(TRIVERTEX) << 1);
 
-				ZeroMemory(&vertices, sizeof(vertices));
 				vertices[0].Red = ((COLOR16)GetRValue(start_color)) << 8;
 				vertices[0].Green = ((COLOR16)GetGValue(start_color)) << 8;
 				vertices[0].Blue = ((COLOR16)GetBValue(start_color)) << 8;
@@ -207,9 +204,6 @@ namespace Core
 				vertices[1].Blue = ((COLOR16)GetBValue(end_color)) << 8;
 				vertices[1].x = rc->right;
 				vertices[1].y = rc->bottom;
-
-				rects.UpperLeft = 0;
-				rects.LowerRight = 1;
 
 				::GradientFill(hdc, vertices, 2, &rects, 1, GRADIENT_FILL_RECT_H);
 			}
@@ -302,6 +296,12 @@ namespace Core
 				m_lock = FALSE;
 
 				Change();
+			}
+
+			CUIFont& CUIFont::operator=(const CUIFont& font)
+			{
+				Assign(font);
+				return *this;
 			}
 
 			VOID CUIFont::Apply(HWND window) const
@@ -462,6 +462,12 @@ namespace Core
 				DoChange();
 			}
 
+			CUIBitmap& CUIBitmap::operator=(const CUIBitmap& bitmap)
+			{
+				Assign(bitmap);
+				return *this;
+			}
+
 			CUIBitmap::CUIBitmap(HBITMAP bitmap) : CUIObjectGUI(1)
 			{ 
 				if (bitmap)
@@ -543,6 +549,12 @@ namespace Core
 			{
 				Release();
 				Create(pen.Style, pen.Width, pen.Color);
+			}
+
+			CUIPen& CUIPen::operator=(const CUIPen& pen)
+			{
+				Assign(pen);
+				return *this;
 			}
 
 			CUIPen WINAPI CreateSolidPen(INT width, COLORREF color)
@@ -693,6 +705,12 @@ namespace Core
 				}
 			}
 
+			CUIBrush& CUIBrush::operator=(const CUIBrush& brush)
+			{
+				Assign(brush);
+				return *this;
+			}
+
 			CUIBrush WINAPI CreateSolidBrush(const COLORREF color)
 			{
 				return color;
@@ -708,41 +726,49 @@ namespace Core
 				return CUIBrush(iHatch, color);
 			}
 
-			CUIBrush WINAPI CreateGradientBrush(const COLORREF start_color, const COLORREF end_color, const INT size, const CUIGradientDirect direct)
+			bool WINAPI CreateGradientBrush(CUIBrush& brush, const COLORREF start_color, const COLORREF end_color, 
+				const INT size, const CUIGradientDirect direct)
 			{
 				// I'm just surprised at people who like to reduce everything in the world......
 				//Assert(size > 0);
 				auto nsize = std::max(size, 5);
+				bool res = false;
 
 				HWND hWnd = GetDesktopWindow();
 				HDC hDC = GetDC(hWnd);
 				HDC hDCMem = CreateCompatibleDC(hDC);
 
 				RECT rc;
-				CUIBitmap* pBitmap;
+				memset(&rc, 0, sizeof(RECT));
 
-				if (direct == gdHorz){
-					rc = { 0, 0, nsize, 1 };
-					pBitmap = new CUIBitmap(CreateCompatibleBitmap(hDC, rc.right, rc.bottom));
-					SelectObject(hDCMem, (HBITMAP)pBitmap->Handle);
-
-					__imGradientFill_H(hDCMem, start_color, end_color, (LPRECT)&rc);
+				if (direct == gdHorz)
+				{
+					rc.right = nsize;
+					rc.bottom = 1;
 				}
-				else {
-					rc = { 0, 0, 1, nsize };
-					pBitmap = new CUIBitmap(CreateCompatibleBitmap(hDC, rc.right, rc.bottom));
-					SelectObject(hDCMem, (HBITMAP)pBitmap->Handle);
-
-					__imGradientFill_V(hDCMem, start_color, end_color, (LPRECT)&rc);
+				else
+				{
+					rc.right = 1;
+					rc.bottom = nsize;
 				}
+					
+				if (auto hBitmap = CreateCompatibleBitmap(hDC, rc.right, rc.bottom))
+				{
+					SelectObject(hDCMem, hBitmap);
 
-				CUIBrush Brush(*pBitmap);
-
-				delete pBitmap;
+					if (direct == gdHorz)
+						__imGradientFill_H(hDCMem, start_color, end_color, (LPRECT)&rc);
+					else
+						__imGradientFill_V(hDCMem, start_color, end_color, (LPRECT)&rc);
+					
+					brush.Bitmap = hBitmap;
+					res = true;
+				}
+	
 				DeleteDC(hDCMem);
 				ReleaseDC(hWnd, hDC);
 
-				return Brush;
+				return res;
 			}
 
 			// CUICanvas
@@ -1013,29 +1039,21 @@ namespace Core
 			VOID CUICanvas::GradientFrame(const RECT& area, const COLORREF start_color, const COLORREF end_color, const CUIGradientDirect direct)
 			{
 				if (direct == gdHorz)
-				{
-					CUIBrush bBrush = CreateGradientBrush(start_color, end_color, area.right - area.left, direct);
-					FrameRect(m_hDC, (LPRECT)&area, (HBRUSH)bBrush.Handle);
-				}
+					if (CreateGradientBrush(Brush, start_color, end_color, area.right - area.left, direct))
+						FrameRect(m_hDC, (LPRECT)&area, (HBRUSH)Brush.Handle);
 				else
-				{
-					CUIBrush bBrush = CreateGradientBrush(start_color, end_color, area.bottom - area.top, direct);
-					FrameRect(m_hDC, (LPRECT)&area, (HBRUSH)bBrush.Handle);
-				}
+					if (CreateGradientBrush(Brush, start_color, end_color, area.bottom - area.top, direct))
+						FrameRect(m_hDC, (LPRECT)&area, (HBRUSH)Brush.Handle);
 			}
 
 			VOID CUICanvas::GradientFrame(const CRECT& area, const COLORREF start_color, const COLORREF end_color, const CUIGradientDirect direct)
 			{
 				if (direct == gdHorz)
-				{
-					CUIBrush bBrush = CreateGradientBrush(start_color, end_color, area.Width, direct);
-					FrameRect(m_hDC, (LPRECT)&area, (HBRUSH)bBrush.Handle);
-				}
+					if (CreateGradientBrush(Brush, start_color, end_color, area.Width, direct))
+						FrameRect(m_hDC, (LPRECT)&area, (HBRUSH)Brush.Handle);
 				else
-				{
-					CUIBrush bBrush = CreateGradientBrush(start_color, end_color, area.Height, direct);
-					FrameRect(m_hDC, (LPRECT)&area, (HBRUSH)bBrush.Handle);
-				}
+					if (CreateGradientBrush(Brush, start_color, end_color, area.Height, direct))
+						FrameRect(m_hDC, (LPRECT)&area, (HBRUSH)Brush.Handle);
 			}
 
 			VOID CUICanvas::Polygon(const LPPOINT ps, INT count) const

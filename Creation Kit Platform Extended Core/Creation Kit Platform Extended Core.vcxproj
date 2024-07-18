@@ -53,7 +53,7 @@
     <IncludePath>$(SolutionDir)Dependencies\Voltek\Detours\include;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\libdeflate;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)Dependencies\jDialogs\include;$(SolutionDir)Dependencies\Voltek\Memory Manager\include;$(SolutionDir)Dependencies\Voltek\UnicodeConverter\include;$(SolutionDir)Dependencies\Voltek\Relocation Database\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Qt|x64'">
-    <LinkIncremental>false</LinkIncremental>
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>winhttp</TargetName>
@@ -173,6 +173,8 @@
     <ClCompile Include="Editor API\FO4\TESFileF4.cpp" />
     <ClCompile Include="Editor API\FO4\TESFormF4.cpp" />
     <ClCompile Include="Editor API\Settings.cpp" />
+    <ClCompile Include="Editor API\SF\TESDataHandlerSF.cpp" />
+    <ClCompile Include="Editor API\SF\TESFileSF.cpp" />
     <ClCompile Include="Editor API\SSE\BSGraphicsTypes.cpp" />
     <ClCompile Include="Editor API\SSE\BSShaderProperty.cpp" />
     <ClCompile Include="Editor API\SSE\BSShaderResourceManager.cpp" />
@@ -245,6 +247,8 @@
     <ClCompile Include="Patches\RenameCreationKitApp.cpp" />
     <ClCompile Include="Patches\RenderWindow60FPS.cpp" />
     <ClCompile Include="Patches\SF\ReplaceImgQSplashWnd.cpp" />
+    <ClCompile Include="Patches\SF\RunAppWithoutNet.cpp" />
+    <ClCompile Include="Patches\SF\TESDataHandlerHookSF.cpp" />
     <ClCompile Include="Patches\SF\TESFormRESF.cpp" />
     <ClCompile Include="Patches\SkipTopicInfoValidation.cpp" />
     <ClCompile Include="Patches\SSE\AddChangeRef.cpp" />
@@ -264,6 +268,7 @@
     <ClCompile Include="Patches\SSE\CrashGenMaxHeightData.cpp" />
     <ClCompile Include="Patches\SSE\CrashHairKS.cpp" />
     <ClCompile Include="Patches\SSE\CrashInventoryIterators.cpp" />
+    <ClCompile Include="Patches\SSE\CrashMHDTMoreThan70.cpp" />
     <ClCompile Include="Patches\SSE\CrashNullptrFaceGen.cpp" />
     <ClCompile Include="Patches\SSE\CrashSortFunc.cpp" />
     <ClCompile Include="Patches\SSE\CrashTestRadius.cpp" />
@@ -354,6 +359,7 @@
     <ClCompile Include="Patches\Windows\FO4\ProgressWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\RenderWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\ResponseWindowF4.cpp" />
+    <ClCompile Include="Patches\Windows\SF\DataWindowSF.cpp" />
     <ClCompile Include="Patches\Windows\SSE\BNetUploadWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\CellViewWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\DataWindow.cpp" />
@@ -486,6 +492,8 @@
     <ClInclude Include="Editor API\FO4\TESTopic.h" />
     <ClInclude Include="Editor API\FO4\TESTopicInfo.h" />
     <ClInclude Include="Editor API\Settings.h" />
+    <ClInclude Include="Editor API\SF\TESDataHandler.h" />
+    <ClInclude Include="Editor API\SF\TESFileSF.h" />
     <ClInclude Include="Editor API\SF\TESForm.h" />
     <ClInclude Include="Editor API\SSE\BGSImpactData.h" />
     <ClInclude Include="Editor API\SSE\BGSImpactDataSet.h" />
@@ -603,6 +611,8 @@
     <ClInclude Include="Patches\RenameCreationKitApp.h" />
     <ClInclude Include="Patches\RenderWindow60FPS.h" />
     <ClInclude Include="Patches\SF\ReplaceImgQSplashWnd.h" />
+    <ClInclude Include="Patches\SF\RunAppWithoutNet.h" />
+    <ClInclude Include="Patches\SF\TESDataHandlerHookSF.h" />
     <ClInclude Include="Patches\SF\TESFormRESF.h" />
     <ClInclude Include="Patches\SkipTopicInfoValidation.h" />
     <ClInclude Include="Patches\SSE\AddChangeRef.h" />
@@ -622,6 +632,7 @@
     <ClInclude Include="Patches\SSE\CrashGenMaxHeightData.h" />
     <ClInclude Include="Patches\SSE\CrashHairKS.h" />
     <ClInclude Include="Patches\SSE\CrashInventoryIterators.h" />
+    <ClInclude Include="Patches\SSE\CrashMHDTMoreThan70.h" />
     <ClInclude Include="Patches\SSE\CrashNullptrFaceGen.h" />
     <ClInclude Include="Patches\SSE\CrashSortFunc.h" />
     <ClInclude Include="Patches\SSE\CrashTestRadius.h" />
@@ -712,6 +723,7 @@
     <ClInclude Include="Patches\Windows\FO4\ProgressWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\RenderWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\ResponseWindowF4.h" />
+    <ClInclude Include="Patches\Windows\SF\DataWindowSF.h" />
     <ClInclude Include="Patches\Windows\SSE\BNetUploadWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\CellViewWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\DataWindow.h" />

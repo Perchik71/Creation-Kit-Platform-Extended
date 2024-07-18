@@ -48,6 +48,10 @@ namespace CreationKitPlatformExtended
 			virtual OsVersion GetSystemVersion() const;
 			virtual bool HasPatch(const char* lpstrName) const;
 			virtual bool HasPlugin(const char* lpstrName) const;
+			virtual bool HasHyperThreads() const noexcept;
+			virtual unsigned char GetTotalThreadsProcessor() const noexcept;
+			virtual unsigned char GetTotalLogicalCores() const noexcept;
+			virtual unsigned char GetTotalPhysicalCores() const noexcept;
 		public:
 			static IResult Initialize(HMODULE hModule, LPCSTR lpcstrAppName);
 		private:
@@ -72,6 +76,10 @@ namespace CreationKitPlatformExtended
 			Module* _Theme;
 			Module* _ClassicTheme;
 			OsVersion _OsVersion;
+			bool _hyperThreads;
+			unsigned char _threads;
+			unsigned char _logicalCores;
+			unsigned char _physicalCores;
 		};
 
 		extern Engine* GlobalEnginePtr;

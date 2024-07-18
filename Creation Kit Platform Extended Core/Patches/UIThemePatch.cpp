@@ -152,6 +152,7 @@ namespace CreationKitPlatformExtended
 			"Creation Kit Fallout 4 [v1.10.982.3]",
 			"Creation Kit Starfield [v1.12.32.0]",				// Qt5 makes it not valid
 			// Classes CK 2.0
+			"MAINMENU",
 			"CicMarshalWndClass",
 			"SystemUserAdapterWindowClass",						// A dummy window to check your hardware, it is it that checks the 
 																// shader model so that it is at least 6.6.
@@ -493,14 +494,14 @@ namespace CreationKitPlatformExtended
 						LPCREATESTRUCTA lpCreateStruct = (LPCREATESTRUCTA)messageData->lParam;
 						if (lpCreateStruct)
 						{
+							/*_CONSOLE("cw %p <%s> <%s>", lpCreateStruct->lpszClass,
+								(((uintptr_t)lpCreateStruct->lpszClass > 0xFFFFull) ? lpCreateStruct->lpszClass : ""),
+								(lpCreateStruct->lpszName ? lpCreateStruct->lpszName : ""));*/
+
 							if ((lpCreateStruct->hInstance) &&
 								(lpCreateStruct->hInstance != GetModuleHandleA("comdlg32.dll"))) {
 								if (WindowHandles.find(messageData->hwnd) == WindowHandles.end()) {
 									SetWindowSubclass(messageData->hwnd, WindowSubclass, 0, reinterpret_cast<DWORD_PTR>(WindowSubclass));
-
-									/*_CONSOLE("cw %p <%s> <%s>", lpCreateStruct->lpszClass,
-										(((uintptr_t)lpCreateStruct->lpszClass > 0xFFFFull) ? lpCreateStruct->lpszClass : ""),
-										(lpCreateStruct->lpszName ? lpCreateStruct->lpszName : ""));*/
 
 									WindowHandles.insert(std::make_pair(messageData->hwnd, FALSE));
 								}
@@ -510,6 +511,8 @@ namespace CreationKitPlatformExtended
 					}
 					case WM_INITDIALOG:
 					{
+						/*_CONSOLE("iw %llx %llx", wParam, lParam);*/
+
 						auto wnd = WindowHandles.find(messageData->hwnd);
 						if (wnd == WindowHandles.end())
 						{
@@ -1063,7 +1066,7 @@ namespace CreationKitPlatformExtended
 		HRESULT UIThemePatch::Comctl32DrawThemeTextEx(HTHEME hTheme, HDC hdc, INT iPartId, INT iStateId,
 			LPCWSTR pszText, INT cchText, DWORD dwTextFlags, LPRECT pRect, const DTTOPTS* pOptions)
 		{
-			return S_OK;
+			return Comctl32DrawThemeText(hTheme, hdc, iPartId, iStateId, pszText, cchText, dwTextFlags, 0, pRect);
 		}
 
 		HRESULT UIThemePatch::Comctl32DrawThemeBackground(HTHEME hTheme, HDC hdc, INT iPartId, INT iStateId,

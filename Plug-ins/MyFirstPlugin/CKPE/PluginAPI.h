@@ -113,6 +113,10 @@ namespace CreationKitPlatformExtended
 			virtual OsVersion GetSystemVersion() const;
 			virtual bool HasPatch(const char* lpstrName) const;
 			virtual bool HasPlugin(const char* lpstrName) const;
+			virtual bool HasHyperThreads() const noexcept;
+			virtual unsigned char GetTotalThreadsProcessor() const noexcept;
+			virtual unsigned char GetTotalLogicalCores() const noexcept;
+			virtual unsigned char GetTotalPhysicalCores() const noexcept;
 
 			inline static Engine* Instance;
 		};

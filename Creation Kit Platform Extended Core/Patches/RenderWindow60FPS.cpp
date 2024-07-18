@@ -45,7 +45,8 @@ namespace CreationKitPlatformExtended
 		bool RenderWindow60FPSPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{
-			return true;
+			// Creation Kit 2.0 (SF) this patch is not needed.
+			return eEditorCurrentVersion <= EDITOR_STARFIELD_1_12_32_0;
 		}
 
 		bool RenderWindow60FPSPatch::Activate(const Relocator* lpRelocator,

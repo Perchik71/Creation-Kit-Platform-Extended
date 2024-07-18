@@ -128,6 +128,8 @@ namespace Core
 				BOOL Empty(VOID) const { return !m_fHandle; };
 				VOID SaveToFile(LPCSTR fname) const;
 				VOID Assign(const CUIBitmap& bitmap);
+
+				CUIBitmap& operator=(const CUIBitmap& bitmap);
 			public:
 				CUIBitmap(VOID) : CUIObjectGUI(1) {}
 				CUIBitmap(HBITMAP bitmap);
@@ -156,6 +158,8 @@ namespace Core
 			public:
 				CUIPen(CUIPenStyle style, INT width, COLORREF color) : CUIObjectGUI(2) { Create(style, width, color); }
 				CUIPen(const CUIPen& pen) : CUIObjectGUI(pen) { Create(pen.m_fStyle, pen.m_fSize, pen.m_fColor); }
+
+				CUIPen& operator=(const CUIPen& pen);
 			public:
 				PROPERTY(GetWidth, SetWidth) const INT Width;
 				PROPERTY(GetColor, SetColor) const COLORREF Color;
@@ -200,6 +204,8 @@ namespace Core
 				CUIBrush(const INT iHatch, const COLORREF color) : CUIObjectGUI(3) { Create(iHatch, color); }
 				CUIBrush(const CUIBitmap& bitmap) : CUIObjectGUI(3) { Create(bitmap); }
 				CUIBrush(const CUIBrush& brush);
+
+				CUIBrush& operator=(const CUIBrush& brush);
 			public:
 				PROPERTY(GetHatch, SetHatch) const INT Hatch;
 				PROPERTY(GetColor, SetColor) const COLORREF Color;
@@ -216,7 +222,7 @@ namespace Core
 				gdVert
 			};
 
-			CUIBrush WINAPI CreateGradientBrush(const COLORREF start_color, const COLORREF end_color, const INT size, const CUIGradientDirect direct);
+			bool WINAPI CreateGradientBrush(CUIBrush& brush, const COLORREF start_color, const COLORREF end_color, const INT size, const CUIGradientDirect direct);
 
 			enum CUIFontStyle {
 				fsBold,
@@ -273,6 +279,8 @@ namespace Core
 			public:
 				VOID Apply(HWND window) const;
 				VOID Assign(const CUIFont& font);
+
+				CUIFont& operator=(const CUIFont& font);
 			public:
 				READ_PROPERTY(GetHandle) HFONT Handle;
 				PROPERTY(GetName, SetName) const std::string Name;

@@ -20,12 +20,14 @@
 */
 //////////////////////////////////////////
 
+#include "Core/Engine.h"
 #include "Editor API/UI/UIBaseWindow.h"
 #include "VarCommon.h"
 #include "ListView.h"
 #include "Editor API/BSString.h"
 #include "Editor API/EditorUI.h"
 #include "Editor API/SSE/TESFile.h"
+#include "Editor API/SF/TESFileSF.h"
 
 #define UI_CONTROL_CONDITION_ID 0xFA0
 #define SIZEBUF 1024
@@ -36,6 +38,10 @@ namespace CreationKitPlatformExtended
 	{
 		namespace ListView 
 		{
+			static std::recursive_mutex locker;
+			static Graphics::CRECT rc, rc2;
+			static Graphics::CUICanvas Canvas(nullptr);
+
 			HTHEME Initialize(HWND hWindow) 
 			{
 				SetWindowSubclass(hWindow, ListViewSubclass, 0, 0);
@@ -57,33 +63,39 @@ namespace CreationKitPlatformExtended
 				}
 				else if (uMsg == WM_PAINT) 
 				{
+					std::lock_guard lock(locker);
+
 					// Paint border
 					LRESULT result = DefSubclassProc(hWnd, uMsg, wParam, lParam);
 
 					HDC hdc = GetWindowDC(hWnd);
-					Graphics::CUICanvas Canvas(hdc);
-					Graphics::CRECT rc, rc2;
-					GetWindowRect(hWnd, (LPRECT)& rc);
-					rc.Offset(-rc.Left, -rc.Top);
+					*(HDC*)(((uintptr_t)&Canvas + 0x8)) = hdc;
 
-					if (GetFocus() == hWnd)
-						Canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Pressed));
-					else
-						Canvas.GradientFrame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_Start), 
-							GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_End), Graphics::gdVert);
+					if (GetWindowRect(hWnd, (LPRECT)&rc))
+					{
+						rc.Offset(-rc.Left, -rc.Top);
 
-					rc.Inflate(-1, -1);
-					Canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Color));
+						if (GetFocus() == hWnd)
+							Canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Pressed));
+						else
+							Canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_End));
+
+						rc.Inflate(-1, -1);
+						Canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Color));
+					}
 
 					// scrollbox detected grip
-					GetClientRect(hWnd, (LPRECT)& rc2);
-					if ((abs(rc2.Width - rc.Width) > 5) && (abs(rc2.Height - rc.Height) > 5)) {
-						rc.Left = rc.Width - GetSystemMetrics(SM_CXVSCROLL);
-						rc.Top = rc.Height - GetSystemMetrics(SM_CYHSCROLL);
-						rc.Width = GetSystemMetrics(SM_CXVSCROLL);
-						rc.Height = GetSystemMetrics(SM_CYHSCROLL);
+					if (GetClientRect(hWnd, (LPRECT)&rc2))
+					{
+						if ((abs(rc2.Width - rc.Width) > 5) && (abs(rc2.Height - rc.Height) > 5)) 
+						{
+							rc.Left = rc.Width - GetSystemMetrics(SM_CXVSCROLL);
+							rc.Top = rc.Height - GetSystemMetrics(SM_CYHSCROLL);
+							rc.Width = GetSystemMetrics(SM_CXVSCROLL);
+							rc.Height = GetSystemMetrics(SM_CYHSCROLL);
 
-						Canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_Default));
+							Canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_Default));
+						}
 					}
 
 					ReleaseDC(hWnd, hdc);
@@ -115,14 +127,35 @@ namespace CreationKitPlatformExtended
 				ListView_GetItemText(lpDrawItem->hwndItem, lpDrawItem->itemID, 0, const_cast<LPSTR>(FileName.Get()), SIZEBUF);
 				ListView_GetItemText(lpDrawItem->hwndItem, lpDrawItem->itemID, 1, const_cast<LPSTR>(FileType.Get()), SIZEBUF);
 
-				// In principle, this API is the same for all games, so it's safe to take Skyrim
-				using namespace EditorAPI::SkyrimSpectialEdition;
+				if (Core::GetShortExecutableTypeFromFull(Core::GlobalEnginePtr->GetEditorVersion()) == Core::EDITOR_SHORT_STARFIELD)
+				{
+					using namespace EditorAPI::Starfield;
 
-				auto type = TESFile::GetTypeFile((EditorAPI::BSString::Utils::GetRelativeDataPath() + FileName).Get());
-				if ((type & TESFile::FILE_RECORD_ESM) == TESFile::FILE_RECORD_ESM)
-					Canvas.FillWithTransparent(rc, RGB(255, 0, 0), 10);
-				else if ((type & TESFile::FILE_RECORD_ESL) == TESFile::FILE_RECORD_ESL)
-					Canvas.FillWithTransparent(rc, RGB(0, 255, 0), 10);
+					auto type = TESFile::GetTypeFile((EditorAPI::BSString::Utils::GetRelativeDataPath() + FileName).Get());
+
+					//_CONSOLE("%s %X", (EditorAPI::BSString::Utils::GetRelativeDataPath() + FileName).Get(), type);
+
+					if ((type & TESFile::FILE_RECORD_ESM) == TESFile::FILE_RECORD_ESM)
+					{
+						if ((type & TESFile::FILE_RECORD_LIGHT) == TESFile::FILE_RECORD_LIGHT)
+							Canvas.FillWithTransparent(rc, RGB(0, 255, 0), 10);
+						else if ((type & TESFile::FILE_RECORD_MID) == TESFile::FILE_RECORD_MID)
+							Canvas.FillWithTransparent(rc, RGB(255, 128, 0), 10);
+						else
+							Canvas.FillWithTransparent(rc, RGB(255, 0, 0), 10);
+					}
+				}
+				else
+				{
+					// In principle, this API is the same for all games, so it's safe to take Skyrim
+					using namespace EditorAPI::SkyrimSpectialEdition;
+
+					auto type = TESFile::GetTypeFile((EditorAPI::BSString::Utils::GetRelativeDataPath() + FileName).Get());
+					if ((type & TESFile::FILE_RECORD_ESM) == TESFile::FILE_RECORD_ESM)
+						Canvas.FillWithTransparent(rc, RGB(255, 0, 0), 10);
+					else if ((type & TESFile::FILE_RECORD_ESL) == TESFile::FILE_RECORD_ESL)
+						Canvas.FillWithTransparent(rc, RGB(0, 255, 0), 10);
+				}
 
 				// CHECKBOX
 

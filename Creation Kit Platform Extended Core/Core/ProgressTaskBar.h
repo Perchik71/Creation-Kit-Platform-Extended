@@ -25,6 +25,11 @@ namespace CreationKitPlatformExtended
 			bool SetProgressState(DWORD State);
 			bool SetProgressValue(DWORD Completed, DWORD Total);
 		private:
+#if 0
+			DWORD_PTR _procAffinity;
+			DWORD_PTR _sysAffinity;
+			bool _hasAffinity;
+#endif
 			HWND _linkWnd;
 			DWORD _progressCompleted;
 			DWORD _progressTotal;

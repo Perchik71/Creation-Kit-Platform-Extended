@@ -1,4 +1,6 @@
 Placeholder entry
+ASSERTION: Tried to set a character outside the range of the string. (e:\_skyrimhd\code\gamesln\bscore\bsstring.h line 731)
+ASSERTION: This functor is only inteded to be called offline. (e:\_skyrimhd\code\gamesln\bsmain\bsninodeutils.cpp line 28)
 MASTERFILE: Potentially duplicate Land (000028df) encountered in file Dawnguard.esm.
 MASTERFILE: Potentially duplicate Land (000028fd) encountered in file Dawnguard.esm.
 QUESTS: Could not find previous info (02004DE6) for TopicInfo (02018B1D) in Topic "" (02004DAA).

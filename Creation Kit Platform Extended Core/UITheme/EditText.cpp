@@ -41,7 +41,7 @@ namespace CreationKitPlatformExtended
 					if (clColorDividerStart == clColorDividerEnd)
 						canvas.Frame(*pRect, clColorDividerStart);
 					else
-						canvas.GradientFrame(*pRect, clColorDividerStart, clColorDividerEnd, Graphics::gdVert);
+						canvas.Frame(*pRect, clColorDividerEnd);
 					canvas.Fill(rc_temp, clColor);
 					canvas.Frame(rc_temp, clBorderColor);
 				}

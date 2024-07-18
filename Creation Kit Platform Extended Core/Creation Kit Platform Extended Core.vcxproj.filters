@@ -789,6 +789,24 @@
     <ClCompile Include="Patches\SF\ReplaceImgQSplashWnd.cpp">
       <Filter>Patches\SF</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SF\RunAppWithoutNet.cpp">
+      <Filter>Patches\SF</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\Windows\SF\DataWindowSF.cpp">
+      <Filter>Patches\Windows\SF</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\SF\TESFileSF.cpp">
+      <Filter>Editor API\SF</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SF\TESDataHandlerHookSF.cpp">
+      <Filter>Patches\SF</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\SF\TESDataHandlerSF.cpp">
+      <Filter>Editor API\SF</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashMHDTMoreThan70.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -868,6 +886,12 @@
     </Filter>
     <Filter Include="Patches\SF">
       <UniqueIdentifier>{cc042b50-201e-4019-8256-4b525058aadf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Patches\Windows\SF">
+      <UniqueIdentifier>{ea268593-bf97-4475-bf5a-34db86c69d84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor API\SF\Forms">
+      <UniqueIdentifier>{8c0ce81a-d9eb-4a96-ac96-1e14a1e870cb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1926,14 +1950,32 @@
     <ClInclude Include="Editor API\Settings.h">
       <Filter>Editor API</Filter>
     </ClInclude>
-    <ClInclude Include="Editor API\SF\TESForm.h">
-      <Filter>Editor API\SF</Filter>
-    </ClInclude>
     <ClInclude Include="Patches\SF\TESFormRESF.h">
       <Filter>Patches\SF</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SF\ReplaceImgQSplashWnd.h">
       <Filter>Patches\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SF\RunAppWithoutNet.h">
+      <Filter>Patches\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\SF\DataWindowSF.h">
+      <Filter>Patches\Windows\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SF\TESForm.h">
+      <Filter>Editor API\SF\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SF\TESFileSF.h">
+      <Filter>Editor API\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SF\TESDataHandlerHookSF.h">
+      <Filter>Patches\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SF\TESDataHandler.h">
+      <Filter>Editor API\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashMHDTMoreThan70.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

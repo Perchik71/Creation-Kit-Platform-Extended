@@ -40,8 +40,8 @@ namespace CreationKitPlatformExtended
 					canvas.Fill(*pRect, GetThemeSysColor(ThemeColor::ThemeColor_Default));
 					canvas.Pen.Style = Graphics::psSolid;
 					canvas.Pen.Color = clDividerHighlighterColor;
-					canvas.Brush.Assign(Graphics::CreateGradientBrush(clGradientColorStart, clGradientColorEnd, 
-						pRect->bottom - pRect->top, Graphics::gdVert));
+					Graphics::CreateGradientBrush(canvas.Brush, clGradientColorStart, clGradientColorEnd,
+						pRect->bottom - pRect->top, Graphics::gdVert);
 					canvas.Ellipse(*pRect);
 				}
 
@@ -89,9 +89,9 @@ namespace CreationKitPlatformExtended
 					rc_temp[1].Inflate(-1, -1);
 
 					canvas.Pen.Style = Graphics::psClear;
-					canvas.Brush.Assign(Graphics::CreateGradientBrush(GetThemeSysColor(ThemeColor::ThemeColor_CheckBox_Gradient_Start), 
+					Graphics::CreateGradientBrush(canvas.Brush, GetThemeSysColor(ThemeColor::ThemeColor_CheckBox_Gradient_Start),
 						GetThemeSysColor(ThemeColor::ThemeColor_CheckBox_Gradient_End),
-						pRect->bottom - pRect->top, Graphics::gdVert));
+						pRect->bottom - pRect->top, Graphics::gdVert);
 					canvas.Ellipse(rc_temp[0]);
 					canvas.EllipseFill(rc_temp[1], clColor);
 				}
