@@ -36,7 +36,7 @@ namespace CreationKitPlatformExtended
 
 			if (!EditorAPI::BSString::Utils::FileExists(FileName))
 			{
-				_ERROR("RESOURCES: Archive \"%s\" no found", FileName.c_str());
+				_FATALERROR("RESOURCES: Archive \"%s\" no found", FileName.c_str());
 				return false;
 			}
 
@@ -44,7 +44,7 @@ namespace CreationKitPlatformExtended
 			struct zip_t* zip = zip_open(FileName.c_str(), 0, 'r');
 			if (!zip)
 			{
-				_ERROR("RESOURCES: Failed open archive \"%s\"", FileName.c_str());
+				_FATALERROR("RESOURCES: Failed open archive \"%s\"", FileName.c_str());
 				return false;
 			}
 
@@ -53,14 +53,14 @@ namespace CreationKitPlatformExtended
 			if (ShortNameGame == EDITOR_SHORT_FALLOUT_C4)
 			{
 				if (!ExtractResourceByName(zip, "CreationKit - Textures.ba2"))
-					_ERROR("RESOURCES: File could not be unpacked \"CreationKit - Textures.ba2\"");
+					_FATALERROR("RESOURCES: File could not be unpacked \"CreationKit - Textures.ba2\"");
 
 				EditorAPI::BSString sShaderName =
 					(GlobalEnginePtr->GetEditorVersion() == EDITOR_FALLOUT_C4_1_10_162_0) ?
 					"CreationKit - Shaders - OG.ba2" : "CreationKit - Shaders - NG.ba2";
 
 				if (!ExtractResourceByName(zip, sShaderName, "CreationKit - Shaders.ba2", true))
-					_ERROR("RESOURCES: File could not be unpacked \"%s\"", sShaderName.c_str());
+					_FATALERROR("RESOURCES: File could not be unpacked \"%s\"", sShaderName.c_str());
 			}
 
 			zip_close(zip);
