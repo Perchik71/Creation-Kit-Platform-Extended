@@ -97,11 +97,12 @@ namespace CreationKitPlatformExtended
 			{ EDITOR_STARFIELD_1_12_32_0,	"CreationKitPlatformExtended_SF_1_12_32_0.database"		},
 		};
 
-		// Список имён файлов базы данных
-		static std::unordered_map<EDITOR_EXECUTABLE_SHORT_TYPE, std::string_view> allowedDialogsPackageFile = {
-			{ EDITOR_SHORT_SKYRIM_SE,	"CreationKitPlatformExtended_SSE_Dialogs.pak"	},
-			{ EDITOR_SHORT_FALLOUT_C4,	"CreationKitPlatformExtended_FO4_Dialogs.pak"	},
-			{ EDITOR_SHORT_STARFIELD,	"CreationKitPlatformExtended_SF_Dialogs.pak"	},
+		// Список коротких названий поддерживаемых игр
+		static std::unordered_map<EDITOR_EXECUTABLE_SHORT_TYPE, std::string_view> allowedShortNameGame =
+		{
+			{ EDITOR_SHORT_SKYRIM_SE,	"SSE" },
+			{ EDITOR_SHORT_FALLOUT_C4,	"FO4" },
+			{ EDITOR_SHORT_STARFIELD,	"SF"  },
 		};
 
 		// Список имён файлов внешних ресурсов для qt

@@ -111,7 +111,10 @@ Marked as <b>deprecated</b>, means that there will be nothing new for these vers
 > You can remove *Steam* from the **Creation Kit**.  
 > You just need to manually replace the string *`steam_api64.dll`* on *`winhttp.dll`* in any **HEX editor**. Since the new string is four bytes shorter, the remaining bytes are set to **`0x00`**. Or compile the **NoSteam Patcher** in **Lazarus** and use it.  
 > For versions **`1.6.438.0`** and **`1.10.162.0`**, you first need to remove **`Steam DRM`**, for example, [Steamless](https://github.com/atom0s/Steamless). 
-  
+
+> [!NOTE]
+> `ckpe_loader -c address_of_base_fixed` will make the starting address fixed, starting from `0x140000000`, changes the .exe header.
+
 # Demonstration
 <p align="center">
   <img src="https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/master/Resources/darktheme.png" width="640px" alt="Creation Kit Platform Extended" border="0">
@@ -151,4 +154,6 @@ Move the dialog package **`Dialogs/<GAME>/CreationKitPlatformExtended_<GAME>_Dia
 
 # License
 **GPLv3**: <a>https://www.gnu.org/licenses/gpl-3.0.html</a>. <br />
-Copyright © 2023-2024 aka perchik71. All rights reserved. 
+Copyright © 2023-2024 aka perchik71. All rights reserved. <br />
+File `Stuffs\FO4\CreationKitPlatformExtended_FO4_Resources.pak` contains files are proprietary and not licensed. <br />
+Dependencies are under their respective licenses. 

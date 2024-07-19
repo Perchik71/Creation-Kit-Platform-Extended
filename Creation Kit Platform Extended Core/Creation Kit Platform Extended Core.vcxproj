@@ -151,6 +151,7 @@
     <ClCompile Include="Core\RegistratorWindow.cpp" />
     <ClCompile Include="Core\RelocationDatabase.cpp" />
     <ClCompile Include="Core\Relocator.cpp" />
+    <ClCompile Include="Core\ResourcesPackerManager.cpp" />
     <ClCompile Include="Core\ResultCoreErrNo.cpp" />
     <ClCompile Include="Core\TracerManager.cpp" />
     <ClCompile Include="Core\TypeInfo\ms_rtti.cpp" />
@@ -425,6 +426,7 @@
     <ClInclude Include="Core\RegistratorWindow.h" />
     <ClInclude Include="Core\RelocationDatabase.h" />
     <ClInclude Include="Core\Relocator.h" />
+    <ClInclude Include="Core\ResourcesPackerManager.h" />
     <ClInclude Include="Core\ResultCoreErrNo.h" />
     <ClInclude Include="Core\Singleton.h" />
     <ClInclude Include="Core\TracerManager.h" />
@@ -526,6 +528,7 @@
     <ClInclude Include="Editor API\SSE\TESTopic.h" />
     <ClInclude Include="Editor API\SSE\TESTopicInfo.h" />
     <ClInclude Include="Editor API\SSE\TESWater.h" />
+    <ClInclude Include="Editor API\SSE\TESWaterForm.h" />
     <ClInclude Include="Editor API\UI\UIBaseWindow.h" />
     <ClInclude Include="Editor API\UI\UICheckboxControl.h" />
     <ClInclude Include="Editor API\UI\UIGraphics.h" />

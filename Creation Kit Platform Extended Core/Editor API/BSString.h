@@ -92,7 +92,7 @@ namespace CreationKitPlatformExtended
 			inline WORD Length() const { return m_dataLen; }
 			inline WORD Size() const { return m_bufLen; }
 			INT Compare(LPCSTR string, BOOL ignoreCase = TRUE) const;
-			inline INT Compare(const BSString& string, BOOL ignoreCase = TRUE) const { return Compare(string, ignoreCase); }
+			inline INT Compare(const BSString& string, BOOL ignoreCase = TRUE) const { return Compare(string.c_str(), ignoreCase); }
 			void Clear();
 			BSString Reverse() const;
 			BSString UpperCase() const;

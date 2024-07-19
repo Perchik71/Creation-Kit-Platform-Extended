@@ -39,6 +39,7 @@ namespace CreationKitPlatformExtended
 					static EResultError HKLoadArchiveEx(void* arrayDataList, InfoEx* infoRes, void* Unk1, uint32_t Unk2);
 					static void LoadArchive(const char* fileName);
 					static bool IsAvailableForLoad(const char* fileName);
+					static void LoadPrimaryArchive();
 				};
 			}
 		}

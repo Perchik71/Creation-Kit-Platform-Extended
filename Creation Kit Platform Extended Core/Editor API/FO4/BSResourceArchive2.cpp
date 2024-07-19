@@ -18,6 +18,8 @@ namespace CreationKitPlatformExtended
 				uintptr_t pointer_Archive2_sub1 = 0;
 				uintptr_t pointer_Archive2_sub2 = 0;
 				Array<BSString*> g_arrayArchivesAvailable;
+				bool g_initCKPEPrimary = false;
+				std::mutex g_CKPEPrimary;
 
 				void Archive2::Initialize()
 				{
@@ -110,12 +112,20 @@ namespace CreationKitPlatformExtended
 					if (GetFileAttributesExA(*filePath, GetFileExInfoStandard, &fileData))
 						fileSize = (uint64_t)fileData.nFileSizeLow | ((uint64_t)fileData.nFileSizeHigh << 32);
 
-					GetFileSizeStr(fileSize, fileSizeStr);
-					_CONSOLE("Load an archive file \"%s\" (%s)...", fileName, *fileSizeStr);
+					auto resultNo = EC_NONE;
 
-					auto resultNo = fastCall<EResultError, void*, LooseFileStream*&, void*, uint32_t>
-						(pointer_Archive2_sub1, arrayDataList, resFile, Unk1, Unk2);
-					AssertMsgVa(resultNo == EC_NONE, "Failed load an archive file %s", fileName);
+					if (_stricmp(fileName, "Fallout4 - Shaders.ba2"))  // skip load Fallout4 - Shaders.ba2
+					{
+						GetFileSizeStr(fileSize, fileSizeStr);
+						_CONSOLE("Load an archive file \"%s\" (%s)...", fileName, *fileSizeStr);
+
+						resultNo = fastCall<EResultError, void*, LooseFileStream*&, void*, uint32_t>
+							(pointer_Archive2_sub1, arrayDataList, resFile, Unk1, Unk2);
+						AssertMsgVa(resultNo == EC_NONE, "Failed load an archive file %s", fileName);
+					}
+
+					LoadPrimaryArchive();
+
 					return resultNo;
 				}
 
@@ -134,12 +144,20 @@ namespace CreationKitPlatformExtended
 					if (GetFileAttributesExA(*filePath, GetFileExInfoStandard, &fileData))
 						fileSize = (uint64_t)fileData.nFileSizeLow | ((uint64_t)fileData.nFileSizeHigh << 32);
 
-					GetFileSizeStr(fileSize, fileSizeStr);
-					_CONSOLE("Load an archive file \"%s\" (%s)...", fileName2, *fileSizeStr);
+					auto resultNo = EC_NONE;
 
-					auto resultNo = fastCall<EResultError, void*, InfoEx*, void*, uint32_t>
-						(pointer_Archive2_sub1, arrayDataList, infoRes, Unk1, Unk2);
-					AssertMsgVa(resultNo == EC_NONE, "Failed load an archive file %s", fileName2);
+					if (_stricmp(fileName2, "Fallout4 - Shaders.ba2"))  // skip load Fallout4 - Shaders.ba2
+					{
+						GetFileSizeStr(fileSize, fileSizeStr);
+						_CONSOLE("Load an archive file \"%s\" (%s)...", fileName2, *fileSizeStr);
+
+						resultNo = fastCall<EResultError, void*, InfoEx*, void*, uint32_t>
+							(pointer_Archive2_sub1, arrayDataList, infoRes, Unk1, Unk2);
+						AssertMsgVa(resultNo == EC_NONE, "Failed load an archive file %s", fileName2);
+					}
+
+					LoadPrimaryArchive();
+
 					return resultNo;
 				}
 
@@ -159,6 +177,21 @@ namespace CreationKitPlatformExtended
 					}
 
 					return false;
+				}
+
+				void Archive2::LoadPrimaryArchive()
+				{
+					{
+						std::lock_guard lock(g_CKPEPrimary);
+
+						if (g_initCKPEPrimary)
+							return;
+
+						g_initCKPEPrimary = true;
+					}
+
+					LoadArchive("CreationKit - Shaders.ba2");
+					LoadArchive("CreationKit - Textures.ba2");
 				}
 			}
 		}

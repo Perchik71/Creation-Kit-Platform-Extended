@@ -115,9 +115,9 @@ namespace CreationKitPlatformExtended
 				{
 					fastCall<void>(pointer_CrashMHDTMoreThan70Patch_sub2, shape, vec, point, unk1, unk2);
 				}
-				__except (1)
+				__except (EXCEPTION_EXECUTE_HANDLER)
 				{
-					_CONSOLE("ASSERTION: Fatal calculating the height for the point (%.0f, %.0f) of (%.0f, %.0f)", coord_x, coord_y, point->x, point->y);
+					_CONSOLE("ASSERTION: Fatal calculating the height for the point (%.0f, %.0f) of (%.3f, %.3f)", coord_x, coord_y, point->x, point->y);
 				}
 			}
 		}

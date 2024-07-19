@@ -95,7 +95,10 @@ namespace CreationKitPlatformExtended
 				
 				// skip dirs
 				if (zip_entry_isdir(zip) != 0)
+				{
+					zip_entry_close(zip);
 					continue;
+				}
 
 				sName = zip_entry_name(zip);
 

@@ -33,6 +33,9 @@ namespace CreationKitPlatformExtended
 			bool IsLoaded;
 			uint8_t supportedBA2Version = 8;
 
+			static constexpr char szArchiveList[] = "Fallout4 - Voices1.ba2, Fallout4 - Voices2.ba2, Fallout4 - Meshes.ba2, Fallout4 - Animations.ba2, Fallout4 - Interface.ba2, Fallout4 - Misc.ba2, Fallout4 - Sounds.ba2";
+			static constexpr char szArchiveList2[] = "Fallout4 - Voices.ba2, Fallout4 - Interface.ba2, Fallout4 - Meshes.ba2, Fallout4 - MeshesExtra.ba2, Fallout4 - Misc.ba2, Fallout4 - Sounds.ba2, Fallout4 - Materials.ba2";
+
 			BSArchiveManagerModdedPatch::BSArchiveManagerModdedPatch() : Module(GlobalEnginePtr)
 			{}
 
@@ -96,8 +99,14 @@ namespace CreationKitPlatformExtended
 
 					pointer_BSArchiveManagerModded_sub = _RELDATA_ADDR(4);
 
+					ScopeRelocator text;
+
 					// Пропуск загрузки архивов, что не имеют отношения к загружаемому моду, но является предыдущей работой
 					lpRelocator->Patch(_RELDATA_RAV(5), { 0xC3 });
+
+					// Исключение из списков архив шейдеров
+					lpRelocator->PatchStringRef(_RELDATA_RAV(8), szArchiveList);
+					lpRelocator->PatchStringRef(_RELDATA_RAV(9), szArchiveList2);
 
 					// Так как разница между первой и 8 версией лишь, то что был удалён GNF формат для PlayStation.
 					// То очевидно, 8 версии с GNF форматом просто не будет, то вполне безопасно, открывать любые версии архивы.

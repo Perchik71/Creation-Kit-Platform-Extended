@@ -14,8 +14,10 @@
 #include "TracerManager.h"
 #include "RegistratorWindow.h"
 #include "CrashHandler.h"
+#include "ResourcesPackerManager.h"
 
 #include "Editor API/EditorUI.h"
+#include "Editor API/BSString.h"
 
 #include "Patches/CrashDumpPatch.h"
 #include "Patches/MemoryManagerPatch.h"
@@ -201,7 +203,12 @@ namespace CreationKitPlatformExtended
 			else
 			// Добавление патчей только для редактора фолыча
 			if (eEditorVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST)
+			{
+				// Распаковка ресурсов
+				ResourcesPackerManager::UnpackResources();
+
 				Fallout4_AppendPatches(PatchesManager);
+			}
 			else
 			// Добавление патчей только для редактора старфилда
 			if (eEditorVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_STARFIELD_LAST)
@@ -438,14 +445,23 @@ namespace CreationKitPlatformExtended
 				return;
 			}
 
-			auto DialogIterator = allowedDialogsPackageFile.find(editorShortVersion);
-			if (DialogIterator == allowedDialogsPackageFile.end())
+			auto ShortNameGameIterator = allowedShortNameGame.find(editorShortVersion);
+			if (ShortNameGameIterator == allowedShortNameGame.end())
 			{
-				_FATALERROR("The dialog file is not specified for this version of the editor");
+				_FATALERROR("INTERNAL: There is no short name for the game");
 				return;
 			}
 
-			GlobalDialogManagerPtr->LoadFromFilePackage(DialogIterator->second.data());
+			auto DialogsFileName = EditorAPI::BSString::FormatString("CreationKitPlatformExtended_%s_Dialogs.pak",
+				ShortNameGameIterator->second.data());
+			
+			if (!EditorAPI::BSString::Utils::FileExists(DialogsFileName))
+			{
+				_FATALERROR("The dialog file is not specified for this version of the editor or no found");
+				return;
+			}
+
+			GlobalDialogManagerPtr->LoadFromFilePackage(DialogsFileName.c_str());
 
 #ifdef _CKPE_WITH_QT5
 			auto QExternalResourceIterator = qtExternalResourcePackageFile.find(editorShortVersion);
