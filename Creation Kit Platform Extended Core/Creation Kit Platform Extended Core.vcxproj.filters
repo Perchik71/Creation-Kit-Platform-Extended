@@ -810,6 +810,7 @@
     <ClCompile Include="Core\ResourcesPackerManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Crc32.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">

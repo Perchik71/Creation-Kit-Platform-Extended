@@ -155,6 +155,7 @@
     <ClCompile Include="Core\ResultCoreErrNo.cpp" />
     <ClCompile Include="Core\TracerManager.cpp" />
     <ClCompile Include="Core\TypeInfo\ms_rtti.cpp" />
+    <ClCompile Include="Crc32.cpp" />
     <ClCompile Include="DllMain.cpp" />
     <ClCompile Include="Editor API\BGStringLocalize.cpp" />
     <ClCompile Include="Editor API\BSReadWriteLock.cpp" />

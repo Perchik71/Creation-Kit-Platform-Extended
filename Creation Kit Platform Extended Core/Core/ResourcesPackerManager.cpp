@@ -2,6 +2,7 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
+#include "Crc32.h"
 #include "Engine.h"
 #include "ResourcesPackerManager.h"
 
@@ -79,7 +80,10 @@ namespace CreationKitPlatformExtended
 			if (!zip || fileName.IsEmpty())
 				return false;
 
-			if (!overwrite && EditorAPI::BSString::Utils::FileExists(EditorAPI::BSString::Utils::GetDataPath() + fileName))
+			auto sArchiveName = EditorAPI::BSString::Utils::GetDataPath() + fileNewName;
+			bool exists = EditorAPI::BSString::Utils::FileExists(sArchiveName);
+
+			if (!overwrite && exists)
 				return true;
 
 			EditorAPI::BSString sName;
@@ -98,6 +102,9 @@ namespace CreationKitPlatformExtended
 
 				if (!fileName.Compare(zip_entry_name((struct zip_t*)zip)))
 				{
+					if (exists && (zip_entry_crc32((struct zip_t*)zip) == ::Utils::CRC32File(sArchiveName.c_str())))
+						return true;
+
 					auto ret = zip_entry_fread((struct zip_t*)zip, (EditorAPI::BSString::Utils::GetDataPath() + fileNewName).c_str());
 					zip_entry_close((struct zip_t*)zip);
 					return !ret;

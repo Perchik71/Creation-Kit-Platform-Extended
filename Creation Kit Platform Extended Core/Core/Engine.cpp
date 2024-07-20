@@ -626,7 +626,7 @@ namespace CreationKitPlatformExtended
 				LogCurrentTime();
 
 				// Получение CRC32 с файла
-				uint32_t hash_crc32 = CRC32File((String(lpcstrAppName) + ".exe").c_str());
+				uint32_t hash_crc32 = ::Utils::CRC32File((String(lpcstrAppName) + ".exe").c_str());
 				_MESSAGE("CRC32 executable file: 0x%08X", hash_crc32);
 
 				// Получение начального адреса памяти главного процесса
