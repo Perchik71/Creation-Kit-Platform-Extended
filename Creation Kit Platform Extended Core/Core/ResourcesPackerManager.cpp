@@ -103,7 +103,10 @@ namespace CreationKitPlatformExtended
 				if (!fileName.Compare(zip_entry_name((struct zip_t*)zip)))
 				{
 					if (exists && (zip_entry_crc32((struct zip_t*)zip) == ::Utils::CRC32File(sArchiveName.c_str())))
+					{
+						zip_entry_close((struct zip_t*)zip);
 						return true;
+					}
 
 					auto ret = zip_entry_fread((struct zip_t*)zip, (EditorAPI::BSString::Utils::GetDataPath() + fileNewName).c_str());
 					zip_entry_close((struct zip_t*)zip);

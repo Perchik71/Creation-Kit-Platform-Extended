@@ -41,7 +41,7 @@ namespace CreationKitPlatformExtended
 
 			bool BSArchiveManagerModdedPatch::HasOption() const
 			{
-				return true;
+				return false;
 			}
 
 			bool BSArchiveManagerModdedPatch::HasCanRuntimeDisabled() const
@@ -51,7 +51,7 @@ namespace CreationKitPlatformExtended
 
 			const char* BSArchiveManagerModdedPatch::GetOptionName() const
 			{
-				return "CreationKit:bOwnArchiveLoader";
+				return nullptr;
 			}
 
 			const char* BSArchiveManagerModdedPatch::GetName() const
