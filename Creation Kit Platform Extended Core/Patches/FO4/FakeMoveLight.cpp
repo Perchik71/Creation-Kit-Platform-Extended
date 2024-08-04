@@ -54,7 +54,7 @@ namespace CreationKitPlatformExtended
 			bool FakeMoveLightPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return eEditorCurrentVersion >= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_1_10_982_3;
+				return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST;
 			}
 
 			bool FakeMoveLightPatch::Activate(const Relocator* lpRelocator,
