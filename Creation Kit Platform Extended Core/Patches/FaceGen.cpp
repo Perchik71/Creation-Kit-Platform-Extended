@@ -148,6 +148,9 @@ namespace CreationKitPlatformExtended
 				lpRelocator->Patch(_RELDATA_RAV(13), (uint8_t*)&tintResolution, sizeof(uint32_t));
 				lpRelocator->Patch(_RELDATA_RAV(14), (uint8_t*)&tintResolution, sizeof(uint32_t));
 
+				// remove check format
+				lpRelocator->PatchNop(_RELDATA_RAV(15), 6);
+
 				return true;
 			}
 			else if (verPatch == 3)
