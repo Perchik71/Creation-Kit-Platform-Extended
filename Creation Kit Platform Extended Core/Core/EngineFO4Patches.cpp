@@ -44,7 +44,6 @@
 #include "Patches/FO4/SortCrashCombined.h"
 #include "Patches/FO4/FakeMoveLight.h"
 #include "Patches/FO4/IncreaseChunkSizeForSNAMPatch.h"
-#include "Patches/FO4/FixUsesReadyFaceGen.h"
 #include "Patches/FO4/FixSortPropObjectMod.h"
 #include "Patches/FO4/BSResourceTextureDB_RE.h"
 #include "Patches/FO4/FixLandspaceVNML.h"
@@ -105,7 +104,6 @@ namespace CreationKitPlatformExtended
 				new Patches::SortCrashCombinedPatch(),
 				new Patches::FakeMoveLightPatch(),
 				new Patches::IncreaseChunkSizeForSNAMPatch(),
-				new Patches::FixUsesReadyFaceGenPatch(),
 				new Patches::FixSortPropObjectModPatch(),
 				new Patches::BSResourceTextureDBREPatch(),
 				new Patches::FixLandspaceVNMLPatch(),

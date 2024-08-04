@@ -63,7 +63,7 @@ namespace CreationKitPlatformExtended
 				}
 				else if (uMsg == WM_PAINT) 
 				{
-					std::lock_guard lock(locker);
+					//std::lock_guard lock(locker);
 
 					// Paint border
 					LRESULT result = DefSubclassProc(hWnd, uMsg, wParam, lParam);

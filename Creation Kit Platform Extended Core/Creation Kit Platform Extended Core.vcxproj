@@ -228,7 +228,6 @@
     <ClCompile Include="Patches\FO4\FixSmoothValue.cpp" />
     <ClCompile Include="Patches\FO4\FixSortPropObjectMod.cpp" />
     <ClCompile Include="Patches\FO4\FixTabDeleteCrash.cpp" />
-    <ClCompile Include="Patches\FO4\FixUsesReadyFaceGen.cpp" />
     <ClCompile Include="Patches\FO4\FixVC.cpp" />
     <ClCompile Include="Patches\FO4\IncreaseChunkSizeForSNAMPatch.cpp" />
     <ClCompile Include="Patches\FO4\MiscF4.cpp" />
@@ -594,7 +593,6 @@
     <ClInclude Include="Patches\FO4\FixSmoothValue.h" />
     <ClInclude Include="Patches\FO4\FixSortPropObjectMod.h" />
     <ClInclude Include="Patches\FO4\FixTabDeleteCrash.h" />
-    <ClInclude Include="Patches\FO4\FixUsesReadyFaceGen.h" />
     <ClInclude Include="Patches\FO4\FixVC.h" />
     <ClInclude Include="Patches\FO4\IncreaseChunkSizeForSNAMPatch.h" />
     <ClInclude Include="Patches\FO4\MiscF4.h" />

@@ -759,9 +759,6 @@
     <ClCompile Include="NiAPI\NiRTTI.cpp">
       <Filter>NiAPI</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\FO4\FixUsesReadyFaceGen.cpp">
-      <Filter>Patches\FO4</Filter>
-    </ClCompile>
     <ClCompile Include="Patches\FO4\FixSortPropObjectMod.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
@@ -1926,9 +1923,6 @@
     </ClInclude>
     <ClInclude Include="Editor API\FO4\BSTextureSet.h">
       <Filter>Editor API\FO4</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\FO4\FixUsesReadyFaceGen.h">
-      <Filter>Patches\FO4</Filter>
     </ClInclude>
     <ClInclude Include="Patches\FO4\FixSortPropObjectMod.h">
       <Filter>Patches\FO4</Filter>
