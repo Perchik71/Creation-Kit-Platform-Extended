@@ -1,4 +1,5 @@
 Add new entries at the bottom of this list. Toggled by WarningBlacklist setting.
+MASTERFILE: DefaultObject 'BypassDestroyedExplosionTest_DO' in file 'Fallout4.esm' is not recognized by the current EXE.
 ANIMATION: Animation 'Actors\Character\Animations\Ripper\AttackRipper' on race 'DLC04_HumanRaceSubgraphDataAdditive' for attack event 'meleeAttackRipperStart' has no preHitFrame event
 ANIMATION: Animation 'Actors\Character\Animations\Ripper\AttackRipper' on race 'DLC04_HumanRaceSubgraphDataAdditive' for attack event 'meleeAttackRipperStart' has no weaponSwing/weaponLeftSwing event
 ANIMATION: Animation 'Actors\Character\Animations\Ripper\AttackRipper' on race 'HumanRaceSubGraphDataAdditiveDLC06' for attack event 'meleeAttackRipperStart' has no preHitFrame event
