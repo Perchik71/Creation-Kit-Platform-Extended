@@ -55,7 +55,6 @@ namespace CreationKitPlatformExtended
 
 		// Список устаревших версий редакторов
 		static std::vector<EDITOR_EXECUTABLE_TYPE> outdatedEditorVersion = {
-			EDITOR_FALLOUT_C4_1_10_162_0,
 			EDITOR_FALLOUT_C4_1_10_943_1,
 		};
 		

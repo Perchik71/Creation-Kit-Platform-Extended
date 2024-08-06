@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
+#include "Editor API/BSString.h"
 #include "Patches/ConsolePatch.h"
 #include "FaceGen.h"
 
@@ -117,6 +118,8 @@ namespace CreationKitPlatformExtended
 			}
 			else if (verPatch == 2)
 			{
+				pointer_FaceGen_sub1 = _RELDATA_ADDR(16);
+
 				ScopeRelocator text; // fast patches
 
 				// Don't produce DDS files
@@ -127,6 +130,12 @@ namespace CreationKitPlatformExtended
 					lpRelocator->PatchNop(_RELDATA_RAV(3), 5);
 					lpRelocator->PatchNop(_RELDATA_RAV(4), 5);
 					lpRelocator->PatchNop(_RELDATA_RAV(5), 5);
+				}
+				else
+				{
+					lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&Fallout4::CreateDiffuseCompressDDS);
+					lpRelocator->DetourCall(_RELDATA_RAV(3), (uintptr_t)&Fallout4::CreateNormalsCompressDDS);
+					lpRelocator->DetourCall(_RELDATA_RAV(5), (uintptr_t)&Fallout4::CreateSpecularCompressDDS);
 				}
 
 				// Don't produce TGA files
@@ -172,6 +181,75 @@ namespace CreationKitPlatformExtended
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
 			return false;
+		}
+
+		void FaceGenPatch::Fallout4::CreateDiffuseCompressDDS(__int64 lpThis, uint32_t TextureId, const char* lpFileName,
+			int32_t Unk1, bool Unk2)
+		{
+			fastCall<void>(pointer_FaceGen_sub1, lpThis, TextureId, lpFileName, Unk1, Unk2);
+			// Compress BC7
+			Execute(lpFileName, "BC7_UNORM");
+		}
+
+		void FaceGenPatch::Fallout4::CreateNormalsCompressDDS(__int64 lpThis, uint32_t TextureId, const char* lpFileName,
+			int32_t Unk1, bool Unk2)
+		{
+			fastCall<void>(pointer_FaceGen_sub1, lpThis, TextureId, lpFileName, Unk1, Unk2);
+			// Compress BC5
+			Execute(lpFileName, "BC5_UNORM");
+		}
+
+		void FaceGenPatch::Fallout4::CreateSpecularCompressDDS(__int64 lpThis, uint32_t TextureId, const char* lpFileName,
+			int32_t Unk1, bool Unk2)
+		{
+			fastCall<void>(pointer_FaceGen_sub1, lpThis, TextureId, lpFileName, Unk1, Unk2);
+			// Compress BC5
+			Execute(lpFileName, "BC5_UNORM");
+		}
+
+		void FaceGenPatch::Fallout4::Execute(const char* lpFileName, const char* lpCompressionFormat)
+		{
+			// FO4CK use old texconv =( 
+			// He doesn't know how to overwrite himself.
+
+			EditorAPI::BSString FileName = EditorAPI::BSString::Utils::GetApplicationPath() + lpFileName;
+			if (EditorAPI::BSString::Utils::FileExists(FileName))
+			{
+				EditorAPI::BSString Path = EditorAPI::BSString::Utils::ExtractFilePath(FileName) + "compress";
+				SHCreateDirectoryExA(NULL, Path.c_str(), NULL);
+
+				EditorAPI::BSString Command;
+				//Command.Format("\"Tools\\Elric\\texconv.cmd\" \"%s\" \"%s\"", FileName.c_str(), Path.c_str());
+				Command.Format("\"Tools\\Elric\\texconv.exe\" -m 1 -f %s \"%s\" -o \"%s\"", lpCompressionFormat, 
+					FileName.c_str(), Path.c_str());
+
+				STARTUPINFO info = { 0 };
+				PROCESS_INFORMATION processInfo = { 0 };
+				info.cb = sizeof(STARTUPINFO);
+				info.wShowWindow = SW_HIDE;
+				info.dwFlags = STARTF_USESHOWWINDOW;
+
+				if (CreateProcessA(NULL, const_cast<LPSTR>(Command.c_str()), NULL, NULL, FALSE,
+					CREATE_NO_WINDOW, NULL, NULL, &info, &processInfo))
+				{
+					WaitForSingleObject(processInfo.hProcess, INFINITE);
+					CloseHandle(processInfo.hProcess);
+					CloseHandle(processInfo.hThread);
+
+					EditorAPI::BSString NewFileName = Path + "\\" +
+						EditorAPI::BSString::Utils::ExtractFileName(lpFileName);
+					if (EditorAPI::BSString::Utils::FileExists(NewFileName))
+						MoveFileExA(NewFileName.c_str(), FileName.c_str(), MOVEFILE_REPLACE_EXISTING);
+					else
+						_CONSOLE("FACEGEN: Texture could not be compressed \"%s\"", NewFileName.c_str());
+				}
+				else
+					_CONSOLE("FACEGEN: Couldn't run \"Tools\\Elric\\texconv.exe\"");
+
+				RemoveDirectoryA(Path.c_str());
+			}
+			else
+				_CONSOLE("FACEGEN: The file \"%s\" was not found", lpFileName);
 		}
 
 		void FaceGenPatch::sub(__int64 a1, __int64 a2)

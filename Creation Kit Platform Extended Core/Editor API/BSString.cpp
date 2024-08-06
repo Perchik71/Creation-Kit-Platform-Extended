@@ -489,7 +489,7 @@ namespace CreationKitPlatformExtended
 			WORD it = fname.FindLastOf("/\\");
 
 			if (it != srNone)
-				return BSString(*fname + (it + 1));
+				return BSString(*fname + it);
 
 			return fname;
 		}
@@ -508,7 +508,7 @@ namespace CreationKitPlatformExtended
 			CHAR szTemp[SIZE];
 
 			if (::GetCurrentDirectoryA(SIZE, szTemp))
-				return szTemp;
+				return BSString(szTemp) + "\\";
 
 			return "";
 		}

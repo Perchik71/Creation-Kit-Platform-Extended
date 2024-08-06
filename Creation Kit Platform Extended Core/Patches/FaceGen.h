@@ -28,6 +28,15 @@ namespace CreationKitPlatformExtended
 
 			static void sub(__int64 a1, __int64 a2);
 			static void sub_sf(__int64 a1, __int64 a2);
+
+			struct Fallout4
+			{
+				static void CreateDiffuseCompressDDS(__int64 lpThis, uint32_t TextureId, const char* lpFileName, int32_t Unk1, bool Unk2);
+				static void CreateNormalsCompressDDS(__int64 lpThis, uint32_t TextureId, const char* lpFileName, int32_t Unk1, bool Unk2);
+				static void CreateSpecularCompressDDS(__int64 lpThis, uint32_t TextureId, const char* lpFileName, int32_t Unk1, bool Unk2);
+
+				static void Execute(const char* lpFileName, const char* lpCompressionFormat);
+			};
 		protected:
 			virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const;
