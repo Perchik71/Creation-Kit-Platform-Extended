@@ -56,15 +56,15 @@ This is not a complete list of improvements.
     </tr>
     <tr>
       <td>1.5.3.0</td>
-      <td>Active</td>
+      <td>Inactive</td>
       <td>1.10.162.0</td>
-      <td>Deprecated</td>
-      <td>1.12.32.0</td>
       <td>Active</td>
+      <td>1.12.32.0</td>
+      <td>Deprecated</td>
     </tr>
     <tr>
       <td>1.5.73.0</td>
-      <td>Active</td>
+      <td>Inactive</td>
       <td>1.10.943.1</td>
       <td>Deprecated</td>
       <td></td>
@@ -72,7 +72,7 @@ This is not a complete list of improvements.
     </tr>
     <tr>
       <td>1.6.438.0</td>
-      <td>Active</td>
+      <td>Inactive</td>
       <td>1.10.982.3</td>
       <td>Active</td>
       <td></td>
@@ -80,7 +80,7 @@ This is not a complete list of improvements.
     </tr>
     <tr>
       <td>1.6.1130.0</td>
-      <td>Active</td>
+      <td>Inactive</td>
       <td></td>
       <td></td>
       <td></td>
@@ -94,7 +94,7 @@ This is not a complete list of improvements.
       <th scope="row" colspan="2">Status platform</th>
     </tr>
     <tr>
-      <th scope="row" colspan="2">Stable</th>
+      <th scope="row" colspan="2">Stable, Stopped</th>
       <th scope="row" colspan="2">Stable</th>
       <th scope="row" colspan="2">Stable</th>
     </tr>
@@ -103,9 +103,8 @@ This is not a complete list of improvements.
 Marked as <b>deprecated</b>, means that there will be nothing new for these versions, older versions, as an option, are more stable. Attention detailed information is relevant for the current commit.  
 
 # 
-> [!IMPORTANT]
-> 1. **CK F4** version **1.10.9XX.X** and newer worked only on the **NG** version of the game. There is no compatibility with **Fallout4 - Shaders.ba2**.  
-> 2. **CK** does not work well with **ENB**. I wrote **ckpe_loader**. This is console app, for 15 seconds renames from the known to me .dll files that harm the work of CK this time is enough to load the CK itself. All renames .dll files will be restored name after this time.
+> [!IMPORTANT] 
+> **CK** does not work well with **ENB**. I wrote **ckpe_loader**. This is console app, for 15 seconds renames from the known to me .dll files that harm the work of CK this time is enough to load the CK itself. All renames .dll files will be restored name after this time.
 
 > [!NOTE]
 > You can remove *Steam* from the **Creation Kit**.  
