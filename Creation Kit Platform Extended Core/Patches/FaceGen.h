@@ -34,8 +34,9 @@ namespace CreationKitPlatformExtended
 				static void CreateDiffuseCompressDDS(__int64 lpThis, uint32_t TextureId, const char* lpFileName, int32_t Unk1, bool Unk2);
 				static void CreateNormalsCompressDDS(__int64 lpThis, uint32_t TextureId, const char* lpFileName, int32_t Unk1, bool Unk2);
 				static void CreateSpecularCompressDDS(__int64 lpThis, uint32_t TextureId, const char* lpFileName, int32_t Unk1, bool Unk2);
-
-				static void Execute(const char* lpFileName, const char* lpCompressionFormat);
+				static void Execute(bool bShowDone);
+				static void ExecuteGUI();
+				static void ExecuteCLI(__int64 Arg1, __int64 Arg2, __int64 Arg3, __int64 Arg4);
 			};
 		protected:
 			virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
