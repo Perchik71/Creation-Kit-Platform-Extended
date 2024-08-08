@@ -7,8 +7,6 @@
 #include "Patches/ConsolePatch.h"
 #include "FaceGen.h"
 
-#include <libps.h>
-
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
@@ -289,33 +287,6 @@ namespace CreationKitPlatformExtended
 
 			_CONSOLE("FACEGEN: Done.", FacegenTextures.size());
 			if (bShowDone) MessageBoxA(0, "Done.", "Message", MB_OK | MB_ICONINFORMATION);
-			
-			
-			// FO4CK use old texconv =( 
-			// He doesn't know how to overwrite himself.
-
-
-			//	EditorAPI::BSString PS_Script;
-			//	PS_Script.AppendFormat("Start-Process -FilePath \"%s\" -ArgumentList \"-m 1 -f %s -o `\"%s`\" `\"%s`\"\" -WindowStyle hidden",
-			//		Texconv.c_str(), lpCompressionFormat, Path.c_str(), FileName.c_str());
-
-			//	//_CONSOLE(PS_Script.c_str());
-			//	RunPowerShell(Conversion::AnsiToWide(PS_Script.c_str()).c_str());
-
-			
-			//	if (EditorAPI::BSString::Utils::FileExists(NewFileName))
-			//		MoveFileExA(NewFileName.c_str(), FileName.c_str(), MOVEFILE_REPLACE_EXISTING);
-			//	else
-			//		_CONSOLE("FACEGEN: Texture could not be compressed \"%s\"", FileName.c_str());
-
-			//	
-			//}
-
-
-				
-				//Command.Format("\"Tools\\Elric\\texconv.cmd\" \"%s\" \"%s\"", FileName.c_str(), Path.c_str());
-				
-			
 		}
 
 		void FaceGenPatch::Fallout4::ExecuteGUI()
