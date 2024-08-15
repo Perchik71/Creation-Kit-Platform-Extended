@@ -8,6 +8,7 @@
 #include "Editor API/EditorUI.h"
 #include "Editor API/SSE/BGSRenderWindow.h"
 #include "Patches/Windows/SSE/MainWindow.h"
+#include "Patches/INICacheData.h"
 #include "CellViewWindow.h"
 
 #define UI_CELL_VIEW_ADD_CELL_ITEM					2579
@@ -20,6 +21,14 @@
 #define UI_CELL_VIEW_GO_BUTTON						3681
 
 #define UI_CELL_VIEW_FILTER_CELL_SIZE				1024
+
+namespace CreationKitPlatformExtended
+{
+	namespace Core
+	{
+		extern CreationKitPlatformExtended::Patches::INICacheDataPatch* INICacheData;
+	}
+}
 
 namespace CreationKitPlatformExtended
 {
@@ -437,9 +446,9 @@ namespace CreationKitPlatformExtended
 				{
 					if (((LPNMHDR)lParam)->code == HDN_ITEMCHANGED)
 					{
-						// Bethesda удал¤ет столбцы, после их восстанавливает и считывает файла параметров их ширину.
-						// ≈стественно это приводит к потере ширины столбца всегда при открытии новой ¤чейки.
-						// —охраним их в файл параметров, как только будут изменены.
+						// Bethesda удаляет столбцы, после их восстанавливает и считывает файла параметров их ширину.
+						// естественно это приводит к потере ширины столбца всегда при открытии новой ячейки.
+						// Сохраним их в файл параметров, как только будут изменены.
 
 						LPNMHEADERA pNMHeader = (LPNMHEADERA)lParam;
 						auto ListView = GetParent(pNMHeader->hdr.hwndFrom);
@@ -450,9 +459,14 @@ namespace CreationKitPlatformExtended
 							EditorAPI::BSString OptionName;
 							OptionName.Format("Cell View Cell List Column %d width", pNMHeader->iItem);
 
-							WritePrivateProfileStringA("General", OptionName.c_str(),
-								EditorAPI::BSString::Transforms::IntToStr(ColWidth).c_str(), 
-								(EditorAPI::BSString::Utils::GetApplicationPath() + "CreationKitPrefs.ini").c_str());
+							if (INICacheData->HasActive())
+								INICacheData->HKWritePrivateProfileStringA("General", OptionName.c_str(),
+									EditorAPI::BSString::Transforms::IntToStr(ColWidth).c_str(),
+									(EditorAPI::BSString::Utils::GetApplicationPath() + "CreationKitPrefs.ini").c_str());
+							else
+								WritePrivateProfileStringA("General", OptionName.c_str(),
+									EditorAPI::BSString::Transforms::IntToStr(ColWidth).c_str(), 
+									(EditorAPI::BSString::Utils::GetApplicationPath() + "CreationKitPrefs.ini").c_str());
 						}
 					}
 				}
