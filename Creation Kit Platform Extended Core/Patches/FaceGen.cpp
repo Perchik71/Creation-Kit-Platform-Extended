@@ -7,6 +7,8 @@
 #include "Patches/ConsolePatch.h"
 #include "FaceGen.h"
 
+#define CKPE_USE_NEW_TEXCONV 1
+
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
@@ -19,7 +21,11 @@ namespace CreationKitPlatformExtended
 		uintptr_t pointer_FaceGen_data = 0;
 
 		EditorAPI::BSString Texconv;
+#ifndef CKPE_USE_NEW_TEXCONV
 		ConcurrencyArray<std::pair<String, String>> FacegenTextures;
+#else
+		size_t FacegenTexturesTotal;
+#endif // CKPE_USE_NEW_TEXCONV
 
 		FaceGenPatch::FaceGenPatch() : Module(GlobalEnginePtr)
 		{}
@@ -144,6 +150,10 @@ namespace CreationKitPlatformExtended
 					Texconv = EditorAPI::BSString::Utils::GetApplicationPath() + "Tools\\Elric\\texconv.exe";
 					lpRelocator->DetourCall(_RELDATA_RAV(17), (uintptr_t)&Fallout4::ExecuteGUI);
 					lpRelocator->DetourCall(_RELDATA_RAV(18), (uintptr_t)&Fallout4::ExecuteCLI);
+
+#ifdef CKPE_USE_NEW_TEXCONV
+					FacegenTexturesTotal = 0;
+#endif // CKPE_USE_NEW_TEXCONV
 				}
 
 				// Don't produce TGA files
@@ -195,30 +205,108 @@ namespace CreationKitPlatformExtended
 			int32_t Unk1, bool Unk2)
 		{
 			fastCall<void>(pointer_FaceGen_sub1, lpThis, TextureId, lpFileName, Unk1, Unk2);
+#ifndef CKPE_USE_NEW_TEXCONV
 			// Compress BC7
 			FacegenTextures.push_back(std::make_pair(lpFileName, "BC7_UNORM"));
+#else
+			FacegenTexturesTotal++;
+#endif // CKPE_USE_NEW_TEXCONV
 		}
 
 		void FaceGenPatch::Fallout4::CreateNormalsCompressDDS(__int64 lpThis, uint32_t TextureId, const char* lpFileName,
 			int32_t Unk1, bool Unk2)
 		{
 			fastCall<void>(pointer_FaceGen_sub1, lpThis, TextureId, lpFileName, Unk1, Unk2);
+#ifndef CKPE_USE_NEW_TEXCONV
 			// Compress BC5
 			FacegenTextures.push_back(std::make_pair(lpFileName, "BC5_UNORM"));
+#else
+			FacegenTexturesTotal++;
+#endif // CKPE_USE_NEW_TEXCONV
 		}
 
 		void FaceGenPatch::Fallout4::CreateSpecularCompressDDS(__int64 lpThis, uint32_t TextureId, const char* lpFileName,
 			int32_t Unk1, bool Unk2)
 		{
 			fastCall<void>(pointer_FaceGen_sub1, lpThis, TextureId, lpFileName, Unk1, Unk2);
+#ifndef CKPE_USE_NEW_TEXCONV
 			// Compress BC5
 			FacegenTextures.push_back(std::make_pair(lpFileName, "BC5_UNORM"));
+#else
+			FacegenTexturesTotal++;
+#endif // CKPE_USE_NEW_TEXCONV
 		}
 
 		void FaceGenPatch::Fallout4::Execute(bool bShowDone)
 		{
-			_CONSOLE("FACEGEN: Total textures %llu", FacegenTextures.size());
+#ifdef CKPE_USE_NEW_TEXCONV
+			_CONSOLE("FACEGEN: Total (NPCs: %llu textures: %llu)", (size_t)(FacegenTexturesTotal / 3), FacegenTexturesTotal);
 			
+			{
+				EditorAPI::BSString Command, 
+									Path = EditorAPI::BSString::Utils::GetApplicationPath() + "Data\\Textures\\Actors\\Character\\FaceCustomization";
+				
+				bool run[3] = { false };
+				STARTUPINFO info[3];
+				PROCESS_INFORMATION processInfo[3];
+				ZeroMemory(info, sizeof(STARTUPINFO) * 3);
+				ZeroMemory(processInfo, sizeof(PROCESS_INFORMATION) * 3);
+
+				for (size_t i = 0; i < 3; i++)
+				{
+					info[i].cb = sizeof(STARTUPINFO);
+					info[i].wShowWindow = SW_HIDE;
+					info[i].dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
+					info[i].hStdInput = NULL;
+					info[i].hStdError = NULL;
+					info[i].hStdOutput = NULL;
+				}
+				
+				Command.Format("\"%s\" -y -m 1 -f BC7_UNORM -r:keep \"%s\\*_d.dds\" -o \"%s\"", Texconv.c_str(), Path.c_str(), Path.c_str());
+				if (!CreateProcessA(NULL, const_cast<LPSTR>(Command.c_str()), NULL, NULL, TRUE,
+					NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW | DETACHED_PROCESS, NULL, NULL, &info[0], &processInfo[0]))
+				{
+					run[0] = false;
+					_CONSOLE("FACEGEN: Couldn't run \"Tools\\Elric\\texconv.exe\"");
+				}
+				else run[0] = true;
+
+				Sleep(20);
+
+				Command.Format("\"%s\" -y -m 1 -f BC5_UNORM -r:keep \"%s\\*_msn.dds\" -o \"%s\"", Texconv.c_str(), Path.c_str(), Path.c_str());
+				if (!CreateProcessA(NULL, const_cast<LPSTR>(Command.c_str()), NULL, NULL, TRUE,
+					NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW | DETACHED_PROCESS, NULL, NULL, &info[1], &processInfo[1]))
+				{
+					run[1] = false;
+					_CONSOLE("FACEGEN: Couldn't run \"Tools\\Elric\\texconv.exe\"");
+				}
+				else run[1] = true;
+
+				Sleep(20);
+
+				Command.Format("\"%s\" -y -m 1 -f BC5_UNORM -r:keep \"%s\\*_s.dds\" -o \"%s\"", Texconv.c_str(), Path.c_str(), Path.c_str());
+				if (!CreateProcessA(NULL, const_cast<LPSTR>(Command.c_str()), NULL, NULL, TRUE,
+					NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW | DETACHED_PROCESS, NULL, NULL, &info[2], &processInfo[2]))
+				{
+					run[2] = false;
+					_CONSOLE("FACEGEN: Couldn't run \"Tools\\Elric\\texconv.exe\"");
+				}
+				else run[2] = true;
+
+				if (run[0]) WaitForSingleObject(processInfo[0].hProcess, INFINITE);
+				if (run[1]) WaitForSingleObject(processInfo[1].hProcess, INFINITE);
+				if (run[2]) WaitForSingleObject(processInfo[2].hProcess, INFINITE);
+
+				CloseHandle(processInfo[0].hThread);
+				CloseHandle(processInfo[0].hProcess);
+				CloseHandle(processInfo[1].hThread);
+				CloseHandle(processInfo[1].hProcess);
+				CloseHandle(processInfo[2].hThread);
+				CloseHandle(processInfo[2].hProcess);
+			}
+#else
+			_CONSOLE("FACEGEN: Total textures %llu", FacegenTextures.size());
+
 			{
 				EditorAPI::BSString FileName, NewFileName, Path, Command;
 
@@ -237,7 +325,7 @@ namespace CreationKitPlatformExtended
 						PROCESS_INFORMATION processInfo;
 						ZeroMemory(&info, sizeof(STARTUPINFO));
 						ZeroMemory(&processInfo, sizeof(PROCESS_INFORMATION));
-						
+
 						info.cb = sizeof(STARTUPINFO);
 						info.wShowWindow = SW_HIDE;
 						info.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
@@ -285,7 +373,10 @@ namespace CreationKitPlatformExtended
 
 			FacegenTextures.clear();
 
-			_CONSOLE("FACEGEN: Done.", FacegenTextures.size());
+			
+#endif // CKPE_USE_NEW_TEXCONV
+
+			_CONSOLE("FACEGEN: Done.");
 			if (bShowDone) MessageBoxA(0, "Done.", "Message", MB_OK | MB_ICONINFORMATION);
 		}
 

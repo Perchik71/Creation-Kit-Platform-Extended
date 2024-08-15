@@ -53,15 +53,18 @@ namespace CreationKitPlatformExtended
 
 			if (ShortNameGame == EDITOR_SHORT_FALLOUT_C4)
 			{
-				if (!ExtractResourceByName(zip, "CreationKit - Textures.ba2"))
+				if (!ExtractResourceByName(zip, "Data\\CreationKit - Textures.ba2"))
 					_FATALERROR("RESOURCES: File could not be unpacked \"CreationKit - Textures.ba2\"");
 
 				EditorAPI::BSString sShaderName =
 					(GlobalEnginePtr->GetEditorVersion() == EDITOR_FALLOUT_C4_1_10_162_0) ?
 					"CreationKit - Shaders - OG.ba2" : "CreationKit - Shaders - NG.ba2";
 
-				if (!ExtractResourceByName(zip, sShaderName, "CreationKit - Shaders.ba2", true))
+				if (!ExtractResourceByName(zip, sShaderName, "Data\\CreationKit - Shaders.ba2", true))
 					_FATALERROR("RESOURCES: File could not be unpacked \"%s\"", sShaderName.c_str());
+
+				if (!ExtractResourceByName(zip, "Tools\\Elric\\texconv.exe", true))
+					_FATALERROR("RESOURCES: File could not be unpacked \"texconv.exe\"");
 			}
 
 			zip_close(zip);
@@ -80,7 +83,8 @@ namespace CreationKitPlatformExtended
 			if (!zip || fileName.IsEmpty())
 				return false;
 
-			auto sArchiveName = EditorAPI::BSString::Utils::GetDataPath() + fileNewName;
+			auto sArchiveName = EditorAPI::BSString::Utils::GetApplicationPath() + fileNewName;
+			auto sCompareName = EditorAPI::BSString::Utils::ExtractFileName(fileName);
 			bool exists = EditorAPI::BSString::Utils::FileExists(sArchiveName);
 
 			if (!overwrite && exists)
@@ -100,7 +104,7 @@ namespace CreationKitPlatformExtended
 					continue;
 				}
 
-				if (!fileName.Compare(zip_entry_name((struct zip_t*)zip)))
+				if (!sCompareName.Compare(zip_entry_name((struct zip_t*)zip)))
 				{
 					if (exists && (zip_entry_crc32((struct zip_t*)zip) == ::Utils::CRC32File(sArchiveName.c_str())))
 					{
@@ -108,7 +112,7 @@ namespace CreationKitPlatformExtended
 						return true;
 					}
 
-					auto ret = zip_entry_fread((struct zip_t*)zip, (EditorAPI::BSString::Utils::GetDataPath() + fileNewName).c_str());
+					auto ret = zip_entry_fread((struct zip_t*)zip, (EditorAPI::BSString::Utils::GetApplicationPath() + fileNewName).c_str());
 					zip_entry_close((struct zip_t*)zip);
 					return !ret;
 				}
