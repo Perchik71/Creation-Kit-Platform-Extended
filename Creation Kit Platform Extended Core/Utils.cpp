@@ -2,10 +2,26 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
+#include "Patches/INICacheData.h"
+
+namespace CreationKitPlatformExtended
+{
+	namespace Core
+	{
+		extern CreationKitPlatformExtended::Patches::INICacheDataPatch* INICacheData;
+	}
+}
+
 namespace CreationKitPlatformExtended
 {
 	namespace Utils
 	{
+		inline static void QuitWithResult(int nErrorCode = 0)
+		{
+			if (Core::INICacheData) Core::INICacheData->ClearAndFlush();
+			TerminateProcess(GetCurrentProcess(), (UINT)nErrorCode);
+		}
+
 		void __Assert(LPCSTR File, int Line, LPCSTR Format, ...)
 		{
 			CHAR buffer[2048] = { 0 };
@@ -24,7 +40,7 @@ namespace CreationKitPlatformExtended
 				__debugbreak();
 			}
 
-			TerminateProcess(GetCurrentProcess(), 1);
+			QuitWithResult(1);
 			__assume(0);
 		}
 
@@ -46,7 +62,7 @@ namespace CreationKitPlatformExtended
 				__debugbreak();
 			}
 
-			TerminateProcess(GetCurrentProcess(), 1);
+			QuitWithResult(1);
 			__assume(0);
 		}
 
@@ -115,7 +131,7 @@ namespace CreationKitPlatformExtended
 
 		void Quit()
 		{
-			TerminateProcess(GetCurrentProcess(), 0);
+			QuitWithResult(0);
 		}
 	}
 }

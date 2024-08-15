@@ -19,6 +19,7 @@
 #include "Editor API/EditorUI.h"
 #include "Editor API/BSString.h"
 
+#include "Patches/INICacheData.h"
 #include "Patches/CrashDumpPatch.h"
 #include "Patches/MemoryManagerPatch.h"
 #include "Patches/QuitHandlerPatch.h"
@@ -65,6 +66,7 @@ namespace CreationKitPlatformExtended
 		using VCoreNotifyEvent = void (Engine::*)();
 		VCoreNotifyEvent VCoreDisableBreakpoint;
 		VCoreNotifyEvent VCoreContinueInitialize;
+		CreationKitPlatformExtended::Patches::INICacheDataPatch* INICacheData = nullptr;
 
 		//////////////////////////////////////////////
 
@@ -161,6 +163,8 @@ namespace CreationKitPlatformExtended
 			// Данный патч, является исключением от остальных, он инициализируется раньше, как
 			// системный модуль, но его можно отключать как патч. Это нужно для покрытия консоли новой темой.
 
+			// Инициализация кеша для .ini файлов
+			INICacheData = new CreationKitPlatformExtended::Patches::INICacheDataPatch();
 			// Инициализация темы, если это необходимо, раньше, чем окно консоли
 			_Theme = new CreationKitPlatformExtended::Patches::UIThemePatch();
 			_ClassicTheme = new CreationKitPlatformExtended::Patches::UIThemeClassicPatch();
@@ -174,6 +178,7 @@ namespace CreationKitPlatformExtended
 
 			// Добавление патчей
 			PatchesManager->Append({
+				
 				new CreationKitPlatformExtended::Patches::QuitHandlerPatch(),
 				new CreationKitPlatformExtended::Patches::MemoryManagerPatch(),
 				new CreationKitPlatformExtended::Patches::CrashDumpPatch(),
@@ -194,7 +199,8 @@ namespace CreationKitPlatformExtended
 				new CreationKitPlatformExtended::Patches::PapyrusEditorLimitPatch(),
 				new CreationKitPlatformExtended::Patches::D3D11Patch(),
 				_Theme,
-				_ClassicTheme
+				_ClassicTheme,
+				INICacheData,
 			});
 
 			// Добавление патчей только для редактора скайрима специального издания

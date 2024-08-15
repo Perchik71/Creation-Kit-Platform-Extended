@@ -808,6 +808,9 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Crc32.cpp" />
+    <ClCompile Include="Patches\INICacheData.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1980,6 +1983,9 @@
     </ClInclude>
     <ClInclude Include="Core\ResourcesPackerManager.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\INICacheData.h">
+      <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
