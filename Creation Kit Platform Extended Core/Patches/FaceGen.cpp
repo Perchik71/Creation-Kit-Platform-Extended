@@ -7,8 +7,6 @@
 #include "Patches/ConsolePatch.h"
 #include "FaceGen.h"
 
-#define CKPE_USE_NEW_TEXCONV 1
-
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
@@ -21,11 +19,7 @@ namespace CreationKitPlatformExtended
 		uintptr_t pointer_FaceGen_data = 0;
 
 		EditorAPI::BSString Texconv;
-#ifndef CKPE_USE_NEW_TEXCONV
-		ConcurrencyArray<std::pair<String, String>> FacegenTextures;
-#else
-		size_t FacegenTexturesTotal;
-#endif // CKPE_USE_NEW_TEXCONV
+		ConcurrencyArray<String> FacegenTextures;
 
 		FaceGenPatch::FaceGenPatch() : Module(GlobalEnginePtr)
 		{}
@@ -150,10 +144,6 @@ namespace CreationKitPlatformExtended
 					Texconv = EditorAPI::BSString::Utils::GetApplicationPath() + "Tools\\Elric\\texconv.exe";
 					lpRelocator->DetourCall(_RELDATA_RAV(17), (uintptr_t)&Fallout4::ExecuteGUI);
 					lpRelocator->DetourCall(_RELDATA_RAV(18), (uintptr_t)&Fallout4::ExecuteCLI);
-
-#ifdef CKPE_USE_NEW_TEXCONV
-					FacegenTexturesTotal = 0;
-#endif // CKPE_USE_NEW_TEXCONV
 				}
 
 				// Don't produce TGA files
@@ -205,47 +195,43 @@ namespace CreationKitPlatformExtended
 			int32_t Unk1, bool Unk2)
 		{
 			fastCall<void>(pointer_FaceGen_sub1, lpThis, TextureId, lpFileName, Unk1, Unk2);
-#ifndef CKPE_USE_NEW_TEXCONV
-			// Compress BC7
-			FacegenTextures.push_back(std::make_pair(lpFileName, "BC7_UNORM"));
-#else
-			FacegenTexturesTotal++;
-#endif // CKPE_USE_NEW_TEXCONV
+			FacegenTextures.push_back(lpFileName);
 		}
 
 		void FaceGenPatch::Fallout4::CreateNormalsCompressDDS(__int64 lpThis, uint32_t TextureId, const char* lpFileName,
 			int32_t Unk1, bool Unk2)
 		{
 			fastCall<void>(pointer_FaceGen_sub1, lpThis, TextureId, lpFileName, Unk1, Unk2);
-#ifndef CKPE_USE_NEW_TEXCONV
-			// Compress BC5
-			FacegenTextures.push_back(std::make_pair(lpFileName, "BC5_UNORM"));
-#else
-			FacegenTexturesTotal++;
-#endif // CKPE_USE_NEW_TEXCONV
+			FacegenTextures.push_back(lpFileName);
 		}
 
 		void FaceGenPatch::Fallout4::CreateSpecularCompressDDS(__int64 lpThis, uint32_t TextureId, const char* lpFileName,
 			int32_t Unk1, bool Unk2)
 		{
 			fastCall<void>(pointer_FaceGen_sub1, lpThis, TextureId, lpFileName, Unk1, Unk2);
-#ifndef CKPE_USE_NEW_TEXCONV
-			// Compress BC5
-			FacegenTextures.push_back(std::make_pair(lpFileName, "BC5_UNORM"));
-#else
-			FacegenTexturesTotal++;
-#endif // CKPE_USE_NEW_TEXCONV
+			FacegenTextures.push_back(lpFileName);
 		}
 
 		void FaceGenPatch::Fallout4::Execute(bool bShowDone)
 		{
-#ifdef CKPE_USE_NEW_TEXCONV
-			_CONSOLE("FACEGEN: Total (NPCs: %llu textures: %llu)", (size_t)(FacegenTexturesTotal / 3), FacegenTexturesTotal);
-			
+			_CONSOLE("FACEGEN: Total (NPCs: %llu textures: %llu)", (size_t)(FacegenTextures.size() / 3), FacegenTextures.size());
+
+			if (!FacegenTextures.empty())
 			{
-				EditorAPI::BSString Command, 
-									Path = EditorAPI::BSString::Utils::GetApplicationPath() + "Data\\Textures\\Actors\\Character\\FaceCustomization";
+				EditorAPI::BSString Command,
+					Path = EditorAPI::BSString::Utils::GetApplicationPath() + "Data\\Textures\\Actors\\Character\\FaceCustomization",
+					PathTEMP = EditorAPI::BSString::Utils::GetApplicationPath() + "Data\\Textures\\Actors\\Character\\FaceCustomizationTEMP";
 				
+				// Need to compress only some textures, not all the textures that are there
+				for (auto it = FacegenTextures.begin(); it != FacegenTextures.end(); it++)
+				{
+					auto FileName = (PathTEMP + ((*it).c_str() + 48));
+					std::filesystem::create_directories(EditorAPI::BSString::Utils::ExtractFilePath(FileName).c_str());
+					MoveFileExA((*it).c_str(), FileName.c_str(), MOVEFILE_REPLACE_EXISTING);
+				}
+
+				// Compress it all in that folder, but save it in a normal folder
+
 				bool run[3] = { false };
 				STARTUPINFO info[3];
 				PROCESS_INFORMATION processInfo[3];
@@ -261,8 +247,8 @@ namespace CreationKitPlatformExtended
 					info[i].hStdError = NULL;
 					info[i].hStdOutput = NULL;
 				}
-				
-				Command.Format("\"%s\" -y -m 1 -f BC7_UNORM -r:keep \"%s\\*_d.dds\" -o \"%s\"", Texconv.c_str(), Path.c_str(), Path.c_str());
+
+				Command.Format("\"%s\" -y -m 1 -f BC7_UNORM -r:keep \"%s\\*_d.dds\" -o \"%s\"", Texconv.c_str(), PathTEMP.c_str(), Path.c_str());
 				if (!CreateProcessA(NULL, const_cast<LPSTR>(Command.c_str()), NULL, NULL, TRUE,
 					NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW | DETACHED_PROCESS, NULL, NULL, &info[0], &processInfo[0]))
 				{
@@ -273,7 +259,7 @@ namespace CreationKitPlatformExtended
 
 				Sleep(20);
 
-				Command.Format("\"%s\" -y -m 1 -f BC5_UNORM -r:keep \"%s\\*_msn.dds\" -o \"%s\"", Texconv.c_str(), Path.c_str(), Path.c_str());
+				Command.Format("\"%s\" -y -m 1 -f BC5_UNORM -r:keep \"%s\\*_msn.dds\" -o \"%s\"", Texconv.c_str(), PathTEMP.c_str(), Path.c_str());
 				if (!CreateProcessA(NULL, const_cast<LPSTR>(Command.c_str()), NULL, NULL, TRUE,
 					NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW | DETACHED_PROCESS, NULL, NULL, &info[1], &processInfo[1]))
 				{
@@ -284,7 +270,7 @@ namespace CreationKitPlatformExtended
 
 				Sleep(20);
 
-				Command.Format("\"%s\" -y -m 1 -f BC5_UNORM -r:keep \"%s\\*_s.dds\" -o \"%s\"", Texconv.c_str(), Path.c_str(), Path.c_str());
+				Command.Format("\"%s\" -y -m 1 -f BC5_UNORM -r:keep \"%s\\*_s.dds\" -o \"%s\"", Texconv.c_str(), PathTEMP.c_str(), Path.c_str());
 				if (!CreateProcessA(NULL, const_cast<LPSTR>(Command.c_str()), NULL, NULL, TRUE,
 					NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW | DETACHED_PROCESS, NULL, NULL, &info[2], &processInfo[2]))
 				{
@@ -292,6 +278,7 @@ namespace CreationKitPlatformExtended
 					_CONSOLE("FACEGEN: Couldn't run \"Tools\\Elric\\texconv.exe\"");
 				}
 				else run[2] = true;
+
 
 				if (run[0]) WaitForSingleObject(processInfo[0].hProcess, INFINITE);
 				if (run[1]) WaitForSingleObject(processInfo[1].hProcess, INFINITE);
@@ -303,78 +290,10 @@ namespace CreationKitPlatformExtended
 				CloseHandle(processInfo[1].hProcess);
 				CloseHandle(processInfo[2].hThread);
 				CloseHandle(processInfo[2].hProcess);
+
+				FacegenTextures.clear();
+				std::filesystem::remove_all(PathTEMP.c_str());
 			}
-#else
-			_CONSOLE("FACEGEN: Total textures %llu", FacegenTextures.size());
-
-			{
-				EditorAPI::BSString FileName, NewFileName, Path, Command;
-
-				for (auto it = FacegenTextures.begin(); it != FacegenTextures.end(); it++)
-				{
-					FileName = EditorAPI::BSString::Utils::GetApplicationPath() + it->first.c_str();
-					if (EditorAPI::BSString::Utils::FileExists(FileName))
-					{
-						Path = EditorAPI::BSString::Utils::ExtractFilePath(FileName) + "compress";
-						SHCreateDirectoryExA(NULL, Path.c_str(), NULL);
-
-						Command.Format("\"%s\" -m 1 -f %s \"%s\" -o \"%s\"", Texconv.c_str(), it->second.c_str(),
-							FileName.c_str(), Path.c_str());
-
-						STARTUPINFO info;
-						PROCESS_INFORMATION processInfo;
-						ZeroMemory(&info, sizeof(STARTUPINFO));
-						ZeroMemory(&processInfo, sizeof(PROCESS_INFORMATION));
-
-						info.cb = sizeof(STARTUPINFO);
-						info.wShowWindow = SW_HIDE;
-						info.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
-						info.hStdInput = NULL;
-						info.hStdError = NULL;
-						info.hStdOutput = NULL;
-
-						if (CreateProcessA(NULL, const_cast<LPSTR>(Command.c_str()), NULL, NULL, TRUE,
-							NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW | DETACHED_PROCESS, NULL, NULL, &info, &processInfo))
-						{
-							bool Success = false;
-
-							if (WAIT_OBJECT_0 != WaitForSingleObject(processInfo.hProcess, 20000))
-							{
-								TerminateProcess(processInfo.hProcess, 0);
-								_CONSOLE("FACEGEN: Texture could not be compressed \"%s\" (Timeout)", FileName.c_str());
-							}
-							else
-							{
-								DWORD rc;
-								GetExitCodeProcess(processInfo.hProcess, &rc);
-								Success = rc == 0;
-							}
-
-							CloseHandle(processInfo.hThread);
-							CloseHandle(processInfo.hProcess);
-
-							if (Success)
-							{
-								NewFileName = Path + "\\" + EditorAPI::BSString::Utils::ExtractFileName(it->first.c_str());
-								MoveFileExA(NewFileName.c_str(), FileName.c_str(), MOVEFILE_REPLACE_EXISTING);
-							}
-							else
-								_CONSOLE("FACEGEN: Texture could not be compressed \"%s\"", it->first.c_str());
-						}
-						else
-							_CONSOLE("FACEGEN: Couldn't run \"Tools\\Elric\\texconv.exe\"");
-
-						RemoveDirectoryA(Path.c_str());
-					}
-					else
-						_CONSOLE("FACEGEN: The file \"%s\" was not found", it->first.c_str());
-				}
-			}
-
-			FacegenTextures.clear();
-
-			
-#endif // CKPE_USE_NEW_TEXCONV
 
 			_CONSOLE("FACEGEN: Done.");
 			if (bShowDone) MessageBoxA(0, "Done.", "Message", MB_OK | MB_ICONINFORMATION);

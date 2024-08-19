@@ -207,6 +207,7 @@
     <ClCompile Include="Patches\FO4\BSArchiveManagerModdedF4.cpp" />
     <ClCompile Include="Patches\FO4\BSResourceLooseFilesPatch.cpp" />
     <ClCompile Include="Patches\FO4\BSResourceTextureDB_RE.cpp" />
+    <ClCompile Include="Patches\FO4\CrashInventory.cpp" />
     <ClCompile Include="Patches\FO4\CreateDDS.cpp" />
     <ClCompile Include="Patches\FO4\EnableGoInSelGame.cpp" />
     <ClCompile Include="Patches\FO4\ESLTip.cpp" />
@@ -573,6 +574,7 @@
     <ClInclude Include="Patches\FO4\BSArchiveManagerModdedF4.h" />
     <ClInclude Include="Patches\FO4\BSResourceLooseFilesPatch.h" />
     <ClInclude Include="Patches\FO4\BSResourceTextureDB_RE.h" />
+    <ClInclude Include="Patches\FO4\CrashInventory.h" />
     <ClInclude Include="Patches\FO4\CreateDDS.h" />
     <ClInclude Include="Patches\FO4\EnableGoInSelGame.h" />
     <ClInclude Include="Patches\FO4\ESLTip.h" />
