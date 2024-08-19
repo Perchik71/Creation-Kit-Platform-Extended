@@ -137,13 +137,17 @@ namespace CreationKitPlatformExtended
 				}
 				else
 				{
-					lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&Fallout4::CreateDiffuseCompressDDS);
-					lpRelocator->DetourCall(_RELDATA_RAV(3), (uintptr_t)&Fallout4::CreateNormalsCompressDDS);
-					lpRelocator->DetourCall(_RELDATA_RAV(5), (uintptr_t)&Fallout4::CreateSpecularCompressDDS);
-
 					Texconv = EditorAPI::BSString::Utils::GetApplicationPath() + "Tools\\Elric\\texconv.exe";
-					lpRelocator->DetourCall(_RELDATA_RAV(17), (uintptr_t)&Fallout4::ExecuteGUI);
-					lpRelocator->DetourCall(_RELDATA_RAV(18), (uintptr_t)&Fallout4::ExecuteCLI);
+					if (::Utils::CRC32File(Texconv.c_str()) == 0xC422A23F)
+					{
+						lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&Fallout4::CreateDiffuseCompressDDS);
+						lpRelocator->DetourCall(_RELDATA_RAV(3), (uintptr_t)&Fallout4::CreateNormalsCompressDDS);
+						lpRelocator->DetourCall(_RELDATA_RAV(5), (uintptr_t)&Fallout4::CreateSpecularCompressDDS);
+						lpRelocator->DetourCall(_RELDATA_RAV(17), (uintptr_t)&Fallout4::ExecuteGUI);
+						lpRelocator->DetourCall(_RELDATA_RAV(18), (uintptr_t)&Fallout4::ExecuteCLI);
+					}
+					else
+						_WARNING("texconv.exe is unsupported version");
 				}
 
 				// Don't produce TGA files
@@ -222,6 +226,8 @@ namespace CreationKitPlatformExtended
 					Path = EditorAPI::BSString::Utils::GetApplicationPath() + "Data\\Textures\\Actors\\Character\\FaceCustomization",
 					PathTEMP = EditorAPI::BSString::Utils::GetApplicationPath() + "Data\\Textures\\Actors\\Character\\FaceCustomizationTEMP";
 				
+				std::filesystem::remove_all(PathTEMP.c_str());
+
 				// Need to compress only some textures, not all the textures that are there
 				for (auto it = FacegenTextures.begin(); it != FacegenTextures.end(); it++)
 				{
