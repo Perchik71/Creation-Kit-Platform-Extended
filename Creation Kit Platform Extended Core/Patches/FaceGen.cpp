@@ -222,85 +222,87 @@ namespace CreationKitPlatformExtended
 
 			if (!FacegenTextures.empty())
 			{
-				EditorAPI::BSString Command,
+				std::thread([]{
+
+					EditorAPI::BSString Command,
 					Path = EditorAPI::BSString::Utils::GetApplicationPath() + "Data\\Textures\\Actors\\Character\\FaceCustomization",
 					PathTEMP = EditorAPI::BSString::Utils::GetApplicationPath() + "Data\\Textures\\Actors\\Character\\FaceCustomizationTEMP";
-				
-				std::filesystem::remove_all(PathTEMP.c_str());
 
-				// Need to compress only some textures, not all the textures that are there
-				for (auto it = FacegenTextures.begin(); it != FacegenTextures.end(); it++)
-				{
-					auto FileName = (PathTEMP + ((*it).c_str() + 48));
-					std::filesystem::create_directories(EditorAPI::BSString::Utils::ExtractFilePath(FileName).c_str());
-					MoveFileExA((*it).c_str(), FileName.c_str(), MOVEFILE_REPLACE_EXISTING);
-				}
+					std::filesystem::remove_all(PathTEMP.c_str());
 
-				// Compress it all in that folder, but save it in a normal folder
+					// Need to compress only some textures, not all the textures that are there
+					for (auto it = FacegenTextures.begin(); it != FacegenTextures.end(); it++)
+					{
+						auto FileName = (PathTEMP + ((*it).c_str() + 48));
+						std::filesystem::create_directories(EditorAPI::BSString::Utils::ExtractFilePath(FileName).c_str());
+						MoveFileExA((*it).c_str(), FileName.c_str(), MOVEFILE_REPLACE_EXISTING);
+					}
 
-				bool run[3] = { false };
-				STARTUPINFO info[3];
-				PROCESS_INFORMATION processInfo[3];
-				ZeroMemory(info, sizeof(STARTUPINFO) * 3);
-				ZeroMemory(processInfo, sizeof(PROCESS_INFORMATION) * 3);
+					// Compress it all in that folder, but save it in a normal folder
 
-				for (size_t i = 0; i < 3; i++)
-				{
-					info[i].cb = sizeof(STARTUPINFO);
-					info[i].wShowWindow = SW_HIDE;
-					info[i].dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
-					info[i].hStdInput = NULL;
-					info[i].hStdError = NULL;
-					info[i].hStdOutput = NULL;
-				}
+					bool run[3] = { false };
+					STARTUPINFO info[3];
+					PROCESS_INFORMATION processInfo[3];
+					ZeroMemory(info, sizeof(STARTUPINFO) * 3);
+					ZeroMemory(processInfo, sizeof(PROCESS_INFORMATION) * 3);
 
-				Command.Format("\"%s\" -y -m 1 -f BC7_UNORM -r:keep \"%s\\*_d.dds\" -o \"%s\"", Texconv.c_str(), PathTEMP.c_str(), Path.c_str());
-				if (!CreateProcessA(NULL, const_cast<LPSTR>(Command.c_str()), NULL, NULL, TRUE,
-					NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW | DETACHED_PROCESS, NULL, NULL, &info[0], &processInfo[0]))
-				{
-					run[0] = false;
-					_CONSOLE("FACEGEN: Couldn't run \"Tools\\Elric\\texconv.exe\"");
-				}
-				else run[0] = true;
+					for (size_t i = 0; i < 3; i++)
+					{
+						info[i].cb = sizeof(STARTUPINFO);
+						info[i].wShowWindow = SW_HIDE;
+						info[i].dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
+						info[i].hStdInput = NULL;
+						info[i].hStdError = NULL;
+						info[i].hStdOutput = NULL;
+					}
 
-				Sleep(20);
+					Command.Format("\"%s\" -y -m 1 -f BC7_UNORM -r:keep \"%s\\*_d.dds\" -o \"%s\"", Texconv.c_str(), PathTEMP.c_str(), Path.c_str());
+					if (!CreateProcessA(NULL, const_cast<LPSTR>(Command.c_str()), NULL, NULL, TRUE,
+						NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW | DETACHED_PROCESS, NULL, NULL, &info[0], &processInfo[0]))
+					{
+						run[0] = false;
+						_CONSOLE("FACEGEN: Couldn't run \"Tools\\Elric\\texconv.exe\"");
+					}
+					else run[0] = true;
 
-				Command.Format("\"%s\" -y -m 1 -f BC5_UNORM -r:keep \"%s\\*_msn.dds\" -o \"%s\"", Texconv.c_str(), PathTEMP.c_str(), Path.c_str());
-				if (!CreateProcessA(NULL, const_cast<LPSTR>(Command.c_str()), NULL, NULL, TRUE,
-					NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW | DETACHED_PROCESS, NULL, NULL, &info[1], &processInfo[1]))
-				{
-					run[1] = false;
-					_CONSOLE("FACEGEN: Couldn't run \"Tools\\Elric\\texconv.exe\"");
-				}
-				else run[1] = true;
+					Sleep(20);
 
-				Sleep(20);
+					Command.Format("\"%s\" -y -m 1 -f BC5_UNORM -r:keep \"%s\\*_msn.dds\" -o \"%s\"", Texconv.c_str(), PathTEMP.c_str(), Path.c_str());
+					if (!CreateProcessA(NULL, const_cast<LPSTR>(Command.c_str()), NULL, NULL, TRUE,
+						NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW | DETACHED_PROCESS, NULL, NULL, &info[1], &processInfo[1]))
+					{
+						run[1] = false;
+						_CONSOLE("FACEGEN: Couldn't run \"Tools\\Elric\\texconv.exe\"");
+					}
+					else run[1] = true;
 
-				Command.Format("\"%s\" -y -m 1 -f BC5_UNORM -r:keep \"%s\\*_s.dds\" -o \"%s\"", Texconv.c_str(), PathTEMP.c_str(), Path.c_str());
-				if (!CreateProcessA(NULL, const_cast<LPSTR>(Command.c_str()), NULL, NULL, TRUE,
-					NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW | DETACHED_PROCESS, NULL, NULL, &info[2], &processInfo[2]))
-				{
-					run[2] = false;
-					_CONSOLE("FACEGEN: Couldn't run \"Tools\\Elric\\texconv.exe\"");
-				}
-				else run[2] = true;
+					Sleep(20);
+
+					Command.Format("\"%s\" -y -m 1 -f BC5_UNORM -r:keep \"%s\\*_s.dds\" -o \"%s\"", Texconv.c_str(), PathTEMP.c_str(), Path.c_str());
+					if (!CreateProcessA(NULL, const_cast<LPSTR>(Command.c_str()), NULL, NULL, TRUE,
+						NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW | DETACHED_PROCESS, NULL, NULL, &info[2], &processInfo[2]))
+					{
+						run[2] = false;
+						_CONSOLE("FACEGEN: Couldn't run \"Tools\\Elric\\texconv.exe\"");
+					}
+					else run[2] = true;
 
 
-				if (run[0]) WaitForSingleObject(processInfo[0].hProcess, INFINITE);
-				if (run[1]) WaitForSingleObject(processInfo[1].hProcess, INFINITE);
-				if (run[2]) WaitForSingleObject(processInfo[2].hProcess, INFINITE);
+					if (run[0]) WaitForSingleObject(processInfo[0].hProcess, INFINITE);
+					if (run[1]) WaitForSingleObject(processInfo[1].hProcess, INFINITE);
+					if (run[2]) WaitForSingleObject(processInfo[2].hProcess, INFINITE);
 
-				CloseHandle(processInfo[0].hThread);
-				CloseHandle(processInfo[0].hProcess);
-				CloseHandle(processInfo[1].hThread);
-				CloseHandle(processInfo[1].hProcess);
-				CloseHandle(processInfo[2].hThread);
-				CloseHandle(processInfo[2].hProcess);
+					CloseHandle(processInfo[0].hThread);
+					CloseHandle(processInfo[0].hProcess);
+					CloseHandle(processInfo[1].hThread);
+					CloseHandle(processInfo[1].hProcess);
+					CloseHandle(processInfo[2].hThread);
+					CloseHandle(processInfo[2].hProcess);
 
-				FacegenTextures.clear();
-				std::filesystem::remove_all(PathTEMP.c_str());
+					FacegenTextures.clear();
+					std::filesystem::remove_all(PathTEMP.c_str());
+				}).join();
 			}
-
 			_CONSOLE("FACEGEN: Done.");
 			if (bShowDone) MessageBoxA(0, "Done.", "Message", MB_OK | MB_ICONINFORMATION);
 		}
