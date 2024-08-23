@@ -62,9 +62,6 @@ namespace CreationKitPlatformExtended
 
 				if (!ExtractResourceByName(zip, sShaderName, "Data\\CreationKit - Shaders.ba2", true))
 					_FATALERROR("RESOURCES: File could not be unpacked \"%s\"", sShaderName.c_str());
-
-				if (!ExtractResourceByName(zip, "Tools\\Elric\\texconv.exe", true))
-					_FATALERROR("RESOURCES: File could not be unpacked \"texconv.exe\"");
 			}
 
 			zip_close(zip);

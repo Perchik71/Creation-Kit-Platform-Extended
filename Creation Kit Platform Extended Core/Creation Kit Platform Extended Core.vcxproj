@@ -50,7 +50,7 @@
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>winhttp</TargetName>
-    <IncludePath>$(SolutionDir)Dependencies\Voltek\Detours\include;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\libdeflate;$(SolutionDir)Dependencies\libps;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)Dependencies\jDialogs\include;$(SolutionDir)Dependencies\Voltek\Memory Manager\include;$(SolutionDir)Dependencies\Voltek\UnicodeConverter\include;$(SolutionDir)Dependencies\Voltek\Relocation Database\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)Dependencies\Voltek\Detours\include;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\libdeflate;$(SolutionDir)Dependencies\libps;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)Dependencies\jDialogs\include;$(SolutionDir)Dependencies\Voltek\Memory Manager\include;$(SolutionDir)Dependencies\Voltek\UnicodeConverter\include;$(SolutionDir)Dependencies\Voltek\Relocation Database\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Qt|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -85,8 +85,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ws2_32.lib;msimg32.lib;uxtheme.lib;version.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;gdiplus.lib;VoltekLib.Detours.lib;VoltekLib.UnicodeConverter.lib;VoltekLib.MemoryManager.lib;VoltekLib.RelocationDatabase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ws2_32.lib;msimg32.lib;uxtheme.lib;version.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;gdiplus.lib;DirectXTex.lib;VoltekLib.Detours.lib;VoltekLib.UnicodeConverter.lib;VoltekLib.MemoryManager.lib;VoltekLib.RelocationDatabase.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\Version\scripts.ps1"</Command>

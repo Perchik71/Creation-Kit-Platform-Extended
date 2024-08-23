@@ -2,6 +2,7 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
+#include <DirectXTex.h>
 #include "Core/Engine.h"
 #include "Editor API/BSString.h"
 #include "Patches/ConsolePatch.h"
@@ -16,10 +17,71 @@ namespace CreationKitPlatformExtended
 		uintptr_t pointer_FaceGen_sub3 = 0;
 		uintptr_t pointer_FaceGen_sub4 = 0;
 		uintptr_t pointer_FaceGen_sub5 = 0;
+		uintptr_t pointer_FaceGen_sub6 = 0;
 		uintptr_t pointer_FaceGen_data = 0;
 
-		EditorAPI::BSString Texconv;
-		ConcurrencyArray<String> FacegenTextures;
+		extern ID3D11Device* pointer_d3d11DeviceIntf;
+
+		enum DDS_COMPRESSION
+		{
+			BC5_UNORM,
+			BC7_UNORM
+		};
+
+		// I'm pretty tired of crashes when working with texconv.
+		// So I'm embedding compression into the code.
+
+		static bool CompressionDDSFile(const char* FileName, DDS_COMPRESSION Flag)
+		{
+			// Checking the existence of the file
+			if (!EditorAPI::BSString::Utils::FileExists(FileName))
+			{
+				_CONSOLE("FACEGEN: File was \"%s\" not found", FileName);
+				return false;
+			}
+			// Opening a .dds file
+			auto WFileName = Conversion::AnsiToWide(FileName);
+			DirectX::TexMetadata info;
+			auto image = std::make_unique<DirectX::ScratchImage>();
+			HRESULT hr = DirectX::LoadFromDDSFile(WFileName.c_str(), DirectX::DDS_FLAGS_NONE, &info, *image);
+			if (FAILED(hr))
+			{
+				_CONSOLE("FACEGEN: Can't open the file \"%s\"", FileName);
+				return false;
+			}
+			// Compression to the desired format
+			DirectX::ScratchImage bcImage;
+			if (Flag == BC7_UNORM)
+			{
+				if (pointer_d3d11DeviceIntf)
+					hr = DirectX::Compress(pointer_d3d11DeviceIntf, image->GetImages(), image->GetImageCount(), image->GetMetadata(),
+						DXGI_FORMAT_BC7_UNORM, DirectX::TEX_COMPRESS_DEFAULT, DirectX::TEX_ALPHA_WEIGHT_DEFAULT, bcImage);
+				else
+					hr = DirectX::Compress(image->GetImages(), image->GetImageCount(), image->GetMetadata(),
+						DXGI_FORMAT_BC7_UNORM, DirectX::TEX_COMPRESS_DEFAULT, DirectX::TEX_ALPHA_WEIGHT_DEFAULT, bcImage);
+			}
+			else if (Flag == BC5_UNORM)
+			{
+				hr = DirectX::Compress(image->GetImages(), image->GetImageCount(), image->GetMetadata(),
+					DXGI_FORMAT_BC5_UNORM, DirectX::TEX_COMPRESS_DEFAULT, DirectX::TEX_THRESHOLD_DEFAULT, bcImage);
+			}
+			else return false;
+			if (FAILED(hr))
+			{
+				_CONSOLE("FACEGEN: Can't compression the file \"%s\"", FileName);
+				return false;
+			}
+			// Saving to the same file
+			hr = DirectX::SaveToDDSFile(bcImage.GetImages(), bcImage.GetImageCount(), bcImage.GetMetadata(),
+				DirectX::DDS_FLAGS_NONE, WFileName.c_str());
+			if (FAILED(hr))
+			{
+				_CONSOLE("FACEGEN: Can't save to file \"%s\"", FileName);
+				return false;
+			}
+			// Inform that everything went great.
+			return true;
+		}
 
 		FaceGenPatch::FaceGenPatch() : Module(GlobalEnginePtr)
 		{}
@@ -85,6 +147,10 @@ namespace CreationKitPlatformExtended
 						lpRelocator->PatchNop(_RELDATA_RAV(1), 5);
 						_MESSAGE("Disabling export FaceGen .DDS files");
 					}
+					else
+					{
+						lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&SkyrimSpecialEdition::CreateDiffuseCompressDDS);
+					}
 
 					// Don't produce TGA files
 					if (_READ_OPTION_BOOL("FaceGen", "bDisableExportTGA", false))
@@ -116,6 +182,7 @@ namespace CreationKitPlatformExtended
 				pointer_FaceGen_sub3 = _RELDATA_ADDR(11);
 				pointer_FaceGen_sub4 = _RELDATA_ADDR(12);
 				pointer_FaceGen_sub5 = _RELDATA_ADDR(13);
+				pointer_FaceGen_sub6 = _RELDATA_ADDR(14);
 				
 				return true;
 			}
@@ -134,20 +201,13 @@ namespace CreationKitPlatformExtended
 					lpRelocator->PatchNop(_RELDATA_RAV(3), 5);
 					lpRelocator->PatchNop(_RELDATA_RAV(4), 5);
 					lpRelocator->PatchNop(_RELDATA_RAV(5), 5);
+					_MESSAGE("Disabling export FaceGen .DDS files");
 				}
 				else
 				{
-					Texconv = EditorAPI::BSString::Utils::GetApplicationPath() + "Tools\\Elric\\texconv.exe";
-					if (::Utils::CRC32File(Texconv.c_str()) == 0xC422A23F)
-					{
-						lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&Fallout4::CreateDiffuseCompressDDS);
-						lpRelocator->DetourCall(_RELDATA_RAV(3), (uintptr_t)&Fallout4::CreateNormalsCompressDDS);
-						lpRelocator->DetourCall(_RELDATA_RAV(5), (uintptr_t)&Fallout4::CreateSpecularCompressDDS);
-						lpRelocator->DetourCall(_RELDATA_RAV(17), (uintptr_t)&Fallout4::ExecuteGUI);
-						lpRelocator->DetourCall(_RELDATA_RAV(18), (uintptr_t)&Fallout4::ExecuteCLI);
-					}
-					else
-						_WARNING("texconv.exe is unsupported version");
+					lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&Fallout4::CreateDiffuseCompressDDS);
+					lpRelocator->DetourCall(_RELDATA_RAV(3), (uintptr_t)&Fallout4::CreateNormalsCompressDDS);
+					lpRelocator->DetourCall(_RELDATA_RAV(5), (uintptr_t)&Fallout4::CreateSpecularCompressDDS);
 				}
 
 				// Don't produce TGA files
@@ -158,11 +218,15 @@ namespace CreationKitPlatformExtended
 					lpRelocator->PatchNop(_RELDATA_RAV(9), 5);
 					lpRelocator->PatchNop(_RELDATA_RAV(10), 5);
 					lpRelocator->PatchNop(_RELDATA_RAV(11), 5);
+					_MESSAGE("Disabling export FaceGen .TGA files");
 				}
 
 				// Don't produce NIF files
 				if (_READ_OPTION_BOOL("FaceGen", "bDisableExportNIF", false))
+				{
 					lpRelocator->Patch(_RELDATA_RAV(12), { 0xC3 });
+					_MESSAGE("Disabling export FaceGen .NIF files");
+				}
 
 				// Allow variable tint mask resolution
 				uint32_t tintResolution = _READ_OPTION_UINT("FaceGen", "uTintMaskResolution", 1024);
@@ -199,123 +263,32 @@ namespace CreationKitPlatformExtended
 			int32_t Unk1, bool Unk2)
 		{
 			fastCall<void>(pointer_FaceGen_sub1, lpThis, TextureId, lpFileName, Unk1, Unk2);
-			FacegenTextures.push_back(lpFileName);
+			if (!CompressionDDSFile(lpFileName, DDS_COMPRESSION::BC7_UNORM))
+				_CONSOLE("FACEGEN: Compression texture \"%s\" error has occurred", lpFileName);
 		}
 
 		void FaceGenPatch::Fallout4::CreateNormalsCompressDDS(__int64 lpThis, uint32_t TextureId, const char* lpFileName,
 			int32_t Unk1, bool Unk2)
 		{
 			fastCall<void>(pointer_FaceGen_sub1, lpThis, TextureId, lpFileName, Unk1, Unk2);
-			FacegenTextures.push_back(lpFileName);
+			if (!CompressionDDSFile(lpFileName, DDS_COMPRESSION::BC5_UNORM))
+				_CONSOLE("FACEGEN: Compression texture \"%s\" error has occurred", lpFileName);
 		}
 
 		void FaceGenPatch::Fallout4::CreateSpecularCompressDDS(__int64 lpThis, uint32_t TextureId, const char* lpFileName,
 			int32_t Unk1, bool Unk2)
 		{
 			fastCall<void>(pointer_FaceGen_sub1, lpThis, TextureId, lpFileName, Unk1, Unk2);
-			FacegenTextures.push_back(lpFileName);
+			if (!CompressionDDSFile(lpFileName, DDS_COMPRESSION::BC5_UNORM))
+				_CONSOLE("FACEGEN: Compression texture \"%s\" error has occurred", lpFileName);
 		}
 
-		void FaceGenPatch::Fallout4::Execute(bool bShowDone)
+		void FaceGenPatch::SkyrimSpecialEdition::CreateDiffuseCompressDDS(__int64 lpThis, uint32_t TextureId, const char* lpFileName, 
+			int32_t Unk1, bool Unk2)
 		{
-			_CONSOLE("FACEGEN: Total (NPCs: %llu textures: %llu)", (size_t)(FacegenTextures.size() / 3), FacegenTextures.size());
-
-			if (!FacegenTextures.empty())
-			{
-				std::thread([]{
-
-					EditorAPI::BSString Command,
-					Path = EditorAPI::BSString::Utils::GetApplicationPath() + "Data\\Textures\\Actors\\Character\\FaceCustomization",
-					PathTEMP = EditorAPI::BSString::Utils::GetApplicationPath() + "Data\\Textures\\Actors\\Character\\FaceCustomizationTEMP";
-
-					std::filesystem::remove_all(PathTEMP.c_str());
-
-					// Need to compress only some textures, not all the textures that are there
-					for (auto it = FacegenTextures.begin(); it != FacegenTextures.end(); it++)
-					{
-						auto FileName = (PathTEMP + ((*it).c_str() + 48));
-						std::filesystem::create_directories(EditorAPI::BSString::Utils::ExtractFilePath(FileName).c_str());
-						MoveFileExA((*it).c_str(), FileName.c_str(), MOVEFILE_REPLACE_EXISTING);
-					}
-
-					// Compress it all in that folder, but save it in a normal folder
-
-					bool run[3] = { false };
-					STARTUPINFO info[3];
-					PROCESS_INFORMATION processInfo[3];
-					ZeroMemory(info, sizeof(STARTUPINFO) * 3);
-					ZeroMemory(processInfo, sizeof(PROCESS_INFORMATION) * 3);
-
-					for (size_t i = 0; i < 3; i++)
-					{
-						info[i].cb = sizeof(STARTUPINFO);
-						info[i].wShowWindow = SW_HIDE;
-						info[i].dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
-						info[i].hStdInput = NULL;
-						info[i].hStdError = NULL;
-						info[i].hStdOutput = NULL;
-					}
-
-					Command.Format("\"%s\" -y -m 1 -f BC7_UNORM -r:keep \"%s\\*_d.dds\" -o \"%s\"", Texconv.c_str(), PathTEMP.c_str(), Path.c_str());
-					if (!CreateProcessA(NULL, const_cast<LPSTR>(Command.c_str()), NULL, NULL, TRUE,
-						NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW | DETACHED_PROCESS, NULL, NULL, &info[0], &processInfo[0]))
-					{
-						run[0] = false;
-						_CONSOLE("FACEGEN: Couldn't run \"Tools\\Elric\\texconv.exe\"");
-					}
-					else run[0] = true;
-
-					Sleep(20);
-
-					Command.Format("\"%s\" -y -m 1 -f BC5_UNORM -r:keep \"%s\\*_msn.dds\" -o \"%s\"", Texconv.c_str(), PathTEMP.c_str(), Path.c_str());
-					if (!CreateProcessA(NULL, const_cast<LPSTR>(Command.c_str()), NULL, NULL, TRUE,
-						NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW | DETACHED_PROCESS, NULL, NULL, &info[1], &processInfo[1]))
-					{
-						run[1] = false;
-						_CONSOLE("FACEGEN: Couldn't run \"Tools\\Elric\\texconv.exe\"");
-					}
-					else run[1] = true;
-
-					Sleep(20);
-
-					Command.Format("\"%s\" -y -m 1 -f BC5_UNORM -r:keep \"%s\\*_s.dds\" -o \"%s\"", Texconv.c_str(), PathTEMP.c_str(), Path.c_str());
-					if (!CreateProcessA(NULL, const_cast<LPSTR>(Command.c_str()), NULL, NULL, TRUE,
-						NORMAL_PRIORITY_CLASS | CREATE_NO_WINDOW | DETACHED_PROCESS, NULL, NULL, &info[2], &processInfo[2]))
-					{
-						run[2] = false;
-						_CONSOLE("FACEGEN: Couldn't run \"Tools\\Elric\\texconv.exe\"");
-					}
-					else run[2] = true;
-
-
-					if (run[0]) WaitForSingleObject(processInfo[0].hProcess, INFINITE);
-					if (run[1]) WaitForSingleObject(processInfo[1].hProcess, INFINITE);
-					if (run[2]) WaitForSingleObject(processInfo[2].hProcess, INFINITE);
-
-					CloseHandle(processInfo[0].hThread);
-					CloseHandle(processInfo[0].hProcess);
-					CloseHandle(processInfo[1].hThread);
-					CloseHandle(processInfo[1].hProcess);
-					CloseHandle(processInfo[2].hThread);
-					CloseHandle(processInfo[2].hProcess);
-
-					FacegenTextures.clear();
-					std::filesystem::remove_all(PathTEMP.c_str());
-				}).join();
-			}
-			_CONSOLE("FACEGEN: Done.");
-			if (bShowDone) MessageBoxA(0, "Done.", "Message", MB_OK | MB_ICONINFORMATION);
-		}
-
-		void FaceGenPatch::Fallout4::ExecuteGUI()
-		{
-			Execute(true);
-		}
-
-		void FaceGenPatch::Fallout4::ExecuteCLI(__int64 Arg1, __int64 Arg2, __int64 Arg3, __int64 Arg4)
-		{
-			fastCall<void>(pointer_FaceGen_sub2, Arg1, Arg2, Arg3, Arg4);
-			Execute(false);
+			fastCall<void>(pointer_FaceGen_sub6, lpThis, TextureId, lpFileName, Unk1, Unk2);
+			if (!CompressionDDSFile(lpFileName, DDS_COMPRESSION::BC7_UNORM))
+				_CONSOLE("FACEGEN: Compression texture \"%s\" error has occurred", lpFileName);
 		}
 
 		void FaceGenPatch::sub(__int64 a1, __int64 a2)
