@@ -58,9 +58,9 @@ This is not a complete list of improvements.
       <td>1.5.3.0</td>
       <td>Inactive</td>
       <td>1.10.162.0</td>
+      <td>Inactive</td>
+      <td>1.13.61.0</td>
       <td>Active</td>
-      <td>1.12.32.0</td>
-      <td>Deprecated</td>
     </tr>
     <tr>
       <td>1.5.73.0</td>
@@ -74,7 +74,7 @@ This is not a complete list of improvements.
       <td>1.6.438.0</td>
       <td>Inactive</td>
       <td>1.10.982.3</td>
-      <td>Active</td>
+      <td>Inactive</td>
       <td></td>
       <td></td>
     </tr>
@@ -95,7 +95,7 @@ This is not a complete list of improvements.
     </tr>
     <tr>
       <th scope="row" colspan="2">Stable, Stopped</th>
-      <th scope="row" colspan="2">Stable</th>
+      <th scope="row" colspan="2">Stable, Stopped</th>
       <th scope="row" colspan="2">Stable</th>
     </tr>
   </tfoot>

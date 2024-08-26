@@ -70,7 +70,7 @@ namespace CreationKitPlatformExtended
 				if (verPatch == 2)
 				{
 					// Initial QCoreApplication
-					lpRelocator->PatchString(_RELDATA_RAV(5), "Creation Kit");
+					//lpRelocator->PatchString(_RELDATA_RAV(5), "Creation Kit");
 					// In Qt, it would be necessary to give the name of the window initially, for something acceptable
 					lpRelocator->Patch(_RELDATA_RAV(1), (uint8_t*)"Creation Kit\0", 13);
 					// Cut a useless entry [Branch: <some>, Version: <CKVer>]

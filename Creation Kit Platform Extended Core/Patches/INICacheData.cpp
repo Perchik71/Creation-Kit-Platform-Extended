@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
+#include "Editor API/BSString.h"
 #include "INICacheData.h"
 
 namespace CreationKitPlatformExtended
@@ -17,10 +18,14 @@ namespace CreationKitPlatformExtended
 			}
 		};
 
-		UnorderedMap<String, mINI::INIStructure*, std::hash<String>, string_equal_to> GlobalINICache;
+		HANDLE GlobalINICacheTriggerEvent = NULL;
+		ConcurrencyMap<String, std::shared_ptr<mINI::INIStructure>, std::hash<String>, string_equal_to> GlobalINICache;
 
 		INICacheDataPatch::INICacheDataPatch() : Module(GlobalEnginePtr)
-		{}
+		{
+			if (GetShortExecutableTypeFromFull(GlobalEnginePtr->GetEditorVersion()) == EDITOR_SHORT_STARFIELD)
+				GlobalINICacheTriggerEvent = CreateEvent(nullptr, FALSE, FALSE, nullptr);
+		}
 
 		INICacheDataPatch::~INICacheDataPatch()
 		{
@@ -59,18 +64,21 @@ namespace CreationKitPlatformExtended
 
 		void INICacheDataPatch::ClearAndFlush()
 		{
-			for (auto it = GlobalINICache.begin(); it != GlobalINICache.end(); it++)
+			if (GetShortExecutableTypeFromFull(GlobalEnginePtr->GetEditorVersion()) == EDITOR_SHORT_STARFIELD)
+				SetEvent(GlobalINICacheTriggerEvent);
+			else
 			{
-				if (it->second)
+				for (auto it = GlobalINICache.begin(); it != GlobalINICache.end(); it++)
 				{
-					mINI::INIFile file(it->first.c_str());
-					file.write(*(it->second));
-					delete it->second;
-					it->second = nullptr;
+					if (it->second)
+					{
+						mINI::INIFile file(it->first.c_str());
+						file.write(*(it->second), false);
+					}
 				}
-			}
 
-			GlobalINICache.clear();
+				GlobalINICache.clear();
+			}
 		}
 
 		UINT INICacheDataPatch::HKGetPrivateProfileIntA(LPCSTR lpAppName, LPCSTR lpKeyName, INT nDefault, LPCSTR lpFileName)
@@ -306,19 +314,11 @@ namespace CreationKitPlatformExtended
 				std::string sname = lpFileName;
 				if (!sname.find_first_of(".\\") || !sname.find_first_of("./"))
 				{
-					
 					GetCurrentDirectoryA(MAX_PATH, szBuffer);
 					sname = szBuffer;
 					sname.append(++lpFileName);
 				}
-				else
-				{
-					if (GetWindowsDirectoryA(szBuffer, MAX_PATH) > 0)
-					{
-						sname = szBuffer;
-						sname.append(++lpFileName);
-					}
-				}
+				else return "";
 				return sname;
 			}
 			return lpFileName;
@@ -327,8 +327,10 @@ namespace CreationKitPlatformExtended
 		HANDLE INICacheDataPatch::GetFileFromCacheOrOpen(const std::string& sFileName)
 		{
 			if (sFileName.empty()) return nullptr;
+			// Skip.. there's not much, and generating this file in the root folder is unnecessary.
+			if (!EditorAPI::BSString::Utils::ExtractFileName(sFileName.c_str()).Compare("ConstructionSetNetwork.ini")) return nullptr;
 
-			mINI::INIStructure* ini_data = nullptr;
+			std::shared_ptr<mINI::INIStructure> ini_data;
 
 			auto iterator_find = GlobalINICache.find(sFileName.c_str());
 			if (iterator_find != GlobalINICache.end())
@@ -339,14 +341,16 @@ namespace CreationKitPlatformExtended
 				mINI::INIFile* file = new mINI::INIFile(sFileName);
 				if (!file) return nullptr;
 
-				ini_data = new mINI::INIStructure();
+				ini_data = std::make_shared<mINI::INIStructure>();
 				if (!ini_data) return nullptr;
 				file->read(*ini_data, false);
 
-				GlobalINICache.insert(std::pair<String, mINI::INIStructure*>(sFileName, ini_data));
+				//_MESSAGE("Debug INI: %s", sFileName.c_str());
+
+				GlobalINICache.insert(std::make_pair(sFileName.c_str(), ini_data));
 			}
 
-			return ini_data;
+			return (HANDLE)(ini_data.get());
 		}
 
 		bool INICacheDataPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
@@ -363,6 +367,30 @@ namespace CreationKitPlatformExtended
 			PatchIAT(HKGetPrivateProfileStructA, "kernel32.dll", "GetPrivateProfileStructA");
 			PatchIAT(HKWritePrivateProfileStringA, "kernel32.dll", "WritePrivateProfileStringA");
 			PatchIAT(HKWritePrivateProfileStructA, "kernel32.dll", "WritePrivateProfileStructA");
+
+			if (GetShortExecutableTypeFromFull(GlobalEnginePtr->GetEditorVersion()) == EDITOR_SHORT_STARFIELD)
+			{
+				ResetEvent(GlobalINICacheTriggerEvent);
+				std::thread t([]()
+					{
+						if (WaitForSingleObject(GlobalINICacheTriggerEvent, INFINITE) != WAIT_OBJECT_0)
+							return;
+
+						CloseHandle(GlobalINICacheTriggerEvent);
+
+						for (auto it = GlobalINICache.begin(); it != GlobalINICache.end(); it++)
+						{
+							if (it->second)
+							{
+								mINI::INIFile file(it->first.c_str());
+								file.write(*(it->second), false);
+							}
+						}
+
+						GlobalINICache.clear();
+					});
+				t.detach();
+			}
 
 			return true;
 		}

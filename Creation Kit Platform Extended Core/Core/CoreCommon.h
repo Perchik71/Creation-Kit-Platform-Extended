@@ -19,8 +19,8 @@ namespace CreationKitPlatformExtended
 			EDITOR_FALLOUT_C4_1_10_943_1,
 			EDITOR_FALLOUT_C4_1_10_982_3,
 			EDITOR_FALLOUT_C4_LAST = EDITOR_FALLOUT_C4_1_10_982_3,
-			EDITOR_STARFIELD_1_12_32_0,
-			EDITOR_STARFIELD_LAST = EDITOR_STARFIELD_1_12_32_0,
+			EDITOR_STARFIELD_1_13_61_0,
+			EDITOR_STARFIELD_LAST = EDITOR_STARFIELD_1_13_61_0,
 		};
 
 		enum EDITOR_EXECUTABLE_SHORT_TYPE {
@@ -50,7 +50,7 @@ namespace CreationKitPlatformExtended
 			{ 0xBAAF1B07ul, EDITOR_FALLOUT_C4_1_10_943_1	},	// No Steam and Redirect Steam
 			{ 0x481CCE95ul, EDITOR_FALLOUT_C4_1_10_982_3	},	// Redirect Steam
 			{ 0x55F7F580ul, EDITOR_FALLOUT_C4_1_10_982_3	},	// No Steam and Redirect Steam
-			{ 0x5CE4E852ul, EDITOR_STARFIELD_1_12_32_0		},	// Redirect Steam
+			{ 0x6CDE4424ul, EDITOR_STARFIELD_1_13_61_0		},	// Redirect Steam
 		};
 
 		// Список устаревших версий редакторов
@@ -68,7 +68,7 @@ namespace CreationKitPlatformExtended
 			{ 0x3896168ul, { "1.10.162.0",	EDITOR_FALLOUT_C4_1_10_162_0	} },
 			{ 0x2F8D1C8ul, { "1.10.943.1",	EDITOR_FALLOUT_C4_1_10_943_1	} },
 			{ 0x2F8D298ul, { "1.10.982.3",	EDITOR_FALLOUT_C4_1_10_982_3	} },
-			{ 0x864FDF0ul, { "1.12.32.0",	EDITOR_STARFIELD_1_12_32_0		} },
+			{ 0x86DD768ul, { "1.13.61.0",	EDITOR_STARFIELD_1_13_61_0		} },
 		};
 		
 		// Список названий редакторов
@@ -81,7 +81,7 @@ namespace CreationKitPlatformExtended
 			"Fallout 4 [v1.10.162.0]",
 			"Fallout 4 [v1.10.943.1]",
 			"Fallout 4 [v1.10.982.3]",
-			"Starfield [v1.12.32.0]",
+			"Starfield [v1.13.61.0]",
 		};
 
 		// Список имён файлов базы данных
@@ -93,7 +93,7 @@ namespace CreationKitPlatformExtended
 			{ EDITOR_FALLOUT_C4_1_10_162_0,	"CreationKitPlatformExtended_FO4_1_10_162.database"		},
 			{ EDITOR_FALLOUT_C4_1_10_943_1,	"CreationKitPlatformExtended_FO4_1_10_943_1.database"	},
 			{ EDITOR_FALLOUT_C4_1_10_982_3,	"CreationKitPlatformExtended_FO4_1_10_982_3.database"	},
-			{ EDITOR_STARFIELD_1_12_32_0,	"CreationKitPlatformExtended_SF_1_12_32_0.database"		},
+			{ EDITOR_STARFIELD_1_13_61_0,	"CreationKitPlatformExtended_SF_1_13_61_0.database"		},
 		};
 
 		// Список коротких названий поддерживаемых игр
@@ -118,7 +118,7 @@ namespace CreationKitPlatformExtended
 			"creationkit_f4_1_10_162",
 			"creationkit_f4_1_10_943_1",
 			"creationkit_f4_1_10_982_3",
-			"creationkit_sf_1_12_32_0",
+			"creationkit_sf_1_13_61_0",
 		};
 
 		inline EDITOR_EXECUTABLE_SHORT_TYPE GetShortExecutableTypeFromFull(EDITOR_EXECUTABLE_TYPE editorVersion)
@@ -139,7 +139,7 @@ namespace CreationKitPlatformExtended
 				return EDITOR_SHORT_FALLOUT_C4;
 			case EDITOR_FALLOUT_C4_1_10_982_3:
 				return EDITOR_SHORT_FALLOUT_C4;
-			case EDITOR_STARFIELD_1_12_32_0:
+			case EDITOR_STARFIELD_1_13_61_0:
 				return EDITOR_SHORT_STARFIELD;
 			default:
 				return EDITOR_SHORT_UNKNOWN;

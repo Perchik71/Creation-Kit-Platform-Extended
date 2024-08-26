@@ -1,0 +1,1248 @@
+Gpu selection: done.
+Dred init: done.
+DxInfoQueue filtering: done.
+GPU feature support: done.
+Raytracing enabled: done.
+Pipeline library created: done.
+TIMER: Starting Loading Materials
+TIMER: Starting BSMaterial load job (async)
+WinPixGpuCapturer load: done.
+CreateDXGIFactory2: done.
+MASTERFILE: Missing AssetDB checkpoint file!
+XeSS: Version - 1. 2. 0
+NiStaticDataManager Initialized
+HAVOK: Unable to to hkCompatFormats.dll from executable directory.  Will not be able to version Havok assets.
+PERFORMANCE: Accessing the DB while the materials are loading stalls the caller thread
+TIMER: Starting BSMaterialDB UpdateAllDependencies
+TIMER: Starting Loading sound banks
+TIMER: Starting BSMaterial::GenerateLODMaterials
+AUDIO: Unknown Wwise Duration string: Mixed
+PARTICLE_ENGINE: Validate multiple output
+MASTERFILE: GameSetting 'fCloudIndirectContribution' in file 'Starfield.esm' is not recognized by the current EXE.
+MASTERFILE: GameSetting 'sMiscStatTargetsDisintegrated' in file 'Starfield.esm' is not recognized by the current EXE.
+MASTERFILE: GameSetting 'fChargenRotatePaperdollSpeedMouse' in file 'Starfield.esm' is not recognized by the current EXE.
+MASTERFILE: GameSetting 'fChargenRotatePaperdollSpeed' in file 'Starfield.esm' is not recognized by the current EXE.
+MASTERFILE: GameSetting 'bCloudCardsSkyCubemapCullingFix' in file 'Starfield.esm' is not recognized by the current EXE.
+MASTERFILE: GameSetting 'sLightLayer10' in file 'Starfield.esm' is not recognized by the current EXE.
+MASTERFILE: GameSetting 'sLightLayer9' in file 'Starfield.esm' is not recognized by the current EXE.
+MASTERFILE: GameSetting 'sLightLayer8' in file 'Starfield.esm' is not recognized by the current EXE.
+MASTERFILE: GameSetting 'sLightLayer7' in file 'Starfield.esm' is not recognized by the current EXE.
+MASTERFILE: GameSetting 'sLightLayer6' in file 'Starfield.esm' is not recognized by the current EXE.
+MASTERFILE: GameSetting 'sLightLayer5' in file 'Starfield.esm' is not recognized by the current EXE.
+MASTERFILE: GameSetting 'sMiscStatAnimalsKilled' in file 'Starfield.esm' is not recognized by the current EXE.
+MASTERFILE: GameSetting 'sInvalidTagString' in file 'Starfield.esm' is not recognized by the current EXE.
+MASTERFILE: GameSetting 'sMiscStatMiscObjectivesCompleted' in file 'Starfield.esm' is not recognized by the current EXE.
+MASTERFILE: GameSetting 'fSpaceshipBuilderMaxSizeX' in file 'Starfield.esm' is not recognized by the current EXE.
+MASTERFILE: GameSetting 'fSpaceshipBuilderMaxSizeY' in file 'Starfield.esm' is not recognized by the current EXE.
+QUESTS: 'COM_CoraCoe_RC_01' (00187BF0) is in quest node 'SQ_PlayerShipDialogue_CaraCoeNode' (00187426) under the wrong event type.
+QUESTS: 'COM_CoraCoe_RC_02' (00187BF2) is in quest node 'SQ_PlayerShipDialogue_CaraCoeNode' (00187426) under the wrong event type.
+QUESTS: 'COM_CoraCoe_RC_03' (00187BEF) is in quest node 'SQ_PlayerShipDialogue_CaraCoeNode' (00187426) under the wrong event type.
+QUESTS: 'COM_CoraCoe_RC_04' (00187BF3) is in quest node 'SQ_PlayerShipDialogue_CaraCoeNode' (00187426) under the wrong event type.
+QUESTS: 'COM_CoraCoe_RC_05' (00187BF4) is in quest node 'SQ_PlayerShipDialogue_CaraCoeNode' (00187426) under the wrong event type.
+QUESTS: 'COM_CoraCoe_RC_06' (00187BEE) is in quest node 'SQ_PlayerShipDialogue_CaraCoeNode' (00187426) under the wrong event type.
+QUESTS: 'COM_CoraCoe_RC_07' (00187BF5) is in quest node 'SQ_PlayerShipDialogue_CaraCoeNode' (00187426) under the wrong event type.
+QUESTS: 'COM_CoraCoe_RC_08' (00187BED) is in quest node 'SQ_PlayerShipDialogue_CaraCoeNode' (00187426) under the wrong event type.
+QUESTS: 'COM_CoraCoe_RC_09' (00187BF6) is in quest node 'SQ_PlayerShipDialogue_CaraCoeNode' (00187426) under the wrong event type.
+QUESTS: 'COM_CoraCoe_RC_10' (00187BEC) is in quest node 'SQ_PlayerShipDialogue_CaraCoeNode' (00187426) under the wrong event type.
+QUESTS: 'COM_CoraCoe_RC_11' (00187BEB) is in quest node 'SQ_PlayerShipDialogue_CaraCoeNode' (00187426) under the wrong event type.
+QUESTS: 'COM_CoraCoe_RC_12' (00187BF7) is in quest node 'SQ_PlayerShipDialogue_CaraCoeNode' (00187426) under the wrong event type.
+QUESTS: 'COM_CoraCoe_RC_13' (00187BEA) is in quest node 'SQ_PlayerShipDialogue_CaraCoeNode' (00187426) under the wrong event type.
+QUESTS: 'COM_CoraCoe_RC_14' (00187BF8) is in quest node 'SQ_PlayerShipDialogue_CaraCoeNode' (00187426) under the wrong event type.
+QUESTS: 'COM_CoraCoe_RC_15' (00187BE9) is in quest node 'SQ_PlayerShipDialogue_CaraCoeNode' (00187426) under the wrong event type.
+QUESTS: STORY MANAGER: Quest node 'RAD06QuestNode' (00260A1B) is orphaned.
+DEFAULT: Could not find overlay (004AE608) in OverlayList for form 'PatternVecteraMineVideoWorld' [001D6B81]
+MASTERFILE: Surface pattern 'PatternTestBlocks' [00233C06] contains missing blocks.
+MASTERFILE: Topic info (0005AC0F) cannot set quest stage 0 on end because the parent quest Traits_Shared (000078DF) doesn't have a stage with that index.
+MASTERFILE: Topic info (000EFF89) cannot set quest stage 0 on end because the parent quest Traits_Shared (000078DF) doesn't have a stage with that index.
+MASTERFILE: Topic info (000ED3AB) cannot set quest stage 0 on end because the parent quest Traits_Shared (000078DF) doesn't have a stage with that index.
+MASTERFILE: Topic info (000ED835) cannot set quest stage 0 on begin because the parent quest Traits_Shared (000078DF) doesn't have a stage with that index.
+MASTERFILE: Topic info (000EFF8F) cannot set quest stage 0 on end because the parent quest Traits_Shared (000078DF) doesn't have a stage with that index.
+FORMS: Blank editor ID on this form should be fixed.
+DEFAULT: Form 'Vendor_ShipServices_AkilaCityFaction' [003CAFBA] is not a bound object or a reference, it should not have the BGSContactShadowComponent.  Please remove!
+FORMS: Blank editor ID on this form should be fixed.
+MAGIC: Magic Item ['Ench_SleepGas' [003E9942]] has [1] INVALID Effect Items.
+MAGIC: Magic Item ['BoostpackEnchantment_Skip' [003CEE46]] has [1] INVALID Effect Items.
+MAGIC: Magic Item ['Ench_IncendiaryGrenade' [003B8827]] has [1] INVALID Effect Items.
+MAGIC: Magic Item ['Ench_Weapon_IgnitionBeams' [003997AF]] has [1] INVALID Effect Items.
+MAGIC: Magic Item ['Ench_Legendary_Pack_ArmorPlated' [002EDE5A]] has [2] INVALID Effect Items.
+MAGIC: Magic Item ['Ench_CryoMine' [0021C505]] has [2] INVALID Effect Items.
+MAGIC: Magic Item ['Ench_Clothing_Common' [0013DDE0]] has [17] INVALID Effect Items.
+MAGIC: Magic Item ['Ench_Legendary_Armor_InverseHealth_DR' [001336C5]] has [8] INVALID Effect Items.
+MAGIC: Magic Item ['Ench_Legendary_Armor_InverseHealth_ER' [001336C4]] has [8] INVALID Effect Items.
+MAGIC: Magic Item ['Ench_Neuroamp_Common' [0010052A]] has [8] INVALID Effect Items.
+MAGIC: Magic Item ['BoostpackEnchantment_PowerBoost' [00092D55]] has [1] INVALID Effect Items.
+MAGIC: Magic Item ['BoostpackEnchantment_Basic' [00092D50]] has [1] INVALID Effect Items.
+MAGIC: Magic Item ['Ench_StarbornWeapon_Supernova01' [00091156]] has [1] INVALID Effect Items.
+MAGIC: Magic Item ['Ench_Generic_IncendiaryDamage' [0007D72A]] has [1] INVALID Effect Items.
+MAGIC: Magic Item ['Ench_Weapon_ShockCharge' [00069DFA]] has [1] INVALID Effect Items.
+MAGIC: Magic Item ['BoostpackEnchantment_Balanced' [00015420]] has [1] INVALID Effect Items.
+AUDIO: Form is using unknown Wwise Event GUID: 2FD7FDF0-6E2F-4315-B490-B6A9F0F97661
+FORMS: Blank editor ID on this form should be fixed.
+MAGIC: Magic Item (002ED9E2) 'Env_HitSpell_AFFL_Chance_AAA' has no effects defined.
+MAGIC: Magic Item (001F764F) 'ENV_DMG_Water_Spell_OBSOLETE' has no effects defined.
+DEFAULT: Form 'glasscleanopaquedark01_To_ryujinfurniture_plastic_red_Swap' [00387147] is not a bound object or a reference, it should not have the BGSContactShadowComponent.  Please remove!
+FORMS: Blank editor ID on this form should be fixed.
+MASTERFILE: Unable to find Package Target Reference (00000000) on owner object "BQ01_Package_Barrett_ErvinDoorUnlock" (00019342).
+MASTERFILE: Unable to find Package Target Reference (00000000) on owner object "BQ01_PackageTemplate_ErvinApartment_UnlockDoor" (00019343).
+MAGIC: Magic Item (000127BE) 'EatPackageDefaultFoodPotion' has no effects defined.
+FORMS: Blank editor ID on this form should be fixed.
+SCRIPTS: Cannot open store for class "SCRefAmbushTrigger", missing file?
+MASTERFILE: Unable to find Papyrus script SCRefAmbushTrigger in TESConditionItem Parameter Init for PACK Form 'OLD_DefaultMaster_AmbushPackage' (0002BB83).
+PACKAGES: TESCustomPackageData::InitItem: custom package has no procedure tree for form UC_Den_BastienSandboxBar (00032D69)
+MASTERFILE: Unable to find Package Target Reference (00000000) on owner object "MQ204_LodgeDeathMale_CompanionWhoLivesPKG" (0004B5A2).
+MASTERFILE: Unable to find Package Target Reference (00000000) on owner object "MQ204_EyeDeathMale_CompanionWhoLivesPKG" (0004B5A6).
+PACKAGES: TESCustomPackageData::InitItem: custom package has no procedure tree for form OE_KT_EmergencyRepair_Sandbox (0005152A)
+MASTERFILE: Unable to find Package Target Reference (00000000) on owner object "MQ206ASarahPkg" (0005BAF0).
+MASTERFILE: Unable to find Package Target Reference (00000000) on owner object "BE_DisembarkingCrewWaitForLandingRampTemplate" (00160D84).
+MASTERFILE: CombatOverridePackage Error: Package FC01_CrawleyCowerAndGetShot (0010ACB1) has a HoldPosition procedure but is not set as a combat override package
+FORMS: Blank editor ID on this form should be fixed.
+MASTERFILE: Unable to find Package Target Reference (00000000) on owner object "FC_Clinic_IntroScene_ArmisteadPackage" (0014EC20).
+MASTERFILE: CombatOverridePackage Error: Package HoldPositionAndHeadtrack (002D9C79) has a HoldPosition procedure underneath a simultaneous node
+MASTERFILE: CombatOverridePackage Error: Package FC01_JedHeadtrackPlayer (00152DCA) has a HoldPosition procedure underneath a simultaneous node
+MASTERFILE: CombatOverridePackage Error: Package FC01_JedHeadtrackPlayer (00152DCA) has a HoldPosition procedure but is not set as a combat override package
+MASTERFILE: Unable to find Package Target Reference (00000000) on owner object "FC_Neon_JamesNewill_Vend_Package" (0015B0DA).
+MASTERFILE: Unable to find Package Target Reference (00000000) on owner object "UC08_TransformLeech_PatrolPlant_PreStage420" (001A0C16).
+MASTERFILE: Unable to find Package Target Reference (00000000) on owner object "TestFormationBugFollowPackage02" (001A338D).
+MASTERFILE: Unable to find Package Target Reference (00000000) on owner object "TestFormationBugFollowPackageTemplate02" (001A338E).
+MASTERFILE: Guard Warn: Trespasser Ref cannot be derived from owning package interrupt type on object "CCT_CuriousApproachPackage_22" (001AF660).
+MASTERFILE: GuardWarn: Trespasser Ref cannot be derived from owning package interrupt type on object "CCT_CuriousApproachPackage_22" (001AF660).
+MASTERFILE: Guard Warn: Trespasser Ref cannot be derived from owning package interrupt type on object "TerrormorphWarnCloseDistancePackage" (001B2BBC).
+MASTERFILE: GuardWarn: Trespasser Ref cannot be derived from owning package interrupt type on object "TerrormorphWarnCloseDistancePackage" (001B2BBC).
+MASTERFILE: Guard Warn: Trespasser Ref cannot be derived from owning package interrupt type on object "CCT_ApproachPackage_30" (001BEE2E).
+MASTERFILE: GuardWarn: Trespasser Ref cannot be derived from owning package interrupt type on object "CCT_ApproachPackage_30" (001BEE2E).
+MASTERFILE: Unable to find Package Target Reference (00000000) on owner object "UC08_Hadrian_Stage600_Activate_UtilityPanel" (002060D2).
+MASTERFILE: CombatOverridePackage Error: Package UC08_AB_Anomaly_CombatOverride_HoldPosition (0024487C) has a HoldPosition procedure but is not set as a combat override package
+MASTERFILE: Unable to find Package Target Reference (00000000) on owner object "MQ105_Oscar_FrontDesk_PKG" (0027004F).
+MASTERFILE: Unable to find Package Target Reference (00000000) on owner object "CCT_PredatorSwimmerFindPreyTemplate" (002DBC84).
+MASTERFILE: Unable to find Package Target Reference (00000000) on owner object "CCT_PredatorSwimmerFindPrey" (002DBC85).
+AUDIO: Form is using unknown Wwise Event GUID: 498EA72B-7AA7-4B83-BA90-352EC1B4547E
+MASTERFILE: Root resource 'ResInorgCommonHelium3_G' (000057F5) in biome 'UniqueCrateredBarrenVytiniumRes' (0018CE00) should be of scarcity COMMON or EVERYWHERE.
+MASTERFILE: Root resource 'ResInorgCommonHelium3_G' (000057F5) in biome 'CrateredNoLifeDefaultRes' (000083E0) should be of scarcity COMMON or EVERYWHERE.
+FORMS: Blank editor ID on this form should be fixed.
+DEFAULT: Form [0036D49D] is not a bound object or a reference, it should not have the BGSContactShadowComponent.  Please remove!
+FORMS: Blank editor ID on this form should be fixed.
+FORMS: Package action 3 in scene 'TemplateNPCScene_MoveThenPackage' (0000086E) has no packages in its list
+FORMS: Package action 5 in scene 'TemplateNPCScene_MoveThenPackage' (0000086E) has no packages in its list
+MASTERFILE: Failed to find space cell 'scLC018BattleAboveEarth' in Init for body '_LC018BattlePlanetData' (002CF271)
+MASTERFILE: No space cell set for Orbital or Station for body '_UC06ShipBattlePlanetData' (00246B8A)
+AUDIO: Form is using unknown Wwise Event GUID: 498EA72B-7AA7-4B83-BA90-352EC1B4547E
+MASTERFILE: No space cell set for Orbital or Station for body '_LC130PlanetData' (001BB7FF)
+MASTERFILE: No space cell set for Orbital or Station for body '_LC137_HankFerrarosShipPlanetData' (001BB7FD)
+MASTERFILE: Failed to find space cell 'sCTestBetaTemp' in Init for body '_tempbetaPlanetData' (0017176B)
+FORMS: Blank editor ID on this form should be fixed.
+MASTERFILE: ArmorAddon 'AA_Clothes_Crowd_Neon_Tracksuit_01_Overweight_NOTPLAYABLE' (000A6FD0) used invalid Biped Object slot 23 for race 'HumanCrowdRace'.
+MASTERFILE: Alias 225 on player dialogue scene 'OE_CECSuperfan_Scene_PlayerWins' (00006E05) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: ArmorAddon 'AA_Clothes_Crowd_ryujin_Tracksuit_01_Overweight_NOTPLAYABLE' (000D3A2E) used invalid Biped Object slot 23 for race 'HumanCrowdRace'.
+MASTERFILE: Armor 'Skin_QuadrupedB_CageBrain' (002AAE95) used invalid Biped Object slot 10 for race 'QuadrupedBRace'.
+MASTERFILE: Start Scene Action 14 on scene 'COM_SarahMorgan_System_AngerScene' (002C8E57) points to unnamed start phase 9 on scene 'COM_SarahMorgan_System_AngerScene' (002C8E57). Please ensure that the linkage is correct, as phases pointed to by start scene actions need names.
+MASTERFILE: Scene MQ103_19_AmbushScene (00016A65) cannot set quest stage 915 on phase 4 end because the parent quest MQ103 (000114C9) doesn't have a stage with that index.
+FORMS: Package action 14 in scene 'DialogueCFTheKey_LastNova_IntroScene' (0008CBCF) has no packages in its list
+MASTERFILE: Failed to find atmosphere (0000C171) in Init for body 'ZetaOphiuchiVI-aPlanetData' (0005E15F)
+MASTERFILE: Alias 1 on player dialogue scene 'MQ202_008_Petrov_BleedoutScene' (00234DF9) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 19 on player dialogue scene 'MQ202_008_Petrov_BleedoutScene' (00234DF9) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+FORMS: Package action 33 in scene 'CF06_Stage030_Estelle_IntroScene' (0001BE60) has no packages in its list
+FORMS: Package action 35 in scene 'CF06_Stage030_Estelle_IntroScene' (0001BE60) has no packages in its list
+FORMS: Package action 10 in scene 'TestSarahScene' (000992D2) has no packages in its list
+MASTERFILE: Scene BQ01_Scene_GREET_5200_Barrett_ExploreTheMine (000C9979) cannot set quest stage 3450 on scene begin because the parent quest COM_Quest_Barrett_Q01 (000369AB) doesn't have a stage with that index.
+MASTERFILE: Scene BQ01_Scene_GREET_5200_Barrett_ExploreTheMine (000C9979) cannot set quest stage 3470 on scene end because the parent quest COM_Quest_Barrett_Q01 (000369AB) doesn't have a stage with that index.
+MASTERFILE: Start Scene Action 18 on scene 'BQ01_Scene_LINK_0420_Ellie_Motive' (002E8925) points to unnamed start phase 1 on scene 'BQ01_Scene_LINK_0430_Ellie_Track' (002E8927). Please ensure that the linkage is correct, as phases pointed to by start scene actions need names.
+MASTERFILE: Scene BQ01_Scene_GREET_8700_TalkToBarretts (00320D46) cannot set quest stage 8720 on phase 14 begin because the parent quest COM_Quest_Barrett_Q01 (000369AB) doesn't have a stage with that index.
+MASTERFILE: Alias 19 on player dialogue scene 'DialogueCrimeGuardShip_BountyAcceptHail' (0005BD97) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 95 on player dialogue scene 'SE_FAB07_300_LillianConversation' (0007E20C) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 100 on player dialogue scene 'SE_FAB07_300_LillianConversation' (0007E20C) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 101 on player dialogue scene 'SE_FAB07_300_LillianConversation' (0007E20C) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Scene OE_KTFL_Smuggler_StoreGreet (000831B8) cannot set quest stage 210 on scene end because the parent quest OE_KT_FriendlyLanding_Vendors (00083246) doesn't have a stage with that index.
+MASTERFILE: Start Scene Action 3 on scene 'RQ_Settlement_Harvest01_Scene_PromptAfterDecline' (0011BBA8) points to unnamed start phase 2 on scene 'RQ_Settlement_Harvest01_Scene_StartQuest' (0011BBA7). Please ensure that the linkage is correct, as phases pointed to by start scene actions need names.
+MASTERFILE: Start Scene Action 3 on scene 'RQ_Settlement_Collect01_Scene_PromptAfterDecline' (0012F21F) points to unnamed start phase 2 on scene 'RQ_Settlement_Collect01_Scene_StartQuest' (0012F21E). Please ensure that the linkage is correct, as phases pointed to by start scene actions need names.
+MASTERFILE: Alias 9 on player dialogue scene 'MQ302_190_Space_PostBattleHunterAlly' (0018713D) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 8 on player dialogue scene 'MQ302_190_Space_PostBattleEmissaryAlly' (0018713E) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 9 on player dialogue scene 'MQ302_100_Space_InitialConfrontHunter' (00187141) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 8 on player dialogue scene 'MQ302_100_Space_InitialConfrontEmissary' (00187142) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 9 on player dialogue scene 'MQ302_100_Space_InitialConfrontBoth' (00187143) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 8 on player dialogue scene 'MQ302_100_Space_InitialConfrontBoth' (00187143) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 127 on player dialogue scene 'MQ302_310_ConfrontBoth' (0018A2B6) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 126 on player dialogue scene 'MQ302_310_ConfrontBoth' (0018A2B6) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 126 on player dialogue scene 'MQ302_310_ConfrontEmissary' (0018A2B7) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 127 on player dialogue scene 'MQ302_310_ConfrontHunter' (0018A2B8) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Start Scene Action 102 on scene 'RI08_0910_Meeting_UlaruWinsScene' (00144B04) points to unnamed start phase 78 on scene 'RI08_0910_Meeting_UlaruWinsScene' (00144B04). Please ensure that the linkage is correct, as phases pointed to by start scene actions need names.
+MASTERFILE: Start Scene Action 162 on scene 'RI08_0910_Meeting_UlaruWinsScene' (00144B04) points to unnamed start phase 59 on scene 'RI08_0910_Meeting_UlaruWinsScene' (00144B04). Please ensure that the linkage is correct, as phases pointed to by start scene actions need names.
+DEFAULT: Linked reaction action 5 has a different number of topics than action 6 in scene 'CREW_EliteCrew_AmeliaEarhart_TopLevel_RealAmeliaIntro' (000EA76D).
+MASTERFILE: Start Scene Action 15 on scene 'COM_Scene_Barrett_Commitment_Vasco_GREET_AskToOfficiate' (0011EDCC) points to unnamed start phase 2 on scene 'COM_Scene_Barrett_Commitment_Vasco_Ceremony' (0033E34F). Please ensure that the linkage is correct, as phases pointed to by start scene actions need names.
+MASTERFILE: Start Scene Action 9 on scene 'COM_Barrett_TopLevel_RomanceScene' (0014A9ED) points to unnamed start phase 2 on scene 'COM_Barrett_Story_SG06_RomanceToCommitment' (00136DC1). Please ensure that the linkage is correct, as phases pointed to by start scene actions need names.
+MASTERFILE: Alias 32 on player dialogue scene 'CF08_Fleet_Stage530_Delgado_OutroSceneMain' (001B402F) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 4 on player dialogue scene 'FC06_MayaCruzScene' (001858C6) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 3 on player dialogue scene 'MS01_0415_MahoneySaved' (001F07C2) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 90 on player dialogue scene 'LC088_Space_SD_260_MainBattleStart' (0015145F) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 24 on player dialogue scene 'LC088_Space_SD_260_MainBattleStart' (0015145F) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 24 on player dialogue scene 'LC088_Space_SD_266_VigilanceArrives02' (001A62DD) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 26 on player dialogue scene 'LC088_Space_SD_266_VigilanceArrives02' (001A62DD) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 4294967293 on player dialogue scene 'LC088_Space_SD_266_VigilanceArrives02' (001A62DD) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 24 on player dialogue scene 'LC088_Space_CF_160_MainBattleStart' (0021C91B) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 26 on player dialogue scene 'LC088_Space_CF_160_MainBattleStart' (0021C91B) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 10 on player dialogue scene 'City_CY_Runaway01_0400_Natan_Greeting' (002266CC) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 19 on player dialogue scene 'City_CY_Runaway01_0400_Natan_Greeting' (002266CC) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 21 on player dialogue scene 'Drug02_600_BayuYannickShowOff' (00235B78) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 17 on player dialogue scene 'FC08_PaxtonHullGreetScene' (001A833A) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 18 on player dialogue scene 'FC08_PaxtonHullGreetScene' (001A833A) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 19 on player dialogue scene 'MQ207C_930_EndingNishinaIII_02' (00024BC0) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 22 on player dialogue scene 'MQ207C_930_EndingNishinaIII_02' (00024BC0) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 23 on player dialogue scene 'MQ207C_930_EndingNishinaIII_02' (00024BC0) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 21 on player dialogue scene 'MQ207C_930_EndingNishinaIII_02' (00024BC0) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 4294967293 on player dialogue scene 'MQ207C_930_EndingNishinaIII_02' (00024BC0) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 20 on player dialogue scene 'MQ207C_162a_EscortReactStorageCorridor' (00035282) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 19 on player dialogue scene 'MQ207C_930_EndingNishinaIII_03' (001FFDF6) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 22 on player dialogue scene 'MQ207C_930_EndingNishinaIII_03' (001FFDF6) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 23 on player dialogue scene 'MQ207C_930_EndingNishinaIII_03' (001FFDF6) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 21 on player dialogue scene 'MQ207C_930_EndingNishinaIII_03' (001FFDF6) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 4294967294 on player dialogue scene 'MQ207C_930_EndingNishinaIII_03' (001FFDF6) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 4294967293 on player dialogue scene 'MQ207C_930_EndingNishinaIII_03' (001FFDF6) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Start Scene Action 7 on scene 'MQ207C_520_ExperimentMaria04' (0022D3AC) points to unnamed start phase 5 on scene 'MQ207C_520_ExperimentMaria04' (0022D3AC). Please ensure that the linkage is correct, as phases pointed to by start scene actions need names.
+FORMS: Package action 44 in scene 'MQ207C_185_EscortReactStorageRoom03' (0022D3BC) has no packages in its list
+MASTERFILE: Alias 19 on player dialogue scene 'MQ207C_930_EndingNishinaIII' (00298ABA) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 22 on player dialogue scene 'MQ207C_930_EndingNishinaIII' (00298ABA) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 23 on player dialogue scene 'MQ207C_930_EndingNishinaIII' (00298ABA) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 21 on player dialogue scene 'MQ207C_930_EndingNishinaIII' (00298ABA) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 4294967294 on player dialogue scene 'MQ207C_930_EndingNishinaIII' (00298ABA) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 4294967293 on player dialogue scene 'MQ207C_930_EndingNishinaIII' (00298ABA) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 4294967292 on player dialogue scene 'COM_SamCoeQ01_0750_LillianAlert' (0026319D) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 0 on player dialogue scene 'COM_SamCoeQ01_0750_LillianAlert' (0026319D) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 1 on player dialogue scene 'COM_SamCoeQ01_0750_LillianAlert' (0026319D) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 5 on player dialogue scene 'City_NA_Viewport03_004_Fizz' (0023E9CF) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 4 on player dialogue scene 'City_NA_Viewport03_004_Fizz' (0023E9CF) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 3 on player dialogue scene 'MS02_1820_GenghisShowdown' (002458F2) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 2 on player dialogue scene 'MS02_1820_GenghisShowdown' (002458F2) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 6 on player dialogue scene 'MS02_1820_GenghisShowdown' (002458F2) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 2 on player dialogue scene 'MS02_1720a_AmanirenasShowdown_Betrayal' (002458F6) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 6 on player dialogue scene 'MS02_1720a_AmanirenasShowdown_Betrayal' (002458F6) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 3 on player dialogue scene 'MS02_1720a_AmanirenasShowdown_Betrayal' (002458F6) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 2 on player dialogue scene 'MS02_1720_AmanirenasShowdown' (002458F7) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 6 on player dialogue scene 'MS02_1720_AmanirenasShowdown' (002458F7) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 3 on player dialogue scene 'MS02_1720_AmanirenasShowdown' (002458F7) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 6 on player dialogue scene 'MS02_1630_FDRWins' (0028FE2F) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 6 on player dialogue scene 'MS02_1620_FDRShowdown' (0028FE32) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 2 on player dialogue scene 'MS02_1620_FDRShowdown' (0028FE32) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 3 on player dialogue scene 'MS02_1620_FDRShowdown' (0028FE32) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Start Scene Action 3 on scene 'UC05_505_Balmor_LoopingIntercomScene' (00297DCF) points to unnamed start phase 1 on scene 'UC05_505_Balmor_LoopingIntercomScene' (00297DCF). Please ensure that the linkage is correct, as phases pointed to by start scene actions need names.
+MASTERFILE: Start Scene Action 2 on scene 'RI02_300_Arthur_Intro_RyujinScene' (0025D686) points to unnamed start phase 5 on scene 'RI02_300_Arthur_IntroWithSuitScene' (0025D68A). Please ensure that the linkage is correct, as phases pointed to by start scene actions need names.
+MASTERFILE: Scene SE_Raid01a_HailingScene (002B0BA5) cannot set quest stage 5 on phase 1 end because the parent quest SE_Player_Raid01 (002B0B8E) doesn't have a stage with that index.
+MASTERFILE: Start Scene Action 21 on scene 'UC02_607_TanksPrimed' (0026DD07) points to unnamed start phase 7 on scene 'UC02_607_TanksPrimed' (0026DD07). Please ensure that the linkage is correct, as phases pointed to by start scene actions need names.
+MASTERFILE: Alias 3 on player dialogue scene 'LC088_Key_600_OperationsIntro' (00219372) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 4294967294 on player dialogue scene 'LC088_1010_KibweConfrontationIntroCamera' (000441CA) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 90 on player dialogue scene 'LC088_1010_KibweConfrontationIntroCamera' (000441CA) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 122 on player dialogue scene 'LC088_1010_KibweConfrontationIntroCamera' (000441CA) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 84 on player dialogue scene 'LC088_1010_KibweConfrontationIntroCamera' (000441CA) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 4294967293 on player dialogue scene 'LC088_1010_KibweConfrontationIntroCamera' (000441CA) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 43 on player dialogue scene 'LC088_880_Estelle_End_Alternate' (00147DBF) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 84 on player dialogue scene 'LC088_1010_KibweConfrontation' (00270F75) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 122 on player dialogue scene 'LC088_1010_KibweConfrontation' (00270F75) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 4294967294 on player dialogue scene 'LC088_1010_KibweConfrontation' (00270F75) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 90 on player dialogue scene 'LC088_1010_KibweConfrontation' (00270F75) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 43 on player dialogue scene 'LC088_880_Estelle_End' (00278E90) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 42 on player dialogue scene 'LC088_780_Huan_End' (00278E91) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 42 on player dialogue scene 'LC088_710_Huan_Start_NotInCombat' (00278E92) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 34 on player dialogue scene 'LC088_680_Adler_End' (00278E93) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 34 on player dialogue scene 'LC088_620_Adler_Greet' (00278E94) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 3 on player dialogue scene 'LC088_380_Rokov_End' (00278E96) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 16 on player dialogue scene 'LC088_581_Naeva_End' (00278E98) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 10 on player dialogue scene 'LC088_480_Mathis_End' (00278E9E) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 1 on player dialogue scene 'RI01_500_Tomo_ConfrontationScene' (002C9B79) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 2 on player dialogue scene 'RI01_500_Tomo_ConfrontationScene' (002C9B79) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 4294967294 on player dialogue scene 'RI01_500_Tomo_ConfrontationScene' (002C9B79) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 15 on player dialogue scene 'RI01_500_Tomo_ConfrontationScene' (002C9B79) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 40 on player dialogue scene 'RI01_500_Tomo_ConfrontationScene' (002C9B79) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 41 on player dialogue scene 'RI01_500_Tomo_ConfrontationScene' (002C9B79) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 42 on player dialogue scene 'RI01_500_Tomo_ConfrontationScene' (002C9B79) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Alias 43 on player dialogue scene 'RI01_500_Tomo_ConfrontationScene' (002C9B79) does not have combat flag marked as end or paused. So the actor will be stuck in scene without being able to process the combat.
+MASTERFILE: Start Scene Action 21 on scene 'CF08_SysDef_MiscScene02' (00140A38) points to unnamed start phase 7 on scene 'CF08_SysDef_MiscScene02' (00140A38). Please ensure that the linkage is correct, as phases pointed to by start scene actions need names.
+MASTERFILE: Start Scene Action 3 on scene 'RQ_Settlement_Convince01_PromptAfterDecline_Scene' (0038BC56) points to unnamed start phase 2 on scene 'RQ_Settlement_Convince01_StartQuest_Scene' (0038BC55). Please ensure that the linkage is correct, as phases pointed to by start scene actions need names.
+PATHFINDING: NavMesh in cell (Unknown Exterior Cell (3,3) should be refinalized, there are navmesh bounds missing
+PATHFINDING: NavMesh in cell Surface[00014fbb] (TempJemisonWorld[2,8,00014f45]) should be refinalized, there are navmesh bounds missing
+PATHFINDING: NavMesh in cell SettleRedMileCourseStart[00138ef9] (settleredmile[0,1,00141e6e]) should be refinalized, there are navmesh bounds missing
+PATHFINDING: NavMesh in cell Surface[00014fb4] (TempJemisonWorld[2,9,00014f45]) should be refinalized, there are navmesh bounds missing
+PATHFINDING: NavMesh in cell (Unknown Exterior Cell (6,-2) should be refinalized, there are navmesh bounds missing
+PATHFINDING: NavMesh in cell Surface[00014f70] (TempJemisonWorld[3,8,00014f45]) should be refinalized, there are navmesh bounds missing
+PATHFINDING: NavMesh in cell DR024Ext23 (0009c188) should be refinalized, there are navmesh bounds missing
+PATHFINDING: NavMesh in cell (Unknown Exterior Cell (4,-6) should be refinalized, there are navmesh bounds missing
+PATHFINDING: NavMesh in cell (Unknown Exterior Cell (3,-6) should be refinalized, there are navmesh bounds missing
+PATHFINDING: NavMesh in cell PackInNishina02FloorPipesComplex02StorageCell (0007d376) should be refinalized, there are navmesh bounds missing
+PATHFINDING: NavMesh in cell DR021Ext03[002c88fb] (DR021World[0,0,002c8e91]) should be refinalized, there are navmesh bounds missing
+PATHFINDING: NavMesh in cell Surface[001708d5] (CydoniaCity[-4,-1,002cfc4a]) should be refinalized, there are navmesh bounds missing
+PATHFINDING: NavMesh in cell (Unknown Exterior Cell (2,0) should be refinalized, there are navmesh bounds missing
+PATHFINDING: NavMesh in cell Surface (00068ea4) should be refinalized, there are navmesh bounds missing
+PATHFINDING: NavMesh in cell DR006Cave (0026ae8d) should be refinalized, there are navmesh bounds missing
+PATHFINDING: NavMesh in cell DR021Ext04[002c8901] (DR021World[0,-1,002c8e91]) should be refinalized, there are navmesh bounds missing
+PATHFINDING: NavMesh in cell (Unknown Exterior Cell (0,-6) should be refinalized, there are navmesh bounds missing
+QUESTS: Alias 'DataSlate' 9 uses non-preceding UNKNOWN alias. This alias cannot be filled.
+QUESTS: Alias 'DataSlate02' 10 uses non-preceding UNKNOWN alias. This alias cannot be filled.
+MASTERFILE: Unable to find variable isLinked on Papyrus script OutpostCargoLinkMarkerScript in TESConditionItem Parameter Init for QUST Form 'MB_Supply02Uncommon01' (00110C22).
+MASTERFILE: Unable to find variable isLinked on Papyrus script OutpostCargoLinkMarkerScript in TESConditionItem Parameter Init for QUST Form 'MB_Supply01Common01' (00110C1F).
+QUESTS: Alias 77 is non-optional and Forced to NONE. This quest cannot start.
+MASTERFILE: Unable to find variable isLinked on Papyrus script OutpostCargoLinkMarkerScript in TESConditionItem Parameter Init for QUST Form 'MB_Supply11Manufactured03' (00192DDC).
+MASTERFILE: Unable to find variable isLinked on Papyrus script OutpostCargoLinkMarkerScript in TESConditionItem Parameter Init for QUST Form 'MB_Supply10Manufactured02' (0019413B).
+MASTERFILE: Unable to find variable isLinked on Papyrus script OutpostCargoLinkMarkerScript in TESConditionItem Parameter Init for QUST Form 'MB_Supply09Manufactured01' (0019413C).
+MASTERFILE: Unable to find variable isLinked on Papyrus script OutpostCargoLinkMarkerScript in TESConditionItem Parameter Init for QUST Form 'MB_Supply08Organic_Exotic' (0019413D).
+MASTERFILE: Unable to find variable isLinked on Papyrus script OutpostCargoLinkMarkerScript in TESConditionItem Parameter Init for QUST Form 'MB_Supply07Organic_Rare' (0019413E).
+MASTERFILE: Unable to find variable isLinked on Papyrus script OutpostCargoLinkMarkerScript in TESConditionItem Parameter Init for QUST Form 'MB_Supply04Exotic' (00194219).
+MASTERFILE: Unable to find variable isLinked on Papyrus script OutpostCargoLinkMarkerScript in TESConditionItem Parameter Init for QUST Form 'MB_Supply03Rare' (0019421A).
+MASTERFILE: Unable to find variable isLinked on Papyrus script OutpostCargoLinkMarkerScript in TESConditionItem Parameter Init for QUST Form 'MB_Supply06Organic_Uncommon' (0019421B).
+MASTERFILE: Unable to find variable isLinked on Papyrus script OutpostCargoLinkMarkerScript in TESConditionItem Parameter Init for QUST Form 'MB_Supply05Organic_Common' (002153B5).
+MASTERFILE: Unable to find variable isLinked on Papyrus script OutpostCargoLinkMarkerScript in TESConditionItem Parameter Init for QUST Form 'MB_Supply02Uncommon' (00215D61).
+MASTERFILE: Unable to find variable isLinked on Papyrus script OutpostCargoLinkMarkerScript in TESConditionItem Parameter Init for QUST Form 'MB_Supply01Common' (0021E703).
+QUESTS: Alias 24 is non-optional and Forced to NONE. This quest cannot start.
+QUESTS: Alias 25 is non-optional and Forced to NONE. This quest cannot start.
+QUESTS: Alias 26 is non-optional and Forced to NONE. This quest cannot start.
+QUESTS: Alias 27 is non-optional and Forced to NONE. This quest cannot start.
+MASTERFILE: LeveledCharacter 'LCharHumanHostile_Boss' (001011E5) contains scripted actors.  Remove actor 'LvlEcliptic_Boss_NoScript' (00167011).
+MASTERFILE: Leveled list 'xDoNotUse_LShip_FreestarCollective_Freighter_All' [0018CEF4] is flagged as containing only spaceship base forms, but contains non-spaceship base forms. Open and re-save the leveled list to fix.
+MASTERFILE: Leveled list 'xDoNotUse_LShip_CrimsonFleet_Fighter_Longsword' [001B7BBD] is flagged as containing only spaceship base forms, but contains non-spaceship base forms. Open and re-save the leveled list to fix.
+MASTERFILE: Leveled list 'xDoNotUse_LShip_CrimsonFleet_Fighter_Sparrow' [001B7BC8] is flagged as containing only spaceship base forms, but contains non-spaceship base forms. Open and re-save the leveled list to fix.
+CELLS: Ref is not in its persistence location 'DR033_TheWheel_CreatedInteriorLocation' (000AE92D).
+MASTERFILE: MapMarker (00205DE2) is a MapMarker ref but does not have map marker data.
+PATHFINDING: Invalid cover edge 4 in NavMesh 00020165 in cell 'PackInOutpostOPKOpsExtPodSmMidRnd01StorageCell' (00007DDD) (0, 0)
+MASTERFILE: NavMesh ID 00020165 in cell 'PackInOutpostOPKOpsExtPodSmMidRnd01StorageCell' (00007DDD) has invalid cover data.  It will be removed.
+MASTERFILE: Invalid base object. No refs to TESGrass objects are allowed.
+MASTERFILE: MapMarker for REFR MapMarker (00238C0B) is set to use its location name but has no location.
+PATHFINDING: Invalid cover edge 26 in NavMesh 0000336E in cell 'PackInOutpostOPKOpiExtPodSmMidDbl01StorageCell' (0001101F) (0, 0)
+MASTERFILE: NavMesh ID 0000336E in cell 'PackInOutpostOPKOpiExtPodSmMidDbl01StorageCell' (0001101F) has invalid cover data.  It will be removed.
+PATHFINDING: Invalid cover edge 0 in NavMesh 00273675 in cell 'PackInOutpostPIOPKOphExtPodSmMidRnd01StorageCell' (000D09B7) (0, 0)
+MASTERFILE: NavMesh ID 00273675 in cell 'PackInOutpostPIOPKOphExtPodSmMidRnd01StorageCell' (000D09B7) has invalid cover data.  It will be removed.
+PATHFINDING: Cover edge 65535 out of range (0) in NavMesh 00015012 in cell 'Surface' (00014FBB) (2, 8)
+MASTERFILE: NavMesh ID 00015012 in cell 'Surface' (00014FBB) (2, 8) in WorldSpace 'TempJemisonWorld' (00014F45) has invalid cover data.  It will be removed.
+CELLS: Ref is not in its persistence location 'OverlayTraitBolideBombardmentMed02Location' (0012ABC7).
+CELLS: Ref is not in its persistence location 'OverlayTraitBolideBombardmentMed01Location' (0012ABC8).
+MASTERFILE: Open by default 'GenAirlock_Main_DoorA01_Inv' (00280CEB) in cell 'OESF006Ext01' will be ignored in-game because the door is also locked.
+CELLS: Ref is not in its persistence location 'OverlayTraitBolideBombardmentMed01Location' (0012ABC8).
+CELLS: Ref is not in its persistence location 'RL002MiningOPInsectHiveLocation_BQ01_Barrett' (0027CF4C).
+CELLS: Ref is not in its persistence location 'POIBB001Location' (002383E6).
+CELLS: Ref is not in its persistence location '_RENAME_TestOldVecteraLocation' (001ED103).
+CELLS: Ref is not in its persistence location 'OverlayTraitCharredEcosystemMd01Location' (0016A8E7).
+MASTERFILE: Open by default 'StorageContainerDoor01' (0002C8FC) in cell 'Surface' will be ignored in-game because the door is also locked.
+CELLS: Ref is not in its persistence location 'OverlayTraitBolideBombardmentMed03Location' (0012ABC6).
+CELLS: Ref is not in its persistence location 'OverlayTraitSolarStormsSeasonsLg01newLocation' (003807D9).
+CELLS: Ref is not in its persistence location 'OverlayTraitSolarStormsSeasonsMed02Location' (0010A470).
+CELLS: Ref is not in its persistence location 'OverlayTraitSolarStormsSeasonsMed01Location' (0016A8E8).
+CELLS: Ref is not in its persistence location 'OverlayTraitSolarStormsSeasonsLg01newLocation' (003807D9).
+CELLS: Ref is not in its persistence location 'OverlayTraitSolarStormsSeasonsMed02Location' (0010A470).
+CELLS: Ref is not in its persistence location 'OverlayTraitSolarStormsSeasonsLg01newLocation' (003807D9).
+CELLS: Ref is not in its persistence location 'OverlayTraitSolarStormsSeasonsMed02Location' (0010A470).
+CELLS: Ref is not in its persistence location 'OverlayTraitSolarStormsSeasonsLg01newLocation' (003807D9).
+CELLS: Ref is not in its persistence location 'OverlayTraitSolarStormsSeasonsMed02Location' (0010A470).
+CELLS: Ref is not in its persistence location 'OverlayTraitSolarStormsSeasonsMed01Location' (0016A8E8).
+CELLS: Ref is not in its persistence location 'OverlayTraitSolarStormsSeasonsMed02Location' (0010A470).
+MASTERFILE: Cell contains more than one COC marker:  'SB002Ext02' (00173090) (0, 1) in WorldSpace 'SB002TempleWorld' (001730CD)
+MASTERFILE: Reference (003FF0EC) attached to wrong cell for its location: 'LC123Ext05' (0022F4BC) (1, 1) in WorldSpace 'lc123world' (0022F4C7)
+MASTERFILE: Open by default 'GenAirlock_Main_DoorA01_Inv' (0000B8C5) in cell 'LC126MoonbaseExt04' will be ignored in-game because the door is also locked.
+MASTERFILE: Open by default 'GenAirlock_Main_DoorA01_Inv' (00003DB2) in cell 'LC126MoonbaseExt01' will be ignored in-game because the door is also locked.
+MASTERFILE: Open by default 'GenIntRmSmWallMid_DoorA00' (0034625F) in cell 'LC165LandingPadExt01' will be ignored in-game because the door is also locked.
+CELLS: Ref is not in its persistence location 'POI064RedDevilsHQ' (002CE18D).
+MASTERFILE: Open by default 'GenAirlock_Main_DoorA01_Inv' (0013224B) in cell 'SettleRedMileCheckpoint04' will be ignored in-game because the door is also locked.
+MASTERFILE: Reference (000DD340) attached to wrong cell for its location: 'RL027WorldExt16' (00120F31) (2, -1) in WorldSpace 'LC180World' (002CFB9F)
+PATHFINDING: Invalid cover edge 2510 in NavMesh 00045E6F in cell 'LC125Ext03' (002962D1) (1, -1)
+MASTERFILE: NavMesh ID 00045E6F in cell 'LC125Ext03' (002962D1) (1, -1) in WorldSpace 'LC125World' (002962D9) has invalid cover data.  It will be removed.
+CELLS: Ref is not in its persistence location 'OverlayTraitCharredEcosystemSm01Location' (0016A8E5).
+MASTERFILE: Reference (0031322A) attached to wrong cell for its location: 'DR018Ext04' (002A8246) (0, 0) in WorldSpace 'DR018World01' (002A82D5)
+MASTERFILE: Reference (0031320B) attached to wrong cell for its location: 'DR018Ext01' (002A8257) (1, 0) in WorldSpace 'DR018World01' (002A82D5)
+CELLS: Ref is not in its persistence location 'OverlayTraitCharredEcosystemMd02Location' (0016A8E6).
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CA97F) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CA966) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CADCE) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CA975) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CADCC) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CAB6D) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg01 (002CADC8) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CA981) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CA8A8) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CA87D) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CA88B) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CA88C) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg01 (002CA8A7) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CA8AD) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CA8AE) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CA8AF) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CA8B0) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CA8B6) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CA88A) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CA8DD) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CA914) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CA964) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CA965) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CA96A) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CA96C) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CA96E) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg01 (002CA97A) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CA97B) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg01 (002CA97E) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CAC34) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CA891) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CAA58) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CAA59) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CAA8B) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CAC0F) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CA96B) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CABD6) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CAD18) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg01 (002CAD4C) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CADC4) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CADC5) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'FX_SulfurAmbiantPlume_01 (002CADD0) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CADD5) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CADD7) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CAA74) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralFormation05 (002CAE22) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg01 (002CADBF) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CA88F) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CADC3) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg01 (002CAD4B) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg01 (002CA982) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CAA2E) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CA890) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CA88D) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CA8C4) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg01 (002CA968) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CADCA) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg01 (002CA97D) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg01 (002CACCC) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CAABC) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CA8AA) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg03 (002CAC1A) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg01 (002CA8A9) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Found non-persistent link [ref 'MineralPoolEgg02 (002CA99A) -> ref 'PlanetTraitScanTarget04CharredEcosystem' (002CAF09)] which may fail to resolve at runtime.
+MASTERFILE: Open by default 'ScienceLockerDoorLower01' (0019B84C) in cell 'LondinionExt02' will be ignored in-game because the door is also locked.
+MASTERFILE: Cell contains more than one COC marker:  'AkilaNorthGate' (0027F1A3) (2, 0) in WorldSpace 'akilacity' (0027CFA2)
+MASTERFILE: Cell contains more than one COC marker:  'GagarinExt01' (0029DDCF) (0, -1) in WorldSpace 'settlegagarinworld' (0029DDD7)
+CELLS: Ref is not in its persistence location 'UC04_Terrormorph_CustomLoc' (0004AEC8).
+MASTERFILE: MapMarker (001C71A2) is a MapMarker ref but does not have map marker data.
+PATHFINDING: Cover edge 65535 out of range (0) in NavMesh 002BE3AA in cell 'QASmoke' (002BE3A9) (0, 0)
+MASTERFILE: NavMesh ID 002BE3AA in cell 'QASmoke' (002BE3A9) has invalid cover data.  It will be removed.
+CELLS: Ref is not in its persistence location 'scGenEmpty01Location' (001D84DF).
+MASTERFILE: Open by default 'GenIntRmSmWallMid_DoorA00b' (00143880) in cell 'RL067RoboticsFacility' will be ignored in-game because the door is also locked.
+MASTERFILE: Open by default 'GenIntRmSmWallMid_DoorA00b' (00080983) in cell 'LC165BuriedTemple01' will be ignored in-game because the door is also locked.
+MASTERFILE: Open by default 'GenIntRmSmWallMid_DoorA00b' (000482CA) in cell 'LC165BuriedTemple01' will be ignored in-game because the door is also locked.
+CELLS: Ref is not in its persistence location 'scGenEmpty01Location' (001D84DF).
+MASTERFILE: MapMarker for REFR MapMarker (00044486) is set to use its location name but has no location.
+MASTERFILE: MapMarker for REFR MapMarker (001E8E2D) is set to use its location name but has no location.
+CELLS: Ref is not in its persistence location 'DebugLocation' (00001116).
+CELLS: Ref is not in its persistence location 'RL002MiningOPInsectHiveLocation_BQ01_Barrett' (0027CF4C).
+CELLS: Ref is not in its persistence location 'SettleHopeTechLocation' (002A80E9).
+MASTERFILE: MapMarker (000390CC) is a MapMarker ref but does not have map marker data.
+MASTERFILE: Open by default 'LC088_OperationsDoorRef04' (0026DC63) in cell 'LC082Vigilance01' will be ignored in-game because the door is also locked.
+CELLS: Ref is not in its persistence location 'LC171Location' (000DF7B2).
+PATHFINDING: Invalid cover edge 4 in NavMesh 0013006D in cell 'DR006Cave' (0026AE8D) (0, 0)
+MASTERFILE: NavMesh ID 0013006D in cell 'DR006Cave' (0026AE8D) has invalid cover data.  It will be removed.
+PATHFINDING: Invalid cover edge 0 in NavMesh 0013006E in cell 'DR006Cave' (0026AE8D) (0, 0)
+MASTERFILE: NavMesh ID 0013006E in cell 'DR006Cave' (0026AE8D) has invalid cover data.  It will be removed.
+PATHFINDING: Invalid cover edge 4326 in NavMesh 00212F21 in cell 'DR006Cave' (0026AE8D) (0, 0)
+MASTERFILE: NavMesh ID 00212F21 in cell 'DR006Cave' (0026AE8D) has invalid cover data.  It will be removed.
+CELLS: Ref is not in its persistence location 'LC171Location' (000DF7B2).
+CELLS: Ref is not in its persistence location 'DebugLocation' (00001116).
+MASTERFILE: MapMarker (000FCC2E) is a MapMarker ref but does not have map marker data.
+CELLS: Ref is not in its persistence location 'DebugLocation' (00001116).
+MASTERFILE: Automatic door 'AutoloadDoor_Cave' (0028FF20) [0 units] in cell 'TraitEnergeticRiftingSM01Int' has its teleport marker too close to the linked door.
+MASTERFILE: MapMarker for REFR MapMarker (000C0EF9) is set to use its location name but has no location.
+MASTERFILE: Open by default 'GenCage_ParSmWallA_MidFull_DoorL01' (0036EBE6) in cell 'LC017NASA' will be ignored in-game because the door is also locked.
+MASTERFILE: Open by default 'CageGen_DoorLG01a_Left' (0022F1F0) in cell 'LC044RyujinIndustriesHQ' will be ignored in-game because the door is also locked.
+DEFAULT: Form [0000C65C] is not a bound object or a reference, it should not have the BGSContactShadowComponent.  Please remove!
+FORMS: Blank editor ID on this form should be fixed.
+MASTERFILE: Idle 'Furniture_ExitQuick' (001EEFF5) has no parent and is not an action root.
+FORMS: (Faction Reaction Error) Faction 'RL036_HostileFlyerFaction' [000034D6] is a Friend or Ally of Faction 'BugFaction' [00028670], but Faction 'BugFaction' [00028670] is not a Friend or Ally of Faction 'RL036_HostileFlyerFaction' [000034D6].
+FORMS: (Faction Reaction Error) Faction 'RL036_HostileFlyerFaction' [000034D6] is a Friend or Ally of Faction 'AnimalFriend01Faction' [00052407], but Faction 'AnimalFriend01Faction' [00052407] is not a Friend or Ally of Faction 'RL036_HostileFlyerFaction' [000034D6].
+FORMS: (Faction Reaction Error) Faction 'RL036_HostileFlyerFaction' [000034D6] is a Friend or Ally of Faction 'AnimalFriend02Faction' [00052408], but Faction 'AnimalFriend02Faction' [00052408] is not a Friend or Ally of Faction 'RL036_HostileFlyerFaction' [000034D6].
+FORMS: (Faction Reaction Error) Faction 'UC03_DeepMinesMinerFaction' [00009619] is a Friend or Ally of Faction 'UC03_AlienFriendFaction' [0029D01E], but Faction 'UC03_AlienFriendFaction' [0029D01E] is not a Friend or Ally of Faction 'UC03_DeepMinesMinerFaction' [00009619].
+FORMS: (Faction Reaction Error) Faction 'CF_TheKey_GenericCouchNPCFaction' [0003D43A] is a Friend or Ally of Faction 'CF_TheKey_GenericCaptainNPCFaction' [0013E420], but Faction 'CF_TheKey_GenericCaptainNPCFaction' [0013E420] is not a Friend or Ally of Faction 'CF_TheKey_GenericCouchNPCFaction' [0003D43A].
+FORMS: (Faction Reaction Error) Faction 'LC039_ReceptionistFaction' [0003FF0E] is a Friend or Ally of Faction 'LC039_RobotSecurityFaction' [0008D322], but Faction 'LC039_RobotSecurityFaction' [0008D322] is not a Friend or Ally of Faction 'LC039_ReceptionistFaction' [0003FF0E].
+FORMS: (Faction Reaction Error) Faction 'RL012RobotFaction' [00071A18] is a Friend or Ally of Faction 'PlayerAllyFaction' [00106C30], but Faction 'PlayerAllyFaction' [00106C30] is not a Friend or Ally of Faction 'RL012RobotFaction' [00071A18].
+FORMS: (Faction Reaction Error) Faction 'RL012RobotFaction' [00071A18] is a Friend or Ally of Faction 'PlayerFriendFaction' [00106C31], but Faction 'PlayerFriendFaction' [00106C31] is not a Friend or Ally of Faction 'RL012RobotFaction' [00071A18].
+FORMS: (Faction Reaction Error) Faction 'UCVanguardFaction' [000D1850] is a Friend or Ally of Faction 'UCSysDefFaction' [002733AF], but Faction 'UCSysDefFaction' [002733AF] is not a Friend or Ally of Faction 'UCVanguardFaction' [000D1850].
+FORMS: (Faction Reaction Error) Faction 'MS03_FriendlyFaction' [000D287B] is a Friend or Ally of Faction 'MS03_HostileFaction' [000D287C], but Faction 'MS03_HostileFaction' [000D287C] is not a Friend or Ally of Faction 'MS03_FriendlyFaction' [000D287B].
+FORMS: (Faction Reaction Error) Faction 'City_NA_Well_PrisonerFaction' [00100AC8] is a Friend or Ally of Faction 'CitizenGenericNPCFaction' [002B6541], but Faction 'CitizenGenericNPCFaction' [002B6541] is not a Friend or Ally of Faction 'City_NA_Well_PrisonerFaction' [00100AC8].
+FORMS: (Faction Reaction Error) Faction 'City_GG_Mark_MaldonadoFaction_OLD' [0018BBCF] is a Friend or Ally of Faction 'CityCYStartup01HostileFaction' [0022198D], but Faction 'CityCYStartup01HostileFaction' [0022198D] is not a Friend or Ally of Faction 'City_GG_Mark_MaldonadoFaction_OLD' [0018BBCF].
+FORMS: (Faction Reaction Error) Faction 'City_NA_Well_FugitiveFaction' [00269B02] is a Friend or Ally of Faction 'CitizenGenericNPCFaction' [002B6541], but Faction 'CitizenGenericNPCFaction' [002B6541] is not a Friend or Ally of Faction 'City_NA_Well_FugitiveFaction' [00269B02].
+FORMS: (Faction Reaction Error) Faction 'DONOTUSE_ScumFaction' [00270247] is a Friend or Ally of Faction 'CaptiveFaction' [0003E0C8], but Faction 'CaptiveFaction' [0003E0C8] is not a Friend or Ally of Faction 'DONOTUSE_ScumFaction' [00270247].
+MASTERFILE: Scene Topic '' (0031700C) is not used by any scenes.
+MASTERFILE: --topic has no infos
+MASTERFILE: --used by QUST 'RQ_OE_Scan_02' (0009084E)
+MASTERFILE: Scene Topic '' (00036AC6) is not used by any scenes.
+MASTERFILE: --first info (002BA9B1) text: 'I'll be back to Gagarin as soon as I can.'
+MASTERFILE: --used by QUST 'COM_Quest_Barrett_Q01_SpeechChallenge' (000369AA)
+MASTERFILE: Scene Topic '' (00036ABD) is not used by any scenes.
+MASTERFILE: --first info (002BA931) text: 'My ship is getting some repairs, but they're already paid for. | I just have to wait for it to be done, then I'll be on my way to Gagarin.'
+MASTERFILE: --used by QUST 'COM_Quest_Barrett_Q01_SpeechChallenge' (000369AA)
+MASTERFILE: Scene Topic '' (00036ABC) is not used by any scenes.
+MASTERFILE: --first info (002BA97E) text: 'What else do you need?'
+MASTERFILE: --used by QUST 'COM_Quest_Barrett_Q01_SpeechChallenge' (000369AA)
+MASTERFILE: Scene Topic '' (00036ABB) is not used by any scenes.
+MASTERFILE: --first info (002BA9D1) text: 'Well, thank you even so. | It means a lot. Maybe we can invest this money... build on it.'
+MASTERFILE: --used by QUST 'COM_Quest_Barrett_Q01_SpeechChallenge' (000369AA)
+MASTERFILE: Scene Topic '' (00036AB9) is not used by any scenes.
+MASTERFILE: --first info (002BAA32) text: 'It's tax deductible. Don't worry about it.'
+MASTERFILE: --used by QUST 'COM_Quest_Barrett_Q01_SpeechChallenge' (000369AA)
+MASTERFILE: Scene Topic '' (00036AB4) is not used by any scenes.
+MASTERFILE: --first info (002BA904) text: 'It means a lot that you believe in our work on Gagarin, and your donation is truly appreciated. | Thank you.'
+MASTERFILE: --used by QUST 'COM_Quest_Barrett_Q01_SpeechChallenge' (000369AA)
+MASTERFILE: Scene Topic '' (00036AB3) is not used by any scenes.
+MASTERFILE: --first info (002BA951) text: 'You need it more than I do.'
+MASTERFILE: --used by QUST 'COM_Quest_Barrett_Q01_SpeechChallenge' (000369AA)
+MASTERFILE: Scene Topic '' (00036A84) is not used by any scenes.
+MASTERFILE: --first info (002BA9C6) text: 'Optimism? Hope for the future? I don't know.'
+MASTERFILE: --used by QUST 'COM_Quest_Barrett_Q01_SpeechChallenge' (000369AA)
+MASTERFILE: Scene Topic '' (00036A83) is not used by any scenes.
+MASTERFILE: --first info (002BAA28) text: 'What will it take to get you back there?'
+MASTERFILE: --used by QUST 'COM_Quest_Barrett_Q01_SpeechChallenge' (000369AA)
+RENDERING: BGSVolumeFormComponent 0018b7dd, Box volume has invalid extents (halfExtents: 8.000000, 4.000000, 0.000000) (scale: 1.690750, 3.565819, 28125312.000000), at 0.000000, 0.000000, 0.000000
+RENDERING: BGSVolumeFormComponent 0018b7de, Box volume has invalid extents (halfExtents: 8.000000, 4.000000, 0.000000) (scale: 1.173887, 3.562958, 28125312.000000), at 0.000000, 0.000000, 0.000000
+RENDERING: BGSVolumeFormComponent 0018b7df, Box volume has invalid extents (halfExtents: 8.000000, 4.000000, 0.000000) (scale: 1.173887, 3.577171, 28125312.000000), at 0.000000, 0.000000, 0.000000
+RENDERING: BGSVolumeFormComponent 0018b7cc, Box volume has invalid extents (halfExtents: 8.000000, 4.000000, 0.000000) (scale: 1.173887, 3.773666, 28125312.000000), at 0.000000, 0.000000, 0.000000
+RENDERING: BGSVolumeFormComponent 0018b7ce, Box volume has invalid extents (halfExtents: 8.000000, 4.000000, 0.000000) (scale: 1.173887, 3.710144, 28125312.000000), at 0.000000, 0.000000, 0.000000
+RENDERING: BGSVolumeFormComponent 0018b7dc, Box volume has invalid extents (halfExtents: 8.000000, 4.000000, 0.000000) (scale: 1.681252, 3.703651, 28125312.000000), at 0.000000, 0.000000, 0.000000
+RENDERING: BGSVolumeFormComponent 0018b7dd, Box volume has invalid extents (halfExtents: 8.000000, 4.000000, 0.000000) (scale: 1.690750, 3.565819, 28125312.000000), at 0.000000, 0.000000, 0.000000
+RENDERING: BGSVolumeFormComponent 0018b7de, Box volume has invalid extents (halfExtents: 8.000000, 4.000000, 0.000000) (scale: 1.173887, 3.562958, 28125312.000000), at 0.000000, 0.000000, 0.000000
+RENDERING: BGSVolumeFormComponent 0018b7df, Box volume has invalid extents (halfExtents: 8.000000, 4.000000, 0.000000) (scale: 1.173887, 3.577171, 28125312.000000), at 0.000000, 0.000000, 0.000000
+RENDERING: BGSVolumeFormComponent 0018b7e7, Box volume has invalid extents (halfExtents: 8.000000, 4.000000, 0.000000) (scale: 5.025682, 4.810104, 24904064.000000), at 0.000000, 0.000000, 0.000000
+RENDERING: BGSVolumeFormComponent 002912a8, Box volume has invalid extents (halfExtents: 8.000000, 4.000000, 0.000000) (scale: 5.025682, 3.606079, 17757440.000000), at 0.000000, 0.000000, 0.000000
+RENDERING: BGSVolumeFormComponent 0018b7df, Box volume has invalid extents (halfExtents: 8.000000, 4.000000, 0.000000) (scale: 1.173887, 3.577171, 28125312.000000), at 0.000000, 0.000000, 0.000000
+RENDERING: BGSVolumeFormComponent 0018b7e0, Box volume has invalid extents (halfExtents: 8.000000, 4.000000, 0.000000) (scale: 1.173887, 3.522377, 28125312.000000), at 0.000000, 0.000000, 0.000000
+RENDERING: BGSVolumeFormComponent 0018b7bb, Box volume has invalid extents (halfExtents: 8.000000, 4.000000, 0.000000) (scale: 0.001000, 4.000000, 0.001000), at 0.000000, 0.000000, 0.000000
+RENDERING: BGSVolumeFormComponent 0018b7cc, Box volume has invalid extents (halfExtents: 8.000000, 4.000000, 0.000000) (scale: 1.173887, 3.773666, 28125312.000000), at 0.000000, 0.000000, 0.000000
+RENDERING: BGSVolumeFormComponent 0018b7df, Box volume has invalid extents (halfExtents: 8.000000, 4.000000, 0.000000) (scale: 1.173887, 3.577171, 28125312.000000), at 0.000000, 0.000000, 0.000000
+RENDERING: BGSVolumeFormComponent 0018b7e0, Box volume has invalid extents (halfExtents: 8.000000, 4.000000, 0.000000) (scale: 1.173887, 3.522377, 28125312.000000), at 0.000000, 0.000000, 0.000000
+RENDERING: BGSVolumeFormComponent 0036dcf8, Box volume has invalid extents (halfExtents: 34.150635, 34.150635, 0.000000) (scale: 1.000000, 1.000000, 7623968.000000), at 0.000000, 0.000000, 0.000000
+FORMS: Material ID 0xACDEC9D6 for material type 'MaterialPHYMeatGeneric' (001D6B76) is already in use by material type 'MaterialOrganicMeat' (000E64A6). One of these needs its Material Name changed.
+FORMS: Material ID 0xE4D39CA3 for material type 'MaterialPHYClothGeneric' (001D6B77) is already in use by material type 'Material_Cloth' (00022957). One of these needs its Material Name changed.
+FORMS: Material ID 0xDEE94842 for material type 'MaterialPHYGlassGenericSmall' (001D6B7B) is already in use by material type 'Material_Glass' (00012F39). One of these needs its Material Name changed.
+FORMS: Material ID 0x7720EFD7 for material type 'MaterialPHYMetalChain01' (00210E71) is already in use by material type 'MaterialPHYMetalChain' (00028E99). One of these needs its Material Name changed.
+FORMS: Material ID 0x532E0B01 for material type 'MaterialActorCreatureParasite' (002209CE) is already in use by material type 'MaterialActorInsect' (00022956). One of these needs its Material Name changed.
+FORMS: Material ID 0xB9233EAA for material type 'Material_Dirt_NoTunnel' (002F063B) is already in use by material type 'Material_Dirt' (00012F38). One of these needs its Material Name changed.
+FORMS: Material ID 0xC566E1E7 for material type 'MaterialShipStarStation' (002F6AEF) is already in use by material type 'MaterialShipHullPlayer' (0005CAFA). One of these needs its Material Name changed.
+FORMS: Movement type ID 'CreatureStrafingDefault' for movement type 'CreatureStrafing_Default_MT' (002CE281) is already in use by movement type 'Terrormorph_Default_MT' (000F5982). One of these needs its type ID changed.
+FORMS: Movement type ID 'CreatureStrafingDefault' for movement type 'Terrormorph_Elder_MT' (003E4F52) is already in use by movement type 'Terrormorph_Default_MT' (000F5982). One of these needs its type ID changed.
+QUESTS: Quest TemplateRandomConvQuest (00014BDE) has not been added to the story manager.
+QUESTS: Quest SE_Player_KMK02 (000157E3) has not been added to the story manager.
+QUESTS: Quest DialogueFCNeonConvo_LendelRenick01 (00024EAA) has not been added to the story manager.
+QUESTS: Quest SE_DerelictTemplate (0007C6A4) has not been added to the story manager.
+QUESTS: Quest FC02_BE_Quest (000D5B2C) has not been added to the story manager.
+QUESTS: Quest CUT_DialogueGenericHouseVaruunRandomConvo06 (000DB8C6) has not been added to the story manager.
+QUESTS: Quest CUT_DialogueGenericHouseVaruunRandomConvo05 (000DB8C7) has not been added to the story manager.
+QUESTS: Quest CUT_DialogueGenericHouseVaruunRandomConvo03 (000DB8C8) has not been added to the story manager.
+QUESTS: Quest CUT_DialogueGenericHouseVaruunRandomConvo02 (000DB8C9) has not been added to the story manager.
+QUESTS: Quest CUT_DialogueGenericHouseVaruunRandomConvo01 (000DB8CA) has not been added to the story manager.
+QUESTS: Quest CUT_DialogueGenericHouseVaruunRandomConvo04 (000DB8CB) has not been added to the story manager.
+QUESTS: Quest COM_Companion_SamCoe_Convo_NewAtlantis01 (000DF311) has not been added to the story manager.
+QUESTS: Quest COM_Companion_SamCoe_Convo_AkilaCity05 (000DF312) has not been added to the story manager.
+QUESTS: Quest COM_Companion_SamCoe_Convo_AkilaCity04 (000DF313) has not been added to the story manager.
+QUESTS: Quest COM_Companion_SamCoe_Convo_AkilaCity03 (000DF314) has not been added to the story manager.
+QUESTS: Quest COM_Companion_SamCoe_Convo_AkilaCity02 (000DF315) has not been added to the story manager.
+QUESTS: Quest COM_Companion_SamCoe_Convo_AkilaCity01 (000DF316) has not been added to the story manager.
+QUESTS: Quest COM_Companion_SamCoe_Convo_NewAtlantis02 (000DF31F) has not been added to the story manager.
+QUESTS: Quest COM_Companion_SamCoe_Convo_Neon01 (000DF320) has not been added to the story manager.
+QUESTS: Quest COM_Companion_SamCoe_Convo_Neon02 (000DF321) has not been added to the story manager.
+QUESTS: Quest COM_Companion_SamCoe_Convo_EleosRetreat (000DF45A) has not been added to the story manager.
+QUESTS: Quest MB_Passenger04Local (0010F8F4) has not been added to the story manager.
+QUESTS: Quest BE_Landing_24 (0010FC22) has not been added to the story manager.
+QUESTS: Quest BE_Landing_23 (0010FC23) has not been added to the story manager.
+QUESTS: Quest BE_Landing_22 (0010FC24) has not been added to the story manager.
+QUESTS: Quest BE_Landing_21 (0010FC25) has not been added to the story manager.
+QUESTS: Quest BE_Landing_20 (0010FC26) has not been added to the story manager.
+QUESTS: Quest SE_RockyAsteroidMiningMaster (001230FE) has not been added to the story manager.
+QUESTS: Quest SE_HailTemplate (0012C5A6) has not been added to the story manager.
+QUESTS: Quest SE_Player_GenericTemplate (0012C5A8) has not been added to the story manager.
+QUESTS: Quest COM_Companion_SarahMorgan_Convo_Cydonia01 (0012DFB5) has not been added to the story manager.
+QUESTS: Quest SE_DerelictShip (0012EB37) has not been added to the story manager.
+QUESTS: Quest SE_Player_DerelictShip (0013F2A1) has not been added to the story manager.
+QUESTS: Quest SE_Player_KMK01_StarbornPatrol01 (0013FA4F) has not been added to the story manager.
+QUESTS: Quest MB_Passenger03Far (00150A57) has not been added to the story manager.
+QUESTS: Quest SE_Player_HailTemplate (001BF8CE) has not been added to the story manager.
+QUESTS: Quest SE_ZW02 (001CE773) has not been added to the story manager.
+QUESTS: Quest Trident_RC_Jia02 (00205E37) has not been added to the story manager.
+QUESTS: Quest RL032_EavesdroppingScene01 (0020C63E) has not been added to the story manager.
+QUESTS: Quest FC_AC_RandConv_Template (00216F82) has not been added to the story manager.
+QUESTS: Quest SE_GenericTemplate (00224B22) has not been added to the story manager.
+QUESTS: Quest DialogueFCNeonConvo_SieghartDiosdado01 (00255449) has not been added to the story manager.
+QUESTS: Quest Trident_RC_Jia01 (002A322E) has not been added to the story manager.
+QUESTS: Quest COM_Companion_Barrett_Convo_Neon02 (0033E8EB) has not been added to the story manager.
+QUESTS: Quest COM_Companion_Barrett_Convo_Neon01 (0033E8EC) has not been added to the story manager.
+QUESTS: Quest COM_Companion_Barrett_Convo_Paradiso01 (0033E8ED) has not been added to the story manager.
+QUESTS: Quest COM_Companion_Barrett_Convo_RedMile01 (0033E8F2) has not been added to the story manager.
+QUESTS: Quest COM_Companion_Barrett_Convo_Cydonia01 (0033E8F7) has not been added to the story manager.
+QUESTS: Quest COM_Companion_Barrett_Convo_ECSConstant01 (0033E8F8) has not been added to the story manager.
+QUESTS: Quest COM_Companion_Barrett_Convo_Paradiso02 (0033E8F9) has not been added to the story manager.
+QUESTS: Quest UC_NA_CL_FarmScene (00390D2F) has not been added to the story manager.
+DEFAULT: Unsafe alias MiniBot02 in quest FFNewAtlantis06 (00089f4e)
+DEFAULT: Unsafe alias CrowdActor in quest DialogueUCNAConvo_Distro02 (002a104a)
+DEFAULT: Unsafe alias CrowdActor in quest DialogueUCNAConvo_Distro01 (002a104b)
+DEFAULT: Unsafe alias Guard02 in quest DialogueNeonConvo_SecurityCheckpoint (0032c7c0)
+DEFAULT: Unsafe alias Guard03 in quest DialogueNeonConvo_SecurityCheckpoint (0032c7c0)
+MASTERFILE: Scene 'MS03_Juno_Main' (00197E89) has overlapping actions 39 (0 - 14) and 28 (7 - 7)
+MASTERFILE: Scene 'MS03_Juno_Main' (00197E89) has overlapping actions 39 (0 - 14) and 33 (12 - 12)
+MASTERFILE: Scene 'MS03_Juno_Main' (00197E89) has overlapping actions 40 (0 - 14) and 29 (8 - 8)
+MASTERFILE: Scene 'MS03_Juno_Main' (00197E89) has overlapping actions 40 (0 - 14) and 30 (9 - 9)
+MASTERFILE: Scene 'MS03_Juno_Main' (00197E89) has overlapping actions 40 (0 - 14) and 34 (13 - 13)
+MASTERFILE: Scene 'MS03_Juno_Main' (00197E89) has overlapping actions 41 (0 - 14) and 26 (6 - 6)
+MASTERFILE: Scene 'FFRedMile01_MeiAnnounceRunScene' (002E0EBC) has overlapping actions 10 (0 - 4) and 1 (1 - 1)
+MASTERFILE: Scene 'FFRedMile01_MeiAnnounceRunScene' (002E0EBC) has overlapping actions 10 (0 - 4) and 2 (2 - 2)
+MASTERFILE: Scene 'FFRedMile01_MeiAnnounceRunScene' (002E0EBC) has overlapping actions 10 (0 - 4) and 3 (3 - 3)
+MASTERFILE: Scene 'FFRedMile01_MeiAnnounceRunScene' (002E0EBC) has overlapping actions 10 (0 - 4) and 4 (4 - 4)
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (00062DC5) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (003F20D6) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (00062E71) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultRefOnTriggerEnter on xMarkerFlagBlue (00125489) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF062 (002A5BDB) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Gen_Switch_02_Inverted (002A5700) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (00062DBB) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF061 (002A5BDA) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (001F326F) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (003F2111) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (003E4921) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (001F32E9) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (001F326A) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF024 (002A5BDD) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF027 (002A5683) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultRefOnTriggerEnter on xMarkerFlagBlue (0012548F) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (001F3311) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultRefOnTriggerEnter on xMarkerFlagBlue (0012548C) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF031 (002A56FF) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (003F225F) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (003F22A2) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on CatIndWalkSm1WayA01 (0009CAE7) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script LandingPadBlastShields on SftIntAddOn_HatchVent01 (00277CAD) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF011 (00277940) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Mechanical_Button_01_BigRedButton (0006332B) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script defaultadditemonactivate on se_ZW05Satellite (00224B1D) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script PilotSeatFurnitureScript on ShipDamage_CockpitInteriorSparks02 (000DD952) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (00062E02) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF063 (002A5BE9) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (003F2393) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script LandingPadBlastShields on SftIntAddOn_HatchVent01 (00277CE0) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Mechanical_Button_01_BigRedButton (0003C5E4) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Ind_Switch_02_Standing (002CE87D) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TerraBrewKioskScript on Neon_Kiosk_TerraBrew_01 (00051D80) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF103 (0003C5E5) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (00062B62) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (003F2316) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (003E4929) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF059 (002A5B91) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script LandingPadBlastShields on SftIntAddOn_HatchVent01 (00277CA3) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF028 (000D22F1) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF029 (002A56B0) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script LandingPadBlastShields on SftIntAddOn_HatchVent01 (00277CDC) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (001F3259) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF054 (002A58E6) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Gen_Switch_02_Inverted (002A58E7) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF068 (002CE82B) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultRefOnTriggerEnter on xMarkerFlagBlue (00125496) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF042 (002A57E2) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Gen_Switch_02_Inverted (002CE82A) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF043 (002A57E3) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script LandingPadBlastShields on SftIntAddOn_HatchVent01 (00277CB6) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF051 (002A588C) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF037 (002A57A3) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF057 (002A5B78) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF052 (002A588D) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Mechanical_Button_01_BigRedButton (0028209B) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultRefOnTriggerEnter on xMarkerFlagBlue (00125494) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Gen_Switch_02_Inverted (002A5989) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on DefaultDummy (001C25FD) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script PilotSeatFurnitureScript on NavMeshSeedMarker (0023C113) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (00062EAB) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultRefOnTriggerEnter on xMarkerFlagBlue (00125491) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF102 (001C80AC) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF044 (002A57E4) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: LvlEcliptic_Boss (0025C5E9) cannot be scripted, but has scripts attached to it
+SCRIPTS: Script TestOpenCloseSyncScript on Mechanical_Button_01_BigRedButton (0005CE64) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF045 (002A5836) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (00062D61) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF046 (002A5837) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF038 (002A57A4) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF050 (002A588B) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Mechanical_Button_01_BigRedButton (0028209E) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF049 (002A588A) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF039 (002A57A5) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Mechanical_Button_01_BigRedButton (001EB21C) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TerraBrewKioskScript on Neon_Kiosk_TerraBrew_01 (00051D6C) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF101 (001EB21D) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Mechanical_Button_01_BigRedButton (0028C30B) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Mechanical_Button_01_BigRedButton (0028C30A) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (002D42E7) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (003F20F3) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script LC107HullBreachTriggerScript on LC107HullBreachExplosionSource_Small (000B828F) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script LC107HullBreachTriggerScript on LC107HullBreachExplosionSource_Small (000B828E) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script LandingPadBlastShields on SftIntAddOn_HatchVent01 (00277CD6) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Mechanical_Button_01_BigRedButton (001C80AE) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script LandingPadBlastShields on SftIntAddOn_HatchVent01 (00277CCC) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (003F20F8) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF056 (002A5B77) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (003F2183) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Mechanical_Button_01_BigRedButton (0005CE53) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Mechanical_Button_01_BigRedButton (0005CE52) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (003F20BB) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (001F3306) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on CatIndWalkSm1WayA01 (00264761) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (003F2371) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Gen_Switch_02_Inverted (002A5938) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script LandingPadBlastShields on SftIntAddOn_HatchVent01 (00277CE3) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Mechanical_Button_01_BigRedButton (0005CEAC) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF022 (002A5755) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (003E5DDA) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF055 (002A5937) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Mechanical_Button_01_BigRedButton (002820AB) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF058 (002A5B90) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (00095082) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF035 (002A5756) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF079 (002CE85D) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Gen_Switch_02_Inverted (002A5BE8) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script LandingPadBlastShields on SftIntAddOn_HatchVent01 (00277CC6) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF036 (002A5757) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Gen_Switch_02_Inverted (002A58BA) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (001F3287) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Mechanical_Button_01_BigRedButton (0005CE62) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Gen_Switch_02_Inverted (000D22F2) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (003F2142) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Mechanical_Button_01_BigRedButton (0006332C) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Mechanical_Button_01_BigRedButton (0005CEA8) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF047 (002A5838) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (001F32F5) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script NewAtlantisActorDialogueScript on NyssaMarcanoRef (0001E44C) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Gen_Switch_02_Inverted (002A56AF) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (003F220E) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF053 (002A58B9) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script LandingPadBlastShields on SftIntAddOn_HatchVent01 (00277CBC) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Mechanical_Button_01_BigRedButton (002820AD) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script LC107HullBreachTriggerScript on LC107HullBreachExplosionSource_Small (000B8290) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script DefaultDisableSelfTrigger on SQ_EarthquakeOnLoadTrigger (003F232F) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF025 (002CE85E) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script LC107HullBreachTriggerScript on LC107HullBreachExplosionSource_Small (000B33D2) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF015 (00029D21) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script DefaultRefOnTriggerEnter on xMarkerFlagBlue (0012548E) is marked as edited, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on Gen_Switch_02_Inverted (002A5682) is marked as deleted, but the parent object doesn't have one
+SCRIPTS: Script TestOpenCloseSyncScript on VecteraElevatorButtonREF030 (002A5988) is marked as deleted, but the parent object doesn't have one
+FORMS: Book 'FAB_Book_TheCountOfMonteCristo_m' (0011234F) has invalid character в.
+FORMS: Book 'FFParadisoZ03_Recipe' (001C42CE) has invalid character и.
+MASTERFILE: Spaceship 'LC175Re939StarStation' [000013B6] has a teleport door that leads somewhere not in the interior or exterior of the ship; the interior and exterior are probably not properly linked
+MASTERFILE: Spaceship 'LC175Re939StarStation' [000013B6]'s interior docking door 'LC175Station_Interior_Docking' [0034829D] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'LC102SirenStarsShipNew_Custom' [00002D45] has a teleport door that leads somewhere not in the interior or exterior of the ship; the interior and exterior are probably not properly linked
+MASTERFILE: Spaceship 'LC102SirenStarsShipNew_Custom' [00002D45]'s docking port 'ShipDockingMarker' [0013DC6F] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'LC102SirenStarsShipNew_Custom' [00002D45]'s interior docking door 'LC102_DockDoor' [0014CFFD] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'LC102SirenStarsShipNew_Custom' [00002D45] has more than one pilot seat. It will not work properly if the player attempts to fly it.
+MASTERFILE: Spaceship 'SE_KT11_Destroyer_B_Deimos_Nebula01_Derelict_Custom' [00007478]'s interior docking door 'ShipDockingHatchCeiling01' [002CAD4E] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'MQ102MoaraShip_Custom' [00007911]'s interior docking door 'ShipDockingMarker' [0021A4E0] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Spaceship 'SM016_StroudEklundStaryard' [000090B0]'s interior docking door 'SettleStroudEklundDockDoor' [002133B4] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'SM015_DeimosStaryard' [000090B3]'s interior docking door 'SettleDeimosDockDoor' [002133B5] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'SM018_TridentLuxuryStaryard' [000090B8]'s interior docking door 'TridentLoadDoor' [00223329] is not linked to a ship module trigger!
+MASTERFILE: Destruction settings on ship 'LC088_LvlShip_DefenseBattery_Alpha' [000090F9] has a health value higher than 1. Health on data is:700
+MASTERFILE: Destruction settings on ship 'LC088_LvlShip_DefenseBattery_Beta' [000090FD] has a health value higher than 1. Health on data is:700
+MASTERFILE: Spaceship 'TheEyeShip' [00012863] has a teleport door that leads somewhere not in the interior or exterior of the ship; the interior and exterior are probably not properly linked
+MASTERFILE: Spaceship 'TheEyeShip' [00012863]'s interior docking door 'SSTheEye_LoadDoorInt_01' [0016D4D3] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'TheEyeShip' [00012863]'s interior docking door 'SSTheEye_LoadDoorInt_02' [0016D4D2] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'UC01_SimulationPlayerShip_ClassB' [00015B82]'s docking port 'ShipDockingMarker' [001E3933] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'RL083_RogueShipyard' [000196D3] has a teleport door that leads somewhere not in the interior or exterior of the ship; the interior and exterior are probably not properly linked
+MASTERFILE: Spaceship 'RL083_RogueShipyard' [000196D3]'s interior docking door 'RL083DockDoor' [0026FB7D] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'Station_Unique_TheKey' [00032406] has a teleport door that leads somewhere not in the interior or exterior of the ship; the interior and exterior are probably not properly linked
+MASTERFILE: Spaceship 'Station_Unique_TheKey' [00032406]'s docking port 'ShipDockingMarker' [000360FD] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'Station_Unique_TheKey' [00032406]'s interior docking door 'StationTheKey_PlayerShipDockingDoorRef' [0029A490] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'Station_Unique_TheKey' [00032406]'s docking port 'ShipDockingMarker' [002F0E05] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'Station_Unique_TheKey' [00032406]'s docking port 'ShipDockingMarker' [002F0E04] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'Station_Unique_TheKey' [00032406]'s docking port 'ShipDockingMarker' [002EFEA0] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'Station_Unique_TheKey' [00032406]'s docking port 'ShipDockingMarker' [002EFEA2] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'Station_Unique_TheKey' [00032406]'s docking port 'ShipDockingMarker' [002F0E06] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'Station_Unique_TheKey' [00032406]'s docking port 'ShipDockingMarker' [002EFEA1] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'Station_Unique_TheKey' [00032406]'s docking port 'ShipDockingMarker' [002EFE9E] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Destruction settings on ship 'LC088_LvlShip_DefenseBattery_Gamma' [00046F61] has a health value higher than 1. Health on data is:700
+MASTERFILE: Spaceship 'DR033_TheWheel' [0008CE68]'s interior docking door 'DR033DockingDoor' [001F88C1] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'COM_Andreja_Quest_JaedaShip_Custom' [000994B2]'s interior docking door 'ShipDockingMarker_DeimosSlim' [000C8873] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Spaceship 'SE_KT02_Ship_PartyCruise_Custom' [000AB5DD]'s interior docking door 'ShipDockingMarker' [00006FEC] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Spaceship 'CF02_RaganaShip_Custom' [000BD1C2] has more than one pilot seat. It will not work properly if the player attempts to fly it.
+MASTERFILE: Spaceship 'DR019_SpacerStation' [000CF22A] has a teleport door that leads somewhere not in the interior or exterior of the ship; the interior and exterior are probably not properly linked
+MASTERFILE: Spaceship 'DR019_SpacerStation' [000CF22A]'s interior docking door 'DR019DockDoor01' [0013D006] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'LvlShip_UCNavy_C_Combat' [000DCF5E] has a invalid bounds of zero. This spaceship's movement behaviors may look wrong in game.
+MASTERFILE: Spaceship 'SE_SD06_DerelictShip_New_Custom' [000E9517]'s interior docking door 'ShipDockingMarker' [000E951B] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Spaceship 'SE_SD07_DerelictShip_New_Custom' [000EB7F6]'s interior docking door 'ShipDockingMarker' [000ED471] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Spaceship 'SE_KT07_Destroyer_B_Deimos_Nebula01_Derelict_Custom' [000ECFF2]'s interior docking door 'ShipDockingMarker_DeimosSlim' [001FA9CA] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Spaceship 'DR019Ship_Custom' [000F48FE] has a teleport door that leads somewhere not in the interior or exterior of the ship; the interior and exterior are probably not properly linked
+MASTERFILE: Spaceship 'DR019Ship_Custom' [000F48FE]'s docking port 'ShipDockingMarker' [000F4888] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'LvlShip_UCNavy_A_Combat_50' [000FFB2B] has a invalid bounds of zero. This spaceship's movement behaviors may look wrong in game.
+MASTERFILE: Spaceship 'SE_KT08_Cargo_A_Generic04_Custom' [00107B56]'s interior docking door 'ShipDockingMarker' [00204FB8] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Spaceship 'SE_CK02_B_Hopetech_PCH01_Custom' [0011EA20]'s interior docking door 'ShipDockingMarker' [0004FA0E] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Spaceship 'se_ck01_Cargo_A_Generic02_Custom' [00122C4A]'s interior docking door 'ShipDockingMarker' [00122C4F] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Spaceship 'SM020_TheDen' [00128D5E]'s interior docking door 'TheDenDockDoor' [0021400B] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'RL088ShipNEW_Custom' [0013D0B9]'s docking port 'ShipDockingMarker' [00187F01] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'RL088ShipNEW_Custom' [0013D0B9]'s interior docking door 'RL088DockDoor' [0021C191] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'RL088ShipNEW_Custom' [0013D0B9]'s docking port 'ShipDockingMarker' [001880A3] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'RL088ShipNEW_Custom' [0013D0B9]'s interior docking door 'Temp_DockDoor' [0022924C] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'SE_JM02_B_Deimos_Bireme01b_Custom' [00140143]'s interior docking door 'ShipDockingMarker' [00177653] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Destruction settings on ship 'LC107LegacyShip' [0014A8B0] has a health value higher than 1. Health on data is:1000
+MASTERFILE: Spaceship 'LC107LegacyShip' [0014A8B0]'s docking port 'ShipDockingMarker' [00190DFC] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'LC107LegacyShip' [0014A8B0]'s interior docking door 'LC107Legacy01DockingDoorRef' [002A48BE] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'LC107LegacyShip' [0014A8B0]'s docking port 'ShipDockingMarker' [00205C83] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'LC107LegacyShip' [0014A8B0]'s interior docking door 'InvisibleDoorHiddenMinUse01' [0003905E] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'UC06_OrlaseShip_Custom' [0014A8BC]'s interior docking door 'ShipLDDoorFloor01' [001451E5] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'SG02StarStation' [00157B69]'s interior docking door 'StsGenIntRmSmWallMid_DoorB01_Load' [00156B47] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s docking port 'ShipDockingMarker' [000F8170] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s interior docking door 'LC043PrototypeShipDockingPortDoor' [00268BBB] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s docking port 'ShipDockingMarker' [000F8E0E] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s docking port 'ShipDockingMarker' [000F8CAD] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s docking port 'ShipDockingMarker' [000F817B] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s docking port 'ShipDockingMarker' [000F85CE] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s docking port 'ShipDockingMarker' [000F85C3] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s docking port 'ShipDockingMarker' [000F8D68] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s docking port 'ShipDockingMarker' [000F8CB8] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s interior docking door 'LC043SY01EntryLoadDoor' [00294DF8] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s docking port 'ShipDockingMarker' [000F8B8F] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s docking port 'ShipDockingMarker' [000F8D8F] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s docking port 'ShipDockingMarker' [000F8CC3] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s docking port 'ShipDockingMarker' [000F85D9] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s docking port 'ShipDockingMarker' [000F85AD] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s docking port 'ShipDockingMarker' [000F8191] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s docking port 'ShipDockingMarker' [000F8186] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'LC043SYStationShip' [00159AF1]'s docking port 'ShipDockingMarker' [000F8165] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'LvlShip_UCNavy_Combat_50' [0015C379] has a invalid bounds of zero. This spaceship's movement behaviors may look wrong in game.
+MASTERFILE: Spaceship 'SE_ZW06_Cargo_A_Generic_MULE01_Custom' [0015D948]'s interior docking door 'ShipDockingMarker' [0015D94F] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Spaceship 'LC131_Freighter_A_Hopetech_LostCargo_Custom' [0016BB89] has a teleport door that leads somewhere not in the interior or exterior of the ship; the interior and exterior are probably not properly linked
+MASTERFILE: Spaceship 'LC131_Freighter_A_Hopetech_LostCargo_Custom' [0016BB89]'s docking port 'ShipDockingMarker' [00011309] doesn't have a linked interior door and won't be useable!
+MASTERFILE: Spaceship 'MS03JunoShip' [001A3EE8]'s docking port 'ShipDockingMarker' [002DA26C] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'MS03JunoShip' [001A3EE8]'s interior docking door 'ShipDockingHatchCeiling01' [0032473B] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'RL082_TradeAuthorityWarehouse' [001B03A7] has a teleport door that leads somewhere not in the interior or exterior of the ship; the interior and exterior are probably not properly linked
+MASTERFILE: Spaceship 'RL082_TradeAuthorityWarehouse' [001B03A7]'s docking port 'ShipDockingMarker' [001AD830] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'RL082_TradeAuthorityWarehouse' [001B03A7]'s interior docking door 'RL082DockDoor' [0021400F] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'LvlShip_UCCitizen_C_Combat' [001BBBB9] has a invalid bounds of zero. This spaceship's movement behaviors may look wrong in game.
+MASTERFILE: Spaceship 'LvlShip_UCCitizen_Combat' [001BBBBB] has a invalid bounds of zero. This spaceship's movement behaviors may look wrong in game.
+MASTERFILE: Spaceship 'LvlShip_FreestarCitizen_C_Combat' [001CAEB7] has a invalid bounds of zero. This spaceship's movement behaviors may look wrong in game.
+MASTERFILE: Spaceship 'LvlShip_FreestarCitizen_Combat' [001CAEB9] has a invalid bounds of zero. This spaceship's movement behaviors may look wrong in game.
+MASTERFILE: Spaceship 'SE_KT09_Freighter_B_Hopetech_PCH01_Derelict_Custom' [001CB7E5]'s interior docking door 'ShipDockingMarker' [001F501D] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Spaceship 'StationTheClinicShip' [001DEBE4] has a teleport door that leads somewhere not in the interior or exterior of the ship; the interior and exterior are probably not properly linked
+MASTERFILE: Spaceship 'StationTheClinicShip' [001DEBE4]'s interior docking door 'TheClinic_DockingDoor01' [001DE8C2] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'DR032DerelictStationShip' [001EB452]'s interior docking door 'ShpGenIntPerSmWallMid_ExLg_DockingDoor01_Load' [001EC248] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'SettleECSConstantShip_Custom' [001F6793]'s docking port 'ShipDockingMarker' [003DAF1E] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'SettleECSConstantShip_Custom' [001F6793]'s interior docking door 'SettleECSConstant_DockDoor' [00147800] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'LC122UCN48Ship' [00203B4C] has a teleport door that leads somewhere not in the interior or exterior of the ship; the interior and exterior are probably not properly linked
+MASTERFILE: Spaceship 'LC122UCN48Ship' [00203B4C]'s docking port 'ShipDockingMarker' [00395F46] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'LC122UCN48Ship' [00203B4C]'s interior docking door 'LC122DockingDoor' [00108676] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'SE_SP01_Freighter_A_Nova_Econohaul02_Derelict_Custom' [00213404]'s interior docking door 'ShipDockingMarker' [002135A6] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Spaceship 'RL088Ship_Custom' [00214335]'s docking port 'ShipDockingMarker' [00214019] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'RL088Ship_Custom' [00214335]'s interior docking door 'RL088DockDoor' [0021C191] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'LC099NovaGalacticShipyardStation' [00216F53] has a teleport door that leads somewhere not in the interior or exterior of the ship; the interior and exterior are probably not properly linked
+MASTERFILE: Spaceship 'LC099NovaGalacticShipyardStation' [00216F53]'s interior docking door 'LC099_NovaStationDoor_DockingInterior' [002FF626] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'MQ202_LC012_TheScow_Custom' [00234DE4]'s docking port 'ShipDockingMarker' [0028AB75] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'MQ202_LC012_TheScow_Custom' [00234DE4]'s interior docking door 'LC012_DockingDoor_Main' [0022D726] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'MQ202_LC012_TheScow_Custom' [00234DE4]'s docking port 'ShipDockingMarker' [0028F5FC] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'MQ202_LC012_TheScow_Custom' [00234DE4]'s interior docking door 'LC012_DockingDoor_Extra01' [0018912E] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'MQ202_LC012_TheScow_Custom' [00234DE4]'s docking port 'ShipDockingMarker' [0028AB6A] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'MQ202_LC012_TheScow_Custom' [00234DE4]'s interior docking door 'LC012_DockingDoor_Extra02' [0018912D] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'LC082VigilanceShip_Custom' [00257106] has a teleport door that leads somewhere not in the interior or exterior of the ship; the interior and exterior are probably not properly linked
+MASTERFILE: Spaceship 'LC082VigilanceShip_Custom' [00257106]'s docking port 'ShipDockingMarker' [0023A6CE] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'LC082VigilanceShip_Custom' [00257106]'s interior docking door 'LC082_FakeDockingPortLoadDoor04' [000F8E31] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'LC082VigilanceShip_Custom' [00257106]'s docking port 'ShipDockingMarker' [002399C2] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'LC082VigilanceShip_Custom' [00257106]'s interior docking door 'LC082_PlayerShipDockingPortDoorRef' [002C6B4E] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'LC082VigilanceShip_Custom' [00257106]'s docking port 'ShipDockingMarker' [00239992] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'LC082VigilanceShip_Custom' [00257106]'s interior docking door 'LC082_FakeDockingPortLoadDoor02' [000F8E33] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'LC082VigilanceShip_Custom' [00257106]'s docking port 'ShipDockingMarker' [0023A1A2] is linked to a door inside a different spaceship!
+MASTERFILE: Spaceship 'LC082VigilanceShip_Custom' [00257106]'s interior docking door 'LC082_FakeDockingPortLoadDoor03' [000F8E32] is not linked to a ship module trigger!
+MASTERFILE: Spaceship 'se_AG01_Freighter_B_Stroud_Venture01b_Derelict_Custom' [00284A18]'s interior docking door 'ShipDockingMarker' [00078D23] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Spaceship 'SE_JM01_A_Deimos_Longsword01_Custom' [0037A56D]'s interior docking door 'ShipDockingMarker' [0037EA2A] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Spaceship 'SE_KT10_Destroyer_B_Stroud_Privateer01_Derelict_Custom' [0037F546]'s interior docking door 'ShipDockingMarker' [0037F552] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Spaceship 'SE_KT13_Freighter_B_Deimos_Bireme01_Derelict_Custom' [0038239C]'s interior docking door 'ShipDockingMarker' [00382515] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Spaceship 'SE_KT12_Combat_B_Generic03_Custom' [003ADB33]'s interior docking door 'ShipDockingMarker' [0020587A] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Spaceship 'SE_KT14_Freighter_B_Hopetech_PCH01_Derelict_Custom' [003B3915]'s interior docking door 'ShipDockingMarker' [003B4673] has a transient link to its associated ship module trigger! Linked ship module triggers should be persistent.
+MASTERFILE: Packin cell 'PackInStorageCellDUPLICATE000' (002FB949) has no source pack in and 3 references.
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Pacifier_Optics_ReflexSight' is not in its parent 'mod_Pacifier_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Pacifier_Optics_ReflexSight' is not in its parent 'mod_Pacifier_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Silencer' on child mod 'mod_Pacifier_Muzzle_Suppressor' is not in its parent 'mod_Pacifier_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Pacifier_Optics_ReflexSight' is not in its parent 'mod_Pacifier_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Pacifier_Optics_ReflexSight' is not in its parent 'mod_Pacifier_Modgroup_02'
+MASTERFILE: Filter keyword 'if_Silencer' on child mod 'mod_Pacifier_Muzzle_Suppressor' is not in its parent 'mod_Pacifier_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Shotty_Barrel_Long' is not in its parent 'mod_Shotty_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Shotty_Optics_ReflexSight' is not in its parent 'mod_Shotty_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Shotty_Optics_ReflexSight' is not in its parent 'mod_Shotty_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Shotty_Barrel_Long' is not in its parent 'mod_Shotty_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Shotty_Optics_ReflexSight' is not in its parent 'mod_Shotty_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Shotty_Optics_ReflexSight' is not in its parent 'mod_Shotty_Modgroup_02'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_HardTarget_Barrel_Long' is not in its parent 'mod_HardTarget_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_HardTarget_Optics_LongScope' is not in its parent 'mod_HardTarget_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_HardTarget_Optics_LongScope' is not in its parent 'mod_HardTarget_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_HardTarget_Optics_ReflexSight' is not in its parent 'mod_HardTarget_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_HardTarget_Optics_ReflexSight' is not in its parent 'mod_HardTarget_Modgroup_01'
+MASTERFILE: Filter keyword 'PkKeywords' on child mod 'mod_HardTarget_Optics_ReflexSight' is not in its parent 'mod_HardTarget_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_HardTarget_Barrel_Long' is not in its parent 'mod_HardTarget_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_HardTarget_Optics_LongScope' is not in its parent 'mod_HardTarget_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_HardTarget_Optics_LongScope' is not in its parent 'mod_HardTarget_Modgroup_02'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_HardTarget_Barrel_Fluted' is not in its parent 'mod_HardTarget_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_HardTarget_Barrel_Bull' is not in its parent 'mod_HardTarget_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_HardTarget_Optics_ReconScope' is not in its parent 'mod_HardTarget_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_HardTarget_Optics_ReconScope' is not in its parent 'mod_HardTarget_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_MagPulse_Barrel_Long' is not in its parent 'mod_MagPulse_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_MagPulse_Barrel_Long' is not in its parent 'mod_MagPulse_Modgroup_02'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_MagPulse_Barrel_Stabilizing' is not in its parent 'mod_MagPulse_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_MagShear_Barrel_Long' is not in its parent 'mod_MagShear_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Short' on child mod 'mod_MagShear_Barrel_Short' is not in its parent 'mod_MagShear_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_MagShear_Barrel_Long' is not in its parent 'mod_MagShear_Modgroup_02'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_MagShear_Barrel_Long' is not in its parent 'mod_MagShear_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_MagShot_Barrel_Long' is not in its parent 'mod_MagShot_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_MagShot_Barrel_Long' is not in its parent 'mod_MagShot_Modgroup_02'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_MagShot_Barrel_MagneticRails' is not in its parent 'mod_MagShot_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_MagSniper_Barrel_Long' is not in its parent 'mod_MagSniper_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_MagSniper_Optics_LongScope' is not in its parent 'mod_MagSniper_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_MagSniper_Optics_LongScope' is not in its parent 'mod_MagSniper_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_MagSniper_Barrel_Long' is not in its parent 'mod_MagSniper_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_MagSniper_Optics_LongScope' is not in its parent 'mod_MagSniper_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_MagSniper_Optics_LongScope' is not in its parent 'mod_MagSniper_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_MagSniper_Optics_ReconScope' is not in its parent 'mod_MagSniper_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_MagSniper_Optics_ReconScope' is not in its parent 'mod_MagSniper_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Bigbang_Optics_ReflexSight' is not in its parent 'mod_BigBang_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Bigbang_Optics_ReflexSight' is not in its parent 'mod_BigBang_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Bigbang_Optics_ReflexSight' is not in its parent 'mod_BigBang_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Bigbang_Optics_ReflexSight' is not in its parent 'mod_BigBang_Modgroup_02'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Bigbang_Muzzle_Double' is not in its parent 'mod_BigBang_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Orion_Barrel_Long' is not in its parent 'mod_Orion_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Orion_Optics_ReflexSight' is not in its parent 'mod_Orion_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Orion_Optics_ReflexSight' is not in its parent 'mod_Orion_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Kodama_Optics_ReflexSight' is not in its parent 'mod_Kodama_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Kodama_Optics_ReflexSight' is not in its parent 'mod_Kodama_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Silencer' on child mod 'mod_Kodama_Muzzle_Suppressor' is not in its parent 'mod_Kodama_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Kodama_Optics_ReflexSight' is not in its parent 'mod_Kodama_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Kodama_Optics_ReflexSight' is not in its parent 'mod_Kodama_Modgroup_02'
+MASTERFILE: Filter keyword 'if_Silencer' on child mod 'mod_Kodama_Muzzle_Suppressor' is not in its parent 'mod_Kodama_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Drumbeat_Optics_ReflexSight' is not in its parent 'mod_Drumbeat_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Drumbeat_Optics_ReflexSight' is not in its parent 'mod_Drumbeat_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Drumbeat_Optics_ReflexSight' is not in its parent 'mod_Drumbeat_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Drumbeat_Optics_ReflexSight' is not in its parent 'mod_Drumbeat_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_DrumBeat_Optics_MediumScope' is not in its parent 'mod_Drumbeat_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_DrumBeat_Optics_MediumScope' is not in its parent 'mod_Drumbeat_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_DrumBeat_Optics_ReconScope' is not in its parent 'mod_Drumbeat_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_DrumBeat_Optics_ReconScope' is not in its parent 'mod_Drumbeat_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_DrumBeat_Optics_MediumScope' is not in its parent 'mod_Drumbeat_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_DrumBeat_Optics_MediumScope' is not in its parent 'mod_Drumbeat_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Orion_Barrel_Long' is not in its parent 'mod_Orion_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Orion_Optics_ShortScope' is not in its parent 'mod_Orion_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Orion_Optics_ShortScope' is not in its parent 'mod_Orion_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Orion_Optics_ReflexSight' is not in its parent 'mod_Orion_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Orion_Optics_ReflexSight' is not in its parent 'mod_Orion_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Orion_Optics_ReconScope' is not in its parent 'mod_Orion_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Orion_Optics_ReconScope' is not in its parent 'mod_Orion_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Orion_Optics_MediumScope' is not in its parent 'mod_Orion_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Orion_Optics_MediumScope' is not in its parent 'mod_Orion_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Sidestar_Barrel_Long' is not in its parent 'mod_Sidestar_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Sidestar_Optics_ReflexSight' is not in its parent 'mod_Sidestar_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Sidestar_Optics_ReflexSight' is not in its parent 'mod_Sidestar_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Sidestar_Barrel_Long' is not in its parent 'mod_Sidestar_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Sidestar_Optics_ReflexSight' is not in its parent 'mod_Sidestar_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Sidestar_Optics_ReflexSight' is not in its parent 'mod_Sidestar_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Sidestar_Optics_ReflexSight' is not in its parent 'mod_Sidestar_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Sidestar_Optics_ReflexSight' is not in its parent 'mod_Sidestar_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_UrbanEagle_Barrel_Long' is not in its parent 'mod_UrbanEagle_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_UrbanEagle_Optics_ReflexSight' is not in its parent 'mod_UrbanEagle_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_UrbanEagle_Optics_ReflexSight' is not in its parent 'mod_UrbanEagle_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_UrbanEagle_Barrel_Long' is not in its parent 'mod_UrbanEagle_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_UrbanEagle_Optics_ReflexSight' is not in its parent 'mod_UrbanEagle_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_UrbanEagle_Optics_ReflexSight' is not in its parent 'mod_UrbanEagle_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_UrbanEagle_Optics_ShortScope' is not in its parent 'mod_UrbanEagle_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_UrbanEagle_Optics_ShortScope' is not in its parent 'mod_UrbanEagle_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_UrbanEagle_Optics_ShortScope' is not in its parent 'mod_UrbanEagle_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_UrbanEagle_Optics_ShortScope' is not in its parent 'mod_UrbanEagle_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_UrbanEagle_Optics_ReflexSight' is not in its parent 'mod_UrbanEagle_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_UrbanEagle_Optics_ReflexSight' is not in its parent 'mod_UrbanEagle_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Microgun_Barrel_Long' is not in its parent 'mod_Microgun_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Microgun_Barrel_Long' is not in its parent 'mod_Microgun_Modgroup_02'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Rocketlauncher_Barrel_Long' is not in its parent 'mod_Rocketlauncher_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Rocketlauncher_Optics_ReflexSight' is not in its parent 'mod_Rocketlauncher_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Rocketlauncher_Optics_ReflexSight' is not in its parent 'mod_Rocketlauncher_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Rocketlauncher_Optics_ShortScope' is not in its parent 'mod_Rocketlauncher_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Rocketlauncher_Optics_ShortScope' is not in its parent 'mod_Rocketlauncher_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Rocketlauncher_Barrel_Long' is not in its parent 'mod_Rocketlauncher_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Rocketlauncher_Optics_ReflexSight' is not in its parent 'mod_Rocketlauncher_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Rocketlauncher_Optics_ReflexSight' is not in its parent 'mod_Rocketlauncher_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Rocketlauncher_Optics_ShortScope' is not in its parent 'mod_Rocketlauncher_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Rocketlauncher_Optics_ShortScope' is not in its parent 'mod_Rocketlauncher_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Rocketlauncher_Optics_ShortScope' is not in its parent 'mod_Rocketlauncher_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Rocketlauncher_Optics_ShortScope' is not in its parent 'mod_Rocketlauncher_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Rocketlauncher_Optics_ReflexSight' is not in its parent 'mod_Rocketlauncher_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Rocketlauncher_Optics_ReflexSight' is not in its parent 'mod_Rocketlauncher_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_AA99_Barrel_Long' is not in its parent 'mod_AA99_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_AA99_Optics_ReflexSight' is not in its parent 'mod_AA99_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_AA99_Optics_ReflexSight' is not in its parent 'mod_AA99_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_AA99_Barrel_Long' is not in its parent 'mod_AA99_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_AA99_Optics_ReflexSight' is not in its parent 'mod_AA99_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_AA99_Optics_ReflexSight' is not in its parent 'mod_AA99_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_AA99_Optics_MediumScope' is not in its parent 'mod_AA99_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_AA99_Optics_MediumScope' is not in its parent 'mod_AA99_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_AA99_Optics_MediumScope' is not in its parent 'mod_AA99_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_AA99_Optics_MediumScope' is not in its parent 'mod_AA99_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_AA99_Optics_ReconScope' is not in its parent 'mod_AA99_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_AA99_Optics_ReconScope' is not in its parent 'mod_AA99_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Beowulf_Barrel_Long' is not in its parent 'mod_Beowulf_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Beowulf_Barrel_Short' is not in its parent 'mod_Beowulf_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Beowulf_Optics_ReflexSight' is not in its parent 'mod_Beowulf_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Beowulf_Optics_ReflexSight' is not in its parent 'mod_Beowulf_Modgroup_01'
+MASTERFILE: Filter keyword 'PkKeywords' on child mod 'mod_Beowulf_Optics_ReflexSight' is not in its parent 'mod_Beowulf_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Beowulf_Barrel_Long' is not in its parent 'mod_Beowulf_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Beowulf_Optics_ReflexSight' is not in its parent 'mod_Beowulf_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Beowulf_Optics_ReflexSight' is not in its parent 'mod_Beowulf_Modgroup_02'
+MASTERFILE: Filter keyword 'PkKeywords' on child mod 'mod_Beowulf_Optics_ReflexSight' is not in its parent 'mod_Beowulf_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Beowulf_Optics_ShortScope' is not in its parent 'mod_Beowulf_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Beowulf_Optics_ShortScope' is not in its parent 'mod_Beowulf_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Beowulf_Optics_MediumScope' is not in its parent 'mod_Beowulf_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Beowulf_Optics_MediumScope' is not in its parent 'mod_Beowulf_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Beowulf_Optics_ShortScope' is not in its parent 'mod_Beowulf_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Beowulf_Optics_ShortScope' is not in its parent 'mod_Beowulf_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Coachman_Barrel_Short' is not in its parent 'mod_Coachman_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Coachman_Optics_ReflexSight' is not in its parent 'mod_Coachman_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Coachman_Optics_ReflexSight' is not in its parent 'mod_Coachman_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Coachman_Barrel_Short' is not in its parent 'mod_Coachman_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Coachman_Optics_ReflexSight' is not in its parent 'mod_Coachman_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Coachman_Optics_ReflexSight' is not in its parent 'mod_Coachman_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Coachman_Optics_ReflexSight' is not in its parent 'mod_Coachman_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Coachman_Optics_ReflexSight' is not in its parent 'mod_Coachman_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Equinox_Optics_ShortScope' is not in its parent 'mod_Equinox_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Equinox_Optics_ShortScope' is not in its parent 'mod_Equinox_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Equinox_Optics_MediumScope' is not in its parent 'mod_Equinox_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Equinox_Optics_MediumScope' is not in its parent 'mod_Equinox_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Equinox_Optics_ShortScope' is not in its parent 'mod_Equinox_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Equinox_Optics_ShortScope' is not in its parent 'mod_Equinox_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Equinox_Optics_MediumScope' is not in its parent 'mod_Equinox_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Equinox_Optics_MediumScope' is not in its parent 'mod_Equinox_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Equinox_Optics_ReconScope' is not in its parent 'mod_Equinox_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Equinox_Optics_ReconScope' is not in its parent 'mod_Equinox_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Grendel_Barrel_Long' is not in its parent 'mod_Grendel_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Short' on child mod 'mod_Grendel_Barrel_Short' is not in its parent 'mod_Grendel_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Grendel_Barrel_Long' is not in its parent 'mod_Grendel_Modgroup_02'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Grendel_Barrel_Slab' is not in its parent 'mod_Grendel_Modgroup_02'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Grendel_Barrel_Slab' is not in its parent 'mod_Grendel_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Kraken_Barrel_Long' is not in its parent 'mod_Kraken_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Kraken_Optics_ReflexSight' is not in its parent 'mod_Kraken_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Kraken_Optics_ReflexSight' is not in its parent 'mod_Kraken_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Kraken_Barrel_Bull' is not in its parent 'mod_Kraken_Modgroup_02'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Kraken_Barrel_Long' is not in its parent 'mod_Kraken_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Kraken_Optics_ReflexSight' is not in its parent 'mod_Kraken_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Kraken_Optics_ReflexSight' is not in its parent 'mod_Kraken_Modgroup_02'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Kraken_Barrel_Bull' is not in its parent 'mod_Kraken_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Kraken_Optics_ReflexSight' is not in its parent 'mod_Kraken_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Kraken_Optics_ReflexSight' is not in its parent 'mod_Kraken_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Maelstrom_Barrel_Long' is not in its parent 'mod_Maelstrom_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Maelstrom_Optics_ReflexSight' is not in its parent 'mod_Maelstrom_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Maelstrom_Optics_ReflexSight' is not in its parent 'mod_Maelstrom_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Maelstrom_Barrel_Long' is not in its parent 'mod_Maelstrom_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Maelstrom_Optics_ReflexSight' is not in its parent 'mod_Maelstrom_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Maelstrom_Optics_ReflexSight' is not in its parent 'mod_Maelstrom_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Maelstrom_Optics_ShortScope' is not in its parent 'mod_Maelstrom_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Maelstrom_Optics_ShortScope' is not in its parent 'mod_Maelstrom_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Maelstrom_Optics_ShortScope' is not in its parent 'mod_Maelstrom_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Maelstrom_Optics_ShortScope' is not in its parent 'mod_Maelstrom_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Maelstrom_Optics_MediumScope' is not in its parent 'mod_Maelstrom_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Maelstrom_Optics_MediumScope' is not in its parent 'mod_Maelstrom_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Novalight_Barrel_Long' is not in its parent 'mod_Novalight_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Novalight_Optics_ReflexSight' is not in its parent 'mod_Novalight_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Novalight_Optics_ReflexSight' is not in its parent 'mod_Novalight_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Novalight_Barrel_Long' is not in its parent 'mod_Novalight_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Novalight_Optics_ReflexSight' is not in its parent 'mod_Novalight_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Novalight_Optics_ReflexSight' is not in its parent 'mod_Novalight_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Novalight_Optics_ReflexSight' is not in its parent 'mod_Novalight_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Novalight_Optics_ReflexSight' is not in its parent 'mod_Novalight_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Solstice_Barrel_Long' is not in its parent 'mod_Solstice_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Solstice_Barrel_Long' is not in its parent 'mod_Solstice_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Solstice_Optics_HoloSight' is not in its parent 'mod_Solstice_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Solstice_Optics_HoloSight' is not in its parent 'mod_Solstice_Modgroup_02'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Solstice_Barrel_Long_Laser' is not in its parent 'mod_Solstice_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Solstice_Optics_HoloSight' is not in its parent 'mod_Solstice_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Solstice_Optics_HoloSight' is not in its parent 'mod_Solstice_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Novablast_Barrel_Long' is not in its parent 'mod_Novablast_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Novablast_Optics_ReflexSight' is not in its parent 'mod_Novablast_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Novablast_Optics_ReflexSight' is not in its parent 'mod_Novablast_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Novablast_Barrel_Long' is not in its parent 'mod_Novablast_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Novablast_Optics_ShortScope' is not in its parent 'mod_Novablast_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Novablast_Optics_ShortScope' is not in its parent 'mod_Novablast_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Novablast_Optics_ReflexSight' is not in its parent 'mod_Novablast_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Novablast_Optics_ReflexSight' is not in its parent 'mod_Novablast_Modgroup_02'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Breach_Barrel_Long' is not in its parent 'mod_Breach_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Breach_Optics_ReflexSight' is not in its parent 'mod_Breach_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Breach_Optics_ReflexSight' is not in its parent 'mod_Breach_Modgroup_01'
+MASTERFILE: Filter keyword 'PkKeywords' on child mod 'mod_Breach_Optics_ReflexSight' is not in its parent 'mod_Breach_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Breach_Barrel_Long' is not in its parent 'mod_Breach_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Breach_Optics_ReflexSight' is not in its parent 'mod_Breach_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Breach_Optics_ReflexSight' is not in its parent 'mod_Breach_Modgroup_02'
+MASTERFILE: Filter keyword 'PkKeywords' on child mod 'mod_Breach_Optics_ReflexSight' is not in its parent 'mod_Breach_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Breach_Optics_ReflexSight' is not in its parent 'mod_Breach_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Breach_Optics_ReflexSight' is not in its parent 'mod_Breach_Modgroup_03'
+MASTERFILE: Filter keyword 'PkKeywords' on child mod 'mod_Breach_Optics_ReflexSight' is not in its parent 'mod_Breach_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Bridger_Barrel_Long' is not in its parent 'mod_Bridger_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Bridger_Optics_ReflexSight' is not in its parent 'mod_Bridger_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Bridger_Optics_ReflexSight' is not in its parent 'mod_Bridger_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Bridger_Optics_ShortScope' is not in its parent 'mod_Bridger_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Bridger_Optics_ShortScope' is not in its parent 'mod_Bridger_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Eon_Optics_ReflexSight' is not in its parent 'mod_Eon_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Eon_Optics_ReflexSight' is not in its parent 'mod_Eon_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Eon_Optics_ReflexSight' is not in its parent 'mod_Eon_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Eon_Optics_ReflexSight' is not in its parent 'mod_Eon_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Eon_Optics_ReflexSight' is not in its parent 'mod_Eon_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Eon_Optics_ReflexSight' is not in its parent 'mod_Eon_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_InflictorRifle_Barrel_Long' is not in its parent 'mod_InflictorRifle_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_InflictorRifle_Optics_ReflexSight' is not in its parent 'mod_InflictorRifle_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_InflictorRifle_Optics_ReflexSight' is not in its parent 'mod_InflictorRifle_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_InflictorRifle_Optics_ReflexSight' is not in its parent 'mod_InflictorRifle_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_InflictorRifle_Optics_ReflexSight' is not in its parent 'mod_InflictorRifle_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_InflictorRifle_Optics_ShortScope' is not in its parent 'mod_InflictorRifle_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_InflictorRifle_Optics_ShortScope' is not in its parent 'mod_InflictorRifle_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_InflictorRifle_Optics_ReconScope' is not in its parent 'mod_InflictorRifle_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_InflictorRifle_Optics_ReconScope' is not in its parent 'mod_InflictorRifle_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_InflictorRifle_Optics_ShortScope' is not in its parent 'mod_InflictorRifle_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_InflictorRifle_Optics_ShortScope' is not in its parent 'mod_InflictorRifle_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_InflictorRifle_Optics_ReflexSight' is not in its parent 'mod_InflictorRifle_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_InflictorRifle_Optics_ReflexSight' is not in its parent 'mod_InflictorRifle_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_InflictorPistol_Barrel_Long' is not in its parent 'mod_InflictorPistol_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_InflictorPistol_Optics_GlowSights' is not in its parent 'mod_InflictorPistol_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_InflictorPistol_Optics_GlowSights' is not in its parent 'mod_InflictorPistol_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_InflictorPistol_Optics_ReflexSight' is not in its parent 'mod_InflictorPistol_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_InflictorPistol_Optics_ReflexSight' is not in its parent 'mod_InflictorPistol_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_InflictorPistol_Optics_GlowSights' is not in its parent 'mod_InflictorPistol_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_InflictorPistol_Optics_GlowSights' is not in its parent 'mod_InflictorPistol_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_InflictorPistol_Optics_ReflexSight' is not in its parent 'mod_InflictorPistol_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_InflictorPistol_Optics_ReflexSight' is not in its parent 'mod_InflictorPistol_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_InflictorPistol_Optics_ReflexSight' is not in its parent 'mod_InflictorPistol_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_InflictorPistol_Optics_ReflexSight' is not in its parent 'mod_InflictorPistol_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Lawgiver_Barrel_Long' is not in its parent 'mod_Lawgiver_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Lawgiver_Optics_ReflexSight' is not in its parent 'mod_Lawgiver_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Lawgiver_Optics_ReflexSight' is not in its parent 'mod_Lawgiver_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Lawgiver_Optics_ShortScope' is not in its parent 'mod_Lawgiver_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Lawgiver_Optics_ShortScope' is not in its parent 'mod_Lawgiver_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Lawgiver_Barrel_Long' is not in its parent 'mod_Lawgiver_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Lawgiver_Optics_ReflexSight' is not in its parent 'mod_Lawgiver_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Lawgiver_Optics_ReflexSight' is not in its parent 'mod_Lawgiver_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Lawgiver_Optics_ShortScope' is not in its parent 'mod_Lawgiver_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Lawgiver_Optics_ShortScope' is not in its parent 'mod_Lawgiver_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Lawgiver_Optics_ShortScope' is not in its parent 'mod_Lawgiver_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Lawgiver_Optics_ShortScope' is not in its parent 'mod_Lawgiver_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Lawgiver_Optics_ReflexSight' is not in its parent 'mod_Lawgiver_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Lawgiver_Optics_ReflexSight' is not in its parent 'mod_Lawgiver_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Lawgiver_Optics_ReconScope' is not in its parent 'mod_Lawgiver_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Lawgiver_Optics_ReconScope' is not in its parent 'mod_Lawgiver_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_RussianAssaultRifle_Optics_ReflexSight' is not in its parent 'mod_RussianAssaultRifle_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_RussianAssaultRifle_Optics_ReflexSight' is not in its parent 'mod_RussianAssaultRifle_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_RussianAssaultRifle_Optics_ReflexSight' is not in its parent 'mod_RussianAssaultRifle_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_RussianAssaultRifle_Optics_ReflexSight' is not in its parent 'mod_RussianAssaultRifle_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_RussianAssaultRifle_Optics_ReflexSight' is not in its parent 'mod_RussianAssaultRifle_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_RussianAssaultRifle_Optics_ReflexSight' is not in its parent 'mod_RussianAssaultRifle_Modgroup_03'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Tombstone_Barrel_Long' is not in its parent 'mod_Tombstone_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Tombstone_Optics_ReflexSight' is not in its parent 'mod_Tombstone_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Tombstone_Optics_ReflexSight' is not in its parent 'mod_Tombstone_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Tombstone_Optics_IronSights' is not in its parent 'mod_Tombstone_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Tombstone_Optics_IronSights' is not in its parent 'mod_Tombstone_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Tombstone_Barrel_Long' is not in its parent 'mod_Tombstone_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Tombstone_Optics_IronSights' is not in its parent 'mod_Tombstone_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Tombstone_Optics_IronSights' is not in its parent 'mod_Tombstone_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Tombstone_Optics_ReflexSight' is not in its parent 'mod_Tombstone_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Tombstone_Optics_ReflexSight' is not in its parent 'mod_Tombstone_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Tombstone_Optics_ReconScope' is not in its parent 'mod_Tombstone_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Tombstone_Optics_ReconScope' is not in its parent 'mod_Tombstone_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Tombstone_Optics_ReflexSight' is not in its parent 'mod_Tombstone_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Tombstone_Optics_ReflexSight' is not in its parent 'mod_Tombstone_Modgroup_03'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_XM2311_Optics_RedDotSight' is not in its parent 'mod_XM2311_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_XM2311_Optics_RedDotSight' is not in its parent 'mod_XM2311_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_XM2311_Optics_RedDotSight' is not in its parent 'mod_XM2311_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_XM2311_Optics_RedDotSight' is not in its parent 'mod_XM2311_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_XM2311_Optics_ShortScope' is not in its parent 'mod_XM2311_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_XM2311_Optics_ShortScope' is not in its parent 'mod_XM2311_Modgroup_02'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Rattler_Barrel_Long' is not in its parent 'mod_Rattler_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Rattler_Optics_ReflexSight' is not in its parent 'mod_Rattler_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Rattler_Optics_ReflexSight' is not in its parent 'mod_Rattler_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Rattler_Optics_ReflexSight' is not in its parent 'mod_Rattler_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Rattler_Optics_ReflexSight' is not in its parent 'mod_Rattler_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Regulator_Optics_GlowSights' is not in its parent 'mod_Regulator_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Regulator_Optics_GlowSights' is not in its parent 'mod_Regulator_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Regulator_Optics_ReflexSight' is not in its parent 'mod_Regulator_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Regulator_Optics_ReflexSight' is not in its parent 'mod_Regulator_Modgroup_01'
+MASTERFILE: Filter keyword 'if_Barrel_Long' on child mod 'mod_Regulator_Barrel_Extended' is not in its parent 'mod_Regulator_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Regulator_Optics_GlowSights' is not in its parent 'mod_Regulator_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Regulator_Optics_GlowSights' is not in its parent 'mod_Regulator_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Regulator_Optics_ReflexSight' is not in its parent 'mod_Regulator_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Regulator_Optics_ReflexSight' is not in its parent 'mod_Regulator_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Razorback_Optics_ReflexSight' is not in its parent 'mod_Razorback_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Razorback_Optics_ReflexSight' is not in its parent 'mod_Razorback_Modgroup_01'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Razorback_Optics_ReconScope' is not in its parent 'mod_Razorback_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Razorback_Optics_ReconScope' is not in its parent 'mod_Razorback_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Razorback_Optics_ShortScope' is not in its parent 'mod_Razorback_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Razorback_Optics_ShortScope' is not in its parent 'mod_Razorback_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeAny' on child mod 'mod_Razorback_Optics_ReflexSight' is not in its parent 'mod_Razorback_Modgroup_02'
+MASTERFILE: Filter keyword 'if_ScopeOptical' on child mod 'mod_Razorback_Optics_ReflexSight' is not in its parent 'mod_Razorback_Modgroup_02'
+TIMER: Starting BSMaterialDB UpdateAllDependencies
+ANIMATION: Race 'SwimmerARace' (0026AECC) has an aim angle tolerance of 20.00 that is not covered by its attacks: (0.00/0.00)
+ANIMATION: Race 'ParasiteARace' (002AAD58) has an aim angle tolerance of 20.00 that is not covered by its attacks: (0.00/0.00)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon CreatureRangedAttack_Mouth1_Ice (000297F7)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_Grendel_Barrel_01 (00032D6A)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_Grendel_Barrel_02 (00032D7A)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon UnarmedModelT (00045EC5)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_Breach_Receiver_02 (00057196)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon CCT_Weapon_Ranged_Floater_Head_Laser (0005817C)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon CCT_Weapon_Ranged_Tail_Grenade (0005817D)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon CreatureRangedAttack_Mouth1_Pod (00064982)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon CCT_Weapon_Ranged_Mouth2_Laser (0006D58F)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon SWC_StarbornWeapon_GravityTorpedo02_lvl40 (00087590)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon CreatureRangedAttack_Mouth1_Rock (00094D26)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon UnarmedOctopedeA_Mouth (000ED3F1)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon crRocketlauncher_Hunter (000F8E7A)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_Drumbeat_Internal_01 (00100B8D)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon CCT_Weapon_Ranged_Mouth1_Laser (00136A3A)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon UnarmedHopperA_Claw (001C7DF3)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon Crew_Elite_Rocketlauncher (001F965C)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon Crew_Elite_BigBang (001F96EA)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon CreatureRangedAttack_Mouth1_Base_Secondary (00210BD1)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon CCT_Weapon_Ranged_Mouth_Grenade (0022EC27)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon crModelA_Combat_Head_Armored (00238940)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_Kodama_Grip_01 (002634C3)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_Kodama_Grip_02 (002634C4)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_Kodama_Grip_03 (002634C5)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_Eon_Magazine_01 (002634C6)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_Eon_Magazine_02 (002634C7)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_Eon_Magazine_03 (002634C8)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_Breach_Receiver_01 (002634C9)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_Drumbeat_Internal_02 (002C7EF6)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_Drumbeat_Internal_03 (002C7EF7)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_HardTarget_OpticsSights_02 (002C7EFC)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_HardTarget_OpticsSights_01 (002C7EFD)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_HardTarget_OpticsSights_03 (002C7EFE)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_Sidestar_Muzzle_01 (002C7F02)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_Sidestar_Muzzle_02 (002C7F03)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon NOCLUTTER_ResearchUI_Sidestar_Muzzle_03 (002C7F04)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon SWC_StarbornWeapon_GravityTorpedo01_lvl20 (002F3F2A)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon SWC_StarbornWeapon_GravityTorpedo03_lvl50 (002F3F2B)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon ModelA_LaserTracker (003B9AB4)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon crModelA_Crimsonfleet_FlameRightGun (003BF755)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon crModelA_Crimsonfleet_FlameLeftGun (003BF756)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon crModelA_CrimsonFleet_ArmoredRightGun (003BF757)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon crModelA_CrimsonFleet_ArmoredLeftGun (003BF758)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon CreatureRangedAttack_Mouth1_Vomit (003E35C1)
+FORMS: Could not find NPC for FillAttackSecondsFromAnimation for weapon CreatureRangedAttack_Head_Spit_AoE_Hazard (003E9B8E)
+TIMER: BSMaterialDB UpdateAllDependencies took 2.036 secs
+TIMER: Starting BSMaterial load job (async)
+MATERIALS: [BSMaterial] Created 65 new empty objects in 844.3 milliseconds
+TIMER: Starting BSMaterial::GenerateLODMaterials
+Generated 0 LOD materials
+TIMER: BSMaterial::GenerateLODMaterials took 0.000 secs
+TIMER: BSMaterial load job (async) took 0.845 secs
+TIMER: Starting BSMaterialDB UpdateDependencyGraph
+TIMER: BSMaterialDB UpdateDependencyGraph took 0.000 secs
+CELLS: Unable to resolve Cell sCTestBetaTemp to a galaxy body ID because it was not found.
+CELLS: Unable to resolve Cell scLC018BattleAboveEarth to a galaxy body ID because it was not found.
+GALAXY: Planet data _scasteroidcavetest02PlanetData(0x0011f78d)'s parent celestial body 0x0000029a:0x00000006 cannot be resolved!
+GALAXY: Planet data _scAsteroidCaveTest01PlanetData(0x0011f78e)'s parent celestial body 0x0000029a:0x00000006 cannot be resolved!
+GALAXY: Planet data _tempbetaPlanetData(0x0017176b)'s parent celestial body 0x0000029b:0x00000002 cannot be resolved!
+GALAXY: scRL048 is marked as unique but is assigned to more than one celestial body (originally marked to _RL048DerelictShipOrbitalPlanetData (0018334f), attempting to add _RL048DerelictResearchShipPlanetData (000b023e).
+GALAXY: 2386826 is marked as unique but does not have a space cell editor ID.
+DEFAULT: No location for orbital body (001bb7fd).
+DEFAULT: No location for orbital body (001bb7ff).
+DEFAULT: No location for orbital body (002cf271).
+DEFAULT: No location for orbital body (0005e560).
+DEFAULT: No location for orbital body (00246b8a).
+CELLS: Unable to resolve Cell sCTestBetaTemp to a galaxy body ID because it was not found.
+CELLS: Unable to resolve Cell scLC018BattleAboveEarth to a galaxy body ID because it was not found.
+GALAXY: Planet data _scasteroidcavetest02PlanetData(0x0011f78d)'s parent celestial body 0x0000029a:0x00000006 cannot be resolved!
+GALAXY: Planet data _scAsteroidCaveTest01PlanetData(0x0011f78e)'s parent celestial body 0x0000029a:0x00000006 cannot be resolved!
+GALAXY: Planet data _tempbetaPlanetData(0x0017176b)'s parent celestial body 0x0000029b:0x00000002 cannot be resolved!
+GALAXY: scRL048 is marked as unique but is assigned to more than one celestial body (originally marked to _RL048DerelictShipOrbitalPlanetData (0018334f), attempting to add _RL048DerelictResearchShipPlanetData (000b023e).
+GALAXY: 2386826 is marked as unique but does not have a space cell editor ID.
+MODELS: Could not find model Meshes\Effects\MPSFootDirtBits01.nif
+MODELS: Could not find model Meshes\Effects\MPSFootDirtDust01.nif
+MODELS: Could not find model Meshes\Effects\MPSFootPADirtDust.nif
+MODELS: Could not find model Meshes\Effects\MPSFootPADirtBits.nif
+MODELS: Could not find model Meshes\Effects\MPSFootGrassBits.nif
+MODELS: Could not find model Meshes\Effects\MPSFootLeavesBits.nif
+MODELS: Could not find model Meshes\Effects\MPSFootStoneDust.nif
+MODELS: Could not find model Meshes\Effects\MPSFootPAStoneDust.nif
+MODELS: Could not find model Meshes\Effects\MPSFootStoneBits.nif
+MODELS: Could not find model Meshes\Effects\MPSFootWaterSplash.nif
+MODELS: Could not find model Meshes\Effects\MPSFootWaterSplashPA.nif

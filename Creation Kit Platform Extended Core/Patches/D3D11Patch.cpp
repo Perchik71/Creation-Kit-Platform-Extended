@@ -53,7 +53,7 @@ namespace CreationKitPlatformExtended
 		bool D3D11Patch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{
-			if (eEditorCurrentVersion < EDITOR_STARFIELD_1_12_32_0)
+			if (eEditorCurrentVersion <= EDITOR_FALLOUT_C4_LAST)
 			{
 				auto SystemVersion = _engine->GetSystemVersion();
 				// Win 8.1 and newer

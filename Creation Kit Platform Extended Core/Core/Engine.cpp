@@ -471,7 +471,7 @@ namespace CreationKitPlatformExtended
 
 #ifdef _CKPE_WITH_QT5
 			auto QExternalResourceIterator = qtExternalResourcePackageFile.find(editorShortVersion);
-			if (QExternalResourceIterator != allowedDialogsPackageFile.end())
+			if (QExternalResourceIterator != qtExternalResourcePackageFile.end())
 			{
 				if (!Utils::FileExists(QExternalResourceIterator->second.data()))
 				{
