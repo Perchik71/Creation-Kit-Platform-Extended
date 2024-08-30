@@ -150,6 +150,46 @@ namespace CreationKitPlatformExtended
 
 		namespace Fallout4
 		{
+			class bhkThreadMemorySource : public CreationKitPlatformExtended::Patches::Skyrim::bhkThreadMemorySource
+			{
+			public:
+				virtual void* getExtendedInterface();
+			};
+
+			void* bhkThreadMemorySource::getExtendedInterface()
+			{
+				return nullptr;
+			}
+		}
+
+		namespace Starfield
+		{
+			class MemoryManager
+			{
+				// Не описываем конструкторы и деструкторы
+				// Класс - это просто оболочка
+			public:
+				static void* Allocate(MemoryManager* manager, size_t size, uint32_t alignment, bool aligned)
+				{
+					// Чем дольше я живу, тем тупее программисты в Beth, alignment == 1, зачем? WHY????
+					if (aligned && (alignment < 2)) alignment = 4;
+					return CreationKitPlatformExtended::Patches::MemoryManager::Allocate(
+						(CreationKitPlatformExtended::Patches::MemoryManager*)manager, size, alignment, aligned);
+				}
+
+				static void Deallocate(MemoryManager* manager, void* memory, bool aligned)
+				{
+					CreationKitPlatformExtended::Patches::MemoryManager::Deallocate(
+						(CreationKitPlatformExtended::Patches::MemoryManager*)manager, memory, aligned);
+				}
+
+				static size_t Size(MemoryManager* manager, void* memory)
+				{
+					return CreationKitPlatformExtended::Patches::MemoryManager::Size(
+						(CreationKitPlatformExtended::Patches::MemoryManager*)manager, memory);
+				}
+			};
+
 			class bhkThreadMemorySource
 			{
 			private:
@@ -162,14 +202,16 @@ namespace CreationKitPlatformExtended
 				virtual ~bhkThreadMemorySource();
 				virtual void* blockAlloc(size_t numBytes);
 				virtual void blockFree(void* p, size_t numBytes);
-				virtual void* bufAlloc(size_t& reqNumBytesInOut);
-				virtual void bufFree(void* p, size_t numBytes);
-				virtual void* bufRealloc(void* pold, size_t oldNumBytes, size_t& reqNumBytesInOut);
+				virtual void* blockRealloc(void* pold, size_t oldNumBytes, size_t& reqNumBytesInOut);
 				virtual void blockAllocBatch(void** ptrsOut, size_t numPtrs, size_t blockSize);
 				virtual void blockFreeBatch(void** ptrsIn, size_t numPtrs, size_t blockSize);
 				virtual void getMemoryStatistics(class MemoryStatistics& u);
 				virtual size_t getAllocatedSize(const void* obj, size_t nbytes);
 				virtual void resetPeakMemoryStatistics();
+				virtual void unk40();
+				virtual void unk48();
+				virtual void unk50();
+				virtual void unk58();
 				virtual void* getExtendedInterface();
 			};
 
@@ -193,17 +235,7 @@ namespace CreationKitPlatformExtended
 				MemoryManager::Deallocate(nullptr, p, true);
 			}
 
-			void* bhkThreadMemorySource::bufAlloc(size_t& reqNumBytesInOut)
-			{
-				return blockAlloc(reqNumBytesInOut);
-			}
-
-			void bhkThreadMemorySource::bufFree(void* p, size_t numBytes)
-			{
-				return blockFree(p, numBytes);
-			}
-
-			void* bhkThreadMemorySource::bufRealloc(void* pold, size_t oldNumBytes, size_t& reqNumBytesInOut)
+			void* bhkThreadMemorySource::blockRealloc(void* pold, size_t oldNumBytes, size_t& reqNumBytesInOut)
 			{
 				void* p = blockAlloc(reqNumBytesInOut);
 				memcpy(p, pold, oldNumBytes);
@@ -231,11 +263,31 @@ namespace CreationKitPlatformExtended
 
 			size_t bhkThreadMemorySource::getAllocatedSize(const void* obj, size_t nbytes)
 			{
-				Assert(FALSE);
+				Assert(false);
 				return 0;
 			}
 
 			void bhkThreadMemorySource::resetPeakMemoryStatistics()
+			{
+				// Ничего
+			}
+
+			void bhkThreadMemorySource::unk40()
+			{
+				// Ничего
+			}
+
+			void bhkThreadMemorySource::unk48()
+			{
+				// Ничего
+			}
+
+			void bhkThreadMemorySource::unk50()
+			{
+				// Ничего
+			}
+
+			void bhkThreadMemorySource::unk58()
 			{
 				// Ничего
 			}
@@ -356,6 +408,9 @@ namespace CreationKitPlatformExtended
 			_MESSAGE("Physical Memory (Total: %.1f Gb, Available: %.1f Gb)", TotalGB, AvailableTotalGB);
 			_MESSAGE("PageFile Memory (Total: %.1f Gb, Available: %.1f Gb)", TotalPageFileGB, AvailableTotalPageFileGB);
 
+			// Программа очень любит думать, а винде это не нравиться, скажем винде, чтоб не обращала внимание.
+			DisableProcessWindowsGhosting();
+
 			auto patchIAT = [](const char* module)
 			{
 				PatchIAT(HkCalloc, module, "calloc");
@@ -378,14 +433,20 @@ namespace CreationKitPlatformExtended
 			patchIAT("API-MS-WIN-CRT-HEAP-L1-1-0.DLL");
 			patchIAT("MSVCR110.DLL");
 
-			if (lpRelocationDatabaseItem->Version() == 1)
+			auto verPath = lpRelocationDatabaseItem->Version();
+
+			if (verPath < 3)
 			{
 				lpRelocator->DetourJump(_RELDATA_RAV(0), (uintptr_t)&MemoryManager::Allocate);
 				lpRelocator->DetourJump(_RELDATA_RAV(1), (uintptr_t)&MemoryManager::Deallocate);
 				lpRelocator->DetourJump(_RELDATA_RAV(2), (uintptr_t)&MemoryManager::Size);
 				lpRelocator->DetourJump(_RELDATA_RAV(3), (uintptr_t)&ScrapHeap::Allocate);
 				lpRelocator->DetourJump(_RELDATA_RAV(4), (uintptr_t)&ScrapHeap::Deallocate);
-				lpRelocator->DetourJump(_RELDATA_RAV(5), (uintptr_t)&Skyrim::bhkThreadMemorySource::__ctor__);
+
+				if (verPath == 1)
+					lpRelocator->DetourJump(_RELDATA_RAV(5), (uintptr_t)&Skyrim::bhkThreadMemorySource::__ctor__);
+				else if (verPath == 2)
+					lpRelocator->DetourJump(_RELDATA_RAV(5), (uintptr_t)&Fallout4::bhkThreadMemorySource::__ctor__);
 
 				{
 					ScopeRelocator SectionTextProtectionRemove;
@@ -396,8 +457,29 @@ namespace CreationKitPlatformExtended
 					lpRelocator->Patch(_RELDATA_RAV(9), { 0xC3 });
 				}
 
-				// Программа очень любит думать, а винде это не нравиться, скажем винде, чтоб не обращала внимание.
-				DisableProcessWindowsGhosting();
+				return true;
+			}
+			else if (verPath == 3)
+			{
+				lpRelocator->DetourJump(_RELDATA_RAV(0), (uintptr_t)&Starfield::MemoryManager::Allocate);
+				lpRelocator->DetourJump(_RELDATA_RAV(1), (uintptr_t)&Starfield::MemoryManager::Deallocate);
+				lpRelocator->DetourJump(_RELDATA_RAV(2), (uintptr_t)&Starfield::MemoryManager::Size);
+				/*lpRelocator->DetourJump(_RELDATA_RAV(3), (uintptr_t)&ScrapHeap::Allocate);
+				lpRelocator->DetourJump(_RELDATA_RAV(4), (uintptr_t)&ScrapHeap::Deallocate);*/
+				lpRelocator->DetourJump(_RELDATA_RAV(5), (uintptr_t)&Starfield::bhkThreadMemorySource::__ctor__);
+
+				{
+					ScopeRelocator SectionTextProtectionRemove;
+
+					lpRelocator->Patch(_RELDATA_RAV(6), { 0xC3 });
+		/*			lpRelocator->Patch(_RELDATA_RAV(7), { 0xC3 });
+					lpRelocator->Patch(_RELDATA_RAV(8), { 0xC3 });
+					lpRelocator->Patch(_RELDATA_RAV(9), { 0xC3 });
+					lpRelocator->Patch(_RELDATA_RAV(10), { 0xC3 });
+					lpRelocator->Patch(_RELDATA_RAV(11), { 0xC3 });*/
+				}
+
+				
 
 				return true;
 			}
