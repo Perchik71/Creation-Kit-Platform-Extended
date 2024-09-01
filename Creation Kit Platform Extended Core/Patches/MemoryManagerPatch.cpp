@@ -169,12 +169,16 @@ namespace CreationKitPlatformExtended
 				// Не описываем конструкторы и деструкторы
 				// Класс - это просто оболочка
 			public:
+				inline static size_t GetAlignSize(size_t size, size_t alignment)
+				{
+					alignment = ((alignment + 15) & ~15);
+					return (alignment + size) & ~alignment;
+				}
+
 				static void* Allocate(MemoryManager* manager, size_t size, uint32_t alignment, bool aligned)
 				{
-					// Чем дольше я живу, тем тупее программисты в Beth, alignment == 1, зачем? WHY????
-					if (aligned && (alignment < 2)) alignment = 4;
 					return CreationKitPlatformExtended::Patches::MemoryManager::Allocate(
-						(CreationKitPlatformExtended::Patches::MemoryManager*)manager, size, alignment, aligned);
+						(CreationKitPlatformExtended::Patches::MemoryManager*)manager, GetAlignSize(size, alignment), 16, true);
 				}
 
 				static void Deallocate(MemoryManager* manager, void* memory, bool aligned)
@@ -190,16 +194,47 @@ namespace CreationKitPlatformExtended
 				}
 			};
 
+			class HeapAllocator
+			{
+				// Не описываем конструкторы и деструкторы
+				// Класс - это просто оболочка
+			public:
+				static void* Allocate(ScrapHeap* manager, size_t size, uint32_t alignment)
+				{
+					auto ptr = Core::GlobalMemoryManagerPtr->MemAlloc(MemoryManager::GetAlignSize(size, alignment), 16, true);
+					_CKPE_TracerPush("HeapAllocator", ptr, size);
+					return ptr;
+				}
+
+				static void Deallocate(ScrapHeap* manager, void* memory)
+				{
+					Core::GlobalMemoryManagerPtr->MemFree(memory);
+					_CKPE_TracerPop(memory);
+				}
+
+				static size_t Size(ScrapHeap* manager, void* memory)
+				{
+					//voltek::scalable_msize(memory)
+					return MemoryManager::Size(nullptr, memory);
+				}
+
+				static size_t BlockSize(ScrapHeap* manager, void* memory)
+				{
+					return MemoryManager::GetAlignSize(MemoryManager::Size(nullptr, memory), 16) + 16;
+				}
+			};
+
 			class bhkThreadMemorySource
 			{
 			private:
 				char _pad0[0x8];
-				CRITICAL_SECTION m_CritSec;
+				char _nameClass[0x20];
 			public:
-				DECLARE_CONSTRUCTOR_HOOK(bhkThreadMemorySource);
+				inline static bhkThreadMemorySource** Instance;
+				static bhkThreadMemorySource* init(bhkThreadMemorySource* newInstance);
 
 				bhkThreadMemorySource();
-				virtual ~bhkThreadMemorySource();
+				virtual ~bhkThreadMemorySource() = default;
 				virtual void* blockAlloc(size_t numBytes);
 				virtual void blockFree(void* p, size_t numBytes);
 				virtual void* blockRealloc(void* pold, size_t oldNumBytes, size_t& reqNumBytesInOut);
@@ -215,14 +250,15 @@ namespace CreationKitPlatformExtended
 				virtual void* getExtendedInterface();
 			};
 
-			bhkThreadMemorySource::bhkThreadMemorySource()
+			bhkThreadMemorySource* bhkThreadMemorySource::init(bhkThreadMemorySource* newInstance)
 			{
-				InitializeCriticalSection(&m_CritSec);
+				*Instance = new(newInstance) bhkThreadMemorySource();
+				return newInstance;
 			}
 
-			bhkThreadMemorySource::~bhkThreadMemorySource()
+			bhkThreadMemorySource::bhkThreadMemorySource()
 			{
-				DeleteCriticalSection(&m_CritSec);
+				strcpy_s(_nameClass, "bhkThreadMemorySource");
 			}
 
 			void* bhkThreadMemorySource::blockAlloc(size_t numBytes)
@@ -464,23 +500,17 @@ namespace CreationKitPlatformExtended
 				lpRelocator->DetourJump(_RELDATA_RAV(0), (uintptr_t)&Starfield::MemoryManager::Allocate);
 				lpRelocator->DetourJump(_RELDATA_RAV(1), (uintptr_t)&Starfield::MemoryManager::Deallocate);
 				lpRelocator->DetourJump(_RELDATA_RAV(2), (uintptr_t)&Starfield::MemoryManager::Size);
-				/*lpRelocator->DetourJump(_RELDATA_RAV(3), (uintptr_t)&ScrapHeap::Allocate);
-				lpRelocator->DetourJump(_RELDATA_RAV(4), (uintptr_t)&ScrapHeap::Deallocate);*/
-				lpRelocator->DetourJump(_RELDATA_RAV(5), (uintptr_t)&Starfield::bhkThreadMemorySource::__ctor__);
 
-				{
-					ScopeRelocator SectionTextProtectionRemove;
+				Starfield::bhkThreadMemorySource::Instance = (Starfield::bhkThreadMemorySource**)(_RELDATA_ADDR(3));
+				lpRelocator->DetourJump(_RELDATA_RAV(4), (uintptr_t)&Starfield::bhkThreadMemorySource::init);
+					
+				lpRelocator->DetourJump(_RELDATA_RAV(5), (uintptr_t)&Starfield::HeapAllocator::Allocate);
+				lpRelocator->DetourJump(_RELDATA_RAV(6), (uintptr_t)&Starfield::HeapAllocator::Deallocate);
+				lpRelocator->DetourJump(_RELDATA_RAV(7), (uintptr_t)&Starfield::HeapAllocator::Size);
+				lpRelocator->DetourJump(_RELDATA_RAV(8), (uintptr_t)&Starfield::HeapAllocator::BlockSize);
 
-					lpRelocator->Patch(_RELDATA_RAV(6), { 0xC3 });
-		/*			lpRelocator->Patch(_RELDATA_RAV(7), { 0xC3 });
-					lpRelocator->Patch(_RELDATA_RAV(8), { 0xC3 });
-					lpRelocator->Patch(_RELDATA_RAV(9), { 0xC3 });
-					lpRelocator->Patch(_RELDATA_RAV(10), { 0xC3 });
-					lpRelocator->Patch(_RELDATA_RAV(11), { 0xC3 });*/
-				}
-
-				
-
+				lpRelocator->Patch(_RELDATA_RAV(9), { 0xC3 });
+	
 				return true;
 			}
 
