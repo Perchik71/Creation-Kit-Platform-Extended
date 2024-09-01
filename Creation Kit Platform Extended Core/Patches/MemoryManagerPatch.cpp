@@ -214,7 +214,6 @@ namespace CreationKitPlatformExtended
 
 				static size_t Size(ScrapHeap* manager, void* memory)
 				{
-					//voltek::scalable_msize(memory)
 					return MemoryManager::Size(nullptr, memory);
 				}
 
@@ -509,7 +508,10 @@ namespace CreationKitPlatformExtended
 				lpRelocator->DetourJump(_RELDATA_RAV(7), (uintptr_t)&Starfield::HeapAllocator::Size);
 				lpRelocator->DetourJump(_RELDATA_RAV(8), (uintptr_t)&Starfield::HeapAllocator::BlockSize);
 
-				lpRelocator->Patch(_RELDATA_RAV(9), { 0xC3 });
+				{
+					lpRelocator->Patch(_RELDATA_RAV(9), { 0xC3 });
+					lpRelocator->PatchNop(_RELDATA_RAV(10), 2);
+				}
 	
 				return true;
 			}
