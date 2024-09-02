@@ -500,9 +500,13 @@ namespace CreationKitPlatformExtended
 				lpRelocator->DetourJump(_RELDATA_RAV(1), (uintptr_t)&Starfield::MemoryManager::Deallocate);
 				lpRelocator->DetourJump(_RELDATA_RAV(2), (uintptr_t)&Starfield::MemoryManager::Size);
 
+				// They added a static variable, surprisingly, they preferred setting this in the class constructor,
+				// they clearly did not read Alen I. Holub... (as can't write in C/C++)
+				// https://www.amazon.com/Enough-Rope-Shoot-Yourself-Foot/dp/0070296898
 				Starfield::bhkThreadMemorySource::Instance = (Starfield::bhkThreadMemorySource**)(_RELDATA_ADDR(3));
 				lpRelocator->DetourJump(_RELDATA_RAV(4), (uintptr_t)&Starfield::bhkThreadMemorySource::init);
-					
+				
+				// ScrapHeap, HeapAllocator, SharedHeapAllocator and etc.
 				lpRelocator->DetourJump(_RELDATA_RAV(5), (uintptr_t)&Starfield::HeapAllocator::Allocate);
 				lpRelocator->DetourJump(_RELDATA_RAV(6), (uintptr_t)&Starfield::HeapAllocator::Deallocate);
 				lpRelocator->DetourJump(_RELDATA_RAV(7), (uintptr_t)&Starfield::HeapAllocator::Size);
@@ -510,6 +514,8 @@ namespace CreationKitPlatformExtended
 
 				{
 					lpRelocator->Patch(_RELDATA_RAV(9), { 0xC3 });
+					// This condition causes a leak, as it blocks the release of memory, perhaps this is due to interception.
+					// Solution: delete the condition.
 					lpRelocator->PatchNop(_RELDATA_RAV(10), 2);
 				}
 	
