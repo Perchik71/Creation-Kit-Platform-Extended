@@ -10,7 +10,11 @@ namespace CreationKitPlatformExtended
 {
 	namespace Patches
 	{
-		constexpr auto MEM_THRESHOLD = 2147483648;
+#if _CKPE_WITH_QT5
+		constexpr auto MEM_THRESHOLD = 21474836480;	// 20Gb a lot, but that's how much Starfield.esm is used when loading
+#else
+		constexpr auto MEM_THRESHOLD = 2147483648;	// 2Gb
+#endif // _CKPE_WITH_QT5
 		constexpr auto MEM_GB = 1073741824;
 
 		class MemoryManager
@@ -433,7 +437,7 @@ namespace CreationKitPlatformExtended
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
 			// Принудительный вылет с сообщением для пользователя.
-			AssertMsg(LowPhysicalMemory(), "Not enough memory to run the program");
+			AssertMsg(LowMemory(), "Not enough memory to run the program");
 
 			auto TotalGB = (double)(Utils::GetTotalPhysicalMemory()) / MEM_GB;
 			auto TotalPageFileGB = (double)(Utils::GetTotalPageFileMemory()) / MEM_GB;
@@ -441,7 +445,7 @@ namespace CreationKitPlatformExtended
 			auto AvailableTotalPageFileGB = (double)(Utils::GetAvailableTotalPageFileMemory()) / MEM_GB;
 
 			_MESSAGE("Physical Memory (Total: %.1f Gb, Available: %.1f Gb)", TotalGB, AvailableTotalGB);
-			_MESSAGE("PageFile Memory (Total: %.1f Gb, Available: %.1f Gb)", TotalPageFileGB, AvailableTotalPageFileGB);
+			_MESSAGE("Memory (Total: %.1f Gb, Available: %.1f Gb)", TotalPageFileGB, AvailableTotalPageFileGB);
 
 			// Программа очень любит думать, а винде это не нравиться, скажем винде, чтоб не обращала внимание.
 			DisableProcessWindowsGhosting();
@@ -531,10 +535,9 @@ namespace CreationKitPlatformExtended
 			return false;
 		}
 
-		bool MemoryManagerPatch::LowPhysicalMemory()
+		bool MemoryManagerPatch::LowMemory()
 		{
-			return (Utils::GetAvailableTotalPhysicalMemory() + 
-				Utils::GetAvailableTotalPageFileMemory()) > MEM_THRESHOLD;
+			return Utils::GetAvailableTotalPageFileMemory() > MEM_THRESHOLD;
 		}
 	}
 }

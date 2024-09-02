@@ -44,7 +44,7 @@ namespace CreationKitPlatformExtended
 			MemoryManagerPatch(const MemoryManagerPatch&) = default;
 			MemoryManagerPatch& operator=(const MemoryManagerPatch&) = default; 
 
-			inline bool LowPhysicalMemory();
+			inline bool LowMemory();
 		};
 	}
 }
