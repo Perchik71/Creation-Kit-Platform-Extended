@@ -46,7 +46,7 @@ namespace CreationKitPlatformExtended
 			const char* lpcstrPlatformRuntimeVersion) const
 		{
 			// Creation Kit 2.0 (SF) this patch is not needed.
-			return eEditorCurrentVersion > EDITOR_FALLOUT_C4_LAST;
+			return eEditorCurrentVersion <= EDITOR_FALLOUT_C4_LAST;
 		}
 
 		bool RenderWindow60FPSPatch::Activate(const Relocator* lpRelocator,
