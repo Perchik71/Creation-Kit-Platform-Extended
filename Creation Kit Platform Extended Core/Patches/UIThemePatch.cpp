@@ -331,6 +331,7 @@ namespace CreationKitPlatformExtended
 				auto comDll = reinterpret_cast<uintptr_t>(GetModuleHandle("comctl32.dll"));
 				Assert(comDll);
 
+#ifndef _CKPE_WITH_QT5
 				auto Id = _READ_OPTION_UINT("CreationKit", "uUIDarkThemeId", 0);
 				Id = std::min(Id, (unsigned long)2);
 
@@ -341,6 +342,10 @@ namespace CreationKitPlatformExtended
 				}
 				else
 					UITheme::SetTheme(UITheme::Theme(Id + 3));
+#else
+				// Visually, the two themes match each other better with qt5 plastique dark.
+				UITheme::SetTheme(UITheme::Theme::Theme_Dark);
+#endif // !_CKPE_WITH_QT5
 
 				voltek::detours_patch_iat(comDll, "USER32.dll", "GetSysColor", (uintptr_t)&Comctl32GetSysColor);
 				voltek::detours_patch_iat(comDll, "USER32.dll", "GetSysColorBrush", (uintptr_t)&Comctl32GetSysColorBrush);

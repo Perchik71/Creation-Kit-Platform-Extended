@@ -89,8 +89,10 @@ namespace CreationKitPlatformExtended
 			{
 				UIThemePatch::InitializeCurrentThread();
 
+				// replace toolbar
+				lpRelocator->DetourCall(_RELDATA_RAV(0), (uintptr_t)&Comctl32CreateToolbarEx_NavMesh);
 				// replace ImageList_LoadImage for item type
-				lpRelocator->DetourCall(_RELDATA_RAV(4), (uintptr_t)&Comctl32ImageList_LoadImageA_1);
+				lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&Comctl32ImageList_LoadImageA_1);
 			}
 			
 			return false;
