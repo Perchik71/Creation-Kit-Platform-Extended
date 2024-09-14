@@ -83,13 +83,20 @@ namespace CreationKitPlatformExtended
 
 		UINT INICacheDataPatch::HKGetPrivateProfileIntA(LPCSTR lpAppName, LPCSTR lpKeyName, INT nDefault, LPCSTR lpFileName)
 		{
+			SetLastError(0);
+
 			if (!lpKeyName || !lpAppName)
 				return (UINT)nDefault;
 
 			auto fileName = GetAbsoluteFileName(lpFileName);
 			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(fileName);
 			if (!ini_data)
-				return GetPrivateProfileIntA(lpAppName, lpKeyName, nDefault, lpFileName);
+			{
+				// set File Not Found
+				SetLastError(2);
+
+				return (UINT)nDefault;
+			}
 
 			String s;
 			auto ip = ini_data->get(lpAppName);
@@ -118,13 +125,30 @@ namespace CreationKitPlatformExtended
 		DWORD INICacheDataPatch::HKGetPrivateProfileStringA(LPCSTR lpAppName, LPCSTR lpKeyName, LPCSTR lpDefault,
 			LPSTR lpReturnedString, DWORD nSize, LPCSTR lpFileName)
 		{
+			SetLastError(0);
+
 			if (!lpReturnedString || !nSize)
 				return 0;
 
 			auto fileName = GetAbsoluteFileName(lpFileName);
 			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(fileName);
 			if (!ini_data)
-				return GetPrivateProfileStringA(lpAppName, lpKeyName, lpDefault, lpReturnedString, nSize, lpFileName);
+			{
+				// set File Not Found
+				SetLastError(2);
+
+				DWORD length = 0;
+				if (lpDefault)
+				{
+					length = std::min((DWORD)strlen(lpDefault), nSize - 1);
+					strncpy(lpReturnedString, lpDefault, length);
+					lpReturnedString[length] = 0;
+				}
+				else
+					lpReturnedString[0] = 0;
+
+				return length;
+			}
 
 			String s;
 			size_t l = 0;
@@ -184,6 +208,8 @@ namespace CreationKitPlatformExtended
 		BOOL INICacheDataPatch::HKGetPrivateProfileStructA(LPCSTR lpszSection, LPCSTR lpszKey, LPVOID lpStruct,
 			UINT uSizeStruct, LPCSTR szFile)
 		{
+			SetLastError(0);
+
 			if (!lpszSection || !szFile || (uSizeStruct >= (UINT)0x7FFFFFFA)) return false;
 
 			auto fileName = GetAbsoluteFileName(szFile);
@@ -231,11 +257,17 @@ namespace CreationKitPlatformExtended
 
 		BOOL INICacheDataPatch::HKWritePrivateProfileStringA(LPCSTR lpAppName, LPCSTR lpKeyName, LPCSTR lpString, LPCSTR lpFileName)
 		{
+			SetLastError(0);
+
 			if (!lpAppName || !lpFileName) return false;
 
 			auto fileName = GetAbsoluteFileName(lpFileName);
 			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(fileName);
-			if (!ini_data) return false;
+			if (!ini_data) 
+			{
+				SetLastError(2);
+				return false;
+			}
 
 			if (!lpKeyName)
 				// The name of the key to be associated with a string.
@@ -257,6 +289,8 @@ namespace CreationKitPlatformExtended
 		BOOL INICacheDataPatch::HKWritePrivateProfileStructA(LPCSTR lpszSection, LPCSTR lpszKey, LPVOID lpStruct,
 			UINT uSizeStruct, LPCSTR szFile)
 		{
+			SetLastError(0);
+
 			if (!lpStruct)
 				return HKWritePrivateProfileStringA(lpszSection, lpszKey, nullptr, szFile);
 
