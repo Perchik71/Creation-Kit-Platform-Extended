@@ -207,6 +207,7 @@ namespace CreationKitPlatformExtended
 
 			LRESULT OnCustomDraw(HWND hWindow, LPNMLVCUSTOMDRAW lpListView)
 			{
+#ifndef _CKPE_WITH_QT5
 				// skip it controls
 				switch (lpListView->nmcd.hdr.idFrom) {
 				case 1041:
@@ -214,6 +215,7 @@ namespace CreationKitPlatformExtended
 				case 1156:
 					return DefSubclassProc(hWindow, WM_NOTIFY, 0, (LPARAM)lpListView);
 				}
+#endif // !_CKPE_WITH_QT5
 
 				Graphics::CUICanvas Canvas(lpListView->nmcd.hdc);
 
