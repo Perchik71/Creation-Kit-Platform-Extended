@@ -814,6 +814,9 @@
     <ClCompile Include="Patches\FO4\CrashInventory.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\Windows\SF\AboutWindowSF.cpp">
+      <Filter>Patches\Windows\SF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1993,6 +1996,9 @@
     <ClInclude Include="Patches\FO4\CrashInventory.h">
       <Filter>Patches\FO4</Filter>
     </ClInclude>
+    <ClInclude Include="Patches\Windows\SF\AboutWindowSF.h">
+      <Filter>Patches\Windows\SF</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version\resource_version.rc">
@@ -2040,5 +2046,6 @@
     <Image Include="..\Resources\aboutf4.png">
       <Filter>Resources</Filter>
     </Image>
+    <Image Include="..\Resources\aboutsf.png" />
   </ItemGroup>
 </Project>

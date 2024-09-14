@@ -29,12 +29,21 @@ namespace CreationKitPlatformExtended
 			{
 				case WM_INITDIALOG:
 				{
-					if (GlobalEnginePtr->GetEditorVersion() <= EDITOR_SKYRIM_SE_LAST)
+					switch (Core::GetShortExecutableTypeFromFull(Core::GlobalEnginePtr->GetEditorVersion()))
+					{
+					case Core::EDITOR_SHORT_SKYRIM_SE:
 						BackgroundImage = LoadImageFromResource(Core::GlobalEnginePtr->GetInstanceDLL(), IDB_PNG1, "PNG");
-					else
+						SendMessage(GetDlgItem(Hwnd, 40), STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)BackgroundImage);
+						break;
+					case Core::EDITOR_SHORT_FALLOUT_C4:
 						BackgroundImage = LoadImageFromResource(Core::GlobalEnginePtr->GetInstanceDLL(), IDB_PNG2, "PNG");
-				
-					SendMessage(GetDlgItem(Hwnd, 40), STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)BackgroundImage);
+						SendMessage(GetDlgItem(Hwnd, 40), STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)BackgroundImage);
+						break;
+					case Core::EDITOR_SHORT_STARFIELD:
+						BackgroundImage = LoadImageFromResource(Core::GlobalEnginePtr->GetInstanceDLL(), IDB_PNG3, "PNG");
+						SendMessage(GetDlgItem(Hwnd, 40), STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)BackgroundImage);
+						break;
+					}
 
 					// Let's make it so that if the picture is a different size, the window will be size for it
 					GetObject(BackgroundImage, sizeof(bitmap), &bitmap);

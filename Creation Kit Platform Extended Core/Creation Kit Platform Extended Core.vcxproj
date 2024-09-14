@@ -119,7 +119,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\;$(SolutionDir)\Dependencies\qt5\lib;$(SolutionDir)$(Platform)\Release\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ws2_32.lib;msimg32.lib;uxtheme.lib;version.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;gdiplus.lib;DirectXTex.lib;Qt5Core.lib;Qt5Gui.lib;VoltekLib.Detours.lib;VoltekLib.UnicodeConverter.lib;VoltekLib.MemoryManager.lib;VoltekLib.RelocationDatabase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;msimg32.lib;uxtheme.lib;version.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;gdiplus.lib;DirectXTex.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;VoltekLib.Detours.lib;VoltekLib.UnicodeConverter.lib;VoltekLib.MemoryManager.lib;VoltekLib.RelocationDatabase.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\Version\scripts.ps1"</Command>
@@ -362,6 +362,7 @@
     <ClCompile Include="Patches\Windows\FO4\ProgressWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\RenderWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\ResponseWindowF4.cpp" />
+    <ClCompile Include="Patches\Windows\SF\AboutWindowSF.cpp" />
     <ClCompile Include="Patches\Windows\SF\DataWindowSF.cpp" />
     <ClCompile Include="Patches\Windows\SSE\BNetUploadWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\CellViewWindow.cpp" />
@@ -729,6 +730,7 @@
     <ClInclude Include="Patches\Windows\FO4\ProgressWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\RenderWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\ResponseWindowF4.h" />
+    <ClInclude Include="Patches\Windows\SF\AboutWindowSF.h" />
     <ClInclude Include="Patches\Windows\SF\DataWindowSF.h" />
     <ClInclude Include="Patches\Windows\SSE\BNetUploadWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\CellViewWindow.h" />
@@ -786,6 +788,7 @@
   <ItemGroup>
     <Image Include="..\Resources\about.png" />
     <Image Include="..\Resources\aboutf4.png" />
+    <Image Include="..\Resources\aboutsf.png" />
     <Image Include="..\Resources\check.bmp" />
     <Image Include="..\Resources\check_darktheme.bmp" />
     <Image Include="..\Resources\navmesh.bmp" />

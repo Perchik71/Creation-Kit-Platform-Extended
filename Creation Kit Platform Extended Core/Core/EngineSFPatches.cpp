@@ -11,6 +11,7 @@
 #include "Patches/SF/TESDataHandlerHookSF.h"
 
 #include "Patches/Windows/SF/DataWindowSF.h"
+#include "Patches/Windows/SF/AboutWindowSF.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -27,6 +28,7 @@ namespace CreationKitPlatformExtended
 				new Patches::TESDataHandlerPatch(),
 
 				new Patches::DataWindow(),
+				new Patches::AboutWindow(),
 			});
 		}
 	}
