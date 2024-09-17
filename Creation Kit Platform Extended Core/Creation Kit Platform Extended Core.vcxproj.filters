@@ -1999,6 +1999,9 @@
     <ClInclude Include="Patches\Windows\SF\AboutWindowSF.h">
       <Filter>Patches\Windows\SF</Filter>
     </ClInclude>
+    <ClInclude Include="Editor API\SF\TESObjectREFR.h">
+      <Filter>Editor API\SF\Forms</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version\resource_version.rc">

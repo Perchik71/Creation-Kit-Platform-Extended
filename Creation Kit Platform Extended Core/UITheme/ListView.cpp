@@ -29,6 +29,10 @@
 #include "Editor API/SSE/TESFile.h"
 #include "Editor API/SF/TESFileSF.h"
 
+#ifdef _CKPE_WITH_QT5
+#	include "Editor API/SF/TESObjectREFR.h"
+#endif // !_CKPE_WITH_QT5
+
 #define UI_CONTROL_CONDITION_ID 0xFA0
 #define SIZEBUF 1024
 
@@ -36,13 +40,13 @@ namespace CreationKitPlatformExtended
 {
 	namespace UITheme
 	{
-		namespace ListView 
+		namespace ListView
 		{
 			static std::recursive_mutex locker;
 			static Graphics::CRECT rc, rc2;
 			static Graphics::CUICanvas Canvas(nullptr);
 
-			HTHEME Initialize(HWND hWindow) 
+			HTHEME Initialize(HWND hWindow)
 			{
 				SetWindowSubclass(hWindow, ListViewSubclass, 0, 0);
 
@@ -53,15 +57,15 @@ namespace CreationKitPlatformExtended
 				return OpenThemeData(hWindow, VSCLASS_SCROLLBAR);
 			}
 
-			LRESULT CALLBACK ListViewSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, 
-				UINT_PTR uIdSubclass, DWORD_PTR dwRefData) 
+			LRESULT CALLBACK ListViewSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,
+				UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
 			{
-				if ((uMsg == WM_SETFOCUS) || (uMsg == WM_KILLFOCUS)) 
+				if ((uMsg == WM_SETFOCUS) || (uMsg == WM_KILLFOCUS))
 				{
 					InvalidateRect(hWnd, NULL, TRUE);
 					UpdateWindow(hWnd);
 				}
-				else if (uMsg == WM_PAINT) 
+				else if (uMsg == WM_PAINT)
 				{
 					//std::lock_guard lock(locker);
 
@@ -87,7 +91,7 @@ namespace CreationKitPlatformExtended
 					// scrollbox detected grip
 					if (GetClientRect(hWnd, (LPRECT)&rc2))
 					{
-						if ((abs(rc2.Width - rc.Width) > 5) && (abs(rc2.Height - rc.Height) > 5)) 
+						if ((abs(rc2.Width - rc.Width) > 5) && (abs(rc2.Height - rc.Height) > 5))
 						{
 							rc.Left = rc.Width - GetSystemMetrics(SM_CXVSCROLL);
 							rc.Top = rc.Height - GetSystemMetrics(SM_CYHSCROLL);
@@ -113,7 +117,7 @@ namespace CreationKitPlatformExtended
 
 				RECT rc = lpDrawItem->rcItem;
 				Graphics::CUICanvas Canvas(lpDrawItem->hDC);
-				
+
 				BOOL Selected = (lpDrawItem->itemState & ODS_SELECTED) == ODS_SELECTED;
 
 				Canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_ListView_Color));
@@ -165,7 +169,7 @@ namespace CreationKitPlatformExtended
 				{
 					int cx, cy;
 					ImageList_GetIconSize(hImageList, &cx, &cy);
-					
+
 					if ((rc.bottom - rc.top > cy) && (rc.right - rc.left > (cx + 8)))
 					{
 						icon_off = cx;
@@ -191,7 +195,7 @@ namespace CreationKitPlatformExtended
 				ListView_GetSubItemRect(lpDrawItem->hwndItem, lpDrawItem->itemID, 0, LVIR_LABEL, (LPRECT)&rcText);
 				rcText.Inflate(-2, -2);
 				rcText.Left += 2;
-		
+
 				Canvas.TextRect(rcText, FileName.Get(), DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS);
 
 				ListView_GetSubItemRect(lpDrawItem->hwndItem, lpDrawItem->itemID, 1, LVIR_LABEL, (LPRECT)&rcText);
@@ -205,6 +209,140 @@ namespace CreationKitPlatformExtended
 					Canvas.FillWithTransparent(rc, GetThemeSysColor(ThemeColor::ThemeColor_ListView_Owner_Selected), 40);
 			}
 
+#ifdef _CKPE_WITH_QT5
+			static LRESULT OnCustomDrawObjectListQt5(HWND hWindow, LPNMLVCUSTOMDRAW lpListView)
+			{
+				// TODO: future
+
+
+				/*LVITEM lvItem;
+				ZeroMemory(&lvItem, sizeof(LVITEM));
+				lvItem.iItem = lpListView->nmcd.dwItemSpec;
+				lvItem.mask = LVIF_PARAM;
+				if (!ListView_GetItem(lpListView->nmcd.hdr.hwndFrom, &lvItem))
+				{
+					_CONSOLE("failed test");
+					return CDRF_DODEFAULT;
+				}*/
+
+				//switch (lpListView->nmcd.dwDrawStage) 
+				//{
+				//	//Before the paint cycle begins
+				//	case CDDS_PREPAINT:
+				//	//request notifications for individual listview items
+				//		return CDRF_NOTIFYITEMDRAW;
+				//	//Before an item is drawn
+				//	case CDDS_ITEMPREPAINT: 
+				//		return CDRF_NOTIFYSUBITEMDRAW;
+				//	//Before a subitem is drawn
+				//	case CDDS_SUBITEM | CDDS_ITEMPREPAINT:
+				//	{
+				//		return CDRF_DODEFAULT;
+				//	}
+				//}
+
+				return CDRF_DODEFAULT;
+			}
+		
+			static LRESULT OnCustomDrawCellListQt5(HWND hWindow, LPNMLVCUSTOMDRAW lpListView)
+			{
+				switch (lpListView->nmcd.dwDrawStage)
+				{
+					//Before the paint cycle begins
+				case CDDS_PREPAINT:
+					//request notifications for individual listview items
+					return CDRF_NOTIFYITEMDRAW;
+					//Before an item is drawn
+				case CDDS_ITEMPREPAINT:
+					return CDRF_NOTIFYSUBITEMDRAW;
+					//Before a subitem is drawn
+				case CDDS_SUBITEM | CDDS_ITEMPREPAINT:
+				{
+					// I have this field of eternal green color
+					if (lpListView->iSubItem == 8)
+						lpListView->clrText = RGB(0, 255, 0);
+					else
+						lpListView->clrText = GetThemeSysColor(ThemeColor_Text_4);
+
+					return CDRF_DODEFAULT;
+				}
+				}
+
+				return CDRF_DODEFAULT;
+			}
+
+			static LRESULT OnCustomDrawCellObjectListQt5(HWND hWindow, LPNMLVCUSTOMDRAW lpListView)
+			{
+				switch (lpListView->nmcd.dwDrawStage)
+				{
+					//Before the paint cycle begins
+					case CDDS_PREPAINT:
+					//request notifications for individual listview items
+						return CDRF_NOTIFYITEMDRAW;
+					//Before an item is drawn
+					case CDDS_ITEMPREPAINT:
+						return CDRF_NOTIFYSUBITEMDRAW;
+					//Before a subitem is drawn
+					case CDDS_SUBITEM | CDDS_ITEMPREPAINT:
+					{
+						// Unfortunately, it is not possible to call the native function because of Qt.
+						// I will return the coloring forms.
+
+						LVITEM lvItem;
+						ZeroMemory(&lvItem, sizeof(LVITEM));
+						lvItem.iItem = lpListView->nmcd.dwItemSpec;
+						lvItem.mask = LVIF_PARAM;
+						if (!ListView_GetItem(lpListView->nmcd.hdr.hwndFrom, &lvItem))
+							return CDRF_DODEFAULT;
+
+						auto FormRef = (EditorAPI::Starfield::TESObjectREFR*)lvItem.lParam;
+						if (FormRef)
+						{
+							auto FadeNode = FormRef->GetFadeNode();
+							if (FadeNode)
+							{
+								if (FadeNode->QNotVisible())
+								{
+									lpListView->clrText = RGB(0, 255, 255);	// blue-gray
+									return CDRF_NEWFONT;
+								}
+								else if (FadeNode->QAppCulled())
+								{
+									lpListView->clrText = RGB(255, 0, 255); // acrid pink
+									return CDRF_NEWFONT;
+								}
+							}
+						}
+
+						return CDRF_DODEFAULT;
+					}
+				}
+
+				return CDRF_DODEFAULT;
+			}
+
+			static BOOL OnCustomDrawQt5(HWND hWindow, LPNMLVCUSTOMDRAW lpListView, LRESULT& lpResult)
+			{
+				switch (lpListView->nmcd.hdr.idFrom) 
+				{
+				// Object list
+				case 1041:
+					lpResult = OnCustomDrawObjectListQt5(hWindow, lpListView);
+					return TRUE;
+				// Cell list
+				case 1155:	
+					lpResult = OnCustomDrawCellListQt5(hWindow, lpListView);
+					return TRUE;
+				// Cell object list	
+				case 1156:		
+					lpResult = OnCustomDrawCellObjectListQt5(hWindow, lpListView);
+					return TRUE;
+				}
+
+				return FALSE;
+			}
+#endif // !_CKPE_WITH_QT5
+
 			LRESULT OnCustomDraw(HWND hWindow, LPNMLVCUSTOMDRAW lpListView)
 			{
 #ifndef _CKPE_WITH_QT5
@@ -215,9 +353,13 @@ namespace CreationKitPlatformExtended
 				case 1156:
 					return DefSubclassProc(hWindow, WM_NOTIFY, 0, (LPARAM)lpListView);
 				}
+#else
+				LRESULT Result = CDRF_DODEFAULT;
+				if (OnCustomDrawQt5(hWindow, lpListView, Result))
+					return Result;
 #endif // !_CKPE_WITH_QT5
 
-				Graphics::CUICanvas Canvas(lpListView->nmcd.hdc);
+				//Graphics::CUICanvas Canvas(lpListView->nmcd.hdc);
 
 				switch (lpListView->nmcd.dwDrawStage) {
 				//Before the paint cycle begins

@@ -79,5 +79,10 @@ namespace CreationKitPlatformExtended
 			};
 			static_assert(sizeof(NiTransform) == 0x40);
 		}
+
+		namespace Starfield
+		{
+			using NiTransform = Fallout4::NiTransform;
+		}
 	}
 }

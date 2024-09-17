@@ -62,5 +62,12 @@ namespace CreationKitPlatformExtended
 			{};
 			static_assert(sizeof(NiObject) == 0x10);
 		}
+
+		namespace Starfield
+		{
+			class NiObject : public Templates::NiObjectT<0x10, 0x148, 0x150, 0x168, 0x158, 0x160>
+			{};
+			static_assert(sizeof(NiObject) == 0x10);
+		}
 	}
 }

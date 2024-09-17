@@ -52,7 +52,7 @@ namespace CreationKitPlatformExtended
 
 		namespace Fallout4
 		{
-			class NiObjectNET : public NiObject
+			class NiObjectNET : public Fallout4::NiObject
 			{
 			public:
 				inline const char* GetName() const { return _Name.c_str(); }
@@ -70,6 +70,29 @@ namespace CreationKitPlatformExtended
 				char _pad18[0x10];
 			};
 			static_assert(sizeof(NiObjectNET) == 0x28);
+		}
+
+		namespace Starfield
+		{
+			class NiObjectNET : public Starfield::NiObject
+			{
+			public:
+				inline const char* GetName() const { return _Name.c_str(); }
+
+				inline void GetViewerStrings(void(*Callback)(const char*, ...), bool Recursive) const
+				{
+					if (Recursive)
+						__super::GetViewerStrings(Callback, Recursive);
+
+					Callback("-- NiObjectNET --\n");
+					Callback("Name = %s\n", GetName());
+				}
+			private:
+				// It seems to have remained unchanged
+				EditorAPI::Fallout4::BSFixedString _Name;
+				char _pad18[0x18];
+			};
+			static_assert(sizeof(NiObjectNET) == 0x30);
 		}
 	}
 }

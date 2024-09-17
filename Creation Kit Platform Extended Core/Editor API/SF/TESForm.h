@@ -2,6 +2,8 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
+#include "NiAPI/NiNode.h"
+
 #pragma once
 #pragma pack(push, 1)
 

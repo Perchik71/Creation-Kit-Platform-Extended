@@ -88,9 +88,7 @@ namespace CreationKitPlatformExtended
 
 			void AboutWindow::QT5Show()
 			{
-#ifdef _CKPE_WITH_QT5
 				EditorAPI::EditorUI::HKDialogBoxParamA(GetModuleHandleA(NULL), MAKEINTRESOURCEA(0x64), NULL, HKWndProc, 0);
-#endif // !_CKPE_WITH_QT5
 			}
 		}
 	}

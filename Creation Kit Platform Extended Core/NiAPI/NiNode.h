@@ -20,13 +20,24 @@ namespace CreationKitPlatformExtended
 
 		namespace Fallout4
 		{
-			class NiNode : public NiAVObject
+			class NiNode : public Fallout4::NiAVObject
 			{
 			public:
 				virtual ~NiNode() = default;
 
 			};
 			static_assert(sizeof(NiNode) == 0x120);
+		}
+
+		namespace Starfield
+		{
+			class NiNode : public Starfield::NiAVObject
+			{
+			public:
+				virtual ~NiNode() = default;
+
+			};
+			static_assert(sizeof(NiNode) == 0x140);
 		}
 	}
 }

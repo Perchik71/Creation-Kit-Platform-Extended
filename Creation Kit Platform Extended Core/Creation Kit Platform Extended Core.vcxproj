@@ -500,6 +500,7 @@
     <ClInclude Include="Editor API\SF\TESDataHandler.h" />
     <ClInclude Include="Editor API\SF\TESFileSF.h" />
     <ClInclude Include="Editor API\SF\TESForm.h" />
+    <ClInclude Include="Editor API\SF\TESObjectREFR.h" />
     <ClInclude Include="Editor API\SSE\BGSImpactData.h" />
     <ClInclude Include="Editor API\SSE\BGSImpactDataSet.h" />
     <ClInclude Include="Editor API\SSE\BGSMaterialType.h" />
