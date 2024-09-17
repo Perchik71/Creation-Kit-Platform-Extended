@@ -281,7 +281,7 @@ namespace CreationKitPlatformExtended
 						return CDRF_NOTIFYITEMDRAW;
 					//Before an item is drawn
 					case CDDS_ITEMPREPAINT:
-						return CDRF_NOTIFYSUBITEMDRAW;
+					//	return CDRF_NOTIFYSUBITEMDRAW;
 					//Before a subitem is drawn
 					case CDDS_SUBITEM | CDDS_ITEMPREPAINT:
 					{
@@ -298,18 +298,23 @@ namespace CreationKitPlatformExtended
 						auto FormRef = (EditorAPI::Starfield::TESObjectREFR*)lvItem.lParam;
 						if (FormRef)
 						{
-							auto FadeNode = FormRef->GetFadeNode();
-							if (FadeNode)
+							//if (thisVirtualCall<EditorAPI::Starfield::TESObjectREFR*>(0x2D0, FormRef))
 							{
-								if (FadeNode->QNotVisible())
+								auto FadeNode = FormRef->GetFadeNode();
+								if (FadeNode)
 								{
-									lpListView->clrText = RGB(0, 255, 255);	// blue-gray
-									return CDRF_NEWFONT;
-								}
-								else if (FadeNode->QAppCulled())
-								{
-									lpListView->clrText = RGB(255, 0, 255); // acrid pink
-									return CDRF_NEWFONT;
+									//Core::fastCall<void>(0x6029B0, FadeNode);
+
+									if (FadeNode->QNotVisible())
+									{
+										lpListView->clrText = RGB(0, 255, 255);	// blue-gray
+										return CDRF_NEWFONT;
+									}
+									else if (FadeNode->QAppCulled())
+									{
+										lpListView->clrText = RGB(255, 0, 255); // acrid pink
+										return CDRF_NEWFONT;
+									}
 								}
 							}
 						}
