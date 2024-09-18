@@ -12,6 +12,7 @@
 
 #include "Patches/Windows/SF/DataWindowSF.h"
 #include "Patches/Windows/SF/AboutWindowSF.h"
+#include "Patches/Windows/SF/MainWindowSF.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -29,6 +30,7 @@ namespace CreationKitPlatformExtended
 
 				new Patches::DataWindow(),
 				new Patches::AboutWindow(),
+				new Patches::MainWindow(),
 			});
 		}
 	}

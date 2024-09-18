@@ -18,7 +18,9 @@ namespace CreationKitPlatformExtended
 	{
 		inline static void QuitWithResult(int nErrorCode = 0)
 		{
+#ifndef _CKPE_WITH_QT5
 			if (Core::INICacheData) Core::INICacheData->ClearAndFlush();
+#endif // _CKPE_WITH_QT5
 			TerminateProcess(GetCurrentProcess(), (UINT)nErrorCode);
 		}
 

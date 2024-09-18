@@ -817,6 +817,9 @@
     <ClCompile Include="Patches\Windows\SF\AboutWindowSF.cpp">
       <Filter>Patches\Windows\SF</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\Windows\SF\MainWindowSF.cpp">
+      <Filter>Patches\Windows\SF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2001,6 +2004,9 @@
     </ClInclude>
     <ClInclude Include="Editor API\SF\TESObjectREFR.h">
       <Filter>Editor API\SF\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\SF\MainWindowSF.h">
+      <Filter>Patches\Windows\SF</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -38,7 +38,13 @@ namespace CreationKitPlatformExtended
 			static BOOL HKWritePrivateProfileStructA(LPCSTR lpszSection, LPCSTR lpszKey, LPVOID lpStruct,
 				UINT uSizeStruct, LPCSTR szFile);
 
+			static UINT HKGetPrivateProfileIntW(LPCWSTR lpAppName, LPCWSTR lpKeyName, INT nDefault, LPCWSTR lpFileName);
+			static DWORD HKGetPrivateProfileStringW(LPCWSTR lpAppName, LPCWSTR lpKeyName, LPCWSTR lpDefault,
+				LPWSTR lpReturnedString, DWORD nSize, LPCWSTR lpFileName);
+			static BOOL HKWritePrivateProfileStringW(LPCWSTR lpAppName, LPCWSTR lpKeyName, LPCWSTR lpString, LPCWSTR lpFileName);
+
 			static std::string GetAbsoluteFileName(LPCSTR lpFileName);
+			static std::wstring GetAbsoluteFileNameUnicode(LPCWSTR lpFileName);
 			static HANDLE GetFileFromCacheOrOpen(const std::string& sFileName);
 		protected:
 			virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,

@@ -49,12 +49,12 @@ namespace CreationKitPlatformExtended
 					ftKeyword,
 					ftLocationRefType,
 					ftAction,
-					ftReserved007,				// TRNS
+					ftTransform,				// TRNS
 					ftReserved008,				// CMPO
 					ftTextureSet,
 					ftMenuIcon,
 					ftGlobal,
-					ftReserved012,				// DMGT
+					ftDamageType,				// DMGT
 					ftClass,
 					ftFaction,
 					ftHeadPart,
@@ -95,7 +95,7 @@ namespace CreationKitPlatformExtended
 					ftNote,
 					ftProjectile,
 					ftHazard052,
-					ftReserved053,				// BNDS
+					ftBendableSpline,			// BNDS
 					ftSoulGem,
 					ftTerminal,
 					ftLeveledItem,
@@ -152,8 +152,8 @@ namespace CreationKitPlatformExtended
 					ftLocation,
 					ftMessage,
 					ftRagdoll,
-					ftReserved110,				// DOBJ
-					ftReserved111,				// DFOB
+					ftDefaultObjectManager,	
+					ftDefaultObject,		
 					ftLightingTemplate,
 					ftMusic,
 					ftFootstep,
@@ -182,25 +182,25 @@ namespace CreationKitPlatformExtended
 					ftColorForm,
 					ftReverbParameters,
 					ftReserved139,				// PKIN
-					ftReserved140,				// RFGP
-					ftReserved141,				// AMDL
+					ftReferenceGroup,	
+					ftAimModel,				
 					ftLayer,
-					ftReserved143,				// COBJ
-					ftReserved144,				// OMOD
+					ftConstructibleObject,	
+					ftAttachmentMod,		
 					ftMaterialSwap,
-					ftReserved146,				// ZOOM
-					ftReserved147,				// INNR
-					ftReserved148,				// KSSM
+					ftAimDownSightModel,	
+					ftInstanceNamingRules,	
+					ftSoundKeywordMapping,
 					ftReserved149,				// AECH
 					ftReserved150,				// SCCO
-					ftReserved151,				// AORU
+					ftAttractionRule,		
 					ftReserved152,				// SCSN
-					ftReserved153,				// STAG
-					ftReserved154,				// NOCM
-					ftReserved155,				// LENS
+					ftSoundTagSet,	
+					ftNavMeshObstacleCoverManager,
+					ftLensFlare,
 					ftReserved156,				// LSPR
 					ftReserved157,				// GDRY
-					ftReserved158,				// OVIS
+					ftObjectVisibilityManager,
 					ftMax
 				};
 
