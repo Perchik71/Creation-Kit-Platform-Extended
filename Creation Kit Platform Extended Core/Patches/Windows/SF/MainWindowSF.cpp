@@ -7,9 +7,11 @@
 #include "Core/FormInfoOutputWindow.h"
 #include "Core/TypeInfo/ms_rtti.h"
 #include "Version/resource_version2.h"
+#include "UITheme/VarCommon.h"
 #include "Editor API/SF/TESForm.h"
 #include "MainWindowSF.h"
 #include "AboutWindowSF.h"
+#include "Editor API/SF/TESPointerHandleDetail.h"
 
 #ifdef _CKPE_WITH_QT5
 #	include "QtCore/qstring.h"
@@ -126,14 +128,26 @@ namespace CreationKitPlatformExtended
 						menuExtensions->addSeparator();
 						menuExtensions->addAction(actionSaveHardcodedForms);
 
-						/*auto menuFileActionList = menuActionList.at(0)->actionGroup()->actions();
-						for (auto yy : menuFileActionList)
+						auto menuFileActionList = menuActionList.at(0)->menu()->actions();
+						static auto actionSaveAs = menuFileActionList.at(1);
+						
+						auto actionThemes = menuFileActionList.at(8);
+						if (actionThemes->menu())
 						{
-							_CONSOLE(yy->text().toStdString().c_str());
-						}*/
-						
-						
+							// hide action themes
+							actionThemes->setVisible(false);
 
+							if (UITheme::IsDarkTheme())
+								// Fake set theme Plastique Dark 
+								actionThemes->menu()->actions().at(3)->activate(QAction::Trigger);
+							else
+								// Fake set theme Default
+								actionThemes->menu()->actions().at(0)->activate(QAction::Trigger);
+						}
+						
+						// remove Warnings
+						auto menuViewActionList = menuActionList.at(2)->menu()->actions();
+						menuViewActionList.at(31)->setVisible(false);
 
 						MainWindow->connect(actionShowLog, &QAction::triggered, MainWindow, []() {
 							if (GlobalConsoleWindowPtr)
@@ -171,7 +185,16 @@ namespace CreationKitPlatformExtended
 							}
 							});
 						MainWindow->connect(actionDumpSDMInfo, &QAction::triggered, MainWindow, []() {
-							// TODO
+							
+							auto handleManager = EditorAPI::Starfield::HandleManager::Singleton.GetSingleton();
+
+							auto head = handleManager->GetHead();
+							auto free = handleManager->GetFree();
+							auto tail = handleManager->GetTail();
+							auto maxe = handleManager->GetMax();
+
+							_CONSOLE("Dump SDM Info:\n\tHead: 0x%08X\n\tFree: 0x%08X\n\tTail: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",
+								head, free, tail, maxe, ((((long double)free) * 100.0f) / (long double)maxe));
 							});
 						MainWindow->connect(actionFormInfoOutput, &QAction::triggered, MainWindow, []() {
 							FormInfoOutputWindow Wnd;
@@ -188,7 +211,8 @@ namespace CreationKitPlatformExtended
 									_CONSOLE("SetFormModified(%08X)", i);
 								}
 							}
-							// TODO save
+							// Fake save
+							actionSaveAs->activate(QAction::Trigger);
 							});
 					}
 

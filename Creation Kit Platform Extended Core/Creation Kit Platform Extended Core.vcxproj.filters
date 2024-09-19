@@ -820,6 +820,9 @@
     <ClCompile Include="Patches\Windows\SF\MainWindowSF.cpp">
       <Filter>Patches\Windows\SF</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SF\TESPointerHandleDetailSF.cpp">
+      <Filter>Patches\SF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2007,6 +2010,21 @@
     </ClInclude>
     <ClInclude Include="Patches\Windows\SF\MainWindowSF.h">
       <Filter>Patches\Windows\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SF\TESFormComponent.h">
+      <Filter>Editor API\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SF\BSFixedString.h">
+      <Filter>Editor API\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SF\BSEntryString.h">
+      <Filter>Editor API\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SF\TESPointerHandleDetail.h">
+      <Filter>Editor API\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SF\TESPointerHandleDetailSF.h">
+      <Filter>Patches\SF</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

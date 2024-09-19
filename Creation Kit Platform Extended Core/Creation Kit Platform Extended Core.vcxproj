@@ -253,6 +253,7 @@
     <ClCompile Include="Patches\SF\RunAppWithoutNet.cpp" />
     <ClCompile Include="Patches\SF\TESDataHandlerHookSF.cpp" />
     <ClCompile Include="Patches\SF\TESFormRESF.cpp" />
+    <ClCompile Include="Patches\SF\TESPointerHandleDetailSF.cpp" />
     <ClCompile Include="Patches\SkipTopicInfoValidation.cpp" />
     <ClCompile Include="Patches\SSE\AddChangeRef.cpp" />
     <ClCompile Include="Patches\SSE\AllowCreateBitArray.cpp" />
@@ -498,10 +499,14 @@
     <ClInclude Include="Editor API\FO4\TESTopic.h" />
     <ClInclude Include="Editor API\FO4\TESTopicInfo.h" />
     <ClInclude Include="Editor API\Settings.h" />
+    <ClInclude Include="Editor API\SF\BSEntryString.h" />
+    <ClInclude Include="Editor API\SF\BSFixedString.h" />
     <ClInclude Include="Editor API\SF\TESDataHandler.h" />
     <ClInclude Include="Editor API\SF\TESFileSF.h" />
     <ClInclude Include="Editor API\SF\TESForm.h" />
+    <ClInclude Include="Editor API\SF\TESFormComponent.h" />
     <ClInclude Include="Editor API\SF\TESObjectREFR.h" />
+    <ClInclude Include="Editor API\SF\TESPointerHandleDetail.h" />
     <ClInclude Include="Editor API\SSE\BGSImpactData.h" />
     <ClInclude Include="Editor API\SSE\BGSImpactDataSet.h" />
     <ClInclude Include="Editor API\SSE\BGSMaterialType.h" />
@@ -623,6 +628,7 @@
     <ClInclude Include="Patches\SF\RunAppWithoutNet.h" />
     <ClInclude Include="Patches\SF\TESDataHandlerHookSF.h" />
     <ClInclude Include="Patches\SF\TESFormRESF.h" />
+    <ClInclude Include="Patches\SF\TESPointerHandleDetailSF.h" />
     <ClInclude Include="Patches\SkipTopicInfoValidation.h" />
     <ClInclude Include="Patches\SSE\AddChangeRef.h" />
     <ClInclude Include="Patches\SSE\AllowCreateBitArray.h" />
