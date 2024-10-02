@@ -402,6 +402,8 @@ namespace CreationKitPlatformExtended
 				break;
 			}
 
+			_MESSAGE("DBG dialog: %X(%u) %p", (DWORD)lpTemplateName, (DWORD)lpTemplateName, lpDialogFunc);
+
 			auto dialog = Core::GlobalDialogManagerPtr->GetDialog(reinterpret_cast<LONG_PTR>(lpTemplateName));
 			if (dialog)
 				return Core::GlobalRegistratorWindowPtr->Register(
@@ -432,6 +434,8 @@ namespace CreationKitPlatformExtended
 				hInstance = Core::GlobalEnginePtr->GetInstanceDLL();
 				break;
 			}
+
+			_MESSAGE("DBG dialog modal: %X(%u) %p", (DWORD)lpTemplateName, (DWORD)lpTemplateName, lpDialogFunc);
 
 			auto dialog = Core::GlobalDialogManagerPtr->GetDialog(reinterpret_cast<ULONG_PTR>(lpTemplateName));
 			if (dialog)

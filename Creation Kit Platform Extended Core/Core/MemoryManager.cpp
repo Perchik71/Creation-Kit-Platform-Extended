@@ -49,7 +49,7 @@ namespace CreationKitPlatformExtended
 			void* ptr = voltek::scalable_alloc(size);
 			if (ptr && zeroed) memset(ptr, 0, size);
 
-			if (!ptr && size <= (128 * 1024 * 1024))
+			if (!ptr && size <= (128llu * 1024 * 1024))
 				AssertMsgVa(false, "A memory allocation failed. This is due to memory leaks in the Creation Kit or not"
 					" having enough free RAM.\n\nRequested chunk size: %llu bytes.", size);
 

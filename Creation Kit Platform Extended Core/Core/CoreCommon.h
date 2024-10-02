@@ -20,7 +20,8 @@ namespace CreationKitPlatformExtended
 			EDITOR_FALLOUT_C4_1_10_982_3,
 			EDITOR_FALLOUT_C4_LAST = EDITOR_FALLOUT_C4_1_10_982_3,
 			EDITOR_STARFIELD_1_13_61_0,
-			EDITOR_STARFIELD_LAST = EDITOR_STARFIELD_1_13_61_0,
+			EDITOR_STARFIELD_1_14_70_0,
+			EDITOR_STARFIELD_LAST = EDITOR_STARFIELD_1_14_70_0,
 		};
 
 		enum EDITOR_EXECUTABLE_SHORT_TYPE {
@@ -51,11 +52,13 @@ namespace CreationKitPlatformExtended
 			{ 0x481CCE95ul, EDITOR_FALLOUT_C4_1_10_982_3	},	// Redirect Steam
 			{ 0x55F7F580ul, EDITOR_FALLOUT_C4_1_10_982_3	},	// No Steam and Redirect Steam
 			{ 0x6CDE4424ul, EDITOR_STARFIELD_1_13_61_0		},	// Redirect Steam
+			{ 0x8777A522ul, EDITOR_STARFIELD_1_14_70_0		},	// Redirect Steam
 		};
 
 		// Список устаревших версий редакторов
 		static std::vector<EDITOR_EXECUTABLE_TYPE> outdatedEditorVersion = {
 			EDITOR_FALLOUT_C4_1_10_943_1,
+			EDITOR_STARFIELD_1_13_61_0,
 		};
 		
 		// Список ключевых смещений в исполняемых файлах, допущенных к запуску
@@ -69,6 +72,7 @@ namespace CreationKitPlatformExtended
 			{ 0x2F8D1C8ul, { "1.10.943.1",	EDITOR_FALLOUT_C4_1_10_943_1	} },
 			{ 0x2F8D298ul, { "1.10.982.3",	EDITOR_FALLOUT_C4_1_10_982_3	} },
 			{ 0x86DD768ul, { "1.13.61.0",	EDITOR_STARFIELD_1_13_61_0		} },
+			{ 0x873D2B8ul, { "1.14.70.0",	EDITOR_STARFIELD_1_14_70_0		} },
 		};
 		
 		// Список названий редакторов
@@ -82,6 +86,7 @@ namespace CreationKitPlatformExtended
 			"Fallout 4 [v1.10.943.1]",
 			"Fallout 4 [v1.10.982.3]",
 			"Starfield [v1.13.61.0]",
+			"Starfield [v1.14.70.0]",
 		};
 
 		// Список имён файлов базы данных
@@ -94,6 +99,7 @@ namespace CreationKitPlatformExtended
 			{ EDITOR_FALLOUT_C4_1_10_943_1,	"CreationKitPlatformExtended_FO4_1_10_943_1.database"	},
 			{ EDITOR_FALLOUT_C4_1_10_982_3,	"CreationKitPlatformExtended_FO4_1_10_982_3.database"	},
 			{ EDITOR_STARFIELD_1_13_61_0,	"CreationKitPlatformExtended_SF_1_13_61_0.database"		},
+			{ EDITOR_STARFIELD_1_14_70_0,	"CreationKitPlatformExtended_SF_1_14_70_0.database"		},
 		};
 
 		// Список коротких названий поддерживаемых игр
@@ -119,6 +125,7 @@ namespace CreationKitPlatformExtended
 			"creationkit_f4_1_10_943_1",
 			"creationkit_f4_1_10_982_3",
 			"creationkit_sf_1_13_61_0",
+			"creationkit_sf_1_14_70_0",
 		};
 
 		inline EDITOR_EXECUTABLE_SHORT_TYPE GetShortExecutableTypeFromFull(EDITOR_EXECUTABLE_TYPE editorVersion)
@@ -126,20 +133,16 @@ namespace CreationKitPlatformExtended
 			switch (editorVersion)
 			{
 			case EDITOR_SKYRIM_SE_1_5_3:
-				return EDITOR_SHORT_SKYRIM_SE;
 			case EDITOR_SKYRIM_SE_1_5_73:
-				return EDITOR_SHORT_SKYRIM_SE;
 			case EDITOR_SKYRIM_SE_1_6_438:
-				return EDITOR_SHORT_SKYRIM_SE;
 			case EDITOR_SKYRIM_SE_1_6_1130:
 				return EDITOR_SHORT_SKYRIM_SE;
 			case EDITOR_FALLOUT_C4_1_10_162_0:
-				return EDITOR_SHORT_FALLOUT_C4;
 			case EDITOR_FALLOUT_C4_1_10_943_1:
-				return EDITOR_SHORT_FALLOUT_C4;
 			case EDITOR_FALLOUT_C4_1_10_982_3:
 				return EDITOR_SHORT_FALLOUT_C4;
 			case EDITOR_STARFIELD_1_13_61_0:
+			case EDITOR_STARFIELD_1_14_70_0:
 				return EDITOR_SHORT_STARFIELD;
 			default:
 				return EDITOR_SHORT_UNKNOWN;

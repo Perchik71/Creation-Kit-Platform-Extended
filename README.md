@@ -60,15 +60,15 @@ This is not a complete list of improvements.
       <td>1.10.162.0</td>
       <td>Inactive</td>
       <td>1.13.61.0</td>
-      <td>Active</td>
+      <td>Deprecated</td>
     </tr>
     <tr>
       <td>1.5.73.0</td>
       <td>Inactive</td>
       <td>1.10.943.1</td>
       <td>Deprecated</td>
-      <td></td>
-      <td></td>
+      <td>1.14.70.0</td>
+      <td>Active</td>
     </tr>
     <tr>
       <td>1.6.438.0</td>

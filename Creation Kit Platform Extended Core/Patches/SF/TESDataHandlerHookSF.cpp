@@ -15,7 +15,6 @@ namespace CreationKitPlatformExtended
 			using namespace CreationKitPlatformExtended::EditorAPI;
 			using namespace CreationKitPlatformExtended::EditorAPI::Starfield;
 
-			uintptr_t pointer_TESDataHandler_data = 0;
 			uintptr_t pointer_TESDataHandler_data2 = 0;
 
 			TESDataHandlerPatch::TESDataHandlerPatch() : Module(GlobalEnginePtr)
@@ -61,10 +60,9 @@ namespace CreationKitPlatformExtended
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
 				if (lpRelocationDatabaseItem->Version() == 1)
-				{
-					pointer_TESDataHandler_data = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0));
-					TESDataHandler::Singleton = (uintptr_t)&pointer_TESDataHandler_data;
-					pointer_TESDataHandler_data2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
+				{ 
+					TESDataHandler::Singleton = _RELDATA_RAV(0);
+					pointer_TESDataHandler_data2 = _RELDATA_RAV(1);
 					TESDataHandler::UserModdedSingleton = (uintptr_t)&pointer_TESDataHandler_data2;
 
 					return true;

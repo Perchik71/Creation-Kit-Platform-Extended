@@ -178,7 +178,6 @@ namespace CreationKitPlatformExtended
 
 			// Добавление патчей
 			PatchesManager->Append({
-				
 				new CreationKitPlatformExtended::Patches::QuitHandlerPatch(),
 				new CreationKitPlatformExtended::Patches::MemoryManagerPatch(),
 				new CreationKitPlatformExtended::Patches::CrashDumpPatch(),

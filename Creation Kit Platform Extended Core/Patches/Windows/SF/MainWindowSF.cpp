@@ -184,8 +184,7 @@ namespace CreationKitPlatformExtended
 								fclose(f);
 							}
 							});
-						MainWindow->connect(actionDumpSDMInfo, &QAction::triggered, MainWindow, []() {
-							
+						MainWindow->connect(actionDumpSDMInfo, &QAction::triggered, MainWindow, []() {		
 							auto handleManager = EditorAPI::Starfield::HandleManager::Singleton.GetSingleton();
 
 							auto head = handleManager->GetHead();
@@ -194,7 +193,7 @@ namespace CreationKitPlatformExtended
 							auto maxe = handleManager->GetMax();
 
 							_CONSOLE("Dump SDM Info:\n\tHead: 0x%08X\n\tFree: 0x%08X\n\tTail: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",
-								head, free, tail, maxe, ((((long double)free) * 100.0f) / (long double)maxe));
+								head, free, tail, maxe, ((((long double)(maxe - free)) * 100.0f) / (long double)maxe));
 							});
 						MainWindow->connect(actionFormInfoOutput, &QAction::triggered, MainWindow, []() {
 							FormInfoOutputWindow Wnd;

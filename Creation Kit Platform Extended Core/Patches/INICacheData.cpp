@@ -98,14 +98,7 @@ namespace CreationKitPlatformExtended
 
 			auto fileName = GetAbsoluteFileName(lpFileName);
 			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(fileName);
-			if (!ini_data)
-			{
-				// set File Not Found
-				SetLastError(2);
-
-				return (UINT)nDefault;
-			}
-			else if (ini_data == INVALID_HANDLE_VALUE)
+			if (!ini_data || (ini_data == INVALID_HANDLE_VALUE))
 				return GetPrivateProfileIntA(lpAppName, lpKeyName, nDefault, lpFileName);
 
 			String s;
@@ -142,24 +135,7 @@ namespace CreationKitPlatformExtended
 
 			auto fileName = GetAbsoluteFileName(lpFileName);
 			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(fileName);
-			if (!ini_data)
-			{
-				// set File Not Found
-				SetLastError(2);
-
-				DWORD length = 0;
-				if (lpDefault)
-				{
-					length = std::min((DWORD)strlen(lpDefault), nSize - 1);
-					strncpy(lpReturnedString, lpDefault, length);
-					lpReturnedString[length] = 0;
-				}
-				else
-					lpReturnedString[0] = 0;
-
-				return length;
-			}
-			else if (ini_data == INVALID_HANDLE_VALUE)
+			if (!ini_data || (ini_data == INVALID_HANDLE_VALUE))
 				return GetPrivateProfileStringA(lpAppName, lpKeyName, lpKeyName, lpReturnedString, nSize, lpFileName);
 
 			String s;
@@ -275,12 +251,7 @@ namespace CreationKitPlatformExtended
 
 			auto fileName = GetAbsoluteFileName(lpFileName);
 			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(fileName);
-			if (!ini_data) 
-			{
-				SetLastError(2);
-				return false;
-			}
-			else if (ini_data == INVALID_HANDLE_VALUE)
+			if (!ini_data || (ini_data == INVALID_HANDLE_VALUE))
 				return WritePrivateProfileStringA(lpAppName, lpKeyName, lpString, lpFileName);
 
 			if (!lpKeyName)
@@ -320,8 +291,7 @@ namespace CreationKitPlatformExtended
 
 			auto fileName = GetAbsoluteFileName(szFile);
 			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(fileName);
-			if (!ini_data) return false;
-			else if (ini_data == INVALID_HANDLE_VALUE)
+			if (!ini_data || (ini_data == INVALID_HANDLE_VALUE)) 
 				return WritePrivateProfileStructA(lpszSection, lpszKey, lpStruct, uSizeStruct, szFile);
 
 			static const char* ffmt_value = "0123456789ABCDEF\\";
@@ -379,14 +349,7 @@ namespace CreationKitPlatformExtended
 
 			auto fileName = GetAbsoluteFileNameUnicode(lpFileName);
 			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(Conversion::WideToAnsi(fileName.c_str()).c_str());
-			if (!ini_data)
-			{
-				// set File Not Found
-				SetLastError(2);
-
-				return (UINT)nDefault;
-			}
-			else if (ini_data == INVALID_HANDLE_VALUE)
+			if (!ini_data || (ini_data == INVALID_HANDLE_VALUE))
 				return GetPrivateProfileIntW(lpAppName, lpKeyName, nDefault, lpFileName);
 
 			String s;
@@ -423,24 +386,7 @@ namespace CreationKitPlatformExtended
 
 			auto fileName = GetAbsoluteFileNameUnicode(lpFileName);
 			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(Conversion::WideToAnsi(fileName.c_str()).c_str());
-			if (!ini_data)
-			{
-				// set File Not Found
-				SetLastError(2);
-
-				DWORD length = 0;
-				if (lpDefault)
-				{
-					length = std::min((DWORD)wcslen(lpDefault), nSize - 1);
-					wcsncpy(lpReturnedString, lpDefault, length);
-					lpReturnedString[length] = 0;
-				}
-				else
-					lpReturnedString[0] = 0;
-
-				return length;
-			}
-			else if (ini_data == INVALID_HANDLE_VALUE)
+			if (!ini_data || (ini_data == INVALID_HANDLE_VALUE))
 				return GetPrivateProfileStringW(lpAppName, lpKeyName, lpDefault, lpReturnedString, nSize, lpFileName);
 
 			String s;
@@ -506,12 +452,7 @@ namespace CreationKitPlatformExtended
 
 			auto fileName = GetAbsoluteFileNameUnicode(lpFileName);
 			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(Conversion::WideToAnsi(fileName.c_str()).c_str());
-			if (!ini_data)
-			{
-				SetLastError(2);
-				return false;
-			}
-			else if (ini_data == INVALID_HANDLE_VALUE)
+			if (!ini_data || (ini_data == INVALID_HANDLE_VALUE))
 				return WritePrivateProfileStringW(lpAppName, lpKeyName, lpString, lpFileName);
 
 			if (!lpKeyName)
