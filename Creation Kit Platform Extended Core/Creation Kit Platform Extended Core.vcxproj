@@ -250,6 +250,7 @@
     <ClCompile Include="Patches\RenameCreationKitApp.cpp" />
     <ClCompile Include="Patches\RenderWindow60FPS.cpp" />
     <ClCompile Include="Patches\SF\ReplaceImgQSplashWnd.cpp" />
+    <ClCompile Include="Patches\SF\RTDynamicCastCrash.cpp" />
     <ClCompile Include="Patches\SF\RunAppWithoutNet.cpp" />
     <ClCompile Include="Patches\SF\TESDataHandlerHookSF.cpp" />
     <ClCompile Include="Patches\SF\TESFormRESF.cpp" />
@@ -626,6 +627,7 @@
     <ClInclude Include="Patches\RenameCreationKitApp.h" />
     <ClInclude Include="Patches\RenderWindow60FPS.h" />
     <ClInclude Include="Patches\SF\ReplaceImgQSplashWnd.h" />
+    <ClInclude Include="Patches\SF\RTDynamicCastCrash.h" />
     <ClInclude Include="Patches\SF\RunAppWithoutNet.h" />
     <ClInclude Include="Patches\SF\TESDataHandlerHookSF.h" />
     <ClInclude Include="Patches\SF\TESFormRESF.h" />

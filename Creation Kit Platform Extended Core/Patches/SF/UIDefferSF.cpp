@@ -52,7 +52,8 @@ namespace CreationKitPlatformExtended
 			bool UIDefferPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_STARFIELD_LAST;
+				return (eEditorCurrentVersion >= EDITOR_EXECUTABLE_TYPE::EDITOR_STARFIELD_1_14_70_0) &&
+					(eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_STARFIELD_LAST);
 			}
 
 			bool UIDefferPatch::Activate(const Relocator* lpRelocator,

@@ -11,6 +11,7 @@
 #include "Patches/SF/TESDataHandlerHookSF.h"
 #include "Patches/SF/TESPointerHandleDetailSF.h"
 #include "Patches/SF/UIDefferSF.h"
+#include "Patches/SF/RTDynamicCastCrash.h"
 
 #include "Patches/Windows/SF/DataWindowSF.h"
 #include "Patches/Windows/SF/AboutWindowSF.h"
@@ -31,6 +32,7 @@ namespace CreationKitPlatformExtended
 				new Patches::TESDataHandlerPatch(),
 				new Patches::TESPointerHandleDetailSFPatch(),
 				new Patches::UIDefferPatch(),
+				new Patches::RTDynamicCastCrashPatch(),
 
 				new Patches::DataWindow(),
 				new Patches::AboutWindow(),

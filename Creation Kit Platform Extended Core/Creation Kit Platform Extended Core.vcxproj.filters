@@ -826,6 +826,9 @@
     <ClCompile Include="Patches\SF\UIDefferSF.cpp">
       <Filter>Patches\SF</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SF\RTDynamicCastCrash.cpp">
+      <Filter>Patches\SF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2030,6 +2033,9 @@
       <Filter>Patches\SF</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SF\UIDefferSF.h">
+      <Filter>Patches\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SF\RTDynamicCastCrash.h">
       <Filter>Patches\SF</Filter>
     </ClInclude>
   </ItemGroup>
