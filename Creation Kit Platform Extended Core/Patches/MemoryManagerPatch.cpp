@@ -11,11 +11,11 @@ namespace CreationKitPlatformExtended
 	namespace Patches
 	{
 #if _CKPE_WITH_QT5
-		constexpr auto MEM_THRESHOLD = 21474836480;	// 20Gb a lot, but that's how much Starfield.esm is used when loading
+		constexpr auto MEM_THRESHOLD = 21474836480llu;	// 20Gb a lot, but that's how much Starfield.esm is used when loading
 #else
-		constexpr auto MEM_THRESHOLD = 2147483648;	// 2Gb
+		constexpr auto MEM_THRESHOLD = 2147483648llu;	// 2Gb
 #endif // _CKPE_WITH_QT5
-		constexpr auto MEM_GB = 1073741824;
+		constexpr auto MEM_GB = 1073741824llu;
 
 		class MemoryManager
 		{

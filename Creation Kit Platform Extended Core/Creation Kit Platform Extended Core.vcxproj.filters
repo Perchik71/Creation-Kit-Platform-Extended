@@ -823,6 +823,9 @@
     <ClCompile Include="Patches\SF\TESPointerHandleDetailSF.cpp">
       <Filter>Patches\SF</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SF\UIDefferSF.cpp">
+      <Filter>Patches\SF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2024,6 +2027,9 @@
       <Filter>Editor API\SF</Filter>
     </ClInclude>
     <ClInclude Include="Patches\SF\TESPointerHandleDetailSF.h">
+      <Filter>Patches\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SF\UIDefferSF.h">
       <Filter>Patches\SF</Filter>
     </ClInclude>
   </ItemGroup>
