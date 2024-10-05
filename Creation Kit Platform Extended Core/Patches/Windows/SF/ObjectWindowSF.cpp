@@ -6,8 +6,7 @@
 #include "Core/RegistratorWindow.h"
 #include "UITheme/VarCommon.h"
 #include "Editor API/EditorUI.h"
-#include "Editor API/FO4/BGSRenderWindow.h"
-#include "ObjectWindowF4.h"
+#include "ObjectWindowSF.h"
 
 #define UI_OBJECT_WINDOW_CHECKBOX			6329
 #define UI_OBJECT_WINDOW_ADD_ITEM			2579
@@ -17,7 +16,7 @@ namespace CreationKitPlatformExtended
 {
 	namespace Patches
 	{
-		namespace Fallout4
+		namespace Starfield
 		{
 			OBJWNDS ObjectWindows;
 			ObjectWindow* GlobalObjectWindowBasePtr = nullptr;
@@ -43,11 +42,13 @@ namespace CreationKitPlatformExtended
 				LONG w_left = w_tree - w_btns + 1;
 				lpObjWnd->Controls.BtnObjLayout.Left = w_left;
 				lpObjWnd->Controls.ToggleDecompose.Left = w_left;
+				lpObjWnd->Controls.BtnDataView.Left = w_left;
 				lpObjWnd->Controls.ActiveOnly.Width = w_tree;
 
 				w_left = w_tree - lpObjWnd->Controls.EditFilter.Left - w_btns - 3;
 				lpObjWnd->Controls.EditFilter.Width = w_left;
 				lpObjWnd->Controls.ComboLayout.Width = w_left;
+				lpObjWnd->Controls.DataView.Width = w_left;
 
 				auto TopT = lpObjWnd->Controls.TreeList.Top;
 
@@ -90,12 +91,14 @@ namespace CreationKitPlatformExtended
 				LONG w_tree = lpObjWnd->Controls.TreeList.Width;
 				LONG w_left = w_tree - w_btns + 1;
 				lpObjWnd->Controls.BtnObjLayout.Left = w_left;
+				lpObjWnd->Controls.BtnDataView.Left = w_left;
 				lpObjWnd->Controls.ToggleDecompose.Left = w_left;
 				lpObjWnd->Controls.ActiveOnly.Width = w_tree;
 
 				w_left = w_tree - lpObjWnd->Controls.EditFilter.Left - w_btns - 3;
 				lpObjWnd->Controls.EditFilter.Width = w_left;
 				lpObjWnd->Controls.ComboLayout.Width = w_left;
+				lpObjWnd->Controls.DataView.Width = w_left;
 
 				auto TopT = lpObjWnd->Controls.TreeList.Top;
 
@@ -155,42 +158,22 @@ namespace CreationKitPlatformExtended
 			bool ObjectWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return eEditorCurrentVersion <= EDITOR_FALLOUT_C4_LAST;
+				return (eEditorCurrentVersion >= EDITOR_EXECUTABLE_TYPE::EDITOR_STARFIELD_1_14_70_0) &&
+					(eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_STARFIELD_LAST);
 			}
 
 			bool ObjectWindow::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
 				auto verPatch = lpRelocationDatabaseItem->Version();
-
-				if ((verPatch == 1) || (verPatch == 2))
+				if (verPatch == 1)
 				{
 					*(uintptr_t*)&_oldWndProc = voltek::detours_function_class_jump(_RELDATA_ADDR(0), (uintptr_t)&HKWndProc);
 
-					if (verPatch == 1)
-					{
-						// Allow forms to be filtered in ObjectWindowProc
-						pointer_ObjectWindow_sub = _RELDATA_ADDR(3);
-						lpRelocator->DetourCall(_RELDATA_RAV(4), (uintptr_t)&sub);
-
-						// Fix resize ObjectWindowProc
-						lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&HKMoveWindow);
-						lpRelocator->PatchNop(_RELDATA_RAV(2), 0x46);
-					}
-					else
-					{
-						pointer_ObjectWindow_sub = _RELDATA_ADDR(4);
-						// Restore function
-						auto rva = _RELDATA_RAV(3);
-						lpRelocator->PatchNop((uintptr_t)rva + 0x10, 0x33);
-						lpRelocator->Patch(rva, { 0x48, 0x8B, 0x4C, 0x24, 0x40, 0x48, 0x89, 0xFA, 0x49, 0x89, 0xF0 });
-						lpRelocator->DetourCall((uintptr_t)rva + 0xB, (uintptr_t)&sub2);
-
-						// Fix resize ObjectWindowProc
-						rva = _RELDATA_RAV(1);
-						lpRelocator->PatchNop(rva, 0x4B);
-						lpRelocator->DetourCall(rva, (uintptr_t)&HKMoveWindow);
-					}
+					// Fix resize ObjectWindowProc
+					auto rva = _RELDATA_RAV(1);
+					lpRelocator->PatchNop(rva, 0x4B);
+					lpRelocator->DetourCall(rva, (uintptr_t)&HKMoveWindow);
 
 					return true;
 				}
@@ -217,59 +200,9 @@ namespace CreationKitPlatformExtended
 				return bResult;
 			}
 
-			int ObjectWindow::sub(__int64 ObjectListInsertData, TESForm* Form)
-			{
-				const HWND objectWindowHandle = GetParent((*(HWND*)(ObjectListInsertData + 0x18)));
-
-				bool allowInsert = true;
-				SendMessageA(objectWindowHandle, UI_OBJECT_WINDOW_ADD_ITEM, (WPARAM)Form, (LPARAM)&allowInsert);
-
-				if (!allowInsert)
-					return 1;
-
-				return ((int(__fastcall*)(__int64, TESForm*))pointer_ObjectWindow_sub)
-					(ObjectListInsertData, Form);
-			}
-
-			int ObjectWindow::sub2(HWND Hwnd, TESForm* Form, const char* filterText)
-			{
-				const HWND objectWindowHandle = GetParent(Hwnd);
-
-				bool allowInsert = true;
-				SendMessageA(objectWindowHandle, UI_OBJECT_WINDOW_ADD_ITEM, (WPARAM)Form, (LPARAM)&allowInsert);
-
-				if (!allowInsert)
-					return 0;
-
-				auto EditorID = Form->GetEditorID_NoVTable();
-
-				if (!fastCall<int>(pointer_ObjectWindow_sub, EditorID, filterText, 0))
-				{
-					char szBuf[12];
-					sprintf_s(szBuf, "%08X", Form->FormID);
-					if (!fastCall<int>(pointer_ObjectWindow_sub, szBuf, filterText, 0))
-						return 0;
-				}
-
-				return 1;
-			}
-
 			ObjectWindow::ObjectWindow() : BaseWindow(), Classes::CUIBaseWindow()
 			{
 				GlobalObjectWindowBasePtr = this;
-			}
-
-			void ObjectWindow::SetObjectWindowFilter(LPOBJWND lpObjWnd, const char* name,
-				const bool SkipText, const bool actived)
-			{
-				if (!SkipText)
-					lpObjWnd->Controls.EditFilter.Caption = name;
-
-				//lpObjWnd->Controls.ActiveOnly.Checked = actived;
-				// Force the list items to update as if it was by timer
-				//lpObjWnd->ObjectWindow.Perform(WM_TIMER, 0x1B58, 0);
-				// This is a bit slower but works in multi windows
-				lpObjWnd->Controls.EditFilter.Caption = lpObjWnd->Controls.EditFilter.Caption;
 			}
 
 			INT_PTR CALLBACK ObjectWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
@@ -286,22 +219,27 @@ namespace CreationKitPlatformExtended
 					lpObjWnd->Controls.ToggleDecompose = lpObjWnd->ObjectWindow.GetControl(6027);
 					lpObjWnd->Controls.BtnObjLayout = lpObjWnd->ObjectWindow.GetControl(6025);
 					lpObjWnd->Controls.ComboLayout = lpObjWnd->ObjectWindow.GetControl(6024);
+					lpObjWnd->Controls.BtnDataView = lpObjWnd->ObjectWindow.GetControl(6028);
+					lpObjWnd->Controls.DataView = lpObjWnd->ObjectWindow.GetControl(6026);
 					lpObjWnd->Controls.EditFilter = lpObjWnd->ObjectWindow.GetControl(2581);
 					lpObjWnd->Controls.Spliter = lpObjWnd->ObjectWindow.GetControl(2157);
-					lpObjWnd->Controls.ActiveOnly = GetDlgItem(Hwnd, UI_OBJECT_WINDOW_CHECKBOX);
+					lpObjWnd->Controls.ActiveOnly = GetDlgItem(Hwnd, 5904);
 
-					// Eliminate the flicker when changing categories
-					ListView_SetExtendedListViewStyleEx(lpObjWnd->Controls.ItemList.Handle, LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
-					// Eliminate the flicker when changing size trees
-					SendMessage(lpObjWnd->Controls.TreeList.Handle, TVM_SETEXTENDEDSTYLE, TVS_EX_DOUBLEBUFFER, TVS_EX_DOUBLEBUFFER);
-					// 
-					ListView_SetExtendedListViewStyleEx(lpObjWnd->Controls.ItemList.Handle, LVS_EX_INFOTIP, LVS_EX_INFOTIP);
+					auto StyleEx = ListView_GetExtendedListViewStyle(lpObjWnd->Controls.ItemList.Handle);
+					if ((StyleEx & LVS_EX_DOUBLEBUFFER) != LVS_EX_DOUBLEBUFFER)
+					{
+						// Eliminate the flicker when changing categories
+						StyleEx |= LVS_EX_DOUBLEBUFFER;
+						ListView_SetExtendedListViewStyleEx(lpObjWnd->Controls.ItemList.Handle, StyleEx, StyleEx);
+					}
 
-					// Erase Icon and SysMenu
-					if (!ObjectWindows.size())
-						lpObjWnd->ObjectWindow.Style = WS_OVERLAPPED | WS_CAPTION | WS_THICKFRAME;
-					else
-						lpObjWnd->ObjectWindow.Style = WS_OVERLAPPED | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_SYSMENU;	
+					StyleEx = TreeView_GetExtendedStyle(lpObjWnd->Controls.TreeList.Handle);
+					if ((StyleEx & TVS_EX_DOUBLEBUFFER) != TVS_EX_DOUBLEBUFFER)
+					{
+						// Eliminate the flicker when changing size trees
+						StyleEx |= TVS_EX_DOUBLEBUFFER;
+						TreeView_SetExtendedStyle(lpObjWnd->Controls.TreeList.Handle, StyleEx, StyleEx);
+					}
 
 					ObjectWindows.emplace(Hwnd, lpObjWnd);
 				}
@@ -358,21 +296,8 @@ namespace CreationKitPlatformExtended
 				else if (Message == WM_COMMAND)
 				{
 					const uint32_t param = LOWORD(wParam);
-					if (param == UI_OBJECT_WINDOW_CHECKBOX)
+					if (param == UI_CMD_CHANGE_SPLITTER_OBJECTWINDOW)
 					{
-						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
-						SetPropA(Hwnd, "ActiveOnly", reinterpret_cast<HANDLE>(enableFilter));
-						
-						if (auto iterator = ObjectWindows.find(Hwnd); iterator != ObjectWindows.end())
-						{
-							LPOBJWND lpObjWnd = (*iterator).second;
-							if (lpObjWnd) SetObjectWindowFilter(lpObjWnd, "", TRUE, 
-								!lpObjWnd->Controls.ActiveOnly.Checked);
-						}
-	
-						return S_OK;
-					}
-					else if (param == UI_CMD_CHANGE_SPLITTER_OBJECTWINDOW) {
 						if (auto iterator = ObjectWindows.find(Hwnd); iterator != ObjectWindows.end())
 						{
 							LPOBJWND lpObjWnd = (*iterator).second;
@@ -380,75 +305,6 @@ namespace CreationKitPlatformExtended
 						}
 						return S_OK;
 					}
-					else if (param == EditorAPI::EditorUI::UI_EDITOR_CHANGEBASEFORM)
-					{
-						auto Renderer = BGSRenderWindow::Singleton.Singleton;
-
-						if (Renderer && Renderer->PickHandler)
-						{
-							auto Pick = Renderer->PickHandler;
-							auto SelCount = Pick->Count;
-							if (!SelCount)
-								return S_OK;
-
-							auto SelItem = Pick->GetItems()->GetBeginIterator();
-
-							// get the desired form from the selected list
-							auto ItemList = GetDlgItem(Hwnd, 1041);
-							Assert(ItemList);
-
-							auto ItemCount = ListView_GetSelectedCount(ItemList);
-							if (!ItemCount)
-								return S_OK;
-
-							if (ItemCount > 1)
-							{
-								MessageBoxA(0, "You have too many selected forms in the Object Window.\n"
-									"Choose one thing.", "Error", MB_OK | MB_ICONERROR);
-								return S_OK;
-							}
-
-							auto Form = (TESForm*)EditorAPI::EditorUI::ListViewGetSelectedItem(ItemList);
-							Assert(Form);
-
-							if (SelCount != 1)
-							{
-								auto str = std::make_unique<char[]>(120);
-								sprintf_s(str.get(), 120, "Do you really want to replace base form in %u refs?", SelCount);
-								if (MessageBoxA(0, str.get(), "Question", MB_YESNO | MB_ICONQUESTION) != IDYES)
-									return S_OK;
-							}
-
-							for (uint32_t i = 0; i < SelCount; i++)
-							{
-								auto Ref = *SelItem++;
-								Assert(Ref);
-
-								// Replace the parent form and update
-								TESObjectREFR::SetParentWithRedraw(Ref, Form);
-								// Fix no mark change
-								Ref->MarkAsChanged();
-							}
-						}
-
-						return S_OK;
-					}
-				}
-				else if (Message == UI_OBJECT_WINDOW_ADD_ITEM)
-				{
-					auto form = reinterpret_cast<const EditorAPI::Fallout4::TESForm*>(wParam);
-					auto allowInsert = reinterpret_cast<bool*>(lParam);
-
-					*allowInsert = true;
-
-					// Skip the entry if "Show only active forms" is checked
-					if (static_cast<bool>(GetPropA(Hwnd, "ActiveOnly")))
-					{
-						if (form && !form->Active)
-							*allowInsert = false;
-					}
-
-					return 1;
 				}
 				else if (Message == WM_SHOWWINDOW)
 				{

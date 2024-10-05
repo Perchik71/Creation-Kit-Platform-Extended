@@ -369,6 +369,7 @@
     <ClCompile Include="Patches\Windows\SF\AboutWindowSF.cpp" />
     <ClCompile Include="Patches\Windows\SF\DataWindowSF.cpp" />
     <ClCompile Include="Patches\Windows\SF\MainWindowSF.cpp" />
+    <ClCompile Include="Patches\Windows\SF\ObjectWindowSF.cpp" />
     <ClCompile Include="Patches\Windows\SSE\BNetUploadWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\CellViewWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\DataWindow.cpp" />
@@ -748,6 +749,7 @@
     <ClInclude Include="Patches\Windows\SF\AboutWindowSF.h" />
     <ClInclude Include="Patches\Windows\SF\DataWindowSF.h" />
     <ClInclude Include="Patches\Windows\SF\MainWindowSF.h" />
+    <ClInclude Include="Patches\Windows\SF\ObjectWindowSF.h" />
     <ClInclude Include="Patches\Windows\SSE\BNetUploadWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\CellViewWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\DataWindow.h" />

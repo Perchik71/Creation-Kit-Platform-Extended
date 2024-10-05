@@ -8,7 +8,6 @@
     <ClInclude Include="libdeflate\lib\lib_common.h" />
     <ClInclude Include="libdeflate\lib\matchfinder_common.h" />
     <ClInclude Include="libdeflate\lib\zlib_constants.h" />
-    <ClInclude Include="libdeflate\lib\adler32_vec_template.h" />
     <ClInclude Include="libdeflate\lib\bt_matchfinder.h" />
     <ClInclude Include="libdeflate\lib\cpu_features_common.h" />
     <ClInclude Include="libdeflate\lib\crc32_multipliers.h" />
