@@ -835,6 +835,9 @@
     <ClCompile Include="Patches\Windows\SF\ObjectWindowSF.cpp">
       <Filter>Patches\Windows\SF</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\Windows\SF\ProgressWindowSF.cpp">
+      <Filter>Patches\Windows\SF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2051,6 +2054,9 @@
       <Filter>Editor API\SF</Filter>
     </ClInclude>
     <ClInclude Include="Patches\Windows\SF\ObjectWindowSF.h">
+      <Filter>Patches\Windows\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\SF\ProgressWindowSF.h">
       <Filter>Patches\Windows\SF</Filter>
     </ClInclude>
   </ItemGroup>

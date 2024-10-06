@@ -18,6 +18,7 @@
 #include "Patches/Windows/SF/AboutWindowSF.h"
 #include "Patches/Windows/SF/MainWindowSF.h"
 #include "Patches/Windows/SF/ObjectWindowSF.h"
+#include "Patches/Windows/SF/ProgressWindowSF.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -41,6 +42,7 @@ namespace CreationKitPlatformExtended
 				new Patches::AboutWindow(),
 				new Patches::MainWindow(),
 				new Patches::ObjectWindow(),
+				//new Patches::ProgressWindow(),
 			});
 		}
 	}

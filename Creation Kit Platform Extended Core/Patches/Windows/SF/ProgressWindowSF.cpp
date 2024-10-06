@@ -6,14 +6,13 @@
 #include "Core/ProgressTaskBar.h"
 #include "Editor API/EditorUI.h"
 #include "Patches/UIThemePatch.h"
-#include "MainWindowF4.h"
-#include "ProgressWindowF4.h"
+#include "ProgressWindowSF.h"
 
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
 	{
-		namespace Fallout4
+		namespace Starfield
 		{
 			ProgressWindow* GlobalProgressWindowPtr = nullptr;
 			ProgressTaskBar* ProgressTaskBarPtr = nullptr;
@@ -57,39 +56,30 @@ namespace CreationKitPlatformExtended
 			bool ProgressWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return eEditorCurrentVersion <= EDITOR_FALLOUT_C4_LAST;
+				return (eEditorCurrentVersion >= EDITOR_EXECUTABLE_TYPE::EDITOR_STARFIELD_1_14_70_0) &&
+					(eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_STARFIELD_LAST);
 			}
 
 			bool ProgressWindow::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
 				auto verPatch = lpRelocationDatabaseItem->Version();
-
-				if ((verPatch == 1) || (verPatch == 2))
+				if (verPatch == 1)
 				{
-					lpRelocator->PatchNop(_RELDATA_RAV(5), 2);
-					lpRelocator->DetourCall(_RELDATA_RAV(0), (uintptr_t)&sub1);
+					auto rva = (uintptr_t)(_RELDATA_RAV(0));
+					lpRelocator->PatchNop(rva, 2);
+					lpRelocator->DetourCall(rva + 0x27, (uintptr_t)&sub1);
 
 					// Hook Loading Files %d%% (%s)
 					lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&sub3);
 					// Hook Loading Files...Initializing...
-					lpRelocator->DetourCall(_RELDATA_RAV(3), (uintptr_t)&sub2);
+					lpRelocator->DetourCall(_RELDATA_RAV(2), (uintptr_t)&sub2);
 					// Hook Loading Files...Initializing References...
-					lpRelocator->DetourCall(_RELDATA_RAV(4), (uintptr_t)&sub2);
+					lpRelocator->DetourCall(_RELDATA_RAV(3), (uintptr_t)&sub2);
 					// Hook Validating forms...
-					lpRelocator->DetourCall(_RELDATA_RAV(6), (uintptr_t)&sub2);
+					lpRelocator->DetourCall(_RELDATA_RAV(4), (uintptr_t)&sub2);
 
-					if (verPatch == 2)
-						// Idk what kind of gifted UI/UX specialist is sitting at Bethesda, 
-						// but this is the most shitty solution.
-						// 
-						// bUseVersionControl=0 by the way...
-						// 
-						// The output of a message to the user, every time you load something, 
-						// should only be in the form of an error, and postpone the load of something.
-						lpRelocator->Patch(_RELDATA_RAV(7), { 0xE9, 0xFC, 0x01, 0x00, 0x00, 0x90 });
-				
-					pointer_ProgressWindow_sub = _RELDATA_ADDR(2);
+					pointer_ProgressWindow_sub = _RELDATA_ADDR(5);
 
 					return true;
 				}
@@ -122,19 +112,23 @@ namespace CreationKitPlatformExtended
 						
 						GlobalProgressWindowPtr->ProgressLabel.Caption = "Loading Files...";
 						GlobalProgressWindowPtr->Progress.Style |= PBS_SMOOTH;
-						GlobalProgressWindowPtr->Progress.Perform(PBM_SETRANGE, 0, MAKELPARAM(0, 95));
+						GlobalProgressWindowPtr->Progress.Perform(PBM_SETRANGE, 0, MAKELPARAM(0, 100));
 						GlobalProgressWindowPtr->Progress.Perform(PBM_SETSTEP, 1, 0);
 						GlobalProgressWindowPtr->Progress.Perform(PBM_SETPOS, 0, 0);
 						value_ProgressWindow_pos = 0;
 
-						if (GlobalMainWindowPtr)
-						{
-							ProgressTaskBarPtr = new ProgressTaskBar(GlobalMainWindowPtr->Handle);
-							if (ProgressTaskBarPtr) ProgressTaskBarPtr->Begin();
-						}
+						ProgressTaskBarPtr = new ProgressTaskBar(Hwnd);
+						if (ProgressTaskBarPtr) ProgressTaskBarPtr->Begin();
 						
 						ShowWindow(Hwnd, SW_SHOW);
 						UpdateWindow(Hwnd);
+						SetTimer(Hwnd, 0, 50, NULL);
+					}
+					return 0;
+					case WM_TIMER:
+					{
+						if (wParam == 0)
+							GlobalProgressWindowPtr->Progress.Refresh();
 					}
 					return 0;
 					case WM_DESTROY:
@@ -149,6 +143,8 @@ namespace CreationKitPlatformExtended
 						GlobalProgressWindowPtr->m_hWnd = nullptr;
 						GlobalProgressWindowPtr->ProgressLabel = nullptr;
 						GlobalProgressWindowPtr->Progress = nullptr;
+
+						KillTimer(Hwnd, 0);
 					}
 					return 0;
 				}
@@ -159,8 +155,52 @@ namespace CreationKitPlatformExtended
 			HWND ProgressWindow::sub1(HINSTANCE hInstance, LPCSTR lpTemplateName, HWND hWndParent,
 				DLGPROC lpDialogFunc, LPARAM dwInitParam)
 			{
-				return EditorAPI::EditorUI::HKCreateDialogParamA(hInstance, MAKEINTRESOURCE(3238), hWndParent,
-					HKWndProc, dwInitParam);
+				auto hEvent = CreateEventA(NULL, 0, 0, NULL);		
+				HWND hWindow = NULL;
+
+				std::thread asyncLogThread([](HWND* window, HANDLE* hEvent, HINSTANCE hInstance, LPCSTR lpTemplateName, 
+					HWND hWndParent, LPARAM dwInitParam)
+					{
+						auto darkmode = _READ_OPTION_BOOL("CreationKit", "bUIDarkTheme", false);
+						if (darkmode)
+							Patches::UIThemePatch::InitializeCurrentThread();
+
+						*window = EditorAPI::EditorUI::HKCreateDialogParamA(hInstance, MAKEINTRESOURCE(3238), hWndParent,
+							HKWndProc, dwInitParam);
+
+						SetEvent(*hEvent);
+
+						if (*window)
+						{
+							MSG msg;
+							while (GetMessageA(&msg, NULL, 0, 0) > 0)
+							{
+								TranslateMessage(&msg);
+								DispatchMessageA(&msg);
+
+								if ((msg.message == WM_DESTROY) && (*window == msg.hwnd))
+								{
+									_CONSOLE("Exit gg");
+									break;
+								}
+							}
+
+							return true;
+						}
+
+						return false;
+					}, &hWindow, &hEvent, hInstance, lpTemplateName, hWndParent, dwInitParam);
+
+				asyncLogThread.detach();
+				WaitForSingleObject(hEvent, 10000);
+				CloseHandle(hEvent);
+
+				_CONSOLE("TETET %u", hWindow);
+
+				return hWindow;
+
+				//return EditorAPI::EditorUI::HKCreateDialogParamA(hInstance, MAKEINTRESOURCE(3238), hWndParent,
+				//	HKWndProc, dwInitParam);
 			}
 
 			void ProgressWindow::sub2(uint32_t nPartId, LPCSTR lpcstrText)

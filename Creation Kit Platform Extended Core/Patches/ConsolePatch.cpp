@@ -329,7 +329,7 @@ namespace CreationKitPlatformExtended
 				lpRelocator->DetourJump(_RELDATA_RAV(0), (uintptr_t)&LogWarning);
 				lpRelocator->DetourJump(_RELDATA_RAV(1), (uintptr_t)&LogWarningWithDebugInfo1Va);
 				lpRelocator->DetourJump(_RELDATA_RAV(2), (uintptr_t)&LogWarningWithDebugInfo1Va);
-				lpRelocator->DetourJump(_RELDATA_RAV(3), (uintptr_t)&LogWarningWithDebugInfo2);
+				//lpRelocator->DetourJump(_RELDATA_RAV(3), (uintptr_t)&LogWarningWithDebugInfo2);  it looks like BSString is there arg 5
 				lpRelocator->DetourJump(_RELDATA_RAV(4), (uintptr_t)&LogWarningUnknown1);
 				lpRelocator->DetourJump(_RELDATA_RAV(5), (uintptr_t)&LogWarningUnknown1);
 				lpRelocator->DetourJump(_RELDATA_RAV(6), (uintptr_t)&LogWarningUnknown1);
