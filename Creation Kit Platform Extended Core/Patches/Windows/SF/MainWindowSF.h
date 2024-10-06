@@ -35,6 +35,8 @@ namespace CreationKitPlatformExtended
 				static BOOL CALLBACK HKInitialize(QMainWindow* MainWindow, LPCSTR ExeFileName, DWORD Unk01);
 				static HWND CALLBACK GetWindowHandle();
 #endif // !_CKPE_WITH_QT5
+
+				static void CALLBACK ShowForm(DWORD FormID);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;

@@ -7,6 +7,8 @@
 #include "Patches/UIThemePatch.h"
 #include "Patches/UIThemeClassicPatch.h"
 #include "Patches/Windows/SSE/MainWindow.h"
+#include "Patches/Windows/FO4/MainWindowF4.h"
+#include "Patches/Windows/SF/MainWindowSF.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -230,8 +232,13 @@ namespace CreationKitPlatformExtended
 									uint32_t id = strtoul(&p[1], nullptr, 16);
 
 									if (GlobalEnginePtr->GetEditorVersion() <= EDITOR_SKYRIM_SE_LAST)
-										PostMessageA(Patches::SkyrimSpectialEdition::GlobalMainWindowPtr->Handle, 
+										PostMessageA(Patches::SkyrimSpectialEdition::GlobalMainWindowPtr->Handle,
 											WM_COMMAND, EditorAPI::EditorUI::UI_EDITOR_OPENFORMBYID, id);
+									else if (GlobalEnginePtr->GetEditorVersion() <= EDITOR_FALLOUT_C4_LAST)
+										PostMessageA(Patches::Fallout4::GlobalMainWindowPtr->Handle,
+											WM_COMMAND, EditorAPI::EditorUI::UI_EDITOR_OPENFORMBYID, id);
+									else if (GlobalEnginePtr->GetEditorVersion() <= EDITOR_STARFIELD_LAST)
+										Patches::Starfield::MainWindow::ShowForm(id);
 								}
 							}
 						}

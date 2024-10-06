@@ -315,11 +315,13 @@ namespace CreationKitPlatformExtended
 				inline void MarkAsChanged(bool state = true) const					// vtbl->238 
 				{ thisVirtualCall<void>(0x238, this, state); }
 				inline uint32_t GetEditIDLength() const								// vtbl->308
-				{ thisVirtualCall<void>(0x308, this); }
+				{ return thisVirtualCall<uint32_t>(0x308, this); }
 				inline const char* GetEditorID() const								// vtbl->310	(offset -> 0x58 -> 0x18)	
-				{ thisVirtualCall<void>(0x310, this); }
+				{ return thisVirtualCall<const char*>(0x310, this); }
 				inline const char* GetFullName() const								// vtbl->2E0
-				{ thisVirtualCall<void>(0x2E0, this); }
+				{ return thisVirtualCall<const char*>(0x2E0, this); }
+				inline void ShowEditWindow(HWND hParentWindow) const				// vtbl->420
+				{ thisVirtualCall<void>(0x420, this, hParentWindow, 0, 1); }
 				inline const char* GetFormTypeShortStr() const
 				{ return szFormTypeStr[std::min(GetFormType(), ftReserved0d9)]; }
 

@@ -200,6 +200,9 @@ namespace CreationKitPlatformExtended
 					}
 
 					// skip 101% - 102% 
+
+					// redraw
+					GlobalProgressWindowPtr->Refresh();
 				}
 				else
 					return fastCall<void>(pointer_ProgressWindow_sub, nPartId, lpcstrText);

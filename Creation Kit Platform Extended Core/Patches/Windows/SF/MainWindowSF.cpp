@@ -79,12 +79,12 @@ namespace CreationKitPlatformExtended
 
 			bool MainWindow::HasDependencies() const
 			{
-				return false;
+				return true;
 			}
 
 			Array<String> MainWindow::GetDependencies() const
 			{
-				return {};
+				return { "TESForm" };
 			}
 
 #ifdef _CKPE_WITH_QT5
@@ -235,6 +235,12 @@ namespace CreationKitPlatformExtended
 				return WndHandle;
 			}
 #endif // !_CKPE_WITH_QT5
+
+			void CALLBACK MainWindow::ShowForm(DWORD FormID)
+			{
+				auto form = EditorAPI::Starfield::TESForm::GetFormByNumericID(FormID);
+				if (form) form->ShowEditWindow(WndHandle);
+			}
 
 			bool MainWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
