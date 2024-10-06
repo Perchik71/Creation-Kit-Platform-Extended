@@ -19,6 +19,7 @@
 #	include "QtWidgets/qaction.h"
 #	include "QtWidgets/qmenu.h"
 #	include "QtWidgets/qmenubar.h"
+#	include "QtGui/qwindow.h"
 #endif // !_CKPE_WITH_QT5
 
 namespace CreationKitPlatformExtended
@@ -87,12 +88,18 @@ namespace CreationKitPlatformExtended
 			}
 
 #ifdef _CKPE_WITH_QT5
+			static HWND WndHandle = NULL;
+
 			BOOL CALLBACK MainWindow::HKInitialize(QMainWindow* MainWindow, LPCSTR ExeFileName, DWORD Unk01)
 			{
 				BOOL bResult = Core::fastCall<BOOL>(pointer_MainWindow_sub0, MainWindow, ExeFileName, Unk01);
 				if (bResult)
 				{
 					//auto application = qApp;
+
+					// Inofficially, (HWND)widget->winId(); still works, note that it enforces 
+					// the creation of a native window, though.
+					WndHandle = (HWND)MainWindow->windowHandle()->winId();
 
 					auto menuBar = MainWindow->menuBar();
 					if (!menuBar) return false;
@@ -221,6 +228,11 @@ namespace CreationKitPlatformExtended
 						MainWindow->connect(menuCKPEVersion, &QAction::triggered, MainWindow, &AboutWindow::QT5Show);
 				}
 				return bResult;
+			}
+
+			HWND CALLBACK MainWindow::GetWindowHandle()
+			{
+				return WndHandle;
 			}
 #endif // !_CKPE_WITH_QT5
 

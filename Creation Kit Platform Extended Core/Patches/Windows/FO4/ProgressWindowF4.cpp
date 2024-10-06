@@ -46,12 +46,12 @@ namespace CreationKitPlatformExtended
 
 			bool ProgressWindow::HasDependencies() const
 			{
-				return false;
+				return true;
 			}
 
 			Array<String> ProgressWindow::GetDependencies() const
 			{
-				return {};
+				return { "Main Window" };
 			}
 
 			bool ProgressWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,

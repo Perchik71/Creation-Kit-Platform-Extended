@@ -42,7 +42,7 @@ namespace CreationKitPlatformExtended
 				new Patches::AboutWindow(),
 				new Patches::MainWindow(),
 				new Patches::ObjectWindow(),
-				//new Patches::ProgressWindow(),
+				new Patches::ProgressWindow(),
 			});
 		}
 	}
