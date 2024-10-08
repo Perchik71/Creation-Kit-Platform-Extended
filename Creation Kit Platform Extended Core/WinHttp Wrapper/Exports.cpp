@@ -23,8 +23,8 @@
 //
 // Forward the exports to WINHTTP.dll like normal
 //
-#pragma comment(linker, "/export:DllCanUnloadNow=C:\\Windows\\System32\\WINHTTP.DllCanUnloadNow")
-#pragma comment(linker, "/export:DllGetClassObject=C:\\Windows\\System32\\WINHTTP.DllGetClassObject")
+#pragma comment(linker, "/export:DllCanUnloadNow=C:\\Windows\\System32\\WINHTTP.DllCanUnloadNow,PRIVATE")
+#pragma comment(linker, "/export:DllGetClassObject=C:\\Windows\\System32\\WINHTTP.DllGetClassObject,PRIVATE")
 #pragma comment(linker, "/export:Private1=C:\\Windows\\System32\\WINHTTP.Private1")
 #pragma comment(linker, "/export:SvchostPushServiceGlobals=C:\\Windows\\System32\\WINHTTP.SvchostPushServiceGlobals")
 #pragma comment(linker, "/export:WinHttpAddRequestHeaders=C:\\Windows\\System32\\WINHTTP.WinHttpAddRequestHeaders")

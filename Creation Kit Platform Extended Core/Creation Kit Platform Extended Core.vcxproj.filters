@@ -838,6 +838,9 @@
     <ClCompile Include="Patches\Windows\SF\ProgressWindowSF.cpp">
       <Filter>Patches\Windows\SF</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\ChooseSoundFile.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2058,6 +2061,9 @@
     </ClInclude>
     <ClInclude Include="Patches\Windows\SF\ProgressWindowSF.h">
       <Filter>Patches\Windows\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\ChooseSoundFile.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
