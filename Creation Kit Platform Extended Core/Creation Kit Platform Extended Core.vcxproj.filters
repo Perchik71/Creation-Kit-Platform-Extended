@@ -841,6 +841,9 @@
     <ClCompile Include="Patches\SSE\ChooseSoundFile.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\FO4\ChooseSoundFileF4.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2064,6 +2067,9 @@
     </ClInclude>
     <ClInclude Include="Patches\SSE\ChooseSoundFile.h">
       <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\ChooseSoundFileF4.h">
+      <Filter>Patches\FO4</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -48,6 +48,7 @@
 #include "Patches/FO4/BSResourceTextureDB_RE.h"
 #include "Patches/FO4/FixLandspaceVNML.h"
 #include "Patches/FO4/CrashInventory.h"
+#include "Patches/FO4/ChooseSoundFileF4.h"
 
 #include "Patches/Windows/FO4/MainWindowF4.h"
 #include "Patches/Windows/FO4/ObjectWindowF4.h"
@@ -108,6 +109,7 @@ namespace CreationKitPlatformExtended
 				new Patches::FixSortPropObjectModPatch(),
 				new Patches::BSResourceTextureDBREPatch(),
 				new Patches::FixLandspaceVNMLPatch(),
+				new Patches::ChooseSoundFilePatch(),
 				//new Patches::CrashInventoryPatch(),
 				
 				new Patches::MainWindow(),
