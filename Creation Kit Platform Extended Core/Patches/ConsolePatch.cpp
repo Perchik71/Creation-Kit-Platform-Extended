@@ -9,7 +9,7 @@ namespace CreationKitPlatformExtended
 {
 	namespace Patches
 	{
-		static LPCSTR typeListSkyrim[] =
+		LPCSTR typeListSkyrim[] =
 		{
 			"DEFAULT",
 			"COMBAT",
@@ -43,7 +43,7 @@ namespace CreationKitPlatformExtended
 			"SYSTEM"
 		};
 
-		static LPCSTR typeListFO4[] =
+		LPCSTR typeListFO4[] =
 		{
 			"DEFAULT",
 			"SYSTEM",
@@ -81,7 +81,7 @@ namespace CreationKitPlatformExtended
 			"WORKSHOP",
 		};
 
-		static LPCSTR typeListSF[] =
+		LPCSTR typeListSF[] =
 		{
 			"DEFAULT",
 			"SYSTEM",
