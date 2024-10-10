@@ -6,29 +6,25 @@
 #include "Editor API/EditorUI.h"
 #include "Editor API/BSString.h"
 #include "Core/RegistratorWindow.h"
-#include "Patches/Windows/FO4/MainWindowF4.h"
-#include "CellViewWindowF4.h"
+#include "CellViewWindowSF.h"
 
 #define UI_CELL_VIEW_ADD_CELL_ITEM					2579
 #define UI_CELL_VIEW_ADD_CELL_OBJECT_ITEM			2583
 #define UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX			2580	
 #define UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX	2582	
-#define UI_CELL_VIEW_FILTER_CELL					2584	
+#define UI_CELL_VIEW_FILTER_CELL					7433	
+#define UI_CELL_VIEW_FILTER_WORLDSPACE				7376	
 #define UI_CELL_VIEW_GO_BUTTON						3681	
-
-#define UI_CELL_VIEW_FILTER_CELL_SIZE				1024
 
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
 	{
-		namespace Fallout4
+		namespace Starfield
 		{
 			CellViewWindow* GlobalCellViewWindowPtr = nullptr;
 			uintptr_t pointer_CellViewWindow_sub1 = 0;
 			uintptr_t pointer_CellViewWindow_sub2 = 0;
-			char* str_CellViewWindow_Filter = nullptr;
-			char* str_CellViewWindow_FilterUser = nullptr;
 
 			bool CellViewWindow::HasOption() const
 			{
@@ -52,18 +48,19 @@ namespace CreationKitPlatformExtended
 
 			bool CellViewWindow::HasDependencies() const
 			{
-				return true;
+				return false;
 			}
 
 			Array<String> CellViewWindow::GetDependencies() const
 			{
-				return { "Main Window" };
+				return {};
 			}
 
 			bool CellViewWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return eEditorCurrentVersion <= EDITOR_FALLOUT_C4_LAST;
+				return (eEditorCurrentVersion >= EDITOR_EXECUTABLE_TYPE::EDITOR_STARFIELD_1_14_70_0) &&
+					(eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_STARFIELD_LAST);
 			}
 
 			bool CellViewWindow::Activate(const Relocator* lpRelocator,
@@ -71,31 +68,31 @@ namespace CreationKitPlatformExtended
 			{
 				auto verPatch = lpRelocationDatabaseItem->Version();
 
-				if ((verPatch == 1) || (verPatch == 2))
+				if (verPatch == 1)
 				{
-					*(uintptr_t*)&_oldWndProc =
-						voltek::detours_function_class_jump(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), &HKWndProc);
+					*(uintptr_t*)&_oldWndProc = voltek::detours_function_class_jump(_RELDATA_ADDR(0), &HKWndProc);
+
+					{
+						ScopeRelocator text;
+
+						// Some kind of mockery, create a dialog, then create a "splitter" window in it. 
+						// Was it really hard to do it in resources? I cut out all this stuff.
+						// Delete the separator, delete everything that changes the windows in the dialog.
+						lpRelocator->Patch(_RELDATA_RAV(1), { 0xC3, 0x90 });
+						// No create splitter.
+						lpRelocator->Patch(_RELDATA_RAV(2), { 0xEB });
+						// Remove change windows size.
+						lpRelocator->Patch(_RELDATA_RAV(3), { 0xC3, 0x90 });
+					}
 
 					// Allow forms to be filtered in CellViewProc
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(1), &CellViewWindow::sub1);
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), &CellViewWindow::sub1);
+					lpRelocator->DetourCall(_RELDATA_RAV(4), &CellViewWindow::sub1);
+					lpRelocator->DetourCall(_RELDATA_RAV(5), &CellViewWindow::sub1);
+					pointer_CellViewWindow_sub1 = _RELDATA_ADDR(6);
 
-					pointer_CellViewWindow_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(4));
-
-					if ((verPatch == 2))
-					{
-						// Allow objects to be filtered in CellViewProc
-						lpRelocator->DetourCall(lpRelocationDatabaseItem->At(3), &CellViewWindow::sub2_ver2);
-						//
-						pointer_CellViewWindow_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(5));
-					}
-					else
-					{
-						// Allow objects to be filtered in CellViewProc
-						lpRelocator->DetourCall(lpRelocationDatabaseItem->At(3), &CellViewWindow::sub2);
-						//
-						pointer_CellViewWindow_sub2 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(5));
-					}
+					// Allow objects to be filtered in CellViewProc
+					lpRelocator->DetourCall(_RELDATA_RAV(7), &CellViewWindow::sub2);
+					pointer_CellViewWindow_sub2 = _RELDATA_ADDR(8);
 
 					return true;
 				}
@@ -117,33 +114,16 @@ namespace CreationKitPlatformExtended
 
 			void CellViewWindow::sub1(HWND ListViewHandle, TESForm* Form, bool UseImage, int ItemIndex)
 			{
-				//if (TESDataHandler::Instance->Mods->Count() > 0) 
-				{
-					bool allowInsert = true;
-					GlobalCellViewWindowPtr->Perform(UI_CELL_VIEW_ADD_CELL_ITEM, (WPARAM)Form, (LPARAM)&allowInsert);
+				bool allowInsert = true;
+				GlobalCellViewWindowPtr->Perform(UI_CELL_VIEW_ADD_CELL_ITEM, (WPARAM)Form, (LPARAM)&allowInsert);
 
-					if (!allowInsert)
-						return;
-				}
+				if (!allowInsert)
+					return;
 
-				((void(__fastcall*)(HWND, TESForm*, bool, int))pointer_CellViewWindow_sub1)(ListViewHandle, Form, UseImage, ItemIndex);
+				fastCall<void>(pointer_CellViewWindow_sub1, ListViewHandle, Form, UseImage, ItemIndex);
 			}
 
-			int CellViewWindow::sub2(HWND** ListViewHandle, TESForm** Form, __int64 a3)
-			{
-				//if (TESDataHandler::Instance->Mods->Count() > 0)
-				{
-					bool allowInsert = true;
-					GlobalCellViewWindowPtr->Perform(UI_CELL_VIEW_ADD_CELL_OBJECT_ITEM, (WPARAM)*Form, (LPARAM)&allowInsert);
-
-					if (!allowInsert)
-						return 1;
-				}
-
-				return ((int(__fastcall*)(HWND**, TESForm**, __int64))pointer_CellViewWindow_sub2)(ListViewHandle, Form, a3);
-			}
-
-			void CellViewWindow::sub2_ver2(HWND ListViewHandle, TESForm* Form)
+			void CellViewWindow::sub2(HWND ListViewHandle, TESForm* Form)
 			{
 				{
 					bool allowInsert = true;
@@ -161,8 +141,10 @@ namespace CreationKitPlatformExtended
 				UINT uHalf = (width - 12) >> 1;
 				Classes::CRECT Bounds;
 
+				// CELL MAIN
+
 				Bounds.Left = 4;
-				Bounds.Top = 90;
+				Bounds.Top = 110;
 				Bounds.Width = uHalf;
 				Bounds.Height = height - (Bounds.Top + 4);
 				m_CellListView.BoundsRect = Bounds;
@@ -179,14 +161,26 @@ namespace CreationKitPlatformExtended
 				Bounds.Width = 148;
 				m_WorldSpaceComboBox.BoundsRect = Bounds;
 
-				Bounds.Left = 156;
+				Bounds.Left = 192;
 				Bounds.Top = 22;
+				Bounds.Height = 21;
+				Bounds.Right = uHalf + 4;
+				m_FilterWorldspaceEdit.BoundsRect = Bounds;
+
+				Bounds.Left = 60;
+				Bounds.Top = 85;
 				Bounds.Height = 21;
 				Bounds.Right = uHalf + 4;
 				m_FilterCellEdit.BoundsRect = Bounds;
 
 				Bounds.Left = 6;
-				Bounds.Top = 60;
+				Bounds.Top = 89;
+				Bounds.Height = 17;
+				Bounds.Right = 56;
+				m_FilterCellLabel.BoundsRect = Bounds;
+
+				Bounds.Left = 6;
+				Bounds.Top = 57;
 				Bounds.Height = 12;
 				Bounds.Width = 10;
 				m_XLabel.BoundsRect = Bounds;
@@ -195,7 +189,7 @@ namespace CreationKitPlatformExtended
 				m_YLabel.BoundsRect = Bounds;
 
 				Bounds.Left = 18;
-				Bounds.Top = 56;
+				Bounds.Top = 53;
 				Bounds.Width = 40;
 				Bounds.Height = 21;
 				m_XEdit.BoundsRect = Bounds;
@@ -203,7 +197,7 @@ namespace CreationKitPlatformExtended
 				Bounds.Left = 76;
 				m_YEdit.BoundsRect = Bounds;
 
-				Bounds.Top = 50;
+				Bounds.Top = 47;
 				Bounds.Left = 120;
 				Bounds.Width = 32;
 				Bounds.Height = 32;
@@ -218,7 +212,9 @@ namespace CreationKitPlatformExtended
 				Bounds.Width = 145;
 				m_ActiveCellsOnly.BoundsRect = Bounds;
 
-				Bounds.Top = 90;
+				// CELL OBJECTS
+
+				Bounds.Top = 122;
 				Bounds.Left = uHalf + 8;
 				Bounds.Width = uHalf;
 				Bounds.Height = height - (Bounds.Top + 4);
@@ -226,27 +222,48 @@ namespace CreationKitPlatformExtended
 
 				Bounds.Top = 22;
 				Bounds.Height = 21;
-				m_IdEdit.BoundsRect = Bounds;
-
-				Bounds.Top = 4;
-				Bounds.Height = 18;
-				m_SelectedObjectLabel.BoundsRect = Bounds;
-				m_SelectedObjectLabel.Refresh();
+				Bounds.Width = 70;
+				m_UnloadButton.BoundsRect = Bounds;
 
 				Bounds.Top = 50;
 				Bounds.Height = 16;
-				Bounds.Width = 95;
+				Bounds.Width = 100;
 				m_FilteredOnly.BoundsRect = Bounds;
 
+				Bounds.Left += 74;
+				Bounds.Top = 22;
+				Bounds.Height = 21;
+				Bounds.Right = width - 4;
+				m_IdEdit.BoundsRect = Bounds;
+
+				Bounds.Left = uHalf + 8;
+				Bounds.Width = 120;
 				Bounds.Top = 67;
 				m_SelectedOnly.BoundsRect = Bounds;
 
+				Bounds.Top = 84;
+				Bounds.Height = 34;
+				m_SpecificFormTypes.BoundsRect = Bounds;
+
 				Bounds.Top = 50;
-				Bounds.Left += 100;
-				Bounds.Width = 160;
+				Bounds.Height = 21;
+				Bounds.Left += 140;
+				Bounds.Width = 120;
 				m_VisibleOnly.BoundsRect = Bounds;
 
 				Bounds.Top = 67;
+				m_ActiveLayerOnly.BoundsRect = Bounds;
+
+				Bounds.Top = 91;
+				m_SelectTypesButton.BoundsRect = Bounds;
+
+				Bounds.Top = 50;
+				Bounds.Left += 140;
+				Bounds.Width = 120;
+				m_ShowNavmesh.BoundsRect = Bounds;
+				
+				Bounds.Top = 67;
+				Bounds.Width = 160;
 				m_ActiveObjectsOnly.BoundsRect = Bounds;
 			}
 
@@ -254,33 +271,32 @@ namespace CreationKitPlatformExtended
 			{
 				if (Message == WM_INITDIALOG)
 				{
-					str_CellViewWindow_Filter = (char*)GlobalMemoryManagerPtr->MemAlloc(UI_CELL_VIEW_FILTER_CELL_SIZE);
-					AssertMsg(str_CellViewWindow_Filter, "Failed to allocate memory for the cells filter");
-					str_CellViewWindow_FilterUser = (char*)GlobalMemoryManagerPtr->MemAlloc(UI_CELL_VIEW_FILTER_CELL_SIZE);
-					AssertMsg(str_CellViewWindow_FilterUser, "Failed to allocate memory for the text of the custom filter");
-
 					GlobalRegistratorWindowPtr->RegisterMajor(Hwnd, "CellViewWindow");
 					GlobalCellViewWindowPtr->m_hWnd = Hwnd;
-					GlobalCellViewWindowPtr->m_WorldSpaceLabel = GetDlgItem(Hwnd, 1164);
-					GlobalCellViewWindowPtr->m_WorldSpaceComboBox = GetDlgItem(Hwnd, 2083);
+					GlobalCellViewWindowPtr->m_CellListView = GetDlgItem(Hwnd, 1155);
+					GlobalCellViewWindowPtr->m_ObjectListView = GetDlgItem(Hwnd, 1156);
+					GlobalCellViewWindowPtr->m_FilterCellEdit = GetDlgItem(Hwnd, UI_CELL_VIEW_FILTER_CELL);
 					GlobalCellViewWindowPtr->m_XEdit = GetDlgItem(Hwnd, 5283);
 					GlobalCellViewWindowPtr->m_YEdit = GetDlgItem(Hwnd, 5099);
 					GlobalCellViewWindowPtr->m_XLabel = GetDlgItem(Hwnd, 5281);
 					GlobalCellViewWindowPtr->m_YLabel = GetDlgItem(Hwnd, 5282);
 					GlobalCellViewWindowPtr->m_GoButton = GetDlgItem(Hwnd, UI_CELL_VIEW_GO_BUTTON);
+					GlobalCellViewWindowPtr->m_WorldSpaceLabel = GetDlgItem(Hwnd, 1164);
 					GlobalCellViewWindowPtr->m_LoadedAtTop = GetDlgItem(Hwnd, 5662);
+					GlobalCellViewWindowPtr->m_ActiveCellsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX);
+					GlobalCellViewWindowPtr->m_WorldSpaceComboBox = GetDlgItem(Hwnd, 2083);
+					GlobalCellViewWindowPtr->m_FilterWorldspaceEdit = GetDlgItem(Hwnd, UI_CELL_VIEW_FILTER_WORLDSPACE);
+					GlobalCellViewWindowPtr->m_UnloadButton = GetDlgItem(Hwnd, 1008);
+					GlobalCellViewWindowPtr->m_IdEdit = GetDlgItem(Hwnd, 2581);
+					GlobalCellViewWindowPtr->m_FilterCellLabel = GetDlgItem(Hwnd, 1222);
 					GlobalCellViewWindowPtr->m_FilteredOnly = GetDlgItem(Hwnd, 5664);
 					GlobalCellViewWindowPtr->m_VisibleOnly = GetDlgItem(Hwnd, 5666);
 					GlobalCellViewWindowPtr->m_SelectedOnly = GetDlgItem(Hwnd, 5665);
-					GlobalCellViewWindowPtr->m_IdEdit = GetDlgItem(Hwnd, 2581);
-					GlobalCellViewWindowPtr->m_SelectedObjectLabel = GetDlgItem(Hwnd, 1163);
-					GlobalCellViewWindowPtr->m_ActiveCellsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX);
+					GlobalCellViewWindowPtr->m_ActiveLayerOnly = GetDlgItem(Hwnd, 5667);
+					GlobalCellViewWindowPtr->m_ShowNavmesh = GetDlgItem(Hwnd, 148);
+					GlobalCellViewWindowPtr->m_SpecificFormTypes = GetDlgItem(Hwnd, 5668);
 					GlobalCellViewWindowPtr->m_ActiveObjectsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX);
-					GlobalCellViewWindowPtr->m_CellListView = GetDlgItem(Hwnd, 1155);
-					GlobalCellViewWindowPtr->m_ObjectListView = GetDlgItem(Hwnd, 1156);
-					GlobalCellViewWindowPtr->m_FilterCellEdit = GetDlgItem(Hwnd, UI_CELL_VIEW_FILTER_CELL);
-
-					GlobalCellViewWindowPtr->m_WorldSpaceLabel.Style |= SS_CENTER;		
+					GlobalCellViewWindowPtr->m_SelectTypesButton = GetDlgItem(Hwnd, 5959);
 
 					// Eliminate the flicker when changing cells
 					ListView_SetExtendedListViewStyleEx(GlobalCellViewWindowPtr->m_CellListView.Handle, 
@@ -315,20 +331,6 @@ namespace CreationKitPlatformExtended
 						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2581, EN_CHANGE), 0);
 						return 1;
 					}
-					else if ((param == UI_CELL_VIEW_FILTER_CELL) && (HIWORD(wParam) == EN_CHANGE))
-					{
-						auto hFilter = GlobalCellViewWindowPtr->m_FilterCellEdit.Handle;
-						auto iLen = std::min(GetWindowTextLengthA(hFilter), UI_CELL_VIEW_FILTER_CELL_SIZE - 1);
-
-						SetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_FILTER_CELLS_LEN, reinterpret_cast<HANDLE>(iLen));
-
-						if (iLen)
-							GetWindowTextA(hFilter, str_CellViewWindow_FilterUser, iLen + 1);
-
-						// Fake the dropdown list being activated
-						SendMessageA(Hwnd, WM_COMMAND, MAKEWPARAM(2083, 1), 0);
-						return 1;
-					}
 					else if (param == UI_CELL_VIEW_GO_BUTTON)
 					{						
 						if ((GlobalCellViewWindowPtr->m_XEdit.Caption.length() <= 1) ||
@@ -350,22 +352,6 @@ namespace CreationKitPlatformExtended
 							*allowInsert = false;
 					}
 
-					// Skip if a filter is installed and the form does not meet the requirements
-					if (*allowInsert && reinterpret_cast<int>(GetPropA(Hwnd, EditorAPI::EditorUI::UI_USER_DATA_FILTER_CELLS_LEN)) > 2)
-					{
-						if (form)
-						{
-							auto editorID = form->GetEditorID_NoVTable();
-							if (editorID)
-							{
-								sprintf_s(str_CellViewWindow_Filter, UI_CELL_VIEW_FILTER_CELL, "%s %08X %s",
-									editorID, form->FormID, form->FullName);
-								
-								*allowInsert = StrStrI(str_CellViewWindow_Filter, str_CellViewWindow_FilterUser) != 0;
-							}
-						}
-					}
-
 					return 1;
 				}
 				else if (Message == UI_CELL_VIEW_ADD_CELL_OBJECT_ITEM)
@@ -383,16 +369,6 @@ namespace CreationKitPlatformExtended
 					}
 
 					return 1;
-				}
-				else if (Message == WM_CLOSE)
-				{
-					//
-					// hide the window and uncheck the checkbox in the main window menu
-					//
-					GlobalCellViewWindowPtr->Visible = false;
-					GlobalMainWindowPtr->MainMenu.GetSubMenuItem(2).GetItem(EditorAPI::EditorUI::UI_EDITOR_TOGGLECELLVIEW).Checked = false;
-
-					return S_OK;
 				}
 				// Don't let us reduce the window too much
 				else if (Message == WM_GETMINMAXINFO) 

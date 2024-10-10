@@ -238,8 +238,10 @@ namespace CreationKitPlatformExtended
 
 			void CALLBACK MainWindow::ShowForm(DWORD FormID)
 			{
+#ifdef _CKPE_WITH_QT5
 				auto form = EditorAPI::Starfield::TESForm::GetFormByNumericID(FormID);
 				if (form) form->ShowEditWindow(WndHandle);
+#endif // !_CKPE_WITH_QT5
 			}
 
 			bool MainWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,

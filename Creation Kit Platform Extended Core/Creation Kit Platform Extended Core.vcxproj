@@ -370,6 +370,7 @@
     <ClCompile Include="Patches\Windows\FO4\RenderWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\FO4\ResponseWindowF4.cpp" />
     <ClCompile Include="Patches\Windows\SF\AboutWindowSF.cpp" />
+    <ClCompile Include="Patches\Windows\SF\CellViewWindowSF.cpp" />
     <ClCompile Include="Patches\Windows\SF\DataWindowSF.cpp" />
     <ClCompile Include="Patches\Windows\SF\MainWindowSF.cpp" />
     <ClCompile Include="Patches\Windows\SF\ObjectWindowSF.cpp" />
@@ -754,6 +755,7 @@
     <ClInclude Include="Patches\Windows\FO4\RenderWindowF4.h" />
     <ClInclude Include="Patches\Windows\FO4\ResponseWindowF4.h" />
     <ClInclude Include="Patches\Windows\SF\AboutWindowSF.h" />
+    <ClInclude Include="Patches\Windows\SF\CellViewWindowSF.h" />
     <ClInclude Include="Patches\Windows\SF\DataWindowSF.h" />
     <ClInclude Include="Patches\Windows\SF\MainWindowSF.h" />
     <ClInclude Include="Patches\Windows\SF\ObjectWindowSF.h" />

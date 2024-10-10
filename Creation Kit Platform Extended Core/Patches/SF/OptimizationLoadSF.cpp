@@ -84,6 +84,8 @@ namespace CreationKitPlatformExtended
 						lpRelocator->Patch(_RELDATA_RAV(4), { 0xC3, 0x90 });
 						// Spam Primitive with zero extents encountered for reference %08X
 						lpRelocator->Patch(_RELDATA_RAV(6), { 0xEB });
+						// Spam Demanding CPU Geometry Data for '%s' because it wasn't ready on time
+						lpRelocator->PatchNop(_RELDATA_RAV(7), 5);
 					}
 
 					// 2 kb -> x kb >= 256 kb
