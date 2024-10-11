@@ -60,8 +60,8 @@ namespace CreationKitPlatformExtended
 					//
 					// Allow the "PlayerKnows" conditional function to accept enchantments as a function parameter
 					//
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(0), (uintptr_t)&sub);
-					pointer_AllowPlayerKnowsCondition_sub = lpRelocationDatabaseItem->At(1);
+					lpRelocator->DetourJump(_RELDATA_RAV(0), (uintptr_t)&sub);
+					pointer_AllowPlayerKnowsCondition_sub = _RELDATA_ADDR(1);
 
 					return true;
 				}

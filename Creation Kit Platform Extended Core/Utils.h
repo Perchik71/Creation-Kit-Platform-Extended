@@ -22,6 +22,8 @@ namespace CreationKitPlatformExtended
 		uint64_t GetAvailableTotalPhysicalMemory();
 		uint64_t GetAvailableTotalPageFileMemory();
 
+		void ProcessMessage();
+
 		void Quit();
 		char* StrDub(const char* s);
 	}

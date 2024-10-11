@@ -82,35 +82,41 @@ namespace CreationKitPlatformExtended
 					// - Replacing FindFirstNextA with a more optimized function FindFirstFileExA
 
 					// Spam in the status bar no more than 250ms
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0), (uintptr_t)&sub);
-					pointer_OptimizationLoad_sub1 = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
+					lpRelocator->DetourCall(_RELDATA_RAV(0), (uintptr_t)&sub);
+					pointer_OptimizationLoad_sub1 = _RELDATA_ADDR(1);
 
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&HKInflateInit);
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(3), (uintptr_t)&HKInflate);
+					lpRelocator->DetourCall(_RELDATA_RAV(2), (uintptr_t)&HKInflateInit);
+					lpRelocator->DetourCall(_RELDATA_RAV(3), (uintptr_t)&HKInflate);
 
 					PatchIAT(HKFindFirstFileA, "kernel32.dll", "FindFirstFileA");
 
 					// Skip remove failed forms
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(4), { 0xEB });
+					lpRelocator->Patch(_RELDATA_RAV(4), { 0xEB });
 
 					{
 						ScopeRelocator text;
 
-						auto rva = lpRelocationDatabaseItem->At(12);
+						auto rva = _RELDATA_RAV(12);
 						EditorAPI::Fallout4::pointer_BSFile_sub = lpRelocator->Rav2Off(rva);
 						// 2 kb -> x kb >= 256 kb
 						*(uintptr_t*)&EditorAPI::Fallout4::BSFile::ICreateInstance =
 							voltek::detours_function_class_jump(EditorAPI::Fallout4::pointer_BSFile_sub,
 								(uintptr_t)&EditorAPI::Fallout4::BSFile::HKCreateInstance);
 						// 2 kb -> 256 kb
-						lpRelocator->Patch(lpRelocationDatabaseItem->At(13), { 0x41, 0xB9, 0x00, 0x00, 0x04, 0x00, 0x90 });
-						lpRelocator->Patch(lpRelocationDatabaseItem->At(14), { 0x04 });
-						lpRelocator->PatchNop(lpRelocationDatabaseItem->At(15), 4);
+						if (verPatch == 1)
+						{
+							lpRelocator->Patch(_RELDATA_RAV(13), { 0x41, 0xB9, 0x00, 0x00, 0x04, 0x00, 0x90 });
+							lpRelocator->PatchNop(_RELDATA_RAV(15), 4);
+						}
+						else
+							lpRelocator->Patch(_RELDATA_RAV(13), { 0x41, 0x89, 0xC6, 0x90 });
+						
+						lpRelocator->Patch(_RELDATA_RAV(14), { 0x04 });
 
 						if (_READ_OPTION_BOOL("Animation", "bSkipAnimationBuildData", false))
 						{
 							// Skipping Export Anim
-							lpRelocator->Patch(lpRelocationDatabaseItem->At(16), { 0xC3 });
+							lpRelocator->Patch(_RELDATA_RAV(16), { 0xC3 });
 							// Remove temporary files
 							DeleteFileA("TemporaryBehaviorEventInfoOutput.txt");
 							DeleteFileA("TemporaryClipDataOutput.txt");
@@ -195,10 +201,10 @@ namespace CreationKitPlatformExtended
 
 							};
 
-							Search_IA128::Generate(lpRelocationDatabaseItem->At(8));
-							Search_IA128::Generate(lpRelocationDatabaseItem->At(9));
-							Search_IA128::Generate(lpRelocationDatabaseItem->At(10));
-							Search_IA128::Generate(lpRelocationDatabaseItem->At(11));
+							Search_IA128::Generate(_RELDATA_RAV(8));
+							Search_IA128::Generate(_RELDATA_RAV(9));
+							Search_IA128::Generate(_RELDATA_RAV(10));
+							Search_IA128::Generate(_RELDATA_RAV(11));
 
 							count += 3;
 

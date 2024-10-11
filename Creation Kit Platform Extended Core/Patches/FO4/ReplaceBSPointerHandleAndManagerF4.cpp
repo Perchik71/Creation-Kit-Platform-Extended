@@ -186,7 +186,7 @@ namespace CreationKitPlatformExtended
 						ScopeRelocator textSection;
 
 						// Preparation, removal of all embedded pieces of code
-						lpRelocator->PatchNop((uintptr_t)lpRelocationDatabaseItem->At(0) + 12, 0x81);
+						lpRelocator->PatchNop((uintptr_t)lpRelocationDatabaseItem->At(0) + 12, 0x7A);
 						lpRelocator->PatchMovFromRax((uintptr_t)lpRelocationDatabaseItem->At(0) + 5, lpRelocationDatabaseItem->At(1));
 
 						// Stub out the rest of the functions which shouldn't ever be called now
@@ -504,7 +504,7 @@ namespace CreationKitPlatformExtended
 						ScopeRelocator textSection;
 
 						// Preparation, removal of all embedded pieces of code
-						lpRelocator->PatchNop((uintptr_t)lpRelocationDatabaseItem->At(0) + 12, 0x81);
+						lpRelocator->PatchNop((uintptr_t)lpRelocationDatabaseItem->At(0) + 12, 0x7A);
 						lpRelocator->PatchMovFromRax((uintptr_t)lpRelocationDatabaseItem->At(0) + 5, lpRelocationDatabaseItem->At(1));
 
 						// Stub out the rest of the functions which shouldn't ever be called now

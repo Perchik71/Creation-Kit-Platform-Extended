@@ -98,7 +98,7 @@ namespace CreationKitPlatformExtended
 
 			auto fileName = GetAbsoluteFileName(lpFileName);
 			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(fileName);
-			if (!ini_data || (ini_data == INVALID_HANDLE_VALUE))
+			if (!ini_data)
 				return GetPrivateProfileIntA(lpAppName, lpKeyName, nDefault, lpFileName);
 
 			String s;
@@ -135,7 +135,7 @@ namespace CreationKitPlatformExtended
 
 			auto fileName = GetAbsoluteFileName(lpFileName);
 			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(fileName);
-			if (!ini_data || (ini_data == INVALID_HANDLE_VALUE))
+			if (!ini_data)
 				return GetPrivateProfileStringA(lpAppName, lpKeyName, lpKeyName, lpReturnedString, nSize, lpFileName);
 
 			String s;
@@ -202,7 +202,7 @@ namespace CreationKitPlatformExtended
 
 			auto fileName = GetAbsoluteFileName(szFile);
 			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(fileName);
-			if (!ini_data) 
+			if (!ini_data)
 				return GetPrivateProfileStructA(lpszSection, lpszKey, lpStruct, uSizeStruct, szFile);
 
 			if (!(*ini_data).has(lpszSection))
@@ -528,7 +528,7 @@ namespace CreationKitPlatformExtended
 			if (sFileName.empty()) return nullptr;
 			// Skip.. there's not much, and generating this file in the root folder is unnecessary.
 			if (!EditorAPI::BSString::Utils::ExtractFileName(sFileName.c_str()).Compare("ConstructionSetNetwork.ini")) 
-				return INVALID_HANDLE_VALUE;
+				return nullptr;
 
 			std::shared_ptr<mINI::INIStructure> ini_data;
 

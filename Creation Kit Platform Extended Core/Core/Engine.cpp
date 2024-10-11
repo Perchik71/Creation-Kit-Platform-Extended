@@ -650,6 +650,12 @@ namespace CreationKitPlatformExtended
 				else
 					editorVersion = editorVersionIterator->second;
 
+#ifndef _CKPE_WITH_QT5
+				// don't let it run without Qt5
+				if (GetShortExecutableTypeFromFull(editorVersion) == EDITOR_SHORT_STARFIELD)
+					editorVersion = EDITOR_UNKNOWN;
+#endif // !_CKPE_WITH_QT5
+
 				if (editorVersion != EDITOR_UNKNOWN)
 				{
 					_MESSAGE("Current CK version: %s", allowedEditorVersionStr[(int)editorVersion].data());

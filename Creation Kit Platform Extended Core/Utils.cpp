@@ -125,6 +125,19 @@ namespace CreationKitPlatformExtended
 			return (uint64_t)statex.ullAvailPageFile;
 		}
 
+		void ProcessMessage()
+		{
+			static MSG msg;
+
+			while (PeekMessageA(&msg, NULL, 0, 0, PM_REMOVE | PM_NOYIELD))
+			{
+				TranslateMessage(&msg);
+				DispatchMessageA(&msg);
+			}
+
+			Sleep(1);
+		}
+
 		char* StrDub(const char* s)
 		{
 			auto l = strlen(s);

@@ -54,6 +54,11 @@ STEAM_API void SteamAPI_RunCallbacks()
 	// nope
 }
 
+STEAM_API void SteamAPI_RestartAppIfNecessary()
+{
+	// nope
+}
+
 STEAM_API void SteamAPI_RegisterCallback(void* pCallbackBase, int32_t nCallbackIndex)
 {
 	pCallbackBase = nullptr;
@@ -84,9 +89,10 @@ STEAM_API void* SteamInternal_FindOrCreateUserInterface(int32_t hSteamUser, cons
 	return nullptr;
 }
 
-STEAM_API void* SteamInternal_ContextInit(void* pContextInitData)
+STEAM_API void* SteamInternal_ContextInit(void** pContextInitData)
 {
-	return nullptr;
+	*pContextInitData = nullptr;
+	return pContextInitData;
 }
 
 STEAM_API void* SteamInternal_CreateInterface(const char* pszVersion)
