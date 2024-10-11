@@ -251,6 +251,7 @@
     <ClCompile Include="Patches\RenameCreationKitApp.cpp" />
     <ClCompile Include="Patches\RenderWindow60FPS.cpp" />
     <ClCompile Include="Patches\SF\OptimizationLoadSF.cpp" />
+    <ClCompile Include="Patches\SF\RemoveUselessMessagesSF.cpp" />
     <ClCompile Include="Patches\SF\ReplaceImgQSplashWnd.cpp" />
     <ClCompile Include="Patches\SF\RTDynamicCastCrash.cpp" />
     <ClCompile Include="Patches\SF\RunAppWithoutNet.cpp" />
@@ -636,6 +637,7 @@
     <ClInclude Include="Patches\RenameCreationKitApp.h" />
     <ClInclude Include="Patches\RenderWindow60FPS.h" />
     <ClInclude Include="Patches\SF\OptimizationLoadSF.h" />
+    <ClInclude Include="Patches\SF\RemoveUselessMessagesSF.h" />
     <ClInclude Include="Patches\SF\ReplaceImgQSplashWnd.h" />
     <ClInclude Include="Patches\SF\RTDynamicCastCrash.h" />
     <ClInclude Include="Patches\SF\RunAppWithoutNet.h" />

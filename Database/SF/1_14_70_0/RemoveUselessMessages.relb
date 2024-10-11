@@ -1,0 +1,9 @@
+Remove Useless Messages
+1
+extended
+EEAC5A 0 str_"Could not find any node for SceneNodeTrack: %s"
+500C0C7 0 str_"SkinAttach: Bone %s not found for remapping skinned mesh %s."
+500C15D 0 str_"SkinAttach: Bone %s not found for remapping skinned mesh %s."
+500C4EE 0 str_"SkinAttach: Bone %s not found for remapping skinned mesh %s."
+500C545 0 str_"SkinAttach: Found bone %s not a node while remapping skinned mesh %s."
+65D0717 0 str_"Lights may flicker. GPU culling pass '%s::%s' marked %u lights as visible, but only %u lights per view are suported. %u lights are rejected."

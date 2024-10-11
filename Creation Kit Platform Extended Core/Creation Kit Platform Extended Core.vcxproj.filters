@@ -850,6 +850,9 @@
     <ClCompile Include="Patches\Windows\SF\CellViewWindowSF.cpp">
       <Filter>Patches\Windows\SF</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SF\RemoveUselessMessagesSF.cpp">
+      <Filter>Patches\SF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2082,6 +2085,9 @@
     </ClInclude>
     <ClInclude Include="Patches\Windows\SF\CellViewWindowSF.h">
       <Filter>Patches\Windows\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SF\RemoveUselessMessagesSF.h">
+      <Filter>Patches\SF</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
