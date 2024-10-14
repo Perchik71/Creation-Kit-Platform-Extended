@@ -890,21 +890,29 @@ namespace CreationKitPlatformExtended
 				}
 				break;
 
-				case WM_DESTROY: {
+				case WM_DESTROY: 
+				{
 					auto it = WindowHandles.find(hWnd);
 					if (it != WindowHandles.end())
 						WindowHandles.unsafe_erase(it);
 				}
 				break;
 
-				case WM_NOTIFY: {
+				case WM_NOTIFY: 
+				{
 					LPNMHDR nmhdr = (LPNMHDR)lParam;
 
 					// Custom drawing
-					if (nmhdr->code == NM_CUSTOMDRAW) {
+					if (nmhdr->code == NM_CUSTOMDRAW)
+					{
 						auto themeType = GetThemeTypeFromWindow(nmhdr->hwndFrom);
 
-						if (themeType == ThemeType::ListView) {
+						if ((themeType == ThemeType::TreeView) && (nmhdr->idFrom != 2093))
+							// I have no idea why TreeView uses the ListView functionality, this question is for microsoft.
+							return UITheme::TreeView::OnCustomDraw(hWnd, (LPNMLVCUSTOMDRAW)lParam);
+
+						if (themeType == ThemeType::ListView)
+						{
 							// To colorize the list of mods, WM_NOTIFY calls prevent me.
 							// It's strange, but to change the color of the text from black to light in standard CK windows with properties, WM_NOTIFY is needed.
 							if (nmhdr->idFrom != EditorAPI::EditorUI::UI_DATA_DIALOG_PLUGINLISTVIEW)

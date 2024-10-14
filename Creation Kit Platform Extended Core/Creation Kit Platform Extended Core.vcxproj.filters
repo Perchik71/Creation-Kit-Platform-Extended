@@ -853,6 +853,9 @@
     <ClCompile Include="Patches\SF\RemoveUselessMessagesSF.cpp">
       <Filter>Patches\SF</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\Windows\SF\LayersWindowSF.cpp">
+      <Filter>Patches\Windows\SF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2089,6 +2092,9 @@
     <ClInclude Include="Patches\SF\RemoveUselessMessagesSF.h">
       <Filter>Patches\SF</Filter>
     </ClInclude>
+    <ClInclude Include="Patches\Windows\SF\LayersWindowSF.h">
+      <Filter>Patches\Windows\SF</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version\resource_version.rc">
@@ -2137,5 +2143,8 @@
       <Filter>Resources</Filter>
     </Image>
     <Image Include="..\Resources\aboutsf.png" />
+    <Image Include="..\Resources\storymanager.bmp">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>

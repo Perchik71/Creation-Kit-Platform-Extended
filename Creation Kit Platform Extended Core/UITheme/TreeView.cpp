@@ -41,6 +41,14 @@ namespace CreationKitPlatformExtended
 				TreeView_SetTextColor(hWindow, GetThemeSysColor(ThemeColor::ThemeColor_Text_4));
 				TreeView_SetBkColor(hWindow, GetThemeSysColor(ThemeColor::ThemeColor_TreeView_Color));
 
+				auto StyleEx = TreeView_GetExtendedStyle(hWindow);
+				if ((StyleEx & TVS_EX_DOUBLEBUFFER) != TVS_EX_DOUBLEBUFFER)
+				{
+					// Eliminate the flicker when changing size trees
+					StyleEx |= TVS_EX_DOUBLEBUFFER;
+					TreeView_SetExtendedStyle(hWindow, StyleEx, StyleEx);
+				}
+
 				return OpenThemeData(hWindow, VSCLASS_SCROLLBAR);
 			}
 
@@ -94,6 +102,28 @@ namespace CreationKitPlatformExtended
 				}
 
 				return DefSubclassProc(hWnd, uMsg, wParam, lParam);
+			}
+
+			LRESULT OnCustomDraw(HWND hWindow, LPNMLVCUSTOMDRAW lpTreeView)
+			{
+				switch (lpTreeView->nmcd.dwDrawStage)
+				{
+					//Before the paint cycle begins
+					case CDDS_PREPAINT: 
+					//request notifications for individual treeview items
+						return CDRF_NOTIFYITEMDRAW;
+					//Before an item is drawn
+					case CDDS_ITEMPREPAINT: 
+						return CDRF_NOTIFYSUBITEMDRAW;
+					//Before a subitem is drawn
+					case CDDS_SUBITEM | CDDS_ITEMPREPAINT:
+					{
+						lpTreeView->clrText = GetThemeSysColor(ThemeColor_Text_4);
+						return CDRF_NEWFONT;
+					}
+					default:
+						return CDRF_DODEFAULT;
+				}
 			}
 		}
 	}

@@ -65,6 +65,8 @@ IDB_BITMAP6             BITMAP                  "..\\Resources\\uncheck_darkthem
 
 IDB_BITMAP7             BITMAP                  "..\\Resources\\navmesh.bmp"
 
+IDB_BITMAP8             BITMAP                  "..\\Resources\\storymanager.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //

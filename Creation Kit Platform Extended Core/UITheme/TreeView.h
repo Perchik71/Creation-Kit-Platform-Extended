@@ -35,6 +35,8 @@ namespace CreationKitPlatformExtended
 			HTHEME Initialize(HWND hWindow);
 			LRESULT CALLBACK TreeViewSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, 
 				UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
+
+			LRESULT OnCustomDraw(HWND hWindow, LPNMLVCUSTOMDRAW lpTreeView);
 		}
 	}
 }

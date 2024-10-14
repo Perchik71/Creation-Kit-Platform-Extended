@@ -373,6 +373,7 @@
     <ClCompile Include="Patches\Windows\SF\AboutWindowSF.cpp" />
     <ClCompile Include="Patches\Windows\SF\CellViewWindowSF.cpp" />
     <ClCompile Include="Patches\Windows\SF\DataWindowSF.cpp" />
+    <ClCompile Include="Patches\Windows\SF\LayersWindowSF.cpp" />
     <ClCompile Include="Patches\Windows\SF\MainWindowSF.cpp" />
     <ClCompile Include="Patches\Windows\SF\ObjectWindowSF.cpp" />
     <ClCompile Include="Patches\Windows\SF\ProgressWindowSF.cpp" />
@@ -759,6 +760,7 @@
     <ClInclude Include="Patches\Windows\SF\AboutWindowSF.h" />
     <ClInclude Include="Patches\Windows\SF\CellViewWindowSF.h" />
     <ClInclude Include="Patches\Windows\SF\DataWindowSF.h" />
+    <ClInclude Include="Patches\Windows\SF\LayersWindowSF.h" />
     <ClInclude Include="Patches\Windows\SF\MainWindowSF.h" />
     <ClInclude Include="Patches\Windows\SF\ObjectWindowSF.h" />
     <ClInclude Include="Patches\Windows\SF\ProgressWindowSF.h" />
@@ -822,6 +824,7 @@
     <Image Include="..\Resources\check.bmp" />
     <Image Include="..\Resources\check_darktheme.bmp" />
     <Image Include="..\Resources\navmesh.bmp" />
+    <Image Include="..\Resources\storymanager.bmp" />
     <Image Include="..\Resources\toolbar.bmp" />
     <Image Include="..\Resources\types.bmp" />
     <Image Include="..\Resources\uncheck.bmp" />

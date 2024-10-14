@@ -93,6 +93,11 @@ namespace CreationKitPlatformExtended
 				lpRelocator->DetourCall(_RELDATA_RAV(0), (uintptr_t)&Comctl32CreateToolbarEx_NavMesh);
 				// replace ImageList_LoadImage for item type
 				lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&Comctl32ImageList_LoadImageA_1);
+				// remove set color for treeview
+				lpRelocator->PatchNop(_RELDATA_RAV(2), 0x29);
+				// replace ImageList_LoadImage for item type
+				lpRelocator->DetourCall(_RELDATA_RAV(3), (uintptr_t)&Comctl32ImageList_LoadImageA_2);
+				//350E412
 			}
 			
 			return false;
@@ -208,6 +213,13 @@ namespace CreationKitPlatformExtended
 					cx, cGrow, crMask, IMAGE_BITMAP, LR_CREATEDIBSECTION | LR_LOADTRANSPARENT);
 
 			return hImageList;
+		}
+
+		HIMAGELIST UIThemePatchAdditional::Comctl32ImageList_LoadImageA_2(HINSTANCE hi, LPCSTR lpbmp, INT cx, INT cGrow,
+			COLORREF crMask, UINT uType, UINT uFlags)
+		{
+			return ImageList_LoadImageA(GlobalEnginePtr->GetInstanceDLL(), MAKEINTRESOURCEA(IDB_BITMAP8),
+				cx, cGrow, crMask, IMAGE_BITMAP, LR_CREATEDIBSECTION | LR_LOADTRANSPARENT);
 		}
 
 		void UIThemePatchAdditional::HideOldTimeOfDayComponents()
