@@ -90,11 +90,14 @@ namespace CreationKitPlatformExtended
 						auto rva = (uintptr_t)_RELDATA_RAV(8);
 						lpRelocator->Patch(rva, { 0x04 });
 						lpRelocator->Patch(rva + 8, { 0x86 });
+						// full skip "%s: Imported file missing: %s"
+						lpRelocator->Patch(_RELDATA_RAV(10), { 0xEB });
 					}
 
 					// Reducing spin time.
 					// While need to wait, will occupy thread with something useful, for example, message processing
 					lpRelocator->DetourCall(_RELDATA_RAV(9), (uintptr_t)&Utils::ProcessMessage);
+					lpRelocator->DetourCall(_RELDATA_RAV(11), (uintptr_t)&Utils::ProcessMessage);
 
 					// 2 kb -> x kb >= 256 kb
 					*(uintptr_t*)&EditorAPI::Starfield::BSFile::ICreateInstance =

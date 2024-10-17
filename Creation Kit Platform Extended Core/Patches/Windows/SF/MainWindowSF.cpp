@@ -8,6 +8,7 @@
 #include "Core/TypeInfo/ms_rtti.h"
 #include "Version/resource_version2.h"
 #include "UITheme/VarCommon.h"
+#include "Editor API/BSString.h"
 #include "Editor API/SF/TESForm.h"
 #include "MainWindowSF.h"
 #include "AboutWindowSF.h"
@@ -30,6 +31,41 @@ namespace CreationKitPlatformExtended
 		{
 			MainWindow* GlobalMainWindowPtr = nullptr;
 			uintptr_t pointer_MainWindow_sub0 = 0;
+
+			bool GetFileVersion(LPCSTR pszFilePath, EditorAPI::BSString& result)
+			{
+				DWORD dwSize = 0;
+				BYTE* pbVersionInfo = NULL;
+				VS_FIXEDFILEINFO* pFileInfo = NULL;
+				UINT puLenFileInfo = 0;
+
+				// Get the version information for the file requested
+				dwSize = GetFileVersionInfoSize(pszFilePath, NULL);
+				if (dwSize == 0)
+					return false;
+
+				pbVersionInfo = new BYTE[dwSize];
+				if (!pbVersionInfo)
+					return false;
+
+				if (!GetFileVersionInfo(pszFilePath, 0, dwSize, pbVersionInfo)) {
+					delete[] pbVersionInfo;
+					return false;
+				}
+
+				if (!VerQueryValue(pbVersionInfo, TEXT("\\"), (LPVOID*)&pFileInfo, &puLenFileInfo)) {
+					delete[] pbVersionInfo;
+					return false;
+				}
+
+				char temp[100];
+				sprintf_s(temp, "[CKPE: V%u.%u BUILD %u]", (pFileInfo->dwFileVersionMS >> 16) & 0xFFFF,
+					(pFileInfo->dwFileVersionMS) & 0xFFFF, pFileInfo->dwFileVersionLS);
+				result = temp;
+
+				delete[] pbVersionInfo;
+				return true;
+			}
 
 			void OutputFormInfo(uint32_t FormID)
 			{
@@ -222,8 +258,12 @@ namespace CreationKitPlatformExtended
 							});
 					}
 
-					auto menuCKPEVersion = menuBar->addAction(QString::asprintf("[CKPE: V%u.%u BUILD %u]", 
-						VERSION_MAJOR, VERSION_MINOR, VERSION_BUILD));
+					EditorAPI::BSString versionApp;
+					char modulePath[MAX_PATH];
+					GetModuleFileNameA((HMODULE)GlobalEnginePtr->GetInstanceDLL(), modulePath, MAX_PATH);
+					GetFileVersion(modulePath, versionApp);
+
+					auto menuCKPEVersion = menuBar->addAction(QString::asprintf(versionApp.c_str()));
 					if (menuCKPEVersion)
 						MainWindow->connect(menuCKPEVersion, &QAction::triggered, MainWindow, &AboutWindow::QT5Show);
 				}

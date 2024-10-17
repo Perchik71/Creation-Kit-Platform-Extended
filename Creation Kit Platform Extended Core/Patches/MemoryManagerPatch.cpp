@@ -510,7 +510,6 @@ namespace CreationKitPlatformExtended
 				Starfield::bhkThreadMemorySource::Instance = (Starfield::bhkThreadMemorySource**)(_RELDATA_ADDR(3));
 				lpRelocator->DetourJump(_RELDATA_RAV(4), (uintptr_t)&Starfield::bhkThreadMemorySource::init);
 				
-				
 				// Reducing performance, it looks like Bethesda has created something wonderful this time
 				// 
 				// ScrapHeap, HeapAllocator, SharedHeapAllocator and etc.
