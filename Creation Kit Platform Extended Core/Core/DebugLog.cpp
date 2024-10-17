@@ -59,7 +59,13 @@ namespace CreationKitPlatformExtended
 
 		void DebugLog::Open(const wchar_t* path)
 		{
-			_handleFile = _wfsopen(path, L"wt", _SH_DENYWR);
+			std::wstring sPath = path;
+			auto it = sPath.find_first_of(L'.');
+
+			if (it != std::wstring::npos)
+				sPath.erase(sPath.begin() + it, sPath.end());
+
+			_handleFile = _wfsopen((sPath + L".log").c_str(), L"wt", _SH_DENYWR);
 			if (!_handleFile)
 			{
 				uint32_t Id = 0;
@@ -68,7 +74,7 @@ namespace CreationKitPlatformExtended
 				do
 				{
 					Id++;
-					swprintf_s(FileName, L"%s%d", path, Id);
+					swprintf_s(FileName, L"%s%d%s", sPath.c_str(), Id, L".log");
 					_handleFile = _wfsopen(FileName, L"wt", _SH_DENYWR);
 				} while (!_handleFile && (Id < 6));
 			}

@@ -2142,8 +2142,10 @@
     <Image Include="..\Resources\aboutf4.png">
       <Filter>Resources</Filter>
     </Image>
-    <Image Include="..\Resources\aboutsf.png" />
     <Image Include="..\Resources\storymanager.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\aboutsf.png">
       <Filter>Resources</Filter>
     </Image>
   </ItemGroup>

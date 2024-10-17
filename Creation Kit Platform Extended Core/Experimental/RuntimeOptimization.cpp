@@ -57,6 +57,19 @@ namespace CreationKitPlatformExtended
 				_CONSOLE("%s: (%llu + %llu) = %llu patches applied in %llums.\n", __FUNCTION__,
 					counts[0], counts[1], counts[0] + counts[1], duration);
 			}
+			else if (Patch->Version() == 3)
+			{
+				std::array<uint64_t, 3> counts
+				{
+					PatchMemInit(),
+					Starfield::PatchHasPointer(),
+					PatchEditAndContinue(Patch),
+				};
+
+				auto duration = duration_cast<milliseconds>(high_resolution_clock::now() - timerStart).count();
+				_CONSOLE("%s: (%llu + %llu + %llu) = %llu patches applied in %llums.\n", __FUNCTION__,
+					counts[0], counts[1], counts[2], counts[0] + counts[1] + counts[2], duration);
+			}
 		}
 
 		uint64_t PatchEditAndContinue(SmartPointer<Core::RelocationDatabaseItem> patch)
@@ -359,6 +372,23 @@ namespace CreationKitPlatformExtended
 			}
 
 			return false;
+		}
+
+		namespace Starfield
+		{
+			uint64_t PatchHasPointer()
+			{
+				const char* pattern = "48 8B 11 0F B6 C2 F6 D0 A8 01 74 ? 48 85 D2 74 ? 32 C0 C3 B0 01 C3";
+
+				auto Sec = Core::GlobalEnginePtr->GetSection(Core::SECTION_TEXT);
+				auto matches = voltek::find_patterns(Sec.base, Sec.end - Sec.base, pattern);
+
+				for (uintptr_t match : matches)
+					memcpy((void*)match, "\x48\x8B\x11\x48\xD1\xEA\x74\x04\x0F\x92\xC0\xC3\xB0\x01\xC3\xCC", 16);
+					//memcpy((void*)match, "\xB0\x01\x48\x83\x39\x00\x74\x02\x22\x01\xC3\xCC", 12);
+
+				return matches.size();
+			}
 		}
 	}
 }

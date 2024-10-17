@@ -27,5 +27,10 @@ namespace CreationKitPlatformExtended
 
 		const NullsubPatch* FindNullsubPatch(uintptr_t SourceAddress, uintptr_t TargetFunction);
 		bool PatchNullsub(uintptr_t SourceAddress, uintptr_t TargetFunction, const NullsubPatch* Patch = nullptr);
+
+		namespace Starfield
+		{
+			uint64_t PatchHasPointer();
+		}
 	}
 }

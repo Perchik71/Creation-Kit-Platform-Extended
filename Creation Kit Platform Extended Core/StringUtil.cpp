@@ -342,7 +342,7 @@ namespace CreationKitPlatformExtended
 		{
 			WideString Ret(s);
 			if (Ret.size() > 1) {
-				if ((Ret.front() == '"') && (Ret.back() == '"')) {
+				if ((Ret.front() == L'"') && (Ret.back() == L'"')) {
 					if (Ret.size() == 2)
 						Ret.erase();
 					else

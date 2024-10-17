@@ -510,19 +510,22 @@ namespace CreationKitPlatformExtended
 				Starfield::bhkThreadMemorySource::Instance = (Starfield::bhkThreadMemorySource**)(_RELDATA_ADDR(3));
 				lpRelocator->DetourJump(_RELDATA_RAV(4), (uintptr_t)&Starfield::bhkThreadMemorySource::init);
 				
+				
+				// Reducing performance, it looks like Bethesda has created something wonderful this time
+				// 
 				// ScrapHeap, HeapAllocator, SharedHeapAllocator and etc.
-				lpRelocator->DetourJump(_RELDATA_RAV(5), (uintptr_t)&Starfield::HeapAllocator::Allocate);
-				lpRelocator->DetourJump(_RELDATA_RAV(6), (uintptr_t)&Starfield::HeapAllocator::Deallocate);
-				lpRelocator->DetourJump(_RELDATA_RAV(7), (uintptr_t)&Starfield::HeapAllocator::Size);
-				lpRelocator->DetourJump(_RELDATA_RAV(8), (uintptr_t)&Starfield::HeapAllocator::BlockSize);
+				//lpRelocator->DetourJump(_RELDATA_RAV(5), (uintptr_t)&Starfield::HeapAllocator::Allocate);
+				//lpRelocator->DetourJump(_RELDATA_RAV(6), (uintptr_t)&Starfield::HeapAllocator::Deallocate);
+				//lpRelocator->DetourJump(_RELDATA_RAV(7), (uintptr_t)&Starfield::HeapAllocator::Size);
+				//lpRelocator->DetourJump(_RELDATA_RAV(8), (uintptr_t)&Starfield::HeapAllocator::BlockSize);
 
-				{
-					lpRelocator->Patch(_RELDATA_RAV(9), { 0xC3 });
-					// This condition causes a leak, as it blocks the release of memory, perhaps this is due to interception.
-					// Solution: delete the condition.
-					lpRelocator->PatchNop(_RELDATA_RAV(10), 2);
-				}
-	
+				//{
+				//	lpRelocator->Patch(_RELDATA_RAV(9), { 0xC3 });
+				//	// This condition causes a leak, as it blocks the release of memory, perhaps this is due to interception.
+				//	// Solution: delete the condition.
+				//	lpRelocator->PatchNop(_RELDATA_RAV(10), 2);
+				//}
+				
 				return true;
 			}
 
