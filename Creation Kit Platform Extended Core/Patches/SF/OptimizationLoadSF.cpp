@@ -70,6 +70,7 @@ namespace CreationKitPlatformExtended
 					// - Skip remove failed forms (This function is more likely to result in CTD) 
 					// - Eliminate millions of calls to update the statusbar
 					// - Increasing the read memory buffer to reduce disk access
+					// - Reducing spin time. Important: materials are loaded in the background.
 
 					PatchIAT(HKFindFirstFileA, "kernel32.dll", "FindFirstFileA");
 

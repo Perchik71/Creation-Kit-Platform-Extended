@@ -32,7 +32,8 @@ namespace CreationKitPlatformExtended
 				virtual bool HasDependencies() const;
 				virtual Array<String> GetDependencies() const;
 #ifdef _CKPE_WITH_QT5
-				static BOOL CALLBACK HKInitialize(QMainWindow* MainWindow, LPCSTR ExeFileName, DWORD Unk01);
+				static bool CALLBACK HKInitialize(QMainWindow* MainWindow, LPCSTR ExeFileName, DWORD Unk01);
+				static void CALLBACK HKInitializeActions(QMainWindow* MainWindow);
 				static HWND CALLBACK GetWindowHandle();
 #endif // !_CKPE_WITH_QT5
 

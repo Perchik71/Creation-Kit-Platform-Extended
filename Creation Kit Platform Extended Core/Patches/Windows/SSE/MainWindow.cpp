@@ -117,6 +117,20 @@ namespace CreationKitPlatformExtended
 			char newMainWindowClass[250];
 			MainWindow* GlobalMainWindowPtr = nullptr;
 
+			static void show_dialog_edit(HWND Hwnd, LPARAM lParam)
+			{
+				__try
+				{
+					auto form = EditorAPI::SkyrimSpectialEdition::TESForm::GetFormByNumericID(static_cast<uint32_t>(lParam));
+					if (form)
+						form->EditFormToWindow(Hwnd, 0, 1);
+				}
+				__except (1)
+				{
+					// skip fatal error
+				}
+			}
+
 			bool MainWindow::HasOption() const
 			{
 				return false;
@@ -389,9 +403,7 @@ namespace CreationKitPlatformExtended
 							return 0;
 							case EditorAPI::EditorUI::UI_EDITOR_OPENFORMBYID:
 							{
-								auto form = EditorAPI::SkyrimSpectialEdition::TESForm::GetFormByNumericID(static_cast<uint32_t>(lParam));
-								if (form)
-									form->EditFormToWindow(Hwnd, 0, 1);
+								show_dialog_edit(Hwnd, lParam);
 							}
 							return 0;
 							case UI_EXTMENU_SHOWLOG:

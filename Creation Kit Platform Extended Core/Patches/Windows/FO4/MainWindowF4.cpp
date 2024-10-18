@@ -105,6 +105,21 @@ namespace CreationKitPlatformExtended
 			char newMainWindowClass[250];
 			MainWindow* GlobalMainWindowPtr = nullptr;
 
+			static void show_dialog_edit(HWND Hwnd, LPARAM lParam)
+			{
+				__try
+				{
+					auto form = TESForm::GetFormByNumericID(static_cast<uint32_t>(lParam));
+					if (form)
+						(*(void(__fastcall**)(TESForm*, HWND, __int64, __int64))(*(__int64*)form + 0x340))
+						(form, Hwnd, 0, 1);
+				}
+				__except (1)
+				{
+					// skip fatal error
+				}
+			}
+
 			bool MainWindow::HasOption() const
 			{
 				return false;
@@ -375,10 +390,7 @@ namespace CreationKitPlatformExtended
 							return 0;
 							case EditorAPI::EditorUI::UI_EDITOR_OPENFORMBYID:
 							{
-								auto form = TESForm::GetFormByNumericID(static_cast<uint32_t>(lParam));
-								if (form)
-									(*(void(__fastcall**)(TESForm*, HWND, __int64, __int64))(*(__int64*)form + 0x340))
-									  (form, Hwnd, 0, 1);
+								show_dialog_edit(Hwnd, lParam);
 							}
 							return 0;
 							case UI_EXTMENU_SHOWLOG:
