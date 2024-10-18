@@ -609,9 +609,7 @@ namespace CreationKitPlatformExtended
 						//77 : SpawnMetricViewer
 						//78 : Toggle Light Toolbar
 						//79 :
-						//80 ://8 : Open the Material Editor
-						//9 : Open the Particle Editor
-						//10 : Open the Folder Keyword Editor
+						//80 :
 
 						auto actionsToolbar = toolbars[0]->actions();
 						actionsToolbar[5]->setIcon(QIcon(":/CKPE/qt5menu/ckpe_ic54.png"));
@@ -684,7 +682,6 @@ namespace CreationKitPlatformExtended
 				{
 					auto form = EditorAPI::Starfield::TESForm::GetFormByNumericID(FormID);
 					if (form) form->ShowEditWindow(WndHandle);
-
 				}
 				__except (1)
 				{
