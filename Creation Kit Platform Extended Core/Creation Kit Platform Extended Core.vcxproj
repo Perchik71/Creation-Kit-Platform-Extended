@@ -175,6 +175,7 @@
     <ClCompile Include="Editor API\FO4\TESFileF4.cpp" />
     <ClCompile Include="Editor API\FO4\TESFormF4.cpp" />
     <ClCompile Include="Editor API\Settings.cpp" />
+    <ClCompile Include="Editor API\SF\BGSRenderWindowSF.cpp" />
     <ClCompile Include="Editor API\SF\TESDataHandlerSF.cpp" />
     <ClCompile Include="Editor API\SF\TESFileSF.cpp" />
     <ClCompile Include="Editor API\SSE\BSGraphicsTypes.cpp" />
@@ -377,6 +378,7 @@
     <ClCompile Include="Patches\Windows\SF\MainWindowSF.cpp" />
     <ClCompile Include="Patches\Windows\SF\ObjectWindowSF.cpp" />
     <ClCompile Include="Patches\Windows\SF\ProgressWindowSF.cpp" />
+    <ClCompile Include="Patches\Windows\SF\RenderWindowSF.cpp" />
     <ClCompile Include="Patches\Windows\SSE\BNetUploadWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\CellViewWindow.cpp" />
     <ClCompile Include="Patches\Windows\SSE\DataWindow.cpp" />
@@ -510,6 +512,7 @@
     <ClInclude Include="Editor API\FO4\TESTopic.h" />
     <ClInclude Include="Editor API\FO4\TESTopicInfo.h" />
     <ClInclude Include="Editor API\Settings.h" />
+    <ClInclude Include="Editor API\SF\BGSRenderWindowSF.h" />
     <ClInclude Include="Editor API\SF\BSEntryString.h" />
     <ClInclude Include="Editor API\SF\BSFile.h" />
     <ClInclude Include="Editor API\SF\BSFixedString.h" />
@@ -764,6 +767,7 @@
     <ClInclude Include="Patches\Windows\SF\MainWindowSF.h" />
     <ClInclude Include="Patches\Windows\SF\ObjectWindowSF.h" />
     <ClInclude Include="Patches\Windows\SF\ProgressWindowSF.h" />
+    <ClInclude Include="Patches\Windows\SF\RenderWindowSF.h" />
     <ClInclude Include="Patches\Windows\SSE\BNetUploadWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\CellViewWindow.h" />
     <ClInclude Include="Patches\Windows\SSE\DataWindow.h" />

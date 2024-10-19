@@ -856,6 +856,12 @@
     <ClCompile Include="Patches\Windows\SF\LayersWindowSF.cpp">
       <Filter>Patches\Windows\SF</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\Windows\SF\RenderWindowSF.cpp">
+      <Filter>Patches\Windows\SF</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\SF\BGSRenderWindowSF.cpp">
+      <Filter>Editor API\SF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2044,9 +2050,6 @@
     <ClInclude Include="Patches\Windows\SF\MainWindowSF.h">
       <Filter>Patches\Windows\SF</Filter>
     </ClInclude>
-    <ClInclude Include="Editor API\SF\TESFormComponent.h">
-      <Filter>Editor API\SF</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\SF\BSFixedString.h">
       <Filter>Editor API\SF</Filter>
     </ClInclude>
@@ -2094,6 +2097,15 @@
     </ClInclude>
     <ClInclude Include="Patches\Windows\SF\LayersWindowSF.h">
       <Filter>Patches\Windows\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\Windows\SF\RenderWindowSF.h">
+      <Filter>Patches\Windows\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SF\TESFormComponent.h">
+      <Filter>Editor API\SF\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SF\BGSRenderWindowSF.h">
+      <Filter>Editor API\SF</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

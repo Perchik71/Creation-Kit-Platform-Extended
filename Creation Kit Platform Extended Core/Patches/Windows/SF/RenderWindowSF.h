@@ -4,7 +4,9 @@
 
 #pragma once
 
-#include "..\BaseWindow.h"
+#include "Core/Module.h"
+#include "Core/Relocator.h"
+#include "Core/RelocationDatabase.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -12,9 +14,13 @@ namespace CreationKitPlatformExtended
 	{
 		namespace Starfield
 		{
-			class ProgressWindow : public BaseWindow, public Classes::CUIBaseWindow
+			using namespace CreationKitPlatformExtended::Core;
+
+			class RenderWindow : public Module
 			{
 			public:
+				RenderWindow();
+
 				virtual bool HasOption() const;
 				virtual bool HasCanRuntimeDisabled() const;
 				virtual const char* GetOptionName() const;
@@ -22,26 +28,15 @@ namespace CreationKitPlatformExtended
 				virtual bool HasDependencies() const;
 				virtual Array<String> GetDependencies() const;
 
-				ProgressWindow();
-
-				static void update_progressbar(LPCSTR lpcstrText);
-				static HWND sub1(HINSTANCE hInstance, LPCSTR lpTemplateName, HWND hWndParent,
-					DLGPROC lpDialogFunc, LPARAM dwInitParam);
-				static void sub2(uint32_t nPartId, LPCSTR lpcstrText);
-
-				static LRESULT CALLBACK HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
+				static void* CALLBACK Initialize(__int64 unk1, __int64 unk2);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
 				virtual bool Activate(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 				virtual bool Shutdown(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
-			private:
-				::Core::Classes::UI::CUIBaseControl ProgressLabel;
-				::Core::Classes::UI::CUIBaseControl	Progress;
-				bool isOpen;
 			};
 
-			extern ProgressWindow* GlobalProgressWindowPtr;
+			extern RenderWindow* GlobalRenderWindowPtr;
 		}
 	}
 }

@@ -99,6 +99,9 @@ namespace CreationKitPlatformExtended
 					// While need to wait, will occupy thread with something useful, for example, message processing
 					lpRelocator->DetourCall(_RELDATA_RAV(9), (uintptr_t)&Utils::ProcessMessage);
 					lpRelocator->DetourCall(_RELDATA_RAV(11), (uintptr_t)&Utils::ProcessMessage);
+					lpRelocator->DetourCall(_RELDATA_RAV(12), (uintptr_t)&Utils::ProcessMessage);
+					lpRelocator->DetourCall(_RELDATA_RAV(13), (uintptr_t)&Utils::ProcessMessage);
+					lpRelocator->DetourCall(_RELDATA_RAV(14), (uintptr_t)&Utils::ProcessMessage);
 
 					// 2 kb -> x kb >= 256 kb
 					*(uintptr_t*)&EditorAPI::Starfield::BSFile::ICreateInstance =
