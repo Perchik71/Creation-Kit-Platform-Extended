@@ -257,6 +257,45 @@ namespace CreationKitPlatformExtended
 						return CDRF_DODEFAULT;
 					}
 				}
+#else
+				switch (lpListView->nmcd.dwDrawStage)
+				{
+					//Before the paint cycle begins
+					case CDDS_PREPAINT:
+					//request notifications for individual listview items
+						return CDRF_NOTIFYITEMDRAW;
+					//Before an item is drawn
+					case CDDS_ITEMPREPAINT:
+						return CDRF_NOTIFYSUBITEMDRAW;
+					//Before a subitem is drawn
+					case CDDS_SUBITEM | CDDS_ITEMPREPAINT:
+					{
+						LVITEM lvItem;
+						ZeroMemory(&lvItem, sizeof(LVITEM));
+						lvItem.iItem = lpListView->nmcd.dwItemSpec;
+						lvItem.mask = LVIF_PARAM | LVIF_STATE;
+						if (!ListView_GetItem(lpListView->nmcd.hdr.hwndFrom, &lvItem))
+						{
+						def_color:
+							lpListView->clrText = GetThemeSysColor(ThemeColor_Text_4);
+							return CDRF_NEWFONT;
+						}
+
+						auto form = (EditorAPI::Starfield::TESForm*)lvItem.lParam;
+						if ((form->Type == EditorAPI::Starfield::TESForm::ftLight) && (lpListView->iSubItem == 1))
+						{
+							if (((lvItem.state & 0xFF) & LVIS_SELECTED) == LVIS_SELECTED)
+								goto def_color;
+
+							auto color = ((EditorAPI::Starfield::TESObjectLIGH*)form)->GetSpecularColor();
+							lpListView->clrText = RGB(color.r, color.g, color.b);
+						}
+						else
+							goto def_color;
+
+						return CDRF_NEWFONT;
+					}
+				}
 #endif
 
 				return CDRF_DODEFAULT;
