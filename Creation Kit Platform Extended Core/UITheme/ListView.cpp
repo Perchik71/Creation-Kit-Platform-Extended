@@ -28,6 +28,7 @@
 #include "Editor API/EditorUI.h"
 #include "Editor API/SSE/TESFile.h"
 #include "Editor API/SF/TESFileSF.h"
+#include "Editor API/SF/TESObjectLIGH.h"
 
 #ifdef _CKPE_WITH_QT5
 #	include "Editor API/SF/TESObjectREFR.h"
@@ -212,34 +213,51 @@ namespace CreationKitPlatformExtended
 #ifdef _CKPE_WITH_QT5
 			static LRESULT OnCustomDrawObjectListQt5(HWND hWindow, LPNMLVCUSTOMDRAW lpListView)
 			{
-				// TODO: future
-
-
-				/*LVITEM lvItem;
-				ZeroMemory(&lvItem, sizeof(LVITEM));
-				lvItem.iItem = lpListView->nmcd.dwItemSpec;
-				lvItem.mask = LVIF_PARAM;
-				if (!ListView_GetItem(lpListView->nmcd.hdr.hwndFrom, &lvItem))
+				// Not suitable 
+				// https://github.com/Perchik71/Creation-Kit-Platform-Extended/issues/58
+#if 0
+				switch (lpListView->nmcd.dwDrawStage)
 				{
-					_CONSOLE("failed test");
-					return CDRF_DODEFAULT;
-				}*/
+					//Before the paint cycle begins
+					case CDDS_PREPAINT:
+					//request notifications for individual listview items
+						return CDRF_NOTIFYITEMDRAW;
+					//Before an item is drawn
+					case CDDS_ITEMPREPAINT:
+						return CDRF_NOTIFYSUBITEMDRAW;
+					//Before a subitem is drawn
+					case CDDS_SUBITEM | CDDS_ITEMPREPAINT:
+					{
+						LVITEM lvItem;
+						ZeroMemory(&lvItem, sizeof(LVITEM));
+						lvItem.iItem = lpListView->nmcd.dwItemSpec;
+						lvItem.mask = LVIF_PARAM;
+						if (!ListView_GetItem(lpListView->nmcd.hdr.hwndFrom, &lvItem))
+							return CDRF_DODEFAULT;
 
-				//switch (lpListView->nmcd.dwDrawStage) 
-				//{
-				//	//Before the paint cycle begins
-				//	case CDDS_PREPAINT:
-				//	//request notifications for individual listview items
-				//		return CDRF_NOTIFYITEMDRAW;
-				//	//Before an item is drawn
-				//	case CDDS_ITEMPREPAINT: 
-				//		return CDRF_NOTIFYSUBITEMDRAW;
-				//	//Before a subitem is drawn
-				//	case CDDS_SUBITEM | CDDS_ITEMPREPAINT:
-				//	{
-				//		return CDRF_DODEFAULT;
-				//	}
-				//}
+						auto form = (EditorAPI::Starfield::TESForm*)lvItem.lParam;
+						if ((form->Type == EditorAPI::Starfield::TESForm::ftLight) && (lpListView->iSubItem == 1))
+						{
+							auto color = ((EditorAPI::Starfield::TESObjectLIGH*)form)->GetSpecularColor();
+							if (color.r > 127 || color.g > 127 || color.b > 127)
+								lpListView->clrText = 0;	// black
+							else
+								lpListView->clrText = GetThemeSysColor(ThemeColor_Text_4);
+
+							lpListView->clrTextBk = *(COLORREF*)color.v;
+						
+							return CDRF_NEWFONT;
+						}
+						else
+						{
+							lpListView->clrText = GetThemeSysColor(ThemeColor_Text_4);
+							lpListView->clrTextBk = GetThemeSysColor(ThemeColor_Edit_Color);
+						}
+
+						return CDRF_DODEFAULT;
+					}
+				}
+#endif
 
 				return CDRF_DODEFAULT;
 			}

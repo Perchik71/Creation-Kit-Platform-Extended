@@ -520,6 +520,7 @@
     <ClInclude Include="Editor API\SF\TESFileSF.h" />
     <ClInclude Include="Editor API\SF\TESForm.h" />
     <ClInclude Include="Editor API\SF\TESFormComponent.h" />
+    <ClInclude Include="Editor API\SF\TESObjectLIGH.h" />
     <ClInclude Include="Editor API\SF\TESObjectREFR.h" />
     <ClInclude Include="Editor API\SF\TESPointerHandleDetail.h" />
     <ClInclude Include="Editor API\SSE\BGSImpactData.h" />

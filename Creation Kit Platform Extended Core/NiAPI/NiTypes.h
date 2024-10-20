@@ -115,13 +115,22 @@ namespace CreationKitPlatformExtended
 		// 3
 		struct NiRGB 
 		{
-			uint8_t r, g, b;
+			union
+			{
+				struct { uint8_t r, g, b; };
+				struct { uint8_t v[3]; };
+			};
 		};
 
 		// 4
 		struct NiRGBA 
 		{
-			uint8_t r, g, b, a;
+			union
+			{
+				struct { uint8_t r, g, b, a; };
+				struct { uint8_t v[4]; };
+				uint32_t c;
+			};
 		};
 
 		// 10
