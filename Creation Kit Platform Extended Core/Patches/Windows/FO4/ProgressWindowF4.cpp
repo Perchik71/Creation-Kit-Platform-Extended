@@ -5,6 +5,7 @@
 #include "Core/Engine.h"
 #include "Core/ProgressTaskBar.h"
 #include "Editor API/EditorUI.h"
+#include "Editor API/BSString.h"
 #include "Patches/UIThemePatch.h"
 #include "MainWindowF4.h"
 #include "ProgressWindowF4.h"
@@ -23,6 +24,11 @@ namespace CreationKitPlatformExtended
 
 			constexpr uint32_t UI_PROGRESS_ID = 31007;
 			constexpr uint32_t UI_PROGRESS_LABEL_ID = 2217;
+			constexpr uint32_t MAX_PROGRESSBAR_VALUE = 399;
+
+			static LPDWORD dwProgressLoadCurrent = nullptr;
+			static LPDWORD dwProgressLoadMax = nullptr;
+			static EditorAPI::BSString sProgressLoadText;
 
 			bool ProgressWindow::HasOption() const
 			{
@@ -71,7 +77,7 @@ namespace CreationKitPlatformExtended
 					lpRelocator->DetourCall(_RELDATA_RAV(0), (uintptr_t)&sub1);
 
 					// Hook Loading Files %d%% (%s)
-					lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&sub3);
+					//lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&sub3);
 					// Hook Loading Files...Initializing...
 					lpRelocator->DetourCall(_RELDATA_RAV(3), (uintptr_t)&sub2);
 					// Hook Loading Files...Initializing References...
@@ -79,7 +85,25 @@ namespace CreationKitPlatformExtended
 					// Hook Validating forms...
 					lpRelocator->DetourCall(_RELDATA_RAV(6), (uintptr_t)&sub2);
 
-					if (verPatch == 2)
+					// Eliminate millions of calls to update the progress dialog, instead only updating 400 times (0% -> 100%)
+					//
+					dwProgressLoadCurrent = (LPDWORD)_RELDATA_ADDR(7);
+					dwProgressLoadMax = (LPDWORD)_RELDATA_ADDR(8);
+					auto rva = (uintptr_t)(_RELDATA_RAV(9));
+					lpRelocator->Patch(rva, { 0x48, 0x8D, 0x4D, 0x78 });
+
+					if (verPatch == 1)
+					{
+						lpRelocator->PatchNop(rva + 0x4, 0x30);
+						lpRelocator->DetourCall(rva + 0x4, (uintptr_t)&update_progressbar);
+						lpRelocator->Patch(rva + 0x34, { 0xEB });
+					}
+					else
+					{
+						lpRelocator->PatchNop(rva + 0x4, 0x34);
+						lpRelocator->DetourCall(rva + 0x4, (uintptr_t)&update_progressbar);
+						lpRelocator->Patch(rva + 0x38, { 0xEB });
+
 						// Idk what kind of gifted UI/UX specialist is sitting at Bethesda, 
 						// but this is the most shitty solution.
 						// 
@@ -87,8 +111,9 @@ namespace CreationKitPlatformExtended
 						// 
 						// The output of a message to the user, every time you load something, 
 						// should only be in the form of an error, and postpone the load of something.
-						lpRelocator->Patch(_RELDATA_RAV(7), { 0xE9, 0xFC, 0x01, 0x00, 0x00, 0x90 });
-				
+						lpRelocator->Patch(_RELDATA_RAV(10), { 0xE9, 0xFC, 0x01, 0x00, 0x00, 0x90 });
+					}
+
 					pointer_ProgressWindow_sub = _RELDATA_ADDR(2);
 
 					return true;
@@ -122,7 +147,7 @@ namespace CreationKitPlatformExtended
 						
 						GlobalProgressWindowPtr->ProgressLabel.Caption = "Loading Files...";
 						GlobalProgressWindowPtr->Progress.Style |= PBS_SMOOTH;
-						GlobalProgressWindowPtr->Progress.Perform(PBM_SETRANGE, 0, MAKELPARAM(0, 95));
+						GlobalProgressWindowPtr->Progress.Perform(PBM_SETRANGE, 0, MAKELPARAM(0, MAX_PROGRESSBAR_VALUE));
 						GlobalProgressWindowPtr->Progress.Perform(PBM_SETSTEP, 1, 0);
 						GlobalProgressWindowPtr->Progress.Perform(PBM_SETPOS, 0, 0);
 						value_ProgressWindow_pos = 0;
@@ -130,7 +155,11 @@ namespace CreationKitPlatformExtended
 						if (GlobalMainWindowPtr)
 						{
 							ProgressTaskBarPtr = new ProgressTaskBar(GlobalMainWindowPtr->Handle);
-							if (ProgressTaskBarPtr) ProgressTaskBarPtr->Begin();
+							if (ProgressTaskBarPtr)
+							{
+								ProgressTaskBarPtr->SetTotal(MAX_PROGRESSBAR_VALUE);
+								ProgressTaskBarPtr->Begin();
+							}
 						}
 						
 						ShowWindow(Hwnd, SW_SHOW);
@@ -156,6 +185,31 @@ namespace CreationKitPlatformExtended
 				return DefWindowProc(Hwnd, Message, wParam, lParam);
 			}
 
+			void ProgressWindow::update_progressbar(LPCSTR lpcstrText)
+			{
+				if (*dwProgressLoadCurrent == *dwProgressLoadMax)
+					return;
+
+				static double lastPercent = 0.0f;
+				(*dwProgressLoadCurrent)++;
+
+				// Only update every quarter percent, rather than every single form load
+				double newPercent = ((double)(*dwProgressLoadCurrent) / (double)(*dwProgressLoadMax)) * 100.0f;
+				if (abs(lastPercent - newPercent) <= 0.25f)
+					return;
+
+				lastPercent = newPercent;
+
+				sProgressLoadText.Format("Loading Files %d%% (%s)", (int)(lastPercent + 0.5), lpcstrText);
+
+				GlobalProgressWindowPtr->ProgressLabel.Caption = sProgressLoadText.c_str();
+				fastCall<void>(pointer_ProgressWindow_sub, 3, sProgressLoadText.c_str());
+
+				GlobalProgressWindowPtr->Progress.Perform(PBM_STEPIT, 0, 0);
+				GlobalProgressWindowPtr->Progress.Refresh();
+				if (ProgressTaskBarPtr) ProgressTaskBarPtr->Step();
+			}
+
 			HWND ProgressWindow::sub1(HINSTANCE hInstance, LPCSTR lpTemplateName, HWND hWndParent,
 				DLGPROC lpDialogFunc, LPARAM dwInitParam)
 			{
@@ -168,35 +222,10 @@ namespace CreationKitPlatformExtended
 				if (GlobalProgressWindowPtr->isOpen)
 				{
 					GlobalProgressWindowPtr->ProgressLabel.Caption = lpcstrText;
-					GlobalProgressWindowPtr->Progress.Perform(PBM_SETPOS, 95, 0);
+					GlobalProgressWindowPtr->Progress.Perform(PBM_SETPOS, MAX_PROGRESSBAR_VALUE, 0);
 					GlobalProgressWindowPtr->Progress.Refresh();
 
-					if (ProgressTaskBarPtr) ProgressTaskBarPtr->SetPosition(95);
-				}
-
-				return fastCall<void>(pointer_ProgressWindow_sub, nPartId, lpcstrText);
-			}
-
-			void ProgressWindow::sub3(uint32_t nPartId, LPCSTR lpcstrText)
-			{
-				if (GlobalProgressWindowPtr->isOpen)
-				{
-					//GlobalProgressWindowPtr->ProgressLabel.Caption = lpcstrText;
-
-					char* EndPref = nullptr;
-					auto step = strtol(lpcstrText + 14, &EndPref, 10);
-
-					if (value_ProgressWindow_pos < step)
-					{
-						for (auto i = 0; i < (step - value_ProgressWindow_pos); i++)
-						{
-							GlobalProgressWindowPtr->Progress.Perform(PBM_STEPIT, 0, 0);
-							if (ProgressTaskBarPtr) ProgressTaskBarPtr->Step();
-						}
-			
-						value_ProgressWindow_pos = step;
-						GlobalProgressWindowPtr->Progress.Refresh();
-					}
+					if (ProgressTaskBarPtr) ProgressTaskBarPtr->SetMarquee(true);
 				}
 
 				return fastCall<void>(pointer_ProgressWindow_sub, nPartId, lpcstrText);

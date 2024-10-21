@@ -155,8 +155,6 @@ namespace CreationKitPlatformExtended
 						GlobalProgressWindowPtr->m_hWnd = nullptr;
 						GlobalProgressWindowPtr->ProgressLabel = nullptr;
 						GlobalProgressWindowPtr->Progress = nullptr;
-						
-						KillTimer(Hwnd, IDT_TIMER1);
 					}
 					return 0;
 				}

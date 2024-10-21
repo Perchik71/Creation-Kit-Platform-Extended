@@ -27,7 +27,7 @@ namespace CreationKitPlatformExtended
 				static HWND sub1(HINSTANCE hInstance, LPCSTR lpTemplateName, HWND hWndParent,
 					DLGPROC lpDialogFunc, LPARAM dwInitParam);
 				static void sub2(uint32_t nPartId, LPCSTR lpcstrText);
-				static void sub3(uint32_t nPartId, LPCSTR lpcstrText);
+				static void update_progressbar(LPCSTR lpcstrText);
 
 				static LRESULT CALLBACK HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 			protected:
