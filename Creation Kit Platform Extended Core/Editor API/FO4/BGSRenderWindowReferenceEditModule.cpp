@@ -15,7 +15,7 @@ namespace CreationKitPlatformExtended
 			void BGSRenderWindowReferenceEditModule::MoveSelectObjects(NiPoint3* NewPosition, int32_t Unk)
 			{
 				auto Picker = _Renderer->GetPickHandler();
-				if (!Picker && !Picker->Count) return;
+				if (!Picker || !Picker->Count) return;
 				// Reset var the relative grid offset 
 				if (_TempPosition == ZERO_P3)
 					MoveSnapObjectIntermediate = ZERO_P3;
@@ -41,7 +41,7 @@ namespace CreationKitPlatformExtended
 					if (BGSRenderWindow::HasSnapToGrid() || BGSRenderWindow::HasSnapToConnectPoints())
 					{
 						NiPoint3 NewPos;
-						if (ComputeGridOrConnectPoint(ObjectPosition, *NewPosition, NewPos))
+						if (ComputeGridOrConnectPoint(ObjectPosition, *NewPosition, NewPos, i, Picker->Count))
 							FormRef->SetPosition(FormRef.Get(), &NewPos);
 					}
 					else
@@ -55,7 +55,7 @@ namespace CreationKitPlatformExtended
 			void BGSRenderWindowReferenceEditModule::MoveSelectObjectsExtremly(NiPoint3* NewPosition, int32_t Unk)
 			{
 				auto Picker = _Renderer->GetPickHandler();
-				if (!Picker && !Picker->Count) return;
+				if (!Picker || !Picker->Count) return;
 				// Reset var the relative grid offset
 				if (_TempPosition == ZERO_P3)
 					MoveSnapObjectIntermediate = ZERO_P3;
@@ -81,7 +81,7 @@ namespace CreationKitPlatformExtended
 					if (BGSRenderWindow::HasSnapToGrid() || BGSRenderWindow::HasSnapToConnectPoints())
 					{
 						NiPoint3 NewPos;
-						if (ComputeGridOrConnectPoint(ObjectPosition, *NewPosition, NewPos))
+						if (ComputeGridOrConnectPoint(ObjectPosition, *NewPosition, NewPos, i, Picker->Count))
 							FormRef->SetPosition(FormRef.Get(), &NewPos);
 					}
 					else
@@ -93,7 +93,7 @@ namespace CreationKitPlatformExtended
 			}
 
 			bool BGSRenderWindowReferenceEditModule::ComputeGridOrConnectPoint(const NiPoint3& Position, NiPoint3& OffsetInstant,
-				NiPoint3& NewPosition) const
+				NiPoint3& NewPosition, uint32_t Index, uint32_t Count) const
 			{
 				if (BGSRenderWindow::HasSnapToGrid())
 				{
@@ -120,17 +120,17 @@ namespace CreationKitPlatformExtended
 					auto Offset = NewPosition - Position;
 					if (Offset.x != 0.f)
 					{
-						MoveSnapObjectIntermediate.x = 0.f;
+						if (Index == (Count - 1)) MoveSnapObjectIntermediate.x = 0.f;
 						Result = true;
 					}
 					if (Offset.y != 0.f)
 					{
-						MoveSnapObjectIntermediate.y = 0.f;
+						if (Index == (Count - 1)) MoveSnapObjectIntermediate.y = 0.f;
 						Result = true;
 					}
 					if (Offset.z != 0.f)
 					{
-						MoveSnapObjectIntermediate.z = 0.f;
+						if (Index == (Count - 1)) MoveSnapObjectIntermediate.z = 0.f;
 						Result = true;
 					}
 
