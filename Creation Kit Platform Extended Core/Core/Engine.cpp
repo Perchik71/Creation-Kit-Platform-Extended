@@ -214,10 +214,12 @@ namespace CreationKitPlatformExtended
 
 				Fallout4_AppendPatches(PatchesManager);
 			}
+#ifdef _CKPE_WITH_QT5
 			else
 			// Добавление патчей только для редактора старфилда
 			if (eEditorVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_STARFIELD_LAST)
 				Starfield_AppendPatches(PatchesManager);
+#endif // !_CKPE_WITH_QT5
 
 			// Установка точки останова, чтобы дождаться расшифровки DRM приложения
 			EnableBreakpoint();

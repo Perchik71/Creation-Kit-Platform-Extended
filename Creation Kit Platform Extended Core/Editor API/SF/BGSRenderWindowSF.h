@@ -4,6 +4,7 @@
 
 #pragma once
 
+#ifdef _CKPE_WITH_QT5
 #include <QtGui/qwindow.h>
 #include <QtWidgets/qwidget.h>
 
@@ -29,3 +30,4 @@ namespace CreationKitPlatformExtended
 }
 
 #pragma pack(pop)
+#endif // !_CKPE_WITH_QT5

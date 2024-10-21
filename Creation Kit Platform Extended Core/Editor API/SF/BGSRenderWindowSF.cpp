@@ -2,6 +2,7 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
+#ifdef _CKPE_WITH_QT5
 #include "BGSRenderWindowSF.h"
 
 namespace CreationKitPlatformExtended
@@ -14,3 +15,5 @@ namespace CreationKitPlatformExtended
 		}
 	}
 }
+
+#endif // !_CKPE_WITH_QT5

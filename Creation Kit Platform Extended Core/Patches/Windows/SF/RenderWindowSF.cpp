@@ -6,9 +6,10 @@
 #include "Core/RegistratorWindow.h"
 #include "RenderWindowSF.h"
 #include "MainWindowSF.h"
-#include "Editor API/SF/BGSRenderWindowSF.h"
-
-#include <QtGui/qpalette.h>
+#ifdef _CKPE_WITH_QT5
+#	include "Editor API/SF/BGSRenderWindowSF.h"
+#	include <QtGui/qpalette.h>
+#endif // !_CKPE_WITH_QT5
 
 namespace CreationKitPlatformExtended
 {
@@ -16,7 +17,9 @@ namespace CreationKitPlatformExtended
 	{
 		namespace Starfield
 		{
+#ifdef _CKPE_WITH_QT5
 			using namespace CreationKitPlatformExtended::EditorAPI::Starfield;
+#endif // !_CKPE_WITH_QT5
 
 			RenderWindow* GlobalRenderWindowPtr;
 			uintptr_t pointer_RenderWindow_sub0;
@@ -85,6 +88,7 @@ namespace CreationKitPlatformExtended
 
 			void* CALLBACK RenderWindow::Initialize(__int64 unk1, __int64 unk2)
 			{
+#ifdef _CKPE_WITH_QT5
 				/*EditorAPI::Starfield::GlobalRenderWindowPtr = fastCall<BGSRenderWindow*>(pointer_RenderWindow_sub0,
 					unk1, unk2);
 
@@ -99,6 +103,7 @@ namespace CreationKitPlatformExtended
 				}*/
 
 				return EditorAPI::Starfield::GlobalRenderWindowPtr;
+#endif // !_CKPE_WITH_QT5
 			}
 		}
 	}

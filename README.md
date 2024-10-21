@@ -138,6 +138,7 @@ For understanding, the application uses the ancient **`ANSI`** type string repre
 [zipper](https://github.com/kuba--/zip.git) URL **https://github.com/kuba--/zip.git** IN **Dependencies/zipper**  
 [libdeflate](https://github.com/ebiggers/libdeflate.git) URL **https://github.com/ebiggers/libdeflate.git** IN **Dependencies/libdeflate**  
 [xbyak](https://github.com/herumi/xbyak.git) URL **https://github.com/herumi/xbyak.git** IN **Dependencies/xbyak**  
+[DirectXTex](https://github.com/microsoft/DirectXTex.git) URL **https://github.com/microsoft/DirectXTex.git** IN **Dependencies/DirectXTex**  
 [jDialogs](https://github.com/Perchik71/jDialogs.git) URL **https://github.com/Perchik71/jDialogs.git** IN **Dependencies/jDialogs** *(recursive)*
 
 # Compilation
