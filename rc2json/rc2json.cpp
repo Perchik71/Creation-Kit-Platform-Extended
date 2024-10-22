@@ -274,7 +274,7 @@ static bool rc2json(const char* a_filename)
     for (;;)
     {
         if (buffer[0] == '}') break;
-
+        
         ZeroMemory(&controlinfo, sizeof(controlinfo_tag));
 
         if (!_stricmp(buffer.c_str(), "CONTROL"))
@@ -506,13 +506,15 @@ static bool rc2json(const char* a_filename)
         out_stream << "],\n";
     }
 
-    out_stream << "\t\"Title\": " << dialoginfo.title << "\n";
-    out_stream << "\t\"Width\": " << dialoginfo.width << "\n";
-    out_stream << "\t\"Height\": " << dialoginfo.height << "\n";
-    out_stream << "\t\"FontName\": " << dialoginfo.fontname << "\n";
-    out_stream << "\t\"FontSize\": " << dialoginfo.fontsize << "\n";
-    out_stream << "\t\"FontWeight\": " << dialoginfo.weight << "\n";
-    out_stream << "\t\"FontItalic\": " << dialoginfo.italic << "\n";
+    if (strlen(dialoginfo.title) > 0)
+        out_stream << "\t\"Title\": " << dialoginfo.title << ",\n";
+
+    out_stream << "\t\"Width\": " << dialoginfo.width << ",\n";
+    out_stream << "\t\"Height\": " << dialoginfo.height << ",\n";
+    out_stream << "\t\"FontName\": " << dialoginfo.fontname << ",\n";
+    out_stream << "\t\"FontSize\": " << dialoginfo.fontsize << ",\n";
+    out_stream << "\t\"FontWeight\": " << dialoginfo.weight << ",\n";
+    out_stream << "\t\"FontItalic\": " << dialoginfo.italic << ",\n";
 
     if (dialoginfo.controls.size() > 0)
     {
