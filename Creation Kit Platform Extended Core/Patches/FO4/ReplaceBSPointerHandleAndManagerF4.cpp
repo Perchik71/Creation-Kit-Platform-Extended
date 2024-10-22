@@ -355,6 +355,9 @@ namespace CreationKitPlatformExtended
 								memcpy((void*)(addr + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
 								total++;
 							}
+
+
+
 						}
 
 						// should be 345
@@ -415,51 +418,51 @@ namespace CreationKitPlatformExtended
 						//
 						// Change REFR test eax -> rax
 						// 
-						total = 0;
+						//total = 0;
 
-						{
-							// mov eax, dword ptr ds:[r??+0x38]
-							// and eax, 0x3FF
-							// cmp eax, 0x3FF
-							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"8B ? 38 25 FF 03 00 00 3D FF 03 00 00");
-							for (size_t i = 0; i < patterns.size(); i++)
-							{
-								auto prefix = *(uint8_t*)(patterns[i] - 1);
-								if (prefix == 0x41)
-									*(uint8_t*)(patterns[i] - 1) = 0x49;
-								else
-								{
-									auto reg = *(uint8_t*)(patterns[i] + 1);
-									memcpy((void*)(patterns[i]),
-										"\x48\x8B\x00\x38\x66\x25\xFF\x03\x66\x3D\xFF\x03\x90", 13);
-									*(uint8_t*)(patterns[i] + 2) = reg;
-								}
-							}
-							total += patterns.size();
+						//{
+						//	// mov eax, dword ptr ds:[r??+0x38]
+						//	// and eax, 0x3FF
+						//	// cmp eax, 0x3FF
+						//	auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+						//		"8B ? 38 25 FF 03 00 00 3D FF 03 00 00");
+						//	for (size_t i = 0; i < patterns.size(); i++)
+						//	{
+						//		auto prefix = *(uint8_t*)(patterns[i] - 1);
+						//		if (prefix == 0x41)
+						//			*(uint8_t*)(patterns[i] - 1) = 0x49;
+						//		else
+						//		{
+						//			auto reg = *(uint8_t*)(patterns[i] + 1);
+						//			memcpy((void*)(patterns[i]),
+						//				"\x48\x8B\x00\x38\x66\x25\xFF\x03\x66\x3D\xFF\x03\x90", 13);
+						//			*(uint8_t*)(patterns[i] + 2) = reg;
+						//		}
+						//	}
+						//	total += patterns.size();
 
-							// mov e??, dword ptr ds:[r??+0x38]
-							// and e??, 0x3FF
-							// cmp e??, 0x3FF
-							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"8B ? 38 81 ? FF 03 00 00 81 ? FF 03 00 00");
-							for (size_t i = 0; i < patterns.size(); i++)
-							{
-								auto reg1 = *(uint8_t*)(patterns[i] + 1);
-								auto reg2 = *(uint8_t*)(patterns[i] + 4);
-								auto reg3 = *(uint8_t*)(patterns[i] + 10);
-								memcpy((void*)(patterns[i]),
-									"\x48\x8B\x00\x38\x66\x81\x00\xFF\x03\x66\x81\x00\xFF\x03\x90", 15);
-								*(uint8_t*)(patterns[i] + 2) = reg1;
-								*(uint8_t*)(patterns[i] + 6) = reg2;
-								*(uint8_t*)(patterns[i] + 11) = reg3;
-							}
-							total += patterns.size();
-						}
-						
-						// should be 298
-						//_CONSOLE("Change REFR test eax -> rax: %llu", total);
-						Assert(total == 298);
+						//	// mov e??, dword ptr ds:[r??+0x38]
+						//	// and e??, 0x3FF
+						//	// cmp e??, 0x3FF
+						//	patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+						//		"8B ? 38 81 ? FF 03 00 00 81 ? FF 03 00 00");
+						//	for (size_t i = 0; i < patterns.size(); i++)
+						//	{
+						//		auto reg1 = *(uint8_t*)(patterns[i] + 1);
+						//		auto reg2 = *(uint8_t*)(patterns[i] + 4);
+						//		auto reg3 = *(uint8_t*)(patterns[i] + 10);
+						//		memcpy((void*)(patterns[i]),
+						//			"\x48\x8B\x00\x38\x66\x81\x00\xFF\x03\x66\x81\x00\xFF\x03\x90", 15);
+						//		*(uint8_t*)(patterns[i] + 2) = reg1;
+						//		*(uint8_t*)(patterns[i] + 6) = reg2;
+						//		*(uint8_t*)(patterns[i] + 11) = reg3;
+						//	}
+						//	total += patterns.size();
+						//}
+						//
+						//// should be 298
+						////_CONSOLE("Change REFR test eax -> rax: %llu", total);
+						//Assert(total == 298);
 
 						//
 						// Change REFR test handle index
@@ -1193,6 +1196,68 @@ namespace CreationKitPlatformExtended
 				patched += 2;
 
 				_MESSAGE("BSHandleRefObject::DecRef (Patched: %d)", patched);
+			}
+
+			void ReplaceBSPointerHandleAndManagerPatch::IncRefPatch_980()
+			{
+				//auto Sec = GlobalEnginePtr->GetSection(SECTION_TEXT);
+				//auto Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, "? ? 38 ? FF 03 00 00 ? FF 03 00 00 72 ?");
+				//Assert(Signatures.size() == 282);
+				//
+				//size_t total = 0;
+				//for (auto sign : Signatures)
+				//{
+				//	auto start = (uint8_t*)sign;
+
+				//	// je
+				//	if (*(start - 2) == 74)
+				//	{
+				//		// nop's
+				//		memset(start + 7, 0x90, (uintptr_t)(*(start - 1)) - 10);
+
+				//		if (*(start + 1) == 0x43)	// rbx
+				//			memcpy(start, "/x48/x89/xD9", 3);
+				//		else if (*(start + 1) == 0x47)	// rdi
+				//			memcpy(start, "/x48/x89/xF9", 3);
+				//		else if (*(start + 1) == 0x45)	// rbp
+				//			memcpy(start, "/x48/x89/xE9", 3);
+				//		else if (*(start + 1) == 0x46)	// rsi
+				//			memcpy(start, "/x48/x89/xF1", 3);
+				//		else if (*(start + 1) == 0x40)	// rax
+				//			memcpy(start, "/x48/x89/xC1", 3);
+				//		else if (*(start + 1) == 0x42)	// rdx
+				//			memcpy(start, "/x48/x89/xD1", 3);
+				//		else if (*(start + 1) == 0x41)	// rcx
+				//			memset(start, 0x90, 3);
+
+				//		// mov rcx, r??
+				//		// call ....
+				//		voltek::detours_function_class_call((uintptr_t)(start + 3), TESObjectREFR_base_Extremly::IncRefCount);
+
+				//		total++;
+				//	}
+				//	else if (*(start - 3) == 74)	// with prefix
+				//	{
+				//		// nop's
+				//		memset(start + 6, 0x90, (uintptr_t)(*(start - 2)) - 11);
+
+				//		if (*(start + 1) == 0x46)	// r14
+				//			memcpy(start - 1, "/x4C/x89/xF1", 3);
+
+				//		// mov rcx, r??
+				//		// call ....
+				//		voltek::detours_function_class_call((uintptr_t)(start + 2), TESObjectREFR_base_Extremly::IncRefCount);
+
+				//		total++;
+				//	}
+				//}
+
+				//_CONSOLE("Inc dbg 1 %llu", total);
+			}
+
+			void ReplaceBSPointerHandleAndManagerPatch::DecRefPatch_980()
+			{
+
 			}
 		}
 	}

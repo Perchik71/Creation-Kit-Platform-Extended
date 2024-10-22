@@ -38,6 +38,9 @@ namespace CreationKitPlatformExtended
 				static uint32_t Check(uintptr_t unused, uintptr_t refr);
 				static void IncRefPatch();
 				static void DecRefPatch();
+
+				static void IncRefPatch_980();
+				static void DecRefPatch_980();
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
