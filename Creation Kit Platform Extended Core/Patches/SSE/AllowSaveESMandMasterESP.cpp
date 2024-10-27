@@ -4,10 +4,16 @@
 
 #include "Core/Engine.h"
 #include "AllowSaveESMandMasterESP.h"
+#include "Patches/INICacheData.h"
 #include "Editor API/SSE/TESFile.h"
 
 namespace CreationKitPlatformExtended
 {
+	namespace Core
+	{
+		extern CreationKitPlatformExtended::Patches::INICacheDataPatch* INICacheData;
+	}
+
 	namespace EditorAPI
 	{
 		namespace SkyrimSpectialEdition
@@ -123,7 +129,7 @@ namespace CreationKitPlatformExtended
 				if (!BasePath)
 					BasePath = "\\Data";
 
-				const char* filter = "TES Plugin Files (*.esp)\0*.esp\0TES Master Files (*.esm)\0*.esm\0\0";
+				const char* filter = "TES Plugin Files (*.esp)\0*.esp\0TES Light Master Files (*.esl)\0*.esl\0TES Master Files (*.esm)\0*.esm\0\0";
 				const char* title = "Select Target Plugin";
 				const char* extension = "esp";
 
@@ -139,8 +145,25 @@ namespace CreationKitPlatformExtended
 					pointer_AllowSaveESMandMasterESP_sub1)(ParentWindow, BasePath, filter, title, extension, nullptr,
 						false, true, Buffer, BufferSize, Directory, nullptr);
 
-				INIConfig CK_CfgCustom = INIConfig("CreationKitCustom.ini");
-				if (result && CK_CfgCustom.ReadBool("General", "bUseVersionControl", false)) {
+				bool bUseVersionControl = false;
+
+				if (INICacheData->HasActive())
+				{
+					bUseVersionControl = (bool)INICacheData->HKGetPrivateProfileIntA("General", "bUseVersionControl", 0,
+						(EditorAPI::BSString::Utils::GetApplicationPath() + "CreationKit.ini").c_str());
+					bUseVersionControl = (bool)INICacheData->HKGetPrivateProfileIntA("General", "bUseVersionControl", 0,
+						(EditorAPI::BSString::Utils::GetApplicationPath() + "CreationKitCustom.ini").c_str());
+				}
+				else
+				{
+					bUseVersionControl = (bool)GetPrivateProfileIntA("General", "bUseVersionControl", 0,
+						(EditorAPI::BSString::Utils::GetApplicationPath() + "CreationKit.ini").c_str());
+					bUseVersionControl = (bool)GetPrivateProfileIntA("General", "bUseVersionControl", 0,
+						(EditorAPI::BSString::Utils::GetApplicationPath() + "CreationKitCustom.ini").c_str());
+				}
+
+				if (result && bUseVersionControl)
+				{
 					std::string sbuf = Buffer;
 					auto ibegin = sbuf.find_last_of('\\');
 					if (ibegin == sbuf.npos) {
@@ -155,7 +178,6 @@ namespace CreationKitPlatformExtended
 
 					strcpy_s(Buffer, BufferSize, sbuf.c_str());
 				}
-
 			end_func:
 				return result;
 			}
