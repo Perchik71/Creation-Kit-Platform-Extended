@@ -129,7 +129,7 @@ namespace CreationKitPlatformExtended
 				if (!BasePath)
 					BasePath = "\\Data";
 
-				const char* filter = "TES Plugin Files (*.esp)\0*.esp\0TES Light Master Files (*.esl)\0*.esp\0TES Master Files (*.esm)\0*.esm\0\0";
+				const char* filter = "TES Plugin Files (*.esp)\0*.esp\0TES Light Master Files (*.esl)\0*.esl\0TES Master Files (*.esm)\0*.esm\0\0";
 				const char* title = "Select Target Plugin";
 				const char* extension = "esp";
 
