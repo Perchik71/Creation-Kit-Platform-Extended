@@ -4,10 +4,16 @@
 
 #include "Core/Engine.h"
 #include "AllowSaveESMandMasterESPF4.h"
+#include "Patches/INICacheData.h"
 #include "Editor API/FO4/TESFileF4.h"
 
 namespace CreationKitPlatformExtended
 {
+	namespace Core
+	{
+		extern CreationKitPlatformExtended::Patches::INICacheDataPatch* INICacheData;
+	}
+
 	namespace EditorAPI
 	{
 		namespace Fallout4
@@ -117,13 +123,13 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
-			bool AllowSaveESMandMasterESPPatch::OpenPluginSaveDialog(HWND ParentWindow, const char* BasePath, bool IsESM,
-				char* Buffer, uint32_t BufferSize, const char* Directory)
+			BOOL AllowSaveESMandMasterESPPatch::OpenPluginSaveDialog(HWND ParentWindow, LPCSTR BasePath, BOOL IsESM, LPSTR Buffer,
+				uint32_t BufferSize, LPCSTR Directory)
 			{
 				if (!BasePath)
 					BasePath = "\\Data";
 
-				const char* filter = "TES Plugin Files (*.esp)\0*.esp\0TES Master Files (*.esm)\0*.esm\0\0";
+				const char* filter = "TES Plugin Files (*.esp)\0*.esp\0TES Light Master Files (*.esl)\0*.esp\0TES Master Files (*.esm)\0*.esm\0\0";
 				const char* title = "Select Target Plugin";
 				const char* extension = "esp";
 
@@ -134,13 +140,21 @@ namespace CreationKitPlatformExtended
 					extension = "esm";
 				}
 
-				auto result = ((bool(__fastcall*)(HWND, const char*, const char*, const char*, 
-					const char*, void*, bool, bool, char*, uint32_t, const char*, void*))
-					pointer_AllowSaveESMandMasterESP_sub1)(ParentWindow, BasePath, filter, title, extension, nullptr,
-						false, true, Buffer, BufferSize, Directory, nullptr);
+				auto result = ((BOOL(__fastcall*)(HWND, LPCSTR, LPCSTR, LPCSTR, LPCSTR, LPVOID, BOOL, BOOL, LPSTR, uint32_t, LPCSTR, LPVOID))
+					pointer_AllowSaveESMandMasterESP_sub1)(ParentWindow, BasePath, filter, title, extension, NULL, FALSE, TRUE, Buffer,
+						BufferSize, Directory, NULL);
 
-				INIConfig CK_CfgCustom = INIConfig("CreationKitCustom.ini");
-				if (result && CK_CfgCustom.ReadBool("General", "bUseVersionControl", false)) {
+				bool bUseVersionControl = false;
+
+				if (INICacheData->HasActive())
+					bUseVersionControl = (bool)INICacheData->HKGetPrivateProfileIntA("General", "bUseVersionControl", 0,
+						(EditorAPI::BSString::Utils::GetApplicationPath() + "CreationKitCustom.ini").c_str());
+				else
+					bUseVersionControl = (bool)GetPrivateProfileIntA("General", "bUseVersionControl", 0,
+						(EditorAPI::BSString::Utils::GetApplicationPath() + "CreationKitCustom.ini").c_str());
+
+				if (result && bUseVersionControl)
+				{
 					std::string sbuf = Buffer;
 					auto ibegin = sbuf.find_last_of('\\');
 					if (ibegin == sbuf.npos) {
@@ -155,7 +169,6 @@ namespace CreationKitPlatformExtended
 
 					strcpy_s(Buffer, BufferSize, sbuf.c_str());
 				}
-
 			end_func:
 				return result;
 			}
