@@ -55,6 +55,8 @@ namespace CreationKitPlatformExtended
 			bool CrashInventoryPatch::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
+				ScopeRelocator text;
+
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
 					// movzx edx, byte ptr ds:[rdi+0x12] 
@@ -77,9 +79,16 @@ namespace CreationKitPlatformExtended
 					*(uintptr_t*)&ptr_CrashInventoryPatch_sub0 =
 						voltek::detours_function_class_jump(_RELDATA_ADDR(0) - 0x7E, (uintptr_t)&sub1);
 
+					// Remove assertion spam
+
 					auto rva = (uintptr_t)_RELDATA_RAV(1);
 					lpRelocator->PatchNop(rva, 0x7B);
 					lpRelocator->PatchNop(rva + 0xE0, 0x7B);
+
+					lpRelocator->Patch(_RELDATA_RAV(2), { 0xEB });
+					lpRelocator->Patch(_RELDATA_RAV(3), { 0xEB, 0x37 });
+					lpRelocator->Patch(_RELDATA_RAV(4), { 0xEB });
+					lpRelocator->Patch(_RELDATA_RAV(5), { 0xEB });
 
 					return true;
 				}
@@ -105,9 +114,17 @@ namespace CreationKitPlatformExtended
 					*(uintptr_t*)&ptr_CrashInventoryPatch_sub0 =
 						voltek::detours_function_class_jump(_RELDATA_ADDR(0) - 0xBD, (uintptr_t)&sub1);
 
+					// Remove assertion spam
+
 					auto rva = (uintptr_t)_RELDATA_RAV(1);
 					lpRelocator->PatchNop(rva, 0x7F);
 					lpRelocator->PatchNop(rva + 0xF0, 0x7F);
+
+					lpRelocator->Patch(_RELDATA_RAV(2), { 0xEB, 0x7D });
+					lpRelocator->Patch(_RELDATA_RAV(3), { 0xEB, 0x39 });
+					lpRelocator->Patch(_RELDATA_RAV(4), { 0xEB, 0x39 });
+					lpRelocator->Patch(_RELDATA_RAV(5), { 0xEB, 0x39 });
+					lpRelocator->Patch(_RELDATA_RAV(6), { 0xEB });
 
 					return true;
 				}
