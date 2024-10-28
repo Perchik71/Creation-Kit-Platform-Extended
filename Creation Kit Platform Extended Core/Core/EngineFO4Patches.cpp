@@ -110,7 +110,7 @@ namespace CreationKitPlatformExtended
 				new Patches::BSResourceTextureDBREPatch(),
 				new Patches::FixLandspaceVNMLPatch(),
 				new Patches::ChooseSoundFilePatch(),
-				//new Patches::CrashInventoryPatch(),
+				new Patches::CrashInventoryPatch(),
 				
 				new Patches::MainWindow(),
 				new Patches::ObjectWindow(),
