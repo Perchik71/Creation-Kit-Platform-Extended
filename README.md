@@ -1,6 +1,3 @@
-Unfortunately, the mod is closed, see new [license](https://store.steampowered.com/eula/1946180_eula_0).
-Perhaps the mod will be removed from all sites in the future, at the request of **Bethesda**.
-
 <p align="center">
   <img src="https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/master/Resources/logo.png" alt="Creation Kit Platform Extended" border="0">
 </p>
