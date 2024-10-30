@@ -2110,6 +2110,12 @@
     <ClInclude Include="Editor API\SF\TESObjectLIGH.h">
       <Filter>Editor API\SF\Forms</Filter>
     </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESObjectLIGH.h">
+      <Filter>Editor API\FO4\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\TESObjectLIGH.h">
+      <Filter>Editor API\SSE\Forms</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version\resource_version.rc">

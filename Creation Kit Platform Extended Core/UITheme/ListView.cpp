@@ -32,6 +32,9 @@
 
 #ifdef _CKPE_WITH_QT5
 #	include "Editor API/SF/TESObjectREFR.h"
+#else
+#	include "Editor API/SSE/TESObjectLIGH.h"
+#	include "Editor API/FO4/TESObjectLIGH.h"
 #endif // !_CKPE_WITH_QT5
 
 #define UI_CONTROL_CONDITION_ID 0xFA0
@@ -403,6 +406,67 @@ namespace CreationKitPlatformExtended
 
 				return FALSE;
 			}
+#else
+			static LRESULT OnCustomDrawObjectList(HWND hWindow, LPNMLVCUSTOMDRAW lpListView)
+			{
+				switch (lpListView->nmcd.dwDrawStage)
+				{
+				//Before the paint cycle begins
+				case CDDS_PREPAINT:
+				//request notifications for individual listview items
+					return CDRF_NOTIFYITEMDRAW;
+				//Before an item is drawn
+				case CDDS_ITEMPREPAINT:
+					return CDRF_NOTIFYSUBITEMDRAW;
+				//Before a subitem is drawn
+				case CDDS_SUBITEM | CDDS_ITEMPREPAINT:
+				{
+					LVITEM lvItem;
+					ZeroMemory(&lvItem, sizeof(LVITEM));
+					lvItem.iItem = lpListView->nmcd.dwItemSpec;
+					lvItem.mask = LVIF_PARAM | LVIF_STATE;
+					if (!ListView_GetItem(lpListView->nmcd.hdr.hwndFrom, &lvItem))
+					{
+					def_color:
+						lpListView->clrText = GetThemeSysColor(ThemeColor_Text_4);
+						return CDRF_NEWFONT;
+					}
+
+					if (Core::GlobalEnginePtr->GetEditorVersion() <= Core::EDITOR_SKYRIM_SE_LAST)
+					{
+						auto form = (EditorAPI::SkyrimSpectialEdition::TESForm*)lvItem.lParam;
+						if ((form->Type == EditorAPI::SkyrimSpectialEdition::TESForm::ftLight) && (lpListView->iSubItem == 1))
+						{
+							if (((lvItem.state & 0xFF) & LVIS_SELECTED) == LVIS_SELECTED)
+								goto def_color;
+
+							auto color = ((EditorAPI::SkyrimSpectialEdition::TESObjectLIGH*)form)->GetSpecularColor();
+							lpListView->clrText = RGB(color.r, color.g, color.b);
+						}
+						else
+							goto def_color;
+					}
+					else if (Core::GlobalEnginePtr->GetEditorVersion() <= Core::EDITOR_FALLOUT_C4_LAST)
+					{
+						auto form = (EditorAPI::Fallout4::TESForm*)lvItem.lParam;
+						if ((form->Type == EditorAPI::Fallout4::TESForm::ftLight) && (lpListView->iSubItem == 1))
+						{
+							if (((lvItem.state & 0xFF) & LVIS_SELECTED) == LVIS_SELECTED)
+								goto def_color;
+
+							auto color = ((EditorAPI::Fallout4::TESObjectLIGH*)form)->GetSpecularColor();
+							lpListView->clrText = RGB(color.r, color.g, color.b);
+						}
+						else
+							goto def_color;
+					}
+					else
+						goto def_color;
+				}
+				}
+
+				return CDRF_DODEFAULT;
+			}
 #endif // !_CKPE_WITH_QT5
 
 			LRESULT OnCustomDraw(HWND hWindow, LPNMLVCUSTOMDRAW lpListView)
@@ -410,8 +474,12 @@ namespace CreationKitPlatformExtended
 #ifndef _CKPE_WITH_QT5
 				// skip it controls
 				switch (lpListView->nmcd.hdr.idFrom) {
+				// Object list
 				case 1041:
+					return OnCustomDrawObjectList(hWindow, lpListView);
+				// Cell list
 				case 1155:
+				// Cell object list	
 				case 1156:
 					return DefSubclassProc(hWindow, WM_NOTIFY, 0, (LPARAM)lpListView);
 				}

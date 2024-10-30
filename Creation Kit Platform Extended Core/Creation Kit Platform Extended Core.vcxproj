@@ -507,6 +507,7 @@
     <ClInclude Include="Editor API\FO4\TESObjectARMO.h" />
     <ClInclude Include="Editor API\FO4\TESObjectCELL.h" />
     <ClInclude Include="Editor API\FO4\TESObjectLAND.h" />
+    <ClInclude Include="Editor API\FO4\TESObjectLIGH.h" />
     <ClInclude Include="Editor API\FO4\TESObjectREFR.h" />
     <ClInclude Include="Editor API\FO4\TESQuest.h" />
     <ClInclude Include="Editor API\FO4\TESTopic.h" />
@@ -550,6 +551,7 @@
     <ClInclude Include="Editor API\SSE\TESLandTexture.h" />
     <ClInclude Include="Editor API\SSE\TESObjectCELL.h" />
     <ClInclude Include="Editor API\SSE\TESObjectLAND.h" />
+    <ClInclude Include="Editor API\SSE\TESObjectLIGH.h" />
     <ClInclude Include="Editor API\SSE\TESObjectREFR.h" />
     <ClInclude Include="Editor API\SSE\TESTopic.h" />
     <ClInclude Include="Editor API\SSE\TESTopicInfo.h" />
