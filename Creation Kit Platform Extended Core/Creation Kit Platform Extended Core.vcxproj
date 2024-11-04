@@ -239,6 +239,7 @@
     <ClCompile Include="Patches\FO4\PreVis.cpp" />
     <ClCompile Include="Patches\FO4\RemoveUselessMessagesF4.cpp" />
     <ClCompile Include="Patches\FO4\ReplaceBSPointerHandleAndManagerF4.cpp" />
+    <ClCompile Include="Patches\FO4\RunNetworkDisable.cpp" />
     <ClCompile Include="Patches\FO4\SkipUpdateCheck.cpp" />
     <ClCompile Include="Patches\FO4\SortCrashCombined.cpp" />
     <ClCompile Include="Patches\FO4\TESDataHandlerHook.cpp" />
@@ -631,6 +632,7 @@
     <ClInclude Include="Patches\FO4\PreVis.h" />
     <ClInclude Include="Patches\FO4\RemoveUselessMessagesF4.h" />
     <ClInclude Include="Patches\FO4\ReplaceBSPointerHandleAndManagerF4.h" />
+    <ClInclude Include="Patches\FO4\RunNetworkDisable.h" />
     <ClInclude Include="Patches\FO4\SkipUpdateCheck.h" />
     <ClInclude Include="Patches\FO4\SortCrashCombined.h" />
     <ClInclude Include="Patches\FO4\TESDataHandlerHook.h" />

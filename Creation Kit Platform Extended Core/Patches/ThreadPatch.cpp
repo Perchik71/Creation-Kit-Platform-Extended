@@ -59,7 +59,33 @@ namespace CreationKitPlatformExtended
 				PatchIAT(HKSleep, "kernel32.dll", "Sleep");
 				PatchIAT(HKSleepEx, "kernel32.dll", "SleepEx");
 
-				SetPriorityClass(GetCurrentProcess(), ABOVE_NORMAL_PRIORITY_CLASS);
+				auto hCurrentProcess = GetCurrentProcess();
+				if (hCurrentProcess)
+				{
+					SetPriorityClass(hCurrentProcess, HIGH_PRIORITY_CLASS/*ABOVE_NORMAL_PRIORITY_CLASS*/);
+
+					DWORD_PTR ProcessMask, SystemMask;
+					GetProcessAffinityMask(hCurrentProcess, &ProcessMask, &SystemMask);
+					_MESSAGE("ProcessMask: 0x%X", ProcessMask);
+					_MESSAGE("SystemMask: 0x%X", SystemMask);
+
+					if (ProcessMask != SystemMask)
+					{
+						_MESSAGE("A change in the usage of processor cores has been detected");
+
+						SetProcessAffinityMask(hCurrentProcess, SystemMask);
+					}
+				}
+
+				auto hCurrentThread = GetCurrentThread();
+				if (hCurrentThread)
+				{
+					auto ThreadID = GetThreadId(hCurrentThread);
+					_MESSAGE("CKPE_ThreadMain %u", ThreadID);
+
+					SetThreadPriority(hCurrentThread, THREAD_PRIORITY_HIGHEST);
+					Utils::SetThreadName(ThreadID, "CKPE_ThreadMain");
+				}
 
 				// The system does not display the critical-error-handler message box. 
 				// Instead, the system sends the error to the calling process.
@@ -83,8 +109,10 @@ namespace CreationKitPlatformExtended
 
 		BOOL ThreadPatch::HKSetThreadPriority(HANDLE hThread, int nPriority)
 		{
-			// Don't allow a priority below normal - Skyrim doesn't have many "idle" threads
-			return SetThreadPriority(hThread, std::max(THREAD_PRIORITY_NORMAL, nPriority));
+			// Don't allow a priority below normal and below current priority
+			auto CurrentPriority = GetThreadPriority(hThread);
+			CurrentPriority = CurrentPriority > THREAD_PRIORITY_NORMAL ? CurrentPriority : THREAD_PRIORITY_NORMAL;
+			return SetThreadPriority(hThread, std::max(CurrentPriority, nPriority));
 		}
 
 		DWORD_PTR ThreadPatch::HKSetThreadAffinityMask(HANDLE hThread, DWORD_PTR dwThreadAffinityMask)

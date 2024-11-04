@@ -70,7 +70,8 @@ namespace CreationKitPlatformExtended
 			bool ReplaceBSPointerHandleAndManagerPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return eEditorCurrentVersion != EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_1_10_943_1;
+				return (eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST) &&
+					(eEditorCurrentVersion != EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_1_10_943_1);
 			}
 
 			bool ReplaceBSPointerHandleAndManagerPatch::IsVersionValid(const RelocationDatabaseItem* lpRelocationDatabaseItem) const
@@ -185,29 +186,33 @@ namespace CreationKitPlatformExtended
 					{
 						ScopeRelocator textSection;
 
+						auto addr = (uintptr_t)_RELDATA_RAV(0);
 						// Preparation, removal of all embedded pieces of code
-						lpRelocator->PatchNop((uintptr_t)lpRelocationDatabaseItem->At(0) + 12, 0x7A);
-						lpRelocator->PatchMovFromRax((uintptr_t)lpRelocationDatabaseItem->At(0) + 5, lpRelocationDatabaseItem->At(1));
+						lpRelocator->PatchNop(addr + 12, 0x7A);
+						lpRelocator->PatchMovFromRax(addr + 5, _RELDATA_RAV(1));
+
+						// End
+						memcpy((void*)((uintptr_t)_RELDATA_ADDR(0) + 0x93), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
 
 						// Stub out the rest of the functions which shouldn't ever be called now
-						lpRelocator->Patch(lpRelocationDatabaseItem->At(4), { 0xCC });	// BSUntypedPointerHandle::Set			
+						lpRelocator->Patch(_RELDATA_RAV(4), { 0xCC });	// BSUntypedPointerHandle::Set			
 					}
 
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0),
+					lpRelocator->DetourCall(_RELDATA_RAV(0),
 						(uintptr_t)&BSPointerHandleManager_Extended::InitSDM);
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2),
+					lpRelocator->DetourCall(_RELDATA_RAV(2),
 						(uintptr_t)&BSPointerHandleManager_Extended::KillSDM);
 					// Unfortunately, the array cleanup is not going through, so let's reset it ourselves
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(15),
+					lpRelocator->DetourJump(_RELDATA_RAV(15),
 						(uintptr_t)&BSPointerHandleManager_Extended::CleanSDM);
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
+					lpRelocator->DetourJump(_RELDATA_RAV(3),
 						(uintptr_t)&BSPointerHandleManagerInterface_Extended::CreateHandle);
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5),
+					lpRelocator->DetourJump(_RELDATA_RAV(5),
 						(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6),
+					lpRelocator->DetourJump(_RELDATA_RAV(6),
 						(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy2);
 
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(16), (uintptr_t)&CheckEx);
+					lpRelocator->DetourCall(_RELDATA_RAV(16), (uintptr_t)&CheckEx);
 
 					{
 						ScopeRelocator textSection;
@@ -215,22 +220,28 @@ namespace CreationKitPlatformExtended
 						//
 						// Deleting the code, restoring the function
 						//
-						restoring_destroy1(lpRelocationDatabaseItem->At(7), 0xF2,
+						restoring_destroy1(_RELDATA_RAV(7), 0xF2,
 							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
-						restoring_destroy1(lpRelocationDatabaseItem->At(8), 0xFE,
+						restoring_destroy1(_RELDATA_RAV(8), 0xFE,
 							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
-						restoring_destroy1(lpRelocationDatabaseItem->At(9), 0xFE,
+						restoring_destroy1(_RELDATA_RAV(9), 0xFE,
 							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
-						restoring_destroy1(lpRelocationDatabaseItem->At(10), 0xFE,
+						restoring_destroy1(_RELDATA_RAV(10), 0xFE,
 							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
-						restoring_destroy1(lpRelocationDatabaseItem->At(11), 0xEF,
+						restoring_destroy1(_RELDATA_RAV(11), 0xEF,
 							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
-						restoring_destroy1(lpRelocationDatabaseItem->At(12), 0xFE,
+						restoring_destroy1(_RELDATA_RAV(12), 0xFE,
 							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
-						restoring_destroy1(lpRelocationDatabaseItem->At(13), 0xEF,
+						restoring_destroy1(_RELDATA_RAV(13), 0xEF,
 							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
-						restoring_destroy2(lpRelocationDatabaseItem->At(14), 0x30, 0x10B,
+						restoring_destroy2(_RELDATA_RAV(14), 0x30, 0x10B,
 							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy2);
+
+						// It is not necessary, it reduces productivity
+						// Conversion BSHandleRefObject::IncRef and BSHandleRefObject::DecRef for work 64bit (hack offset 4 bytes)
+
+						//IncRefPatch_980();
+						//DecRefPatch_980();
 
 						auto textRange = GlobalEnginePtr->GetSection(SECTION_TEXT);
 
@@ -271,7 +282,6 @@ namespace CreationKitPlatformExtended
 
 						// should be 660
 						Assert(total == 660);
-						//_CONSOLE("AGE_MASK change: %llu", total);
 
 						//
 						// Change INDEX
@@ -355,14 +365,56 @@ namespace CreationKitPlatformExtended
 								memcpy((void*)(addr + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
 								total++;
 							}
-
-
-
 						}
 
 						// should be 345
 						Assert(total == 345);
-						//_CONSOLE("INDEX_MASK change: %llu", total);
+
+						// Since the patch is critical to the binary, it makes no sense to keep the offset in the database too much.
+						// Size correction for exclusion.
+						memcpy((void*)(lpRelocator->GetBase() + 0x916A61), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+						memcpy((void*)(lpRelocator->GetBase() + 0x916AA1), &BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT, 4);
+
+						//
+						// Change NOT MASK_INDEX_BIT
+						// 
+						total = 0;
+
+						{
+							uint32_t not_mask = ~BSUntypedPointerHandle_Extended::MASK_INDEX_BIT;
+							
+							// and r???, 0xFFE00000
+							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"81 ? 00 00 E0 FF");
+							//_CONSOLE("%llu", patterns.size());
+							Assert(patterns.size() >= 40);
+							for (size_t i = 0; i < 40; i++)
+								memcpy((void*)(patterns[i] + 2), &not_mask, 4);
+							total += 40;
+						}
+
+						// should be 40
+						Assert(total == 40);
+
+						//
+						// Change NOT MASK_ACTIVE_BIT
+						// 
+						total = 0;
+
+						{
+							uint32_t not_mask = ~BSUntypedPointerHandle_Extended::MASK_ACTIVE_BIT;
+
+							// and r???, 0xFBFFFFFF
+							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
+								"81 ? FF FF FF FB");
+							Assert(patterns.size() >= 7);
+							for (size_t i = 0; i < 7; i++)
+								memcpy((void*)(patterns[i] + 2), &not_mask, 4);
+							total += 7;
+						}
+
+						// should be 7
+						Assert(total == 7);
 
 						//
 						// Change UNUSED_BIT_START
@@ -1200,64 +1252,400 @@ namespace CreationKitPlatformExtended
 
 			void ReplaceBSPointerHandleAndManagerPatch::IncRefPatch_980()
 			{
-				//auto Sec = GlobalEnginePtr->GetSection(SECTION_TEXT);
-				//auto Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, "? ? 38 ? FF 03 00 00 ? FF 03 00 00 72 ?");
-				//Assert(Signatures.size() == 282);
-				//
-				//size_t total = 0;
-				//for (auto sign : Signatures)
-				//{
-				//	auto start = (uint8_t*)sign;
+				size_t total = 0;
 
-				//	// je
-				//	if (*(start - 2) == 74)
-				//	{
-				//		// nop's
-				//		memset(start + 7, 0x90, (uintptr_t)(*(start - 1)) - 10);
+				{
+					auto Sec = GlobalEnginePtr->GetSection(SECTION_TEXT);
+					auto Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
+						"4C 8D 05 ? ? ? ? 8D ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 ? ? 38");
+					Assert(Signatures.size() == 57);
+					total += Signatures.size();
 
-				//		if (*(start + 1) == 0x43)	// rbx
-				//			memcpy(start, "/x48/x89/xD9", 3);
-				//		else if (*(start + 1) == 0x47)	// rdi
-				//			memcpy(start, "/x48/x89/xF9", 3);
-				//		else if (*(start + 1) == 0x45)	// rbp
-				//			memcpy(start, "/x48/x89/xE9", 3);
-				//		else if (*(start + 1) == 0x46)	// rsi
-				//			memcpy(start, "/x48/x89/xF1", 3);
-				//		else if (*(start + 1) == 0x40)	// rax
-				//			memcpy(start, "/x48/x89/xC1", 3);
-				//		else if (*(start + 1) == 0x42)	// rdx
-				//			memcpy(start, "/x48/x89/xD1", 3);
-				//		else if (*(start + 1) == 0x41)	// rcx
-				//			memset(start, 0x90, 3);
+					// TODO
 
-				//		// mov rcx, r??
-				//		// call ....
-				//		voltek::detours_function_class_call((uintptr_t)(start + 3), TESObjectREFR_base_Extremly::IncRefCount);
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
+						"4C 8D 05 ? ? ? ? BA ? ? ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 ? ? 38");
+					Assert(Signatures.size() == 179);
+					total += Signatures.size();
 
-				//		total++;
-				//	}
-				//	else if (*(start - 3) == 74)	// with prefix
-				//	{
-				//		// nop's
-				//		memset(start + 6, 0x90, (uintptr_t)(*(start - 2)) - 11);
+					// TODO
 
-				//		if (*(start + 1) == 0x46)	// r14
-				//			memcpy(start - 1, "/x4C/x89/xF1", 3);
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
+						"8D ? ? 48 8D 0D ? ? ? ? 4C 8D 05 ? ? ? ? E8 ? ? ? ? F0 ? ? 38");
+					Assert(Signatures.size() == 31);
+					total += Signatures.size();
 
-				//		// mov rcx, r??
-				//		// call ....
-				//		voltek::detours_function_class_call((uintptr_t)(start + 2), TESObjectREFR_base_Extremly::IncRefCount);
+					// TODO
 
-				//		total++;
-				//	}
-				//}
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
+						"4C 8D 05 ? ? ? ? ? 8D ? ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 ? ? 38");
+					Assert(Signatures.size() == 13);
+					total += Signatures.size();
 
-				//_CONSOLE("Inc dbg 1 %llu", total);
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
+						"4C 8D 05 ? ? ? ? BA ? ? ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 ? FF ? 38");
+					Assert(Signatures.size() == 10);
+					total += Signatures.size();
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
+						"4C 8D 05 ? ? ? ? 8D ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 41 ? ? 38");
+					Assert(Signatures.size() == 6);
+					total += Signatures.size();
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
+						"4C 8D 05 ? ? ? ? BA ? ? ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 FF ? 08");
+					Assert(Signatures.size() == 12);
+					// need only 1
+					Signatures.resize(1);
+					total += Signatures.size();
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
+						"4C 8D 05 ? ? ? ? 41 8D ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 FF ? 38");
+					Assert(Signatures.size() == 12);
+					total += Signatures.size();
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
+						"8D ? ? 48 8D 0D ? ? ? ? 4C 8D 05 ? ? ? ? E8 ? ? ? ? F0 41 FF ? 38");
+					Assert(Signatures.size() == 3);
+					total += Signatures.size();
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
+						"4C 8D 05 ? ? ? ? 41 8D ? 3C 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 41 FF ? 38");
+					Assert(Signatures.size() == 1);
+					total += Signatures.size();
+
+					// TODO
+
+				}
+
+				_CONSOLE("BSHandleRefObject::IncRef (Patched: %llu)", total);
 			}
 
 			void ReplaceBSPointerHandleAndManagerPatch::DecRefPatch_980()
 			{
+				size_t total_find = 0, total = 0;
 
+				{
+					auto Sec = GlobalEnginePtr->GetSection(SECTION_TEXT);
+					auto Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? FF FF FF FF F0 0F");
+					Assert(Signatures.size() == 716);
+					total += Signatures.size();
+		
+					auto fff = Signatures;
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? FF FF FF FF F0 ? 0F");
+					Assert(Signatures.size() == 41);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? F0 0F");
+					Assert(Signatures.size() == 128);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? F0 ? 0F");
+					Assert(Signatures.size() == 15);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 0F");
+					Assert(Signatures.size() == 171);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 ? 0F");
+					Assert(Signatures.size() == 76);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? F0 0F");
+					Assert(Signatures.size() == 140);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? FF FF FF FF ? ? F0 0F");
+					Assert(Signatures.size() == 9);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? 41 ? FF FF FF FF 41 ? ? F0 ? 0F");
+					Assert(Signatures.size() == 3);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? 8D ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? ? FF FF FF FF F0");
+					Assert(Signatures.size() == 20);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					// there jump
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? FF FF FF");
+					Assert(Signatures.size() == 35);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? 41 8D ? 55 48 8D 0D ? ? ? ? E8 ? ? ? ?");
+					Assert(Signatures.size() == 24);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? 41 8D ? 56 48 8D 0D ? ? ? ? E8 ? ? ? ?");
+					Assert(Signatures.size() == 6);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+						
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? 8D ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? F0 0F");
+					Assert(Signatures.size() == 1);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? EB ?");
+					Assert(Signatures.size() == 5);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? 41 8D ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? 41 ? ? F0 0F");
+					Assert(Signatures.size() == 8);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? FF FF FF FF F0 0F");
+					Assert(Signatures.size() == 17);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? FF FF FF FF F0 ? 0F");
+					Assert(Signatures.size() == 6);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? F0 ? 0F");
+					Assert(Signatures.size() == 13);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? 8D ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? F0 0F");
+					Assert(Signatures.size() == 49);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+					
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? E9 ? ? ? ?");
+					Assert(Signatures.size() == 2);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? 8D ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? F0 ? 0F");
+					Assert(Signatures.size() == 2);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? ? 8D ? ? 56 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? ? ? ? F0 0F");
+					Assert(Signatures.size() == 1);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? ? ? ? ? ? FF FF FF FF F0 0F");
+					Assert(Signatures.size() == 1);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+					
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? 41 8D ? ? 55 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? F0 ? 0F");
+					Assert(Signatures.size() == 1);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? F0 ? 0F");
+					Assert(Signatures.size() == 15);
+					total += Signatures.size();
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? 41 8D ? ? 56 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? F0 0F");
+					//Assert(Signatures.size() == 1);
+					total += Signatures.size();
+					_CONSOLE("ddv4 %llu", Signatures.size());
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? 41 8D ? ? 55 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? FF FF");
+					//Assert(Signatures.size() == 15);
+					total += Signatures.size();
+					_CONSOLE("ddv5 %llu", Signatures.size());
+
+					fff.append_range(Signatures);
+
+					// TODO
+					
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"8D ? 54 48 8D 0D ? ? ? ? 4C 8D 05 ? ? ? ? E8 ? ? ? ? ? FF FF FF FF F0 0F");
+					//Assert(Signatures.size() == 1);
+					total += Signatures.size();
+					_CONSOLE("ddv4 %llu", Signatures.size());
+
+					fff.append_range(Signatures);
+					
+					// TODO
+					
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? 41 8D ? ? 55 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? F0 0F");
+					//Assert(Signatures.size() == 15);
+					total += Signatures.size();
+					_CONSOLE("ddv5 %llu", Signatures.size());
+
+					fff.append_range(Signatures);
+
+					// TODO
+					
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? 41 8D ? ? 55 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? F0 0F");
+					//Assert(Signatures.size() == 1);
+					total += Signatures.size();
+					_CONSOLE("ddv4 %llu", Signatures.size());
+
+					fff.append_range(Signatures);
+
+					// TODO
+					
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? 45 33 C9 49 8B C9 41 8B C7 F0 0F");
+					//Assert(Signatures.size() == 15);
+					total += Signatures.size();
+					_CONSOLE("ddv5 %llu", Signatures.size());
+
+					fff.append_range(Signatures);
+
+					// TODO
+
+					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
+						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? ? FF FF FF FF F0 0F");
+					//Assert(Signatures.size() == 15);
+					total += Signatures.size();
+					_CONSOLE("ddv55 %llu", Signatures.size());
+
+					fff.append_range(Signatures);
+
+					// TODO
+				}
+
+				_CONSOLE("BSHandleRefObject::DecRef (Patched: %llu/%llu)", total, total_find);
 			}
 		}
 	}

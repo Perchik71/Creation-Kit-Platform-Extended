@@ -122,8 +122,10 @@ namespace CreationKitPlatformExtended
 				OsVer->BuildNubmer = osInfo.dwBuildNumber;
 			}
 
-			_MESSAGE("Creation Kit Platform Extended Runtime: Initialize (Version: %s, OS: %u.%u Build %u)",
+			auto str = EditorAPI::BSString::FormatString("CKPE Runtime: Initialize (Version: %s, OS: %u.%u Build %u)",
 				VER_FILE_VERSION_STR, OsVer->MajorVersion, OsVer->MinorVersion, OsVer->BuildNubmer);
+
+			_MESSAGE(str.c_str());
 
 			int info[4];
 			__cpuid(info, 7);
