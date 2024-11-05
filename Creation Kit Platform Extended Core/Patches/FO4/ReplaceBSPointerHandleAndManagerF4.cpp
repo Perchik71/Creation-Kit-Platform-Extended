@@ -18,6 +18,8 @@ namespace CreationKitPlatformExtended
 			uintptr_t pointer_ReplaceBSPointerHandleAndManager_code2 = 0;
 			uintptr_t pointer_ReplaceBSPointerHandleAndManager_code3 = 0;
 			uintptr_t pointer_ReplaceBSPointerHandleAndManager_code4 = 0;
+			uint32_t* pointer_ReplaceBSPointerHandleAndManager_data1 = nullptr;
+			uint32_t* pointer_ReplaceBSPointerHandleAndManager_data2 = nullptr;
 
 			class HandleManager
 			{
@@ -179,6 +181,9 @@ namespace CreationKitPlatformExtended
 					lpRelocator->DetourCall(rva + 5, func);
 				};
 
+				pointer_ReplaceBSPointerHandleAndManager_data1 = (uint32_t*)_RELDATA_ADDR(4);
+				pointer_ReplaceBSPointerHandleAndManager_data2 = (uint32_t*)_RELDATA_ADDR(5);
+
 				if (Extremly)
 				{
 					BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 1;
@@ -190,421 +195,267 @@ namespace CreationKitPlatformExtended
 						// Preparation, removal of all embedded pieces of code
 						lpRelocator->PatchNop(addr + 12, 0x7A);
 						lpRelocator->PatchMovFromRax(addr + 5, _RELDATA_RAV(1));
-
-						// End
+						// Specify the size
 						memcpy((void*)((uintptr_t)_RELDATA_ADDR(0) + 0x93), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
 
-						// Stub out the rest of the functions which shouldn't ever be called now
-						lpRelocator->Patch(_RELDATA_RAV(4), { 0xCC });	// BSUntypedPointerHandle::Set			
+						// Modify CreateHandle
+						addr = (uintptr_t)_RELDATA_ADDR(3);
+						memcpy((void*)(addr + 0x12F), &BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT, 4);
+						uint32_t mask = BSUntypedPointerHandle_Extended::MASK_ACTIVE_BIT | BSUntypedPointerHandle_Extended::MASK_INDEX_BIT;
+						memcpy((void*)(addr + 0x134), &mask, 4);
 					}
 
 					lpRelocator->DetourCall(_RELDATA_RAV(0),
 						(uintptr_t)&BSPointerHandleManager_Extended::InitSDM);
 					lpRelocator->DetourCall(_RELDATA_RAV(2),
 						(uintptr_t)&BSPointerHandleManager_Extended::KillSDM);
+	
 					// Unfortunately, the array cleanup is not going through, so let's reset it ourselves
-					lpRelocator->DetourJump(_RELDATA_RAV(15),
-						(uintptr_t)&BSPointerHandleManager_Extended::CleanSDM);
-					lpRelocator->DetourJump(_RELDATA_RAV(3),
-						(uintptr_t)&BSPointerHandleManagerInterface_Extended::CreateHandle);
-					lpRelocator->DetourJump(_RELDATA_RAV(5),
-						(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
-					lpRelocator->DetourJump(_RELDATA_RAV(6),
-						(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy2);
+					//lpRelocator->DetourJump(_RELDATA_RAV(15),
+					//	(uintptr_t)&BSPointerHandleManager_Extended::CleanSDM);
 
-					lpRelocator->DetourCall(_RELDATA_RAV(16), (uintptr_t)&CheckEx);
+					ScopeRelocator textSection;
+					auto textRange = GlobalEnginePtr->GetSection(SECTION_TEXT);
 
-					{
-						ScopeRelocator textSection;
-
-						//
-						// Deleting the code, restoring the function
-						//
-						restoring_destroy1(_RELDATA_RAV(7), 0xF2,
-							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
-						restoring_destroy1(_RELDATA_RAV(8), 0xFE,
-							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
-						restoring_destroy1(_RELDATA_RAV(9), 0xFE,
-							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
-						restoring_destroy1(_RELDATA_RAV(10), 0xFE,
-							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
-						restoring_destroy1(_RELDATA_RAV(11), 0xEF,
-							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
-						restoring_destroy1(_RELDATA_RAV(12), 0xFE,
-							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
-						restoring_destroy1(_RELDATA_RAV(13), 0xEF,
-							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy1);
-						restoring_destroy2(_RELDATA_RAV(14), 0x30, 0x10B,
-							(uintptr_t)&BSPointerHandleManagerInterface_Extended::Destroy2);
-
-						// It is not necessary, it reduces productivity
-						// Conversion BSHandleRefObject::IncRef and BSHandleRefObject::DecRef for work 64bit (hack offset 4 bytes)
-
-						//IncRefPatch_980();
-						//DecRefPatch_980();
-
-						auto textRange = GlobalEnginePtr->GetSection(SECTION_TEXT);
-
-						//
-						// Change AGE
-						// 
-						size_t total = 0;
-
+					auto __InstallPatchByPatternMask = [&textRange](
+						const char* pattern_mask,	// pattern "? ? 00 E0 03"
+						size_t offset,				// offset from find patterns array
+						size_t count,				// count need change
+						size_t offset_find,			// offset from in once find pattern
+						const void* source,			// buffer
+						size_t ssize				// buffer size
+						) -> size_t {
+						auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base, pattern_mask);
+						if (patterns.size() > offset)
 						{
-							// test ??, 0x3E00000
-							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"A9 00 00 E0 03");
-							for (size_t i = 0; i < patterns.size(); i++)
-								memcpy((void*)(patterns[i] + 1), &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
-							total += patterns.size();
+							size_t max = std::min(patterns.size(), count + offset);
+							for (size_t index = offset; index < max; index++)
+								memcpy((void*)(patterns[index] + offset_find), source, ssize);
 
-							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"F7 ? 00 00 E0 03");
-							for (size_t i = 0; i < patterns.size(); i++)
-								memcpy((void*)(patterns[i] + 2), &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
-							total += patterns.size();
+							// Debug
+							//_CONSOLE("__InstallPatchByPatternMask() function was executed successfully. PatternMask: \"%s\", Count: %llu",
+							//	pattern_mask, max - offset);
+
+							return max - offset;
 						}
-						
-						{
-							// and r??, 0x3E00000
-							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"25 00 00 E0 03");
-							for (size_t i = 0; i < patterns.size(); i++)
-								memcpy((void*)(patterns[i] + 1), &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
-							total += patterns.size();
-
-							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"81 ? 00 00 E0 03");
-							for (size_t i = 0; i < patterns.size(); i++)
-								memcpy((void*)(patterns[i] + 2), &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
-							total += patterns.size();
-						}
-
-						// should be 660
-						Assert(total == 660);
-
-						//
-						// Change INDEX
-						// 
-						total = 0;
-
-						{
-							// and r???, 0x1FFFFF
-							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"41 81 ? FF FF 1F 00");
-							for (size_t i = 0; i < patterns.size(); i++)
-								memcpy((void*)(patterns[i] + 3), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-							total += patterns.size();
-
-							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"81 E1 FF FF 1F 00");
-							for (size_t i = 3; i < patterns.size() - 1; i++)
-								memcpy((void*)(patterns[i] + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-							total += patterns.size() - 4;
-
-							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"81 E5 FF FF 1F 00");
-							for (size_t i = 0; i < patterns.size(); i++)
-							{
-								if ((i == 4) || (i == 8)) continue;
-								memcpy((void*)(patterns[i] + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-							}
-							total += patterns.size() - 2;
-
-							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"81 E6 FF FF 1F 00");
-							Assert(patterns.size() == 7);
-							for (size_t i = 3; i < patterns.size() - 2; i++)
-							{
-								if ((i == 4) || (i == 8)) continue;
-								memcpy((void*)(patterns[i] + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-							}
-							total += 2;
-
-							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"81 E7 FF FF 1F 00");
-							Assert(patterns.size() == 3);
-							memcpy((void*)(patterns[2] + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-							total++;
-
-							auto addr = voltek::find_pattern(textRange.base, textRange.end - textRange.base,
-								"8B C7 25 FF FF 1F 00 8B D8");
-							if (addr)
-							{
-								memcpy((void*)(addr + 3), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-								total++;
-							}
-
-							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"81 ? FF FF 1F 00 ? ? 48 ? ? 04");
-							Assert(patterns.size() == 8);
-							for (size_t i = 0; i < patterns.size(); i++)
-								memcpy((void*)(patterns[i] + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-							total += patterns.size();
-
-							addr = voltek::find_pattern(textRange.base, textRange.end - textRange.base,
-								"81 ? FF FF 1F 00 ? ? ? ? ? ? 48 ? ? 04");
-							if (addr)
-							{
-								memcpy((void*)(addr + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-								total++;
-							}
-
-							addr = voltek::find_pattern(textRange.base, textRange.end - textRange.base,
-								"81 ? FF FF 1F 00 ? ? ? ? ? ? 44 ? ? 41 ? 00 00 00 00 49 ? ? 04");
-							if (addr)
-							{
-								memcpy((void*)(addr + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-								total++;
-							}
-
-							addr = voltek::find_pattern(textRange.base, textRange.end - textRange.base,
-								"81 ? FF FF 1F 00 ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? 49 ? ? 04");
-							if (addr)
-							{
-								memcpy((void*)(addr + 2), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-								total++;
-							}
-						}
-
-						// should be 345
-						Assert(total == 345);
-
-						// Since the patch is critical to the binary, it makes no sense to keep the offset in the database too much.
-						// Size correction for exclusion.
-						memcpy((void*)(lpRelocator->GetBase() + 0x916A61), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-						memcpy((void*)(lpRelocator->GetBase() + 0x916AA1), &BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT, 4);
-
-						//
-						// Change NOT MASK_INDEX_BIT
-						// 
-						total = 0;
-
-						{
-							uint32_t not_mask = ~BSUntypedPointerHandle_Extended::MASK_INDEX_BIT;
-							
-							// and r???, 0xFFE00000
-							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"81 ? 00 00 E0 FF");
-							//_CONSOLE("%llu", patterns.size());
-							Assert(patterns.size() >= 40);
-							for (size_t i = 0; i < 40; i++)
-								memcpy((void*)(patterns[i] + 2), &not_mask, 4);
-							total += 40;
-						}
-
-						// should be 40
-						Assert(total == 40);
-
-						//
-						// Change NOT MASK_ACTIVE_BIT
-						// 
-						total = 0;
-
-						{
-							uint32_t not_mask = ~BSUntypedPointerHandle_Extended::MASK_ACTIVE_BIT;
-
-							// and r???, 0xFBFFFFFF
-							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"81 ? FF FF FF FB");
-							Assert(patterns.size() >= 7);
-							for (size_t i = 0; i < 7; i++)
-								memcpy((void*)(patterns[i] + 2), &not_mask, 4);
-							total += 7;
-						}
-
-						// should be 7
-						Assert(total == 7);
-
-						//
-						// Change UNUSED_BIT_START
-						// 
-						total = 0;
-
-						{
-							// bt ???, 0x1A
-							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"0F BA E0 1A");
-							Assert(patterns.size() == 322);
-							for (size_t i = 0; i < patterns.size() - 5; i++)
-								*(uint8_t*)(patterns[i] + 3) = (uint8_t)BSUntypedPointerHandle_Extended::UNUSED_BIT_START;
-							total += patterns.size() - 5;
-
-							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"0F BA ?? 1A");
-							Assert(patterns.size() == 104);
-							for (size_t i = 0; i < 57; i++)
-							{
-								switch (i)
-								{
-								case 16:
-								case 17:
-								case 21:
-								case 22:
-								case 26:
-								case 32:
-								case 33:
-								case 35:
-								case 40:
-								case 41:
-								case 50:
-								case 51:
-								case 52:
-								case 53:
-								case 54:
-								case 55:
-									break;
-								default:
-								{
-									*(uint8_t*)(patterns[i] + 3) = (uint8_t)BSUntypedPointerHandle_Extended::UNUSED_BIT_START;
-									total++;
-								}
-								}
-							}
-						}
-
-						// should be 358
-						//_CONSOLE("UNUSED_BIT_START change: %llu", total);
-						Assert(total == 358);
-
-						//
-						// Change REFR test eax -> rax
-						// 
-						//total = 0;
-
+						//else
 						//{
-						//	// mov eax, dword ptr ds:[r??+0x38]
-						//	// and eax, 0x3FF
-						//	// cmp eax, 0x3FF
-						//	auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-						//		"8B ? 38 25 FF 03 00 00 3D FF 03 00 00");
-						//	for (size_t i = 0; i < patterns.size(); i++)
-						//	{
-						//		auto prefix = *(uint8_t*)(patterns[i] - 1);
-						//		if (prefix == 0x41)
-						//			*(uint8_t*)(patterns[i] - 1) = 0x49;
-						//		else
-						//		{
-						//			auto reg = *(uint8_t*)(patterns[i] + 1);
-						//			memcpy((void*)(patterns[i]),
-						//				"\x48\x8B\x00\x38\x66\x25\xFF\x03\x66\x3D\xFF\x03\x90", 13);
-						//			*(uint8_t*)(patterns[i] + 2) = reg;
-						//		}
-						//	}
-						//	total += patterns.size();
-
-						//	// mov e??, dword ptr ds:[r??+0x38]
-						//	// and e??, 0x3FF
-						//	// cmp e??, 0x3FF
-						//	patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-						//		"8B ? 38 81 ? FF 03 00 00 81 ? FF 03 00 00");
-						//	for (size_t i = 0; i < patterns.size(); i++)
-						//	{
-						//		auto reg1 = *(uint8_t*)(patterns[i] + 1);
-						//		auto reg2 = *(uint8_t*)(patterns[i] + 4);
-						//		auto reg3 = *(uint8_t*)(patterns[i] + 10);
-						//		memcpy((void*)(patterns[i]),
-						//			"\x48\x8B\x00\x38\x66\x81\x00\xFF\x03\x66\x81\x00\xFF\x03\x90", 15);
-						//		*(uint8_t*)(patterns[i] + 2) = reg1;
-						//		*(uint8_t*)(patterns[i] + 6) = reg2;
-						//		*(uint8_t*)(patterns[i] + 11) = reg3;
-						//	}
-						//	total += patterns.size();
+						//	// Debug
+						//	_CONSOLE("__InstallPatchByPatternMask() function return failed. PatternMask: \"%s\", Count: %llu",
+						//		pattern_mask, 0);
 						//}
-						//
-						//// should be 298
-						////_CONSOLE("Change REFR test eax -> rax: %llu", total);
-						//Assert(total == 298);
 
-						//
-						// Change REFR test handle index
-						// 
-						total = 0;
+						return 0;
+					};
 
+					auto __InstallPatchByPatternMaskCustom = [&textRange](
+						const char* pattern_mask,			// pattern "? ? 00 E0 03"
+						size_t offset,						// offset from find patterns array
+						size_t count,						// count need change
+						void(callback)(uintptr_t addr)		// callback function
+						) -> size_t {
+							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base, pattern_mask);
+							if (patterns.size() > offset)
+							{
+								size_t max = std::min(patterns.size(), count + offset);
+								for (size_t index = offset; index < max; index++)
+									callback(patterns[index]);
+
+								// Debug
+								//_CONSOLE("__InstallPatchByPatternMask() function was executed successfully. PatternMask: \"%s\", Count: %llu",
+								//	pattern_mask, max - offset);
+
+								return max - offset;
+							}
+							//else
+							//{
+							//	// Debug
+							//	_CONSOLE("__InstallPatchByPatternMask() function return failed. PatternMask: \"%s\", Count: %llu",
+							//		pattern_mask, 0);
+							//}
+
+							return 0;
+						};
+
+					auto __InstallPatchByPatternMaskEx = [&textRange](
+						const char* pattern_mask,				// pattern "? ? 00 E0 03"
+						size_t offset,							// offset from find patterns array
+						size_t count,							// count need change
+						size_t offset_find,						// offset from in once find pattern
+						const void* source,						// buffer
+						size_t ssize,							// buffer size
+						std::initializer_list<size_t> excludes	// list exclude indexes
+						) -> size_t {
+							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base, pattern_mask);
+							if (patterns.size() > offset)
+							{
+								size_t max = std::min(patterns.size(), count + offset);
+								size_t total = 0;
+								for (size_t index = offset; index < max; index++)
+									if (std::find(excludes.begin(), excludes.end(), index) == std::end(excludes))
+									{
+										memcpy((void*)(patterns[index] + offset_find), source, ssize);
+										total++;
+									}
+
+								// Debug
+								//_CONSOLE("__InstallPatchByPatternMaskEx() function was executed successfully. PatternMask: \"%s\", Count: %llu",
+								//	pattern_mask, total);
+
+								return total;
+							}
+							//else
+							//{
+							//	// Debug
+							//	_CONSOLE("__InstallPatchByPatternMaskEx() function return failed. PatternMask: \"%s\", Count: %llu",
+							//		pattern_mask, 0);
+							//}
+
+							return 0;
+						};
+
+					size_t total = 0;
+
+					_MESSAGE("Change BSPointerHandle inline functions");
+
+					// Change AGE
+					total += __InstallPatchByPatternMask("A9 00 00 E0 03", 0, -1, 1, &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
+					total += __InstallPatchByPatternMask("F7 ? 00 00 E0 03", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
+					total += __InstallPatchByPatternMask("25 00 00 E0 03", 0, -1, 1, &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
+					total += __InstallPatchByPatternMask("81 ? 00 00 E0 03", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
+
+					_MESSAGE("AGE Total %llu", total);
+
+					total = 0;
+
+					// Change INDEX
+					total += __InstallPatchByPatternMask("41 81 ? FF FF 1F 00", 0, -1, 3, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 E1 FF FF 1F 00", 3, 25, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMaskEx("81 E5 FF FF 1F 00", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4, { 4, 8 });
+					total += __InstallPatchByPatternMaskEx("81 E6 FF FF 1F 00", 3, 24, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4, { 7, 8 });
+					total += __InstallPatchByPatternMask("81 E7 FF FF 1F 00", 2, 1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("8B C7 25 FF FF 1F 00 8B D8", 0, -1, 3, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? 48 ? ? 04", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? ? ? ? ? 48 ? ? 04", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? ? ? ? ? 44 ? ? 41 ? 00 00 00 00 49 ? ? 04", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? 49 ? ? 04", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 E2 FF FF 1F 00", 0, 2, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+					
+					memcpy((void*)(lpRelocator->GetBase() + 0x5279F9), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+					total += 1;
+
+					_MESSAGE("INDEX Total %llu", total);
+
+					total = 0;
+					uint32_t not_mask = ~BSUntypedPointerHandle_Extended::MASK_INDEX_BIT;
+
+					// Change NOT MASK_INDEX_BIT
+					total += __InstallPatchByPatternMask("81 ? 00 00 E0 FF", 0, 56, 2, &not_mask, 4);
+
+					_MESSAGE("NOT MASK_INDEX_BIT Total %llu", total);
+	
+					total = 0;
+					not_mask = ~BSUntypedPointerHandle_Extended::MASK_ACTIVE_BIT;
+
+					// Change NOT MASK_ACTIVE_BIT
+					total += __InstallPatchByPatternMask("81 ? FF FF FF FB", 0, -1, 2, &not_mask, 4);
+
+					_MESSAGE("NOT MASK_INDEX_BIT Total %llu", total);
+
+					total = 0;
+
+					// Change UNUSED_BIT_START
+					total += __InstallPatchByPatternMask("0F BA E0 1A", 0, 317, 3, &BSUntypedPointerHandle_Extended::UNUSED_BIT_START, 1);
+					total += __InstallPatchByPatternMaskEx("0F BA ?? 1A", 0, 72, 3, &BSUntypedPointerHandle_Extended::UNUSED_BIT_START, 1,
+						{ 18, 19, 23, 24, 30, 38, 39, 47, 48, 63, 64, 65, 66, 67, 68 });
+
+					_MESSAGE("UNUSED_BIT_START Total %llu", total);
+
+					total = 0;
+
+					// Change REFR test handle index
+					total += __InstallPatchByPatternMaskCustom("8B ? 38 C1 ? 0B 41 3B ?", 0, -1, [](uintptr_t addr) 
+						{ 
+							*(uint8_t*)(addr + 2) = (uint8_t)0x39;
+							*(uint8_t*)(addr + 5) = (uint8_t)0x3;
+						});
+					total += __InstallPatchByPatternMaskCustom("8B ? 38 C1 ? 0B 3B ?", 0, -1, [](uintptr_t addr)
 						{
-							// mov e??, dword ptr ds:[r??+0x38]
-							// shr e??, 0xB
-							// cmp e??, r??
-							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"8B ? 38 C1 ? 0B 41 3B ?");
-							for (size_t i = 0; i < patterns.size(); i++)
-							{
-								*(uint8_t*)(patterns[i] + 2) = (uint8_t)0x39;
-								*(uint8_t*)(patterns[i] + 5) = (uint8_t)0x3;
-							}
+							*(uint8_t*)(addr + 2) = (uint8_t)0x39;
+							*(uint8_t*)(addr + 5) = (uint8_t)0x3;
+						});
 
-							total += patterns.size();
+					_MESSAGE("REFR_TEST Total %llu", total);
 
-							patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base,
-								"8B ? 38 C1 ? 0B 3B ?");
-							for (size_t i = 0; i < patterns.size(); i++)
-							{
-								*(uint8_t*)(patterns[i] + 2) = (uint8_t)0x39;
-								*(uint8_t*)(patterns[i] + 5) = (uint8_t)0x3;
-							}
+					total = 0;
+	
+					// Change MAX_HANDLE_COUNT
+					total += __InstallPatchByPatternMask("81 ? 00 00 20 00", 0, 1, 2, &BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT, 4);
+					total += __InstallPatchByPatternMask("BD 00 00 20 00", 0, -1, 1, &BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT, 4);
+					
+					_MESSAGE("MAX_HANDLE_COUNT Total %llu", total);
 
-							total += patterns.size();
-						}
+					total = 0;
 
-						// should be 308
-						//_CONSOLE("Change REFR test handle index: %llu", total);
-						Assert(total == 307);
-					}
+					// Change MASK_ACTIVE_BIT
+					total += __InstallPatchByPatternMask("F7 ? 00 00 00 04", 0, 3, 2, &BSUntypedPointerHandle_Extended::MASK_ACTIVE_BIT, 4);
+
+					_MESSAGE("MASK_ACTIVE_BIT Total %llu", total);
 				}
 				else
 				{
 					BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 0;
 
-					{
-						ScopeRelocator textSection;
+					//{
+					//	ScopeRelocator textSection;
 
-						// Preparation, removal of all embedded pieces of code
-						lpRelocator->PatchNop((uintptr_t)lpRelocationDatabaseItem->At(0) + 12, 0x7A);
-						lpRelocator->PatchMovFromRax((uintptr_t)lpRelocationDatabaseItem->At(0) + 5, lpRelocationDatabaseItem->At(1));
+					//	// Preparation, removal of all embedded pieces of code
+					//	lpRelocator->PatchNop((uintptr_t)lpRelocationDatabaseItem->At(0) + 12, 0x7A);
+					//	lpRelocator->PatchMovFromRax((uintptr_t)lpRelocationDatabaseItem->At(0) + 5, lpRelocationDatabaseItem->At(1));
 
-						// Stub out the rest of the functions which shouldn't ever be called now
-						lpRelocator->Patch(lpRelocationDatabaseItem->At(4), { 0xCC });	// BSUntypedPointerHandle::Set			
-					}
+					//	// Stub out the rest of the functions which shouldn't ever be called now
+					//	lpRelocator->Patch(lpRelocationDatabaseItem->At(4), { 0xCC });	// BSUntypedPointerHandle::Set			
+					//}
 
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0),
-						(uintptr_t)&BSPointerHandleManager_Original::InitSDM);
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2),
-						(uintptr_t)&BSPointerHandleManager_Original::KillSDM);
-					// Unfortunately, the array cleanup is not going through, so let's reset it ourselves
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(15),
-						(uintptr_t)&BSPointerHandleManager_Original::CleanSDM);
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
-						(uintptr_t)&BSPointerHandleManagerInterface_Original::CreateHandle);
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5),
-						(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6),
-						(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy2);
+					//lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0),
+					//	(uintptr_t)&BSPointerHandleManager_Original::InitSDM);
+					//lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2),
+					//	(uintptr_t)&BSPointerHandleManager_Original::KillSDM);
+					//// Unfortunately, the array cleanup is not going through, so let's reset it ourselves
+					//lpRelocator->DetourJump(lpRelocationDatabaseItem->At(15),
+					//	(uintptr_t)&BSPointerHandleManager_Original::CleanSDM);
+					//lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
+					//	(uintptr_t)&BSPointerHandleManagerInterface_Original::CreateHandle);
+					//lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5),
+					//	(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
+					//lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6),
+					//	(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy2);
 
-					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(16), (uintptr_t)&Check);
+					//lpRelocator->DetourCall(lpRelocationDatabaseItem->At(16), (uintptr_t)&Check);
 
-					{
-						ScopeRelocator textSection;
+					//{
+					//	ScopeRelocator textSection;
 
-						//
-						// Deleting the code, restoring the function
-						//
-						restoring_destroy1(lpRelocationDatabaseItem->At(7), 0xF2,
-							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-						restoring_destroy1(lpRelocationDatabaseItem->At(8), 0xFE,
-							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-						restoring_destroy1(lpRelocationDatabaseItem->At(9), 0xFE,
-							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-						restoring_destroy1(lpRelocationDatabaseItem->At(10), 0xFE,
-							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-						restoring_destroy1(lpRelocationDatabaseItem->At(11), 0xEF,
-							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-						restoring_destroy1(lpRelocationDatabaseItem->At(12), 0xFE,
-							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-						restoring_destroy1(lpRelocationDatabaseItem->At(13), 0xEF,
-							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-						restoring_destroy2(lpRelocationDatabaseItem->At(14), 0x30, 0x10B,
-							(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy2);
-					}
+					//	//
+					//	// Deleting the code, restoring the function
+					//	//
+					//	restoring_destroy1(lpRelocationDatabaseItem->At(7), 0xF2,
+					//		(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
+					//	restoring_destroy1(lpRelocationDatabaseItem->At(8), 0xFE,
+					//		(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
+					//	restoring_destroy1(lpRelocationDatabaseItem->At(9), 0xFE,
+					//		(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
+					//	restoring_destroy1(lpRelocationDatabaseItem->At(10), 0xFE,
+					//		(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
+					//	restoring_destroy1(lpRelocationDatabaseItem->At(11), 0xEF,
+					//		(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
+					//	restoring_destroy1(lpRelocationDatabaseItem->At(12), 0xFE,
+					//		(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
+					//	restoring_destroy1(lpRelocationDatabaseItem->At(13), 0xEF,
+					//		(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
+					//	restoring_destroy2(lpRelocationDatabaseItem->At(14), 0x30, 0x10B,
+					//		(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy2);
+					//}
 				}
 
 				return true;

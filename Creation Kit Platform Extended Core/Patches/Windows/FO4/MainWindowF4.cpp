@@ -29,6 +29,8 @@ namespace CreationKitPlatformExtended
 			using namespace EditorAPI::Fallout4;
 
 			uintptr_t pointer_MainWindow_data = 0;
+			extern uint32_t* pointer_ReplaceBSPointerHandleAndManager_data1;
+			extern uint32_t* pointer_ReplaceBSPointerHandleAndManager_data2;
 
 			struct VersionControlListItem
 			{
@@ -492,25 +494,48 @@ namespace CreationKitPlatformExtended
 							case UI_EXTMENU_SDM:
 							{
 								bool ExtremlyMode = EditorAPI::Fallout4::BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId;
-								if (ExtremlyMode == 1)
-								{
-									auto head = EditorAPI::Fallout4::BSPointerHandleManagerInterface_Extended::GetHead();
-									auto tail = EditorAPI::Fallout4::BSPointerHandleManagerInterface_Extended::GetTail();
 
-									ConsolePatch::Log("Dump SDM Info:\n\tHead: 0x%08X\n\tTail: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",
-										head, tail, EditorAPI::Fallout4::BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT,
-										((((long double)head) * 100.0f) / 
-											(long double)EditorAPI::Fallout4::BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT));
+								if (GlobalEnginePtr->GetEditorVersion() == EDITOR_FALLOUT_C4_1_10_982_3)
+								{
+									if (ExtremlyMode == 1)
+									{
+										ConsolePatch::Log("Dump SDM Info:\n\tHead: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",
+											*pointer_ReplaceBSPointerHandleAndManager_data1,
+											EditorAPI::Fallout4::BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT,
+											((((long double)(*pointer_ReplaceBSPointerHandleAndManager_data1)) * 100.0f) /
+												(long double)EditorAPI::Fallout4::BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT));
+									}
+									else
+									{
+										ConsolePatch::Log("Dump SDM Info:\n\tHead: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",
+											*pointer_ReplaceBSPointerHandleAndManager_data1,
+											EditorAPI::Fallout4::BSUntypedPointerHandle_Original::MAX_HANDLE_COUNT,
+											((((long double)(*pointer_ReplaceBSPointerHandleAndManager_data1)) * 100.0f) /
+												(long double)EditorAPI::Fallout4::BSUntypedPointerHandle_Original::MAX_HANDLE_COUNT));
+									}
 								}
 								else
 								{
-									auto head = EditorAPI::Fallout4::BSPointerHandleManagerInterface_Original::GetHead();
-									auto tail = EditorAPI::Fallout4::BSPointerHandleManagerInterface_Original::GetTail();
+									if (ExtremlyMode == 1)
+									{
+										auto head = EditorAPI::Fallout4::BSPointerHandleManagerInterface_Extended::GetHead();
+										auto tail = EditorAPI::Fallout4::BSPointerHandleManagerInterface_Extended::GetTail();
 
-									ConsolePatch::Log("Dump SDM Info:\n\tHead: 0x%08X\n\tTail: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",
-										head, tail, EditorAPI::Fallout4::BSUntypedPointerHandle_Original::MAX_HANDLE_COUNT,
-										((((long double)head) * 100.0f) /
-											(long double)EditorAPI::Fallout4::BSUntypedPointerHandle_Original::MAX_HANDLE_COUNT));
+										ConsolePatch::Log("Dump SDM Info:\n\tHead: 0x%08X\n\tTail: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",
+											head, tail, EditorAPI::Fallout4::BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT,
+											((((long double)head) * 100.0f) /
+												(long double)EditorAPI::Fallout4::BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT));
+									}
+									else
+									{
+										auto head = EditorAPI::Fallout4::BSPointerHandleManagerInterface_Original::GetHead();
+										auto tail = EditorAPI::Fallout4::BSPointerHandleManagerInterface_Original::GetTail();
+
+										ConsolePatch::Log("Dump SDM Info:\n\tHead: 0x%08X\n\tTail: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",
+											head, tail, EditorAPI::Fallout4::BSUntypedPointerHandle_Original::MAX_HANDLE_COUNT,
+											((((long double)head) * 100.0f) /
+												(long double)EditorAPI::Fallout4::BSUntypedPointerHandle_Original::MAX_HANDLE_COUNT));
+									}
 								}
 							}
 							return 0;
