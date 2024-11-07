@@ -18,6 +18,7 @@ namespace CreationKitPlatformExtended
 
 				void MoveSelectObjects(NiPoint3* NewPosition, int32_t Unk = 0);
 				void MoveSelectObjectsExtremly(NiPoint3* NewPosition, int32_t Unk = 0);
+				void MoveSelectObjectsExtremlyNG(NiPoint3* NewPosition, int32_t Unk = 0);
 
 				bool ComputeGridOrConnectPoint(const NiPoint3& Position, NiPoint3& OffsetInstant, 
 					NiPoint3& NewPosition, uint32_t Index, uint32_t Count) const;

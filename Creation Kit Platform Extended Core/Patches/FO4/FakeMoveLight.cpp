@@ -71,9 +71,15 @@ namespace CreationKitPlatformExtended
 					if (!BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId)
 						lpRelocator->DetourJump(_RELDATA_RAV(0), &BGSRenderWindowReferenceEditModule::MoveSelectObjects);
 					else
-						lpRelocator->DetourJump(_RELDATA_RAV(0), &BGSRenderWindowReferenceEditModule::MoveSelectObjectsExtremly);
+					{
+						if (GlobalEnginePtr->GetEditorVersion() == EDITOR_FALLOUT_C4_1_10_162_0)
+							lpRelocator->DetourJump(_RELDATA_RAV(0), &BGSRenderWindowReferenceEditModule::MoveSelectObjectsExtremly);
+						else
+							lpRelocator->DetourJump(_RELDATA_RAV(0), &BGSRenderWindowReferenceEditModule::MoveSelectObjectsExtremlyNG);
+					}
 
 					*(uintptr_t*)&TESObjectREFR::SetPosition = _RELDATA_ADDR(1);
+					*(uintptr_t*)&TESObjectREFR_Extremly_NG::SetPosition = _RELDATA_ADDR(1);
 					*(uintptr_t*)&TESObjectREFR_Extremly::SetPosition = _RELDATA_ADDR(1);
 
 					return true;

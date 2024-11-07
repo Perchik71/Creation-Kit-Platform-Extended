@@ -108,6 +108,7 @@ namespace CreationKitPlatformExtended
 			static_assert(sizeof(IBSUntypedPointerHandle<uint32_t>) == 0x4);
 
 			typedef IBSUntypedPointerHandle<uint32_t, 21, 5> BSUntypedPointerHandle_Original;
+			typedef IBSUntypedPointerHandle<uint32_t, 23, 5> BSUntypedPointerHandle_Extended_NG;
 			typedef IBSUntypedPointerHandle<uint32_t, 26, 5> BSUntypedPointerHandle_Extended;
 
 			template<typename _Ty, typename HandleType, typename HandleRef>
@@ -145,10 +146,13 @@ namespace CreationKitPlatformExtended
 
 			typedef IBSPointerHandleManagerEntry<uint32_t, BSUntypedPointerHandle_Original,
 				BSHandleRefObject_Original> BSPointerHandleManagerEntry_Original;
+			typedef IBSPointerHandleManagerEntry<uint32_t, BSUntypedPointerHandle_Extended_NG,
+				BSHandleRefObject_Extremly> BSPointerHandleManagerEntry_Extended_NG;
 			typedef IBSPointerHandleManagerEntry<uint32_t, BSUntypedPointerHandle_Extended,
 				BSHandleRefObject_64_Extremly> BSPointerHandleManagerEntry_Extended;
 
 			static_assert(sizeof(BSPointerHandleManagerEntry_Original) == 0x10);
+			static_assert(sizeof(BSPointerHandleManagerEntry_Extended_NG) == 0x10);
 			static_assert(sizeof(BSPointerHandleManagerEntry_Extended) == 0x10);
 
 			template<typename _Ty, typename HandleType, typename HandleRef>
@@ -223,6 +227,8 @@ namespace CreationKitPlatformExtended
 
 			typedef IBSPointerHandleManager<uint32_t, BSUntypedPointerHandle_Original,
 				BSHandleRefObject_Original> BSPointerHandleManager_Original;
+			typedef IBSPointerHandleManager<uint64_t, BSUntypedPointerHandle_Extended_NG,
+				BSHandleRefObject_Extremly> BSPointerHandleManager_Extended_NG;
 			typedef IBSPointerHandleManager<uint64_t, BSUntypedPointerHandle_Extended,
 				BSHandleRefObject_64_Extremly> BSPointerHandleManager_Extended;
 
@@ -242,6 +248,7 @@ namespace CreationKitPlatformExtended
 			};
 
 			typedef IBSHandleManager<BSPointerHandleManager_Original> HandleManager_Original;
+			typedef IBSHandleManager<BSPointerHandleManager_Extended_NG> HandleManager_Extended_NG;
 			typedef IBSHandleManager<BSPointerHandleManager_Extended> HandleManager_Extended;
 
 			template<typename ObjectType, typename HandleType, typename Manager>
@@ -452,7 +459,9 @@ namespace CreationKitPlatformExtended
 			typedef IBSPointerHandleManagerInterface<TESObjectREFR_Original,
 				BSUntypedPointerHandle_Original, HandleManager_Original>
 				BSPointerHandleManagerInterface_Original;
-
+			typedef IBSPointerHandleManagerInterface<TESObjectREFR_Extremly_NG,
+				BSUntypedPointerHandle_Extended_NG, HandleManager_Extended_NG>
+				BSPointerHandleManagerInterface_Extended_NG;
 			typedef IBSPointerHandleManagerInterface<TESObjectREFR_Extremly,
 				BSUntypedPointerHandle_Extended, HandleManager_Extended>
 				BSPointerHandleManagerInterface_Extended;
@@ -468,6 +477,8 @@ namespace CreationKitPlatformExtended
 				{
 				case 1:
 					return BSPointerHandleManagerInterface_Extended::GetPointer(UniqueId);
+				case 2:
+					return BSPointerHandleManagerInterface_Extended_NG::GetPointer(UniqueId);
 				default:
 					return BSPointerHandleManagerInterface_Original::GetPointer(UniqueId);
 				}

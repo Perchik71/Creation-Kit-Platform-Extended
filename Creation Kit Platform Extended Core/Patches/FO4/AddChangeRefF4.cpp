@@ -59,10 +59,9 @@ namespace CreationKitPlatformExtended
 				{
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0), (uintptr_t)&HKInsertMenuA);
 
-					*(uintptr_t*)&EditorAPI::Fallout4::TESObjectREFR::SetParentWithRedraw =
-						lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
-					*(uintptr_t*)&EditorAPI::Fallout4::TESObjectREFR_Extremly::SetParentWithRedraw =
-						lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(1));
+					*(uintptr_t*)&EditorAPI::Fallout4::TESObjectREFR::SetParentWithRedraw = _RELDATA_ADDR(1);
+					*(uintptr_t*)&EditorAPI::Fallout4::TESObjectREFR_Extremly_NG::SetParentWithRedraw = _RELDATA_ADDR(1);
+					*(uintptr_t*)&EditorAPI::Fallout4::TESObjectREFR_Extremly::SetParentWithRedraw = _RELDATA_ADDR(1);
 
 					return true;
 				}

@@ -6,6 +6,8 @@
 #include "Editor API/FO4/BSPointerHandleManager.h"
 #include "ReplaceBSPointerHandleAndManagerF4.h"
 
+#define CKPE_FO4_ENABLED_REFLIMIT 1
+
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
@@ -31,10 +33,26 @@ namespace CreationKitPlatformExtended
 					NiPointer<ObjectType> ObjectPtr;
 					if (!BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId)
 						Exist = BSPointerHandleManagerInterface_Original::GetSmartPointer1(Handle, ObjectPtr);
-					else
+					else if (BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId == 1)
 						Exist = BSPointerHandleManagerInterface_Extended::GetSmartPointer1(Handle, ObjectPtr);
+					else
+						Exist = BSPointerHandleManagerInterface_Extended_NG::GetSmartPointer1(Handle, ObjectPtr);
 				}
 			};
+
+			// There are strings in the Cascadia mod that lead to a crash.
+			// This will prevent a crash and return false in this case, hopefully the strings will be deleted when saving.
+			static bool sub_string_crash(void* unk)
+			{
+				__try
+				{
+					return fastCall<bool>(pointer_ReplaceBSPointerHandleAndManager_code1, unk);
+				}
+				__except (1)
+				{
+					return false;
+				}
+			}
 
 			ReplaceBSPointerHandleAndManagerPatch::ReplaceBSPointerHandleAndManagerPatch() : Module(GlobalEnginePtr)
 			{}
@@ -181,41 +199,35 @@ namespace CreationKitPlatformExtended
 					lpRelocator->DetourCall(rva + 5, func);
 				};
 
+				*(uintptr_t*)&pointer_ReplaceBSPointerHandleAndManager_code1 =
+					voltek::detours_function_class_jump(_RELDATA_ADDR(6), (uintptr_t)&sub_string_crash);
+
 				pointer_ReplaceBSPointerHandleAndManager_data1 = (uint32_t*)_RELDATA_ADDR(4);
 				pointer_ReplaceBSPointerHandleAndManager_data2 = (uint32_t*)_RELDATA_ADDR(5);
 
 				if (Extremly)
 				{
-					BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 1;
-
-					{
-						ScopeRelocator textSection;
-
-						auto addr = (uintptr_t)_RELDATA_RAV(0);
-						// Preparation, removal of all embedded pieces of code
-						lpRelocator->PatchNop(addr + 12, 0x7A);
-						lpRelocator->PatchMovFromRax(addr + 5, _RELDATA_RAV(1));
-						// Specify the size
-						memcpy((void*)((uintptr_t)_RELDATA_ADDR(0) + 0x93), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-
-						// Modify CreateHandle
-						addr = (uintptr_t)_RELDATA_ADDR(3);
-						memcpy((void*)(addr + 0x12F), &BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT, 4);
-						uint32_t mask = BSUntypedPointerHandle_Extended::MASK_ACTIVE_BIT | BSUntypedPointerHandle_Extended::MASK_INDEX_BIT;
-						memcpy((void*)(addr + 0x134), &mask, 4);
-					}
+					using namespace std::chrono;
+					auto timerStart = high_resolution_clock::now();
+					BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 2;
 
 					lpRelocator->DetourCall(_RELDATA_RAV(0),
-						(uintptr_t)&BSPointerHandleManager_Extended::InitSDM);
+						(uintptr_t)&BSPointerHandleManager_Extended_NG::InitSDM);
 					lpRelocator->DetourCall(_RELDATA_RAV(2),
-						(uintptr_t)&BSPointerHandleManager_Extended::KillSDM);
-	
-					// Unfortunately, the array cleanup is not going through, so let's reset it ourselves
-					//lpRelocator->DetourJump(_RELDATA_RAV(15),
-					//	(uintptr_t)&BSPointerHandleManager_Extended::CleanSDM);
+						(uintptr_t)&BSPointerHandleManager_Extended_NG::KillSDM);
 
 					ScopeRelocator textSection;
 					auto textRange = GlobalEnginePtr->GetSection(SECTION_TEXT);
+
+					auto addr = (uintptr_t)_RELDATA_RAV(0);
+					// Preparation, removal of all embedded pieces of code
+					lpRelocator->PatchNop(addr + 12, 0x7A);
+					lpRelocator->PatchMovFromRax(addr + 5, _RELDATA_RAV(1));
+					// Specify the size
+					memcpy((void*)((uintptr_t)_RELDATA_ADDR(0) + 0x93), &BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+
+					// Debug (for check)
+					//static std::vector<uintptr_t> storage;
 
 					auto __InstallPatchByPatternMask = [&textRange](
 						const char* pattern_mask,	// pattern "? ? 00 E0 03"
@@ -225,47 +237,59 @@ namespace CreationKitPlatformExtended
 						const void* source,			// buffer
 						size_t ssize				// buffer size
 						) -> size_t {
-						auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base, pattern_mask);
-						if (patterns.size() > offset)
-						{
-							size_t max = std::min(patterns.size(), count + offset);
-							for (size_t index = offset; index < max; index++)
-								memcpy((void*)(patterns[index] + offset_find), source, ssize);
-
-							// Debug
-							//_CONSOLE("__InstallPatchByPatternMask() function was executed successfully. PatternMask: \"%s\", Count: %llu",
-							//	pattern_mask, max - offset);
-
-							return max - offset;
-						}
-						//else
-						//{
-						//	// Debug
-						//	_CONSOLE("__InstallPatchByPatternMask() function return failed. PatternMask: \"%s\", Count: %llu",
-						//		pattern_mask, 0);
-						//}
-
-						return 0;
-					};
-
-					auto __InstallPatchByPatternMaskCustom = [&textRange](
-						const char* pattern_mask,			// pattern "? ? 00 E0 03"
-						size_t offset,						// offset from find patterns array
-						size_t count,						// count need change
-						void(callback)(uintptr_t addr)		// callback function
-						) -> size_t {
 							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base, pattern_mask);
+
+							// Debug (for check)
+							//storage.append_range(patterns);
+
 							if (patterns.size() > offset)
 							{
 								size_t max = std::min(patterns.size(), count + offset);
 								for (size_t index = offset; index < max; index++)
-									callback(patterns[index]);
+									memcpy((void*)(patterns[index] + offset_find), source, ssize);
 
 								// Debug
 								//_CONSOLE("__InstallPatchByPatternMask() function was executed successfully. PatternMask: \"%s\", Count: %llu",
 								//	pattern_mask, max - offset);
 
 								return max - offset;
+							}
+							//else
+							//{
+							//	// Debug
+							//	_CONSOLE("__InstallPatchByPatternMask() function return failed. PatternMask: \"%s\", Count: %llu",
+							//		pattern_mask, 0);
+							//}
+
+							return 0;
+						};
+
+					auto __InstallPatchByPatternMaskCustom = [&textRange](
+						const char* pattern_mask,			// pattern "? ? 00 E0 03"
+						size_t offset,						// offset from find patterns array
+						size_t count,						// count need change
+						bool(callback)(uintptr_t addr)		// callback function
+						) -> size_t {
+							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base, pattern_mask);
+
+							// Debug (for check)
+							//storage.append_range(patterns);
+
+							if (patterns.size() > offset)
+							{
+								size_t max = std::min(patterns.size(), count + offset);
+								size_t total = 0;
+								for (size_t index = offset; index < max; index++)
+								{
+									if (callback(patterns[index]))
+										total++;
+								}
+
+								// Debug
+								//_CONSOLE("__InstallPatchByPatternMask() function was executed successfully. PatternMask: \"%s\", Count: %llu",
+								//	pattern_mask, max - offset);
+
+								return total;
 							}
 							//else
 							//{
@@ -287,6 +311,10 @@ namespace CreationKitPlatformExtended
 						std::initializer_list<size_t> excludes	// list exclude indexes
 						) -> size_t {
 							auto patterns = voltek::find_patterns(textRange.base, textRange.end - textRange.base, pattern_mask);
+
+							// Debug (for check)
+							//storage.append_range(patterns);
+
 							if (patterns.size() > offset)
 							{
 								size_t max = std::min(patterns.size(), count + offset);
@@ -315,148 +343,567 @@ namespace CreationKitPlatformExtended
 						};
 
 					size_t total = 0;
+					size_t total_patches = 0;
+					static uint8_t buffer_cmd[0x10];
 
-					_MESSAGE("Change BSPointerHandle inline functions");
+#if CKPE_FO4_ENABLED_REFLIMIT
+					// == REF_COUNT_MASK
+					total += __InstallPatchByPatternMaskCustom("? FF 03 00 00 ? FF 03 00 00", 0, -1, [](uintptr_t addr) -> bool
+						{
+							memcpy((uint8_t*)(addr + 1), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+							memcpy((uint8_t*)(addr + 6), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+							return true;
+						});
+
+					total += __InstallPatchByPatternMaskCustom("F7 ? ? FF 03 00 00", 0, -1, [](uintptr_t addr) -> bool
+						{
+							if ((*(uint8_t*)(addr + 2) != 0x38) && (*(uint8_t*)(addr + 2) != 0x8)) return false;
+							memcpy((uint8_t*)(addr + 3), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+							return true;
+						});
+
+					total += __InstallPatchByPatternMaskCustom("81 ? ? FF 03 00 00", 0, -1, [](uintptr_t addr) -> bool
+						{
+							if ((*(uint8_t*)(addr + 2) != 0x38) && (*(uint8_t*)(addr + 2) != 0x8)) return false;
+							memcpy((uint8_t*)(addr + 3), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+							return true;
+						});
+
+					total += __InstallPatchByPatternMask("FF C8 A9 FF 03 00 00", 0, -1, 3, 
+						&EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					total += __InstallPatchByPatternMask("FF ? F7 ? FF 03 00 00", 0, -1, 4,
+						&EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					total += __InstallPatchByPatternMask("41 F7 ? 24 38 FF 03 00 00", 0, -1, 5,
+						&EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					total += __InstallPatchByPatternMask("41 FF ? 41 F7 ? FF 03 00 00", 0, -1, 6,
+						&EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+
+					total += __InstallPatchByPatternMaskCustom("81 ? FF 03 00 00 81 ? FF 03 00 00", 0, 20, [](uintptr_t addr) -> bool
+						{
+							memcpy((uint8_t*)(addr + 2), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+							memcpy((uint8_t*)(addr + 8), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+							return true;
+						});
+
+					total += __InstallPatchByPatternMaskCustom("? FF 03 00 00 ? ? ? ? ? ? ? ? ? FF 03 00 00", 0, 20, [](uintptr_t addr) -> bool
+						{
+							memcpy((uint8_t*)(addr + 1), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+							memcpy((uint8_t*)(addr + 14), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+							return true;
+						});
+
+					memcpy((uint8_t*)(lpRelocator->GetBase() + 0x538ACF), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((uint8_t*)(lpRelocator->GetBase() + 0x53B0A1), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((uint8_t*)(lpRelocator->GetBase() + 0x5B64B6), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((uint8_t*)(lpRelocator->GetBase() + 0x5B64C4), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((uint8_t*)(lpRelocator->GetBase() + 0xD3A786), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((uint8_t*)(lpRelocator->GetBase() + 0xD9B4E2), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((uint8_t*)(lpRelocator->GetBase() + 0xD9B5D1), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);	
+					memcpy((uint8_t*)(lpRelocator->GetBase() + 0x5AF00D), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((uint8_t*)(lpRelocator->GetBase() + 0x5AF018), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((uint8_t*)(lpRelocator->GetBase() + 0x5AF2B0), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((uint8_t*)(lpRelocator->GetBase() + 0x5AF2C6), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+
+					total_patches += total + 7;
+					total = 0;
+
+					// CreateHandle fix
+					*(uint8_t*)(lpRelocator->GetBase() + 0x526D5D) = (uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
+					*(uint8_t*)(lpRelocator->GetBase() + 0x526DC6) = (uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
+					*(uint8_t*)(lpRelocator->GetBase() + 0x526EAC) = (uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
+					*(uint8_t*)(lpRelocator->GetBase() + 0x526D64) = (uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
+					*(uint8_t*)(lpRelocator->GetBase() + 0x526DCE) = (uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
+					*(uint8_t*)(lpRelocator->GetBase() + 0x526EA8) = (uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
+
+					addr = (uintptr_t)_RELDATA_ADDR(3);
+					memcpy((void*)(addr + 0x12F), &BSUntypedPointerHandle_Extended_NG::MAX_HANDLE_COUNT, 4);
+					uint32_t mask = BSUntypedPointerHandle_Extended_NG::MASK_ACTIVE_BIT | BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT;
+					memcpy((void*)(addr + 0x134), &mask, 4);
+
+					// Change HANDLE_BIT_INDEX
+					uint8_t bit_byte = (uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
+					total += __InstallPatchByPatternMask("C1 ? 0B 3B", 0, -1, 2, &bit_byte, 1);
+					total += __InstallPatchByPatternMask("C1 ? 0B 41 3B", 0, -1, 2, &bit_byte, 1);
+
+					total_patches += total;
+					total = 0;
 
 					// Change AGE
-					total += __InstallPatchByPatternMask("A9 00 00 E0 03", 0, -1, 1, &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
-					total += __InstallPatchByPatternMask("F7 ? 00 00 E0 03", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
-					total += __InstallPatchByPatternMask("25 00 00 E0 03", 0, -1, 1, &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
-					total += __InstallPatchByPatternMask("81 ? 00 00 E0 03", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
+					total += __InstallPatchByPatternMask("A9 00 00 E0 03", 0, -1, 1, 
+						&BSUntypedPointerHandle_Extended_NG::MASK_AGE_BIT, 4);
+					total += __InstallPatchByPatternMask("F7 ? 00 00 E0 03", 0, -1, 2,
+						&BSUntypedPointerHandle_Extended_NG::MASK_AGE_BIT, 4);
+					total += __InstallPatchByPatternMask("25 00 00 E0 03", 0, -1, 1, 
+						&BSUntypedPointerHandle_Extended_NG::MASK_AGE_BIT, 4);
+					total += __InstallPatchByPatternMask("81 ? 00 00 E0 03", 0, -1, 2, 
+						&BSUntypedPointerHandle_Extended_NG::MASK_AGE_BIT, 4);
 
-					_MESSAGE("AGE Total %llu", total);
-
+					total_patches += total;
 					total = 0;
 
 					// Change INDEX
-					total += __InstallPatchByPatternMask("41 81 ? FF FF 1F 00", 0, -1, 3, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-					total += __InstallPatchByPatternMask("81 E1 FF FF 1F 00", 3, 25, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-					total += __InstallPatchByPatternMaskEx("81 E5 FF FF 1F 00", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4, { 4, 8 });
-					total += __InstallPatchByPatternMaskEx("81 E6 FF FF 1F 00", 3, 24, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4, { 7, 8 });
-					total += __InstallPatchByPatternMask("81 E7 FF FF 1F 00", 2, 1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-					total += __InstallPatchByPatternMask("8B C7 25 FF FF 1F 00 8B D8", 0, -1, 3, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-					total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? 48 ? ? 04", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-					total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? ? ? ? ? 48 ? ? 04", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-					total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? ? ? ? ? 44 ? ? 41 ? 00 00 00 00 49 ? ? 04", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-					total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? 49 ? ? 04", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-					total += __InstallPatchByPatternMask("81 E2 FF FF 1F 00", 0, 2, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
-					
-					memcpy((void*)(lpRelocator->GetBase() + 0x5279F9), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("41 81 ? FF FF 1F 00", 0, -1, 3, 
+						&BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 E1 FF FF 1F 00", 3, 25, 2, 
+						&BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMaskEx("81 E5 FF FF 1F 00", 0, -1, 2, 
+						&BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4, { 4, 8 });
+					total += __InstallPatchByPatternMaskEx("81 E6 FF FF 1F 00", 3, 24, 2, 
+						&BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4, { 7, 8 });
+					total += __InstallPatchByPatternMask("81 E7 FF FF 1F 00", 2, 1, 2, 
+						&BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("8B C7 25 FF FF 1F 00 8B D8", 0, -1, 3, 
+						&BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? 48 ? ? 04", 0, -1, 2, 
+						&BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? ? ? ? ? 48 ? ? 04", 0, -1, 2, 
+						&BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? ? ? ? ? 44 ? ? 41 ? 00 00 00 00 49 ? ? 04", 0, -1, 2, 
+						&BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? 49 ? ? 04", 0, -1, 2, 
+						&BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 E2 FF FF 1F 00", 0, 2, 2, 
+						&BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+
+					memcpy((void*)(lpRelocator->GetBase() + 0x5279F9), 
+						&BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+				
 					total += 1;
-
-					_MESSAGE("INDEX Total %llu", total);
-
+					total_patches += total;
 					total = 0;
-					uint32_t not_mask = ~BSUntypedPointerHandle_Extended::MASK_INDEX_BIT;
+
+					uint32_t not_mask = ~BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT;
 
 					// Change NOT MASK_INDEX_BIT
 					total += __InstallPatchByPatternMask("81 ? 00 00 E0 FF", 0, 56, 2, &not_mask, 4);
 
-					_MESSAGE("NOT MASK_INDEX_BIT Total %llu", total);
-	
+					total_patches += total;
+					//_MESSAGE("NOT MASK_INDEX_BIT Total %llu", total);
+
 					total = 0;
-					not_mask = ~BSUntypedPointerHandle_Extended::MASK_ACTIVE_BIT;
+					not_mask = ~BSUntypedPointerHandle_Extended_NG::MASK_ACTIVE_BIT;
 
 					// Change NOT MASK_ACTIVE_BIT
 					total += __InstallPatchByPatternMask("81 ? FF FF FF FB", 0, -1, 2, &not_mask, 4);
 
-					_MESSAGE("NOT MASK_INDEX_BIT Total %llu", total);
+					total_patches += total;
+					//_MESSAGE("NOT MASK_INDEX_BIT Total %llu", total);
 
 					total = 0;
 
 					// Change UNUSED_BIT_START
-					total += __InstallPatchByPatternMask("0F BA E0 1A", 0, 317, 3, &BSUntypedPointerHandle_Extended::UNUSED_BIT_START, 1);
-					total += __InstallPatchByPatternMaskEx("0F BA ?? 1A", 0, 72, 3, &BSUntypedPointerHandle_Extended::UNUSED_BIT_START, 1,
+					total += __InstallPatchByPatternMask("0F BA E0 1A", 0, 317, 3, 
+						&BSUntypedPointerHandle_Extended_NG::UNUSED_BIT_START, 1);
+					total += __InstallPatchByPatternMaskEx("0F BA ?? 1A", 0, 72, 3, 
+						&BSUntypedPointerHandle_Extended_NG::UNUSED_BIT_START, 1,
 						{ 18, 19, 23, 24, 30, 38, 39, 47, 48, 63, 64, 65, 66, 67, 68 });
 
-					_MESSAGE("UNUSED_BIT_START Total %llu", total);
-
+					total_patches += total;
 					total = 0;
 
-					// Change REFR test handle index
-					total += __InstallPatchByPatternMaskCustom("8B ? 38 C1 ? 0B 41 3B ?", 0, -1, [](uintptr_t addr) 
-						{ 
-							*(uint8_t*)(addr + 2) = (uint8_t)0x39;
-							*(uint8_t*)(addr + 5) = (uint8_t)0x3;
-						});
-					total += __InstallPatchByPatternMaskCustom("8B ? 38 C1 ? 0B 3B ?", 0, -1, [](uintptr_t addr)
-						{
-							*(uint8_t*)(addr + 2) = (uint8_t)0x39;
-							*(uint8_t*)(addr + 5) = (uint8_t)0x3;
-						});
-
-					_MESSAGE("REFR_TEST Total %llu", total);
-
-					total = 0;
-	
 					// Change MAX_HANDLE_COUNT
-					total += __InstallPatchByPatternMask("81 ? 00 00 20 00", 0, 1, 2, &BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT, 4);
-					total += __InstallPatchByPatternMask("BD 00 00 20 00", 0, -1, 1, &BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT, 4);
-					
-					_MESSAGE("MAX_HANDLE_COUNT Total %llu", total);
+					total += __InstallPatchByPatternMask("81 ? 00 00 20 00", 0, 1, 2, &BSUntypedPointerHandle_Extended_NG::MAX_HANDLE_COUNT, 4);
+					total += __InstallPatchByPatternMask("BD 00 00 20 00", 0, -1, 1, &BSUntypedPointerHandle_Extended_NG::MAX_HANDLE_COUNT, 4);
+
+					total_patches += total;
+					//_MESSAGE("MAX_HANDLE_COUNT Total %llu", total);
 
 					total = 0;
 
 					// Change MASK_ACTIVE_BIT
-					total += __InstallPatchByPatternMask("F7 ? 00 00 00 04", 0, 3, 2, &BSUntypedPointerHandle_Extended::MASK_ACTIVE_BIT, 4);
+					total += __InstallPatchByPatternMask("F7 ? 00 00 00 04", 0, 3, 2, &BSUntypedPointerHandle_Extended_NG::MASK_ACTIVE_BIT, 4);
+#else
+					AssertMsg("Refrs extension is disabled by perchik71, it may be in implementation or abandoned.");
+#endif /* CKPE_FO4_ENABLED_REFLIMIT */
 
-					_MESSAGE("MASK_ACTIVE_BIT Total %llu", total);
+					////////////////////////////////////////////////////////////////////////////////////////////////////
+					//
+					// REFUSAL FOR NG, MAINTAINING 64 MILLION LINKS (2^26) IS TOO DIFFICULT AND UNSTABLE, TY FUCKESDA.
+					// THE PROBLEM: MULTIPLE INSERTS OF THE FUNCTION AS INLINE, THE INABILITY TO STABLY EDIT THE DECREF
+					// CODE, SINCE -1 MAY BE FAR FROM THE CODE SNIPPET.
+					// 
+					////////////////////////////////////////////////////////////////////////////////////////////////////
+
+					// BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 1;
+
+					//{
+					//	ScopeRelocator textSection;
+
+					//	auto addr = (uintptr_t)_RELDATA_RAV(0);
+					//	// Preparation, removal of all embedded pieces of code
+					//	lpRelocator->PatchNop(addr + 12, 0x7A);
+					//	lpRelocator->PatchMovFromRax(addr + 5, _RELDATA_RAV(1));
+					//	// Specify the size
+					//	memcpy((void*)((uintptr_t)_RELDATA_ADDR(0) + 0x93), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+
+					//	// Modify CreateHandle
+					//	addr = (uintptr_t)_RELDATA_ADDR(3);
+					//	memcpy((void*)(addr + 0x12F), &BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT, 4);
+					//	uint32_t mask = BSUntypedPointerHandle_Extended::MASK_ACTIVE_BIT | BSUntypedPointerHandle_Extended::MASK_INDEX_BIT;
+					//	memcpy((void*)(addr + 0x134), &mask, 4);
+					//	/*
+					//	*(uint8_t*)(addr + 0x34) = 3;
+					//	*(uint8_t*)(addr + 0x2D) = 2;
+					//	*(uint8_t*)(addr + 0x21) = 0x39;
+
+					//	*(uint8_t*)(addr + 0x9E) = 3;
+					//	*(uint8_t*)(addr + 0x96) = 2;
+					//	*(uint8_t*)(addr + 0x8E) = 0x39;
+
+					//	*(uint8_t*)(addr + 0x178) = 3;
+					//	*(uint8_t*)(addr + 0x17C) = 2;
+					//	*(uint8_t*)(addr + 0x17F) = 0x39;*/
+					//}
+
+					//
+
+					// Change DecRef
+				//	total += __InstallPatchByPatternMaskCustom("B8 FF FF FF FF F0 0F C1 ? 08 FF C8 A9 FF 03", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			memcpy(buffer_cmd, (uint8_t*)(addr + 6), 3);
+				//			memcpy((uint8_t*)addr, "\x48\x83\xC8\xFF\xF0\x48\x90\x90\x90\x08", 10);
+				//			memcpy((uint8_t*)(addr + 6), buffer_cmd, 3);
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("B8 FF FF FF FF F0 0F C1 ? 38 FF C8", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			memcpy(buffer_cmd, (uint8_t*)(addr + 6), 3);
+				//			memcpy((uint8_t*)addr, "\x48\x83\xC8\xFF\xF0\x48\x90\x90\x90\x38", 10);
+				//			memcpy((uint8_t*)(addr + 6), buffer_cmd, 3);
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("BA FF FF FF FF F0 0F C1 ? 08 FF ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			memcpy(buffer_cmd, (uint8_t*)(addr + 6), 3);
+				//			memcpy((uint8_t*)addr, "\x48\x83\xCA\xFF\xF0\x48\x90\x90\x90\x08", 10);
+				//			memcpy((uint8_t*)(addr + 6), buffer_cmd, 3);
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("BA FF FF FF FF F0 0F C1 ? 38 FF ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			memcpy(buffer_cmd, (uint8_t*)(addr + 6), 3);
+				//			memcpy((uint8_t*)addr, "\x48\x83\xCA\xFF\xF0\x48\x90\x90\x90\x38", 10);
+				//			memcpy((uint8_t*)(addr + 6), buffer_cmd, 3);
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("BE FF FF FF FF F0 0F C1 ? 38 FF ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			memcpy(buffer_cmd, (uint8_t*)(addr + 6), 3);
+				//			memcpy((uint8_t*)addr, "\x48\x83\xCE\xFF\xF0\x48\x90\x90\x90\x38", 10);
+				//			memcpy((uint8_t*)(addr + 6), buffer_cmd, 3);
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("BD FF FF FF FF F0 0F C1 ? 38 FF ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			memcpy(buffer_cmd, (uint8_t*)(addr + 6), 3);
+				//			memcpy((uint8_t*)addr, "\x48\x83\xCD\xFF\xF0\x48\x90\x90\x90\x38", 10);
+				//			memcpy((uint8_t*)(addr + 6), buffer_cmd, 3);
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("BB FF FF FF FF F0 0F C1 ? 08 FF ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			memcpy(buffer_cmd, (uint8_t*)(addr + 6), 3);
+				//			memcpy((uint8_t*)addr, "\x48\x83\xCB\xFF\xF0\x48\x90\x90\x90\x08", 10);
+				//			memcpy((uint8_t*)(addr + 6), buffer_cmd, 3);
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("48 ? ? FF FF FF FF F0 0F C1 ? 38 FF ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			memcpy(buffer_cmd, (uint8_t*)(addr + 8), 3);
+				//			if (*(uint8_t*)(addr + 2) == 0xC0)
+				//				memcpy((uint8_t*)addr, "\x48\x83\xC8\xFF\xF0\x48\x90\x90\x90\x38\x90\x90", 12);
+				//			else if (*(uint8_t*)(addr + 2) == 0xC7)
+				//				memcpy((uint8_t*)addr, "\x48\x83\xCF\xFF\xF0\x48\x90\x90\x90\x38\x90\x90", 12);
+				//			else if (*(uint8_t*)(addr + 2) == 0xC6)
+				//				memcpy((uint8_t*)addr, "\x48\x83\xCE\xFF\xF0\x48\x90\x90\x90\x38\x90\x90", 12);
+				//			else return false;
+				//			memcpy((uint8_t*)(addr + 6), buffer_cmd, 3);
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("48 ? ? FF FF FF FF F0 0F C1 ? 08 FF ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			memcpy(buffer_cmd, (uint8_t*)(addr + 8), 3);
+				//			if (*(uint8_t*)(addr + 2) == 0xC0)
+				//				memcpy((uint8_t*)addr, "\x48\x83\xC8\xFF\xF0\x48\x90\x90\x90\x08\x90\x90", 12);
+				//			else if (*(uint8_t*)(addr + 2) == 0xC3)
+				//				memcpy((uint8_t*)addr, "\x48\x83\xCB\xFF\xF0\x48\x90\x90\x90\x08\x90\x90", 12);
+				//			else if (*(uint8_t*)(addr + 2) == 0xC6)
+				//				memcpy((uint8_t*)addr, "\x48\x83\xCE\xFF\xF0\x48\x90\x90\x90\x08\x90\x90", 12);
+				//			else return false;
+				//			memcpy((uint8_t*)(addr + 6), buffer_cmd, 3);
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("? FF FF FF FF F0 ? 0F C1 ? ? ? FF ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			if ((*(uint8_t*)addr == 0xC7) || (*(uint8_t*)addr == 0xC6))
+				//				*(uint8_t*)(addr + 6) += 0x8;
+				//			else if ((*(uint8_t*)addr == 0xBF) || (*(uint8_t*)addr == 0xBE))
+				//			{
+				//				memcpy(buffer_cmd, (uint8_t*)(addr + 7), 4);
+				//				if (*(uint8_t*)addr == 0xBF)
+				//					memcpy((uint8_t*)addr, "\x49\x83\xCF\xFF\xF0\x4C\x90\x90\x90\x90\x90", 11);
+				//				else
+				//					memcpy((uint8_t*)addr, "\x49\x83\xCE\xFF\xF0\x4C\x90\x90\x90\x90\x90", 11);
+				//				memcpy((uint8_t*)(addr + 6), buffer_cmd, 4);
+				//			}
+				//			else if (*(uint8_t*)addr == 0xB8)
+				//			{
+				//				memcpy(buffer_cmd, (uint8_t*)(addr + 7), 5);
+				//				memcpy((uint8_t*)addr, "\x48\x83\xC8\xFF\xF0\x49\x90\x90\x90\x90\x90\x90", 12);
+				//				memcpy((uint8_t*)(addr + 6), buffer_cmd, 5);
+				//			}
+				//			else return false;
+
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("8B ? F0 ? 0F C1 ? ? FF ?", 0, 36, [](uintptr_t addr) -> bool
+				//		{
+				//			// mov r??, r??
+				//			// lock xadd dword ptr ds:[r?? + 0x??], r??
+				//			// FF r??
+				//			if (*(uint8_t*)(addr - 1) == 0x41)	// prefix
+				//				*(uint8_t*)(addr - 1) = 0x49;
+				//			*(uint8_t*)(addr + 3) += 8;
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("8B ? F0 0F C1 ? ? FF ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			// mov r??, r??
+				//			// lock xadd dword ptr ds:[r?? + 0x??], r??
+				//			// FF r??
+				//			*(uint8_t*)(addr + 2) = 0x48;		// remove lock prefix (idk stable or no)
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("F0 0F C1 ? 38 FF ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			*(uint8_t*)addr = 0x48;				// remove lock prefix (idk stable or no)
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("F0 0F C1 ? 08 FF ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			
+				//			
+				//			*(uint8_t*)addr = 0x48;				// remove lock prefix (idk stable or no)
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("F0 44 0F C1 ? 38 ? FF ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			*(uint8_t*)(addr + 1) = 0x4C;
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("F0 41 0F C1 ? 38 FF ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			if ((*(uint8_t*)(addr - 5) == 0xB8) && (*(uint8_t*)(addr - 1) == 0xFF))
+				//				memcpy((uint8_t*)(addr - 5), "\x48\x83\xC8\xFF\x90\x90", 5);
+				//			*(uint8_t*)(addr + 1) = 0x49;
+				//			return true;
+				//		});
+				//	
+				//	total += __InstallPatchByPatternMaskCustom("F0 41 0F C1 ? 08 FF ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			if ((*(uint8_t*)(addr - 5) == 0xB8) && (*(uint8_t*)(addr - 1) == 0xFF))
+				//				memcpy((uint8_t*)(addr - 5), "\x48\x83\xC8\xFF\x90\x90", 5);
+				//			*(uint8_t*)(addr + 1) = 0x49;
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("F0 44 0F C1 ? 08 ? FF ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			*(uint8_t*)(addr + 1) = 0x4C;
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("B8 FF FF FF FF F0 0F C1 ? 38 ? ? ? ? ? FF ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			memcpy(buffer_cmd, (uint8_t*)(addr + 6), 3);
+				//			memcpy((uint8_t*)addr, "\x48\x83\xC8\xFF\xF0\x48\x90\x90\x90\x38", 10);
+				//			memcpy((uint8_t*)(addr + 6), buffer_cmd, 3);
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("F0 45 0F C1 ? 38 ? FF ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			*(uint8_t*)(addr + 1) = 0x4D;
+				//			return true;
+				//		});
+
+				//	lpRelocator->Patch(0x83BC03, { 0x4D });
+				//	total++;
+
+				//	total_patches += total;
+				//	//_MESSAGE("DecRef Total %llu", total);
+
+				//	total = 0;
+
+				//	// Change AGE
+				//	total += __InstallPatchByPatternMask("A9 00 00 E0 03", 0, -1, 1, &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
+				//	total += __InstallPatchByPatternMask("F7 ? 00 00 E0 03", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
+				//	total += __InstallPatchByPatternMask("25 00 00 E0 03", 0, -1, 1, &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
+				//	total += __InstallPatchByPatternMask("81 ? 00 00 E0 03", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_AGE_BIT, 4);
+
+				//	total_patches += total;
+				//	//_MESSAGE("AGE Total %llu", total);
+
+				//	total = 0;
+
+				//	// Change INDEX
+				//	total += __InstallPatchByPatternMask("41 81 ? FF FF 1F 00", 0, -1, 3, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+				//	total += __InstallPatchByPatternMask("81 E1 FF FF 1F 00", 3, 25, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+				//	total += __InstallPatchByPatternMaskEx("81 E5 FF FF 1F 00", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4, { 4, 8 });
+				//	total += __InstallPatchByPatternMaskEx("81 E6 FF FF 1F 00", 3, 24, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4, { 7, 8 });
+				//	total += __InstallPatchByPatternMask("81 E7 FF FF 1F 00", 2, 1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+				//	total += __InstallPatchByPatternMask("8B C7 25 FF FF 1F 00 8B D8", 0, -1, 3, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+				//	total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? 48 ? ? 04", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+				//	total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? ? ? ? ? 48 ? ? 04", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+				//	total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? ? ? ? ? 44 ? ? 41 ? 00 00 00 00 49 ? ? 04", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+				//	total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? 49 ? ? 04", 0, -1, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+				//	total += __InstallPatchByPatternMask("81 E2 FF FF 1F 00", 0, 2, 2, &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+				//	
+				//	memcpy((void*)(lpRelocator->GetBase() + 0x5279F9), &BSUntypedPointerHandle_Extended::MASK_INDEX_BIT, 4);
+				//	total += 1;
+
+				//	total_patches += total;
+				//	//_MESSAGE("INDEX Total %llu", total);
+
+				//	total = 0;
+				//	uint32_t not_mask = ~BSUntypedPointerHandle_Extended::MASK_INDEX_BIT;
+
+				//	// Change NOT MASK_INDEX_BIT
+				//	total += __InstallPatchByPatternMask("81 ? 00 00 E0 FF", 0, 56, 2, &not_mask, 4);
+
+				//	total_patches += total;
+				//	//_MESSAGE("NOT MASK_INDEX_BIT Total %llu", total);
+	
+				//	total = 0;
+				//	not_mask = ~BSUntypedPointerHandle_Extended::MASK_ACTIVE_BIT;
+
+				//	// Change NOT MASK_ACTIVE_BIT
+				//	total += __InstallPatchByPatternMask("81 ? FF FF FF FB", 0, -1, 2, &not_mask, 4);
+
+				//	total_patches += total;
+				//	//_MESSAGE("NOT MASK_INDEX_BIT Total %llu", total);
+
+				//	total = 0;
+
+				//	// Change UNUSED_BIT_START
+				//	total += __InstallPatchByPatternMask("0F BA E0 1A", 0, 317, 3, &BSUntypedPointerHandle_Extended::UNUSED_BIT_START, 1);
+				//	total += __InstallPatchByPatternMaskEx("0F BA ?? 1A", 0, 72, 3, &BSUntypedPointerHandle_Extended::UNUSED_BIT_START, 1,
+				//		{ 18, 19, 23, 24, 30, 38, 39, 47, 48, 63, 64, 65, 66, 67, 68 });
+
+				//	total_patches += total;
+				//	//_MESSAGE("UNUSED_BIT_START Total %llu", total);
+
+				//	total = 0;
+				//	// Need to fix it, in order to apply it to the entire register, will have to capture what is not needed...	
+
+				//	/*total += __InstallPatchByPatternMaskCustom("41 ? FF FF FF FF", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			if (*(uint8_t*)(addr - 1) == 0xC7) return false;
+				//			auto reg = *(uint8_t*)(addr + 1);
+				//			memcpy((uint8_t*)addr, "\x49\x83\x90\xFF\x90\x90", 6);
+				//			*(uint8_t*)(addr + 2) = reg + 0x10;
+				//			return true;
+				//		});*/
+
+				//	lpRelocator->Patch(0xD46793, { 0x48, 0x83, 0xCF, 0xFF });
+				//
+				//	total_patches += total + 1;
+				//	//_MESSAGE("FIXED_FFFFFFFF Total %llu", total);
+				//	
+				//	total = 0;
+
+				//	// Change REFR test handle index
+				///*	total += __InstallPatchByPatternMaskCustom("8B ? 38 C1 ? 0B 41 3B ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{ 
+				//			*(uint8_t*)(addr + 2) = (uint8_t)0x39;
+				//			*(uint8_t*)(addr + 5) = (uint8_t)0x3;
+				//			return true;
+				//		});
+				//	total += __InstallPatchByPatternMaskCustom("8B ? 38 C1 ? 0B 3B ?", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			*(uint8_t*)(addr + 2) = (uint8_t)0x39;
+				//			*(uint8_t*)(addr + 5) = (uint8_t)0x3;
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("? ? 08 C1 ? 0B 3B", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			*(uint8_t*)(addr + 2) = (uint8_t)0x9;
+				//			*(uint8_t*)(addr + 5) = (uint8_t)0x3;
+				//			return true;
+				//		});
+
+				//	total += __InstallPatchByPatternMaskCustom("? ? 08 C1 ? 0B 41 3B", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			*(uint8_t*)(addr + 2) = (uint8_t)0x9;
+				//			*(uint8_t*)(addr + 5) = (uint8_t)0x3;
+				//			return true;
+				//		});
+				//	
+				//	total += __InstallPatchByPatternMaskCustom("8B ? 38 8B ? C1 ? 0B", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			*(uint8_t*)(addr + 2) = (uint8_t)0x9;
+				//			*(uint8_t*)(addr + 7) = (uint8_t)0x3;
+				//			return true;
+				//		});
+				//	
+				//	total += __InstallPatchByPatternMaskCustom("? ? 38 C1 ? 0B 41 3B", 0, -1, [](uintptr_t addr) -> bool
+				//		{
+				//			*(uint8_t*)(addr + 2) = (uint8_t)0x9;
+				//			*(uint8_t*)(addr + 5) = (uint8_t)0x3;
+				//			return true;
+				//		});*/
+
+				//	total_patches += total;
+				//	//_MESSAGE("REFR_TEST Total %llu", total);
+
+				//	total = 0;
+	
+				//	// Change MAX_HANDLE_COUNT
+				//	total += __InstallPatchByPatternMask("81 ? 00 00 20 00", 0, 1, 2, &BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT, 4);
+				//	total += __InstallPatchByPatternMask("BD 00 00 20 00", 0, -1, 1, &BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT, 4);
+				//	
+				//	total_patches += total;
+				//	//_MESSAGE("MAX_HANDLE_COUNT Total %llu", total);
+
+				//	total = 0;
+
+				//	// Change MASK_ACTIVE_BIT
+				//	total += __InstallPatchByPatternMask("F7 ? 00 00 00 04", 0, 3, 2, &BSUntypedPointerHandle_Extended::MASK_ACTIVE_BIT, 4);
+
+				//	total_patches += total;
+				//	//_MESSAGE("MASK_ACTIVE_BIT Total %llu", total);
+
+				//	/*std::vector<uintptr_t> pp;
+				//	for (auto pattern : storage_check)
+				//		for (auto find_pattern : storage)
+				//			if (((pattern - 40) < find_pattern) && ((pattern + 40) > find_pattern))
+				//				pp.push_back(pattern);
+
+				//	for (auto pattern : storage_check)
+				//		if (std::find(pp.begin(), pp.end(), pattern) == std::end(pp))
+				//			_CONSOLE("%llx", pattern);*/
+
+					auto duration = duration_cast<milliseconds>(high_resolution_clock::now() - timerStart).count();
+					_CONSOLE("CreationKitPlatformExtended::Experimental::BSPointerHandle: %llu patches applied in %llums", total_patches, duration);
 				}
 				else
-				{
 					BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 0;
-
-					//{
-					//	ScopeRelocator textSection;
-
-					//	// Preparation, removal of all embedded pieces of code
-					//	lpRelocator->PatchNop((uintptr_t)lpRelocationDatabaseItem->At(0) + 12, 0x7A);
-					//	lpRelocator->PatchMovFromRax((uintptr_t)lpRelocationDatabaseItem->At(0) + 5, lpRelocationDatabaseItem->At(1));
-
-					//	// Stub out the rest of the functions which shouldn't ever be called now
-					//	lpRelocator->Patch(lpRelocationDatabaseItem->At(4), { 0xCC });	// BSUntypedPointerHandle::Set			
-					//}
-
-					//lpRelocator->DetourCall(lpRelocationDatabaseItem->At(0),
-					//	(uintptr_t)&BSPointerHandleManager_Original::InitSDM);
-					//lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2),
-					//	(uintptr_t)&BSPointerHandleManager_Original::KillSDM);
-					//// Unfortunately, the array cleanup is not going through, so let's reset it ourselves
-					//lpRelocator->DetourJump(lpRelocationDatabaseItem->At(15),
-					//	(uintptr_t)&BSPointerHandleManager_Original::CleanSDM);
-					//lpRelocator->DetourJump(lpRelocationDatabaseItem->At(3),
-					//	(uintptr_t)&BSPointerHandleManagerInterface_Original::CreateHandle);
-					//lpRelocator->DetourJump(lpRelocationDatabaseItem->At(5),
-					//	(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-					//lpRelocator->DetourJump(lpRelocationDatabaseItem->At(6),
-					//	(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy2);
-
-					//lpRelocator->DetourCall(lpRelocationDatabaseItem->At(16), (uintptr_t)&Check);
-
-					//{
-					//	ScopeRelocator textSection;
-
-					//	//
-					//	// Deleting the code, restoring the function
-					//	//
-					//	restoring_destroy1(lpRelocationDatabaseItem->At(7), 0xF2,
-					//		(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-					//	restoring_destroy1(lpRelocationDatabaseItem->At(8), 0xFE,
-					//		(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-					//	restoring_destroy1(lpRelocationDatabaseItem->At(9), 0xFE,
-					//		(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-					//	restoring_destroy1(lpRelocationDatabaseItem->At(10), 0xFE,
-					//		(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-					//	restoring_destroy1(lpRelocationDatabaseItem->At(11), 0xEF,
-					//		(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-					//	restoring_destroy1(lpRelocationDatabaseItem->At(12), 0xFE,
-					//		(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-					//	restoring_destroy1(lpRelocationDatabaseItem->At(13), 0xEF,
-					//		(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy1);
-					//	restoring_destroy2(lpRelocationDatabaseItem->At(14), 0x30, 0x10B,
-					//		(uintptr_t)&BSPointerHandleManagerInterface_Original::Destroy2);
-					//}
-				}
 
 				return true;
 			}
@@ -1099,404 +1546,6 @@ namespace CreationKitPlatformExtended
 				patched += 2;
 
 				_MESSAGE("BSHandleRefObject::DecRef (Patched: %d)", patched);
-			}
-
-			void ReplaceBSPointerHandleAndManagerPatch::IncRefPatch_980()
-			{
-				size_t total = 0;
-
-				{
-					auto Sec = GlobalEnginePtr->GetSection(SECTION_TEXT);
-					auto Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
-						"4C 8D 05 ? ? ? ? 8D ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 ? ? 38");
-					Assert(Signatures.size() == 57);
-					total += Signatures.size();
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
-						"4C 8D 05 ? ? ? ? BA ? ? ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 ? ? 38");
-					Assert(Signatures.size() == 179);
-					total += Signatures.size();
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
-						"8D ? ? 48 8D 0D ? ? ? ? 4C 8D 05 ? ? ? ? E8 ? ? ? ? F0 ? ? 38");
-					Assert(Signatures.size() == 31);
-					total += Signatures.size();
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
-						"4C 8D 05 ? ? ? ? ? 8D ? ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 ? ? 38");
-					Assert(Signatures.size() == 13);
-					total += Signatures.size();
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
-						"4C 8D 05 ? ? ? ? BA ? ? ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 ? FF ? 38");
-					Assert(Signatures.size() == 10);
-					total += Signatures.size();
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
-						"4C 8D 05 ? ? ? ? 8D ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 41 ? ? 38");
-					Assert(Signatures.size() == 6);
-					total += Signatures.size();
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
-						"4C 8D 05 ? ? ? ? BA ? ? ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 FF ? 08");
-					Assert(Signatures.size() == 12);
-					// need only 1
-					Signatures.resize(1);
-					total += Signatures.size();
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
-						"4C 8D 05 ? ? ? ? 41 8D ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 FF ? 38");
-					Assert(Signatures.size() == 12);
-					total += Signatures.size();
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
-						"8D ? ? 48 8D 0D ? ? ? ? 4C 8D 05 ? ? ? ? E8 ? ? ? ? F0 41 FF ? 38");
-					Assert(Signatures.size() == 3);
-					total += Signatures.size();
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
-						"4C 8D 05 ? ? ? ? 41 8D ? 3C 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 41 FF ? 38");
-					Assert(Signatures.size() == 1);
-					total += Signatures.size();
-
-					// TODO
-
-				}
-
-				_CONSOLE("BSHandleRefObject::IncRef (Patched: %llu)", total);
-			}
-
-			void ReplaceBSPointerHandleAndManagerPatch::DecRefPatch_980()
-			{
-				size_t total_find = 0, total = 0;
-
-				{
-					auto Sec = GlobalEnginePtr->GetSection(SECTION_TEXT);
-					auto Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? FF FF FF FF F0 0F");
-					Assert(Signatures.size() == 716);
-					total += Signatures.size();
-		
-					auto fff = Signatures;
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? FF FF FF FF F0 ? 0F");
-					Assert(Signatures.size() == 41);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? F0 0F");
-					Assert(Signatures.size() == 128);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? F0 ? 0F");
-					Assert(Signatures.size() == 15);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 0F");
-					Assert(Signatures.size() == 171);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? F0 ? 0F");
-					Assert(Signatures.size() == 76);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base, 
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? F0 0F");
-					Assert(Signatures.size() == 140);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? FF FF FF FF ? ? F0 0F");
-					Assert(Signatures.size() == 9);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? 41 ? FF FF FF FF 41 ? ? F0 ? 0F");
-					Assert(Signatures.size() == 3);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? 8D ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? ? FF FF FF FF F0");
-					Assert(Signatures.size() == 20);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					// there jump
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? FF FF FF");
-					Assert(Signatures.size() == 35);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? 41 8D ? 55 48 8D 0D ? ? ? ? E8 ? ? ? ?");
-					Assert(Signatures.size() == 24);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? 41 8D ? 56 48 8D 0D ? ? ? ? E8 ? ? ? ?");
-					Assert(Signatures.size() == 6);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-						
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? 8D ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? F0 0F");
-					Assert(Signatures.size() == 1);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? EB ?");
-					Assert(Signatures.size() == 5);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? 41 8D ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? 41 ? ? F0 0F");
-					Assert(Signatures.size() == 8);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? FF FF FF FF F0 0F");
-					Assert(Signatures.size() == 17);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? FF FF FF FF F0 ? 0F");
-					Assert(Signatures.size() == 6);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? F0 ? 0F");
-					Assert(Signatures.size() == 13);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? 8D ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? F0 0F");
-					Assert(Signatures.size() == 49);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-					
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? E9 ? ? ? ?");
-					Assert(Signatures.size() == 2);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? 8D ? ? 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? F0 ? 0F");
-					Assert(Signatures.size() == 2);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? ? 8D ? ? 56 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? ? ? ? F0 0F");
-					Assert(Signatures.size() == 1);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? ? ? ? ? ? FF FF FF FF F0 0F");
-					Assert(Signatures.size() == 1);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-					
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? 41 8D ? ? 55 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? F0 ? 0F");
-					Assert(Signatures.size() == 1);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? F0 ? 0F");
-					Assert(Signatures.size() == 15);
-					total += Signatures.size();
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? 41 8D ? ? 56 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? F0 0F");
-					//Assert(Signatures.size() == 1);
-					total += Signatures.size();
-					_CONSOLE("ddv4 %llu", Signatures.size());
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? 41 8D ? ? 55 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? FF FF");
-					//Assert(Signatures.size() == 15);
-					total += Signatures.size();
-					_CONSOLE("ddv5 %llu", Signatures.size());
-
-					fff.append_range(Signatures);
-
-					// TODO
-					
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"8D ? 54 48 8D 0D ? ? ? ? 4C 8D 05 ? ? ? ? E8 ? ? ? ? ? FF FF FF FF F0 0F");
-					//Assert(Signatures.size() == 1);
-					total += Signatures.size();
-					_CONSOLE("ddv4 %llu", Signatures.size());
-
-					fff.append_range(Signatures);
-					
-					// TODO
-					
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? 41 8D ? ? 55 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? F0 0F");
-					//Assert(Signatures.size() == 15);
-					total += Signatures.size();
-					_CONSOLE("ddv5 %llu", Signatures.size());
-
-					fff.append_range(Signatures);
-
-					// TODO
-					
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? 41 8D ? ? 55 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? F0 0F");
-					//Assert(Signatures.size() == 1);
-					total += Signatures.size();
-					_CONSOLE("ddv4 %llu", Signatures.size());
-
-					fff.append_range(Signatures);
-
-					// TODO
-					
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? 45 33 C9 49 8B C9 41 8B C7 F0 0F");
-					//Assert(Signatures.size() == 15);
-					total += Signatures.size();
-					_CONSOLE("ddv5 %llu", Signatures.size());
-
-					fff.append_range(Signatures);
-
-					// TODO
-
-					Signatures = voltek::find_patterns(Sec.base, Sec.end - Sec.base,
-						"4C 8D 05 ? ? ? ? BA 55 00 00 00 48 8D 0D ? ? ? ? E8 ? ? ? ? ? ? ? ? FF FF FF FF F0 0F");
-					//Assert(Signatures.size() == 15);
-					total += Signatures.size();
-					_CONSOLE("ddv55 %llu", Signatures.size());
-
-					fff.append_range(Signatures);
-
-					// TODO
-				}
-
-				_CONSOLE("BSHandleRefObject::DecRef (Patched: %llu/%llu)", total, total_find);
 			}
 		}
 	}

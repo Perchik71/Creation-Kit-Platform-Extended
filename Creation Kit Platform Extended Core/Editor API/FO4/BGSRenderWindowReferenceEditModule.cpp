@@ -52,6 +52,46 @@ namespace CreationKitPlatformExtended
 				}
 			}
 
+			void BGSRenderWindowReferenceEditModule::MoveSelectObjectsExtremlyNG(NiPoint3* NewPosition, int32_t Unk)
+			{
+				auto Picker = _Renderer->GetPickHandler();
+				if (!Picker || !Picker->Count) return;
+				// Reset var the relative grid offset
+				if (_TempPosition == ZERO_P3)
+					MoveSnapObjectIntermediate = ZERO_P3;
+				// If the offset is too small, then it is not needed
+				/*if (NewPosition->Magnitude2() >= 0.001f)
+					return;*/
+					// Increase the offset while pull the mouse, this offset cannot be touched, it seems to be used to restore the cursor
+				_TempPosition += *NewPosition;
+				// Also for the relative grid
+				MoveSnapObjectIntermediate += *NewPosition;
+
+				auto It = Picker->Items->First;
+				for (uint32_t i = 0; i < Picker->Count; i++, It = It->Next)
+				{
+					// Get a REFR to object and increase the counter
+					auto FormRef = BGSUniqueObjectRef((TESObjectREFR_Extremly_NG*)It->GetRef());
+					if (FormRef.Empty()) continue;
+					// I have no idea what for, but it is used in the original, also incrementing the counter
+					auto NodeRef = FormRef->GetFadeNode();
+					if (NodeRef.Empty()) continue;
+
+					auto ObjectPosition = FormRef->GetPosition();
+					if (BGSRenderWindow::HasSnapToGrid() || BGSRenderWindow::HasSnapToConnectPoints())
+					{
+						NiPoint3 NewPos;
+						if (ComputeGridOrConnectPoint(ObjectPosition, *NewPosition, NewPos, i, Picker->Count))
+							FormRef->SetPosition(FormRef.Get(), &NewPos);
+					}
+					else
+					{
+						ObjectPosition += *NewPosition;
+						FormRef->SetPosition(FormRef.Get(), &ObjectPosition);
+					}
+				}
+			}
+
 			void BGSRenderWindowReferenceEditModule::MoveSelectObjectsExtremly(NiPoint3* NewPosition, int32_t Unk)
 			{
 				auto Picker = _Renderer->GetPickHandler();

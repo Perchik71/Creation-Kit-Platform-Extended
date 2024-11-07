@@ -501,9 +501,9 @@ namespace CreationKitPlatformExtended
 									{
 										ConsolePatch::Log("Dump SDM Info:\n\tHead: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",
 											*pointer_ReplaceBSPointerHandleAndManager_data1,
-											EditorAPI::Fallout4::BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT,
+											EditorAPI::Fallout4::BSUntypedPointerHandle_Extended_NG::MAX_HANDLE_COUNT,
 											((((long double)(*pointer_ReplaceBSPointerHandleAndManager_data1)) * 100.0f) /
-												(long double)EditorAPI::Fallout4::BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT));
+												(long double)EditorAPI::Fallout4::BSUntypedPointerHandle_Extended_NG::MAX_HANDLE_COUNT));
 									}
 									else
 									{
