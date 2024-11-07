@@ -25,12 +25,14 @@ env:
   QT_BUILD_CONFIGURATION: Release-Qt
   # Databases that are supported by CKPE last commit
   SSE_DATABASES: "*1_5_3.database,*1_5_73.database,*1_6_438.database,*1_6_1130.database"
+  FO4_DATABASES: "*1_10_162.database,*1_10_982_3.database"
+  SF_DATABASES: "*1_14_70_0.database"
 
 permissions:
   contents: read
 
 jobs:
-  sse-build-master:
+  build-master:
     runs-on: windows-latest
 
     steps:
@@ -74,3 +76,90 @@ jobs:
     - name: Copy SSE Stuff
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: Get-ChildItem -Path .\Stuffs\SSE -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-${{env.SHORT_SHA}}" $_.Name) -Force }
+      
+    - name: Upload SSE build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ckpe-sse-master-${{env.SHORT_SHA}}
+        path: "ckpe-sse-master-${{env.SHORT_SHA}}"
+        
+    - name: Make Bundle Directory
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: New-Item -ItemType Directory -Path "ckpe-fo4-master-${{env.SHORT_SHA}}"
+
+    - name: Copy FO4 CKPE
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\x64 -Include "ckpe_loader.exe","winhttp.dll" | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-${{env.SHORT_SHA}}" $_.Name) -Force }
+
+    - name: Copy Voltek to FO4
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path x64\Release\Voltek*.dll "ckpe-fo4-master-${{env.SHORT_SHA}}"
+
+    - name: Copy FO4 Database
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Recurse -Path Database\FO4 -Include ${{ env.FO4_DATABASES }} | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-${{env.SHORT_SHA}}" $_.Name) -Force }
+
+    - name: Copy FO4 Dialog
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path Dialogs\FO4\*.pak "ckpe-fo4-master-${{env.SHORT_SHA}}"
+
+    - name: Copy FO4 Stuff
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\Stuffs\FO4 -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-${{env.SHORT_SHA}}" $_.Name) -Force }
+      
+    - name: Upload FO4 build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ckpe-fo4-master-${{env.SHORT_SHA}}
+        path: "ckpe-fo4-master-${{env.SHORT_SHA}}"
+        
+  qt-build-master:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    # gets the short sha to append it to the archive name
+    - name: Get short SHA
+      run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Build
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      # Add additional options to the MSBuild command line here (like platform or verbosity level).
+      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+      run: msbuild /m /p:Configuration=${{env.QT_BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
+
+    - name: Make Bundle Directory
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: New-Item -ItemType Directory -Path "ckpe-sf-${{env.SHORT_SHA}}"
+
+    - name: Copy Voltek
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path x64\Release\Voltek*.dll "ckpe-sf-${{env.SHORT_SHA}}"
+
+    - name: Copy Database
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Recurse -Path Database\SF -Include ${{ env.SF_DATABASES }} | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sf-${{env.SHORT_SHA}}" $_.Name) -Force }
+
+    - name: Copy Dialog
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path Dialogs\SF\*.pak "ckpe-sf-${{env.SHORT_SHA}}"
+
+    - name: Copy Stuff
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\Stuffs\SF -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sf-${{env.SHORT_SHA}}" $_.Name) -Force }
+
+    - name: Copy CKPE
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\x64 -Include "ckpe_loader.exe","winhttp.dll" | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sf-${{env.SHORT_SHA}}" $_.Name) -Force }
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ckpe-sf-${{env.SHORT_SHA}}
+        path: "ckpe-sf-${{env.SHORT_SHA}}"
