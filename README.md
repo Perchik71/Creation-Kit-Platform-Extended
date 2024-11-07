@@ -1,4 +1,9 @@
-[![MSBuild](https://github.com/Perchik71/Creation-Kit-Platform-Extended/actions/workflows/msbuild.yml/badge.svg?branch=master)](https://github.com/Perchik71/Creation-Kit-Platform-Extended/actions/workflows/msbuild.yml)
+[![MSBuild](https://github.com/Perchik71/Creation-Kit-Platform-Extended/actions/workflows/msbuild.yml/badge.svg?branch=master)](https://github.com/Perchik71/Creation-Kit-Platform-Extended/actions/workflows/msbuild.yml) 
+![GitHub License](https://img.shields.io/github/license/perchik71/Creation-Kit-Platform-Extended) 
+![GitHub top language](https://img.shields.io/github/languages/top/perchik71/Creation-Kit-Platform-Extended)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/perchik71/Creation-Kit-Platform-Extended/master)
+![GitHub repo size](https://img.shields.io/github/repo-size/perchik71/Creation-Kit-Platform-Extended?color=rgb(170%2C40%2C80))
+![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/perchik71/Creation-Kit-Platform-Extended/latest/total?color=rgb(00%2C150%2C100))  
 
 <p align="center">
   <img src="https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/master/Resources/logo.png" alt="Creation Kit Platform Extended" border="0">
@@ -7,14 +12,6 @@
 <p align="center">
   A collection of modifications, enhancements, and reverse engineered resources for Creation Kit by Bethesda.
 </p>
-
-<p align="center">
-  <a href="https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Perchik71/Creation-Kit-Platform-Extended?style=for-the-badge&color=007d34"></img></a>
-  <img src="https://img.shields.io/github/languages/top/perchik71/Creation-Kit-Platform-Extended?style=for-the-badge&color=e8793e"></img> 
-  <img src="https://img.shields.io/github/last-commit/perchik71/Creation-Kit-Platform-Extended?style=for-the-badge"></img> 
-  <img src="https://img.shields.io/github/repo-size/Perchik71/Creation-Kit-Platform-Extended?style=for-the-badge"></img> 
-  <img src="https://img.shields.io/github/downloads/Perchik71/Creation-Kit-Platform-Extended/total?style=for-the-badge"></img> 
-</p>  
 
 # Description
 <p align="left">
