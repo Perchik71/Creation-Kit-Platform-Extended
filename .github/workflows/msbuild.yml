@@ -59,7 +59,7 @@ jobs:
 
     - name: Copy SSE CKPE
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: Get-ChildItem -Path .\x64 -Include "ckpe_loader.exe","winhttp.dll" | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-${{env.SHORT_SHA}}" $_.Name) -Force }
+      run: Get-ChildItem -Recurse -Path ".\x64" -Include "ckpe_loader.exe", "winhttp.dll" | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-${{env.SHORT_SHA}}" $_.Name) -Force }
 
     - name: Copy Voltek to SSE
       working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -89,7 +89,7 @@ jobs:
 
     - name: Copy FO4 CKPE
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: Get-ChildItem -Path .\x64 -Include "ckpe_loader.exe","winhttp.dll" | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-${{env.SHORT_SHA}}" $_.Name) -Force }
+      run: Get-ChildItem -Recurse -Path ".\x64" -Include "ckpe_loader.exe", "winhttp.dll" | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-${{env.SHORT_SHA}}" $_.Name) -Force }
 
     - name: Copy Voltek to FO4
       working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -138,25 +138,25 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: New-Item -ItemType Directory -Path "ckpe-sf-${{env.SHORT_SHA}}"
 
-    - name: Copy Voltek
+    - name: Copy Voltek to SF
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: Copy-Item -Path x64\Release\Voltek*.dll "ckpe-sf-${{env.SHORT_SHA}}"
 
-    - name: Copy Database
+    - name: Copy SF Database
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: Get-ChildItem -Recurse -Path Database\SF -Include ${{ env.SF_DATABASES }} | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sf-${{env.SHORT_SHA}}" $_.Name) -Force }
 
-    - name: Copy Dialog
+    - name: Copy SF Dialog
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: Copy-Item -Path Dialogs\SF\*.pak "ckpe-sf-${{env.SHORT_SHA}}"
 
-    - name: Copy Stuff
+    - name: Copy SF Stuff
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: Get-ChildItem -Path .\Stuffs\SF -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sf-${{env.SHORT_SHA}}" $_.Name) -Force }
 
-    - name: Copy CKPE
+    - name: Copy SF CKPE
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: Get-ChildItem -Path .\x64 -Include "ckpe_loader.exe","winhttp.dll" | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sf-${{env.SHORT_SHA}}" $_.Name) -Force }
+      run: Get-ChildItem -Recurse -Path ".\x64" -Include "ckpe_loader.exe", "winhttp.dll" | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sf-${{env.SHORT_SHA}}" $_.Name) -Force }
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
