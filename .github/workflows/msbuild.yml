@@ -1,0 +1,76 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+#
+# Authors: yak3d, perchik71
+# Data: 07/11/2024
+# License: GPLv3
+
+name: MSBuild
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  # Path to the solution file relative to the root of the project.
+  SOLUTION_FILE_PATH: .
+  # Configuration type to build.
+  # You can convert this to a build matrix if you need coverage of multiple configuration types.
+  # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+  BUILD_CONFIGURATION: Release
+  QT_BUILD_CONFIGURATION: Release-Qt
+  # Databases that are supported by CKPE last commit
+  SSE_DATABASES: "*1_5_3.database,*1_5_73.database,*1_6_438.database,*1_6_1130.database"
+
+permissions:
+  contents: read
+
+jobs:
+  sse-build-master:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        
+      # gets the short sha to append it to the archive name
+    - name: Get short SHA
+      run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
+      
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Build
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      # Add additional options to the MSBuild command line here (like platform or verbosity level).
+      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
+
+    - name: Make Bundle Directory
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: New-Item -ItemType Directory -Path "ckpe-sse-master-${{env.SHORT_SHA}}"
+
+    - name: Copy SSE CKPE
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\x64 -Include "ckpe_loader.exe","winhttp.dll" | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-${{env.SHORT_SHA}}" $_.Name) -Force }
+
+    - name: Copy Voltek to SSE
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path x64\Release\Voltek*.dll "ckpe-sse-master-${{env.SHORT_SHA}}"
+
+    - name: Copy SSE Database
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Recurse -Path Database\SSE -Include ${{ env.SSE_DATABASES }} | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-${{env.SHORT_SHA}}" $_.Name) -Force }
+
+    - name: Copy SSE Dialog
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path Dialogs\SSE\*.pak "ckpe-sse-master-${{env.SHORT_SHA}}"
+
+    - name: Copy SSE Stuff
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\Stuffs\SSE -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-${{env.SHORT_SHA}}" $_.Name) -Force }
