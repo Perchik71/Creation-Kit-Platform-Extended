@@ -1,3 +1,5 @@
+[![MSBuild](https://github.com/Perchik71/Creation-Kit-Platform-Extended/actions/workflows/msbuild.yml/badge.svg?branch=master)](https://github.com/Perchik71/Creation-Kit-Platform-Extended/actions/workflows/msbuild.yml)
+
 <p align="center">
   <img src="https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/master/Resources/logo.png" alt="Creation Kit Platform Extended" border="0">
 </p>
@@ -12,7 +14,7 @@
   <img src="https://img.shields.io/github/last-commit/perchik71/Creation-Kit-Platform-Extended?style=for-the-badge"></img> 
   <img src="https://img.shields.io/github/repo-size/Perchik71/Creation-Kit-Platform-Extended?style=for-the-badge"></img> 
   <img src="https://img.shields.io/github/downloads/Perchik71/Creation-Kit-Platform-Extended/total?style=for-the-badge"></img> 
-</p>
+</p>  
 
 # Description
 <p align="left">
@@ -132,25 +134,23 @@ For understanding, the application uses the ancient **`ANSI`** type string repre
 > In **`Win10`**, in the language settings, there is now an option to work with **`UTF-8`**, you need to turn it off otherwise there will be only **`?`**.
 
 # Dependencies
-[VoltekLib](https://github.com/Perchik71/VoltekLib.git) URL **https://github.com/Perchik71/VoltekLib.git** IN **Dependencies/Voltek**  
-[mINI](https://github.com/Perchik71/mINI.git) URL **https://github.com/Perchik71/mINI.git** IN **Dependencies/mINI**  
-[Zydis](https://github.com/zyantific/zydis.git) URL **https://github.com/zyantific/zydis.git** IN **Dependencies/zydis**  
-[zipper](https://github.com/kuba--/zip.git) URL **https://github.com/kuba--/zip.git** IN **Dependencies/zipper**  
-[libdeflate](https://github.com/ebiggers/libdeflate.git) URL **https://github.com/ebiggers/libdeflate.git** IN **Dependencies/libdeflate**  
-[xbyak](https://github.com/herumi/xbyak.git) URL **https://github.com/herumi/xbyak.git** IN **Dependencies/xbyak**  
-[DirectXTex](https://github.com/microsoft/DirectXTex.git) URL **https://github.com/microsoft/DirectXTex.git** IN **Dependencies/DirectXTex**  
-[jDialogs](https://github.com/Perchik71/jDialogs.git) URL **https://github.com/Perchik71/jDialogs.git** IN **Dependencies/jDialogs** *(recursive)*
+[VoltekLib](https://github.com/Perchik71/VoltekLib.git) by `perchik71` *(recursive)*  
+[mINI](https://github.com/Perchik71/mINI.git) by `perchik71` and `metayeti`  
+[Zydis](https://github.com/zyantific/zydis.git) by `zyantifi` and other  
+[zipper](https://github.com/kuba--/zip.git) by `kuba--`  
+[libdeflate](https://github.com/ebiggers/libdeflate.git) by `ebiggers` and other  
+[xbyak](https://github.com/herumi/xbyak.git) by `herumi` and other    
+[DirectXTex](https://github.com/microsoft/DirectXTex.git) by `microsoft`  
+[jDialogs](https://github.com/Perchik71/jDialogs.git) by `perchik71` *(recursive)*
 
 # Compilation
 Open a project in **`Visual Studio 2022`** or later. Build the project in **`Release`** mode or **`Release-Qt`** for `Starfield`.  
-Take .dll's from the **`x64`** folder also take all **`VoltekLib.XXXX.dll`**, from the **`x64/Release`** and move it to the folder with the game. 
-Take the database **`CreationKitPlatformExtended_<GAME>_1_X_XXXX.database`** from the folder **`Database/<GAME>/1_X_XXXX/`**. 
-You will also need **`Stuffs/<GAME>/CreationKitPlatformExtendedMessagesBlacklist.txt`** and **`Stuffs/<GAME>/CreationKitPlatformExtended.ini`** to the game folder. 
-Move the dialog package **`Dialogs/<GAME>/CreationKitPlatformExtended_<GAME>_Dialogs.pak`** to the root folder of the game.  
+You can take compiled ones automatically, they are of decent quality.
 
 # Credits
 [Nukem9](https://github.com/Nukem9) (for experimental functions, hash and so on, very useful)  
 [adzm](https://github.com/adzm) (I really appreciate your work, you have [done](https://github.com/adzm/win32-custom-menubar-aero-theme) what I have long wanted to do myself)  
+[yak3d](https://github.com/yak3d) (For the contribution and development of workflow)  
 
 # License
 **GPLv3**: <a>https://www.gnu.org/licenses/gpl-3.0.html</a>. <br />
