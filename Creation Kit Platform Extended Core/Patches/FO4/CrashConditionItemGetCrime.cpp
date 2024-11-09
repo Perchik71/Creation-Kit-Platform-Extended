@@ -99,7 +99,9 @@ namespace CreationKitPlatformExtended
 				if (!hCombobox) return;
 
 				EditorAPI::EditorUI::HKSendMessageA(hCombobox, CB_RESETCONTENT, 0, 0);
-				EditorAPI::EditorUI::ComboBoxInsertItemDeferred(hCombobox, " ANY ", nullptr, 1);
+				// Same as steal
+				//EditorAPI::EditorUI::ComboBoxInsertItemDeferred(hCombobox, " ANY ", nullptr, 1);
+				EditorAPI::EditorUI::ComboBoxInsertItemDeferred(hCombobox, " NONE ", (void*)-1, 1);
 				
 				auto Array = pointer_CrashConditionItemGetCrimePatch_data;
 				if (!Array) return;
