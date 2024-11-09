@@ -50,6 +50,7 @@
 #include "Patches/FO4/CrashInventory.h"
 #include "Patches/FO4/ChooseSoundFileF4.h"
 #include "Patches/FO4/RunNetworkDisable.h"
+#include "Patches/FO4/CrashConditionItemGetCrime.h"
 
 #include "Patches/Windows/FO4/MainWindowF4.h"
 #include "Patches/Windows/FO4/ObjectWindowF4.h"
@@ -113,6 +114,7 @@ namespace CreationKitPlatformExtended
 				new Patches::ChooseSoundFilePatch(),
 				new Patches::CrashInventoryPatch(),
 				new Patches::RunNetworkDisablePatch(),
+				new Patches::CrashConditionItemGetCrimePatch(),
 				
 				new Patches::MainWindow(),
 				new Patches::ObjectWindow(),

@@ -865,6 +865,9 @@
     <ClCompile Include="Patches\FO4\RunNetworkDisable.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\FO4\CrashConditionItemGetCrime.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2120,6 +2123,9 @@
       <Filter>Editor API\SSE\Forms</Filter>
     </ClInclude>
     <ClInclude Include="Patches\FO4\RunNetworkDisable.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\CrashConditionItemGetCrime.h">
       <Filter>Patches\FO4</Filter>
     </ClInclude>
   </ItemGroup>
