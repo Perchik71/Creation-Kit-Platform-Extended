@@ -74,7 +74,7 @@ namespace CreationKitPlatformExtended
 					// In Qt, it would be necessary to give the name of the window initially, for something acceptable
 					lpRelocator->Patch(_RELDATA_RAV(1), (uint8_t*)"Creation Kit\0", 13);
 					// Cut a useless entry [Branch: <some>, Version: <CKVer>]
-					lpRelocator->PatchNop(_RELDATA_RAV(2), 0xA7);
+					//lpRelocator->PatchNop(_RELDATA_RAV(2), 0xA7);
 					lpRelocator->PatchNop(_RELDATA_RAV(4), 0x6);
 					// Cut a useless entry [Admin]
 					lpRelocator->DetourCall(_RELDATA_RAV(3), &QString::sprintf);

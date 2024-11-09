@@ -868,6 +868,18 @@
     <ClCompile Include="Patches\FO4\CrashConditionItemGetCrime.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SF\RemoveUselessResizeInDialogs.cpp">
+      <Filter>Patches\SF</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SF\RemoveThreadDpi.cpp">
+      <Filter>Patches\SF</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SF\LoadMaterialsAsync.cpp">
+      <Filter>Patches\SF</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\FO4\DontMatchForms.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2126,6 +2138,18 @@
       <Filter>Patches\FO4</Filter>
     </ClInclude>
     <ClInclude Include="Patches\FO4\CrashConditionItemGetCrime.h">
+      <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SF\RemoveUselessResizeInDialogs.h">
+      <Filter>Patches\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SF\RemoveThreadDpi.h">
+      <Filter>Patches\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SF\LoadMaterialsAsync.h">
+      <Filter>Patches\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\DontMatchForms.h">
       <Filter>Patches\FO4</Filter>
     </ClInclude>
   </ItemGroup>

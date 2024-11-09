@@ -212,6 +212,7 @@
     <ClCompile Include="Patches\FO4\CrashConditionItemGetCrime.cpp" />
     <ClCompile Include="Patches\FO4\CrashInventory.cpp" />
     <ClCompile Include="Patches\FO4\CreateDDS.cpp" />
+    <ClCompile Include="Patches\FO4\DontMatchForms.cpp" />
     <ClCompile Include="Patches\FO4\EnableGoInSelGame.cpp" />
     <ClCompile Include="Patches\FO4\ESLTip.cpp" />
     <ClCompile Include="Patches\FO4\FakeMoveLight.cpp" />
@@ -253,8 +254,11 @@
     <ClCompile Include="Patches\QuitHandlerPatch.cpp" />
     <ClCompile Include="Patches\RenameCreationKitApp.cpp" />
     <ClCompile Include="Patches\RenderWindow60FPS.cpp" />
+    <ClCompile Include="Patches\SF\LoadMaterialsAsync.cpp" />
     <ClCompile Include="Patches\SF\OptimizationLoadSF.cpp" />
+    <ClCompile Include="Patches\SF\RemoveThreadDpi.cpp" />
     <ClCompile Include="Patches\SF\RemoveUselessMessagesSF.cpp" />
+    <ClCompile Include="Patches\SF\RemoveUselessResizeInDialogs.cpp" />
     <ClCompile Include="Patches\SF\ReplaceImgQSplashWnd.cpp" />
     <ClCompile Include="Patches\SF\RTDynamicCastCrash.cpp" />
     <ClCompile Include="Patches\SF\RunAppWithoutNet.cpp" />
@@ -606,6 +610,7 @@
     <ClInclude Include="Patches\FO4\CrashConditionItemGetCrime.h" />
     <ClInclude Include="Patches\FO4\CrashInventory.h" />
     <ClInclude Include="Patches\FO4\CreateDDS.h" />
+    <ClInclude Include="Patches\FO4\DontMatchForms.h" />
     <ClInclude Include="Patches\FO4\EnableGoInSelGame.h" />
     <ClInclude Include="Patches\FO4\ESLTip.h" />
     <ClInclude Include="Patches\FO4\FakeMoveLight.h" />
@@ -647,8 +652,11 @@
     <ClInclude Include="Patches\QuitHandlerPatch.h" />
     <ClInclude Include="Patches\RenameCreationKitApp.h" />
     <ClInclude Include="Patches\RenderWindow60FPS.h" />
+    <ClInclude Include="Patches\SF\LoadMaterialsAsync.h" />
     <ClInclude Include="Patches\SF\OptimizationLoadSF.h" />
+    <ClInclude Include="Patches\SF\RemoveThreadDpi.h" />
     <ClInclude Include="Patches\SF\RemoveUselessMessagesSF.h" />
+    <ClInclude Include="Patches\SF\RemoveUselessResizeInDialogs.h" />
     <ClInclude Include="Patches\SF\ReplaceImgQSplashWnd.h" />
     <ClInclude Include="Patches\SF\RTDynamicCastCrash.h" />
     <ClInclude Include="Patches\SF\RunAppWithoutNet.h" />
