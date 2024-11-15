@@ -17,6 +17,7 @@
 #include "Patches/SF/RemoveUselessResizeInDialogs.h"
 #include "Patches/SF/RemoveThreadDpi.h"
 #include "Patches/SF/LoadMaterialsAsync.h"
+#include "Patches/SF/FixQuoteCmdLineSF.h"
 
 #include "Patches/Windows/SF/DataWindowSF.h"
 #include "Patches/Windows/SF/AboutWindowSF.h"
@@ -48,6 +49,7 @@ namespace CreationKitPlatformExtended
 				//new Patches::RemoveUselessResizeInDialogsPatch(),
 				new Patches::RemoveThreadDpiPatch(),
 				//new Patches::LoadMaterialsAsyncPatch(),
+				new Patches::FixQuoteCmdLinePatch(),
 
 				new Patches::DataWindow(),
 				new Patches::AboutWindow(),

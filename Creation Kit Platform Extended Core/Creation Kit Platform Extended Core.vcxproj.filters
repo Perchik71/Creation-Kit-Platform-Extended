@@ -880,6 +880,9 @@
     <ClCompile Include="Patches\FO4\DontMatchForms.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SF\FixQuoteCmdLineSF.cpp">
+      <Filter>Patches\SF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2151,6 +2154,9 @@
     </ClInclude>
     <ClInclude Include="Patches\FO4\DontMatchForms.h">
       <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SF\FixQuoteCmdLineSF.h">
+      <Filter>Patches\SF</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

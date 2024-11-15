@@ -188,15 +188,16 @@ namespace CreationKitPlatformExtended
 			void ProgressWindow::update_progressbar(LPCSTR lpcstrText)
 			{
 				// For some reason, 95 does not go further
-				static DWORD dwProgressLoadMax95 = (DWORD)(*dwProgressLoadMax * 95.0f) / 100.0f;
-				if (*dwProgressLoadCurrent == dwProgressLoadMax95)
+				// NEWS: Fallout4.esm contains ~80k incorrect forms.
+				//static DWORD dwProgressLoadMax95 = (DWORD)(*dwProgressLoadMax * 95.0f) / 100.0f;
+				if (*dwProgressLoadCurrent == *dwProgressLoadMax)
 					return;
 
 				static double lastPercent = 0.0f;
 				(*dwProgressLoadCurrent)++;
 
 				// Only update every quarter percent, rather than every single form load
-				double newPercent = ((double)(*dwProgressLoadCurrent) / (double)(dwProgressLoadMax95)) * 100.0f;
+				double newPercent = ((double)(*dwProgressLoadCurrent) / (double)(*dwProgressLoadMax)) * 100.0f;
 				if (abs(lastPercent - newPercent) <= 0.25f)
 					return;
 

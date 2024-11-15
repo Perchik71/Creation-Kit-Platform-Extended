@@ -68,7 +68,11 @@ namespace CreationKitPlatformExtended
 			bool AllowSaveESMandMasterESPPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST;
+				auto Path = EditorAPI::BSString::Utils::GetApplicationPath();
+				bool vc_enabled =
+					GetPrivateProfileIntA("General", "bUseVersionControl", 0, (Path + "CreationKit.ini").c_str()) ||
+					GetPrivateProfileIntA("General", "bUseVersionControl", 0, (Path + "CreationKitCustom.ini").c_str());
+				return !vc_enabled && eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST;
 			}
 
 			bool AllowSaveESMandMasterESPPatch::Activate(const Relocator* lpRelocator,
@@ -140,37 +144,10 @@ namespace CreationKitPlatformExtended
 					extension = "esm";
 				}
 
-				auto result = ((BOOL(__fastcall*)(HWND, LPCSTR, LPCSTR, LPCSTR, LPCSTR, LPVOID, BOOL, BOOL, LPSTR, uint32_t, LPCSTR, LPVOID))
-					pointer_AllowSaveESMandMasterESP_sub1)(ParentWindow, BasePath, filter, title, extension, NULL, FALSE, TRUE, Buffer,
-						BufferSize, Directory, NULL);
-
-				bool bUseVersionControl = false;
-
-				if (INICacheData->HasActive())
-					bUseVersionControl = (bool)INICacheData->HKGetPrivateProfileIntA("General", "bUseVersionControl", 0,
-						(EditorAPI::BSString::Utils::GetApplicationPath() + "CreationKitCustom.ini").c_str());
-				else
-					bUseVersionControl = (bool)GetPrivateProfileIntA("General", "bUseVersionControl", 0,
-						(EditorAPI::BSString::Utils::GetApplicationPath() + "CreationKitCustom.ini").c_str());
-
-				if (result && bUseVersionControl)
-				{
-					std::string sbuf = Buffer;
-					auto ibegin = sbuf.find_last_of('\\');
-					if (ibegin == sbuf.npos) {
-						ibegin = sbuf.find_last_of('/');
-						if (ibegin == sbuf.npos)
-							goto end_func;
-						else
-							sbuf = sbuf.substr(ibegin + 1);
-					}
-					else
-						sbuf = sbuf.substr(ibegin + 1);
-
-					strcpy_s(Buffer, BufferSize, sbuf.c_str());
-				}
-			end_func:
-				return result;
+				return ((bool(__fastcall*)(HWND, const char*, const char*, const char*, const char*, void*, bool, bool, char*, 
+					uint32_t, const char*, void*))
+					pointer_AllowSaveESMandMasterESP_sub1)(ParentWindow, BasePath, filter, title, extension, nullptr, false, true, Buffer,
+						BufferSize, Directory, nullptr);
 			}
 		}
 	}
