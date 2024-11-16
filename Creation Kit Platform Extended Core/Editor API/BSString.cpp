@@ -1,49 +1,6 @@
-//////////////////////////////////////////
-/*
-* Fallout 4 Script Extender (F4SE)
-* by Ian Patterson, Stephen Abel, and Brendan Borthwick (ianpatt, behippo, and purplelunchbox)
-*
-* Contact the F4SE Team
-*
-* Entire Team
-* Send email to team [at] f4se [dot] silverlock [dot] org
-*
-* Ian (ianpatt)
-* Send email to ianpatt+f4se [at] gmail [dot] com
-*
-* Stephen (behippo)
-* Send email to gamer [at] silverlock [dot] org
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-* INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-* PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-* FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-* OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-* DEALINGS IN THE SOFTWARE.
-*/
-//////////////////////////////////////////
-
-//////////////////////////////////////////
-/*
-* Copyright (c) 2022 Perchik71 <email:perchik71@outlook.com>
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy of this
-* software and associated documentation files (the "Software"), to deal in the Software
-* without restriction, including without limitation the rights to use, copy, modify, merge,
-* publish, distribute, sublicense, and/or sell copies of the Software, and to permit
-* persons to whom the Software is furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in all copies or
-* substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-* INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-* PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-* FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-* OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-* DEALINGS IN THE SOFTWARE.
-*/
-//////////////////////////////////////////
+// Copyright © 2024 aka perchik71. All rights reserved.
+// Contacts: <email:timencevaleksej@gmail.com>
+// License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "..\NiAPI\NiMemoryManager.h"
 #include "BSString.h"
@@ -647,6 +604,423 @@ namespace CreationKitPlatformExtended
 
 		BSString BSString::Converts::WideToAnsi(LPWSTR str) {
 			return Conversion::WideToAnsi(str).c_str();
+		}
+
+		BSStringEx::BSStringEx() :
+			m_data(nullptr), m_dataLen(0), m_bufLen(0)
+		{}
+
+		BSStringEx::BSStringEx(const char* string, uint32_t size) : BSStringEx() {
+			Set(string ? string : "", size);
+		}
+
+		BSStringEx::BSStringEx(const std::string& string, uint32_t size) : BSStringEx() {
+			Set(string.empty() ? "" : string.c_str(), size);
+		}
+
+		BSStringEx::BSStringEx(const BSStringEx& string, uint32_t size) : BSStringEx() {
+			Set(string, size);
+		}
+
+		BSStringEx::BSStringEx(const BSStringEx& string) : BSStringEx() {
+			Set(string, string.m_bufLen);
+		}
+
+		BSStringEx::~BSStringEx() {
+			Clear();
+		}
+
+		bool BSStringEx::Reserved(uint32_t size) {
+			uint32_t newLen = size;
+			uint32_t newSize = newLen + 1;
+			auto newData = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, newSize);
+			if (!newData)
+				return false;
+
+			if (m_bufLen) {
+				strncpy(newData, m_data, newLen);
+				NiAPI::NiMemoryManager::Free(nullptr, (LPVOID)m_data);
+				newData[newLen] = 0;
+			}
+			else
+				newData[0] = 0;
+
+			m_data = newData;
+			m_bufLen = newSize;
+			m_dataLen = newLen;
+
+			return true;
+		}
+
+		bool BSStringEx::Set(const char* string, uint32_t size) {
+			uint32_t wNeedLen, wNeedBuf;
+
+			wNeedLen = (string) ? (uint32_t)strlen(string) : 0;
+			if (size && (wNeedLen > size))
+				wNeedLen = size;
+
+			wNeedBuf = wNeedLen + 1;
+
+			if (wNeedBuf > m_bufLen) {
+				if (!wNeedLen)
+					goto __2dealloc2;
+				else {
+					char* newData = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, wNeedBuf, 4);
+					memcpy(newData, string, wNeedLen);
+					newData[wNeedLen] = 0;
+
+					if (m_data)
+						NiAPI::NiMemoryManager::Free(nullptr, (void*)m_data);
+
+					uint32_t wRealBuf = (uint32_t)NiAPI::NiMemoryManager::Size(nullptr, newData);
+
+					m_data = newData;
+					m_bufLen = wRealBuf > wNeedBuf ? wRealBuf : wNeedBuf;
+					m_dataLen = wNeedLen;
+				}
+			}
+			else {
+				if (!string) {
+				__2dealloc2:
+					if (m_data) {
+						NiAPI::NiMemoryManager::Free(nullptr, (LPVOID)m_data);
+
+						m_data = nullptr;
+						m_bufLen = 0;
+						m_dataLen = 0;
+					}
+				}
+				else {
+					memcpy(m_data, string, wNeedLen);
+					m_dataLen = wNeedLen;
+					m_data[wNeedLen] = 0;
+				}
+			}
+
+			return true;
+		}
+
+		bool BSStringEx::Set(const BSStringEx& string, uint32_t size)
+		{
+			return Set(string.m_data ? *string : "", size);
+		}
+
+		void BSStringEx::Clear() {
+			if (m_data) {
+				NiAPI::NiMemoryManager::Free(nullptr, (void*)m_data);
+				m_data = nullptr;
+				m_dataLen = 0;
+				m_bufLen = 0;
+			}
+		}
+
+		BSStringEx BSStringEx::Reverse() const {
+			if (!m_dataLen)
+				return "";
+
+			auto s = BSStringEx(m_data);
+			return strrev(*s);
+		}
+
+		BSStringEx& BSStringEx::Format(const char* format, ...) {
+			Clear();
+
+			va_list va;
+			va_start(va, format);
+			auto size = _vsnprintf(nullptr, 0, format, va);
+			if (size) {
+				m_bufLen = size + 1;
+				m_dataLen = size;
+				m_data = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, m_bufLen);
+				if (!m_data) {
+					m_bufLen = 0;
+					m_dataLen = 0;
+				}
+				else {
+					vsprintf(m_data, format, va);
+					m_data[size] = 0;
+				}
+			}
+			va_end(va);
+
+			return *this;
+		}
+
+		BSStringEx& BSStringEx::FormatVa(const char* format, va_list ap) {
+			auto size = _vsnprintf(nullptr, 0, format, ap);
+			if (size) {
+				m_bufLen = size + 1;
+				m_dataLen = size;
+				m_data = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, m_bufLen);
+				if (!m_data) {
+					m_bufLen = 0;
+					m_dataLen = 0;
+				}
+				else {
+					vsprintf(m_data, format, ap);
+					m_data[size] = 0;
+				}
+			}
+
+			return *this;
+		}
+
+		int32_t BSStringEx::Compare(const char* string, bool ignoreCase) const {
+			if (ignoreCase)
+				return _stricmp(m_data, string);
+			else
+				return strcmp(m_data, string);
+		}
+
+		BSStringEx& BSStringEx::Append(const char* str) {
+			if (str) {
+				uint32_t dwLen = (uint32_t)strlen(str);
+				if (dwLen) {
+					if (m_dataLen) {
+						if (Reserved(m_dataLen + dwLen + 1))
+							strcat(m_data, str);
+					}
+					else
+						Set(str);
+				}
+			}
+
+			return *this;
+		}
+
+		BSStringEx& BSStringEx::Append(const char* str, uint32_t len)
+		{
+			if (str)
+			{
+				uint32_t dwLen = (uint32_t)strlen(str);
+				if (dwLen)
+				{
+					if (m_dataLen)
+					{
+						if (dwLen <= len)
+						{
+							if (Reserved(m_dataLen + dwLen + 1))
+								strcat(m_data, str);
+						}
+						else
+						{
+							if (Reserved(m_dataLen + len + 1))
+								strncat(m_data, str, len);
+						}
+					}
+					else
+						Set(str, len);
+				}
+			}
+
+			return *this;
+		}
+
+		BSStringEx& BSStringEx::Append(const BSStringEx& string)
+		{
+			if (!string.IsEmpty())
+			{
+				uint32_t dwLen = (uint32_t)string.m_dataLen;
+				if (dwLen)
+				{
+					if (m_dataLen)
+					{
+						if (Reserved(m_dataLen + dwLen + 1))
+							strcat(m_data, string.m_data);
+					}
+					else
+						Set(string.m_data);
+				}
+			}
+
+			return *this;
+		}
+
+		BSStringEx& BSStringEx::Append(const BSStringEx& string, uint32_t len)
+		{
+			if (!string.IsEmpty())
+			{
+				uint32_t dwLen = (uint32_t)string.m_dataLen;
+				if (dwLen)
+				{
+					if (m_dataLen)
+					{
+						if (dwLen <= len)
+						{
+							if (Reserved(m_dataLen + dwLen + 1))
+								strcat(m_data, string.m_data);
+						}
+						else
+						{
+							if (Reserved(m_dataLen + len + 1))
+								strncat(m_data, string.m_data, len);
+						}
+					}
+					else
+						Set(string.m_data, len);
+				}
+			}
+
+			return *this;
+		}
+
+		BSStringEx& BSStringEx::Append(char ch) {
+			CHAR Buf[2] = { ch, 0 };
+			return Append(Buf);
+		}
+
+		BSStringEx& BSStringEx::AppendFormat(const char* format, ...) {
+			BSStringEx fmt;
+			va_list va;
+			va_start(va, format);
+			fmt.FormatVa(format, va);
+			va_end(va);
+
+			return fmt.IsEmpty() ? *this : Append(fmt);
+		}
+
+		BSStringEx& BSStringEx::AppendFormatVa(const char* format, va_list ap) {
+			BSStringEx fmt;
+			fmt.FormatVa(format, ap);
+			return fmt.IsEmpty() ? *this : Append(fmt);
+		}
+
+		BSStringEx& BSStringEx::Copy(uint32_t start, uint32_t len) {
+			return Assign(m_data, start, len);
+		}
+
+		BSStringEx& BSStringEx::Assign(const char* str, uint32_t start, uint32_t len) {
+			if (str) {
+				if (!len)
+					len = (uint32_t)strlen(str);
+
+				Set(*BSStringEx(str + start), len);
+			}
+
+			return *this;
+		}
+
+		BSStringEx& BSStringEx::AssignUnsafe(const char* str, uint32_t start, uint32_t len) {
+			if (str) {
+				if (!len)
+					len = (uint32_t)strlen(str);
+
+				Set(str + start, len);
+			}
+
+			return *this;
+		}
+
+		BSStringEx& BSStringEx::Erase(uint32_t start, uint32_t len) {
+			if ((!start && !len) || (start >= len))
+				return *this;
+
+			if (!start) {
+				if (len >= m_dataLen)
+					Clear();
+				else
+					return Assign(m_data, len);
+			}
+			else {
+				if (len >= m_dataLen)
+					return Assign(m_data, 0, start);
+				else
+					return Assign(m_data, 0, start).Append(m_data + (start + len));
+			}
+
+			return *this;
+		}
+
+		uint32_t BSStringEx::FindLastOf(char ch, uint32_t offset) const {
+			if (!m_data)
+				return srNone;
+
+			char* Ret = strrchr(m_data + offset, ch);
+			return Ret ? (uint32_t)(Ret - m_data) : srNone;
+		}
+
+		uint32_t BSStringEx::FindFirstOf(char ch, uint32_t offset) const {
+			if (IsEmpty())
+				return srNone;
+
+			char* Ret = strchr(m_data + offset, ch);
+			return Ret ? (uint32_t)(Ret - m_data) : srNone;
+		}
+
+		uint32_t BSStringEx::FindLastOf(const char* chs, uint32_t offset) const {
+			uint32_t Ret = Reverse().FindFirstOf(chs, offset);
+			return Ret == srNone ? srNone : m_dataLen - Ret;
+		}
+
+		uint32_t BSStringEx::FindFirstOf(const char* chs, uint32_t offset) const {
+			if (IsEmpty() || !chs)
+				return srNone;
+
+			char* Ret = strpbrk(m_data + offset, chs);
+			return Ret ? (uint32_t)(Ret - m_data) : srNone;
+		}
+
+		BSStringEx BSStringEx::UpperCase() const {
+			if (IsEmpty())
+				return "";
+
+			auto s = BSStringEx(m_data);
+			UpperCase(*s);
+			return s;
+		}
+
+		BSStringEx BSStringEx::LowerCase() const {
+			if (IsEmpty())
+				return "";
+
+			auto s = BSStringEx(m_data);
+			LowerCase(*s);
+			return s;
+		}
+
+		void BSStringEx::UpperCase(const char* str) {
+			if (!str)
+				return;
+
+			strupr(const_cast<char*>(str));
+		}
+
+		void BSStringEx::LowerCase(const char* str) {
+			if (!str)
+				return;
+
+			strlwr(const_cast<char*>(str));
+		}
+
+		uint32_t BSStringEx::Find(const char* substr, EFlags flags) const {
+			if (IsEmpty() || !substr)
+				return srNone;
+
+			char* Ret = nullptr;
+			if (flags == sfInsensitiveCase)
+				Ret = strstr(*LowerCase(), *(BSStringEx(substr).LowerCase()));
+			else
+				char* Ret = strstr(m_data, substr);
+
+			return Ret ? (uint32_t)(Ret - m_data) : srNone;
+		}
+
+		BSStringEx BSStringEx::Trim() const {
+			if (IsEmpty())
+				return "";
+
+			return CreationKitPlatformExtended::Utils::Trim(m_data).c_str();
+		}
+
+		BSStringEx BSStringEx::FormatString(const char* format, ...) {
+			BSStringEx fmt;
+			va_list va;
+
+			va_start(va, format);
+			fmt.FormatVa(format, va);
+			va_end(va);
+
+			return fmt;
 		}
 	}
 }

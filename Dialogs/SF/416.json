@@ -1,7 +1,7 @@
 {
 	"Style": ["WS_DLGFRAME", "WS_CAPTION", "WS_SYSMENU", "WS_CLIPCHILDREN" ],
 	"Title": "Script Properties",
-	"Width": 529,
+	"Width": 509,
 	"Height": 201,
 	"FontName": "Microsoft Sans Serif",
 	"FontSize": 8,

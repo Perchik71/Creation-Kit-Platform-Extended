@@ -254,6 +254,7 @@
     <ClCompile Include="Patches\QuitHandlerPatch.cpp" />
     <ClCompile Include="Patches\RenameCreationKitApp.cpp" />
     <ClCompile Include="Patches\RenderWindow60FPS.cpp" />
+    <ClCompile Include="Patches\SF\AllowSaveESMandMasterESPSF.cpp" />
     <ClCompile Include="Patches\SF\FixQuoteCmdLineSF.cpp" />
     <ClCompile Include="Patches\SF\LoadMaterialsAsync.cpp" />
     <ClCompile Include="Patches\SF\OptimizationLoadSF.cpp" />
@@ -653,6 +654,7 @@
     <ClInclude Include="Patches\QuitHandlerPatch.h" />
     <ClInclude Include="Patches\RenameCreationKitApp.h" />
     <ClInclude Include="Patches\RenderWindow60FPS.h" />
+    <ClInclude Include="Patches\SF\AllowSaveESMandMasterESPSF.h" />
     <ClInclude Include="Patches\SF\FixQuoteCmdLineSF.h" />
     <ClInclude Include="Patches\SF\LoadMaterialsAsync.h" />
     <ClInclude Include="Patches\SF\OptimizationLoadSF.h" />

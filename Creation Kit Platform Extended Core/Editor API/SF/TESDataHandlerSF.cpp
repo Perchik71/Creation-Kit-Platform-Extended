@@ -12,7 +12,7 @@ namespace CreationKitPlatformExtended
 	{
 		namespace Starfield
 		{
-			/*TESDataHandler* TESDataHandler_CKPEIntf::GetSingleton()
+			TESDataHandler* TESDataHandler_CKPEIntf::GetSingleton()
 			{
 				__try
 				{
@@ -34,7 +34,7 @@ namespace CreationKitPlatformExtended
 				{
 					return nullptr;
 				}
-			}*/
+			}
 		}
 	}
 }

@@ -18,6 +18,7 @@
 #include "Patches/SF/RemoveThreadDpi.h"
 #include "Patches/SF/LoadMaterialsAsync.h"
 #include "Patches/SF/FixQuoteCmdLineSF.h"
+#include "Patches/SF/AllowSaveESMandMasterESPSF.h"
 
 #include "Patches/Windows/SF/DataWindowSF.h"
 #include "Patches/Windows/SF/AboutWindowSF.h"
@@ -50,6 +51,7 @@ namespace CreationKitPlatformExtended
 				new Patches::RemoveThreadDpiPatch(),
 				//new Patches::LoadMaterialsAsyncPatch(),
 				new Patches::FixQuoteCmdLinePatch(),
+				new Patches::AllowSaveESMandMasterESPPatch(),
 
 				new Patches::DataWindow(),
 				new Patches::AboutWindow(),

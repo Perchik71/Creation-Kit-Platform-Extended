@@ -1,25 +1,6 @@
-//////////////////////////////////////////
-/*
-* Copyright (c) 2020 Nukem9 <email:Nukem@outlook.com>
-* Copyright (c) 2020-2022 Perchik71 <email:perchik71@outlook.com>
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy of this
-* software and associated documentation files (the "Software"), to deal in the Software
-* without restriction, including without limitation the rights to use, copy, modify, merge,
-* publish, distribute, sublicense, and/or sell copies of the Software, and to permit
-* persons to whom the Software is furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in all copies or
-* substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-* INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-* PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-* FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-* OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-* DEALINGS IN THE SOFTWARE.
-*/
-//////////////////////////////////////////
+// Copyright © 2024 aka perchik71. All rights reserved.
+// Contacts: <email:timencevaleksej@gmail.com>
+// License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #pragma once
 #pragma pack(push, 4)
@@ -106,7 +87,7 @@ namespace CreationKitPlatformExtended
 				/* 364 */ char _pad3[0x4];
 				/* 368 */ TESFile** m_dependArray;
 				/* 370 */ char _pad4[0x8];
-				/* 378 */ char m_fileIndex;						// index of this file in load order (or 0xFF if not loaded)
+				/* 378 */ uint8_t m_fileIndex;					// index of this file in load order (or 0xFF if not loaded)
 				/* 379 */ char _pad5[0x7];
 				/* 380 */ BSString m_authorName;
 				/* 390 */ BSString m_description;
@@ -116,7 +97,7 @@ namespace CreationKitPlatformExtended
 				inline BSString GetDescription() const { return *m_description ? m_description : ""; }
 				inline BSString GetFileName() const { return m_FileName ? m_FileName : ""; }
 				inline BSString GetFilePath() const { return m_FilePath ? m_FilePath : ""; }
-				inline char GetFileLoadIndex() const { return m_fileIndex; }
+				inline uint8_t GetFileLoadIndex() const { return m_fileIndex; }
 				inline TESFile** GetDependArray() const { return m_dependArray; }
 				inline uint32_t GetDependCount() const { return m_dependCount; }
 				inline uint32_t GetFileSize() const { return m_fileSize; }
@@ -148,7 +129,7 @@ namespace CreationKitPlatformExtended
 				READ_PROPERTY(GetFileName) BSString FileName;
 				READ_PROPERTY(GetFilePath) BSString FilePath;
 				READ_PROPERTY(GetFlags) uint32_t Flags;
-				READ_PROPERTY(GetFileLoadIndex) char FileLoadIndex;
+				READ_PROPERTY(GetFileLoadIndex) uint8_t FileLoadIndex;
 				READ_PROPERTY(GetDependArray) TESFile** DependArray;
 				READ_PROPERTY(GetDependCount) uint32_t DependCount;
 				READ_PROPERTY(GetFileSize) uint32_t FileSize;

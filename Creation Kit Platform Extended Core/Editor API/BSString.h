@@ -1,49 +1,6 @@
-//////////////////////////////////////////
-/*
-* Fallout 4 Script Extender (F4SE)
-* by Ian Patterson, Stephen Abel, and Brendan Borthwick (ianpatt, behippo, and purplelunchbox)
-* 
-* Contact the F4SE Team
-*
-* Entire Team
-* Send email to team [at] f4se [dot] silverlock [dot] org
-*
-* Ian (ianpatt)
-* Send email to ianpatt+f4se [at] gmail [dot] com
-*
-* Stephen (behippo)
-* Send email to gamer [at] silverlock [dot] org
-* 
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-* INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-* PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-* FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-* OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-* DEALINGS IN THE SOFTWARE.
-*/
-//////////////////////////////////////////
-
-//////////////////////////////////////////
-/*
-* Copyright (c) 2022 Perchik71 <email:perchik71@outlook.com>
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy of this
-* software and associated documentation files (the "Software"), to deal in the Software
-* without restriction, including without limitation the rights to use, copy, modify, merge,
-* publish, distribute, sublicense, and/or sell copies of the Software, and to permit
-* persons to whom the Software is furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in all copies or
-* substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-* INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-* PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-* FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-* OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-* DEALINGS IN THE SOFTWARE.
-*/
-//////////////////////////////////////////
+// Copyright © 2024 aka perchik71. All rights reserved.
+// Contacts: <email:timencevaleksej@gmail.com>
+// License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #pragma once
 #pragma pack(push, 1)
@@ -202,6 +159,103 @@ namespace CreationKitPlatformExtended
 			WORD	m_dataLen;	// 08
 			WORD	m_bufLen;	// 0A
 			DWORD	pad0C;		// 0C
+		};
+
+		class BSStringEx {
+		public:
+			enum EResult : uint32_t {
+				srNone = MAXDWORD,
+			};
+			enum EFlags : uint32_t {
+				sfNone = 0,
+				sfInsensitiveCase = 1,
+			};
+		public:
+			BSStringEx();
+			BSStringEx(const char* string, uint32_t size = 0);
+			BSStringEx(const std::string& string, uint32_t size = 0);
+			BSStringEx(const BSStringEx& string, uint32_t size);
+			BSStringEx(const BSStringEx& string);
+			~BSStringEx();
+		public:
+			bool Reserved(uint32_t size);
+			bool Set(const char* string, uint32_t size = 0);				// 0 to allocate automatically
+			bool Set(const BSStringEx& string, uint32_t size = 0);			// 0 to allocate automatically
+			inline const char* Get() const { return m_data ? m_data : ""; }
+			inline const char* c_str() const { return m_data ? m_data : ""; }
+			inline uint32_t Length() const { return m_dataLen; }
+			inline uint32_t Size() const { return m_bufLen; }
+			int32_t Compare(const char* string, bool ignoreCase = true) const;
+			inline int32_t Compare(const BSStringEx& string, bool ignoreCase = true) const { return Compare(string.c_str(), ignoreCase); }
+			void Clear();
+			BSStringEx Reverse() const;
+			BSStringEx UpperCase() const;
+			BSStringEx LowerCase() const;
+			static void UpperCase(const char* str);
+			static void LowerCase(const char* str);
+			BSStringEx& Assign(const char* str, uint32_t start = 0, uint32_t len = 0);
+			BSStringEx& AssignUnsafe(const char* str, uint32_t start = 0, uint32_t len = 0);
+			BSStringEx& Append(const char* str);
+			BSStringEx& Append(const char* str, uint32_t len);
+			BSStringEx& Append(const BSStringEx& string);
+			BSStringEx& Append(const BSStringEx& string, uint32_t len);
+			BSStringEx& Append(char ch);
+			BSStringEx& AppendFormat(const char* format, ...);
+			BSStringEx& AppendFormatVa(const char* format, va_list ap);
+			BSStringEx& Copy(uint32_t start = 0, uint32_t len = 0);
+			BSStringEx& Erase(uint32_t start = 0, uint32_t len = 0);
+			BSStringEx& Format(const char* format, ...);
+			BSStringEx& FormatVa(const char* format, va_list ap);
+			BSStringEx Trim() const;
+			uint32_t FindLastOf(char ch, uint32_t offset = 0) const;
+			uint32_t FindFirstOf(char ch, uint32_t offset = 0) const;
+			uint32_t FindLastOf(const char* chs, uint32_t offset = 0) const;
+			uint32_t FindFirstOf(const char* chs, uint32_t offset = 0) const;
+			uint32_t Find(const char* substr, EFlags flags = sfNone) const;
+			inline bool IsEmpty() const { return !m_dataLen; }
+		public:
+			static BSStringEx FormatString(const char* format, ...);
+			static BSStringEx FormatStringVa(const char* format, va_list ap) { return BSStringEx().FormatVa(format, ap); }
+		public:
+			inline char& operator[](const uint32_t Pos) { return m_data[Pos]; }
+			inline const char operator[](const uint32_t Pos) const { return m_data[Pos]; }
+		public:
+			inline BSStringEx& operator=(char ch) { char szCS[2] = { ch, 0 }; Set(szCS, 1); return *this; }
+			inline BSStringEx& operator=(const char* string) { Set(string, (uint32_t)strlen(string)); return *this; }
+			inline BSStringEx& operator=(const std::string& string) { Set(string, (uint32_t)string.length()); return *this; }
+			inline BSStringEx& operator=(const BSStringEx& string) { Set(string, string.Length()); return *this; }
+			inline BSStringEx& operator=(bool value) { Set(BSString::Transforms::BoolToStr(value).c_str()); return *this; }
+			inline BSStringEx& operator=(int64_t value) { Set(BSString::Transforms::IntToStr(value).c_str()); return *this; }
+			inline BSStringEx& operator=(uint64_t value) { Set(BSString::Transforms::UIntToStr(value).c_str()); return *this; }
+			inline BSStringEx& operator=(double value) { Set(BSString::Transforms::FloatToStr(value).c_str()); return *this; }
+			inline BSStringEx& operator+=(const char* string) { return Append(string); }
+			inline BSStringEx& operator+=(const std::string& string) { return Append(string); }
+			inline BSStringEx& operator+=(const BSStringEx& string) { return Append(string); }
+			inline BSStringEx& operator+=(char ch) { return Append(ch); }
+			inline BSStringEx& operator+=(bool value) { return Append(BSString::Transforms::BoolToStr(value).c_str()); }
+			inline BSStringEx& operator+=(int64_t value) { return Append(BSString::Transforms::IntToStr(value).c_str()); }
+			inline BSStringEx& operator+=(uint64_t value) { return Append(BSString::Transforms::UIntToStr(value).c_str()); }
+			inline BSStringEx& operator+=(double value) { return Append(BSString::Transforms::FloatToStr(value).c_str()); }
+			inline BSStringEx operator+(const char* string) const { return BSStringEx(*this).Append(string); }
+			inline BSStringEx operator+(const std::string& string) const { return BSStringEx(*this).Append(string); }
+			inline BSStringEx operator+(const BSStringEx& string) const { return BSStringEx(*this).Append(string.c_str()); }
+			inline BSStringEx operator+(char ch) const { return BSStringEx(*this).Append(ch); }
+			inline BSStringEx operator+(bool value) const { return BSStringEx(*this).Append(BSString::Transforms::BoolToStr(value).c_str()); }
+			inline BSStringEx operator+(int64_t value) const { return BSStringEx(*this).Append(BSString::Transforms::IntToStr(value).c_str()); }
+			inline BSStringEx operator+(uint64_t value) const { return BSStringEx(*this).Append(BSString::Transforms::UIntToStr(value).c_str()); }
+			inline BSStringEx operator+(double value) const { return BSStringEx(*this).Append(BSString::Transforms::FloatToStr(value).c_str()); }
+			inline char* operator*() { return m_data ? m_data : nullptr; }
+			inline const char* operator*() const { return Get(); }
+			inline bool operator==(const char* string) const { return !Compare(string); }
+			inline bool operator==(const std::string& string) const { return !Compare(string); }
+			inline bool operator==(const BSStringEx& string) const { return !Compare(string); }
+			inline bool operator!=(const char* string) const { return Compare(string); }
+			inline bool operator!=(const std::string& string) const { return Compare(string); }
+			inline bool operator!=(const BSStringEx& string) const { return Compare(string); }
+		private:
+			char* m_data;		// 00
+			uint32_t m_dataLen;	// 08
+			uint32_t m_bufLen;	// 0C
 		};
 	}
 }
