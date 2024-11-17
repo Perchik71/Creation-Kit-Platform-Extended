@@ -115,7 +115,6 @@ namespace CreationKitPlatformExtended
 							lpRelocator->PatchNop(_RELDATA_RAV(10), 9);
 					}
 
-
 					return true;
 				}
 
@@ -128,11 +127,10 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
-			BOOL AllowSaveESMandMasterESPPatch::OpenPluginSaveDialog(HWND ParentWindow, LPCSTR BasePath, BOOL IsESM, LPSTR Buffer,
-				uint32_t BufferSize, LPCSTR Directory)
+			BOOL AllowSaveESMandMasterESPPatch::OpenPluginSaveDialog(HWND ParentWindow, BOOL IsESM, LPSTR Buffer,
+				uint32_t BufferSize)
 			{
-				if (!BasePath)
-					BasePath = "\\Data";
+				EditorAPI::BSString BasePath = EditorAPI::BSString::Utils::GetApplicationPath() + "Data";
 
 				const char* filter = "TES Plugin Files (*.esp)\0*.esp\0TES Light Master Files (*.esl)\0*.esl\0TES Master Files (*.esm)\0*.esm\0\0";
 				const char* title = "Select Target Plugin";
@@ -146,9 +144,9 @@ namespace CreationKitPlatformExtended
 				}
 
 				return ((bool(__fastcall*)(HWND, const char*, const char*, const char*, const char*, void*, bool, bool, char*, 
-					uint32_t, const char*, void*))
-					pointer_AllowSaveESMandMasterESP_sub1)(ParentWindow, BasePath, filter, title, extension, nullptr, false, true, Buffer,
-						BufferSize, Directory, nullptr);
+					uint32_t, const char*, void*, bool))
+					pointer_AllowSaveESMandMasterESP_sub1)(ParentWindow, BasePath.c_str(), filter, title, extension, 
+						nullptr, false, true, Buffer, BufferSize, nullptr, nullptr, false);
 			}
 		}
 	}

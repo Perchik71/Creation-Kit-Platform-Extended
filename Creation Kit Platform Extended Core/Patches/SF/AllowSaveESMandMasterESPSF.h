@@ -28,8 +28,8 @@ namespace CreationKitPlatformExtended
 				virtual bool HasDependencies() const;
 				virtual Array<String> GetDependencies() const;
 
-				static BOOL OpenPluginSaveDialog(HWND ParentWindow, LPCSTR BasePath, BOOL IsESM, LPSTR Buffer, 
-					uint32_t BufferSize, LPCSTR Directory);
+				static BOOL OpenPluginSaveDialog(HWND ParentWindow, BOOL IsESM, LPSTR Buffer, 
+					uint32_t BufferSize);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;

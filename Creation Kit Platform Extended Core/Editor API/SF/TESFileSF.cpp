@@ -82,7 +82,20 @@ namespace CreationKitPlatformExtended
 				if (IsMaster()) {
 					auto str = FileName;
 
-					if (!str.Compare("starfield.esm"))
+					if (!str.Compare("starfield.esm") ||
+						!str.Compare("constellation.esm") ||
+						!str.Compare("oldmars.esm") ||
+						!str.Compare("sfbgs003.esm") ||
+						!str.Compare("sfbgs004.esm") ||
+						!str.Compare("sfbgs006.esm") ||
+						!str.Compare("sfbgs007.esm") ||
+						!str.Compare("sfbgs008.esm") ||
+						!str.Compare("sfbgs00a_a.esm") ||
+						!str.Compare("sfbgs00e.esm") ||
+						!str.Compare("sfbgs021.esm") ||
+						!str.Compare("sfbgs023.esm") ||
+						!str.Compare("sfta01.esm") ||
+						!str.Compare("blueprintships - starfield.esm"))
 					{
 						MessageBoxA(GetForegroundWindow(),
 							"Base game master files cannot be set as the active file.",
