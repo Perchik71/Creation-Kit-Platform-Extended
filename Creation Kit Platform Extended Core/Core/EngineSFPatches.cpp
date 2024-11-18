@@ -16,7 +16,7 @@
 #include "Patches/SF/RemoveUselessMessagesSF.h"
 #include "Patches/SF/RemoveUselessResizeInDialogs.h"
 #include "Patches/SF/RemoveThreadDpi.h"
-#include "Patches/SF/LoadMaterialsAsync.h"
+#include "Patches/SF/LoadMaterialsQSplash.h"
 #include "Patches/SF/FixQuoteCmdLineSF.h"
 #include "Patches/SF/AllowSaveESMandMasterESPSF.h"
 
@@ -49,7 +49,7 @@ namespace CreationKitPlatformExtended
 				new Patches::RemoveUselessMessagesPatch(),
 				//new Patches::RemoveUselessResizeInDialogsPatch(),
 				new Patches::RemoveThreadDpiPatch(),
-				//new Patches::LoadMaterialsAsyncPatch(),
+				new Patches::LoadMaterialsQSplashPatch(),
 				new Patches::FixQuoteCmdLinePatch(),
 				new Patches::AllowSaveESMandMasterESPPatch(),
 

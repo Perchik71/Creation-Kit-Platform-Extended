@@ -8,6 +8,11 @@
 #include "Core/Relocator.h"
 #include "Core/RelocationDatabase.h"
 
+#ifdef _CKPE_WITH_QT5
+#	include "QtWidgets/qwidget.h"
+#	include "QtWidgets/qsplashscreen.h"
+#endif // !_CKPE_WITH_QT5
+
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
@@ -16,10 +21,10 @@ namespace CreationKitPlatformExtended
 		{
 			using namespace CreationKitPlatformExtended::Core;
 
-			class LoadMaterialsAsyncPatch : public Module
+			class LoadMaterialsQSplashPatch : public Module
 			{
 			public:
-				LoadMaterialsAsyncPatch();
+				LoadMaterialsQSplashPatch();
 
 				virtual bool HasOption() const;
 				virtual bool HasCanRuntimeDisabled() const;
@@ -28,15 +33,20 @@ namespace CreationKitPlatformExtended
 				virtual bool HasDependencies() const;
 				virtual Array<String> GetDependencies() const;
 
+#ifdef _CKPE_WITH_QT5
+				static void hk_finish(QSplashScreen* logoWin, QWidget* mainWin);
+#endif // !_CKPE_WITH_QT5
+
 				static void sub(void* arg1, void* arg2);
+				static bool LoadMaterials(void* arg1, void* arg2);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
 				virtual bool Activate(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 				virtual bool Shutdown(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 			private:
-				LoadMaterialsAsyncPatch(const LoadMaterialsAsyncPatch&) = default;
-				LoadMaterialsAsyncPatch& operator=(const LoadMaterialsAsyncPatch&) = default;
+				LoadMaterialsQSplashPatch(const LoadMaterialsQSplashPatch&) = default;
+				LoadMaterialsQSplashPatch& operator=(const LoadMaterialsQSplashPatch&) = default;
 			};
 		}
 	}

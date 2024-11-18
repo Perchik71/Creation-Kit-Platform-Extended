@@ -874,7 +874,7 @@
     <ClCompile Include="Patches\SF\RemoveThreadDpi.cpp">
       <Filter>Patches\SF</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SF\LoadMaterialsAsync.cpp">
+    <ClCompile Include="Patches\SF\LoadMaterialsQSplash.cpp">
       <Filter>Patches\SF</Filter>
     </ClCompile>
     <ClCompile Include="Patches\FO4\DontMatchForms.cpp">
@@ -2152,7 +2152,7 @@
     <ClInclude Include="Patches\SF\RemoveThreadDpi.h">
       <Filter>Patches\SF</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SF\LoadMaterialsAsync.h">
+    <ClInclude Include="Patches\SF\LoadMaterialsQSplash.h">
       <Filter>Patches\SF</Filter>
     </ClInclude>
     <ClInclude Include="Patches\FO4\DontMatchForms.h">

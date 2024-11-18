@@ -256,7 +256,7 @@
     <ClCompile Include="Patches\RenderWindow60FPS.cpp" />
     <ClCompile Include="Patches\SF\AllowSaveESMandMasterESPSF.cpp" />
     <ClCompile Include="Patches\SF\FixQuoteCmdLineSF.cpp" />
-    <ClCompile Include="Patches\SF\LoadMaterialsAsync.cpp" />
+    <ClCompile Include="Patches\SF\LoadMaterialsQSplash.cpp" />
     <ClCompile Include="Patches\SF\OptimizationLoadSF.cpp" />
     <ClCompile Include="Patches\SF\RemoveThreadDpi.cpp" />
     <ClCompile Include="Patches\SF\RemoveUselessMessagesSF.cpp" />
@@ -656,7 +656,7 @@
     <ClInclude Include="Patches\RenderWindow60FPS.h" />
     <ClInclude Include="Patches\SF\AllowSaveESMandMasterESPSF.h" />
     <ClInclude Include="Patches\SF\FixQuoteCmdLineSF.h" />
-    <ClInclude Include="Patches\SF\LoadMaterialsAsync.h" />
+    <ClInclude Include="Patches\SF\LoadMaterialsQSplash.h" />
     <ClInclude Include="Patches\SF\OptimizationLoadSF.h" />
     <ClInclude Include="Patches\SF\RemoveThreadDpi.h" />
     <ClInclude Include="Patches\SF\RemoveUselessMessagesSF.h" />
