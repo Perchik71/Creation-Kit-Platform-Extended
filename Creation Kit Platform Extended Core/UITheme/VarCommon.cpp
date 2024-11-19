@@ -20,6 +20,8 @@
 */
 //////////////////////////////////////////
 
+#pragma warning(disable : 6031)
+
 #include "VarCommon.h"
 #include "Core/Engine.h"
 

@@ -81,11 +81,19 @@ namespace CreationKitPlatformExtended
 				{
 					lpRelocator->PatchNop(_RELDATA_RAV(7), 7);				// Prevent setting redundant colors in the condition list view NM_CUSTOMDRAW (breaks dark theme)
 					lpRelocator->Patch(_RELDATA_RAV(8), { 0x74, 0x20 });	// ^
-					lpRelocator->DetourCall(_RELDATA_RAV(9), (uintptr_t)&Comctl32ImageList_LoadImageA_2);
+					// replace ImageList_LoadImage
+					lpRelocator->DetourCall(_RELDATA_RAV(9), (uintptr_t)&Comctl32ImageList_LoadImageA_2);	// item type Task Manager
+					lpRelocator->DetourCall(_RELDATA_RAV(10), (uintptr_t)&Comctl32ImageList_LoadImageA_3);	// Scripts icons
+					lpRelocator->DetourCall(_RELDATA_RAV(11), (uintptr_t)&Comctl32ImageList_LoadImageA_3);	// Scripts icons
 				}
 				else
-					// replace ImageList_LoadImage for item type
-					lpRelocator->DetourCall(_RELDATA_RAV(7), (uintptr_t)&Comctl32ImageList_LoadImageA_2);
+				{
+					// replace ImageList_LoadImage
+					lpRelocator->DetourCall(_RELDATA_RAV(7), (uintptr_t)&Comctl32ImageList_LoadImageA_2);	// item type Task Manager
+					lpRelocator->DetourCall(_RELDATA_RAV(8), (uintptr_t)&Comctl32ImageList_LoadImageA_3);	// Scripts icons
+					lpRelocator->DetourCall(_RELDATA_RAV(9), (uintptr_t)&Comctl32ImageList_LoadImageA_3);	// Scripts icons
+					lpRelocator->DetourCall(_RELDATA_RAV(10), (uintptr_t)&Comctl32ImageList_LoadImageA_3);	// Scripts icons
+				}
 
 				return true;
 			}
@@ -99,8 +107,10 @@ namespace CreationKitPlatformExtended
 				lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&Comctl32ImageList_LoadImageA_1);
 				// remove set color for treeview
 				lpRelocator->PatchNop(_RELDATA_RAV(2), 0x29);
-				// replace ImageList_LoadImage for item type
-				lpRelocator->DetourCall(_RELDATA_RAV(3), (uintptr_t)&Comctl32ImageList_LoadImageA_2);
+				// replace ImageList_LoadImage
+				lpRelocator->DetourCall(_RELDATA_RAV(3), (uintptr_t)&Comctl32ImageList_LoadImageA_2);	// item type
+				lpRelocator->DetourCall(_RELDATA_RAV(4), (uintptr_t)&Comctl32ImageList_LoadImageA_3);	// Scripts icons
+				lpRelocator->DetourCall(_RELDATA_RAV(5), (uintptr_t)&Comctl32ImageList_LoadImageA_3);	// Scripts icons
 			}
 			
 			return false;
@@ -222,6 +232,13 @@ namespace CreationKitPlatformExtended
 			COLORREF crMask, UINT uType, UINT uFlags)
 		{
 			return ImageList_LoadImageA(GlobalEnginePtr->GetInstanceDLL(), MAKEINTRESOURCEA(IDB_BITMAP8),
+				cx, cGrow, crMask, IMAGE_BITMAP, LR_CREATEDIBSECTION | LR_LOADTRANSPARENT);
+		}
+
+		HIMAGELIST UIThemePatchAdditional::Comctl32ImageList_LoadImageA_3(HINSTANCE hi, LPCSTR lpbmp, INT cx, INT cGrow,
+			COLORREF crMask, UINT uType, UINT uFlags)
+		{
+			return ImageList_LoadImageA(GlobalEnginePtr->GetInstanceDLL(), MAKEINTRESOURCEA(IDB_BITMAP9),
 				cx, cGrow, crMask, IMAGE_BITMAP, LR_CREATEDIBSECTION | LR_LOADTRANSPARENT);
 		}
 

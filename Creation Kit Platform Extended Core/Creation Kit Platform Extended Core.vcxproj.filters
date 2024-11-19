@@ -2217,5 +2217,8 @@
     <Image Include="..\Resources\aboutsf.png">
       <Filter>Resources</Filter>
     </Image>
+    <Image Include="..\Resources\scripts.bmp">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>

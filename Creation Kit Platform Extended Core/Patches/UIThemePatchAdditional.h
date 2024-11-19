@@ -36,6 +36,8 @@ namespace CreationKitPlatformExtended
 				COLORREF crMask, UINT uType, UINT uFlags);
 			static HIMAGELIST Comctl32ImageList_LoadImageA_2(HINSTANCE hi, LPCSTR lpbmp, INT cx, INT cGrow,
 				COLORREF crMask, UINT uType, UINT uFlags);
+			static HIMAGELIST Comctl32ImageList_LoadImageA_3(HINSTANCE hi, LPCSTR lpbmp, INT cx, INT cGrow,
+				COLORREF crMask, UINT uType, UINT uFlags);
 			static void HideOldTimeOfDayComponents();
 			static void HKInitializeTimeOfDay(HWND hDlg, INT nIDDlgItem, FLOAT value, INT a4);
 			static void HKSetNewValueTimeOfDay(HWND hDlg, INT nIDDlgItem, FLOAT value, INT a4);

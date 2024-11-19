@@ -358,7 +358,7 @@ namespace CreationKitPlatformExtended
 			RGB(32, 32, 32),											// ThemeColor_SelectedItem_Text
 		};
 
-		constexpr COLORREF szNightBlue[66]
+		constexpr COLORREF szConstNightBlue[66]
 		{
 			RGB(34, 37, 50),											// ThemeColor_Default
 			RGB(18, 19, 22),											// ThemeColor_ListView_Color
@@ -441,6 +441,8 @@ namespace CreationKitPlatformExtended
 				return const_cast<COLORREF*>(szConstDarkGray);
 			case Theme_Dark:
 				return const_cast<COLORREF*>(szConstDark);
+			case Theme_NightBlue:
+				return const_cast<COLORREF*>(szConstNightBlue);
 			}
 
 			return nullptr;
@@ -456,6 +458,8 @@ namespace CreationKitPlatformExtended
 				return szConstLight[color - 1];
 			else if (theme == Theme_Gray)
 				return szConstGray[color - 1];
+			else if (theme == Theme_NightBlue)
+				return szConstNightBlue[color - 1];
 			else
 				return 0;
 		}

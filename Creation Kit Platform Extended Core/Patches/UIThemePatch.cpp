@@ -4,6 +4,8 @@
 
 // Special thanks (very cool): https://github.com/adzm/win32-custom-menubar-aero-theme
 
+#pragma warning(disable : 26819)
+
 #include "Core/Engine.h"
 #include "Core/RegistratorWindow.h"
 #include "Editor API/EditorUI.h"
@@ -333,9 +335,9 @@ namespace CreationKitPlatformExtended
 
 #ifndef _CKPE_WITH_QT5
 				auto Id = _READ_OPTION_UINT("CreationKit", "uUIDarkThemeId", 0);
-				Id = std::min(Id, (unsigned long)2);
+				Id = std::min(Id, (unsigned long)3);
 
-				if (Id == 2)
+				if (Id == 3)
 				{
 					if (!UITheme::OpenCustomTheme())
 						UITheme::SetTheme(UITheme::Theme_DarkGray);
@@ -1527,12 +1529,23 @@ namespace CreationKitPlatformExtended
 							UITheme::CheckBox::Render::DrawCheck_Disabled(Canvas, pRect);
 							break;
 						case CBS_CHECKEDNORMAL:
-							UITheme::PushButton::Render::DrawPushButton_Normal(Canvas, pRect);
+							if (UITheme::GetTheme() == UITheme::Theme_NightBlue)
+								UITheme::PushButton::Render::DrawPushButton_Pressed(Canvas, pRect);
+							else
+								UITheme::PushButton::Render::DrawPushButton_Normal(Canvas, pRect);
 							UITheme::CheckBox::Render::DrawCheck_Normal(Canvas, pRect);
 							break;
 						case CBS_CHECKEDHOT:
-							UITheme::PushButton::Render::DrawPushButton_Hot(Canvas, pRect);
-							UITheme::CheckBox::Render::DrawCheck_Hot(Canvas, pRect);
+							if (UITheme::GetTheme() == UITheme::Theme_NightBlue)
+							{
+								UITheme::PushButton::Render::DrawPushButton_Pressed(Canvas, pRect);
+								UITheme::CheckBox::Render::DrawCheck_Normal(Canvas, pRect);
+							}
+							else
+							{
+								UITheme::PushButton::Render::DrawPushButton_Hot(Canvas, pRect);
+								UITheme::CheckBox::Render::DrawCheck_Hot(Canvas, pRect);
+							}
 							break;
 						case CBS_CHECKEDPRESSED:
 							UITheme::PushButton::Render::DrawPushButton_Pressed(Canvas, pRect);
