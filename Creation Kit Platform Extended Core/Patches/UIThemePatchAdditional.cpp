@@ -81,7 +81,11 @@ namespace CreationKitPlatformExtended
 				{
 					lpRelocator->PatchNop(_RELDATA_RAV(7), 7);				// Prevent setting redundant colors in the condition list view NM_CUSTOMDRAW (breaks dark theme)
 					lpRelocator->Patch(_RELDATA_RAV(8), { 0x74, 0x20 });	// ^
+					lpRelocator->DetourCall(_RELDATA_RAV(9), (uintptr_t)&Comctl32ImageList_LoadImageA_2);
 				}
+				else
+					// replace ImageList_LoadImage for item type
+					lpRelocator->DetourCall(_RELDATA_RAV(7), (uintptr_t)&Comctl32ImageList_LoadImageA_2);
 
 				return true;
 			}
@@ -97,7 +101,6 @@ namespace CreationKitPlatformExtended
 				lpRelocator->PatchNop(_RELDATA_RAV(2), 0x29);
 				// replace ImageList_LoadImage for item type
 				lpRelocator->DetourCall(_RELDATA_RAV(3), (uintptr_t)&Comctl32ImageList_LoadImageA_2);
-				//350E412
 			}
 			
 			return false;
