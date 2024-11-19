@@ -2,6 +2,7 @@
 #pragma warning (disable : 6335)
 
 #include <iostream>
+#include <algorithm>
 #include <memory>
 #include <string>
 #include <map>
@@ -30,6 +31,8 @@ std::map<std::wstring, BOOL> dllENBs = {
 	{ L"dxgi.dll", FALSE },
 	{ L"dinput8.dll", FALSE },
 };
+
+static constexpr const char steamapi_dllname[] = "steam_api64";
 
 void RestoreFiles(const std::wstring& AppPath);
 
@@ -242,6 +245,109 @@ void SetAddressOfBaseFixed(const std::wstring& AppPath)
 	fwrite(&ntHeaders, sizeof(IMAGE_NT_HEADERS), 1, Stream);
 
 	fclose(Stream);
+
+	MessageBoxW(0, CREATIONKIT" Patched. Close.", L"Info", MB_OK | MB_ICONINFORMATION);
+}
+
+void SetAddressOfBaseFloating(const std::wstring& AppPath)
+{
+	if (!FileExists(AppPath + CREATIONKIT))
+		return;
+
+	FILE* Stream = nullptr;
+	_wfopen_s(&Stream, (AppPath + CREATIONKIT).c_str(), L"rb+");
+	if (!Stream)
+		return;
+
+	IMAGE_DOS_HEADER DosHeader = { 0 };
+	fread(&DosHeader, sizeof(IMAGE_DOS_HEADER), 1, Stream);
+	fseek(Stream, DosHeader.e_lfanew, SEEK_SET);
+
+	IMAGE_NT_HEADERS ntHeaders = { 0 };
+	fread(&ntHeaders, sizeof(IMAGE_NT_HEADERS), 1, Stream);
+	ntHeaders.FileHeader.Characteristics =
+		IMAGE_FILE_EXECUTABLE_IMAGE | IMAGE_FILE_LARGE_ADDRESS_AWARE;
+	fseek(Stream, DosHeader.e_lfanew, SEEK_SET);
+	fwrite(&ntHeaders, sizeof(IMAGE_NT_HEADERS), 1, Stream);
+
+	fclose(Stream);
+
+	MessageBoxW(0, CREATIONKIT" Patched. Close.", L"Info", MB_OK | MB_ICONINFORMATION);
+}
+
+void SetRedirectSteamAPI(const std::wstring& AppPath)
+{
+	if (!FileExists(AppPath + CREATIONKIT))
+		return;
+
+	// Algorithm is imperfect, and there may be exceptional situations
+
+	FILE* Stream = nullptr;
+	_wfopen_s(&Stream, (AppPath + CREATIONKIT).c_str(), L"rb+");
+	if (!Stream)
+		return;
+
+	std::string Pattern = steamapi_dllname;
+	std::string PatternWinhttp = "winhttp";
+	std::string PatternDll = ".dll";
+
+	auto Buffer = std::make_unique<char[]>(2048);
+	size_t Total = 0;
+	while (!feof(Stream))
+	{
+		auto ReadBytes = fread(Buffer.get(), 1, 2048, Stream);
+		if (!ReadBytes) break;
+
+		auto Start = Buffer.get();
+		auto End = Start + ReadBytes;
+		while (true)
+		{
+			auto Result = std::search(Start, End, Pattern.begin(), Pattern.end());
+			if (Result >= End)
+				break;
+
+			if (*(Result + Pattern.size()) == '\x00')
+			{
+				auto SafePos = ftell(Stream);
+				auto Pos = ((size_t)(Result - Buffer.get())) + Total;
+				fseek(Stream, (long)Pos, SEEK_SET);
+				fwrite(PatternWinhttp.c_str(), PatternWinhttp.size(), 1, Stream);
+				
+				char ch = 0;
+				for(int i = 0; i < (int)(Pattern.size() - PatternWinhttp.size()); i++)
+					fwrite(&ch, 1, 1, Stream);
+
+				fseek(Stream, SafePos, SEEK_SET);
+			}
+			else if (*(Result + Pattern.size()) == '.')
+			{
+				auto SafePos = ftell(Stream);
+				auto Pos = ((size_t)(Result - Buffer.get())) + Total;
+				fseek(Stream, (long)Pos, SEEK_SET);
+				fwrite(PatternWinhttp.c_str(), PatternWinhttp.size(), 1, Stream);
+				fwrite(PatternDll.c_str(), PatternDll.size(), 1, Stream);
+
+				char ch = 0;
+				for (int i = 0; i < (int)(Pattern.size() - PatternWinhttp.size()); i++)
+					fwrite(&ch, 1, 1, Stream);
+
+				fseek(Stream, SafePos, SEEK_SET);
+			}
+			else
+			{
+				MessageBoxA(0, "An unexpected find pattern. Close.", "Warning", MB_OK | MB_ICONWARNING);
+				return;
+			}
+
+			Start = Result + Pattern.size();
+		}
+
+		Total += ReadBytes;
+	}
+
+	fclose(Stream);
+
+	MessageBoxW(0, CREATIONKIT" Patched. Close.", L"Info", MB_OK | MB_ICONINFORMATION);
 }
 
 int main(int argc, char* argv[])
@@ -263,7 +369,20 @@ int main(int argc, char* argv[])
 	if ((argc > 2) && !_stricmp(argv[1], "-c"))
 	{
 		if (!_stricmp(argv[2], "address_of_base_fixed"))
+		{
 			SetAddressOfBaseFixed(AppPath);
+			return 0;
+		}
+		else if (!_stricmp(argv[2], "address_of_base_floating"))
+		{
+			SetAddressOfBaseFloating(AppPath);
+			return 0;
+		}
+		else if (!_stricmp(argv[2], "redirect_steam_api"))
+		{
+			SetRedirectSteamAPI(AppPath);
+			return 0;
+		}
 	}
 
 	RenameFiles(AppPath);

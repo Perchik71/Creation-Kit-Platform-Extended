@@ -15,10 +15,6 @@ namespace CreationKitPlatformExtended
 
 			HANDLE g_LoadMaterialsQSplashPatch_wait = NULL;
 			uintptr_t pointer_LoadMaterialsQSplashPatch_sub0 = 0;
-#ifdef _CKPE_WITH_QT5
-			QSplashScreen* g_LoadMaterialsQSplashPatch_logoWin = nullptr;
-			QWidget* g_LoadMaterialsQSplashPatch_mainWin = nullptr;
-#endif // !_CKPE_WITH_QT5
 
 			LoadMaterialsQSplashPatch::LoadMaterialsQSplashPatch() : Module(GlobalEnginePtr)
 			{}

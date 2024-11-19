@@ -108,10 +108,7 @@ Marked as <b>deprecated</b>, means that there will be nothing new for these vers
 > [!NOTE]
 > You can remove *Steam* from the **Creation Kit**.  
 > You just need to manually replace the string *`steam_api64.dll`* on *`winhttp.dll`* in any **HEX editor**. Since the new string is four bytes shorter, the remaining bytes are set to **`0x00`**. Or compile the **NoSteam Patcher** in **Lazarus** and use it.  
-> For versions **`1.6.438.0`** and **`1.10.162.0`**, you first need to remove **`Steam DRM`**, for example, [Steamless](https://github.com/atom0s/Steamless). 
-
-> [!NOTE]
-> `ckpe_loader -c address_of_base_fixed` will make the starting address fixed, starting from `0x140000000`, changes the .exe header.
+> For versions **`1.6.438.0`** and **`1.10.162.0`**, you first need to remove **`Steam DRM`**, for example, [Steamless](https://github.com/atom0s/Steamless).  
 
 # Demonstration
 <p align="center">
