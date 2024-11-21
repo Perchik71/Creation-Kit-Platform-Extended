@@ -102,11 +102,12 @@ namespace CreationKitPlatformExtended
 
 			void LoadMaterialsQSplashPatch::sub(void* arg1, void* arg2)
 			{
-				_CONSOLE(MESSAGE);
+				//_CONSOLE(MESSAGE);
 				// To be processed faster by the process
 				SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
 				// Load
-				_CONSOLE("%s %s", MESSAGE, LoadMaterials(arg1, arg2) ? "SUCCESS" : "FATAL");
+				LoadMaterials(arg1, arg2);
+				//_CONSOLE("%s %s", MESSAGE,  ? "SUCCESS" : "FATAL");
 				// Return priority
 				SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL);
 				// End loading
