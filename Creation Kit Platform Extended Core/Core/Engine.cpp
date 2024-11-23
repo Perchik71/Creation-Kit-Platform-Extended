@@ -641,6 +641,7 @@ namespace CreationKitPlatformExtended
 				// Получение начального адреса памяти главного процесса
 				uintptr_t moduleBase = (uintptr_t)GetModuleHandle(NULL);
 
+				bool Outdated = false;
 				// Пытаемся определить файл
 				EDITOR_EXECUTABLE_TYPE editorVersion = EDITOR_UNKNOWN;
 				auto editorVersionIterator = allowedEditorVersion.find(hash_crc32);
@@ -660,7 +661,10 @@ namespace CreationKitPlatformExtended
 					editorVersion = EDITOR_UNKNOWN;
 #endif // !_CKPE_WITH_QT5
 
-				if (editorVersion != EDITOR_UNKNOWN)
+				// Проверка неустаревшая ли версия
+				Outdated = CheckOutdatedEditor(editorVersion);
+
+				if ((editorVersion != EDITOR_UNKNOWN) && !Outdated)
 				{
 					_MESSAGE("Current CK version: %s", allowedEditorVersionStr[(int)editorVersion].data());
 
@@ -668,9 +672,14 @@ namespace CreationKitPlatformExtended
 				}
 				else
 				{
-					_ERROR("The CK version has not been determined");
+					if (Outdated)
+						Result = RC_DEPRECATED_VERSION_CREATIONKIT;
+					else
+					{
+						_ERROR("The CK version has not been determined");
 
-					Result = RC_UNSUPPORTED_VERSION_CREATIONKIT;
+						Result = RC_UNSUPPORTED_VERSION_CREATIONKIT;
+					}
 				}
 			}
 			else

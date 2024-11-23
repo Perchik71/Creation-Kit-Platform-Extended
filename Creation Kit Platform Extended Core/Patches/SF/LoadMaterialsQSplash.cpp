@@ -67,8 +67,8 @@ namespace CreationKitPlatformExtended
 					lpRelocator->DetourCall(_RELDATA_RAV(0), (uintptr_t)&hk_finish);
 					lpRelocator->PatchNop(_RELDATA_RAV(0) + 5, 0xA);
 
-					*(uintptr_t*)&pointer_LoadMaterialsQSplashPatch_sub0 =
-						voltek::detours_function_class_jump(_RELDATA_ADDR(1), (uintptr_t)&sub);
+					//*(uintptr_t*)&pointer_LoadMaterialsQSplashPatch_sub0 =
+					//	voltek::detours_function_class_jump(_RELDATA_ADDR(1), (uintptr_t)&sub);
 
 					return true;
 				}
@@ -86,14 +86,14 @@ namespace CreationKitPlatformExtended
 #ifdef _CKPE_WITH_QT5
 			void LoadMaterialsQSplashPatch::hk_finish(QSplashScreen* logoWin, QWidget* mainWin)
 			{
-				logoWin->showMessage(MESSAGE, 1, Qt::red);
+				//logoWin->showMessage(MESSAGE, 1, Qt::red);
 				// Instead of QtCore::ProcessMessage, since CKPE Qt is not initialized
-				Utils::ProcessMessage();
+				//Utils::ProcessMessage();
 				// Wait loading materials
-				g_LoadMaterialsQSplashPatch_wait = CreateEvent(NULL, TRUE, FALSE, NULL);
-				ResetEvent(g_LoadMaterialsQSplashPatch_wait);
-				WaitForSingleObject(g_LoadMaterialsQSplashPatch_wait, INFINITE);
-				CloseHandle(g_LoadMaterialsQSplashPatch_wait);
+				//g_LoadMaterialsQSplashPatch_wait = CreateEvent(NULL, TRUE, FALSE, NULL);
+				//ResetEvent(g_LoadMaterialsQSplashPatch_wait);
+				//WaitForSingleObject(g_LoadMaterialsQSplashPatch_wait, INFINITE);
+				//CloseHandle(g_LoadMaterialsQSplashPatch_wait);
 				// Show main window
 				mainWin->show();
 				logoWin->finish(mainWin);
