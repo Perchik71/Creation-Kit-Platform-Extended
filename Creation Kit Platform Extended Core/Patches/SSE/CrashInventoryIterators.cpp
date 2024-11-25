@@ -55,7 +55,7 @@ namespace CreationKitPlatformExtended
 			bool CrashInventoryIteratorsPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST;
+				return eEditorCurrentVersion <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_1_6_1130;
 			}
 
 			bool CrashInventoryIteratorsPatch::Activate(const Relocator* lpRelocator,

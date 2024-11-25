@@ -81,7 +81,6 @@
 #include "Patches/SSE/UpdateUIWhenFogToggled.h"
 #include "Patches/SSE/FixParamsATXT.h"
 #include "Patches/SSE/NewFormat171.h"
-#include "Patches/SSE/CrashGenMaxHeightData.h"
 #include "Patches/SSE/TESDataHandlerHookSSE.h"
 #include "Patches/SSE/FixFormIDsInLoadFile.h"
 #include "Patches/SSE/IgnoreGroundHeightTest.h"
@@ -191,7 +190,6 @@ namespace CreationKitPlatformExtended
 				new Patches::UpdateUIWhenFogToggledPatch(),
 				new Patches::FixParamsATXTPatch(),
 				new Patches::NewFormat171Patch(),
-				new Patches::CrashGenMaxHeightDataPatch(),
 				new Patches::TESDataHandlerPatch(),
 				new Patches::FixFormIDsInLoadFilePatch(),
 				new Patches::IgnoreGroundHeightTestPatch(),

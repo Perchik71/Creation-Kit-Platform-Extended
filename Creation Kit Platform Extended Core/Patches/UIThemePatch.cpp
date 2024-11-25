@@ -145,14 +145,15 @@ namespace CreationKitPlatformExtended
 		{
 			// Main class Creation Kit
 			"Creation Kit",
-			"Creation Kit Skyrim Special Edition [v1.5.3]",
+			//"Creation Kit Skyrim Special Edition [v1.5.3]",
 			"Creation Kit Skyrim Special Edition [v1.5.73]",
-			"Creation Kit Skyrim Special Edition [v1.6.438]",
+			//"Creation Kit Skyrim Special Edition [v1.6.438]",
 			"Creation Kit Skyrim Special Edition [v1.6.1130]",
+			"Creation Kit Skyrim Special Edition [v1.6.1378.1]",
 			"Creation Kit Fallout 4 [v1.10.162.0]",
-			"Creation Kit Fallout 4 [v1.10.943.1]",
+			//"Creation Kit Fallout 4 [v1.10.943.1]",
 			"Creation Kit Fallout 4 [v1.10.982.3]",
-			"Creation Kit Starfield [v1.12.32.0]",				// Qt5 makes it not valid
+			//"Creation Kit Starfield [v1.12.32.0]",			// Qt5 makes it not valid
 			// Classes CK 2.0
 			"MAINMENU",
 			"CicMarshalWndClass",

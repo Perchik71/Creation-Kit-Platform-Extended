@@ -68,8 +68,8 @@ namespace CreationKitPlatformExtended
 			bool BNetUploadWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				// Upload for the editor only version CK 1.6.1130
-				return eEditorCurrentVersion == EDITOR_SKYRIM_SE_1_6_1130;
+				// Upload for the editor only version CK 1.6.1130 or newer
+				return eEditorCurrentVersion >= EDITOR_SKYRIM_SE_1_6_1130;
 			}
 
 			bool BNetUploadWindow::Activate(const Relocator* lpRelocator,

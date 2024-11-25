@@ -87,16 +87,16 @@ namespace CreationKitPlatformExtended
 		// Список названий редакторов
 		static std::vector<std::string_view> allowedEditorVersionStr = {
 			"Unknown version",
-			//"Skyrim Special Edition [v1.5.3]",
+			"Skyrim Special Edition [v1.5.3]",
 			"Skyrim Special Edition [v1.5.73]",
-			//"Skyrim Special Edition [v1.6.438]",
+			"Skyrim Special Edition [v1.6.438]",
 			"Skyrim Special Edition [v1.6.1130]",
 			"Skyrim Special Edition [v1.6.1378.1]",
 			"Fallout 4 [v1.10.162.0]",
-			//"Fallout 4 [v1.10.943.1]",
+			"Fallout 4 [v1.10.943.1]",
 			"Fallout 4 [v1.10.982.3]",
-			//"Starfield [v1.13.61.0]",
-			//"Starfield [v1.14.70.0]",
+			"Starfield [v1.13.61.0]",
+			"Starfield [v1.14.70.0]",
 			"Starfield [v1.14.74.0]",
 		};
 
@@ -147,18 +147,18 @@ namespace CreationKitPlatformExtended
 		{
 			switch (editorVersion)
 			{
-			//case EDITOR_SKYRIM_SE_1_5_3:
+			case EDITOR_SKYRIM_SE_1_5_3:
 			case EDITOR_SKYRIM_SE_1_5_73:
-			//case EDITOR_SKYRIM_SE_1_6_438:
+			case EDITOR_SKYRIM_SE_1_6_438:
 			case EDITOR_SKYRIM_SE_1_6_1130:
 			case EDITOR_SKYRIM_SE_1_6_1378_1:
 				return EDITOR_SHORT_SKYRIM_SE;
 			case EDITOR_FALLOUT_C4_1_10_162_0:
-			//case EDITOR_FALLOUT_C4_1_10_943_1:
+			case EDITOR_FALLOUT_C4_1_10_943_1:
 			case EDITOR_FALLOUT_C4_1_10_982_3:
 				return EDITOR_SHORT_FALLOUT_C4;
-			//case EDITOR_STARFIELD_1_13_61_0:
-			//case EDITOR_STARFIELD_1_14_70_0:
+			case EDITOR_STARFIELD_1_13_61_0:
+			case EDITOR_STARFIELD_1_14_70_0:
 			case EDITOR_STARFIELD_1_14_74_0:
 				return EDITOR_SHORT_STARFIELD;
 			default:

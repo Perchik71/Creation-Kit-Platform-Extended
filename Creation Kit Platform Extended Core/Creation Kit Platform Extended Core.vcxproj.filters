@@ -627,9 +627,6 @@
     <ClCompile Include="Core\MemoryManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\CrashGenMaxHeightData.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Patches\SSE\TESDataHandlerHookSSE.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
@@ -1673,9 +1670,6 @@
     </ClInclude>
     <ClInclude Include="Core\MemoryManager.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\CrashGenMaxHeightData.h">
-      <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Editor API\SSE\TESDataHandler.h">
       <Filter>Editor API\SSE</Filter>

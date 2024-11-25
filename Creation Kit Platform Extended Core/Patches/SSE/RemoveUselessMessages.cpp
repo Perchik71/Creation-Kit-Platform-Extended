@@ -90,6 +90,9 @@ namespace CreationKitPlatformExtended
 					// Disable "Unable to initialize perforce, check your logs for more information."
 					lpRelocator->PatchNop(lpRelocationDatabaseItem->At(12), 6);
 
+					for (uint32_t i = 13; i < lpRelocationDatabaseItem->Count(); i++)
+						lpRelocator->PatchNop(_RELDATA_RAV(i), 5);
+
 					return true;
 				}
 

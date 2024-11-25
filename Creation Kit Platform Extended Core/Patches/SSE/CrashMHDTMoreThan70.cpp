@@ -55,7 +55,7 @@ namespace CreationKitPlatformExtended
 			bool CrashMHDTMoreThan70Patch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const
 			{
-				return eEditorCurrentVersion == EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_1_6_1130;
+				return eEditorCurrentVersion >= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_1_6_1130;
 			}
 
 			bool CrashMHDTMoreThan70Patch::Activate(const Relocator* lpRelocator,
