@@ -38,12 +38,12 @@ namespace CreationKitPlatformExtended
 
 			bool AddChangeRefPatch::HasDependencies() const
 			{
-				return false;
+				return true;
 			}
 
 			Array<String> AddChangeRefPatch::GetDependencies() const
 			{
-				return {};
+				return { "Replace BSPointerHandle And Manager" };
 			}
 
 			bool AddChangeRefPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,

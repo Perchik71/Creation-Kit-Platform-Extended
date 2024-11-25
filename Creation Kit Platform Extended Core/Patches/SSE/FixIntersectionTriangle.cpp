@@ -47,12 +47,12 @@ namespace CreationKitPlatformExtended
 
 			bool FixIntersectionTrianglePatch::HasDependencies() const
 			{
-				return false;
+				return true;
 			}
 
 			Array<String> FixIntersectionTrianglePatch::GetDependencies() const
 			{
-				return {};
+				return { "Replace BSPointerHandle And Manager" };
 			}
 
 			bool FixIntersectionTrianglePatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,

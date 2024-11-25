@@ -56,8 +56,8 @@ namespace CreationKitPlatformExtended
 				PatchIAT(HKSetThreadPriority, "kernel32.dll", "SetThreadPriority");
 				PatchIAT(HKSetThreadAffinityMask, "kernel32.dll", "SetThreadAffinityMask");
 				
-				PatchIAT(HKSleep, "kernel32.dll", "Sleep");
-				PatchIAT(HKSleepEx, "kernel32.dll", "SleepEx");
+				//PatchIAT(HKSleep, "kernel32.dll", "Sleep");
+				//PatchIAT(HKSleepEx, "kernel32.dll", "SleepEx");
 
 				auto hCurrentProcess = GetCurrentProcess();
 				if (hCurrentProcess)
