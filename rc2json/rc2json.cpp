@@ -13,6 +13,8 @@
 #include <fstream>
 #include <filesystem>
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 
 static const std::map<std::string, std::string> mapStdControlType = {
     { "LISTVIEW", "SysListView32" },
@@ -63,12 +65,31 @@ inline static std::string trim(const char* s)
     return trim(str);
 }
 
+static void read_words(FILE* f, char* b)
+{
+    while (fscanf(f, " %1023s", b) == 1)
+        break;
+}
+
+static void read_word_sep(FILE* f, char* b)
+{
+    char* rr = b;
+    char c = (char)fgetc(f);
+    while (c != ',')
+    {
+        *rr++ = c;
+        c = fgetc(f);
+    }
+
+    *rr++ = '\x00';
+}
+
 static bool rc2json(const char* a_filename)
 {
-    std::string in_file(a_filename);
+    std::string in_file = a_filename;
     if (!std::filesystem::exists(a_filename)) return false;
 
-    std::string out_file(change_file_ext(a_filename, ".json"));
+    std::string out_file = change_file_ext(a_filename, ".json");
     if (std::filesystem::exists(out_file) && !std::filesystem::remove(out_file))
     {
         std::cout << "ERROR: can't remove old file json\n";
@@ -113,10 +134,15 @@ static bool rc2json(const char* a_filename)
     //     ]
     // }
 
-    std::ifstream in_stream(in_file, std::ios::in);
-    std::ofstream out_stream(out_file, std::ios::out);
-    if (!in_stream.is_open() || !out_stream.is_open())
+    char szWord[512];
+
+    auto in_stream = fopen(in_file.c_str(), "rt");
+    auto out_stream = std::ofstream(out_file); //fopen(out_file.c_str(), "wt");
+    if (!in_stream || !out_stream)
     {
+        if (in_stream) fclose(in_stream);
+        if (out_stream) out_stream.close();
+
         std::cout << "ERROR: I/O error fatal\n";
 
         return false;
@@ -124,17 +150,17 @@ static bool rc2json(const char* a_filename)
 
     bool need_del_sep = false;
 
-    in_stream.seekg(0);
+    fseek(in_stream, 0, SEEK_SET);
+    read_words(in_stream, szWord);
+    uint32_t dialog_index = strtoul(szWord, nullptr, 10);
+    
+    std::cout << "dfd " << dialog_index << " " << in_file << std::endl;
 
-    uint32_t dialog_index = 0;
-    in_stream >> dialog_index;
-
-    std::string buffer;
-    in_stream >> buffer;
+    read_words(in_stream, szWord);
  
-    if (!in_stream.good() || _stricmp(buffer.c_str(), "DIALOGEX"))
+    if (_stricmp(szWord, "DIALOGEX"))
     {
-        std::cout << "ERROR: no dialog rcdata (" << buffer.c_str() << ")\n";
+        std::cout << "ERROR: no dialog rcdata (" << szWord << ")\n";
 
         return false;
     }
@@ -160,160 +186,167 @@ static bool rc2json(const char* a_filename)
     } dialoginfo;
     ZeroMemory(&dialoginfo, sizeof(dialoginfo_tag));
 
-    in_stream >> buffer >> buffer;
-    in_stream >> buffer;
-    dialoginfo.width = strtoul(buffer.c_str(), nullptr, 10);
-    in_stream >> buffer;
-    dialoginfo.height = strtoul(buffer.c_str(), nullptr, 10);
-    in_stream >> buffer >> buffer;
+    read_words(in_stream, szWord);
+    read_words(in_stream, szWord);
+    read_words(in_stream, szWord);
+    dialoginfo.width = strtoul(szWord, nullptr, 10);
+    read_words(in_stream, szWord);
+    dialoginfo.height = strtoul(szWord, nullptr, 10);
+    
+    while(_stricmp(szWord, "STYLE"))
+        read_words(in_stream, szWord);
 
-	if (!_stricmp(buffer.c_str(), "STYLE"))
+	if (!_stricmp(szWord, "STYLE"))
 	{
 		for (;;)
 		{
-			in_stream >> buffer;
+            read_words(in_stream, szWord);
 
-            if (!_stricmp(buffer.c_str(), "NOT"))
+            if (!_stricmp(szWord, "NOT"))
             {
-                in_stream >> buffer;
-                dialoginfo.style.push_back((std::string("NOT ") + buffer).c_str());
+                read_words(in_stream, szWord);
+
+                dialoginfo.style.push_back((std::string("NOT ") + szWord).c_str());
             }
             else
             {
-                if (strncmp(buffer.c_str(), "0x", 2))
-                    dialoginfo.style.push_back(buffer.c_str());
+                if (strncmp(szWord, "0x", 2))
+                    dialoginfo.style.push_back(szWord);
                 else
                 {
-                    if (strtoul(buffer.c_str(), nullptr, 16))
-                        dialoginfo.style.push_back(buffer.c_str());
+                    if (strtoul(szWord, nullptr, 16))
+                        dialoginfo.style.push_back(szWord);
                 }
             }
 
-			in_stream >> buffer;
+            read_words(in_stream, szWord);
 
-			if (buffer[0] != '|') break;
+			if (szWord[0] != '|') break;
 		}
 	}
 
-	if (!_stricmp(buffer.c_str(), "EXSTYLE"))
+	if (!_stricmp(szWord, "EXSTYLE"))
 	{
 		for (;;)
 		{
-			in_stream >> buffer;
+            read_words(in_stream, szWord);
 
-            if (!_stricmp(buffer.c_str(), "NOT"))
+            if (!_stricmp(szWord, "NOT"))
             {
-                in_stream >> buffer;
-                dialoginfo.exstyle.push_back((std::string("NOT ") + buffer).c_str());
+                read_words(in_stream, szWord);
+                dialoginfo.exstyle.push_back((std::string("NOT ") + szWord).c_str());
             }
             else
             {
-                if (strncmp(buffer.c_str(), "0x", 2))
-                    dialoginfo.exstyle.push_back(buffer.c_str());
+                if (strncmp(szWord, "0x", 2))
+                    dialoginfo.exstyle.push_back(szWord);
                 else
                 {
-                    if (strtoul(buffer.c_str(), nullptr, 16))
-                        dialoginfo.exstyle.push_back(buffer.c_str());
+                    if (strtoul(szWord, nullptr, 16))
+                        dialoginfo.exstyle.push_back(szWord);
                 }
             }
 
-			in_stream >> buffer;
+            read_words(in_stream, szWord);
 
-			if (buffer[0] != '|') break;
+			if (szWord[0] != '|') break;
 		}
 	}
 
-    if (!_stricmp(buffer.c_str(), "CLASS"))
+    if (!_stricmp(szWord, "CLASS"))
     {
-        in_stream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        in_stream >> buffer;
+        fgets(szWord, 512, in_stream);
+        read_words(in_stream, szWord);
     }
 
-    if (!_stricmp(buffer.c_str(), "CAPTION"))
+    if (!_stricmp(szWord, "CAPTION"))
     {
-        in_stream.getline(dialoginfo.title, _ARRAYSIZE(dialoginfo.title));
+        fgets(dialoginfo.title, _ARRAYSIZE(dialoginfo.title), in_stream);
         auto s = trim(dialoginfo.title);
         ZeroMemory(dialoginfo.title, _ARRAYSIZE(dialoginfo.title));
         memcpy_s(dialoginfo.title, _ARRAYSIZE(dialoginfo.title), s.c_str(), s.length());
 
-        in_stream >> buffer;
+        read_words(in_stream, szWord);
     }
 
-    if (!_stricmp(buffer.c_str(), "LANGUAGE"))
+    if (!_stricmp(szWord, "LANGUAGE"))
     {
-        in_stream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        in_stream >> buffer;
+        fgets(szWord, 512, in_stream);
+        
+        read_words(in_stream, szWord);
     }
 
-    if (!_stricmp(buffer.c_str(), "FONT"))
+    if (!_stricmp(szWord, "FONT"))
     {
         dialoginfo.weight = 400;
-        in_stream >> buffer;
-        dialoginfo.fontsize = strtoul(buffer.c_str(), nullptr, 10);
-        in_stream.getline(dialoginfo.fontname, _ARRAYSIZE(dialoginfo.fontname));
+        read_words(in_stream, szWord);
+        dialoginfo.fontsize = strtoul(szWord, nullptr, 10);
+        fgets(dialoginfo.fontname, _ARRAYSIZE(dialoginfo.fontname), in_stream);
         auto s = trim(dialoginfo.fontname);
         ZeroMemory(dialoginfo.fontname, _ARRAYSIZE(dialoginfo.fontname));
         memcpy_s(dialoginfo.fontname, _ARRAYSIZE(dialoginfo.fontname), s.c_str(), s.length());
     }
     else
     {
-        std::cout << "ERROR: invalid rcdata  (" << buffer.c_str() << ")\n";
+        std::cout << "ERROR: invalid rcdata  (" << szWord << ")\n";
         return false;
     }
 
-    in_stream >> buffer;
-    if (buffer[0] != '{')
+    read_words(in_stream, szWord);
+    if (szWord[0] != '{')
     {
-        std::cout << "ERROR: invalid rcdata  (" << buffer.c_str() << ")\n";
+        std::cout << "ERROR: invalid rcdata  (" << szWord << ")\n";
         return false;
     }
 
     controlinfo_tag controlinfo;
-    in_stream >> buffer;
+    read_words(in_stream, szWord);
 
     for (;;)
     {
-        if (buffer[0] == '}') break;
+        if (szWord[0] == '}') break;
         
         ZeroMemory(&controlinfo, sizeof(controlinfo_tag));
 
-        if (!_stricmp(buffer.c_str(), "CONTROL"))
+        if (!_stricmp(szWord, "CONTROL"))
         {
-            strcpy_s(controlinfo.type, buffer.c_str());
+            strcpy_s(controlinfo.type, szWord);
 
-            auto pos = in_stream.tellg();
-            in_stream >> buffer;
-            if (buffer[0] == '"')
+            auto pos = ftell(in_stream);
+            read_words(in_stream, szWord);
+
+            if (szWord[0] == '"')
             {
-                in_stream.seekg(pos, std::ios::beg);
+                fseek(in_stream, pos, SEEK_SET);
 
-                char buf[100];
-                in_stream.getline(buf, _ARRAYSIZE(buf), ',');
-                strcpy_s(controlinfo.title, trim(buf).c_str());
-      
-                in_stream >> buffer;
-                controlinfo.id = strtoul(buffer.c_str(), nullptr, 10);
+                read_word_sep(in_stream, szWord);
+                strcpy_s(controlinfo.title, trim(szWord).c_str());
+  
+                read_words(in_stream, szWord);
+
+                controlinfo.id = strtoul(szWord, nullptr, 10);
             }
             else
-                controlinfo.id = strtoul(buffer.c_str(), nullptr, 10);
+                controlinfo.id = strtoul(szWord, nullptr, 10);
 
-            in_stream >> buffer;
-            strcpy_s(controlinfo.classname, trim(buffer).c_str());
+            read_words(in_stream, szWord);
+            strcpy_s(controlinfo.classname, trim(szWord).c_str());
 
-            pos = in_stream.tellg();
-            in_stream >> buffer;
-            if (!strncmp(buffer.c_str(), "0x", 2) || (std::isalpha(buffer[0])))
+            pos = ftell(in_stream);
+            read_words(in_stream, szWord);
+            if (!strncmp(szWord, "0x", 2) || (std::isalpha(szWord[0])))
             {
-                in_stream.seekg(pos, std::ios::beg);
+                fseek(in_stream, pos, SEEK_SET);
 
                 for (;;)
                 {
-                    in_stream >> buffer;
-                    buffer = trim(buffer);
+                    read_words(in_stream, szWord);
+                    std::string buffer = trim(szWord);
 
                     if (!_stricmp(buffer.c_str(), "NOT"))
                     {
-                        in_stream >> buffer;
+                        read_words(in_stream, szWord);
+                        buffer = szWord;
                         controlinfo.style.push_back((std::string("NOT ") + buffer).c_str());
                     }
                     else
@@ -327,29 +360,32 @@ static bool rc2json(const char* a_filename)
                         }
                     }
 
-                    in_stream >> buffer;
-                    if (buffer[0] != '|') break;
+                    read_words(in_stream, szWord);
+                    if (szWord[0] != '|') break;
                 }
             }
 
-            controlinfo.left = strtoul(buffer.c_str(), nullptr, 10);
-            in_stream >> buffer;
-            controlinfo.top = strtoul(buffer.c_str(), nullptr, 10);
-            in_stream >> buffer;
-            controlinfo.width = strtoul(buffer.c_str(), nullptr, 10);
-            in_stream >> buffer;
-            controlinfo.height = strtoul(buffer.c_str(), nullptr, 10);
+            controlinfo.left = strtoul(szWord, nullptr, 10);
+            read_words(in_stream, szWord);
+            controlinfo.top = strtoul(szWord, nullptr, 10);
+            read_words(in_stream, szWord);
+            controlinfo.width = strtoul(szWord, nullptr, 10);
+            read_words(in_stream, szWord);
+            controlinfo.height = strtoul(szWord, nullptr, 10);
 
+            std::string buffer = szWord;
             auto it_sep = buffer.find_last_of(',');
             if (it_sep != std::string::npos)
             {
                 for (;;)
                 {
-                    in_stream >> buffer;
+                    read_words(in_stream, szWord);
+                    std::string buffer = trim(szWord);
 
                     if (!_stricmp(buffer.c_str(), "NOT"))
                     {
-                        in_stream >> buffer;
+                        read_words(in_stream, szWord);
+                        buffer = szWord;
                         controlinfo.exstyle.push_back((std::string("NOT ") + buffer).c_str());
                     }
                     else
@@ -363,50 +399,51 @@ static bool rc2json(const char* a_filename)
                         }
                     }
 
-                    in_stream >> buffer;
-                    if (buffer[0] != '|') break;
+                    read_words(in_stream, szWord);
+                    if (szWord[0] != '|') break;
                 }
             }
-            else in_stream >> buffer;
+            else read_words(in_stream, szWord);
 
             dialoginfo.controls.push_back(controlinfo);
         }
         else
         {
-            strcpy_s(controlinfo.type, buffer.c_str());
+            strcpy_s(controlinfo.type, szWord);
 
-            auto pos = in_stream.tellg();
-            in_stream >> buffer;
-            if (buffer[0] == '"')
+            auto pos = ftell(in_stream);
+            read_words(in_stream, szWord);
+            if (szWord[0] == '"')
             {
-                in_stream.seekg(pos, std::ios::beg);
+                fseek(in_stream, pos, SEEK_SET);
 
-                char buf[100];
-                in_stream.getline(buf, _ARRAYSIZE(buf), ',');
-                strcpy_s(controlinfo.title, trim(buf).c_str());
+                read_word_sep(in_stream, szWord);
+                strcpy_s(controlinfo.title, trim(szWord).c_str());
 
-                in_stream >> buffer;
-                controlinfo.id = strtoul(buffer.c_str(), nullptr, 10);
+                read_words(in_stream, szWord);
+                controlinfo.id = strtoul(szWord, nullptr, 10);
             }
             else
-                controlinfo.id = strtoul(buffer.c_str(), nullptr, 10);
+                controlinfo.id = strtoul(szWord, nullptr, 10);
 
-            in_stream >> buffer;
-            controlinfo.left = strtoul(buffer.c_str(), nullptr, 10);
-            in_stream >> buffer;
-            controlinfo.top = strtoul(buffer.c_str(), nullptr, 10);
-            in_stream >> buffer;
-            controlinfo.width = strtoul(buffer.c_str(), nullptr, 10);
-            in_stream >> buffer;
-            controlinfo.height = strtoul(buffer.c_str(), nullptr, 10);
+            read_words(in_stream, szWord);
+            controlinfo.left = strtoul(szWord, nullptr, 10);
+            read_words(in_stream, szWord);
+            controlinfo.top = strtoul(szWord, nullptr, 10);
+            read_words(in_stream, szWord);
+            controlinfo.width = strtoul(szWord, nullptr, 10);
+            read_words(in_stream, szWord);
+            controlinfo.height = strtoul(szWord, nullptr, 10);
 
+            std::string buffer = szWord;
             if (buffer.find_last_of(',') != std::string::npos)
             {
                 need_del_sep = false;
                 
                 for (;;)
                 {
-                    in_stream >> buffer;
+                    read_words(in_stream, szWord);
+                    buffer = szWord;
 
                     auto it_sep = buffer.find_last_of(',');
                     if (it_sep != std::string::npos)
@@ -417,7 +454,8 @@ static bool rc2json(const char* a_filename)
 
                     if (!_stricmp(buffer.c_str(), "NOT"))
                     {
-                        in_stream >> buffer;
+                        read_words(in_stream, szWord);
+                        buffer = trim(szWord);
                         controlinfo.style.push_back((std::string("NOT ") + buffer).c_str());
                     }
                     else
@@ -433,35 +471,33 @@ static bool rc2json(const char* a_filename)
 
                     if (need_del_sep) break;
 
-                    in_stream >> buffer;
-                    if (buffer[0] != '|') break;
+                    read_words(in_stream, szWord);
+                    if (szWord[0] != '|') break;
                 }
 
                 if (need_del_sep)
                 {
                     for (;;)
                     {
-                        in_stream >> buffer;
-
-                        if (!_stricmp(buffer.c_str(), "NOT"))
+                        read_words(in_stream, szWord);
+                        if (!_stricmp(szWord, "NOT"))
                         {
-                            in_stream >> buffer;
-                            controlinfo.exstyle.push_back((std::string("NOT ") + buffer).c_str());
+                            read_words(in_stream, szWord);
+                            controlinfo.exstyle.push_back((std::string("NOT ") + szWord).c_str());
                         }
                         else
                         {
-                            if (strncmp(buffer.c_str(), "0x", 2))
-                                controlinfo.exstyle.push_back(buffer.c_str());
+                            if (strncmp(szWord, "0x", 2))
+                                controlinfo.exstyle.push_back(szWord);
                             else
                             {
-                                if (strtoul(buffer.c_str(), nullptr, 16))
-                                    controlinfo.exstyle.push_back(buffer.c_str());
+                                if (strtoul(szWord, nullptr, 16))
+                                    controlinfo.exstyle.push_back(szWord);
                             }
                         }
 
-                        in_stream >> buffer;
-
-                        if (buffer[0] != '|') break;
+                        read_words(in_stream, szWord);
+                        if (szWord[0] != '|') break;
                     }
                 }
 
@@ -471,14 +507,14 @@ static bool rc2json(const char* a_filename)
             else
             {
                 dialoginfo.controls.push_back(controlinfo);
-                in_stream >> buffer;
+                read_words(in_stream, szWord);
             }
         }
     }
 
-    if (buffer[0] != '}')
+    if (szWord[0] != '}')
     {
-        std::cout << "ERROR: invalid rcdata  (" << buffer.c_str() << ")\n";
+        std::cout << "ERROR: invalid rcdata  (" << szWord << ")\n";
         return false;
     }
 
