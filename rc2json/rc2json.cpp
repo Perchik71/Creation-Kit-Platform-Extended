@@ -512,6 +512,8 @@ static bool rc2json(const char* a_filename)
         }
     }
 
+    fclose(in_stream);
+
     if (szWord[0] != '}')
     {
         std::cout << "ERROR: invalid rcdata  (" << szWord << ")\n";
