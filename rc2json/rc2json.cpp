@@ -174,7 +174,7 @@ static bool rc2json(const char* a_filename)
         char type[100];
         char classname[100];
         char title[100];
-        uint32_t id;
+        uint16_t id;
         uint32_t left, top, width, height;
     };
 
@@ -327,10 +327,10 @@ static bool rc2json(const char* a_filename)
   
                 read_words(in_stream, szWord);
 
-                controlinfo.id = strtoul(szWord, nullptr, 10);
+                controlinfo.id = (uint16_t)strtoul(szWord, nullptr, 10);
             }
             else
-                controlinfo.id = strtoul(szWord, nullptr, 10);
+                controlinfo.id = (uint16_t)strtoul(szWord, nullptr, 10);
 
             read_words(in_stream, szWord);
             strcpy_s(controlinfo.classname, trim(szWord).c_str());
@@ -424,10 +424,10 @@ static bool rc2json(const char* a_filename)
                 strcpy_s(controlinfo.title, trim(szWord).c_str());
 
                 read_words(in_stream, szWord);
-                controlinfo.id = strtoul(szWord, nullptr, 10);
+                controlinfo.id = (uint16_t)strtoul(szWord, nullptr, 10);
             }
             else
-                controlinfo.id = strtoul(szWord, nullptr, 10);
+                controlinfo.id = (uint16_t)strtoul(szWord, nullptr, 10);
 
             read_words(in_stream, szWord);
             controlinfo.left = strtoul(szWord, nullptr, 10);
