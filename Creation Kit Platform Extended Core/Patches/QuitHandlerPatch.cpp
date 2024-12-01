@@ -51,13 +51,23 @@ namespace CreationKitPlatformExtended
 		bool QuitHandlerPatch::Activate(const Relocator* lpRelocator,
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
-			if (lpRelocationDatabaseItem->Version() == 1)
+			auto versionPatch = lpRelocationDatabaseItem->Version();
+
+			if (versionPatch == 1)
 			{
 				for (uint32_t nId = 0; nId < lpRelocationDatabaseItem->Count(); nId++)
 					lpRelocator->DetourCall(_RELDATA_RAV(nId),
 						(uintptr_t)&CreationKitPlatformExtended::Utils::Quit);
 
 				return true;
+			}
+			else if (versionPatch == 2)
+			{
+				lpRelocator->DetourCall(_RELDATA_RAV(0), (uintptr_t)&CreationKitPlatformExtended::Utils::Quit);
+				lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&CreationKitPlatformExtended::Utils::Quit);
+
+				// Remove useless stuff destroy and free resources
+				lpRelocator->PatchNop(_RELDATA_RAV(2), 0x3FC);
 			}
 			
 			return false;
