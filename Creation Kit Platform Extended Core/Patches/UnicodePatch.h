@@ -28,9 +28,12 @@ namespace CreationKitPlatformExtended
 
 			static bool HKBeginPluginSave();
 			static void HKEndPluginSave(HCURSOR hCursor);
-			static bool HKSetDlgItemTextA(HWND hDlg, int nIDDlgItem, LPCSTR lpString);
-			static bool HKSendDlgItemMessageA(HWND hDlg, int nIDDlgItem, UINT Msg,
+			static BOOL HKSetDlgItemTextA(HWND hDlg, int nIDDlgItem, LPCSTR lpString);
+			static LRESULT HKSendDlgItemMessageA(HWND hDlg, int nIDDlgItem, UINT Msg,
 				WPARAM wParam, LPARAM lParam);
+
+			static void HKPluginSaveSF(__int64 unk01, __int64 unk02, __int64 unk03, __int64 unk04);
+			static const char* HKGetStringLocalizeSF(__int64 lstring);
 		protected:
 			virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const;

@@ -76,7 +76,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <CallingConvention>StdCall</CallingConvention>
       <ForcedIncludeFiles>Common.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)Creation Kit Platform Extended Core\;$(SolutionDir)Dependencies\mzip\src;$(SolutionDir)Dependencies\mINI\src\mini;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Creation Kit Platform Extended Core\;$(SolutionDir)Dependencies\mzip\src;$(SolutionDir)Dependencies\mINI\src\mini;$(SolutionDir)Dependencies\PropertyGrid;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsWinRT>false</CompileAsWinRT>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
@@ -111,7 +111,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <CallingConvention>StdCall</CallingConvention>
       <ForcedIncludeFiles>Common.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)Creation Kit Platform Extended Core\;$(SolutionDir)Dependencies\mzip\src;$(SolutionDir)Dependencies\mINI\src\mini;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Creation Kit Platform Extended Core\;$(SolutionDir)Dependencies\mzip\src;$(SolutionDir)Dependencies\mINI\src\mini;$(SolutionDir)Dependencies\PropertyGrid;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAsWinRT>false</CompileAsWinRT>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>

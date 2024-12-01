@@ -21,6 +21,7 @@ static const std::map<std::string, std::string> mapStdControlType = {
     { "STATIC", "STATIC" },
     { "EDIT", "EDIT" },
     { "COMBOBOX", "COMBOBOX" },
+    { "LISTVIEW", "SysListView32" },
     { "TREEVIEW", "SysTreeView32" },
     { "TABVIEW", "SysTabControl32" },
     { "REBAR", "ReBarWindow32" },

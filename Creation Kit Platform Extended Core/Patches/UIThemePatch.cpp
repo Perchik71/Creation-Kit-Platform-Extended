@@ -736,14 +736,15 @@ namespace CreationKitPlatformExtended
 						PostMessageA(hWnd, WM_SETFONT, (WPARAM)UITheme::ThemeFont->Handle, TRUE);
 						PostMessageA(hWnd, WM_SYSCOLORCHANGE, 0, 0);
 						break;
-					case ThemeType::ListBox: {
+					case ThemeType::ListBox: 
+					{
 						scrollBarTheme = UITheme::ListBox::Initialize(hWnd);
 
 						LONG_PTR uID = GetWindowLongPtrA(hWnd, GWLP_ID);
 						if (uID != 0x7D0 && uID != 0x7D1)
 							PostMessageA(hWnd, WM_SETFONT, (WPARAM)UITheme::ThemeFont->Handle, TRUE);
 					}
-										   break;
+					break;
 					case ThemeType::ListView:
 						scrollBarTheme = UITheme::ListView::Initialize(hWnd);
 						PostMessageA(hWnd, WM_SETFONT, (WPARAM)UITheme::ThemeFont->Handle, TRUE);
@@ -766,13 +767,14 @@ namespace CreationKitPlatformExtended
 					case ThemeType::ProgressBar:
 						UITheme::ProgressBar::Initialize(hWnd);
 						break;
-					case ThemeType::PopupMenu: {
+					case ThemeType::PopupMenu:
+					{
 						Graphics::CUIMonitor Monitor = Graphics::Screen.MonitorFromWindow(hWnd);
 						// Avoid the up and down arrows in PopupMenu
 						if (Monitor.WorkAreaRect.Height > 768)
 							UITheme::PopupMenu::Initialize(hWnd);
 					}
-											 break;
+					break;
 					case ThemeType::Spin:
 						UITheme::UpDown::Initialize(hWnd);
 						break;

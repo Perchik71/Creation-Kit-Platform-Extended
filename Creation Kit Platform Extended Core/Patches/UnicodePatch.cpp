@@ -10,6 +10,9 @@ namespace CreationKitPlatformExtended
 {
 	namespace Patches
 	{
+		uintptr_t pointer_UnicodePatch_sub1 = 0;
+		uintptr_t pointer_UnicodePatch_sub2 = 0;
+
 		UnicodePatch::UnicodePatch() : Module(GlobalEnginePtr)
 		{}
 
@@ -52,13 +55,13 @@ namespace CreationKitPlatformExtended
 		bool UnicodePatch::Activate(const Relocator* lpRelocator,
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
+			// Initial mode
+			// Initially, the original state must be set
+			EditorAPI::ConvertorString.SetMode(EditorAPI::BGSConvertorString::MODE_ANSI);
+
 			auto verPatch = lpRelocationDatabaseItem->Version();
 			if (verPatch == 1)
 			{
-				// Initial mode
-				// Initially, the original state must be set
-				EditorAPI::ConvertorString.SetMode(EditorAPI::BGSConvertorString::MODE_ANSI);
-
 				// Intercepting the receipt of a string
 				*(uintptr_t*)&EditorAPI::BGSLocalizedString_OldGetStrProc =
 					voltek::detours_function_class_jump(_RELDATA_ADDR(0), &EditorAPI::BGSLocalizedString::GetStr);
@@ -86,10 +89,6 @@ namespace CreationKitPlatformExtended
 			}
 			else if (verPatch == 2)
 			{
-				// Initial mode
-				// Initially, the original state must be set
-				EditorAPI::ConvertorString.SetMode(EditorAPI::BGSConvertorString::MODE_ANSI);
-
 				// Also delete it message "You must close all Dialoge Boxes",
 				// which has problems with programs that work with multiple monitors.
 				lpRelocator->DetourCall(_RELDATA_RAV(0), (uintptr_t)&HKBeginPluginSave);
@@ -126,6 +125,34 @@ namespace CreationKitPlatformExtended
 
 				return true;
 			}
+			else if (verPatch == 3)
+			{
+				// Hook save plugin
+				pointer_UnicodePatch_sub1 =
+					voltek::detours_function_class_jump(_RELDATA_ADDR(0), (uintptr_t)&HKPluginSaveSF);
+				
+				// Introduction of string processing.
+				pointer_UnicodePatch_sub2 =
+					voltek::detours_function_class_jump(_RELDATA_ADDR(1), (uintptr_t)&HKGetStringLocalizeSF);
+
+				// In the "Data" dialog box, the "author" and "description" controls are independent, 
+				// and I'm forced to make a trap for WinAPI calls
+				lpRelocator->DetourCall(_RELDATA_RAV(2), (uintptr_t)&HKSetDlgItemTextA);
+				lpRelocator->DetourCall(_RELDATA_RAV(3), (uintptr_t)&HKSetDlgItemTextA);
+				lpRelocator->DetourCall(_RELDATA_RAV(4), (uintptr_t)&HKSendDlgItemMessageA);
+				lpRelocator->DetourCall(_RELDATA_RAV(5), (uintptr_t)&HKSendDlgItemMessageA);
+				lpRelocator->DetourCall(_RELDATA_RAV(6), (uintptr_t)&HKSendDlgItemMessageA);
+				lpRelocator->DetourCall(_RELDATA_RAV(7), (uintptr_t)&HKSendDlgItemMessageA);
+
+				//
+				// Cut check spelling window
+				//
+
+				ScopeRelocator text;
+
+				for (uint32_t i = 8; i < lpRelocationDatabaseItem->Count(); i++)
+					lpRelocator->PatchNop(_RELDATA_RAV(i), 5);
+			}
 			
 			return false;
 		}
@@ -148,7 +175,7 @@ namespace CreationKitPlatformExtended
 			SetCursor(hCursor);
 		}
 
-		bool UnicodePatch::HKSetDlgItemTextA(HWND hDlg, int nIDDlgItem, LPCSTR lpString) {
+		BOOL UnicodePatch::HKSetDlgItemTextA(HWND hDlg, int nIDDlgItem, LPCSTR lpString) {
 			switch (nIDDlgItem)
 			{
 			case 1024:
@@ -166,9 +193,9 @@ namespace CreationKitPlatformExtended
 			}
 		}
 
-		bool UnicodePatch::HKSendDlgItemMessageA(HWND hDlg, INT nIDDlgItem, UINT Msg, 
+		LRESULT UnicodePatch::HKSendDlgItemMessageA(HWND hDlg, INT nIDDlgItem, UINT Msg, 
 			WPARAM wParam, LPARAM lParam) {
-			if (Msg != WM_GETTEXT && Msg != WM_GETTEXTLENGTH)
+			if ((Msg != WM_GETTEXT) && (Msg != WM_GETTEXTLENGTH))
 				MsgTextDef:
 				return SendDlgItemMessageA(hDlg, nIDDlgItem, Msg, wParam, lParam);
 
@@ -180,19 +207,17 @@ namespace CreationKitPlatformExtended
 			case 1025:
 			{
 				hCtrlWnd = GetDlgItem(hDlg, nIDDlgItem);
-				INT32 maxlen = GetWindowTextLengthA(hCtrlWnd) << 2;
+				INT32 maxlen = GetWindowTextLengthA(hCtrlWnd);
 
 				if (maxlen <= 0)
 					goto MsgTextDef;
 
-				String ansi_str;
-				ansi_str.resize(maxlen);
-				ansi_str.resize(GetWindowTextA(hCtrlWnd, &ansi_str[0], maxlen));
+				maxlen <<= 1;
+				auto ansi_str = std::make_unique<char[]>((size_t)maxlen + 1);
+				GetWindowTextA(hCtrlWnd, ansi_str.get(), maxlen);
+				ansi_str.get()[maxlen] = 0;
 
-				if (!Conversion::IsUtf8Valid(ansi_str))
-					goto MsgTextDef;
-
-				String utf8_str = Conversion::AnsiToUtf8(ansi_str);
+				String utf8_str = Conversion::AnsiToUtf8(ansi_str.get());
 
 				if (Msg == WM_GETTEXT)
 					strncpy((LPSTR)(lParam), utf8_str.c_str(), wParam);
@@ -201,6 +226,38 @@ namespace CreationKitPlatformExtended
 			}
 			default:
 				goto MsgTextDef;
+			}
+		}
+
+		void UnicodePatch::HKPluginSaveSF(__int64 unk01, __int64 unk02, __int64 unk03, __int64 unk04)
+		{
+			EditorAPI::ConvertorString.SetMode(EditorAPI::BGSConvertorString::MODE_UTF8);
+			fastCall<void>(pointer_UnicodePatch_sub1, unk01, unk02, unk03, unk04);
+			EditorAPI::ConvertorString.SetMode(EditorAPI::BGSConvertorString::MODE_ANSI);
+		}
+
+		const char* UnicodePatch::HKGetStringLocalizeSF(__int64 lstring)
+		{
+			// Fixed:
+			// First problem, Bethesda removed the check for an null pointer
+
+			if (!lstring) return nullptr;
+			auto utf8_string = fastCall<const char*>(pointer_UnicodePatch_sub2, lstring);
+			if (!utf8_string) return nullptr;
+
+			// Second problem is that all the strings have become BGSLocalizedString,
+			// Even the path, system strings, and script properties.
+			// It can't have localization, goonies, "<ID=" it also don't have.
+
+			// Extremely surprisingly, I don't get CTD when I translate a string,
+			// but I return the same memory address, however, this is only applicable when converting WinCP.
+			if (EditorAPI::ConvertorString.GetMode() == EditorAPI::BGSConvertorString::MODE_UTF8)
+				return EditorAPI::BGSLocalizedString::GetStr2(utf8_string);
+			// All APIs are implemented as ANSI. In this regard, utf-8 must be converted to the specified ANSI.
+			else
+			{
+				EditorAPI::BGSLocalizedString::GetStr2(utf8_string);
+				return utf8_string;
 			}
 		}
 	}
