@@ -32,5 +32,5 @@ You can take compiled ones automatically, they are of decent quality.
 # License
 **GPLv3**: <a>https://www.gnu.org/licenses/gpl-3.0.html</a>. <br />
 Copyright © 2023-2024 aka perchik71. All rights reserved. <br />
-File `Stuffs\FO4\CreationKitPlatformExtended_FO4_Resources.pak` contains files are proprietary and not licensed. <br />
+File `Stuffs\FO4\CreationKitPlatformExtended_FO4_Resources.pak` contains files are proprietary and not licensed, also files `d3dcompiler\*.*`. <br />
 Dependencies are under their respective licenses. 
