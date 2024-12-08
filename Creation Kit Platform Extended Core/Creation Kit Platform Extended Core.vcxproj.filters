@@ -886,6 +886,9 @@
     <ClCompile Include="Patches\SSE\ResponseIgnoreMax.cpp">
       <Filter>Patches\SSE</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\FO4\ResponseIgnoreMaxF4.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2163,6 +2166,9 @@
     </ClInclude>
     <ClInclude Include="Patches\SSE\ResponseIgnoreMax.h">
       <Filter>Patches\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\ResponseIgnoreMaxF4.h">
+      <Filter>Patches\FO4</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -52,6 +52,7 @@
 #include "Patches/FO4/RunNetworkDisable.h"
 #include "Patches/FO4/CrashConditionItemGetCrime.h"
 #include "Patches/FO4/DontMatchForms.h"
+#include "Patches/FO4/ResponseIgnoreMaxF4.h"
 
 #include "Patches/Windows/FO4/MainWindowF4.h"
 #include "Patches/Windows/FO4/ObjectWindowF4.h"
@@ -117,6 +118,7 @@ namespace CreationKitPlatformExtended
 				new Patches::RunNetworkDisablePatch(),
 				new Patches::CrashConditionItemGetCrimePatch(),
 				new Patches::DontMatchFormsPatch(),
+				new Patches::ResponseIgnoreMaxPatch(),
 				
 				new Patches::MainWindow(),
 				new Patches::ObjectWindow(),
