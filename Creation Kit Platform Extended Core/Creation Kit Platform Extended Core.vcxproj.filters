@@ -883,6 +883,9 @@
     <ClCompile Include="Patches\SF\AllowSaveESMandMasterESPSF.cpp">
       <Filter>Patches\SF</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\ResponseIgnoreMax.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2157,6 +2160,9 @@
     </ClInclude>
     <ClInclude Include="Patches\SF\AllowSaveESMandMasterESPSF.h">
       <Filter>Patches\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\ResponseIgnoreMax.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

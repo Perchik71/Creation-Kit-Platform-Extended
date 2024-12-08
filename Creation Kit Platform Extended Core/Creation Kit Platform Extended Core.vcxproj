@@ -355,6 +355,7 @@
     <ClCompile Include="Patches\SSE\RefLinkGeometryHangWorkaround.cpp" />
     <ClCompile Include="Patches\SSE\RemoveUselessMessages.cpp" />
     <ClCompile Include="Patches\SSE\ReplaceBSPointerHandleAndManager.cpp" />
+    <ClCompile Include="Patches\SSE\ResponseIgnoreMax.cpp" />
     <ClCompile Include="Patches\SSE\ShowReloadShadersAlways.cpp" />
     <ClCompile Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.cpp" />
     <ClCompile Include="Patches\SSE\StableSortForPerks.cpp" />
@@ -754,6 +755,7 @@
     <ClInclude Include="Patches\SSE\RefLinkGeometryHangWorkaround.h" />
     <ClInclude Include="Patches\SSE\RemoveUselessMessages.h" />
     <ClInclude Include="Patches\SSE\ReplaceBSPointerHandleAndManager.h" />
+    <ClInclude Include="Patches\SSE\ResponseIgnoreMax.h" />
     <ClInclude Include="Patches\SSE\ShowReloadShadersAlways.h" />
     <ClInclude Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.h" />
     <ClInclude Include="Patches\SSE\StableSortForPerks.h" />

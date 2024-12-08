@@ -94,6 +94,7 @@
 #include "Patches/SSE/CrashMHDTMoreThan70.h"
 #include "Patches/SSE/ChooseSoundFile.h"
 #include "Patches/SSE/MiscMessages.h"
+#include "Patches/SSE/ResponseIgnoreMax.h"
 
 #include "Patches/Windows/SSE/MainWindow.h"
 #include "Patches/Windows/SSE/RenderWindow.h"
@@ -203,6 +204,7 @@ namespace CreationKitPlatformExtended
 				new Patches::CrashMHDTMoreThan70Patch(),
 				new Patches::ChooseSoundFilePatch(),
 				new Patches::MiscMessagesPatch(),
+				new Patches::ResponseIgnoreMaxPatch(),
 
 				new Patches::MainWindow(),
 				new Patches::RenderWindow(),
