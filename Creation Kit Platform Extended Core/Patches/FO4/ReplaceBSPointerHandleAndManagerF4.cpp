@@ -903,7 +903,23 @@ namespace CreationKitPlatformExtended
 					_CONSOLE("CreationKitPlatformExtended::Experimental::BSPointerHandle: %llu patches applied in %llums", total_patches, duration);
 				}
 				else
+				{
 					BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 0;
+
+					{
+						ScopeRelocator textSection;
+
+						auto addr = (uintptr_t)_RELDATA_RAV(0);
+						// Preparation, removal of all embedded pieces of code
+						lpRelocator->PatchNop(addr + 12, 0x7A);
+						lpRelocator->PatchMovFromRax(addr + 5, _RELDATA_RAV(1));	
+					}
+
+					lpRelocator->DetourCall(_RELDATA_RAV(0),
+						(uintptr_t)&BSPointerHandleManager_Original::InitSDM);
+					lpRelocator->DetourCall(_RELDATA_RAV(2),
+						(uintptr_t)&BSPointerHandleManager_Original::KillSDM);
+				}
 
 				return true;
 			}
