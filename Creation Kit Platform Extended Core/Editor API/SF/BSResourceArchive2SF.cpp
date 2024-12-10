@@ -2,19 +2,22 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
-#include "BSResourceArchive2.h"
+#include "BSResourceArchive2SF.h"
 #include "NiAPI\NiMemoryManager.h"
 
 namespace CreationKitPlatformExtended
 {
 	namespace EditorAPI
 	{
-		namespace Fallout4
+		namespace Starfield
 		{
 			using namespace CreationKitPlatformExtended::Core;
 
+			BGSFileSelectorDialog::RegisterArchiveFileCallback* lpArchiveFileCallback = nullptr;
+
 			namespace BSResource
 			{
+				LocationTree* lpArchiveTree = nullptr;
 				uintptr_t pointer_Archive2_sub1 = 0;
 				uintptr_t pointer_Archive2_sub2 = 0;
 				Array<BSString*> g_arrayArchivesAvailable;
@@ -126,48 +129,13 @@ namespace CreationKitPlatformExtended
 						AssertMsgVa(resultNo == EC_NONE, "Failed load an archive file %s", fileName);
 					}
 
-					LoadPrimaryArchive();
-
-					return resultNo;
-				}
-
-				Archive2::EResultError Archive2::HKLoadArchiveEx(void* arrayDataList, InfoEx* infoRes,
-					void* Unk1, uint32_t Unk2)
-				{
-					auto fileName2 = infoRes->fileName->Get<CHAR>(true);
-					AssertMsg(fileName2, "There is no name of the load archive");
-
-					BSString filePath, fileSizeStr;
-					filePath.Format("%s%s%s", BSString::Utils::GetApplicationPath().c_str(), "Data\\", fileName2);
-					AssertMsgVa(BSString::Utils::FileExists(filePath), "Can't found file %s", *filePath);
-
-					uint64_t fileSize = 0;
-					WIN32_FILE_ATTRIBUTE_DATA fileData;
-					ZeroMemory(&fileData, sizeof(WIN32_FILE_ATTRIBUTE_DATA));
-					if (GetFileAttributesExA(*filePath, GetFileExInfoStandard, &fileData))
-						fileSize = (uint64_t)fileData.nFileSizeLow | ((uint64_t)fileData.nFileSizeHigh << 32);
-
-					auto resultNo = EC_NONE;
-
-					if (_stricmp(fileName2, "Fallout4 - Shaders.ba2"))  // skip load Fallout4 - Shaders.ba2
-					{
-						GetFileSizeStr(fileSize, fileSizeStr);
-						_CONSOLE("Load an archive file \"%s\" (%s)...", fileName2, *fileSizeStr);
-
-						resultNo = fastCall<EResultError, void*, InfoEx*, void*, uint32_t>
-							(pointer_Archive2_sub1, arrayDataList, infoRes, Unk1, Unk2);
-						AssertMsgVa(resultNo == EC_NONE, "Failed load an archive file %s", fileName2);
-					}
-
-					LoadPrimaryArchive();
-
 					return resultNo;
 				}
 
 				void Archive2::LoadArchive(const char* fileName)
 				{
 					if (BSString::Utils::FileExists(BSString::Utils::GetDataPath() + fileName))
-						fastCall<void>(pointer_Archive2_sub2, fileName, 0, 0);
+						fastCall<void>(pointer_Archive2_sub2, fileName, &lpArchiveTree, &lpArchiveFileCallback);
 				}
 
 				bool Archive2::IsAvailableForLoad(const char* fileName)
@@ -180,21 +148,6 @@ namespace CreationKitPlatformExtended
 					}
 
 					return false;
-				}
-
-				void Archive2::LoadPrimaryArchive()
-				{
-					{
-						std::lock_guard lock(g_CKPEPrimary);
-
-						if (g_initCKPEPrimary)
-							return;
-
-						g_initCKPEPrimary = true;
-					}
-
-					LoadArchive("CreationKit - Shaders.ba2");
-					LoadArchive("CreationKit - Textures.ba2");
 				}
 			}
 		}

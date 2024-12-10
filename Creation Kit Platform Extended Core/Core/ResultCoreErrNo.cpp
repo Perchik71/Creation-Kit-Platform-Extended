@@ -18,6 +18,7 @@ namespace CreationKitPlatformExtended
 				"\nCheck out the list of supported versions on the mod page.",
 				"Unknown application",
 				"Reinitializing the engine"
+				"Your OS is not supported"
 			};
 
 			return szMessage[nErrorNo];

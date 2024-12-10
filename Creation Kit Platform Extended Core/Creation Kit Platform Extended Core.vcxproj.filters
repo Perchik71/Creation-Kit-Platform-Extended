@@ -889,6 +889,18 @@
     <ClCompile Include="Patches\FO4\ResponseIgnoreMaxF4.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SF\BSArchiveManagerModdedSF.cpp">
+      <Filter>Patches\SF</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\SF\BSResourceArchive2SF.cpp">
+      <Filter>Editor API\SF</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor API\SF\BSResourceLooseFilesSF.cpp">
+      <Filter>Editor API\SF</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SF\BSResourceLooseFilesPatchSF.cpp">
+      <Filter>Patches\SF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2169,6 +2181,18 @@
     </ClInclude>
     <ClInclude Include="Patches\FO4\ResponseIgnoreMaxF4.h">
       <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SF\BSArchiveManagerModdedSF.h">
+      <Filter>Patches\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SF\BSResourceArchive2SF.h">
+      <Filter>Editor API\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SF\BSResourceLooseFilesSF.h">
+      <Filter>Editor API\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SF\BSResourceLooseFilesPatchSF.h">
+      <Filter>Patches\SF</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

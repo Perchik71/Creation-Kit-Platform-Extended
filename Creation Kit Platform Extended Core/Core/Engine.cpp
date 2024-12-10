@@ -70,7 +70,30 @@ namespace CreationKitPlatformExtended
 
 		//////////////////////////////////////////////
 
-		BOOL WINAPI hk_QueryPerformanceCounter(LARGE_INTEGER* lpPerformanceCount)
+		static BOOL WINAPI GetVerOs(LPDWORD lpdwMajorVersion, LPDWORD lpdwMinorVersion, LPDWORD lpdwBuildNubmer)
+		{
+			if (!lpdwMajorVersion || !lpdwMinorVersion || !lpdwBuildNubmer)
+				return FALSE;
+
+			LONG(WINAPI * RtlGetVersion)(LPOSVERSIONINFOEXW) = nullptr;
+			OSVERSIONINFOEXW osInfo = { 0 };
+			*(FARPROC*)&RtlGetVersion = GetProcAddress(GetModuleHandleA("ntdll"), "RtlGetVersion");
+			if (RtlGetVersion)
+			{
+				osInfo.dwOSVersionInfoSize = sizeof(osInfo);
+				RtlGetVersion(&osInfo);
+
+				*lpdwMajorVersion = osInfo.dwMajorVersion;
+				*lpdwMinorVersion = osInfo.dwMinorVersion;
+				*lpdwBuildNubmer  = osInfo.dwBuildNumber;
+
+				return TRUE;
+			}
+
+			return FALSE;
+		}
+
+		static BOOL WINAPI hk_QueryPerformanceCounter(LARGE_INTEGER* lpPerformanceCount)
 		{
 			// Выключение точки останова
 			(GlobalEnginePtr->*VCoreDisableBreakpoint)();
@@ -87,7 +110,7 @@ namespace CreationKitPlatformExtended
 			return QueryPerformanceCounter(lpPerformanceCount);
 		}
 
-		LONG NTAPI hk_NtSetInformationThread(HANDLE ThreadHandle, LONG ThreadInformationClass,
+		static LONG NTAPI hk_NtSetInformationThread(HANDLE ThreadHandle, LONG ThreadInformationClass,
 			PVOID ThreadInformation, ULONG ThreadInformationLength)
 		{
 			// Для Steam
@@ -108,24 +131,13 @@ namespace CreationKitPlatformExtended
 
 			auto OsVer = &_OsVersion;
 			ZeroMemory(OsVer, sizeof(OsVersion));
-
-			LONG(WINAPI *RtlGetVersion)(LPOSVERSIONINFOEXW) = nullptr;
-			OSVERSIONINFOEXW osInfo = { 0 };
-			*(FARPROC*)&RtlGetVersion = GetProcAddress(GetModuleHandleA("ntdll"), "RtlGetVersion");
-			if (RtlGetVersion)
-			{
-				osInfo.dwOSVersionInfoSize = sizeof(osInfo);
-				RtlGetVersion(&osInfo);
-
-				OsVer->MajorVersion = osInfo.dwMajorVersion;
-				OsVer->MinorVersion = osInfo.dwMinorVersion;
-				OsVer->BuildNubmer = osInfo.dwBuildNumber;
-			}
-
+			GetVerOs((LPDWORD)&OsVer->MajorVersion, (LPDWORD)&OsVer->MinorVersion, (LPDWORD)&OsVer->BuildNubmer);
 			auto str = EditorAPI::BSString::FormatString("CKPE Runtime: Initialize (Version: %s, OS: %u.%u Build %u)",
 				VER_FILE_VERSION_STR, OsVer->MajorVersion, OsVer->MinorVersion, OsVer->BuildNubmer);
-
 			_MESSAGE(str.c_str());
+
+			if ((OsVer->MajorVersion == 6) && (OsVer->MinorVersion < 3))
+				_CONSOLE("[WARNING] Your OS is not fully supported");
 
 			int info[4];
 			__cpuid(info, 7);
@@ -600,6 +612,19 @@ namespace CreationKitPlatformExtended
 
 			IResult Result = RC_OK;
 
+			DWORD dwMajor, dwMinor, dwBuild;
+			if (!GetVerOs(&dwMajor, &dwMinor, &dwBuild))
+			{
+				if (dwMajor < 6)
+				{
+					_ERROR("Unsupported OS version");
+
+					return RC_UNSUPPORT_VERSION_OS;
+				}
+				else if ((dwMajor == 6) && (dwMinor < 3))			// Need 8.1
+					_WARNING("Your OS is not fully supported");
+			}
+
 			// Доступные имена для Creation Kit
 			if (CheckFileNameProcess(lpcstrAppName))
 			{
@@ -611,10 +636,6 @@ namespace CreationKitPlatformExtended
 				GlobalTracerManagerPtr = new TracerManager();
 				AssertMsg(GlobalTracerManagerPtr, "Failed to initialize class \"TracerManager\".");
 #endif
-				// Инициализация библиотеки vup
-				//AssertMsg(Conversion::LazUnicodePluginInit(), 
-				//	"I can't find the library: \"vup-x86_64.dll\"\nReinstall the mod.");
-					
 				GlobalDebugLogPtr = new DebugLog(L"CreationKitPlatformExtended.log");
 				AssertMsg(GlobalDebugLogPtr, "Failed create the log file \"CreationKitPlatformExtended.log\"");
 				

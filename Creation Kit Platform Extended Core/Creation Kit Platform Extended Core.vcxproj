@@ -180,6 +180,8 @@
     <ClCompile Include="Editor API\FO4\TESFormF4.cpp" />
     <ClCompile Include="Editor API\Settings.cpp" />
     <ClCompile Include="Editor API\SF\BGSRenderWindowSF.cpp" />
+    <ClCompile Include="Editor API\SF\BSResourceArchive2SF.cpp" />
+    <ClCompile Include="Editor API\SF\BSResourceLooseFilesSF.cpp" />
     <ClCompile Include="Editor API\SF\TESDataHandlerSF.cpp" />
     <ClCompile Include="Editor API\SF\TESFileSF.cpp" />
     <ClCompile Include="Editor API\SSE\BSGraphicsTypes.cpp" />
@@ -260,6 +262,8 @@
     <ClCompile Include="Patches\RenameCreationKitApp.cpp" />
     <ClCompile Include="Patches\RenderWindow60FPS.cpp" />
     <ClCompile Include="Patches\SF\AllowSaveESMandMasterESPSF.cpp" />
+    <ClCompile Include="Patches\SF\BSArchiveManagerModdedSF.cpp" />
+    <ClCompile Include="Patches\SF\BSResourceLooseFilesPatchSF.cpp" />
     <ClCompile Include="Patches\SF\FixQuoteCmdLineSF.cpp" />
     <ClCompile Include="Patches\SF\LoadMaterialsQSplash.cpp" />
     <ClCompile Include="Patches\SF\OptimizationLoadSF.cpp" />
@@ -530,6 +534,8 @@
     <ClInclude Include="Editor API\SF\BSEntryString.h" />
     <ClInclude Include="Editor API\SF\BSFile.h" />
     <ClInclude Include="Editor API\SF\BSFixedString.h" />
+    <ClInclude Include="Editor API\SF\BSResourceArchive2SF.h" />
+    <ClInclude Include="Editor API\SF\BSResourceLooseFilesSF.h" />
     <ClInclude Include="Editor API\SF\TESDataHandler.h" />
     <ClInclude Include="Editor API\SF\TESFileSF.h" />
     <ClInclude Include="Editor API\SF\TESForm.h" />
@@ -661,6 +667,8 @@
     <ClInclude Include="Patches\RenameCreationKitApp.h" />
     <ClInclude Include="Patches\RenderWindow60FPS.h" />
     <ClInclude Include="Patches\SF\AllowSaveESMandMasterESPSF.h" />
+    <ClInclude Include="Patches\SF\BSArchiveManagerModdedSF.h" />
+    <ClInclude Include="Patches\SF\BSResourceLooseFilesPatchSF.h" />
     <ClInclude Include="Patches\SF\FixQuoteCmdLineSF.h" />
     <ClInclude Include="Patches\SF\LoadMaterialsQSplash.h" />
     <ClInclude Include="Patches\SF\OptimizationLoadSF.h" />

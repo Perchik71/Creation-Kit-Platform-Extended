@@ -19,6 +19,7 @@
 #include "Patches/SF/LoadMaterialsQSplash.h"
 #include "Patches/SF/FixQuoteCmdLineSF.h"
 #include "Patches/SF/AllowSaveESMandMasterESPSF.h"
+#include "Patches/SF/BSResourceLooseFilesPatchSF.h"
 
 #include "Patches/Windows/SF/DataWindowSF.h"
 #include "Patches/Windows/SF/AboutWindowSF.h"
@@ -52,6 +53,7 @@ namespace CreationKitPlatformExtended
 				new Patches::LoadMaterialsQSplashPatch(),
 				new Patches::FixQuoteCmdLinePatch(),
 				new Patches::AllowSaveESMandMasterESPPatch(),
+				new Patches::BSResourceLooseFilesPatch(),
 
 				new Patches::DataWindow(),
 				new Patches::AboutWindow(),

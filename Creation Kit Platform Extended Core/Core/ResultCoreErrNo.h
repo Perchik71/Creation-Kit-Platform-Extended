@@ -15,6 +15,7 @@ namespace CreationKitPlatformExtended
 		constexpr static IResult RC_DEPRECATED_VERSION_CREATIONKIT = 2;
 		constexpr static IResult RC_UNKNOWN_APPLICATION = 3;
 		constexpr static IResult RC_INITIALIZATION_ENGINE_AGAIN = 4;
+		constexpr static IResult RC_UNSUPPORT_VERSION_OS = 5;
 		
 		inline bool Successed(IResult nErrorNo) { return nErrorNo == RC_OK; }
 		inline bool Failed(IResult nErrorNo) { return nErrorNo != RC_OK; }
