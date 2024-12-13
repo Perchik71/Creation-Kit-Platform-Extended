@@ -13,8 +13,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{77da7f78-ede5-4343-8cf4-751a70d50039}</ProjectGuid>
-    <RootNamespace>rc2json</RootNamespace>
+    <ProjectGuid>{2ac659ea-3097-49d0-9b96-fceff4928559}</ProjectGuid>
+    <RootNamespace>jdiashow</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -45,8 +45,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -70,10 +70,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;NOMINMAX;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <CallingConvention>StdCall</CallingConvention>
+      <DisableSpecificWarnings>4996;4244</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -83,15 +88,20 @@
       <AdditionalDependencies>version.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\Version\scripts.ps1"</Command>
+      <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)Creation Kit Platform Extended Tools\$(ProjectName)\Version\scripts.ps1"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="rc2json.cpp" />
+    <ClCompile Include="..\..\Dependencies\jDialogs\include\jdialogs.cpp" />
+    <ClCompile Include="jdiashow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Dependencies\jDialogs\include\jdialogs.h" />
     <ClInclude Include="version\resource_version.h" />
     <ClInclude Include="version\resource_version2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="version\resource_version.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="version\resource_version.aps" />
@@ -100,9 +110,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="version\build_version.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="version\resource_version.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

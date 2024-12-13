@@ -75,9 +75,9 @@ BEGIN
             VALUE "CompanyName", "aka perchik71"
             VALUE "FileDescription", ""
             VALUE "FileVersion", VER_FILE_VERSION_STR
-            VALUE "InternalName", "winhttp"
-            VALUE "LegalCopyright", "Copyright (C) aka perchik71 2023-2024"
-            VALUE "OriginalFilename", "winhttp.dll"
+            VALUE "InternalName", "rc2json"
+            VALUE "LegalCopyright", "Copyright (C) aka perchik71 2024"
+            VALUE "OriginalFilename", "rc2json.exe"
             VALUE "ProductName", "Creation Kit Platform Extended Project"
             VALUE "ProductVersion", VER_PRODUCT_VERSION_STR
         END

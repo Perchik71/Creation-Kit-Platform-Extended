@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="jdiashow.cpp" />
+    <ClCompile Include="..\..\Dependencies\jDialogs\include\jdialogs.cpp">
+      <Filter>jDialogs</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="jDialogs">
+      <UniqueIdentifier>{92765b5b-348b-4226-854e-25e269d6bec1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{c7402277-2103-4534-9b2d-6f0a75a304d7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="version\resource_version2.h">
+      <Filter>res</Filter>
+    </ClInclude>
+    <ClInclude Include="version\resource_version.h">
+      <Filter>res</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\jDialogs\include\jdialogs.h">
+      <Filter>jDialogs</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="version\resource_version.rc">
+      <Filter>res</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="version\resource_version2.tmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="version\scripts.ps1">
+      <Filter>res</Filter>
+    </None>
+    <None Include="version\resource_version.aps">
+      <Filter>res</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="version\build_version.txt">
+      <Filter>res</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
