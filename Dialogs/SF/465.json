@@ -1,0 +1,18 @@
+{
+	"Style": ["DS_CONTROL", "WS_CLIPCHILDREN", "0x40000000"],
+	"Width": 312,
+	"Height": 133,
+	"FontName": "Microsoft Sans Serif",
+	"FontSize": 8,
+	"FontWeight": 400,
+	"FontItalic": 0,
+	"Controls": [
+		{ "Type": "LISTVIEW", "Title": "", "Style": ["WS_BORDER", "0x0000080D"], "Id": 5819, "x": 0, "y": 0, "Width": 240, "Height": 92 },
+		{ "Type": "PUSHBUTTON", "Title": "Add", "Id": 3681, "x": 244, "y": 0, "Width": 50, "Height": 14 },
+		{ "Type": "PUSHBUTTON", "Title": "Remove", "Id": 3682, "x": 244, "y": 18, "Width": 50, "Height": 14 },
+		{ "Type": "PUSHBUTTON", "Title": "Duplicate", "Id": 3685, "x": 244, "y": 36, "Width": 50, "Height": 14 },
+		{ "Type": "PUSHBUTTON", "Title": "Move Up", "Id": 3683, "x": 244, "y": 54, "Width": 50, "Height": 14 },
+		{ "Type": "PUSHBUTTON", "Title": "Move Down", "Id": 3684, "x": 244, "y": 72, "Width": 50, "Height": 14 },
+		{ "Type": "LTEXT", "Title": "Property Edit Placeholder", "Style": ["WS_BORDER"], "Id": 5432, "x": 0, "y": 96, "Width": 296, "Height": 74 }
+	]
+}
