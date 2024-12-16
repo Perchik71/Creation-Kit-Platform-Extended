@@ -9,7 +9,7 @@
 	"FontItalic": 0,
 	"Controls": [
 		{ "Type": "LISTVIEW", "Title": "", "Style": ["WS_BORDER", "0x0000880D"], "Id": 5430, "x": 7, "y": 7, "Width": 197, "Height": 210 },
-		{ "Type": "LTEXT", "Title": "Property Edit Placeholder", "Style": ["WS_BORDER"], "Id": 5432, "x": 212, "y": 20, "Width": 294, "Height": 133 },
+		{ "Type": "LTEXT", "Title": "Property Edit Placeholder", "Style": ["WS_BORDER"], "Id": 5432, "x": 212, "y": 20, "Width": 294, "Height": 141 },
 		{ "Type": "PUSHBUTTON", "Title": "Edit Value", "Id": 3682, "x": 511, "y": 20, "Width": 50, "Height": 14 },
 		{ "Type": "PUSHBUTTON", "Title": "Revert", "Id": 5488, "x": 511, "y": 38, "Width": 50, "Height": 14 },
 		{ "Type": "PUSHBUTTON", "Title": "Auto-Fill", "Id": 3681, "x": 511, "y": 56, "Width": 50, "Height": 14 },
@@ -19,7 +19,7 @@
 		{ "Type": "PUSHBUTTON", "Title": "Cancel", "Id": 2, "x": 511, "y": 222, "Width": 50, "Height": 14 },
 		{ "Type": "LTEXT", "Title": "Property type: <nothing selected>", "Id": 5431, "x": 212, "y": 7, "Width": 224, "Height": 8 },
 		{ "Type": "LTEXT", "Title": "<<Using Default Script Value>>", "Id": 5492, "x": 212, "y": 20, "Width": 104, "Height": 8 },
-		{ "Type": "LTEXT", "Title": "Documentation String:", "Id": 5956, "x": 212, "y": 158, "Width": 72, "Height": 8 },
-		{ "Type": "EDITTEXT", "Style": ["ES_LEFT", "ES_MULTILINE", "ES_AUTOVSCROLL", "ES_AUTOHSCROLL", "ES_READONLY", "WS_VSCROLL", "WS_HSCROLL"], "Id": 5955, "x": 212, "y": 169, "Width": 349, "Height": 48 }
+		{ "Type": "LTEXT", "Title": "Documentation String:", "Id": 5956, "x": 212, "y": 166, "Width": 72, "Height": 8 },
+		{ "Type": "EDITTEXT", "Style": ["ES_LEFT", "ES_MULTILINE", "ES_AUTOVSCROLL", "ES_AUTOHSCROLL", "ES_READONLY", "WS_VSCROLL", "WS_HSCROLL"], "Id": 5955, "x": 212, "y": 177, "Width": 349, "Height": 40 }
 	]
 }
