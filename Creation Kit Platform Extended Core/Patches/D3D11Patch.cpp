@@ -22,7 +22,7 @@ namespace CreationKitPlatformExtended
 
 		bool D3D11Patch::HasOption() const
 		{
-			return true;
+			return false;
 		}
 
 		bool D3D11Patch::HasCanRuntimeDisabled() const
@@ -32,7 +32,7 @@ namespace CreationKitPlatformExtended
 
 		const char* D3D11Patch::GetOptionName() const
 		{
-			return "CreationKit:bD3D11Patch";
+			return nullptr;
 		}
 
 		const char* D3D11Patch::GetName() const
@@ -57,7 +57,8 @@ namespace CreationKitPlatformExtended
 			{
 				auto SystemVersion = _engine->GetSystemVersion();
 				// Win 8.1 and newer
-				return ((SystemVersion.MajorVersion > 6) || ((SystemVersion.MajorVersion == 6) && (SystemVersion.MinorVersion == 3)));
+				return ((SystemVersion.MajorVersion > 6) || 
+					((SystemVersion.MajorVersion == 6) && (SystemVersion.MinorVersion == 3)));
 			}
 
 			return false;
@@ -143,6 +144,11 @@ namespace CreationKitPlatformExtended
 			D3D_FEATURE_LEVEL* pFeatureLevel,
 			ID3D11DeviceContext** ppImmediateContext)
 		{
+			auto SwapChainDesc = const_cast<DXGI_SWAP_CHAIN_DESC*>(pSwapChainDesc);
+			SwapChainDesc->BufferDesc.RefreshRate.Numerator = 60;
+			SwapChainDesc->BufferDesc.RefreshRate.Denominator = 
+				(UINT)_READ_OPTION_BOOL("CreationKit", "bRenderWindowVSync", true);
+			
 			//
 			// From MSDN:
 			//

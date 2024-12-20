@@ -901,6 +901,9 @@
     <ClCompile Include="Patches\SF\BSResourceLooseFilesPatchSF.cpp">
       <Filter>Patches\SF</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\FO4\FixBadPictureInRender.cpp">
+      <Filter>Patches\FO4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2193,6 +2196,9 @@
     </ClInclude>
     <ClInclude Include="Patches\SF\BSResourceLooseFilesPatchSF.h">
       <Filter>Patches\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\FO4\FixBadPictureInRender.h">
+      <Filter>Patches\FO4</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

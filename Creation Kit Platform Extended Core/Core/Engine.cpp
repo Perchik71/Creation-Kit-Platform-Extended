@@ -615,14 +615,13 @@ namespace CreationKitPlatformExtended
 			DWORD dwMajor, dwMinor, dwBuild;
 			if (!GetVerOs(&dwMajor, &dwMinor, &dwBuild))
 			{
-				if (dwMajor < 6)
+				// Need 8.1
+				if ((dwMajor < 6) || (dwMajor == 6) && (dwMinor < 3))
 				{
 					_ERROR("Unsupported OS version");
 
 					return RC_UNSUPPORT_VERSION_OS;
 				}
-				else if ((dwMajor == 6) && (dwMinor < 3))			// Need 8.1
-					_WARNING("Your OS is not fully supported");
 			}
 
 			// Доступные имена для Creation Kit

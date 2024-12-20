@@ -14,7 +14,7 @@ namespace CreationKitPlatformExtended
 
 		bool RenderWindow60FPSPatch::HasOption() const
 		{
-			return true;
+			return false;
 		}
 
 		bool RenderWindow60FPSPatch::HasCanRuntimeDisabled() const
@@ -24,7 +24,7 @@ namespace CreationKitPlatformExtended
 
 		const char* RenderWindow60FPSPatch::GetOptionName() const
 		{
-			return "CreationKit:bRenderWindow60FPS";
+			return nullptr;
 		}
 
 		const char* RenderWindow60FPSPatch::GetName() const
@@ -53,14 +53,15 @@ namespace CreationKitPlatformExtended
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
 			auto verPatch = lpRelocationDatabaseItem->Version();
-			if ((verPatch == 1) || (verPatch == 2))
+			if (verPatch == 2)
 			{
 				//
 				// Force render window to draw at 60fps (SetTimer(10ms))
+				// DESC: BufferDesc.RefreshRate.Numerator = 60
 				//
 				lpRelocator->Patch(_RELDATA_RAV(0), { USER_TIMER_MINIMUM });
 
-				if (verPatch == 2)
+				if (!_READ_OPTION_BOOL("CreationKit", "bRenderWindowVSync", true))
 					// no VSync
 					lpRelocator->Patch(_RELDATA_RAV(1), { 0x33, 0xD2, 0x90 });
 

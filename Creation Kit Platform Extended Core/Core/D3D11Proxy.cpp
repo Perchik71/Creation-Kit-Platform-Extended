@@ -170,6 +170,15 @@ namespace CreationKitPlatformExtended
 
 		HRESULT STDMETHODCALLTYPE D3D11DeviceProxy::CreateSamplerState(const D3D11_SAMPLER_DESC *pSamplerDesc, ID3D11SamplerState **ppSamplerState)
 		{
+			if (pSamplerDesc)
+			{
+				auto SamplerDesc = const_cast<D3D11_SAMPLER_DESC*>(pSamplerDesc);
+
+				SamplerDesc->MipLODBias = 0.0f;				// mipmap level bias value
+				SamplerDesc->MinLOD = 0.0f;					// alternative minimum mipmap level
+				SamplerDesc->MaxLOD = D3D11_FLOAT32_MAX;	// alternative maximum mipmap level
+			}
+			
 			return m_Device->CreateSamplerState(pSamplerDesc, ppSamplerState);
 		}
 

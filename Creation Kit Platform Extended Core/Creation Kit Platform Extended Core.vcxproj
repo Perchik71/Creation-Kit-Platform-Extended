@@ -222,6 +222,7 @@
     <ClCompile Include="Patches\FO4\EnableGoInSelGame.cpp" />
     <ClCompile Include="Patches\FO4\ESLTip.cpp" />
     <ClCompile Include="Patches\FO4\FakeMoveLight.cpp" />
+    <ClCompile Include="Patches\FO4\FixBadPictureInRender.cpp" />
     <ClCompile Include="Patches\FO4\FixBNet.cpp" />
     <ClCompile Include="Patches\FO4\FixCrashMapMarkerCmd.cpp" />
     <ClCompile Include="Patches\FO4\FixCrashNoRootMat.cpp" />
@@ -627,6 +628,7 @@
     <ClInclude Include="Patches\FO4\EnableGoInSelGame.h" />
     <ClInclude Include="Patches\FO4\ESLTip.h" />
     <ClInclude Include="Patches\FO4\FakeMoveLight.h" />
+    <ClInclude Include="Patches\FO4\FixBadPictureInRender.h" />
     <ClInclude Include="Patches\FO4\FixBNet.h" />
     <ClInclude Include="Patches\FO4\FixCrashMapMarkerCmd.h" />
     <ClInclude Include="Patches\FO4\FixCrashNoRootMat.h" />
