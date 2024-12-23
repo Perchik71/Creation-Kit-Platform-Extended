@@ -53,7 +53,7 @@ namespace CreationKitPlatformExtended
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
 			auto verPatch = lpRelocationDatabaseItem->Version();
-			if (verPatch == 2)
+			if ((verPatch == 1) || (verPatch == 2))
 			{
 				//
 				// Force render window to draw at 60fps (SetTimer(10ms))
@@ -64,6 +64,13 @@ namespace CreationKitPlatformExtended
 				if (!_READ_OPTION_BOOL("CreationKit", "bRenderWindowVSync", true))
 					// no VSync
 					lpRelocator->Patch(_RELDATA_RAV(1), { 0x33, 0xD2, 0x90 });
+
+				if (verPatch == 1)
+				{
+					// Remove lock framerate
+					lpRelocator->Patch(_RELDATA_RAV(2), { 0xEB });
+					lpRelocator->Patch(_RELDATA_RAV(3), { 0xEB });
+				}
 
 				return true;
 			} 

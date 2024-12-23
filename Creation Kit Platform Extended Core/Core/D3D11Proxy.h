@@ -12,6 +12,8 @@ namespace CreationKitPlatformExtended
 			ID3D11Device2* m_Device;
 			D3D11DeviceContextProxy* m_ContextProxy;
 
+			float m_MipLODBias;
+
 			D3D11DeviceProxy(ID3D11Device* Device);
 			D3D11DeviceProxy(ID3D11Device2* Device);
 

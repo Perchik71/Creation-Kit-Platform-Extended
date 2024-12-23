@@ -15,33 +15,16 @@ namespace CreationKitPlatformExtended
 	{
 		namespace Starfield
 		{
-			class BGSFileSelectorDialog
-			{
-			public:
-				class RegisterArchiveFileCallback
-				{};
-			};
-
-			extern BGSFileSelectorDialog::RegisterArchiveFileCallback* lpArchiveFileCallback;
-
 			namespace BSResource
 			{
-				class LocationTree
-				{};
-
-				extern LocationTree* lpArchiveTree;
-
 				class Archive2
 				{
 				public:
-					enum EResultError : uint32_t
-					{
-						EC_NONE = 0,
-					};
-				public:
 					static void Initialize();
 					static void GetFileSizeStr(uint64_t fileSize, BSString& fileSizeStr);
-					static EResultError HKLoadArchive(void* arrayDataList, LooseFileStream*& resFile, void* Unk1, uint32_t Unk2);
+					static uint32_t HKLoadArchive(const char* fileName, __int64 unknown01,
+						__int64 unknown02, __int64 unknown03, __int64 unknown04, __int64 unknown05, 
+						__int64 unknown06, __int64 unknown07);
 					static void LoadArchive(const char* fileName);
 					static bool IsAvailableForLoad(const char* fileName);
 				};

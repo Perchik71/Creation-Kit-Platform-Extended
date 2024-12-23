@@ -32,8 +32,8 @@ namespace CreationKitPlatformExtended
 				virtual Array<String> GetDependencies() const;
 
 				static void AttachBA2File(LPCSTR _filename);
-				static void LoadTesFile(const TESFile* load_file);
-				static void LoadTesFileFinal(HWND hWnd, UINT uMsg, LPARAM lParam, WPARAM wParam);
+				static void LoadTesFile(const TESFile* load_file, __int8 unknown);
+				static void LoadTesFileFinal();
 				static bool HasLoaded();
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,

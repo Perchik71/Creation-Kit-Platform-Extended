@@ -28,9 +28,8 @@ namespace CreationKitPlatformExtended
 		{
 			bool IsLoaded;
 			Array<const TESFile*> g_SelectedFilesArray;
+			uintptr_t pointer_BSArchiveManagerModded_sub = 0;
 
-			//
-			//uintptr_t pointer_BSArchiveManagerModded_sub = 0;
 			//
 			//uint8_t supportedBA2Version = 8;
 
@@ -84,42 +83,26 @@ namespace CreationKitPlatformExtended
 
 				if (verPatch == 1)
 				{
-					lpArchiveFileCallback = (BGSFileSelectorDialog::RegisterArchiveFileCallback*)_RELDATA_ADDR(0);
-					BSResource::lpArchiveTree = (BSResource::LocationTree*)_RELDATA_ADDR(1);
-					EditorAPI::Starfield::BSResource::pointer_Archive2_sub2 = _RELDATA_ADDR(2);
+					EditorAPI::Starfield::BSResource::pointer_Archive2_sub2 = _RELDATA_ADDR(0);
+					EditorAPI::Starfield::BSResource::Archive2::Initialize();
 
-					//EditorAPI::Fallout4::BSResource::pointer_Archive2_sub1 = _RELDATA_ADDR(6);
-					//
-					//EditorAPI::Fallout4::BSResource::Archive2::Initialize();
+					// Удаление пролога (ловушка занимает 5 байт и повредит прыжок)
+					lpRelocator->PatchNop(_RELDATA_RAV(1), 9);
+					// Ловушка на загрузку архивов
+					EditorAPI::Starfield::BSResource::pointer_Archive2_sub1 = 
+						lpRelocator->DetourFunctionClass(_RELDATA_RAV(1),
+						(uintptr_t)&EditorAPI::Starfield::BSResource::Archive2::HKLoadArchive);
+					
+					lpRelocator->DetourCall(_RELDATA_RAV(2), (uintptr_t)&LoadTesFile);
+					lpRelocator->DetourCall(_RELDATA_RAV(3), (uintptr_t)&LoadTesFileFinal);
+					pointer_BSArchiveManagerModded_sub = _RELDATA_ADDR(4);
 
-					//if (verPatch == 1)
-					//	// Первая версия патча для 1.10.162.0
-					//	lpRelocator->DetourCall(_RELDATA_RAV(1),
-					//		(uintptr_t)&EditorAPI::Fallout4::BSResource::Archive2::HKLoadArchive);
-					//else
-					//	lpRelocator->DetourCall(_RELDATA_RAV(1),
-					//		(uintptr_t)&EditorAPI::Fallout4::BSResource::Archive2::HKLoadArchiveEx);
-
-					//lpRelocator->DetourCall(_RELDATA_RAV(2), (uintptr_t)&LoadTesFile);
-					//lpRelocator->DetourJump(_RELDATA_RAV(3), (uintptr_t)&LoadTesFileFinal);
-
-					//pointer_BSArchiveManagerModded_sub = _RELDATA_ADDR(4);
-
-					//ScopeRelocator text;
-
-					//// Пропуск загрузки архивов, что не имеют отношения к загружаемому моду, но является предыдущей работой
-					//lpRelocator->Patch(_RELDATA_RAV(5), { 0xC3 });
-
-					//// Исключение из списков архив шейдеров
-					//lpRelocator->PatchStringRef(_RELDATA_RAV(8), szArchiveList);
-					//lpRelocator->PatchStringRef(_RELDATA_RAV(9), szArchiveList2);
-
-					//// Так как разница между первой и 8 версией лишь, то что был удалён GNF формат для PlayStation.
-					//// То очевидно, 8 версии с GNF форматом просто не будет, то вполне безопасно, открывать любые версии архивы.
-					//if (verPatch == 1)
-					//	// Первая версия патча для 1.10.162.0
-					//	lpRelocator->Patch(_RELDATA_RAV(7), &supportedBA2Version, 1);
-
+					// Пропуск загрузки архивов, что не имеют отношения к загружаемому моду, но является предыдущей работой
+					// Так же используется для загрузки архивов самим СК, так что душим это.
+					lpRelocator->Patch(_RELDATA_RAV(5), { 0xC3 });
+					// Вырезать EditorDataFilesLoaded.txt
+					lpRelocator->Patch(_RELDATA_RAV(6), { 0xEB });
+	
 					return true;
 				}
 
@@ -139,14 +122,14 @@ namespace CreationKitPlatformExtended
 
 			void BSArchiveManagerModdedPatch::AttachBA2File(LPCSTR _filename)
 			{
-				/*if (EditorAPI::Fallout4::BSResource::Archive2::IsAvailableForLoad(_filename))
+				if (EditorAPI::Starfield::BSResource::Archive2::IsAvailableForLoad(_filename))
 					goto attach_ba2;
 				return;
 			attach_ba2:
-				EditorAPI::Fallout4::BSResource::Archive2::LoadArchive(_filename);*/
+				EditorAPI::Starfield::BSResource::Archive2::LoadArchive(_filename);
 			}
 
-			void BSArchiveManagerModdedPatch::LoadTesFile(const TESFile* load_file)
+			void BSArchiveManagerModdedPatch::LoadTesFile(const TESFile* load_file, __int8 unknown)
 			{
 				IsLoaded = false;
 				// Sometimes duplicated
@@ -169,12 +152,11 @@ namespace CreationKitPlatformExtended
 				AttachBA2File(*(sname + " - Main.ba2"));
 				AttachBA2File(*(sname + " - Textures.ba2"));
 
-				//((void(__fastcall*)(const TESFile*))pointer_BSArchiveManagerModded_sub)(load_file);
+				fastCall<void>(pointer_BSArchiveManagerModded_sub, load_file, unknown);
 			}
 
-			void BSArchiveManagerModdedPatch::LoadTesFileFinal(HWND hWnd, UINT uMsg, LPARAM lParam, WPARAM wParam)
+			void BSArchiveManagerModdedPatch::LoadTesFileFinal()
 			{
-				//EditorUI::HKSendMessageA(hWnd, uMsg, lParam, wParam);
 				g_SelectedFilesArray.clear();
 				IsLoaded = true;
 			}

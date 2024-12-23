@@ -130,6 +130,7 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Dependencies\DirectXTex\src\ScreenGrab11.cpp" />
     <ClCompile Include="..\Dependencies\jDialogs\include\jdialogs.cpp" />
     <ClCompile Include="Core\AboutWindow.cpp" />
     <ClCompile Include="Core\CommandLineParser.cpp" />
@@ -202,6 +203,7 @@
     <ClCompile Include="NiAPI\NiMemoryManager.cpp" />
     <ClCompile Include="NiAPI\NiRTTI.cpp" />
     <ClCompile Include="Patches\AllowMultipleWindowAndMaster.cpp" />
+    <ClCompile Include="Patches\ComPatch.cpp" />
     <ClCompile Include="Patches\ConsolePatch.cpp" />
     <ClCompile Include="Patches\CrashDumpPatch.cpp" />
     <ClCompile Include="Patches\D3D11Patch.cpp" />
@@ -270,7 +272,6 @@
     <ClCompile Include="Patches\SF\OptimizationLoadSF.cpp" />
     <ClCompile Include="Patches\SF\RemoveThreadDpi.cpp" />
     <ClCompile Include="Patches\SF\RemoveUselessMessagesSF.cpp" />
-    <ClCompile Include="Patches\SF\RemoveUselessResizeInDialogs.cpp" />
     <ClCompile Include="Patches\SF\ReplaceImgQSplashWnd.cpp" />
     <ClCompile Include="Patches\SF\RTDynamicCastCrash.cpp" />
     <ClCompile Include="Patches\SF\RunAppWithoutNet.cpp" />
@@ -437,6 +438,7 @@
     <ClCompile Include="WinHttp Wrapper\Exports.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Dependencies\DirectXTex\include\ScreenGrab11.h" />
     <ClInclude Include="..\Dependencies\jDialogs\include\jdialogs.h" />
     <ClInclude Include="..\Plug-ins\MyFirstPlugin\CKPE\PluginAPI.h" />
     <ClInclude Include="Common.h" />
@@ -608,6 +610,7 @@
     <ClInclude Include="NiAPI\NiTMap.h" />
     <ClInclude Include="NiAPI\NiTypes.h" />
     <ClInclude Include="Patches\AllowMultipleWindowAndMaster.h" />
+    <ClInclude Include="Patches\ComPatch.h" />
     <ClInclude Include="Patches\ConsolePatch.h" />
     <ClInclude Include="Patches\CrashDumpPatch.h" />
     <ClInclude Include="Patches\D3D11Patch.h" />
@@ -676,7 +679,6 @@
     <ClInclude Include="Patches\SF\OptimizationLoadSF.h" />
     <ClInclude Include="Patches\SF\RemoveThreadDpi.h" />
     <ClInclude Include="Patches\SF\RemoveUselessMessagesSF.h" />
-    <ClInclude Include="Patches\SF\RemoveUselessResizeInDialogs.h" />
     <ClInclude Include="Patches\SF\ReplaceImgQSplashWnd.h" />
     <ClInclude Include="Patches\SF\RTDynamicCastCrash.h" />
     <ClInclude Include="Patches\SF\RunAppWithoutNet.h" />

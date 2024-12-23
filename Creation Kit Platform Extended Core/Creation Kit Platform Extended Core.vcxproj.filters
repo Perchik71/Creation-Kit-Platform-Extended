@@ -865,9 +865,6 @@
     <ClCompile Include="Patches\FO4\CrashConditionItemGetCrime.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SF\RemoveUselessResizeInDialogs.cpp">
-      <Filter>Patches\SF</Filter>
-    </ClCompile>
     <ClCompile Include="Patches\SF\RemoveThreadDpi.cpp">
       <Filter>Patches\SF</Filter>
     </ClCompile>
@@ -903,6 +900,12 @@
     </ClCompile>
     <ClCompile Include="Patches\FO4\FixBadPictureInRender.cpp">
       <Filter>Patches\FO4</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\ComPatch.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\DirectXTex\src\ScreenGrab11.cpp">
+      <Filter>Dependecies\DirectXTexUtils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -989,6 +992,9 @@
     </Filter>
     <Filter Include="Editor API\SF\Forms">
       <UniqueIdentifier>{8c0ce81a-d9eb-4a96-ac96-1e14a1e870cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependecies\DirectXTexUtils">
+      <UniqueIdentifier>{af8e5418-ce4f-476e-819d-01125a452f54}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2161,9 +2167,6 @@
     <ClInclude Include="Patches\FO4\CrashConditionItemGetCrime.h">
       <Filter>Patches\FO4</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SF\RemoveUselessResizeInDialogs.h">
-      <Filter>Patches\SF</Filter>
-    </ClInclude>
     <ClInclude Include="Patches\SF\RemoveThreadDpi.h">
       <Filter>Patches\SF</Filter>
     </ClInclude>
@@ -2199,6 +2202,12 @@
     </ClInclude>
     <ClInclude Include="Patches\FO4\FixBadPictureInRender.h">
       <Filter>Patches\FO4</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\ComPatch.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\DirectXTex\include\ScreenGrab11.h">
+      <Filter>Dependecies\DirectXTexUtils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

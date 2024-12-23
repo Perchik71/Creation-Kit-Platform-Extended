@@ -14,12 +14,12 @@
 #include "Patches/SF/RTDynamicCastCrash.h"
 #include "Patches/SF/OptimizationLoadSF.h"
 #include "Patches/SF/RemoveUselessMessagesSF.h"
-#include "Patches/SF/RemoveUselessResizeInDialogs.h"
 #include "Patches/SF/RemoveThreadDpi.h"
 #include "Patches/SF/LoadMaterialsQSplash.h"
 #include "Patches/SF/FixQuoteCmdLineSF.h"
 #include "Patches/SF/AllowSaveESMandMasterESPSF.h"
 #include "Patches/SF/BSResourceLooseFilesPatchSF.h"
+#include "Patches/SF/BSArchiveManagerModdedSF.h"
 
 #include "Patches/Windows/SF/DataWindowSF.h"
 #include "Patches/Windows/SF/AboutWindowSF.h"
@@ -48,12 +48,12 @@ namespace CreationKitPlatformExtended
 				new Patches::RTDynamicCastCrashPatch(),
 				new Patches::OptimizationLoadPatch(),
 				new Patches::RemoveUselessMessagesPatch(),
-				//new Patches::RemoveUselessResizeInDialogsPatch(),
 				new Patches::RemoveThreadDpiPatch(),
 				new Patches::LoadMaterialsQSplashPatch(),
 				new Patches::FixQuoteCmdLinePatch(),
 				new Patches::AllowSaveESMandMasterESPPatch(),
 				new Patches::BSResourceLooseFilesPatch(),
+				new Patches::BSArchiveManagerModdedPatch(),
 
 				new Patches::DataWindow(),
 				new Patches::AboutWindow(),

@@ -13,11 +13,8 @@ namespace CreationKitPlatformExtended
 		{
 			using namespace CreationKitPlatformExtended::Core;
 
-			BGSFileSelectorDialog::RegisterArchiveFileCallback* lpArchiveFileCallback = nullptr;
-
 			namespace BSResource
 			{
-				LocationTree* lpArchiveTree = nullptr;
 				uintptr_t pointer_Archive2_sub1 = 0;
 				uintptr_t pointer_Archive2_sub2 = 0;
 				Array<BSString*> g_arrayArchivesAvailable;
@@ -101,41 +98,35 @@ namespace CreationKitPlatformExtended
 						fileSizeStr.Format("%d Byte", fileSize);
 				}
 
-				Archive2::EResultError Archive2::HKLoadArchive(void* arrayDataList, LooseFileStream*& resFile,
-					void* Unk1, uint32_t Unk2)
+				uint32_t Archive2::HKLoadArchive(const char* fileName, __int64 unknown01,
+					__int64 unknown02, __int64 unknown03, __int64 unknown04, __int64 unknown05,
+					__int64 unknown06, __int64 unknown07)
 				{
-					auto fileName = resFile->FileName->Get<CHAR>(true);
+					if (!fileName)
+						return 0;
+
 					AssertMsg(fileName, "There is no name of the load archive");
 
-					BSString filePath, fileSizeStr;
-					filePath.Format("%s%s%s", resFile->AppPath->Get<CHAR>(true), resFile->DataPath->Get<CHAR>(true), fileName);
-					AssertMsgVa(BSString::Utils::FileExists(filePath), "Can't found file %s", *filePath);
-
-					uint64_t fileSize = 0;
-					WIN32_FILE_ATTRIBUTE_DATA fileData;
-					ZeroMemory(&fileData, sizeof(WIN32_FILE_ATTRIBUTE_DATA));
-					if (GetFileAttributesExA(*filePath, GetFileExInfoStandard, &fileData))
-						fileSize = (uint64_t)fileData.nFileSizeLow | ((uint64_t)fileData.nFileSizeHigh << 32);
-
-					auto resultNo = EC_NONE;
-
-					if (_stricmp(fileName, "Fallout4 - Shaders.ba2"))  // skip load Fallout4 - Shaders.ba2
+					BSString filePath = BSString::Utils::GetDataPath() + fileName, fileSizeStr;
+					if (BSString::Utils::FileExists(filePath))
 					{
+						unsigned int fileSize = 0;
+						WIN32_FILE_ATTRIBUTE_DATA fileData;
+						if (GetFileAttributesExA(*filePath, GetFileExInfoStandard, &fileData))
+							fileSize = (uint64_t)fileData.nFileSizeLow | ((uint64_t)fileData.nFileSizeHigh << 32);
+
 						GetFileSizeStr(fileSize, fileSizeStr);
 						_CONSOLE("Load an archive file \"%s\" (%s)...", fileName, *fileSizeStr);
-
-						resultNo = fastCall<EResultError, void*, LooseFileStream*&, void*, uint32_t>
-							(pointer_Archive2_sub1, arrayDataList, resFile, Unk1, Unk2);
-						AssertMsgVa(resultNo == EC_NONE, "Failed load an archive file %s", fileName);
 					}
 
-					return resultNo;
+					return fastCall<uint32_t>(pointer_Archive2_sub1, fileName, unknown01, 
+						unknown02, unknown03, unknown04, unknown05, unknown06, unknown07);
 				}
 
 				void Archive2::LoadArchive(const char* fileName)
 				{
 					if (BSString::Utils::FileExists(BSString::Utils::GetDataPath() + fileName))
-						fastCall<void>(pointer_Archive2_sub2, fileName, &lpArchiveTree, &lpArchiveFileCallback);
+						fastCall<void>(pointer_Archive2_sub2, fileName, 0, 0);
 				}
 
 				bool Archive2::IsAvailableForLoad(const char* fileName)

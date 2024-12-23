@@ -148,7 +148,7 @@ namespace CreationKitPlatformExtended
 			SwapChainDesc->BufferDesc.RefreshRate.Numerator = 60;
 			SwapChainDesc->BufferDesc.RefreshRate.Denominator = 
 				(UINT)_READ_OPTION_BOOL("CreationKit", "bRenderWindowVSync", true);
-			
+
 			//
 			// From MSDN:
 			//

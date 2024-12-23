@@ -7,6 +7,7 @@
 #include "RenderWindow.h"
 #include "MainWindow.h"
 #include "Editor API/SSE/BGSRenderWindow.h"
+#include "Patches/D3D11Patch.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -38,12 +39,12 @@ namespace CreationKitPlatformExtended
 
 			bool RenderWindow::HasDependencies() const
 			{
-				return false;
+				return true;
 			}
 
 			Array<String> RenderWindow::GetDependencies() const
 			{
-				return {};
+				return { "D3D11 Patch" };
 			}
 
 			bool RenderWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
@@ -89,9 +90,11 @@ namespace CreationKitPlatformExtended
 					GlobalRegistratorWindowPtr->RegisterMajor(Hwnd, "RenderWindow");
 					GlobalRenderWindowPtr->m_hWnd = Hwnd;
 					GlobalRenderWindowPtr->_BlockInputMessage = true;
-					return CallWindowProc(GlobalRenderWindowPtr->GetOldWndProc(), Hwnd, Message, wParam, lParam);
+
+					return CallWindowProc(GlobalRenderWindowPtr->GetOldWndProc(),
+						Hwnd, Message, wParam, lParam);
 				}
-				////// Fix WHITE area (Eats my eyes at startup) (only 1.6.1130)
+				////// Fix WHITE area (Eats my eyes at startup) (only 1.6.1130 or newer)
 				else if (Message == WM_PAINT)
 				{
 					PAINTSTRUCT ps;

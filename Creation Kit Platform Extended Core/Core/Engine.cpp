@@ -41,6 +41,7 @@
 #include "Patches/PapyrusEditorLimit.h"
 #include "Patches/UIHotkeys.h"
 #include "Patches/D3D11Patch.h"
+#include "Patches/ComPatch.h"
 
 #include "Experimental/RuntimeOptimization.h"
 
@@ -211,6 +212,7 @@ namespace CreationKitPlatformExtended
 				new CreationKitPlatformExtended::Patches::UIThemePatchAdditional(),
 				new CreationKitPlatformExtended::Patches::PapyrusEditorLimitPatch(),
 				new CreationKitPlatformExtended::Patches::D3D11Patch(),
+				new CreationKitPlatformExtended::Patches::ComPatch(),
 				_Theme,
 				_ClassicTheme,
 				INICacheData,

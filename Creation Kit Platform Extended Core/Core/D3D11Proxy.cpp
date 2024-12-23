@@ -15,6 +15,8 @@ namespace CreationKitPlatformExtended
 			m_Device->GetImmediateContext2(&temp);
 
 			m_ContextProxy = new D3D11DeviceContextProxy(temp);
+			m_MipLODBias = std::min(3.f, std::max(-3.f, 
+				_READ_OPTION_FLOAT("Graphics", "fMipLODBias", 0.f)));
 		}
 
 		D3D11DeviceProxy::D3D11DeviceProxy(ID3D11Device2 *Device)
@@ -25,6 +27,8 @@ namespace CreationKitPlatformExtended
 			m_Device->GetImmediateContext2(&temp);
 
 			m_ContextProxy = new D3D11DeviceContextProxy(temp);
+			m_MipLODBias = std::min(3.f, std::max(-3.f,
+				_READ_OPTION_FLOAT("Graphics", "fMipLODBias", 0.f)));
 		}
 
 		HRESULT STDMETHODCALLTYPE D3D11DeviceProxy::QueryInterface(REFIID riid, void **ppvObj)
@@ -165,6 +169,15 @@ namespace CreationKitPlatformExtended
 
 		HRESULT STDMETHODCALLTYPE D3D11DeviceProxy::CreateRasterizerState(const D3D11_RASTERIZER_DESC *pRasterizerDesc, ID3D11RasterizerState **ppRasterizerState)
 		{
+			if (pRasterizerDesc)
+			{
+				auto RasterizerDesc = const_cast<D3D11_RASTERIZER_DESC*>(pRasterizerDesc);
+				RasterizerDesc->AntialiasedLineEnable = true;
+				RasterizerDesc->MultisampleEnable = true;
+
+				return m_Device->CreateRasterizerState(RasterizerDesc, ppRasterizerState);
+			}
+
 			return m_Device->CreateRasterizerState(pRasterizerDesc, ppRasterizerState);
 		}
 
@@ -174,7 +187,7 @@ namespace CreationKitPlatformExtended
 			{
 				auto SamplerDesc = const_cast<D3D11_SAMPLER_DESC*>(pSamplerDesc);
 
-				SamplerDesc->MipLODBias = 0.0f;				// mipmap level bias value
+				SamplerDesc->MipLODBias = m_MipLODBias;		// mipmap level bias value
 				SamplerDesc->MinLOD = 0.0f;					// alternative minimum mipmap level
 				SamplerDesc->MaxLOD = D3D11_FLOAT32_MAX;	// alternative maximum mipmap level
 			}
