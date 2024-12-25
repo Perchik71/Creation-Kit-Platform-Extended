@@ -203,7 +203,6 @@
     <ClCompile Include="NiAPI\NiMemoryManager.cpp" />
     <ClCompile Include="NiAPI\NiRTTI.cpp" />
     <ClCompile Include="Patches\AllowMultipleWindowAndMaster.cpp" />
-    <ClCompile Include="Patches\ComPatch.cpp" />
     <ClCompile Include="Patches\ConsolePatch.cpp" />
     <ClCompile Include="Patches\CrashDumpPatch.cpp" />
     <ClCompile Include="Patches\D3D11Patch.cpp" />
@@ -610,7 +609,6 @@
     <ClInclude Include="NiAPI\NiTMap.h" />
     <ClInclude Include="NiAPI\NiTypes.h" />
     <ClInclude Include="Patches\AllowMultipleWindowAndMaster.h" />
-    <ClInclude Include="Patches\ComPatch.h" />
     <ClInclude Include="Patches\ConsolePatch.h" />
     <ClInclude Include="Patches\CrashDumpPatch.h" />
     <ClInclude Include="Patches\D3D11Patch.h" />

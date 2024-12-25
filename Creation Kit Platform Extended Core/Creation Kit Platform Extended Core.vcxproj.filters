@@ -901,9 +901,6 @@
     <ClCompile Include="Patches\FO4\FixBadPictureInRender.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\ComPatch.cpp">
-      <Filter>Patches</Filter>
-    </ClCompile>
     <ClCompile Include="..\Dependencies\DirectXTex\src\ScreenGrab11.cpp">
       <Filter>Dependecies\DirectXTexUtils</Filter>
     </ClCompile>
@@ -2202,9 +2199,6 @@
     </ClInclude>
     <ClInclude Include="Patches\FO4\FixBadPictureInRender.h">
       <Filter>Patches\FO4</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\ComPatch.h">
-      <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="..\Dependencies\DirectXTex\include\ScreenGrab11.h">
       <Filter>Dependecies\DirectXTexUtils</Filter>
