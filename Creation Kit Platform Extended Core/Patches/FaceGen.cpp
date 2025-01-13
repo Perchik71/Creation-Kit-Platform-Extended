@@ -62,10 +62,10 @@ namespace CreationKitPlatformExtended
 			}
 			else if (Flag == BC5_UNORM)
 			{
-				if (pointer_d3d11DeviceIntf)
+				/*if (pointer_d3d11DeviceIntf)
 					hr = DirectX::Compress(pointer_d3d11DeviceIntf, image->GetImages(), image->GetImageCount(), image->GetMetadata(),
 						DXGI_FORMAT_BC5_UNORM, DirectX::TEX_COMPRESS_DEFAULT, DirectX::TEX_ALPHA_WEIGHT_DEFAULT, bcImage);
-				else
+				else*/
 					hr = DirectX::Compress(image->GetImages(), image->GetImageCount(), image->GetMetadata(),
 						DXGI_FORMAT_BC5_UNORM, DirectX::TEX_COMPRESS_DEFAULT, DirectX::TEX_ALPHA_WEIGHT_DEFAULT, bcImage);
 			}
