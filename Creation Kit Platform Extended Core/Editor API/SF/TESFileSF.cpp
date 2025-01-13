@@ -12,7 +12,9 @@ namespace CreationKitPlatformExtended
 		{
 			uintptr_t pointer_TESFile_sub1 = 0;
 			uintptr_t pointer_TESFile_sub2 = 0;
+			uintptr_t pointer_TESFile_sub3 = 0;
 			uintptr_t pointer_TESFile_data = 0;
+			uint32_t conversion_TESFile_data = 0;
 
 			int32_t TESFile::hk_LoadTESInfo()
 			{
@@ -49,33 +51,82 @@ namespace CreationKitPlatformExtended
 
 			int64_t TESFile::hk_WriteTESInfo()
 			{
-				bool resetEsmFlag = false;
-
 				if (AllowSaveESM)
 				{
+					bool resetEsmFlag = false;
+
 					if (IsActive())
 					{
-						LPCSTR extension = strrchr(m_FileName, '.');
-
-						// forced remove esm flag
-						m_Flags &= ~FILE_RECORD_ESM;
-
-						if (extension && !_stricmp(extension, ".esm"))
+						if (conversion_TESFile_data)
 						{
-							_CONSOLE("Regenerating ONAM data for master file '%s'...\n", m_FileName);
+							// The conversion takes place in 3 stages: saving the plugin,
+							// changing the header and saving, returning the header and saving.
+							// Plugin always with ext as .esp.
 
-							((void(__fastcall*)(TESFile*))pointer_TESFile_sub2)(this);
-							resetEsmFlag = true;
+							if (IsMaster())
+							{
+								_CONSOLE("Conversion plugin: 0x%X", conversion_TESFile_data);
+
+								// forced remove esm flag
+								m_Flags &= ~FILE_RECORD_ESM;
+
+								_CONSOLE("Regenerating ONAM data for master file '%s'...\n", m_FileName);
+								((void(__fastcall*)(TESFile*))pointer_TESFile_sub2)(this);
+
+								// returned esm flag and type
+								m_Flags |= FILE_RECORD_ESM;
+								m_Flags |= conversion_TESFile_data;
+							}
+						}
+						else
+						{
+							LPCSTR extension = strrchr(m_FileName, '.');
+							if (extension && !_stricmp(extension, ".esm"))
+							{
+								// forced remove esm flag
+								m_Flags &= ~FILE_RECORD_ESM;
+
+								_CONSOLE("Regenerating ONAM data for master file '%s'...\n", m_FileName);
+								((void(__fastcall*)(TESFile*))pointer_TESFile_sub2)(this);
+
+								resetEsmFlag = true;
+							}
 						}
 					}
+
+					auto form = WriteTESInfo(this);
+
+					if (resetEsmFlag)
+						m_Flags &= ~FILE_RECORD_ESM;
+
+					return form;
+				}
+				else
+					return WriteTESInfo(this);
+			}
+
+			void TESFile::hk_ConversionPlugin(void* __This, uint32_t Type)
+			{
+				switch (Type)
+				{
+				case 1:
+					conversion_TESFile_data = FILE_RECORD_LIGHT;
+					break;
+				case 2:
+					conversion_TESFile_data = FILE_RECORD_MID;
+					break;
+				case 3:
+					conversion_TESFile_data = FILE_RECORD_ESM;
+					break;
+				default:
+					conversion_TESFile_data = 0;
+					break;
 				}
 
-				auto form = WriteTESInfo(this);
-
-				if (resetEsmFlag)
-					m_Flags &= ~FILE_RECORD_ESM;
-
-				return form;
+				// call native function
+				Core::fastCall<void>(pointer_TESFile_sub3, __This, Type);
+				// reset conversion flag
+				conversion_TESFile_data = 0;
 			}
 
 			bool TESFile::IsMasterFileToBlacklist() {

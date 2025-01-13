@@ -21,6 +21,7 @@ namespace CreationKitPlatformExtended
 		{
 			extern uintptr_t pointer_TESFile_sub1;
 			extern uintptr_t pointer_TESFile_sub2;
+			extern uintptr_t pointer_TESFile_sub3;
 			extern uintptr_t pointer_TESFile_data;
 		}
 	}
@@ -98,6 +99,8 @@ namespace CreationKitPlatformExtended
 
 						if (TESFile::AllowSaveESM)
 						{
+							pointer_TESFile_sub3 = voltek::detours_function_class_jump(_RELDATA_ADDR(12), &TESFile::hk_ConversionPlugin);
+
 							// Also allow non-game ESMs to be set as "Active File"
 							lpRelocator->DetourCall(_RELDATA_RAV(5), &TESFile::IsMasterFileToBlacklist);
 							lpRelocator->PatchNop(_RELDATA_RAV(6), 2);
@@ -132,7 +135,7 @@ namespace CreationKitPlatformExtended
 			{
 				EditorAPI::BSString BasePath = EditorAPI::BSString::Utils::GetApplicationPath() + "Data";
 
-				const char* filter = "TES Plugin Files (*.esp)\0*.esp\0TES Light Master Files (*.esl)\0*.esl\0TES Master Files (*.esm)\0*.esm\0\0";
+				const char* filter = "TES Plugin Files (*.esp)\0*.esp\0TES Master Files (*.esm)\0*.esm\0\0";
 				const char* title = "Select Target Plugin";
 				const char* extension = "esp";
 

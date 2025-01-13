@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Version/resource_version2.h"
+#include <VersionHelpers.h>
 
 #include "ConsoleWindow.h"
 #include "CommandLineParser.h"

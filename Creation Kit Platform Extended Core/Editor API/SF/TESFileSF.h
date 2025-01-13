@@ -118,6 +118,7 @@ namespace CreationKitPlatformExtended
 				inline static int64_t(*WriteTESInfo)(TESFile*);
 				int32_t hk_LoadTESInfo();
 				int64_t hk_WriteTESInfo();
+				static void hk_ConversionPlugin(void* __This, uint32_t Type);
 				bool IsMasterFileToBlacklist();
 				void Dump();
 			public:
