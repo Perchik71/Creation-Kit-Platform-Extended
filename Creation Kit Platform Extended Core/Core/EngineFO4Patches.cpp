@@ -115,7 +115,6 @@ namespace CreationKitPlatformExtended
 				new Patches::BSResourceTextureDBREPatch(),
 				new Patches::FixLandspaceVNMLPatch(),
 				new Patches::ChooseSoundFilePatch(),
-				//new Patches::CrashInventoryPatch(),
 				new Patches::RunNetworkDisablePatch(),
 				new Patches::CrashConditionItemGetCrimePatch(),
 				new Patches::DontMatchFormsPatch(),
@@ -148,6 +147,12 @@ namespace CreationKitPlatformExtended
 					_CONSOLE("The precombining operation has been launched");
 
 					PatchesManager->Append(new Patches::PreCombinedPatch());
+				}
+				else if (!_stricmp(Cmd.c_str(), "-ExportFaceGenData"))
+				{
+					_CONSOLE("The facegen operation has been launched");
+
+					PatchesManager->Append(new Patches::CrashInventoryPatch());
 				}
 			}
 		}
