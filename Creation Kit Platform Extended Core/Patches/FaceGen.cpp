@@ -151,10 +151,8 @@ namespace CreationKitPlatformExtended
 						lpRelocator->PatchNop(_RELDATA_RAV(1), 5);
 						_MESSAGE("Disabling export FaceGen .DDS files");
 					}
-					else
-					{
+					else if (_READ_OPTION_BOOL("FaceGen", "bAutoCompressionDDS", false))
 						lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&SkyrimSpecialEdition::CreateDiffuseCompressDDS);
-					}
 
 					// Don't produce TGA files
 					if (_READ_OPTION_BOOL("FaceGen", "bDisableExportTGA", false))
@@ -207,7 +205,7 @@ namespace CreationKitPlatformExtended
 					lpRelocator->PatchNop(_RELDATA_RAV(5), 5);
 					_MESSAGE("Disabling export FaceGen .DDS files");
 				}
-				else
+				else if (_READ_OPTION_BOOL("FaceGen", "bAutoCompressionDDS", false))
 				{
 					lpRelocator->DetourCall(_RELDATA_RAV(1), (uintptr_t)&Fallout4::CreateDiffuseCompressDDS);
 					lpRelocator->DetourCall(_RELDATA_RAV(3), (uintptr_t)&Fallout4::CreateNormalsCompressDDS);
