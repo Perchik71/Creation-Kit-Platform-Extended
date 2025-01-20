@@ -17,7 +17,7 @@ namespace CreationKitPlatformExtended
 			{
 				uintptr_t pointer_Archive2_sub1 = 0;
 				uintptr_t pointer_Archive2_sub2 = 0;
-				Array<BSString*> g_arrayArchivesAvailable;
+				Array<std::unique_ptr<BSString>> g_arrayArchivesAvailable;
 				bool g_initCKPEPrimary = false;
 				std::mutex g_CKPEPrimary;
 
@@ -33,7 +33,7 @@ namespace CreationKitPlatformExtended
 					{
 						do
 						{
-							g_arrayArchivesAvailable.push_back(new BSString(FileFindData.cFileName));
+							g_arrayArchivesAvailable.push_back(std::make_unique<BSString>(FileFindData.cFileName));
 						} while (FindNextFile(hFindFile, &FileFindData));
 					}
 
@@ -56,10 +56,8 @@ namespace CreationKitPlatformExtended
 											break;
 									}
 
-									if (index != g_arrayArchivesAvailable.end()) {
-										delete* index;
+									if (index != g_arrayArchivesAvailable.end())
 										g_arrayArchivesAvailable.erase(index);
-									}
 
 									stoken = strtok(NULL, ",");
 								} while (stoken);

@@ -30,12 +30,6 @@ namespace CreationKitPlatformExtended
 			Array<const TESFile*> g_SelectedFilesArray;
 			uintptr_t pointer_BSArchiveManagerModded_sub = 0;
 
-			//
-			//uint8_t supportedBA2Version = 8;
-
-			//static constexpr char szArchiveList[] = "Fallout4 - Voices1.ba2, Fallout4 - Voices2.ba2, Fallout4 - Meshes.ba2, Fallout4 - Animations.ba2, Fallout4 - Interface.ba2, Fallout4 - Misc.ba2, Fallout4 - Sounds.ba2";
-			//static constexpr char szArchiveList2[] = "Fallout4 - Voices.ba2, Fallout4 - Interface.ba2, Fallout4 - Meshes.ba2, Fallout4 - MeshesExtra.ba2, Fallout4 - Misc.ba2, Fallout4 - Sounds.ba2, Fallout4 - Materials.ba2";*/
-
 			BSArchiveManagerModdedPatch::BSArchiveManagerModdedPatch() : Module(GlobalEnginePtr)
 			{}
 
@@ -149,8 +143,30 @@ namespace CreationKitPlatformExtended
 				auto sname = load_file->GetFileName();
 				sname.Copy(0, sname.FindLastOf('.'));
 
-				AttachBA2File(*(sname + " - Main.ba2"));
-				AttachBA2File(*(sname + " - Textures.ba2"));
+				// Find archives this plugin
+				WIN32_FIND_DATA FindFileData;
+				ZeroMemory(&FindFileData, sizeof(WIN32_FIND_DATA));
+				auto hFind = FindFirstFileExA(*(EditorAPI::BSString::Utils::GetDataPath() + "*.ba2"),
+					FindExInfoStandard, &FindFileData, FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH);
+				if (hFind != INVALID_HANDLE_VALUE)
+				{
+					auto CheckLen = sname.Length();
+					auto CheckStr = *sname;
+
+					do
+					{
+						if ((FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == FILE_ATTRIBUTE_DIRECTORY)
+							continue;
+
+						if (!_strnicmp(FindFileData.cFileName, CheckStr, CheckLen))
+						{
+							if (!_strnicmp(FindFileData.cFileName + CheckLen, " - Main", 7))
+								AttachBA2File(FindFileData.cFileName);
+							else if (!_strnicmp(FindFileData.cFileName + CheckLen, " - Textures", 11))
+								AttachBA2File(FindFileData.cFileName);
+						}
+					} while(FindNextFileA(hFind, &FindFileData));
+				}
 
 				fastCall<void>(pointer_BSArchiveManagerModded_sub, load_file, unknown);
 			}
