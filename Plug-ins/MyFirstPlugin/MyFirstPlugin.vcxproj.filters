@@ -18,7 +18,7 @@
     <ClInclude Include="CKPE\vmmconfig.h">
       <Filter>CKPE</Filter>
     </ClInclude>
-    <ClInclude Include="CKPE\vmm.h">
+    <ClInclude Include="CKPE\Voltek.MemoryManager.h">
       <Filter>CKPE</Filter>
     </ClInclude>
   </ItemGroup>

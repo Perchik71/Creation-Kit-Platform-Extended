@@ -102,8 +102,8 @@
     <ClInclude Include="CKPE\Common.h" />
     <ClInclude Include="CKPE\PluginAPI.h" />
     <ClInclude Include="CKPE\Types.h" />
-    <ClInclude Include="CKPE\vmm.h" />
     <ClInclude Include="CKPE\vmmconfig.h" />
+    <ClInclude Include="CKPE\Voltek.MemoryManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CKPE\PluginAPI.cpp" />
