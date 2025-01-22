@@ -37,10 +37,17 @@ namespace CreationKitPlatformExtended
 			EDITOR_SKYRIM_SE_1_5_3,
 			EDITOR_SKYRIM_SE_1_5_73,
 			EDITOR_SKYRIM_SE_1_6_438,
-			EDITOR_SKYRIM_SE_1_6_1130 = EDITOR_SKYRIM_SE_1_6_438 + 1,
-			EDITOR_SKYRIM_SE_LAST = EDITOR_SKYRIM_SE_1_6_1130,
+			EDITOR_SKYRIM_SE_1_6_1130,
+			EDITOR_SKYRIM_SE_1_6_1378_1,
+			EDITOR_SKYRIM_SE_LAST = EDITOR_SKYRIM_SE_1_6_1378_1,
 			EDITOR_FALLOUT_C4_1_10_162_0,
-			EDITOR_FALLOUT_C4_LAST = EDITOR_FALLOUT_C4_1_10_162_0
+			EDITOR_FALLOUT_C4_1_10_943_1,
+			EDITOR_FALLOUT_C4_1_10_982_3,
+			EDITOR_FALLOUT_C4_LAST = EDITOR_FALLOUT_C4_1_10_982_3,
+			EDITOR_STARFIELD_1_13_61_0,
+			EDITOR_STARFIELD_1_14_70_0,
+			EDITOR_STARFIELD_1_14_74_0,
+			EDITOR_STARFIELD_LAST = EDITOR_STARFIELD_1_14_74_0,
 		};
 
 		typedef int32_t IResult;
@@ -56,12 +63,17 @@ namespace CreationKitPlatformExtended
 
 		static inline bool __stdcall IsEditorFallout4(EDITOR_EXECUTABLE_TYPE editor)
 		{
-			return editor <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST;
+			return (editor >= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_1_10_162_0) && (editor <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST);
 		}
 
 		static inline bool __stdcall IsEditorSkyrimSpecialEdition(EDITOR_EXECUTABLE_TYPE editor)
 		{
 			return editor <= EDITOR_EXECUTABLE_TYPE::EDITOR_SKYRIM_SE_LAST;
+		}
+
+		static inline bool __stdcall IsEditorStarfield(EDITOR_EXECUTABLE_TYPE editor)
+		{
+			return (editor >= EDITOR_EXECUTABLE_TYPE::EDITOR_STARFIELD_1_13_61_0) && (editor <= EDITOR_EXECUTABLE_TYPE::EDITOR_STARFIELD_LAST);
 		}
 
 		static inline bool __stdcall CheckRuntimePlatformVersion(const char* platform_ver, 

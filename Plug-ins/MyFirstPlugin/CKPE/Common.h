@@ -52,7 +52,7 @@
 #include <concurrent_vector.h>
 #include <concurrent_unordered_map.h>
 
-#include "vmm.h"
+#include "Voltek.MemoryManager.h"
 #include "Types.h"
 
 #define PROPERTY(read_func, write_func)	__declspec(property(get = read_func, put = write_func))

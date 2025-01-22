@@ -14,6 +14,7 @@
 
 #include "Editor API/SSE/TESDataHandler.h"
 #include "Editor API/FO4/TESDataHandler.h"
+#include "Editor API/SF/TESDataHandler.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -176,6 +177,8 @@ namespace CreationKitPlatformExtended
 				DataHandler = new EditorAPI::SkyrimSpectialEdition::TESDataHandler_CKPEIntf;
 			else if (editorVer <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST)
 				DataHandler = new EditorAPI::Fallout4::TESDataHandler_CKPEIntf;
+			else if (editorVer <= EDITOR_EXECUTABLE_TYPE::EDITOR_STARFIELD_LAST)
+				DataHandler = new EditorAPI::Starfield::TESDataHandler_CKPEIntf;
 	
 			DataTAG Data = 
 			{
@@ -212,6 +215,8 @@ namespace CreationKitPlatformExtended
 					delete (EditorAPI::SkyrimSpectialEdition::TESDataHandler_CKPEIntf*)DataHandler;
 				else if (editorVer <= EDITOR_EXECUTABLE_TYPE::EDITOR_FALLOUT_C4_LAST)
 					delete (EditorAPI::Fallout4::TESDataHandler_CKPEIntf*)DataHandler;
+				else if (editorVer <= EDITOR_EXECUTABLE_TYPE::EDITOR_STARFIELD_LAST)
+					delete (EditorAPI::Starfield::TESDataHandler_CKPEIntf*)DataHandler;
 			}
 
 			return bRet;
