@@ -4,6 +4,7 @@
 
 #include "Core/Engine.h"
 #include "Core/CrashHandler.h"
+#include "Core/CommandLineParser.h"
 #include "CrashDumpPatch.h"
 
 namespace CreationKitPlatformExtended
@@ -98,6 +99,29 @@ namespace CreationKitPlatformExtended
 			}
 			else if (verPatch == 2)
 			{
+				if (GetShortExecutableTypeFromFull(GlobalEnginePtr->GetEditorVersion()) == EDITOR_SHORT_STARFIELD)
+				{
+					CommandLineParser CommandLine;
+					if (CommandLine.HasCommandRun())
+					{
+						auto Cmd = CommandLine.GetCommand();
+						auto Sep = Cmd.find_first_of(':');
+						if (Sep != String::npos)
+						{
+							Cmd = Cmd.substr(0, Sep);
+
+							if (!_stricmp(Cmd.c_str(), "-GenerateInventoryIcons") || 
+								!_stricmp(Cmd.c_str(), "-GenerateWorkshopIcons") || 
+								!_stricmp(Cmd.c_str(), "-GenerateShipBuilderIcons"))
+							{
+								_MESSAGE("CrashDump patch is not compatible with \"%s\" command.", Cmd.c_str());
+
+								return false;
+							}
+						}
+					}
+				}
+
 				ScopeRelocator text; // fast patches
 
 				for (uint32_t i = 0; i < lpRelocationDatabaseItem->Count(); i++)

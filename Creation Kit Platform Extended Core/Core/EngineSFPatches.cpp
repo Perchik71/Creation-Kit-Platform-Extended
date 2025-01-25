@@ -4,6 +4,7 @@
 
 #include "Engine.h"
 #include "ModuleManager.h"
+#include "CommandLineParser.h"
 
 #include "Patches/SF/TESFormRESF.h"
 #include "Patches/SF/ReplaceImgQSplashWnd.h"
@@ -64,6 +65,18 @@ namespace CreationKitPlatformExtended
 				new Patches::LayersWindow(),
 				//new Patches::RenderWindow(),
 			});
+
+			CommandLineParser CommandLine;
+			if (CommandLine.HasCommandRun())
+			{
+				auto Cmd = CommandLine.GetCommand();
+				auto Sep = Cmd.find_first_of(':');
+				if (Sep == String::npos)
+					return;
+
+				Cmd = Cmd.substr(0, Sep);
+				_MESSAGE("[SF] Console command: %s", Cmd.c_str());
+			}
 		}
 	}
 }
