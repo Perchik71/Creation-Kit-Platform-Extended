@@ -12,6 +12,16 @@ namespace CreationKitPlatformExtended
 {
 	namespace Patches
 	{
+#ifdef _CKPE_WITH_QT5
+		static QString& QFixAppend_PluginName(QString& This, QString* PluginName)
+		{
+			if (((*PluginName)[0] == '/') || ((*PluginName)[0] == '\\'))
+				PluginName->remove(0, 1);
+			return This.append(PluginName);
+		}
+
+#endif // !_CKPE_WITH_QT5
+
 		RenameCreationKitAppPatch::RenameCreationKitAppPatch() : Module(GlobalEnginePtr)
 		{}
 
@@ -69,8 +79,6 @@ namespace CreationKitPlatformExtended
 #ifdef _CKPE_WITH_QT5
 				if (verPatch == 2)
 				{
-					// Initial QCoreApplication
-					//lpRelocator->PatchString(_RELDATA_RAV(5), "Creation Kit");
 					// In Qt, it would be necessary to give the name of the window initially, for something acceptable
 					lpRelocator->Patch(_RELDATA_RAV(1), (uint8_t*)"Creation Kit\0", 13);
 					// Cut a useless entry [Branch: <some>, Version: <CKVer>]
@@ -78,6 +86,8 @@ namespace CreationKitPlatformExtended
 					lpRelocator->PatchNop(_RELDATA_RAV(4), 0x6);
 					// Cut a useless entry [Admin]
 					lpRelocator->DetourCall(_RELDATA_RAV(3), &QString::sprintf);
+					// Fix splash
+					lpRelocator->DetourCall(_RELDATA_RAV(5), (uintptr_t)&QFixAppend_PluginName);
 				}
 #endif // !_CKPE_WITH_QT5
 
