@@ -19,7 +19,6 @@ namespace CreationKitPlatformExtended
 				PluginName->remove(0, 1);
 			return This.append(PluginName);
 		}
-
 #endif // !_CKPE_WITH_QT5
 
 		RenameCreationKitAppPatch::RenameCreationKitAppPatch() : Module(GlobalEnginePtr)
