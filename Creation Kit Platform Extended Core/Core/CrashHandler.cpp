@@ -4,7 +4,9 @@
 
 #include <new.h>
 #include <signal.h>
+#include <psapi.h>
 #include "CrashHandler.h"
+#include "INIWrapper.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -13,6 +15,14 @@ namespace CreationKitPlatformExtended
 		CrashHandler* GlobalCrashHandlerPtr = nullptr;
 
 		HANDLE GlobalCrashDumpTriggerEvent;
+		HMODULE GlobalCrashLoadedModules[1024];
+		
+		struct CrashLoadedModuleInfo
+		{
+			char fileName[96];
+			uintptr_t start, end;
+		} GlobalCrashLoadedModulesInfo[1024];
+
 		std::atomic<PEXCEPTION_POINTERS> GlobalCrashDumpExceptionInfo;
 		std::atomic_uint32_t GlobalCrashDumpTargetThreadId;
 
@@ -112,6 +122,8 @@ namespace CreationKitPlatformExtended
 
 			std::thread t([]()
 			{
+				auto BigDump = GlobalINIConfigPtr->ReadBool("Crashes", "bGenerateFullDump", false);
+
 				if (WaitForSingleObject(GlobalCrashDumpTriggerEvent, INFINITE) != WAIT_OBJECT_0)
 					return;
 
@@ -125,7 +137,7 @@ namespace CreationKitPlatformExtended
 				{
 					// Create a dump in the same folder of the exe itself
 					char exePath[MAX_PATH];
-					GetModuleFileNameA(GetModuleHandle(nullptr), exePath, ARRAYSIZE(exePath));
+					GetModuleFileNameA(GetModuleHandleA(nullptr), exePath, ARRAYSIZE(exePath));
 
 					SYSTEMTIME sysTime;
 					GetSystemTime(&sysTime);
@@ -143,9 +155,15 @@ namespace CreationKitPlatformExtended
 							.ClientPointers = FALSE,
 						};
 
-						auto dumpFlags = (MINIDUMP_TYPE)(MiniDumpNormal | MiniDumpWithIndirectlyReferencedMemory | 
-							MiniDumpWithThreadInfo | MiniDumpWithoutOptionalData);
-						dumpWritten = miniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), file, dumpFlags,
+						UINT32 dumpFlags = 
+							MiniDumpNormal | MiniDumpWithThreadInfo | MiniDumpWithIndirectlyReferencedMemory;
+
+						if (BigDump)
+							dumpFlags |= (MiniDumpWithDataSegs | MiniDumpWithFullMemory | MiniDumpWithHandleData | MiniDumpWithFullMemoryInfo);
+						else
+							dumpFlags |= MiniDumpWithoutOptionalData;
+			
+						dumpWritten = miniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), file, (MINIDUMP_TYPE)dumpFlags,
 							&dumpInfo, nullptr, nullptr) != FALSE;
 
 						CloseHandle(file);
@@ -243,14 +261,53 @@ namespace CreationKitPlatformExtended
 
 		void CrashHandler::ContextWriteToCrashLog(FILE* Stream, PEXCEPTION_POINTERS ExceptionInfo)
 		{
-			fprintf(Stream, "\n====== CRASH INFO ======\nException:\n");
+			fprintf(Stream, "\n====== CRASH INFO ======\n");
 
 			PEXCEPTION_RECORD pExceptionRecord = ExceptionInfo->ExceptionRecord;
 
+			fprintf(Stream, "Modules:\n");
+
+			DWORD cbNeeded;
+			auto hProcess = GetCurrentProcess();
+			// Get a list of all the modules in this process.
+			if (EnumProcessModules(hProcess, GlobalCrashLoadedModules, sizeof(GlobalCrashLoadedModules), &cbNeeded))
+			{
+				for (DWORD i = 0; i < (cbNeeded / sizeof(HMODULE)); i++)
+				{
+					CHAR szModName[MAX_PATH];
+					// Get the full path to the module's file.
+					if (GetModuleFileNameExA(hProcess, GlobalCrashLoadedModules[i], szModName,
+						sizeof(szModName) / sizeof(CHAR)))
+					{
+						MODULEINFO Info;
+						GetModuleInformation(hProcess, GlobalCrashLoadedModules[i], &Info, sizeof(MODULEINFO));
+
+						strcpy(GlobalCrashLoadedModulesInfo[i].fileName, PathFindFileNameA(szModName));
+						GlobalCrashLoadedModulesInfo[i].start = (uintptr_t)Info.lpBaseOfDll;
+						GlobalCrashLoadedModulesInfo[i].end = GlobalCrashLoadedModulesInfo[i].start + (uintptr_t)Info.SizeOfImage;
+						
+						// Print the module name and handle value.
+						fprintf(Stream, "\t%s (Start: 0x%016llX Size: 0x%08X)\n",
+							GlobalCrashLoadedModulesInfo[i].fileName, 
+							GlobalCrashLoadedModulesInfo[i].start,
+							Info.SizeOfImage);
+					}
+				}
+			}
+
 			while (pExceptionRecord)
 			{
-				fprintf(Stream, "\tCode: %X\n\tAddress: %p\n\t",
-					pExceptionRecord->ExceptionCode, pExceptionRecord->ExceptionAddress);
+				size_t modIndex;
+				for (modIndex = 0; modIndex < _ARRAYSIZE(GlobalCrashLoadedModules); modIndex++)
+				{
+					if (((uintptr_t)pExceptionRecord->ExceptionAddress >= GlobalCrashLoadedModulesInfo[modIndex].start) &&
+						((uintptr_t)pExceptionRecord->ExceptionAddress < GlobalCrashLoadedModulesInfo[modIndex].end))
+						break;
+				}
+
+				fprintf(Stream, "\nException:\n\tCode: %X\n\tAddress: (%p) %s -> 0x%08X\n\t",
+					pExceptionRecord->ExceptionCode, pExceptionRecord->ExceptionAddress, GlobalCrashLoadedModulesInfo[modIndex].fileName,
+					(uint32_t)((uintptr_t)pExceptionRecord->ExceptionAddress - GlobalCrashLoadedModulesInfo[modIndex].start));
 
 				switch (pExceptionRecord->ExceptionCode)
 				{
