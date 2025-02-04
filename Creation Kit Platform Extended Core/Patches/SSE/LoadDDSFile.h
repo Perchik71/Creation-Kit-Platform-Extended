@@ -29,6 +29,7 @@ namespace CreationKitPlatformExtended
 				virtual Array<String> GetDependencies() const;
 
 				static HRESULT sub(__int64 a1, __int64 a2, __int64 a3, __int64 a4, unsigned int a5, int a6);
+				static HRESULT sub_1378(__int64 a1, __int64 a2, __int64 a3, __int64 a4, unsigned int a5, int a6);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
