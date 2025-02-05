@@ -560,6 +560,7 @@
     <ClInclude Include="Editor API\SSE\BSGraphicsRenderTargetManager.h" />
     <ClInclude Include="Editor API\SSE\BSGraphicsTypes.h" />
     <ClInclude Include="Editor API\SSE\BSPointerHandleManager.h" />
+    <ClInclude Include="Editor API\SSE\BSResources.h" />
     <ClInclude Include="Editor API\SSE\BSShaderMaterial.h" />
     <ClInclude Include="Editor API\SSE\BSShaderProperty.h" />
     <ClInclude Include="Editor API\SSE\BSShaderResourceManager.h" />

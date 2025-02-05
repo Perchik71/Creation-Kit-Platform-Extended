@@ -2203,6 +2203,9 @@
     <ClInclude Include="..\Dependencies\DirectXTex\include\ScreenGrab11.h">
       <Filter>Dependecies\DirectXTexUtils</Filter>
     </ClInclude>
+    <ClInclude Include="Editor API\SSE\BSResources.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version\resource_version.rc">
