@@ -15,8 +15,10 @@ namespace CreationKitPlatformExtended
 			m_Device->GetImmediateContext2(&temp);
 
 			m_ContextProxy = new D3D11DeviceContextProxy(temp);
-			m_MipLODBias = std::min(3.f, std::max(-3.f, 
+			m_MipLODBias = std::min(5.f, std::max(-5.f, 
 				_READ_OPTION_FLOAT("Graphics", "fMipLODBias", 0.f)));
+			m_MaxAnisotropy = std::min(16ul, std::max(0ul,
+				_READ_OPTION_UINT("Graphics", "uMaxAnisotropy", 0)));
 		}
 
 		D3D11DeviceProxy::D3D11DeviceProxy(ID3D11Device2 *Device)
@@ -27,8 +29,10 @@ namespace CreationKitPlatformExtended
 			m_Device->GetImmediateContext2(&temp);
 
 			m_ContextProxy = new D3D11DeviceContextProxy(temp);
-			m_MipLODBias = std::min(3.f, std::max(-3.f,
+			m_MipLODBias = std::min(5.f, std::max(-5.f,
 				_READ_OPTION_FLOAT("Graphics", "fMipLODBias", 0.f)));
+			m_MaxAnisotropy = std::min(16ul, std::max(0ul,
+				_READ_OPTION_UINT("Graphics", "uMaxAnisotropy", 0)));
 		}
 
 		HRESULT STDMETHODCALLTYPE D3D11DeviceProxy::QueryInterface(REFIID riid, void **ppvObj)
@@ -186,6 +190,9 @@ namespace CreationKitPlatformExtended
 			if (pSamplerDesc)
 			{
 				auto SamplerDesc = const_cast<D3D11_SAMPLER_DESC*>(pSamplerDesc);
+
+				if (SamplerDesc->Filter == D3D11_FILTER_ANISOTROPIC)
+					SamplerDesc->MaxAnisotropy = m_MaxAnisotropy;
 
 				SamplerDesc->MipLODBias = m_MipLODBias;		// mipmap level bias value
 				SamplerDesc->MinLOD = 0.0f;					// alternative minimum mipmap level

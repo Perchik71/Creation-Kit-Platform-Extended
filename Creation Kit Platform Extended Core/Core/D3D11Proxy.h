@@ -13,6 +13,7 @@ namespace CreationKitPlatformExtended
 			D3D11DeviceContextProxy* m_ContextProxy;
 
 			float m_MipLODBias;
+			int m_MaxAnisotropy;
 
 			D3D11DeviceProxy(ID3D11Device* Device);
 			D3D11DeviceProxy(ID3D11Device2* Device);

@@ -137,7 +137,7 @@ namespace CreationKitPlatformExtended
 
 			bool CreateDDSPatch::HasOption() const
 			{
-				return false;
+				return true;
 			}
 
 			bool CreateDDSPatch::HasCanRuntimeDisabled() const
@@ -147,7 +147,7 @@ namespace CreationKitPlatformExtended
 
 			const char* CreateDDSPatch::GetOptionName() const
 			{
-				return nullptr;
+				return "CreationKit:bWarningCreateTexture2D";
 			}
 
 			const char* CreateDDSPatch::GetName() const
