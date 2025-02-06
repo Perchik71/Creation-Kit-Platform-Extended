@@ -81,21 +81,6 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
-			void LoadDDSFilePatch::FailedMessage(HRESULT error, __int64 a2)
-			{
-				auto Resource = ((EditorAPI::SkyrimSpectialEdition::BSResourceNiBinaryStream*)a2);
-
-				__try
-				{
-					_CONSOLE("Error while trying to load texture \"%s\" due to an incompatible file format or something else."
-						" (0x%08X) \"%s\".", Resource->GetStream()->GetFileName().data, error, _com_error(error).ErrorMessage());
-				}
-				__except (EXCEPTION_EXECUTE_HANDLER)
-				{
-					_CONSOLE("Error while trying to load texture, but from the bad .nif, unknown filename or your mod is broken.");
-				}
-			}
-
 			HRESULT LoadDDSFilePatch::sub(__int64 a1, __int64 a2, __int64 a3, __int64 a4, unsigned int a5, int a6)
 			{
 				// Modified DirectX::LoadFromDDSFile from DDSTextureLoader (DirectXTex)
@@ -105,17 +90,20 @@ namespace CreationKitPlatformExtended
 				if (FAILED(hr))
 				{
 					auto Resource = ((EditorAPI::SkyrimSpectialEdition::BSResourceNiBinaryStream*)a2);
-					if (!Resource->GetStream()->GetFileName().data[0])
-						// Skips
-						return E_FAIL;
+					if (!Resource || !Resource->GetStream()->GetFileName().data)
+						AssertMsg(false, "Fatal error while trying to load unknown texture.");
 
-					FailedMessage(hr, a2);
+					AssertMsgVa(false,
+						"Fatal error while trying to load texture \"%s\" due to an incompatible file format. This "
+						"indicates a problem with your mod or game files. Note that B5G6R5 and B5G5R5A1 texture "
+						"formats are not supported on Windows 7. HR = (0x%08X) %s.",
+						Resource->GetStream()->GetFileName().data, hr, _com_error(hr).ErrorMessage());
 				}
 
 				//_CONSOLE("DirectX::LoadFromDDSFile opened file \"%s\".", Resource->GetStream()->GetFileName().data);
 
 				// This return value is ignored. If it fails it returns a null pointer (a3) and crashes later on.
-				return S_OK;
+				return hr;
 			}
 		}
 	}

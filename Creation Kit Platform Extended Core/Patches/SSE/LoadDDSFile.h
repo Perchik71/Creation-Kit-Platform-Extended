@@ -28,7 +28,6 @@ namespace CreationKitPlatformExtended
 				virtual bool HasDependencies() const;
 				virtual Array<String> GetDependencies() const;
 
-				static void FailedMessage(HRESULT error, __int64 a2);
 				static HRESULT sub(__int64 a1, __int64 a2, __int64 a3, __int64 a4, unsigned int a5, int a6);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
