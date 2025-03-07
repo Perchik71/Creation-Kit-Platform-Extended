@@ -224,10 +224,12 @@ namespace CreationKitPlatformExtended
 				return false;
 			}
 
+			static uint64_t timeStartTick = 0;
+			static uint64_t timeCurrentTick = 0;
+
 			void OptimizationLoadPatch::sub(int64_t a1)
 			{
-				static uint64_t timeStartTick = 0;
-				static uint64_t timeCurrentTick = GetTickCount64();
+				timeCurrentTick = GetTickCount64();
 
 				// 250ms
 				if ((timeCurrentTick - timeStartTick) >= 250)

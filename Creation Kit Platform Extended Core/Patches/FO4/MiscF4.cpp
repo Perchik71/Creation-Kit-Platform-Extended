@@ -83,7 +83,7 @@ namespace CreationKitPlatformExtended
 					// ret skip Warnings window
 					lpRelocator->Patch(lpRelocationDatabaseItem->At(4), { 0xC3, 0xCC, 0xCC, 0xCC, 0xCC });
 					// ret skip spam "%u main draw calls, %u polys, %s textures, %u FPS"
-					lpRelocator->Patch(lpRelocationDatabaseItem->At(6), { 0xC3, 0xCC });
+					//lpRelocator->Patch(lpRelocationDatabaseItem->At(6), { 0xC3, 0xCC });
 
 					return true;
 				}

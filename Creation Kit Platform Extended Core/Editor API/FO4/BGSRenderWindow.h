@@ -91,6 +91,14 @@ namespace CreationKitPlatformExtended
 					};
 				};
 
+				struct DrawInfo
+				{
+					inline static UINT DrawCalls;
+					inline static UINT FramePerSecond;
+					inline static char TexturesSize[32];
+					inline static UINT Polys;
+				};
+
 				inline static bool HasSnapToGrid() { return (Settings::Movement::GetFlags() & rwsSnapToGrid) == rwsSnapToGrid; }
 				inline static bool HasSnapToAngle() { return (Settings::Movement::GetFlags() & rwsSnapToAngle) == rwsSnapToAngle; }
 				inline static bool HasSnapToConnectPoints() { return (Settings::Movement::GetFlags() & rwsSnapToConnectPoints) == rwsSnapToConnectPoints; }

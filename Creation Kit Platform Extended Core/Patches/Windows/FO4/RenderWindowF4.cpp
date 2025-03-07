@@ -8,12 +8,28 @@
 #include "MainWindowF4.h"
 #include "Editor API/FO4/TESF4.h"
 #include "Editor API/FO4/BGSRenderWindow.h"
+#include "Editor API/FO4/BGSRenderWindowCamera.h"
 #include "UITheme/VarCommon.h"
+
+#include <imgui.h>
+#include <backends/imgui_impl_win32.h>
+#include <backends/imgui_impl_dx11.h>
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND, UINT, WPARAM, LPARAM);
 
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
 	{
+		extern ImFont* imguiFonts[3];
+
+		ImVec4 gImGuiGreenColor = { 0.0f, 1.0f, 0.0f, 1.0f };
+		ImVec4 gImGuiOrangeColor = { 1.0f, 0.6f, 0.0f, 1.0f };
+		ImVec4 gImGuiRedColor = { 1.0f, 0.0f, 0.0f, 1.0f };
+		ImVec4 gImGuiGreyColor = { 0.5f, 0.5f, 0.5f, 1.0f };
+
+		static bool gImGuiShowDrawInfo = true;
+
 		namespace Fallout4
 		{
 			using namespace CreationKitPlatformExtended::EditorAPI::Fallout4;
@@ -45,12 +61,12 @@ namespace CreationKitPlatformExtended
 
 			bool RenderWindow::HasDependencies() const
 			{
-				return false;
+				return true;
 			}
 
 			Array<String> RenderWindow::GetDependencies() const
 			{
-				return {};
+				return { "D3D11 Patch" };
 			}
 
 			bool RenderWindow::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
@@ -62,7 +78,9 @@ namespace CreationKitPlatformExtended
 			bool RenderWindow::Activate(const Relocator* lpRelocator,
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
-				if (lpRelocationDatabaseItem->Version() == 1)
+				auto PatchVer = lpRelocationDatabaseItem->Version();
+
+				if ((PatchVer == 1) || (PatchVer == 2))
 				{
 					*(uintptr_t*)&_oldWndProc =
 						voltek::detours_function_class_jump(_RELDATA_ADDR(0), (uintptr_t)&HKWndProc);
@@ -85,6 +103,19 @@ namespace CreationKitPlatformExtended
 					BGSRenderWindow::Settings::Movement::CameraPanValueSingleton = (uintptr_t)&pointer_RenderWindow_Mov_data[9];
 					BGSRenderWindow::Settings::Movement::LandspaceMultValueSingleton = (uintptr_t)&pointer_RenderWindow_Mov_data[10];
 
+					auto rel = _RELDATA_RAV(15);
+
+					if (PatchVer == 1)
+						lpRelocator->PatchNop(rel, 0x4B);
+					else
+						lpRelocator->PatchNop(rel, 0x44);
+
+					lpRelocator->DetourCall(rel, (uintptr_t)&ImGuiDraw);
+
+					rel = _RELDATA_RAV(16);
+					lpRelocator->PatchNop(rel, 0x14);
+					lpRelocator->DetourCall(rel, (uintptr_t)&UpdateDrawInfo);
+
 					return true;
 				}
 
@@ -105,6 +136,9 @@ namespace CreationKitPlatformExtended
 
 			LRESULT CALLBACK RenderWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 			{
+				auto Result = ImGui_ImplWin32_WndProcHandler(Hwnd, Message, wParam, lParam);
+				if (Result) return Result;
+
 				switch (Message)
 				{
 					case WM_INITDIALOG:
@@ -134,9 +168,93 @@ namespace CreationKitPlatformExtended
 							*_TempDrawArea = rcSafeDrawArea;
 					}
 					break;
+					case WM_KEYUP:
+					{
+						if (wParam == VK_F1)
+							gImGuiShowDrawInfo = !gImGuiShowDrawInfo;
+					}
+					break;
 				}
 
 				return CallWindowProc(GlobalRenderWindowPtr->GetOldWndProc(), Hwnd, Message, wParam, lParam);
+			}
+
+			void RenderWindow::ImGuiDraw(IDXGISwapChain* This, UINT SyncInterval, UINT Flags)
+			{
+				// IMGUI
+				ImGui_ImplDX11_NewFrame();
+				ImGui_ImplWin32_NewFrame();
+				ImGui::NewFrame();
+
+				if (gImGuiShowDrawInfo)
+				{
+					// IMGUI DRAWINFO
+
+					ImGui::SetNextWindowPos({ 5.0f, 5.0f });
+					ImGui::Begin("Display Info", nullptr, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoDecoration |
+						ImGuiWindowFlags_AlwaysAutoResize);
+					ImGui::PushFont(imguiFonts[1]);
+
+					ImGui::Text("Draw calls: ");
+					ImGui::SameLine(0.0f, 0.0f);
+
+					if (BGSRenderWindow::DrawInfo::DrawCalls < 8000)
+						ImGui::TextColored(gImGuiGreenColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
+					else if (BGSRenderWindow::DrawInfo::DrawCalls < 12000)
+						ImGui::TextColored(gImGuiOrangeColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
+					else
+						ImGui::TextColored(gImGuiRedColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
+
+					ImGui::SameLine(0.0f, 0.0f);
+					ImGui::Text(" polys: %u fps: %u", BGSRenderWindow::DrawInfo::Polys, BGSRenderWindow::DrawInfo::FramePerSecond);
+					ImGui::NewLine();
+
+					BGSRenderWindow* RenderWindow = BGSRenderWindow::Singleton.GetSingleton();
+					if (RenderWindow)
+					{
+						auto Cell = RenderWindow->GetCurrentCell();
+						if (Cell)
+						{
+							auto EditorID = Cell->GetEditorID_NoVTable();
+
+							if (Cell->IsInterior())
+								ImGui::Text("Current Cell: %s (%08X)", EditorID, Cell->FormID);
+							else
+								ImGui::Text("Current Cell: %s (%i, %i) (%08X)", EditorID, Cell->GridX, Cell->GridY, Cell->FormID);
+						}
+
+						const auto& CameraPos = RenderWindow->Camera->GetPosition();
+						ImGui::Text("Camera: %.3f, %.3f, %.3f", CameraPos.x, CameraPos.y, CameraPos.z);
+					}
+
+					ImGui::PopFont();
+					ImGui::PushFont(imguiFonts[2]);
+					ImGui::TextColored(gImGuiGreyColor, "(Show/Hide press key F1)");
+					ImGui::PopFont();
+					ImGui::End();
+				}
+
+				ImGui::Render();
+				ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
+				// PRESENT
+
+				This->Present(SyncInterval, Flags);
+			}
+
+			void RenderWindow::UpdateDrawInfo(char* Dest, UINT Size, const char* FormatStr, ...)
+			{
+				// parse "%u main draw calls, %u polys, %s textures, %u FPS"
+
+				va_list ap;
+				va_start(ap, FormatStr);
+
+				BGSRenderWindow::DrawInfo::DrawCalls = va_arg(ap, UINT);
+				BGSRenderWindow::DrawInfo::Polys = va_arg(ap, UINT);
+				strcpy_s(BGSRenderWindow::DrawInfo::TexturesSize, va_arg(ap, char*));
+				BGSRenderWindow::DrawInfo::FramePerSecond = va_arg(ap, UINT);
+
+				va_end(ap);
 			}
 		}
 	}

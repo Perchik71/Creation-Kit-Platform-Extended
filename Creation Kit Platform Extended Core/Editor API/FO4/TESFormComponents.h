@@ -69,6 +69,8 @@ namespace CreationKitPlatformExtended
 			class TESFullName
 			{
 			public:
+				virtual ~TESFullName() = default;
+
 				inline const char* GetName() const
 				{
 					return thisVirtualCall<const char*>(0xB0, this);

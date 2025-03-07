@@ -26,6 +26,8 @@ namespace CreationKitPlatformExtended
 				RenderWindow();
 
 				static LRESULT CALLBACK HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
+				static void ImGuiDraw(IDXGISwapChain* This, UINT SyncInterval, UINT Flags);
+				static void UpdateDrawInfo(char* Dest, UINT Size, const char* FormatStr, ...);
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;

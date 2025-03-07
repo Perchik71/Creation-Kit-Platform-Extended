@@ -131,9 +131,9 @@ namespace CreationKitPlatformExtended
 					return IsInterior() ? (CellFlags::cfInvertFastTravel & _cell_flags) :
 						((CellFlags::cfInvertFastTravel & _cell_flags) != CellFlags::cfInvertFastTravel);
 				}
-				inline bool IsInterior() const { return _cell_flags & CellFlags::cfInterior; }
-				inline bool IsExterior() const { return _cell_flags & CellFlags::cfExterior; }
-				inline bool IsFragment() const { return _cell_flags & CellFlags::cfFragment; }
+				inline bool IsInterior() const { return (_cell_flags & CellFlags::cfInterior) == CellFlags::cfInterior; }
+				inline bool IsExterior() const { return (_cell_flags & CellFlags::cfExterior) == CellFlags::cfExterior; }
+				inline bool IsFragment() const { return (_cell_flags & CellFlags::cfFragment) == CellFlags::cfFragment; }
 			public:
 				READ_PROPERTY(GetNavMeshes) TESForm** NavMeshes;
 				READ_PROPERTY(GetNavMeshesConst) const TESForm** NavMeshesConst;

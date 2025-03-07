@@ -8,6 +8,8 @@
 #include "Core/Relocator.h"
 #include "Core/RelocationDatabase.h"
 
+#include "Editor API/Settings.h"
+
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
@@ -46,6 +48,8 @@ namespace CreationKitPlatformExtended
 			static std::string GetAbsoluteFileName(LPCSTR lpFileName);
 			static std::wstring GetAbsoluteFileNameUnicode(LPCWSTR lpFileName);
 			static HANDLE GetFileFromCacheOrOpen(const std::string& sFileName);
+
+			static int HK_SettingCollectionList_ReadSetting_Read(void* lpCollectionList, EditorAPI::Setting* lpSetting, void* INISettingCollectionVTable);
 		protected:
 			virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 				const char* lpcstrPlatformRuntimeVersion) const;

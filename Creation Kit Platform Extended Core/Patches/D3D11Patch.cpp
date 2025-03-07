@@ -6,6 +6,10 @@
 #include "Core/D3D11Proxy.h"
 #include "D3D11Patch.h"
 
+#include <imgui.h>
+#include <backends/imgui_impl_win32.h>
+#include <backends/imgui_impl_dx11.h>
+
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
@@ -16,6 +20,7 @@ namespace CreationKitPlatformExtended
 		ID3D11Device* pointer_d3d11DeviceIntf = nullptr;
 		IDXGISwapChain* pointer_dxgiSwapChain = nullptr;
 		ID3D11DeviceContext* pointer_d3d11DeviceContext = nullptr;
+		ImFont* imguiFonts[3];
 
 		D3D11Patch::D3D11Patch() : Module(GlobalEnginePtr), moduleDXGI(NULL), moduleD3D11(NULL)
 		{}
@@ -116,6 +121,10 @@ namespace CreationKitPlatformExtended
 		bool D3D11Patch::Shutdown(const Relocator* lpRelocator,
 			const RelocationDatabaseItem* lpRelocationDatabaseItem)
 		{
+			ImGui_ImplDX11_Shutdown();
+			ImGui_ImplWin32_Shutdown();
+			ImGui::DestroyContext();
+
 			return false;
 		}
 
@@ -218,6 +227,30 @@ namespace CreationKitPlatformExtended
 
 			(*ppDevice)->SetExceptionMode(D3D11_RAISE_FLAG_DRIVER_INTERNAL_ERROR);
 			pointer_dxgiSwapChain = *ppSwapChain;
+
+			IMGUI_CHECKVERSION();
+			ImGui::CreateContext();
+
+			ImGuiIO& io = ImGui::GetIO();
+			io.ConfigFlags |= ImGuiConfigFlags_NoKeyboard;		
+			io.ConfigFlags |= ImGuiConfigFlags_NoMouse;
+			io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;		// Hide cursor
+
+			io.Fonts->AddFontDefault();
+
+			char path[MAX_PATH];
+			if (FAILED(SHGetFolderPath(NULL, CSIDL_FONTS, NULL, SHGFP_TYPE_CURRENT, path)))
+				return E_FAIL;
+			String ps(path);
+
+			imguiFonts[0] = io.Fonts->AddFontFromFileTTF((ps + "\\consola.ttf").c_str(), 12.0f);
+			imguiFonts[1] = io.Fonts->AddFontFromFileTTF((ps + "\\consolab.ttf").c_str(), 12.0f);
+			imguiFonts[2] = io.Fonts->AddFontFromFileTTF((ps + "\\consola.ttf").c_str(), 10.0f);
+			if (!imguiFonts[0] || !imguiFonts[1] || !imguiFonts[2])
+				return E_FAIL;
+
+			ImGui_ImplWin32_Init(pSwapChainDesc->OutputWindow);
+			ImGui_ImplDX11_Init(*ppDevice, *ppImmediateContext);
 
 			return hr;
 		}

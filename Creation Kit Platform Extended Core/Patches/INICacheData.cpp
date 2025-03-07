@@ -6,10 +6,14 @@
 #include "Editor API/BSString.h"
 #include "INICacheData.h"
 
+#include <intrin.h>
+
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
 	{
+		uintptr_t pointer_SettingCollectionList_ReadSetting_Read_code = 0;
+
 		struct string_equal_to
 		{
 			inline bool operator()(const String& lhs, const String& rhs) const
@@ -17,7 +21,6 @@ namespace CreationKitPlatformExtended
 				return !_stricmp(lhs.c_str(), rhs.c_str());
 			}
 		};
-
 #if 0
 		HANDLE GlobalINICacheTriggerEvent = NULL;
 #endif
@@ -553,6 +556,16 @@ namespace CreationKitPlatformExtended
 			return (HANDLE)(ini_data.get());
 		}
 
+		int INICacheDataPatch::HK_SettingCollectionList_ReadSetting_Read(void* lpCollectionList, EditorAPI::Setting* lpSetting,
+			void* INISettingCollectionVTable)
+		{
+			if (lpSetting)
+				_MESSAGE("INI::ReadSetting: %s %p", lpSetting->Name, lpSetting);
+
+			return fastCall<int>(pointer_SettingCollectionList_ReadSetting_Read_code, lpCollectionList, lpSetting, 
+				INISettingCollectionVTable);
+		}
+
 		bool INICacheDataPatch::QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 			const char* lpcstrPlatformRuntimeVersion) const
 		{
@@ -570,6 +583,9 @@ namespace CreationKitPlatformExtended
 			PatchIAT(HKGetPrivateProfileIntW, "kernel32.dll", "GetPrivateProfileIntW");
 			PatchIAT(HKGetPrivateProfileStringW, "kernel32.dll", "GetPrivateProfileStringW");
 			PatchIAT(HKWritePrivateProfileStringW, "kernel32.dll", "WritePrivateProfileStringW");
+	
+			//pointer_SettingCollectionList_ReadSetting_Read_code = lpRelocator->DetourFunction(0x259AB50, // F4OG 0x2604EB0
+			//	(uintptr_t)&HK_SettingCollectionList_ReadSetting_Read);
 
 #if 0
 			if (GetShortExecutableTypeFromFull(GlobalEnginePtr->GetEditorVersion()) == EDITOR_SHORT_STARFIELD)
