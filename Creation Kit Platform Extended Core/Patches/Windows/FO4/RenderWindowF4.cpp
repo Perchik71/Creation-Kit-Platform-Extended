@@ -21,7 +21,12 @@ namespace CreationKitPlatformExtended
 {
 	namespace Patches
 	{
+		using namespace Microsoft::WRL;
+
+		extern ID3D11Device* pointer_d3d11DeviceIntf;
+		extern ID3D11DeviceContext* pointer_d3d11DeviceContext;
 		extern ImFont* imguiFonts[3];
+		extern uintptr_t gGlobAddrDeviceContext;
 
 		ImVec4 gImGuiGreenColor = { 0.0f, 1.0f, 0.0f, 1.0f };
 		ImVec4 gImGuiOrangeColor = { 1.0f, 0.6f, 0.0f, 1.0f };
@@ -181,61 +186,74 @@ namespace CreationKitPlatformExtended
 
 			void RenderWindow::ImGuiDraw(IDXGISwapChain* This, UINT SyncInterval, UINT Flags)
 			{
-				// IMGUI
-				ImGui_ImplDX11_NewFrame();
-				ImGui_ImplWin32_NewFrame();
-				ImGui::NewFrame();
-
-				if (gImGuiShowDrawInfo)
+				if (pointer_d3d11DeviceContext && gGlobAddrDeviceContext)
 				{
-					// IMGUI DRAWINFO
-
-					ImGui::SetNextWindowPos({ 5.0f, 5.0f });
-					ImGui::Begin("Display Info", nullptr, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoDecoration |
-						ImGuiWindowFlags_AlwaysAutoResize);
-					ImGui::PushFont(imguiFonts[1]);
-
-					ImGui::Text("Draw calls: ");
-					ImGui::SameLine(0.0f, 0.0f);
-
-					if (BGSRenderWindow::DrawInfo::DrawCalls < 8000)
-						ImGui::TextColored(gImGuiGreenColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
-					else if (BGSRenderWindow::DrawInfo::DrawCalls < 12000)
-						ImGui::TextColored(gImGuiOrangeColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
-					else
-						ImGui::TextColored(gImGuiRedColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
-
-					ImGui::SameLine(0.0f, 0.0f);
-					ImGui::Text(" polys: %u fps: %u", BGSRenderWindow::DrawInfo::Polys, BGSRenderWindow::DrawInfo::FramePerSecond);
-					ImGui::NewLine();
-
-					BGSRenderWindow* RenderWindow = BGSRenderWindow::Singleton.GetSingleton();
-					if (RenderWindow)
+					auto RenderTarget = (ID3D11RenderTargetView**)(gGlobAddrDeviceContext + 0x88);
+					if (RenderTarget)
 					{
-						auto Cell = RenderWindow->GetCurrentCell();
-						if (Cell)
+						ComPtr<ID3D11RenderTargetView> pRenderTargetViews;
+						pointer_d3d11DeviceContext->OMGetRenderTargets(1, pRenderTargetViews.GetAddressOf(), nullptr);
+
+						if (pRenderTargetViews.Get() == *RenderTarget)
 						{
-							auto EditorID = Cell->GetEditorID_NoVTable();
+							// IMGUI
+							ImGui_ImplDX11_NewFrame();
+							ImGui_ImplWin32_NewFrame();
+							ImGui::NewFrame();
 
-							if (Cell->IsInterior())
-								ImGui::Text("Current Cell: %s (%08X)", EditorID, Cell->FormID);
-							else
-								ImGui::Text("Current Cell: %s (%i, %i) (%08X)", EditorID, Cell->GridX, Cell->GridY, Cell->FormID);
+							if (gImGuiShowDrawInfo)
+							{
+								// IMGUI DRAWINFO
+
+								ImGui::SetNextWindowPos({ 5.0f, 5.0f });
+								ImGui::Begin("Display Info", nullptr, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoDecoration |
+									ImGuiWindowFlags_AlwaysAutoResize);
+								ImGui::PushFont(imguiFonts[1]);
+
+								ImGui::Text("Draw calls: ");
+								ImGui::SameLine(0.0f, 0.0f);
+
+								if (BGSRenderWindow::DrawInfo::DrawCalls < 8000)
+									ImGui::TextColored(gImGuiGreenColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
+								else if (BGSRenderWindow::DrawInfo::DrawCalls < 12000)
+									ImGui::TextColored(gImGuiOrangeColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
+								else
+									ImGui::TextColored(gImGuiRedColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
+
+								ImGui::SameLine(0.0f, 0.0f);
+								ImGui::Text(" polys: %u fps: %u", BGSRenderWindow::DrawInfo::Polys, BGSRenderWindow::DrawInfo::FramePerSecond);
+								ImGui::NewLine();
+
+								BGSRenderWindow* RenderWindow = BGSRenderWindow::Singleton.GetSingleton();
+								if (RenderWindow)
+								{
+									auto Cell = RenderWindow->GetCurrentCell();
+									if (Cell)
+									{
+										auto EditorID = Cell->GetEditorID_NoVTable();
+
+										if (Cell->IsInterior())
+											ImGui::Text("Current Cell: %s (%08X)", EditorID, Cell->FormID);
+										else
+											ImGui::Text("Current Cell: %s (%i, %i) (%08X)", EditorID, Cell->GridX, Cell->GridY, Cell->FormID);
+									}
+
+									const auto& CameraPos = RenderWindow->Camera->GetPosition();
+									ImGui::Text("Camera: %.3f, %.3f, %.3f", CameraPos.x, CameraPos.y, CameraPos.z);
+								}
+
+								ImGui::PopFont();
+								ImGui::PushFont(imguiFonts[2]);
+								ImGui::TextColored(gImGuiGreyColor, "(Show/Hide press key F1)");
+								ImGui::PopFont();
+								ImGui::End();
+							}
+
+							ImGui::Render();
+							ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 						}
-
-						const auto& CameraPos = RenderWindow->Camera->GetPosition();
-						ImGui::Text("Camera: %.3f, %.3f, %.3f", CameraPos.x, CameraPos.y, CameraPos.z);
 					}
-
-					ImGui::PopFont();
-					ImGui::PushFont(imguiFonts[2]);
-					ImGui::TextColored(gImGuiGreyColor, "(Show/Hide press key F1)");
-					ImGui::PopFont();
-					ImGui::End();
 				}
-
-				ImGui::Render();
-				ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
 				// PRESENT
 

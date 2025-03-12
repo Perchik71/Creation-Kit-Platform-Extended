@@ -10,6 +10,8 @@
 #include <backends/imgui_impl_win32.h>
 #include <backends/imgui_impl_dx11.h>
 
+#include <shared_mutex>
+
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
@@ -20,6 +22,9 @@ namespace CreationKitPlatformExtended
 		ID3D11Device* pointer_d3d11DeviceIntf = nullptr;
 		IDXGISwapChain* pointer_dxgiSwapChain = nullptr;
 		ID3D11DeviceContext* pointer_d3d11DeviceContext = nullptr;
+		uintptr_t gGlobAddrDeviceContext = 0;
+		//uintptr_t gOldCreateRenderTargetView = 0;
+		//std::vector<ID3D11RenderTargetView*> pointer_mainRenderTargetView;
 		ImFont* imguiFonts[3];
 
 		D3D11Patch::D3D11Patch() : Module(GlobalEnginePtr), moduleDXGI(NULL), moduleD3D11(NULL)
@@ -139,6 +144,40 @@ namespace CreationKitPlatformExtended
 			return ptrCreateDXGIFactory(__uuidof(IDXGIFactory), ppFactory);
 		}
 
+		//HRESULT WINAPI D3D11Patch::HKD3D11CreateRenderTargetView(ID3D11Device* pDevice, 
+		//	ID3D11Resource* pResource,
+		//	const D3D11_RENDER_TARGET_VIEW_DESC* pDesc,
+		//	ID3D11RenderTargetView** ppRTView)
+		//{
+		//	//if (pResource)
+		//	//{
+		//	//	Microsoft::WRL::ComPtr<ID3D11Texture2D> Tex;
+		//	//	pResource->QueryInterface<ID3D11Texture2D>(Tex.GetAddressOf());
+
+		//	//	D3D11_TEXTURE2D_DESC Desc;
+		//	//	Tex->GetDesc(&Desc);
+
+
+		//	//	//_MESSAGE("HKD3D11CreateRenderTargetView: %u %u", Desc.Width, Desc.Height);
+		//	//}
+
+		//	//if (!pointer_mainRenderTargetView)
+		//	//{
+		//		auto res = fastCall<HRESULT>(gOldCreateRenderTargetView, pDevice, pResource, pDesc, ppRTView);
+		//		if (SUCCEEDED(res) && ppRTView)
+		//		{
+		//			pointer_mainRenderTargetView.push_back(*ppRTView);
+		//			_MESSAGE("HKD3D11CreateRenderTargetView: %p", ppRTView);
+		//		}
+
+		//		return res;
+		//	//}
+
+		//	//auto res = fastCall<HRESULT>(gOldCreateRenderTargetView, pDevice, pResource, pDesc, ppRTView);
+
+		//	//return res;
+		//}
+
 		HRESULT WINAPI D3D11Patch::HKD3D11CreateDeviceAndSwapChain(
 			IDXGIAdapter* pAdapter,
 			D3D_DRIVER_TYPE DriverType,
@@ -228,6 +267,9 @@ namespace CreationKitPlatformExtended
 			(*ppDevice)->SetExceptionMode(D3D11_RAISE_FLAG_DRIVER_INTERNAL_ERROR);
 			pointer_dxgiSwapChain = *ppSwapChain;
 
+			/*auto vtableCreateRenderTargetView = reinterpret_cast<uintptr_t*>((uintptr_t)(*((uintptr_t*)(*ppDevice))) + (9 * sizeof(void*)));
+			gOldCreateRenderTargetView = voltek::detours_jump(*vtableCreateRenderTargetView, (uintptr_t)&HKD3D11CreateRenderTargetView);*/
+
 			IMGUI_CHECKVERSION();
 			ImGui::CreateContext();
 
@@ -251,6 +293,8 @@ namespace CreationKitPlatformExtended
 
 			ImGui_ImplWin32_Init(pSwapChainDesc->OutputWindow);
 			ImGui_ImplDX11_Init(*ppDevice, *ppImmediateContext);
+
+			gGlobAddrDeviceContext = (uintptr_t)ppImmediateContext;
 
 			return hr;
 		}
