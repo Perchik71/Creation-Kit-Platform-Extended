@@ -33,7 +33,7 @@ namespace CreationKitPlatformExtended
 		ImVec4 gImGuiRedColor = { 1.0f, 0.0f, 0.0f, 1.0f };
 		ImVec4 gImGuiGreyColor = { 0.5f, 0.5f, 0.5f, 1.0f };
 
-		static bool gImGuiShowDrawInfo = true;
+		bool gImGuiShowDrawInfo = true;
 
 		namespace Fallout4
 		{

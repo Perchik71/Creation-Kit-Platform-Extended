@@ -20,6 +20,12 @@ namespace CreationKitPlatformExtended
 			// func 1
 			class BGSRenderWindowCamera
 			{
+			private:
+				struct DataInfo
+				{
+					char pad00[0x6C];
+					NiPoint3 Position;
+				};
 			public:
 				enum ViewModeT : uint32_t
 				{
@@ -51,7 +57,7 @@ namespace CreationKitPlatformExtended
 			public:
 				virtual ~BGSRenderWindowCamera() = default;
 
-				inline NiPoint3 GetPosition() const { return *(NiPoint3*)(((char*)(*_Data)) + 0x6C); }
+				inline NiPoint3 GetPosition() const { return _Data->Position; }
 				inline ViewModeT GetViewMode() const { return _ViewMode; }
 				inline const char* GetViewModeByStr() const { return _ViewMode == Perspective ? "perspective" : "orthographic"; }
 				inline CameraModeT GetCameraMode() const { return _CameraMode; }
@@ -61,7 +67,7 @@ namespace CreationKitPlatformExtended
 				READ_PROPERTY(GetViewMode) ViewModeT ViewMode;
 				READ_PROPERTY(GetCameraMode) CameraModeT CameraMode;
 			private:
-				NiNode** _Data;
+				DataInfo* _Data;
 				NiCamera* _Camera;
 				ViewModeT _ViewMode;
 				CameraModeT _CameraMode;

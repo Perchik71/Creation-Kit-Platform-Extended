@@ -14,6 +14,7 @@ namespace CreationKitPlatformExtended
 		namespace SkyrimSpectialEdition
 		{
 			using namespace NiAPI;
+			using namespace NiAPI::SkyrimSpectialEdition;
 
 			class BSEffectShaderMaterial : public BSShaderMaterial
 			{

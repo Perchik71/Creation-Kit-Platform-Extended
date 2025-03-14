@@ -7,15 +7,43 @@
 #include "RenderWindow.h"
 #include "MainWindow.h"
 #include "Editor API/SSE/BGSRenderWindow.h"
+#include "Editor API/SSE/BSGraphicsTypes.h"
+#include "NiAPI/NiSourceTexture.h"
 #include "Patches/D3D11Patch.h"
+
+#include <imgui.h>
+#include <backends/imgui_impl_win32.h>
+#include <backends/imgui_impl_dx11.h>
 
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
 	{
+		using namespace Microsoft::WRL;
+		using namespace NiAPI::SkyrimSpectialEdition;
+		using namespace EditorAPI::SkyrimSpectialEdition;
+
+		extern ID3D11Device* pointer_d3d11DeviceIntf;
+		extern ID3D11DeviceContext* pointer_d3d11DeviceContext;
+		extern ImFont* imguiFonts[3];
+		extern uintptr_t gGlobAddrDeviceContext;
+
+		extern ImVec4 gImGuiGreenColor;
+		extern ImVec4 gImGuiOrangeColor;
+		extern ImVec4 gImGuiRedColor;
+		extern ImVec4 gImGuiGreyColor;
+		extern bool gImGuiShowDrawInfo;
+
 		namespace SkyrimSpectialEdition
 		{
+			struct NodeTextureList
+			{
+				NiSourceTexture* Texture;
+				NodeTextureList* Next;
+			};
+
 			RenderWindow* GlobalRenderWindowPtr = nullptr;
+			NodeTextureList* GlobalRootTextureList = nullptr;
 
 			bool RenderWindow::HasOption() const
 			{
@@ -63,6 +91,10 @@ namespace CreationKitPlatformExtended
 						voltek::detours_function_class_jump(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), &RenderWindow::HKWndProc);
 					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(1), &RenderWindow::setFlagLoadCell);
 					EditorAPI::SkyrimSpectialEdition::BGSRenderWindow::Singleton = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2));
+
+					auto rel = _RELDATA_RAV(3);
+					lpRelocator->PatchNop(rel, 0xB);
+					lpRelocator->DetourCall(rel, (uintptr_t)&ImGuiDraw);
 
 					return true;
 				}
@@ -150,8 +182,79 @@ namespace CreationKitPlatformExtended
 						break;
 					}
 				}
+				else if ((Message == WM_KEYUP) && (wParam == VK_F1))
+				{
+					gImGuiShowDrawInfo = !gImGuiShowDrawInfo;
+				}
 
 				return CallWindowProc(GlobalRenderWindowPtr->GetOldWndProc(), Hwnd, Message, wParam, lParam);
+			}
+
+			void RenderWindow::ImGuiDraw(IDXGISwapChain* This, UINT SyncInterval, UINT Flags)
+			{
+				if (pointer_d3d11DeviceContext && gGlobAddrDeviceContext)
+				{
+					auto RenderTarget = (ID3D11RenderTargetView**)(gGlobAddrDeviceContext + 0x88);
+					if (RenderTarget)
+					{
+						ComPtr<ID3D11RenderTargetView> pRenderTargetViews;
+						pointer_d3d11DeviceContext->OMGetRenderTargets(1, pRenderTargetViews.GetAddressOf(), nullptr);
+
+						if (pRenderTargetViews.Get() == *RenderTarget)
+						{
+							// IMGUI
+							ImGui_ImplDX11_NewFrame();
+							ImGui_ImplWin32_NewFrame();
+							ImGui::NewFrame();
+
+							if (gImGuiShowDrawInfo)
+							{
+								// IMGUI DRAWINFO
+
+								ImGui::SetNextWindowPos({ 5.0f, 5.0f });
+								ImGui::Begin("Display Info", nullptr, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoDecoration |
+									ImGuiWindowFlags_AlwaysAutoResize);
+								ImGui::PushFont(imguiFonts[1]);
+
+								auto& io = ImGui::GetIO();
+
+								ImGui::Text("FPS: %.0f", io.Framerate);
+								ImGui::NewLine();
+
+								BGSRenderWindow* RenderWindow = BGSRenderWindow::Singleton.GetSingleton();
+								if (RenderWindow)
+								{
+									auto Cell = RenderWindow->GetCurrentCell();
+									if (Cell)
+									{
+										auto EditorID = Cell->GetEditorID_NoVTable();
+
+										if (Cell->IsInterior())
+											ImGui::Text("Current Cell: %s (%08X)", EditorID, Cell->FormID);
+										else
+											ImGui::Text("Current Cell: %s (%i, %i) (%08X)", EditorID, Cell->GridX, Cell->GridY, Cell->FormID);
+									}
+
+									const auto& CameraPos = RenderWindow->Camera->GetPosition();
+									ImGui::Text("Camera: %.3f, %.3f, %.3f", CameraPos.x, CameraPos.y, CameraPos.z);
+								}
+
+								ImGui::PopFont();
+								ImGui::PushFont(imguiFonts[2]);
+								ImGui::TextColored(gImGuiGreyColor, "(Show/Hide press key F1)");
+								ImGui::PopFont();
+								ImGui::End();
+							}
+
+							ImGui::Render();
+							ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+						}
+					}
+				}
+
+				// PRESENT
+
+				This->Present(SyncInterval, Flags);
 			}
 
 			void RenderWindow::setFlagLoadCell()

@@ -8,26 +8,26 @@ namespace CreationKitPlatformExtended
 {
 	namespace NiAPI
 	{
-		namespace BSGraphics
+		namespace SkyrimSpectialEdition
 		{
-			struct Texture;
+			class NiSourceTexture : public NiTexture
+			{
+			public:
+				NiSourceTexture() = default;
+				virtual ~NiSourceTexture() = default;
+			};
+			static_assert(sizeof(NiSourceTexture) == 0x58);
 		}
 
-		class NiSourceTexture : public NiTexture
+		namespace Fallout4
 		{
-		public:
-			NiSourceTexture() = default;
-			virtual ~NiSourceTexture() = default;
-
-			char _pad0[0x8];
-			BSGraphics::Texture* pRendererTexture;
-			char _pad1[0x8];
-
-			BSGraphics::Texture* QRendererTexture() const
+			class NiSourceTexture : public NiTexture
 			{
-				return pRendererTexture;
-			}
-		};
-		static_assert(sizeof(NiSourceTexture) == 0x58);
+			public:
+				NiSourceTexture() = default;
+				virtual ~NiSourceTexture() = default;
+			};
+			static_assert(sizeof(NiSourceTexture) == 0x48);
+		}
 	}
 }

@@ -23,8 +23,8 @@ namespace CreationKitPlatformExtended
 		IDXGISwapChain* pointer_dxgiSwapChain = nullptr;
 		ID3D11DeviceContext* pointer_d3d11DeviceContext = nullptr;
 		uintptr_t gGlobAddrDeviceContext = 0;
-		//uintptr_t gOldCreateRenderTargetView = 0;
-		//std::vector<ID3D11RenderTargetView*> pointer_mainRenderTargetView;
+		/*uintptr_t gOldCreateRenderTargetView = 0;
+		std::vector<ID3D11RenderTargetView*> pointer_mainRenderTargetView;*/
 		ImFont* imguiFonts[3];
 
 		D3D11Patch::D3D11Patch() : Module(GlobalEnginePtr), moduleDXGI(NULL), moduleD3D11(NULL)
@@ -167,7 +167,7 @@ namespace CreationKitPlatformExtended
 		//		if (SUCCEEDED(res) && ppRTView)
 		//		{
 		//			pointer_mainRenderTargetView.push_back(*ppRTView);
-		//			_MESSAGE("HKD3D11CreateRenderTargetView: %p", ppRTView);
+		//			_MESSAGE("HKD3D11CreateRenderTargetView: %p %p", ppRTView, *ppRTView);
 		//		}
 
 		//		return res;
