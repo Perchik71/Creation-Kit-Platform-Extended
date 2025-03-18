@@ -69,6 +69,14 @@ IDB_BITMAP8             BITMAP                  "..\\Resources\\storymanager.bmp
 
 IDB_BITMAP9             BITMAP                  "..\\Resources\\scripts.bmp"
 
+/////////////////////////////////////////////////////////////////////////////
+//
+// Shader
+//
+
+IDS_FXAA_PS             SHADER                  "..\\Resources\\FXAA_PS.cso"
+
+IDS_FXAA_VS             SHADER                  "..\\Resources\\FXAA_VS.cso"
 
 /////////////////////////////////////////////////////////////////////////////
 //

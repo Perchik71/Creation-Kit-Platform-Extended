@@ -904,6 +904,9 @@
     <ClCompile Include="..\Dependencies\DirectXTex\src\ScreenGrab11.cpp">
       <Filter>Dependecies\DirectXTexUtils</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Shaders.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -992,6 +995,9 @@
     </Filter>
     <Filter Include="Dependecies\DirectXTexUtils">
       <UniqueIdentifier>{af8e5418-ce4f-476e-819d-01125a452f54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{c437f585-ff86-4d2a-90d6-73a423bfce06}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2206,6 +2212,9 @@
     <ClInclude Include="Editor API\SSE\BSResources.h">
       <Filter>Editor API\SSE</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Shaders.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version\resource_version.rc">
@@ -2262,5 +2271,13 @@
     <Image Include="..\Resources\scripts.bmp">
       <Filter>Resources</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Shaders\FXAA_PS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Shaders\FXAA_VS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

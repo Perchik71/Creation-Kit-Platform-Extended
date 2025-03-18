@@ -93,6 +93,10 @@
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\Version\scripts.ps1"</Command>
     </PreBuildEvent>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>$(SolutionDir)Resources\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Qt|x64'">
     <ClCompile>
@@ -128,6 +132,10 @@
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\Version\scripts.ps1"</Command>
     </PreBuildEvent>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>$(SolutionDir)Resources\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\DirectXTex\src\ScreenGrab11.cpp" />
@@ -158,6 +166,7 @@
     <ClCompile Include="Core\Relocator.cpp" />
     <ClCompile Include="Core\ResourcesPackerManager.cpp" />
     <ClCompile Include="Core\ResultCoreErrNo.cpp" />
+    <ClCompile Include="Core\Shaders.cpp" />
     <ClCompile Include="Core\TracerManager.cpp" />
     <ClCompile Include="Core\TypeInfo\ms_rtti.cpp" />
     <ClCompile Include="Crc32.cpp" />
@@ -465,6 +474,7 @@
     <ClInclude Include="Core\Relocator.h" />
     <ClInclude Include="Core\ResourcesPackerManager.h" />
     <ClInclude Include="Core\ResultCoreErrNo.h" />
+    <ClInclude Include="Core\Shaders.h" />
     <ClInclude Include="Core\Singleton.h" />
     <ClInclude Include="Core\TracerManager.h" />
     <ClInclude Include="Core\TypeInfo\ms_rtti.h" />
@@ -870,6 +880,16 @@
     <Image Include="..\Resources\types.bmp" />
     <Image Include="..\Resources\uncheck.bmp" />
     <Image Include="..\Resources\uncheck_darktheme.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Shaders\FXAA_PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release-Qt|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\Shaders\FXAA_VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release-Qt|x64'">Vertex</ShaderType>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

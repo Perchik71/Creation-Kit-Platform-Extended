@@ -5,6 +5,7 @@
 #pragma once
 
 #include "..\BaseWindow.h"
+#include <Core/Shaders.h>
 
 namespace CreationKitPlatformExtended
 {
@@ -12,6 +13,25 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
+			class ImagespaceAA
+			{
+			public:
+				ImagespaceAA();
+				
+				virtual bool Install();
+				virtual void Draw(IDXGISwapChain* SwapChain) const;
+			private:
+				std::unique_ptr<D3D11PixelShader> _PShader;
+				std::unique_ptr<D3D11VertexShader> _VShader;
+				std::unique_ptr<D3D11ShaderTexture> _BackTex;
+				std::unique_ptr<D3D11ShaderResourceView> _BackRes;
+				std::unique_ptr<D3D11SamplerState> _BackSmp;
+
+
+				ComPtr<ID3D11RasterizerState> _RasterizerState;
+				bool _Init;
+			};
+
 			class RenderWindow : public BaseWindow, public Classes::CUIBaseWindow
 			{
 			public:
@@ -25,8 +45,11 @@ namespace CreationKitPlatformExtended
 				RenderWindow();
 				
 				static LRESULT CALLBACK HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-				static void ImGuiDraw(IDXGISwapChain* This, UINT SyncInterval, UINT Flags);
+				static void DrawFrameEx(IDXGISwapChain* This, UINT SyncInterval, UINT Flags);
+				static void ImGuiDrawInfo();
 				static void setFlagLoadCell();
+
+				inline ImagespaceAA* GetImagespaceAA() const noexcept(true) { return _ImagespaceAA.get(); }
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
@@ -34,6 +57,7 @@ namespace CreationKitPlatformExtended
 				virtual bool Shutdown(const Relocator* lpRelocator, const RelocationDatabaseItem* lpRelocationDatabaseItem);
 			private:
 				bool _BlockInputMessage;
+				std::unique_ptr<ImagespaceAA> _ImagespaceAA;
 			};
 
 			extern RenderWindow* GlobalRenderWindowPtr;

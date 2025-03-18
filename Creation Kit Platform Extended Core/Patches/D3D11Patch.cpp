@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Core/Engine.h"
+#include "Core/Shaders.h"
 #include "Core/D3D11Proxy.h"
 #include "D3D11Patch.h"
 
@@ -23,9 +24,15 @@ namespace CreationKitPlatformExtended
 		IDXGISwapChain* pointer_dxgiSwapChain = nullptr;
 		ID3D11DeviceContext* pointer_d3d11DeviceContext = nullptr;
 		uintptr_t gGlobAddrDeviceContext = 0;
-		/*uintptr_t gOldCreateRenderTargetView = 0;
-		std::vector<ID3D11RenderTargetView*> pointer_mainRenderTargetView;*/
+		//uintptr_t gOldCreateRenderTargetView = 0;
+		//std::vector<ID3D11RenderTargetView*> pointer_mainRenderTargetView;
 		ImFont* imguiFonts[3];
+
+		static const ImWchar GlobalFontRanges[] =
+		{
+			0x0020, 0xFFFF, // ALL
+			0,
+		};
 
 		D3D11Patch::D3D11Patch() : Module(GlobalEnginePtr), moduleDXGI(NULL), moduleD3D11(NULL)
 		{}
@@ -284,16 +291,17 @@ namespace CreationKitPlatformExtended
 			if (FAILED(SHGetFolderPath(NULL, CSIDL_FONTS, NULL, SHGFP_TYPE_CURRENT, path)))
 				return E_FAIL;
 			String ps(path);
-
-			imguiFonts[0] = io.Fonts->AddFontFromFileTTF((ps + "\\consola.ttf").c_str(), 12.0f);
-			imguiFonts[1] = io.Fonts->AddFontFromFileTTF((ps + "\\consolab.ttf").c_str(), 12.0f);
-			imguiFonts[2] = io.Fonts->AddFontFromFileTTF((ps + "\\consola.ttf").c_str(), 10.0f);
+			
+			imguiFonts[0] = io.Fonts->AddFontFromFileTTF((ps + "\\consola.ttf").c_str(), 12.0f, nullptr, GlobalFontRanges);
+			imguiFonts[1] = io.Fonts->AddFontFromFileTTF((ps + "\\consolab.ttf").c_str(), 12.0f, nullptr, GlobalFontRanges);
+			imguiFonts[2] = io.Fonts->AddFontFromFileTTF((ps + "\\consola.ttf").c_str(), 10.0f, nullptr, GlobalFontRanges);
 			if (!imguiFonts[0] || !imguiFonts[1] || !imguiFonts[2])
 				return E_FAIL;
 
 			ImGui_ImplWin32_Init(pSwapChainDesc->OutputWindow);
 			ImGui_ImplDX11_Init(*ppDevice, *ppImmediateContext);
 
+			GlobalD3D11ShaderEngine = new D3D11ShaderEngine(*ppDevice, *ppImmediateContext);
 			gGlobAddrDeviceContext = (uintptr_t)ppImmediateContext;
 
 			return hr;

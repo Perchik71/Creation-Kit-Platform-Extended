@@ -16,7 +16,8 @@ namespace CreationKitPlatformExtended
 		{
 			class TESObjectLAND;
 
-			// size 0x88
+			// class upd... no longer suitable for 1.5.3, 1.5.73
+			// size 0x88 - now 0x90
 			// func 101
 			class TESObjectCELL: public TESForm
 			{
@@ -109,8 +110,8 @@ namespace CreationKitPlatformExtended
 				inline bool IsInterior() const { return _cell_flags & CellFlags::cfInterior; }
 				inline bool IsExterior() const { return _cell_flags & CellFlags::cfExterior; }
 				inline bool IsFragment() const { return _cell_flags & CellFlags::cfFragment; }
-				inline int32_t GetGridX() const { return (IsExterior()) ? _CellData.Grid->X : 0; }
-				inline int32_t GetGridY() const { return (IsExterior()) ? _CellData.Grid->Y : 0; }
+				inline int32_t GetGridX() const { return (IsExterior() && _CellData.Grid) ? _CellData.Grid->X : 0; }
+				inline int32_t GetGridY() const { return (IsExterior() && _CellData.Grid) ? _CellData.Grid->Y : 0; }
 				inline TESFormArray* GetNavMeshes() { return _NavMeshes; }
 				inline uint32_t GetNavMeshesCount() const { return _NavMeshes->QSize(); }
 				inline TESObjectLAND* GetLandspace() { return _Landspace; }
@@ -127,7 +128,7 @@ namespace CreationKitPlatformExtended
 				char pad40[0x10];
 				CellFlags _cell_flags;
 				CellProcessLevels _cell_process_level;
-				char _pad54[0x4];
+				char _pad54[0xC];	// 0x8 added with 1.6.1130 (maybe ExtraData without ref)
 				void* _ExtraData;
 				char _pad60[0x8];
 				CellData _CellData;
@@ -135,7 +136,7 @@ namespace CreationKitPlatformExtended
 				char _pad78[0x8];
 				TESFormArray* _NavMeshes;
 			};
-			static_assert(sizeof(TESObjectCELL) == 0x88);
+			static_assert(sizeof(TESObjectCELL) == 0x90);
 		}
 	}
 }
