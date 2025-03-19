@@ -1,4 +1,4 @@
-// Copyright � 2024 aka perchik71.All rights reserved.
+﻿// Copyright © 2025 aka perchik71.All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -485,6 +485,86 @@ namespace CreationKitPlatformExtended
 		D3D11Object::D3D11Object(D3D11ShaderEngine* Engine, const char* Name) :
 			_Engine(Engine), _Name(Name)
 		{}
+
+		D3D11State::D3D11State(D3D11ShaderEngine* Engine, const char* Name) :
+			D3D11Object(Engine, Name)
+		{}
+
+		void D3D11State::PushState() noexcept(true)
+		{
+			// https://github.com/fholger/vrperfkit/blob/a52f8a45d330d0b66206aee85165db715e4482cd/src/d3d11/d3d11_helper.h
+
+			Engine()->DeviceContext()->VSGetShader(VertexShader.ReleaseAndGetAddressOf(), nullptr, nullptr);
+			Engine()->DeviceContext()->PSGetShader(PixelShader.ReleaseAndGetAddressOf(), nullptr, nullptr);
+			Engine()->DeviceContext()->CSGetShader(ComputeShader.ReleaseAndGetAddressOf(), nullptr, nullptr);
+			Engine()->DeviceContext()->IAGetInputLayout(InputLayout.ReleaseAndGetAddressOf());
+			Engine()->DeviceContext()->IAGetPrimitiveTopology(&Topology);
+			Engine()->DeviceContext()->IAGetVertexBuffers(0, D3D11_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT, VertexBuffers, Strides, Offsets);
+			Engine()->DeviceContext()->IAGetIndexBuffer(IndexBuffer.ReleaseAndGetAddressOf(), &Format, &Offset);
+			Engine()->DeviceContext()->OMGetRenderTargets(D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT, RenderTargets, DepthStencil.GetAddressOf());
+			Engine()->DeviceContext()->RSGetState(RasterizerState.ReleaseAndGetAddressOf());
+			Engine()->DeviceContext()->OMGetDepthStencilState(DepthStencilState.ReleaseAndGetAddressOf(), &StencilRef);
+			Engine()->DeviceContext()->RSGetViewports(&NumViewports, nullptr);
+			Engine()->DeviceContext()->RSGetViewports(&NumViewports, Viewports);
+			Engine()->DeviceContext()->VSGetConstantBuffers(0, 1, VSConstantBuffer.GetAddressOf());
+			Engine()->DeviceContext()->PSGetConstantBuffers(0, 1, PSConstantBuffer.GetAddressOf());
+			Engine()->DeviceContext()->CSGetConstantBuffers(0, 1, CSConstantBuffer.GetAddressOf());
+			Engine()->DeviceContext()->CSGetShaderResources(0, D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT, CSShaderResources);
+			Engine()->DeviceContext()->CSGetUnorderedAccessViews(0, D3D11_1_UAV_SLOT_COUNT, CSUavs);
+
+			// Added
+			Engine()->DeviceContext()->RSGetScissorRects(&NumScissorRects, nullptr);
+			Engine()->DeviceContext()->RSGetScissorRects(&NumScissorRects, RSScissorRects);
+			Engine()->DeviceContext()->RSGetState(RS.GetAddressOf());
+			Engine()->DeviceContext()->OMGetBlendState(BlendState.GetAddressOf(), BlendFactor, &SampleMask);
+		}
+
+		void D3D11State::PopState() noexcept(true)
+		{
+			// https://github.com/fholger/vrperfkit/blob/a52f8a45d330d0b66206aee85165db715e4482cd/src/d3d11/d3d11_helper.h
+
+			Engine()->DeviceContext()->VSSetShader(VertexShader.Get(), nullptr, 0);
+			Engine()->DeviceContext()->PSSetShader(PixelShader.Get(), nullptr, 0);
+			Engine()->DeviceContext()->CSSetShader(ComputeShader.Get(), nullptr, 0);
+			Engine()->DeviceContext()->IASetInputLayout(InputLayout.Get());
+			Engine()->DeviceContext()->IASetPrimitiveTopology(Topology);
+			Engine()->DeviceContext()->IASetVertexBuffers(0, D3D11_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT, VertexBuffers, Strides, Offsets);
+
+			for (int i = 0; i < D3D11_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT; ++i)
+				if (VertexBuffers[i])
+					VertexBuffers[i]->Release();
+
+			Engine()->DeviceContext()->IASetIndexBuffer(IndexBuffer.Get(), Format, Offset);
+			Engine()->DeviceContext()->OMSetRenderTargets(D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT, RenderTargets, DepthStencil.Get());
+
+			for (int i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+				if (RenderTargets[i])
+					RenderTargets[i]->Release();
+
+			Engine()->DeviceContext()->RSSetState(RasterizerState.Get());
+			Engine()->DeviceContext()->OMSetDepthStencilState(DepthStencilState.Get(), StencilRef);
+			Engine()->DeviceContext()->RSSetViewports(NumViewports, Viewports);
+			Engine()->DeviceContext()->VSSetConstantBuffers(0, 1, VSConstantBuffer.GetAddressOf());
+			Engine()->DeviceContext()->PSSetConstantBuffers(0, 1, PSConstantBuffer.GetAddressOf());
+			Engine()->DeviceContext()->CSSetConstantBuffers(0, 1, CSConstantBuffer.GetAddressOf());
+			Engine()->DeviceContext()->CSSetShaderResources(0, D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT, CSShaderResources);
+
+			for (int i = 0; i < D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT; ++i)
+				if (CSShaderResources[i])
+					CSShaderResources[i]->Release();
+
+			UINT initial = 0;
+			Engine()->DeviceContext()->CSSetUnorderedAccessViews(0, D3D11_1_UAV_SLOT_COUNT, CSUavs, &initial);
+
+			for (int i = 0; i < D3D11_1_UAV_SLOT_COUNT; ++i)
+				if (CSUavs[i])
+					CSUavs[i]->Release();
+
+			// Added
+			Engine()->DeviceContext()->RSSetScissorRects(NumScissorRects, RSScissorRects);
+			Engine()->DeviceContext()->RSSetState(RS.Get());
+			Engine()->DeviceContext()->OMSetBlendState(BlendState.Get(), BlendFactor, SampleMask);
+		}
 
 		D3D11ShaderTexture::D3D11ShaderTexture(D3D11ShaderEngine* Engine, const char* Name) :
 			D3D11Object(Engine, Name)

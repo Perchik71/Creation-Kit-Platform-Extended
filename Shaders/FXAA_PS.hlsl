@@ -1,6 +1,29 @@
-// Copyright © 2025 aka perchik71. All rights reserved.
-// Contacts: <email:timencevaleksej@gmail.com>
-// License: https://www.gnu.org/licenses/gpl-3.0.html
+/***************************************************************************************************
+
+  FXAA Fast approXimate Anti-Aliasing
+
+  Author : perchik71 (Alexey Tim)
+  Original see : https://github.com/bartwronski/CSharpRenderer/blob/master/shaders/FXAA.hlsl
+
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+
+***************************************************************************************************/
 
 // FXAA_EDGE_THRESHOLD - The minimum amount of local contrast required 
 //                       to apply algorithm.
@@ -54,7 +77,6 @@
 #define FXAA_SUBPIX_CAP (3.0/4.0) 
 
 #define FXAA_SUBPIX_TRIM_SCALE (1.0/(1.0 - FXAA_SUBPIX_TRIM))
-
 #define FXAA_DOT_LUMA 1
 
 /////////////////////////////
@@ -87,13 +109,13 @@ float3 helper_TexGrad(float2 uv, float2 grad)
     return ColorBuffer.SampleGrad(linearSampler, uv, grad, grad).rgb;
 }
 
-// helper_Luma() will range 0.0 to 2.963210702.
 float helper_Luma(float3 rgb)
 {
 #if FXAA_DOT_LUMA
     float3 luma = float3(0.299, 0.587, 0.114);  
     return dot(rgb, luma);
 #else
+    // will range 0.0 to 2.963210702.
     return rgb.g * (0.587 / 0.299) + rgb.r;
 #endif // FXAA_DOT_LUMA
 }

@@ -1,11 +1,11 @@
-﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #pragma once
 
 #include "..\BaseWindow.h"
-#include <Core/Shaders.h>
+#include <Core/ImagespaceAA.h>
 
 namespace CreationKitPlatformExtended
 {
@@ -13,25 +13,6 @@ namespace CreationKitPlatformExtended
 	{
 		namespace SkyrimSpectialEdition
 		{
-			class ImagespaceAA
-			{
-			public:
-				ImagespaceAA();
-				
-				virtual bool Install();
-				virtual void Draw(IDXGISwapChain* SwapChain) const;
-			private:
-				std::unique_ptr<D3D11PixelShader> _PShader;
-				std::unique_ptr<D3D11VertexShader> _VShader;
-				std::unique_ptr<D3D11ShaderTexture> _BackTex;
-				std::unique_ptr<D3D11ShaderResourceView> _BackRes;
-				std::unique_ptr<D3D11SamplerState> _BackSmp;
-
-
-				ComPtr<ID3D11RasterizerState> _RasterizerState;
-				bool _Init;
-			};
-
 			class RenderWindow : public BaseWindow, public Classes::CUIBaseWindow
 			{
 			public:

@@ -907,6 +907,9 @@
     <ClCompile Include="Core\Shaders.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Core\ImagespaceAA.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2213,6 +2216,9 @@
       <Filter>Editor API\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Core\Shaders.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ImagespaceAA.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>

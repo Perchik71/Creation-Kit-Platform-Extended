@@ -154,6 +154,7 @@
     <ClCompile Include="Core\EngineSSEPatches.cpp" />
     <ClCompile Include="Core\FormInfoOutputWindow.cpp" />
     <ClCompile Include="Core\GDIPlusInit.cpp" />
+    <ClCompile Include="Core\ImagespaceAA.cpp" />
     <ClCompile Include="Core\INIWrapper.cpp" />
     <ClCompile Include="Core\MemoryManager.cpp" />
     <ClCompile Include="Core\Module.cpp" />
@@ -462,6 +463,7 @@
     <ClInclude Include="Core\Engine.h" />
     <ClInclude Include="Core\FormInfoOutputWindow.h" />
     <ClInclude Include="Core\GDIPlusInit.h" />
+    <ClInclude Include="Core\ImagespaceAA.h" />
     <ClInclude Include="Core\INIWrapper.h" />
     <ClInclude Include="Core\MemoryManager.h" />
     <ClInclude Include="Core\Module.h" />

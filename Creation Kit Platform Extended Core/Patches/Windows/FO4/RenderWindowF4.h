@@ -6,6 +6,7 @@
 
 #include "..\BaseWindow.h"
 #include "Editor API/FO4/TESF4.h"
+#include <Core/ImagespaceAA.h>
 
 namespace CreationKitPlatformExtended
 {
@@ -26,8 +27,9 @@ namespace CreationKitPlatformExtended
 				RenderWindow();
 
 				static LRESULT CALLBACK HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-				static void ImGuiDraw(IDXGISwapChain* This, UINT SyncInterval, UINT Flags);
+				static void DrawFrameEx(IDXGISwapChain* This, UINT SyncInterval, UINT Flags);
 				static void UpdateDrawInfo(char* Dest, UINT Size, const char* FormatStr, ...);
+				static void ImGuiDrawInfo();
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;
@@ -49,6 +51,8 @@ namespace CreationKitPlatformExtended
 				};
 
 				inline static Area* _TempDrawArea;
+			private:
+				std::unique_ptr<ImagespaceAA> _ImagespaceAA;
 			};
 
 			extern RenderWindow* GlobalRenderWindowPtr;

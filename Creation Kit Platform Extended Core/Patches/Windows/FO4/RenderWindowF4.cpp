@@ -115,7 +115,7 @@ namespace CreationKitPlatformExtended
 					else
 						lpRelocator->PatchNop(rel, 0x44);
 
-					lpRelocator->DetourCall(rel, (uintptr_t)&ImGuiDraw);
+					lpRelocator->DetourCall(rel, (uintptr_t)&DrawFrameEx);
 
 					rel = _RELDATA_RAV(16);
 					lpRelocator->PatchNop(rel, 0x14);
@@ -184,8 +184,15 @@ namespace CreationKitPlatformExtended
 				return CallWindowProc(GlobalRenderWindowPtr->GetOldWndProc(), Hwnd, Message, wParam, lParam);
 			}
 
-			void RenderWindow::ImGuiDraw(IDXGISwapChain* This, UINT SyncInterval, UINT Flags)
+			void RenderWindow::DrawFrameEx(IDXGISwapChain* This, UINT SyncInterval, UINT Flags)
 			{
+				if (!(GlobalRenderWindowPtr->_ImagespaceAA))
+				{
+					GlobalRenderWindowPtr->_ImagespaceAA = std::make_unique<ImagespaceAA>();
+					if (!GlobalRenderWindowPtr->_ImagespaceAA->Install(GlobalRenderWindowPtr->Handle))
+						_ERROR("An error occurred in the shader compilation.");
+				}
+
 				if (pointer_d3d11DeviceContext && gGlobAddrDeviceContext)
 				{
 					auto RenderTarget = (ID3D11RenderTargetView**)(gGlobAddrDeviceContext + 0x88);
@@ -196,61 +203,8 @@ namespace CreationKitPlatformExtended
 
 						if (pRenderTargetViews.Get() == *RenderTarget)
 						{
-							// IMGUI
-							ImGui_ImplDX11_NewFrame();
-							ImGui_ImplWin32_NewFrame();
-							ImGui::NewFrame();
-
-							if (gImGuiShowDrawInfo)
-							{
-								// IMGUI DRAWINFO
-
-								ImGui::SetNextWindowPos({ 5.0f, 5.0f });
-								ImGui::Begin("Display Info", nullptr, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoDecoration |
-									ImGuiWindowFlags_AlwaysAutoResize);
-								ImGui::PushFont(imguiFonts[1]);
-
-								ImGui::Text("Draw calls: ");
-								ImGui::SameLine(0.0f, 0.0f);
-
-								if (BGSRenderWindow::DrawInfo::DrawCalls < 8000)
-									ImGui::TextColored(gImGuiGreenColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
-								else if (BGSRenderWindow::DrawInfo::DrawCalls < 12000)
-									ImGui::TextColored(gImGuiOrangeColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
-								else
-									ImGui::TextColored(gImGuiRedColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
-
-								ImGui::SameLine(0.0f, 0.0f);
-								ImGui::Text(" polys: %u fps: %u", BGSRenderWindow::DrawInfo::Polys, BGSRenderWindow::DrawInfo::FramePerSecond);
-								ImGui::NewLine();
-
-								BGSRenderWindow* RenderWindow = BGSRenderWindow::Singleton.GetSingleton();
-								if (RenderWindow)
-								{
-									auto Cell = RenderWindow->GetCurrentCell();
-									if (Cell)
-									{
-										auto EditorID = Cell->GetEditorID_NoVTable();
-
-										if (Cell->IsInterior())
-											ImGui::Text("Current Cell: %s (%08X)", EditorID, Cell->FormID);
-										else
-											ImGui::Text("Current Cell: %s (%i, %i) (%08X)", EditorID, Cell->GridX, Cell->GridY, Cell->FormID);
-									}
-
-									const auto& CameraPos = RenderWindow->Camera->GetPosition();
-									ImGui::Text("Camera: %.3f, %.3f, %.3f", CameraPos.x, CameraPos.y, CameraPos.z);
-								}
-
-								ImGui::PopFont();
-								ImGui::PushFont(imguiFonts[2]);
-								ImGui::TextColored(gImGuiGreyColor, "(Show/Hide press key F1)");
-								ImGui::PopFont();
-								ImGui::End();
-							}
-
-							ImGui::Render();
-							ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+							GlobalRenderWindowPtr->_ImagespaceAA->Draw(This);
+							ImGuiDrawInfo();
 						}
 					}
 				}
@@ -273,6 +227,65 @@ namespace CreationKitPlatformExtended
 				BGSRenderWindow::DrawInfo::FramePerSecond = va_arg(ap, UINT);
 
 				va_end(ap);
+			}
+
+			void RenderWindow::ImGuiDrawInfo()
+			{
+				// IMGUI
+				ImGui_ImplDX11_NewFrame();
+				ImGui_ImplWin32_NewFrame();
+				ImGui::NewFrame();
+
+				if (gImGuiShowDrawInfo)
+				{
+					// IMGUI DRAWINFO
+
+					ImGui::SetNextWindowPos({ 5.0f, 5.0f });
+					ImGui::Begin("Display Info", nullptr, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoDecoration |
+						ImGuiWindowFlags_AlwaysAutoResize);
+					ImGui::PushFont(imguiFonts[1]);
+
+					ImGui::Text("Draw calls: ");
+					ImGui::SameLine(0.0f, 0.0f);
+
+					if (BGSRenderWindow::DrawInfo::DrawCalls < 8000)
+						ImGui::TextColored(gImGuiGreenColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
+					else if (BGSRenderWindow::DrawInfo::DrawCalls < 12000)
+						ImGui::TextColored(gImGuiOrangeColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
+					else
+						ImGui::TextColored(gImGuiRedColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
+
+					ImGui::SameLine(0.0f, 0.0f);
+					ImGui::Text(" polys: %u fps: %u", BGSRenderWindow::DrawInfo::Polys, BGSRenderWindow::DrawInfo::FramePerSecond);
+					ImGui::NewLine();
+
+					BGSRenderWindow* RenderWindow = BGSRenderWindow::Singleton.GetSingleton();
+					if (RenderWindow)
+					{
+						auto Cell = RenderWindow->GetCurrentCell();
+						if (Cell)
+						{
+							auto EditorID = Cell->GetEditorID_NoVTable();
+
+							if (Cell->IsInterior())
+								ImGui::Text("Current Cell: %s (%08X)", EditorID, Cell->FormID);
+							else
+								ImGui::Text("Current Cell: %s (%i, %i) (%08X)", EditorID, Cell->GridX, Cell->GridY, Cell->FormID);
+						}
+
+						const auto& CameraPos = RenderWindow->Camera->GetPosition();
+						ImGui::Text("Camera: %.3f, %.3f, %.3f", CameraPos.x, CameraPos.y, CameraPos.z);
+					}
+
+					ImGui::PopFont();
+					ImGui::PushFont(imguiFonts[2]);
+					ImGui::TextColored(gImGuiGreyColor, "(Show/Hide press key F1)");
+					ImGui::PopFont();
+					ImGui::End();
+				}
+
+				ImGui::Render();
+				ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 			}
 		}
 	}
