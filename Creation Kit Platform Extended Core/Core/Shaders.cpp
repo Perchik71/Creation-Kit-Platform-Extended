@@ -805,19 +805,19 @@ namespace CreationKitPlatformExtended
 			Assert(Create(Buffer, Size, BindFlags, Usage));
 		}
 
-		bool D3D11ShaderBuffer::Create(const void* Buffer, uint32_t Size, uint32_t BindFlags, D3D11_USAGE Usage) noexcept(true)
+		bool D3D11ShaderBuffer::Create(const void* Buffer, uint32_t Size, uint32_t BindFlags, D3D11_USAGE Usage, uint32_t CPUAccess) noexcept(true)
 		{
 			if (!Buffer || !Size)
 				return false;
 
-			CD3D11_BUFFER_DESC cbDesc(Size, BindFlags, Usage);
+			CD3D11_BUFFER_DESC cbDesc(Size, BindFlags, Usage, CPUAccess);
 			memcpy(&_Desc, &cbDesc, sizeof(D3D11_BUFFER_DESC));
 
 			D3D11_SUBRESOURCE_DATA InitData;
 			ZeroMemory(&InitData, sizeof(D3D11_SUBRESOURCE_DATA));
 			InitData.pSysMem = Buffer;
 
-			return CheckHrResult(Engine()->Device()->CreateBuffer(&_Desc, &InitData, _Buffer.ReleaseAndGetAddressOf()), Name().c_str());
+			return CheckHrResult(Engine()->Device()->CreateBuffer(&_Desc, &InitData, ReleaseAndGetAddressOf()), Name().c_str());
 		}
 
 		void D3D11ShaderBuffer::Bind(uint32_t Type, uint32_t BindID) noexcept(true)

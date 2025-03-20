@@ -89,6 +89,11 @@ struct InputData
 
 Texture2D ColorBuffer : register(t0);
 SamplerState linearSampler : register(s0);
+cbuffer dataBuffer : register(b0)
+{
+    float2 tilesize;
+    float2 jitter;
+};
 
 /////////////////////////////
 // HELPER FUNCTION
@@ -124,10 +129,6 @@ float helper_Luma(float3 rgb)
 
 float3 fxaa(InputData Data)
 {
-    uint tw, th;
-    ColorBuffer.GetDimensions(tw, th);
-    float2 rcpFrame = float2(1.0 / tw, 1.0 / th);
-    
     // Given the following neighborhood: 
     //   N
     // W M E
@@ -206,7 +207,7 @@ float3 fxaa(InputData Data)
         abs((0.25 * lumaNE) + (-0.5 * lumaE) + (0.25 * lumaSE));
     
     bool horzSpan = edgeHorz >= edgeVert;
-    float lengthSign = horzSpan ? -rcpFrame.y : -rcpFrame.x;
+    float lengthSign = horzSpan ? -tilesize.y : -tilesize.x;
     
     if (!horzSpan)
     {
@@ -241,7 +242,7 @@ float3 fxaa(InputData Data)
     gradientN *= FXAA_SEARCH_THRESHOLD;
     
     float2 posP = posN;
-    float2 offNP = horzSpan ? float2(rcpFrame.x, 0.0) : float2(0.0f, rcpFrame.y);
+    float2 offNP = horzSpan ? float2(tilesize.x, 0.0) : float2(0.0f, tilesize.y);
     float lumaEndN = lumaN;
     float lumaEndP = lumaN;
     bool doneN = false;

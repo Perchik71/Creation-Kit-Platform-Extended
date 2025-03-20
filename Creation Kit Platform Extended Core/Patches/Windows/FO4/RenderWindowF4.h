@@ -30,6 +30,9 @@ namespace CreationKitPlatformExtended
 				static void DrawFrameEx(IDXGISwapChain* This, UINT SyncInterval, UINT Flags);
 				static void UpdateDrawInfo(char* Dest, UINT Size, const char* FormatStr, ...);
 				static void ImGuiDrawInfo();
+
+				virtual bool HasAntiAliasing() const noexcept(true) { return _ImagespaceAA->IsEnabled(); }
+				virtual void SetAntiAliasingEnabled(bool v) noexcept(true) { _ImagespaceAA->SetEnabled(v); }
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;

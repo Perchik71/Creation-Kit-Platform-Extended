@@ -867,6 +867,9 @@
     <Text Include="Version\build_version.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Resources\FXAA_PS.cso" />
+    <None Include="..\Resources\FXAA_VS.cso" />
+    <None Include="..\Resources\TAA_PS.cso" />
     <None Include="Version\resource_version2.tmp" />
   </ItemGroup>
   <ItemGroup>
@@ -891,6 +894,10 @@
     <FxCompile Include="..\Shaders\FXAA_VS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release-Qt|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\Shaders\TAA_PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release-Qt|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

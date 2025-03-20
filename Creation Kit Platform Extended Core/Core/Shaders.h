@@ -249,7 +249,8 @@ namespace CreationKitPlatformExtended
 			D3D11ShaderBuffer(const D3D11ShaderBuffer&) = delete;
 			D3D11ShaderBuffer& operator=(const D3D11ShaderBuffer&) = delete;
 
-			virtual bool Create(const void* Buffer, uint32_t Size, uint32_t BindFlags, D3D11_USAGE Usage = D3D11_USAGE_DEFAULT) noexcept(true);
+			virtual bool Create(const void* Buffer, uint32_t Size, uint32_t BindFlags, D3D11_USAGE Usage = D3D11_USAGE_DEFAULT,
+				uint32_t CPUAccess = 0) noexcept(true);
 			
 			virtual void Bind(uint32_t Type, uint32_t BindID) noexcept(true);
 			virtual void Unbind() noexcept(true);

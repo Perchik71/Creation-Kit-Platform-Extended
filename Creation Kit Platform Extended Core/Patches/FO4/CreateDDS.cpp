@@ -5,6 +5,8 @@
 #include "Core/Engine.h"
 #include "CreateDDS.h"
 
+#include <comdef.h>
+
 namespace CreationKitPlatformExtended
 {
 	namespace Patches
@@ -233,6 +235,7 @@ namespace CreationKitPlatformExtended
 					_MESSAGE("- BindFlags %u", pDesc->BindFlags);
 					_MESSAGE("- CPUAccessFlags %u", (uint32_t)pDesc->CPUAccessFlags);
 					_MESSAGE("- MiscFlags %u", pDesc->MiscFlags);
+                    _MESSAGE("- Result Code Error %u %s", Ret, _com_error(Ret).ErrorMessage());
 
 					AssertMsg(SUCCEEDED(Ret),
 						"ID3D11CreateTexture2D: A fatal error occurred while creating the texture. "

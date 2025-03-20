@@ -31,6 +31,8 @@ namespace CreationKitPlatformExtended
 				static void setFlagLoadCell();
 
 				inline ImagespaceAA* GetImagespaceAA() const noexcept(true) { return _ImagespaceAA.get(); }
+				virtual bool HasAntiAliasing() const noexcept(true) { return _ImagespaceAA->IsEnabled(); }
+				virtual void SetAntiAliasingEnabled(bool v) noexcept(true) { _ImagespaceAA->SetEnabled(v); }
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;

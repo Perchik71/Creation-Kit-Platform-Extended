@@ -69,14 +69,18 @@ IDB_BITMAP8             BITMAP                  "..\\Resources\\storymanager.bmp
 
 IDB_BITMAP9             BITMAP                  "..\\Resources\\scripts.bmp"
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
-// Shader
+// SHADER
 //
 
 IDS_FXAA_PS             SHADER                  "..\\Resources\\FXAA_PS.cso"
 
+IDS_TAA_PS              SHADER                  "..\\Resources\\TAA_PS.cso"
+
 IDS_FXAA_VS             SHADER                  "..\\Resources\\FXAA_VS.cso"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -141,6 +145,17 @@ END
 IDD_DIALOG1 AFX_DIALOG_LAYOUT
 BEGIN
     0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDST_ANTIALIASING_TIPS  "Toggle Anti-aliasing"
 END
 
 #endif    // Русский (Россия) resources

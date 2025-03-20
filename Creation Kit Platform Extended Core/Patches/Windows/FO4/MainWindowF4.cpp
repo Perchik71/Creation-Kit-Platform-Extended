@@ -19,6 +19,8 @@
 #include "RenderWindowF4.h"
 #include "MainWindowF4.h"
 #include "Core/RegistratorWindow.h"
+#include "Core/ImagespaceAA.h"
+#include "resource.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -28,6 +30,7 @@ namespace CreationKitPlatformExtended
 		{
 			using namespace EditorAPI::Fallout4;
 
+			bool ToolFind = false;
 			uintptr_t pointer_MainWindow_data = 0;
 			extern uint32_t* pointer_ReplaceBSPointerHandleAndManager_data1;
 			extern uint32_t* pointer_ReplaceBSPointerHandleAndManager_data2;
@@ -226,7 +229,8 @@ namespace CreationKitPlatformExtended
 				ExtMenu.Append("Dump RTTI Data", UI_EXTMENU_DUMPRTTI);
 				ExtMenu.Append("Dump SDM Info", UI_EXTMENU_SDM);
 				ExtMenu.Append("Form Info Output", UI_EXTMENU_FORMINFOOUTPUT);
-
+				ExtMenu.Append("Toggle Anti-aliasing", UI_EXTMENU_TOGGLE_ANTIALIASING, true, true);
+					
 #if CKPE_USES_TRACER
 				// Create tracer menu
 				auto TracerMenuHandle = CreateMenu();
@@ -353,6 +357,18 @@ namespace CreationKitPlatformExtended
 							Utils::Quit();
 						}
 						return S_OK;
+						case WM_NOTIFY:
+							if (((LPNMHDR)lParam)->code == TTN_GETDISPINFO)
+							{
+								LPTOOLTIPTEXT lpttt = (LPTOOLTIPTEXT)lParam;
+								if (lpttt->hdr.idFrom == UI_EXTMENU_TOGGLE_ANTIALIASING)
+								{
+									lpttt->hinst = GlobalEnginePtr->GetInstanceDLL();
+									lpttt->lpszText = MAKEINTRESOURCE(IDST_ANTIALIASING_TIPS);
+									return TRUE;
+								}
+							}
+						break;
 						case WM_SIZE:
 						{
 							// Scale the status bar segments to fit the window size
@@ -555,6 +571,30 @@ namespace CreationKitPlatformExtended
 								PostMessageA(Hwnd, WM_COMMAND, 40127, 0);
 							}
 							return 0;
+							case UI_EXTMENU_TOGGLE_ANTIALIASING:
+							{
+								MENUITEMINFO info
+								{
+									.cbSize = sizeof(MENUITEMINFO),
+									.fMask = MIIM_STATE
+								};
+
+								GetMenuItemInfo(GlobalMainWindowPtr->GetExtensionMenuHandle(), param, FALSE, &info);
+
+								bool doCheck = !((info.fState & MFS_CHECKED) == MFS_CHECKED);
+
+								if (doCheck)
+									info.fState |= MFS_CHECKED;
+								else
+									info.fState &= ~MFS_CHECKED;
+
+								GlobalRenderWindowPtr->SetAntiAliasingEnabled(doCheck);
+								SetMenuItemInfo(GlobalMainWindowPtr->GetExtensionMenuHandle(), param, FALSE, &info);
+
+								SendMessageA(GlobalMainWindowPtr->Toolbar.Handle, TB_CHECKBUTTON,
+									UI_EXTMENU_TOGGLE_ANTIALIASING, MAKELPARAM(doCheck, 0));
+							}
+							return 0;
 							default:
 							{
 								bool Continue = true;
@@ -568,8 +608,13 @@ namespace CreationKitPlatformExtended
 						break;
 						case WM_SHOWWINDOW:
 						{
-							// Getting additional child Windows		
-							GlobalMainWindowPtr->FindToolWindow();
+							if (!ToolFind)
+							{
+								// Getting additional child Windows		
+								GlobalMainWindowPtr->FindToolWindow();
+
+								ToolFind = true;
+							}
 						}
 						break;
 						case WM_GETMINMAXINFO:

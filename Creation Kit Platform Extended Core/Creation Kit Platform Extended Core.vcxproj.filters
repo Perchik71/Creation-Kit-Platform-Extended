@@ -2239,6 +2239,9 @@
     <None Include="Version\resource_version2.tmp">
       <Filter>Version</Filter>
     </None>
+    <None Include="..\Resources\FXAA_PS.cso" />
+    <None Include="..\Resources\TAA_PS.cso" />
+    <None Include="..\Resources\FXAA_VS.cso" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Resources\check.bmp">
@@ -2283,6 +2286,9 @@
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="..\Shaders\FXAA_VS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Shaders\TAA_PS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

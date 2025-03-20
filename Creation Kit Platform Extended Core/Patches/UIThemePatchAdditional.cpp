@@ -126,7 +126,31 @@ namespace CreationKitPlatformExtended
 			HINSTANCE hBMInst, UINT_PTR wBMID, LPCTBBUTTON lpButtons,
 			INT iNumButtons, INT dxButton, INT dyButton, INT dxBitmap, INT dyBitmap, UINT uStructSize)
 		{
+			constexpr static auto UI_EXTMENU_TOGGLE_ANTIALIASING = 51015;
+
+			bool SupportedAA = true;
 			HIMAGELIST hImageList;
+
+			auto pNewButtons = std::make_unique<TBBUTTON[]>(iNumButtons);
+			auto verEditor = GlobalEnginePtr->GetEditorVersion();
+
+			if ((verEditor >= EDITOR_SKYRIM_SE_1_6_1130) && (verEditor <= EDITOR_FALLOUT_C4_LAST))
+			{
+				size_t aa_index = 19;
+				if (verEditor <= EDITOR_SKYRIM_SE_LAST)
+					aa_index++;
+
+				memcpy(pNewButtons.get(), lpButtons, sizeof(TBBUTTON) * aa_index);
+
+				pNewButtons[aa_index] = (pNewButtons.get())[aa_index - 1];
+				pNewButtons[aa_index].iBitmap = 59;
+				pNewButtons[aa_index].idCommand = UI_EXTMENU_TOGGLE_ANTIALIASING;
+				pNewButtons[aa_index].fsState |= TBSTATE_CHECKED;
+
+				memcpy(&(pNewButtons.get())[aa_index + 1], &lpButtons[aa_index], sizeof(TBBUTTON) * ((size_t)iNumButtons - (aa_index + 1)));
+			}
+			else
+				memcpy(pNewButtons.get(), lpButtons, sizeof(TBBUTTON) * iNumButtons);
 
 			if (UITheme::GetTheme() == UITheme::Theme_Custom)
 			{
@@ -148,14 +172,18 @@ namespace CreationKitPlatformExtended
 					RGB(56, 56, 56), IMAGE_BITMAP, LR_CREATEDIBSECTION | LR_LOADTRANSPARENT);
 
 			HWND ret = CreateToolbarEx(hwnd, WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, wID, nBitmaps,
-				NULL, NULL, lpButtons, iNumButtons - 2 /*delete two divider*/, dxButton, dyButton, dxBitmap, dyBitmap, uStructSize);
+				NULL, NULL, pNewButtons.get(), SupportedAA ? (iNumButtons - 1) : (iNumButtons - 2) /*delete two divider*/, dxButton, dyButton,
+				dxBitmap, dyBitmap, uStructSize);
 
-			SendMessageA(ret, TB_SETIMAGELIST, 0, (LPARAM)hImageList);
-			SendMessageA(ret, TB_SETBITMAPSIZE, 0, MAKELPARAM(16, 16));
-			ShowWindow(ret, SW_SHOWNORMAL);
-			SetWindowPos(ret, NULL, 0, 24, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+			if (ret)
+			{
+				SendMessageA(ret, TB_SETIMAGELIST, 0, (LPARAM)hImageList);
+				SendMessageA(ret, TB_SETBITMAPSIZE, 0, MAKELPARAM(16, 16));
+				ShowWindow(ret, SW_SHOWNORMAL);
+				SetWindowPos(ret, NULL, 0, 24, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
-			Initialization(ret);
+				Initialization(ret);
+			}
 
 			return ret;
 		}

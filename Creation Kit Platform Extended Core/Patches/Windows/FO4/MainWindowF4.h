@@ -42,7 +42,8 @@ namespace CreationKitPlatformExtended
 				constexpr static auto UI_EXTMENU_TRACER_CLEAR = 51012;
 				constexpr static auto UI_EXTMENU_TRACER_DUMP = 51013;
 				constexpr static auto UI_EXTMENU_TRACER_RECORD = 51014;
-
+				constexpr static auto UI_EXTMENU_TOGGLE_ANTIALIASING = 51015;
+				
 				virtual bool HasOption() const;
 				virtual bool HasCanRuntimeDisabled() const;
 				virtual const char* GetOptionName() const;
