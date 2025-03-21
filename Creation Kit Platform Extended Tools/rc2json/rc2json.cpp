@@ -36,6 +36,10 @@ static const std::map<std::string, std::string> mapStdControlType = {
     { "DATETIMEPICKER", "SysDateTimePick32" }
 };
 
+static const std::map<std::string, std::string> mapStdControlTypeInvalid = {
+    { "AUTOCHECKBOX", "AUTOCHECKBUTTON" },
+};
+
 static std::string change_file_ext(const std::string& a_filename, const std::string& a_ext)
 {
     std::string result = a_filename;
@@ -413,7 +417,11 @@ static bool rc2json(const char* a_filename)
         }
         else
         {
-            strcpy_s(controlinfo.type, szWord);
+            auto it_invalid = mapStdControlTypeInvalid.find(szWord);
+            if (it_invalid == mapStdControlTypeInvalid.end())   
+                strcpy_s(controlinfo.type, szWord);
+            else
+                strcpy_s(controlinfo.type, it_invalid->second.c_str());
 
             auto pos = ftell(in_stream);
             read_words(in_stream, szWord);
