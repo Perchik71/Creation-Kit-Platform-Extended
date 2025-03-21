@@ -1,0 +1,28 @@
+{
+	"Style": [ "WS_DLGFRAME", "DS_MODALFRAME", "WS_POPUPWINDOW", "WS_CAPTION", "WS_SYSMENU", "WS_CLIPCHILDREN", "DS_NOFAILCREATE" ],
+	"Title": "Sound Category",
+	"Width": 316,
+	"Height": 124,
+	"FontName": "Microsoft Sans Serif",
+	"FontSize": 8,
+	"FontWeight": 400,
+	"FontItalic": 0,
+	"Controls": [
+		{ "Type": "EDITTEXT", "Style": [ "ES_LEFT", "ES_AUTOHSCROLL" ], "Id": 5500, "Title": "", "x": 57, "y": 7, "Width": 142, "Height": 12 },
+		{ "Type": "EDITTEXT", "Style": [ "ES_LEFT", "ES_AUTOHSCROLL" ], "Id": 1060, "Title": "", "x": 57, "y": 22, "Width": 142, "Height": 12 },
+		{ "Type": "RTEXT", "Title": "ID", "x": 28, "y": 9, "Width": 25, "Height": 8 },
+		{ "Type": "RTEXT", "Title": "Name", "x": 28, "y": 24, "Width": 25, "Height": 8 },
+		{ "Type": "PUSHBUTTON", "Title": "Categorize Sounds", "Id": 5660, "x": 220, "y": 7, "Width": 80, "Height": 12 },
+		{ "Type": "PUSHBUTTON", "Title": "Categorize Categories", "Id": 5661, "x": 220, "y": 22, "Width": 80, "Height": 12 },
+		{ "Type": "COMBOBOX", "Style": ["CBS_DROPDOWNLIST", "CBS_SORT", "WS_VSCROLL"], "Id": 5598, "x": 57, "y": 38, "Width": 142, "Height": 98 },
+		{ "Type": "LTEXT", "Title": "Static Volume Multiplier:", "x": 179, "y": 60, "Width": 75, "Height": 8 },	
+		{ "Type": "EDITTEXT", "Style": ["ES_LEFT", "ES_AUTOHSCROLL"], "Id": 5638, "x": 258, "y": 58, "Width": 42, "Height": 12 },	
+		{ "Type": "AUTOCHECKBUTTON", "Title": "Mute When Submerged", "Id": 5597, "x": 7, "y": 58, "Width": 92, "Height": 12 },
+		{ "Type": "AUTOCHECKBUTTON", "Title": "Should Appear on Menu", "Id": 5600, "x": 7, "y": 70, "Width": 98, "Height": 12 },
+		{ "Type": "LTEXT", "Title": "Default Menu Value:", "x": 8, "y": 88, "Width": 65, "Height": 8 },
+		{ "Type": "EDITTEXT", "Style": [ "ES_LEFT", "ES_AUTOHSCROLL", "WS_DISABLED" ], "Id": 5639, "x": 77, "y": 86, "Width": 40, "Height": 12 },
+		{ "Type": "PUSHBUTTON", "Title": "Push to Game", "Id": 6280, "x": 230, "y": 74, "Width": 70, "Height": 12 }, 
+		{ "Type": "DEFPUSHBUTTON", "Title": "OK", "Id": 1, "x": 17, "y": 106, "Width": 50, "Height": 12 },
+		{ "Type": "PUSHBUTTON", "Title": "Cancel", "Id": 2, "x": 71, "y": 106, "Width": 50, "Height": 12 }
+	]
+}
