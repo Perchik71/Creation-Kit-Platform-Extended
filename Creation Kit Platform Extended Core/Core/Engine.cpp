@@ -298,7 +298,7 @@ namespace CreationKitPlatformExtended
 			memset(&si, 0, sizeof(si));
 			si.cb = sizeof(si);
 			si.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
-			si.wShowWindow = SW_SHOW;
+			si.wShowWindow = SW_HIDE;
 			si.hStdOutput = hWriteOut;
 			si.hStdError = hWriteOut;
 
