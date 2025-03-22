@@ -1,0 +1,21 @@
+{
+	"ExStyle": [ "WS_EX_ACCEPTFILES" ],
+	"Style": [ "DS_MODALFRAME", "DS_CENTER", "WS_POPUPWINDOW", "WS_DLGFRAME", "DS_NOFAILCREATE" ],
+	"Title": "Music Track",
+	"Width": 485,
+	"Height": 245,
+	"FontName": "Microsoft Sans Serif",
+	"FontSize": 8,
+	"FontWeight": 400,
+	"FontItalic": 0,
+	"Controls": [
+		{ "Type": "LTEXT", "Title": "ID:", "x": 8, "y": 8, "Width": 10, "Height": 8 },
+		{ "Type": "EDITTEXT", "Style": ["ES_LEFT", "ES_AUTOHSCROLL"], "Id": 5500, "x": 20, "y": 6, "Width": 266, "Height": 12 },
+		{ "Type": "DEFPUSHBUTTON", "Title": "OK", "Id": 1, "x": 373, "y": 226, "Width": 50, "Height": 14 },
+		{ "Type": "PUSHBUTTON", "Title": "Cancel", "Id": 2, "x": 427, "y": 226, "Width": 50, "Height": 14 },
+		{ "Type": "COMBOBOX", "Style": ["CBS_DROPDOWN", "WS_VSCROLL"], "Id": 5363, "x": 50, "y": 22, "Width": 236, "Height": 75 },
+		{ "Type": "LTEXT", "Title": "Track Type:", "x": 8, "y": 24, "Width": 40, "Height": 8 },
+		{ "Type": "TABVIEW", "Title": "", "Id": 1777, "x": 8, "y": 38, "Width": 469, "Height": 184 },
+		{ "Type": "AUTOCHECKBUTTON", "Title": "Has Conditions", "Id": 5372, "x": 292, "y": 24, "Width": 77, "Height": 10 }
+	]
+}

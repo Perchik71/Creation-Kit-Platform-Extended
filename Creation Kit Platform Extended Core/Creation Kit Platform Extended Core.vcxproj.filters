@@ -910,6 +910,9 @@
     <ClCompile Include="Core\ImagespaceAA.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashFootstepSetRemove.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2220,6 +2223,12 @@
     </ClInclude>
     <ClInclude Include="Core\ImagespaceAA.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SSE\BGSFootstepSet.h">
+      <Filter>Editor API\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashFootstepSetRemove.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

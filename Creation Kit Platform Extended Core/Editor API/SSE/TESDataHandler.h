@@ -13,6 +13,7 @@
 #include "TESObjectLAND.h"
 #include "BGSVoiceType.h"
 #include "BGSMaterialType.h"
+#include "BGSFootstepSet.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -149,8 +150,8 @@ namespace CreationKitPlatformExtended
 				TESFormArray arrDOBJ;									// A70 Form Type 107
 				TESFormArray arrLGTM;									// A88 Form Type 108
 				TESFormArray arrMUSC;									// AA0 Form Type 109
-				TESFormArray arrFSTP;									// AB8 Form Type 110
-				TESFormArray arrFSTS;									// AD0 Form Type 111
+				BSTArray<BGSFootstep*> arrFootstep;						// AB8 Form Type 110 <FSTP>
+				BSTArray<BGSFootstepSet*> arrFootstepSet;				// AD0 Form Type 111 <FSTS>
 				TESFormArray arrSMBN;									// AE8 Form Type 112
 				TESFormArray arrSMQN;									// B00 Form Type 113
 				TESFormArray arrSMEN;									// B18 Form Type 114

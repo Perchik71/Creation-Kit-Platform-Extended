@@ -1,0 +1,28 @@
+{
+	"Style": [ "WS_CHILD", "DS_NOFAILCREATE" ],
+	"Width": 288,
+	"Height": 161,
+	"FontName": "Microsoft Sans Serif",
+	"FontSize": 8,
+	"FontWeight": 400,
+	"FontItalic": 0,
+	"Controls": [
+		{ "Type": "LISTBOX", "Style": ["LBS_NOINTEGRALHEIGHT", "WS_VSCROLL"], "Id": 5378, "x": 240, "y": 82, "Width": 38, "Height": 73 },
+		{ "Type": "LTEXT", "Title": "Cue Points (in seconds):", "x": 196, "y": 51, "Width": 79, "Height": 8 },
+		{ "Type": "AUTOCHECKBUTTON", "Title": "Contains Loop", "Id": 5364, "x": 12, "y": 66, "Width": 105, "Height": 10 },
+		{ "Type": "EDITTEXT", "Style": ["ES_LEFT", "ES_AUTOHSCROLL", "WS_DISABLED"], "Id": 5365, "x": 77, "y": 80, "Width": 40, "Height": 14 },
+		{ "Type": "EDITTEXT", "Style": ["ES_LEFT", "ES_AUTOHSCROLL", "WS_DISABLED"], "Id": 5367, "x": 77, "y": 97, "Width": 40, "Height": 14 },
+		{ "Type": "EDITTEXT", "Style": ["ES_LEFT", "ES_AUTOHSCROLL", "WS_DISABLED"], "Id": 5368, "x": 77, "y": 114, "Width": 40, "Height": 14 },
+		{ "Type": "RTEXT", "Title": "Loop Begins (secs):", "Style": ["WS_DISABLED"], "Id": 5373, "x": 11, "y": 84, "Width": 62, "Height": 8 },
+		{ "Type": "RTEXT", "Title": "Loop Ends (secs):", "Style": ["WS_DISABLED"], "Id": 5374, "x": 13, "y": 100, "Width": 60, "Height": 8 },
+		{ "Type": "RTEXT", "Title": "Loop Count:", "Style": ["WS_DISABLED"], "Id": 102, "x": 23, "y": 117, "Width": 51, "Height": 8 },
+		{ "Type": "EDITTEXT", "Style": ["ES_LEFT", "ES_AUTOHSCROLL", "ES_READONLY"], "Id": 5376, "x": 12, "y": 8, "Width": 206, "Height": 14 },
+		{ "Type": "PUSHBUTTON", "Title": "Choose File", "Id": 3681, "x": 224, "y": 8, "Width": 54, "Height": 14 },
+		{ "Type": "EDITTEXT", "Style": ["ES_LEFT", "ES_AUTOHSCROLL"], "Id": 5377, "x": 240, "y": 63, "Width": 38, "Height": 14 },
+		{ "Type": "PUSHBUTTON", "Title": "Add", "Id": 3682, "x": 194, "y": 63, "Width": 40, "Height": 14 },
+		{ "Type": "PUSHBUTTON", "Title": "Import Metadata", "Style": ["WS_DISABLED"], "Id": 5379, "x": 12, "y": 47, "Width": 105, "Height": 14 },
+		{ "Type": "PUSHBUTTON", "Title": "Remove", "Id": 5380, "x": 194, "y": 82, "Width": 40, "Height": 14 },
+		{ "Type": "PUSHBUTTON", "Title": "Choose Finale", "Id": 3683, "x": 224, "y": 28, "Width": 54, "Height": 14 },
+		{ "Type": "EDITTEXT", "Style": ["ES_LEFT", "ES_AUTOHSCROLL", "ES_READONLY"], "Id": 5381, "x": 12, "y": 28, "Width": 206, "Height": 14 }
+	]
+}

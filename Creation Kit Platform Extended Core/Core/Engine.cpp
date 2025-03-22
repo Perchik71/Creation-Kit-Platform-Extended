@@ -265,6 +265,27 @@ namespace CreationKitPlatformExtended
 			*lpdwBuildNubmer = data->NtBuildNumber;
 #endif // HACK_VERSION_RETRIEVAL
 #else
+			LONG(WINAPI * RtlGetVersion)(LPOSVERSIONINFOEXW) = nullptr;
+			OSVERSIONINFOEXW osInfo = { 0 };
+			*(FARPROC*)&RtlGetVersion = GetProcAddress(GetModuleHandleA("ntdll"), "RtlGetVersion");
+			if (RtlGetVersion)
+			{
+				osInfo.dwOSVersionInfoSize = sizeof(osInfo);
+				RtlGetVersion(&osInfo);
+
+				*lpdwMajorVersion = osInfo.dwMajorVersion;
+				*lpdwMinorVersion = osInfo.dwMinorVersion;
+				*lpdwBuildNubmer = osInfo.dwBuildNumber;
+
+				if (osInfo.dwMajorVersion == 6)
+					// There is a problem with stripped-down versions of OS, the function returns that it is still Win 8.
+					goto ver_win_home_maybe;
+
+				return TRUE;
+			}
+
+		ver_win_home_maybe:
+			
 			std::string str_ver;
 
 			char cmd_exe[256];
@@ -347,27 +368,14 @@ namespace CreationKitPlatformExtended
 			if (it_l == std::string::npos)
 				goto invalid_error;
 
+			MessageBoxA(0, str_ver.c_str(), "", 0);
+
 			if (sscanf(str_ver.c_str() + it_l + 1, "%u.%u.%u", lpdwMajorVersion, lpdwMinorVersion, lpdwBuildNubmer) != 3)
 				goto invalid_error;
 
 			return TRUE;
 
 		invalid_error:
-
-			LONG(WINAPI * RtlGetVersion)(LPOSVERSIONINFOEXW) = nullptr;
-			OSVERSIONINFOEXW osInfo = { 0 };
-			*(FARPROC*)&RtlGetVersion = GetProcAddress(GetModuleHandleA("ntdll"), "RtlGetVersion");
-			if (RtlGetVersion)
-			{
-				osInfo.dwOSVersionInfoSize = sizeof(osInfo);
-				RtlGetVersion(&osInfo);
-
-				*lpdwMajorVersion = osInfo.dwMajorVersion;
-				*lpdwMinorVersion = osInfo.dwMinorVersion;
-				*lpdwBuildNubmer = osInfo.dwBuildNumber;
-
-				return TRUE;
-			}
 #endif // GET_VERSION_FROM_CMD_VER
 
 			return FALSE;
@@ -895,8 +903,8 @@ namespace CreationKitPlatformExtended
 			DWORD dwMajor, dwMinor, dwBuild;
 			if (!GetVerOs(&dwMajor, &dwMinor, &dwBuild))
 			{
-				// Need 8.1
-				if ((dwMajor < 6) || (dwMajor == 6) && (dwMinor < 3))
+				// Need 8.1 or newer
+				if ((dwMajor < 6) || ((dwMajor == 6) && (dwMinor < 2)))
 				{
 					_ERROR("Unsupported OS version");
 

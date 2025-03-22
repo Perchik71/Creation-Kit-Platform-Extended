@@ -95,6 +95,7 @@
 #include "Patches/SSE/ChooseSoundFile.h"
 #include "Patches/SSE/MiscMessages.h"
 #include "Patches/SSE/ResponseIgnoreMax.h"
+#include "Patches/SSE/CrashFootstepSetRemove.h"
 
 #include "Patches/Windows/SSE/MainWindow.h"
 #include "Patches/Windows/SSE/RenderWindow.h"
@@ -205,6 +206,7 @@ namespace CreationKitPlatformExtended
 				new Patches::ChooseSoundFilePatch(),
 				new Patches::MiscMessagesPatch(),
 				new Patches::ResponseIgnoreMaxPatch(),
+				new Patches::CrashFootstepSetRemovePatch(),
 
 				new Patches::MainWindow(),
 				new Patches::RenderWindow(),

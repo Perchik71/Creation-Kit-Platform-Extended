@@ -304,6 +304,7 @@
     <ClCompile Include="Patches\SSE\CrashCCCFiles.cpp" />
     <ClCompile Include="Patches\SSE\CrashDuplicateWorldspace.cpp" />
     <ClCompile Include="Patches\SSE\CrashFlowChartX.cpp" />
+    <ClCompile Include="Patches\SSE\CrashFootstepSetRemove.cpp" />
     <ClCompile Include="Patches\SSE\CrashHairKS.cpp" />
     <ClCompile Include="Patches\SSE\CrashInventoryIterators.cpp" />
     <ClCompile Include="Patches\SSE\CrashMHDTMoreThan70.cpp" />
@@ -557,6 +558,7 @@
     <ClInclude Include="Editor API\SF\TESObjectLIGH.h" />
     <ClInclude Include="Editor API\SF\TESObjectREFR.h" />
     <ClInclude Include="Editor API\SF\TESPointerHandleDetail.h" />
+    <ClInclude Include="Editor API\SSE\BGSFootstepSet.h" />
     <ClInclude Include="Editor API\SSE\BGSImpactData.h" />
     <ClInclude Include="Editor API\SSE\BGSImpactDataSet.h" />
     <ClInclude Include="Editor API\SSE\BGSMaterialType.h" />
@@ -713,6 +715,7 @@
     <ClInclude Include="Patches\SSE\CrashCCCFiles.h" />
     <ClInclude Include="Patches\SSE\CrashDuplicateWorldspace.h" />
     <ClInclude Include="Patches\SSE\CrashFlowChartX.h" />
+    <ClInclude Include="Patches\SSE\CrashFootstepSetRemove.h" />
     <ClInclude Include="Patches\SSE\CrashHairKS.h" />
     <ClInclude Include="Patches\SSE\CrashInventoryIterators.h" />
     <ClInclude Include="Patches\SSE\CrashMHDTMoreThan70.h" />
