@@ -38,7 +38,7 @@ namespace CreationKitPlatformExtended
 		extern ImVec4 gImGuiGreyColor;
 		extern bool gImGuiShowDrawInfo;
 
-		static float RAD2DEG = 57.29577951308232;
+		float RAD2DEG = 57.29577951308232;
 
 		namespace SkyrimSpectialEdition
 		{
@@ -237,7 +237,6 @@ namespace CreationKitPlatformExtended
 						ImGui::TableNextColumn();
 						ImGui::Text("FPS:");
 
-
 						ImGui::TableNextColumn();
 						ImGui::Text("%.0f", io.Framerate);
 
@@ -377,6 +376,13 @@ namespace CreationKitPlatformExtended
 					GetCursorPos(&pt);
 					GetWindowRect(RenderWindow->GetWindowHandle(), &rcWnd);
 
+					if (gImGuiShowDrawInfo)
+					{
+						RECT rcWndToolInfo = { rcWnd.left, rcWnd.top, 330 + rcWnd.left, 160 + rcWnd.top };
+						if (PtInRect(&rcWndToolInfo, pt))
+							goto Skips;
+					}
+
 					if (PtInRect(&rcWnd, pt) && (ImGuiTimer.Get() > 1.5))
 					{
 						auto Ref = BGSRenderWindow::Pick::Result;
@@ -385,7 +391,11 @@ namespace CreationKitPlatformExtended
 
 						if (FormParent)
 						{
-							ImGui::SetNextWindowPos({ (float)MousePos.x, (float)(MousePos.y - 120) });
+							if (MousePos.y - 115 < 0)
+								ImGui::SetNextWindowPos({ (float)MousePos.x, (float)(MousePos.y) });
+							else
+								ImGui::SetNextWindowPos({ (float)MousePos.x, (float)(MousePos.y - 115) });
+
 							ImGui::Begin("Ref Info", nullptr, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoDecoration | 
 								ImGuiWindowFlags_AlwaysAutoResize);
 
@@ -448,6 +458,8 @@ namespace CreationKitPlatformExtended
 							ImGui::End();
 						}
 					}
+				Skips:
+					{ /* nope : need compiler, lmao syntax error */ }
 				}
 
 				ImGui::Render();
