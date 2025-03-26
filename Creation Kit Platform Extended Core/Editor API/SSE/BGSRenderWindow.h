@@ -11,6 +11,7 @@
 #include "../BGSPickHandler.h"
 #include "BGSRenderWindowCamera.h"
 #include "BSPointerHandleManager.h"
+#include "BSTriShape.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -44,6 +45,23 @@ namespace CreationKitPlatformExtended
 
 					return Ret;
 				}
+
+				struct Pick
+				{
+					inline static TESObjectREFR* Result;
+					inline static TESObjectREFR* (*GetRefFromTriShape)(BSTriShape* TriShape);
+					inline static void* (*Update)(BGSRenderWindowReferenceEditModule* EditModule, POINT* MousePos, POINT* MousePos2);
+					inline static TESObjectREFR* HKGetRefFromTriShape(BSTriShape* TriShape)
+					{
+						Result = GetRefFromTriShape(TriShape);
+						return Result;
+					}
+					inline static void* HKUpdate(BGSRenderWindowReferenceEditModule* EditModule, POINT* MousePos, POINT* MousePos2)
+					{
+						Result = nullptr;
+						return Update(EditModule, MousePos, MousePos2);
+					}
+				};
 
 				inline HWND GetWindowHandle() const { return _WindowHandle; }
 				inline SIZE GetWindowSize() const { return _WindowSize; }

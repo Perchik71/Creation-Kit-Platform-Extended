@@ -168,6 +168,7 @@
     <ClCompile Include="Core\ResourcesPackerManager.cpp" />
     <ClCompile Include="Core\ResultCoreErrNo.cpp" />
     <ClCompile Include="Core\Shaders.cpp" />
+    <ClCompile Include="Core\Timer.cpp" />
     <ClCompile Include="Core\TracerManager.cpp" />
     <ClCompile Include="Core\TypeInfo\ms_rtti.cpp" />
     <ClCompile Include="Crc32.cpp" />
@@ -377,6 +378,7 @@
     <ClCompile Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.cpp" />
     <ClCompile Include="Patches\SSE\StableSortForPerks.cpp" />
     <ClCompile Include="Patches\SSE\TESDataHandlerHookSSE.cpp" />
+    <ClCompile Include="Patches\SSE\TESFormSSE_RE.cpp" />
     <ClCompile Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.cpp" />
     <ClCompile Include="Patches\SSE\TESParameters_CTDA.cpp" />
     <ClCompile Include="Patches\SSE\UnEquipSound.cpp" />
@@ -479,6 +481,7 @@
     <ClInclude Include="Core\ResultCoreErrNo.h" />
     <ClInclude Include="Core\Shaders.h" />
     <ClInclude Include="Core\Singleton.h" />
+    <ClInclude Include="Core\Timer.h" />
     <ClInclude Include="Core\TracerManager.h" />
     <ClInclude Include="Core\TypeInfo\ms_rtti.h" />
     <ClInclude Include="Crc32.h" />
@@ -788,6 +791,7 @@
     <ClInclude Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.h" />
     <ClInclude Include="Patches\SSE\StableSortForPerks.h" />
     <ClInclude Include="Patches\SSE\TESDataHandlerHookSSE.h" />
+    <ClInclude Include="Patches\SSE\TESFormSSE_RE.h" />
     <ClInclude Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.h" />
     <ClInclude Include="Patches\SSE\TESParameters_CTDA.h" />
     <ClInclude Include="Patches\SSE\UnEquipSound.h" />

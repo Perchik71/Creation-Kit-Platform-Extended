@@ -246,56 +246,14 @@
     <ClCompile Include="Patches\SSE\WeaponCriticalEffect.cpp">
       <Filter>Patches\SSE\1-50</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\FixNavMesh.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\CrashSortFunc.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\UnEquipSound.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixCellViewObjectList.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="..\Dependencies\jDialogs\include\jdialogs.cpp">
       <Filter>Dependecies\jDialogs</Filter>
     </ClCompile>
     <ClCompile Include="Editor API\SSE\BSShaderResourceManager.cpp">
       <Filter>Editor API\SSE</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\FixIntersectionTriangle.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixIconsScriptProp.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\CrashCCCFiles.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\CrashUploadBNetModWithArchive.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\Re-EnableFog.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\Re-EnableLandShadows.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixBSShadowDirectionalLight.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Patches\VersionControlMergeWorkaround.cpp">
       <Filter>Patches</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\RefLinkGeometryHangWorkaround.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\EnableStateParentWorkaround.cpp">
-      <Filter>Patches\SSE</Filter>
     </ClCompile>
     <ClCompile Include="Patches\RenderWindow60FPS.cpp">
       <Filter>Patches</Filter>
@@ -311,12 +269,6 @@
     </ClCompile>
     <ClCompile Include="Editor API\SSE\TESFile.cpp">
       <Filter>Editor API\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\AllowSaveESMandMasterESP.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\RemoveUselessMessages.cpp">
-      <Filter>Patches\SSE</Filter>
     </ClCompile>
     <ClCompile Include="Editor API\UI\UIGraphics.cpp">
       <Filter>Editor API\UI</Filter>
@@ -423,18 +375,6 @@
     <ClCompile Include="Patches\Windows\SSE\MainWindow.cpp">
       <Filter>Patches\Windows\SSE</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\DeferredDlg.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\LipGen.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\CrashHairKS.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\BSArchiveManagerModded.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Patches\SSE\NavMeshPseudoDelete.cpp">
       <Filter>Editor API</Filter>
     </ClCompile>
@@ -459,29 +399,8 @@
     <ClCompile Include="Patches\PapyrusEditorLimit.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\UpdateUIWhenFogToggled.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\ShowReloadShadersAlways.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\StableSortForPerks.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixParamsATXT.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\NewFormat171.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Core\EngineFO4Patches.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\EnableGameButtonToVC.cpp">
-      <Filter>Patches\SSE</Filter>
     </ClCompile>
     <ClCompile Include="Patches\UIHotkeys.cpp">
       <Filter>Patches</Filter>
@@ -627,17 +546,11 @@
     <ClCompile Include="Core\MemoryManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\TESDataHandlerHookSSE.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Plugin.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\PluginManager.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixFormIDsInLoadFile.cpp">
-      <Filter>Patches\SSE</Filter>
     </ClCompile>
     <ClCompile Include="Core\DynamicCast.cpp">
       <Filter>Core</Filter>
@@ -651,9 +564,6 @@
     <ClCompile Include="Patches\Windows\FO4\ProgressWindowF4.cpp">
       <Filter>Patches\Windows\FO4</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\IgnoreGroundHeightTest.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Editor API\FO4\BGSLayer.cpp">
       <Filter>Editor API\FO4\Forms</Filter>
     </ClCompile>
@@ -662,9 +572,6 @@
     </ClCompile>
     <ClCompile Include="Core\TracerManager.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\MemoryLeakBSString.cpp">
-      <Filter>Patches\SSE</Filter>
     </ClCompile>
     <ClCompile Include="Patches\FO4\ESLTip.cpp">
       <Filter>Patches\FO4</Filter>
@@ -681,26 +588,11 @@
     <ClCompile Include="Editor API\SSE\TESForm.cpp">
       <Filter>Editor API\SSE\Forms</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\FixParamsVTXT.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\AddChangeRef.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Patches\FO4\AddChangeRefF4.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
     <ClCompile Include="Editor API\FO4\BSResourceArchive2.cpp">
       <Filter>Editor API\FO4</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\AllowCreateBitArray.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\CrashMergeForms.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\CrashNullptrFaceGen.cpp">
-      <Filter>Patches\SSE</Filter>
     </ClCompile>
     <ClCompile Include="Patches\Windows\SSE\NavMeshWindow.cpp">
       <Filter>Patches\Windows\SSE</Filter>
@@ -722,9 +614,6 @@
     </ClCompile>
     <ClCompile Include="Core\RegistratorWindow.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\FixReverbParameters.cpp">
-      <Filter>Patches\SSE</Filter>
     </ClCompile>
     <ClCompile Include="Patches\FO4\SortCrashCombined.cpp">
       <Filter>Patches\FO4</Filter>
@@ -798,9 +687,6 @@
     <ClCompile Include="Editor API\SF\TESDataHandlerSF.cpp">
       <Filter>Editor API\SF</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\CrashMHDTMoreThan70.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Core\ResourcesPackerManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -835,14 +721,8 @@
     <ClCompile Include="Patches\Windows\SF\ProgressWindowSF.cpp">
       <Filter>Patches\Windows\SF</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\ChooseSoundFile.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Patches\FO4\ChooseSoundFileF4.cpp">
       <Filter>Patches\FO4</Filter>
-    </ClCompile>
-    <ClCompile Include="Patches\SSE\MiscMessages.cpp">
-      <Filter>Patches\SSE</Filter>
     </ClCompile>
     <ClCompile Include="Patches\Windows\SF\CellViewWindowSF.cpp">
       <Filter>Patches\Windows\SF</Filter>
@@ -880,9 +760,6 @@
     <ClCompile Include="Patches\SF\AllowSaveESMandMasterESPSF.cpp">
       <Filter>Patches\SF</Filter>
     </ClCompile>
-    <ClCompile Include="Patches\SSE\ResponseIgnoreMax.cpp">
-      <Filter>Patches\SSE</Filter>
-    </ClCompile>
     <ClCompile Include="Patches\FO4\ResponseIgnoreMaxF4.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
@@ -910,8 +787,137 @@
     <ClCompile Include="Core\ImagespaceAA.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Timer.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\AddChangeRef.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\AllowCreateBitArray.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\AllowSaveESMandMasterESP.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\BSArchiveManagerModded.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\ChooseSoundFile.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashCCCFiles.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
     <ClCompile Include="Patches\SSE\CrashFootstepSetRemove.cpp">
-      <Filter>Patches\SSE</Filter>
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashHairKS.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashMergeForms.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashMHDTMoreThan70.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashNullptrFaceGen.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashSortFunc.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashUploadBNetModWithArchive.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\DeferredDlg.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\EnableGameButtonToVC.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\EnableStateParentWorkaround.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixBSShadowDirectionalLight.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixCellViewObjectList.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixFormIDsInLoadFile.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixIconsScriptProp.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixIntersectionTriangle.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixNavMesh.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixParamsATXT.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixParamsVTXT.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\FixReverbParameters.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\IgnoreGroundHeightTest.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\LipGen.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\MemoryLeakBSString.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\MiscMessages.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\NewFormat171.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\Re-EnableFog.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\Re-EnableLandShadows.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\RefLinkGeometryHangWorkaround.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\RemoveUselessMessages.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\ResponseIgnoreMax.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\ShowReloadShadersAlways.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\StableSortForPerks.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\TESDataHandlerHookSSE.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\TESFormSSE_RE.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\UnEquipSound.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClCompile>
+    <ClCompile Include="Patches\SSE\UpdateUIWhenFogToggled.cpp">
+      <Filter>Patches\SSE\51-100</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1004,6 +1010,9 @@
     </Filter>
     <Filter Include="Shaders">
       <UniqueIdentifier>{c437f585-ff86-4d2a-90d6-73a423bfce06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Patches\SSE\51-100">
+      <UniqueIdentifier>{536a2b0e-b070-43bb-91aa-1b9b396f5423}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1299,21 +1308,6 @@
     <ClInclude Include="Patches\SSE\WeaponCriticalEffect.h">
       <Filter>Patches\SSE\1-50</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\FixNavMesh.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\CrashSortFunc.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\UnEquipSound.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixCellViewObjectList.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="..\Dependencies\jDialogs\include\jdialogs.h">
       <Filter>Dependecies\jDialogs</Filter>
     </ClInclude>
@@ -1323,35 +1317,8 @@
     <ClInclude Include="Editor API\SSE\BSDynamicTriShape.h">
       <Filter>Editor API\SSE</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\FixIntersectionTriangle.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixIconsScriptProp.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\CrashCCCFiles.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\CrashUploadBNetModWithArchive.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\Re-EnableFog.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\Re-EnableLandShadows.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixBSShadowDirectionalLight.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Patches\VersionControlMergeWorkaround.h">
       <Filter>Patches</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\RefLinkGeometryHangWorkaround.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\EnableStateParentWorkaround.h">
-      <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Patches\RenderWindow60FPS.h">
       <Filter>Patches</Filter>
@@ -1367,12 +1334,6 @@
     </ClInclude>
     <ClInclude Include="Editor API\SSE\TESFile.h">
       <Filter>Editor API\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\AllowSaveESMandMasterESP.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\RemoveUselessMessages.h">
-      <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Editor API\UI\UIGraphics.h">
       <Filter>Editor API\UI</Filter>
@@ -1482,18 +1443,6 @@
     <ClInclude Include="Patches\Windows\SSE\MainWindow.h">
       <Filter>Patches\Windows\SSE</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\DeferredDlg.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\LipGen.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\CrashHairKS.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\BSArchiveManagerModded.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Patches\SSE\NavMeshPseudoDelete.h">
       <Filter>Editor API</Filter>
     </ClInclude>
@@ -1517,27 +1466,6 @@
     </ClInclude>
     <ClInclude Include="Patches\PapyrusEditorLimit.h">
       <Filter>Patches</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\UpdateUIWhenFogToggled.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\ShowReloadShadersAlways.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\StableSortForPerks.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixParamsATXT.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\NewFormat171.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\EnableGameButtonToVC.h">
-      <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Patches\UIHotkeys.h">
       <Filter>Patches</Filter>
@@ -1710,17 +1638,11 @@
     <ClInclude Include="Editor API\SSE\TESDataHandler.h">
       <Filter>Editor API\SSE</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\TESDataHandlerHookSSE.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Plugin.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\PluginManager.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixFormIDsInLoadFile.h">
-      <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Core\DynamicCast.h">
       <Filter>Core</Filter>
@@ -1742,9 +1664,6 @@
     </ClInclude>
     <ClInclude Include="Patches\Windows\FO4\ProgressWindowF4.h">
       <Filter>Patches\Windows\FO4</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\IgnoreGroundHeightTest.h">
-      <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Editor API\FO4\BGSLayer.h">
       <Filter>Editor API\FO4\Forms</Filter>
@@ -1781,9 +1700,6 @@
     </ClInclude>
     <ClInclude Include="Core\TracerManager.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\MemoryLeakBSString.h">
-      <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Patches\FO4\ESLTip.h">
       <Filter>Patches\FO4</Filter>
@@ -1860,9 +1776,6 @@
     <ClInclude Include="Editor API\SSE\TESObjectLAND.h">
       <Filter>Editor API\SSE\Forms</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\FixParamsVTXT.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\SSE\TESObjectCELL.h">
       <Filter>Editor API\SSE\Forms</Filter>
     </ClInclude>
@@ -1886,9 +1799,6 @@
     </ClInclude>
     <ClInclude Include="Editor API\SSE\BGSSoundDescriptorForm.h">
       <Filter>Editor API\SSE\Forms</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\AddChangeRef.h">
-      <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Editor API\FO4\BGSRenderWindow.h">
       <Filter>Editor API\FO4</Filter>
@@ -1926,15 +1836,6 @@
     <ClInclude Include="NiAPI\NiTSimpleArray.h">
       <Filter>NiAPI</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\AllowCreateBitArray.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\CrashMergeForms.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\CrashNullptrFaceGen.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Patches\Windows\SSE\NavMeshWindow.h">
       <Filter>Patches\Windows\SSE</Filter>
     </ClInclude>
@@ -1962,9 +1863,6 @@
     </ClInclude>
     <ClInclude Include="Editor API\SSE\BGSVoiceType.h">
       <Filter>Editor API\SSE\Forms</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\FixReverbParameters.h">
-      <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Patches\FO4\SortCrashCombined.h">
       <Filter>Patches\FO4</Filter>
@@ -2080,9 +1978,6 @@
     <ClInclude Include="Editor API\SF\TESDataHandler.h">
       <Filter>Editor API\SF</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\CrashMHDTMoreThan70.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\SSE\TESWaterForm.h">
       <Filter>Editor API\SSE\Forms</Filter>
     </ClInclude>
@@ -2134,14 +2029,8 @@
     <ClInclude Include="Patches\Windows\SF\ProgressWindowSF.h">
       <Filter>Patches\Windows\SF</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\ChooseSoundFile.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Patches\FO4\ChooseSoundFileF4.h">
       <Filter>Patches\FO4</Filter>
-    </ClInclude>
-    <ClInclude Include="Patches\SSE\MiscMessages.h">
-      <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Patches\Windows\SF\CellViewWindowSF.h">
       <Filter>Patches\Windows\SF</Filter>
@@ -2191,9 +2080,6 @@
     <ClInclude Include="Patches\SF\AllowSaveESMandMasterESPSF.h">
       <Filter>Patches\SF</Filter>
     </ClInclude>
-    <ClInclude Include="Patches\SSE\ResponseIgnoreMax.h">
-      <Filter>Patches\SSE</Filter>
-    </ClInclude>
     <ClInclude Include="Patches\FO4\ResponseIgnoreMaxF4.h">
       <Filter>Patches\FO4</Filter>
     </ClInclude>
@@ -2227,8 +2113,137 @@
     <ClInclude Include="Editor API\SSE\BGSFootstepSet.h">
       <Filter>Editor API\SSE</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Timer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\AddChangeRef.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\AllowCreateBitArray.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\AllowSaveESMandMasterESP.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\BSArchiveManagerModded.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\ChooseSoundFile.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashCCCFiles.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
     <ClInclude Include="Patches\SSE\CrashFootstepSetRemove.h">
-      <Filter>Patches\SSE</Filter>
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashHairKS.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashMergeForms.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashMHDTMoreThan70.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashNullptrFaceGen.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashSortFunc.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashUploadBNetModWithArchive.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\DeferredDlg.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\EnableGameButtonToVC.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\EnableStateParentWorkaround.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixBSShadowDirectionalLight.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixCellViewObjectList.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixFormIDsInLoadFile.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixIconsScriptProp.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixIntersectionTriangle.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixNavMesh.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixParamsATXT.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixParamsVTXT.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\FixReverbParameters.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\IgnoreGroundHeightTest.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\LipGen.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\MemoryLeakBSString.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\MiscMessages.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\NewFormat171.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\Re-EnableFog.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\Re-EnableLandShadows.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\RefLinkGeometryHangWorkaround.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\RemoveUselessMessages.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\ResponseIgnoreMax.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\ShowReloadShadersAlways.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\SpellEnableCastingAndDeliveryAlways.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\StableSortForPerks.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\TESDataHandlerHookSSE.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\TESFormSSE_RE.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\TESModelTextureSwapCorrectlyLoad.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\UnEquipSound.h">
+      <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\UpdateUIWhenFogToggled.h">
+      <Filter>Patches\SSE\51-100</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

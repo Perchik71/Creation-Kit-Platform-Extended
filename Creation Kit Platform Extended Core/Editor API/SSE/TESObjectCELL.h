@@ -15,6 +15,7 @@ namespace CreationKitPlatformExtended
 		namespace SkyrimSpectialEdition
 		{
 			class TESObjectLAND;
+			class TESObjectREFR;
 
 			// class upd... no longer suitable for 1.5.3, 1.5.73
 			// size 0x88 - now 0x90
@@ -23,6 +24,12 @@ namespace CreationKitPlatformExtended
 			{
 			public:
 				constexpr static uint8_t TYPE_ID = ftCell;
+				// 10
+				struct Item
+				{
+					TESObjectREFR* Refr;
+					void* Unk;
+				};
 				// 08
 				struct CellCoordinates { int32_t X, Y; };
 				// 8C
@@ -95,27 +102,29 @@ namespace CreationKitPlatformExtended
 			public:
 				virtual ~TESObjectCELL() = default;
 
-				inline const char* GetFullName() const 
+				[[nodiscard]] inline const char* GetFullName() const noexcept(true)
 				{
 					auto Ret = _FullName.c_str(); 
 					return Ret ? Ret : "";
 				}
-				inline bool IsActive() const { return _cell_process_level == CellProcessLevels::cplActive; }
-				inline bool IsLoaded() const { return _cell_process_level == CellProcessLevels::cplLoaded; }
-				inline bool IsFastTravelEnabled() const 
+				[[nodiscard]] inline bool IsActive() const noexcept(true) { return _cell_process_level == CellProcessLevels::cplActive; }
+				[[nodiscard]] inline bool IsLoaded() const noexcept(true) { return _cell_process_level == CellProcessLevels::cplLoaded; }
+				[[nodiscard]] inline bool IsFastTravelEnabled() const noexcept(true)
 				{
 					return IsInterior() ? (CellFlags::cfInvertFastTravel & _cell_flags) :
 						((CellFlags::cfInvertFastTravel & _cell_flags) != CellFlags::cfInvertFastTravel);
 				}
-				inline bool IsInterior() const { return _cell_flags & CellFlags::cfInterior; }
-				inline bool IsExterior() const { return _cell_flags & CellFlags::cfExterior; }
-				inline bool IsFragment() const { return _cell_flags & CellFlags::cfFragment; }
-				inline int32_t GetGridX() const { return (IsExterior() && _CellData.Grid) ? _CellData.Grid->X : 0; }
-				inline int32_t GetGridY() const { return (IsExterior() && _CellData.Grid) ? _CellData.Grid->Y : 0; }
-				inline TESFormArray* GetNavMeshes() { return _NavMeshes; }
-				inline uint32_t GetNavMeshesCount() const { return _NavMeshes->QSize(); }
-				inline TESObjectLAND* GetLandspace() { return _Landspace; }
-				inline LightingData* GetLighting() { return (IsInterior()) ? _CellData.Lighting : nullptr; }
+				[[nodiscard]] inline bool IsInterior() const noexcept(true) { return _cell_flags & CellFlags::cfInterior; }
+				[[nodiscard]] inline bool IsExterior() const noexcept(true) { return _cell_flags & CellFlags::cfExterior; }
+				[[nodiscard]] inline bool IsFragment() const noexcept(true) { return _cell_flags & CellFlags::cfFragment; }
+				[[nodiscard]] inline int32_t GetGridX() const noexcept(true) { return (IsExterior() && _CellData.Grid) ? _CellData.Grid->X : 0; }
+				[[nodiscard]] inline int32_t GetGridY() const noexcept(true) { return (IsExterior() && _CellData.Grid) ? _CellData.Grid->Y : 0; }
+				[[nodiscard]] inline TESFormArray* GetNavMeshes() const noexcept(true) { return _NavMeshes; }
+				[[nodiscard]] inline uint32_t GetNavMeshesCount() const  noexcept(true) { return _NavMeshes->QSize(); }
+				[[nodiscard]] inline TESObjectLAND* GetLandspace() const noexcept(true) { return _Landspace; }
+				[[nodiscard]] inline LightingData* GetLighting() const noexcept(true) { return (IsInterior()) ? _CellData.Lighting : nullptr; }
+				[[nodiscard]] inline Item* GetItems() const noexcept(true) { return (Item*)_AddrRefrs; }
+				[[nodiscard]] inline uint32_t GetItemCount() const noexcept(true) { return _SizeRefrs; }
 			public:
 				READ_PROPERTY(GetFullName) const char* FullName;
 				READ_PROPERTY(GetLandspace) TESObjectLAND* Landspace;
@@ -130,13 +139,21 @@ namespace CreationKitPlatformExtended
 				CellProcessLevels _cell_process_level;
 				char _pad54[0xC];	// 0x8 added with 1.6.1130 (maybe ExtraData without ref)
 				void* _ExtraData;
-				char _pad60[0x8];
+				TESForm* Imagespace;
 				CellData _CellData;
 				TESObjectLAND* _Landspace;
 				char _pad78[0x8];
 				TESFormArray* _NavMeshes;
+				char _pad90[0xC];
+				uint32_t _SizeRefrs;
+				char _padA0[0x4];
+				uint32_t _TotalRefrs;
+				char _padA8[0x8];
+				uint32_t _AllocateSizeRefrs;
+				char _padB4[0xC];
+				Item* _AddrRefrs;
 			};
-			static_assert(sizeof(TESObjectCELL) == 0x90);
+			static_assert(sizeof(TESObjectCELL) == 0xC8);
 		}
 	}
 }

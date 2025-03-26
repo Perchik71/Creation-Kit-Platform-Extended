@@ -4,10 +4,12 @@
 
 #include "Core/Engine.h"
 #include "Core/RegistratorWindow.h"
+#include <Core/Timer.h>
 #include "RenderWindow.h"
 #include "MainWindow.h"
 #include "Editor API/SSE/BGSRenderWindow.h"
 #include "Editor API/SSE/BSGraphicsTypes.h"
+#include "Editor API/SSE/TESObjectREFR.h"
 #include "NiAPI/NiSourceTexture.h"
 #include "Patches/D3D11Patch.h"
 
@@ -36,9 +38,12 @@ namespace CreationKitPlatformExtended
 		extern ImVec4 gImGuiGreyColor;
 		extern bool gImGuiShowDrawInfo;
 
+		static float RAD2DEG = 57.29577951308232;
+
 		namespace SkyrimSpectialEdition
 		{
 			RenderWindow* GlobalRenderWindowPtr = nullptr;
+			Core::Timer ImGuiTimer;
 
 			bool RenderWindow::HasOption() const
 			{
@@ -83,15 +88,20 @@ namespace CreationKitPlatformExtended
 				if (lpRelocationDatabaseItem->Version() == 1)
 				{
 					*(uintptr_t*)&_oldWndProc =
-						voltek::detours_function_class_jump(lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(0)), &RenderWindow::HKWndProc);
-					lpRelocator->DetourJump(lpRelocationDatabaseItem->At(1), &RenderWindow::setFlagLoadCell);
-					EditorAPI::SkyrimSpectialEdition::BGSRenderWindow::Singleton = lpRelocator->Rav2Off(lpRelocationDatabaseItem->At(2));
-
+						voltek::detours_function_class_jump(_RELDATA_ADDR(0), &RenderWindow::HKWndProc);
+					lpRelocator->DetourJump(_RELDATA_RAV(1), &RenderWindow::setFlagLoadCell);
+					BGSRenderWindow::Singleton = _RELDATA_ADDR(2);
+						
 					if (GlobalEnginePtr->GetEditorVersion() >= EDITOR_SKYRIM_SE_1_6_1130)
 					{
 						auto rel = _RELDATA_RAV(3);
 						lpRelocator->PatchNop(rel, 0xB);
 						lpRelocator->DetourCall(rel, (uintptr_t)&DrawFrameEx);
+
+						*(uintptr_t*)&BGSRenderWindow::Pick::Update =
+							lpRelocator->DetourFunctionClass(_RELDATA_RAV(6), (uintptr_t)&BGSRenderWindow::Pick::HKUpdate);
+						*(uintptr_t*)&BGSRenderWindow::Pick::GetRefFromTriShape = _RELDATA_ADDR(5);
+						lpRelocator->DetourCall(_RELDATA_RAV(4), (uintptr_t)&BGSRenderWindow::Pick::HKGetRefFromTriShape);
 					}
 
 					return true;
@@ -120,6 +130,7 @@ namespace CreationKitPlatformExtended
 					GlobalRegistratorWindowPtr->RegisterMajor(Hwnd, "RenderWindow");
 					GlobalRenderWindowPtr->m_hWnd = Hwnd;
 					GlobalRenderWindowPtr->_BlockInputMessage = true;
+					ImGuiTimer.Start();
 
 					return CallWindowProc(GlobalRenderWindowPtr->GetOldWndProc(),
 						Hwnd, Message, wParam, lParam);
@@ -184,6 +195,10 @@ namespace CreationKitPlatformExtended
 				{
 					gImGuiShowDrawInfo = !gImGuiShowDrawInfo;
 				}
+				else if ((Message == WM_MOUSEMOVE) || (Message == WM_MOUSEWHEEL))
+				{
+					ImGuiTimer.Start();
+				}
 
 				return CallWindowProc(GlobalRenderWindowPtr->GetOldWndProc(), Hwnd, Message, wParam, lParam);
 			}
@@ -195,46 +210,244 @@ namespace CreationKitPlatformExtended
 				ImGui_ImplWin32_NewFrame();
 				ImGui::NewFrame();
 
+				BGSRenderWindow* RenderWindow = BGSRenderWindow::Singleton.GetSingleton();
+				auto& io = ImGui::GetIO();	
+				if (RenderWindow)
+				{
+					// io.MousePos always { -1, -1 }, let's fix it
+					auto p = RenderWindow->GetMousePos();
+					io.MousePos = { (float)p.x, (float)p.y };
+				}
+
 				if (gImGuiShowDrawInfo)
 				{
 					// IMGUI DRAWINFO
 
 					ImGui::SetNextWindowPos({ 5.0f, 5.0f });
-					ImGui::Begin("Display Info", nullptr, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoDecoration |
-						ImGuiWindowFlags_AlwaysAutoResize);
-					ImGui::PushFont(imguiFonts[1]);
+					ImGui::Begin("#Default Info Overlay", nullptr, ImGuiWindowFlags_NoSavedSettings |
+						ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize);
 
-					auto& io = ImGui::GetIO();
-			
-					ImGui::Text("FPS: %.0f", io.Framerate);
-					ImGui::NewLine();
-
-					BGSRenderWindow* RenderWindow = BGSRenderWindow::Singleton.GetSingleton();
-					if (RenderWindow)
+					if (ImGui::BeginTable("##Info Overlay Data", 2))
 					{
-						auto Cell = RenderWindow->GetCurrentCell();
-						if (Cell)
-						{
-							auto Name = Cell->EditorID;
-							if (!Name) Name = "";
+						ImGui::PushFont(imguiFonts[1]);
+						ImGui::TableSetupColumn("First", ImGuiTableColumnFlags_WidthStretch, 130);
+						ImGui::TableSetupColumn("Second", ImGuiTableColumnFlags_WidthFixed | ImGuiTableColumnFlags_NoResize);
 
-							if (Cell->IsInterior())
-								ImGui::Text("Current Cell: %s (%08X)", EditorAPI::BSString::Converts::AnsiToUtf8(Name).c_str(), 
-									Cell->FormID);
-							else
-								ImGui::Text("Current Cell: %s (%i, %i) (%08X)", EditorAPI::BSString::Converts::AnsiToUtf8(Name).c_str(), 
-									Cell->GridX, Cell->GridY, Cell->FormID);
+						ImGui::TableNextRow();
+						ImGui::TableNextColumn();
+						ImGui::Text("FPS:");
+
+
+						ImGui::TableNextColumn();
+						ImGui::Text("%.0f", io.Framerate);
+
+						if (RenderWindow)
+						{
+							auto ActiveCell = RenderWindow->GetCurrentCell();
+							if (ActiveCell)
+							{
+								ImGui::Dummy(ImVec2(1, 10));
+
+								ImGui::TableNextRow();
+								ImGui::TableNextColumn();
+								ImGui::Text("Current Cell: ");
+
+								ImGui::TableNextColumn();
+								ImGui::TextDisabled("[?]");
+
+								// ImGui::IsItemHovered() -- no worked
+
+								auto ip = ImGui::GetCursorScreenPos();
+								auto is = ImGui::GetItemRectSize();
+								auto rp = RenderWindow->GetMousePos();
+
+								uint32_t uCountNPCs, uCountLight, uCountObject, uCountSelNPCs = 0, uCountSelLight = 0, uCountSelObject = 0;
+
+								// It looks like the coordinates of the origin are the lower left corner (so ip.y - is.y - 2)
+								if ((ip.x <= rp.x) && ((ip.y - is.y - 2) <= rp.y) && ((ip.x + is.x) > rp.x) && (ip.y > rp.y))
+								{
+									auto Counter = [](TESObjectCELL::Item* refrs, uint32_t count, uint32_t& npcs, uint32_t& lights, uint32_t& objs) 
+									{
+										uint32_t uId = 0;
+										npcs = 0;
+										lights = 0;
+										objs = 0;
+
+										if (!count)
+											return;
+
+										uint32_t total = 0;
+
+										do
+										{
+											auto form = refrs[uId++].Refr;
+											// empty (some kind of strange array, where there may be nothing between the elements, as if sparse)
+											if (!form) continue;
+											
+											total++;
+
+											if (form->IsDeleted()) continue;	
+											switch (form->GetParent()->GetFormType())
+											{
+											case TESForm::ftNPC:
+												npcs++;
+												break;
+											case TESForm::ftLight:
+												lights++;
+												break;
+											default:
+												objs++;
+												break;
+											}
+										} while (uId != count);
+									};
+
+									Counter(ActiveCell->GetItems(), ActiveCell->GetItemCount(), uCountNPCs, uCountLight, uCountObject);
+
+									auto TotalSel = RenderWindow->PickHandler->Count;
+									if (TotalSel > 0)
+									{
+										uint32_t i = 0;
+										auto Items = RenderWindow->PickHandler->Items;	
+										for (auto It = Items->First; i < TotalSel; It = It->Next, i++)
+										{
+											auto form = It->Ref;
+											if (form->IsDeleted()) continue;
+											switch (form->GetParent()->GetFormType()) 
+											{
+											case TESForm::ftNPC:
+												uCountSelNPCs++;
+												break;
+											case TESForm::ftLight:
+												uCountSelLight++;
+												break;
+											default:
+												uCountSelObject++;
+												break;
+											}
+										}
+
+										ImGui::SetTooltip("Geometry:\n\tObjects: %d\n\tLights: %d\n\tNPCs: %d\nSelected:\n\tObjects: %d\n\tLights: %d\n\tNPCs: %d", 
+											uCountObject, uCountLight, uCountNPCs, uCountSelObject, uCountSelLight, uCountSelNPCs);
+									}
+									else
+										ImGui::SetTooltip("Geometry:\n\tObjects: %u\n\tLights: %u\n\tNPCs: %u", uCountObject, uCountLight, uCountNPCs);
+								}
+
+								auto Name = ActiveCell->EditorID;
+								if (!Name) Name = "";
+
+								ImGui::SameLine(0, 5);
+								if (ActiveCell->IsInterior())
+									ImGui::Text("%s (%08X)", EditorAPI::BSString::Converts::AnsiToUtf8(Name).c_str(), 
+										ActiveCell->FormID);
+								else
+									ImGui::Text("%s (%i, %i) (%08X)", EditorAPI::BSString::Converts::AnsiToUtf8(Name).c_str(),
+										ActiveCell->GridX, ActiveCell->GridY, ActiveCell->FormID);
+
+								ImGui::TableNextRow();
+								ImGui::TableNextColumn();
+								ImGui::Text("Camera:");
+
+								ImGui::TableNextColumn();
+								auto Cam = RenderWindow->Camera;
+								auto CamPos = Cam->Position;
+								ImGui::Text("%.3f, %.3f, %.3f", CamPos.x, CamPos.y, CamPos.z);
+								ImGui::TableNextRow();
+								ImGui::TableNextColumn();
+								ImGui::TableNextColumn();
+								ImGui::PushFont(imguiFonts[2]);
+								ImGui::TextColored(gImGuiGreyColor, "(Show/Hide press key F1)");
+								ImGui::PopFont();
+							}
 						}
 
-						const auto& CameraPos = RenderWindow->Camera->GetPosition();
-						ImGui::Text("Camera: %.3f, %.3f, %.3f", CameraPos.x, CameraPos.y, CameraPos.z);
+						ImGui::PopFont();
+						ImGui::EndTable();
 					}
-
-					ImGui::PopFont();
-					ImGui::PushFont(imguiFonts[2]);
-					ImGui::TextColored(gImGuiGreyColor, "(Show/Hide press key F1)");
-					ImGui::PopFont();
+					
 					ImGui::End();
+				}
+
+				if (RenderWindow && BGSRenderWindow::Pick::Result)
+				{
+					POINT pt;
+					RECT rcWnd;
+
+					GetCursorPos(&pt);
+					GetWindowRect(RenderWindow->GetWindowHandle(), &rcWnd);
+
+					if (PtInRect(&rcWnd, pt) && (ImGuiTimer.Get() > 1.5))
+					{
+						auto Ref = BGSRenderWindow::Pick::Result;
+						auto FormParent = Ref->GetParent();
+						auto MousePos = RenderWindow->GetMousePos();
+
+						if (FormParent)
+						{
+							ImGui::SetNextWindowPos({ (float)MousePos.x, (float)(MousePos.y - 120) });
+							ImGui::Begin("Ref Info", nullptr, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoDecoration | 
+								ImGuiWindowFlags_AlwaysAutoResize);
+
+							if (ImGui::BeginTable("##Tooltip Contents", 2))
+							{
+								ImGui::PushFont(imguiFonts[1]);
+								ImGui::TableSetupColumn("First", ImGuiTableColumnFlags_WidthStretch, 100);
+								ImGui::TableSetupColumn("Second", ImGuiTableColumnFlags_WidthFixed | ImGuiTableColumnFlags_NoResize);
+
+								ImGui::TableNextRow();
+								ImGui::TableNextColumn();
+								ImGui::Text("Object Reference:");
+								ImGui::TableNextColumn();
+
+								auto EDID = Ref->GetEditorID_NoVTable();
+								if (!EDID) EDID = "<EMPTY>";
+
+								ImGui::Text("%s%s (%08X)", EDID, (Ref->Active ? "*" : ""), Ref->FormID);
+
+								ImGui::TableNextRow();
+								ImGui::TableNextColumn();
+								ImGui::Text("Base Form:");
+								ImGui::TableNextColumn();
+
+								EDID = FormParent->GetEditorID_NoVTable();
+								if (!EDID) EDID = "<EMPTY>";
+
+								ImGui::Text("%s%s (%08X)", EDID, (FormParent->Active ? "*" : ""), FormParent->FormID);
+
+								ImGui::TableNextRow();
+								ImGui::TableNextColumn();
+								ImGui::TableNextColumn();
+								ImGui::TextColored(gImGuiGreyColor, TESForm::GetFormTypeStr(FormParent->Type));
+
+								ImGui::TableNextRow();
+								ImGui::TableNextColumn();
+								ImGui::Text("Position:");
+								ImGui::TableNextColumn();
+								auto Vec3 = Ref->GetPosition();
+								ImGui::Text("%.03f, %.03f, %.03f", Vec3.x, Vec3.y, Vec3.z);
+
+								ImGui::TableNextRow();
+								ImGui::TableNextColumn();
+								ImGui::Text("Rotation:");
+								ImGui::TableNextColumn();
+								Vec3 = Ref->GetRotate();
+								ImGui::Text("%.03f, %.03f, %.03f", Vec3.x * RAD2DEG, Vec3.y * RAD2DEG, Vec3.z * RAD2DEG);
+
+								ImGui::TableNextRow();
+								ImGui::TableNextColumn();
+								ImGui::Text("Scale:");
+
+								ImGui::TableNextColumn();
+								ImGui::Text("%.03f", Ref->GetScale());
+
+								ImGui::PopFont();
+								ImGui::EndTable();
+							}
+
+							ImGui::End();
+						}
+					}
 				}
 
 				ImGui::Render();

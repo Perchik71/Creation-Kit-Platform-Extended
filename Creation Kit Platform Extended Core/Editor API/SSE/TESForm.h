@@ -230,6 +230,7 @@ namespace CreationKitPlatformExtended
 				inline static void (*OldAlteredFormList_RemoveAllEntries)(Array*, bool);
 				inline static void (*OldAlteredFormList_Insert)(Array*, TESForm*&);
 				inline static void (*OldAlteredFormList_RemoveEntry)(Array*, uint32_t, uint32_t);
+				inline static const char* (*GetFormTypeStr)(FormType);
 
 				static void FormReferenceMap_RemoveAllEntries();
 				static Array* FormReferenceMap_FindOrCreate(uint64_t Key, bool Create);
