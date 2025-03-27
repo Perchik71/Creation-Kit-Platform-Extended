@@ -115,7 +115,7 @@ namespace CreationKitPlatformExtended
 			public:
 				inline const TESObjectREFR_Original** GetItemsConst() const { return (const TESObjectREFR_Original**)_items.QBuffer(); }
 				inline TESObjectREFR_Original** GetItems() { return (TESObjectREFR_Original**)_items.QBuffer(); }
-				inline uint32_t GetItemsCount() const { return (uint32_t)_items.QSize(); }
+				inline uint32_t GetItemCount() const { return (uint32_t)_items.QSize(); }
 				inline const TESObjectLAND* GetLandspaceConst() const { return _landspace; }
 				inline TESObjectLAND* GetLandspace() { return _landspace; }
 				inline bool IsNavMesh() const { return _navmeshes != NULL; }

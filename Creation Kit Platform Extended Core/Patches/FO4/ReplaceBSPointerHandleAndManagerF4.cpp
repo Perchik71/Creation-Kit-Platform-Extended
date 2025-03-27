@@ -955,7 +955,7 @@ namespace CreationKitPlatformExtended
 				if (!refr)
 					return 0;
 
-				return ((TESObjectREFR_base_Extremly*)refr)->GetHandleEntryIndex();
+				return ((TESObjectREFR_Extremly*)refr)->GetHandleEntryIndex();
 			}
 
 			uint32_t ReplaceBSPointerHandleAndManagerPatch::Check(uintptr_t unused, uintptr_t refr)
@@ -963,7 +963,7 @@ namespace CreationKitPlatformExtended
 				if (!refr)
 					return 0;
 
-				return ((TESObjectREFR_base_Original*)refr)->GetHandleEntryIndex();
+				return ((TESObjectREFR_Original*)refr)->GetHandleEntryIndex();
 			}
 
 			void ReplaceBSPointerHandleAndManagerPatch::IncRefPatch()

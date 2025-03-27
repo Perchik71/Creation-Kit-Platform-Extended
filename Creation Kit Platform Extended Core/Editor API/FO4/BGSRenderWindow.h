@@ -99,6 +99,17 @@ namespace CreationKitPlatformExtended
 					inline static UINT Polys;
 				};
 
+				struct Pick
+				{
+					inline static TESObjectREFR* Result;
+					inline static TESObjectREFR* (*GetRefFromNiNode)(LPVOID* ObjNode);
+					inline static TESObjectREFR* HKGetRefFromNiNode(LPVOID* ObjNode)
+					{
+						Result = GetRefFromNiNode(ObjNode);
+						return Result;
+					}
+				};
+
 				inline static bool HasSnapToGrid() { return (Settings::Movement::GetFlags() & rwsSnapToGrid) == rwsSnapToGrid; }
 				inline static bool HasSnapToAngle() { return (Settings::Movement::GetFlags() & rwsSnapToAngle) == rwsSnapToAngle; }
 				inline static bool HasSnapToConnectPoints() { return (Settings::Movement::GetFlags() & rwsSnapToConnectPoints) == rwsSnapToConnectPoints; }

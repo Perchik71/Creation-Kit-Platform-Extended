@@ -275,16 +275,12 @@ namespace CreationKitPlatformExtended
 										if (!count)
 											return;
 
-										uint32_t total = 0;
-
 										do
 										{
 											auto form = refrs[uId++].Refr;
 											// empty (some kind of strange array, where there may be nothing between the elements, as if sparse)
 											if (!form) continue;
 											
-											total++;
-
 											if (form->IsDeleted()) continue;	
 											switch (form->GetParent()->GetFormType())
 											{
@@ -372,6 +368,7 @@ namespace CreationKitPlatformExtended
 				{
 					POINT pt;
 					RECT rcWnd;
+					double Tick;
 
 					GetCursorPos(&pt);
 					GetWindowRect(RenderWindow->GetWindowHandle(), &rcWnd);
@@ -383,7 +380,9 @@ namespace CreationKitPlatformExtended
 							goto Skips;
 					}
 
-					if (PtInRect(&rcWnd, pt) && (ImGuiTimer.Get() > 1.5))
+					Tick = ImGuiTimer.Get();
+
+					if (PtInRect(&rcWnd, pt) && (Tick > 1.5) && (Tick <= 7.5))
 					{
 						auto Ref = BGSRenderWindow::Pick::Result;
 						auto FormParent = Ref->GetParent();
