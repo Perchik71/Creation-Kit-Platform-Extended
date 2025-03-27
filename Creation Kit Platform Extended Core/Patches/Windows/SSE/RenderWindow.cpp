@@ -410,7 +410,7 @@ namespace CreationKitPlatformExtended
 								ImGui::TableNextColumn();
 
 								auto EDID = Ref->GetEditorID_NoVTable();
-								if (!EDID) EDID = "<EMPTY>";
+								if (!EDID || !EDID[0]) EDID = "<EMPTY>";
 
 								ImGui::Text("%s%s (%08X)", EDID, (Ref->Active ? "*" : ""), Ref->FormID);
 
@@ -420,7 +420,7 @@ namespace CreationKitPlatformExtended
 								ImGui::TableNextColumn();
 
 								EDID = FormParent->GetEditorID_NoVTable();
-								if (!EDID) EDID = "<EMPTY>";
+								if (!EDID || !EDID[0]) EDID = "<EMPTY>";
 
 								ImGui::Text("%s%s (%08X)", EDID, (FormParent->Active ? "*" : ""), FormParent->FormID);
 
