@@ -368,8 +368,6 @@ namespace CreationKitPlatformExtended
 			if (it_l == std::string::npos)
 				goto invalid_error;
 
-			MessageBoxA(0, str_ver.c_str(), "", 0);
-
 			if (sscanf(str_ver.c_str() + it_l + 1, "%u.%u.%u", lpdwMajorVersion, lpdwMinorVersion, lpdwBuildNubmer) != 3)
 				goto invalid_error;
 

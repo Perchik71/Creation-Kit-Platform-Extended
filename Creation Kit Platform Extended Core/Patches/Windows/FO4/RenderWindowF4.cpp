@@ -258,6 +258,8 @@ namespace CreationKitPlatformExtended
 					auto ActiveCell = RenderWindow->GetCurrentCell();
 					if (ActiveCell)
 					{
+						ImVec4 DrawInfo_size;
+
 						if (gImGuiShowDrawInfo)
 						{
 							// IMGUI DRAWINFO
@@ -405,6 +407,14 @@ namespace CreationKitPlatformExtended
 								ImGui::EndTable();
 							}
 
+							auto ss = ImGui::GetWindowPos();
+							DrawInfo_size.x = ss.x;
+							DrawInfo_size.y = ss.y;
+
+							ss = ImGui::GetWindowSize();
+							DrawInfo_size.z = ss.x + DrawInfo_size.x;
+							DrawInfo_size.w = ss.y + DrawInfo_size.y;
+
 							ImGui::End();
 						}
 
@@ -419,7 +429,8 @@ namespace CreationKitPlatformExtended
 
 							if (gImGuiShowDrawInfo)
 							{
-								RECT rcWndToolInfo = { rcWnd.left, rcWnd.top, 330 + rcWnd.left, 210 + rcWnd.top };
+								RECT rcWndToolInfo = { (LONG)DrawInfo_size.x, (LONG)DrawInfo_size.y, 
+									(LONG)DrawInfo_size.z, (LONG)DrawInfo_size.w };
 								if (PtInRect(&rcWndToolInfo, pt))
 									goto Skips;
 							}
