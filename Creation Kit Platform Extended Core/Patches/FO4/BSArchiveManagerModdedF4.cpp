@@ -16,8 +16,10 @@ namespace CreationKitPlatformExtended
 		{
 			namespace BSResource
 			{
+				extern bool NoTextureLoad;
 				extern uintptr_t pointer_Archive2_sub1;
 				extern uintptr_t pointer_Archive2_sub2;
+				extern uintptr_t pointer_Archive2_sub3;
 			}
 		}
 	}
@@ -84,15 +86,17 @@ namespace CreationKitPlatformExtended
 				{
 					EditorAPI::Fallout4::BSResource::pointer_Archive2_sub1 = _RELDATA_ADDR(6);
 					EditorAPI::Fallout4::BSResource::pointer_Archive2_sub2 = _RELDATA_ADDR(0);
+					EditorAPI::Fallout4::BSResource::pointer_Archive2_sub3 = 
+						lpRelocator->DetourFunctionClass(_RELDATA_RAV(10), EditorAPI::Fallout4::BSResource::Archive2::HKLoadArchive);
 					EditorAPI::Fallout4::BSResource::Archive2::Initialize();
 
 					if (verPatch == 1)
 						// Первая версия патча для 1.10.162.0
 						lpRelocator->DetourCall(_RELDATA_RAV(1),
-							(uintptr_t)&EditorAPI::Fallout4::BSResource::Archive2::HKLoadArchive);
+							(uintptr_t)&EditorAPI::Fallout4::BSResource::Archive2::HKLoadStreamArchive);
 					else
 						lpRelocator->DetourCall(_RELDATA_RAV(1),
-							(uintptr_t)&EditorAPI::Fallout4::BSResource::Archive2::HKLoadArchiveEx);
+							(uintptr_t)&EditorAPI::Fallout4::BSResource::Archive2::HKLoadStreamArchiveEx);
 
 					lpRelocator->DetourCall(_RELDATA_RAV(2), (uintptr_t)&LoadTesFile);
 					lpRelocator->DetourJump(_RELDATA_RAV(3), (uintptr_t)&LoadTesFileFinal);
@@ -161,7 +165,7 @@ namespace CreationKitPlatformExtended
 				sname.Copy(0, sname.FindLastOf('.'));
 
 				AttachBA2File(*(sname + " - Main.ba2"));
-				AttachBA2File(*(sname + " - Textures.ba2"));
+				if (!EditorAPI::Fallout4::BSResource::NoTextureLoad) AttachBA2File(*(sname + " - Textures.ba2"));
 
 				((void(__fastcall*)(const TESFile*))pointer_BSArchiveManagerModded_sub)(load_file);
 			}

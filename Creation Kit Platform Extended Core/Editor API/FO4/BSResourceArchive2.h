@@ -35,8 +35,9 @@ namespace CreationKitPlatformExtended
 				public:
 					static void Initialize();
 					static void GetFileSizeStr(uint64_t fileSize, BSString& fileSizeStr);
-					static EResultError HKLoadArchive(void* arrayDataList, LooseFileStream*& resFile, void* Unk1, uint32_t Unk2);
-					static EResultError HKLoadArchiveEx(void* arrayDataList, InfoEx* infoRes, void* Unk1, uint32_t Unk2);
+					static EResultError HKLoadStreamArchive(void* arrayDataList, LooseFileStream*& resFile, void* Unk1, uint32_t Unk2);
+					static EResultError HKLoadStreamArchiveEx(void* arrayDataList, InfoEx* infoRes, void* Unk1, uint32_t Unk2);
+					static void HKLoadArchive(const char* fileName, void* Unk1, void* Unk2, uint32_t Unk3);
 					static void LoadArchive(const char* fileName);
 					static bool IsAvailableForLoad(const char* fileName);
 					static void LoadPrimaryArchive();

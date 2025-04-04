@@ -140,6 +140,9 @@ namespace CreationKitPlatformExtended
 				if (verEditor <= EDITOR_SKYRIM_SE_LAST)
 					aa_index++;
 
+				if (verEditor == EDITOR_FALLOUT_C4_1_10_162_0)
+					aa_index += 4;
+
 				memcpy(pNewButtons.get(), lpButtons, sizeof(TBBUTTON) * aa_index);
 
 				pNewButtons[aa_index] = (pNewButtons.get())[aa_index - 1];

@@ -62,7 +62,7 @@ namespace CreationKitPlatformExtended
 				auto useVC = GetProfileIntA("CreationKitCustom.ini", "bUseVersionControl", 0);
 				if (!useVC) useVC = GetProfileIntA("CreationKit.ini", "bUseVersionControl", 0);
 				
-				auto left = useVC ? 1154 : 1130;
+				auto left = useVC ? 1184 : 1160;
 
 				HWND hPanel = CreateWindowExA(0, wc.lpszClassName, "", WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE, left, 2, 250, 24, hWnd, (HMENU)NULL, wc.hInstance, NULL);
 

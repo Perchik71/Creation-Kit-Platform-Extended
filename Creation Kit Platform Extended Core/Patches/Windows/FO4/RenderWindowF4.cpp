@@ -258,7 +258,7 @@ namespace CreationKitPlatformExtended
 					auto ActiveCell = RenderWindow->GetCurrentCell();
 					if (ActiveCell)
 					{
-						ImVec4 DrawInfo_size;
+						/*ImVec4 DrawInfo_size;*/
 
 						if (gImGuiShowDrawInfo)
 						{
@@ -276,26 +276,18 @@ namespace CreationKitPlatformExtended
 
 								ImGui::TableNextRow();
 								ImGui::TableNextColumn();
-								ImGui::Text("FPS:");
+								ImGui::Text("FPS/DC/Polys:");
 								ImGui::TableNextColumn();
-								ImGui::Text("%u", BGSRenderWindow::DrawInfo::FramePerSecond);
-
-								ImGui::TableNextRow();
-								ImGui::TableNextColumn();
-								ImGui::Text("Draw calls: ");
-								ImGui::TableNextColumn();
+								ImGui::Text("%u / ", BGSRenderWindow::DrawInfo::FramePerSecond);
+								ImGui::SameLine(0.0f, 0.0f);
 								if (BGSRenderWindow::DrawInfo::DrawCalls < 8000)
 									ImGui::TextColored(gImGuiGreenColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
 								else if (BGSRenderWindow::DrawInfo::DrawCalls < 12000)
 									ImGui::TextColored(gImGuiOrangeColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
 								else
 									ImGui::TextColored(gImGuiRedColor, "%u", BGSRenderWindow::DrawInfo::DrawCalls);
-
-								ImGui::TableNextRow();
-								ImGui::TableNextColumn();
-								ImGui::Text("Polygons:");
-								ImGui::TableNextColumn();
-								ImGui::Text("%u", BGSRenderWindow::DrawInfo::Polys);
+								ImGui::SameLine(0.0f, 0.0f);
+								ImGui::Text(" / %u", BGSRenderWindow::DrawInfo::Polys);
 
 								ImGui::Dummy(ImVec2(1, 10));
 
@@ -407,13 +399,13 @@ namespace CreationKitPlatformExtended
 								ImGui::EndTable();
 							}
 
-							auto ss = ImGui::GetWindowPos();
+							/*auto ss = ImGui::GetWindowPos();
 							DrawInfo_size.x = ss.x;
 							DrawInfo_size.y = ss.y;
 
 							ss = ImGui::GetWindowSize();
 							DrawInfo_size.z = ss.x + DrawInfo_size.x;
-							DrawInfo_size.w = ss.y + DrawInfo_size.y;
+							DrawInfo_size.w = ss.y + DrawInfo_size.y;*/
 
 							ImGui::End();
 						}
@@ -429,8 +421,10 @@ namespace CreationKitPlatformExtended
 
 							if (gImGuiShowDrawInfo)
 							{
-								RECT rcWndToolInfo = { (LONG)DrawInfo_size.x, (LONG)DrawInfo_size.y, 
-									(LONG)DrawInfo_size.z, (LONG)DrawInfo_size.w };
+								/*RECT rcWndToolInfo = { (LONG)DrawInfo_size.x, (LONG)DrawInfo_size.y, 
+									(LONG)DrawInfo_size.z, (LONG)DrawInfo_size.w };*/
+								RECT rcWndToolInfo = { rcWnd.left, rcWnd.top,
+									rcWnd.left + 350, rcWnd.top + 130 };
 								if (PtInRect(&rcWndToolInfo, pt))
 									goto Skips;
 							}

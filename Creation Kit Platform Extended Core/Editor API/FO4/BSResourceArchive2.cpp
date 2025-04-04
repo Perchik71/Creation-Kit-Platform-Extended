@@ -15,8 +15,10 @@ namespace CreationKitPlatformExtended
 
 			namespace BSResource
 			{
+				bool NoTextureLoad = false;
 				uintptr_t pointer_Archive2_sub1 = 0;
 				uintptr_t pointer_Archive2_sub2 = 0;
+				uintptr_t pointer_Archive2_sub3 = 0;
 				Array<BSString*> g_arrayArchivesAvailable;
 				bool g_initCKPEPrimary = false;
 				std::mutex g_CKPEPrimary;
@@ -98,7 +100,7 @@ namespace CreationKitPlatformExtended
 						fileSizeStr.Format("%d Byte", fileSize);
 				}
 
-				Archive2::EResultError Archive2::HKLoadArchive(void* arrayDataList, LooseFileStream*& resFile,
+				Archive2::EResultError Archive2::HKLoadStreamArchive(void* arrayDataList, LooseFileStream*& resFile,
 					void* Unk1, uint32_t Unk2)
 				{
 					auto fileName = resFile->FileName->Get<CHAR>(true);
@@ -126,12 +128,14 @@ namespace CreationKitPlatformExtended
 						AssertMsgVa(resultNo == EC_NONE, "Failed load an archive file %s", fileName);
 					}
 
+				skips:
+
 					LoadPrimaryArchive();
 
 					return resultNo;
 				}
 
-				Archive2::EResultError Archive2::HKLoadArchiveEx(void* arrayDataList, InfoEx* infoRes,
+				Archive2::EResultError Archive2::HKLoadStreamArchiveEx(void* arrayDataList, InfoEx* infoRes,
 					void* Unk1, uint32_t Unk2)
 				{
 					auto fileName2 = infoRes->fileName->Get<CHAR>(true);
@@ -159,9 +163,19 @@ namespace CreationKitPlatformExtended
 						AssertMsgVa(resultNo == EC_NONE, "Failed load an archive file %s", fileName2);
 					}
 
+				skips:
+
 					LoadPrimaryArchive();
 
 					return resultNo;
+				}
+
+				void Archive2::HKLoadArchive(const char* fileName, void* Unk1, void* Unk2, uint32_t Unk3)
+				{
+					if (NoTextureLoad && (StrStrIA(fileName, " - Textures") != NULL))
+						return;
+
+					fastCall<void>(pointer_Archive2_sub3, fileName, Unk1, Unk2, Unk3);
 				}
 
 				void Archive2::LoadArchive(const char* fileName)
@@ -194,7 +208,7 @@ namespace CreationKitPlatformExtended
 					}
 
 					LoadArchive("CreationKit - Shaders.ba2");
-					LoadArchive("CreationKit - Textures.ba2");
+					if (!NoTextureLoad) LoadArchive("CreationKit - Textures.ba2");
 				}
 			}
 		}

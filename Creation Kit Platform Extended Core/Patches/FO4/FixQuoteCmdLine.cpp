@@ -66,7 +66,7 @@ namespace CreationKitPlatformExtended
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(2), (uintptr_t)&sub);
 
 					//	-GeneratePreVisData
-					//	This command into the code section -GeneratePreCombined.
+					//	This command into the code section -GeneratePreVisData.
 					//	Should be: -GeneratePreVisData:"<ESMFilename>" [clean, filtered] [all, other, main, ints]
 
 					lpRelocator->DetourCall(lpRelocationDatabaseItem->At(3), (uintptr_t)&sub);

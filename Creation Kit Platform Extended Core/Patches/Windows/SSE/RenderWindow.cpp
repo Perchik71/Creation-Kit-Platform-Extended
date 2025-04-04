@@ -219,7 +219,7 @@ namespace CreationKitPlatformExtended
 					io.MousePos = { (float)p.x, (float)p.y };
 				}
 
-				ImVec4 DrawInfo_size;
+				//ImVec4 DrawInfo_size;
 
 				if (gImGuiShowDrawInfo)
 				{
@@ -363,13 +363,13 @@ namespace CreationKitPlatformExtended
 						ImGui::EndTable();
 					}
 					
-					auto ss = ImGui::GetWindowPos();
+				/*	auto ss = ImGui::GetWindowPos();
 					DrawInfo_size.x = ss.x;
 					DrawInfo_size.y = ss.y;
 
 					ss = ImGui::GetWindowSize();
 					DrawInfo_size.z = ss.x + DrawInfo_size.x;
-					DrawInfo_size.w = ss.y + DrawInfo_size.y;
+					DrawInfo_size.w = ss.y + DrawInfo_size.y;*/
 
 					ImGui::End();
 				}
@@ -385,8 +385,8 @@ namespace CreationKitPlatformExtended
 
 					if (gImGuiShowDrawInfo)
 					{
-						RECT rcWndToolInfo = { (LONG)DrawInfo_size.x, (LONG)DrawInfo_size.y, 
-							(LONG)DrawInfo_size.z, (LONG)DrawInfo_size.w };
+						RECT rcWndToolInfo = { rcWnd.left, rcWnd.top,
+							rcWnd.left + 350, rcWnd.top + 130 };
 						if (PtInRect(&rcWndToolInfo, pt))
 							goto Skips;
 					}

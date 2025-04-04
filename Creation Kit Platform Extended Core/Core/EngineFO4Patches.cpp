@@ -67,6 +67,17 @@
 
 namespace CreationKitPlatformExtended
 {
+	namespace EditorAPI
+	{
+		namespace Fallout4
+		{
+			namespace BSResource
+			{
+				extern bool NoTextureLoad;
+			}
+		}
+	}
+
 	namespace Core
 	{
 		void Fallout4_AppendPatches(ModuleManager* PatchesManager)
@@ -153,6 +164,12 @@ namespace CreationKitPlatformExtended
 					_CONSOLE("The facegen operation has been launched");
 
 					PatchesManager->Append(new Patches::CrashInventoryPatch());
+				}
+				else if (!_stricmp(Cmd.c_str(), "-GeneratePreVisData"))
+				{
+					_CONSOLE("The prevising operation has been launched");
+
+					EditorAPI::Fallout4::BSResource::NoTextureLoad = true;
 				}
 			}
 		}

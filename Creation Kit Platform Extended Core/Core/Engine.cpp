@@ -289,7 +289,7 @@ namespace CreationKitPlatformExtended
 			std::string str_ver;
 
 			char cmd_exe[256];
-			GetEnvironmentVariable("COMSPEC", cmd_exe, 256);
+			GetEnvironmentVariableA("COMSPEC", cmd_exe, 256);
 
 			size_t				it, it_l;
 			DWORD               read;
