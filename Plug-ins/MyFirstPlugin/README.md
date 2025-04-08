@@ -9,7 +9,7 @@ This is an example of a simple plugin for **CKPE** and serves solely to start yo
 > All functions must be implemented, read the comments.
 
 # What does the plugin do?
-![What does the plugin do?](https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/master/MyFirstPlugin/What.png)
+![What does the plugin do?](https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/master/Plug-ins/MyFirstPlugin/What.png)
 
 # Briefly
 1. If you don't need a menu, don't create one. `*Data->SubMenu = nullptr;`
