@@ -17,6 +17,8 @@ namespace CreationKitPlatformExtended
 			class BGSVoiceType : public TESForm
 			{
 			public:
+				constexpr static uint8_t TYPE_ID = ftVoice;
+
 				enum Gender
 				{
 					Male = 0,
