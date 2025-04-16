@@ -794,9 +794,10 @@ namespace CreationKitPlatformExtended
 			auto lamda_xmm_printf = [](FILE* Stream, uint8_t RegId, M128A Reg)
 			{
 				auto p = (DWORD*)&Reg;
-				auto pf = (float*)&Reg;
-				fprintf(Stream, "\tXMM%u\t%08X (%.6f)\t%08X (%.6f)\t%08X (%.6f)\t%08X (%.6f)\n", RegId, 
-					p[0], pf[0], p[1], pf[1], p[2], pf[2], p[3], pf[3]);
+				//auto pf = (float*)&Reg;
+				//fprintf(Stream, "\tXMM%u\t%08X (%.6f)\t%08X (%.6f)\t%08X (%.6f)\t%08X (%.6f)\n", RegId, 
+				//	p[0], pf[0], p[1], pf[1], p[2], pf[2], p[3], pf[3]);
+				fprintf(Stream, "\tXMM%u\t%08X %08X %08X %08X\n", RegId, p[0], p[1], p[2], p[3]);
 			};
 
 			lamda_xmm_printf(Stream, 0, lpExceptionRecord->ContextRecord->Xmm0);
