@@ -25,6 +25,7 @@ namespace CreationKitPlatformExtended
 			void Dump(FILE* File);
 			const Info* Find(const char* Name, bool Exact = true);
 			Array<const Info*> FindAll(const char* Name, bool Exact = true);
+			[[nodiscard]] const Info* FindByAddr(uintptr_t Addr) noexcept(true);
 
 			namespace detail
 			{

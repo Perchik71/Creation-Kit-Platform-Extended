@@ -19,18 +19,19 @@ namespace CreationKitPlatformExtended
 			Plugin(Engine* lpEngine, const char* lpcstrPluginDllName);
 			virtual ~Plugin();
 
-			virtual bool HasCanRuntimeDisabled() const;
-			virtual const char* GetName() const;
-			virtual bool HasDependencies() const;
-			virtual Array<String> GetDependencies() const;
-			const char* GetVersion() const;
-			virtual bool HasOption() const;
-			virtual const char* GetOptionName() const;
+			[[nodiscard]] virtual bool HasCanRuntimeDisabled() const noexcept(true);
+			[[nodiscard]] virtual const char* GetName() const noexcept(true);
+			[[nodiscard]] virtual bool HasDependencies() const noexcept(true);
+			[[nodiscard]] virtual Array<String> GetDependencies() const noexcept(true);
+			[[nodiscard]] const char* GetVersion() const noexcept(true);
+			[[nodiscard]] virtual bool HasOption() const noexcept(true);
+			[[nodiscard]] virtual const char* GetOptionName() const noexcept(true);
 
-			inline bool IsOk() const { return IsInit; }
-			inline bool HasMenu() const { return Menu != nullptr; }
-			inline HMENU GetMenu() const { return Menu; }
-			inline const char* GetMenuName() const { return _MenuName.c_str(); }
+			[[nodiscard]] inline bool IsOk() const noexcept(true) { return IsInit; }
+			[[nodiscard]] inline bool HasMenu() const noexcept(true) { return Menu != nullptr; }
+			[[nodiscard]] inline HMENU GetMenu() const noexcept(true) { return Menu; }
+			[[nodiscard]] inline const char* GetMenuName() const noexcept(true) { return _MenuName.c_str(); }
+			[[nodiscard]] inline const char* GetPluginDllName() const noexcept(true) { return _PluginDllName.c_str(); }
 
 			READ_PROPERTY(GetMenu) HMENU SubMenu;
 			READ_PROPERTY(GetMenuName) const char* SubMenuName;

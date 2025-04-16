@@ -121,6 +121,14 @@ namespace CreationKitPlatformExtended
 				return results;
 			}
 
+			const Info* FindByAddr(uintptr_t Addr) noexcept(true)
+			{
+				for (const Info& info : Tables)
+					if (info.VTableAddress == Addr)
+						return &info;
+				return nullptr;
+			}
+
 			namespace detail
 			{
 				bool IsWithinRDATA(uintptr_t Address)

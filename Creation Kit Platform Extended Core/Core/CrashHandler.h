@@ -13,12 +13,32 @@ namespace CreationKitPlatformExtended
 		class CrashHandler
 		{
 		public:
+			struct Region { uintptr_t Start, End; };
+			struct Module { uintptr_t Start, End; Region SecCode; };
+			using ModuleMapInfo = UnorderedMap<String, Module>;
+			using ArrayMemoryInfo = Array<Region>;
+
 			CrashHandler();
 			~CrashHandler();
 
 			void InstallThreadTheCrashSystem();
 
+			static void PrintException(FILE* Stream, ModuleMapInfo* Modules, PEXCEPTION_RECORD lpExceptionRecord);
+			static void PrintSettings(FILE* Stream);
+			static void PrintSysInfo(FILE* Stream);
+			static void PrintMemory(FILE* Stream, ArrayMemoryInfo* Memory);
+			static void PrintRegistry(FILE* Stream, ModuleMapInfo* Modules, ArrayMemoryInfo* Memory, PEXCEPTION_POINTERS lpExceptionRecord);
+			static void PrintRegistrySafe(FILE* Stream, ModuleMapInfo* Modules, ArrayMemoryInfo* Memory, PEXCEPTION_POINTERS lpExceptionRecord);
+			static void PrintCallStack(FILE* Stream, ModuleMapInfo* Modules);
+			static void PrintCallStackSafe(FILE* Stream, ModuleMapInfo* Modules);
+			static void PrintStack(FILE* Stream, ModuleMapInfo* Modules, ArrayMemoryInfo* Memory, PEXCEPTION_POINTERS lpExceptionInfo);
+			static void PrintStackSafe(FILE* Stream, ModuleMapInfo* Modules, ArrayMemoryInfo* Memory, PEXCEPTION_POINTERS lpExceptionInfo);
+			static void PrintPatches(FILE* Stream);
+			static void PrintModules(FILE* Stream, ModuleMapInfo* Modules);
+			static void PrintPlugins(FILE* Stream);
+
 			static LONG WINAPI DumpExceptionHandler(PEXCEPTION_POINTERS ExceptionInfo);
+			static void ContextWriteToCrashLogSafe(FILE* Stream, PEXCEPTION_POINTERS ExceptionInfo);
 			static void ContextWriteToCrashLog(FILE* Stream, PEXCEPTION_POINTERS ExceptionInfo);
 		private:
 			void SetProcessExceptionHandlers();

@@ -50,14 +50,14 @@
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>winhttp</TargetName>
-    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)Dependencies\Voltek\Detours\include;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\libdeflate;$(SolutionDir)Dependencies\libps;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)Dependencies\jDialogs\include;$(SolutionDir)Dependencies\Voltek\Memory Manager\include;$(SolutionDir)Dependencies\Voltek\UnicodeConverter\include;$(SolutionDir)Dependencies\Voltek\Relocation Database\include;$(SolutionDir)Dependencies\imgui;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)Dependencies\Voltek\Detours\include;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\libdeflate;$(SolutionDir)Dependencies\libps;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)Dependencies\jDialogs\include;$(SolutionDir)Dependencies\Voltek\Memory Manager\include;$(SolutionDir)Dependencies\Voltek\UnicodeConverter\include;$(SolutionDir)Dependencies\Voltek\Relocation Database\include;$(SolutionDir)Dependencies\imgui;$(SolutionDir)Dependencies\iw;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Qt|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>winhttp</TargetName>
-    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)Dependencies\Voltek\Detours\include;$(SolutionDir)Dependencies\qt5;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\libdeflate;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)Dependencies\jDialogs\include;$(SolutionDir)Dependencies\Voltek\Memory Manager\include;$(SolutionDir)Dependencies\Voltek\UnicodeConverter\include;$(SolutionDir)Dependencies\Voltek\Relocation Database\include;$(SolutionDir)Dependencies\imgui;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)Dependencies\Voltek\Detours\include;$(SolutionDir)Dependencies\qt5;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\libdeflate;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)Dependencies\jDialogs\include;$(SolutionDir)Dependencies\Voltek\Memory Manager\include;$(SolutionDir)Dependencies\Voltek\UnicodeConverter\include;$(SolutionDir)Dependencies\Voltek\Relocation Database\include;$(SolutionDir)Dependencies\imgui;$(SolutionDir)Dependencies\iw;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -87,8 +87,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ws2_32.lib;msimg32.lib;uxtheme.lib;version.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;gdiplus.lib;DirectXTex.lib;VoltekLib.Detours.lib;VoltekLib.UnicodeConverter.lib;VoltekLib.MemoryManager.lib;VoltekLib.RelocationDatabase.lib;ImGUI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\;$(VSInstallDir)DIA SDK\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ws2_32.lib;msimg32.lib;uxtheme.lib;version.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;gdiplus.lib;DirectXTex.lib;VoltekLib.Detours.lib;VoltekLib.UnicodeConverter.lib;VoltekLib.MemoryManager.lib;VoltekLib.RelocationDatabase.lib;ImGUI.lib;diaguids.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\Version\scripts.ps1"</Command>
@@ -126,8 +126,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\;$(SolutionDir)\Dependencies\qt5\lib;$(SolutionDir)$(Platform)\Release\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ws2_32.lib;msimg32.lib;uxtheme.lib;version.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;gdiplus.lib;DirectXTex.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;VoltekLib.Detours.lib;VoltekLib.UnicodeConverter.lib;VoltekLib.MemoryManager.lib;VoltekLib.RelocationDatabase.lib;ImGUI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\;$(SolutionDir)\Dependencies\qt5\lib;$(SolutionDir)$(Platform)\Release\;$(VSInstallDir)DIA SDK\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ws2_32.lib;msimg32.lib;uxtheme.lib;version.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;gdiplus.lib;DirectXTex.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;VoltekLib.Detours.lib;VoltekLib.UnicodeConverter.lib;VoltekLib.MemoryManager.lib;VoltekLib.RelocationDatabase.lib;ImGUI.lib;diaguids.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\Version\scripts.ps1"</Command>
@@ -139,6 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\DirectXTex\src\ScreenGrab11.cpp" />
+    <ClCompile Include="..\Dependencies\iw\iw.cpp" />
     <ClCompile Include="..\Dependencies\jDialogs\include\jdialogs.cpp" />
     <ClCompile Include="Core\AboutWindow.cpp" />
     <ClCompile Include="Core\CommandLineParser.cpp" />
@@ -451,6 +452,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Dependencies\DirectXTex\include\ScreenGrab11.h" />
+    <ClInclude Include="..\Dependencies\iw\iw.h" />
     <ClInclude Include="..\Dependencies\jDialogs\include\jdialogs.h" />
     <ClInclude Include="..\Plug-ins\MyFirstPlugin\CKPE\PluginAPI.h" />
     <ClInclude Include="Common.h" />
@@ -531,6 +533,7 @@
     <ClInclude Include="Editor API\FO4\NiClassesF4.h" />
     <ClInclude Include="Editor API\FO4\NiEvents.h" />
     <ClInclude Include="Editor API\FO4\TESActorValue.h" />
+    <ClInclude Include="Editor API\FO4\TESBoundObject.h" />
     <ClInclude Include="Editor API\FO4\TESDataHandler.h" />
     <ClInclude Include="Editor API\FO4\TESF4.h" />
     <ClInclude Include="Editor API\FO4\TESFileF4.h" />

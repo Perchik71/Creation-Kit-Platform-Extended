@@ -4,6 +4,7 @@
 
 #include "Version/resource_version2.h"
 #include <VersionHelpers.h>
+#include "iw.h"
 
 #include "ConsoleWindow.h"
 #include "CommandLineParser.h"
@@ -49,172 +50,6 @@
 #	include "QtCore/qresource.h"
 #endif // !_CKPE_WITH_QT5
 
-#define GET_VERSION_FROM_CMD_VER 1
-#define HACK_VERSION_RETRIEVAL 1
-
-#if GET_VERSION_FROM_CMD_VER == 0
-#if HACK_VERSION_RETRIEVAL == 1
-
-// In the Windows Native API Programming book by Pavel Yosifovich, it is mentioned a method to get the Windows version 
-// through the KUSER_SHARED_DATA struct located at 0x7ffe0000 address in every process. For more information about KUSER_SHARED_DATA,
-// read this MSDN link. KUSER_SHARED_DATA is located in <ntddk.h> that comes with Windows Driver Development Kit (DDK). 
-// You must install the DDK to compile the code snippet below.
-// https://www.codeproject.com/Articles/5336372/Windows-Version-Detection
-
-#define PROCESSOR_FEATURE_MAX 64
-
-typedef struct _KSYSTEM_TIME
-{
-	ULONG LowPart;
-	LONG High1Time;
-	LONG High2Time;
-} KSYSTEM_TIME, * PKSYSTEM_TIME;
-
-typedef enum _NT_PRODUCT_TYPE
-{
-	NtProductWinNt = 1,
-	NtProductLanManNt = 2,
-	NtProductServer = 3
-} NT_PRODUCT_TYPE;
-
-typedef enum _ALTERNATIVE_ARCHITECTURE_TYPE
-{
-	StandardDesign = 0,
-	NEC98x86 = 1,
-	EndAlternatives = 2
-} ALTERNATIVE_ARCHITECTURE_TYPE;
-
-typedef struct _KUSER_SHARED_DATA {
-	ULONG                         TickCountLowDeprecated;
-	ULONG                         TickCountMultiplier;
-	KSYSTEM_TIME                  InterruptTime;
-	KSYSTEM_TIME                  SystemTime;
-	KSYSTEM_TIME                  TimeZoneBias;
-	USHORT                        ImageNumberLow;
-	USHORT                        ImageNumberHigh;
-	WCHAR                         NtSystemRoot[260];
-	ULONG                         MaxStackTraceDepth;
-	ULONG                         CryptoExponent;
-	ULONG                         TimeZoneId;
-	ULONG                         LargePageMinimum;
-	ULONG                         AitSamplingValue;
-	ULONG                         AppCompatFlag;
-	ULONGLONG                     RNGSeedVersion;
-	ULONG                         GlobalValidationRunlevel;
-	LONG                          TimeZoneBiasStamp;
-	ULONG                         NtBuildNumber;
-	NT_PRODUCT_TYPE               NtProductType;
-	BOOLEAN                       ProductTypeIsValid;
-	BOOLEAN                       Reserved0[1];
-	USHORT                        NativeProcessorArchitecture;
-	ULONG                         NtMajorVersion;
-	ULONG                         NtMinorVersion;
-	BOOLEAN                       ProcessorFeatures[PROCESSOR_FEATURE_MAX];
-	ULONG                         Reserved1;
-	ULONG                         Reserved3;
-	ULONG                         TimeSlip;
-	ALTERNATIVE_ARCHITECTURE_TYPE AlternativeArchitecture;
-	ULONG                         BootId;
-	LARGE_INTEGER                 SystemExpirationDate;
-	ULONG                         SuiteMask;
-	BOOLEAN                       KdDebuggerEnabled;
-	union {
-		UCHAR MitigationPolicies;
-		struct {
-			UCHAR NXSupportPolicy : 2;
-			UCHAR SEHValidationPolicy : 2;
-			UCHAR CurDirDevicesSkippedForDlls : 2;
-			UCHAR Reserved : 2;
-		};
-	};
-	USHORT                        CyclesPerYield;
-	ULONG                         ActiveConsoleId;
-	ULONG                         DismountCount;
-	ULONG                         ComPlusPackage;
-	ULONG                         LastSystemRITEventTickCount;
-	ULONG                         NumberOfPhysicalPages;
-	BOOLEAN                       SafeBootMode;
-	union {
-		UCHAR VirtualizationFlags;
-		struct {
-			UCHAR ArchStartedInEl2 : 1;
-			UCHAR QcSlIsSupported : 1;
-		};
-	};
-	UCHAR                         Reserved12[2];
-	union {
-		ULONG SharedDataFlags;
-		struct {
-			ULONG DbgErrorPortPresent : 1;
-			ULONG DbgElevationEnabled : 1;
-			ULONG DbgVirtEnabled : 1;
-			ULONG DbgInstallerDetectEnabled : 1;
-			ULONG DbgLkgEnabled : 1;
-			ULONG DbgDynProcessorEnabled : 1;
-			ULONG DbgConsoleBrokerEnabled : 1;
-			ULONG DbgSecureBootEnabled : 1;
-			ULONG DbgMultiSessionSku : 1;
-			ULONG DbgMultiUsersInSessionSku : 1;
-			ULONG DbgStateSeparationEnabled : 1;
-			ULONG SpareBits : 21;
-		} DUMMYSTRUCTNAME2;
-	} DUMMYUNIONNAME2;
-	ULONG                         DataFlagsPad[1];
-	ULONGLONG                     TestRetInstruction;
-	LONGLONG                      QpcFrequency;
-	ULONG                         SystemCall;
-	ULONG                         Reserved2;
-	ULONGLONG                     FullNumberOfPhysicalPages;
-	ULONGLONG                     SystemCallPad[1];
-	union {
-		KSYSTEM_TIME TickCount;
-		ULONG64      TickCountQuad;
-		struct {
-			ULONG ReservedTickCountOverlay[3];
-			ULONG TickCountPad[1];
-		} DUMMYSTRUCTNAME;
-	} DUMMYUNIONNAME3;
-	ULONG                         Cookie;
-	ULONG                         CookiePad[1];
-	LONGLONG                      ConsoleSessionForegroundProcessId;
-	ULONGLONG                     TimeUpdateLock;
-	ULONGLONG                     BaselineSystemTimeQpc;
-	ULONGLONG                     BaselineInterruptTimeQpc;
-	ULONGLONG                     QpcSystemTimeIncrement;
-	ULONGLONG                     QpcInterruptTimeIncrement;
-	UCHAR                         QpcSystemTimeIncrementShift;
-	UCHAR                         QpcInterruptTimeIncrementShift;
-	USHORT                        UnparkedProcessorCount;
-	ULONG                         EnclaveFeatureMask[4];
-	ULONG                         TelemetryCoverageRound;
-	USHORT                        UserModeGlobalLogger[16];
-	ULONG                         ImageFileExecutionOptions;
-	ULONG                         LangGenerationCount;
-	ULONGLONG                     Reserved4;
-	ULONGLONG                     InterruptTimeBias;
-	ULONGLONG                     QpcBias;
-	ULONG                         ActiveProcessorCount;
-	UCHAR                         ActiveGroupCount;
-	UCHAR                         Reserved9;
-	union {
-		USHORT QpcData;
-		struct {
-			UCHAR QpcBypassEnabled;
-			UCHAR QpcReserved;
-		};
-	};
-	LARGE_INTEGER                 TimeZoneBiasEffectiveStart;
-	LARGE_INTEGER                 TimeZoneBiasEffectiveEnd;
-	XSTATE_CONFIGURATION          XState;
-	KSYSTEM_TIME                  FeatureConfigurationChangeStamp;
-	ULONG                         Spare;
-	ULONG64                       UserPointerAuthMask;
-	XSTATE_CONFIGURATION          XStateArm64;
-	ULONG                         Reserved10[210];
-} KUSER_SHARED_DATA, * PKUSER_SHARED_DATA;
-#endif // HACK_VERSION_RETRIEVAL
-#endif // GET_VERSION_FROM_CMD_VER
-
 namespace CreationKitPlatformExtended
 {
 	namespace Core
@@ -236,148 +71,6 @@ namespace CreationKitPlatformExtended
 		CreationKitPlatformExtended::Patches::INICacheDataPatch* INICacheData = nullptr;
 
 		//////////////////////////////////////////////
-
-		static BOOL WINAPI GetVerOs(LPDWORD lpdwMajorVersion, LPDWORD lpdwMinorVersion, LPDWORD lpdwBuildNubmer)
-		{
-			if (!lpdwMajorVersion || !lpdwMinorVersion || !lpdwBuildNubmer)
-				return FALSE;
-
-#if GET_VERSION_FROM_CMD_VER == 0
-#if HACK_VERSION_RETRIEVAL == 0
-			LONG(WINAPI * RtlGetVersion)(LPOSVERSIONINFOEXW) = nullptr;
-			OSVERSIONINFOEXW osInfo = { 0 };
-			*(FARPROC*)&RtlGetVersion = GetProcAddress(GetModuleHandleA("ntdll"), "RtlGetVersion");
-			if (RtlGetVersion)
-			{
-				osInfo.dwOSVersionInfoSize = sizeof(osInfo);
-				RtlGetVersion(&osInfo);
-
-				*lpdwMajorVersion = osInfo.dwMajorVersion;
-				*lpdwMinorVersion = osInfo.dwMinorVersion;
-				*lpdwBuildNubmer  = osInfo.dwBuildNumber;
-
-				return TRUE;
-			}
-#else
-			auto data = (KUSER_SHARED_DATA*)0x7ffe0000;
-			*lpdwMajorVersion = data->NtMajorVersion;
-			*lpdwMinorVersion = data->NtMinorVersion;
-			*lpdwBuildNubmer = data->NtBuildNumber;
-#endif // HACK_VERSION_RETRIEVAL
-#else
-			LONG(WINAPI * RtlGetVersion)(LPOSVERSIONINFOEXW) = nullptr;
-			OSVERSIONINFOEXW osInfo = { 0 };
-			*(FARPROC*)&RtlGetVersion = GetProcAddress(GetModuleHandleA("ntdll"), "RtlGetVersion");
-			if (RtlGetVersion)
-			{
-				osInfo.dwOSVersionInfoSize = sizeof(osInfo);
-				RtlGetVersion(&osInfo);
-
-				*lpdwMajorVersion = osInfo.dwMajorVersion;
-				*lpdwMinorVersion = osInfo.dwMinorVersion;
-				*lpdwBuildNubmer = osInfo.dwBuildNumber;
-
-				if (osInfo.dwMajorVersion == 6)
-					// There is a problem with stripped-down versions of OS, the function returns that it is still Win 8.
-					goto ver_win_home_maybe;
-
-				return TRUE;
-			}
-
-		ver_win_home_maybe:
-			
-			std::string str_ver;
-
-			char cmd_exe[256];
-			GetEnvironmentVariableA("COMSPEC", cmd_exe, 256);
-
-			size_t				it, it_l;
-			DWORD               read;
-			SECURITY_ATTRIBUTES sa;
-			STARTUPINFO         si;
-			PROCESS_INFORMATION pi;
-			HANDLE              hReadOut = NULL;   // pipe handles for redirecting STDOUT
-			HANDLE              hWriteOut = NULL;
-			char                buf[255];
-
-			std::string scmd = cmd_exe;
-			scmd += " /c ver";
-
-			// Prepare security attributes for pipes.
-			// Note - inheritance flag is ON!
-			memset(&sa, 0, sizeof(sa));
-			sa.nLength = sizeof(sa);
-			sa.bInheritHandle = TRUE;
-			sa.lpSecurityDescriptor = NULL;
-
-			// Create pipe for output redirection
-			if (!CreatePipe(&hReadOut, &hWriteOut, &sa, 0))
-				goto invalid_error;
-
-			// Prepare child process startup data
-			// Force child process to use hWriteOut as stdout
-			memset(&si, 0, sizeof(si));
-			si.cb = sizeof(si);
-			si.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
-			si.wShowWindow = SW_HIDE;
-			si.hStdOutput = hWriteOut;
-			si.hStdError = hWriteOut;
-
-			// Spawn child process.
-			if (!CreateProcessA(NULL, scmd.data(), NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi))
-			{
-				CloseHandle(hReadOut);
-				CloseHandle(hWriteOut);
-
-				goto invalid_error;
-			}
-
-			// Wait until child process exits.
-			WaitForSingleObject(pi.hProcess, INFINITE);
-			// Close pipe ends, which i're not going to use
-			CloseHandle(hWriteOut);  // child process will write here
-
-			// Read process output.
-			while (TRUE)
-			{
-				if (!ReadFile(hReadOut, buf, sizeof(buf) - 1, &read, NULL)) 
-					// It might be "normal" error. Spawned app just closed the
-					// stdout, and in this case ReadFile returned FALSE.
-					break;
-
-				// Test for the "normal" end of the output
-				if (0 == read)
-					// Nothing to read, child processs has closed the output
-					break;   
-
-				// Write all data from redirected stdout to our own stdout.
-				buf[read] = 0;
-				str_ver += buf;
-			}
-
-			//  Close all remaining handles
-			CloseHandle(pi.hProcess);
-			CloseHandle(pi.hThread);
-			CloseHandle(hReadOut);
-
-			it = str_ver.find_first_of('[');
-			if (it == std::string::npos)
-				goto invalid_error;
-
-			it_l = str_ver.find_first_of(' ', it + 1);
-			if (it_l == std::string::npos)
-				goto invalid_error;
-
-			if (sscanf(str_ver.c_str() + it_l + 1, "%u.%u.%u", lpdwMajorVersion, lpdwMinorVersion, lpdwBuildNubmer) != 3)
-				goto invalid_error;
-
-			return TRUE;
-
-		invalid_error:
-#endif // GET_VERSION_FROM_CMD_VER
-
-			return FALSE;
-		}
 
 		static BOOL WINAPI hk_QueryPerformanceCounter(LARGE_INTEGER* lpPerformanceCount)
 		{
@@ -414,30 +107,26 @@ namespace CreationKitPlatformExtended
 			PatchesManager(new ModuleManager()), UserPluginsManager(new PluginManager())
 		{
 			GlobalEnginePtr = this;
+			ZeroMemory(&_OsVersion, sizeof(_OsVersion));
+			
+			auto kernel_info = iw::system::kernel_info();
+			_OsVersion.MajorVersion = kernel_info.major;
+			_OsVersion.MinorVersion = kernel_info.minor;
+			_OsVersion.BuildNubmer = kernel_info.build;
 
-			auto OsVer = &_OsVersion;
-			ZeroMemory(OsVer, sizeof(OsVersion));
-			GetVerOs((LPDWORD)&OsVer->MajorVersion, (LPDWORD)&OsVer->MinorVersion, (LPDWORD)&OsVer->BuildNubmer);
-			auto str = EditorAPI::BSString::FormatString("CKPE Runtime: Initialize (Version: %s, OS: %u.%u Build %u)",
-				VER_FILE_VERSION_STR, OsVer->MajorVersion, OsVer->MinorVersion, OsVer->BuildNubmer);
-			_MESSAGE(str.c_str());
+			_MESSAGE("CKPE Runtime: Initialize (Version: %s %s %s, OS: %s)",
+				VER_FILE_VERSION_STR, __DATE__, __TIME__, iw::system::version_name_by_kernel_info(&kernel_info).c_str());
 
-			if ((OsVer->MajorVersion == 6) && (OsVer->MinorVersion < 3))
-				_CONSOLE("[WARNING] Your OS is not fully supported");
-
-			int info[4];
-			__cpuid(info, 7);
-			_hasAVX2 = (info[1] & (1 << 5)) != 0;
-
-			__cpuid(info, 1);
-			_hasSSE41 = (info[2] & (1 << 19)) != 0;
+			auto cpu_info = iw::cpu::cpu_info();
+			_hasAVX2 = iw::cpu::is_support_AVX2(&cpu_info);
+			_hasSSE41 = iw::cpu::is_support_SSE41(&cpu_info);
 
 			// Detect hyper-threads and cores
-			_hyperThreads = info[3] & (1 << 28);
-			_threads = (info[1] >> 16) & 0xff;
-			if (_hyperThreads) _threads;
+			_hyperThreads = iw::cpu::is_support_hyper(&cpu_info);
+			_threads = iw::cpu::number_of_procs(&cpu_info);
 			_logicalCores = _threads;
-			_physicalCores = _logicalCores >> 1;
+			_physicalCores = _threads;
+			if (_hyperThreads) _physicalCores >>= 1;
 
 			_MESSAGE("The processor has a number of threads: %u", _threads);
 			_MESSAGE("The processor has a number of logical cores: %u", _logicalCores);
@@ -897,17 +586,14 @@ namespace CreationKitPlatformExtended
 				return RC_INITIALIZATION_ENGINE_AGAIN;
 
 			IResult Result = RC_OK;
+			auto kernel_info = iw::system::kernel_info();
 
-			DWORD dwMajor, dwMinor, dwBuild;
-			if (!GetVerOs(&dwMajor, &dwMinor, &dwBuild))
+			// Need 8.1 or newer
+			if ((kernel_info.major < 6) || ((kernel_info.major == 6) && (kernel_info.minor < 3)))
 			{
-				// Need 8.1 or newer
-				if ((dwMajor < 6) || ((dwMajor == 6) && (dwMinor < 2)))
-				{
-					_ERROR("Unsupported OS version");
+				_ERROR("Unsupported OS version");
 
-					return RC_UNSUPPORT_VERSION_OS;
-				}
+				return RC_UNSUPPORT_VERSION_OS;
 			}
 
 			// Доступные имена для Creation Kit

@@ -2,6 +2,8 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
+#include <comdef.h>
+
 #include "Version/resource_version2.h"
 #include "Engine.h"
 #include "Plugin.h"
@@ -42,7 +44,7 @@ namespace CreationKitPlatformExtended
 		extern uint32_t GlobalPluginMenuEndId;
 
 		Plugin::Plugin(Engine* lpEngine, const char* lpcstrPluginDllName) :
-			Module(lpEngine), _PluginDllName(lpcstrPluginDllName), _Handle(nullptr), IsInit(true),
+			Module(lpEngine), _PluginDllName(PathFindFileNameA(lpcstrPluginDllName)), _Handle(nullptr), IsInit(true),
 			Menu(nullptr)
 		{
 			_FuncMap.insert(std::make_pair<std::string_view, uintptr_t>("CKPEPlugin_HasCanRuntimeDisabled", 0));
@@ -54,10 +56,19 @@ namespace CreationKitPlatformExtended
 			_FuncMap.insert(std::make_pair<std::string_view, uintptr_t>("CKPEPlugin_Shutdown", 0));
 			_FuncMap.insert(std::make_pair<std::string_view, uintptr_t>("CKPEPlugin_GetVersion", 0));
 
-			_Handle = LoadLibrary(_PluginDllName.c_str());
+			auto path = EditorAPI::BSString::Utils::GetApplicationPath();
+			path += "CKPEPlugins\\";
+			path += _PluginDllName.c_str();
+
+			_Handle = LoadLibraryA(path.c_str());
 			if (!_Handle)
 			{
-				_ERROR("Library \"%s\" not found", _PluginDllName.c_str());
+				auto ErrCode = GetLastError();
+				if (!ErrCode)
+					_ERROR("Couldn't open library \"%s\": Undefined error", path.c_str());
+				else
+					_ERROR("Couldn't open library \"%s\": #%X %s", path.c_str(), ErrCode, _com_error(ErrCode).ErrorMessage());
+				
 				IsInit = false;
 			}
 			else
@@ -78,7 +89,7 @@ namespace CreationKitPlatformExtended
 
 			if (IsInit)
 			{
-				_Log = new Core::DebugLog(EditorAPI::BSString::Utils::ChangeFileExt(lpcstrPluginDllName, ".log").c_str());
+				_Log = new Core::DebugLog(EditorAPI::BSString::Utils::ChangeFileExt(path.c_str(), ".log").c_str());
 				
 				auto OsVer = lpEngine->GetSystemVersion();		
 				_Log->FormattedMessage("Creation Kit Platform Extended Runtime: Initialize (Version: %s, OS: %u.%u Build %u)",
@@ -100,14 +111,14 @@ namespace CreationKitPlatformExtended
 			FreeLibrary(_Handle);
 		}
 
-		bool Plugin::HasCanRuntimeDisabled() const
+		bool Plugin::HasCanRuntimeDisabled() const noexcept(true)
 		{
 			auto It = _FuncMap.find("CKPEPlugin_HasCanRuntimeDisabled");
 			if ((It == _FuncMap.end()) || !It->second) return false;
 			return fastCall<bool>(It->second);
 		}
 
-		const char* Plugin::GetName() const
+		const char* Plugin::GetName() const noexcept(true)
 		{
 			auto It = _FuncMap.find("CKPEPlugin_GetName");
 			if ((It == _FuncMap.end()) || !It->second) return nullptr;
@@ -116,14 +127,14 @@ namespace CreationKitPlatformExtended
 			return szTemp;
 		}
 
-		bool Plugin::HasDependencies() const
+		bool Plugin::HasDependencies() const noexcept(true)
 		{
 			auto It = _FuncMap.find("CKPEPlugin_HasDependencies");
 			if ((It == _FuncMap.end()) || !It->second) return false;
 			return fastCall<bool>(It->second);
 		}
 
-		Array<String> Plugin::GetDependencies() const
+		Array<String> Plugin::GetDependencies() const noexcept(true)
 		{
 			auto It = _FuncMap.find("CKPEPlugin_GetDependencies");
 			if ((It == _FuncMap.end()) || !It->second) return {};
@@ -132,7 +143,7 @@ namespace CreationKitPlatformExtended
 			return DependList;
 		}
 
-		const char* Plugin::GetVersion() const
+		const char* Plugin::GetVersion() const noexcept(true)
 		{
 			auto It = _FuncMap.find("CKPEPlugin_GetVersion");
 			if ((It == _FuncMap.end()) || !It->second) return nullptr;
@@ -141,12 +152,12 @@ namespace CreationKitPlatformExtended
 			return szTemp;
 		}
 
-		bool Plugin::HasOption() const
+		bool Plugin::HasOption() const noexcept(true)
 		{
 			return false;
 		}
 
-		const char* Plugin::GetOptionName() const
+		const char* Plugin::GetOptionName() const noexcept(true)
 		{
 			return nullptr;
 		}

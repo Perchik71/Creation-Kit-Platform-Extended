@@ -128,8 +128,6 @@ namespace CreationKitPlatformExtended
 						AssertMsgVa(resultNo == EC_NONE, "Failed load an archive file %s", fileName);
 					}
 
-				skips:
-
 					LoadPrimaryArchive();
 
 					return resultNo;
@@ -162,8 +160,6 @@ namespace CreationKitPlatformExtended
 							(pointer_Archive2_sub1, arrayDataList, infoRes, Unk1, Unk2);
 						AssertMsgVa(resultNo == EC_NONE, "Failed load an archive file %s", fileName2);
 					}
-
-				skips:
 
 					LoadPrimaryArchive();
 

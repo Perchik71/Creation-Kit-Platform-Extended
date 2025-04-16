@@ -87,7 +87,7 @@ namespace CreationKitPlatformExtended
 					ScopeRelocator text;
 
 					// Set new size class 0x168 to 0x178
-					for (size_t i = 0; i < 3; i++)
+					for (uint32_t i = 0; i < 3; i++)
 						lpRelocator->Patch(_RELDATA_RAV(i), { 0x78 });
 					// Init
 					//LooseFileStreamHook::Generate(_RELDATA_RAV(3));

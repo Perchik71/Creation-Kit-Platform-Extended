@@ -919,6 +919,9 @@
     <ClCompile Include="Patches\SSE\UpdateUIWhenFogToggled.cpp">
       <Filter>Patches\SSE\51-100</Filter>
     </ClCompile>
+    <ClCompile Include="..\Dependencies\iw\iw.cpp">
+      <Filter>Dependecies\iw</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -1013,6 +1016,9 @@
     </Filter>
     <Filter Include="Patches\SSE\51-100">
       <UniqueIdentifier>{536a2b0e-b070-43bb-91aa-1b9b396f5423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependecies\iw">
+      <UniqueIdentifier>{71015db3-e55c-4373-87e2-4f5f73d87377}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2244,6 +2250,12 @@
     </ClInclude>
     <ClInclude Include="Patches\SSE\UpdateUIWhenFogToggled.h">
       <Filter>Patches\SSE\51-100</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\FO4\TESBoundObject.h">
+      <Filter>Editor API\FO4\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\iw\iw.h">
+      <Filter>Dependecies\iw</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
