@@ -33,7 +33,7 @@ Agree to replace all files.
 Regular users only need this method to access the newest features which haven't been released yet.  
 Open a project in **`Visual Studio 2022`** or later. Build the project in **`Release`** mode or **`Release-Qt`** for `Starfield`.  
 Then move your build output into game directory, so that **ckpe_loader.exe** is in the same folder as **CreationKit.exe**.  
-If you are asked to replace old files agrre to replace all.
+If you are asked to replace old files agree to replace all.
 
 # Credits
 [Nukem9](https://github.com/Nukem9) (for experimental functions, hash and so on, very useful)  
