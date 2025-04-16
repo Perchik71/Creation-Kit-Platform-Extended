@@ -50,9 +50,10 @@ namespace CreationKitPlatformExtended
 				FromInfo = reinterpret_cast<const MSRTTI::Info*>(_CacheFrom.second);
 			else
 			{
-				FromInfo = MSRTTI::Find(lpstrFromType);
-				if (FromInfo)
+				auto v = MSRTTI::FindAll(lpstrFromType);
+				if (v.size())
 				{
+					FromInfo = v[0];
 					_CacheFrom.first = lpstrFromType;
 					_CacheFrom.second = FromInfo;
 				}
@@ -62,11 +63,12 @@ namespace CreationKitPlatformExtended
 				TargetInfo = reinterpret_cast<const MSRTTI::Info*>(_CacheTarget.second);
 			else
 			{
-				TargetInfo = MSRTTI::Find(lpstrTargetType);
-				if (TargetInfo)
-				{ 
-					_CacheTarget.first = lpstrTargetType;
-					_CacheTarget.second = TargetInfo;
+				auto v = MSRTTI::FindAll(lpstrTargetType);
+				if (v.size())
+				{
+					TargetInfo = v[0];
+					_CacheFrom.first = lpstrFromType;
+					_CacheFrom.second = TargetInfo;
 				}
 			}
 

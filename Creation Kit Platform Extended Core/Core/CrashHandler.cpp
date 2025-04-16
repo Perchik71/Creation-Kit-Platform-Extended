@@ -16,6 +16,10 @@
 #include "Zydis/Zydis.h"
 #include "iw.h"
 
+#include "Editor API/SSE/TESForm.h"
+#include "Editor API/FO4/TESFormF4.h"
+#include "Editor API/SF/TESForm.h"
+
 namespace CreationKitPlatformExtended
 {
 	namespace Core
@@ -40,12 +44,15 @@ namespace CreationKitPlatformExtended
 			{
 				AnalyzeItemType Type;
 				EditorAPI::BSString Text;
+				EditorAPI::BSString Additional;
 			};
 
 			Introspection();
 
 			[[nodiscard]] AnalyzeInfo Analyze(FILE* Stream, uintptr_t Address, CrashHandler::ModuleMapInfo* Modules,
 				CrashHandler::ArrayMemoryInfo* Memory) const noexcept(true);
+		private:
+			[[nodiscard]] bool AnalyzeClass(FILE* Stream, uintptr_t Address, AnalyzeInfo* Info, uintptr_t RefAddress = 0) const noexcept(true);
 		};
 
 		CrashHandler* GlobalCrashHandlerPtr = nullptr;
@@ -65,6 +72,58 @@ namespace CreationKitPlatformExtended
 			if (ZYDIS_SUCCESS(ZydisDecoderInit(&Decoder, ZYDIS_MACHINE_MODE_LONG_64, ZYDIS_ADDRESS_WIDTH_64)))
 				if (ZYDIS_SUCCESS(ZydisFormatterInit(&Formatter, ZYDIS_FORMATTER_STYLE_INTEL)))
 					Init = true;
+		}
+
+		bool Introspection::AnalyzeClass(FILE* Stream, uintptr_t Address, AnalyzeInfo* Info, uintptr_t RefAddress) const noexcept(true)
+		{
+			auto ObjRtti = MSRTTI::FindByAddr(Address);
+			if (ObjRtti)
+			{
+				Info->Type = aitClass;
+				auto RttiName = strchr(ObjRtti->Name, ' ');
+				Info->Text = RttiName ? RttiName + 1 : ObjRtti->Name;
+
+				if (RefAddress)
+				{
+					auto form = _DYNAMIC_CAST((void*)RefAddress, 0, ObjRtti->Name, "class TESForm");
+					if (form)
+					{
+						switch (GetShortExecutableTypeFromFull(GlobalEnginePtr->GetEditorVersion()))
+						{
+						case CreationKitPlatformExtended::Core::EDITOR_SHORT_SKYRIM_SE:
+						{
+							auto formSSE = (EditorAPI::SkyrimSpectialEdition::TESForm*)form;
+							auto buf = std::make_unique<char[]>(256);
+							formSSE->DebugInfo(buf.get(), 256);
+							Info->Additional = buf.get();
+						}
+						break;
+						case CreationKitPlatformExtended::Core::EDITOR_SHORT_FALLOUT_C4:
+						{
+							auto formFO4 = (EditorAPI::Fallout4::TESForm*)form;
+							auto buf = std::make_unique<char[]>(256);
+							formFO4->DebugInfo(buf.get(), 256);
+							Info->Additional = buf.get();
+						}
+						break;
+						case CreationKitPlatformExtended::Core::EDITOR_SHORT_STARFIELD:
+						{
+							auto formSF = (EditorAPI::Starfield::TESForm*)form;
+							auto buf = std::make_unique<char[]>(256);
+							formSF->DebugInfo(buf.get(), 256);
+							Info->Additional = buf.get();
+						}
+						break;
+						default:
+							break;
+						}
+					}
+				}
+
+				return true;
+			}
+
+			return false;
 		}
 
 		Introspection::AnalyzeInfo Introspection::Analyze(FILE* Stream, uintptr_t Address, CrashHandler::ModuleMapInfo* Modules,
@@ -147,28 +206,14 @@ namespace CreationKitPlatformExtended
 									Info.Text.AppendFormat("&%s", RefInfo.Text.c_str());
 								else
 								{
-									auto ObjRtti = MSRTTI::FindByAddr(*(uintptr_t*)Address);
-									if (ObjRtti)
-									{
-										Info.Type = aitClass;
-										auto RttiName = strchr(ObjRtti->Name, ' ');
-										Info.Text = RttiName ? RttiName + 1 : ObjRtti->Name;
-									}
-									else
+									if (!AnalyzeClass(Stream, *(uintptr_t*)Address, &Info, Address))
 										Info.Type = aitUnknown;
 								}
 							}
 						}
 						else
 						{
-							auto ObjRtti = MSRTTI::FindByAddr(*(uintptr_t*)Address);
-							if (ObjRtti)
-							{
-								Info.Type = aitClass;
-								auto RttiName = strchr(ObjRtti->Name, ' ');
-								Info.Text = RttiName ? RttiName + 1 : ObjRtti->Name;
-							}
-							else
+							if (!AnalyzeClass(Stream, *(uintptr_t*)Address, &Info, Address))
 							{
 								// maybe string
 
@@ -194,14 +239,7 @@ namespace CreationKitPlatformExtended
 					}
 					else
 					{
-						auto ObjRtti = MSRTTI::FindByAddr(Address);
-						if (ObjRtti)
-						{
-							Info.Type = aitClass;
-							auto RttiName = strchr(ObjRtti->Name, ' ');
-							Info.Text = RttiName ? RttiName + 1 : ObjRtti->Name;
-						}
-						else
+						if (!AnalyzeClass(Stream, Address, &Info))
 						{
 							// maybe part string
 
@@ -705,10 +743,13 @@ namespace CreationKitPlatformExtended
 						fprintf(Stream, "(size_t) [%llu]\n", Value);
 					break;
 				case Introspection::aitClass:
-					fprintf(Stream, "(%s*)\n", Analize.Text.c_str());
+					if (Analize.Additional.IsEmpty())
+						fprintf(Stream, "(%s*)\n", Analize.Text.c_str());
+					else
+						fprintf(Stream, "(%s*) | %s\n", Analize.Text.c_str(), Analize.Additional.c_str());
 					break;
 				case Introspection::aitString:
-					fprintf(Stream, "%s\n", Analize.Text.c_str());
+					fprintf(Stream, "(char*) %s\n", Analize.Text.c_str());
 					break;
 				default:
 					fprintf(Stream, "(void*)\n");
@@ -787,7 +828,7 @@ namespace CreationKitPlatformExtended
 			}
 			__except (1)
 			{
-				// nope
+				fprintf(Stream, "\n");
 			}
 		}
 
@@ -821,7 +862,7 @@ namespace CreationKitPlatformExtended
 			}
 			__except (1)
 			{
-				// nope
+				fprintf(Stream, "\n");
 			}
 		}
 
@@ -865,10 +906,13 @@ namespace CreationKitPlatformExtended
 							fprintf(Stream, "(size_t) [%llu]\n", *(uintptr_t*)stack_iter);
 						break;
 					case Introspection::aitClass:
-						fprintf(Stream, "(%s*)\n", Analize.Text.c_str());
+						if (Analize.Additional.IsEmpty())
+							fprintf(Stream, "(%s*)\n", Analize.Text.c_str());
+						else
+							fprintf(Stream, "(%s*) | %s\n", Analize.Text.c_str(), Analize.Additional.c_str());
 						break;
 					case Introspection::aitString:
-						fprintf(Stream, "%s\n", Analize.Text.c_str());
+						fprintf(Stream, "(char*) %s\n", Analize.Text.c_str());
 						break;
 					default:
 						fprintf(Stream, "(void*)\n");
@@ -891,7 +935,7 @@ namespace CreationKitPlatformExtended
 			}
 			__except (1)
 			{
-				// nope
+				fprintf(Stream, "\n");
 			}
 		}
 
