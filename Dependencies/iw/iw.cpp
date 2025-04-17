@@ -361,6 +361,7 @@ namespace iw
 			*minor = LOWORD(file_version->dwProductVersionMS);
 			*build = HIWORD(file_version->dwProductVersionLS);
 
+			return;
 		ver_win_home_maybe:
 			get_os_spec(major, minor, build);
 		}

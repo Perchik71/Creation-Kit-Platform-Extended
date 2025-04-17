@@ -114,8 +114,9 @@ namespace CreationKitPlatformExtended
 			_OsVersion.MinorVersion = kernel_info.minor;
 			_OsVersion.BuildNubmer = kernel_info.build;
 
-			_MESSAGE("CKPE Runtime: Initialize (Version: %s %s %s, OS: %s)",
-				VER_FILE_VERSION_STR, __DATE__, __TIME__, iw::system::version_name_by_kernel_info(&kernel_info).c_str());
+			_MESSAGE("CKPE Runtime: Initialize (Version: %s %s %s, OS: %s v%u.%u.%u)",
+				VER_FILE_VERSION_STR, __DATE__, __TIME__, iw::system::version_name_by_kernel_info(&kernel_info).c_str(),
+				_OsVersion.MajorVersion, _OsVersion.MinorVersion, _OsVersion.BuildNubmer);
 
 			auto cpu_info = iw::cpu::cpu_info();
 			_hasAVX2 = iw::cpu::is_support_AVX2(&cpu_info);
