@@ -23,7 +23,7 @@ namespace CreationKitPlatformExtended
 
 			bool FakeMoveLightPatch::HasOption() const
 			{
-				return false;
+				return true;
 			}
 
 			bool FakeMoveLightPatch::HasCanRuntimeDisabled() const
@@ -33,7 +33,7 @@ namespace CreationKitPlatformExtended
 
 			const char* FakeMoveLightPatch::GetOptionName() const
 			{
-				return nullptr;
+				return "CreationKit:bFakeMovingLight";
 			}
 
 			const char* FakeMoveLightPatch::GetName() const
