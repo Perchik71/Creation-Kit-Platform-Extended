@@ -64,6 +64,7 @@ namespace CreationKitPlatformExtended
 			static LRESULT CALLBACK DialogSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,
 				UINT_PTR uIdSubclass, DWORD_PTR dwRefData);
 
+			static void ApplyThemeForWindow(HWND hWnd);
 			static DWORD Comctl32GetSysColor(INT nIndex);
 			static HBRUSH Comctl32GetSysColorBrush(INT nIndex);
 			static HRESULT Comctl32DrawThemeText(HTHEME hTheme, HDC hdc, INT iPartId, INT iStateId, 

@@ -2316,6 +2316,7 @@
     <Image Include="..\Resources\scripts.bmp">
       <Filter>Resources</Filter>
     </Image>
+    <Image Include="..\Resources\ckpe.ico" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Shaders\FXAA_PS.hlsl">

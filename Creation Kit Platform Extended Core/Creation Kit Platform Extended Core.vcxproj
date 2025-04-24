@@ -88,7 +88,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\;$(VSInstallDir)DIA SDK\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ws2_32.lib;msimg32.lib;uxtheme.lib;version.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;gdiplus.lib;DirectXTex.lib;VoltekLib.Detours.lib;VoltekLib.UnicodeConverter.lib;VoltekLib.MemoryManager.lib;VoltekLib.RelocationDatabase.lib;ImGUI.lib;diaguids.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;msimg32.lib;uxtheme.lib;version.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;gdiplus.lib;DirectXTex.lib;VoltekLib.Detours.lib;VoltekLib.UnicodeConverter.lib;VoltekLib.MemoryManager.lib;VoltekLib.RelocationDatabase.lib;ImGUI.lib;diaguids.lib;dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\Version\scripts.ps1"</Command>
@@ -127,7 +127,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\;$(SolutionDir)\Dependencies\qt5\lib;$(SolutionDir)$(Platform)\Release\;$(VSInstallDir)DIA SDK\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ws2_32.lib;msimg32.lib;uxtheme.lib;version.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;gdiplus.lib;DirectXTex.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;VoltekLib.Detours.lib;VoltekLib.UnicodeConverter.lib;VoltekLib.MemoryManager.lib;VoltekLib.RelocationDatabase.lib;ImGUI.lib;diaguids.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;msimg32.lib;uxtheme.lib;version.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;gdiplus.lib;DirectXTex.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;VoltekLib.Detours.lib;VoltekLib.UnicodeConverter.lib;VoltekLib.MemoryManager.lib;VoltekLib.RelocationDatabase.lib;ImGUI.lib;diaguids.lib;dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\Version\scripts.ps1"</Command>
@@ -888,6 +888,7 @@
     <Image Include="..\Resources\aboutsf.png" />
     <Image Include="..\Resources\check.bmp" />
     <Image Include="..\Resources\check_darktheme.bmp" />
+    <Image Include="..\Resources\ckpe.ico" />
     <Image Include="..\Resources\navmesh.bmp" />
     <Image Include="..\Resources\scripts.bmp" />
     <Image Include="..\Resources\storymanager.bmp" />

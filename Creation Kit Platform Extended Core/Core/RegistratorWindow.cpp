@@ -3,6 +3,8 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "RegistratorWindow.h"
+#include "UITheme/VarCommon.h"
+#include "Patches/UIThemePatch.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -37,6 +39,7 @@ namespace CreationKitPlatformExtended
 			_aWnds.push_back(hWnd);
 			// Регистрируем индетификатор потока или инкреминируем счётчик
 			AddWndThread(hWnd);
+			SendMessageForUITheme(hWnd);
 
 			return hWnd;
 		}
@@ -51,6 +54,7 @@ namespace CreationKitPlatformExtended
 			_aMajorWnds.insert(std::pair<HWND, String>(hWnd, sName));
 			// Регистрируем индетификатор потока или инкреминируем счётчик
 			AddWndThread(hWnd);
+			SendMessageForUITheme(hWnd);
 
 			return hWnd;
 		}
@@ -163,6 +167,12 @@ namespace CreationKitPlatformExtended
 				else
 					It->second--;
 			}
+		}
+
+		void RegistratorWindow::SendMessageForUITheme(HWND hWnd)
+		{
+			if (UITheme::IsDarkThemeSystemSupported() && UITheme::IsDarkTheme())
+				Patches::UIThemePatch::ApplyThemeForWindow(hWnd);
 		}
 	}
 }

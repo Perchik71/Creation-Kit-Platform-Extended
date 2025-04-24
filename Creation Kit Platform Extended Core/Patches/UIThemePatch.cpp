@@ -6,6 +6,9 @@
 
 #pragma warning(disable : 26819)
 
+#include <dwmapi.h>
+#include <comdef.h>
+
 #include "Core/Engine.h"
 #include "Core/RegistratorWindow.h"
 #include "Editor API/EditorUI.h"
@@ -814,6 +817,7 @@ namespace CreationKitPlatformExtended
 						else if (((uStyles & WS_CAPTION) == WS_CAPTION) && ((uStyles & WS_CHILD) != WS_CHILD)) {
 							if ((uStyles & WS_SYSMENU) == WS_SYSMENU) 
 							{
+								//IDI_CKPEICON
 								auto Inst = GlobalEnginePtr->GetModuleBase();
 								SetClassLongPtrA(hWnd, GCLP_HICON, (LONG_PTR)LoadIconA((HINSTANCE)Inst, MAKEINTRESOURCEA(318)));
 								SetClassLongPtrA(hWnd, GCLP_HICONSM, (LONG_PTR)LoadIconA((HINSTANCE)Inst, MAKEINTRESOURCEA(318)));
@@ -975,6 +979,42 @@ namespace CreationKitPlatformExtended
 			}
 
 			return result;
+		}
+
+		void UIThemePatch::ApplyThemeForWindow(HWND hWnd)
+		{
+			auto _OsVer = GlobalEnginePtr->GetSystemVersion();
+
+			if (_OsVer.BuildNubmer >= 22000)
+			{
+				// Win11			
+				COLORREF Color = UITheme::Comctl32GetSysColor(COLOR_BTNFACE);
+				HRESULT hr = DwmSetWindowAttribute(hWnd, DWMWINDOWATTRIBUTE::DWMWA_CAPTION_COLOR, &Color, sizeof(Color));
+				if (SUCCEEDED(hr))
+				{
+					Color = UITheme::Comctl32GetSysColor(COLOR_BTNTEXT);
+					hr = DwmSetWindowAttribute(hWnd, DWMWINDOWATTRIBUTE::DWMWA_TEXT_COLOR, &Color, sizeof(Color));
+					if (SUCCEEDED(hr))
+					{
+						Color = UITheme::Comctl32GetSysColor(COLOR_INACTIVEBORDER);
+						hr = DwmSetWindowAttribute(hWnd, DWMWINDOWATTRIBUTE::DWMWA_BORDER_COLOR, &Color, sizeof(Color));
+						if (SUCCEEDED(hr))
+						{
+							// TODO: Reg for inactive/active
+						}
+						else _ERROR("Couldn't apply a dark theme for caption border: %08X %s", hr, _com_error(hr).ErrorMessage());
+					}
+					else _ERROR("Couldn't apply a dark theme for caption text: %08X %s", hr, _com_error(hr).ErrorMessage());
+				}
+				else _ERROR("Couldn't apply a dark theme for caption bg: %08X %s", hr, _com_error(hr).ErrorMessage());
+			}
+			else
+			{
+				// Win10
+				BOOL DarkMode = true;
+				HRESULT hr = DwmSetWindowAttribute(hWnd, DWMWINDOWATTRIBUTE::DWMWA_USE_IMMERSIVE_DARK_MODE, &DarkMode, sizeof(DarkMode));
+				if (FAILED(hr)) _ERROR("Couldn't apply a dark theme for caption: %08X %s", hr, _com_error(hr).ErrorMessage());
+			}
 		}
 
 		DWORD UIThemePatch::Comctl32GetSysColor(INT nIndex)

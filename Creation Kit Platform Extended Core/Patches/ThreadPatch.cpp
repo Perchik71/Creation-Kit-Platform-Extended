@@ -69,11 +69,23 @@ namespace CreationKitPlatformExtended
 					_MESSAGE("ProcessMask: 0x%X", ProcessMask);
 					_MESSAGE("SystemMask: 0x%X", SystemMask);
 
-					if (ProcessMask != SystemMask)
+					auto NumCores = _engine->GetTotalLogicalCores();
+					if (NumCores >= 4)
 					{
-						_MESSAGE("A change in the usage of processor cores has been detected");
+						// max 50% for cpu
+						NumCores >>= 1;
+						DWORD dwMask = 0;
 
-						SetProcessAffinityMask(hCurrentProcess, SystemMask);
+						for (uint8_t i = 0; i < NumCores; i++)
+							dwMask |= 1 << i;
+
+						if (SetProcessAffinityMask(hCurrentProcess, dwMask))
+							_MESSAGE("InstallMask: 0x%X", dwMask);
+					}
+					else
+					{
+						if (SetProcessAffinityMask(hCurrentProcess, SystemMask))
+							_MESSAGE("InstallMask: 0x%X", SystemMask);
 					}
 				}
 

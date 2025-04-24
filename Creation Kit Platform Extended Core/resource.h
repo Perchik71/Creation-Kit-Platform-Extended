@@ -19,6 +19,7 @@
 #define IDS_FXAA_VS                     116
 #define IDS_TAA_PS                      117
 #define IDST_ANTIALIASING_TIPS          118
+#define IDI_CKPEICON                    119
 #define IDC_STATIC1                     1001
 #define IDC_EDIT1                       1002
 
@@ -26,7 +27,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        119
+#define _APS_NEXT_RESOURCE_VALUE        120
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1003
 #define _APS_NEXT_SYMED_VALUE           101

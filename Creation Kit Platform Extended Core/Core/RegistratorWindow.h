@@ -39,6 +39,7 @@ namespace CreationKitPlatformExtended
 		private:
 			void AddWndThread(HWND hWnd);
 			void RemoveWndThread(HWND hWnd);
+			void SendMessageForUITheme(HWND hWnd);
 		private:
 			std::recursive_mutex _lock;
 			Map<HWND, String> _aMajorWnds;
