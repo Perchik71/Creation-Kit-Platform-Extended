@@ -922,6 +922,9 @@
     <ClCompile Include="..\Dependencies\iw\iw.cpp">
       <Filter>Dependecies\iw</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SF\TESRemoveCheckDataDriverSF.cpp">
+      <Filter>Patches\SF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2256,6 +2259,9 @@
     </ClInclude>
     <ClInclude Include="..\Dependencies\iw\iw.h">
       <Filter>Dependecies\iw</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SF\TESRemoveCheckDataDriverSF.h">
+      <Filter>Patches\SF</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

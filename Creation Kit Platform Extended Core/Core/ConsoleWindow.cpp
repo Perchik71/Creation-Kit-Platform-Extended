@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #include "Engine.h"
+#include "RegistratorWindow.h"
 #include "Editor API/EditorUI.h"
 #include "Patches/UIThemePatch.h"
 #include "Patches/UIThemeClassicPatch.h"
@@ -121,6 +122,8 @@ namespace CreationKitPlatformExtended
 				{
 				case WM_CREATE:
 				{
+					GlobalRegistratorWindowPtr->RegisterMajor(Hwnd, "ConsoleWindow");
+
 					auto info = reinterpret_cast<const CREATESTRUCT*>(lParam);
 
 					// Создание rich edit control (https://docs.microsoft.com/en-us/windows/desktop/Controls/rich-edit-controls)

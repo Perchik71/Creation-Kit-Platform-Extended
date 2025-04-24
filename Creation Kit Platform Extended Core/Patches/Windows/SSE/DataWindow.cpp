@@ -4,6 +4,7 @@
 
 #include "resource.h"
 #include "Core/Engine.h"
+#include "Core/RegistratorWindow.h"
 #include "UITheme/VarCommon.h"
 #include "Editor API/UI/UIImageList.h"
 #include "DataWindow.h"
@@ -99,6 +100,7 @@ namespace CreationKitPlatformExtended
 					GlobalDataWindowPtr->m_hWnd = Hwnd;
 					pluginList = pluginListHandle;
 
+					GlobalRegistratorWindowPtr->RegisterMajor(Hwnd, "DataWindow");
 					GlobalDataWindowPtr->Style = WS_OVERLAPPED | WS_CAPTION | WS_BORDER | WS_SYSMENU;
 
 					// Subscribe to notifications when the user types in the filter text box

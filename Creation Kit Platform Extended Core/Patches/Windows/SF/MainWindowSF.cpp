@@ -6,6 +6,7 @@
 #include "Core/ConsoleWindow.h"
 #include "Core/FormInfoOutputWindow.h"
 #include "Core/TypeInfo/ms_rtti.h"
+#include "Core/RegistratorWindow.h"
 #include "Version/resource_version2.h"
 #include "UITheme/VarCommon.h"
 #include "Editor API/BSString.h"
@@ -146,6 +147,10 @@ namespace CreationKitPlatformExtended
 			void CALLBACK MainWindow::HKInitializeActions(QMainWindow* MainWindow)
 			{
 				Core::fastCall<void>(pointer_MainWindow_sub1, MainWindow);
+				GlobalRegistratorWindowPtr->RegisterMajor((HWND)MainWindow->winId(), "MainWindow");
+
+				// Replace icon
+				MainWindow->setWindowIcon(QIcon("/CKPE/ckpe_ico.png"));
 
 				auto menuBar = MainWindow->menuBar();
 				if (!menuBar) return;

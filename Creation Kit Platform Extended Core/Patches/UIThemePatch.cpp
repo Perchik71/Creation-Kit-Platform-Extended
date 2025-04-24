@@ -9,6 +9,7 @@
 #include <dwmapi.h>
 #include <comdef.h>
 
+#include "resource.h"
 #include "Core/Engine.h"
 #include "Core/RegistratorWindow.h"
 #include "Editor API/EditorUI.h"
@@ -817,10 +818,9 @@ namespace CreationKitPlatformExtended
 						else if (((uStyles & WS_CAPTION) == WS_CAPTION) && ((uStyles & WS_CHILD) != WS_CHILD)) {
 							if ((uStyles & WS_SYSMENU) == WS_SYSMENU) 
 							{
-								//IDI_CKPEICON
-								auto Inst = GlobalEnginePtr->GetModuleBase();
-								SetClassLongPtrA(hWnd, GCLP_HICON, (LONG_PTR)LoadIconA((HINSTANCE)Inst, MAKEINTRESOURCEA(318)));
-								SetClassLongPtrA(hWnd, GCLP_HICONSM, (LONG_PTR)LoadIconA((HINSTANCE)Inst, MAKEINTRESOURCEA(318)));
+								auto Inst = GlobalEnginePtr->GetInstanceDLL();
+								SetClassLongPtrA(hWnd, GCLP_HICON, (LONG_PTR)LoadIconA((HINSTANCE)Inst, MAKEINTRESOURCEA(IDI_CKPEICON)));
+								SetClassLongPtrA(hWnd, GCLP_HICONSM, (LONG_PTR)LoadIconA((HINSTANCE)Inst, MAKEINTRESOURCEA(IDI_CKPEICON)));
 							}
 						}
 						break;

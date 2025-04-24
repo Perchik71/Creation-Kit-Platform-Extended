@@ -289,6 +289,7 @@
     <ClCompile Include="Patches\SF\TESDataHandlerHookSF.cpp" />
     <ClCompile Include="Patches\SF\TESFormRESF.cpp" />
     <ClCompile Include="Patches\SF\TESPointerHandleDetailSF.cpp" />
+    <ClCompile Include="Patches\SF\TESRemoveCheckDataDriverSF.cpp" />
     <ClCompile Include="Patches\SF\UIDefferSF.cpp" />
     <ClCompile Include="Patches\SkipTopicInfoValidation.cpp" />
     <ClCompile Include="Patches\SSE\AddChangeRef.cpp" />
@@ -704,6 +705,7 @@
     <ClInclude Include="Patches\SF\TESDataHandlerHookSF.h" />
     <ClInclude Include="Patches\SF\TESFormRESF.h" />
     <ClInclude Include="Patches\SF\TESPointerHandleDetailSF.h" />
+    <ClInclude Include="Patches\SF\TESRemoveCheckDataDriverSF.h" />
     <ClInclude Include="Patches\SF\UIDefferSF.h" />
     <ClInclude Include="Patches\SkipTopicInfoValidation.h" />
     <ClInclude Include="Patches\SSE\AddChangeRef.h" />

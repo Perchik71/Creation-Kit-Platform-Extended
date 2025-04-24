@@ -4,6 +4,7 @@
 
 #include "resource.h"
 #include "Core/Engine.h"
+#include "Core/RegistratorWindow.h"
 #include "UITheme/VarCommon.h"
 #include "Editor API/UI/UIImageList.h"
 #include "DataWindowSF.h"
@@ -95,6 +96,7 @@ namespace CreationKitPlatformExtended
 				{
 					INT_PTR result = CallWindowProc(GlobalDataWindowPtr->GetOldWndProc(), Hwnd, Message, wParam, lParam);
 					HWND pluginListHandle = GetDlgItem(Hwnd, UI_LISTVIEW_PLUGINS);
+					GlobalRegistratorWindowPtr->RegisterMajor(Hwnd, "DataWindow");
 
 					GlobalDataWindowPtr->m_hWnd = Hwnd;
 					pluginList = pluginListHandle;

@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/CKPE">
+		<file>ckpe_ico.png</file>
         <file>aboutsf.png</file>
 		<file>qt5menu/ckpe_ic1.png</file>
 		<file>qt5menu/ckpe_ic2.png</file>
