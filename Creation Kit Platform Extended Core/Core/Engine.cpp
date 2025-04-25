@@ -59,7 +59,7 @@ namespace CreationKitPlatformExtended
 		void Starfield_AppendPatches(ModuleManager* PatchesManager);
 
 		Engine* GlobalEnginePtr = nullptr;
-
+		HMODULE GlobalModuleHandle = nullptr;
 		CHAR TempNTSIT[16];
 		ULONG_PTR TempNTSITAddress;
 		std::atomic_uint32_t g_DumpTargetThreadId;
@@ -583,6 +583,8 @@ namespace CreationKitPlatformExtended
 
 		IResult Engine::Initialize(HMODULE hModule, LPCSTR lpcstrAppName)
 		{
+			GlobalModuleHandle = hModule;
+
 			if (GlobalEnginePtr)
 				return RC_INITIALIZATION_ENGINE_AGAIN;
 

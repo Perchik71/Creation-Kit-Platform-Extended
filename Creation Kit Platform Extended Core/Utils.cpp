@@ -16,7 +16,7 @@ namespace CreationKitPlatformExtended
 {
 	namespace Utils
 	{
-		inline static void QuitWithResult(int nErrorCode = 0)
+		void QuitWithResult(int nErrorCode)
 		{
 #ifndef _CKPE_WITH_QT5
 			if (Core::INICacheData) Core::INICacheData->ClearAndFlush();

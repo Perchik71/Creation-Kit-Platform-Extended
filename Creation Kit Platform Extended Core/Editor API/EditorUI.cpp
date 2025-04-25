@@ -8,6 +8,8 @@
 #include "Core/RegistratorWindow.h"
 #include "EditorUI.h"
 #include "../NiAPI/NiMemoryManager.h"
+#include "UITheme/VarCommon.h"
+#include "../Patches/UIThemePatch.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -330,6 +332,9 @@ namespace CreationKitPlatformExtended
 
 			DialogOverrideMutex.lock();
 			{
+				if (UITheme::IsDarkTheme())
+					Patches::UIThemePatch::ApplyThemeForWindow(hwndDlg);
+
 				if (auto itr = DialogOverrides.find(hwndDlg); itr != DialogOverrides.end())
 					proc = itr->second.DialogFunc;
 

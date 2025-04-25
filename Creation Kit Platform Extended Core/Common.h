@@ -21,10 +21,12 @@
 #include <wrl/client.h>		// Microsoft::WRL::ComPtr
 #include <dbghelp.h>
 #include <shellapi.h>
+#include <dwmapi.h>
 #include <shlwapi.h>
 #include <shlobj_core.h>
 #include <d3d11.h>
 #include <d3d11_2.h>
+#include <d3d12.h>
 #include <dxgi.h>
 #include <uxtheme.h>
 #include <strsafe.h>
@@ -38,6 +40,7 @@
 #include <mmsystem.h>
 #include <commctrl.h>
 #include <commdlg.h>
+#include <comdef.h>
 #include <richedit.h>
 #include <intrin.h>
 #include <xmmintrin.h>

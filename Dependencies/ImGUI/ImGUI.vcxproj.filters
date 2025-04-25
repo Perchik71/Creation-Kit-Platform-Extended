@@ -8,6 +8,7 @@
     <ClCompile Include="imgui_draw.cpp" />
     <ClCompile Include="backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="backends\imgui_impl_dx12.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imstb_rectpack.h" />
@@ -17,5 +18,6 @@
     <ClInclude Include="imgui_internal.h" />
     <ClInclude Include="backends\imgui_impl_dx11.h" />
     <ClInclude Include="backends\imgui_impl_win32.h" />
+    <ClInclude Include="backends\imgui_impl_dx12.h" />
   </ItemGroup>
 </Project>

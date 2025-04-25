@@ -6,9 +6,6 @@
 
 #pragma warning(disable : 26819)
 
-#include <dwmapi.h>
-#include <comdef.h>
-
 #include "resource.h"
 #include "Core/Engine.h"
 #include "Core/RegistratorWindow.h"

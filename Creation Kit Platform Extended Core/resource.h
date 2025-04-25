@@ -20,16 +20,30 @@
 #define IDS_TAA_PS                      117
 #define IDST_ANTIALIASING_TIPS          118
 #define IDI_CKPEICON                    119
+#define IDD_CRASHDIALOG                 120
+#define IDB_PNG4                        122
+#define IDB_PNG5                        124
 #define IDC_STATIC1                     1001
 #define IDC_EDIT1                       1002
+#define IDC_STATIC_CRASH_CAPTION        1003
+#define IDC_STATIC_CRASH_PICTURE        1004
+#define IDC_STATIC_CRASH_ERROR_PIC      1005
+#define IDC_STATIC_CRASH_DETAILS        1006
+#define IDC_EDIT_CRASH_DETAILS          1007
+#define IDC_STATIC_CRASH_VERSION        1008
+#define IDC_STATIC_CRASH_TEXT_MAIN      1009
+#define IDC_STATIC_CRASH_TEXT_ADD       1010
+#define IDC_SYSLINK1                    1011
+#define IDC_SYSLINK2                    1012
+#define IDC_STATIC_CRASH_TEXT_ADD2      1013
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        120
+#define _APS_NEXT_RESOURCE_VALUE        125
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1003
+#define _APS_NEXT_CONTROL_VALUE         1012
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

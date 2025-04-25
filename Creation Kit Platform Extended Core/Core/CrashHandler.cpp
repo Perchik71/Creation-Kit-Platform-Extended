@@ -7,6 +7,8 @@
 #include <psapi.h>
 #include "CrashHandler.h"
 #include "INIWrapper.h"
+#include "resource.h"
+#include "..\version\resource_version2.h"
 
 #include "Engine.h"
 #include "PluginManager.h"
@@ -19,11 +21,18 @@
 #include "Editor API/SSE/TESForm.h"
 #include "Editor API/FO4/TESFormF4.h"
 #include "Editor API/SF/TESForm.h"
+#include "Editor API/UI/UIGraphics.h"
+#include "Patches/UIThemePatch.h"
+#include "UITheme/VarCommon.h"
 
 namespace CreationKitPlatformExtended
 {
 	namespace Core
 	{
+		using namespace ::Core::Classes::UI;
+
+		extern HMODULE GlobalModuleHandle;
+
 		class Introspection
 		{
 			bool Init;
@@ -377,95 +386,15 @@ namespace CreationKitPlatformExtended
 
 			std::thread t([]()
 			{
-				auto BigDump = GlobalINIConfigPtr->ReadBool("Crashes", "bGenerateFullDump", false);
+				if (UITheme::IsDarkTheme())
+					Patches::UIThemePatch::InitializeCurrentThread();
 
 				if (WaitForSingleObject(GlobalCrashDumpTriggerEvent, INFINITE) != WAIT_OBJECT_0)
 					return;
 
-				char fileNames[4][MAX_PATH];
-				bool dumpWritten = false;
-
 				auto ehInfo = GlobalCrashDumpExceptionInfo.load();
-				auto miniDumpWriteDump = (decltype(&MiniDumpWriteDump))GetProcAddress(LoadLibraryA("dbghelp.dll"), "MiniDumpWriteDump");
-				
-				if (miniDumpWriteDump)
-				{
-					// Create a dump in the same folder of the exe itself
-					char exePath[MAX_PATH];
-					GetModuleFileNameA(GetModuleHandleA(nullptr), exePath, ARRAYSIZE(exePath));
-
-					SYSTEMTIME sysTime;
-					GetSystemTime(&sysTime);
-					sprintf_s(fileNames[0], "%s_%4d%02d%02d_%02d%02d%02d.dmp", exePath, sysTime.wYear, sysTime.wMonth, 
-						sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond);
-
-					HANDLE file = CreateFileA(fileNames[0], GENERIC_READ | GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS,
-						FILE_ATTRIBUTE_NORMAL, nullptr);
-					if (file != INVALID_HANDLE_VALUE)
-					{
-						MINIDUMP_EXCEPTION_INFORMATION dumpInfo
-						{
-							.ThreadId = GlobalCrashDumpTargetThreadId.load(),
-							.ExceptionPointers = ehInfo,
-							.ClientPointers = FALSE,
-						};
-
-						UINT32 dumpFlags = 
-							MiniDumpNormal | MiniDumpWithThreadInfo | MiniDumpWithIndirectlyReferencedMemory;
-
-						if (BigDump)
-							dumpFlags |= (MiniDumpWithDataSegs | MiniDumpWithFullMemory | MiniDumpWithHandleData | MiniDumpWithFullMemoryInfo);
-						else
-							dumpFlags |= MiniDumpWithoutOptionalData;
-			
-						dumpWritten = miniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), file, (MINIDUMP_TYPE)dumpFlags,
-							&dumpInfo, nullptr, nullptr) != FALSE;
-
-						CloseHandle(file);
-					}
-				}
-				else
-					strcpy_s(fileNames[0], "UNABLE TO LOAD DBGHELP.DLL");
-				
-				// Close and added archive the log's
-				GlobalDebugLogPtr->Close();
-				strcpy(fileNames[1], "CreationKitPlatformExtended.log");
-				
-				if (Core::GlobalConsoleWindowPtr)
-				{
-					strcpy(fileNames[2], "CreationKitPlatformExtendedCrash.log");
-
-					Core::GlobalConsoleWindowPtr->CloseOutputFile();
-					Core::GlobalConsoleWindowPtr->SaveRichTextToFile(fileNames[2]);
-
-					FILE* fStream = _fsopen(fileNames[2], "at", _SH_DENYWR);
-					if (fStream)
-					{
-						Utils::ScopeFileStream fileStream(fStream);
-						ContextWriteToCrashLog(fStream, ehInfo);
-					}
-				}
-				
-				strcpy(fileNames[3], fileNames[0]);
-				PathRenameExtensionA(fileNames[3], ".zip");
-
-				LPCSTR zNames[3];
-				zNames[0] = fileNames[0];
-				zNames[1] = fileNames[1];
-				zNames[2] = fileNames[2];
-				zip_create(fileNames[3], zNames, Core::GlobalConsoleWindowPtr ? 3 : 2);
-
-				DeleteFileA(fileNames[0]);
-				if (Core::GlobalConsoleWindowPtr)
-					DeleteFileA(fileNames[2]);
-
-				const char* message = nullptr;
 				const char* reason = nullptr;
-
-				if (dumpWritten)
-					message = "FATAL ERROR\n\nThe Creation Kit encountered a fatal error and has crashed.\n\nReason: %s (0x%08X).\n\nA minidump has been written to '%s'.\n\nPlease note it may contain private information such as usernames.";
-				else
-					message = "FATAL ERROR\n\nThe Creation Kit encountered a fatal error and has crashed.\n\nReason: %s (0x%08X).\n\nA minidump could not be written to '%s'.\nPlease check that you have proper permissions.";
+				bool ckpe_error = false;
 
 				switch (ehInfo->ExceptionRecord->ExceptionCode)
 				{
@@ -493,12 +422,36 @@ namespace CreationKitPlatformExtended
 					reason = "Aborted";
 					break;
 
+				case 100:
+					reason = "Internal CKPE mod error";
+					ckpe_error = true;
+					break;
+
 				default:
 					reason = "Unspecified exception";
 					break;
 				}
 
-				Utils::__Assert("", 0, message, reason, ehInfo->ExceptionRecord->ExceptionCode, fileNames[3]);
+				MessageBoxA(0, "", "", 0);
+
+				char message[128];
+				sprintf_s(message, "Reason: %s (0x%08X).\r\n\r\n", reason, ehInfo->ExceptionRecord->ExceptionCode);
+
+				if (!ckpe_error || !ehInfo->ExceptionRecord->NumberParameters)
+					AssertWithCrashReport("", 0, message, ehInfo);
+				else
+				{
+					struct ExecData
+					{
+						char File[260];
+						char Msg[260];
+						int Line;
+					};
+
+					auto data = (ExecData*)ehInfo->ExceptionRecord->ExceptionInformation[0];
+					if (data)
+						AssertWithCrashReport(data->File, data->Line, data->Msg, ehInfo);
+				}
 			});
 			t.detach();
 		}
@@ -610,15 +563,15 @@ namespace CreationKitPlatformExtended
 				ExceptionInstructionText.Append(Analize.Text);
 			}
 
-			fprintf(Stream, "\nUnhandled exception ""%s"" at 0x%016llX %s\n", ExceptionName.c_str(),
+			fprintf(Stream, "\r\nUnhandled exception ""%s"" at 0x%016llX %s\r\n", ExceptionName.c_str(),
 				(uintptr_t)lpExceptionRecord->ExceptionAddress, ExceptionInstructionText.c_str());
 
 			// Log exception flags
-			fprintf(Stream, "Exception Flags: 0x%08X\n", lpExceptionRecord->ExceptionFlags);
+			fprintf(Stream, "Exception Flags: 0x%08X\r\n", lpExceptionRecord->ExceptionFlags);
 			// Log number of parameters
-			fprintf(Stream, "Number of Parameters: %u\n", lpExceptionRecord->NumberParameters);
+			fprintf(Stream, "Number of Parameters: %u\r\n", lpExceptionRecord->NumberParameters);
 			// Description
-			fprintf(Stream, "Exception Description: %s\n", ExceptionDescription.c_str());
+			fprintf(Stream, "Exception Description: %s\r\n", ExceptionDescription.c_str());
 
 			// Log additional exception information for specific exception types
 			if (lpExceptionRecord->ExceptionCode == EXCEPTION_ACCESS_VIOLATION) 
@@ -628,7 +581,7 @@ namespace CreationKitPlatformExtended
 										lpExceptionRecord->ExceptionInformation[0] == 8 ? "execute" :
 																						  "unknown";
 				const auto faultAddress = lpExceptionRecord->ExceptionInformation[1];
-				fprintf(Stream, "Access Violation: Tried to %s memory at 0x%016llX\n", accessType, faultAddress);
+				fprintf(Stream, "Access Violation: Tried to %s memory at 0x%016llX\r\n", accessType, faultAddress);
 			}
 			else if (lpExceptionRecord->ExceptionCode == EXCEPTION_IN_PAGE_ERROR) 
 			{
@@ -638,24 +591,24 @@ namespace CreationKitPlatformExtended
 																						  "unknown";
 				const auto faultAddress = lpExceptionRecord->ExceptionInformation[1];
 				const auto ntStatus = lpExceptionRecord->ExceptionInformation[2];
-				fprintf(Stream, "In-Page Error: Tried to %s memory at 0x%016llX, NTSTATUS: 0x%08X\n", accessType, faultAddress, (uint32_t)ntStatus);
+				fprintf(Stream, "In-Page Error: Tried to %s memory at 0x%016llX, NTSTATUS: 0x%08X\r\n", accessType, faultAddress, (uint32_t)ntStatus);
 			}
 			else if (lpExceptionRecord->NumberParameters > 0)
 			{
-				fprintf(Stream, "Exception Information Parameters:\n");	
+				fprintf(Stream, "Exception Information Parameters:\r\n");	
 				for (DWORD i = 0; i < lpExceptionRecord->NumberParameters; ++i)
-					fprintf(Stream, "\tParameter[%u]: 0x%016llX:\n", i, lpExceptionRecord->ExceptionInformation[i]);
+					fprintf(Stream, "\tParameter[%u]: 0x%016llX:\r\n", i, lpExceptionRecord->ExceptionInformation[i]);
 			}
 
 			// Check for nested exceptions
 			if (lpExceptionRecord->ExceptionRecord) 
 			{
-				fprintf(Stream, "Nested Exception:\n");
+				fprintf(Stream, "Nested Exception:\r\n");
 				// Recursively print nested exception
 				PrintException(Stream, Modules, lpExceptionRecord->ExceptionRecord);
 			}
 
-			fprintf(Stream, "\n");
+			fprintf(Stream, "\r\n");
 			fflush(Stream);
 		}
 
@@ -668,34 +621,34 @@ namespace CreationKitPlatformExtended
 				if (!itSec->second.size() || (itSec->first == "hotkeys"))
 					continue;
 
-				fprintf(Stream, "\t[%s]\n", itSec->first.c_str());
+				fprintf(Stream, "\t[%s]\r\n", itSec->first.c_str());
 
 				for (auto itVal = itSec->second.begin(); itVal != itSec->second.end(); itVal++)
-					fprintf(Stream, "\t\t%s: %s\n", itVal->first.c_str(), itVal->second.c_str());
+					fprintf(Stream, "\t\t%s: %s\r\n", itVal->first.c_str(), itVal->second.c_str());
 			}
 
-			fprintf(Stream, "\n");
+			fprintf(Stream, "\r\n");
 			fflush(Stream);
 		}
 
 		void CrashHandler::PrintSysInfo(FILE* Stream)
 		{
-			fprintf(Stream, "SYSTEM SPECS:\n");
-			fprintf(Stream, "\tOS: %s\n", iw::system::os_info().c_str());
+			fprintf(Stream, "SYSTEM SPECS:\r\n");
+			fprintf(Stream, "\tOS: %s\r\n", iw::system::os_info().c_str());
 
 			auto cpu_info = iw::cpu::cpu_info();
-			fprintf(Stream, "\tCPU: %s\n", iw::cpu::cpu_brand(&cpu_info).c_str());
+			fprintf(Stream, "\tCPU: %s\r\n", iw::cpu::cpu_brand(&cpu_info).c_str());
 
 			auto gpu_info = iw::graphics::graphics_info();
 			for (uint8_t i = 0; i < gpu_info.videocard_num; i++)
 			{
 				auto gpu = gpu_info.videocards + i;
-				fprintf(Stream, "\tGPU #%u: %s %u Gb\n", i + 1, gpu->name, (uint16_t)std::roundf(gpu->memory));
+				fprintf(Stream, "\tGPU #%u: %s %u Gb\r\n", i + 1, gpu->name, (uint16_t)std::roundf(gpu->memory));
 			}
 			
 			auto mem_info = iw::system::memory_info();
-			fprintf(Stream, "\tPHYSICAL MEMORY: %.2f GB / %.2f GB\n", mem_info.physical_total - mem_info.physical_free, mem_info.physical_total);
-			fprintf(Stream, "\tSHARED MEMORY: %.2f GB / %.2f GB\n\n", mem_info.shared_total - mem_info.shared_free, mem_info.shared_total);
+			fprintf(Stream, "\tPHYSICAL MEMORY: %.2f GB / %.2f GB\r\n", mem_info.physical_total - mem_info.physical_free, mem_info.physical_total);
+			fprintf(Stream, "\tSHARED MEMORY: %.2f GB / %.2f GB\r\n\r\n", mem_info.shared_total - mem_info.shared_free, mem_info.shared_total);
 			fflush(Stream);
 		}
 
@@ -704,13 +657,13 @@ namespace CreationKitPlatformExtended
 			if (!Memory)
 				return;
 
-			fprintf(Stream, "MEMORY:\n");
+			fprintf(Stream, "MEMORY:\r\n");
 
 			uint32_t id = 0;
 			for (auto itM = Memory->begin(); itM != Memory->end(); itM++, id++)
-				fprintf(Stream, "\t[%04u]: %llX / %llX\n", id, itM->Start, itM->End);
+				fprintf(Stream, "\t[%04u]: %llX / %llX\r\n", id, itM->Start, itM->End);
 
-			fprintf(Stream, "\n");
+			fprintf(Stream, "\r\n");
 			fflush(Stream);
 		}
 
@@ -719,7 +672,7 @@ namespace CreationKitPlatformExtended
 			if (!Modules || !lpExceptionRecord)
 				return;
 
-			fprintf(Stream, "REGISTERS:\n");
+			fprintf(Stream, "REGISTERS:\r\n");
 
 			auto lamda_print_register = [&](FILE* Stream, const char* NameReg, uintptr_t Value)
 			{
@@ -731,28 +684,28 @@ namespace CreationKitPlatformExtended
 				switch (Analize.Type)
 				{
 				case Introspection::aitCode:
-					fprintf(Stream, "(void* -> %s)\n", Analize.Text.c_str());
+					fprintf(Stream, "(void* -> %s)\r\n", Analize.Text.c_str());
 					break;
 				case Introspection::aitInstance:
-					fprintf(Stream, "(HINSTANCE*) %s\n", Analize.Text.c_str());
+					fprintf(Stream, "(HINSTANCE*) %s\r\n", Analize.Text.c_str());
 					break;
 				case Introspection::aitNumber:
 					if (Value >> 63)
-						fprintf(Stream, "(size_t) [uint: %llu int: %lld]\n", Value, (ptrdiff_t)Value);
+						fprintf(Stream, "(size_t) [uint: %llu int: %lld]\r\n", Value, (ptrdiff_t)Value);
 					else
-						fprintf(Stream, "(size_t) [%llu]\n", Value);
+						fprintf(Stream, "(size_t) [%llu]\r\n", Value);
 					break;
 				case Introspection::aitClass:
 					if (Analize.Additional.IsEmpty())
-						fprintf(Stream, "(%s*)\n", Analize.Text.c_str());
+						fprintf(Stream, "(%s*)\r\n", Analize.Text.c_str());
 					else
-						fprintf(Stream, "(%s*) | %s\n", Analize.Text.c_str(), Analize.Additional.c_str());
+						fprintf(Stream, "(%s*) | %s\r\n", Analize.Text.c_str(), Analize.Additional.c_str());
 					break;
 				case Introspection::aitString:
-					fprintf(Stream, "(char*) %s\n", Analize.Text.c_str());
+					fprintf(Stream, "(char*) %s\r\n", Analize.Text.c_str());
 					break;
 				default:
-					fprintf(Stream, "(void*)\n");
+					fprintf(Stream, "(void*)\r\n");
 					break;
 				}
 			};
@@ -779,15 +732,15 @@ namespace CreationKitPlatformExtended
 				return (uint8_t)((Flags & (1 << bit)) >> bit);
 			};
 			
-			fprintf(Stream, "\n\tZF\t%u\tPF\t%u\tAF\t%u\n\tOF\t%u\tSF\t%u\tDF\t%u\n\tCF\t%u\tTF\t%u\tIF\t%u\n\n",
+			fprintf(Stream, "\n\tZF\t%u\tPF\t%u\tAF\t%u\r\n\tOF\t%u\tSF\t%u\tDF\t%u\r\n\tCF\t%u\tTF\t%u\tIF\t%u\r\n\r\n",
 				lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 6), lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 2), 
 				lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 4), lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 11), 
 				lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 7), lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 10),
 				lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 0), lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 8),
 				lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 9));
 
-			fprintf(Stream, "\tLastError\t%08X\n\n", GetLastError());
-			fprintf(Stream, "\tGS\t%04X\tFS\t%04X\n\tES\t%04X\tDS\t%04X\n\tCS\t%04X\tSS\t%04X\n\n",
+			fprintf(Stream, "\tLastError\t%08X\r\n\r\n", GetLastError());
+			fprintf(Stream, "\tGS\t%04X\tFS\t%04X\r\n\tES\t%04X\tDS\t%04X\r\n\tCS\t%04X\tSS\t%04X\r\n\r\n",
 				lpExceptionRecord->ContextRecord->SegGs, lpExceptionRecord->ContextRecord->SegFs, lpExceptionRecord->ContextRecord->SegEs, 
 				lpExceptionRecord->ContextRecord->SegDs, lpExceptionRecord->ContextRecord->SegCs, lpExceptionRecord->ContextRecord->SegSs);
 			
@@ -797,7 +750,7 @@ namespace CreationKitPlatformExtended
 				//auto pf = (float*)&Reg;
 				//fprintf(Stream, "\tXMM%u\t%08X (%.6f)\t%08X (%.6f)\t%08X (%.6f)\t%08X (%.6f)\n", RegId, 
 				//	p[0], pf[0], p[1], pf[1], p[2], pf[2], p[3], pf[3]);
-				fprintf(Stream, "\tXMM%u\t%08X %08X %08X %08X\n", RegId, p[0], p[1], p[2], p[3]);
+				fprintf(Stream, "\tXMM%u\t%08X %08X %08X %08X\r\n", RegId, p[0], p[1], p[2], p[3]);
 			};
 
 			lamda_xmm_printf(Stream, 0, lpExceptionRecord->ContextRecord->Xmm0);
@@ -817,7 +770,7 @@ namespace CreationKitPlatformExtended
 			lamda_xmm_printf(Stream, 14, lpExceptionRecord->ContextRecord->Xmm14);
 			lamda_xmm_printf(Stream, 15, lpExceptionRecord->ContextRecord->Xmm15);
 
-			fprintf(Stream, "\n");
+			fprintf(Stream, "\r\n");
 			fflush(Stream);
 		}
 
@@ -829,7 +782,7 @@ namespace CreationKitPlatformExtended
 			}
 			__except (1)
 			{
-				fprintf(Stream, "\n");
+				fprintf(Stream, "\r\n");
 			}
 		}
 
@@ -838,7 +791,7 @@ namespace CreationKitPlatformExtended
 			if (!Modules)
 				return;
 
-			fprintf(Stream, "PROBABLE CALL STACK:\n");
+			fprintf(Stream, "PROBABLE CALL STACK:\r\n");
 
 			uint32_t id = 0;
 			for (auto itS : ProbablyCallStack)
@@ -846,12 +799,12 @@ namespace CreationKitPlatformExtended
 				auto Info = GlobalIntrospection->Analyze(Stream, itS, Modules, nullptr);
 				if (Info.Type == Introspection::aitCode)
 				{
-					fprintf(Stream, "\t[%-*u]: 0x%016llX %s\n", 3, id, itS, Info.Text.c_str());
+					fprintf(Stream, "\t[%-*u]: 0x%016llX %s\r\n", 3, id, itS, Info.Text.c_str());
 					id++;
 				}
 			}
 
-			fprintf(Stream, "\n");
+			fprintf(Stream, "\r\n");
 			fflush(Stream);
 		}
 
@@ -863,7 +816,7 @@ namespace CreationKitPlatformExtended
 			}
 			__except (1)
 			{
-				fprintf(Stream, "\n");
+				fprintf(Stream, "\r\n");
 			}
 		}
 
@@ -872,10 +825,10 @@ namespace CreationKitPlatformExtended
 			if (!lpExceptionInfo || !Modules || !GlobalIntrospection)
 				return;
 
-			fprintf(Stream, "STACK:\n");
+			fprintf(Stream, "STACK:\r\n");
 
 			if (!GlobalCrashTib || !GlobalCrashTib->StackBase)
-				fprintf(Stream, "\tFAILED TO READ TIB\n");
+				fprintf(Stream, "\tFAILED TO READ TIB\r\n");
 			else
 			{
 				uintptr_t stack_end = GlobalCrashTib->StackBase;
@@ -883,7 +836,7 @@ namespace CreationKitPlatformExtended
 				uintptr_t stack_last = lpExceptionInfo->ContextRecord->Rsp;
 				uintptr_t stack_iter = stack_last;
 
-				fprintf(Stream, "\tBase: %llX / %llX Last: %llX\n", stack_base, stack_end, stack_last);
+				fprintf(Stream, "\tBase: %llX / %llX Last: %llX\r\n", stack_base, stack_end, stack_last);
 
 				while ((stack_iter < (stack_end - 8)) && ((stack_iter - stack_last) < 0x2500))
 				{
@@ -895,28 +848,28 @@ namespace CreationKitPlatformExtended
 					switch (Analize.Type)
 					{
 					case Introspection::aitCode:
-						fprintf(Stream, "(void* -> %s)\n", Analize.Text.c_str());
+						fprintf(Stream, "(void* -> %s)\r\n", Analize.Text.c_str());
 						break;
 					case Introspection::aitInstance:
-						fprintf(Stream, "(HINSTANCE*) %s\n", Analize.Text.c_str());
+						fprintf(Stream, "(HINSTANCE*) %s\r\n", Analize.Text.c_str());
 						break;
 					case Introspection::aitNumber:
 						if (*(uintptr_t*)stack_iter >> 63)
-							fprintf(Stream, "(size_t) [uint: %llu int: %lld]\n", *(uintptr_t*)stack_iter, *(ptrdiff_t*)stack_iter);
+							fprintf(Stream, "(size_t) [uint: %llu int: %lld]\r\n", *(uintptr_t*)stack_iter, *(ptrdiff_t*)stack_iter);
 						else
-							fprintf(Stream, "(size_t) [%llu]\n", *(uintptr_t*)stack_iter);
+							fprintf(Stream, "(size_t) [%llu]\r\n", *(uintptr_t*)stack_iter);
 						break;
 					case Introspection::aitClass:
 						if (Analize.Additional.IsEmpty())
-							fprintf(Stream, "(%s*)\n", Analize.Text.c_str());
+							fprintf(Stream, "(%s*)\r\n", Analize.Text.c_str());
 						else
-							fprintf(Stream, "(%s*) | %s\n", Analize.Text.c_str(), Analize.Additional.c_str());
+							fprintf(Stream, "(%s*) | %s\r\n", Analize.Text.c_str(), Analize.Additional.c_str());
 						break;
 					case Introspection::aitString:
-						fprintf(Stream, "(char*) %s\n", Analize.Text.c_str());
+						fprintf(Stream, "(char*) %s\r\n", Analize.Text.c_str());
 						break;
 					default:
-						fprintf(Stream, "(void*)\n");
+						fprintf(Stream, "(void*)\r\n");
 						break;
 					}
 
@@ -924,7 +877,7 @@ namespace CreationKitPlatformExtended
 				}
 			}
 
-			fprintf(Stream, "\n");
+			fprintf(Stream, "\r\n");
 			fflush(Stream);
 		}
 
@@ -936,17 +889,17 @@ namespace CreationKitPlatformExtended
 			}
 			__except (1)
 			{
-				fprintf(Stream, "\n");
+				fprintf(Stream, "\r\n");
 			}
 		}
 
 		void CrashHandler::PrintPatches(FILE* Stream)
 		{
-			fprintf(Stream, "PATCHES:\n");
+			fprintf(Stream, "PATCHES:\r\n");
 
 			auto Manager = GlobalEnginePtr->GetPatchesManager();
 
-			fprintf(Stream, "\tTotal: %u\n", Manager->Count());
+			fprintf(Stream, "\tTotal: %u\r\n", Manager->Count());
 
 			uint32_t id = 0;
 			auto Modules = Manager->GetModuleMap();
@@ -955,45 +908,45 @@ namespace CreationKitPlatformExtended
 				auto& Patch = itM->second;
 				if (Patch->HasActive())
 				{
-					fprintf(Stream, "\t[%04u]: %s\n", id, Patch->GetName());
+					fprintf(Stream, "\t[%04u]: %s\r\n", id, Patch->GetName());
 					id++;
 				}
 			}
 
-			fprintf(Stream, "\n");
+			fprintf(Stream, "\r\n");
 			fflush(Stream);
 		}
 
 		void CrashHandler::PrintModules(FILE* Stream, ModuleMapInfo* Modules)
 		{
-			fprintf(Stream, "MODULES:\n");
-			fprintf(Stream, "\tTotal: %u\n", (uint32_t)Modules->size());
+			fprintf(Stream, "MODULES:\r\n");
+			fprintf(Stream, "\tTotal: %u\r\n", (uint32_t)Modules->size());
 
 			std::size_t column_max = 0;
 			for (auto itM = Modules->begin(); itM != Modules->end(); itM++)
 				column_max = std::max(column_max, itM->first.length());
 			
 			for (auto itM = Modules->begin(); itM != Modules->end(); itM++)
-				fprintf(Stream, "\t%-*s\t%016llX\n", (unsigned int)column_max, itM->first.c_str(), itM->second.Start);
+				fprintf(Stream, "\t%-*s\t%016llX\r\n", (unsigned int)column_max, itM->first.c_str(), itM->second.Start);
 
-			fprintf(Stream, "\n");
+			fprintf(Stream, "\r\n");
 			fflush(Stream);
 		}
 
 		void CrashHandler::PrintPlugins(FILE* Stream)
 		{
-			fprintf(Stream, "PLUGINS:\n");
+			fprintf(Stream, "PLUGINS:\r\n");
 			
 			auto Manager = GlobalEnginePtr->GetUserPluginsManager();
 
-			fprintf(Stream, "\tTotal: %u\n", Manager->Count());
+			fprintf(Stream, "\tTotal: %u\r\n", Manager->Count());
 			
 			uint32_t id = 0;
 			auto Plugins = Manager->GetPluginMap();
 			for (auto itP = Plugins->begin(); itP != Plugins->end(); itP++, id++)
-				fprintf(Stream, "\t[%04u]: %s\n", id, itP->second->GetPluginDllName());
+				fprintf(Stream, "\t[%04u]: %s\r\n", id, itP->second->GetPluginDllName());
 
-			fprintf(Stream, "\n");
+			fprintf(Stream, "\r\n");
 			fflush(Stream);
 		}
 
@@ -1011,9 +964,9 @@ namespace CreationKitPlatformExtended
 
 		void CrashHandler::ContextWriteToCrashLogSafe(FILE* Stream, PEXCEPTION_POINTERS ExceptionInfo)
 		{
-			fprintf(Stream, "\n\n====== CRASH INFO ======\n\n");
-			fprintf(Stream, "CK %s\n", allowedEditorVersionStr[(size_t)GlobalEnginePtr->GetEditorVersion()].data());
-			fprintf(Stream, "CKPE Runtime %s %s %s\n", VER_FILE_VERSION_STR, __DATE__, __TIME__);
+			fprintf(Stream, "====== CRASH INFO ======\r\n\r\n");
+			fprintf(Stream, "CK %s\r\n", allowedEditorVersionStr[(size_t)GlobalEnginePtr->GetEditorVersion()].data());
+			fprintf(Stream, "CKPE Runtime %s %s %s\r\n", VER_FILE_VERSION_STR, __DATE__, __TIME__);
 			fflush(Stream);
 
 			ModuleMapInfo Modules;
@@ -1096,6 +1049,268 @@ namespace CreationKitPlatformExtended
 			{
 				// nope
 			}
+		}
+
+		void CrashHandler::AssertWithCrashReport(LPCSTR File, int Line, LPCSTR ErrorMessage, PEXCEPTION_POINTERS ExceptionInfo)
+		{
+			struct CrashDlgParam
+			{
+				LPCSTR File;
+				int Line;
+				LPCSTR ErrorMessage;
+				PEXCEPTION_POINTERS ExceptionInfo;
+			};
+
+			static CrashDlgParam Param;
+			Param.File = File;
+			Param.Line = Line;
+			Param.ErrorMessage = ErrorMessage;
+			Param.ExceptionInfo = ExceptionInfo;
+
+			static auto proc = [](HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam) -> INT_PTR {
+				static HFONT CaptionFont = nullptr;
+				static HBITMAP CKPEFemale = nullptr;
+				static HBITMAP ErrorImage = nullptr;
+
+				switch (message)
+				{
+				case WM_INITDIALOG:
+				{
+					if (UITheme::IsDarkTheme())
+						Patches::UIThemePatch::ApplyThemeForWindow(hwndDlg);
+
+					CrashDlgParam* Param = (CrashDlgParam*)lParam;
+
+					static int ImageWidth = 306;
+					static int ImageHeight = 450;
+
+					auto WndImage = GetDlgItem(hwndDlg, IDC_STATIC_CRASH_PICTURE);
+					CKPEFemale = UITheme::LoadImageFromResource((HINSTANCE)GlobalModuleHandle, IDB_PNG4, "PNG");
+					SendMessage(WndImage, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)CKPEFemale);
+					RedrawWindow(WndImage, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+					RECT rc;
+					GetClientRect(hwndDlg, &rc);
+
+					CUIMonitor monitor = Screen.MonitorFromWindow(hwndDlg);
+					CRECT wa = monitor.WorkAreaRect;
+
+					SetWindowPos(hwndDlg, NULL, (wa.Width - rc.right) >> 1, (wa.Height - rc.bottom) >> 1, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+					MoveWindow(WndImage, 24, (rc.bottom - ImageHeight) >> 1, ImageWidth, ImageHeight, TRUE);
+
+					CaptionFont = CreateFont(24, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+						ANSI_CHARSET, OUT_DEFAULT_PRECIS,
+						CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+						DEFAULT_PITCH | FF_ROMAN,
+						"Microsoft Sans Serif");
+
+					auto WndCaption = GetDlgItem(hwndDlg, IDC_STATIC_CRASH_CAPTION);
+					SendMessage(WndCaption, WM_SETFONT, (WPARAM)CaptionFont, TRUE);
+
+					auto WndCaptionImageError = GetDlgItem(hwndDlg, IDC_STATIC_CRASH_ERROR_PIC);
+					ErrorImage = UITheme::LoadImageFromResource((HINSTANCE)GlobalModuleHandle, IDB_PNG5, "PNG");
+					SendMessage(WndCaptionImageError, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)ErrorImage);
+					SetWindowPos(WndCaptionImageError, NULL, 0, 0, 32, 32, SWP_NOMOVE | SWP_NOZORDER);
+					RedrawWindow(WndCaptionImageError, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+					auto WndVersion = GetDlgItem(hwndDlg, IDC_STATIC_CRASH_VERSION);
+					if (WndVersion)
+					{
+						char Buffer[96];
+						sprintf_s(Buffer, "CKPE Runtime Version: %s %s %s", VER_FILE_VERSION_STR, __DATE__, __TIME__);
+						SetWindowText(WndVersion, Buffer);
+					}
+
+					auto WndDetails = GetDlgItem(hwndDlg, IDC_EDIT_CRASH_DETAILS);
+					if (WndDetails && Param)
+					{
+						SendMessage(WndDetails, EM_LIMITTEXT, 500000, 0);
+
+						bool no_ckpe_assert = !Param->File || !Param->File[0];
+						if (no_ckpe_assert)
+							SetWindowText(WndDetails, "NO_CKPE_ASSERTION\r\n\r\n");
+						else
+						{
+							char Buffer[320];
+							sprintf_s(Buffer, "CKPE_ASSERTION: \"%s\" line: %d\r\n\r\n", Param->File, Param->Line);
+							SetWindowText(WndDetails, Buffer);
+						}
+
+						int index = GetWindowTextLength(WndDetails);
+						SendMessageA(WndDetails, EM_SETSEL, (WPARAM)index, (LPARAM)index);
+						SendMessageA(WndDetails, EM_REPLACESEL, 0, (LPARAM)Param->ErrorMessage);
+
+						if (Param->ExceptionInfo)
+						{
+							FILE* fStream = _fsopen("CreationKitPlatformExtendedCrash.log", "rt", _SH_DENYWR);
+							if (fStream)
+							{
+								Utils::ScopeFileStream fileStream(fStream);
+								
+								WIN32_FILE_ATTRIBUTE_DATA FileData;
+								if (GetFileAttributesEx("CreationKitPlatformExtendedCrash.log", GetFileExInfoStandard, &FileData) &&
+									(FileData.nFileSizeLow <= 499000))
+								{
+									auto TextData = std::make_unique<char[]>(FileData.nFileSizeLow);
+									fread_s(TextData.get(), FileData.nFileSizeLow, 1, FileData.nFileSizeLow, fStream);
+
+									index = GetWindowTextLength(WndDetails);
+									SendMessageA(WndDetails, EM_SETSEL, (WPARAM)index, (LPARAM)index);
+									SendMessageA(WndDetails, EM_REPLACESEL, 0, (LPARAM)TextData.get());
+								}
+							}
+						}
+					}
+
+					return TRUE;
+				}
+				case WM_NOTIFY:
+				{
+					switch (((LPNMHDR)lParam)->code)
+					{
+						case NM_CLICK:
+						case NM_RETURN:
+						{
+							PNMLINK pNMLink = (PNMLINK)lParam;
+							LITEM   item = pNMLink->item;
+
+							if (item.iLink == 0)
+							{
+								SHELLEXECUTEINFOW ExecInfo;
+								ZeroMemory(&ExecInfo, sizeof(ExecInfo));
+
+								ExecInfo.cbSize = sizeof(ExecInfo);
+								ExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
+								ExecInfo.lpVerb = L"open";
+								ExecInfo.lpFile = item.szUrl;
+								ExecInfo.lpParameters = L"";
+								ExecInfo.nShow = SW_SHOW;
+
+								ShellExecuteExW(&ExecInfo);
+							}
+						}
+					}
+
+					return TRUE;
+				}
+				case WM_DESTROY:
+				{
+					DeleteObject(CKPEFemale);
+					DeleteObject(ErrorImage);
+					DeleteObject(CaptionFont);
+
+					return TRUE;
+				}
+				case WM_COMMAND:
+				{
+					switch (wParam)
+					{
+						case IDOK:
+						case IDCANCEL:
+						{
+							EndDialog(hwndDlg, wParam);
+							return TRUE;
+						}
+					}
+				}
+				}
+				return FALSE;
+			};
+
+			char fileNames[4][MAX_PATH];
+			// Close and added archive the log's
+			Core::GlobalDebugLogPtr->Close();
+
+			strcpy(fileNames[1], "CreationKitPlatformExtended.log");
+
+			bool dumpWritten = false;
+			auto miniDumpWriteDump = (decltype(&MiniDumpWriteDump))GetProcAddress(LoadLibraryA("dbghelp.dll"), "MiniDumpWriteDump");
+			auto BigDump = GlobalINIConfigPtr->ReadBool("Crashes", "bGenerateFullDump", false);
+
+			if (miniDumpWriteDump && Param.ExceptionInfo)
+			{
+				// Create a dump in the same folder of the exe itself
+				char exePath[MAX_PATH];
+				GetModuleFileNameA(GetModuleHandleA(nullptr), exePath, ARRAYSIZE(exePath));
+
+				SYSTEMTIME sysTime;
+				GetSystemTime(&sysTime);
+				sprintf_s(fileNames[0], "%s_%4d%02d%02d_%02d%02d%02d.dmp", exePath, sysTime.wYear, sysTime.wMonth,
+					sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond);
+
+				HANDLE file = CreateFileA(fileNames[0], GENERIC_READ | GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS,
+					FILE_ATTRIBUTE_NORMAL, nullptr);
+				if (file != INVALID_HANDLE_VALUE)
+				{
+					MINIDUMP_EXCEPTION_INFORMATION dumpInfo
+					{
+						.ThreadId = GlobalCrashDumpTargetThreadId.load(),
+						.ExceptionPointers = Param.ExceptionInfo,
+						.ClientPointers = FALSE,
+					};
+
+					UINT32 dumpFlags =
+						MiniDumpNormal | MiniDumpWithThreadInfo | MiniDumpWithIndirectlyReferencedMemory;
+
+					if (BigDump)
+						dumpFlags |= (MiniDumpWithDataSegs | MiniDumpWithFullMemory | MiniDumpWithHandleData | MiniDumpWithFullMemoryInfo);
+					else
+						dumpFlags |= MiniDumpWithoutOptionalData;
+
+					dumpWritten = miniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), file, (MINIDUMP_TYPE)dumpFlags,
+						&dumpInfo, nullptr, nullptr) != FALSE;
+
+					CloseHandle(file);
+				}
+			}
+			else
+				fileNames[0][0] = '\0';
+
+			fileNames[2][0] = '\0';
+
+			if (Core::GlobalConsoleWindowPtr)
+			{
+				strcpy(fileNames[2], "CreationKitPlatformExtendedCrash.log");
+				Core::GlobalConsoleWindowPtr->CloseOutputFile();
+				//Core::GlobalConsoleWindowPtr->SaveRichTextToFile(fileNames[2]);
+
+				if (Param.ExceptionInfo)
+				{
+					FILE* fStream = _fsopen(fileNames[2], "at", _SH_DENYWR);
+					if (fStream)
+					{
+						Utils::ScopeFileStream fileStream(fStream);
+						ContextWriteToCrashLog(fStream, Param.ExceptionInfo);
+					}
+				}
+			}
+
+			if (DialogBoxParamA((HINSTANCE)Core::GlobalModuleHandle, MAKEINTRESOURCE(IDD_CRASHDIALOG), nullptr, proc, (LPARAM)&Param) == IDOK)
+			{
+				strcpy(fileNames[3], fileNames[0]);
+				PathRenameExtensionA(fileNames[3], ".zip");
+
+				LPCSTR zNames[3];
+				zNames[0] = fileNames[0];
+				zNames[1] = fileNames[1];
+				zNames[2] = fileNames[2];
+				zip_create(fileNames[3], zNames, Core::GlobalConsoleWindowPtr ? 3 : 2);
+			}
+
+			DeleteFileA(fileNames[0]);
+			if (Core::GlobalConsoleWindowPtr)
+				DeleteFileA(fileNames[2]);
+
+			if (IsDebuggerPresent())
+			{
+				if (Param.ErrorMessage)
+					OutputDebugStringA(Param.ErrorMessage);
+
+				__debugbreak();
+			}
+
+			Utils::QuitWithResult(1);
+			__assume(0);
 		}
 	}
 }

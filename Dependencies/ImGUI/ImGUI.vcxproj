@@ -8,6 +8,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="backends\imgui_impl_dx11.cpp" />
+    <ClCompile Include="backends\imgui_impl_dx12.cpp" />
     <ClCompile Include="backends\imgui_impl_win32.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
@@ -17,6 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="backends\imgui_impl_dx11.h" />
+    <ClInclude Include="backends\imgui_impl_dx12.h" />
     <ClInclude Include="backends\imgui_impl_win32.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />

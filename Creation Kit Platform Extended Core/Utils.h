@@ -25,6 +25,7 @@ namespace CreationKitPlatformExtended
 		void ProcessMessage();
 
 		void Quit();
+		void QuitWithResult(int nErrorCode = 0);
 		char* StrDub(const char* s);
 	}
 

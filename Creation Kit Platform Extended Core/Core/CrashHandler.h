@@ -40,6 +40,8 @@ namespace CreationKitPlatformExtended
 			static LONG WINAPI DumpExceptionHandler(PEXCEPTION_POINTERS ExceptionInfo);
 			static void ContextWriteToCrashLogSafe(FILE* Stream, PEXCEPTION_POINTERS ExceptionInfo);
 			static void ContextWriteToCrashLog(FILE* Stream, PEXCEPTION_POINTERS ExceptionInfo);
+			
+			static void AssertWithCrashReport(LPCSTR File, int Line, LPCSTR ErrorMessage, PEXCEPTION_POINTERS ExceptionInfo);
 		private:
 			void SetProcessExceptionHandlers();
 			void SetThreadExceptionHandlers();

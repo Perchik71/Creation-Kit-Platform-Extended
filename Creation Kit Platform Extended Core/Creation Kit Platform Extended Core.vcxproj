@@ -218,6 +218,7 @@
     <ClCompile Include="Patches\ConsolePatch.cpp" />
     <ClCompile Include="Patches\CrashDumpPatch.cpp" />
     <ClCompile Include="Patches\D3D11Patch.cpp" />
+    <ClCompile Include="Patches\D3D12Patch.cpp" />
     <ClCompile Include="Patches\DisableAssertion.cpp" />
     <ClCompile Include="Patches\FaceGen.cpp" />
     <ClCompile Include="Patches\FlowChartXPatch.cpp" />
@@ -634,6 +635,7 @@
     <ClInclude Include="Patches\ConsolePatch.h" />
     <ClInclude Include="Patches\CrashDumpPatch.h" />
     <ClInclude Include="Patches\D3D11Patch.h" />
+    <ClInclude Include="Patches\D3D12Patch.h" />
     <ClInclude Include="Patches\DisableAssertion.h" />
     <ClInclude Include="Patches\FaceGen.h" />
     <ClInclude Include="Patches\FlowChartXPatch.h" />
@@ -891,6 +893,9 @@
     <Image Include="..\Resources\check.bmp" />
     <Image Include="..\Resources\check_darktheme.bmp" />
     <Image Include="..\Resources\ckpe.ico" />
+    <Image Include="..\Resources\ckpe_boo.png" />
+    <Image Include="..\Resources\icon_error.bmp" />
+    <Image Include="..\Resources\icon_error.png" />
     <Image Include="..\Resources\navmesh.bmp" />
     <Image Include="..\Resources\scripts.bmp" />
     <Image Include="..\Resources\storymanager.bmp" />

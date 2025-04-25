@@ -925,6 +925,9 @@
     <ClCompile Include="Patches\SF\TESRemoveCheckDataDriverSF.cpp">
       <Filter>Patches\SF</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\D3D12Patch.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2263,6 +2266,9 @@
     <ClInclude Include="Patches\SF\TESRemoveCheckDataDriverSF.h">
       <Filter>Patches\SF</Filter>
     </ClInclude>
+    <ClInclude Include="Patches\D3D12Patch.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version\resource_version.rc">
@@ -2323,6 +2329,9 @@
       <Filter>Resources</Filter>
     </Image>
     <Image Include="..\Resources\ckpe.ico" />
+    <Image Include="..\Resources\ckpe_boo.png" />
+    <Image Include="..\Resources\icon_error.bmp" />
+    <Image Include="..\Resources\icon_error.png" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Shaders\FXAA_PS.hlsl">
