@@ -422,11 +422,6 @@ namespace CreationKitPlatformExtended
 					reason = "Aborted";
 					break;
 
-				case 100:
-					reason = "Internal CKPE mod error";
-					ckpe_error = true;
-					break;
-
 				default:
 					reason = "Unspecified exception";
 					break;
