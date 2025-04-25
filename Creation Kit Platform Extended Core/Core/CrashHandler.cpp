@@ -432,8 +432,6 @@ namespace CreationKitPlatformExtended
 					break;
 				}
 
-				MessageBoxA(0, "", "", 0);
-
 				char message[128];
 				sprintf_s(message, "Reason: %s (0x%08X).\r\n\r\n", reason, ehInfo->ExceptionRecord->ExceptionCode);
 
