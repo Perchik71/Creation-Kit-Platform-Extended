@@ -478,13 +478,16 @@ namespace CreationKitPlatformExtended
 
 			void RenderWindow::DrawFrameEx(IDXGISwapChain* This, UINT SyncInterval, UINT Flags)
 			{
+				if (GlobalRenderWindowPtr->_BlockInputMessage)
+					return;
+
 				if (!(GlobalRenderWindowPtr->_ImagespaceAA))
 				{
 					GlobalRenderWindowPtr->_ImagespaceAA = std::make_unique<ImagespaceAA>();
 					if (!GlobalRenderWindowPtr->_ImagespaceAA->Install(GlobalRenderWindowPtr->Handle))
 						_ERROR("An error occurred in the shader compilation.");
 				}
-	
+				
 				if (pointer_d3d11DeviceContext && gGlobAddrDeviceContext)
 				{
 					auto RenderTarget = (ID3D11RenderTargetView**)(gGlobAddrDeviceContext + 0x88);

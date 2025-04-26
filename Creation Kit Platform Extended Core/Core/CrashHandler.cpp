@@ -394,7 +394,6 @@ namespace CreationKitPlatformExtended
 
 				auto ehInfo = GlobalCrashDumpExceptionInfo.load();
 				const char* reason = nullptr;
-				bool ckpe_error = false;
 
 				switch (ehInfo->ExceptionRecord->ExceptionCode)
 				{
@@ -428,23 +427,8 @@ namespace CreationKitPlatformExtended
 				}
 
 				char message[128];
-				sprintf_s(message, "Reason: %s (0x%08X).\r\n\r\n", reason, ehInfo->ExceptionRecord->ExceptionCode);
-
-				if (!ckpe_error || !ehInfo->ExceptionRecord->NumberParameters)
-					AssertWithCrashReport("", 0, message, ehInfo);
-				else
-				{
-					struct ExecData
-					{
-						char File[260];
-						char Msg[260];
-						int Line;
-					};
-
-					auto data = (ExecData*)ehInfo->ExceptionRecord->ExceptionInformation[0];
-					if (data)
-						AssertWithCrashReport(data->File, data->Line, data->Msg, ehInfo);
-				}
+				sprintf_s(message, "Reason: %s (0x%08X).\n\n", reason, ehInfo->ExceptionRecord->ExceptionCode);
+				AssertWithCrashReport("", 0, message, ehInfo);
 			});
 			t.detach();
 		}
@@ -556,15 +540,15 @@ namespace CreationKitPlatformExtended
 				ExceptionInstructionText.Append(Analize.Text);
 			}
 
-			fprintf(Stream, "\r\nUnhandled exception ""%s"" at 0x%016llX %s\r\n", ExceptionName.c_str(),
+			fprintf(Stream, "\nUnhandled exception ""%s"" at 0x%016llX %s\n", ExceptionName.c_str(),
 				(uintptr_t)lpExceptionRecord->ExceptionAddress, ExceptionInstructionText.c_str());
 
 			// Log exception flags
-			fprintf(Stream, "Exception Flags: 0x%08X\r\n", lpExceptionRecord->ExceptionFlags);
+			fprintf(Stream, "Exception Flags: 0x%08X\n", lpExceptionRecord->ExceptionFlags);
 			// Log number of parameters
-			fprintf(Stream, "Number of Parameters: %u\r\n", lpExceptionRecord->NumberParameters);
+			fprintf(Stream, "Number of Parameters: %u\n", lpExceptionRecord->NumberParameters);
 			// Description
-			fprintf(Stream, "Exception Description: %s\r\n", ExceptionDescription.c_str());
+			fprintf(Stream, "Exception Description: %s\n", ExceptionDescription.c_str());
 
 			// Log additional exception information for specific exception types
 			if (lpExceptionRecord->ExceptionCode == EXCEPTION_ACCESS_VIOLATION) 
@@ -574,7 +558,7 @@ namespace CreationKitPlatformExtended
 										lpExceptionRecord->ExceptionInformation[0] == 8 ? "execute" :
 																						  "unknown";
 				const auto faultAddress = lpExceptionRecord->ExceptionInformation[1];
-				fprintf(Stream, "Access Violation: Tried to %s memory at 0x%016llX\r\n", accessType, faultAddress);
+				fprintf(Stream, "Access Violation: Tried to %s memory at 0x%016llX\n", accessType, faultAddress);
 			}
 			else if (lpExceptionRecord->ExceptionCode == EXCEPTION_IN_PAGE_ERROR) 
 			{
@@ -584,24 +568,24 @@ namespace CreationKitPlatformExtended
 																						  "unknown";
 				const auto faultAddress = lpExceptionRecord->ExceptionInformation[1];
 				const auto ntStatus = lpExceptionRecord->ExceptionInformation[2];
-				fprintf(Stream, "In-Page Error: Tried to %s memory at 0x%016llX, NTSTATUS: 0x%08X\r\n", accessType, faultAddress, (uint32_t)ntStatus);
+				fprintf(Stream, "In-Page Error: Tried to %s memory at 0x%016llX, NTSTATUS: 0x%08X\n", accessType, faultAddress, (uint32_t)ntStatus);
 			}
 			else if (lpExceptionRecord->NumberParameters > 0)
 			{
-				fprintf(Stream, "Exception Information Parameters:\r\n");	
+				fprintf(Stream, "Exception Information Parameters:\n");	
 				for (DWORD i = 0; i < lpExceptionRecord->NumberParameters; ++i)
-					fprintf(Stream, "\tParameter[%u]: 0x%016llX:\r\n", i, lpExceptionRecord->ExceptionInformation[i]);
+					fprintf(Stream, "\tParameter[%u]: 0x%016llX:\n", i, lpExceptionRecord->ExceptionInformation[i]);
 			}
 
 			// Check for nested exceptions
 			if (lpExceptionRecord->ExceptionRecord) 
 			{
-				fprintf(Stream, "Nested Exception:\r\n");
+				fprintf(Stream, "Nested Exception:\n");
 				// Recursively print nested exception
 				PrintException(Stream, Modules, lpExceptionRecord->ExceptionRecord);
 			}
 
-			fprintf(Stream, "\r\n");
+			fprintf(Stream, "\n");
 			fflush(Stream);
 		}
 
@@ -614,34 +598,34 @@ namespace CreationKitPlatformExtended
 				if (!itSec->second.size() || (itSec->first == "hotkeys"))
 					continue;
 
-				fprintf(Stream, "\t[%s]\r\n", itSec->first.c_str());
+				fprintf(Stream, "\t[%s]\n", itSec->first.c_str());
 
 				for (auto itVal = itSec->second.begin(); itVal != itSec->second.end(); itVal++)
-					fprintf(Stream, "\t\t%s: %s\r\n", itVal->first.c_str(), itVal->second.c_str());
+					fprintf(Stream, "\t\t%s: %s\n", itVal->first.c_str(), itVal->second.c_str());
 			}
 
-			fprintf(Stream, "\r\n");
+			fprintf(Stream, "\n");
 			fflush(Stream);
 		}
 
 		void CrashHandler::PrintSysInfo(FILE* Stream)
 		{
-			fprintf(Stream, "SYSTEM SPECS:\r\n");
-			fprintf(Stream, "\tOS: %s\r\n", iw::system::os_info().c_str());
+			fprintf(Stream, "SYSTEM SPECS:\n");
+			fprintf(Stream, "\tOS: %s\n", iw::system::os_info().c_str());
 
 			auto cpu_info = iw::cpu::cpu_info();
-			fprintf(Stream, "\tCPU: %s\r\n", iw::cpu::cpu_brand(&cpu_info).c_str());
+			fprintf(Stream, "\tCPU: %s\n", iw::cpu::cpu_brand(&cpu_info).c_str());
 
 			auto gpu_info = iw::graphics::graphics_info();
 			for (uint8_t i = 0; i < gpu_info.videocard_num; i++)
 			{
 				auto gpu = gpu_info.videocards + i;
-				fprintf(Stream, "\tGPU #%u: %s %u Gb\r\n", i + 1, gpu->name, (uint16_t)std::roundf(gpu->memory));
+				fprintf(Stream, "\tGPU #%u: %s %u Gb\n", i + 1, gpu->name, (uint16_t)std::roundf(gpu->memory));
 			}
 			
 			auto mem_info = iw::system::memory_info();
-			fprintf(Stream, "\tPHYSICAL MEMORY: %.2f GB / %.2f GB\r\n", mem_info.physical_total - mem_info.physical_free, mem_info.physical_total);
-			fprintf(Stream, "\tSHARED MEMORY: %.2f GB / %.2f GB\r\n\r\n", mem_info.shared_total - mem_info.shared_free, mem_info.shared_total);
+			fprintf(Stream, "\tPHYSICAL MEMORY: %.2f GB / %.2f GB\n", mem_info.physical_total - mem_info.physical_free, mem_info.physical_total);
+			fprintf(Stream, "\tSHARED MEMORY: %.2f GB / %.2f GB\n\n", mem_info.shared_total - mem_info.shared_free, mem_info.shared_total);
 			fflush(Stream);
 		}
 
@@ -650,13 +634,13 @@ namespace CreationKitPlatformExtended
 			if (!Memory)
 				return;
 
-			fprintf(Stream, "MEMORY:\r\n");
+			fprintf(Stream, "MEMORY:\n");
 
 			uint32_t id = 0;
 			for (auto itM = Memory->begin(); itM != Memory->end(); itM++, id++)
-				fprintf(Stream, "\t[%04u]: %llX / %llX\r\n", id, itM->Start, itM->End);
+				fprintf(Stream, "\t[%04u]: %llX / %llX\n", id, itM->Start, itM->End);
 
-			fprintf(Stream, "\r\n");
+			fprintf(Stream, "\n");
 			fflush(Stream);
 		}
 
@@ -665,7 +649,7 @@ namespace CreationKitPlatformExtended
 			if (!Modules || !lpExceptionRecord)
 				return;
 
-			fprintf(Stream, "REGISTERS:\r\n");
+			fprintf(Stream, "REGISTERS:\n");
 
 			auto lamda_print_register = [&](FILE* Stream, const char* NameReg, uintptr_t Value)
 			{
@@ -677,28 +661,28 @@ namespace CreationKitPlatformExtended
 				switch (Analize.Type)
 				{
 				case Introspection::aitCode:
-					fprintf(Stream, "(void* -> %s)\r\n", Analize.Text.c_str());
+					fprintf(Stream, "(void* -> %s)\n", Analize.Text.c_str());
 					break;
 				case Introspection::aitInstance:
-					fprintf(Stream, "(HINSTANCE*) %s\r\n", Analize.Text.c_str());
+					fprintf(Stream, "(HINSTANCE*) %s\n", Analize.Text.c_str());
 					break;
 				case Introspection::aitNumber:
 					if (Value >> 63)
-						fprintf(Stream, "(size_t) [uint: %llu int: %lld]\r\n", Value, (ptrdiff_t)Value);
+						fprintf(Stream, "(size_t) [uint: %llu int: %lld]\n", Value, (ptrdiff_t)Value);
 					else
-						fprintf(Stream, "(size_t) [%llu]\r\n", Value);
+						fprintf(Stream, "(size_t) [%llu]\n", Value);
 					break;
 				case Introspection::aitClass:
 					if (Analize.Additional.IsEmpty())
-						fprintf(Stream, "(%s*)\r\n", Analize.Text.c_str());
+						fprintf(Stream, "(%s*)\n", Analize.Text.c_str());
 					else
-						fprintf(Stream, "(%s*) | %s\r\n", Analize.Text.c_str(), Analize.Additional.c_str());
+						fprintf(Stream, "(%s*) | %s\n", Analize.Text.c_str(), Analize.Additional.c_str());
 					break;
 				case Introspection::aitString:
-					fprintf(Stream, "(char*) %s\r\n", Analize.Text.c_str());
+					fprintf(Stream, "(char*) %s\n", Analize.Text.c_str());
 					break;
 				default:
-					fprintf(Stream, "(void*)\r\n");
+					fprintf(Stream, "(void*)\n");
 					break;
 				}
 			};
@@ -725,15 +709,15 @@ namespace CreationKitPlatformExtended
 				return (uint8_t)((Flags & (1 << bit)) >> bit);
 			};
 			
-			fprintf(Stream, "\n\tZF\t%u\tPF\t%u\tAF\t%u\r\n\tOF\t%u\tSF\t%u\tDF\t%u\r\n\tCF\t%u\tTF\t%u\tIF\t%u\r\n\r\n",
+			fprintf(Stream, "\n\tZF\t%u\tPF\t%u\tAF\t%u\n\tOF\t%u\tSF\t%u\tDF\t%u\n\tCF\t%u\tTF\t%u\tIF\t%u\n\n",
 				lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 6), lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 2), 
 				lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 4), lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 11), 
 				lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 7), lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 10),
 				lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 0), lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 8),
 				lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 9));
 
-			fprintf(Stream, "\tLastError\t%08X\r\n\r\n", GetLastError());
-			fprintf(Stream, "\tGS\t%04X\tFS\t%04X\r\n\tES\t%04X\tDS\t%04X\r\n\tCS\t%04X\tSS\t%04X\r\n\r\n",
+			fprintf(Stream, "\tLastError\t%08X\n\n", GetLastError());
+			fprintf(Stream, "\tGS\t%04X\tFS\t%04X\n\tES\t%04X\tDS\t%04X\n\tCS\t%04X\tSS\t%04X\n\n",
 				lpExceptionRecord->ContextRecord->SegGs, lpExceptionRecord->ContextRecord->SegFs, lpExceptionRecord->ContextRecord->SegEs, 
 				lpExceptionRecord->ContextRecord->SegDs, lpExceptionRecord->ContextRecord->SegCs, lpExceptionRecord->ContextRecord->SegSs);
 			
@@ -743,7 +727,7 @@ namespace CreationKitPlatformExtended
 				//auto pf = (float*)&Reg;
 				//fprintf(Stream, "\tXMM%u\t%08X (%.6f)\t%08X (%.6f)\t%08X (%.6f)\t%08X (%.6f)\n", RegId, 
 				//	p[0], pf[0], p[1], pf[1], p[2], pf[2], p[3], pf[3]);
-				fprintf(Stream, "\tXMM%u\t%08X %08X %08X %08X\r\n", RegId, p[0], p[1], p[2], p[3]);
+				fprintf(Stream, "\tXMM%u\t%08X %08X %08X %08X\n", RegId, p[0], p[1], p[2], p[3]);
 			};
 
 			lamda_xmm_printf(Stream, 0, lpExceptionRecord->ContextRecord->Xmm0);
@@ -763,7 +747,7 @@ namespace CreationKitPlatformExtended
 			lamda_xmm_printf(Stream, 14, lpExceptionRecord->ContextRecord->Xmm14);
 			lamda_xmm_printf(Stream, 15, lpExceptionRecord->ContextRecord->Xmm15);
 
-			fprintf(Stream, "\r\n");
+			fprintf(Stream, "\n");
 			fflush(Stream);
 		}
 
@@ -775,7 +759,7 @@ namespace CreationKitPlatformExtended
 			}
 			__except (1)
 			{
-				fprintf(Stream, "\r\n");
+				fprintf(Stream, "\n");
 			}
 		}
 
@@ -784,7 +768,7 @@ namespace CreationKitPlatformExtended
 			if (!Modules)
 				return;
 
-			fprintf(Stream, "PROBABLE CALL STACK:\r\n");
+			fprintf(Stream, "PROBABLE CALL STACK:\n");
 
 			uint32_t id = 0;
 			for (auto itS : ProbablyCallStack)
@@ -792,12 +776,12 @@ namespace CreationKitPlatformExtended
 				auto Info = GlobalIntrospection->Analyze(Stream, itS, Modules, nullptr);
 				if (Info.Type == Introspection::aitCode)
 				{
-					fprintf(Stream, "\t[%-*u]: 0x%016llX %s\r\n", 3, id, itS, Info.Text.c_str());
+					fprintf(Stream, "\t[%-*u]: 0x%016llX %s\n", 3, id, itS, Info.Text.c_str());
 					id++;
 				}
 			}
 
-			fprintf(Stream, "\r\n");
+			fprintf(Stream, "\n");
 			fflush(Stream);
 		}
 
@@ -809,7 +793,7 @@ namespace CreationKitPlatformExtended
 			}
 			__except (1)
 			{
-				fprintf(Stream, "\r\n");
+				fprintf(Stream, "\n");
 			}
 		}
 
@@ -818,10 +802,10 @@ namespace CreationKitPlatformExtended
 			if (!lpExceptionInfo || !Modules || !GlobalIntrospection)
 				return;
 
-			fprintf(Stream, "STACK:\r\n");
+			fprintf(Stream, "STACK:\n");
 
 			if (!GlobalCrashTib || !GlobalCrashTib->StackBase)
-				fprintf(Stream, "\tFAILED TO READ TIB\r\n");
+				fprintf(Stream, "\tFAILED TO READ TIB\n");
 			else
 			{
 				uintptr_t stack_end = GlobalCrashTib->StackBase;
@@ -829,7 +813,7 @@ namespace CreationKitPlatformExtended
 				uintptr_t stack_last = lpExceptionInfo->ContextRecord->Rsp;
 				uintptr_t stack_iter = stack_last;
 
-				fprintf(Stream, "\tBase: %llX / %llX Last: %llX\r\n", stack_base, stack_end, stack_last);
+				fprintf(Stream, "\tBase: %llX / %llX Last: %llX\n", stack_base, stack_end, stack_last);
 
 				while ((stack_iter < (stack_end - 8)) && ((stack_iter - stack_last) < 0x2500))
 				{
@@ -841,28 +825,28 @@ namespace CreationKitPlatformExtended
 					switch (Analize.Type)
 					{
 					case Introspection::aitCode:
-						fprintf(Stream, "(void* -> %s)\r\n", Analize.Text.c_str());
+						fprintf(Stream, "(void* -> %s)\n", Analize.Text.c_str());
 						break;
 					case Introspection::aitInstance:
-						fprintf(Stream, "(HINSTANCE*) %s\r\n", Analize.Text.c_str());
+						fprintf(Stream, "(HINSTANCE*) %s\n", Analize.Text.c_str());
 						break;
 					case Introspection::aitNumber:
 						if (*(uintptr_t*)stack_iter >> 63)
-							fprintf(Stream, "(size_t) [uint: %llu int: %lld]\r\n", *(uintptr_t*)stack_iter, *(ptrdiff_t*)stack_iter);
+							fprintf(Stream, "(size_t) [uint: %llu int: %lld]\n", *(uintptr_t*)stack_iter, *(ptrdiff_t*)stack_iter);
 						else
-							fprintf(Stream, "(size_t) [%llu]\r\n", *(uintptr_t*)stack_iter);
+							fprintf(Stream, "(size_t) [%llu]\n", *(uintptr_t*)stack_iter);
 						break;
 					case Introspection::aitClass:
 						if (Analize.Additional.IsEmpty())
-							fprintf(Stream, "(%s*)\r\n", Analize.Text.c_str());
+							fprintf(Stream, "(%s*)\n", Analize.Text.c_str());
 						else
-							fprintf(Stream, "(%s*) | %s\r\n", Analize.Text.c_str(), Analize.Additional.c_str());
+							fprintf(Stream, "(%s*) | %s\n", Analize.Text.c_str(), Analize.Additional.c_str());
 						break;
 					case Introspection::aitString:
-						fprintf(Stream, "(char*) %s\r\n", Analize.Text.c_str());
+						fprintf(Stream, "(char*) %s\n", Analize.Text.c_str());
 						break;
 					default:
-						fprintf(Stream, "(void*)\r\n");
+						fprintf(Stream, "(void*)\n");
 						break;
 					}
 
@@ -870,7 +854,7 @@ namespace CreationKitPlatformExtended
 				}
 			}
 
-			fprintf(Stream, "\r\n");
+			fprintf(Stream, "\n");
 			fflush(Stream);
 		}
 
@@ -882,17 +866,17 @@ namespace CreationKitPlatformExtended
 			}
 			__except (1)
 			{
-				fprintf(Stream, "\r\n");
+				fprintf(Stream, "\n");
 			}
 		}
 
 		void CrashHandler::PrintPatches(FILE* Stream)
 		{
-			fprintf(Stream, "PATCHES:\r\n");
+			fprintf(Stream, "PATCHES:\n");
 
 			auto Manager = GlobalEnginePtr->GetPatchesManager();
 
-			fprintf(Stream, "\tTotal: %u\r\n", Manager->Count());
+			fprintf(Stream, "\tTotal: %u\n", Manager->Count());
 
 			uint32_t id = 0;
 			auto Modules = Manager->GetModuleMap();
@@ -901,45 +885,45 @@ namespace CreationKitPlatformExtended
 				auto& Patch = itM->second;
 				if (Patch->HasActive())
 				{
-					fprintf(Stream, "\t[%04u]: %s\r\n", id, Patch->GetName());
+					fprintf(Stream, "\t[%04u]: %s\n", id, Patch->GetName());
 					id++;
 				}
 			}
 
-			fprintf(Stream, "\r\n");
+			fprintf(Stream, "\n");
 			fflush(Stream);
 		}
 
 		void CrashHandler::PrintModules(FILE* Stream, ModuleMapInfo* Modules)
 		{
-			fprintf(Stream, "MODULES:\r\n");
-			fprintf(Stream, "\tTotal: %u\r\n", (uint32_t)Modules->size());
+			fprintf(Stream, "MODULES:\n");
+			fprintf(Stream, "\tTotal: %u\n", (uint32_t)Modules->size());
 
 			std::size_t column_max = 0;
 			for (auto itM = Modules->begin(); itM != Modules->end(); itM++)
 				column_max = std::max(column_max, itM->first.length());
 			
 			for (auto itM = Modules->begin(); itM != Modules->end(); itM++)
-				fprintf(Stream, "\t%-*s\t%016llX\r\n", (unsigned int)column_max, itM->first.c_str(), itM->second.Start);
+				fprintf(Stream, "\t%-*s\t%016llX\n", (unsigned int)column_max, itM->first.c_str(), itM->second.Start);
 
-			fprintf(Stream, "\r\n");
+			fprintf(Stream, "\n");
 			fflush(Stream);
 		}
 
 		void CrashHandler::PrintPlugins(FILE* Stream)
 		{
-			fprintf(Stream, "PLUGINS:\r\n");
+			fprintf(Stream, "PLUGINS:\n");
 			
 			auto Manager = GlobalEnginePtr->GetUserPluginsManager();
 
-			fprintf(Stream, "\tTotal: %u\r\n", Manager->Count());
+			fprintf(Stream, "\tTotal: %u\n", Manager->Count());
 			
 			uint32_t id = 0;
 			auto Plugins = Manager->GetPluginMap();
 			for (auto itP = Plugins->begin(); itP != Plugins->end(); itP++, id++)
-				fprintf(Stream, "\t[%04u]: %s\r\n", id, itP->second->GetPluginDllName());
+				fprintf(Stream, "\t[%04u]: %s\n", id, itP->second->GetPluginDllName());
 
-			fprintf(Stream, "\r\n");
+			fprintf(Stream, "\n");
 			fflush(Stream);
 		}
 
@@ -957,9 +941,9 @@ namespace CreationKitPlatformExtended
 
 		void CrashHandler::ContextWriteToCrashLogSafe(FILE* Stream, PEXCEPTION_POINTERS ExceptionInfo)
 		{
-			fprintf(Stream, "====== CRASH INFO ======\r\n\r\n");
-			fprintf(Stream, "CK %s\r\n", allowedEditorVersionStr[(size_t)GlobalEnginePtr->GetEditorVersion()].data());
-			fprintf(Stream, "CKPE Runtime %s %s %s\r\n", VER_FILE_VERSION_STR, __DATE__, __TIME__);
+			fprintf(Stream, "====== CRASH INFO ======\n\n");
+			fprintf(Stream, "CK %s\n", allowedEditorVersionStr[(size_t)GlobalEnginePtr->GetEditorVersion()].data());
+			fprintf(Stream, "CKPE Runtime %s %s %s\n", VER_FILE_VERSION_STR, __DATE__, __TIME__);
 			fflush(Stream);
 
 			ModuleMapInfo Modules;
@@ -1121,7 +1105,7 @@ namespace CreationKitPlatformExtended
 
 						bool no_ckpe_assert = !Param->File || !Param->File[0];
 						if (no_ckpe_assert)
-							SetWindowText(WndDetails, "NO_CKPE_ASSERTION\r\n\r\n");
+							SetWindowText(WndDetails, "ASSERTION\r\n\r\n");
 						else
 						{
 							char Buffer[320];
@@ -1144,12 +1128,25 @@ namespace CreationKitPlatformExtended
 								if (GetFileAttributesEx("CreationKitPlatformExtendedCrash.log", GetFileExInfoStandard, &FileData) &&
 									(FileData.nFileSizeLow <= 499000))
 								{
-									auto TextData = std::make_unique<char[]>(FileData.nFileSizeLow);
-									fread_s(TextData.get(), FileData.nFileSizeLow, 1, FileData.nFileSizeLow, fStream);
+									char* chSep = nullptr;
+									auto TextData = std::make_unique<char[]>(2048);
+									
+									while (!feof(fStream))
+									{
+										fgets(TextData.get(), 2048, fStream);
 
-									index = GetWindowTextLength(WndDetails);
-									SendMessageA(WndDetails, EM_SETSEL, (WPARAM)index, (LPARAM)index);
-									SendMessageA(WndDetails, EM_REPLACESEL, 0, (LPARAM)TextData.get());
+										chSep = strchr(TextData.get(), '\n');
+										if (chSep && ((chSep - TextData.get()) <= 2044))
+										{
+											chSep[0] = '\r';
+											chSep[1] = '\n';
+											chSep[2] = '\0';
+										}
+
+										index = GetWindowTextLength(WndDetails);
+										SendMessageA(WndDetails, EM_SETSEL, (WPARAM)index, (LPARAM)index);
+										SendMessageA(WndDetails, EM_REPLACESEL, 0, (LPARAM)TextData.get());
+									}
 								}
 							}
 						}

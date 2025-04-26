@@ -563,26 +563,29 @@ namespace CreationKitPlatformExtended
 							return 0;
 							case UI_EXTMENU_TOGGLE_ANTIALIASING:
 							{
-								MENUITEMINFO info
+								if (GlobalRenderWindowPtr)
 								{
-									.cbSize = sizeof(MENUITEMINFO),
-									.fMask = MIIM_STATE
-								};
+									MENUITEMINFO info
+									{
+										.cbSize = sizeof(MENUITEMINFO),
+										.fMask = MIIM_STATE
+									};
 
-								GetMenuItemInfo(GlobalMainWindowPtr->GetExtensionMenuHandle(), param, FALSE, &info);
+									GetMenuItemInfo(GlobalMainWindowPtr->GetExtensionMenuHandle(), param, FALSE, &info);
 
-								bool doCheck = !((info.fState & MFS_CHECKED) == MFS_CHECKED);
+									bool doCheck = !((info.fState & MFS_CHECKED) == MFS_CHECKED);
 
-								if (doCheck)
-									info.fState |= MFS_CHECKED;
-								else
-									info.fState &= ~MFS_CHECKED;
+									if (doCheck)
+										info.fState |= MFS_CHECKED;
+									else
+										info.fState &= ~MFS_CHECKED;
 
-								GlobalRenderWindowPtr->SetAntiAliasingEnabled(doCheck);
-								SetMenuItemInfo(GlobalMainWindowPtr->GetExtensionMenuHandle(), param, FALSE, &info);
+									GlobalRenderWindowPtr->SetAntiAliasingEnabled(doCheck);
+									SetMenuItemInfo(GlobalMainWindowPtr->GetExtensionMenuHandle(), param, FALSE, &info);
 
-								SendMessageA(GlobalMainWindowPtr->Toolbar.Handle, TB_CHECKBUTTON, 
-									UI_EXTMENU_TOGGLE_ANTIALIASING, MAKELPARAM(doCheck, 0));
+									SendMessageA(GlobalMainWindowPtr->Toolbar.Handle, TB_CHECKBUTTON,
+										UI_EXTMENU_TOGGLE_ANTIALIASING, MAKELPARAM(doCheck, 0));
+								}
 							}
 							return 0;
 							default:
