@@ -419,7 +419,7 @@ namespace CreationKitPlatformExtended
 				CreateDialogParamA(hInstance, lpTemplateName, hWndParent, DialogFuncOverride, dwInitParam));
 		}
 
-		static BSSpinLock GlobalDialogBoxMutex;
+		//static BSSpinLock GlobalDialogBoxMutex;
 
 		INT_PTR EditorUI::HKDialogBoxParamA(HINSTANCE hInstance, LPCSTR lpTemplateName, HWND hWndParent, 
 			DLGPROC lpDialogFunc, LPARAM dwInitParam)
