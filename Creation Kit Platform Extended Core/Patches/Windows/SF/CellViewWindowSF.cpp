@@ -151,7 +151,7 @@ namespace CreationKitPlatformExtended
 						return true;
 				}
 
-				return false;
+				return skipsInsert;
 			}
 
 			void CellViewWindow::ResizeWnd(UINT width, UINT height)

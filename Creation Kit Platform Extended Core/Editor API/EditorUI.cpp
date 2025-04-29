@@ -7,7 +7,6 @@
 #include "Core/DialogManager.h"
 #include "Core/RegistratorWindow.h"
 #include "EditorUI.h"
-//#include "BSSpinLock.h"
 #include "../NiAPI/NiMemoryManager.h"
 #include "UITheme/VarCommon.h"
 #include "../Patches/UIThemePatch.h"
@@ -419,16 +418,9 @@ namespace CreationKitPlatformExtended
 				CreateDialogParamA(hInstance, lpTemplateName, hWndParent, DialogFuncOverride, dwInitParam));
 		}
 
-		//static BSSpinLock GlobalDialogBoxMutex;
-
 		INT_PTR EditorUI::HKDialogBoxParamA(HINSTANCE hInstance, LPCSTR lpTemplateName, HWND hWndParent, 
 			DLGPROC lpDialogFunc, LPARAM dwInitParam)
 		{
-		//	if (GlobalDialogBoxMutex.IsLocked())
-		//		return IDCLOSE;
-
-		//	GlobalDialogBoxMutex.Acquire();
-
 			// EndDialog MUST be used
 			ThreadDialogData.DialogFunc = lpDialogFunc;
 			ThreadDialogData.IsDialog = true;
@@ -450,14 +442,11 @@ namespace CreationKitPlatformExtended
 
 			//_MESSAGE("DBG dialog modal: %X(%u) %p", (DWORD)lpTemplateName, (DWORD)lpTemplateName, lpDialogFunc);
 
-			INT_PTR Result = 0;
 			auto dialog = Core::GlobalDialogManagerPtr->GetDialog(reinterpret_cast<ULONG_PTR>(lpTemplateName));
 			if (dialog)
-				Result = dialog->ShowModal(hWndParent, DialogFuncOverride, dwInitParam, hInstance);
-			Result = DialogBoxParamA(hInstance, lpTemplateName, hWndParent, DialogFuncOverride, dwInitParam);
-
-			//GlobalDialogBoxMutex.Release();
-			return Result;
+				return dialog->ShowModal(hWndParent, DialogFuncOverride, dwInitParam, hInstance);
+			
+			return DialogBoxParamA(hInstance, lpTemplateName, hWndParent, DialogFuncOverride, dwInitParam);
 		}
 
 		BOOL EditorUI::HKEndDialog(HWND hDlg, INT_PTR nResult)
