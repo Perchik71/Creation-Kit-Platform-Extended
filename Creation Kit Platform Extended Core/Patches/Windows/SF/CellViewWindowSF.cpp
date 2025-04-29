@@ -90,8 +90,9 @@ namespace CreationKitPlatformExtended
 					lpRelocator->DetourCall(_RELDATA_RAV(4), &CellViewWindow::sub1);
 					lpRelocator->DetourCall(_RELDATA_RAV(5), &CellViewWindow::sub1);
 					pointer_CellViewWindow_sub1 = _RELDATA_ADDR(6);
-					// For Recent Cells etc less 6 index in combobox Worldspace
+					// For Recent Cells
 					lpRelocator->DetourCall(_RELDATA_RAV(10), &CellViewWindow::sub3);
+					lpRelocator->DetourCall(_RELDATA_RAV(11), &CellViewWindow::sub3);
 					pointer_CellViewWindow_sub3 = _RELDATA_ADDR(9);
 					// Allow objects to be filtered in CellViewProc
 					lpRelocator->DetourCall(_RELDATA_RAV(7), &CellViewWindow::sub2);
