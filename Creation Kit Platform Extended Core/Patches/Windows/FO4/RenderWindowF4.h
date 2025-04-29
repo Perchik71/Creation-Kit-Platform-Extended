@@ -31,8 +31,9 @@ namespace CreationKitPlatformExtended
 				static void UpdateDrawInfo(char* Dest, UINT Size, const char* FormatStr, ...);
 				static void ImGuiDrawInfo();
 
-				virtual bool HasAntiAliasing() const noexcept(true) { return _ImagespaceAA->IsEnabled(); }
-				virtual void SetAntiAliasingEnabled(bool v) noexcept(true) { _ImagespaceAA->SetEnabled(v); }
+				inline ImagespaceAA* GetImagespaceAA() const noexcept(true) { return _ImagespaceAA.get(); }
+				virtual bool HasAntiAliasing() const noexcept(true) { return _ImagespaceAA ? _ImagespaceAA->IsEnabled() : false; }
+				virtual void SetAntiAliasingEnabled(bool v) noexcept(true) { if (_ImagespaceAA) _ImagespaceAA->SetEnabled(v); }
 			protected:
 				virtual bool QueryFromPlatform(EDITOR_EXECUTABLE_TYPE eEditorCurrentVersion,
 					const char* lpcstrPlatformRuntimeVersion) const;

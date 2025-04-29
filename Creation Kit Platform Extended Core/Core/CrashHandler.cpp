@@ -1105,7 +1105,7 @@ namespace CreationKitPlatformExtended
 
 						bool no_ckpe_assert = !Param->File || !Param->File[0];
 						if (no_ckpe_assert)
-							SetWindowText(WndDetails, "ASSERTION\r\n\r\n");
+							SetWindowText(WndDetails, "ASSERTION: \r\n\r\n");
 						else
 						{
 							char Buffer[320];
@@ -1116,6 +1116,10 @@ namespace CreationKitPlatformExtended
 						int index = GetWindowTextLength(WndDetails);
 						SendMessageA(WndDetails, EM_SETSEL, (WPARAM)index, (LPARAM)index);
 						SendMessageA(WndDetails, EM_REPLACESEL, 0, (LPARAM)Param->ErrorMessage);
+
+						index = GetWindowTextLength(WndDetails);
+						SendMessageA(WndDetails, EM_SETSEL, (WPARAM)index, (LPARAM)index);
+						SendMessageA(WndDetails, EM_REPLACESEL, 0, (LPARAM)"\r\n\r\n");
 
 						if (Param->ExceptionInfo)
 						{

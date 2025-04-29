@@ -928,6 +928,9 @@
     <ClCompile Include="Patches\D3D12Patch.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SF\RemoveSpamMessageSF.cpp">
+      <Filter>Patches\SF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2056,9 +2059,6 @@
     <ClInclude Include="Patches\Windows\SF\RenderWindowSF.h">
       <Filter>Patches\Windows\SF</Filter>
     </ClInclude>
-    <ClInclude Include="Editor API\SF\TESFormComponent.h">
-      <Filter>Editor API\SF\Forms</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\SF\BGSRenderWindowSF.h">
       <Filter>Editor API\SF</Filter>
     </ClInclude>
@@ -2268,6 +2268,15 @@
     </ClInclude>
     <ClInclude Include="Patches\D3D12Patch.h">
       <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SF\TESObjectCELL.h">
+      <Filter>Editor API\SF\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor API\SF\TESFormComponent.h">
+      <Filter>Editor API\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SF\RemoveSpamMessageSF.h">
+      <Filter>Patches\SF</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -574,17 +574,22 @@ namespace CreationKitPlatformExtended
 									GetMenuItemInfo(GlobalMainWindowPtr->GetExtensionMenuHandle(), param, FALSE, &info);
 
 									bool doCheck = !((info.fState & MFS_CHECKED) == MFS_CHECKED);
+									if (GlobalRenderWindowPtr->GetImagespaceAA())
+									{
+										GlobalRenderWindowPtr->SetAntiAliasingEnabled(doCheck);
 
-									if (doCheck)
-										info.fState |= MFS_CHECKED;
+										if (doCheck)
+											info.fState |= MFS_CHECKED;
+										else
+											info.fState &= ~MFS_CHECKED;
+
+										SetMenuItemInfo(GlobalMainWindowPtr->GetExtensionMenuHandle(), param, FALSE, &info);
+										SendMessageA(GlobalMainWindowPtr->Toolbar.Handle, TB_CHECKBUTTON,
+											UI_EXTMENU_TOGGLE_ANTIALIASING, MAKELPARAM(doCheck, 0));
+									}
 									else
-										info.fState &= ~MFS_CHECKED;
-
-									GlobalRenderWindowPtr->SetAntiAliasingEnabled(doCheck);
-									SetMenuItemInfo(GlobalMainWindowPtr->GetExtensionMenuHandle(), param, FALSE, &info);
-
-									SendMessageA(GlobalMainWindowPtr->Toolbar.Handle, TB_CHECKBUTTON,
-										UI_EXTMENU_TOGGLE_ANTIALIASING, MAKELPARAM(doCheck, 0));
+										SendMessageA(GlobalMainWindowPtr->Toolbar.Handle, TB_CHECKBUTTON,
+											UI_EXTMENU_TOGGLE_ANTIALIASING, MAKELPARAM(TRUE, 0));
 								}
 							}
 							return 0;

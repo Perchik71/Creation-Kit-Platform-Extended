@@ -22,6 +22,7 @@
 #include "Patches/SF/BSResourceLooseFilesPatchSF.h"
 #include "Patches/SF/BSArchiveManagerModdedSF.h"
 #include "Patches/SF/TESRemoveCheckDataDriverSF.h"
+#include "Patches/SF/RemoveSpamMessageSF.h"
 
 #include "Patches/Windows/SF/DataWindowSF.h"
 #include "Patches/Windows/SF/AboutWindowSF.h"
@@ -57,6 +58,7 @@ namespace CreationKitPlatformExtended
 				new Patches::BSResourceLooseFilesPatch(),
 				new Patches::BSArchiveManagerModdedPatch(),
 				new Patches::TESRemoveCheckDriverSFPatch(),
+				new Patches::RemoveSpamMessagePatch(),
 
 				new Patches::DataWindow(),
 				new Patches::AboutWindow(),

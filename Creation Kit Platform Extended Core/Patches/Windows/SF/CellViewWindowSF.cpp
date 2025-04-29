@@ -25,6 +25,7 @@ namespace CreationKitPlatformExtended
 			CellViewWindow* GlobalCellViewWindowPtr = nullptr;
 			uintptr_t pointer_CellViewWindow_sub1 = 0;
 			uintptr_t pointer_CellViewWindow_sub2 = 0;
+			uintptr_t pointer_CellViewWindow_sub3 = 0;
 
 			bool CellViewWindow::HasOption() const
 			{
@@ -89,7 +90,9 @@ namespace CreationKitPlatformExtended
 					lpRelocator->DetourCall(_RELDATA_RAV(4), &CellViewWindow::sub1);
 					lpRelocator->DetourCall(_RELDATA_RAV(5), &CellViewWindow::sub1);
 					pointer_CellViewWindow_sub1 = _RELDATA_ADDR(6);
-
+					// For Recent Cells etc less 6 index in combobox Worldspace
+					lpRelocator->DetourCall(_RELDATA_RAV(10), &CellViewWindow::sub3);
+					pointer_CellViewWindow_sub3 = _RELDATA_ADDR(9);
 					// Allow objects to be filtered in CellViewProc
 					lpRelocator->DetourCall(_RELDATA_RAV(7), &CellViewWindow::sub2);
 					pointer_CellViewWindow_sub2 = _RELDATA_ADDR(8);
@@ -134,6 +137,20 @@ namespace CreationKitPlatformExtended
 				}
 
 				fastCall<void>(pointer_CellViewWindow_sub2, ListViewHandle, Form);
+			}
+
+			bool CellViewWindow::sub3(TESForm* Form)
+			{
+				bool skipsInsert = fastCall<bool>(pointer_CellViewWindow_sub3, Form);
+				if (!skipsInsert)
+				{
+					bool allowInsert = true;
+					GlobalCellViewWindowPtr->Perform(UI_CELL_VIEW_ADD_CELL_ITEM, (WPARAM)Form, (LPARAM)&allowInsert);
+					if (!allowInsert)
+						return true;
+				}
+
+				return false;
 			}
 
 			void CellViewWindow::ResizeWnd(UINT width, UINT height)

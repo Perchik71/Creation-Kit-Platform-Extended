@@ -31,6 +31,7 @@ namespace CreationKitPlatformExtended
 				
 				static void sub1(HWND ListViewHandle, TESForm* Form, bool UseImage, int ItemIndex);
 				static void sub2(HWND ListViewHandle, TESForm* Form);
+				static bool sub3(TESForm* Form);
 
 				void ResizeWnd(UINT width, UINT height);
 			protected:

@@ -6,6 +6,7 @@
 #pragma pack(push, 1)
 
 #include "BSFixedString.h"
+#include "..\BGSLocalizedString.h"
 
 namespace CreationKitPlatformExtended
 {
@@ -50,6 +51,8 @@ namespace CreationKitPlatformExtended
 			};
 			static_assert(sizeof(BaseFormComponent) == 0x08);
 		}
+
+
 	}
 }
 

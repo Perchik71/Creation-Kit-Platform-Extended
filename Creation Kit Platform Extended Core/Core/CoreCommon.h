@@ -68,6 +68,7 @@ namespace CreationKitPlatformExtended
 			EDITOR_FALLOUT_C4_1_10_943_1,
 			EDITOR_STARFIELD_1_13_61_0,
 			EDITOR_STARFIELD_1_14_70_0,
+			EDITOR_STARFIELD_1_14_74_0,
 		};
 		
 		// Список ключевых смещений в исполняемых файлах, допущенных к запуску (но не точно)
