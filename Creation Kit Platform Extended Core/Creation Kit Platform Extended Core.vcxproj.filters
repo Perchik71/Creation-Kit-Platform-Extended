@@ -931,6 +931,9 @@
     <ClCompile Include="Patches\SF\RemoveSpamMessageSF.cpp">
       <Filter>Patches\SF</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\CheckTextureInMaterial.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2277,6 +2280,9 @@
     </ClInclude>
     <ClInclude Include="Patches\SF\RemoveSpamMessageSF.h">
       <Filter>Patches\SF</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CheckTextureInMaterial.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -304,6 +304,7 @@
     <ClCompile Include="Patches\SSE\BrokenTerrainEditDlg.cpp" />
     <ClCompile Include="Patches\SSE\BSArchiveManagerModded.cpp" />
     <ClCompile Include="Patches\SSE\CheckD3D11.cpp" />
+    <ClCompile Include="Patches\SSE\CheckTextureInMaterial.cpp" />
     <ClCompile Include="Patches\SSE\ChooseSoundFile.cpp" />
     <ClCompile Include="Patches\SSE\CrashAfterMultipleMastersWarning.cpp" />
     <ClCompile Include="Patches\SSE\CrashCCCFiles.cpp" />
@@ -723,6 +724,7 @@
     <ClInclude Include="Patches\SSE\BrokenTerrainEditDlg.h" />
     <ClInclude Include="Patches\SSE\BSArchiveManagerModded.h" />
     <ClInclude Include="Patches\SSE\CheckD3D11.h" />
+    <ClInclude Include="Patches\SSE\CheckTextureInMaterial.h" />
     <ClInclude Include="Patches\SSE\ChooseSoundFile.h" />
     <ClInclude Include="Patches\SSE\CrashAfterMultipleMastersWarning.h" />
     <ClInclude Include="Patches\SSE\CrashCCCFiles.h" />

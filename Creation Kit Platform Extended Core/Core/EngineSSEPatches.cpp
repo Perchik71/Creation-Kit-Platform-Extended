@@ -97,6 +97,7 @@
 #include "Patches/SSE/ResponseIgnoreMax.h"
 #include "Patches/SSE/CrashFootstepSetRemove.h"
 #include "Patches/SSE/TESFormSSE_RE.h"
+#include "Patches/SSE/CheckTextureInMaterial.h"
 
 #include "Patches/Windows/SSE/MainWindow.h"
 #include "Patches/Windows/SSE/RenderWindow.h"
@@ -209,6 +210,7 @@ namespace CreationKitPlatformExtended
 				new Patches::ResponseIgnoreMaxPatch(),
 				new Patches::CrashFootstepSetRemovePatch(),
 				new Patches::TESFormSSE_REPatch(),
+				new Patches::CheckTextureInMaterialPatch(),
 
 				new Patches::MainWindow(),
 				new Patches::RenderWindow(),
