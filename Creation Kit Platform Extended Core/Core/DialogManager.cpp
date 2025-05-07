@@ -69,13 +69,6 @@ namespace CreationKitPlatformExtended
 
 		void DialogManager::LoadFromFilePackage(const char* fname)
 		{
-			// I didn't understand it, but it crashes when calling json::parser().
-			// I will make the load via a file.
-
-			CHAR szBuf[MAX_PATH] = { 0 };
-			Assert(GetTempPathA(MAX_PATH, szBuf));
-			String path_temp = szBuf;
-
 			// open archive
 			struct zip_t* zip = zip_open(fname, 0, 'r');
 			if (!zip)
@@ -86,7 +79,7 @@ namespace CreationKitPlatformExtended
 
 			_MESSAGE("DIALOG: Open archive \"%s\"", fname);
 
-			String sName, sId, extract_fname;
+			String sName, sId;
 
 			INT nCount = zip_entries_total(zip);
 			for (INT i = 0; i < nCount; ++i)
@@ -111,18 +104,20 @@ namespace CreationKitPlatformExtended
 					continue;
 
 				sId = sName.substr(0, AtuID);
-				extract_fname = path_temp + sId + ".json";
-				if (zip_entry_fread(zip, extract_fname.c_str()))
+				size_t fileSize = (size_t)zip_entry_size(zip);
+				auto fileBuffer = std::make_unique<char[]>(fileSize + 1);
+				if (zip_entry_noallocread(zip, (void*)fileBuffer.get(), fileSize) < 0)
 					_FATALERROR("DIALOG: Failed read file \"%s\"", sName.c_str());
 				else
 				{
-					if (AddDialog(extract_fname, strtoul(sId.data(), NULL, 10)))
+					// sets EOF
+					fileBuffer[fileSize] = '\0';
+					if (AddDialogByCode(fileBuffer.get(), strtoul(sId.data(), NULL, 10)))
 						_MESSAGE("The dialog has been added: \"%s\"", sName.c_str());
 					else
 						_ERROR("Error adding a dialog: \"%s\"", sName.c_str());
 				}
 
-				DeleteFileA(extract_fname.c_str());
 				zip_entry_close(zip);
 			}
 
