@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="toml11\src\color.cpp" />
+    <ClCompile Include="toml11\src\comments.cpp" />
+    <ClCompile Include="toml11\src\context.cpp" />
+    <ClCompile Include="toml11\src\datetime.cpp" />
+    <ClCompile Include="toml11\src\error_info.cpp" />
+    <ClCompile Include="toml11\src\format.cpp" />
+    <ClCompile Include="toml11\src\literal.cpp" />
+    <ClCompile Include="toml11\src\location.cpp" />
+    <ClCompile Include="toml11\src\parser.cpp" />
+    <ClCompile Include="toml11\src\region.cpp" />
+    <ClCompile Include="toml11\src\scanner.cpp" />
+    <ClCompile Include="toml11\src\serializer.cpp" />
+    <ClCompile Include="toml11\src\skip.cpp" />
+    <ClCompile Include="toml11\src\source_location.cpp" />
+    <ClCompile Include="toml11\src\syntax.cpp" />
+    <ClCompile Include="toml11\src\types.cpp" />
+    <ClCompile Include="toml11\src\value_t.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="toml11\include\toml.hpp" />
+    <ClInclude Include="toml11\include\toml11\color.hpp" />
+    <ClInclude Include="toml11\include\toml11\comments.hpp" />
+    <ClInclude Include="toml11\include\toml11\compat.hpp" />
+    <ClInclude Include="toml11\include\toml11\context.hpp" />
+    <ClInclude Include="toml11\include\toml11\conversion.hpp" />
+    <ClInclude Include="toml11\include\toml11\datetime.hpp" />
+    <ClInclude Include="toml11\include\toml11\error_info.hpp" />
+    <ClInclude Include="toml11\include\toml11\exception.hpp" />
+    <ClInclude Include="toml11\include\toml11\find.hpp" />
+    <ClInclude Include="toml11\include\toml11\format.hpp" />
+    <ClInclude Include="toml11\include\toml11\from.hpp" />
+    <ClInclude Include="toml11\include\toml11\fwd\color_fwd.hpp" />
+    <ClInclude Include="toml11\include\toml11\fwd\comments_fwd.hpp" />
+    <ClInclude Include="toml11\include\toml11\fwd\datetime_fwd.hpp" />
+    <ClInclude Include="toml11\include\toml11\fwd\error_info_fwd.hpp" />
+    <ClInclude Include="toml11\include\toml11\fwd\format_fwd.hpp" />
+    <ClInclude Include="toml11\include\toml11\fwd\literal_fwd.hpp" />
+    <ClInclude Include="toml11\include\toml11\fwd\location_fwd.hpp" />
+    <ClInclude Include="toml11\include\toml11\fwd\region_fwd.hpp" />
+    <ClInclude Include="toml11\include\toml11\fwd\scanner_fwd.hpp" />
+    <ClInclude Include="toml11\include\toml11\fwd\source_location_fwd.hpp" />
+    <ClInclude Include="toml11\include\toml11\fwd\syntax_fwd.hpp" />
+    <ClInclude Include="toml11\include\toml11\fwd\value_t_fwd.hpp" />
+    <ClInclude Include="toml11\include\toml11\get.hpp" />
+    <ClInclude Include="toml11\include\toml11\impl\color_impl.hpp" />
+    <ClInclude Include="toml11\include\toml11\impl\comments_impl.hpp" />
+    <ClInclude Include="toml11\include\toml11\impl\datetime_impl.hpp" />
+    <ClInclude Include="toml11\include\toml11\impl\error_info_impl.hpp" />
+    <ClInclude Include="toml11\include\toml11\impl\format_impl.hpp" />
+    <ClInclude Include="toml11\include\toml11\impl\literal_impl.hpp" />
+    <ClInclude Include="toml11\include\toml11\impl\location_impl.hpp" />
+    <ClInclude Include="toml11\include\toml11\impl\region_impl.hpp" />
+    <ClInclude Include="toml11\include\toml11\impl\scanner_impl.hpp" />
+    <ClInclude Include="toml11\include\toml11\impl\source_location_impl.hpp" />
+    <ClInclude Include="toml11\include\toml11\impl\syntax_impl.hpp" />
+    <ClInclude Include="toml11\include\toml11\impl\value_t_impl.hpp" />
+    <ClInclude Include="toml11\include\toml11\into.hpp" />
+    <ClInclude Include="toml11\include\toml11\literal.hpp" />
+    <ClInclude Include="toml11\include\toml11\location.hpp" />
+    <ClInclude Include="toml11\include\toml11\ordered_map.hpp" />
+    <ClInclude Include="toml11\include\toml11\parser.hpp" />
+    <ClInclude Include="toml11\include\toml11\region.hpp" />
+    <ClInclude Include="toml11\include\toml11\result.hpp" />
+    <ClInclude Include="toml11\include\toml11\scanner.hpp" />
+    <ClInclude Include="toml11\include\toml11\serializer.hpp" />
+    <ClInclude Include="toml11\include\toml11\skip.hpp" />
+    <ClInclude Include="toml11\include\toml11\source_location.hpp" />
+    <ClInclude Include="toml11\include\toml11\spec.hpp" />
+    <ClInclude Include="toml11\include\toml11\storage.hpp" />
+    <ClInclude Include="toml11\include\toml11\syntax.hpp" />
+    <ClInclude Include="toml11\include\toml11\traits.hpp" />
+    <ClInclude Include="toml11\include\toml11\types.hpp" />
+    <ClInclude Include="toml11\include\toml11\utility.hpp" />
+    <ClInclude Include="toml11\include\toml11\value.hpp" />
+    <ClInclude Include="toml11\include\toml11\value_t.hpp" />
+    <ClInclude Include="toml11\include\toml11\version.hpp" />
+    <ClInclude Include="toml11\include\toml11\visit.hpp" />
+    <ClInclude Include="toml11\include\toml_fwd.hpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{05d6a7e8-f94b-49ad-b7f2-b1a832b746fd}</ProjectGuid>
+    <RootNamespace>Toml</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)Dependencies\toml11\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;TOML11_COMPILE_SOURCES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

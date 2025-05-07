@@ -73,8 +73,8 @@ namespace CreationKitPlatformExtended
 
 					static const char* SC_NONE = "<NONE>";
 
-					INIConfig _conf("CreationKit.ini");
-					INIConfig _User_conf("CreationKitCustom.ini");
+					INISettingCollection _conf("CreationKit.ini");
+					INISettingCollection _User_conf("CreationKitCustom.ini");
 
 					auto s = _User_conf.ReadString("Archive", "sResourceArchiveList", SC_NONE);
 					func((s == SC_NONE) ? _conf.ReadString("Archive", "sResourceArchiveList", "") : s);

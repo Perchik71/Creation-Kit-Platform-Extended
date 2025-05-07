@@ -80,9 +80,7 @@ namespace CreationKitPlatformExtended
 			if (HasOption())
 			{
 				String Section, Option;
-				INIConfig::SplitOptionName(GetOptionName(), Section, Option);
-
-				if (Option.empty() || !Option.length())
+				if (!CustomSettingCollection::SplitOptionName(GetOptionName(), Section, Option) || Option.empty() || !Option.length())
 				{
 					_ERROR("The patch indicated that it has an option, but there is no option name: \"%s\"", GetName());
 					return;
@@ -93,24 +91,24 @@ namespace CreationKitPlatformExtended
 
 				_MESSAGE("Reading an option in the configuration: %s:%s", Section.c_str(), Option.c_str());
 
-				switch (INIConfig::GetOptionTypeByName(Option.c_str()))
+				switch (CustomSettingCollection::GetOptionTypeByName(Option.c_str()))
 				{
-				case cotBool:
-					if (!GlobalINIConfigPtr->ReadBool(Section.c_str(), Option.c_str(), false))
+				case sotBool:
+					if (!_READ_OPTION_BOOL(Section.c_str(), Option.c_str(), false))
 					{
 						_MESSAGE("The option is disabled in the configuration: %s:%s", Section.c_str(), Option.c_str());
 						return;
 					}
 					break;
-				case cotInteger:
-					if (!GlobalINIConfigPtr->ReadInt(Section.c_str(), Option.c_str(), false))
+				case sotInteger:
+					if (!_READ_OPTION_INT(Section.c_str(), Option.c_str(), 0))
 					{
 						_MESSAGE("The option is disabled in the configuration: %s:%s", Section.c_str(), Option.c_str());
 						return;
 					}
 					break;
-				case cotUnsignedInteger:
-					if (!GlobalINIConfigPtr->ReadUInt(Section.c_str(), Option.c_str(), false))
+				case sotUnsignedInteger:
+					if (!_READ_OPTION_UINT(Section.c_str(), Option.c_str(), 0))
 					{
 						_MESSAGE("The option is disabled in the configuration: %s:%s", Section.c_str(), Option.c_str());
 						return;

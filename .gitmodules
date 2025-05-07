@@ -1,9 +1,6 @@
 [submodule "Dependencies/mzip"]
 	path = Dependencies/mzip
 	url = https://github.com/kuba--/zip.git
-[submodule "Dependencies/mINI"]
-	path = Dependencies/mINI
-	url = https://github.com/Perchik71/mINI.git
 [submodule "Dependencies/libdeflate"]
 	path = Dependencies/libdeflate
 	url = https://github.com/ebiggers/libdeflate.git
@@ -13,3 +10,6 @@
 [submodule "Dependencies/Voltek"]
 	path = Dependencies/Voltek
 	url = https://github.com/Perchik71/VoltekLib.git
+[submodule "Dependencies/toml11"]
+	path = Dependencies/toml11
+	url = https://github.com/ToruNiina/toml11.git

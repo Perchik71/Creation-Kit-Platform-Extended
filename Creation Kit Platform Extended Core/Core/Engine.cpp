@@ -613,8 +613,10 @@ namespace CreationKitPlatformExtended
 				GlobalDebugLogPtr = new DebugLog(L"CreationKitPlatformExtended.log");
 				AssertMsg(GlobalDebugLogPtr, "Failed create the log file \"CreationKitPlatformExtended.log\"");
 				
-				GlobalINIConfigPtr = new INIConfig(L"CreationKitPlatformExtended.ini");
-				AssertMsg(GlobalINIConfigPtr, "Failed open the config file \"CreationKitPlatformExtended.ini\"");
+				GlobalCKPEConfigPtr = new TOMLSettingCollection(L"CreationKitPlatformExtended.toml");
+				AssertMsg(GlobalCKPEConfigPtr, "Failed open the config file \"CreationKitPlatformExtended.toml\"");
+				//GlobalINIConfigPtr = new INIConfig(L"CreationKitPlatformExtended.ini");
+				//AssertMsg(GlobalINIConfigPtr, "Failed open the config file \"CreationKitPlatformExtended.ini\"");
 
 				auto LogCurrentTime = []() {
 					char timeBuffer[80];

@@ -84,7 +84,7 @@
 #include <jdialogs.h>
 
 #include "Crc32.h"
-#include "ini.h"
+#include "toml.hpp"
 #include "zip.h"
 
 #include "Types.h"
@@ -92,7 +92,7 @@
 
 #include "Core/CoreCommon.h"
 #include "Core/DebugLog.h"
-#include "Core/INIWrapper.h"
+#include "Core/CKPESettings.h"
 #include "Core/Relocator.h"
 #include "Core/ConsoleWindow.h"
 #include "Core/MemoryManager.h"

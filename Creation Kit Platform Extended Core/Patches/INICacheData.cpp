@@ -24,7 +24,7 @@ namespace CreationKitPlatformExtended
 #if 0
 		HANDLE GlobalINICacheTriggerEvent = NULL;
 #endif
-		ConcurrencyMap<String, std::shared_ptr<mINI::INIStructure>, std::hash<String>, string_equal_to> GlobalINICache;
+		ConcurrencyMap<String, std::shared_ptr<INISettingCollection>, std::hash<String>, string_equal_to> GlobalINICache;
 
 		INICacheDataPatch::INICacheDataPatch() : Module(GlobalEnginePtr)
 		{
@@ -79,11 +79,8 @@ namespace CreationKitPlatformExtended
 #endif
 				for (auto it = GlobalINICache.begin(); it != GlobalINICache.end(); it++)
 				{
-					if (it->second && (it->second->size() > 0))
-					{
-						mINI::INIFile file(it->first.c_str());
-						file.write(*(it->second), false);
-					}
+					if (it->second && !it->second->IsEmpty())
+						it->second->Save();
 				}
 
 				GlobalINICache.clear();
@@ -100,32 +97,21 @@ namespace CreationKitPlatformExtended
 				return (UINT)nDefault;
 
 			auto fileName = GetAbsoluteFileName(lpFileName);
-			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(fileName);
+			auto ini_data = (INISettingCollection*)GetFileFromCacheOrOpen(fileName);
 			if (!ini_data)
 				return GetPrivateProfileIntA(lpAppName, lpKeyName, nDefault, lpFileName);
 
-			String s;
-			auto ip = ini_data->get(lpAppName);
-			if (!ip.has(lpKeyName))
+			// Так как это единственная функция без защиты на тип опции, юзаю только это...
+			auto s = ini_data->ReadString(lpAppName, lpKeyName, "\"");
+			if (s == "\"")
 				return (UINT)nDefault;
-			else
-				s = ip.get(lpKeyName);
-
-			static const char* whitespace_delimiters = " \t\n\r\f\v";
-			s.erase(s.find_last_not_of(whitespace_delimiters) + 1);
-			s.erase(0, s.find_first_not_of(whitespace_delimiters));
-
-			if (s[0] == '"') s.erase(0, 1);
-			if (s[s.length() - 1] == '"') s.resize(s.length() - 1);
-
-			char* end_ptr = nullptr;
 
 			if (s.find_first_of("0x") == 0)
 				// hex
-				return strtoul(s.c_str() + 2, &end_ptr, 16);
+				return strtoul(s.c_str() + 2, nullptr, 16);
 			else
 				// dec
-				return strtoul(s.c_str(), &end_ptr, 10);
+				return strtoul(s.c_str(), nullptr, 10);
 		}
 
 		DWORD INICacheDataPatch::HKGetPrivateProfileStringA(LPCSTR lpAppName, LPCSTR lpKeyName, LPCSTR lpDefault,
@@ -137,8 +123,8 @@ namespace CreationKitPlatformExtended
 				return 0;
 
 			auto fileName = GetAbsoluteFileName(lpFileName);
-			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(fileName);
-			if (!ini_data)
+			auto ini_data = (INISettingCollection*)GetFileFromCacheOrOpen(fileName);
+			if (!ini_data || !ini_data->IsOpen())
 				return GetPrivateProfileStringA(lpAppName, lpKeyName, lpKeyName, lpReturnedString, nSize, lpFileName);
 
 			String s;
@@ -146,11 +132,11 @@ namespace CreationKitPlatformExtended
 
 			if (lpAppName && !lpKeyName)
 			{
-				auto ip = ini_data->get(lpAppName);
+				auto ip = ini_data->ReadSection(lpAppName);
 
-				for (auto i = ip.begin(); i != ip.end(); i++)
+				for (auto& i : ip->second)
 				{
-					s.append(i->first).append("=").append(i->second).append("\n");
+					s.append(i.first).append("=").append(i.second).append("\n");
 					l = std::min((size_t)nSize, s.length());
 					if (l == nSize) break;
 				}
@@ -159,7 +145,7 @@ namespace CreationKitPlatformExtended
 			}
 			else if (!lpAppName)
 			{
-				for (auto j = ini_data->begin(); j != ini_data->end(); j++)
+				for (auto j = ini_data->FirstUnsafe(); j != ini_data->LastUnsafe(); j++)
 				{
 					s.append("[").append(j->first).append("]\n");
 
@@ -175,18 +161,9 @@ namespace CreationKitPlatformExtended
 			}
 			else
 			{
-				auto ip = ini_data->get(lpAppName);
-				if (!ip.has(lpKeyName))
-					s = lpDefault ? lpDefault : "";
-				else
-					s = ip.get(lpKeyName);
-
-				static const char* whitespace_delimiters = " \t\n\r\f\v";
-				s.erase(s.find_last_not_of(whitespace_delimiters) + 1);
-				s.erase(0, s.find_first_not_of(whitespace_delimiters));
-
-				if (s[0] == '"') s.erase(0, 1);
-				if (s[s.length() - 1] == '"') s.resize(s.length() - 1);
+				auto s = ini_data->ReadString(lpAppName, lpKeyName, "\"");
+				if (s == "\"")
+					s = lpDefault ? Utils::QuoteRemove(lpDefault) : "";
 
 				l = std::min((size_t)nSize, s.length());
 				memcpy(lpReturnedString, (const void*)s.c_str(), l);
@@ -204,16 +181,14 @@ namespace CreationKitPlatformExtended
 			if (!lpszSection || !szFile || (uSizeStruct >= (UINT)0x7FFFFFFA)) return false;
 
 			auto fileName = GetAbsoluteFileName(szFile);
-			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(fileName);
+			auto ini_data = (INISettingCollection*)GetFileFromCacheOrOpen(fileName);
 			if (!ini_data)
 				return GetPrivateProfileStructA(lpszSection, lpszKey, lpStruct, uSizeStruct, szFile);
 
-			if (!(*ini_data).has(lpszSection))
-				return false;
-			if (!(*ini_data)[lpszSection].has(lpszKey))
+			if (!ini_data->Has(lpszSection, lpszKey))
 				return false;
 
-			std::string& value_str = (*ini_data)[lpszSection][lpszKey];
+			String value_str = ini_data->ReadString(lpszSection, lpszKey, "");
 			UINT count = (uSizeStruct << 1) + 2;
 
 			if (value_str.length() != count)
@@ -253,28 +228,25 @@ namespace CreationKitPlatformExtended
 			if (!lpAppName || !lpFileName) return false;
 
 			auto fileName = GetAbsoluteFileName(lpFileName);
-			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(fileName);
-			if (!ini_data || (ini_data == INVALID_HANDLE_VALUE))
+			auto ini_data = (INISettingCollection*)GetFileFromCacheOrOpen(fileName);
+			if (!ini_data || (ini_data == INVALID_HANDLE_VALUE) || !ini_data->IsOpen())
 				return WritePrivateProfileStringA(lpAppName, lpKeyName, lpString, lpFileName);
 
 			if (!lpKeyName)
 				// The name of the key to be associated with a string.
 				// If the key does not exist in the specified section, it is created.
 				// If this parameter is NULL, the entire section, including all entries within the section, is deleted.
-				ini_data->remove(lpAppName);
+				ini_data->Remove(lpAppName);
 			else if (!lpString)
 				// A null - terminated string to be written to the file.
 				// If this parameter is NULL, the key pointed to by the key_name parameter is deleted.
-				(*ini_data)[lpAppName].remove(lpKeyName);
+				ini_data->Remove(lpAppName, lpKeyName);
 			else
-				(*ini_data)[lpAppName][lpKeyName] = lpString;
+				ini_data->WriteString(lpAppName, lpKeyName, lpString);
 
 #ifdef _CKPE_WITH_QT5
-			if (ini_data->size() > 0)
-			{
-				mINI::INIFile file(fileName);
-				return file.write(*ini_data);
-			}
+			if (!ini_data->IsEmpty())
+				ini_data->Save();
 			else
 				return false;
 #else
@@ -293,7 +265,7 @@ namespace CreationKitPlatformExtended
 			if (!lpszSection || !szFile || (uSizeStruct >= (UINT)0x7FFFFFFA)) return false;
 
 			auto fileName = GetAbsoluteFileName(szFile);
-			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(fileName);
+			auto ini_data = (INISettingCollection*)GetFileFromCacheOrOpen(fileName);
 			if (!ini_data || (ini_data == INVALID_HANDLE_VALUE)) 
 				return WritePrivateProfileStructA(lpszSection, lpszKey, lpStruct, uSizeStruct, szFile);
 
@@ -328,14 +300,11 @@ namespace CreationKitPlatformExtended
 			data[0] = ffmt_value[dec_val[0]];
 			data[1] = ffmt_value[dec_val[1]];
 
-			(*ini_data)[lpszSection][lpszKey] = value_str;
+			ini_data->WriteString(lpszSection, lpszKey, value_str.c_str());
 
 #ifdef _CKPE_WITH_QT5
-			if (ini_data->size() > 0)
-			{
-				mINI::INIFile file(fileName);
-				return file.write(*ini_data);
-			}
+			if (!ini_data->IsEmpty())
+				ini_data->Save();
 			else
 				return false;
 #else
@@ -351,32 +320,21 @@ namespace CreationKitPlatformExtended
 				return (UINT)nDefault;
 
 			auto fileName = GetAbsoluteFileNameUnicode(lpFileName);
-			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(Conversion::WideToAnsi(fileName.c_str()).c_str());
+			auto ini_data = (INISettingCollection*)GetFileFromCacheOrOpen(Conversion::WideToAnsi(fileName.c_str()).c_str());
 			if (!ini_data || (ini_data == INVALID_HANDLE_VALUE))
 				return GetPrivateProfileIntW(lpAppName, lpKeyName, nDefault, lpFileName);
 
-			String s;
-			auto ip = ini_data->get(Conversion::WideToAnsi(lpAppName).c_str());
-			if (!ip.has(Conversion::WideToAnsi(lpKeyName).c_str()))
+			// Так как это единственная функция без защиты на тип опции, юзаю только это...
+			auto s = ini_data->ReadString(Conversion::WideToAnsi(lpAppName).c_str(), Conversion::WideToAnsi(lpKeyName).c_str(), "\"");
+			if (s == "\"")
 				return (UINT)nDefault;
-			else
-				s = ip.get(Conversion::WideToAnsi(lpKeyName).c_str());
-
-			static const char* whitespace_delimiters = " \t\n\r\f\v";
-			s.erase(s.find_last_not_of(whitespace_delimiters) + 1);
-			s.erase(0, s.find_first_not_of(whitespace_delimiters));
-
-			if (s[0] == '"') s.erase(0, 1);
-			if (s[s.length() - 1] == '"') s.resize(s.length() - 1);
-
-			char* end_ptr = nullptr;
 
 			if (s.find_first_of("0x") == 0)
 				// hex
-				return strtoul(s.c_str() + 2, &end_ptr, 16);
+				return strtoul(s.c_str() + 2, nullptr, 16);
 			else
 				// dec
-				return strtoul(s.c_str(), &end_ptr, 10);
+				return strtoul(s.c_str(), nullptr, 10);
 		}
 
 		DWORD INICacheDataPatch::HKGetPrivateProfileStringW(LPCWSTR lpAppName, LPCWSTR lpKeyName, LPCWSTR lpDefault,
@@ -388,8 +346,8 @@ namespace CreationKitPlatformExtended
 				return 0;
 
 			auto fileName = GetAbsoluteFileNameUnicode(lpFileName);
-			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(Conversion::WideToAnsi(fileName.c_str()).c_str());
-			if (!ini_data || (ini_data == INVALID_HANDLE_VALUE))
+			auto ini_data = (INISettingCollection*)GetFileFromCacheOrOpen(Conversion::WideToAnsi(fileName.c_str()).c_str());
+			if (!ini_data || (ini_data == INVALID_HANDLE_VALUE) || !ini_data->IsOpen())
 				return GetPrivateProfileStringW(lpAppName, lpKeyName, lpDefault, lpReturnedString, nSize, lpFileName);
 
 			String s;
@@ -397,20 +355,20 @@ namespace CreationKitPlatformExtended
 
 			if (lpAppName && !lpKeyName)
 			{
-				auto ip = ini_data->get(Conversion::WideToAnsi(lpAppName).c_str());
+				auto ip = ini_data->ReadSection(Conversion::WideToAnsi(lpAppName).c_str());
 
-				for (auto i = ip.begin(); i != ip.end(); i++)
+				for (auto i = ip->second.begin(); i != ip->second.end(); i++)
 				{
 					s.append(i->first).append("=").append(i->second).append("\n");
 					l = std::min((size_t)nSize, s.length());
 					if (l == nSize) break;
 				}
 
-				memcpy(lpReturnedString, (const void*)Conversion::AnsiToWide(s.c_str()).c_str(), l << 1);
+				memcpy(lpReturnedString, (const void*)Conversion::Utf8ToUtf16(s.c_str()).c_str(), l << 1);
 			}
 			else if (!lpAppName)
 			{
-				for (auto j = ini_data->begin(); j != ini_data->end(); j++)
+				for (auto j = ini_data->FirstUnsafe(); j != ini_data->LastUnsafe(); j++)
 				{
 					s.append("[").append(j->first).append("]\n");
 
@@ -422,25 +380,16 @@ namespace CreationKitPlatformExtended
 					}
 				}
 
-				memcpy(lpReturnedString, (const void*)Conversion::AnsiToWide(s.c_str()).c_str(), l << 1);
+				memcpy(lpReturnedString, (const void*)Conversion::Utf8ToUtf16(s.c_str()).c_str(), l << 1);
 			}
 			else
 			{
-				auto ip = ini_data->get(Conversion::WideToAnsi(lpAppName).c_str());
-				if (!ip.has(Conversion::WideToAnsi(lpKeyName).c_str()))
-					s = lpDefault ? Conversion::WideToAnsi(lpDefault) : "";
-				else
-					s = ip.get(Conversion::WideToAnsi(lpKeyName).c_str());
-
-				static const char* whitespace_delimiters = " \t\n\r\f\v";
-				s.erase(s.find_last_not_of(whitespace_delimiters) + 1);
-				s.erase(0, s.find_first_not_of(whitespace_delimiters));
-
-				if (s[0] == '"') s.erase(0, 1);
-				if (s[s.length() - 1] == '"') s.resize(s.length() - 1);
+				auto s = ini_data->ReadString(Conversion::WideToAnsi(lpAppName).c_str(), Conversion::WideToAnsi(lpKeyName).c_str(), "\"");
+				if (s == "\"")
+					s = lpDefault ? Conversion::Utf16ToUtf8(Utils::QuoteRemove(lpDefault)) : "";
 
 				l = std::min((size_t)nSize, s.length());
-				memcpy(lpReturnedString, (const void*)Conversion::AnsiToWide(s.c_str()).c_str(), l << 1);
+				memcpy(lpReturnedString, (const void*)Conversion::Utf8ToUtf16(s.c_str()).c_str(), l << 1);
 			}
 
 			lpReturnedString[(l == nSize) ? l - 1 : l] = L'\0';
@@ -454,7 +403,7 @@ namespace CreationKitPlatformExtended
 			if (!lpAppName || !lpFileName) return false;
 
 			auto fileName = GetAbsoluteFileNameUnicode(lpFileName);
-			auto ini_data = (mINI::INIStructure*)GetFileFromCacheOrOpen(Conversion::WideToAnsi(fileName.c_str()).c_str());
+			auto ini_data = (INISettingCollection*)GetFileFromCacheOrOpen(Conversion::WideToAnsi(fileName.c_str()).c_str());
 			if (!ini_data || (ini_data == INVALID_HANDLE_VALUE))
 				return WritePrivateProfileStringW(lpAppName, lpKeyName, lpString, lpFileName);
 
@@ -462,21 +411,18 @@ namespace CreationKitPlatformExtended
 				// The name of the key to be associated with a string.
 				// If the key does not exist in the specified section, it is created.
 				// If this parameter is NULL, the entire section, including all entries within the section, is deleted.
-				ini_data->remove(Conversion::WideToAnsi(lpAppName).c_str());
+				ini_data->Remove(Conversion::WideToAnsi(lpAppName).c_str());
 			else if (!lpString)
 				// A null - terminated string to be written to the file.
 				// If this parameter is NULL, the key pointed to by the key_name parameter is deleted.
-				(*ini_data)[Conversion::WideToAnsi(lpAppName).c_str()].remove(Conversion::WideToAnsi(lpKeyName).c_str());
+				ini_data->Remove(Conversion::WideToAnsi(lpAppName).c_str(), (Conversion::WideToAnsi(lpKeyName).c_str()));
 			else
-				(*ini_data)[Conversion::WideToAnsi(lpAppName).c_str()][Conversion::WideToAnsi(lpKeyName).c_str()] =
-					Conversion::WideToAnsi(lpString).c_str();
+				ini_data->WriteString(Conversion::WideToAnsi(lpAppName).c_str(), (Conversion::WideToAnsi(lpKeyName).c_str()),
+					Conversion::Utf16ToUtf8(lpString).c_str());
 
 #ifdef _CKPE_WITH_QT5
-			if (ini_data->size() > 0)
-			{
-				mINI::INIFile file(Conversion::WideToAnsi(fileName.c_str()).c_str());
-				return file.write(*ini_data);
-			}
+			if (!ini_data->IsEmpty())
+				ini_data->Save();
 			else
 				return false;
 #else
@@ -533,7 +479,7 @@ namespace CreationKitPlatformExtended
 			if (!EditorAPI::BSString::Utils::ExtractFileName(sFileName.c_str()).Compare("ConstructionSetNetwork.ini")) 
 				return nullptr;
 
-			std::shared_ptr<mINI::INIStructure> ini_data;
+			std::shared_ptr<INISettingCollection> ini_data;
 
 			auto iterator_find = GlobalINICache.find(sFileName.c_str());
 			if (iterator_find != GlobalINICache.end())
@@ -541,12 +487,13 @@ namespace CreationKitPlatformExtended
 
 			if (!ini_data)
 			{
-				mINI::INIFile* file = new mINI::INIFile(sFileName);
-				if (!file) return nullptr;
+				if (!Utils::FileExists(sFileName.c_str())) 
+					return nullptr;
 
-				ini_data = std::make_shared<mINI::INIStructure>();
+				ini_data = std::make_shared<INISettingCollection>();
 				if (!ini_data) return nullptr;
-				file->read(*ini_data, false);
+
+				ini_data->Open(sFileName.c_str());
 
 				//_MESSAGE("Debug INI: %s", sFileName.c_str());
 

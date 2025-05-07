@@ -6,7 +6,6 @@
 #include <signal.h>
 #include <psapi.h>
 #include "CrashHandler.h"
-#include "INIWrapper.h"
 #include "resource.h"
 #include "..\version\resource_version2.h"
 
@@ -591,21 +590,12 @@ namespace CreationKitPlatformExtended
 
 		void CrashHandler::PrintSettings(FILE* Stream)
 		{
-			auto smINI = ((SmartPointer<mINI::INIStructure>*)GlobalINIConfigPtr)->Get();
-
-			for (auto itSec = smINI->begin(); itSec != smINI->end(); itSec++)
+			if (GlobalCKPEConfigPtr)
 			{
-				if (!itSec->second.size() || (itSec->first == "hotkeys"))
-					continue;
-
-				fprintf(Stream, "\t[%s]\n", itSec->first.c_str());
-
-				for (auto itVal = itSec->second.begin(); itVal != itSec->second.end(); itVal++)
-					fprintf(Stream, "\t\t%s: %s\n", itVal->first.c_str(), itVal->second.c_str());
+				GlobalCKPEConfigPtr->Dump(Stream);
+				fprintf(Stream, "\n");
+				fflush(Stream);
 			}
-
-			fprintf(Stream, "\n");
-			fflush(Stream);
 		}
 
 		void CrashHandler::PrintSysInfo(FILE* Stream)
@@ -1219,7 +1209,7 @@ namespace CreationKitPlatformExtended
 
 			bool dumpWritten = false;
 			auto miniDumpWriteDump = (decltype(&MiniDumpWriteDump))GetProcAddress(LoadLibraryA("dbghelp.dll"), "MiniDumpWriteDump");
-			auto BigDump = GlobalINIConfigPtr->ReadBool("Crashes", "bGenerateFullDump", false);
+			auto BigDump = GlobalCKPEConfigPtr ? _READ_OPTION_BOOL("Crashes", "bGenerateFullDump", false) : false;
 
 			if (miniDumpWriteDump && Param.ExceptionInfo)
 			{

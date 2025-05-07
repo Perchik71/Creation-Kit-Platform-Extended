@@ -25,7 +25,7 @@
 #include "VarCommon.h"
 #include "Core/Engine.h"
 
-#define CUSTOM_THEME "CreationKitPlatformExtendedCustomTheme.ini"
+#define CUSTOM_THEME "CreationKitPlatformExtendedCustomTheme.toml"
 
 #define min std::min
 #define max std::max
@@ -191,37 +191,32 @@ namespace CreationKitPlatformExtended
 			if (!IsCustomThemeExists())
 				return false;
 
-			SmartPointerInfo<Core::INIConfig> ThemeIni = new Core::INIConfig((Utils::GetApplicationPath() + CUSTOM_THEME).c_str());
-			if (ThemeIni.Empty())
+			SmartPointerInfo<Core::TOMLSettingCollection> ThemeToml = 
+				new Core::TOMLSettingCollection((Utils::GetApplicationPath() + CUSTOM_THEME).c_str());
+			if (ThemeToml.Empty())
 				return false;
 
-			String Text;
 			uint32_t r = 0, g = 0, b = 0;
+			Core::TOMLSettingCollection::color_value color_zero, color;
 			for (auto it = CustomColorInfo.begin(); it != CustomColorInfo.end(); it++)
 			{
-				Text = ThemeIni->ReadString("Colors", it->first.data(), "0,0,0");
-				Text.erase(remove_if(Text.begin(), Text.end(), isspace), Text.end());
-				ScanColorFromString(Text, it->first.data(), &r, &g, &b);
-				szCustomTheme[(int)(it->second) - 1] = RGB(r, g, b);
-				r = 0; g = 0; b = 0;
+				color = ThemeToml->ReadRgbColor("Colors", it->first.data(), color_zero);
+				szCustomTheme[(int)(it->second) - 1] = RGB(color.r, color.g, color.b);
 			}
 
-			Text = ThemeIni->ReadString("Assets", "rMaskToolbar", "0,0,0");
-			ScanColorFromString(Text, "rMaskToolbar", &r, &g, &b);
-			CustomTheme_MaskColor_Toolbar = RGB(r, g, b);
-			CustomTheme_FileName_Toolbar = ThemeIni->ReadString("Assets", "sImageForToolbar", "");
+			color = ThemeToml->ReadRgbColor("Assets", "rMaskToolbar", color_zero);
+			CustomTheme_MaskColor_Toolbar = RGB(color.r, color.g, color.b);
+			CustomTheme_FileName_Toolbar = ThemeToml->ReadString("Assets", "sImageForToolbar", "");
 
-			Text = ThemeIni->ReadString("Assets", "rMaskToolbarNavMesh", "0,0,0");
-			ScanColorFromString(Text, "rMaskToolbar", &r, &g, &b);
-			CustomTheme_MaskColor_Toolbar_NavMesh = RGB(r, g, b);
-			CustomTheme_FileName_Toolbar_NavMesh = ThemeIni->ReadString("Assets", "sImageForToolbarNavMesh", "");
+			color = ThemeToml->ReadRgbColor("Assets", "rMaskToolbarNavMesh", color_zero);
+			CustomTheme_MaskColor_Toolbar_NavMesh = RGB(color.r, color.g, color.b);
+			CustomTheme_FileName_Toolbar_NavMesh = ThemeToml->ReadString("Assets", "sImageForToolbarNavMesh", "");
 
-			Text = ThemeIni->ReadString("Assets", "rMaskIcons", "0,0,0");
-			ScanColorFromString(Text, "rMaskIcons", &r, &g, &b);
-			CustomTheme_MaskColor_Icons = RGB(r, g, b);
-			CustomTheme_FileName_Icons = ThemeIni->ReadString("Assets", "sImageForIcons", "");
+			color = ThemeToml->ReadRgbColor("Assets", "rMaskIcons", color_zero);
+			CustomTheme_MaskColor_Icons = RGB(color.r, color.g, color.b);
+			CustomTheme_FileName_Icons = ThemeToml->ReadString("Assets", "sImageForIcons", "");
 
-			needDarkCheckbox = ThemeIni->ReadBool("Assets", "bNeedDarkCheckboxInData", false);
+			needDarkCheckbox = ThemeToml->ReadBool("Assets", "bNeedDarkCheckboxInData", false);
 
 			if (PathIsRelative(CustomTheme_FileName_Toolbar.c_str()))
 				CustomTheme_FileName_Toolbar = Utils::GetApplicationPath() + CustomTheme_FileName_Toolbar;
