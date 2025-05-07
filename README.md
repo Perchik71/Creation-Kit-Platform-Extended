@@ -12,7 +12,6 @@
 
 # Dependencies
 [VoltekLib](https://github.com/Perchik71/VoltekLib.git) by `perchik71` *(recursive)*  
-[mINI](https://github.com/Perchik71/mINI.git) by `perchik71` and `metayeti`  
 [Zydis](https://github.com/zyantific/zydis.git) by `zyantifi` and other  
 [zipper](https://github.com/kuba--/zip.git) by `kuba--`  
 [libdeflate](https://github.com/ebiggers/libdeflate.git) by `ebiggers` and other  
