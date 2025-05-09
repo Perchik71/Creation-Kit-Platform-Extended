@@ -125,7 +125,7 @@ namespace CreationKitPlatformExtended
 			auto fileName = GetAbsoluteFileName(lpFileName);
 			auto ini_data = (INISettingCollection*)GetFileFromCacheOrOpen(fileName);
 			if (!ini_data || !ini_data->IsOpen())
-				return GetPrivateProfileStringA(lpAppName, lpKeyName, lpKeyName, lpReturnedString, nSize, lpFileName);
+				return GetPrivateProfileStringA(lpAppName, lpKeyName, lpDefault, lpReturnedString, nSize, lpFileName);
 
 			String s;
 			size_t l = 0;
@@ -474,6 +474,8 @@ namespace CreationKitPlatformExtended
 
 		HANDLE INICacheDataPatch::GetFileFromCacheOrOpen(const std::string& sFileName)
 		{
+			return nullptr;
+
 			if (sFileName.empty()) return nullptr;
 			// Skip.. there's not much, and generating this file in the root folder is unnecessary.
 			if (!EditorAPI::BSString::Utils::ExtractFileName(sFileName.c_str()).Compare("ConstructionSetNetwork.ini")) 
