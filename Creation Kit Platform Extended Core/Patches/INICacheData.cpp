@@ -474,8 +474,6 @@ namespace CreationKitPlatformExtended
 
 		HANDLE INICacheDataPatch::GetFileFromCacheOrOpen(const std::string& sFileName)
 		{
-			return nullptr;
-
 			if (sFileName.empty()) return nullptr;
 			// Skip.. there's not much, and generating this file in the root folder is unnecessary.
 			if (!EditorAPI::BSString::Utils::ExtractFileName(sFileName.c_str()).Compare("ConstructionSetNetwork.ini")) 
