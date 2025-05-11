@@ -23,6 +23,8 @@
 #define IDD_CRASHDIALOG                 120
 #define IDB_PNG4                        122
 #define IDB_PNG5                        124
+#define IDD_DIALOGCONFIG                125
+#define IDD_DIALOGINSTALL               125
 #define IDC_STATIC1                     1001
 #define IDC_EDIT1                       1002
 #define IDC_STATIC_CRASH_CAPTION        1003
@@ -36,14 +38,18 @@
 #define IDC_SYSLINK1                    1011
 #define IDC_SYSLINK2                    1012
 #define IDC_STATIC_CRASH_TEXT_ADD2      1013
+#define IDC_STATIC_INSTALL_TITLE        1013
+#define IDC_STATIC_INSTALL_VERSION_RUNTIME 1014
+#define IDC_SYSLINK_INSTALL_DISCORD_CONTACT 1015
+#define IDC_SYSLINK_INSTALL_WIKI        1016
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        125
+#define _APS_NEXT_RESOURCE_VALUE        127
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1012
+#define _APS_NEXT_CONTROL_VALUE         1016
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

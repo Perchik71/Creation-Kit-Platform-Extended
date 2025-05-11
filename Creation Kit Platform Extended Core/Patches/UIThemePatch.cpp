@@ -794,6 +794,10 @@ namespace CreationKitPlatformExtended
 							if ((uStyles & SS_BLACKFRAME) == SS_BLACKFRAME)
 								// CK deprecated control (Icon)
 								UITheme::CustomBox::Initialize(hWnd, UITheme::CustomBox::abNormal);
+							//else if (((uStyles & SS_ETCHEDFRAME) == SS_ETCHEDFRAME) || ((uStyles & SS_ETCHEDHORZ) == SS_ETCHEDHORZ) ||
+							//	((uStyles & SS_ETCHEDVERT) == SS_ETCHEDVERT))
+							//	// CK seperator etc
+							//	UITheme::CustomBox::Initialize(hWnd, UITheme::CustomBox::abNormal);
 							else {
 								// skip edit control 
 								if (((uStyles & SS_EDITCONTROL) == SS_EDITCONTROL) || ((uStyles & ES_AUTOHSCROLL) == ES_AUTOHSCROLL) ||

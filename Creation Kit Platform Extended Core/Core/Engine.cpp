@@ -4,6 +4,7 @@
 
 #include "Version/resource_version2.h"
 #include <VersionHelpers.h>
+#include <resource.h>
 #include "iw.h"
 
 #include "ConsoleWindow.h"
@@ -17,6 +18,7 @@
 #include "RegistratorWindow.h"
 #include "CrashHandler.h"
 #include "ResourcesPackerManager.h"
+#include "ConfigureWindow.h"
 
 #include "Editor API/EditorUI.h"
 #include "Editor API/BSString.h"
@@ -163,8 +165,10 @@ namespace CreationKitPlatformExtended
 			if (!_ClassicTheme->HasActive())
 				_Theme->Enable(GlobalRelocatorPtr, (RelocationDatabaseItem*)1);	
 
+			// Инициализация gdi для загрузки .png картинок, а так же для тёмной темы
+			GlobalGDIPlusInitPtr = new GDIPlusInit(this);	
+			// Консольное окно 
 			GlobalConsoleWindowPtr = new ConsoleWindow(this);
-			GlobalGDIPlusInitPtr = new GDIPlusInit(this);
 
 			// Добавление патчей
 			PatchesManager->Append({
@@ -204,6 +208,10 @@ namespace CreationKitPlatformExtended
 
 				Fallout4_AppendPatches(PatchesManager);
 			}
+
+			// Показать окно настроек, если это открывается впервые
+			// Показать именно после распаковки, чтобы не беспокоить дважды почитателей MO2
+			//ConfigureWindow::Show();
 #ifdef _CKPE_WITH_QT5
 			else
 			// Добавление патчей только для редактора старфилда

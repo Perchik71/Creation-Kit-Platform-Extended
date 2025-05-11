@@ -1066,7 +1066,7 @@ namespace CreationKitPlatformExtended
 					MoveWindow(WndImage, 24, (rc.bottom - ImageHeight) >> 1, ImageWidth, ImageHeight, TRUE);
 
 					CaptionFont = CreateFont(24, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
-						ANSI_CHARSET, OUT_DEFAULT_PRECIS,
+						DEFAULT_CHARSET, OUT_DEFAULT_PRECIS,
 						CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 						DEFAULT_PITCH | FF_ROMAN,
 						"Microsoft Sans Serif");

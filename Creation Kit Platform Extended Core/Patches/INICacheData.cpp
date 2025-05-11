@@ -122,6 +122,8 @@ namespace CreationKitPlatformExtended
 			if (!lpReturnedString || !nSize)
 				return 0;
 
+			memset(lpReturnedString, 0, nSize);
+
 			auto fileName = GetAbsoluteFileName(lpFileName);
 			auto ini_data = (INISettingCollection*)GetFileFromCacheOrOpen(fileName);
 			if (!ini_data || !ini_data->IsOpen())
@@ -184,6 +186,8 @@ namespace CreationKitPlatformExtended
 			auto ini_data = (INISettingCollection*)GetFileFromCacheOrOpen(fileName);
 			if (!ini_data)
 				return GetPrivateProfileStructA(lpszSection, lpszKey, lpStruct, uSizeStruct, szFile);
+
+			memset(lpStruct, 0, uSizeStruct);
 
 			if (!ini_data->Has(lpszSection, lpszKey))
 				return false;

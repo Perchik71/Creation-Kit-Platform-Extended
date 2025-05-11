@@ -65,7 +65,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;ZYDIS_STATIC_DEFINE;CREATIOKITPLATFORMEXTENDEDCORE_EXPORTS;_WINDOWS;_USRDLL;XBYAK_NO_OP_NAMES;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;JDIALOG_NO_MANIFEST_LINKER_COMMCTRL;NOMINMAX;_CKPE_MAIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;ZYDIS_STATIC_DEFINE;CREATIOKITPLATFORMEXTENDEDCORE_EXPORTS;_WINDOWS;_USRDLL;XBYAK_NO_OP_NAMES;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;JDIALOG_NO_MANIFEST_LINKER_COMMCTRL;NOMINMAX;_CKPE_MAIN;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
@@ -87,7 +87,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\;$(VSInstallDir)DIA SDK\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\;$(SolutionDir)Dependencies\curl\lib;$(VSInstallDir)DIA SDK\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>ws2_32.lib;msimg32.lib;uxtheme.lib;version.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;gdiplus.lib;DirectXTex.lib;VoltekLib.Detours.lib;VoltekLib.UnicodeConverter.lib;VoltekLib.MemoryManager.lib;VoltekLib.RelocationDatabase.lib;ImGUI.lib;diaguids.lib;dwmapi.lib;Toml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
@@ -104,7 +104,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;ZYDIS_STATIC_DEFINE;CREATIOKITPLATFORMEXTENDEDCORE_EXPORTS;_WINDOWS;_USRDLL;XBYAK_NO_OP_NAMES;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;JDIALOG_NO_MANIFEST_LINKER_COMMCTRL;NOMINMAX;_CKPE_MAIN;_CKPE_WITH_QT5;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;ZYDIS_STATIC_DEFINE;CREATIOKITPLATFORMEXTENDEDCORE_EXPORTS;_WINDOWS;_USRDLL;XBYAK_NO_OP_NAMES;WIN32_LEAN_AND_MEAN;_CRT_SECURE_NO_WARNINGS;JDIALOG_NO_MANIFEST_LINKER_COMMCTRL;NOMINMAX;_CKPE_MAIN;_CKPE_WITH_QT5;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
@@ -126,7 +126,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\;$(SolutionDir)\Dependencies\qt5\lib;$(SolutionDir)$(Platform)\Release\;$(VSInstallDir)DIA SDK\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\;$(SolutionDir)\Dependencies\qt5\lib;$(SolutionDir)$(Platform)\Release\;$(SolutionDir)Dependencies\curl\lib;$(VSInstallDir)DIA SDK\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>ws2_32.lib;msimg32.lib;uxtheme.lib;version.lib;shlwapi.lib;libzip.lib;libzydis.lib;libdeflate.lib;comctl32.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;gdiplus.lib;DirectXTex.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;VoltekLib.Detours.lib;VoltekLib.UnicodeConverter.lib;VoltekLib.MemoryManager.lib;VoltekLib.RelocationDatabase.lib;ImGUI.lib;diaguids.lib;dwmapi.lib;Toml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
@@ -143,6 +143,7 @@
     <ClCompile Include="..\Dependencies\jDialogs\include\jdialogs.cpp" />
     <ClCompile Include="Core\AboutWindow.cpp" />
     <ClCompile Include="Core\CommandLineParser.cpp" />
+    <ClCompile Include="Core\ConfigureWindow.cpp" />
     <ClCompile Include="Core\ConsoleWindow.cpp" />
     <ClCompile Include="Core\CrashHandler.cpp" />
     <ClCompile Include="Core\D3D11Proxy.cpp" />
@@ -462,6 +463,7 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="Core\AboutWindow.h" />
     <ClInclude Include="Core\CommandLineParser.h" />
+    <ClInclude Include="Core\ConfigureWindow.h" />
     <ClInclude Include="Core\ConsoleWindow.h" />
     <ClInclude Include="Core\CoreCommon.h" />
     <ClInclude Include="Core\CrashHandler.h" />

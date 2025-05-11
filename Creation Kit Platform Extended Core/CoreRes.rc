@@ -143,7 +143,28 @@ BEGIN
     CONTROL         "<a href=""https://discord.gg/pF9U5FmD6w"">Collective Modding Discord Server</a>",IDC_SYSLINK2,
                     "SysLink",WS_TABSTOP,354,59,105,9
     LTEXT           "in the",IDC_STATIC,460,59,46,8
-    LTEXT           "🔧-mod-creations-talk, 🔧-perchik71-fierce-nonsense channels.",IDC_STATIC_CRASH_TEXT_ADD2,179,67,185,8
+    LTEXT           "🔧-mod-creations-talk, 🔧-perchik71-fierce-nonsense channels.",IDC_STATIC,179,67,185,8
+END
+
+IDD_DIALOGINSTALL DIALOGEX 0, 0, 720, 318
+STYLE DS_SYSMODAL | DS_SETFONT | DS_MODALFRAME | DS_NOIDLEMSG | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_STATICEDGE
+FONT 10, "Segoe UI Variable Display", 400, 0, 0xCC
+BEGIN
+    DEFPUSHBUTTON   "ОК",IDOK,10,296,50,14
+    PUSHBUTTON      "Отмена",IDCANCEL,66,296,50,14
+    LTEXT           "Creation Kit Platform Extended Installer",IDC_STATIC_INSTALL_TITLE,30,0,561,51,SS_CENTERIMAGE
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKRECT,0,51,720,1
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKRECT,540,51,1,268
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKRECT,540,255,180,1
+    LTEXT           "Version",IDC_STATIC_INSTALL_VERSION_RUNTIME,546,302,167,8
+    LTEXT           "Do you need help? Check it out ",IDC_STATIC,546,261,104,8
+    CONTROL         "<a href=""https://discord.gg/pF9U5FmD6w"">discord server</a>",IDC_SYSLINK_INSTALL_DISCORD_CONTACT,
+                    "SysLink",WS_TABSTOP,653,261,60,8
+    LTEXT           "You can also read",IDC_STATIC,546,286,59,8
+    LTEXT           "🔧-mod-creations-talk,\n🔧-perchik71-fierce-nonsense channels.",IDC_STATIC,546,270,167,17
+    CONTROL         "<a href=""https://github.com/Perchik71/Creation-Kit-Platform-Extended/wiki"">wiki.</a>",IDC_SYSLINK_INSTALL_WIKI,
+                    "SysLink",WS_TABSTOP,605,286,60,8
 END
 
 
@@ -180,6 +201,18 @@ BEGIN
         HORZGUIDE, 218
         HORZGUIDE, 224
     END
+
+    IDD_DIALOGINSTALL, DIALOG
+    BEGIN
+        VERTGUIDE, 540
+        VERTGUIDE, 546
+        VERTGUIDE, 713
+        BOTTOMMARGIN, 316
+        HORZGUIDE, 51
+        HORZGUIDE, 255
+        HORZGUIDE, 261
+        HORZGUIDE, 310
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -195,6 +228,11 @@ BEGIN
 END
 
 IDD_CRASHDIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOGINSTALL AFX_DIALOG_LAYOUT
 BEGIN
     0
 END

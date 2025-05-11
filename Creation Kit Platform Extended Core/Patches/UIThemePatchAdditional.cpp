@@ -64,6 +64,7 @@ namespace CreationKitPlatformExtended
 			auto verPatch = lpRelocationDatabaseItem->Version();
 			if ((verPatch == 1) || (verPatch == 2))
 			{
+				// CinfigureWindow sets now
 				UIThemePatch::InitializeCurrentThread();
 
 				pointer_UIThemePatchAdditional_sub = _RELDATA_ADDR(0);

@@ -202,8 +202,8 @@ namespace CreationKitPlatformExtended
 						if (TOMLValue.second.is_array() && (TOMLValue.second.size() == 3))
 						{
 							auto& a = TOMLValue.second.as_array();
-							fprintf(file, "\t\t%s: %u, %u, %u\n", TOMLValue.first.c_str(),
-								a[0].as_integer(), a[1].as_integer(), a[2].as_integer());
+							fprintf(file, "\t\t%s: %d, %d, %d\n", TOMLValue.first.c_str(),
+								(long)a[0].as_integer(), (long)a[1].as_integer(), (long)a[2].as_integer());
 						}
 						else
 							fprintf(file, "\t\t%s: 0, 0, 0\n", TOMLValue.first.c_str());
@@ -212,15 +212,15 @@ namespace CreationKitPlatformExtended
 						if (TOMLValue.second.is_array() && (TOMLValue.second.size() == 4))
 						{
 							auto& a = TOMLValue.second.as_array();
-							fprintf(file, "\t\t%s: %u, %u, %u, %u\n", TOMLValue.first.c_str(),
-								a[0].as_integer(), a[1].as_integer(), a[2].as_integer(), a[3].as_integer());
+							fprintf(file, "\t\t%s: %d, %d, %d, %d\n", TOMLValue.first.c_str(),
+								(long)a[0].as_integer(), (long)a[1].as_integer(), (long)a[2].as_integer(), (long)a[3].as_integer());
 						}
 						else
 							fprintf(file, "\t\t%s: 0, 0, 0, 0\n", TOMLValue.first.c_str());
 						break;
 					case sotString:
 						fprintf(file, "\t\t%s: %s\n", TOMLValue.first.c_str(),
-							(TOMLValue.second.is_string() ? TOMLValue.second.as_string() : ""));
+							(TOMLValue.second.is_string() ? TOMLValue.second.as_string().c_str() : ""));
 						break;
 					}
 				}
@@ -529,8 +529,37 @@ namespace CreationKitPlatformExtended
 			if (!IsOpen() || (GetOptionTypeByName(option) != sotBool))
 				return;
 
+			bool error = false;
 			auto& TOMLData = _tomlData->data.unwrap();
-			TOMLData[section][option].as_boolean() = value;
+			if (TOMLData.is_table())
+			{
+			find_section:
+				if (TOMLData.contains(section))
+				{
+					auto& TOMLSection = TOMLData[section];
+					if (TOMLSection.is_table())
+					{
+						if (TOMLSection.contains(option))
+							TOMLSection[option] = value;
+						else
+						{
+							toml::value v(value);
+							TOMLSection.as_table().insert(std::make_pair(option, std::move(v)));
+						}
+					}
+					else return;
+				}
+				else
+				{
+					if (error) return;
+					error = true;
+					toml::value v(toml::table{});
+					TOMLData.as_table().insert(std::make_pair(option, std::move(v)));
+					goto find_section;
+				}
+			}
+			else return;
+
 			MarkNeedSave();
 		}
 
@@ -539,8 +568,39 @@ namespace CreationKitPlatformExtended
 			if (!IsOpen() || (GetOptionTypeByName(option) != sotChar))
 				return;
 
+			bool error = false;
 			auto& TOMLData = _tomlData->data.unwrap();
-			TOMLData[section][option].as_string() = value;
+			if (TOMLData.is_table())
+			{
+			find_section:
+				if (TOMLData.contains(section))
+				{
+					auto& TOMLSection = TOMLData[section];
+					if (TOMLSection.is_table())
+					{
+						char ch[2] = { value, '\0' };
+
+						if (TOMLSection.contains(option))
+							TOMLSection[option] = ch;
+						else
+						{
+							toml::value v(ch);
+							TOMLSection.as_table().insert(std::make_pair(option, std::move(v)));
+						}
+					}
+					else return;
+				}
+				else
+				{
+					if (error) return;
+					error = true;
+					toml::value v(toml::table{});
+					TOMLData.as_table().insert(std::make_pair(option, std::move(v)));
+					goto find_section;
+				}
+			}
+			else return;
+
 			MarkNeedSave();
 		}
 
@@ -549,8 +609,37 @@ namespace CreationKitPlatformExtended
 			if (!IsOpen() || (GetOptionTypeByName(option) != sotInteger))
 				return;
 
+			bool error = false;
 			auto& TOMLData = _tomlData->data.unwrap();
-			TOMLData[section][option].as_boolean() = value;
+			if (TOMLData.is_table())
+			{
+			find_section:
+				if (TOMLData.contains(section))
+				{
+					auto& TOMLSection = TOMLData[section];
+					if (TOMLSection.is_table())
+					{
+						if (TOMLSection.contains(option))
+							TOMLSection[option] = value;
+						else
+						{
+							toml::value v(value);
+							TOMLSection.as_table().insert(std::make_pair(option, std::move(v)));
+						}
+					}
+					else return;
+				}
+				else
+				{
+					if (error) return;
+					error = true;
+					toml::value v(toml::table{});
+					TOMLData.as_table().insert(std::make_pair(option, std::move(v)));
+					goto find_section;
+				}
+			}
+			else return;
+
 			MarkNeedSave();
 		}
 
@@ -559,8 +648,37 @@ namespace CreationKitPlatformExtended
 			if (!IsOpen() || (GetOptionTypeByName(option) != sotUnsignedInteger))
 				return;
 
+			bool error = false;
 			auto& TOMLData = _tomlData->data.unwrap();
-			TOMLData[section][option].as_boolean() = value;
+			if (TOMLData.is_table())
+			{
+			find_section:
+				if (TOMLData.contains(section))
+				{
+					auto& TOMLSection = TOMLData[section];
+					if (TOMLSection.is_table())
+					{
+						if (TOMLSection.contains(option))
+							TOMLSection[option] = value;
+						else
+						{
+							toml::value v(value);
+							TOMLSection.as_table().insert(std::make_pair(option, std::move(v)));
+						}
+					}
+					else return;
+				}
+				else
+				{
+					if (error) return;
+					error = true;
+					toml::value v(toml::table{});
+					TOMLData.as_table().insert(std::make_pair(option, std::move(v)));
+					goto find_section;
+				}
+			}
+			else return;
+
 			MarkNeedSave();
 		}
 
@@ -569,10 +687,44 @@ namespace CreationKitPlatformExtended
 			if (!IsOpen() || (GetOptionTypeByName(option) != sotHexadecimal))
 				return;
 
+			bool error = false;
 			auto& TOMLData = _tomlData->data.unwrap();
-			auto& TOMLValue = TOMLData[section][option];
-			TOMLValue.as_integer_fmt().fmt = toml::integer_format::hex;
-			TOMLValue.as_integer() = value;
+			if (TOMLData.is_table())
+			{
+			find_section:
+				if (TOMLData.contains(section))
+				{
+					auto& TOMLSection = TOMLData[section];
+					if (TOMLSection.is_table())
+					{
+						if (TOMLSection.contains(option))
+						{
+							auto& TOMLValue = TOMLData[section][option];
+							TOMLValue.as_integer_fmt().fmt = toml::integer_format::hex;
+							TOMLValue.as_integer() = value;
+						}
+						else
+						{
+							toml::value v(value);
+							v.as_integer_fmt().fmt = toml::integer_format::hex;
+							v.as_integer() = value;
+
+							TOMLSection.as_table().insert(std::make_pair(option, std::move(v)));
+						}
+					}
+					else return;
+				}
+				else
+				{
+					if (error) return;
+					error = true;
+					toml::value v(toml::table{});
+					TOMLData.as_table().insert(std::make_pair(option, std::move(v)));
+					goto find_section;
+				}
+			}
+			else return;
+
 			MarkNeedSave();
 		}
 
@@ -581,8 +733,37 @@ namespace CreationKitPlatformExtended
 			if (!IsOpen() || (GetOptionTypeByName(option) != sotFloat))
 				return;
 
+			bool error = false;
 			auto& TOMLData = _tomlData->data.unwrap();
-			TOMLData[section][option].as_boolean() = value;
+			if (TOMLData.is_table())
+			{
+			find_section:
+				if (TOMLData.contains(section))
+				{
+					auto& TOMLSection = TOMLData[section];
+					if (TOMLSection.is_table())
+					{
+						if (TOMLSection.contains(option))
+							TOMLSection[option] = value;
+						else
+						{
+							toml::value v(value);
+							TOMLSection.as_table().insert(std::make_pair(option, std::move(v)));
+						}
+					}
+					else return;
+				}
+				else
+				{
+					if (error) return;
+					error = true;
+					toml::value v(toml::table{});
+					TOMLData.as_table().insert(std::make_pair(option, std::move(v)));
+					goto find_section;
+				}
+			}
+			else return;
+
 			MarkNeedSave();
 		}
 
@@ -591,12 +772,35 @@ namespace CreationKitPlatformExtended
 			if (!IsOpen() || (GetOptionTypeByName(option) != sotColorRGB))
 				return;
 
+			bool error = false;
 			auto& TOMLData = _tomlData->data.unwrap();
-			auto& TOMLArray = TOMLData[section][option].as_array();
-			TOMLArray.clear();
-			TOMLArray.push_back((unsigned long)value.r);
-			TOMLArray.push_back((unsigned long)value.g);
-			TOMLArray.push_back((unsigned long)value.b);
+			if (TOMLData.is_table())
+			{
+			find_section:
+				if (TOMLData.contains(section))
+				{
+					auto& TOMLSection = TOMLData[section];
+					if (TOMLSection.is_table())
+					{
+						auto v = toml::array{ (unsigned long)value.r, (unsigned long)value.g, (unsigned long)value.b };
+						if (TOMLSection.contains(option))
+							TOMLSection[option] = std::move(v);
+						else
+							TOMLSection.as_table().insert(std::make_pair(option, std::move(v)));
+					}
+					else return;
+				}
+				else
+				{
+					if (error) return;
+					error = true;
+					toml::value v(toml::table{});
+					TOMLData.as_table().insert(std::make_pair(option, std::move(v)));
+					goto find_section;
+				}
+			}
+			else return;
+			
 			MarkNeedSave();
 		}
 
@@ -605,13 +809,36 @@ namespace CreationKitPlatformExtended
 			if (!IsOpen() || (GetOptionTypeByName(option) != sotColorRGBA))
 				return;
 
+			bool error = false;
 			auto& TOMLData = _tomlData->data.unwrap();
-			auto& TOMLArray = TOMLData[section][option].as_array();
-			TOMLArray.clear();
-			TOMLArray.push_back((unsigned long)value.r);
-			TOMLArray.push_back((unsigned long)value.g);
-			TOMLArray.push_back((unsigned long)value.b);
-			TOMLArray.push_back((unsigned long)value.a);
+			if (TOMLData.is_table())
+			{
+			find_section:
+				if (TOMLData.contains(section))
+				{
+					auto& TOMLSection = TOMLData[section];
+					if (TOMLSection.is_table())
+					{
+						auto v = toml::array{ (unsigned long)value.r, (unsigned long)value.g,
+								(unsigned long)value.b, (unsigned long)value.a };
+						if (TOMLSection.contains(option))
+							TOMLSection[option] = std::move(v);
+						else
+							TOMLSection.as_table().insert(std::make_pair(option, std::move(v)));
+					}
+					else return;
+				}
+				else
+				{
+					if (error) return;
+					error = true;
+					toml::value v(toml::table{});
+					TOMLData.as_table().insert(std::make_pair(option, std::move(v)));
+					goto find_section;
+				}
+			}
+			else return;
+
 			MarkNeedSave();
 		}
 
@@ -620,8 +847,37 @@ namespace CreationKitPlatformExtended
 			if (!IsOpen()/* || (GetOptionTypeByName(option) != sotString)*/)
 				return;
 
+			bool error = false;
 			auto& TOMLData = _tomlData->data.unwrap();
-			TOMLData[section][option].as_string() = Utils::Trim(value);
+			if (TOMLData.is_table())
+			{
+			find_section:
+				if (TOMLData.contains(section))
+				{
+					auto& TOMLSection = TOMLData[section];
+					if (TOMLSection.is_table())
+					{
+						if (TOMLData.contains(option))
+							TOMLSection[option] = Utils::Trim(value).c_str();
+						else
+						{
+							toml::value v(Utils::Trim(value).c_str());
+							TOMLSection.as_table().insert(std::make_pair(option, std::move(v)));
+						}
+					}
+					else return;
+				}
+				else
+				{
+					if (error) return;
+					error = true;
+					toml::value v(toml::table{});
+					TOMLData.as_table().insert(std::make_pair(option, std::move(v)));
+					goto find_section;
+				}
+			}
+			else return;
+
 			MarkNeedSave();
 		}
 
@@ -630,8 +886,37 @@ namespace CreationKitPlatformExtended
 			if (!IsOpen()/* || (GetOptionTypeByName(option) != sotString)*/)
 				return;
 
+			bool error = false;
 			auto& TOMLData = _tomlData->data.unwrap();
-			TOMLData[section][option].as_string() = Utils::Trim(Conversion::Utf16ToUtf8(value).c_str());
+			if (TOMLData.is_table())
+			{
+			find_section:
+				if (TOMLData.contains(section))
+				{
+					auto& TOMLSection = TOMLData[section];
+					if (TOMLSection.is_table())
+					{
+						if (TOMLData.contains(option))
+							TOMLSection[option] = Utils::Trim(Conversion::Utf16ToUtf8(value).c_str()).c_str();
+						else
+						{
+							toml::value v(Utils::Trim(Conversion::Utf16ToUtf8(value).c_str()).c_str());
+							TOMLSection.as_table().insert(std::make_pair(option, std::move(v)));
+						}
+					}
+					else return;
+				}
+				else
+				{
+					if (error) return;
+					error = true;
+					toml::value v(toml::table{});
+					TOMLData.as_table().insert(std::make_pair(option, std::move(v)));
+					goto find_section;
+				}
+			}
+			else return;
+
 			MarkNeedSave();
 		}
 
@@ -1037,7 +1322,7 @@ namespace CreationKitPlatformExtended
 				if (_stricmp(INIValue.first.c_str(), option))
 					continue;
 
-				return INIValue.second.empty() ? "" : Utils::QuoteRemove(INIValue.second.c_str());
+				return INIValue.second.empty() ? "" : Utils::QuoteRemove(INIValue.second.c_str()).c_str();
 			}
 
 			return def;
