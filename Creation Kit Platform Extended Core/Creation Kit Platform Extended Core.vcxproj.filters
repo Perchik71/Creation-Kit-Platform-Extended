@@ -934,9 +934,6 @@
     <ClCompile Include="Core\CKPESettings.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Core\ConfigureWindow.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2285,9 +2282,6 @@
       <Filter>Patches\SSE</Filter>
     </ClInclude>
     <ClInclude Include="Core\CKPESettings.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\ConfigureWindow.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>

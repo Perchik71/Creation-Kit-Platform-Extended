@@ -143,7 +143,6 @@
     <ClCompile Include="..\Dependencies\jDialogs\include\jdialogs.cpp" />
     <ClCompile Include="Core\AboutWindow.cpp" />
     <ClCompile Include="Core\CommandLineParser.cpp" />
-    <ClCompile Include="Core\ConfigureWindow.cpp" />
     <ClCompile Include="Core\ConsoleWindow.cpp" />
     <ClCompile Include="Core\CrashHandler.cpp" />
     <ClCompile Include="Core\D3D11Proxy.cpp" />
@@ -463,7 +462,6 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="Core\AboutWindow.h" />
     <ClInclude Include="Core\CommandLineParser.h" />
-    <ClInclude Include="Core\ConfigureWindow.h" />
     <ClInclude Include="Core\ConsoleWindow.h" />
     <ClInclude Include="Core\CoreCommon.h" />
     <ClInclude Include="Core\CrashHandler.h" />
