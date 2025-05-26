@@ -37,7 +37,7 @@ namespace CreationKitPlatformExtended
 					/* 140 */ uint32_t UsefulDataSize;
 					/* 144 */ uint32_t dwUnk144;
 					/* 148 */ void* lpData;					// BSResource::LooseFileLocation
-					/* 150 */ char szUnk150[0x18];
+					/* 150 */ char szUnk150[0x20];
 					///////////////////////////////
 					/// SFCK FIXED ADDED
 					///////////////////////////////
@@ -61,7 +61,7 @@ namespace CreationKitPlatformExtended
 					READ_PROPERTY(GetFileName) BSEntryString* FileName;
 				};
 
-				static_assert(sizeof(LooseFileStream) == 0x178, "LooseFileStream class should be the size of 0x178");
+				static_assert(sizeof(LooseFileStream) == 0x180, "LooseFileStream class should be the size of 0x180");
 			}
 		}
 	}
