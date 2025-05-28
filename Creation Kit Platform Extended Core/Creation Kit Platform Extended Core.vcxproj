@@ -314,6 +314,7 @@
     <ClCompile Include="Patches\SSE\CrashHairKS.cpp" />
     <ClCompile Include="Patches\SSE\CrashInventoryIterators.cpp" />
     <ClCompile Include="Patches\SSE\CrashMHDTMoreThan70.cpp" />
+    <ClCompile Include="Patches\SSE\CrashNullptrDXGISurface.cpp" />
     <ClCompile Include="Patches\SSE\CrashNullptrFaceGen.cpp" />
     <ClCompile Include="Patches\SSE\CrashSortFunc.cpp" />
     <ClCompile Include="Patches\SSE\CrashTestRadius.cpp" />
@@ -734,6 +735,7 @@
     <ClInclude Include="Patches\SSE\CrashHairKS.h" />
     <ClInclude Include="Patches\SSE\CrashInventoryIterators.h" />
     <ClInclude Include="Patches\SSE\CrashMHDTMoreThan70.h" />
+    <ClInclude Include="Patches\SSE\CrashNullptrDXGISurface.h" />
     <ClInclude Include="Patches\SSE\CrashNullptrFaceGen.h" />
     <ClInclude Include="Patches\SSE\CrashSortFunc.h" />
     <ClInclude Include="Patches\SSE\CrashTestRadius.h" />

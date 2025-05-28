@@ -934,6 +934,9 @@
     <ClCompile Include="Core\CKPESettings.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Patches\SSE\CrashNullptrDXGISurface.cpp">
+      <Filter>Patches\SSE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Version">
@@ -2283,6 +2286,9 @@
     </ClInclude>
     <ClInclude Include="Core\CKPESettings.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Patches\SSE\CrashNullptrDXGISurface.h">
+      <Filter>Patches\SSE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1009,13 +1009,13 @@ namespace CreationKitPlatformExtended
 				}
 				else _ERROR("Couldn't apply a dark theme for caption bg: %08X %s", hr, _com_error(hr).ErrorMessage());
 			}
-			else
-			{
-				// Win10
-				BOOL DarkMode = true;
-				HRESULT hr = DwmSetWindowAttribute(hWnd, DWMWINDOWATTRIBUTE::DWMWA_USE_IMMERSIVE_DARK_MODE, &DarkMode, sizeof(DarkMode));
-				if (FAILED(hr)) _ERROR("Couldn't apply a dark theme for caption: %08X %s", hr, _com_error(hr).ErrorMessage());
-			}
+			//else
+			//{
+			//	// Win10
+			//	BOOL DarkMode = true;
+			//	HRESULT hr = DwmSetWindowAttribute(hWnd, DWMWINDOWATTRIBUTE::DWMWA_USE_IMMERSIVE_DARK_MODE, &DarkMode, sizeof(DarkMode));
+			//	if (FAILED(hr)) _ERROR("Couldn't apply a dark theme for caption: %08X %s", hr, _com_error(hr).ErrorMessage());
+			//}
 		}
 
 		DWORD UIThemePatch::Comctl32GetSysColor(INT nIndex)
