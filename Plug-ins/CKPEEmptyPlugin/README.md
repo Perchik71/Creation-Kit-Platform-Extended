@@ -3,7 +3,7 @@ This is an empty plugin for **CKPE**.
 It include CKPE folder and all properties are set as required to start working on new plugin.
 
 To install this template:
-1. Copy CKPEEmptyPlugin.zip
+1. Copy CKPEEmptyPlugin.zip from ..\Creation-Kit-Platform-Extended\Plug-ins\
 2. Paste it in here > C:\Users\USERNAME\Documents\Visual Studio 2022\Templates\ProjectTemplates\
 
 To use this template:
