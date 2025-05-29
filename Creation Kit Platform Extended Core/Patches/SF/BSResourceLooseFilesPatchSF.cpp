@@ -58,7 +58,7 @@ namespace CreationKitPlatformExtended
 				const RelocationDatabaseItem* lpRelocationDatabaseItem)
 			{
 				auto verPatch = lpRelocationDatabaseItem->Version();
-				if (verPatch == 1)
+				if ((verPatch == 1) || (verPatch == 2))
 				{
 					// I will add initialization to fill in the new fields with data
 					/*class LooseFileStreamHook : public Xbyak::CodeGenerator
@@ -86,15 +86,19 @@ namespace CreationKitPlatformExtended
 
 					ScopeRelocator text;
 
-					// Set new size class 0x168 to 0x178
+					// Set new size class 0x168 (0x170 for v1.15) to 0x180
 					for (uint32_t i = 0; i < 3; i++)
-						lpRelocator->Patch(_RELDATA_RAV(i), { 0x78 });
+						lpRelocator->Patch(_RELDATA_RAV(i), { 0x80 });
 					// Init
 					//LooseFileStreamHook::Generate(_RELDATA_RAV(3));
 					// Ignoring the correctness check is not useful
 					lpRelocator->Patch(_RELDATA_RAV(4), { 0xEB });
 					lpRelocator->DetourJump(_RELDATA_RAV(5), (uintptr_t)&sub);
-					lpRelocator->PatchNop(_RELDATA_RAV(6), 0xC);
+
+					if (verPatch == 1)
+						lpRelocator->PatchNop(_RELDATA_RAV(6), 0xC);
+					else if (verPatch == 2)
+						lpRelocator->PatchNop(_RELDATA_RAV(6), 0xA);
 
 					return true;
 				}

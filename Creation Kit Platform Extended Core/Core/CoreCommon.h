@@ -24,7 +24,8 @@ namespace CreationKitPlatformExtended
 			EDITOR_STARFIELD_1_14_70_0,
 			EDITOR_STARFIELD_1_14_74_0,
 			EDITOR_STARFIELD_1_14_78_0,
-			EDITOR_STARFIELD_LAST = EDITOR_STARFIELD_1_14_78_0,
+			EDITOR_STARFIELD_1_15_216_0,
+			EDITOR_STARFIELD_LAST = EDITOR_STARFIELD_1_15_216_0,
 		};
 
 		enum EDITOR_EXECUTABLE_SHORT_TYPE {
@@ -59,6 +60,7 @@ namespace CreationKitPlatformExtended
 			//{ 0x8777A522ul, EDITOR_STARFIELD_1_14_70_0		},	// Redirect Steam
 			{ 0x01BF6FB3ul, EDITOR_STARFIELD_1_14_74_0		},	// Redirect Steam
 			{ 0x8C475320ul, EDITOR_STARFIELD_1_14_78_0		},	// Redirect Steam
+			{ 0x8C475320ul, EDITOR_STARFIELD_1_15_216_0		},	// Redirect Steam
 		};
 
 		// Список устаревших версий редакторов
@@ -86,6 +88,7 @@ namespace CreationKitPlatformExtended
 			{ 0x873D2B8ul, { "1.14.70.0",	EDITOR_STARFIELD_1_14_70_0		} },
 			{ 0x875F450ul, { "1.14.74.0",	EDITOR_STARFIELD_1_14_74_0		} },
 			{ 0x875F550ul, { "1.14.78.0",	EDITOR_STARFIELD_1_14_78_0		} },
+			{ 0x84D9B40ul, { "1.15.216.0",	EDITOR_STARFIELD_1_15_216_0		} },
 		};
 		
 		// Список названий редакторов
@@ -103,6 +106,7 @@ namespace CreationKitPlatformExtended
 			"Starfield [v1.14.70.0]",
 			"Starfield [v1.14.74.0]",
 			"Starfield [v1.14.78.0]",
+			"Starfield [v1.15.216.0]",
 		};
 
 		// Список имён файлов базы данных
@@ -119,6 +123,7 @@ namespace CreationKitPlatformExtended
 			//{ EDITOR_STARFIELD_1_14_70_0,	"CreationKitPlatformExtended_SF_1_14_70_0.database"		},
 			{ EDITOR_STARFIELD_1_14_74_0,	"CreationKitPlatformExtended_SF_1_14_74_0.database"		},
 			{ EDITOR_STARFIELD_1_14_78_0,	"CreationKitPlatformExtended_SF_1_14_78_0.database"		},
+			{ EDITOR_STARFIELD_1_15_216_0,	"CreationKitPlatformExtended_SF_1_15_216_0.database"	},
 		};
 
 		// Список коротких названий поддерживаемых игр
@@ -148,6 +153,7 @@ namespace CreationKitPlatformExtended
 			//"creationkit_sf_1_14_70_0",
 			"creationkit_sf_1_14_74_0",
 			"creationkit_sf_1_14_78_0",
+			"creationkit_sf_1_15_216_0",
 		};
 
 		inline EDITOR_EXECUTABLE_SHORT_TYPE GetShortExecutableTypeFromFull(EDITOR_EXECUTABLE_TYPE editorVersion)
@@ -168,6 +174,7 @@ namespace CreationKitPlatformExtended
 			case EDITOR_STARFIELD_1_14_70_0:
 			case EDITOR_STARFIELD_1_14_74_0:
 			case EDITOR_STARFIELD_1_14_78_0:
+			case EDITOR_STARFIELD_1_15_216_0:
 				return EDITOR_SHORT_STARFIELD;
 			default:
 				return EDITOR_SHORT_UNKNOWN;

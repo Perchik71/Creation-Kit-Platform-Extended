@@ -143,7 +143,6 @@
     <ClCompile Include="..\Dependencies\jDialogs\include\jdialogs.cpp" />
     <ClCompile Include="Core\AboutWindow.cpp" />
     <ClCompile Include="Core\CommandLineParser.cpp" />
-    <ClCompile Include="Core\ConfigureWindow.cpp" />
     <ClCompile Include="Core\ConsoleWindow.cpp" />
     <ClCompile Include="Core\CrashHandler.cpp" />
     <ClCompile Include="Core\D3D11Proxy.cpp" />
@@ -315,6 +314,7 @@
     <ClCompile Include="Patches\SSE\CrashHairKS.cpp" />
     <ClCompile Include="Patches\SSE\CrashInventoryIterators.cpp" />
     <ClCompile Include="Patches\SSE\CrashMHDTMoreThan70.cpp" />
+    <ClCompile Include="Patches\SSE\CrashNullptrDXGISurface.cpp" />
     <ClCompile Include="Patches\SSE\CrashNullptrFaceGen.cpp" />
     <ClCompile Include="Patches\SSE\CrashSortFunc.cpp" />
     <ClCompile Include="Patches\SSE\CrashTestRadius.cpp" />
@@ -463,7 +463,6 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="Core\AboutWindow.h" />
     <ClInclude Include="Core\CommandLineParser.h" />
-    <ClInclude Include="Core\ConfigureWindow.h" />
     <ClInclude Include="Core\ConsoleWindow.h" />
     <ClInclude Include="Core\CoreCommon.h" />
     <ClInclude Include="Core\CrashHandler.h" />
@@ -736,6 +735,7 @@
     <ClInclude Include="Patches\SSE\CrashHairKS.h" />
     <ClInclude Include="Patches\SSE\CrashInventoryIterators.h" />
     <ClInclude Include="Patches\SSE\CrashMHDTMoreThan70.h" />
+    <ClInclude Include="Patches\SSE\CrashNullptrDXGISurface.h" />
     <ClInclude Include="Patches\SSE\CrashNullptrFaceGen.h" />
     <ClInclude Include="Patches\SSE\CrashSortFunc.h" />
     <ClInclude Include="Patches\SSE\CrashTestRadius.h" />

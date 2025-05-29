@@ -37,12 +37,12 @@ namespace CreationKitPlatformExtended
 					/* 140 */ uint32_t UsefulDataSize;
 					/* 144 */ uint32_t dwUnk144;
 					/* 148 */ void* lpData;					// BSResource::LooseFileLocation
-					/* 150 */ char szUnk150[0x18];
+					/* 150 */ char szUnk150[0x20];			// for 1.15 0x170
 					///////////////////////////////
 					/// SFCK FIXED ADDED
 					///////////////////////////////
-					/* 178 */ uint64_t dw64FileSize;		// If zero, then the file is not found or inside the archive
-					/* 170 */ uint64_t dw64Position;		// while unused
+					/* 170 */ uint64_t dw64FileSize;		// If zero, then the file is not found or inside the archive
+					/* 178 */ uint64_t dw64Position;		// while unused
 				public:
 					static void CreateInstance(const char* FileName, LooseFileStream** Instance);
 				public:
@@ -61,7 +61,7 @@ namespace CreationKitPlatformExtended
 					READ_PROPERTY(GetFileName) BSEntryString* FileName;
 				};
 
-				static_assert(sizeof(LooseFileStream) == 0x178, "LooseFileStream class should be the size of 0x178");
+				static_assert(sizeof(LooseFileStream) == 0x180, "LooseFileStream class should be the size of 0x180");
 			}
 		}
 	}

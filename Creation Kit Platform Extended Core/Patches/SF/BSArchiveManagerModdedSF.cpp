@@ -75,7 +75,7 @@ namespace CreationKitPlatformExtended
 			{
 				auto verPatch = lpRelocationDatabaseItem->Version();
 
-				if (verPatch == 1)
+				if ((verPatch == 1) || (verPatch == 2))
 				{
 					EditorAPI::Starfield::BSResource::pointer_Archive2_sub2 = _RELDATA_ADDR(0);
 					EditorAPI::Starfield::BSResource::Archive2::Initialize();
@@ -95,7 +95,10 @@ namespace CreationKitPlatformExtended
 					// Так же используется для загрузки архивов самим СК, так что душим это.
 					lpRelocator->Patch(_RELDATA_RAV(5), { 0xC3 });
 					// Вырезать EditorDataFilesLoaded.txt
-					lpRelocator->Patch(_RELDATA_RAV(6), { 0xEB });
+					if (verPatch == 1)
+						lpRelocator->Patch(_RELDATA_RAV(6), { 0xEB });
+					else if (verPatch == 2)
+						lpRelocator->Patch(_RELDATA_RAV(6), { 0x90, 0xE9 });
 	
 					return true;
 				}

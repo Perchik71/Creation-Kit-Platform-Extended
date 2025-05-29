@@ -18,7 +18,6 @@
 #include "RegistratorWindow.h"
 #include "CrashHandler.h"
 #include "ResourcesPackerManager.h"
-#include "ConfigureWindow.h"
 
 #include "Editor API/EditorUI.h"
 #include "Editor API/BSString.h"
@@ -208,10 +207,6 @@ namespace CreationKitPlatformExtended
 
 				Fallout4_AppendPatches(PatchesManager);
 			}
-
-			// Показать окно настроек, если это открывается впервые
-			// Показать именно после распаковки, чтобы не беспокоить дважды почитателей MO2
-			//ConfigureWindow::Show();
 #ifdef _CKPE_WITH_QT5
 			else
 			// Добавление патчей только для редактора старфилда
