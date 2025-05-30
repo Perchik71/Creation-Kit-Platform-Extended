@@ -47,6 +47,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGUI", "Dependencies\ImGUI
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Toml", "Dependencies\Toml.vcxproj", "{05D6A7E8-F94B-49AD-B7F2-B1A832B746FD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CKPEEmptyPlugin", "Plug-ins\CKPEEmptyPlugin\CKPEEmptyPlugin.vcxproj", "{BB686DB3-FFB4-4ECF-860B-11EF4A8B3F32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Release|x64 = Release|x64
@@ -109,6 +111,10 @@ Global
 		{05D6A7E8-F94B-49AD-B7F2-B1A832B746FD}.Release|x64.Build.0 = Release|x64
 		{05D6A7E8-F94B-49AD-B7F2-B1A832B746FD}.Release-Qt|x64.ActiveCfg = Release|x64
 		{05D6A7E8-F94B-49AD-B7F2-B1A832B746FD}.Release-Qt|x64.Build.0 = Release|x64
+		{BB686DB3-FFB4-4ECF-860B-11EF4A8B3F32}.Release|x64.ActiveCfg = Release|x64
+		{BB686DB3-FFB4-4ECF-860B-11EF4A8B3F32}.Release|x64.Build.0 = Release|x64
+		{BB686DB3-FFB4-4ECF-860B-11EF4A8B3F32}.Release-Qt|x64.ActiveCfg = Release|x64
+		{BB686DB3-FFB4-4ECF-860B-11EF4A8B3F32}.Release-Qt|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
