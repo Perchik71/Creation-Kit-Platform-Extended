@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="exports.cpp" />
+    <ClCompile Include="CKPE.WinHttp.Native.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="CKPE.SteamAPI.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scripts.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource_version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="API">
+      <UniqueIdentifier>{c49caa2a-af8c-4240-b353-01eafcf3ac3e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CKPE.WinHttp.Native.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="CKPE.SteamAPI.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="CKPE.SteamAPI.Config.h">
+      <Filter>API</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="build_version.txt" />
+  </ItemGroup>
+</Project>

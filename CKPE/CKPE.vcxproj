@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{03c83950-16c9-4f53-8298-e118155f4774}</ProjectGuid>
+    <RootNamespace>CKPE</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)Dependencies\iw;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;CKPE_EXPORTS;_WINDOWS;_USRDLL;WIN32_LEAN_AND_MEAN;NOMINMAX;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <CallingConvention>StdCall</CallingConvention>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <DisableSpecificWarnings>26444;6386</DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+    <PreBuildEvent>
+      <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\scripts.ps1"</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Dependencies\iw\iw.cpp" />
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Src\CKPE.Application.cpp" />
+    <ClCompile Include="Src\CKPE.CriticalSection.cpp" />
+    <ClCompile Include="Src\CKPE.ErrorHandler.cpp" />
+    <ClCompile Include="Src\CKPE.GameManager.cpp" />
+    <ClCompile Include="Src\CKPE.HardwareInfo.cpp" />
+    <ClCompile Include="Src\CKPE.Logger.cpp" />
+    <ClCompile Include="Src\CKPE.MessageBox.cpp" />
+    <ClCompile Include="Src\CKPE.Module.cpp" />
+    <ClCompile Include="Src\CKPE.PathUtils.cpp" />
+    <ClCompile Include="Src\CKPE.StringUtils.cpp" />
+    <ClCompile Include="Src\CKPE.VersionLists.cpp" />
+    <ClCompile Include="Src\CKPE.FileUtils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource_version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scripts.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Dependencies\iw\iw.h" />
+    <ClInclude Include="Include\CKPE.Application.h" />
+    <ClInclude Include="Include\CKPE.Common.h" />
+    <ClInclude Include="Include\CKPE.CriticalSection.h" />
+    <ClInclude Include="Include\CKPE.ErrorHandler.h" />
+    <ClInclude Include="Include\CKPE.FileUtils.h" />
+    <ClInclude Include="Include\CKPE.GameManager.h" />
+    <ClInclude Include="Include\CKPE.h" />
+    <ClInclude Include="Include\CKPE.HardwareInfo.h" />
+    <ClInclude Include="Include\CKPE.Logger.h" />
+    <ClInclude Include="Include\CKPE.MessageBox.h" />
+    <ClInclude Include="Include\CKPE.Module.h" />
+    <ClInclude Include="Include\CKPE.PathUtils.h" />
+    <ClInclude Include="Include\CKPE.StringUtils.h" />
+    <ClInclude Include="Include\CKPE.VersionLists.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="build_version.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
