@@ -1,16 +1,15 @@
-// Copyright � 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
 #pragma once
 
 #include <string>
-#include <cstdint>
-#include <CKPE.Common.h>
+#include <CKPE.Process.h>
 
 namespace CKPE
 {
-	class CKPE_API Application
+	class CKPE_API Application : public Process
 	{
 		bool _init{ false };
 		std::wstring* _fname{ nullptr };
@@ -28,9 +27,8 @@ namespace CKPE
 		{ return _fpath ? _fpath->c_str() : L""; }
 		[[nodiscard]] static const Application* GetSingleton() noexcept(true);
 
-		virtual void Terminate() const noexcept(true);
 		virtual void MessageProcessing() const noexcept(true);
-
-		void Initialize() const;
+		virtual void Initialize() const;
+		virtual void Shutdown() const;
 	};
 }

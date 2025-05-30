@@ -33,7 +33,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)Dependencies\iw;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)Dependencies\iw;$(SolutionDir)Dependencies\Detours;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -61,6 +61,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>detours.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\scripts.ps1"</Command>
@@ -71,6 +73,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Src\CKPE.Application.cpp" />
     <ClCompile Include="Src\CKPE.CriticalSection.cpp" />
+    <ClCompile Include="Src\CKPE.Detours.cpp" />
     <ClCompile Include="Src\CKPE.ErrorHandler.cpp" />
     <ClCompile Include="Src\CKPE.GameManager.cpp" />
     <ClCompile Include="Src\CKPE.HardwareInfo.cpp" />
@@ -78,6 +81,9 @@
     <ClCompile Include="Src\CKPE.MessageBox.cpp" />
     <ClCompile Include="Src\CKPE.Module.cpp" />
     <ClCompile Include="Src\CKPE.PathUtils.cpp" />
+    <ClCompile Include="Src\CKPE.Patterns.cpp" />
+    <ClCompile Include="Src\CKPE.Process.cpp" />
+    <ClCompile Include="Src\CKPE.SafeWrite.cpp" />
     <ClCompile Include="Src\CKPE.StringUtils.cpp" />
     <ClCompile Include="Src\CKPE.VersionLists.cpp" />
     <ClCompile Include="Src\CKPE.FileUtils.cpp" />
@@ -93,6 +99,7 @@
     <ClInclude Include="Include\CKPE.Application.h" />
     <ClInclude Include="Include\CKPE.Common.h" />
     <ClInclude Include="Include\CKPE.CriticalSection.h" />
+    <ClInclude Include="Include\CKPE.Detours.h" />
     <ClInclude Include="Include\CKPE.ErrorHandler.h" />
     <ClInclude Include="Include\CKPE.FileUtils.h" />
     <ClInclude Include="Include\CKPE.GameManager.h" />
@@ -102,6 +109,11 @@
     <ClInclude Include="Include\CKPE.MessageBox.h" />
     <ClInclude Include="Include\CKPE.Module.h" />
     <ClInclude Include="Include\CKPE.PathUtils.h" />
+    <ClInclude Include="Include\CKPE.Patterns.h" />
+    <ClInclude Include="Include\CKPE.PEDirectory.h" />
+    <ClInclude Include="Include\CKPE.Process.h" />
+    <ClInclude Include="Include\CKPE.SafeWrite.h" />
+    <ClInclude Include="Include\CKPE.Segment.h" />
     <ClInclude Include="Include\CKPE.StringUtils.h" />
     <ClInclude Include="Include\CKPE.VersionLists.h" />
   </ItemGroup>

@@ -41,10 +41,22 @@
     <ClCompile Include="Src\CKPE.HardwareInfo.cpp">
       <Filter>API</Filter>
     </ClCompile>
-    <ClCompile Include="..\Dependencies\iw\iw.cpp">
-      <Filter>_depend</Filter>
-    </ClCompile>
     <ClCompile Include="Src\CKPE.FileUtils.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Process.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Detours.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\iw\iw.cpp">
+      <Filter>_depend\iw</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.SafeWrite.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Patterns.cpp">
       <Filter>API</Filter>
     </ClCompile>
   </ItemGroup>
@@ -54,6 +66,9 @@
     </Filter>
     <Filter Include="_depend">
       <UniqueIdentifier>{72662fed-6be0-41ce-996f-5b92d2733a67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_depend\iw">
+      <UniqueIdentifier>{2183e92f-8bc3-47a3-ab35-06f7923c2f1b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -96,10 +111,28 @@
     <ClInclude Include="Include\CKPE.HardwareInfo.h">
       <Filter>API</Filter>
     </ClInclude>
-    <ClInclude Include="..\Dependencies\iw\iw.h">
-      <Filter>_depend</Filter>
-    </ClInclude>
     <ClInclude Include="Include\CKPE.FileUtils.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Process.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Detours.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\iw\iw.h">
+      <Filter>_depend\iw</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.SafeWrite.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Patterns.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Segment.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.PEDirectory.h">
       <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>

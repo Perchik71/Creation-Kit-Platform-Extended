@@ -1,4 +1,4 @@
-// Copyright � 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -36,52 +36,52 @@ namespace CKPE
 
 	void GameManager::InitializeGameLibraries() noexcept(true)
 	{
-		std::uint32_t handleIdx = 1;	// start at 1, 0 is reserved for internal use
+		//std::uint32_t handleIdx = 1;	// start at 1, 0 is reserved for internal use
 
-		auto libraries = PathUtils::GetFilesInDir(Application::GetSingleton()->GetPath(), L".dll", false);
-		for (auto& lib : libraries)
-		{
-			LoadedLibrary library;
-			
-			std::wstring path = lib.first;
-			wcscpy_s(library.dllName, PathUtils::ExtractFileName(path).c_str());
-			_MESSAGE(L"Checking module %s", library.dllName);
+		//auto libraries = PathUtils::GetFilesInDir(Application::GetSingleton()->GetPath(), L".dll", false);
+		//for (auto& lib : libraries)
+		//{
+		//	LoadedLibrary library;
+		//	
+		//	std::wstring path = lib.first;
+		//	wcscpy_s(library.dllName, PathUtils::ExtractFileName(path).c_str());
+		//	_MESSAGE(L"Checking module %s", library.dllName);
 
-			HMODULE resourceHandle = (HMODULE)LoadLibraryExW(path.c_str(), nullptr, LOAD_LIBRARY_AS_IMAGE_RESOURCE);
-			if (resourceHandle)
-			{
-				Module resourceModule = resourceHandle;
-				if (resourceModule.Is64())
-				{
-					auto* data = (const CKPEGameLibraryData*)
-						resourceModule.GetResourceLibraryViaProcAddress("CKPEGameLibrary_Data");
-					if (data)
-					{
-						memcpy(&library.data, data, sizeof(CKPEGameLibraryData));
-						library.hasLoad = resourceModule.GetResourceLibraryViaProcAddress("CKPEGameLibrary_Load") != nullptr;
-						library.hasQuery = resourceModule.GetResourceLibraryViaProcAddress("CKPEGameLibrary_Query") != nullptr;
-						if (library.hasLoad && library.hasQuery)
-						{
-							library.internalHandle = handleIdx;
-							library.info.version = library.data.dataVersion;
-							wcscpy_s(library.info.name, StringUtils::WinCPToUtf16(library.data.name).c_str());
+		//	HMODULE resourceHandle = (HMODULE)LoadLibraryExW(path.c_str(), nullptr, LOAD_LIBRARY_AS_IMAGE_RESOURCE);
+		//	if (resourceHandle)
+		//	{
+		//		Module resourceModule = resourceHandle;
+		//		if (resourceModule.Is64())
+		//		{
+		//			auto* data = (const CKPEGameLibraryData*)
+		//				resourceModule.GetResourceLibraryViaProcAddress("CKPEGameLibrary_Data");
+		//			if (data)
+		//			{
+		//				memcpy(&library.data, data, sizeof(CKPEGameLibraryData));
+		//				library.hasLoad = resourceModule.GetResourceLibraryViaProcAddress("CKPEGameLibrary_Load") != nullptr;
+		//				library.hasQuery = resourceModule.GetResourceLibraryViaProcAddress("CKPEGameLibrary_Query") != nullptr;
+		//				if (library.hasLoad && library.hasQuery)
+		//				{
+		//					library.internalHandle = handleIdx;
+		//					library.info.version = library.data.dataVersion;
+		//					wcscpy_s(library.info.name, StringUtils::WinCPToUtf16(library.data.name).c_str());
 
-							_libs->insert({ handleIdx, library });
-							handleIdx++;
-						}
-						else
-							_MESSAGE(L"[ERROR]\t\tWithout CKPEGameLibrary_Load or CKPEGameLibrary_Query function");
-					}
-				}
-				else
-					_MESSAGE(L"\t\tIt's 32-bit", path.c_str());
+		//					_libs->insert({ handleIdx, library });
+		//					handleIdx++;
+		//				}
+		//				else
+		//					_MESSAGE(L"[ERROR]\t\tWithout CKPEGameLibrary_Load or CKPEGameLibrary_Query function");
+		//			}
+		//		}
+		//		else
+		//			_MESSAGE(L"\t\tIt's 32-bit", path.c_str());
 
-				FreeLibrary(resourceHandle);
-			}
-			else
-				_MESSAGE("LoadLibraryExW returned failed: \"%s\" \n\t%s", StringUtils::Utf16ToUtf8(path).c_str(),
-					ErrorHandler::GetSystemMessage(GetLastError()).c_str());
-		}
+		//		FreeLibrary(resourceHandle);
+		//	}
+		//	else
+		//		_MESSAGE("LoadLibraryExW returned failed: \"%s\" \n\t%s", StringUtils::Utf16ToUtf8(path).c_str(),
+		//			ErrorHandler::GetSystemMessage(GetLastError()).c_str());
+		//}
 	}
 
 	std::uint32_t GameManager::StartGameLibraries() noexcept(true)

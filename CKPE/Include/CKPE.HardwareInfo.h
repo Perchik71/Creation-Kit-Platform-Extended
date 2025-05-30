@@ -1,4 +1,4 @@
-// Copyright � 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -113,7 +113,7 @@ namespace CKPE
 				{ return (std::uint32_t)std::round(Total - Free); }
 			};
 
-			[[nodiscard]] static std::uint32_t GetVersion() noexcept(true);
+			[[nodiscard]] static std::uint64_t GetVersion() noexcept(true);
 			[[nodiscard]] static std::wstring GetVersionByString() noexcept(true);
 			[[nodiscard]] static std::wstring GetVersionByStringEx() noexcept(true);
 			[[nodiscard]] static MemoryInfo GetPhysicalMemory() noexcept(true);

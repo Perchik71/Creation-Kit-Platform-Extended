@@ -1,4 +1,4 @@
-// Copyright � 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -9,9 +9,10 @@
 
 namespace CKPE
 {
-	static Application _sapp;
+	static Application* _sapp;
 
-	Application::Application() noexcept(true)
+	Application::Application() noexcept(true) :
+		Process()
 	{
 		_fname = new std::wstring;
 		_fpath = new std::wstring;
@@ -43,14 +44,8 @@ namespace CKPE
 
 	const Application* Application::GetSingleton() noexcept(true)
 	{
-		return &_sapp;
-	}
-
-	void Application::Terminate() const noexcept(true)
-	{
-		if (!TerminateProcess(GetCurrentProcess(), EXIT_SUCCESS))
-			terminate();
-		__assume(0);
+		if (!_sapp) _sapp = new Application;
+		return _sapp;
 	}
 
 	void Application::MessageProcessing() const noexcept(true)
@@ -72,5 +67,16 @@ namespace CKPE
 		auto slog = const_cast<Logger*>(Logger::GetSingleton());
 		if (!slog->Open(std::wstring(GetPath()) + L"CreationKitPlatformExtended.log"))
 			throw std::runtime_error("Failed to create a file: CreationKitPlatformExtended.log");
+
+		_This->LoadInfo();
+	}
+
+	void Application::Shutdown() const
+	{
+		if (_sapp)
+		{
+			delete _sapp;
+			_sapp = nullptr;
+		}
 	}
 }

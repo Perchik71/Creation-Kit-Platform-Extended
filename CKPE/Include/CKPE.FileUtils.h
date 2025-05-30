@@ -1,4 +1,4 @@
-// Copyright � 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -16,6 +16,6 @@ namespace CKPE
 		FileUtils(const FileUtils&) = delete;
 		FileUtils& operator=(const FileUtils&) = delete;
 	public:
-		[[nodiscard]] static std::uint32_t GetFileVersion(const std::wstring& fname) noexcept(true);
+		[[nodiscard]] static std::uint64_t GetFileVersion(const std::wstring& fname) noexcept(true);
 	};
 }

@@ -1,4 +1,4 @@
-// Copyright � 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -431,10 +431,10 @@ namespace CKPE
 		return (_graphics_info.videocard_num > id) ? _graphics_info.videocards[id].memory : 0.0f;
 	}
 
-	std::uint32_t HardwareInfo::OS::GetVersion() noexcept(true)
+	std::uint64_t HardwareInfo::OS::GetVersion() noexcept(true)
 	{
 		OSUpdate();
-		return MAKE_EXE_VERSION(_kernel_info.major, _kernel_info.minor, _kernel_info.build);
+		return MAKE_EXE_VERSION_EX(_kernel_info.major, _kernel_info.minor, _kernel_info.build, 0);
 	}
 
 	std::wstring HardwareInfo::OS::GetVersionByString() noexcept(true)
