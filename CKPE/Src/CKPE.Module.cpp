@@ -115,4 +115,19 @@ namespace CKPE
 
 		return result;
 	}
+
+	[[nodiscard]] const void* Module::GetProcAddress(const char* name) const noexcept(true)
+	{
+		return _handle ? ::GetProcAddress((HMODULE)_handle, name) : nullptr;
+	}
+
+	ScopeLoadedModule::ScopeLoadedModule(const Module& m) noexcept(true) :
+		_m(&m)
+	{}
+
+	ScopeLoadedModule::~ScopeLoadedModule() noexcept(true)
+	{
+		if (_m && _m->GetBase())
+			FreeLibrary((HMODULE)_m->GetBase());
+	}
 }

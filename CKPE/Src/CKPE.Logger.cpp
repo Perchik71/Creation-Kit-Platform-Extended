@@ -84,7 +84,7 @@ namespace CKPE
 
 	void Logger::Close() noexcept(true)
 	{
-		ScopeCriticalSection{ _section };
+		ScopeCriticalSection guard{ _section };
 
 		if (HasOpen())
 		{
@@ -171,7 +171,7 @@ namespace CKPE
 
 	void Logger::Flush() const noexcept(true)
 	{
-		ScopeCriticalSection{ _section };
+		ScopeCriticalSection guard{ _section };
 
 		if (HasOpen())
 			fflush((FILE*)_handle);
@@ -179,7 +179,7 @@ namespace CKPE
 
 	void Logger::NewLine() const noexcept(true)
 	{
-		ScopeCriticalSection{ _section };
+		ScopeCriticalSection guard{ _section };
 
 		if (HasOpen())
 			fputc('\n', (FILE*)_handle);
@@ -187,7 +187,7 @@ namespace CKPE
 
 	void Logger::WriteString(TypeMsg type_msg, const std::string& message) const noexcept(true)
 	{
-		ScopeCriticalSection{ _section };
+		ScopeCriticalSection guard{ _section };
 
 		if (HasOpen())
 		{

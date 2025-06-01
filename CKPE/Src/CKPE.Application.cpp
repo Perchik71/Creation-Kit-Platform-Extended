@@ -79,4 +79,9 @@ namespace CKPE
 			_sapp = nullptr;
 		}
 	}
+
+	GameManager::Game Application::GetGameType() const noexcept(true)
+	{
+		return GameManager::GetSingleton()->GetType();
+	}
 }

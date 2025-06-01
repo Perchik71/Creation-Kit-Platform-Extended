@@ -6,6 +6,7 @@
 
 #include <string>
 #include <CKPE.Process.h>
+#include <CKPE.GameManager.h>
 
 namespace CKPE
 {
@@ -30,5 +31,13 @@ namespace CKPE
 		virtual void MessageProcessing() const noexcept(true);
 		virtual void Initialize() const;
 		virtual void Shutdown() const;
+
+		[[nodiscard]] virtual GameManager::Game GetGameType() const noexcept(true);
+		[[nodiscard]] inline constexpr virtual bool IsSkyrim() const noexcept(true)
+		{ return GetGameType() == GameManager::Game::CK_SKYRIMSE; }
+		[[nodiscard]] inline constexpr virtual bool IsFallout4() const noexcept(true)
+		{ return GetGameType() == GameManager::Game::CK_FALLOUT4; }
+		[[nodiscard]] inline constexpr virtual bool IsStarfield() const noexcept(true)
+		{ return GetGameType() == GameManager::Game::CK_STARFIELD; }
 	};
 }

@@ -4,160 +4,110 @@
 
 #include <windows.h>
 #include <CKPE.GameManager.h>
-#include <CKPE.PathUtils.h>
 #include <CKPE.Application.h>
 #include <CKPE.Module.h>
+#include <CKPE.FileUtils.h>
 #include <CKPE.ErrorHandler.h>
 #include <CKPE.StringUtils.h>
 #include <CKPE.Logger.h>
+#include <array>
 
 namespace CKPE
 {
 	static GameManager _sgmanager;
 
-	GameManager::LoadedLibrary::LoadedLibrary() :
-		handle(nullptr), internalHandle(-1), query(nullptr), load(nullptr), errorCode(0), 
-		hasLoad(false), hasQuery(false)
+	static std::array GAME_LIBRARIES_FILENAME
 	{
-		wmemset(dllName, 0, 128);
-		memset(errorState, 0, 128);
-		memset(&info, 0, sizeof(LibaryInfo));
-		memset(&data, 0, sizeof(CKPEGameLibraryData));
-	}
+		L"",
+		L"CKPE.SkyrimSE.dll",
+		L"CKPE.Fallout4.dll",
+		L"CKPE.Starfield.dll",
+	};
 
-	GameManager::~GameManager()
+	bool GameManager::Initialize(Game game) noexcept(true)
 	{
-		if (_libs)
+		if (_init) 
+			return true;
+
+		if (game == CK_UNKNOWN)
+			return false;
+
+		_game_type = game;
+		auto _app = Application::GetSingleton();
+		auto _path = std::wstring(_app->GetPath()) + GAME_LIBRARIES_FILENAME[_game_type];
+
+		_MESSAGE(L"Load game library: \"%s\"", GAME_LIBRARIES_FILENAME[_game_type]);
+
+		HMODULE resourceHandle = (HMODULE)LoadLibraryExW(_path.c_str(),
+			nullptr, LOAD_LIBRARY_AS_IMAGE_RESOURCE);
+		if (!resourceHandle)
 		{
-			delete _libs;
-			_libs = nullptr;
+			_MESSAGE("\tLoadLibraryW returned error: \"%s\"", ErrorHandler::GetSystemMessage(GetLastError()).c_str());
+			return false;
 		}
-	}
 
-	void GameManager::InitializeGameLibraries() noexcept(true)
-	{
-		//std::uint32_t handleIdx = 1;	// start at 1, 0 is reserved for internal use
+		bool hasLoad = false;
+		bool hasQuery = false;
 
-		//auto libraries = PathUtils::GetFilesInDir(Application::GetSingleton()->GetPath(), L".dll", false);
-		//for (auto& lib : libraries)
-		//{
-		//	LoadedLibrary library;
-		//	
-		//	std::wstring path = lib.first;
-		//	wcscpy_s(library.dllName, PathUtils::ExtractFileName(path).c_str());
-		//	_MESSAGE(L"Checking module %s", library.dllName);
-
-		//	HMODULE resourceHandle = (HMODULE)LoadLibraryExW(path.c_str(), nullptr, LOAD_LIBRARY_AS_IMAGE_RESOURCE);
-		//	if (resourceHandle)
-		//	{
-		//		Module resourceModule = resourceHandle;
-		//		if (resourceModule.Is64())
-		//		{
-		//			auto* data = (const CKPEGameLibraryData*)
-		//				resourceModule.GetResourceLibraryViaProcAddress("CKPEGameLibrary_Data");
-		//			if (data)
-		//			{
-		//				memcpy(&library.data, data, sizeof(CKPEGameLibraryData));
-		//				library.hasLoad = resourceModule.GetResourceLibraryViaProcAddress("CKPEGameLibrary_Load") != nullptr;
-		//				library.hasQuery = resourceModule.GetResourceLibraryViaProcAddress("CKPEGameLibrary_Query") != nullptr;
-		//				if (library.hasLoad && library.hasQuery)
-		//				{
-		//					library.internalHandle = handleIdx;
-		//					library.info.version = library.data.dataVersion;
-		//					wcscpy_s(library.info.name, StringUtils::WinCPToUtf16(library.data.name).c_str());
-
-		//					_libs->insert({ handleIdx, library });
-		//					handleIdx++;
-		//				}
-		//				else
-		//					_MESSAGE(L"[ERROR]\t\tWithout CKPEGameLibrary_Load or CKPEGameLibrary_Query function");
-		//			}
-		//		}
-		//		else
-		//			_MESSAGE(L"\t\tIt's 32-bit", path.c_str());
-
-		//		FreeLibrary(resourceHandle);
-		//	}
-		//	else
-		//		_MESSAGE("LoadLibraryExW returned failed: \"%s\" \n\t%s", StringUtils::Utf16ToUtf8(path).c_str(),
-		//			ErrorHandler::GetSystemMessage(GetLastError()).c_str());
-		//}
-	}
-
-	std::uint32_t GameManager::StartGameLibraries() noexcept(true)
-	{
-		std::wstring path = Application::GetSingleton()->GetPath();
-		std::map<GameLibraryHandle, std::uint32_t> result_query;
-
-		for (auto& lib : *_libs)
+		// ScopeLoadedModule unload library because { <code> }
 		{
-			if (!lib.second.handle)
+			Module resourceModule(resourceHandle);
+			ScopeLoadedModule guard{ resourceModule };
+
+			if (!resourceModule.Is64())
 			{
-				lib.second.handle = (void*)LoadLibraryW((path + lib.second.dllName).c_str());
-				if (!lib.second.handle)
-					_ERROR("Couldn't load plugin \"%s\"\n\t\"%s\"", StringUtils::Utf16ToUtf8(lib.second.dllName).c_str(),
-						ErrorHandler::GetSystemMessage(GetLastError()));
-				else
-				{
-					lib.second.query = (_CKPEGameLibrary_Query)GetProcAddress((HMODULE)lib.second.handle, "CKPEGameLibrary_Query");
-					if (lib.second.query)
-					{
-						auto result = SafeQuery(lib.second);
-						result_query.insert({ lib.first, result });
-						if (result != GameManager::CK_SUPPORTED)
-						{
-							FreeLibrary((HMODULE)lib.second.handle);
-							lib.second.handle = nullptr;
-						}
-						else
-						{
-							lib.second.load = (_CKPEGameLibrary_Load)GetProcAddress((HMODULE)lib.second.handle, "CKPEGameLibrary_Load");
-							auto success = SafeLoad(lib.second);	
-							if (!success)
-							{
-								_ERROR(L"An error occurred initializing the game library \"%s\"", lib.second.dllName);
+				_MESSAGE("\tIt's 32-bit");
+				return false;
+			}
 
-								FreeLibrary((HMODULE)lib.second.handle);
-								lib.second.handle = nullptr;
-							}
-							else
-								_MESSAGE_EX("\tName: \"{}\", Author: \"{}\", Version: {:x} | set index {:x}",
-									lib.second.data.name, lib.second.data.author, lib.second.data.dataVersion, lib.first);
-						}
-					}
-					else
-					{
-						_ERROR("Does not appear to be an CKPE game library");
+			auto _data = (const CKPEGameLibraryData*)resourceModule.Resources.GetProcAddress("CKPEGameLibrary_Data");
+			if (!_data)
+			{
+				_MESSAGE("\tNo data");
+				return false;
+			}
 
-						FreeLibrary((HMODULE)lib.second.handle);
-						lib.second.handle = nullptr;
-					}
-				}
+			if (_data->cbVersion != CKPEGameLibraryData::kVersion)
+			{
+				_MESSAGE("\tThe data version differs from the supported one, check the mod updates");
+				return false;
+			}
+
+			hasLoad = resourceModule.Resources.GetProcAddress("CKPEGameLibrary_Load") != nullptr;
+			hasQuery = resourceModule.Resources.GetProcAddress("CKPEGameLibrary_Query") != nullptr;
+			if (hasLoad && hasQuery)
+			{
+				_MESSAGE("\tName: %s", _data->name);
+				_MESSAGE("\tAuthor: %s", _data->author);
+				_MESSAGE("\tVersion: %llX (%u.%u.%u.%u)\n", _data->dataVersion,
+					GET_EXE_VERSION_EX_MAJOR(_data->dataVersion), GET_EXE_VERSION_EX_MINOR(_data->dataVersion),
+					GET_EXE_VERSION_EX_BUILD(_data->dataVersion), GET_EXE_VERSION_EX_REVISION(_data->dataVersion));
+			}
+			else
+			{
+				_MESSAGE("\tWithout CKPEGameLibrary_Load or CKPEGameLibrary_Query function");
+				return false;
 			}
 		}
-	}
 
-	std::uint32_t GameManager::Initialize() const noexcept(true)
-	{
-		if (_init) return GameManager::CK_UNKNOWN;
-		auto _This = const_cast<GameManager*>(this);
-		_This->_init = true;
-
-		_This->_libs = new std::map<GameLibraryHandle, LoadedLibrary>;
-		if (_This->_libs)
+		auto handle = (void*)LoadLibraryW(_path.c_str());
+		if (!handle)
 		{
-			_This->InitializeGameLibraries();
-			return _This->StartGameLibraries();
+			_ERROR("\tCouldn't load library: \"%s\"", ErrorHandler::GetSystemMessage(GetLastError()));
+			return false;
 		}
-		else
-			_FATALERROR("Out of memory");
+		
+		Module lib(handle);
+		_load = (_CKPEGameLibrary_Load)lib.GetProcAddress("CKPEGameLibrary_Load");
+		_query = (_CKPEGameLibrary_Query)lib.GetProcAddress("CKPEGameLibrary_Load");	
+		_interface.interfaceVersion = CKPEGameLibraryInterface::kInterfaceVersion;
+		_interface.ckpeVersion = FileUtils::GetFileVersion(std::wstring(_app->GetPath()) + L"CKPE.dll");
+		_interface.application = const_cast<Application*>(_app);
+		_interface.logger = Logger::GetSingleton();
+		_interface.QueryInterface = QueryInterface;
+		_init = true;
 
-		return GameManager::CK_UNKNOWN;
-	}
-
-	std::uint32_t GameManager::GetCount() const noexcept(true)
-	{
-		return _libs ? (std::uint32_t)_libs->size() : 0;
+		return true;
 	}
 
 	const GameManager* GameManager::GetSingleton() noexcept(true)
@@ -165,11 +115,11 @@ namespace CKPE
 		return &_sgmanager;
 	}
 
-	std::uint32_t GameManager::SafeQuery(const LoadedLibrary& lib)
+	std::uint32_t GameManager::QueryLib()
 	{
 		__try
 		{
-			return lib.query();
+			return _query();
 		}
 		__except (1)
 		{
@@ -177,15 +127,20 @@ namespace CKPE
 		}
 	}
 
-	bool GameManager::SafeLoad(const LoadedLibrary& lib)
+	bool GameManager::LoadLib()
 	{
 		__try
 		{
-			return lib.load(nullptr);
+			return _load(static_cast<CKPEGameLibraryInterface*>(&_interface));
 		}
 		__except (1)
 		{
 			return false;
 		}
+	}
+
+	void* GameManager::QueryInterface(std::uint32_t id) noexcept(true)
+	{
+		return nullptr;
 	}
 }

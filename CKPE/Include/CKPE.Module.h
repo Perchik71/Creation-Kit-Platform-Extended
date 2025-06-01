@@ -75,6 +75,16 @@ namespace CKPE
 			[[nodiscard]] const void* GetProcAddress(const char* name) const noexcept(true);
 		} Resources{ this };
 
+		[[nodiscard]] const void* GetProcAddress(const char* name) const noexcept(true);
+
 		friend class Application;
+	};
+
+	class CKPE_API ScopeLoadedModule
+	{
+		const Module* _m;
+	public:
+		ScopeLoadedModule(const Module& m) noexcept(true);
+		~ScopeLoadedModule() noexcept(true);
 	};
 }

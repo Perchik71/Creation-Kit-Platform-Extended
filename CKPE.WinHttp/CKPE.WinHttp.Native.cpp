@@ -7,6 +7,8 @@
 #include <CKPE.h>
 #include <stdexcept>
 
+#include <fstream>
+
 LONG(NTAPI* NtSetInformationThread)(HANDLE ThreadHandle, LONG ThreadInformationClass,
     PVOID ThreadInformation, ULONG ThreadInformationLength);
 
@@ -65,7 +67,11 @@ namespace CKPE
 
         void Runner::ContinueInitialize()
         {
-            // TODO
+            // TODO: command line
+
+            auto game_mgr = const_cast<GameManager*>(GameManager::GetSingleton());
+            if (!game_mgr->LoadLib())
+                _ERROR("Failed initialize game library");
         }
 
         void Runner::EnableBreakpoint() noexcept(true)
@@ -73,13 +79,7 @@ namespace CKPE
             _MESSAGE("Module base: %llX", _moduleBase);
 
             auto app = Application::GetSingleton();
-
-            //_MESSAGE("Section range \".text\": (base: %p, end: %p)", Sections[SECTION_TEXT].base, Sections[SECTION_TEXT].end);
-           // _MESSAGE("Section range \".rdata\": (base: %p, end: %p)", Sections[SECTION_DATA_READONLY].base, Sections[SECTION_DATA_READONLY].end);
-            //_MESSAGE("Section range \".data\": (base: %p, end: %p)", Sections[SECTION_DATA].base, Sections[SECTION_DATA].end);
-
-            // TODO
-
+      
             // Установить магическое значение, которое запускает ранний вызов QueryPerformanceCounter
             auto lc = app->GetPEDirectory(PEDirectory::e_load_config);
             *(std::uint64_t*)lc.GetPointer<IMAGE_LOAD_CONFIG_DIRECTORY>()->SecurityCookie = 0x2B992DDFA232;
@@ -174,14 +174,56 @@ namespace CKPE
                     (_hasSSE41 ? "true" : "false"), 
                     (_hasAVX2 ? "true" : "false"));
 
-                //else if (VersionLists::HasOutdatedEditorVersion())
-                /*    throw std::runtime_error(
+                auto seg_rdata = app->GetSegment(Segment::rdata);
+                auto game_mgr = const_cast<GameManager*>(GameManager::GetSingleton());
+
+                if (Patterns::FindByMask(seg_rdata.GetAddress(), seg_rdata.GetSize(),
+                    Patterns::ASCIIStringToMask("Skyrim.esm")))
+                {
+                    // SKYRIM
+                    _MESSAGE("Game:\n\tSkyrimSE\n");
+                    if (!game_mgr->Initialize(GameManager::Game::CK_SKYRIMSE))
+                        throw std::runtime_error("CKPE is installed incorrectly."
+                            "\nThere is no library to support Creation Kit the SkyrimSE game.");
+                }
+                else if (Patterns::FindByMask(seg_rdata.GetAddress(), seg_rdata.GetSize(),
+                    Patterns::ASCIIStringToMask("Fallout4.esm")))
+                {
+                    // FALLOUT4
+                    _MESSAGE("Game:\n\tFallout 4\n");
+                    if (!game_mgr->Initialize(GameManager::Game::CK_FALLOUT4))
+                        throw std::runtime_error("CKPE is installed incorrectly."
+                            "\nThere is no library to support Creation Kit the Fallout 4 game.");
+                }
+                else if (Patterns::FindByMask(seg_rdata.GetAddress(), seg_rdata.GetSize(),
+                    Patterns::ASCIIStringToMask("Starfield.esm")))
+                {
+                    // STARFIELD
+                    _MESSAGE("Game:\n\tStarfield\n");
+                    if (!game_mgr->Initialize(GameManager::Game::CK_STARFIELD))
+                        throw std::runtime_error("CKPE is installed incorrectly."
+                            "\nThere is no library to support Creation Kit the Starfield game.");
+                }
+                else
+                {
+                Unsupported:
+                    throw std::runtime_error(
+                        "Unsupported version of Creation Kit.\nYou may need to update this mod."
+                        "\nCheck out the list of supported versions on the mod page.");
+                    return;
+                }
+
+                switch (game_mgr->QueryLib())
+                {
+                case GameManager::UNSUPPORTED:
+                    goto Unsupported;
+                case GameManager::DEPRECATED:
+                    throw std::runtime_error(
                         "Deprecated version of Creation Kit.\nYou need to update the Creation Kit."
-                        "\nCheck out the list of supported versions on the mod page.");*/
-                        //else
-                        //    throw std::runtime_error(
-                        //        "Unsupported version of Creation Kit.\nYou may need to update this mod."
-                        //        "\nCheck out the list of supported versions on the mod page.");
+                        "\nCheck out the list of supported versions on the mod page.");
+                default:
+                    break;
+                }
 
                 EnableBreakpoint();
                 _run = true;

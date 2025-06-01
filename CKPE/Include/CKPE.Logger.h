@@ -93,6 +93,7 @@ namespace CKPE
 		std::uint32_t _settings{ sAutoFlush | sAlwaysNewLine | sIfFatalErrorTriggerErrorHandler };
 	};
 
+#ifndef CKPE_NO_LOGGER_FUNCTION
 	void CKPE_API _FATALERROR(const std::string_view& formatted_message, ...);
 	void CKPE_API _ERROR(const std::string_view& formatted_message, ...);
 	void CKPE_API _WARNING(const std::string_view& formatted_message, ...);
@@ -150,4 +151,5 @@ namespace CKPE
 		Logger::GetSingleton()->WriteString(Logger::tMessage,
 			std::vformat(_Fmt.get(), std::make_wformat_args(_Args...)));
 	}
+#endif // !CKPE_NO_LOGGER_FUNCTION
 }

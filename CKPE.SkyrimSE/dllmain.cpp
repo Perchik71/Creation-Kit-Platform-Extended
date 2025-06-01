@@ -13,7 +13,7 @@ extern "C"
 	__declspec(dllexport) CKPEGameLibraryData CKPEGameLibrary_Data =
 	{
 		CKPEGameLibraryData::kVersion,
-		MAKE_EXE_VERSION(VERSION_MAJOR, VERSION_MINOR, VERSION_BUILD),
+		MAKE_EXE_VERSION_EX(VERSION_MAJOR, VERSION_MINOR, VERSION_BUILD, VERSION_REVISION),
 		"SkyrimSE",
 		"Perchik71",
 	};
@@ -22,10 +22,10 @@ extern "C"
 	{
 		CKPE::SkyrimSE::VersionLists::Verify();
 		if (CKPE::SkyrimSE::VersionLists::HasAllowedEditorVersion())
-			return CKPE::GameManager::CK_SUPPORTED;
+			return CKPE::GameManager::SUPPORTED;
 		if (CKPE::SkyrimSE::VersionLists::HasOutdatedEditorVersion())
-			return CKPE::GameManager::CK_DEPRECATED;
-		return CKPE::GameManager::CK_UNKNOWN;
+			return CKPE::GameManager::DEPRECATED;
+		return CKPE::GameManager::UNSUPPORTED;
 	}
 
 	__declspec(dllexport) bool CKPEGameLibrary_Load(const CKPEGameLibraryData* ckpe)

@@ -18,6 +18,7 @@
 #include <CKPE.Process.h>
 #include <CKPE.Detours.h>
 #include <CKPE.SafeWrite.h>
-
+#include <CKPE.Patterns.h>
 #include <CKPE.GameManager.h>
+
 #include <CKPE.VersionLists.h>
