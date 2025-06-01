@@ -21,8 +21,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libzydis", "Dependencies\li
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libdeflate", "Dependencies\libdeflate.vcxproj", "{9E771CA4-04D9-4ED8-80F2-FFD379413688}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Creation Kit Platform Extended Loader", "Creation Kit Platform Extended Loader\ckpe_loader.vcxproj", "{42E22F45-AC50-49BF-AABB-D0FFE480333C}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyFirstPlugin", "Plug-ins\MyFirstPlugin\MyFirstPlugin.vcxproj", "{D9D13FA6-38C4-443A-A610-18A0DB488DB5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Detours", "Dependencies\Voltek\Detours\Detours.vcxproj", "{5E4F0CA1-5093-48F0-8660-E649765D6A1E}"
@@ -85,6 +83,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "detours", "Dependencies\det
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CKPE.Common", "CKPE.Common\CKPE.Common.vcxproj", "{D3C5714A-688F-4D85-964F-712E692EC496}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CKPE.Loader", "CKPE.Loader\ckpe_loader.vcxproj", "{42E22F45-AC50-49BF-AABB-D0FFE480333C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Release|x64 = Release|x64
@@ -107,10 +107,6 @@ Global
 		{9E771CA4-04D9-4ED8-80F2-FFD379413688}.Release|x64.Build.0 = Release|x64
 		{9E771CA4-04D9-4ED8-80F2-FFD379413688}.Release-Qt|x64.ActiveCfg = Release|x64
 		{9E771CA4-04D9-4ED8-80F2-FFD379413688}.Release-Qt|x64.Build.0 = Release|x64
-		{42E22F45-AC50-49BF-AABB-D0FFE480333C}.Release|x64.ActiveCfg = Release|x64
-		{42E22F45-AC50-49BF-AABB-D0FFE480333C}.Release|x64.Build.0 = Release|x64
-		{42E22F45-AC50-49BF-AABB-D0FFE480333C}.Release-Qt|x64.ActiveCfg = Release|x64
-		{42E22F45-AC50-49BF-AABB-D0FFE480333C}.Release-Qt|x64.Build.0 = Release|x64
 		{D9D13FA6-38C4-443A-A610-18A0DB488DB5}.Release|x64.ActiveCfg = Release|x64
 		{D9D13FA6-38C4-443A-A610-18A0DB488DB5}.Release|x64.Build.0 = Release|x64
 		{D9D13FA6-38C4-443A-A610-18A0DB488DB5}.Release-Qt|x64.ActiveCfg = Release|x64
@@ -179,6 +175,10 @@ Global
 		{D3C5714A-688F-4D85-964F-712E692EC496}.Release|x64.Build.0 = Release|x64
 		{D3C5714A-688F-4D85-964F-712E692EC496}.Release-Qt|x64.ActiveCfg = Release|x64
 		{D3C5714A-688F-4D85-964F-712E692EC496}.Release-Qt|x64.Build.0 = Release|x64
+		{42E22F45-AC50-49BF-AABB-D0FFE480333C}.Release|x64.ActiveCfg = Release|x64
+		{42E22F45-AC50-49BF-AABB-D0FFE480333C}.Release|x64.Build.0 = Release|x64
+		{42E22F45-AC50-49BF-AABB-D0FFE480333C}.Release-Qt|x64.ActiveCfg = Release|x64
+		{42E22F45-AC50-49BF-AABB-D0FFE480333C}.Release-Qt|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -205,6 +205,7 @@ Global
 		{1BC95883-32A8-45F7-BA3F-940610DF50EE} = {220983A6-3FEC-4CE5-A5D3-EF6DC96116DF}
 		{06E30C65-D79A-4FEC-8A60-B36D907E6601} = {DBF8B066-7523-44A5-8F55-02E3212A048F}
 		{D3C5714A-688F-4D85-964F-712E692EC496} = {220983A6-3FEC-4CE5-A5D3-EF6DC96116DF}
+		{42E22F45-AC50-49BF-AABB-D0FFE480333C} = {220983A6-3FEC-4CE5-A5D3-EF6DC96116DF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3D7FAA7F-23AA-467B-BFB7-39DF25721450}

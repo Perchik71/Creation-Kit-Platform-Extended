@@ -33,7 +33,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Starfield\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Starfield\Include;$(SolutionDir)CKPE.Common\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -41,7 +41,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;CKPESKYRIMSE_EXPORTS;_WINDOWS;_USRDLL;WIN32_LEAN_AND_MEAN;NOMINMAX;_CRT_SECURE_NO_WARNINGS;CKPE_NO_LOGGER_FUNCTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;CKPESTARFIELD_EXPORTS;_WINDOWS;_USRDLL;WIN32_LEAN_AND_MEAN;NOMINMAX;_CRT_SECURE_NO_WARNINGS;CKPE_NO_LOGGER_FUNCTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>

@@ -12,7 +12,7 @@
     <ProjectGuid>{42e22f45-ac50-49bf-aabb-d0ffe480333c}</ProjectGuid>
     <RootNamespace>sseckloader</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Creation Kit Platform Extended Loader</ProjectName>
+    <ProjectName>CKPE.Loader</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
