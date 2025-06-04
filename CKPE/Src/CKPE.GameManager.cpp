@@ -99,7 +99,7 @@ namespace CKPE
 		
 		Module lib(handle);
 		_load = (_CKPEGameLibrary_Load)lib.GetProcAddress("CKPEGameLibrary_Load");
-		_query = (_CKPEGameLibrary_Query)lib.GetProcAddress("CKPEGameLibrary_Load");	
+		_query = (_CKPEGameLibrary_Query)lib.GetProcAddress("CKPEGameLibrary_Query");	
 		_interface.interfaceVersion = CKPEGameLibraryInterface::kInterfaceVersion;
 		_interface.ckpeVersion = FileUtils::GetFileVersion(std::wstring(_app->GetPath()) + L"CKPE.dll");
 		_interface.application = const_cast<Application*>(_app);

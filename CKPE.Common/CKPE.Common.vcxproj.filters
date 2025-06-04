@@ -5,6 +5,15 @@
     <ClCompile Include="Src\CKPE.Common.Interface.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.RuntimeOptimization.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.LogWindow.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.SettingCollection.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -18,8 +27,23 @@
     <ClInclude Include="Include\CKPE.Common.Common.h">
       <Filter>API</Filter>
     </ClInclude>
-    <ClInclude Include="Include\CKPE.CommonLib.h">
+    <ClInclude Include="Include\CKPE.Common.Include.h">
       <Filter>API</Filter>
     </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.RuntimeOptimization.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.LogWindow.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.SettingCollection.h">
+      <Filter>API</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource_version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="build_version.txt" />
   </ItemGroup>
 </Project>

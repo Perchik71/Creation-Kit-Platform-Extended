@@ -69,13 +69,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Src\CKPE.SkyrimSE.Runner.cpp" />
     <ClCompile Include="Src\CKPE.SkyrimSE.VersionLists.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\CKPE.SkyrimSE.Runner.h" />
     <ClInclude Include="Include\CKPE.SkyrimSE.VersionLists.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource_version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="build_version.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

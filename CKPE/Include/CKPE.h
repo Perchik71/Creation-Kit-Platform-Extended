@@ -11,6 +11,7 @@
 #include <CKPE.StringUtils.h>
 #include <CKPE.PathUtils.h>
 #include <CKPE.FileUtils.h>
+#include <CKPE.DirUtils.h>
 #include <CKPE.Application.h>
 #include <CKPE.CriticalSection.h>
 #include <CKPE.HardwareInfo.h>
@@ -20,5 +21,5 @@
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Patterns.h>
 #include <CKPE.GameManager.h>
-
-#include <CKPE.VersionLists.h>
+#include <CKPE.Exception.h>
+#include <CKPE.SmartPointer.h>

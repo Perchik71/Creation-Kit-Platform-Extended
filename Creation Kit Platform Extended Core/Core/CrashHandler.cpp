@@ -1043,8 +1043,8 @@ namespace CreationKitPlatformExtended
 				{
 				case WM_INITDIALOG:
 				{
-					if (UITheme::IsDarkTheme())
-						Patches::UIThemePatch::ApplyThemeForWindow(hwndDlg);
+					//if (UITheme::IsDarkTheme())
+					//	Patches::UIThemePatch::ApplyThemeForWindow(hwndDlg);
 
 					CrashDlgParam* Param = (CrashDlgParam*)lParam;
 

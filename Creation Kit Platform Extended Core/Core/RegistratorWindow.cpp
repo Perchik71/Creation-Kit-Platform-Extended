@@ -171,8 +171,8 @@ namespace CreationKitPlatformExtended
 
 		void RegistratorWindow::SendMessageForUITheme(HWND hWnd)
 		{
-			if (UITheme::IsDarkThemeSystemSupported() && UITheme::IsDarkTheme())
-				Patches::UIThemePatch::ApplyThemeForWindow(hWnd);
+			//if (UITheme::IsDarkThemeSystemSupported() && UITheme::IsDarkTheme())
+			//	Patches::UIThemePatch::ApplyThemeForWindow(hWnd);
 		}
 	}
 }

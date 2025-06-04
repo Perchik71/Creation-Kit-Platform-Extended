@@ -219,6 +219,7 @@ namespace CKPE
 		WriteString(type_msg, StringUtils::Utf16ToUtf8(message));
 	}
 
+#ifndef CKPE_NO_LOGGER_FUNCTION
 	void _FATALERROR(const std::string_view& formatted_message, ...)
 	{
 		va_list ap;
@@ -346,4 +347,5 @@ namespace CKPE
 
 		_slogger.WriteString(Logger::tMessage, StringUtils::Utf16ToUtf8(string_done));
 	}
+#endif // !CKPE_NO_LOGGER_FUNCTION
 }

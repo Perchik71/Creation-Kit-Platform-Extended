@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <CKPE.Application.h>
 #include <CKPE.PathUtils.h>
+#include <CKPE.Exception.h>
 #include <CKPE.Logger.h>
 
 namespace CKPE
@@ -66,7 +67,7 @@ namespace CKPE
 
 		auto slog = const_cast<Logger*>(Logger::GetSingleton());
 		if (!slog->Open(std::wstring(GetPath()) + L"CreationKitPlatformExtended.log"))
-			throw std::runtime_error("Failed to create a file: CreationKitPlatformExtended.log");
+			throw RuntimeError("Failed to create a file: CreationKitPlatformExtended.log");
 
 		_This->LoadInfo();
 	}

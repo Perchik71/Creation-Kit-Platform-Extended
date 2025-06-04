@@ -33,7 +33,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Common\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\toml11\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -41,7 +41,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;CKPECOMMON_EXPORTS;_WINDOWS;_USRDLL;WIN32_LEAN_AND_MEAN;NOMINMAX;_CRT_SECURE_NO_WARNINGS;CKPE_NO_LOGGER_FUNCTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;ZYDIS_STATIC_DEFINE;CKPECOMMON_EXPORTS;_WINDOWS;_USRDLL;WIN32_LEAN_AND_MEAN;NOMINMAX;_CRT_SECURE_NO_WARNINGS;CKPE_NO_LOGGER_FUNCTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
@@ -53,6 +53,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <CallingConvention>StdCall</CallingConvention>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <DisableSpecificWarnings>26478</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -60,8 +61,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CKPE.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CKPE.lib;Shell32.lib;Toml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\scripts.ps1"</Command>
@@ -70,11 +71,23 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Src\CKPE.Common.Interface.cpp" />
+    <ClCompile Include="Src\CKPE.Common.LogWindow.cpp" />
+    <ClCompile Include="Src\CKPE.Common.RuntimeOptimization.cpp" />
+    <ClCompile Include="Src\CKPE.Common.SettingCollection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\CKPE.Common.Common.h" />
     <ClInclude Include="Include\CKPE.Common.Interface.h" />
-    <ClInclude Include="Include\CKPE.CommonLib.h" />
+    <ClInclude Include="Include\CKPE.Common.LogWindow.h" />
+    <ClInclude Include="Include\CKPE.Common.RuntimeOptimization.h" />
+    <ClInclude Include="Include\CKPE.Common.Include.h" />
+    <ClInclude Include="Include\CKPE.Common.SettingCollection.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource_version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="build_version.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

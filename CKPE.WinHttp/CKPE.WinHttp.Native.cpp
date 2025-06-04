@@ -7,8 +7,6 @@
 #include <CKPE.h>
 #include <stdexcept>
 
-#include <fstream>
-
 LONG(NTAPI* NtSetInformationThread)(HANDLE ThreadHandle, LONG ThreadInformationClass,
     PVOID ThreadInformation, ULONG ThreadInformationLength);
 
@@ -115,19 +113,19 @@ namespace CKPE
             if (sname.contains(L"creationkit"))
             {
                 if (HasRun())
-                    throw std::runtime_error("CKPE is already injected to the process.");
+                    throw RuntimeError("CKPE is already injected to the process.");
 
                 auto osver = HardwareInfo::OS::GetVersion();
                 if ((GET_EXE_VERSION_EX_MAJOR(osver) < 6) ||
                     (((GET_EXE_VERSION_EX_MAJOR(osver) == 6) && (GET_EXE_VERSION_EX_MINOR(osver) <= 2))))
-                    throw std::runtime_error("CKPE supports Windows OS versions 8.1 and above.");
+                    throw RuntimeError("CKPE supports Windows OS versions 8.1 and above.");
 
 #if __AVX__
                 if (!HardwareInfo::CPU::HasSupportAVX())
-                    throw std::runtime_error("CKPE compiled using AVX instructions.\nYour processor does not support this and is outdated.");
+                    throw RuntimeError("CKPE compiled using AVX instructions.\nYour processor does not support this and is outdated.");
 #elif __AVX2__
                 if (!HardwareInfo::CPU::HasSupportAVX2())
-                    throw std::runtime_error("CKPE compiled using AVX2 instructions.\nYour processor does not support this and is outdated.");
+                    throw RuntimeError("CKPE compiled using AVX2 instructions.\nYour processor does not support this and is outdated.");
 #endif 
 
                 auto app = Application::GetSingleton();
@@ -135,7 +133,7 @@ namespace CKPE
 
                 auto lc = app->GetPEDirectory(PEDirectory::e_load_config);
                 if (!lc.GetAddress() || !lc.GetSize() || !(lc.GetPointer<IMAGE_LOAD_CONFIG_DIRECTORY>())->SecurityCookie)
-                    throw std::runtime_error("SecurityCookie is a null pointer!");
+                    throw RuntimeError("SecurityCookie is a null pointer!");
 
                 _moduleBase = app->GetBase();
 
@@ -183,7 +181,7 @@ namespace CKPE
                     // SKYRIM
                     _MESSAGE("Game:\n\tSkyrimSE\n");
                     if (!game_mgr->Initialize(GameManager::Game::CK_SKYRIMSE))
-                        throw std::runtime_error("CKPE is installed incorrectly."
+                        throw RuntimeError("CKPE is installed incorrectly."
                             "\nThere is no library to support Creation Kit the SkyrimSE game.");
                 }
                 else if (Patterns::FindByMask(seg_rdata.GetAddress(), seg_rdata.GetSize(),
@@ -192,7 +190,7 @@ namespace CKPE
                     // FALLOUT4
                     _MESSAGE("Game:\n\tFallout 4\n");
                     if (!game_mgr->Initialize(GameManager::Game::CK_FALLOUT4))
-                        throw std::runtime_error("CKPE is installed incorrectly."
+                        throw RuntimeError("CKPE is installed incorrectly."
                             "\nThere is no library to support Creation Kit the Fallout 4 game.");
                 }
                 else if (Patterns::FindByMask(seg_rdata.GetAddress(), seg_rdata.GetSize(),
@@ -201,13 +199,13 @@ namespace CKPE
                     // STARFIELD
                     _MESSAGE("Game:\n\tStarfield\n");
                     if (!game_mgr->Initialize(GameManager::Game::CK_STARFIELD))
-                        throw std::runtime_error("CKPE is installed incorrectly."
+                        throw RuntimeError("CKPE is installed incorrectly."
                             "\nThere is no library to support Creation Kit the Starfield game.");
                 }
                 else
                 {
                 Unsupported:
-                    throw std::runtime_error(
+                    throw RuntimeError(
                         "Unsupported version of Creation Kit.\nYou may need to update this mod."
                         "\nCheck out the list of supported versions on the mod page.");
                     return;
@@ -218,7 +216,7 @@ namespace CKPE
                 case GameManager::UNSUPPORTED:
                     goto Unsupported;
                 case GameManager::DEPRECATED:
-                    throw std::runtime_error(
+                    throw RuntimeError(
                         "Deprecated version of Creation Kit.\nYou need to update the Creation Kit."
                         "\nCheck out the list of supported versions on the mod page.");
                 default:

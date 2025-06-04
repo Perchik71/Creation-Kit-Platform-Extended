@@ -100,4 +100,84 @@ namespace CKPE
 	{
 		return Utf8ToUtf16(ToLowerUTF8(Utf16ToUtf8(src)));
 	}
+
+	static const char* whitespaceDelimitersA = " \t\n\r\f\v";
+
+	std::string& StringUtils::Trim(std::string& str) noexcept(true)
+	{
+		str.erase(str.find_last_not_of(whitespaceDelimitersA) + 1);
+		str.erase(0, str.find_first_not_of(whitespaceDelimitersA));
+
+		return str;
+	}
+
+	std::string StringUtils::Trim(const char* s) noexcept(true)
+	{
+		std::string str(s);
+		return Trim(str);
+	}
+
+	static const wchar_t* whitespaceDelimitersW = L" \t\n\r\f\v";
+
+	std::wstring& StringUtils::Trim(std::wstring& str) noexcept(true)
+	{
+		str.erase(str.find_last_not_of(whitespaceDelimitersW) + 1);
+		str.erase(0, str.find_first_not_of(whitespaceDelimitersW));
+
+		return str;
+	}
+
+	std::wstring StringUtils::Trim(const wchar_t* s) noexcept(true)
+	{
+		std::wstring str(s);
+		return Trim(str);
+	}
+
+	std::string& StringUtils::QuoteRemove(std::string& str) noexcept(true)
+	{
+		if (str.size() > 1)
+		{
+			if ((str.front() == '"') && (str.back() == '"'))
+			{
+				if (str.size() == 2)
+					str.erase();
+				else
+				{
+					str.erase(str.begin());
+					str.erase(str.end() - 1);
+				}
+			}
+		}
+		return str;
+	}
+
+	std::string StringUtils::QuoteRemove(const char* s) noexcept(true)
+	{
+		std::string r(s);
+		return QuoteRemove(r);
+	}
+
+	std::wstring& StringUtils::QuoteRemove(std::wstring& str) noexcept(true)
+	{
+		if (str.size() > 1)
+		{
+			if ((str.front() == L'"') && (str.back() == L'"'))
+			{
+				if (str.size() == 2)
+					str.erase();
+				else
+				{
+					str.erase(str.begin());
+					str.erase(str.end() - 1);
+				}
+			}
+		}
+		return str;
+	}
+
+	std::wstring StringUtils::QuoteRemove(const wchar_t* s) noexcept(true)
+	{
+		std::wstring r(s);
+		return QuoteRemove(r);
+	}
 }

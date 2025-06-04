@@ -332,8 +332,8 @@ namespace CreationKitPlatformExtended
 
 			DialogOverrideMutex.lock();
 			{
-				if (UITheme::IsDarkTheme())
-					Patches::UIThemePatch::ApplyThemeForWindow(hwndDlg);
+				//if (UITheme::IsDarkTheme())
+				//	Patches::UIThemePatch::ApplyThemeForWindow(hwndDlg);
 
 				if (auto itr = DialogOverrides.find(hwndDlg); itr != DialogOverrides.end())
 					proc = itr->second.DialogFunc;

@@ -5,6 +5,9 @@
     <ClCompile Include="Src\CKPE.SkyrimSE.VersionLists.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.SkyrimSE.Runner.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -15,8 +18,14 @@
     <ClInclude Include="Include\CKPE.SkyrimSE.VersionLists.h">
       <Filter>API</Filter>
     </ClInclude>
+    <ClInclude Include="Include\CKPE.SkyrimSE.Runner.h">
+      <Filter>API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource_version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="build_version.txt" />
   </ItemGroup>
 </Project>

@@ -3,9 +3,10 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.GameManager.h>
+#include <CKPE.Common.Interface.h>
 #include <CKPE.Module.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
+#include <CKPE.SkyrimSE.Runner.h>
 #include "resource_version2.h"
 
 extern "C"
@@ -28,9 +29,12 @@ extern "C"
 		return CKPE::GameManager::UNSUPPORTED;
 	}
 
-	__declspec(dllexport) bool CKPEGameLibrary_Load(const CKPEGameLibraryData* ckpe)
+	__declspec(dllexport) bool CKPEGameLibrary_Load(const CKPEGameLibraryInterface* ckpe)
 	{
-		return true;
+		auto interface = CKPE::Common::Interface::GetSingleton();
+		interface->Initialize(ckpe);
+		auto runner = CKPE::SkyrimSE::Runner::GetSingleton();
+		return runner->Install();
 	}
 };
 

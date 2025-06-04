@@ -59,6 +59,15 @@
     <ClCompile Include="Src\CKPE.Patterns.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.DirUtils.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.HashUtils.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Stream.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -133,6 +142,21 @@
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.PEDirectory.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Exception.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.DirUtils.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.SmartPointer.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.HashUtils.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Stream.h">
       <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>

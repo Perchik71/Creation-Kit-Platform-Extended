@@ -984,31 +984,31 @@ namespace CreationKitPlatformExtended
 
 		void UIThemePatch::ApplyThemeForWindow(HWND hWnd)
 		{
-			auto _OsVer = GlobalEnginePtr->GetSystemVersion();
+			//auto _OsVer = GlobalEnginePtr->GetSystemVersion();
 
-			if (_OsVer.BuildNubmer >= 22000)
-			{
-				// Win11			
-				COLORREF Color = UITheme::Comctl32GetSysColor(COLOR_BTNFACE);
-				HRESULT hr = DwmSetWindowAttribute(hWnd, DWMWINDOWATTRIBUTE::DWMWA_CAPTION_COLOR, &Color, sizeof(Color));
-				if (SUCCEEDED(hr))
-				{
-					Color = UITheme::Comctl32GetSysColor(COLOR_BTNTEXT);
-					hr = DwmSetWindowAttribute(hWnd, DWMWINDOWATTRIBUTE::DWMWA_TEXT_COLOR, &Color, sizeof(Color));
-					if (SUCCEEDED(hr))
-					{
-						Color = UITheme::Comctl32GetSysColor(COLOR_INACTIVEBORDER);
-						hr = DwmSetWindowAttribute(hWnd, DWMWINDOWATTRIBUTE::DWMWA_BORDER_COLOR, &Color, sizeof(Color));
-						if (SUCCEEDED(hr))
-						{
-							// TODO: Reg for inactive/active
-						}
-						else _ERROR("Couldn't apply a dark theme for caption border: %08X %s", hr, _com_error(hr).ErrorMessage());
-					}
-					else _ERROR("Couldn't apply a dark theme for caption text: %08X %s", hr, _com_error(hr).ErrorMessage());
-				}
-				else _ERROR("Couldn't apply a dark theme for caption bg: %08X %s", hr, _com_error(hr).ErrorMessage());
-			}
+			//if (_OsVer.BuildNubmer >= 22000)
+			//{
+			//	// Win11			
+			//	COLORREF Color = UITheme::Comctl32GetSysColor(COLOR_BTNFACE);
+			//	HRESULT hr = DwmSetWindowAttribute(hWnd, DWMWINDOWATTRIBUTE::DWMWA_CAPTION_COLOR, &Color, sizeof(Color));
+			//	if (SUCCEEDED(hr))
+			//	{
+			//		Color = UITheme::Comctl32GetSysColor(COLOR_BTNTEXT);
+			//		hr = DwmSetWindowAttribute(hWnd, DWMWINDOWATTRIBUTE::DWMWA_TEXT_COLOR, &Color, sizeof(Color));
+			//		if (SUCCEEDED(hr))
+			//		{
+			//			Color = UITheme::Comctl32GetSysColor(COLOR_INACTIVEBORDER);
+			//			hr = DwmSetWindowAttribute(hWnd, DWMWINDOWATTRIBUTE::DWMWA_BORDER_COLOR, &Color, sizeof(Color));
+			//			if (SUCCEEDED(hr))
+			//			{
+			//				// TODO: Reg for inactive/active
+			//			}
+			//			else _ERROR("Couldn't apply a dark theme for caption border: %08X %s", hr, _com_error(hr).ErrorMessage());
+			//		}
+			//		else _ERROR("Couldn't apply a dark theme for caption text: %08X %s", hr, _com_error(hr).ErrorMessage());
+			//	}
+			//	else _ERROR("Couldn't apply a dark theme for caption bg: %08X %s", hr, _com_error(hr).ErrorMessage());
+			//}
 			//else
 			//{
 			//	// Win10
