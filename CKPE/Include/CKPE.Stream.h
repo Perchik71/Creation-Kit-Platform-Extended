@@ -58,6 +58,7 @@ namespace CKPE
 		[[nodiscard]] virtual std::wstring GetFileName() const noexcept(true);
 		[[nodiscard]] virtual inline std::FILE* GetHandle() const noexcept(true) { return _Handle; }
 		virtual void Flush() const noexcept(true);
+		[[nodiscard]] virtual bool Eof() const noexcept(true);
 	public:
 		FileStream(const std::string& fname, FileMode _mode);
 		FileStream(const std::wstring& fname, FileMode _mode);

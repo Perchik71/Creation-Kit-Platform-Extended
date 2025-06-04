@@ -7,6 +7,8 @@
 #include <CKPE.Common.Common.h>
 #include <cstdint>
 #include <cstdio>
+#include <string_view>
+#include <string>
 
 namespace CKPE
 {
@@ -20,10 +22,10 @@ namespace CKPE
 			void* _external_pipereader_handler{ nullptr };
 			void* _external_pipewriter_handler{ nullptr };
 			FILE* _output_file{ nullptr };
+			std::uint64_t _last_hash{ 0 };
 
 			bool Create();
 			void Destroy();
-			bool CreateStdoutListener();
 			void LoadWarningBlacklist();
 
 			LogWindow(const LogWindow&) = delete;
@@ -48,32 +50,17 @@ namespace CKPE
 			void ActiveHandler(bool active) const noexcept(true);
 			void CloseHandler() const noexcept(true);
 
-			/*
+			bool CreateStdoutListener() noexcept(true);
+			void CloseOutputFile() noexcept(true);
 
-
-			bool SaveRichTextToFile(const char* _filename) const;
-			void LoadWarningBlacklist();
-
-			inline HANDLE GetStdoutListenerPipe() const { return _ExternalPipeWriterHandle; }
-			bool CreateStdoutListener();
-
-			virtual void InputLog(const char* Format, ...);
-			virtual void InputLogVa(const char* Format, va_list Va);
-
-			void CloseOutputFile();*/
-		private:
-			/*
-
+			bool SaveRichTextToFile(const std::string& fname) const noexcept(true);
+			bool SaveRichTextToFile(const std::wstring& fname) const noexcept(true);
 			
+			[[nodiscard]] constexpr inline void* GetStdoutListenerPipe() const noexcept(true) 
+			{ return _external_pipewriter_handler; }
 
-			uint64_t HashLastMsg;
-			Engine* _engine;
-			HWND _richEditHwnd;
-			bool _autoScroll;
-			FILE* _outputFileHandle;
-			HANDLE _ExternalPipeWriterHandle;
-			HANDLE _ExternalPipeReaderHandle;
-			*/
+			virtual void InputLog(const std::string_view& formatted_message, ...);
+			virtual void InputLogVa(const std::string_view& formatted_message, va_list va);
 		};
 
 		void _CONSOLE(const char* fmt, ...);

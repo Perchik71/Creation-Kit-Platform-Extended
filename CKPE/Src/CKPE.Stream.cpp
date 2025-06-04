@@ -78,6 +78,11 @@ namespace CKPE
 			fflush(_Handle);
 	}
 
+	bool FileStream::Eof() const noexcept(true)
+	{
+		return _Handle ? feof(_Handle) : false;
+	}
+
 	FileStream::FileStream(const std::string& fname, FileMode _mode) : 
 		FileStream(StringUtils::Utf8ToUtf16(fname), _mode)
 	{}

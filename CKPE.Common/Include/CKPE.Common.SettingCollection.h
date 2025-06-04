@@ -1,4 +1,4 @@
-// Copyright © 2025 aka perchik71. All rights reserved.
+п»ї// Copyright В© 2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -92,10 +92,10 @@ namespace CKPE
 				color_value def) const noexcept(true) = 0;
 			[[nodiscard]] virtual color_value ReadRgbaColor(const std::string& section, const std::string& option,
 				color_value def) const noexcept(true) = 0;
-			// Для чтения ansi строк
+			// Ж’Р»В¤ С‡С‚РµРЅРёВ¤ ansi СЃС‚СЂРѕРє
 			[[nodiscard]] virtual std::string ReadString(const std::string& section, const std::string& option, 
 				const std::string& def) const noexcept(true) = 0;
-			// Для чтения utf8 строк
+			// Ж’Р»В¤ С‡С‚РµРЅРёВ¤ utf8 СЃС‚СЂРѕРє
 			[[nodiscard]] virtual std::wstring ReadUnicodeString(const std::string& section, const std::string& option,
 				const std::wstring& def) const noexcept(true) = 0;
 
@@ -115,10 +115,10 @@ namespace CKPE
 				color_value value) noexcept(true) = 0;
 			virtual void WriteRgbaColor(const std::string& section, const std::string& option, 
 				color_value value) noexcept(true) = 0;
-			// Для записи ansi строк
+			// Ж’Р»В¤ Р·Р°РїРёСЃРё ansi СЃС‚СЂРѕРє
 			virtual void WriteString(const std::string& section, const std::string& option,
 				const std::string& value) noexcept(true) = 0;
-			// Для записи utf8 строк
+			// Ж’Р»В¤ Р·Р°РїРёСЃРё utf8 СЃС‚СЂРѕРє
 			virtual void WriteUnicodeString(const std::string& section, const std::string& option,
 				const std::wstring& value) noexcept(true) = 0;
 		protected:
@@ -174,10 +174,10 @@ namespace CKPE
 				color_value def) const noexcept(true);
 			[[nodiscard]] virtual color_value ReadRgbaColor(const std::string& section, const std::string& option,
 				color_value def) const noexcept(true);
-			// Для чтения ansi строк
+			// Ж’Р»В¤ С‡С‚РµРЅРёВ¤ ansi СЃС‚СЂРѕРє
 			[[nodiscard]] virtual std::string ReadString(const std::string& section, const std::string& option, 
 				const std::string& def) const noexcept(true);
-			// Для чтения utf8 строк
+			// Ж’Р»В¤ С‡С‚РµРЅРёВ¤ utf8 СЃС‚СЂРѕРє
 			[[nodiscard]] virtual std::wstring ReadUnicodeString(const std::string& section, const std::string& option, 
 				const std::wstring& def) const noexcept(true);
 
@@ -197,10 +197,10 @@ namespace CKPE
 				color_value value) noexcept(true);
 			virtual void WriteRgbaColor(const std::string& section, const std::string& option,
 				color_value value) noexcept(true);
-			// Для записи ansi строк
+			// Ж’Р»В¤ Р·Р°РїРёСЃРё ansi СЃС‚СЂРѕРє
 			virtual void WriteString(const std::string& section, const std::string& option, 
 				const std::string& value) noexcept(true);
-			// Для записи utf8 строк
+			// Ж’Р»В¤ Р·Р°РїРёСЃРё utf8 СЃС‚СЂРѕРє
 			virtual void WriteUnicodeString(const std::string& section, const std::string& option, 
 				const std::wstring& value) noexcept(true);
 		protected:
@@ -268,10 +268,10 @@ namespace CKPE
 				color_value def) const noexcept(true);
 			[[nodiscard]] virtual color_value ReadRgbaColor(const std::string& section, const std::string& option, 
 				color_value def) const noexcept(true);
-			// Для чтения ansi строк
+			// Ж’Р»В¤ С‡С‚РµРЅРёВ¤ ansi СЃС‚СЂРѕРє
 			[[nodiscard]] virtual std::string ReadString(const std::string& section, const std::string& option, 
 				const std::string& def) const noexcept(true);
-			// Для чтения utf8 строк
+			// Ж’Р»В¤ С‡С‚РµРЅРёВ¤ utf8 СЃС‚СЂРѕРє
 			[[nodiscard]] virtual std::wstring ReadUnicodeString(const std::string& section, const std::string& option, 
 				const std::wstring& def) const noexcept(true);
 
@@ -291,10 +291,10 @@ namespace CKPE
 				color_value def) noexcept(true);
 			virtual void WriteRgbaColor(const std::string& section, const std::string& option, 
 				color_value def) noexcept(true);
-			// Для записи ansi строк
+			// Ж’Р»В¤ Р·Р°РїРёСЃРё ansi СЃС‚СЂРѕРє
 			virtual void WriteString(const std::string& section, const std::string& option, 
 				const std::string& value) noexcept(true);
-			// Для записи utf8 строк
+			// Ж’Р»В¤ Р·Р°РїРёСЃРё utf8 СЃС‚СЂРѕРє
 			virtual void WriteUnicodeString(const std::string& section, const std::string& option,
 				const std::wstring& value) noexcept(true);
 		protected:

@@ -6,6 +6,8 @@
 #include <richedit.h>
 #include <CKPE.Exception.h>
 #include <CKPE.HashUtils.h>
+#include <CKPE.Stream.h>
+#include <CKPE.PathUtils.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.LogWindow.h>
 #include <concurrent_vector.h>
@@ -20,6 +22,7 @@ namespace CKPE
 	namespace Common
 	{
 		constexpr static auto FILE_NONE = L"none";
+		constexpr static auto FILE_BLACKLIST = L"CreationKitPlatformExtendedMessagesBlacklist.txt";
 		constexpr static auto UI_LOG_CMD_ADDTEXT = 0x23000;
 		constexpr static auto UI_LOG_CMD_CLEARTEXT = 0x23001;
 		constexpr static auto UI_LOG_CMD_AUTOSCROLL = 0x23002;
@@ -74,6 +77,27 @@ namespace CKPE
 				case WM_CLOSE:
 					log->CloseHandler();
 					return 0;
+
+				case WM_TIMER:
+				{
+					if (wParam != UI_LOG_CMD_ADDTEXT)
+						break;
+
+					// Если очень много тысяч в лог окне, то разумно его почистить,
+					// Это освободит немного памяти.
+					if (LineCount >= LINECOUNT_MAX)
+					{
+						log->Clear();
+						auto rich = log->GetRichEditHandle();
+						LineCount = (size_t)SendMessageA((HWND)rich, EM_GETLINECOUNT, 0, 0);
+					}
+
+					if (_pendingMessages.size() <= 0)
+						break;
+
+					return LogWindowProc(Hwnd, UI_LOG_CMD_ADDTEXT, 0, 0);
+				}
+				return 0;
 
 				case UI_LOG_CMD_CLEARTEXT:
 					log->Clear();
@@ -219,7 +243,7 @@ namespace CKPE
 			}
 		}
 
-		bool LogWindow::CreateStdoutListener()
+		bool LogWindow::CreateStdoutListener() noexcept(true)
 		{
 			SECURITY_ATTRIBUTES saAttr
 			{
@@ -276,29 +300,44 @@ namespace CKPE
 			return true;
 		}
 
+		void LogWindow::CloseOutputFile() noexcept(true)
+		{
+			if (_output_file)
+			{
+				fclose(_output_file);
+				_output_file = nullptr;
+			}
+		}
+
 		void LogWindow::LoadWarningBlacklist()
 		{
-			FILE* fileStream = _wfsopen(L"CreationKitPlatformExtendedMessagesBlacklist.txt", L"rt", _SH_DENYWR);
-			if (!fileStream) return;
+			if (!PathUtils::FileExists(FILE_BLACKLIST))
+				return;
+			
+			try
+			{
+				FileStream stream(FILE_BLACKLIST, FileStream::fmOpenRead);
 
-			//CreationKitPlatformExtended::Utils::ScopeFileStream file(fileStream);
-			//auto szBuf = std::make_unique<char[]>(2049);
-			//szBuf.get()[2048] = '\0';
+				auto szBuf = std::make_unique<char[]>(2049);
+				szBuf.get()[2048] = '\0';
 
-			//std::size_t nCount = 0;
-			//std::string Message;
-			//while (!feof(fileStream))
-			//{
-			//	fgets(szBuf.get(), 2048, fileStream);
-			//	nCount++;
+				std::size_t nCount = 0;
+				std::string Message;
+				while (!stream.Eof())
+				{
+					fgets(szBuf.get(), 2048, stream.GetHandle());
+					nCount++;
 
-			//	Message = StringUtils::Trim(szBuf.get());
-			//	_messageBlacklist.emplace(HashUtils::MurmurHash64A(Message.c_str(), Message.length()));
-			//}
+					Message = StringUtils::Trim(szBuf.get());
+					_messageBlacklist.emplace(HashUtils::MurmurHash64A(Message.c_str(), Message.length()));
+				}
 
-			/*_MESSAGE("Messages Blacklist: %llu", _messageBlacklist.size());
-			if (nCount > _messageBlacklist.size())
-				_MESSAGE("Number of messages whose hash has already been added: %llu", (nCount - _messageBlacklist.size()));*/
+				_MESSAGE("Messages Blacklist: %llu", _messageBlacklist.size());
+				if (nCount > _messageBlacklist.size())
+					_MESSAGE("Number of messages whose hash has already been added: %llu", (nCount - _messageBlacklist.size()));
+			}
+			catch (const std::exception&)
+			{}
 		}
 
 		LogWindow::LogWindow()
@@ -409,9 +448,109 @@ namespace CKPE
 		{
 			Show(false);
 		}
+
+		bool LogWindow::SaveRichTextToFile(const std::string& fname) const noexcept(true)
+		{
+			return SaveRichTextToFile(StringUtils::Utf8ToUtf16(fname));
+		}
+
+		bool LogWindow::SaveRichTextToFile(const std::wstring& fname) const noexcept(true)
+		{
+			// Изучено отсюда
+			// https://subscribe.ru/archive/comp.soft.prog.qandacpp/200507/10000511.html
+
+			try
+			{
+				// открываю\создаю файл, полностью заменяю его содержимое
+				// если файл существует
+				FileStream stream(fname, FileStream::fmCreate);
+
+				// функция обратного вызова для вывода в файл
+				auto MyOutFunction = [](
+					DWORD_PTR dwCookie, // то самое пользовательское значение которое
+					// мы указали в EDITSTREAM::dwCookie
+					LPBYTE pbBuff,		// буфер с данными которые передает RichEdit
+					LONG cb,			// размер буфера в байтах
+					LONG* pcb			// указатель на переменную в которую следует
+					// записать сколько функция MyOutFunction
+					// успешно обработала байтов из буфера pbBuff) -> DWORD 
+					) -> DWORD {
+						// в качестве dwCookie получаем указатель который мы
+						// установили в EDITSTREAM
+						auto stream = reinterpret_cast<FileStream*>(dwCookie);
+						// записываем полученный буфер в файл, размер переданного нам
+						// буфера в переменной cb
+						stream->Write(pbBuff, cb);
+						// говорим RichEditу сколько мы обработали байтов
+						*pcb = cb;
+						// возвращаем ноль (у нас всё ОК)
+						return 0;
+					};
+
+				EDITSTREAM es = { 0 };
+				// указываем функцию обратного вызова
+				es.pfnCallback = static_cast<EDITSTREAMCALLBACK>(MyOutFunction);
+				// сбрасываем ошибки
+				es.dwError = 0;
+				// в качестве Cookie передаем указатель на наш объект file
+				es.dwCookie = (DWORD_PTR)&stream;
+				// посылаем сообщение окну RichEdit, WPARAM==флаги,
+				// LPARAM - указатель на EDITSTREAM
+				SendMessageA((HWND)_handle_richedit, EM_STREAMOUT,
+					SF_TEXT /*получать обычный текст*/,
+					(LPARAM)&es);
+
+				// true - если не было ошибок, иначе что-то где-то вдруг
+				// порою не в порядке.
+				return !es.dwError;
+			}
+			catch (const std::exception& e)
+			{
+				_ERROR(e.what());
+				return false;
+			}
+		}
+
+		void LogWindow::InputLog(const std::string_view& formatted_message, ...)
+		{
+			va_list va;
+			va_start(va, &formatted_message);
+			InputLogVa(formatted_message, va);
+			va_end(va);
+		}
+
+		void LogWindow::InputLogVa(const std::string_view& formatted_message, va_list va)
+		{
+			char buffer[2048];
+			int len = _vsnprintf(buffer, _TRUNCATE, formatted_message.data(), va);
+
+			if (len <= 0)
+				return;
+
+			auto line = StringUtils::Trim(buffer);
+			std::replace_if(line.begin(), line.end(), [](auto const& x) { return x == '\n' || x == '\r'; }, ' ');
+
+			if (!line.length())
+				return;
+
+			auto HashMsg = HashUtils::MurmurHash64A(line.c_str(), line.length());
+			if ((_last_hash == HashMsg) || (_messageBlacklist.count(HashMsg) > 0))
+				return;
+
+			_last_hash = HashMsg;
+			line += "\n";
+
+			if (_output_file)
+			{
+				fputs(line.c_str(), _output_file);
+				fflush(_output_file);
+			}
+
+			if (_pendingMessages.size() < LINECOUNT_MAX)
+				_pendingMessages.push_back(_strdup(line.c_str()));
+		}
 	}
 }
-
 
 //		LRESULT CALLBACK ConsoleWindow::WndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 //		{
@@ -472,139 +611,15 @@ namespace CKPE
 //					}
 //				}
 //				break;
-//
-//				case WM_TIMER:
-//				{
-//					if (wParam != UI_LOG_CMD_ADDTEXT)
-//						break;
-//
-//					// Если очень много тысяч в лог окне, то разумно его почистить,
-//					// Это освободит немного памяти.
-//					if (LineCount >= LINECOUNT_MAX)
-//					{
-//						moduleConsole->Clear();
-//						auto rich = moduleConsole->GetRichEditHandle();
-//						LineCount = (size_t)SendMessageA(rich, EM_GETLINECOUNT, 0, 0);
-//					}
-//
-//					if (moduleConsole->GetPendingMessages().size() <= 0)
-//						break;
-//
-//					return WndProc(Hwnd, UI_LOG_CMD_ADDTEXT, 0, 0);
-//				}
-//				return 0;
-//
 
-//				}
 //			}
 //
 //			return DefWindowProc(Hwnd, Message, wParam, lParam);
 //		}
 //
-//		bool ConsoleWindow::SaveRichTextToFile(const char* _filename) const
-//		{
-//			// Изучено отсюда
-//			// https://subscribe.ru/archive/comp.soft.prog.qandacpp/200507/10000511.html
-//
-//			// открываю\создаю файл, полностью заменяю его содержимое
-//			// если файл существует
-//			FILE* fileStream = _fsopen(_filename, "wb", _SH_DENYRW);
-//			if (!fileStream)
-//			{
-//				_ERROR("I can't open the file for writing: \"%s\"", _filename);
-//				return false;
-//			}
-//
-//			CreationKitPlatformExtended::Utils::ScopeFileStream file(fileStream);
-//
-//			// функция обратного вызова для вывода в файл
-//			auto MyOutFunction = [](
-//				DWORD_PTR dwCookie, // то самое пользовательское значение которое
-//									// мы указали в EDITSTREAM::dwCookie
-//				LPBYTE pbBuff,		// буфер с данными которые передает RichEdit
-//				LONG cb,			// размер буфера в байтах
-//				LONG* pcb			// указатель на переменную в которую следует
-//									// записать сколько функция MyOutFunction
-//									// успешно обработала байтов из буфера pbBuff) -> DWORD 
-//			) -> DWORD {
-//					// в качестве dwCookie получаем указатель который мы
-//					// установили в EDITSTREAM
-//					FILE* stream = reinterpret_cast<FILE*>(dwCookie);
-//					// записываем полученный буфер в файл, размер переданного нам
-//					// буфера в переменной cb
-//					fwrite(pbBuff, 1, cb, stream);
-//					// говорим RichEditу сколько мы обработали байтов
-//					*pcb = cb;
-//					// возвращаем ноль (у нас всё ОК)
-//					return 0;
-//			};
-//			
-//			EDITSTREAM es = { 0 };
-//			// указываем функцию обратного вызова
-//			es.pfnCallback = static_cast<EDITSTREAMCALLBACK>(MyOutFunction);
-//			// сбрасываем ошибки
-//			es.dwError = 0;
-//			// в качестве Cookie передаем указатель на наш объект file
-//			es.dwCookie = (DWORD_PTR)fileStream;
-//			// посылаем сообщение окну RichEdit, WPARAM==флаги,
-//			// LPARAM - указатель на EDITSTREAM
-//			SendMessage(_richEditHwnd, EM_STREAMOUT,
-//				SF_TEXT /*получать обычный текст*/,
-//				(LPARAM)&es);
-//
-//			// true - если не было ошибок, иначе что-то где-то вдруг
-//			// порою не в порядке.
-//			return !es.dwError;
-//		}
-//
-//		void ConsoleWindow::CloseOutputFile()
-//		{
-//			if (_outputFileHandle)
-//			{
-//				fclose(_outputFileHandle);
-//				_outputFileHandle = nullptr;
-//			}
-//		}
 
 //
-//		void ConsoleWindow::InputLog(const char* Format, ...)
-//		{
-//			va_list va;
-//			va_start(va, Format);
-//			InputLogVa(Format, va);
-//			va_end(va);
-//		}
-//
-//		void ConsoleWindow::InputLogVa(const char* Format, va_list Va)
-//		{
-//			char buffer[2048];
-//			int len = _vsnprintf_s(buffer, _TRUNCATE, Format, Va);
-//
-//			if (len <= 0)
-//				return;
-//
-//			auto line = Utils::Trim(buffer);
-//			std::replace_if(line.begin(), line.end(), [](auto const& x) { return x == '\n' || x == '\r'; }, ' ');
-//
-//			if (!line.length())
-//				return;
-//
-//			auto HashMsg = CreationKitPlatformExtended::Utils::MurmurHash64A(line.c_str(), line.length());	
-//			if ((HashLastMsg == HashMsg) || (_messageBlacklist.count(HashMsg) > 0))
-//				return;
-//
-//			HashLastMsg = HashMsg;
-//			line += "\n";
-//
-//			if (_outputFileHandle)
-//			{
-//				fputs(line.c_str(), _outputFileHandle);
-//				fflush(_outputFileHandle);
-//			}
-//
-//			if (_pendingMessages.size() < LINECOUNT_MAX)
-//				_pendingMessages.push_back(Utils::StrDub(line.c_str()));
-//		}
+
 //	}
 //
 //	void _CONSOLE(const char* fmt, ...)

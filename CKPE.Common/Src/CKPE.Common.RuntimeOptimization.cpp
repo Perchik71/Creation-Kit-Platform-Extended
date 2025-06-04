@@ -1,4 +1,4 @@
-// Author: Nukem9 
+﻿// Author: Nukem9 
 // Link: https://github.com/Nukem9/SkyrimSETest/blob/master/skyrim64_test/src/patches/CKSSE/Experimental.cpp
 
 #include <Zydis/Zydis.h>
