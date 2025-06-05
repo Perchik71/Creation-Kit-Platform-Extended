@@ -608,7 +608,8 @@ namespace CKPE
 					return;
 
 				_last_hash = HashMsg;
-				sbuffer.append("\n");
+				// fix length string sbuffer
+				sbuffer = std::string(sbuffer.c_str()).append("\n");
 
 				if (_output_file)
 				{
