@@ -2,6 +2,7 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
+#include <windows.h>
 #include <CKPE.Stream.h>
 #include <CKPE.PathUtils.h>
 #include <CKPE.StringUtils.h>
@@ -194,6 +195,153 @@ namespace CKPE
 	TextFileStream::TextFileStream(const std::wstring& fname, FileOpen _open) :
 		FileStream(fname, _open, FileMode::fmText)
 	{}
+
+	std::uint32_t MapFileStream::Read(void* buf, std::uint32_t size) const noexcept(true)
+	{
+		ScopeCriticalSection guard{ _section };
+
+		LARGE_INTEGER offset
+		{
+			.QuadPart = (LONGLONG)_caret
+		};
+		
+		if ((_caret + size) > _size) 
+			size = (std::uint32_t)(_size - _caret);
+
+		auto Ptr = ::MapViewOfFileEx(_handle_map, FILE_MAP_READ, offset.HighPart, offset.LowPart, 
+			size, nullptr);
+		if (!Ptr)
+			return 0;
+
+		memcpy(buf, Ptr, size);
+		UnmapViewOfFile(Ptr);
+
+		const_cast<MapFileStream*>(this)->_caret += size;
+		return size;
+	}
+
+	std::uint32_t MapFileStream::Write(const void* buf, std::uint32_t size) noexcept(true)
+	{
+		ScopeCriticalSection guard{ _section };
+
+		LARGE_INTEGER offset
+		{
+			.QuadPart = (LONGLONG)_caret
+		};
+		LARGE_INTEGER new_offset;
+
+		SetFilePointerEx(_handle, offset, &new_offset, FILE_BEGIN);
+
+		DWORD dwWritten;
+		if (WriteFile(_handle, buf, size, &dwWritten, nullptr))
+			_caret += dwWritten;
+
+		return dwWritten;
+	}
+
+	std::uint64_t MapFileStream::Offset(std::int64_t offset, OffsetStream flag) noexcept(true)
+	{
+		ScopeCriticalSection guard{ _section };
+
+		switch (flag)
+		{
+		case Stream::ofBegin:
+			_caret = (std::uint64_t)offset;
+			break;
+		case Stream::ofCurrent:
+			_caret += offset;
+			break;
+		case Stream::ofEnd:
+			_caret = _size + offset;
+			break;
+		}
+
+		return _caret;
+	}
+
+	std::uint64_t MapFileStream::GetSize() const noexcept(true)
+	{
+		return _size;
+	}
+
+	std::wstring MapFileStream::GetFileName() const noexcept(true)
+	{
+		return _FileName ? *_FileName : L"";
+	}
+
+	bool MapFileStream::Eof() const noexcept(true)
+	{
+		return _caret >= _size;
+	}
+
+	MapFileStream::MapFileStream(const std::string& fname, FileStream::FileOpen _open, bool UseCache) :
+		MapFileStream(StringUtils::Utf8ToUtf16(fname), _open)
+	{}
+
+	MapFileStream::MapFileStream(const std::wstring& fname, FileStream::FileOpen _open, bool UseCache) : Stream()
+	{
+		_handle = CreateFileW(
+			fname.c_str(),
+			(_open == FileStream::FileOpen::fmOpenRead) ? GENERIC_READ : (GENERIC_READ | GENERIC_WRITE),
+			(_open == FileStream::FileOpen::fmOpenRead) ? FILE_SHARE_WRITE : 0,
+			nullptr,
+			(_open == FileStream::FileOpen::fmCreate) ? CREATE_NEW : OPEN_EXISTING,
+			UseCache ? FILE_FLAG_SEQUENTIAL_SCAN : 0,
+			nullptr);
+		if (_handle == INVALID_HANDLE_VALUE)
+			throw SystemError(GetLastError(), "MapFileStream_CreateFileW \"{}\"", 
+				StringUtils::Utf16ToWinCP(fname));
+
+		LARGE_INTEGER size;
+		if (!GetFileSizeEx(_handle, &size))
+		{
+			CloseHandle(_handle);
+			_handle = INVALID_HANDLE_VALUE;
+
+			throw SystemError(GetLastError(), "MapFileStream_CreateFileW \"{}\"",
+				StringUtils::Utf16ToWinCP(fname));
+		}
+		_size = size.QuadPart;
+
+		_handle_map = CreateFileMappingW(
+			_handle, 
+			nullptr, 
+			(_open == FileStream::FileOpen::fmOpenRead) ? PAGE_READONLY : PAGE_READWRITE,
+			0, 
+			0, 
+			nullptr);
+		if (!_handle_map)
+		{
+			CloseHandle(_handle);
+			_handle = INVALID_HANDLE_VALUE;
+
+			throw SystemError(GetLastError(), "MapFileStream_CreateFileMappingW \"{}\"",
+				StringUtils::Utf16ToWinCP(fname));
+		}
+
+		_FileName = new std::wstring(fname);
+	}
+
+	MapFileStream::~MapFileStream() noexcept(true)
+	{
+		if (_FileName)
+		{
+			delete _FileName;
+			_FileName = nullptr;
+		}
+
+		if (_handle_map)
+		{
+			CloseHandle(_handle_map);
+			_handle_map = nullptr;
+		}
+
+		if (_handle != INVALID_HANDLE_VALUE)
+		{
+			CloseHandle(_handle);
+			_handle = INVALID_HANDLE_VALUE;
+		}
+	}
 
 	bool FileStreamIntf::LoadFromFile(const std::string& fname) noexcept(true)
 	{

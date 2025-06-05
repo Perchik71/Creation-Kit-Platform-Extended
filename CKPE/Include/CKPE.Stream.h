@@ -85,6 +85,26 @@ namespace CKPE
 		TextFileStream(const std::wstring& fname, FileOpen _open);
 	};
 
+	class CKPE_API MapFileStream : public Stream
+	{
+		void* _handle{ (void*)-1 };
+		void* _handle_map{ nullptr };
+		std::uint64_t _size{ 0 };
+		std::uint64_t _caret{ 0 };
+		std::wstring* _FileName{ nullptr };
+	public:
+		virtual std::uint32_t Read(void* buf, std::uint32_t size) const noexcept(true);
+		virtual std::uint32_t Write(const void* buf, std::uint32_t size) noexcept(true);
+		virtual std::uint64_t Offset(std::int64_t offset, OffsetStream flag = ofCurrent) noexcept(true);
+		[[nodiscard]] virtual std::uint64_t GetSize() const noexcept(true);
+		[[nodiscard]] virtual std::wstring GetFileName() const noexcept(true);
+		[[nodiscard]] virtual bool Eof() const noexcept(true);
+	public:
+		MapFileStream(const std::string& fname, FileStream::FileOpen _open, bool UseCache = true);
+		MapFileStream(const std::wstring& fname, FileStream::FileOpen _open, bool UseCache = true);
+		virtual ~MapFileStream() noexcept(true);
+	};
+
 	class CKPE_API FileStreamIntf
 	{
 	public:

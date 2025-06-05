@@ -8,7 +8,6 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.LogWindow.h>
-#include <CKPE.MessageBox.h>
 
 namespace CKPE
 {
@@ -44,11 +43,6 @@ namespace CKPE
 			_theme_settings = new TOMLSettingCollection(spath + _stheme_settings_fname);
 			/* call constructor */ new LogWindow();
 
-			_CONSOLE("Hello, log window!");
-			_CONSOLE("Hello, log window1!");
-			_CONSOLE("Hello, log window2!");
-
-			//MessageBox::Open(_READ_OPTION_USTR("Log", "sOutputFile", L"FILE_NONE"));
 		}
 
 		Interface* Interface::GetSingleton() noexcept(true)
