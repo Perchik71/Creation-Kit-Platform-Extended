@@ -4,12 +4,14 @@
 
 #include <windows.h>
 #include <richedit.h>
+#include <CKPE.Application.h>
 #include <CKPE.Exception.h>
 #include <CKPE.HashUtils.h>
 #include <CKPE.Stream.h>
 #include <CKPE.PathUtils.h>
+#include <CKPE.MessageBox.h>
 #include <CKPE.Common.Interface.h>
-#include <CKPE.Common.LogWindow.h>
+#include <CKPE.Common.MemoryManager.h>
 #include <concurrent_vector.h>
 #include <unordered_set>
 #include <thread>
@@ -52,7 +54,7 @@ namespace CKPE
 				{
 					try
 					{
-						if (!log->Initialize((void*)lParam))
+						if (!log->Initialize(Hwnd, (void*)lParam))
 							throw SystemError(GetLastError(), "LogWindow_Initialize");
 					}
 					catch (const std::exception& e)
@@ -99,6 +101,53 @@ namespace CKPE
 				}
 				return 0;
 
+				case WM_NOTIFY:
+				{
+					static uint64_t lastClickTime;
+					auto notification = reinterpret_cast<const LPNMHDR>(lParam);
+
+					if (notification->code == EN_MSGFILTER)
+					{
+						auto msgFilter = reinterpret_cast<const MSGFILTER*>(notification);
+
+						if (msgFilter->msg == WM_LBUTTONDBLCLK)
+							lastClickTime = GetTickCount64();
+					}
+					else if (notification->code == EN_SELCHANGE)
+					{
+						auto selChange = reinterpret_cast<const SELCHANGE*>(notification);
+						
+						// Двойной щелчок мыши с правильным выбором -> попробовать проанализировать идентификатор формы
+						if ((GetTickCount64() - lastClickTime > 1000) || selChange->seltyp == SEL_EMPTY)
+							break;
+
+						if (!log->OnOpenFormById)
+							break;
+
+						char lineData[2048] = { 0 };
+						*reinterpret_cast<uint16_t*>(&lineData[0]) = ARRAYSIZE(lineData);
+
+						// Получить номер строки и текст из выбранного диапазона
+						LRESULT lineIndex = SendMessageA((HWND)log->GetRichEditHandle(), EM_LINEFROMCHAR,
+							selChange->chrg.cpMin, 0);
+						LRESULT charCount = SendMessageA((HWND)log->GetRichEditHandle(), EM_GETLINE, lineIndex,
+							reinterpret_cast<LPARAM>(&lineData));
+
+						if (charCount > 0)
+						{
+							lineData[charCount - 1] = '\0';
+
+							// Захватить шестнадцатеричный идентификатор формы в формате "(XXXXXXXX)"
+							for (char* p = lineData; p[0] != '\0'; p++)
+								if (p[0] == '(' && strlen(p) >= 10 && p[9] == ')')
+									log->OnOpenFormById(strtoul(&p[1], nullptr, 16));
+						}
+
+						lastClickTime = GetTickCount64() + 1000;
+					}
+				}
+				break;
+
 				case UI_LOG_CMD_CLEARTEXT:
 					log->Clear();
 					return 0;
@@ -133,7 +182,7 @@ namespace CKPE
 						SendMessageA(rich, EM_EXSETSEL, 0, reinterpret_cast<LPARAM>(&range));
 						SendMessageA(rich, EM_REPLACESEL, FALSE, reinterpret_cast<LPARAM>(message));
 
-						std::free((void*)message);
+						CKPE::free((void*)message);
 						LineCount++;
 					}
 
@@ -285,8 +334,8 @@ namespace CKPE
 							while (strchr(logBuffer.get(), '\r'))
 								*strchr(logBuffer.get(), '\r') = ' ';
 
-							//if (len > 0 && (len > 1 || logBuffer[0] != ' '))
-							//	GlobalConsoleWindowPtr->InputLog("%s", logBuffer);
+							if (len > 0 && (len > 1 || logBuffer[0] != ' '))
+								slogwindow->InputLog("%s", logBuffer.get());
 
 							strcpy_s(logBuffer.get(), 16384, end + 1);
 						}
@@ -309,26 +358,32 @@ namespace CKPE
 			}
 		}
 
-		void LogWindow::LoadWarningBlacklist()
+		void LogWindow::LoadWarningBlacklist() noexcept(true)
 		{
-			if (!PathUtils::FileExists(FILE_BLACKLIST))
+			auto app = Interface::GetSingleton()->GetApplication();
+			auto spath = std::wstring(app->GetPath());
+			
+			if (!PathUtils::FileExists(spath + FILE_BLACKLIST))
 				return;
 			
 			try
 			{
-				FileStream stream(FILE_BLACKLIST, FileStream::fmOpenRead);
+				TextFileStream stream(spath + FILE_BLACKLIST, FileStream::fmOpenRead);
 
-				auto szBuf = std::make_unique<char[]>(2049);
-				szBuf.get()[2048] = '\0';
+				std::string sbuffer;
+				sbuffer.resize(2048);
+				if (sbuffer.empty())
+					throw RuntimeError("LogWindow: Out of memory");
 
 				std::size_t nCount = 0;
 				std::string Message;
 				while (!stream.Eof())
 				{
-					fgets(szBuf.get(), 2048, stream.GetHandle());
-					nCount++;
+					if (!stream.ReadLine(sbuffer, 2048))
+						break;
 
-					Message = StringUtils::Trim(szBuf.get());
+					nCount++;
+					Message = StringUtils::Trim(sbuffer);
 					_messageBlacklist.emplace(HashUtils::MurmurHash64A(Message.c_str(), Message.length()));
 				}
 
@@ -336,8 +391,10 @@ namespace CKPE
 				if (nCount > _messageBlacklist.size())
 					_MESSAGE("Number of messages whose hash has already been added: %llu", (nCount - _messageBlacklist.size()));
 			}
-			catch (const std::exception&)
-			{}
+			catch (const std::exception& e)
+			{
+				_ERROR(e.what());
+			}
 		}
 
 		LogWindow::LogWindow()
@@ -350,14 +407,24 @@ namespace CKPE
 			Destroy();
 		}
 
+		void LogWindow::Shutdown() noexcept(true)
+		{
+			if (slogwindow)
+			{
+				delete slogwindow;
+				slogwindow = nullptr;
+			}
+		}
+
 		LogWindow* LogWindow::GetSingleton() noexcept(true)
 		{
 			return slogwindow;
 		}
 
-		bool LogWindow::Initialize(const void* create_struct)
+		bool LogWindow::Initialize(void* handle, const void* create_struct)
 		{
 			auto cs = reinterpret_cast<const CREATESTRUCTA*>(create_struct);
+			_handle = handle;
 
 			// Создание rich edit control (https://docs.microsoft.com/en-us/windows/desktop/Controls/rich-edit-controls)
 			uint32_t style = WS_VISIBLE | WS_CHILD | WS_VSCROLL | ES_MULTILINE | ES_LEFT | ES_NOHIDESEL |
@@ -521,118 +588,88 @@ namespace CKPE
 
 		void LogWindow::InputLogVa(const std::string_view& formatted_message, va_list va)
 		{
-			char buffer[2048];
-			int len = _vsnprintf(buffer, _TRUNCATE, formatted_message.data(), va);
-
+			int len = _vscprintf(formatted_message.data(), va);
 			if (len <= 0)
 				return;
 
-			auto line = StringUtils::Trim(buffer);
-			std::replace_if(line.begin(), line.end(), [](auto const& x) { return x == '\n' || x == '\r'; }, ' ');
-
-			if (!line.length())
-				return;
-
-			auto HashMsg = HashUtils::MurmurHash64A(line.c_str(), line.length());
-			if ((_last_hash == HashMsg) || (_messageBlacklist.count(HashMsg) > 0))
-				return;
-
-			_last_hash = HashMsg;
-			line += "\n";
-
-			if (_output_file)
+			std::string sbuffer;
+			sbuffer.resize(len);
+			if (!sbuffer.empty())
 			{
-				fputs(line.c_str(), _output_file);
-				fflush(_output_file);
-			}
+				_vsnprintf_s(sbuffer.data(), (std::size_t)len, _TRUNCATE, formatted_message.data(), va);
 
-			if (_pendingMessages.size() < LINECOUNT_MAX)
-				_pendingMessages.push_back(_strdup(line.c_str()));
+				sbuffer = StringUtils::Trim(sbuffer);
+				std::replace_if(sbuffer.begin(), sbuffer.end(), [](auto const& x) { return x == '\n' || x == '\r'; }, ' ');
+				if (!sbuffer.length())
+					return;
+
+				auto HashMsg = HashUtils::MurmurHash64A(sbuffer.c_str(), sbuffer.length());
+				if ((_last_hash == HashMsg) || (_messageBlacklist.count(HashMsg) > 0))
+					return;
+
+				_last_hash = HashMsg;
+				sbuffer.append("\n");
+
+				if (_output_file)
+				{
+					fputs(sbuffer.c_str(), _output_file);
+					fflush(_output_file);
+				}
+
+				if (_pendingMessages.size() < LINECOUNT_MAX)
+					_pendingMessages.push_back(CKPE::strdup(sbuffer.c_str()));
+			}
+		}
+
+		void LogWindow::InputLog(const std::wstring_view& formatted_message, ...)
+		{
+			va_list va;
+			va_start(va, &formatted_message);
+			InputLogVa(formatted_message, va);
+			va_end(va);
+		}
+
+		void LogWindow::InputLogVa(const std::wstring_view& formatted_message, va_list va)
+		{
+			int len = _vscwprintf(formatted_message.data(), va);
+			if (len <= 0)
+				return;
+
+			std::wstring sbuffer;
+			sbuffer.resize(len);
+			if (!sbuffer.empty())
+			{
+				_vsnwprintf_s(sbuffer.data(), (std::size_t)len, _TRUNCATE, formatted_message.data(), va);
+				InputLog(StringUtils::Utf16ToWinCP(sbuffer));
+			}
 		}
 	}
+
+	CKPE_COMMON_API void _CONSOLE(const std::string_view& formatted_message, ...) noexcept(true)
+	{
+		va_list va;
+		va_start(va, &formatted_message);
+		_CONSOLEVA(formatted_message, va);
+		va_end(va);
+	}
+
+	CKPE_COMMON_API void _CONSOLEVA(const std::string_view& formatted_message, va_list va) noexcept(true)
+	{
+		if (Common::slogwindow)
+			Common::slogwindow->InputLogVa(formatted_message, va);
+	}
+
+	CKPE_COMMON_API void _CONSOLE(const std::wstring_view& formatted_message, ...) noexcept(true)
+	{
+		va_list va;
+		va_start(va, &formatted_message);
+		_CONSOLEVA(formatted_message, va);
+		va_end(va);
+	}
+
+	CKPE_COMMON_API void _CONSOLEVA(const std::wstring_view& formatted_message, va_list va) noexcept(true)
+	{
+		if (Common::slogwindow)
+			Common::slogwindow->InputLogVa(formatted_message, va);
+	}
 }
-
-//		LRESULT CALLBACK ConsoleWindow::WndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
-//		{
-//			
-
-//				case WM_NOTIFY:
-//				{
-//					static uint64_t lastClickTime;
-//					auto notification = reinterpret_cast<const LPNMHDR>(lParam);
-//
-//					if (notification->code == EN_MSGFILTER)
-//					{
-//						auto msgFilter = reinterpret_cast<const MSGFILTER*>(notification);
-//
-//						if (msgFilter->msg == WM_LBUTTONDBLCLK)
-//							lastClickTime = GetTickCount64();
-//					}
-//					else if (notification->code == EN_SELCHANGE)
-//					{
-//						auto selChange = reinterpret_cast<const SELCHANGE*>(notification);
-//						// Двойной щелчок мыши с правильным выбором -> попробовать проанализировать идентификатор формы
-//						if ((GetTickCount64() - lastClickTime > 1000) || selChange->seltyp == SEL_EMPTY)
-//							break;
-//
-//						char lineData[2048] = { 0 };
-//						*reinterpret_cast<uint16_t*>(&lineData[0]) = ARRAYSIZE(lineData);
-//
-//						// Получить номер строки и текст из выбранного диапазона
-//						LRESULT lineIndex = SendMessageA(moduleConsole->GetRichEditHandle(), EM_LINEFROMCHAR,
-//							selChange->chrg.cpMin, 0);
-//						LRESULT charCount = SendMessageA(moduleConsole->GetRichEditHandle(), EM_GETLINE, lineIndex,
-//							reinterpret_cast<LPARAM>(&lineData));
-//
-//						if (charCount > 0)
-//						{
-//							lineData[charCount - 1] = '\0';
-//
-//							// Захватить шестнадцатеричный идентификатор формы в формате "(XXXXXXXX)"
-//							for (char* p = lineData; p[0] != '\0'; p++)
-//							{
-//								if (p[0] == '(' && strlen(p) >= 10 && p[9] == ')')
-//								{
-//									uint32_t id = strtoul(&p[1], nullptr, 16);
-//
-//									if (GlobalEnginePtr->GetEditorVersion() <= EDITOR_SKYRIM_SE_LAST)
-//										PostMessageA(Patches::SkyrimSpectialEdition::GlobalMainWindowPtr->Handle,
-//											WM_COMMAND, EditorAPI::EditorUI::UI_EDITOR_OPENFORMBYID, id);
-//									else if (GlobalEnginePtr->GetEditorVersion() <= EDITOR_FALLOUT_C4_LAST)
-//										PostMessageA(Patches::Fallout4::GlobalMainWindowPtr->Handle,
-//											WM_COMMAND, EditorAPI::EditorUI::UI_EDITOR_OPENFORMBYID, id);
-//									else if (GlobalEnginePtr->GetEditorVersion() <= EDITOR_STARFIELD_LAST)
-//										Patches::Starfield::MainWindow::ShowForm(id);
-//								}
-//							}
-//						}
-//
-//						lastClickTime = GetTickCount64() + 1000;
-//					}
-//				}
-//				break;
-
-//			}
-//
-//			return DefWindowProc(Hwnd, Message, wParam, lParam);
-//		}
-//
-
-//
-
-//	}
-//
-//	void _CONSOLE(const char* fmt, ...)
-//	{
-//		va_list va;
-//		va_start(va, fmt);
-//		_CONSOLEVA(fmt, va);
-//		va_end(va);
-//	}
-//
-//	void _CONSOLEVA(const char* fmt, va_list va)
-//	{
-//		if (Core::GlobalConsoleWindowPtr)
-//			Core::GlobalConsoleWindowPtr->InputLogVa(fmt, va);
-//	}
-//}

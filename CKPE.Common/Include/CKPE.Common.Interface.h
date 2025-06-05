@@ -8,6 +8,7 @@
 #include <CKPE.Logger.h>
 #include <CKPE.Common.Common.h>
 #include <CKPE.Common.SettingCollection.h>
+#include <CKPE.Common.LogWindow.h>
 #include <string_view>
 #include <string>
 #include <format>
@@ -41,14 +42,14 @@ namespace CKPE
 	}
 
 #ifdef CKPE_NO_LOGGER_FUNCTION
-	void CKPE_COMMON_API _FATALERROR(const std::string_view& formatted_message, ...);
-	void CKPE_COMMON_API _ERROR(const std::string_view& formatted_message, ...);
-	void CKPE_COMMON_API _WARNING(const std::string_view& formatted_message, ...);
-	void CKPE_COMMON_API _MESSAGE(const std::string_view& formatted_message, ...);
-	void CKPE_COMMON_API _FATALERROR(const std::wstring_view& formatted_message, ...);
-	void CKPE_COMMON_API _ERROR(const std::wstring_view& formatted_message, ...);
-	void CKPE_COMMON_API _WARNING(const std::wstring_view& formatted_message, ...);
-	void CKPE_COMMON_API _MESSAGE(const std::wstring_view& formatted_message, ...);
+	CKPE_COMMON_API void _FATALERROR(const std::string_view& formatted_message, ...);
+	CKPE_COMMON_API void _ERROR(const std::string_view& formatted_message, ...);
+	CKPE_COMMON_API void _WARNING(const std::string_view& formatted_message, ...);
+	CKPE_COMMON_API void _MESSAGE(const std::string_view& formatted_message, ...);
+	CKPE_COMMON_API void _FATALERROR(const std::wstring_view& formatted_message, ...);
+	CKPE_COMMON_API void _ERROR(const std::wstring_view& formatted_message, ...);
+	CKPE_COMMON_API void _WARNING(const std::wstring_view& formatted_message, ...);
+	CKPE_COMMON_API void _MESSAGE(const std::wstring_view& formatted_message, ...);
 
 	template<class... _Types>
 	void _FATALERROR_EX(const std::format_string<_Types...> _Fmt, _Types&&... _Args)
@@ -100,32 +101,28 @@ namespace CKPE
 	}
 #endif // !CKPE_NO_LOGGER_FUNCTION
 
-	bool CKPE_COMMON_API _READ_OPTION_BOOL(const std::string& section, const std::string& option, bool def);
-	char CKPE_COMMON_API _READ_OPTION_CHAR(const std::string& section, const std::string& option, char def);
-	long CKPE_COMMON_API _READ_OPTION_INT(const std::string& section, const std::string& option, long def);
-	unsigned long CKPE_COMMON_API _READ_OPTION_UINT(const std::string& section, const std::string& option, unsigned long def);
-	unsigned long CKPE_COMMON_API _READ_OPTION_HEX(const std::string& section, const std::string& option, unsigned long def);
-	float CKPE_COMMON_API _READ_OPTION_FLOAT(const std::string& section, const std::string& option, float def);
-	Common::CustomSettingCollection::color_value CKPE_COMMON_API _READ_OPTION_RGB(const std::string& section,
+	CKPE_COMMON_API bool _READ_OPTION_BOOL(const std::string& section, const std::string& option, bool def);
+	CKPE_COMMON_API char _READ_OPTION_CHAR(const std::string& section, const std::string& option, char def);
+	CKPE_COMMON_API long _READ_OPTION_INT(const std::string& section, const std::string& option, long def);
+	CKPE_COMMON_API unsigned long _READ_OPTION_UINT(const std::string& section, const std::string& option, unsigned long def);
+	CKPE_COMMON_API unsigned long _READ_OPTION_HEX(const std::string& section, const std::string& option, unsigned long def);
+	CKPE_COMMON_API float _READ_OPTION_FLOAT(const std::string& section, const std::string& option, float def);
+	CKPE_COMMON_API Common::CustomSettingCollection::color_value _READ_OPTION_RGB(const std::string& section,
 		const std::string& option, Common::CustomSettingCollection::color_value def);
-	Common::CustomSettingCollection::color_value CKPE_COMMON_API _READ_OPTION_RGBA(const std::string& section,
+	CKPE_COMMON_API Common::CustomSettingCollection::color_value _READ_OPTION_RGBA(const std::string& section,
 		const std::string& option, Common::CustomSettingCollection::color_value def);
-	std::string CKPE_COMMON_API _READ_OPTION_STR(const std::string& section, const std::string& option, 
-		const std::string& def);
-	std::wstring CKPE_COMMON_API _READ_OPTION_USTR(const std::string& section, const std::string& option, 
-		const std::wstring& def);
-	void CKPE_COMMON_API _WRITE_OPTION_BOOL(const std::string& section, const std::string& option, bool value);
-	void CKPE_COMMON_API _WRITE_OPTION_CHAR(const std::string& section, const std::string& option, char value);
-	void CKPE_COMMON_API _WRITE_OPTION_INT(const std::string& section, const std::string& option, long value);
-	void CKPE_COMMON_API _WRITE_OPTION_UINT(const std::string& section, const std::string& option, unsigned long value);
-	void CKPE_COMMON_API _WRITE_OPTION_HEX(const std::string& section, const std::string& option, unsigned long value);
-	void CKPE_COMMON_API _WRITE_OPTION_FLOAT(const std::string& section, const std::string& option, float value);
-	void CKPE_COMMON_API _WRITE_OPTION_RGB(const std::string& section, const std::string& option,
+	CKPE_COMMON_API std::string _READ_OPTION_STR(const std::string& section, const std::string& option, const std::string& def);
+	CKPE_COMMON_API std::wstring _READ_OPTION_USTR(const std::string& section, const std::string& option, const std::wstring& def);
+	CKPE_COMMON_API void _WRITE_OPTION_BOOL(const std::string& section, const std::string& option, bool value);
+	CKPE_COMMON_API void _WRITE_OPTION_CHAR(const std::string& section, const std::string& option, char value);
+	CKPE_COMMON_API void _WRITE_OPTION_INT(const std::string& section, const std::string& option, long value);
+	CKPE_COMMON_API void _WRITE_OPTION_UINT(const std::string& section, const std::string& option, unsigned long value);
+	CKPE_COMMON_API void _WRITE_OPTION_HEX(const std::string& section, const std::string& option, unsigned long value);
+	CKPE_COMMON_API void _WRITE_OPTION_FLOAT(const std::string& section, const std::string& option, float value);
+	CKPE_COMMON_API void _WRITE_OPTION_RGB(const std::string& section, const std::string& option,
 		Common::CustomSettingCollection::color_value value);
-	void CKPE_COMMON_API _WRITE_OPTION_RGBA(const std::string& section, const std::string& option,
+	CKPE_COMMON_API void _WRITE_OPTION_RGBA(const std::string& section, const std::string& option,
 		Common::CustomSettingCollection::color_value value);
-	void CKPE_COMMON_API _WRITE_OPTION_STR(const std::string& section, const std::string& option, 
-		const std::string& value);
-	void CKPE_COMMON_API _WRITE_OPTION_USTR(const std::string& section, const std::string& option,
-		const std::wstring& value);
+	CKPE_COMMON_API void _WRITE_OPTION_STR(const std::string& section, const std::string& option, const std::string& value);
+	CKPE_COMMON_API void _WRITE_OPTION_USTR(const std::string& section, const std::string& option, const std::wstring& value);
 }

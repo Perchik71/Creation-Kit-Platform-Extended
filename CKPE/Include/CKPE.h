@@ -23,3 +23,7 @@
 #include <CKPE.GameManager.h>
 #include <CKPE.Exception.h>
 #include <CKPE.SmartPointer.h>
+#include <CKPE.HashUtils.h>
+#include <CKPE.Stream.h>
+#include <CKPE.Timer.h>
+#include <CKPE.GDIPlus.h>

@@ -25,4 +25,4 @@
 #pragma once
 
 #include <CKPE.Common.Interface.h>
-#include <CKPE.Common.LogWindow.h>
+#include <CKPE.Common.MemoryManager.h>

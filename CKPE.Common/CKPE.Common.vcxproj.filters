@@ -14,6 +14,9 @@
     <ClCompile Include="Src\CKPE.Common.SettingCollection.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.MemoryManager.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -37,6 +40,9 @@
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.Common.SettingCollection.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.MemoryManager.h">
       <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>

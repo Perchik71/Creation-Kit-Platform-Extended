@@ -907,10 +907,10 @@ namespace CKPE
 					if (TOMLSection.is_table())
 					{
 						if (TOMLData.contains(option))
-							TOMLSection[option] = StringUtils::Trim(value.c_str());
+							TOMLSection[option] = StringUtils::Trim(value);
 						else
 						{
-							toml::value v(StringUtils::Trim(value.c_str()));
+							toml::value v(StringUtils::Trim(value));
 							TOMLSection.as_table().insert(std::make_pair(option, std::move(v)));
 						}
 					}
@@ -947,10 +947,10 @@ namespace CKPE
 					if (TOMLSection.is_table())
 					{
 						if (TOMLData.contains(option))
-							TOMLSection[option] = StringUtils::Trim(StringUtils::Utf16ToUtf8(value).c_str()).c_str();
+							TOMLSection[option] = StringUtils::Trim(StringUtils::Utf16ToUtf8(value));
 						else
 						{
-							toml::value v(StringUtils::Trim(StringUtils::Utf16ToUtf8(value).c_str()).c_str());
+							toml::value v(StringUtils::Trim(StringUtils::Utf16ToUtf8(value)));
 							TOMLSection.as_table().insert(std::make_pair(option, std::move(v)));
 						}
 					}
@@ -1383,7 +1383,7 @@ namespace CKPE
 				if (_stricmp(INIValue.first.c_str(), option.c_str()))
 					continue;
 
-				return INIValue.second.empty() ? "" : StringUtils::QuoteRemove(INIValue.second.c_str());
+				return INIValue.second.empty() ? "" : StringUtils::QuoteRemove(INIValue.second);
 			}
 
 			return def;
@@ -1404,7 +1404,7 @@ namespace CKPE
 				if (_stricmp(INIValue.first.c_str(), option.c_str()))
 					continue;
 
-				return INIValue.second.empty() ? L"" : StringUtils::Utf8ToUtf16(StringUtils::QuoteRemove(INIValue.second.c_str()));
+				return INIValue.second.empty() ? L"" : StringUtils::Utf8ToUtf16(StringUtils::QuoteRemove(INIValue.second));
 			}
 
 			return def;
@@ -1623,7 +1623,7 @@ namespace CKPE
 					if (_stricmp(INIValue.first.c_str(), option.c_str()))
 						continue;
 
-					INIValue.second = value.empty() ? StringUtils::Trim(value.c_str()) : "";
+					INIValue.second = value.empty() ? StringUtils::Trim(value) : "";
 					MarkNeedSave();
 					return;
 				}
@@ -1646,8 +1646,7 @@ namespace CKPE
 					if (_stricmp(INIValue.first.c_str(), option.c_str()))
 						continue;
 
-					INIValue.second = value.empty() ? StringUtils::Utf16ToUtf8(value.c_str()) : "";
-					StringUtils::Trim(INIValue.second);
+					INIValue.second = value.empty() ? StringUtils::Trim(StringUtils::Utf16ToUtf8(value)) : "";
 					MarkNeedSave();
 					return;
 				}
@@ -1714,11 +1713,9 @@ namespace CKPE
 				default:
 					auto sep = lineS.find_first_of("=:");
 					if (sep == std::string::npos) break;
-					nameOption = lineS.substr(0, sep);
-					StringUtils::Trim(nameOption);
-					valueOption = lineS.substr(sep + 1);
-					StringUtils::Trim(valueOption);
-
+					nameOption = StringUtils::Trim(lineS.substr(0, sep));
+					valueOption = StringUtils::Trim(lineS.substr(sep + 1));
+	
 					if (!currentSection.empty() && !nameOption.empty())
 						(*(_iniData.data))[currentSection][nameOption] = valueOption;
 					else
@@ -1739,20 +1736,19 @@ namespace CKPE
 
 			try
 			{
-				FileStream stream(*_fileName, FileStream::fmCreate);
+				TextFileStream stream(*_fileName, FileStream::fmCreate);
 				for (auto& INISection : *(_iniData.data))
 				{
 					if (!INISection.first.length() || !INISection.first.size())
 						continue;
 
-					fprintf(stream.GetHandle(), "[%s]\n", INISection.first.c_str());
-
+					stream.WriteLine("[%s]\n", INISection.first.c_str());
 					for (auto& INIValue : INISection.second)
 					{
 						if (!INIValue.first.length())
 							continue;
 
-						fprintf(stream.GetHandle(), "%s=%s\n", INIValue.first.c_str(),
+						stream.WriteLine("[%s]\n", "%s=%s\n", INIValue.first.c_str(),
 							(!INIValue.second.empty() ? INIValue.second.c_str() : ""));
 					}
 				}

@@ -28,13 +28,13 @@ namespace CKPE
 		static std::wstring ToUpper(const std::wstring& src) noexcept(true);
 		static std::wstring ToLower(const std::wstring& src) noexcept(true);
 
-		static std::string& Trim(std::string& str) noexcept(true);
+		static std::string Trim(const std::string& str) noexcept(true);
 		static std::string Trim(const char* s) noexcept(true);
-		static std::wstring& Trim(std::wstring& str) noexcept(true);
+		static std::wstring Trim(const std::wstring& str) noexcept(true);
 		static std::wstring Trim(const wchar_t* s) noexcept(true);
-		static std::string& QuoteRemove(std::string& str) noexcept(true);
+		static std::string QuoteRemove(const std::string& str) noexcept(true);
 		static std::string QuoteRemove(const char* s) noexcept(true);
-		static std::wstring& QuoteRemove(std::wstring& str) noexcept(true);
+		static std::wstring QuoteRemove(const std::wstring& str) noexcept(true);
 		static std::wstring QuoteRemove(const wchar_t* s) noexcept(true);
 	};
 }

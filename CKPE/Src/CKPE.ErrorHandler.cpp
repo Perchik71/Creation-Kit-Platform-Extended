@@ -13,6 +13,8 @@ namespace CKPE
 	void ErrorHandler::Trigger(const std::string& message) noexcept(true)
 	{
 		MessageBox::OpenError(message);
+		if (IsDebuggerPresent())
+			OutputDebugStringA(message.c_str());
 		if (!TerminateProcess(GetCurrentProcess(), EXIT_FAILURE))
 			abort();
 		__assume(0);

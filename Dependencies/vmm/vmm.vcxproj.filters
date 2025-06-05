@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="source\vio.cpp" />
+    <ClCompile Include="source\vmm.cpp" />
+    <ClCompile Include="source\vmmmain.cpp" />
+    <ClCompile Include="source\vsimplelock.cpp" />
+    <ClCompile Include="source\valloc.cpp" />
+    <ClCompile Include="source\vassert.cpp" />
+    <ClCompile Include="source\vbase.cpp" />
+    <ClCompile Include="source\vbits.cpp" />
+    <ClCompile Include="source\vmapper.cpp" />
+    <ClCompile Include="iw\iw.cpp">
+      <Filter>iw</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\vintrin.h" />
+    <ClInclude Include="source\vio.h" />
+    <ClInclude Include="source\vmmblock.h" />
+    <ClInclude Include="source\vmmmain.h" />
+    <ClInclude Include="source\vmmpage.h" />
+    <ClInclude Include="source\vmmpool.h" />
+    <ClInclude Include="source\vsimplelock.h" />
+    <ClInclude Include="source\valloc.h" />
+    <ClInclude Include="source\vassert.h" />
+    <ClInclude Include="source\vbase.h" />
+    <ClInclude Include="source\vbits.h" />
+    <ClInclude Include="include\vmmconfig.h" />
+    <ClInclude Include="include\Voltek.MemoryManager.h" />
+    <ClInclude Include="source\vmapper.h" />
+    <ClInclude Include="version\resource_version2.h">
+      <Filter>version</Filter>
+    </ClInclude>
+    <ClInclude Include="version\resource_version.h">
+      <Filter>version</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vstack.h" />
+    <ClInclude Include="iw\iw.h">
+      <Filter>iw</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="version">
+      <UniqueIdentifier>{5b1be333-3cf1-4fc3-bac4-d0a06804c8de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="iw">
+      <UniqueIdentifier>{4b0214a1-a109-461a-94e9-e387ca473577}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="version\resource_version2.tmp">
+      <Filter>version</Filter>
+    </None>
+    <None Include="version\scripts.ps1">
+      <Filter>version</Filter>
+    </None>
+    <None Include="version\resource_version.aps">
+      <Filter>version</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="version\build_version.txt">
+      <Filter>version</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="version\resource_version.rc">
+      <Filter>version</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

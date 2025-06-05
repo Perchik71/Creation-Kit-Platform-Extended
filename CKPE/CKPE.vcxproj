@@ -61,7 +61,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>detours.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>detours.lib;Shell32.lib;gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
@@ -76,6 +76,7 @@
     <ClCompile Include="Src\CKPE.Detours.cpp" />
     <ClCompile Include="Src\CKPE.DirUtils.cpp" />
     <ClCompile Include="Src\CKPE.ErrorHandler.cpp" />
+    <ClCompile Include="Src\CKPE.GDIPlus.cpp" />
     <ClCompile Include="Src\CKPE.Stream.cpp" />
     <ClCompile Include="Src\CKPE.GameManager.cpp" />
     <ClCompile Include="Src\CKPE.HardwareInfo.cpp" />
@@ -88,6 +89,7 @@
     <ClCompile Include="Src\CKPE.Process.cpp" />
     <ClCompile Include="Src\CKPE.SafeWrite.cpp" />
     <ClCompile Include="Src\CKPE.StringUtils.cpp" />
+    <ClCompile Include="Src\CKPE.Timer.cpp" />
     <ClCompile Include="Src\CKPE.VersionLists.cpp" />
     <ClCompile Include="Src\CKPE.FileUtils.cpp" />
   </ItemGroup>
@@ -105,6 +107,7 @@
     <ClInclude Include="Include\CKPE.Detours.h" />
     <ClInclude Include="Include\CKPE.DirUtils.h" />
     <ClInclude Include="Include\CKPE.ErrorHandler.h" />
+    <ClInclude Include="Include\CKPE.GDIPlus.h" />
     <ClInclude Include="Include\CKPE.Stream.h" />
     <ClInclude Include="Include\CKPE.FileUtils.h" />
     <ClInclude Include="Include\CKPE.GameManager.h" />
@@ -123,6 +126,7 @@
     <ClInclude Include="Include\CKPE.Segment.h" />
     <ClInclude Include="Include\CKPE.SmartPointer.h" />
     <ClInclude Include="Include\CKPE.StringUtils.h" />
+    <ClInclude Include="Include\CKPE.Timer.h" />
     <ClInclude Include="Include\CKPE.VersionLists.h" />
   </ItemGroup>
   <ItemGroup>

@@ -94,14 +94,14 @@ namespace CKPE
 	};
 
 #ifndef CKPE_NO_LOGGER_FUNCTION
-	void CKPE_API _FATALERROR(const std::string_view& formatted_message, ...);
-	void CKPE_API _ERROR(const std::string_view& formatted_message, ...);
-	void CKPE_API _WARNING(const std::string_view& formatted_message, ...);
-	void CKPE_API _MESSAGE(const std::string_view& formatted_message, ...);
-	void CKPE_API _FATALERROR(const std::wstring_view& formatted_message, ...);
-	void CKPE_API _ERROR(const std::wstring_view& formatted_message, ...);
-	void CKPE_API _WARNING(const std::wstring_view& formatted_message, ...);
-	void CKPE_API _MESSAGE(const std::wstring_view& formatted_message, ...);
+	CKPE_API void _FATALERROR(const std::string_view& formatted_message, ...);
+	CKPE_API void _ERROR(const std::string_view& formatted_message, ...);
+	CKPE_API void _WARNING(const std::string_view& formatted_message, ...);
+	CKPE_API void _MESSAGE(const std::string_view& formatted_message, ...);
+	CKPE_API void _FATALERROR(const std::wstring_view& formatted_message, ...);
+	CKPE_API void _ERROR(const std::wstring_view& formatted_message, ...);
+	CKPE_API void _WARNING(const std::wstring_view& formatted_message, ...);
+	CKPE_API void _MESSAGE(const std::wstring_view& formatted_message, ...);
 
 	template<class... _Types>
 	void _FATALERROR_EX(const std::format_string<_Types...> _Fmt, _Types&&... _Args)

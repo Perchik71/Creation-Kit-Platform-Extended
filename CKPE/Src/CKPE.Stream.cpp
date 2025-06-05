@@ -6,6 +6,7 @@
 #include <CKPE.PathUtils.h>
 #include <CKPE.StringUtils.h>
 #include <CKPE.Exception.h>
+#include <cstdarg>
 #include <memory>
 
 namespace CKPE
@@ -83,27 +84,32 @@ namespace CKPE
 		return _Handle ? feof(_Handle) : false;
 	}
 
-	FileStream::FileStream(const std::string& fname, FileMode _mode) : 
-		FileStream(StringUtils::Utf8ToUtf16(fname), _mode)
+	FileStream::FileStream(const std::string& fname, FileOpen _open, FileMode _mode) :
+		FileStream(StringUtils::Utf8ToUtf16(fname), _open, _mode)
 	{}
 
-	FileStream::FileStream(const std::wstring& fname, FileMode _mode) : Stream()
+	FileStream::FileStream(const std::wstring& fname, FileOpen _open, FileMode _mode) : Stream()
 	{
 		int right = _SH_DENYNO;
 		std::wstring m;
 		
-		switch (_mode)
+		switch (_open)
 		{
 		case CKPE::FileStream::fmOpenRead:
-			m = L"rb";
+			m = L"r";
+			m += _mode == FileMode::fmBinary ? L"b" : L"t";
 			right = _SH_DENYWR;
 			break;
 		case CKPE::FileStream::fmOpenReadWrite:
-			m = L"rb+";
+			m = L"r";
+			m += _mode == FileMode::fmBinary ? L"b" : L"t";
+			m += L"+";
 			right = _SH_DENYRW;
 			break;
 		default:
-			m = L"wb+";
+			m = L"w";
+			m += _mode == FileMode::fmBinary ? L"b" : L"t";
+			m += L"+";
 			right = _SH_DENYRW;
 			break;
 		}
@@ -111,6 +117,7 @@ namespace CKPE
 		_Handle = _wfsopen(fname.c_str(), m.c_str(), right);
 		if (!_Handle)
 			throw SystemError(errno, "FileStream \"{}\"", StringUtils::Utf16ToWinCP(fname));
+
 		_FileName = new std::wstring(fname);
 	}
 
@@ -129,6 +136,64 @@ namespace CKPE
 			_FileName = nullptr;
 		}
 	}
+
+	void TextFileStream::WriteLineStr(const std::string& string) const noexcept(true)
+	{
+		if (!_Handle || string.empty())
+			return;
+
+		fputs(string.c_str(), _Handle);
+		fputc('\n', _Handle);
+	}
+
+	bool TextFileStream::ReadLine(std::string& string, std::uint32_t maxsize) const noexcept(true)
+	{
+		if (!_Handle || !maxsize)
+			return false;
+
+		fgets(string.data(), (int)maxsize, _Handle);
+		return true;
+	}
+
+	void TextFileStream::WriteLine(const std::string_view& formatted_string, ...) const noexcept(true)
+	{
+		va_list ap;
+		va_start(ap, &formatted_string);
+		auto len = _vscprintf(formatted_string.data(), (va_list)ap);
+		if (len < 1) return;
+
+		std::string string_done;
+		string_done.resize((std::size_t)len);
+		if (string_done.empty()) return;
+		vsprintf(string_done.data(), formatted_string.data(), (va_list)ap);
+		va_end(ap);
+
+		WriteLineStr(string_done);
+	}
+
+	void TextFileStream::WriteLine(const std::wstring_view& formatted_string, ...) const noexcept(true)
+	{
+		va_list ap;
+		va_start(ap, &formatted_string);
+		auto len = _vscwprintf(formatted_string.data(), (va_list)ap);
+		if (len < 1) return;
+
+		std::wstring string_done;
+		string_done.resize((std::size_t)len);
+		if (string_done.empty()) return;
+		_vswprintf(string_done.data(), formatted_string.data(), (va_list)ap);
+		va_end(ap);
+
+		WriteLineStr(StringUtils::Utf16ToUtf8(string_done));
+	}
+
+	TextFileStream::TextFileStream(const std::string& fname, FileOpen _open) : 
+		FileStream(fname, _open, FileMode::fmText)
+	{}
+
+	TextFileStream::TextFileStream(const std::wstring& fname, FileOpen _open) :
+		FileStream(fname, _open, FileMode::fmText)
+	{}
 
 	bool FileStreamIntf::LoadFromFile(const std::string& fname) noexcept(true)
 	{

@@ -68,6 +68,12 @@
     <ClCompile Include="Src\CKPE.Stream.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Timer.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.GDIPlus.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -157,6 +163,12 @@
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.Stream.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Timer.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.GDIPlus.h">
       <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>

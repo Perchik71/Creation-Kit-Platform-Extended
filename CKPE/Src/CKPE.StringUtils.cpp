@@ -103,12 +103,14 @@ namespace CKPE
 
 	static const char* whitespaceDelimitersA = " \t\n\r\f\v";
 
-	std::string& StringUtils::Trim(std::string& str) noexcept(true)
+	std::string StringUtils::Trim(const std::string& str) noexcept(true)
 	{
-		str.erase(str.find_last_not_of(whitespaceDelimitersA) + 1);
-		str.erase(0, str.find_first_not_of(whitespaceDelimitersA));
+		std::string s = str;
 
-		return str;
+		s.erase(s.find_last_not_of(whitespaceDelimitersA) + 1);
+		s.erase(0, s.find_first_not_of(whitespaceDelimitersA));
+
+		return s;
 	}
 
 	std::string StringUtils::Trim(const char* s) noexcept(true)
@@ -119,12 +121,14 @@ namespace CKPE
 
 	static const wchar_t* whitespaceDelimitersW = L" \t\n\r\f\v";
 
-	std::wstring& StringUtils::Trim(std::wstring& str) noexcept(true)
+	std::wstring StringUtils::Trim(const std::wstring& str) noexcept(true)
 	{
-		str.erase(str.find_last_not_of(whitespaceDelimitersW) + 1);
-		str.erase(0, str.find_first_not_of(whitespaceDelimitersW));
+		std::wstring s = str;
 
-		return str;
+		s.erase(s.find_last_not_of(whitespaceDelimitersW) + 1);
+		s.erase(0, s.find_first_not_of(whitespaceDelimitersW));
+
+		return s;
 	}
 
 	std::wstring StringUtils::Trim(const wchar_t* s) noexcept(true)
@@ -133,22 +137,24 @@ namespace CKPE
 		return Trim(str);
 	}
 
-	std::string& StringUtils::QuoteRemove(std::string& str) noexcept(true)
+	std::string StringUtils::QuoteRemove(const std::string& str) noexcept(true)
 	{
-		if (str.size() > 1)
+		std::string s = str;
+
+		if (s.size() > 1)
 		{
-			if ((str.front() == '"') && (str.back() == '"'))
+			if ((s.front() == '"') && (s.back() == '"'))
 			{
-				if (str.size() == 2)
-					str.erase();
+				if (s.size() == 2)
+					s.erase();
 				else
 				{
-					str.erase(str.begin());
-					str.erase(str.end() - 1);
+					s.erase(s.begin());
+					s.erase(s.end() - 1);
 				}
 			}
 		}
-		return str;
+		return s;
 	}
 
 	std::string StringUtils::QuoteRemove(const char* s) noexcept(true)
@@ -157,22 +163,24 @@ namespace CKPE
 		return QuoteRemove(r);
 	}
 
-	std::wstring& StringUtils::QuoteRemove(std::wstring& str) noexcept(true)
+	std::wstring StringUtils::QuoteRemove(const std::wstring& str) noexcept(true)
 	{
-		if (str.size() > 1)
+		std::wstring s = str;
+
+		if (s.size() > 1)
 		{
-			if ((str.front() == L'"') && (str.back() == L'"'))
+			if ((s.front() == L'"') && (s.back() == L'"'))
 			{
-				if (str.size() == 2)
-					str.erase();
+				if (s.size() == 2)
+					s.erase();
 				else
 				{
-					str.erase(str.begin());
-					str.erase(str.end() - 1);
+					s.erase(s.begin());
+					s.erase(s.end() - 1);
 				}
 			}
 		}
-		return str;
+		return s;
 	}
 
 	std::wstring StringUtils::QuoteRemove(const wchar_t* s) noexcept(true)

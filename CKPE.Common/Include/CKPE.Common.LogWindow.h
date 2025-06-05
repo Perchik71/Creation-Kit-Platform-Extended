@@ -26,19 +26,23 @@ namespace CKPE
 
 			bool Create();
 			void Destroy();
-			void LoadWarningBlacklist();
+			void LoadWarningBlacklist() noexcept(true);
 
 			LogWindow(const LogWindow&) = delete;
 			LogWindow& operator=(const LogWindow&) = delete;
 		public:
+			typedef void(__stdcall* OnOpenFormByIdHandler)(std::uint32_t id);
+
 			LogWindow();
 			virtual ~LogWindow();
+
+			static void Shutdown() noexcept(true);
 
 			[[nodiscard]] static LogWindow* GetSingleton() noexcept(true);
 			[[nodiscard]] constexpr inline void* GetHandle() const noexcept(true) { return _handle; }
 			[[nodiscard]] constexpr inline void* GetRichEditHandle() const noexcept(true) { return _handle_richedit; }
 
-			bool Initialize(const void* create_struct);	
+			bool Initialize(void* handle, const void* create_struct);
 			void Show(bool sh) const noexcept(true);
 			void Update() const noexcept(true);
 			void Clear() const noexcept(true);
@@ -61,9 +65,15 @@ namespace CKPE
 
 			virtual void InputLog(const std::string_view& formatted_message, ...);
 			virtual void InputLogVa(const std::string_view& formatted_message, va_list va);
-		};
+			virtual void InputLog(const std::wstring_view& formatted_message, ...);
+			virtual void InputLogVa(const std::wstring_view& formatted_message, va_list va);
 
-		void _CONSOLE(const char* fmt, ...);
-		void _CONSOLEVA(const char* fmt, va_list va);
+			OnOpenFormByIdHandler OnOpenFormById{ nullptr };
+		};
 	}
+
+	CKPE_COMMON_API void _CONSOLE(const std::string_view& formatted_message, ...) noexcept(true);
+	CKPE_COMMON_API void _CONSOLEVA(const std::string_view& formatted_message, va_list va) noexcept(true);
+	CKPE_COMMON_API void _CONSOLE(const std::wstring_view& formatted_message, ...) noexcept(true);
+	CKPE_COMMON_API void _CONSOLEVA(const std::wstring_view& formatted_message, va_list va) noexcept(true);
 }

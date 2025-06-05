@@ -220,7 +220,7 @@ namespace CKPE
 	}
 
 #ifndef CKPE_NO_LOGGER_FUNCTION
-	void _FATALERROR(const std::string_view& formatted_message, ...)
+	CKPE_API void _FATALERROR(const std::string_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
@@ -236,7 +236,7 @@ namespace CKPE
 		_slogger.WriteString(Logger::tFatalError, string_done);
 	}
 
-	void _ERROR(const std::string_view& formatted_message, ...)
+	CKPE_API void _ERROR(const std::string_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
@@ -252,7 +252,7 @@ namespace CKPE
 		_slogger.WriteString(Logger::tError, string_done);
 	}
 
-	void _WARNING(const std::string_view& formatted_message, ...)
+	CKPE_API void _WARNING(const std::string_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
@@ -268,7 +268,7 @@ namespace CKPE
 		_slogger.WriteString(Logger::tWarning, string_done);
 	}
 
-	void _MESSAGE(const std::string_view& formatted_message, ...)
+	CKPE_API void _MESSAGE(const std::string_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
@@ -284,7 +284,7 @@ namespace CKPE
 		_slogger.WriteString(Logger::tMessage, string_done);
 	}
 
-	void _FATALERROR(const std::wstring_view& formatted_message, ...)
+	CKPE_API void _FATALERROR(const std::wstring_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
@@ -300,7 +300,7 @@ namespace CKPE
 		_slogger.WriteString(Logger::tFatalError, StringUtils::Utf16ToUtf8(string_done));
 	}
 
-	void _ERROR(const std::wstring_view& formatted_message, ...)
+	CKPE_API void _ERROR(const std::wstring_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
@@ -316,7 +316,7 @@ namespace CKPE
 		_slogger.WriteString(Logger::tError, StringUtils::Utf16ToUtf8(string_done));
 	}
 
-	void _WARNING(const std::wstring_view& formatted_message, ...)
+	CKPE_API void _WARNING(const std::wstring_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
@@ -332,7 +332,7 @@ namespace CKPE
 		_slogger.WriteString(Logger::tWarning, StringUtils::Utf16ToUtf8(string_done));
 	}
 
-	void _MESSAGE(const std::wstring_view& formatted_message, ...)
+	CKPE_API void _MESSAGE(const std::wstring_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);

@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <cstdio>
 #include <string>
+#include <string_view>
 #include <CKPE.CriticalSection.h>
 
 namespace CKPE
@@ -41,11 +42,17 @@ namespace CKPE
 	class CKPE_API FileStream : public Stream
 	{
 	public:
-		enum FileMode : std::uint32_t
+		enum FileOpen : std::uint32_t
 		{
 			fmOpenRead = 0,
 			fmOpenReadWrite,
 			fmCreate,
+		};
+
+		enum FileMode : std::uint32_t
+		{
+			fmBinary = 0,
+			fmText,
 		};
 	protected:
 		std::FILE* _Handle{ nullptr };
@@ -56,13 +63,26 @@ namespace CKPE
 		virtual std::uint64_t Offset(std::int64_t offset, OffsetStream flag = ofCurrent) noexcept(true);
 		[[nodiscard]] virtual std::uint64_t GetSize() const noexcept(true);
 		[[nodiscard]] virtual std::wstring GetFileName() const noexcept(true);
-		[[nodiscard]] virtual inline std::FILE* GetHandle() const noexcept(true) { return _Handle; }
 		virtual void Flush() const noexcept(true);
 		[[nodiscard]] virtual bool Eof() const noexcept(true);
 	public:
-		FileStream(const std::string& fname, FileMode _mode);
-		FileStream(const std::wstring& fname, FileMode _mode);
+		FileStream(const std::string& fname, FileOpen _open, FileMode _mode = FileMode::fmBinary);
+		FileStream(const std::wstring& fname, FileOpen _open, FileMode _mode = FileMode::fmBinary);
 		virtual ~FileStream() noexcept(true);
+	};
+
+	// Only Utf8 or Ansi codepages
+	class CKPE_API TextFileStream : public FileStream
+	{
+	protected:
+		void WriteLineStr(const std::string& string) const noexcept(true);
+	public:
+		virtual bool ReadLine(std::string& string, std::uint32_t maxsize) const noexcept(true);
+		virtual void WriteLine(const std::string_view& formatted_string, ...) const noexcept(true);
+		virtual void WriteLine(const std::wstring_view& formatted_string, ...) const noexcept(true);
+	public:
+		TextFileStream(const std::string& fname, FileOpen _open);
+		TextFileStream(const std::wstring& fname, FileOpen _open);
 	};
 
 	class CKPE_API FileStreamIntf
