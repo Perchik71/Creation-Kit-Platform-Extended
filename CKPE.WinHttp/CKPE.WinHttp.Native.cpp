@@ -65,11 +65,23 @@ namespace CKPE
 
         void Runner::ContinueInitialize()
         {
-            // TODO: command line
+            try
+            {
+                CommandLineParser cmd;
+                if (cmd.HasCommandRun())
+                {
+                    // TODO: cmd line
+                }
 
-            auto game_mgr = const_cast<GameManager*>(GameManager::GetSingleton());
-            if (!game_mgr->LoadLib())
-                _ERROR("Failed initialize game library");
+                auto game_mgr = const_cast<GameManager*>(GameManager::GetSingleton());
+                if (!game_mgr->LoadLib())
+                    throw RuntimeError("Failed initialize game library");
+            }
+            catch (const std::exception& e)
+            {
+                _ERROR(e.what());
+                ErrorHandler::Trigger(e.what());
+            }
         }
 
         void Runner::EnableBreakpoint() noexcept(true)

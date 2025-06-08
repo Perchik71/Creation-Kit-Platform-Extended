@@ -6,6 +6,7 @@
 
 #include <CKPE.GameManager.h>
 #include <CKPE.Logger.h>
+#include <CKPE.CommandLineParser.h>
 #include <CKPE.Common.Common.h>
 #include <CKPE.Common.SettingCollection.h>
 #include <CKPE.Common.LogWindow.h>
@@ -22,6 +23,7 @@ namespace CKPE
 			const CKPEGameLibraryInterface* _interface{ nullptr };
 			TOMLSettingCollection* _settings{ nullptr };
 			TOMLSettingCollection* _theme_settings{ nullptr };
+			CommandLineParser* _cmdline{ nullptr };
 
 			Interface(const Interface&) = delete;
 			Interface& operator=(const Interface&) = delete;
@@ -29,7 +31,8 @@ namespace CKPE
 			constexpr Interface() noexcept(true) = default;
 			virtual ~Interface() noexcept(true);
 
-			void Initialize(const CKPEGameLibraryInterface* a_interface) noexcept(true);
+			void Initialize(const CKPEGameLibraryInterface* a_interface) noexcept(true); 
+			void CmdLineHandler();
 
 			[[nodiscard]] static Interface* GetSingleton() noexcept(true);
 			[[nodiscard]] constexpr inline const Logger* GetLogger() const noexcept(true) { return _interface->logger; }
@@ -38,6 +41,8 @@ namespace CKPE
 			{ return _settings; }
 			[[nodiscard]] constexpr inline TOMLSettingCollection* GetCustomThemeSettings() const noexcept(true)
 			{ return _theme_settings; }
+			[[nodiscard]] constexpr inline CommandLineParser* GetCommandLineParser() const noexcept(true)
+			{ return _cmdline; }
 		};
 	}
 

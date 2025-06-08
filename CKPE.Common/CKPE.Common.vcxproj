@@ -75,6 +75,7 @@
     <ClCompile Include="Src\CKPE.Common.Interface.cpp" />
     <ClCompile Include="Src\CKPE.Common.LogWindow.cpp" />
     <ClCompile Include="Src\CKPE.Common.MemoryManager.cpp" />
+    <ClCompile Include="Src\CKPE.Common.RTTI.cpp" />
     <ClCompile Include="Src\CKPE.Common.RuntimeOptimization.cpp" />
     <ClCompile Include="Src\CKPE.Common.SettingCollection.cpp" />
   </ItemGroup>
@@ -83,6 +84,7 @@
     <ClInclude Include="Include\CKPE.Common.Interface.h" />
     <ClInclude Include="Include\CKPE.Common.LogWindow.h" />
     <ClInclude Include="Include\CKPE.Common.MemoryManager.h" />
+    <ClInclude Include="Include\CKPE.Common.RTTI.h" />
     <ClInclude Include="Include\CKPE.Common.RuntimeOptimization.h" />
     <ClInclude Include="Include\CKPE.Common.Include.h" />
     <ClInclude Include="Include\CKPE.Common.SettingCollection.h" />

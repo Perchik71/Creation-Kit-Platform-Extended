@@ -74,6 +74,9 @@
     <ClCompile Include="Src\CKPE.GDIPlus.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.CommandLineParser.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -169,6 +172,9 @@
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.GDIPlus.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.CommandLineParser.h">
       <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>

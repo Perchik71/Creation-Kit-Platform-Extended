@@ -8,6 +8,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.LogWindow.h>
+#include <CKPE.Common.RTTI.h>
 
 namespace CKPE
 {
@@ -33,16 +34,45 @@ namespace CKPE
 				delete _theme_settings;
 				_theme_settings = nullptr;
 			}
+
+			if (_cmdline)
+			{
+				delete _cmdline;
+				_cmdline = nullptr;
+			}
 		}
 
 		void Interface::Initialize(const CKPEGameLibraryInterface* a_interface) noexcept(true)
 		{
 			_interface = a_interface;
+			_cmdline = new CommandLineParser;
 			std::wstring spath = _interface->application->GetPath();
 			_settings = new TOMLSettingCollection(spath + _ssettings_fname);
 			_theme_settings = new TOMLSettingCollection(spath + _stheme_settings_fname);
 			/* call constructor */ new LogWindow();
+			RTTI::GetSingleton()->Initialize();
+		}
 
+		void Interface::CmdLineHandler()
+		{
+			CommandLineParser cmd;
+			if (cmd.HasCommandRun() && _interface)
+			{
+				auto scmd = StringUtils::ToLower(cmd.GetCommand());
+				if (scmd.compare(L"-PEExportRTTI"))
+				{
+					if (cmd.Count() != 2)
+					{
+						_ERROR("Invalid number of command arguments: %u", cmd.Count());
+						_MESSAGE("Example: CreationKit -PEExportRTTI \"rtti.txt\"");
+					}
+					else
+						RTTI::GetSingleton()->Dump(cmd[1]);
+
+					// Закрываем Creation Kit
+					_interface->application->Terminate();
+				}
+			}
 		}
 
 		Interface* Interface::GetSingleton() noexcept(true)

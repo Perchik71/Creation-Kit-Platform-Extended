@@ -157,7 +157,59 @@ namespace CKPE
 		}
 	}
 
-	std::uint64_t HashUtils::MurmurHash64A(const void* Key, std::size_t Len, std::uint64_t Seed) noexcept(true)
+	std::uint32_t HashUtils::MurmurHash32(const void* key, std::size_t len, std::uint32_t seed) noexcept(true)
+	{
+		// https://github.com/abrandoned/murmur2/blob/master/MurmurHash2.c#L14
+		/* 'm' and 'r' are mixing constants generated offline.
+		They're not really 'magic', they just happen to work well.  */
+
+		const std::uint32_t m = 0x5bd1e995;
+		const int r = 24;
+
+		/* Initialize the hash to a 'random' value */
+
+		std::uint32_t h = seed ^ (std::uint32_t)len;
+
+		/* Mix 4 bytes at a time into the hash */
+
+		const unsigned char* data = (const unsigned char*)key;
+
+		while (len >= 4)
+		{
+			std::uint32_t k = *(std::uint32_t*)data;
+
+			k *= m;
+			k ^= k >> r;
+			k *= m;
+
+			h *= m;
+			h ^= k;
+
+			data += 4;
+			len -= 4;
+		}
+
+		/* Handle the last few bytes of the input array  */
+
+		switch (len)
+		{
+		case 3: h ^= data[2] << 16;
+		case 2: h ^= data[1] << 8;
+		case 1: h ^= data[0];
+			h *= m;
+		};
+
+		/* Do a few final mixes of the hash to ensure the last few
+		// bytes are well-incorporated.  */
+
+		h ^= h >> 13;
+		h *= m;
+		h ^= h >> 15;
+
+		return h;
+	}
+
+	std::uint64_t HashUtils::MurmurHash64A(const void* key, std::size_t len, std::uint64_t seed) noexcept(true)
 	{
 		/*-----------------------------------------------------------------------------
 		// https://github.com/abrandoned/murmur2/blob/master/MurmurHash2.c#L65
@@ -171,10 +223,10 @@ namespace CKPE
 		const std::uint64_t m = 0xc6a4a7935bd1e995ull;
 		const int r = 47;
 
-		std::uint64_t h = Seed ^ (Len * m);
+		std::uint64_t h = seed ^ (len * m);
 
-		const std::uint64_t* data = (const std::uint64_t*)Key;
-		const std::uint64_t* end = data + (Len / 8);
+		const std::uint64_t* data = (const std::uint64_t*)key;
+		const std::uint64_t* end = data + (len / 8);
 
 		while (data != end)
 		{
@@ -190,7 +242,7 @@ namespace CKPE
 
 		const unsigned char* data2 = (const unsigned char*)data;
 
-		switch (Len & 7)
+		switch (len & 7)
 		{
 		case 7: h ^= ((std::uint64_t)data2[6]) << 48;
 		case 6: h ^= ((std::uint64_t)data2[5]) << 40;
@@ -207,5 +259,15 @@ namespace CKPE
 		h ^= h >> r;
 
 		return h;
+	}
+
+	std::uint32_t HashUtils::MurmurHash32(const std::string& key, std::uint32_t seed) noexcept(true)
+	{
+		return MurmurHash32(key.c_str(), key.length(), seed);
+	}
+
+	std::uint64_t HashUtils::MurmurHash64A(const std::string& key, std::uint64_t seed) noexcept(true)
+	{
+		return MurmurHash64A(key.c_str(), key.length(), seed);
 	}
 }

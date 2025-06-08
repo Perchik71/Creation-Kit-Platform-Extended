@@ -33,6 +33,7 @@ extern "C"
 	{
 		auto interface = CKPE::Common::Interface::GetSingleton();
 		interface->Initialize(ckpe);
+		interface->CmdLineHandler();
 		auto runner = CKPE::SkyrimSE::Runner::GetSingleton();
 		return runner->Install();
 	}

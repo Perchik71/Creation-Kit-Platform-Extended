@@ -23,6 +23,9 @@ namespace CKPE
 		static std::uint32_t CRC32Final(std::uint32_t crc) noexcept(true);
 		static std::uint32_t CRC32File(const std::string& filename) noexcept(true);
 		static std::uint32_t CRC32File(const std::wstring& filename) noexcept(true);
-		static std::uint64_t MurmurHash64A(const void* Key, std::size_t Len, std::uint64_t Seed = 0) noexcept(true);
+		static std::uint32_t MurmurHash32(const void* key, std::size_t len, std::uint32_t seed = 0) noexcept(true);
+		static std::uint64_t MurmurHash64A(const void* key, std::size_t len, std::uint64_t seed = 0) noexcept(true);
+		static std::uint32_t MurmurHash32(const std::string& key, std::uint32_t seed = 0) noexcept(true);
+		static std::uint64_t MurmurHash64A(const std::string& key, std::uint64_t seed = 0) noexcept(true);
 	};
 }

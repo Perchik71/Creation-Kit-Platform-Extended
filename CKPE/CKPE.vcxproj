@@ -72,6 +72,7 @@
     <ClCompile Include="..\Dependencies\iw\iw.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Src\CKPE.Application.cpp" />
+    <ClCompile Include="Src\CKPE.CommandLineParser.cpp" />
     <ClCompile Include="Src\CKPE.CriticalSection.cpp" />
     <ClCompile Include="Src\CKPE.Detours.cpp" />
     <ClCompile Include="Src\CKPE.DirUtils.cpp" />
@@ -102,6 +103,7 @@
   <ItemGroup>
     <ClInclude Include="..\Dependencies\iw\iw.h" />
     <ClInclude Include="Include\CKPE.Application.h" />
+    <ClInclude Include="Include\CKPE.CommandLineParser.h" />
     <ClInclude Include="Include\CKPE.Common.h" />
     <ClInclude Include="Include\CKPE.CriticalSection.h" />
     <ClInclude Include="Include\CKPE.Detours.h" />
