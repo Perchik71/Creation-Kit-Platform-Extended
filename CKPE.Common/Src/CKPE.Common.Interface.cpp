@@ -59,7 +59,7 @@ namespace CKPE
 			if (cmd.HasCommandRun() && _interface)
 			{
 				auto scmd = StringUtils::ToLower(cmd.GetCommand());
-				if (scmd.compare(L"-PEExportRTTI"))
+				if (!scmd.compare(L"-peexportrtti"))
 				{
 					if (cmd.Count() != 2)
 					{
