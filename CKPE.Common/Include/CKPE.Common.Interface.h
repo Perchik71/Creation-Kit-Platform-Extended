@@ -24,6 +24,7 @@ namespace CKPE
 			TOMLSettingCollection* _settings{ nullptr };
 			TOMLSettingCollection* _theme_settings{ nullptr };
 			CommandLineParser* _cmdline{ nullptr };
+			std::uint64_t _version{ 0 };
 
 			Interface(const Interface&) = delete;
 			Interface& operator=(const Interface&) = delete;
@@ -31,8 +32,10 @@ namespace CKPE
 			constexpr Interface() noexcept(true) = default;
 			virtual ~Interface() noexcept(true);
 
-			void Initialize(const CKPEGameLibraryInterface* a_interface) noexcept(true); 
+			void Initialize(const CKPEGameLibraryInterface* a_interface, std::uint64_t a_version) noexcept(true); 
 			void CmdLineHandler();
+
+			[[nodiscard]] bool HasCustomThemeSetting() const noexcept(true);
 
 			[[nodiscard]] static Interface* GetSingleton() noexcept(true);
 			[[nodiscard]] constexpr inline const Logger* GetLogger() const noexcept(true) { return _interface->logger; }

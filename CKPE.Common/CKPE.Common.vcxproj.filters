@@ -20,10 +20,85 @@
     <ClCompile Include="Src\CKPE.Common.RTTI.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIBaseWindow.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIMenus.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIVarCommon.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIColored.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UITrackBar.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIToolBar.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIScrollBar.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIStatusBar.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIPopupMenu.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIProgressBar.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIPushButton.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIRadioButton.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIPageControl.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIMDIClient.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIListBox.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIGroupBox.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIHeader.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIUpDown.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UICheckBox.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIComboBox.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UICustomBox.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIEditText.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIRichEdit20.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UITreeView.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
       <UniqueIdentifier>{8d7d4588-e831-422b-8969-11e8c27027fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{42f894af-517e-47ee-bd34-83bd19bcb2a5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +125,78 @@
     </ClInclude>
     <ClInclude Include="Include\CKPE.Common.RTTI.h">
       <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIBaseWindow.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIMenus.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIVarCommon.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIColored.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UITrackBar.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIToolBar.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIScrollBar.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIStatusBar.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIProgressBar.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIPushButton.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIRadioButton.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIPageControl.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIPopupMenu.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIMDIClient.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIListBox.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIHeader.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIGroupBox.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIUpDown.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UICheckBox.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIComboBox.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UICustomBox.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIEditText.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIRichEdit20.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UITreeView.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

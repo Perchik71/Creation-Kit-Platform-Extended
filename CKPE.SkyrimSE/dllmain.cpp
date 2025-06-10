@@ -32,7 +32,7 @@ extern "C"
 	__declspec(dllexport) bool CKPEGameLibrary_Load(const CKPEGameLibraryInterface* ckpe)
 	{
 		auto interface = CKPE::Common::Interface::GetSingleton();
-		interface->Initialize(ckpe);
+		interface->Initialize(ckpe, CKPEGameLibrary_Data.dataVersion);
 		interface->CmdLineHandler();
 		auto runner = CKPE::SkyrimSE::Runner::GetSingleton();
 		return runner->Install();

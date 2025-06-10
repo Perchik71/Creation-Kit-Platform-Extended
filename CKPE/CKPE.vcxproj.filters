@@ -77,6 +77,15 @@
     <ClCompile Include="Src\CKPE.CommandLineParser.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Math.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Graphics.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.ImageList.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -175,6 +184,15 @@
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.CommandLineParser.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Math.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Graphics.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.ImageList.h">
       <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>

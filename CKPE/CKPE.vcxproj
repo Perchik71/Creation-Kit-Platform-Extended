@@ -52,7 +52,7 @@
       <CallingConvention>StdCall</CallingConvention>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <DisableSpecificWarnings>26444;6386;28619</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26444;6386;28619;28183;28182</DisableSpecificWarnings>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
@@ -61,7 +61,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>detours.lib;Shell32.lib;gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>detours.lib;Shell32.lib;msimg32.lib;gdiplus.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
@@ -78,6 +78,9 @@
     <ClCompile Include="Src\CKPE.DirUtils.cpp" />
     <ClCompile Include="Src\CKPE.ErrorHandler.cpp" />
     <ClCompile Include="Src\CKPE.GDIPlus.cpp" />
+    <ClCompile Include="Src\CKPE.Graphics.cpp" />
+    <ClCompile Include="Src\CKPE.ImageList.cpp" />
+    <ClCompile Include="Src\CKPE.Math.cpp" />
     <ClCompile Include="Src\CKPE.Stream.cpp" />
     <ClCompile Include="Src\CKPE.GameManager.cpp" />
     <ClCompile Include="Src\CKPE.HardwareInfo.cpp" />
@@ -110,6 +113,9 @@
     <ClInclude Include="Include\CKPE.DirUtils.h" />
     <ClInclude Include="Include\CKPE.ErrorHandler.h" />
     <ClInclude Include="Include\CKPE.GDIPlus.h" />
+    <ClInclude Include="Include\CKPE.Graphics.h" />
+    <ClInclude Include="Include\CKPE.ImageList.h" />
+    <ClInclude Include="Include\CKPE.Math.h" />
     <ClInclude Include="Include\CKPE.Stream.h" />
     <ClInclude Include="Include\CKPE.FileUtils.h" />
     <ClInclude Include="Include\CKPE.GameManager.h" />

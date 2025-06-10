@@ -28,3 +28,4 @@
 #include <CKPE.Timer.h>
 #include <CKPE.GDIPlus.h>
 #include <CKPE.CommandLineParser.h>
+#include <CKPE.ImageList.h>

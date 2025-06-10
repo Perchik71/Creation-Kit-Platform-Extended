@@ -213,7 +213,7 @@ namespace CKPE
 			LoadWarningBlacklist();
 
 			auto fName = _READ_OPTION_USTR("Log", "sOutputFile", FILE_NONE);
-			if (fName != FILE_NONE)
+			if ((fName != FILE_NONE) && !fName.empty())
 			{
 				_output_file = _wfsopen(fName.c_str(), L"wt", _SH_DENYRW);
 				if (!_output_file)
@@ -596,7 +596,7 @@ namespace CKPE
 			sbuffer.resize(len);
 			if (!sbuffer.empty())
 			{
-				_vsnprintf_s(sbuffer.data(), (std::size_t)len, _TRUNCATE, formatted_message.data(), va);
+				_vsnprintf_s(sbuffer.data(), (std::size_t)len + 1, _TRUNCATE, formatted_message.data(), va);
 
 				sbuffer = StringUtils::Trim(sbuffer);
 				std::replace_if(sbuffer.begin(), sbuffer.end(), [](auto const& x) { return x == '\n' || x == '\r'; }, ' ');

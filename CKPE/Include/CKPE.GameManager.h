@@ -65,7 +65,7 @@ namespace CKPE
 			DEPRECATED,
 		};
 
-		constexpr GameManager() = default;
+		GameManager() = default;
 	
 		[[nodiscard]] bool Initialize(Game game) noexcept(true);
 		[[nodiscard]] static const GameManager* GetSingleton() noexcept(true);

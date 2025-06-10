@@ -1,4 +1,4 @@
-﻿/// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -48,6 +48,7 @@ namespace CKPE
 			void Clear() const noexcept(true);
 			[[nodiscard]] constexpr inline bool HasAutoScroll() const noexcept(true) { return _auto_scroll; }
 			constexpr inline void SetAutoScroll(bool v) noexcept(true) { _auto_scroll = v; }
+			[[nodiscard]] constexpr inline bool HasOutputFile() const noexcept(true) { return _output_file != nullptr; }
 
 			void ReleaseHandler() noexcept(true);
 			void ResizeHandler(std::uint32_t x, std::uint32_t y) const noexcept(true);

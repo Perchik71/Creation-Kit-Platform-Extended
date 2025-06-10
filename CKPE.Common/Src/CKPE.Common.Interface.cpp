@@ -6,9 +6,12 @@
 #include <CKPE.PathUtils.h>
 #include <CKPE.StringUtils.h>
 #include <CKPE.Application.h>
+#include <CKPE.FileUtils.h>
+#include <CKPE.Graphics.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.LogWindow.h>
 #include <CKPE.Common.RTTI.h>
+#include <time.h>
 
 namespace CKPE
 {
@@ -42,15 +45,54 @@ namespace CKPE
 			}
 		}
 
-		void Interface::Initialize(const CKPEGameLibraryInterface* a_interface) noexcept(true)
+		void Interface::Initialize(const CKPEGameLibraryInterface* a_interface, std::uint64_t a_version) noexcept(true)
 		{
-			_interface = a_interface;
-			_cmdline = new CommandLineParser;
-			std::wstring spath = _interface->application->GetPath();
-			_settings = new TOMLSettingCollection(spath + _ssettings_fname);
-			_theme_settings = new TOMLSettingCollection(spath + _stheme_settings_fname);
-			/* call constructor */ new LogWindow();
-			RTTI::GetSingleton()->Initialize();
+			if (_cmdline) return;
+
+			{
+				_interface = a_interface;
+				std::wstring spath = _interface->application->GetPath();
+
+				_cmdline = new CommandLineParser;
+				_settings = new TOMLSettingCollection(spath + _ssettings_fname);
+				if (PathUtils::FileExists(spath + _stheme_settings_fname))
+					_theme_settings = new TOMLSettingCollection(spath + _stheme_settings_fname);
+				else
+					_theme_settings = nullptr;
+				_version = FileUtils::GetFileVersion(spath + L"CKPE.Common.dll");
+				/* call constructor */ new LogWindow();
+				RTTI::GetSingleton()->Initialize();
+			}
+
+			char timeBuffer[80];
+			struct tm* timeInfo;
+			time_t rawtime;
+			time(&rawtime);
+			timeInfo = localtime(&rawtime);
+			strftime(timeBuffer, sizeof(timeBuffer), "%A %d %b %Y %r %Z", timeInfo);
+
+			auto v = _interface->ckpeVersion;
+			
+			_CONSOLE("##########################################################");
+			_CONSOLE("Hi, I'm CKPE! Now: %s", timeBuffer); 
+			_CONSOLE("CKPE Runtime: %u.%u build %u rev:%u", GET_EXE_VERSION_EX_MAJOR(v), GET_EXE_VERSION_EX_MINOR(v), 
+				GET_EXE_VERSION_EX_BUILD(v), GET_EXE_VERSION_EX_REVISION(v));
+			_CONSOLE("CKPE Common Library: %u.%u build %u rev:%u", GET_EXE_VERSION_EX_MAJOR(_version), 
+				GET_EXE_VERSION_EX_MINOR(_version), GET_EXE_VERSION_EX_BUILD(_version), GET_EXE_VERSION_EX_REVISION(_version));
+			_CONSOLE("CKPE Game Library: %u.%u build %u rev:%u", GET_EXE_VERSION_EX_MAJOR(a_version),
+				GET_EXE_VERSION_EX_MINOR(a_version), GET_EXE_VERSION_EX_BUILD(a_version), GET_EXE_VERSION_EX_REVISION(a_version));
+			_CONSOLE("I have created a log file: \"%s\"", StringUtils::Utf16ToWinCP(_interface->logger->GetFileName()).c_str());
+
+			auto log = LogWindow::GetSingleton();
+			if (log && log->HasOutputFile())
+			{
+				auto fName = _READ_OPTION_USTR("Log", "sOutputFile", L"");
+				if (!fName.empty())
+					_CONSOLE("As you wanted, I will duplicate my entries in a log file: \"%s\"", 
+						StringUtils::Utf16ToWinCP(fName).c_str());
+			}
+
+			_CONSOLE("##########################################################");
 		}
 
 		void Interface::CmdLineHandler()
@@ -73,6 +115,11 @@ namespace CKPE
 					_interface->application->Terminate();
 				}
 			}
+		}
+
+		bool Interface::HasCustomThemeSetting() const noexcept(true)
+		{
+			return _theme_settings != nullptr;
 		}
 
 		Interface* Interface::GetSingleton() noexcept(true)

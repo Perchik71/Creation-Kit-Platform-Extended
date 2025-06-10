@@ -6,10 +6,14 @@
 
 #include <cstdint>
 #include <string>
-#include <CKPE.Common.h>
+#include <CKPE.Stream.h>
 
 namespace CKPE
 {
+#ifndef CKPE_GRAPHICS
+	typedef void* THandle;
+#endif // !CKPE_GRAPHICS
+
 	class CKPE_API GDIPlus
 	{
 		GDIPlus(const GDIPlus&) = delete;
@@ -18,6 +22,11 @@ namespace CKPE
 		GDIPlus() noexcept(true);
 		virtual ~GDIPlus() noexcept(true);
 
-		[[nodiscard]] static const GDIPlus* GetSingleton() noexcept(true);
+		static THandle LoadImageFromFile(const std::wstring& fname) noexcept(true);
+		static THandle LoadImageFromStream(Stream& stream) noexcept(true);
+		static THandle LoadImageFromResource(THandle hInst, std::uint32_t dwResId,
+			const std::wstring& ResType) noexcept(true);
+
+		[[nodiscard]] static GDIPlus* GetSingleton() noexcept(true);
 	};
 }

@@ -93,7 +93,7 @@ namespace CKPE
 		auto handle = (void*)LoadLibraryW(_path.c_str());
 		if (!handle)
 		{
-			_ERROR("\tCouldn't load library: \"%s\"", ErrorHandler::GetSystemMessage(GetLastError()));
+			_ERROR("\tCouldn't load library: \"%s\"", ErrorHandler::GetSystemMessage(GetLastError()).c_str());
 			return false;
 		}
 		

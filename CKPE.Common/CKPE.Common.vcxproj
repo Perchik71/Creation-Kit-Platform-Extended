@@ -62,7 +62,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CKPE.lib;Shell32.lib;Toml.lib;vmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CKPE.lib;Shell32.lib;Toml.lib;vmm.lib;libzydis.lib;comctl32.lib;msimg32.lib;uxtheme.lib;gdiplus.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <StackCommitSize>
       </StackCommitSize>
     </Link>
@@ -78,6 +78,30 @@
     <ClCompile Include="Src\CKPE.Common.RTTI.cpp" />
     <ClCompile Include="Src\CKPE.Common.RuntimeOptimization.cpp" />
     <ClCompile Include="Src\CKPE.Common.SettingCollection.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIBaseWindow.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UICheckBox.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIColored.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIComboBox.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UICustomBox.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIEditText.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIGroupBox.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIHeader.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIListBox.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIMDIClient.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIMenus.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIPageControl.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIPopupMenu.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIProgressBar.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIPushButton.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIRadioButton.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIRichEdit20.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIScrollBar.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIStatusBar.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIToolBar.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UITrackBar.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UITreeView.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIUpDown.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIVarCommon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\CKPE.Common.Common.h" />
@@ -88,6 +112,30 @@
     <ClInclude Include="Include\CKPE.Common.RuntimeOptimization.h" />
     <ClInclude Include="Include\CKPE.Common.Include.h" />
     <ClInclude Include="Include\CKPE.Common.SettingCollection.h" />
+    <ClInclude Include="Include\CKPE.Common.UIBaseWindow.h" />
+    <ClInclude Include="Include\CKPE.Common.UICheckBox.h" />
+    <ClInclude Include="Include\CKPE.Common.UIColored.h" />
+    <ClInclude Include="Include\CKPE.Common.UIComboBox.h" />
+    <ClInclude Include="Include\CKPE.Common.UICustomBox.h" />
+    <ClInclude Include="Include\CKPE.Common.UIEditText.h" />
+    <ClInclude Include="Include\CKPE.Common.UIGroupBox.h" />
+    <ClInclude Include="Include\CKPE.Common.UIHeader.h" />
+    <ClInclude Include="Include\CKPE.Common.UIListBox.h" />
+    <ClInclude Include="Include\CKPE.Common.UIMDIClient.h" />
+    <ClInclude Include="Include\CKPE.Common.UIMenus.h" />
+    <ClInclude Include="Include\CKPE.Common.UIPageControl.h" />
+    <ClInclude Include="Include\CKPE.Common.UIPopupMenu.h" />
+    <ClInclude Include="Include\CKPE.Common.UIProgressBar.h" />
+    <ClInclude Include="Include\CKPE.Common.UIPushButton.h" />
+    <ClInclude Include="Include\CKPE.Common.UIRadioButton.h" />
+    <ClInclude Include="Include\CKPE.Common.UIRichEdit20.h" />
+    <ClInclude Include="Include\CKPE.Common.UIScrollBar.h" />
+    <ClInclude Include="Include\CKPE.Common.UIStatusBar.h" />
+    <ClInclude Include="Include\CKPE.Common.UIToolBar.h" />
+    <ClInclude Include="Include\CKPE.Common.UITrackBar.h" />
+    <ClInclude Include="Include\CKPE.Common.UITreeView.h" />
+    <ClInclude Include="Include\CKPE.Common.UIUpDown.h" />
+    <ClInclude Include="Include\CKPE.Common.UIVarCommon.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource_version.rc" />
