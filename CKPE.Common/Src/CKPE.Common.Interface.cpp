@@ -8,9 +8,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.FileUtils.h>
 #include <CKPE.Graphics.h>
-#include <CKPE.Common.Interface.h>
-#include <CKPE.Common.LogWindow.h>
-#include <CKPE.Common.RTTI.h>
+#include <CKPE.Common.Include.h>
 #include <time.h>
 
 namespace CKPE
@@ -50,9 +48,9 @@ namespace CKPE
 			if (_cmdline) return;
 
 			{
+				// IMPORTANT OBJECTS
 				_interface = a_interface;
 				std::wstring spath = _interface->application->GetPath();
-
 				_cmdline = new CommandLineParser;
 				_settings = new TOMLSettingCollection(spath + _ssettings_fname);
 				if (PathUtils::FileExists(spath + _stheme_settings_fname))
@@ -60,7 +58,11 @@ namespace CKPE
 				else
 					_theme_settings = nullptr;
 				_version = FileUtils::GetFileVersion(spath + L"CKPE.Common.dll");
-				/* call constructor */ new LogWindow();
+				// IMPORTANT HOOKS
+				EditorUI::Hook::Initialize();	// Init UI patch
+
+				// RTTI AND LOG WINDOW
+				/* call constructor */ new LogWindow();		
 				RTTI::GetSingleton()->Initialize();
 			}
 

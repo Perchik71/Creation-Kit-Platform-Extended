@@ -7,3 +7,4 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.MemoryManager.h>
 #include <CKPE.Common.RTTI.h>
+#include <CKPE.Common.EditorUI.h>

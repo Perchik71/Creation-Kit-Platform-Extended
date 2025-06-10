@@ -92,6 +92,9 @@
     <ClCompile Include="Src\CKPE.Common.UITreeView.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.EditorUI.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -197,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="Include\CKPE.Common.UITreeView.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.EditorUI.h">
+      <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

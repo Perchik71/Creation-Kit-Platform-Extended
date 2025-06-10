@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <memory>
 #include <CKPE.Common.Common.h>
 
 namespace CKPE
