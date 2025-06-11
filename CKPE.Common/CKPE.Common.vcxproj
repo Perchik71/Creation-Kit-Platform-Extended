@@ -80,6 +80,7 @@
     <ClCompile Include="Src\CKPE.Common.RuntimeOptimization.cpp" />
     <ClCompile Include="Src\CKPE.Common.SafeExit.cpp" />
     <ClCompile Include="Src\CKPE.Common.SettingCollection.cpp" />
+    <ClCompile Include="Src\CKPE.Common.Threads.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIBaseWindow.cpp" />
     <ClCompile Include="Src\CKPE.Common.UICheckBox.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIColored.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="Include\CKPE.Common.Include.h" />
     <ClInclude Include="Include\CKPE.Common.SafeExit.h" />
     <ClInclude Include="Include\CKPE.Common.SettingCollection.h" />
+    <ClInclude Include="Include\CKPE.Common.Threads.h" />
     <ClInclude Include="Include\CKPE.Common.UIBaseWindow.h" />
     <ClInclude Include="Include\CKPE.Common.UICheckBox.h" />
     <ClInclude Include="Include\CKPE.Common.UIColored.h" />

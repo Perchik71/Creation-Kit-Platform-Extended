@@ -9,3 +9,4 @@
 #include <CKPE.Common.RTTI.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.SafeExit.h>
+#include <CKPE.Common.Threads.h>

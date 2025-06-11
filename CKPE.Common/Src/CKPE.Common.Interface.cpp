@@ -10,6 +10,7 @@
 #include <CKPE.Graphics.h>
 #include <CKPE.Common.Include.h>
 #include <CKPE.Common.UIVarCommon.h>
+#include <algorithm>
 #include <time.h>
 
 namespace CKPE
@@ -67,6 +68,7 @@ namespace CKPE
 				// IMPORTANT HOOKS
 				EditorUI::Hook::Initialize();	// Init UI patch (Dialogs)
 				SafeExit::Hook::Initialize();	// Init fast quit
+				Threads::Hook::Initialize();	// Init threads
 
 				if (_READ_OPTION_BOOL("CreationKit", "bUIClassicTheme", false))
 				{

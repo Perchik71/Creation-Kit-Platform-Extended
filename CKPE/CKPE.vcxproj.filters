@@ -29,9 +29,6 @@
     <ClCompile Include="Src\CKPE.CriticalSection.cpp">
       <Filter>API</Filter>
     </ClCompile>
-    <ClCompile Include="Src\CKPE.VersionLists.cpp">
-      <Filter>API</Filter>
-    </ClCompile>
     <ClCompile Include="Src\CKPE.GameManager.cpp">
       <Filter>API</Filter>
     </ClCompile>
@@ -124,9 +121,6 @@
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.CriticalSection.h">
-      <Filter>API</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\CKPE.VersionLists.h">
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.GameManager.h">

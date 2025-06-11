@@ -94,7 +94,6 @@
     <ClCompile Include="Src\CKPE.SafeWrite.cpp" />
     <ClCompile Include="Src\CKPE.StringUtils.cpp" />
     <ClCompile Include="Src\CKPE.Timer.cpp" />
-    <ClCompile Include="Src\CKPE.VersionLists.cpp" />
     <ClCompile Include="Src\CKPE.FileUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -135,7 +134,6 @@
     <ClInclude Include="Include\CKPE.SmartPointer.h" />
     <ClInclude Include="Include\CKPE.StringUtils.h" />
     <ClInclude Include="Include\CKPE.Timer.h" />
-    <ClInclude Include="Include\CKPE.VersionLists.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="build_version.txt" />
