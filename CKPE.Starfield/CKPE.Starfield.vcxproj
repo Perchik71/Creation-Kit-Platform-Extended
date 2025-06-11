@@ -69,6 +69,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Src\CKPE.Starfield.Runner.cpp" />
+    <ClCompile Include="Src\CKPE.Starfield.VersionLists.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource_version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\CKPE.Starfield.Runner.h" />
+    <ClInclude Include="Include\CKPE.Starfield.VersionLists.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

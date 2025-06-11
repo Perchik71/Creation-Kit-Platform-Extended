@@ -9,7 +9,7 @@
 
 namespace CKPE
 {
-	namespace SkyrimSE
+	namespace Fallout4
 	{
 		class VersionLists
 		{
@@ -19,13 +19,11 @@ namespace CKPE
 		public:
 			enum EDITOR_EXECUTABLE_TYPE : std::uint32_t
 			{
-				EDITOR_UNKNOWN,
-				EDITOR_SKYRIM_SE_1_5_3,
-				EDITOR_SKYRIM_SE_1_5_73,
-				EDITOR_SKYRIM_SE_1_6_438,
-				EDITOR_SKYRIM_SE_1_6_1130,
-				EDITOR_SKYRIM_SE_1_6_1378_1,
-				EDITOR_SKYRIM_SE_LAST = EDITOR_SKYRIM_SE_1_6_1378_1,
+				EDITOR_UNKNOWN = 0,
+				EDITOR_FALLOUT_C4_1_10_162_0,
+				EDITOR_FALLOUT_C4_1_10_943_1,
+				EDITOR_FALLOUT_C4_1_10_982_3,
+				EDITOR_FALLOUT_C4_LAST = EDITOR_FALLOUT_C4_1_10_982_3,
 			};
 
 			static void Verify();

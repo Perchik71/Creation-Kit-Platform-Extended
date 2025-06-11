@@ -5,67 +5,54 @@
 #include <vector>
 #include <unordered_map>
 #include <windows.h>
-#include <CKPE.SkyrimSE.VersionLists.h>
+#include <CKPE.Fallout4.VersionLists.h>
 
 namespace CKPE
 {
-	namespace SkyrimSE
+	namespace Fallout4
 	{
 		VersionLists::EDITOR_EXECUTABLE_TYPE _seditor_ver{ VersionLists::EDITOR_UNKNOWN };
 
 		// Список проверенных исполняемых файлов, допущенных к запуску
 		static std::unordered_map<uint32_t, VersionLists::EDITOR_EXECUTABLE_TYPE> _sallowedEditorVersion =
 		{
-			//{ 0xA9CD60C7ul, VersionLists::EDITOR_SKYRIM_SE_1_5_3			},	// Default
-			//{ 0xED7DB054ul, VersionLists::EDITOR_SKYRIM_SE_1_5_3			},	// Redirect Steam
-			{ 0x624E8C84ul, VersionLists::EDITOR_SKYRIM_SE_1_5_73			},	// Default
-			{ 0xF7E929A4ul, VersionLists::EDITOR_SKYRIM_SE_1_5_73			},	// Redirect Steam
-			{ 0x668F3CB3ul, VersionLists::EDITOR_SKYRIM_SE_1_5_73			},	// Unoffical patch 6.3
-			//{ 0x748A3CC4ul, VersionLists::EDITOR_SKYRIM_SE_1_6_438		},	// No Steam
-			//{ 0x3FDB3994ul, VersionLists::EDITOR_SKYRIM_SE_1_6_438		},	// With Steam
-			//{ 0xFDCAEE10ul, VersionLists::EDITOR_SKYRIM_SE_1_6_438		},	// No Steam and Redirect Steam
-			{ 0x2EF668CEul, VersionLists::EDITOR_SKYRIM_SE_1_6_1130			},	// Redirect Steam
-			{ 0x0085AA4Cul, VersionLists::EDITOR_SKYRIM_SE_1_6_1130			},	// Default
-			{ 0x0085AA4Cul, VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1		},	// Redirect Steam
+			{ 0xDF67F346ul, VersionLists::EDITOR_FALLOUT_C4_1_10_162_0		},	// Default
+			//{ 0x4BA2E086ul, VersionLists::EDITOR_FALLOUT_C4_1_10_943_1	},	// Redirect Steam
+			//{ 0xBAAF1B07ul, VersionLists::EDITOR_FALLOUT_C4_1_10_943_1	},	// No Steam and Redirect Steam
+			{ 0x481CCE95ul, VersionLists::EDITOR_FALLOUT_C4_1_10_982_3		},	// Redirect Steam
+			{ 0x55F7F580ul, VersionLists::EDITOR_FALLOUT_C4_1_10_982_3		},	// No Steam and Redirect Steam
 		};
 
 		// Список устаревших версий редакторов
 		static std::vector<VersionLists::EDITOR_EXECUTABLE_TYPE> _soutdatedEditorVersion =
 		{
-			VersionLists::EDITOR_SKYRIM_SE_1_5_3,
-			VersionLists::EDITOR_SKYRIM_SE_1_6_438,
+			VersionLists::EDITOR_FALLOUT_C4_1_10_943_1,
 		};
 
 		// Список ключевых смещений в исполняемых файлах, допущенных к запуску (но не точно)
 		static std::unordered_map<uint32_t,
 			std::pair<std::string_view, VersionLists::EDITOR_EXECUTABLE_TYPE>> _sallowedEditorVersion2 =
 		{
-			//{ 0x3078988ul,	{ "1.5.3.0",	VersionLists::EDITOR_SKYRIM_SE_1_5_3			} },
-			{ 0x3062CC8ul,		{ "1.5.73.0",	VersionLists::EDITOR_SKYRIM_SE_1_5_73			} },
-			//{ 0x2E835D8ul,	{ "1.6.438.0",	VersionLists::EDITOR_SKYRIM_SE_1_6_438			} },
-			{ 0x2F3E698ul,		{ "1.6.1130.0",	VersionLists::EDITOR_SKYRIM_SE_1_6_1130			} },
-			{ 0x2F7F018ul,		{ "1.6.1378.1",	VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1		} },
+			{ 0x3896168ul, { "1.10.162.0",	VersionLists::EDITOR_FALLOUT_C4_1_10_162_0		} },
+			//{ 0x2F8D1C8ul, { "1.10.943.1",	VersionLists::EDITOR_FALLOUT_C4_1_10_943_1	} },
+			{ 0x2F8D298ul, { "1.10.982.3",	VersionLists::EDITOR_FALLOUT_C4_1_10_982_3		} },
 		};
 
 		// Список названий редакторов
 		static std::vector<std::wstring_view> _sEditorVersionStr =
 		{
 			L"Unknown version",
-			L"Skyrim Special Edition [v1.5.3]",
-			L"Skyrim Special Edition [v1.5.73]",
-			L"Skyrim Special Edition [v1.6.438]",
-			L"Skyrim Special Edition [v1.6.1130]",
-			L"Skyrim Special Edition [v1.6.1378.1]",
+			L"Fallout 4 [v1.10.162.0]",
+			L"Fallout 4 [v1.10.943.1]",
+			L"Fallout 4 [v1.10.982.3]",
 		};
 
 		// Список имён файлов базы данных
 		static std::unordered_map<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view> _sallowedDatabaseVersion =
 		{
-			//{ VersionLists::EDITOR_SKYRIM_SE_1_5_3,		L"CreationKitPlatformExtended_SSE_1_5_3.database"		},
-			{ VersionLists::EDITOR_SKYRIM_SE_1_5_73,		L"CreationKitPlatformExtended_SSE_1_5_73.database"		},
-			//{ VersionLists::EDITOR_SKYRIM_SE_1_6_438,		L"CreationKitPlatformExtended_SSE_1_6_438.database"		},
-			{ VersionLists::EDITOR_SKYRIM_SE_1_6_1130,		L"CreationKitPlatformExtended_SSE_1_6_1130.database"	},
-			{ VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1,	L"CreationKitPlatformExtended_SSE_1_6_1378_1.database"	},
+			{ VersionLists::EDITOR_FALLOUT_C4_1_10_162_0,	L"CreationKitPlatformExtended_FO4_1_10_162.database"	},
+			//{ VersionLists::EDITOR_FALLOUT_C4_1_10_943_1,	L"CreationKitPlatformExtended_FO4_1_10_943_1.database"	},
+			{ VersionLists::EDITOR_FALLOUT_C4_1_10_982_3,	L"CreationKitPlatformExtended_FO4_1_10_982_3.database"	},
 		};
 
 		void VersionLists::Verify()

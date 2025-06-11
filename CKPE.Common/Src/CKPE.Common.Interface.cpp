@@ -9,6 +9,7 @@
 #include <CKPE.FileUtils.h>
 #include <CKPE.Graphics.h>
 #include <CKPE.Common.Include.h>
+#include <CKPE.Common.UIVarCommon.h>
 #include <time.h>
 
 namespace CKPE
@@ -43,7 +44,8 @@ namespace CKPE
 			}
 		}
 
-		void Interface::Initialize(const CKPEGameLibraryInterface* a_interface, std::uint64_t a_version) noexcept(true)
+		void Interface::Initialize(const CKPEGameLibraryInterface* a_interface, std::uint64_t a_version,
+			bool support_more_theme) noexcept(true)
 		{
 			if (_cmdline) return;
 
@@ -58,8 +60,30 @@ namespace CKPE
 				else
 					_theme_settings = nullptr;
 				_version = FileUtils::GetFileVersion(spath + L"CKPE.Common.dll");
+				// INSTALL RUN
+				
+				// TODO: Launch installer
+				
 				// IMPORTANT HOOKS
-				EditorUI::Hook::Initialize();	// Init UI patch
+				EditorUI::Hook::Initialize();	// Init UI patch (Dialogs)
+				SafeExit::Hook::Initialize();	// Init fast quit
+
+				if (_READ_OPTION_BOOL("CreationKit", "bUIClassicTheme", false))
+				{
+					// TODO: Classic win95-2000 theme
+				}
+				else if (_READ_OPTION_BOOL("CreationKit", "bUIDarkTheme", false))
+				{
+					std::uint32_t theme_id = 1;
+					if (support_more_theme)
+					{
+						theme_id = std::min(_READ_OPTION_UINT("CreationKit", "uUIDarkThemeId", theme_id), 3ul);
+						if ((theme_id == 3ul) && !HasCustomThemeSetting()) theme_id = 1;
+					}
+
+					// TODO: modern theme
+					// Need basedata for add...
+				}
 
 				// RTTI AND LOG WINDOW
 				/* call constructor */ new LogWindow();		
@@ -77,6 +101,7 @@ namespace CKPE
 			
 			_CONSOLE("##########################################################");
 			_CONSOLE("Hi, I'm CKPE! Now: %s", timeBuffer); 
+			// TODO: version CK
 			_CONSOLE("CKPE Runtime: %u.%u build %u rev:%u", GET_EXE_VERSION_EX_MAJOR(v), GET_EXE_VERSION_EX_MINOR(v), 
 				GET_EXE_VERSION_EX_BUILD(v), GET_EXE_VERSION_EX_REVISION(v));
 			_CONSOLE("CKPE Common Library: %u.%u build %u rev:%u", GET_EXE_VERSION_EX_MAJOR(_version), 

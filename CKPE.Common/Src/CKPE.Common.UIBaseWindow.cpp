@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Common.UIBaseWindow.h>
+#include <CKPE.Common.EditorUI.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.ErrorHandler.h>
@@ -477,7 +478,7 @@ namespace CKPE
 
 			LRESULT CUIBaseWindow::Perform(HWND hWnd, std::uint32_t uMsg, WPARAM wParam, LPARAM lParam) noexcept(true)
 			{ 
-				return 0;//EditorUI::HKSendMessageA(hWnd, uMsg, wParam, lParam);
+				return EditorUI::Hook::HKSendMessageA(hWnd, uMsg, wParam, lParam);
 			}
 
 			LRESULT CUIBaseWindow::WndProc(HWND hWnd, std::uint32_t uMsg, WPARAM wParam, LPARAM lParam) noexcept(true)
@@ -511,13 +512,13 @@ namespace CKPE
 
 			void CUICustomDialog::Create() noexcept(true)
 			{
-				// fix crashes dark theme
-			//	CreateDialogParamA(GetModuleHandle(nullptr), MAKEINTRESOURCEA(m_ResId), m_Parent->Handle, m_DlgProc, (LONG_PTR)this);
-				//EditorUI::HKCreateDialogParamA(GetModuleHandle(nullptr), MAKEINTRESOURCEA(m_ResId), m_Parent->Handle, 
-				//	m_DlgProc, (LONG_PTR)this);
-				//Assert(m_hWnd);
-				ShowWindow(m_hWnd, SW_SHOW);
-				UpdateWindow(m_hWnd);
+				m_hWnd = (HWND)EditorUI::Hook::HKCreateDialogParamA(GetModuleHandle(nullptr), MAKEINTRESOURCEA(m_ResId), 
+					m_Parent->Handle, (std::uintptr_t)m_DlgProc, (LONG_PTR)this);
+				if (m_hWnd)
+				{
+					ShowWindow(m_hWnd, SW_SHOW);
+					UpdateWindow(m_hWnd);
+				}
 			}
 
 			void CUICustomDialog::FreeRelease() noexcept(true)

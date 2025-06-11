@@ -2,10 +2,27 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Src\CKPE.Fallout4.Runner.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Fallout4.VersionLists.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
       <UniqueIdentifier>{3702ce59-c3aa-443b-bcef-8b88553cb07f}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\CKPE.Fallout4.VersionLists.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Fallout4.Runner.h">
+      <Filter>API</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource_version.rc" />
   </ItemGroup>
 </Project>

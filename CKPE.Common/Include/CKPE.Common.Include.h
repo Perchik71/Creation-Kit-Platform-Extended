@@ -8,3 +8,4 @@
 #include <CKPE.Common.MemoryManager.h>
 #include <CKPE.Common.RTTI.h>
 #include <CKPE.Common.EditorUI.h>
+#include <CKPE.Common.SafeExit.h>

@@ -69,6 +69,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Src\CKPE.Fallout4.Runner.cpp" />
+    <ClCompile Include="Src\CKPE.Fallout4.VersionLists.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\CKPE.Fallout4.Runner.h" />
+    <ClInclude Include="Include\CKPE.Fallout4.VersionLists.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource_version.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

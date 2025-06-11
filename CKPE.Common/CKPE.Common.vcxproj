@@ -78,6 +78,7 @@
     <ClCompile Include="Src\CKPE.Common.MemoryManager.cpp" />
     <ClCompile Include="Src\CKPE.Common.RTTI.cpp" />
     <ClCompile Include="Src\CKPE.Common.RuntimeOptimization.cpp" />
+    <ClCompile Include="Src\CKPE.Common.SafeExit.cpp" />
     <ClCompile Include="Src\CKPE.Common.SettingCollection.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIBaseWindow.cpp" />
     <ClCompile Include="Src\CKPE.Common.UICheckBox.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="Include\CKPE.Common.RTTI.h" />
     <ClInclude Include="Include\CKPE.Common.RuntimeOptimization.h" />
     <ClInclude Include="Include\CKPE.Common.Include.h" />
+    <ClInclude Include="Include\CKPE.Common.SafeExit.h" />
     <ClInclude Include="Include\CKPE.Common.SettingCollection.h" />
     <ClInclude Include="Include\CKPE.Common.UIBaseWindow.h" />
     <ClInclude Include="Include\CKPE.Common.UICheckBox.h" />

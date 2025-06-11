@@ -9,7 +9,7 @@
 
 namespace CKPE
 {
-	namespace SkyrimSE
+	namespace Starfield
 	{
 		class VersionLists
 		{
@@ -19,13 +19,13 @@ namespace CKPE
 		public:
 			enum EDITOR_EXECUTABLE_TYPE : std::uint32_t
 			{
-				EDITOR_UNKNOWN,
-				EDITOR_SKYRIM_SE_1_5_3,
-				EDITOR_SKYRIM_SE_1_5_73,
-				EDITOR_SKYRIM_SE_1_6_438,
-				EDITOR_SKYRIM_SE_1_6_1130,
-				EDITOR_SKYRIM_SE_1_6_1378_1,
-				EDITOR_SKYRIM_SE_LAST = EDITOR_SKYRIM_SE_1_6_1378_1,
+				EDITOR_UNKNOWN = 0,
+				EDITOR_STARFIELD_1_13_61_0,
+				EDITOR_STARFIELD_1_14_70_0,
+				EDITOR_STARFIELD_1_14_74_0,
+				EDITOR_STARFIELD_1_14_78_0,
+				EDITOR_STARFIELD_1_15_216_0,
+				EDITOR_STARFIELD_LAST = EDITOR_STARFIELD_1_15_216_0,
 			};
 
 			static void Verify();

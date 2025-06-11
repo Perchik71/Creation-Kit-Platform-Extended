@@ -95,6 +95,9 @@
     <ClCompile Include="Src\CKPE.Common.EditorUI.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.SafeExit.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -202,6 +205,9 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.Common.EditorUI.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.SafeExit.h">
       <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>

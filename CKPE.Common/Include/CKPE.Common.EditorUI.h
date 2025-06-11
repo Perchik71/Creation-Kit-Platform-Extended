@@ -21,8 +21,8 @@ namespace CKPE
 			bool _DeferredAllowResize{ false };
 			std::vector<std::pair<const char*, void*>>* _DeferredMenuItems{ nullptr };
 
-			EditorUI(const EditorUI&) = default;
-			EditorUI& operator=(const EditorUI&) = default;
+			EditorUI(const EditorUI&) = delete;
+			EditorUI& operator=(const EditorUI&) = delete;
 		public:
 			EditorUI() noexcept(true);
 

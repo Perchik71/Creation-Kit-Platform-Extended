@@ -8,7 +8,6 @@
 #include <CKPE.Logger.h>
 #include <CKPE.CommandLineParser.h>
 #include <CKPE.Common.Interface.h>
-#include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.SettingCollection.h>
 #include <CKPE.Common.LogWindow.h>
 #include <string_view>
@@ -33,7 +32,8 @@ namespace CKPE
 			constexpr Interface() noexcept(true) = default;
 			virtual ~Interface() noexcept(true);
 
-			void Initialize(const CKPEGameLibraryInterface* a_interface, std::uint64_t a_version) noexcept(true); 
+			void Initialize(const CKPEGameLibraryInterface* a_interface, std::uint64_t a_version, 
+				bool support_more_theme = true) noexcept(true); 
 			void CmdLineHandler();
 
 			[[nodiscard]] bool HasCustomThemeSetting() const noexcept(true);
