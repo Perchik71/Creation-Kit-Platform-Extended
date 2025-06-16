@@ -5,6 +5,7 @@
 #pragma once
 
 #include <CKPE.Graphics.h>
+#include <CKPE.Common.Common.h>
 
 namespace CKPE
 {

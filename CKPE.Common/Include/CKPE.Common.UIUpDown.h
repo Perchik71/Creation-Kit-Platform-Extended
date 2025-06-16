@@ -6,6 +6,7 @@
 
 #include <windows.h>
 #include <CKPE.Graphics.h>
+#include <CKPE.Common.Common.h>
 
 namespace CKPE
 {

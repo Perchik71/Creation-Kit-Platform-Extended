@@ -92,6 +92,7 @@
     <ClCompile Include="Src\CKPE.Common.UIGroupBox.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIHeader.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIListBox.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIListView.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIMDIClient.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIMemo.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIMenus.cpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="Include\CKPE.Common.UIGroupBox.h" />
     <ClInclude Include="Include\CKPE.Common.UIHeader.h" />
     <ClInclude Include="Include\CKPE.Common.UIListBox.h" />
+    <ClInclude Include="Include\CKPE.Common.UIListView.h" />
     <ClInclude Include="Include\CKPE.Common.UIMDIClient.h" />
     <ClInclude Include="Include\CKPE.Common.UIMemo.h" />
     <ClInclude Include="Include\CKPE.Common.UIMenus.h" />

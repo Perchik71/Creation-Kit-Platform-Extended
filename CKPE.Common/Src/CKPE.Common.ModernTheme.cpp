@@ -32,6 +32,7 @@
 #include <CKPE.Common.UIGroupBox.h>
 #include <CKPE.Common.UIHeader.h>
 #include <CKPE.Common.UIListBox.h>
+#include <CKPE.Common.UIListView.h>
 #include <CKPE.Common.UIMDIClient.h>
 #include <CKPE.Common.UIMemo.h>
 #include <CKPE.Common.UIPageControl.h>
@@ -1415,10 +1416,10 @@ namespace CKPE
 						PostMessageA(hWnd, WM_SETFONT, (WPARAM)f->Handle, TRUE);
 				}
 				break;
-				/*case ThemeType::ListView:
+				case ThemeType::ListView:
 					scrollBarTheme = UI::ListView::Initialize(hWnd);
 					PostMessageA(hWnd, WM_SETFONT, (WPARAM)f->Handle, TRUE);
-					break;*/
+					break;
 				case ThemeType::TreeView:
 					scrollBarTheme = UI::TreeView::Initialize(hWnd);
 					PostMessageA(hWnd, WM_SETFONT, (WPARAM)f->Handle, TRUE);
@@ -1488,6 +1489,9 @@ namespace CKPE
 					else if (((uStyles & WS_CAPTION) == WS_CAPTION) && ((uStyles & WS_CHILD) != WS_CHILD)) {
 						if ((uStyles & WS_SYSMENU) == WS_SYSMENU)
 						{
+							// It's a bit wasteful, but it's guaranteed that all windows will have their title changed.
+							ModernTheme::ApplyDarkThemeForWindow(reinterpret_cast<void*>(hWnd));
+
 							/*auto Inst = Interface::GetSingleton()->GetApplication()->
 								GlobalEnginePtr->GetInstanceDLL();
 							SetClassLongPtrA(hWnd, GCLP_HICON, (LONG_PTR)LoadIconA((HINSTANCE)Inst, MAKEINTRESOURCEA(IDI_CKPEICON)));
@@ -1547,17 +1551,17 @@ namespace CKPE
 					// Paint menu item
 					UI::PopupMenu::Event::OnDrawItem(hWnd, lpdis);
 					return TRUE;
-				//case ODT_LISTVIEW:
-				//{
-				//	if (lpdis->CtlID == EditorAPI::EditorUI::UI_DATA_DIALOG_PLUGINLISTVIEW)
-				//	{
-				//		// Paint draw item listview
-				//		UI::ListView::OnCustomDrawItemPlugins(hWnd, lpdis);
+				case ODT_LISTVIEW:
+				{
+					if (lpdis->CtlID == 1056)
+					{
+						// Paint draw item listview
+						UI::ListView::OnCustomDrawItemPlugins(hWnd, lpdis);
 
-				//		return TRUE;
-				//	}
-				//}
-				//break;
+						return TRUE;
+					}
+				}
+				break;
 				}
 			}
 			break;
@@ -1572,29 +1576,29 @@ namespace CKPE
 
 			case WM_NOTIFY:
 			{
-				//LPNMHDR nmhdr = (LPNMHDR)lParam;
+				LPNMHDR nmhdr = (LPNMHDR)lParam;
 
-				//// Custom drawing
-				//if (nmhdr->code == NM_CUSTOMDRAW)
-				//{
-				//	auto themeType = GetThemeTypeFromWindow(nmhdr->hwndFrom);
+				// Custom drawing
+				if (nmhdr->code == NM_CUSTOMDRAW)
+				{
+					auto themeType = GetThemeTypeFromWindow(nmhdr->hwndFrom);
 
-				//	if ((themeType == ThemeType::TreeView) && (nmhdr->idFrom != 2093))
-				//		// I have no idea why TreeView uses the ListView functionality, this question is for microsoft.
-				//		return UI::TreeView::OnCustomDraw(hWnd, (LPNMLVCUSTOMDRAW)lParam);
+					if ((themeType == ThemeType::TreeView) && (nmhdr->idFrom != 2093))
+						// I have no idea why TreeView uses the ListView functionality, this question is for microsoft.
+						return UI::TreeView::OnCustomDraw(hWnd, (LPNMLVCUSTOMDRAW)lParam);
 
-				//	if (themeType == ThemeType::ListView)
-				//	{
-				//		// To colorize the list of mods, WM_NOTIFY calls prevent me.
-				//		// It's strange, but to change the color of the text from black to light in standard CK windows with properties, WM_NOTIFY is needed.
-				//		if (nmhdr->idFrom != EditorAPI::EditorUI::UI_DATA_DIALOG_PLUGINLISTVIEW)
-				//			return UI::ListView::OnCustomDraw(hWnd, (LPNMLVCUSTOMDRAW)lParam);
-				//		else
-				//			return CDRF_DODEFAULT;
-				//	}
-				//	else if (themeType == ThemeType::ToolBar)
-				//		return UI::ToolBar::OnCustomDraw(hWnd, (LPNMTBCUSTOMDRAW)lParam);
-				//}
+					if (themeType == ThemeType::ListView)
+					{
+						// To colorize the list of mods, WM_NOTIFY calls prevent me.
+						// It's strange, but to change the color of the text from black to light in standard CK windows with properties, WM_NOTIFY is needed.
+						if (nmhdr->idFrom != 1056)
+							return UI::ListView::OnCustomDraw(hWnd, (LPNMLVCUSTOMDRAW)lParam);
+						else
+							return CDRF_DODEFAULT;
+					}
+					else if (themeType == ThemeType::ToolBar)
+						return UI::ToolBar::OnCustomDraw(hWnd, (LPNMTBCUSTOMDRAW)lParam);
+				}
 			}
 			break;
 

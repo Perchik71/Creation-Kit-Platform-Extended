@@ -60,7 +60,7 @@ namespace CKPE
 						LRESULT result = DefSubclassProc(hWnd, uMsg, wParam, lParam);
 
 						HDC hdc = GetWindowDC(hWnd);
-						*(HDC*)(((uintptr_t)&Canvas + 0x8)) = hdc;
+						*(HDC*)(((std::uintptr_t)&Canvas + 0x8)) = hdc;
 
 						if (GetWindowRect(hWnd, (LPRECT)&rc))
 						{

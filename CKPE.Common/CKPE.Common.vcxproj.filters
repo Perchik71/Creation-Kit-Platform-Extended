@@ -110,6 +110,9 @@
     <ClCompile Include="Src\CKPE.Common.UIMemo.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIListView.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -232,6 +235,9 @@
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.Common.UIMemo.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIListView.h">
       <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
