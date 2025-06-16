@@ -111,7 +111,8 @@ namespace CKPE
 
 				namespace Event
 				{
-					CKPE_COMMON_API void OnBeforeDrawText(Canvas& canvas, DWORD& flags, INT iStateId) noexcept(true)
+					CKPE_COMMON_API void OnBeforeDrawText(Canvas& canvas, std::uint32_t& flags,
+						std::int32_t iStateId) noexcept(true)
 					{
 						flags |= DT_END_ELLIPSIS;
 						if (iStateId == PBS_DISABLED)

@@ -10,3 +10,5 @@
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.SafeExit.h>
 #include <CKPE.Common.Threads.h>
+#include <CKPE.Common.ClassicTheme.h>
+#include <CKPE.Common.ModernTheme.h>

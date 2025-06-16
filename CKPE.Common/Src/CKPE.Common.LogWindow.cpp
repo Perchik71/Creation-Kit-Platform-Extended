@@ -12,6 +12,8 @@
 #include <CKPE.MessageBox.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.MemoryManager.h>
+#include <CKPE.Common.ClassicTheme.h>
+#include <CKPE.Common.ModernTheme.h>
 #include <concurrent_vector.h>
 #include <unordered_set>
 #include <thread>
@@ -228,19 +230,13 @@ namespace CKPE
 			std::thread asyncLogThread([](HWND* window, LogWindow* module)
 				{
 					// Окно вывода
-					auto instance = static_cast<HINSTANCE>(GetModuleHandle(NULL));
-					/*auto darkmode = _READ_OPTION_BOOL("CreationKit", "bUIDarkTheme", false);
-					auto classicmode = _READ_OPTION_BOOL("CreationKit", "bUIClassicTheme", false);*/
+					auto instance = static_cast<HINSTANCE>(GetModuleHandleA(nullptr));
 
-					/*if (darkmode && classicmode)
-						_WARNING("You cannot use classic mode and dark mode together.");
-					else
-					{
-						if (darkmode)
-							Patches::UIThemePatch::InitializeCurrentThread();
-						else if (classicmode)
-							Patches::UIThemeClassicPatch::InitializeCurrentThread();
-					}*/
+					if (_READ_OPTION_BOOL("CreationKit", "bUIClassicTheme", false))
+						ClassicTheme::InitializeCurrentThread();
+
+					else if (_READ_OPTION_BOOL("CreationKit", "bUIDarkTheme", false))
+						ModernTheme::InitializeCurrentThread();
 
 					WNDCLASSEXA wc
 					{
@@ -263,6 +259,9 @@ namespace CKPE
 
 					if (!(*window))
 						return false;
+
+					if (_READ_OPTION_BOOL("CreationKit", "bUIDarkTheme", false))
+						ModernTheme::ApplyDarkThemeForWindow(reinterpret_cast<void*>(*window));
 
 					// Опрашивайть каждые 100 мс на наличие новых строк
 					SetTimer(*window, UI_LOG_CMD_ADDTEXT, 100, NULL);

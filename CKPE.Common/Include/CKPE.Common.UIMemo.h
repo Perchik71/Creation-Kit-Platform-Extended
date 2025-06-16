@@ -4,7 +4,9 @@
 
 #pragma once
 
-#include <CKPE.Common.UIGraphics.h>
+#include <windows.h>
+#include <uxtheme.h>
+#include <CKPE.Graphics.h>
 
 namespace CKPE
 {

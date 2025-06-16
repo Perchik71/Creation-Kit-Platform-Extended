@@ -9,7 +9,6 @@
 #include <CKPE.FileUtils.h>
 #include <CKPE.Graphics.h>
 #include <CKPE.Common.Include.h>
-#include <CKPE.Common.UIVarCommon.h>
 #include <algorithm>
 #include <time.h>
 
@@ -71,17 +70,11 @@ namespace CKPE
 				Threads::Hook::Initialize();	// Init threads
 
 				if (_READ_OPTION_BOOL("CreationKit", "bUIClassicTheme", false))
-				{
-					// TODO: Classic win95-2000 theme
-				}
+					ClassicTheme::Hook::Initialize();
+
 				else if (_READ_OPTION_BOOL("CreationKit", "bUIDarkTheme", false))
 				{
-					std::uint32_t theme_id = 1;
-					if (support_more_theme)
-					{
-						theme_id = std::min(_READ_OPTION_UINT("CreationKit", "uUIDarkThemeId", theme_id), 3ul);
-						if ((theme_id == 3ul) && !HasCustomThemeSetting()) theme_id = 1;
-					}
+					ModernTheme::Hook::Initialize();
 
 					// TODO: modern theme
 					// Need basedata for add...

@@ -587,7 +587,7 @@ namespace CKPE
 
 	// Font
 
-	Font::Font(const THandle hDC) noexcept(true) : ObjectGUI(4), m_Name(new std::string)
+	Font::Font(const THandle hDC) noexcept(true) : ObjectGUI(4), m_lock(false), m_Name(new std::string)
 	{
 		m_FontStyles = new FontStyles();
 		Recreate(hDC);
@@ -598,9 +598,9 @@ namespace CKPE
 		ObjectGUI(4), m_lock(false), m_ulCharSet(ulCharSet),
 		m_Name(new std::string(name)), m_Quality(quality), m_Pitch(pitch)
 	{
-		Size = size;
 		m_FontStyles = new FontStyles();
 		*m_FontStyles = styles;
+		Size = size;
 	}
 
 	void Font::Recreate(const THandle hDC) noexcept(true)

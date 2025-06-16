@@ -101,6 +101,15 @@
     <ClCompile Include="Src\CKPE.Common.Threads.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.ClassicTheme.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.ModernTheme.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UIMemo.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -215,6 +224,15 @@
     </ClInclude>
     <ClInclude Include="Include\CKPE.Common.Threads.h">
       <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.ClassicTheme.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.ModernTheme.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UIMemo.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

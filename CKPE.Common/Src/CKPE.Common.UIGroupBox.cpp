@@ -45,7 +45,7 @@ namespace CKPE
 
 				namespace Event
 				{
-					CKPE_COMMON_API void OnBeforeDrawText(Canvas& canvas, DWORD& flags) noexcept(true)
+					CKPE_COMMON_API void OnBeforeDrawText(Canvas& canvas, std::uint32_t& flags) noexcept(true)
 					{
 						flags |= DT_END_ELLIPSIS;
 						canvas.ColorText = GetThemeSysColor(ThemeColor_Text_4);

@@ -53,7 +53,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <CallingConvention>StdCall</CallingConvention>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
-      <DisableSpecificWarnings>26478</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26478;26819</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -62,7 +62,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CKPE.lib;Shell32.lib;Toml.lib;vmm.lib;libzydis.lib;comctl32.lib;msimg32.lib;uxtheme.lib;gdiplus.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CKPE.lib;Shell32.lib;Toml.lib;vmm.lib;libzydis.lib;comctl32.lib;msimg32.lib;uxtheme.lib;gdiplus.lib;shlwapi.lib;dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <StackCommitSize>
       </StackCommitSize>
     </Link>
@@ -72,10 +72,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Src\CKPE.Common.ClassicTheme.cpp" />
     <ClCompile Include="Src\CKPE.Common.EditorUI.cpp" />
     <ClCompile Include="Src\CKPE.Common.Interface.cpp" />
     <ClCompile Include="Src\CKPE.Common.LogWindow.cpp" />
     <ClCompile Include="Src\CKPE.Common.MemoryManager.cpp" />
+    <ClCompile Include="Src\CKPE.Common.ModernTheme.cpp" />
     <ClCompile Include="Src\CKPE.Common.RTTI.cpp" />
     <ClCompile Include="Src\CKPE.Common.RuntimeOptimization.cpp" />
     <ClCompile Include="Src\CKPE.Common.SafeExit.cpp" />
@@ -91,6 +93,7 @@
     <ClCompile Include="Src\CKPE.Common.UIHeader.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIListBox.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIMDIClient.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UIMemo.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIMenus.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIPageControl.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIPopupMenu.cpp" />
@@ -107,11 +110,13 @@
     <ClCompile Include="Src\CKPE.Common.UIVarCommon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\CKPE.Common.ClassicTheme.h" />
     <ClInclude Include="Include\CKPE.Common.Common.h" />
     <ClInclude Include="Include\CKPE.Common.EditorUI.h" />
     <ClInclude Include="Include\CKPE.Common.Interface.h" />
     <ClInclude Include="Include\CKPE.Common.LogWindow.h" />
     <ClInclude Include="Include\CKPE.Common.MemoryManager.h" />
+    <ClInclude Include="Include\CKPE.Common.ModernTheme.h" />
     <ClInclude Include="Include\CKPE.Common.RTTI.h" />
     <ClInclude Include="Include\CKPE.Common.RuntimeOptimization.h" />
     <ClInclude Include="Include\CKPE.Common.Include.h" />
@@ -128,6 +133,7 @@
     <ClInclude Include="Include\CKPE.Common.UIHeader.h" />
     <ClInclude Include="Include\CKPE.Common.UIListBox.h" />
     <ClInclude Include="Include\CKPE.Common.UIMDIClient.h" />
+    <ClInclude Include="Include\CKPE.Common.UIMemo.h" />
     <ClInclude Include="Include\CKPE.Common.UIMenus.h" />
     <ClInclude Include="Include\CKPE.Common.UIPageControl.h" />
     <ClInclude Include="Include\CKPE.Common.UIPopupMenu.h" />

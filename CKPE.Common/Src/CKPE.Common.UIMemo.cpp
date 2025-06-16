@@ -16,7 +16,7 @@ namespace CKPE
 			namespace Memo
 			{
 				static CRECT rc, rc2;
-				static CUICanvas Canvas(nullptr);
+				static Canvas canvas(nullptr);
 
 				CKPE_COMMON_API HTHEME Initialize(HWND hWindow) noexcept(true)
 				{
@@ -43,19 +43,19 @@ namespace CKPE
 						LRESULT result = DefSubclassProc(hWnd, uMsg, wParam, lParam);
 
 						HDC hdc = GetWindowDC(hWnd);
-						*(HDC*)(((uintptr_t)&Canvas + 0x8)) = hdc;
+						*(HDC*)(((uintptr_t)&canvas + 0x8)) = hdc;
 
 						if (GetWindowRect(hWnd, (LPRECT)&rc))
 						{
 							rc.Offset(-rc.Left, -rc.Top);
 
 							if (GetFocus() == hWnd)
-								Canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Pressed));
+								canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Pressed));
 							else
-								Canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_End));
+								canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_End));
 
 							rc.Inflate(-1, -1);
-							Canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Color));
+							canvas.Frame(rc, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Color));
 						}
 
 						// scrollbox detected grip
@@ -68,7 +68,7 @@ namespace CKPE
 								rc.Width = GetSystemMetrics(SM_CXVSCROLL);
 								rc.Height = GetSystemMetrics(SM_CYHSCROLL);
 
-								Canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_Default));
+								canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_Default));
 							}
 						}
 
@@ -80,13 +80,13 @@ namespace CKPE
 						PAINTSTRUCT ps;
 						HDC hDC = BeginPaint(hWnd, &ps);
 
-						CUICanvas Canvas(hDC);
+						Canvas canvas(hDC);
 						CRECT rc;
 						GetWindowRect(hWnd, (LPRECT)&rc);
 						rc.Offset(rc.Left, rc.Top);
 						// skip border
 						rc.Inflate(-2, -2);
-						Canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_Edit_Color_Disabled));
+						canvas.Fill(rc, GetThemeSysColor(ThemeColor::ThemeColor_Edit_Color_Disabled));
 
 						EndPaint(hWnd, &ps);
 					}
