@@ -48,6 +48,18 @@ namespace CKPE
 		return GetApplicationPath() + L"CKPEPlugins/";
 	}
 
+	bool PathUtils::FileExists(const std::string& path) noexcept(true)
+	{
+		auto attr = GetFileAttributesA(path.c_str());
+		return ((attr != INVALID_FILE_ATTRIBUTES) && !(attr & FILE_ATTRIBUTE_DIRECTORY));
+	}
+
+	bool PathUtils::DirExists(const std::string& path) noexcept(true)
+	{
+		auto attr = GetFileAttributesA(path.c_str());
+		return ((attr != INVALID_FILE_ATTRIBUTES) && (attr & FILE_ATTRIBUTE_DIRECTORY));
+	}
+
 	bool PathUtils::FileExists(const std::wstring& path) noexcept(true)
 	{
 		auto attr = GetFileAttributesW(path.c_str());
@@ -82,15 +94,48 @@ namespace CKPE
 		return path;
 	}
 
-	std::wstring PathUtils::ExtractFileName(std::wstring& path)
+
+	std::string PathUtils::ExtractFileExt(const std::string& path) noexcept(true)
+	{
+		auto it = path.find_last_of(".");
+		if (it != std::string::npos)
+			return path.substr(it);
+		return "";
+	}
+
+	std::string PathUtils::ExtractFileName(const std::string& path) noexcept(true)
+	{
+		auto it = path.find_last_of("\\/");
+		if (it != std::string::npos)
+			return path.substr(it + 1);
+		return path;
+	}
+
+	std::string PathUtils::ExtractFilePath(const std::string& path) noexcept(true)
+	{
+		auto it = path.find_last_of("\\/");
+		if (it != std::string::npos)
+			return path.substr(0, it + 1);
+		return "";
+	}
+
+	std::wstring PathUtils::ExtractFileExt(const std::wstring& path) noexcept(true)
+	{
+		auto it = path.find_last_of(L".");
+		if (it != std::wstring::npos)
+			return path.substr(it);
+		return L"";
+	}
+
+	std::wstring PathUtils::ExtractFileName(const std::wstring& path) noexcept(true)
 	{
 		auto it = path.find_last_of(L"\\/");
 		if (it != std::wstring::npos)
 			return path.substr(it + 1);
 		return path;
 	}
-
-	std::wstring PathUtils::ExtractFilePath(std::wstring& path)
+	
+	std::wstring PathUtils::ExtractFilePath(const std::wstring& path) noexcept(true)
 	{
 		auto it = path.find_last_of(L"\\/");
 		if (it != std::wstring::npos)

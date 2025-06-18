@@ -56,15 +56,15 @@ namespace CKPE
 
 		// see https://github.com/adzm/win32-custom-menubar-aero-theme/blob/main/UAHMenuBar.h
 
-// window messages related to menu bar drawing
-#define WM_UAHDESTROYWINDOW    0x0090	// handled by DefWindowProc
-#define WM_UAHDRAWMENU         0x0091	// lParam is UAHMENU
-#define WM_UAHDRAWMENUITEM     0x0092	// lParam is UAHDRAWMENUITEM
-#define WM_UAHINITMENU         0x0093	// handled by DefWindowProc
-#define WM_UAHMEASUREMENUITEM  0x0094	// lParam is UAHMEASUREMENUITEM
-#define WM_UAHNCPAINTMENUPOPUP 0x0095	// handled by DefWindowProc
+		// window messages related to menu bar drawing
+		#define WM_UAHDESTROYWINDOW    0x0090	// handled by DefWindowProc
+		#define WM_UAHDRAWMENU         0x0091	// lParam is UAHMENU
+		#define WM_UAHDRAWMENUITEM     0x0092	// lParam is UAHDRAWMENUITEM
+		#define WM_UAHINITMENU         0x0093	// handled by DefWindowProc
+		#define WM_UAHMEASUREMENUITEM  0x0094	// lParam is UAHMEASUREMENUITEM
+		#define WM_UAHNCPAINTMENUPOPUP 0x0095	// handled by DefWindowProc
 
-// describes the sizes of the menu bar or menu item
+		// describes the sizes of the menu bar or menu item
 		typedef union tagUAHMENUITEMMETRICS
 		{
 			// cx appears to be 14 / 0xE less than rcItem's width!
@@ -211,6 +211,7 @@ namespace CKPE
 		static HBRUSH g_brItemBackground = nullptr;
 		static HBRUSH g_brItemBackgroundHot = nullptr;
 		static HBRUSH g_brItemBackgroundSelected = nullptr;
+		static HICON g_AppIcon = nullptr;
 
 		struct string_equal_to {
 			inline bool operator()(const std::string_view& lhs, const std::string_view& rhs) const
@@ -261,16 +262,15 @@ namespace CKPE
 		// Returns TRUE if successful
 		static bool RegisterThemeHandle(HTHEME hTheme, ThemeType eTheme) {
 			if (ThemeType::None == eTheme)
-				return FALSE;
+				return false;
 
-			for (auto it = ThemeHandles.begin(); it != ThemeHandles.end(); it++) {
+			for (auto it = ThemeHandles.begin(); it != ThemeHandles.end(); it++) 
 				if ((*it).second == eTheme)
-					return FALSE;
-			}
+					return false;
 
 			ThemeHandles.insert(std::make_pair(hTheme, eTheme));
 
-			return TRUE;
+			return true;
 		}
 
 		// Binds the specified class type to the visual theme. hWindow takes only HTHEME
@@ -1271,33 +1271,36 @@ namespace CKPE
 				int iTextStateID = 0;
 				int iBackgroundStateID = 0;
 				{
-					if ((pUDMI->dis.itemState & ODS_INACTIVE) || (pUDMI->dis.itemState & ODS_DEFAULT)) {
+					if ((pUDMI->dis.itemState & ODS_INACTIVE) || (pUDMI->dis.itemState & ODS_DEFAULT)) 
+					{
 						// normal display
 						iTextStateID = MBI_NORMAL;
 						iBackgroundStateID = MBI_NORMAL;
 					}
-					if (pUDMI->dis.itemState & ODS_HOTLIGHT) {
+					if (pUDMI->dis.itemState & ODS_HOTLIGHT) 
+					{
 						// hot tracking
 						iTextStateID = MBI_HOT;
 						iBackgroundStateID = MBI_HOT;
 
 						pbrBackground = &g_brItemBackgroundHot;
 					}
-					if (pUDMI->dis.itemState & ODS_SELECTED) {
+					if (pUDMI->dis.itemState & ODS_SELECTED) 
+					{
 						// clicked -- MENU_POPUPITEM has no state for this, though MENU_BARITEM does
 						iTextStateID = MBI_HOT;
 						iBackgroundStateID = MBI_HOT;
 
 						pbrBackground = &g_brItemBackgroundSelected;
 					}
-					if ((pUDMI->dis.itemState & ODS_GRAYED) || (pUDMI->dis.itemState & ODS_DISABLED)) {
+					if ((pUDMI->dis.itemState & ODS_GRAYED) || (pUDMI->dis.itemState & ODS_DISABLED)) 
+					{
 						// disabled / grey text
 						iTextStateID = MBI_DISABLED;
 						iBackgroundStateID = MBI_DISABLED;
 					}
-					if (pUDMI->dis.itemState & ODS_NOACCEL) {
+					if (pUDMI->dis.itemState & ODS_NOACCEL)
 						dwFlags |= DT_HIDEPREFIX;
-					}
 				}
 
 				if (!g_menuTheme)
@@ -1451,11 +1454,14 @@ namespace CKPE
 					break;
 				default:
 					// fix slowdown render window... exclude from subclassing
-					if ((ThemeType::Static == themeType) && ((uStyles & SS_BLACKRECT) == SS_BLACKRECT) && (GetWindowLongPtrA(hWnd, GWLP_ID) == 0xA3B)) {
+					if ((ThemeType::Static == themeType) && ((uStyles & SS_BLACKRECT) == SS_BLACKRECT) && 
+						(GetWindowLongPtrA(hWnd, GWLP_ID) == 0xA3B)) 
+					{
 						RemoveWindowSubclass(hWnd, WindowSubclassModernTheme, 0);
 						break;
 					}
-					else if ((uStyles & SS_SUNKEN) == SS_SUNKEN) {
+					else if ((uStyles & SS_SUNKEN) == SS_SUNKEN) 
+					{
 						// 1. Label with frame
 						// 2. ColorBox (and DialogColor)
 						// 3. Edit (Disabled) (don't understand)	--- SS_EDITCONTROL
@@ -1468,7 +1474,8 @@ namespace CKPE
 						//	((uStyles & SS_ETCHEDVERT) == SS_ETCHEDVERT))
 						//	// CK seperator etc
 						//	UI::CustomBox::Initialize(hWnd, UI::CustomBox::abNormal);
-						else {
+						else 
+						{
 							// skip edit control 
 							if (((uStyles & SS_EDITCONTROL) == SS_EDITCONTROL) || ((uStyles & ES_AUTOHSCROLL) == ES_AUTOHSCROLL) ||
 								((uStyles & ES_AUTOVSCROLL) == ES_AUTOVSCROLL))
@@ -1484,18 +1491,18 @@ namespace CKPE
 					else if (((uStyles & SS_CENTERIMAGE) == SS_CENTERIMAGE) && ((uStylesEx & WS_EX_CLIENTEDGE) == WS_EX_CLIENTEDGE))
 						// CK deprecated control (material count)
 						UI::CustomBox::Initialize(hWnd, UI::CustomBox::abNormal);
-					else if ((ThemeType::Static == themeType) && (((uStylesEx & WS_EX_CLIENTEDGE) == WS_EX_CLIENTEDGE) || ((uStylesEx & WS_EX_STATICEDGE) == WS_EX_STATICEDGE)))
+					else if ((ThemeType::Static == themeType) && (((uStylesEx & WS_EX_CLIENTEDGE) == WS_EX_CLIENTEDGE) || 
+						((uStylesEx & WS_EX_STATICEDGE) == WS_EX_STATICEDGE)))
 						UI::CustomBox::Initialize(hWnd, UI::CustomBox::abNormal);
-					else if (((uStyles & WS_CAPTION) == WS_CAPTION) && ((uStyles & WS_CHILD) != WS_CHILD)) {
+					else if (((uStyles & WS_CAPTION) == WS_CAPTION) && ((uStyles & WS_CHILD) != WS_CHILD))
+					{
 						if ((uStyles & WS_SYSMENU) == WS_SYSMENU)
 						{
 							// It's a bit wasteful, but it's guaranteed that all windows will have their title changed.
 							ModernTheme::ApplyDarkThemeForWindow(reinterpret_cast<void*>(hWnd));
 
-							/*auto Inst = Interface::GetSingleton()->GetApplication()->
-								GlobalEnginePtr->GetInstanceDLL();
-							SetClassLongPtrA(hWnd, GCLP_HICON, (LONG_PTR)LoadIconA((HINSTANCE)Inst, MAKEINTRESOURCEA(IDI_CKPEICON)));
-							SetClassLongPtrA(hWnd, GCLP_HICONSM, (LONG_PTR)LoadIconA((HINSTANCE)Inst, MAKEINTRESOURCEA(IDI_CKPEICON)));*/
+							SetClassLongPtrA(hWnd, GCLP_HICON, (LONG_PTR)g_AppIcon);
+							SetClassLongPtrA(hWnd, GCLP_HICONSM, (LONG_PTR)g_AppIcon);
 						}
 					}
 					break;
@@ -1633,7 +1640,8 @@ namespace CKPE
 							return TRUE;
 						}, reinterpret_cast<LPARAM>(&buttonCount));
 
-					if (buttonCount <= 3) {
+					if (buttonCount <= 3) 
+					{
 						UI::CUICustomWindow Window = hWnd;
 						Canvas canvas(GetDC(hWnd));
 						CRECT windowArea(Window.ClientRect());
@@ -1841,6 +1849,7 @@ namespace CKPE
 			g_brItemBackground = (HBRUSH)UI::Comctl32GetSysColorBrush(COLOR_BTNFACE);
 			g_brItemBackgroundHot = ::CreateSolidBrush(UI::GetThemeSysColor(UI::ThemeColor_Button_Hot_Gradient_End));
 			g_brItemBackgroundSelected = (HBRUSH)UI::Comctl32GetSysColorBrush(COLOR_HIGHLIGHT);
+			g_AppIcon = LoadIconA(GetModuleHandleA(nullptr), MAKEINTRESOURCEA(318));
 
 			InitializeCurrentThread();
 		}

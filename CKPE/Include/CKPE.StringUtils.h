@@ -5,6 +5,7 @@
 #pragma once
 
 #include <string>
+#include <cstdarg>
 #include <CKPE.Common.h>
 
 namespace CKPE
@@ -36,5 +37,12 @@ namespace CKPE
 		static std::string QuoteRemove(const char* s) noexcept(true);
 		static std::wstring QuoteRemove(const std::wstring& str) noexcept(true);
 		static std::wstring QuoteRemove(const wchar_t* s) noexcept(true);
+
+		static std::string FormatString(const std::string& format_string, ...) noexcept(true);
+		static std::string FormatStringVa(const std::string& format_string, va_list ap) noexcept(true);
+		static std::wstring FormatString(const std::wstring& format_string, ...) noexcept(true);
+		static std::wstring FormatStringVa(const std::wstring& format_string, va_list ap) noexcept(true);
 	};
 }
+
+//#define MakeFormatArgs ()

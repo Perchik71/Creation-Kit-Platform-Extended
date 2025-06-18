@@ -33,7 +33,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)Dependencies\iw;$(SolutionDir)Dependencies\Detours;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)Dependencies\iw;$(SolutionDir)Dependencies\Detours;$(SolutionDir)Dependencies\mzip\src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -61,7 +61,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>detours.lib;Shell32.lib;msimg32.lib;gdiplus.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>detours.lib;Shell32.lib;msimg32.lib;gdiplus.lib;comctl32.lib;libzip.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
@@ -95,6 +95,7 @@
     <ClCompile Include="Src\CKPE.StringUtils.cpp" />
     <ClCompile Include="Src\CKPE.Timer.cpp" />
     <ClCompile Include="Src\CKPE.FileUtils.cpp" />
+    <ClCompile Include="Src\CKPE.Zipper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource_version.rc" />
@@ -134,6 +135,8 @@
     <ClInclude Include="Include\CKPE.SmartPointer.h" />
     <ClInclude Include="Include\CKPE.StringUtils.h" />
     <ClInclude Include="Include\CKPE.Timer.h" />
+    <ClInclude Include="Include\CKPE.Zipper.h" />
+    <ClInclude Include="resource_version.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="build_version.txt" />

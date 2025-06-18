@@ -5,7 +5,7 @@
 #include <windows.h>
 #include <stdio.h>
 #include <time.h>
-#include <stdarg.h>
+#include <cstdarg>
 #include <filesystem>
 #include <array>
 #include <CKPE.Logger.h>
@@ -224,128 +224,72 @@ namespace CKPE
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
-		auto len = _vscprintf(formatted_message.data(), (va_list)ap);
-		if (len < 1) return;
-
-		std::string string_done;
-		string_done.resize((std::size_t)len);
-		if (string_done.empty()) return;
-		vsprintf(string_done.data(), formatted_message.data(), (va_list)ap);
+		_slogger.WriteString(Logger::tFatalError,
+			StringUtils::FormatStringVa(formatted_message.data(), ap));
 		va_end(ap);
-
-		_slogger.WriteString(Logger::tFatalError, string_done);
 	}
 
 	CKPE_API void _ERROR(const std::string_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
-		auto len = _vscprintf(formatted_message.data(), (va_list)ap);
-		if (len < 1) return;
-
-		std::string string_done;
-		string_done.resize((std::size_t)len);
-		if (string_done.empty()) return;
-		vsprintf(string_done.data(), formatted_message.data(), (va_list)ap);
+		_slogger.WriteString(Logger::tError,
+			StringUtils::FormatStringVa(formatted_message.data(), ap));
 		va_end(ap);
-
-		_slogger.WriteString(Logger::tError, string_done);
 	}
 
 	CKPE_API void _WARNING(const std::string_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
-		auto len = _vscprintf(formatted_message.data(), (va_list)ap);
-		if (len < 1) return;
-
-		std::string string_done;
-		string_done.resize((std::size_t)len);
-		if (string_done.empty()) return;
-		vsprintf(string_done.data(), formatted_message.data(), (va_list)ap);
+		_slogger.WriteString(Logger::tWarning,
+			StringUtils::FormatStringVa(formatted_message.data(), ap));
 		va_end(ap);
-
-		_slogger.WriteString(Logger::tWarning, string_done);
 	}
 
 	CKPE_API void _MESSAGE(const std::string_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
-		auto len = _vscprintf(formatted_message.data(), (va_list)ap);
-		if (len < 1) return;
-
-		std::string string_done;
-		string_done.resize((std::size_t)len);
-		if (string_done.empty()) return;
-		vsprintf(string_done.data(), formatted_message.data(), (va_list)ap);
+		_slogger.WriteString(Logger::tMessage,
+			StringUtils::FormatStringVa(formatted_message.data(), ap));
 		va_end(ap);
-
-		_slogger.WriteString(Logger::tMessage, string_done);
 	}
 
 	CKPE_API void _FATALERROR(const std::wstring_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
-		auto len = _vscwprintf(formatted_message.data(), (va_list)ap);
-		if (len < 1) return;
-
-		std::wstring string_done;
-		string_done.resize((std::size_t)len);
-		if (string_done.empty()) return;
-		_vswprintf(string_done.data(), formatted_message.data(), (va_list)ap);
+		_slogger.WriteString(Logger::tFatalError,
+			StringUtils::Utf16ToUtf8(StringUtils::FormatStringVa(formatted_message.data(), ap)));
 		va_end(ap);
-
-		_slogger.WriteString(Logger::tFatalError, StringUtils::Utf16ToUtf8(string_done));
 	}
 
 	CKPE_API void _ERROR(const std::wstring_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
-		auto len = _vscwprintf(formatted_message.data(), (va_list)ap);
-		if (len < 1) return;
-
-		std::wstring string_done;
-		string_done.resize((std::size_t)len);
-		if (string_done.empty()) return;
-		_vswprintf(string_done.data(), formatted_message.data(), (va_list)ap);
+		_slogger.WriteString(Logger::tError,
+			StringUtils::Utf16ToUtf8(StringUtils::FormatStringVa(formatted_message.data(), ap)));
 		va_end(ap);
-
-		_slogger.WriteString(Logger::tError, StringUtils::Utf16ToUtf8(string_done));
 	}
 
 	CKPE_API void _WARNING(const std::wstring_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
-		auto len = _vscwprintf(formatted_message.data(), (va_list)ap);
-		if (len < 1) return;
-
-		std::wstring string_done;
-		string_done.resize((std::size_t)len);
-		if (string_done.empty()) return;
-		_vswprintf(string_done.data(), formatted_message.data(), (va_list)ap);
+		_slogger.WriteString(Logger::tWarning,
+			StringUtils::Utf16ToUtf8(StringUtils::FormatStringVa(formatted_message.data(), ap)));
 		va_end(ap);
-
-		_slogger.WriteString(Logger::tWarning, StringUtils::Utf16ToUtf8(string_done));
 	}
 
 	CKPE_API void _MESSAGE(const std::wstring_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
-		auto len = _vscwprintf(formatted_message.data(), (va_list)ap);
-		if (len < 1) return;
-
-		std::wstring string_done;
-		string_done.resize((std::size_t)len);
-		if (string_done.empty()) return;
-		_vswprintf(string_done.data(), formatted_message.data(), (va_list)ap);
+		_slogger.WriteString(Logger::tMessage,
+			StringUtils::Utf16ToUtf8(StringUtils::FormatStringVa(formatted_message.data(), ap)));
 		va_end(ap);
-
-		_slogger.WriteString(Logger::tMessage, StringUtils::Utf16ToUtf8(string_done));
 	}
 #endif // !CKPE_NO_LOGGER_FUNCTION
 }

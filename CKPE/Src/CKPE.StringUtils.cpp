@@ -4,6 +4,8 @@
 
 #include <windows.h>
 #include <limits.h>
+#include <cstdio>
+#include <cstdlib>
 #include <CKPE.StringUtils.h>
 #include "Impl/utfcpp/utf8.h"
 #include "Impl/utf8.h"
@@ -187,5 +189,45 @@ namespace CKPE
 	{
 		std::wstring r(s);
 		return QuoteRemove(r);
+	}
+
+	std::string StringUtils::FormatString(const std::string& format_string, ...) noexcept(true)
+	{
+		va_list ap;
+		va_start(ap, &format_string);
+		auto r = FormatStringVa(format_string, ap);
+		va_end(ap);
+		return r;
+	}
+
+	std::string StringUtils::FormatStringVa(const std::string& format_string, va_list ap) noexcept(true)
+	{
+		std::string r;
+		auto l = _vscprintf(format_string.c_str(), ap);
+		if (l < 1) return r;
+		r.resize((std::size_t)l);
+		if (!r.empty())
+			vsprintf(r.data(), format_string.c_str(), ap);
+		return r;
+	}
+
+	std::wstring StringUtils::FormatString(const std::wstring& format_string, ...) noexcept(true)
+	{
+		va_list ap;
+		va_start(ap, &format_string);
+		auto r = FormatStringVa(format_string, ap);
+		va_end(ap);
+		return r;
+	}
+
+	std::wstring StringUtils::FormatStringVa(const std::wstring& format_string, va_list ap) noexcept(true)
+	{
+		std::wstring r;
+		auto l = _vscwprintf(format_string.c_str(), ap);
+		if (l < 1) return r;
+		r.resize((std::size_t)l);
+		if (!r.empty())
+			_vswprintf(r.data(), format_string.c_str(), ap);
+		return r;
 	}
 }

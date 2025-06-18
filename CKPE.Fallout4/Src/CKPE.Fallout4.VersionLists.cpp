@@ -93,7 +93,7 @@ namespace CKPE
 
 		std::wstring VersionLists::GetGameName() noexcept(true)
 		{
-			return L"SSE";
+			return L"FO4";
 		}
 
 		std::wstring VersionLists::GetDatabaseFileName() noexcept(true)

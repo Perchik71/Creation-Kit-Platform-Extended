@@ -4,8 +4,10 @@
 
 #include <windows.h>
 #include <commctrl.h>
+#include <CKPE.Common.Interface.h>
 #include <CKPE.Common.MemoryManager.h>
 #include <CKPE.Common.EditorUI.h>
+#include <CKPE.Common.DialogManager.h>
 #include <CKPE.CriticalSection.h>
 #include <CKPE.Exception.h>
 #include <CKPE.Detours.h>
@@ -344,6 +346,17 @@ namespace CKPE
 			ThreadDialogData.DialogFunc = (DLGPROC)lpDialogFunc;
 			ThreadDialogData.IsDialog = false;
 
+			//_MESSAGE("DBG dialog: %X(%u) %p", (DWORD)lpTemplateName, (DWORD)lpTemplateName, lpDialogFunc);
+
+			auto dmgr = DialogManager::GetSingleton();
+			if (dmgr)
+			{
+				auto dialog = dmgr->GetDialog(reinterpret_cast<ULONG_PTR>(lpTemplateName));
+				if (dialog)
+					return dialog->Show((HWND)hWndParent, (DLGPROC)DialogFuncOverride, dwInitParam,
+						(HINSTANCE)hInstance);
+			}
+
 			// Override certain default dialogs to use this DLL's resources
 			//switch (reinterpret_cast<uintptr_t>(lpTemplateName))
 			//{
@@ -358,13 +371,6 @@ namespace CKPE
 			//	hInstance = Core::GlobalEnginePtr->GetInstanceDLL();
 			//	break;
 			//}
-
-			//_MESSAGE("DBG dialog: %X(%u) %p", (DWORD)lpTemplateName, (DWORD)lpTemplateName, lpDialogFunc);
-
-			//auto dialog = Core::GlobalDialogManagerPtr->GetDialog(reinterpret_cast<LONG_PTR>(lpTemplateName));
-			//if (dialog)
-			//	return Core::GlobalRegistratorWindowPtr->Register(
-			//		dialog->Show(hWndParent, DialogFuncOverride, dwInitParam, hInstance));
 
 			return CreateDialogParamA((HINSTANCE)hInstance, lpTemplateName, (HWND)hWndParent, 
 				(DLGPROC)DialogFuncOverride, dwInitParam);
@@ -377,6 +383,19 @@ namespace CKPE
 			ThreadDialogData.DialogFunc = (DLGPROC)lpDialogFunc;
 			ThreadDialogData.IsDialog = true;
 
+			_CONSOLE("HI");
+
+			//_CONSOLE("DBG dialog modal: %X(%u) %p", (DWORD)lpTemplateName, (DWORD)lpTemplateName, lpDialogFunc);
+
+			auto dmgr = DialogManager::GetSingleton();
+			if (dmgr)
+			{
+				auto dialog = dmgr->GetDialog(reinterpret_cast<ULONG_PTR>(lpTemplateName));
+				if (dialog)
+					return dialog->ShowModal((HWND)hWndParent, (DLGPROC)DialogFuncOverride, dwInitParam,
+						(HINSTANCE)hInstance);
+			}
+
 			// Override certain default dialogs to use this DLL's resources
 			//switch (reinterpret_cast<uintptr_t>(lpTemplateName))
 			//{
@@ -391,12 +410,6 @@ namespace CKPE
 			//	hInstance = Core::GlobalEnginePtr->GetInstanceDLL();
 			//	break;
 			//}
-
-			//_MESSAGE("DBG dialog modal: %X(%u) %p", (DWORD)lpTemplateName, (DWORD)lpTemplateName, lpDialogFunc);
-
-			//auto dialog = Core::GlobalDialogManagerPtr->GetDialog(reinterpret_cast<ULONG_PTR>(lpTemplateName));
-			//if (dialog)
-			//	return dialog->ShowModal(hWndParent, DialogFuncOverride, dwInitParam, hInstance);
 
 			return DialogBoxParamA((HINSTANCE)hInstance, lpTemplateName, (HWND)hWndParent, 
 				(DLGPROC)DialogFuncOverride, dwInitParam);

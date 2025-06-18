@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Module.h>
+#include <CKPE.StringUtils.h>
 #include <CKPE.Starfield.VersionLists.h>
 #include <CKPE.Starfield.Runner.h>
 #include "resource_version2.h"
@@ -31,8 +32,13 @@ extern "C"
 
 	__declspec(dllexport) bool CKPEGameLibrary_Load(const CKPEGameLibraryInterface* ckpe)
 	{
+		auto dialog_pakfn = CKPE::StringUtils::FormatString(L"CreationKitPlatformExtended_%s_Dialogs.pak",
+			CKPE::Starfield::VersionLists::GetGameName().c_str());
+		auto database_pakfn = CKPE::StringUtils::FormatString(L"CreationKitPlatformExtended_%s_Databases.pak",
+			CKPE::Starfield::VersionLists::GetGameName().c_str());
 		auto interface = CKPE::Common::Interface::GetSingleton();
-		interface->Initialize(ckpe, CKPEGameLibrary_Data.dataVersion);
+		interface->Initialize(ckpe, CKPEGameLibrary_Data.dataVersion,
+			dialog_pakfn, database_pakfn, CKPE::Starfield::VersionLists::GetExternalResourcePackageFileName(), false);
 		interface->CmdLineHandler();
 		auto runner = CKPE::Starfield::Runner::GetSingleton();
 		return runner->Install();

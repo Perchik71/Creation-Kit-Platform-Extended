@@ -1,12 +1,6 @@
-// Copyrig// Copyright © 2025 aka perchik71. All rights reserved.
-// Contacts: <email:timencevaleksej@gmail.com>
-// License: https://www.gnu.org/licenses/lgpl-3.0.html
-
 // Microsoft Visual C++ generated resource script.
 //
-#pragma code_page(65001)
-
-#include "resource_version2.h"
+#include "resource_version.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
@@ -19,10 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Русский (Россия) resources
+// ������� (������) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
 LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
+#pragma code_page(1251)
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -56,8 +51,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION VER_FILE_VERSION
- PRODUCTVERSION VER_PRODUCT_VERSION
+ FILEVERSION 0,6,267,0
+ PRODUCTVERSION 0,6,267,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -73,13 +68,12 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "CompanyName", "aka perchik71"
-            VALUE "FileDescription", ""
-            VALUE "FileVersion", VER_FILE_VERSION_STR
+            VALUE "FileVersion", "0.6.267.0"
             VALUE "InternalName", "CKPE"
             VALUE "LegalCopyright", "Copyright (C) aka perchik71 2023-2025"
             VALUE "OriginalFilename", "CKPE.dll"
             VALUE "ProductName", "Creation Kit Platform Extended Project"
-            VALUE "ProductVersion", VER_PRODUCT_VERSION_STR
+            VALUE "ProductVersion", "0.6.267.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -88,18 +82,5 @@ BEGIN
     END
 END
 
-#endif    // Русский (Россия) resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-
-#ifndef APSTUDIO_INVOKED
-/////////////////////////////////////////////////////////////////////////////
-//
-// Generated from the TEXTINCLUDE 3 resource.
-//
-
-
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

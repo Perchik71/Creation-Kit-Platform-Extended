@@ -113,6 +113,12 @@
     <ClCompile Include="Src\CKPE.Common.UIListView.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="..\Dependencies\jDialogs\include\jdialogs.cpp">
+      <Filter>_depend</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.DialogManager.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -120,6 +126,9 @@
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{42f894af-517e-47ee-bd34-83bd19bcb2a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_depend">
+      <UniqueIdentifier>{2129f330-812a-45a4-9173-c9bc8505f039}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +248,12 @@
     </ClInclude>
     <ClInclude Include="Include\CKPE.Common.UIListView.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\jDialogs\include\jdialogs.h">
+      <Filter>_depend</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.DialogManager.h">
+      <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

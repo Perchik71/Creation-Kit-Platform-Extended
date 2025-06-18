@@ -9,6 +9,8 @@
 #include <CKPE.FileUtils.h>
 #include <CKPE.Graphics.h>
 #include <CKPE.Common.Include.h>
+#include <CKPE.Common.DialogManager.h>
+#include <CKPE.Exception.h>
 #include <algorithm>
 #include <time.h>
 
@@ -45,6 +47,7 @@ namespace CKPE
 		}
 
 		void Interface::Initialize(const CKPEGameLibraryInterface* a_interface, std::uint64_t a_version,
+			const std::wstring& a_dialogs_fn, const std::wstring& a_databases_fn, const std::wstring& a_resources_fn,
 			bool support_more_theme) noexcept(true)
 		{
 			if (_cmdline) return;
@@ -64,6 +67,11 @@ namespace CKPE
 				
 				// TODO: Launch installer
 				
+				// LOAD DATAS
+				if (!DialogManager::Initialize(a_dialogs_fn))
+					ErrorHandler::Trigger(StringUtils::Utf16ToWinCP(
+						StringUtils::FormatString(L"No found dialogs pak \"%s\"", a_dialogs_fn.c_str())));
+
 				// IMPORTANT HOOKS
 				EditorUI::Hook::Initialize();	// Init UI patch (Dialogs)
 				SafeExit::Hook::Initialize();	// Init fast quit
@@ -155,128 +163,72 @@ namespace CKPE
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
-		auto len = _vscprintf(formatted_message.data(), (va_list)ap);
-		if (len < 1) return;
-
-		std::string string_done;
-		string_done.resize((std::size_t)len);
-		if (string_done.empty()) return;
-		vsprintf(string_done.data(), formatted_message.data(), (va_list)ap);
+		Common::Interface::GetSingleton()->GetLogger()->WriteString(Logger::tFatalError,
+			StringUtils::FormatStringVa(formatted_message.data(), ap));
 		va_end(ap);
-
-		Common::Interface::GetSingleton()->GetLogger()->WriteString(Logger::tFatalError, string_done);
 	}
 
 	CKPE_COMMON_API void _ERROR(const std::string_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
-		auto len = _vscprintf(formatted_message.data(), (va_list)ap);
-		if (len < 1) return;
-
-		std::string string_done;
-		string_done.resize((std::size_t)len);
-		if (string_done.empty()) return;
-		vsprintf(string_done.data(), formatted_message.data(), (va_list)ap);
+		Common::Interface::GetSingleton()->GetLogger()->WriteString(Logger::tError,
+			StringUtils::FormatStringVa(formatted_message.data(), ap));
 		va_end(ap);
-
-		Common::Interface::GetSingleton()->GetLogger()->WriteString(Logger::tError, string_done);
 	}
 
 	CKPE_COMMON_API void _WARNING(const std::string_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
-		auto len = _vscprintf(formatted_message.data(), (va_list)ap);
-		if (len < 1) return;
-
-		std::string string_done;
-		string_done.resize((std::size_t)len);
-		if (string_done.empty()) return;
-		vsprintf(string_done.data(), formatted_message.data(), (va_list)ap);
+		Common::Interface::GetSingleton()->GetLogger()->WriteString(Logger::tWarning,
+			StringUtils::FormatStringVa(formatted_message.data(), ap));
 		va_end(ap);
-
-		Common::Interface::GetSingleton()->GetLogger()->WriteString(Logger::tWarning, string_done);
 	}
 
 	CKPE_COMMON_API void _MESSAGE(const std::string_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
-		auto len = _vscprintf(formatted_message.data(), (va_list)ap);
-		if (len < 1) return;
-
-		std::string string_done;
-		string_done.resize((std::size_t)len);
-		if (string_done.empty()) return;
-		vsprintf(string_done.data(), formatted_message.data(), (va_list)ap);
+		Common::Interface::GetSingleton()->GetLogger()->WriteString(Logger::tMessage,
+			StringUtils::FormatStringVa(formatted_message.data(), ap));
 		va_end(ap);
-
-		Common::Interface::GetSingleton()->GetLogger()->WriteString(Logger::tMessage, string_done);
 	}
 
 	CKPE_COMMON_API void _FATALERROR(const std::wstring_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
-		auto len = _vscwprintf(formatted_message.data(), (va_list)ap);
-		if (len < 1) return;
-
-		std::wstring string_done;
-		string_done.resize((std::size_t)len);
-		if (string_done.empty()) return;
-		_vswprintf(string_done.data(), formatted_message.data(), (va_list)ap);
+		Common::Interface::GetSingleton()->GetLogger()->WriteString(Logger::tFatalError,
+			StringUtils::Utf16ToUtf8(StringUtils::FormatStringVa(formatted_message.data(), ap)));
 		va_end(ap);
-
-		Common::Interface::GetSingleton()->GetLogger()->WriteString(Logger::tFatalError, StringUtils::Utf16ToUtf8(string_done));
 	}
 
 	CKPE_COMMON_API void _ERROR(const std::wstring_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
-		auto len = _vscwprintf(formatted_message.data(), (va_list)ap);
-		if (len < 1) return;
-
-		std::wstring string_done;
-		string_done.resize((std::size_t)len);
-		if (string_done.empty()) return;
-		_vswprintf(string_done.data(), formatted_message.data(), (va_list)ap);
+		Common::Interface::GetSingleton()->GetLogger()->WriteString(Logger::tError,
+			StringUtils::Utf16ToUtf8(StringUtils::FormatStringVa(formatted_message.data(), ap)));
 		va_end(ap);
-
-		Common::Interface::GetSingleton()->GetLogger()->WriteString(Logger::tError, StringUtils::Utf16ToUtf8(string_done));
 	}
 
 	CKPE_COMMON_API void _WARNING(const std::wstring_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
-		auto len = _vscwprintf(formatted_message.data(), (va_list)ap);
-		if (len < 1) return;
-
-		std::wstring string_done;
-		string_done.resize((std::size_t)len);
-		if (string_done.empty()) return;
-		_vswprintf(string_done.data(), formatted_message.data(), (va_list)ap);
+		Common::Interface::GetSingleton()->GetLogger()->WriteString(Logger::tWarning,
+			StringUtils::Utf16ToUtf8(StringUtils::FormatStringVa(formatted_message.data(), ap)));
 		va_end(ap);
-
-		Common::Interface::GetSingleton()->GetLogger()->WriteString(Logger::tWarning, StringUtils::Utf16ToUtf8(string_done));
 	}
 
 	CKPE_COMMON_API void _MESSAGE(const std::wstring_view& formatted_message, ...)
 	{
 		va_list ap;
 		va_start(ap, &formatted_message);
-		auto len = _vscwprintf(formatted_message.data(), (va_list)ap);
-		if (len < 1) return;
-
-		std::wstring string_done;
-		string_done.resize((std::size_t)len);
-		if (string_done.empty()) return;
-		_vswprintf(string_done.data(), formatted_message.data(), (va_list)ap);
+		Common::Interface::GetSingleton()->GetLogger()->WriteString(Logger::tMessage,
+			StringUtils::Utf16ToUtf8(StringUtils::FormatStringVa(formatted_message.data(), ap)));
 		va_end(ap);
-
-		Common::Interface::GetSingleton()->GetLogger()->WriteString(Logger::tMessage, StringUtils::Utf16ToUtf8(string_done));
 	}
 #endif // !CKPE_NO_LOGGER_FUNCTION
 

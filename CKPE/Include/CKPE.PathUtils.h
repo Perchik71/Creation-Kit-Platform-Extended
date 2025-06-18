@@ -23,15 +23,21 @@ namespace CKPE
 		[[nodiscard]] static std::wstring GetDataPath() noexcept(true);
 		[[nodiscard]] static std::wstring GetCKPEPluginPath() noexcept(true);
 
+		[[nodiscard]] static bool FileExists(const std::string& path) noexcept(true);
+		[[nodiscard]] static bool DirExists(const std::string& path) noexcept(true);
 		[[nodiscard]] static bool FileExists(const std::wstring& path) noexcept(true);
 		[[nodiscard]] static bool DirExists(const std::wstring& path) noexcept(true);
 
-		static std::wstring& Normalize(std::wstring& path) noexcept(true);
-		static std::wstring& IncludeTrailingPathDelimiter(std::wstring& path) noexcept(true);
-		static std::wstring& ExcludeTrailingPathDelimiter(std::wstring& path) noexcept(true);
+		[[nodiscard]] static std::wstring& Normalize(std::wstring& path) noexcept(true);
+		[[nodiscard]] static std::wstring& IncludeTrailingPathDelimiter(std::wstring& path) noexcept(true);
+		[[nodiscard]] static std::wstring& ExcludeTrailingPathDelimiter(std::wstring& path) noexcept(true);
 
-		static std::wstring ExtractFileName(std::wstring& path);
-		static std::wstring ExtractFilePath(std::wstring& path);
+		[[nodiscard]] static std::string ExtractFileExt(const std::string& path) noexcept(true);
+		[[nodiscard]] static std::string ExtractFileName(const std::string& path) noexcept(true);
+		[[nodiscard]] static std::string ExtractFilePath(const std::string& path) noexcept(true);
+		[[nodiscard]] static std::wstring ExtractFileExt(const std::wstring& path) noexcept(true);
+		[[nodiscard]] static std::wstring ExtractFileName(const std::wstring& path) noexcept(true);
+		[[nodiscard]] static std::wstring ExtractFilePath(const std::wstring& path) noexcept(true);
 
 		static std::unordered_map<std::wstring, std::uint64_t> GetFilesInDir(const std::wstring& path, 
 			const std::wstring& what, bool recursive = false) noexcept(true);

@@ -33,7 +33,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\toml11\include;$(SolutionDir)Dependencies\vmm\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\toml11\include;$(SolutionDir)Dependencies\vmm\include;$(SolutionDir)Dependencies\jDialogs\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -53,7 +53,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <CallingConvention>StdCall</CallingConvention>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
-      <DisableSpecificWarnings>26478;26819</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26478;26819;4996;4244;4005;6387</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -71,8 +71,10 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Dependencies\jDialogs\include\jdialogs.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Src\CKPE.Common.ClassicTheme.cpp" />
+    <ClCompile Include="Src\CKPE.Common.DialogManager.cpp" />
     <ClCompile Include="Src\CKPE.Common.EditorUI.cpp" />
     <ClCompile Include="Src\CKPE.Common.Interface.cpp" />
     <ClCompile Include="Src\CKPE.Common.LogWindow.cpp" />
@@ -111,8 +113,10 @@
     <ClCompile Include="Src\CKPE.Common.UIVarCommon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Dependencies\jDialogs\include\jdialogs.h" />
     <ClInclude Include="Include\CKPE.Common.ClassicTheme.h" />
     <ClInclude Include="Include\CKPE.Common.Common.h" />
+    <ClInclude Include="Include\CKPE.Common.DialogManager.h" />
     <ClInclude Include="Include\CKPE.Common.EditorUI.h" />
     <ClInclude Include="Include\CKPE.Common.Interface.h" />
     <ClInclude Include="Include\CKPE.Common.LogWindow.h" />
