@@ -25,6 +25,7 @@ namespace CKPE
 			TOMLSettingCollection* _theme_settings{ nullptr };
 			CommandLineParser* _cmdline{ nullptr };
 			std::uint64_t _version{ 0 };
+			std::uintptr_t _instDll{ 0 };
 
 			Interface(const Interface&) = delete;
 			Interface& operator=(const Interface&) = delete;
@@ -40,6 +41,7 @@ namespace CKPE
 			[[nodiscard]] bool HasCustomThemeSetting() const noexcept(true);
 
 			[[nodiscard]] static Interface* GetSingleton() noexcept(true);
+			[[nodiscard]] constexpr inline std::uintptr_t GetInstanceDLL() const noexcept(true) { return _instDll; }
 			[[nodiscard]] constexpr inline const Logger* GetLogger() const noexcept(true) { return _interface->logger; }
 			[[nodiscard]] constexpr inline Application* GetApplication() const noexcept(true) { return _interface->application; }
 			[[nodiscard]] constexpr inline TOMLSettingCollection* GetSettings() const noexcept(true)

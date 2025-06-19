@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <commctrl.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.AboutWindow.h>
 #include <CKPE.Common.MemoryManager.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.DialogManager.h>
@@ -348,6 +349,21 @@ namespace CKPE
 
 			//_MESSAGE("DBG dialog: %X(%u) %p", (DWORD)lpTemplateName, (DWORD)lpTemplateName, lpDialogFunc);
 
+			// Override certain default dialogs to use this DLL's resources
+			switch (reinterpret_cast<uintptr_t>(lpTemplateName))
+			{
+			case 0x64:// "About"
+				lpTemplateName = (LPCSTR)0xEB;
+				ThreadDialogData.DialogFunc = AboutWindow::WndProc2;
+				hInstance = (HINSTANCE)Interface::GetSingleton()->GetInstanceDLL();
+				break;
+			case 0xEB:// "Logo"
+				lpTemplateName = (LPCSTR)0xEB;
+				ThreadDialogData.DialogFunc = AboutWindow::WndProc;
+				hInstance = (HINSTANCE)Interface::GetSingleton()->GetInstanceDLL();
+				break;
+			}
+
 			auto dmgr = DialogManager::GetSingleton();
 			if (dmgr)
 			{
@@ -356,21 +372,6 @@ namespace CKPE
 					return dialog->Show((HWND)hWndParent, (DLGPROC)DialogFuncOverride, dwInitParam,
 						(HINSTANCE)hInstance);
 			}
-
-			// Override certain default dialogs to use this DLL's resources
-			//switch (reinterpret_cast<uintptr_t>(lpTemplateName))
-			//{
-			//case 0x64:// "About"
-			//	lpTemplateName = (LPCSTR)0xEB;
-			//	ThreadDialogData.DialogFunc = Core::AboutWindow::WndProc2;
-			//	hInstance = Core::GlobalEnginePtr->GetInstanceDLL();
-			//	break;
-			//case 0xEB:// "Logo"
-			//	lpTemplateName = (LPCSTR)0xEB;
-			//	ThreadDialogData.DialogFunc = Core::AboutWindow::WndProc;
-			//	hInstance = Core::GlobalEnginePtr->GetInstanceDLL();
-			//	break;
-			//}
 
 			return CreateDialogParamA((HINSTANCE)hInstance, lpTemplateName, (HWND)hWndParent, 
 				(DLGPROC)DialogFuncOverride, dwInitParam);
@@ -383,9 +384,22 @@ namespace CKPE
 			ThreadDialogData.DialogFunc = (DLGPROC)lpDialogFunc;
 			ThreadDialogData.IsDialog = true;
 
-			_CONSOLE("HI");
+			//_MESSAGE("DBG dialog modal: %X(%u) %p", (DWORD)lpTemplateName, (DWORD)lpTemplateName, lpDialogFunc);
 
-			//_CONSOLE("DBG dialog modal: %X(%u) %p", (DWORD)lpTemplateName, (DWORD)lpTemplateName, lpDialogFunc);
+			// Override certain default dialogs to use this DLL's resources
+			switch (reinterpret_cast<uintptr_t>(lpTemplateName))
+			{
+			case 0x64:// "About"
+				lpTemplateName = (LPCSTR)0xEB;
+				ThreadDialogData.DialogFunc = AboutWindow::WndProc2;
+				hInstance = (HINSTANCE)Interface::GetSingleton()->GetInstanceDLL();
+				break;
+			case 0xEB:// "Logo"
+				lpTemplateName = (LPCSTR)0xEB;
+				ThreadDialogData.DialogFunc = AboutWindow::WndProc;
+				hInstance = (HINSTANCE)Interface::GetSingleton()->GetInstanceDLL();
+				break;
+			}
 
 			auto dmgr = DialogManager::GetSingleton();
 			if (dmgr)
@@ -395,21 +409,6 @@ namespace CKPE
 					return dialog->ShowModal((HWND)hWndParent, (DLGPROC)DialogFuncOverride, dwInitParam,
 						(HINSTANCE)hInstance);
 			}
-
-			// Override certain default dialogs to use this DLL's resources
-			//switch (reinterpret_cast<uintptr_t>(lpTemplateName))
-			//{
-			//case 0x64:// "About"
-			//	lpTemplateName = (LPCSTR)0xEB;
-			//	ThreadDialogData.DialogFunc = Core::AboutWindow::WndProc2;
-			//	hInstance = Core::GlobalEnginePtr->GetInstanceDLL();
-			//	break;
-			//case 0xEB:// "Logo"
-			//	lpTemplateName = (LPCSTR)0xEB;
-			//	ThreadDialogData.DialogFunc = Core::AboutWindow::WndProc;
-			//	hInstance = Core::GlobalEnginePtr->GetInstanceDLL();
-			//	break;
-			//}
 
 			return DialogBoxParamA((HINSTANCE)hInstance, lpTemplateName, (HWND)hWndParent, 
 				(DLGPROC)DialogFuncOverride, dwInitParam);

@@ -73,6 +73,7 @@
   <ItemGroup>
     <ClCompile Include="..\Dependencies\jDialogs\include\jdialogs.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Src\CKPE.Common.AboutWindow.cpp" />
     <ClCompile Include="Src\CKPE.Common.ClassicTheme.cpp" />
     <ClCompile Include="Src\CKPE.Common.DialogManager.cpp" />
     <ClCompile Include="Src\CKPE.Common.EditorUI.cpp" />
@@ -114,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Dependencies\jDialogs\include\jdialogs.h" />
+    <ClInclude Include="Include\CKPE.Common.AboutWindow.h" />
     <ClInclude Include="Include\CKPE.Common.ClassicTheme.h" />
     <ClInclude Include="Include\CKPE.Common.Common.h" />
     <ClInclude Include="Include\CKPE.Common.DialogManager.h" />
@@ -154,8 +156,10 @@
     <ClInclude Include="Include\CKPE.Common.UITreeView.h" />
     <ClInclude Include="Include\CKPE.Common.UIUpDown.h" />
     <ClInclude Include="Include\CKPE.Common.UIVarCommon.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="resource.rc" />
     <ResourceCompile Include="resource_version.rc" />
   </ItemGroup>
   <ItemGroup>

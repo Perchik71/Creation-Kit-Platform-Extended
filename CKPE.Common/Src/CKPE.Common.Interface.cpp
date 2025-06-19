@@ -20,6 +20,7 @@ namespace CKPE
 	{
 		static Interface _sinterface;
 
+		constexpr static auto _dllName = L"CKPE.Common.dll";
 		constexpr static auto _ssettings_fname = L"CreationKitPlatformExtended.toml";
 		constexpr static auto _stheme_settings_fname = L"CreationKitPlatformExtendedCustomTheme.toml";
 
@@ -52,8 +53,11 @@ namespace CKPE
 		{
 			if (_cmdline) return;
 
+			std::srand(time(nullptr));
+
 			{
 				// IMPORTANT OBJECTS
+				_instDll = (std::uintptr_t)GetModuleHandleW(_dllName);
 				_interface = a_interface;
 				std::wstring spath = _interface->application->GetPath();
 				_cmdline = new CommandLineParser;
@@ -62,7 +66,7 @@ namespace CKPE
 					_theme_settings = new TOMLSettingCollection(spath + _stheme_settings_fname);
 				else
 					_theme_settings = nullptr;
-				_version = FileUtils::GetFileVersion(spath + L"CKPE.Common.dll");
+				_version = FileUtils::GetFileVersion(spath + _dllName);
 				// INSTALL RUN
 				
 				// TODO: Launch installer

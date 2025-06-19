@@ -119,6 +119,9 @@
     <ClCompile Include="Src\CKPE.Common.DialogManager.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.AboutWindow.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -255,9 +258,14 @@
     <ClInclude Include="Include\CKPE.Common.DialogManager.h">
       <Filter>API</Filter>
     </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.AboutWindow.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource_version.rc" />
+    <ResourceCompile Include="resource.rc" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="build_version.txt" />
