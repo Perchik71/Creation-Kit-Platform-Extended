@@ -54,7 +54,9 @@ namespace CKPE
 					CRECT wa = monitor.WorkAreaRect;
 
 					SetWindowPos(Hwnd, nullptr, 0, 0, AppLogoWidth, AppLogoHeight, SWP_NOMOVE | SWP_NOOWNERZORDER);
-					SetWindowRgn(Hwnd, CreateRoundRectRgn(0, 0, AppLogoWidth, AppLogoHeight, 30, 30), TRUE);
+					auto Rgn = CreateRoundRectRgn(0, 0, AppLogoWidth, AppLogoHeight, 30, 30);
+					SetWindowRgn(Hwnd, Rgn, TRUE);
+					DeleteObject(Rgn);
 					ShowWindow(Hwnd, SW_SHOW);
 					return (INT_PTR)TRUE;
 				}
