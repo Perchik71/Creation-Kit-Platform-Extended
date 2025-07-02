@@ -122,6 +122,9 @@
     <ClCompile Include="Src\CKPE.Common.AboutWindow.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.Registry.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -262,6 +265,9 @@
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Include\CKPE.Common.Registry.h">
+      <Filter>API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource_version.rc" />

@@ -12,3 +12,4 @@
 #include <CKPE.Common.Threads.h>
 #include <CKPE.Common.ClassicTheme.h>
 #include <CKPE.Common.ModernTheme.h>
+#include <CKPE.Common.Registry.h>

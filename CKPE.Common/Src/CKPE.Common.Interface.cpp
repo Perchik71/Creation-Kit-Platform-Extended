@@ -10,6 +10,7 @@
 #include <CKPE.Graphics.h>
 #include <CKPE.Common.Include.h>
 #include <CKPE.Common.DialogManager.h>
+#include <CKPE.Common.Registry.h>
 #include <CKPE.Exception.h>
 #include <algorithm>
 #include <time.h>
@@ -67,15 +68,46 @@ namespace CKPE
 				else
 					_theme_settings = nullptr;
 				_version = FileUtils::GetFileVersion(spath + _dllName);
-				// INSTALL RUN
-				
-				// TODO: Launch installer
 				
 				// LOAD DATAS
 				if (!DialogManager::Initialize(a_dialogs_fn))
 					ErrorHandler::Trigger(StringUtils::Utf16ToWinCP(
 						StringUtils::FormatString(L"No found dialogs pak \"%s\"", a_dialogs_fn.c_str())));
 
+				// INSTALL RUN
+				// 
+				// Check registry	
+				Registry reg;
+				if (reg.OpenKey(L"Software\\CKPE\\Installer", false))
+				{
+					if (reg.ValueExists("NoHi") && reg.ReadBool("NoHi"))
+						goto SkipsInstaller;
+					else
+						goto StartInstaller;
+				}
+				else
+				{
+				StartInstaller:
+					
+					STARTUPINFOW si = { 0 };
+					PROCESS_INFORMATION pi = { 0 };
+					si.cb = sizeof(STARTUPINFOW);
+
+					if (!CreateProcessW(NULL, (spath + L"CKPE.Installer.exe").data(), NULL, NULL, FALSE,
+						0, NULL, NULL, &si, &pi))
+					{
+						_ERROR("Can't launch CKPE Installer");
+						goto SkipsInstaller;
+					}
+
+					if (WaitForSingleObject(pi.hProcess, INFINITE) != WAIT_OBJECT_0)
+						_ERROR("Error wait closes CKPE Installer");
+					
+					CloseHandle(pi.hThread);
+					CloseHandle(pi.hProcess);
+				}
+
+			SkipsInstaller:			
 				// IMPORTANT HOOKS
 				EditorUI::Hook::Initialize();	// Init UI patch (Dialogs)
 				SafeExit::Hook::Initialize();	// Init fast quit
