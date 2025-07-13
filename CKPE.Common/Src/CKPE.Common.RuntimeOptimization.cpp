@@ -267,7 +267,7 @@ namespace CKPE
 			return matches.size();
 		}
 
-		void RuntimeOptimization::Apply()
+		void RuntimeOptimization::Apply() noexcept(true)
 		{
 			auto interface = Interface::GetSingleton();
 			auto app = interface->GetApplication();

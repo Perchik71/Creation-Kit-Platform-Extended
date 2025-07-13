@@ -77,9 +77,15 @@ namespace CKPE
 	protected:
 		void WriteLineStr(const std::string& string) const noexcept(true);
 	public:
-		virtual bool ReadLine(std::string& string, std::uint32_t maxsize) const noexcept(true);
+		virtual bool ReadLine(char* string, std::uint32_t maxsize) const noexcept(true);
+		virtual void WriteString(const std::string_view& formatted_string, ...) const noexcept(true);
+		virtual void WriteString(const std::wstring_view& formatted_string, ...) const noexcept(true);
+		virtual void WriteString(const char* formatted_string, ...) const noexcept(true);
+		virtual void WriteString(const wchar_t* formatted_string, ...) const noexcept(true);
 		virtual void WriteLine(const std::string_view& formatted_string, ...) const noexcept(true);
 		virtual void WriteLine(const std::wstring_view& formatted_string, ...) const noexcept(true);
+		virtual void WriteLine(const char* formatted_string, ...) const noexcept(true);
+		virtual void WriteLine(const wchar_t* formatted_string, ...) const noexcept(true);
 	public:
 		TextFileStream(const std::string& fname, FileOpen _open);
 		TextFileStream(const std::wstring& fname, FileOpen _open);

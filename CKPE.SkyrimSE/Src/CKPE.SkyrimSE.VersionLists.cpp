@@ -124,5 +124,10 @@ namespace CKPE
 		{
 			return L"";
 		}
+
+		VersionLists::EDITOR_EXECUTABLE_TYPE VersionLists::GetEditorVersion() noexcept(true)
+		{
+			return _seditor_ver;
+		}
 	}
 }

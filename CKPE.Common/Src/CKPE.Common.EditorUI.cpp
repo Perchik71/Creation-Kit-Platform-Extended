@@ -504,10 +504,6 @@ namespace CKPE
 				}
 			}
 
-			// TODO need only wm_Create
-			//if (UITheme::IsDarkTheme())
-			//	Patches::UIThemePatch::ApplyThemeForWindow(hwndDlg);
-
 			return proc((HWND)hwndDlg, uMsg, wParam, lParam);
 		}
 

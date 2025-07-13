@@ -125,6 +125,21 @@
     <ClCompile Include="Src\CKPE.Common.Registry.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.Relocator.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.RelocatorDB.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.CreatePatterns.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.PatchManager.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.Patch.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -266,6 +281,21 @@
     </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="Include\CKPE.Common.Registry.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.Relocator.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.RelocatorDB.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.CreatePatterns.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.Patch.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.PatchManager.h">
       <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>

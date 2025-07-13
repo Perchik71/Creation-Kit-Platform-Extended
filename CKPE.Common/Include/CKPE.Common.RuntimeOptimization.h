@@ -32,7 +32,7 @@ namespace CKPE
 		public:
 			constexpr RuntimeOptimization() noexcept(true) = default;
 
-			void Apply();
+			void Apply() noexcept(true);
 		};
 	}
 }

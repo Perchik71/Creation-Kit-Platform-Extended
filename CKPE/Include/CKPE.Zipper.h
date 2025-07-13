@@ -47,14 +47,16 @@ namespace CKPE
 
 		virtual bool Create(const std::string& fname) noexcept(true);
 		virtual bool Create(const std::wstring& fname) noexcept(true);
-		virtual bool Open(const std::string& fname) noexcept(true);
-		virtual bool Open(const std::wstring& fname) noexcept(true);
+		virtual bool Open(const std::string& fname, bool write_access = false) noexcept(true);
+		virtual bool Open(const std::wstring& fname, bool write_access = false) noexcept(true);
 		virtual void Close() noexcept(true);
 
 		virtual std::uint32_t Count() const;
 		
-		virtual bool WriteFile(const std::string& fname) noexcept(true);
-		virtual bool WriteFile(const std::wstring& fname) noexcept(true);
+		virtual bool PackFromFile(const std::string& fname) noexcept(true);
+		virtual bool PackFromFile(const std::wstring& fname) noexcept(true);
+		virtual bool PackFromStream(const std::string& fname, MemoryStream& stream) noexcept(true);
+		virtual bool PackFromStream(const std::wstring& fname, MemoryStream& stream) noexcept(true);
 		
 		constexpr virtual std::int32_t LastError() const noexcept(true) { return _lasterr; }
 		virtual std::string LastErrorAsString() const noexcept(true);

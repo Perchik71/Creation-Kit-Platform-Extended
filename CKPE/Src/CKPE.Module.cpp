@@ -9,14 +9,16 @@
 
 namespace CKPE
 {
-	static constexpr std::array SEGMENTS{
-			std::string_view(".text"),
-			std::string_view(".interpr"),
-			std::string_view(".idata"),
-			std::string_view(".rdata"),
-			std::string_view(".data"),
-			std::string_view(".pdata"),
-			std::string_view(".tls")
+	static constexpr std::array SEGMENTS
+	{
+		//std::string_view(".textbss"),
+		std::string_view(".text"),
+		std::string_view(".interpr"),
+		std::string_view(".idata"),
+		std::string_view(".rdata"),
+		std::string_view(".data"),
+		std::string_view(".pdata"),
+		std::string_view(".tls")
 	};
 
 	void Module::LoadSegments()

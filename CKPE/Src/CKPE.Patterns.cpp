@@ -7,6 +7,32 @@
 
 namespace CKPE
 {
+	std::string Patterns::CreateMask(std::uintptr_t start_address, std::size_t size, CreateFlag flag) noexcept(true)
+	{
+		char ch[3]{ 0 };
+		std::string mask, unkn = (flag == DEFAULT_MASK) ? "?" : "??";
+		std::uint8_t* start = (std::uint8_t*)start_address;
+
+		for (std::size_t i = 0; i < size; i++)
+		{
+			if (!start[i])
+				mask += unkn;
+			else
+			{
+				sprintf_s(ch, "%02X", start[i]);
+				mask += ch;
+			}
+
+			if (flag == DEFAULT_MASK)
+			{
+				if ((i + 1) != size)
+					mask += ' ';
+			}
+		}
+
+		return mask;
+	}
+
 	std::uintptr_t Patterns::FindByMask(std::uintptr_t start_address, std::uintptr_t max_size, 
 		const char* mask) noexcept(true)
 	{
@@ -157,12 +183,12 @@ namespace CKPE
 		return results;
 	}
 
-	std::string Patterns::ASCIIStringToMask(const std::string_view& mask) noexcept(true)
+	std::string Patterns::ASCIIStringToMask(const std::string_view& str) noexcept(true)
 	{
 		std::string r;
 		char buf[4]{0};
 
-		for (auto ch : mask)
+		for (auto ch : str)
 		{
 			if (ch >= 0x80)
 				return "";

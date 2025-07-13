@@ -10,7 +10,12 @@
 #include <CKPE.Graphics.h>
 #include <CKPE.Common.Include.h>
 #include <CKPE.Common.DialogManager.h>
+#include <CKPE.Common.Relocator.h>
+#if 0
+#include <CKPE.Common.GenerateTableID.h>
+#endif
 #include <CKPE.Common.Registry.h>
+#include <CKPE.Common.RTTI.h>
 #include <CKPE.Exception.h>
 #include <algorithm>
 #include <time.h>
@@ -49,8 +54,8 @@ namespace CKPE
 		}
 
 		void Interface::Initialize(const CKPEGameLibraryInterface* a_interface, std::uint64_t a_version,
-			const std::wstring& a_dialogs_fn, const std::wstring& a_databases_fn, const std::wstring& a_resources_fn,
-			bool support_more_theme) noexcept(true)
+			const std::wstring& a_dialogs_fn, const std::wstring& a_databases_fn, const std::wstring& a_database_fn,
+			const std::wstring& a_resources_fn, bool support_more_theme) noexcept(true)
 		{
 			if (_cmdline) return;
 
@@ -68,11 +73,232 @@ namespace CKPE
 				else
 					_theme_settings = nullptr;
 				_version = FileUtils::GetFileVersion(spath + _dllName);
+
+				// IMPORTANT SYSTEM
+				RTTI::GetSingleton()->Initialize();
 				
+				CommandLineParser cmd;
+				if (cmd.HasCommandRun())
+				{
+					_MESSAGE("\tAccessing the console...");
+
+					// Detect command
+					auto Command = cmd.GetCommand();
+					_MESSAGE(L"\tCommand: \"%s\"", Command.c_str());
+
+					if (!_wcsicmp(Command.c_str(), L"-PECreateDatabase"))
+					{
+						auto reldb = Relocator::GetSingleton();
+
+						// Создаём базу
+						reldb->Clear();
+						reldb->Save(a_databases_fn, a_database_fn);
+
+						// Close Creation Kit				
+						_interface->application->Terminate();
+					}
+				}
+
 				// LOAD DATAS
 				if (!DialogManager::Initialize(a_dialogs_fn))
 					ErrorHandler::Trigger(StringUtils::Utf16ToWinCP(
-						StringUtils::FormatString(L"No found dialogs pak \"%s\"", a_dialogs_fn.c_str())));
+						StringUtils::FormatString(L"No found dialogs pak \"%s\"."
+							"\nMore detailed to log.", a_dialogs_fn.c_str())));
+
+				if (!Relocator::GetSingleton()->Open(a_databases_fn, a_database_fn))
+					ErrorHandler::Trigger(StringUtils::Utf16ToWinCP(
+						StringUtils::FormatString(L"Couldn't open the database \"%s\" in \"%s\""
+							"\nMore detailed to log.", a_database_fn.c_str(), a_databases_fn.c_str())));
+
+				// CMD LINE HANDLER
+
+				if (cmd.HasCommandRun())
+				{
+					auto Command = cmd.GetCommand();
+					if (!_wcsicmp(Command.c_str(), L"-PEUpdateDatabase"))
+					{
+						if (cmd.Count() != 2)
+						{
+							_ERROR("Invalid number of command arguments: %u", cmd.Count());
+							_MESSAGE("Example: CreationKit -PEUpdateDatabase \"test.relb\"");
+						}
+						else if (!PathUtils::FileExists(cmd[1].c_str()))
+							_ERROR(L"The file does not exist: \"%s\"", cmd[1].c_str());
+						else
+						{
+							auto Patch = new RelocatorDB::PatchDB();
+							if (Patch && Patch->LoadDevFromFile(cmd[1]))
+							{
+								auto reldb = Relocator::GetSingleton();
+
+								reldb->Delete(Patch->GetName());
+								reldb->Add(Patch);
+								reldb->Save(a_databases_fn, a_database_fn);
+							}
+						}
+
+						// Close Creation Kit				
+						_interface->application->Terminate();
+					}
+					else if (!_wcsicmp(Command.c_str(), L"-PERemoveFromDatabase"))
+					{
+						if (cmd.Count() != 2)
+						{
+							_ERROR("Invalid number of command arguments: %u", cmd.Count());
+							_MESSAGE("Example: CreationKit -PERemoveFromDatabase \"test\"");
+						}
+						else
+						{
+							if (Relocator::GetSingleton()->Delete(StringUtils::Utf16ToWinCP(cmd[1])))
+							{
+								if (Relocator::GetSingleton()->Save(a_databases_fn, a_database_fn))
+									_ERROR(L"The database can't save: \"%s\"", a_databases_fn.c_str());
+							}
+							else
+								_ERROR(L"Couldn't remove the patch from the database: \"%s\"", cmd[1].c_str());
+						}
+
+						// Close Creation Kit				
+						_interface->application->Terminate();
+					}
+					else if (!_wcsicmp(Command.c_str(), L"-PEExtractFromDatabase"))
+					{
+						if ((cmd.Count() < 3) || (cmd.Count() > 4))
+						{
+							_ERROR("Invalid number of command arguments: %u", cmd.Count());
+							_MESSAGE("Example: CreationKit -PEExtractFromDatabase \"test\" \"test.relb\" <-regen-sign>");
+						}
+						else
+						{
+							auto Patch = Relocator::GetSingleton()->GetByNameConst(StringUtils::Utf16ToWinCP(cmd[1]));
+							// Патча есть?
+							if (Patch)
+							{
+								if (cmd.Count() == 4)
+									Patch->SaveDevToFile(cmd[2], !_wcsicmp(cmd[3].c_str(), L"-regen-sign"));
+								else
+									Patch->SaveDevToFile(cmd[2]);
+							}
+						}
+
+						// Close Creation Kit				
+						_interface->application->Terminate();
+					}
+					else if (!_wcsicmp(Command.c_str(), L"-PEExtractAllFromDatabase"))
+					{
+						if ((cmd.Count() < 2) || (cmd.Count() > 3))
+						{
+							_ERROR("Invalid number of command arguments: %u", cmd.Count());
+							_MESSAGE("Example: CreationKit -PEExtractAllFromDatabase \"dir\" <-regen-sign>");
+						}
+						else
+						{
+							auto spath = cmd[1];
+							PathUtils::CreateFolder(PathUtils::IncludeTrailingPathDelimiter(PathUtils::Normalize(spath)));
+							
+							bool regen_sign = false;
+							if (cmd.Count() == 3)
+								regen_sign = !_wcsicmp(cmd[2].c_str(), L"-regen-sign");
+
+							auto rldb = Relocator::GetSingleton()->GetDB();
+							_MESSAGE("\tTotal patches: %u", rldb->GetCount());
+
+							for (std::uint32_t i = 0; i < rldb->GetCount(); i++)
+							{
+								auto Patch = rldb->AtByIndex(i);
+								// Патча есть?
+								if (Patch)
+								{
+									auto sname = StringUtils::FormatString(L"%s%s.relb",
+										spath.c_str(), StringUtils::Utf8ToUtf16(Patch->GetName()).c_str());
+
+									_MESSAGE(L"\tExtract: \"%s\"", sname.c_str());
+
+									Patch->SaveDevToFile(sname, regen_sign);
+								}
+							}
+						}
+
+						// Close Creation Kit				
+						_interface->application->Terminate();
+					}
+					else if (!_wcsicmp(Command.c_str(), L"-PEExportRTTI"))
+					{
+						if (cmd.Count() != 2)
+						{
+							_ERROR("Invalid number of command arguments: %u", cmd.Count());
+							_MESSAGE("Example: CreationKit -PEExportRTTI \"rtti.txt\"");
+						}
+						else
+						{
+							try
+							{
+								RTTI::GetSingleton()->Dump(cmd[1]);
+							}
+							catch (const std::exception&)
+							{
+								_ERROR("It was not possible to create a file and write data there.");
+							}
+						}
+
+						// Close Creation Kit				
+						_interface->application->Terminate();
+					} 
+#if 0
+					// Create RELIB for the current process
+					else if (!_wcsicmp(Command.c_str(), L"-PECreateRL"))
+					{
+						if (cmd.Count() != 2)
+						{
+							_ERROR("Invalid number of command arguments: %u", cmd.Count());
+							_MESSAGE("Example: CreationKit -PECreateAL \"version-lib.relib\"");
+						}
+						else
+						{
+							try
+							{
+								GenerateTableID GenRL;
+								GenRL.Rebase();			// analize current .exe
+								GenRL.SaveToFile(PathUtils::ChangeFileExt(cmd[1], L".relib").c_str());
+							}
+							catch (const std::exception&)
+							{
+								_ERROR("Couldn't create .relib file the current process");
+							}
+						}
+
+						// Close Creation Kit				
+						_interface->application->Terminate();
+					}
+					// Merging RELIB with the current process 
+					else if (!_wcsicmp(Command.c_str(), L"-PEMergeRL"))
+					{
+						if (cmd.Count() != 2)
+						{
+							_ERROR("Invalid number of command arguments: %u", cmd.Count());
+							_MESSAGE("Example: CreationKit -PEMergeRL \"version-lib.relib\"");
+						}
+						else
+						{
+							try
+							{
+								GenerateTableID GenRL;
+								GenerateTableID OpenRL;
+								GenRL.Rebase();			// analize current .exe
+								OpenRL.LoadFromFile(PathUtils::ChangeFileExt(cmd[1], L".relib").c_str());
+								OpenRL.Merging(GenRL);
+							}
+							catch (const std::exception&)
+							{
+								_ERROR("Couldn't merging .relib file the current process");
+							}
+						}
+
+						// Close Creation Kit				
+						_interface->application->Terminate();
+					}
+#endif
+				}
 
 				// INSTALL RUN
 				// 
@@ -124,9 +350,8 @@ namespace CKPE
 					// Need basedata for add...
 				}
 
-				// RTTI AND LOG WINDOW
+				// LOG WINDOW
 				/* call constructor */ new LogWindow();		
-				RTTI::GetSingleton()->Initialize();
 			}
 
 			char timeBuffer[80];

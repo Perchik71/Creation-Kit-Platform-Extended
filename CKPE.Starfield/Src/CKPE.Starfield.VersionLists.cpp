@@ -121,5 +121,10 @@ namespace CKPE
 		{
 			return QT_RESOURCE;
 		}
+
+		VersionLists::EDITOR_EXECUTABLE_TYPE VersionLists::GetEditorVersion() noexcept(true)
+		{
+			return _seditor_ver;
+		}
 	}
 }

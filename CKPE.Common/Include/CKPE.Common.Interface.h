@@ -34,8 +34,8 @@ namespace CKPE
 			virtual ~Interface() noexcept(true);
 
 			void Initialize(const CKPEGameLibraryInterface* a_interface, std::uint64_t a_version, 
-				const std::wstring& a_dialogs_fn, const std::wstring& a_databases_fn, const std::wstring& a_resources_fn, 
-				bool support_more_theme = true) noexcept(true); 
+				const std::wstring& a_dialogs_fn, const std::wstring& a_databases_fn, const std::wstring& a_database_fn, 
+				const std::wstring& a_resources_fn, bool support_more_theme = true) noexcept(true); 
 			void CmdLineHandler();
 
 			[[nodiscard]] bool HasCustomThemeSetting() const noexcept(true);

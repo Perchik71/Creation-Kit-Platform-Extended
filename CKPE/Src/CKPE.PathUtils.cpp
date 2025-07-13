@@ -3,6 +3,9 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <shlwapi.h>
+#include <shlobj_core.h>
+
 #include <CKPE.PathUtils.h>
 #include <CKPE.ErrorHandler.h>
 #include <CKPE.StringUtils.h>
@@ -46,6 +49,42 @@ namespace CKPE
 	std::wstring PathUtils::GetCKPEPluginPath() noexcept(true)
 	{
 		return GetApplicationPath() + L"CKPEPlugins/";
+	}
+
+	bool PathUtils::CreateFolder(const std::string& path) noexcept(true)
+	{
+		std::string spath = path;
+		if (IsRelative(spath))
+			spath = StringUtils::Utf16ToWinCP(GetApplicationPath()) + path;
+		return SHCreateDirectoryExA(NULL, spath.c_str(), NULL) == ERROR_SUCCESS;
+	}
+
+	bool PathUtils::CreateFolder(const std::wstring& path) noexcept(true)
+	{
+		std::wstring spath = path;
+		if (IsRelative(spath))
+			spath = GetApplicationPath() + path;
+		return SHCreateDirectoryExW(NULL, spath.c_str(), NULL) == ERROR_SUCCESS;
+	}
+
+	bool PathUtils::IsPrefix(const std::string& subpath, const std::string& path) noexcept(true)
+	{
+		return PathIsPrefixA(subpath.c_str(), path.c_str());
+	}
+
+	bool PathUtils::IsPrefix(const std::wstring& subpath, const std::wstring& path) noexcept(true)
+	{
+		return PathIsPrefixW(subpath.c_str(), path.c_str());
+	}
+
+	bool PathUtils::IsRelative(const std::string& path) noexcept(true)
+	{
+		return PathIsRelativeA(path.c_str());
+	}
+
+	bool PathUtils::IsRelative(const std::wstring& path) noexcept(true)
+	{
+		return PathIsRelativeW(path.c_str());
 	}
 
 	bool PathUtils::FileExists(const std::string& path) noexcept(true)
@@ -141,6 +180,22 @@ namespace CKPE
 		if (it != std::wstring::npos)
 			return path.substr(0, it + 1);
 		return L"";
+	}
+
+	std::string PathUtils::ChangeFileExt(const std::string& path, const std::string& newext) noexcept(true)
+	{
+		auto it = path.find_last_of(".");
+		if (it != std::wstring::npos)
+			return path.substr(0, it) + newext;
+		return path + newext;
+	}
+
+	std::wstring PathUtils::ChangeFileExt(const std::wstring& path, const std::wstring& newext) noexcept(true)
+	{
+		auto it = path.find_last_of(L".");
+		if (it != std::wstring::npos)
+			return path.substr(0, it) + newext;
+		return path + newext;
 	}
 
 	std::unordered_map<std::wstring, std::uint64_t> PathUtils::GetFilesInDir(const std::wstring& path,

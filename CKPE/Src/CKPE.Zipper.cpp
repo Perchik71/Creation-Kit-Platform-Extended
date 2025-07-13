@@ -166,15 +166,19 @@ namespace CKPE
 		return _zip != nullptr;
 	}
 
-	bool Zipper::Open(const std::string& fname) noexcept(true)
+	bool Zipper::Open(const std::string& fname, bool write_access) noexcept(true)
 	{
-		_zip = zip_openwitherror(fname.c_str(), 0, 'r', (int*)&_lasterr);
+		_zip = zip_openwitherror(fname.c_str(),
+			write_access ? ZIP_DEFAULT_COMPRESSION_LEVEL : 0,
+			write_access ? 'a' : 'r', (int*)&_lasterr);
 		return _zip != nullptr;
 	}
 
-	bool Zipper::Open(const std::wstring& fname) noexcept(true)
+	bool Zipper::Open(const std::wstring& fname, bool write_access) noexcept(true)
 	{
-		_zip = zip_openwitherror(StringUtils::Utf16ToWinCP(fname).c_str(), 0, 'r', (int*)&_lasterr);
+		_zip = zip_openwitherror(StringUtils::Utf16ToWinCP(fname).c_str(), 
+			write_access ? ZIP_DEFAULT_COMPRESSION_LEVEL : 0,
+			write_access ? 'a' : 'r', (int*)&_lasterr);
 		return _zip != nullptr;
 	}
 
@@ -201,7 +205,7 @@ namespace CKPE
 		return (std::uint32_t)r;
 	}
 
-	bool Zipper::WriteFile(const std::string& fname) noexcept(true)
+	bool Zipper::PackFromFile(const std::string& fname) noexcept(true)
 	{
 		if (!_zip) return false;
 
@@ -211,7 +215,44 @@ namespace CKPE
 			if (!stream.LoadFromFile(fname))
 				return false;
 
-			auto r = zip_entry_open(_zip, PathUtils::ExtractFileName(fname).c_str());
+			return PackFromStream(fname, stream);
+		}
+		catch (const std::exception&)
+		{
+			return false;
+		}
+	}
+
+	bool Zipper::PackFromFile(const std::wstring& fname) noexcept(true)
+	{
+		if (!_zip) return false;
+
+		try
+		{
+			MemoryStream stream;
+			if (!stream.LoadFromFile(fname))
+				return false;
+
+			return PackFromStream(fname, stream);
+		}
+		catch (const std::exception&)
+		{
+			return false;
+		}
+	}
+
+	bool Zipper::PackFromStream(const std::string& fname, MemoryStream& stream) noexcept(true)
+	{
+		if (!_zip) return false;
+
+		try
+		{
+			std::string sfname = fname;
+			char* entry[1] = { sfname.data() };
+
+			zip_entries_delete(_zip, entry, 1);
+
+			auto r = zip_entry_open(_zip, entry[0]);
 			if (r < 0)
 			{
 				const_cast<Zipper*>(this)->_lasterr = (std::int32_t)r;
@@ -234,17 +275,18 @@ namespace CKPE
 		}
 	}
 
-	bool Zipper::WriteFile(const std::wstring& fname) noexcept(true)
+	bool Zipper::PackFromStream(const std::wstring& fname, MemoryStream& stream) noexcept(true)
 	{
 		if (!_zip) return false;
 
 		try
 		{
-			MemoryStream stream;
-			if (!stream.LoadFromFile(fname))
-				return false;
+			auto sfname = StringUtils::Utf16ToWinCP(PathUtils::ExtractFileName(fname));
+			char* entry[1] = { sfname.data() };
+			
+			zip_entries_delete(_zip, entry, 1);
 
-			auto r = zip_entry_open(_zip, StringUtils::Utf16ToWinCP(PathUtils::ExtractFileName(fname)).c_str());
+			auto r = zip_entry_open(_zip, entry[0]);
 			if (r < 0)
 			{
 				const_cast<Zipper*>(this)->_lasterr = (std::int32_t)r;

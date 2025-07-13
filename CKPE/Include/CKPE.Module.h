@@ -45,7 +45,7 @@ namespace CKPE
 		std::array<Segment, Segment::total> _segments;
 		std::array<PEDirectory, PEDirectory::total> _directories;
 
-		constexpr Module() noexcept(true) = default;
+		Module() noexcept(true) = default;
 		Module(const Module&) = delete;
 		Module& operator=(const Module&) = delete;
 	protected:

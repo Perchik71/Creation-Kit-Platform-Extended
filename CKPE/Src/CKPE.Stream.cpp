@@ -147,13 +147,77 @@ namespace CKPE
 		fputc('\n', _Handle);
 	}
 
-	bool TextFileStream::ReadLine(std::string& string, std::uint32_t maxsize) const noexcept(true)
+	bool TextFileStream::ReadLine(char* string, std::uint32_t maxsize) const noexcept(true)
 	{
 		if (!_Handle || !maxsize)
 			return false;
 
-		fgets(string.data(), (int)maxsize, _Handle);
+		fgets(string, (int)maxsize, _Handle);
 		return true;
+	}
+
+	void TextFileStream::WriteString(const std::string_view& formatted_string, ...) const noexcept(true)
+	{
+		va_list ap;
+		va_start(ap, &formatted_string);
+		auto len = _vscprintf(formatted_string.data(), (va_list)ap);
+		if (len < 1) return;
+
+		std::string string_done;
+		string_done.resize((std::size_t)len);
+		if (string_done.empty()) return;
+		vsprintf(string_done.data(), formatted_string.data(), (va_list)ap);
+		va_end(ap);
+
+		fputs(string_done.c_str(), _Handle);
+	}
+
+	void TextFileStream::WriteString(const std::wstring_view& formatted_string, ...) const noexcept(true)
+	{
+		va_list ap;
+		va_start(ap, &formatted_string);
+		auto len = _vscwprintf(formatted_string.data(), (va_list)ap);
+		if (len < 1) return;
+
+		std::wstring string_done;
+		string_done.resize((std::size_t)len);
+		if (string_done.empty()) return;
+		_vswprintf(string_done.data(), formatted_string.data(), (va_list)ap);
+		va_end(ap);
+
+		fputs(StringUtils::Utf16ToUtf8(string_done).c_str(), _Handle);
+	}
+
+	void TextFileStream::WriteString(const char* formatted_string, ...) const noexcept(true)
+	{
+		va_list ap;
+		va_start(ap, &formatted_string);
+		auto len = _vscprintf(formatted_string, (va_list)ap);
+		if (len < 1) return;
+
+		std::string string_done;
+		string_done.resize((std::size_t)len);
+		if (string_done.empty()) return;
+		vsprintf(string_done.data(), formatted_string, (va_list)ap);
+		va_end(ap);
+
+		fputs(string_done.c_str(), _Handle);
+	}
+
+	void TextFileStream::WriteString(const wchar_t* formatted_string, ...) const noexcept(true)
+	{
+		va_list ap;
+		va_start(ap, &formatted_string);
+		auto len = _vscwprintf(formatted_string, (va_list)ap);
+		if (len < 1) return;
+
+		std::wstring string_done;
+		string_done.resize((std::size_t)len);
+		if (string_done.empty()) return;
+		_vswprintf(string_done.data(), formatted_string, (va_list)ap);
+		va_end(ap);
+
+		fputs(StringUtils::Utf16ToUtf8(string_done).c_str(), _Handle);
 	}
 
 	void TextFileStream::WriteLine(const std::string_view& formatted_string, ...) const noexcept(true)
@@ -183,6 +247,38 @@ namespace CKPE
 		string_done.resize((std::size_t)len);
 		if (string_done.empty()) return;
 		_vswprintf(string_done.data(), formatted_string.data(), (va_list)ap);
+		va_end(ap);
+
+		WriteLineStr(StringUtils::Utf16ToUtf8(string_done));
+	}
+
+	void TextFileStream::WriteLine(const char* formatted_string, ...) const noexcept(true)
+	{
+		va_list ap;
+		va_start(ap, &formatted_string);
+		auto len = _vscprintf(formatted_string, (va_list)ap);
+		if (len < 1) return;
+
+		std::string string_done;
+		string_done.resize((std::size_t)len);
+		if (string_done.empty()) return;
+		vsprintf(string_done.data(), formatted_string, (va_list)ap);
+		va_end(ap);
+
+		WriteLineStr(string_done);
+	}
+
+	void TextFileStream::WriteLine(const wchar_t* formatted_string, ...) const noexcept(true)
+	{
+		va_list ap;
+		va_start(ap, &formatted_string);
+		auto len = _vscwprintf(formatted_string, (va_list)ap);
+		if (len < 1) return;
+
+		std::wstring string_done;
+		string_done.resize((std::size_t)len);
+		if (string_done.empty()) return;
+		_vswprintf(string_done.data(), formatted_string, (va_list)ap);
 		va_end(ap);
 
 		WriteLineStr(StringUtils::Utf16ToUtf8(string_done));

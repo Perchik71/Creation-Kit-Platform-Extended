@@ -207,7 +207,7 @@ namespace CKPE
 						if ((FindFileData.dwFileAttributes & FILE_ATTRIBUTE_OFFLINE) == FILE_ATTRIBUTE_OFFLINE)
 							continue;
 
-						zipper.WriteFile((path + FindFileData.cFileName).c_str());
+						zipper.PackFromFile((path + FindFileData.cFileName).c_str());
 					} while (FindNextFileA(hFind, &FindFileData));
 
 					FindClose(hFind);

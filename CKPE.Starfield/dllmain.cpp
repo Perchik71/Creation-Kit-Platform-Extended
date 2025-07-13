@@ -38,7 +38,8 @@ extern "C"
 			CKPE::Starfield::VersionLists::GetGameName().c_str());
 		auto interface = CKPE::Common::Interface::GetSingleton();
 		interface->Initialize(ckpe, CKPEGameLibrary_Data.dataVersion,
-			dialog_pakfn, database_pakfn, CKPE::Starfield::VersionLists::GetExternalResourcePackageFileName(), false);
+			dialog_pakfn, database_pakfn, CKPE::Starfield::VersionLists::GetDatabaseFileName(),
+			CKPE::Starfield::VersionLists::GetExternalResourcePackageFileName(), false);
 		interface->CmdLineHandler();
 		auto runner = CKPE::Starfield::Runner::GetSingleton();
 		return runner->Install();

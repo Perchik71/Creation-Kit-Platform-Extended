@@ -13,7 +13,8 @@ namespace CKPE
 			Runner(const Runner&) = delete;
 			Runner& operator=(const Runner&) = delete;
 
-			[[nodiscard]] bool InstallPatches() noexcept(true);
+			void RegisterPatches() noexcept(true);
+			void InstallPatches() noexcept(true);
 		public:
 			constexpr Runner() noexcept(true) = default;
 

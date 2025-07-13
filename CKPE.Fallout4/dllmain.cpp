@@ -38,7 +38,8 @@ extern "C"
 			CKPE::Fallout4::VersionLists::GetGameName().c_str());
 		auto interface = CKPE::Common::Interface::GetSingleton();
 		interface->Initialize(ckpe, CKPEGameLibrary_Data.dataVersion,
-			dialog_pakfn, database_pakfn, CKPE::Fallout4::VersionLists::GetExternalResourcePackageFileName());
+			dialog_pakfn, database_pakfn, CKPE::Fallout4::VersionLists::GetDatabaseFileName(),
+			CKPE::Fallout4::VersionLists::GetExternalResourcePackageFileName());
 		interface->CmdLineHandler();
 		auto runner = CKPE::Fallout4::Runner::GetSingleton();
 		return runner->Install();

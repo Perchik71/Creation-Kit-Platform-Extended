@@ -38,7 +38,8 @@ extern "C"
 			CKPE::SkyrimSE::VersionLists::GetGameName().c_str());
 		auto interface = CKPE::Common::Interface::GetSingleton();
 		interface->Initialize(ckpe, CKPEGameLibrary_Data.dataVersion,
-			dialog_pakfn, database_pakfn, CKPE::SkyrimSE::VersionLists::GetExternalResourcePackageFileName());
+			dialog_pakfn, database_pakfn, CKPE::SkyrimSE::VersionLists::GetDatabaseFileName(), 
+			CKPE::SkyrimSE::VersionLists::GetExternalResourcePackageFileName());
 		interface->CmdLineHandler();
 		auto runner = CKPE::SkyrimSE::Runner::GetSingleton();
 		return runner->Install();

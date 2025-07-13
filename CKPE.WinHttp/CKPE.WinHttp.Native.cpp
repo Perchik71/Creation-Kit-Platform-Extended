@@ -67,12 +67,6 @@ namespace CKPE
         {
             try
             {
-                CommandLineParser cmd;
-                if (cmd.HasCommandRun())
-                {
-                    // TODO: cmd line
-                }
-
                 auto game_mgr = const_cast<GameManager*>(GameManager::GetSingleton());
                 if (!game_mgr->LoadLib())
                     throw RuntimeError("Failed initialize game library");

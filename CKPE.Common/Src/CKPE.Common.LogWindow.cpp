@@ -369,20 +369,21 @@ namespace CKPE
 			{
 				TextFileStream stream(spath + FILE_BLACKLIST, FileStream::fmOpenRead);
 
-				std::string sbuffer;
-				sbuffer.resize(2048);
-				if (sbuffer.empty())
+				auto sbuffer = std::make_unique<char[]>(2049);
+				if (!sbuffer)
 					throw RuntimeError("LogWindow: Out of memory");
+
+				sbuffer.get()[2048] = 0;
 
 				std::size_t nCount = 0;
 				std::string Message;
 				while (!stream.Eof())
 				{
-					if (!stream.ReadLine(sbuffer, 2048))
+					if (!stream.ReadLine(sbuffer.get(), 2048))
 						break;
 
 					nCount++;
-					Message = StringUtils::Trim(sbuffer);
+					Message = StringUtils::Trim(sbuffer.get());
 					_messageBlacklist.emplace(HashUtils::MurmurHash64A(Message.c_str(), Message.length()));
 				}
 

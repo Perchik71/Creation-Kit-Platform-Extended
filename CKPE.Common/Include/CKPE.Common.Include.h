@@ -13,3 +13,5 @@
 #include <CKPE.Common.ClassicTheme.h>
 #include <CKPE.Common.ModernTheme.h>
 #include <CKPE.Common.Registry.h>
+#include <CKPE.Common.Relocator.h>
+#include <CKPE.Common.RelocatorDB.h>
