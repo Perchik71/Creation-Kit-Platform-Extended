@@ -8,10 +8,19 @@
     <ClCompile Include="Src\CKPE.SkyrimSE.Runner.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AllowMultipleWindowAndMaster.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
       <UniqueIdentifier>{8d7d4588-e831-422b-8969-11e8c27027fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Patches">
+      <UniqueIdentifier>{f29e8527-fb38-4e74-b15a-ec117511f614}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SkyrimSEAPI">
+      <UniqueIdentifier>{756a1126-b758-4597-9975-5e703fe6b336}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -20,6 +29,9 @@
     </ClInclude>
     <ClInclude Include="Include\CKPE.SkyrimSE.Runner.h">
       <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AllowMultipleWindowAndMaster.h">
+      <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

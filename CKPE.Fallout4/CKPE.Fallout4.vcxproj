@@ -71,10 +71,12 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Src\CKPE.Fallout4.Runner.cpp" />
     <ClCompile Include="Src\CKPE.Fallout4.VersionLists.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.AllowMultipleWindowAndMaster.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\CKPE.Fallout4.Runner.h" />
     <ClInclude Include="Include\CKPE.Fallout4.VersionLists.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AllowMultipleWindowAndMaster.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource_version.rc" />

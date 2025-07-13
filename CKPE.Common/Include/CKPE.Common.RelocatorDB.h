@@ -53,6 +53,7 @@ namespace CKPE
 				virtual bool SaveDevToFile(const std::wstring& fname, bool regen_sign = false) const noexcept(true);
 
 				virtual std::string GetName() const noexcept(true);
+				virtual std::uint32_t GetVersion() const noexcept(true);
 				virtual EntryDB GetAt(std::uint32_t id) const noexcept(true);
 				virtual void Append(const EntryDB& name) noexcept(true);
 				virtual void Insert(std::uint32_t id, const EntryDB& name) noexcept(true);
@@ -88,3 +89,6 @@ namespace CKPE
 		};
 	}
 }
+
+#define __CKPE_RVA(idx) (db->GetAt(idx).Rva)
+#define __CKPE_OFFSET(idx) (base + db->GetAt(idx).Rva)

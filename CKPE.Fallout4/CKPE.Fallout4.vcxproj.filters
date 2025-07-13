@@ -8,10 +8,19 @@
     <ClCompile Include="Src\CKPE.Fallout4.VersionLists.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.AllowMultipleWindowAndMaster.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
       <UniqueIdentifier>{3702ce59-c3aa-443b-bcef-8b88553cb07f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Patches">
+      <UniqueIdentifier>{e1e37d04-c45d-4e00-b12e-637c1edc6ce9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fallout4API">
+      <UniqueIdentifier>{1ad15b36-3004-4b1d-9801-881529b4b1ff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -20,6 +29,9 @@
     </ClInclude>
     <ClInclude Include="Include\CKPE.Fallout4.Runner.h">
       <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AllowMultipleWindowAndMaster.h">
+      <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

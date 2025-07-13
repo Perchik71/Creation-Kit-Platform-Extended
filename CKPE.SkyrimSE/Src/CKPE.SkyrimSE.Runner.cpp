@@ -9,6 +9,8 @@
 #include <CKPE.SkyrimSE.Runner.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
 
+#include <Patches/CKPE.SkyrimSE.Patch.AllowMultipleWindowAndMaster.h>
+
 namespace CKPE
 {
 	namespace SkyrimSE
@@ -19,7 +21,7 @@ namespace CKPE
 		{
 			auto mgr = Common::PatchManager::GetSingleton();
 
-			// TODO
+			mgr->Register(new Patch::AllowMultipleWindowAndMaster);
 		}
 
 		void Runner::InstallPatches() noexcept(true)

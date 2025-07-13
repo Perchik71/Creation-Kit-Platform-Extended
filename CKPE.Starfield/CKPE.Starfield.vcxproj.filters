@@ -8,10 +8,19 @@
     <ClCompile Include="Src\CKPE.Starfield.Runner.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
       <UniqueIdentifier>{8d7d4588-e831-422b-8969-11e8c27027fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Patches">
+      <UniqueIdentifier>{3321cb66-f02c-41eb-b161-58b9c1fe856a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StarfieldAPI">
+      <UniqueIdentifier>{abb0447e-2dc9-4164-b499-045d8e1d4d05}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -23,6 +32,9 @@
     </ClInclude>
     <ClInclude Include="Include\CKPE.Starfield.Runner.h">
       <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.h">
+      <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -31,6 +31,11 @@ namespace CKPE
 
 			virtual std::string GetName() const noexcept(true);
 			virtual bool IsActive() const noexcept(true);
+
+			virtual bool HasOption() const noexcept(true) = 0;
+			virtual const char* GetOptionName() const noexcept(true) = 0;
+			virtual bool HasDependencies() const noexcept(true) = 0;
+			virtual std::vector<std::string> GetDependencies() const noexcept(true) = 0;
 		};
 	}
 }

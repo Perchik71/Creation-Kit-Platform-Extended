@@ -42,6 +42,112 @@ namespace CKPE
 			}
 		}
 
+		bool PatchManager::ActivePatch(Entry& entry, const std::string& game_short) noexcept(true)
+		{
+			auto gsettings = Interface::GetSingleton()->GetSettings();
+
+			if (!entry.patch)
+				return false;
+
+			if (entry.patch->IsActive())
+				return true;
+
+			if (!entry.db)
+			{
+				_WARNING("[%s]\tThe \"%s\" patch can't be installed, there is no data in the database",
+					game_short.c_str(), entry.patch->GetName().c_str());
+				return false;
+			}
+
+			if (entry.patch->HasOption())
+			{
+				auto option_name = entry.patch->GetOptionName();
+				if (!option_name)
+				{
+					_ERROR("[%s]\tThe \"%s\" patch is a requirement for an option, but the option itself is specified as nullptr, skips",
+						game_short.c_str(), entry.patch->GetName().c_str());
+					return false;
+				}
+
+				if (gsettings->GetOptionTypeByName(option_name) != SettingOptionType::sotBool)
+				{
+					_ERROR("[%s]\tThe \"%s\" patch only logical option names are allowed, skips",
+						game_short.c_str(), entry.patch->GetName().c_str());
+					return false;
+				}
+
+				std::string section;
+				std::string name;
+				if (!gsettings->SplitOptionName(option_name, section, name) || !section.length() || !name.length())
+				{
+					_ERROR("[%s]\tThe \"%s\" patch couldn't identify the section and the name of the option, skips",
+						game_short.c_str(), entry.patch->GetName().c_str());
+					return false;
+				}
+
+				if (!gsettings->ReadBool(section, option_name, false))
+				{
+					_MESSAGE("[%s]\tThe \"%s\" patch can't be installed, it is disabled by the option",
+						game_short.c_str(), entry.patch->GetName().c_str());
+					return false;
+				}
+			}
+
+			if (entry.patch->HasDependencies())
+			{
+				auto depends = entry.patch->GetDependencies();
+				if (!depends.size())
+					_WARNING("[%s]\tThe \"%s\" patch says that there are dependencies that for some reason don't exist",
+						game_short.c_str(), entry.patch->GetName().c_str());
+				else
+				{
+					for (auto& depend : depends)
+					{
+						auto it = std::find_if(_entries->begin(), _entries->end(), [&depend](Entry& entry) -> bool
+							{
+								return !_stricmp(entry.patch->GetName().c_str(), depend.c_str());
+							});
+
+						if (it == _entries->end())
+						{
+							_ERROR("[%s]\tThe \"%s\" patch has a dependency that is not in the database, skips",
+								game_short.c_str(), entry.patch->GetName().c_str());
+							return false;
+						}
+
+						if (it->patch->IsActive())
+							continue;
+
+						if (!ActivePatch(*it, game_short))
+						{
+							_ERROR("[%s]\tThe \"%s\" patch has a dependency that has not been initialized, skips",
+								game_short.c_str(), entry.patch->GetName().c_str());
+							return false;
+						}
+						else
+							_MESSAGE("[%s]\tThe \"%s\" patch has been initialized",
+								game_short.c_str(), entry.patch->GetName().c_str());
+					}
+				}
+			}
+
+			switch (ActivePatchSafe(entry))
+			{
+			case 0:
+				return true;
+			case -1:
+				_FATALERROR("[%s]\tThe \"%s\" patch has not been fully installed, there may be errors",
+					game_short.c_str(), entry.patch->GetName().c_str());
+				break;
+			case -2:
+				_FATALERROR("[%s]\tAn internal error occurred while installing the \"%s\" patch",
+					game_short.c_str(), entry.patch->GetName().c_str());
+				break;
+			}
+
+			return false;
+		}
+
 		PatchManager::PatchManager() noexcept(true) :
 			_entries(new std::vector<Entry>)
 		{}
@@ -120,32 +226,16 @@ namespace CKPE
 				return;
 
 			ScopeCriticalSection lock(_locker);
-			auto gshort = StringUtils::Utf16ToUtf8(game_short);
+			auto gshort = StringUtils::Utf16ToUtf8(game_short);	
 
 			for (auto& entry : *_entries)
 			{
-				if (!entry.patch || entry.patch->IsActive())
-					continue;
-
-				if (!entry.db)
-				{
-					_WARNING("[%s]\tThe \"%s\" patch can't be installed, there is no data in the database", 
+				if (!ActivePatch(entry, gshort))
+					_ERROR("[%s]\tThe \"%s\" patch was not initialized",
 						gshort.c_str(), entry.patch->GetName().c_str());
-					continue;
-				}
-
-				switch (ActivePatchSafe(entry))
-				{
-				
-				case -1:
-					_FATALERROR("[%s]\tThe \"%s\" patch has not been fully installed, there may be errors", 
+				else
+					_MESSAGE("[%s]\tThe \"%s\" patch has been initialized",
 						gshort.c_str(), entry.patch->GetName().c_str());
-					break;
-				case -2:
-					_FATALERROR("[%s]\tAn internal error occurred while installing the \"%s\" patch",
-						gshort.c_str(), entry.patch->GetName().c_str());
-					break;
-				}
 			}
 		}
 

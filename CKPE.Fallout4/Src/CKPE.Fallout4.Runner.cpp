@@ -9,6 +9,8 @@
 #include <CKPE.Fallout4.Runner.h>
 #include <CKPE.Fallout4.VersionLists.h>
 
+#include <Patches/CKPE.Fallout4.Patch.AllowMultipleWindowAndMaster.h>
+
 namespace CKPE
 {
 	namespace Fallout4
@@ -19,7 +21,7 @@ namespace CKPE
 		{
 			auto mgr = Common::PatchManager::GetSingleton();
 
-			// TODO
+			mgr->Register(new Patch::AllowMultipleWindowAndMaster);
 		}
 
 		void Runner::InstallPatches() noexcept(true)

@@ -527,6 +527,11 @@ namespace CKPE
 			return _name ? *_name : "";
 		}
 
+		std::uint32_t RelocatorDB::PatchDB::GetVersion() const noexcept(true)
+		{
+			return _version;
+		}
+
 		RelocatorDB::PatchDB::EntryDB RelocatorDB::PatchDB::GetAt(std::uint32_t id) const noexcept(true)
 		{
 			RelocatorDB::PatchDB::EntryDB entry{0};

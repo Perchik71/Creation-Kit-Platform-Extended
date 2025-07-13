@@ -9,6 +9,8 @@
 #include <CKPE.Starfield.Runner.h>
 #include <CKPE.Starfield.VersionLists.h>
 
+#include <Patches/CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.h>
+
 namespace CKPE
 {
 	namespace Starfield
@@ -19,7 +21,7 @@ namespace CKPE
 		{
 			auto mgr = Common::PatchManager::GetSingleton();
 
-			// TODO
+			mgr->Register(new Patch::AllowMultipleWindowAndMaster);
 		}
 
 		void Runner::InstallPatches() noexcept(true)
