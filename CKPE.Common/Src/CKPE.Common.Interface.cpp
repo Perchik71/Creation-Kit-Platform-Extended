@@ -343,12 +343,7 @@ namespace CKPE
 					ClassicTheme::Hook::Initialize();
 
 				else if (_READ_OPTION_BOOL("CreationKit", "bUIDarkTheme", false))
-				{
 					ModernTheme::Hook::Initialize();
-
-					// TODO: modern theme
-					// Need basedata for add...
-				}
 
 				// LOG WINDOW
 				/* call constructor */ new LogWindow();		

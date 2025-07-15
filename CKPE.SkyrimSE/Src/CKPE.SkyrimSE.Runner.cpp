@@ -26,6 +26,22 @@
 #include <Patches/CKPE.SkyrimSE.Patch.CrashNullptrDXGISurface.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashNullptrFaceGen.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashUsingMore16NPCForFaceGen.h>
+#include <Patches/CKPE.SkyrimSE.Patch.EnableGameButtonToVC.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixActorDlg.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixBGSEntryPointFunctionDataTwoValue.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixBrightLightColor.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixBSShadowDirectionalLight.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixClassDlg.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixCrashDuplicateForm.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixCrashInArmorAddon.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixCrashLightingShader.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixCrashMakeXYZCircles.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixCrashPluginTXT.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixCrashTabControl.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixDataDlgWithPluginTXT.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixDialogueBranch.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixFileInUse.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixIconsScriptProp.h>
 
 namespace CKPE
 {
@@ -54,6 +70,22 @@ namespace CKPE
 			mgr->Register(new Patch::CrashNullptrDXGISurface);
 			mgr->Register(new Patch::CrashNullptrFaceGen);
 			mgr->Register(new Patch::CrashUsingMore16NPCForFaceGen);
+			mgr->Register(new Patch::EnableGameButtonToVC);
+			mgr->Register(new Patch::FixActorDlg);
+			mgr->Register(new Patch::FixBGSEntryPointFunctionDataTwoValue);
+			mgr->Register(new Patch::FixBrightLightColor);
+			mgr->Register(new Patch::FixBSShadowDirectionalLight);
+			mgr->Register(new Patch::FixClassDlg);
+			mgr->Register(new Patch::FixCrashDuplicateForm);
+			mgr->Register(new Patch::FixCrashInArmorAddon);
+			mgr->Register(new Patch::FixCrashLightingShader);
+			mgr->Register(new Patch::FixCrashMakeXYZCircles);
+			mgr->Register(new Patch::FixCrashPluginTXT);
+			mgr->Register(new Patch::FixCrashTabControl);
+			mgr->Register(new Patch::FixDataDlgWithPluginTXT);
+			mgr->Register(new Patch::FixDialogueBranch);
+			mgr->Register(new Patch::FixFileInUse);
+			mgr->Register(new Patch::FixIconsScriptProp);
 		}
 
 		void Runner::InstallPatches() noexcept(true)

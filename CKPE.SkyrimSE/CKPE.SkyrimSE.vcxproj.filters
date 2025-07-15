@@ -59,6 +59,54 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashUsingMore16NPCForFaceGen.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.EnableGameButtonToVC.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixActorDlg.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixBGSEntryPointFunctionDataTwoValue.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixBrightLightColor.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixBSShadowDirectionalLight.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixClassDlg.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixCrashDuplicateForm.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixCrashInArmorAddon.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixCrashLightingShader.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixCrashMakeXYZCircles.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixCrashPluginTXT.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixCrashTabControl.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixDataDlgWithPluginTXT.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixDialogueBranch.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixFileInUse.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixIconsScriptProp.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -127,6 +175,54 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashUsingMore16NPCForFaceGen.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.EnableGameButtonToVC.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixActorDlg.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixBGSEntryPointFunctionDataTwoValue.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixBrightLightColor.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixBSShadowDirectionalLight.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixClassDlg.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixCrashDuplicateForm.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixCrashInArmorAddon.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixCrashLightingShader.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixCrashMakeXYZCircles.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixCrashPluginTXT.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixCrashTabControl.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixDataDlgWithPluginTXT.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixDialogueBranch.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixFileInUse.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixIconsScriptProp.h">
       <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>
