@@ -86,6 +86,9 @@
     <ClCompile Include="Src\CKPE.Zipper.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Asserts.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -194,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="resource_version.h" />
     <ClInclude Include="Include\CKPE.Zipper.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Asserts.h">
       <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>

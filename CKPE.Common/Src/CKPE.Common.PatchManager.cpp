@@ -111,7 +111,7 @@ namespace CKPE
 						if (it == _entries->end())
 						{
 							_ERROR("[%s]\tThe \"%s\" patch has a dependency that is not in the database, skips",
-								game_short.c_str(), entry.patch->GetName().c_str());
+								game_short.c_str(), depend.c_str());
 							return false;
 						}
 
@@ -121,12 +121,9 @@ namespace CKPE
 						if (!ActivePatch(*it, game_short))
 						{
 							_ERROR("[%s]\tThe \"%s\" patch has a dependency that has not been initialized, skips",
-								game_short.c_str(), entry.patch->GetName().c_str());
+								game_short.c_str(), depend.c_str());
 							return false;
 						}
-						else
-							_MESSAGE("[%s]\tThe \"%s\" patch has been initialized",
-								game_short.c_str(), entry.patch->GetName().c_str());
 					}
 				}
 			}
@@ -134,6 +131,8 @@ namespace CKPE
 			switch (ActivePatchSafe(entry))
 			{
 			case 0:
+				_MESSAGE("[%s]\tThe \"%s\" patch has been initialized",
+					game_short.c_str(), entry.patch->GetName().c_str());
 				return true;
 			case -1:
 				_FATALERROR("[%s]\tThe \"%s\" patch has not been fully installed, there may be errors",
@@ -183,7 +182,7 @@ namespace CKPE
 			auto db = Relocator::GetSingleton()->GetByName(name);
 			if (!db)
 			{
-				_ERROR("PatchManager::Register no found this patch name in db");
+				_ERROR("PatchManager::Register no found this patch name \"%s\" in db", name.c_str());
 				return;
 			}
 
@@ -232,9 +231,6 @@ namespace CKPE
 			{
 				if (!ActivePatch(entry, gshort))
 					_ERROR("[%s]\tThe \"%s\" patch was not initialized",
-						gshort.c_str(), entry.patch->GetName().c_str());
-				else
-					_MESSAGE("[%s]\tThe \"%s\" patch has been initialized",
 						gshort.c_str(), entry.patch->GetName().c_str());
 			}
 		}

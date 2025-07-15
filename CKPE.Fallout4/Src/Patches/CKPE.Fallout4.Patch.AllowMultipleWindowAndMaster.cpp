@@ -59,6 +59,8 @@ namespace CKPE
 					SafeWrite::Write(__CKPE_OFFSET(0), { 0xE9, 0xD4, 0x00, 0x00, 0x00, 0x90 });
 
 				SafeWrite::Write(__CKPE_OFFSET(1), { 0xEB });
+
+				return true;
 			}
 		}
 	}

@@ -9,7 +9,23 @@
 #include <CKPE.SkyrimSE.Runner.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
 
+#include <Patches/CKPE.SkyrimSE.Patch.AllowCreateBitArray.h>
 #include <Patches/CKPE.SkyrimSE.Patch.AllowMultipleWindowAndMaster.h>
+#include <Patches/CKPE.SkyrimSE.Patch.AllowPlayerKnowsCondition.h>
+#include <Patches/CKPE.SkyrimSE.Patch.BGSPerkRankArray.h>
+#include <Patches/CKPE.SkyrimSE.Patch.BNetConvertUnicodeString.h>
+#include <Patches/CKPE.SkyrimSE.Patch.BrokenTerrainEditDlg.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CheckD3D11.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CheckTextureInMaterial.h>
+#include <Patches/CKPE.SkyrimSE.Patch.ChooseSoundFile.h>
+#include <Patches/CKPE.SkyrimSE.Patch.Console.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CrashAfterMultipleMastersWarning.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CrashDuplicateWorldspace.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CrashFlowChartX.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CrashHairKS.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CrashNullptrDXGISurface.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CrashNullptrFaceGen.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CrashUsingMore16NPCForFaceGen.h>
 
 namespace CKPE
 {
@@ -21,7 +37,23 @@ namespace CKPE
 		{
 			auto mgr = Common::PatchManager::GetSingleton();
 
+			mgr->Register(new Patch::AllowCreateBitArray);
 			mgr->Register(new Patch::AllowMultipleWindowAndMaster);
+			mgr->Register(new Patch::AllowPlayerKnowsCondition);
+			mgr->Register(new Patch::BGSPerkRankArray);
+			mgr->Register(new Patch::BNetConvertUnicodeString);
+			mgr->Register(new Patch::BrokenTerrainEditDlg);
+			mgr->Register(new Patch::CheckD3D11);
+			mgr->Register(new Patch::CheckTextureInMaterial);
+			mgr->Register(new Patch::ChooseSoundFile);
+			mgr->Register(new Patch::Console);
+			mgr->Register(new Patch::CrashAfterMultipleMastersWarning);
+			mgr->Register(new Patch::CrashDuplicateWorldspace);
+			mgr->Register(new Patch::CrashFlowChartX);
+			mgr->Register(new Patch::CrashHairKS);
+			mgr->Register(new Patch::CrashNullptrDXGISurface);
+			mgr->Register(new Patch::CrashNullptrFaceGen);
+			mgr->Register(new Patch::CrashUsingMore16NPCForFaceGen);
 		}
 
 		void Runner::InstallPatches() noexcept(true)
