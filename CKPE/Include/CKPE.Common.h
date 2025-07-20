@@ -23,3 +23,15 @@
 	__forceinline type Get##Name(VOID) const { return Var; } \
 	__declspec(property(get = Get##Name)) type Name
 #endif // !CKPE_READ_PROPERTY2
+
+#define CKPE_DECLARE_CONSTRUCTOR_HOOK(Class) \
+	static Class *__ctor__(void *Instance) \
+	{ \
+		return new (Instance) Class(); \
+	} \
+	\
+	static Class *__dtor__(Class *Thisptr, unsigned __int8) \
+	{ \
+		Thisptr->~Class(); \
+		return Thisptr; \
+	}

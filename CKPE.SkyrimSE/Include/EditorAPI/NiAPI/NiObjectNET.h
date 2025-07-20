@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "NiObject.h"
+#include <EditorAPI/NiAPI/NiObject.h>
 
 #pragma pack(push, 1)
 

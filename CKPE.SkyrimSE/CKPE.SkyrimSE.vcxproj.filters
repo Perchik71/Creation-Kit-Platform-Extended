@@ -200,6 +200,18 @@
     <ClCompile Include="Src\EditorAPI\NiAPI\NiRefObject.cpp">
       <Filter>EditorAPI\NiAPI</Filter>
     </ClCompile>
+    <ClCompile Include="Src\EditorAPI\Forms\TESForm.cpp">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSSimpleLock.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSSpinLock.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSReadWriteLock.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -213,6 +225,9 @@
     </Filter>
     <Filter Include="EditorAPI\NiAPI">
       <UniqueIdentifier>{1ba36205-7cd3-45c6-b3f4-ea53d3ab0cd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditorAPI\Forms">
+      <UniqueIdentifier>{9a6969b8-9ecf-42e8-a4bf-908134cc9142}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -467,6 +482,42 @@
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\NiAPI\NiPick.h">
       <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSTArray.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSTList.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESForm.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BaseFormComponent.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESFullName.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSSimpleLock.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSSpinLock.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSReadWriteLock.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSStringCache.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSFixedString.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSEntryString.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSLocalizedString.h">
+      <Filter>EditorAPI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

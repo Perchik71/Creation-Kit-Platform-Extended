@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "NiPoint.h"
+#include <EditorAPI/NiAPI/NiPoint.h>
 
 namespace CKPE
 {

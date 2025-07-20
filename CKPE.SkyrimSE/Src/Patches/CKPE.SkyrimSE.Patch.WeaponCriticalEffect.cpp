@@ -7,6 +7,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
+#include <EditorAPI/Forms/TESForm.h>
 #include <Patches/CKPE.SkyrimSE.Patch.WeaponCriticalEffect.h>
 
 namespace CKPE
@@ -86,10 +87,9 @@ namespace CKPE
 				*(std::uint32_t*)(DiskCRDT + 0x4) = *(std::uint32_t*)SourceCRDT;		// Percentage multiplier
 				*(std::uint8_t*)(DiskCRDT + 0x8) = *(std::uint8_t*)(SourceCRDT + 0x12);	// Flags
 
-				//std::uint64_t* effectForm = *(std::uint64_t**)(SourceCRDT + 0x8);
-
-				//if (effectForm)
-				//	*(uint64_t*)(DiskCRDT + 0x10) = effectForm->GetFormID();
+				EditorAPI::Forms::TESForm* effectForm = *(EditorAPI::Forms::TESForm**)(SourceCRDT + 0x8);
+				if (effectForm)
+					*(uint64_t*)(DiskCRDT + 0x10) = effectForm->FormID;
 			}
 
 			void WeaponCriticalEffect::sub2(std::int64_t TESFile, std::int64_t SourceCRDT) noexcept(true)

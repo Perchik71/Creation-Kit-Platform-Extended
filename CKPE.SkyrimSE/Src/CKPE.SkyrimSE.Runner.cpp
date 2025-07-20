@@ -139,7 +139,7 @@ namespace CKPE
 			mgr->Register(new Patch::TESModelTextureSwapCorrectlyLoad);
 			mgr->Register(new Patch::TESParameters_CTDA);
 			mgr->Register(new Patch::UnEquipSound);
-			//mgr->Register(new Patch::WeaponCriticalEffect);				// Fix me: need API
+			mgr->Register(new Patch::WeaponCriticalEffect);
 		}
 
 		void Runner::InstallPatches() noexcept(true)

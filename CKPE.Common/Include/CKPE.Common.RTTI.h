@@ -123,7 +123,7 @@ namespace CKPE
 			[[nodiscard]] bool IsValidCOL(CompleteObjectLocator* Locator) const noexcept(true);
 			[[nodiscard]] std::uint32_t GetCountVFunc(std::uintptr_t addr) const noexcept(true);
 		public:
-			constexpr RTTI() noexcept(true) = default;
+			RTTI() noexcept(true) = default;
 
 			[[nodiscard]] static RTTI* GetSingleton() noexcept(true);
 
@@ -133,11 +133,11 @@ namespace CKPE
 			virtual void* Cast(const void* InPtr, long VfDelta,
 				const char* lpstrFromType, const char* lpstrTargetType, bool isReference = false);
 		};
+	}
 
-		inline static void* _DYNAMIC_CAST(const void* InPtr, long VfDelta, const char* lpstrFromType,
-			const char* lpstrTargetType, bool isReference = false)
-		{
-			return RTTI::GetSingleton()->Cast(InPtr, VfDelta, lpstrFromType, lpstrTargetType, isReference);
-		}
+	inline static void* _DYNAMIC_CAST(const void* InPtr, long VfDelta, const char* lpstrFromType,
+		const char* lpstrTargetType, bool isReference = false)
+	{
+		return Common::RTTI::GetSingleton()->Cast(InPtr, VfDelta, lpstrFromType, lpstrTargetType, isReference);
 	}
 }

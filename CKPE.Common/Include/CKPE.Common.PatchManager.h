@@ -27,7 +27,7 @@ namespace CKPE
 
 			[[nodiscard]] std::int32_t ActivePatchSafe(Entry& entry);
 			[[nodiscard]] std::int32_t QueryPatchSafe(Entry& entry);
-			[[nodiscard]] bool ActivePatch(Entry& entry, const std::string& game_short) noexcept(true);
+			bool ActivePatch(Entry& entry, const std::string& game_short) noexcept(true);
 
 			PatchManager(const PatchManager&) = delete;
 			PatchManager& operator=(const PatchManager&) = delete;

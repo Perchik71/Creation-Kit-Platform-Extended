@@ -72,6 +72,10 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Src\CKPE.SkyrimSE.Runner.cpp" />
     <ClCompile Include="Src\CKPE.SkyrimSE.VersionLists.cpp" />
+    <ClCompile Include="Src\EditorAPI\BSReadWriteLock.cpp" />
+    <ClCompile Include="Src\EditorAPI\BSSimpleLock.cpp" />
+    <ClCompile Include="Src\EditorAPI\BSSpinLock.cpp" />
+    <ClCompile Include="Src\EditorAPI\Forms\TESForm.cpp" />
     <ClCompile Include="Src\EditorAPI\NiAPI\NiCollisionUtils.cpp" />
     <ClCompile Include="Src\EditorAPI\NiAPI\NiMemoryManager.cpp" />
     <ClCompile Include="Src\EditorAPI\NiAPI\NiRefObject.cpp" />
@@ -140,6 +144,18 @@
   <ItemGroup>
     <ClInclude Include="Include\CKPE.SkyrimSE.Runner.h" />
     <ClInclude Include="Include\CKPE.SkyrimSE.VersionLists.h" />
+    <ClInclude Include="Include\EditorAPI\BGSLocalizedString.h" />
+    <ClInclude Include="Include\EditorAPI\BSEntryString.h" />
+    <ClInclude Include="Include\EditorAPI\BSFixedString.h" />
+    <ClInclude Include="Include\EditorAPI\BSReadWriteLock.h" />
+    <ClInclude Include="Include\EditorAPI\BSSimpleLock.h" />
+    <ClInclude Include="Include\EditorAPI\BSSpinLock.h" />
+    <ClInclude Include="Include\EditorAPI\BSStringCache.h" />
+    <ClInclude Include="Include\EditorAPI\BSTArray.h" />
+    <ClInclude Include="Include\EditorAPI\BSTList.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\BaseFormComponent.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\TESForm.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\TESFullName.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiTArray.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiAVObject.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiCollisionUtils.h" />
