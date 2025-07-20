@@ -1,4 +1,4 @@
-﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -58,7 +58,7 @@ namespace CKPE
 				// Fix for crash when tab control buttons are deleted.
 				// Uninitialized TCITEMA structure variables.
 				//
-				Detours::DetourJump(__CKPE_OFFSET(0), (uintptr_t)&sub);
+				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
 
 				return true;
 			}

@@ -1,4 +1,4 @@
-﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -66,11 +66,11 @@ namespace CKPE
 					//
 					// This hook also fixes broken graph layout where every topic would draw on top of the other.
 					//
-					Detours::DetourCall(__CKPE_OFFSET(0), (uintptr_t)&sub);
+					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
 					break;
 				case 2:
 					// Bethesda has changed the code, let's make a jump and omit the entire code
-					Detours::DetourJump(__CKPE_OFFSET(0), (uintptr_t)&sub);
+					Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
 					break;
 				default:
 					return false;
@@ -82,11 +82,11 @@ namespace CKPE
 			void* CrashFlowChartX::sub(void* a1) noexcept(true)
 			{
 				// Patch flowchartx64.dll every time - it's a COM dll and I have no idea if it gets reloaded
-				uintptr_t flowchartBase = (uintptr_t)GetModuleHandleA("flowchartx64.dll");
+				std::uintptr_t flowchartBase = (std::uintptr_t)GetModuleHandleA("flowchartx64.dll");
 
 				if (flowchartBase)
 				{
-					CKPE_ASSERT_MSG(*(uint8_t*)(flowchartBase + 0x5FF89) == 0x48 && *(uint8_t*)(flowchartBase + 0x5FF8A) == 0x8B,
+					CKPE_ASSERT_MSG(*(std::uint8_t*)(flowchartBase + 0x5FF89) == 0x48 && *(std::uint8_t*)(flowchartBase + 0x5FF8A) == 0x8B,
 						"Unknown FlowChartX64.dll version");
 
 					// Prevent the XML element <Tag Type="14">16745094784</Tag> from being written

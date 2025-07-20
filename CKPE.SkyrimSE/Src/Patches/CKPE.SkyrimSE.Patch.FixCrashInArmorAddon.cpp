@@ -1,4 +1,4 @@
-﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -65,7 +65,7 @@ namespace CKPE
 				// A for loop reads past the end of a stack-allocated buffer.
 				//
 				SafeWrite::WriteNop(__CKPE_OFFSET(0), 231);
-				Detours::DetourJump(__CKPE_OFFSET(1), (uintptr_t)&sub);
+				Detours::DetourJump(__CKPE_OFFSET(1), (std::uintptr_t)&sub);
 				FixCrashInArmorAddonSub1 = (TFixCrashInArmorAddonSub1)__CKPE_OFFSET(2);
 				FixCrashInArmorAddonSub2 = (TFixCrashInArmorAddonSub2)__CKPE_OFFSET(3);
 

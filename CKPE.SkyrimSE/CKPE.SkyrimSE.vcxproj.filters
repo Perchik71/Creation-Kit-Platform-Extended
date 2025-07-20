@@ -107,6 +107,99 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixIconsScriptProp.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixLoadMore32KAnimation.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixMemoryLeakActorDlg.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixMoveToTopic.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixMusicTrackForm.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixNiSkinInstance.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixObjectPalette.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixParamsATXT.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixRaceDlg.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixRemoteDesktop.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixSpellEffectsDuration.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixSelectedPackageData.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixReverbParameters.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixUnableToFindVariable.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixVertexNormals.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixWaterOrtho.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.IgnoreGroundHeightTest.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.IncreaseMaximumNavmesh.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.NavMeshInfoMap.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ResponseIgnoreMax.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ShowReloadShadersAlways.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.TESModelTextureSwapCorrectlyLoad.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.TESParameters_CTDA.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.UnEquipSound.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.WeaponCriticalEffect.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.RefLinkGeometryHangWorkaround.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ReEnableLandShadows.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.NiCollisionObjectClonedWarning.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\NiAPI\NiRTTI.cpp">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\NiAPI\NiCollisionUtils.cpp">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\NiAPI\NiMemoryManager.cpp">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\NiAPI\NiRefObject.cpp">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -115,8 +208,11 @@
     <Filter Include="Patches">
       <UniqueIdentifier>{f29e8527-fb38-4e74-b15a-ec117511f614}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SkyrimSEAPI">
+    <Filter Include="EditorAPI">
       <UniqueIdentifier>{756a1126-b758-4597-9975-5e703fe6b336}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditorAPI\NiAPI">
+      <UniqueIdentifier>{1ba36205-7cd3-45c6-b3f4-ea53d3ab0cd9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +320,153 @@
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixIconsScriptProp.h">
       <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixLoadMore32KAnimation.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixMemoryLeakActorDlg.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixMoveToTopic.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixMusicTrackForm.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixNiSkinInstance.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixObjectPalette.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixParamsATXT.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixRaceDlg.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixRemoteDesktop.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixSpellEffectsDuration.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixSelectedPackageData.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixReverbParameters.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixUnableToFindVariable.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixVertexNormals.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixWaterOrtho.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.IgnoreGroundHeightTest.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.IncreaseMaximumNavmesh.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.NavMeshInfoMap.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ResponseIgnoreMax.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ShowReloadShadersAlways.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.TESModelTextureSwapCorrectlyLoad.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.TESParameters_CTDA.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.UnEquipSound.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.WeaponCriticalEffect.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.RefLinkGeometryHangWorkaround.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ReEnableLandShadows.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.NiCollisionObjectClonedWarning.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiPoint.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiPointer.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiProperty.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiRefObject.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiRTTI.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiSkinInstance.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiSourceTexture.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTexture.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTMap.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTransform.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTSimpleArray.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTypes.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTArray.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiAVObject.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiCollisionUtils.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiColor.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiMatrix.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiMemoryManager.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiNode.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiObject.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiObjectNET.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiPick.h">
+      <Filter>EditorAPI\NiAPI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

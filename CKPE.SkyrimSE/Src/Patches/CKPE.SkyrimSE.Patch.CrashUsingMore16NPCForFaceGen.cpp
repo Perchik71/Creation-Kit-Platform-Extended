@@ -1,4 +1,4 @@
-﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -66,7 +66,7 @@ namespace CKPE
 				auto addr = __CKPE_OFFSET(1);
 				SafeWrite::Write(addr, { 0x48, 0x8B, 0x4C, 0x24, 0x68, 0xE8, 0xCB, 0xFF,
 					0xFF, 0xFF, 0xE9, 0x7D, 0x01, 0x00, 0x00 });
-				Detours::DetourCall((uintptr_t)addr + 5, (uintptr_t)&sub);
+				Detours::DetourCall((std::uintptr_t)addr + 5, (std::uintptr_t)&sub);
 
 				return true;
 			}

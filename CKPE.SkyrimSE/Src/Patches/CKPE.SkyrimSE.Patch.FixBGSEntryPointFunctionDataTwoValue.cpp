@@ -1,4 +1,4 @@
-﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -59,7 +59,7 @@ namespace CKPE
 				// Fix for "Could not select actor value X in LoadDialog for BGSEntryPointFunctionDataTwoValue." 
 				// Use the editor id instead of perk name for the Perk Entry dialog selection.
 				//
-				Detours::DetourCall(__CKPE_OFFSET(0), (uintptr_t)&sub);
+				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
 				FixBGSEntryPointFunctionDataTwoValueSub = (TFixBGSEntryPointFunctionDataTwoValueSub)
 					__CKPE_OFFSET(1);
 

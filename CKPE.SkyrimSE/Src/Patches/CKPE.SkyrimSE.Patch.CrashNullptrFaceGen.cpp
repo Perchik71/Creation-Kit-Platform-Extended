@@ -1,4 +1,4 @@
-﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -64,7 +64,7 @@ namespace CKPE
 				// I'll try to skip the code, if you have problems with the display (no eyebrows), 
 				// then you have problems with the NPC's faces.
 
-				Detours::DetourCall(__CKPE_OFFSET(0), (uintptr_t)&sub);
+				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
 				CrashNullptrFaceGenSub = (TCrashNullptrFaceGenSub)__CKPE_OFFSET(1);
 
 				return true;

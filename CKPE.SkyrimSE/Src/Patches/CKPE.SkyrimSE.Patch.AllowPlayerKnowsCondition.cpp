@@ -1,4 +1,4 @@
-﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -59,7 +59,7 @@ namespace CKPE
 				//
 				// Allow the "PlayerKnows" conditional function to accept enchantments as a function parameter
 				//
-				Detours::DetourJump(__CKPE_OFFSET(0), (uintptr_t)&sub);
+				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
 				AllowPlayerKnowsCondition_Add = (TAllowPlayerKnowsCondition_Add)__CKPE_OFFSET(1);
 
 				return true;

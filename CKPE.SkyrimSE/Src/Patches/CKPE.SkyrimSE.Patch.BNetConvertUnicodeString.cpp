@@ -1,4 +1,4 @@
-﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -54,7 +54,7 @@ namespace CKPE
 				auto interface = CKPE::Common::Interface::GetSingleton();
 				auto base = interface->GetApplication()->GetBase();
 
-				Detours::DetourJump(__CKPE_OFFSET(0), (uintptr_t)&Convert);
+				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&Convert);
 
 				return true;
 			}

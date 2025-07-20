@@ -42,6 +42,33 @@
 #include <Patches/CKPE.SkyrimSE.Patch.FixDialogueBranch.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixFileInUse.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixIconsScriptProp.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixLoadMore32KAnimation.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixMemoryLeakActorDlg.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixMoveToTopic.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixMusicTrackForm.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixNiSkinInstance.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixObjectPalette.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixParamsATXT.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixRaceDlg.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixRemoteDesktop.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixReverbParameters.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixSelectedPackageData.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixSpellEffectsDuration.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixUnableToFindVariable.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixVertexNormals.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixWaterOrtho.h>
+#include <Patches/CKPE.SkyrimSE.Patch.IgnoreGroundHeightTest.h>
+#include <Patches/CKPE.SkyrimSE.Patch.IncreaseMaximumNavmesh.h>
+#include <Patches/CKPE.SkyrimSE.Patch.NavMeshInfoMap.h>
+#include <Patches/CKPE.SkyrimSE.Patch.NiCollisionObjectClonedWarning.h>
+#include <Patches/CKPE.SkyrimSE.Patch.ReEnableLandShadows.h>
+#include <Patches/CKPE.SkyrimSE.Patch.RefLinkGeometryHangWorkaround.h>
+#include <Patches/CKPE.SkyrimSE.Patch.ResponseIgnoreMax.h>
+#include <Patches/CKPE.SkyrimSE.Patch.ShowReloadShadersAlways.h>
+#include <Patches/CKPE.SkyrimSE.Patch.TESModelTextureSwapCorrectlyLoad.h>
+#include <Patches/CKPE.SkyrimSE.Patch.TESParameters_CTDA.h>
+#include <Patches/CKPE.SkyrimSE.Patch.UnEquipSound.h>
+#include <Patches/CKPE.SkyrimSE.Patch.WeaponCriticalEffect.h>
 
 namespace CKPE
 {
@@ -86,6 +113,33 @@ namespace CKPE
 			mgr->Register(new Patch::FixDialogueBranch);
 			mgr->Register(new Patch::FixFileInUse);
 			mgr->Register(new Patch::FixIconsScriptProp);
+			mgr->Register(new Patch::FixLoadMore32KAnimation);
+			mgr->Register(new Patch::FixMemoryLeakActorDlg);
+			mgr->Register(new Patch::FixMoveToTopic);
+			mgr->Register(new Patch::FixMusicTrackForm);
+			mgr->Register(new Patch::FixNiSkinInstance);
+			mgr->Register(new Patch::FixObjectPalette);
+			mgr->Register(new Patch::FixParamsATXT);
+			mgr->Register(new Patch::FixRaceDlg);
+			mgr->Register(new Patch::FixRemoteDesktop);
+			mgr->Register(new Patch::FixReverbParameters);
+			mgr->Register(new Patch::FixSelectedPackageData);
+			mgr->Register(new Patch::FixSpellEffectsDuration);
+			mgr->Register(new Patch::FixUnableToFindVariable);
+			mgr->Register(new Patch::FixVertexNormals);
+			mgr->Register(new Patch::FixWaterOrtho);
+			mgr->Register(new Patch::IgnoreGroundHeightTest);
+			mgr->Register(new Patch::IncreaseMaximumNavmesh);
+			mgr->Register(new Patch::NavMeshInfoMap);
+			mgr->Register(new Patch::NiCollisionObjectClonedWarning);
+			mgr->Register(new Patch::ReEnableLandShadows);
+			mgr->Register(new Patch::RefLinkGeometryHangWorkaround);
+			mgr->Register(new Patch::ResponseIgnoreMax);
+			mgr->Register(new Patch::ShowReloadShadersAlways);
+			mgr->Register(new Patch::TESModelTextureSwapCorrectlyLoad);
+			mgr->Register(new Patch::TESParameters_CTDA);
+			mgr->Register(new Patch::UnEquipSound);
+			//mgr->Register(new Patch::WeaponCriticalEffect);				// Fix me: need API
 		}
 
 		void Runner::InstallPatches() noexcept(true)

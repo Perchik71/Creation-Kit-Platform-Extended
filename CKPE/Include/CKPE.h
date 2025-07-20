@@ -29,3 +29,5 @@
 #include <CKPE.GDIPlus.h>
 #include <CKPE.CommandLineParser.h>
 #include <CKPE.ImageList.h>
+#include <CKPE.Asserts.h>
+#include <CKPE.Utils.h>

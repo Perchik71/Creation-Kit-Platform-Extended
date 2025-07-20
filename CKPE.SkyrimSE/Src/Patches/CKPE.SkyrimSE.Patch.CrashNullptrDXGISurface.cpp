@@ -1,4 +1,4 @@
-﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -70,7 +70,7 @@ namespace CKPE
 					}
 				} static DXGISurfaceHookInstance(__CKPE_OFFSET(0) + 6);
 
-				Detours::DetourJump(__CKPE_OFFSET(0), (uintptr_t)DXGISurfaceHookInstance.getCode());
+				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)DXGISurfaceHookInstance.getCode());
 
 				return true;
 			}

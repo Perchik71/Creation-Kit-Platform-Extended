@@ -53,7 +53,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <CallingConvention>StdCall</CallingConvention>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
-      <DisableSpecificWarnings>26478;26819;4996;4244;4005;6387</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26478;26819;4996;4244;4005;6387;6031</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

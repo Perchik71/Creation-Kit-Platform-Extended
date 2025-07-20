@@ -1,4 +1,4 @@
-﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -87,19 +87,19 @@ namespace CKPE
 				auto interface = CKPE::Common::Interface::GetSingleton();
 				auto base = interface->GetApplication()->GetBase();
 				
-				Detours::DetourJump(__CKPE_OFFSET(0), (uintptr_t)&LogWarning);
-				Detours::DetourJump(__CKPE_OFFSET(1), (uintptr_t)&LogWarning);
-				Detours::DetourJump(__CKPE_OFFSET(2), (uintptr_t)&LogWarning);
-				Detours::DetourJump(__CKPE_OFFSET(3), (uintptr_t)&LogWarningUnknown1);
-				Detours::DetourJump(__CKPE_OFFSET(4), (uintptr_t)&LogWarningUnknown1);
-				Detours::DetourJump(__CKPE_OFFSET(5), (uintptr_t)&LogWarningUnknown1);
-				Detours::DetourJump(__CKPE_OFFSET(6), (uintptr_t)&LogWarningUnknown1);
-				Detours::DetourJump(__CKPE_OFFSET(7), (uintptr_t)&LogWarningUnknown1);
-				Detours::DetourJump(__CKPE_OFFSET(8), (uintptr_t)&LogWarningUnknown1);
-				Detours::DetourJump(__CKPE_OFFSET(9), (uintptr_t)&LogWarningUnknown2);
-				Detours::DetourJump(__CKPE_OFFSET(10), (uintptr_t)&LogWarningUnknown2);
-				Detours::DetourCall(__CKPE_OFFSET(11), (uintptr_t)&LogWarningUnknown2);
-				Detours::DetourJump(__CKPE_OFFSET(12), (uintptr_t)&LogAssert);
+				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&LogWarning);
+				Detours::DetourJump(__CKPE_OFFSET(1), (std::uintptr_t)&LogWarning);
+				Detours::DetourJump(__CKPE_OFFSET(2), (std::uintptr_t)&LogWarning);
+				Detours::DetourJump(__CKPE_OFFSET(3), (std::uintptr_t)&LogWarningUnknown1);
+				Detours::DetourJump(__CKPE_OFFSET(4), (std::uintptr_t)&LogWarningUnknown1);
+				Detours::DetourJump(__CKPE_OFFSET(5), (std::uintptr_t)&LogWarningUnknown1);
+				Detours::DetourJump(__CKPE_OFFSET(6), (std::uintptr_t)&LogWarningUnknown1);
+				Detours::DetourJump(__CKPE_OFFSET(7), (std::uintptr_t)&LogWarningUnknown1);
+				Detours::DetourJump(__CKPE_OFFSET(8), (std::uintptr_t)&LogWarningUnknown1);
+				Detours::DetourJump(__CKPE_OFFSET(9), (std::uintptr_t)&LogWarningUnknown2);
+				Detours::DetourJump(__CKPE_OFFSET(10), (std::uintptr_t)&LogWarningUnknown2);
+				Detours::DetourCall(__CKPE_OFFSET(11), (std::uintptr_t)&LogWarningUnknown2);
+				Detours::DetourJump(__CKPE_OFFSET(12), (std::uintptr_t)&LogAssert);
 
 				return true;
 			}

@@ -137,6 +137,7 @@
     <ClInclude Include="Include\CKPE.SmartPointer.h" />
     <ClInclude Include="Include\CKPE.StringUtils.h" />
     <ClInclude Include="Include\CKPE.Timer.h" />
+    <ClInclude Include="Include\CKPE.Utils.h" />
     <ClInclude Include="Include\CKPE.Zipper.h" />
     <ClInclude Include="resource_version.h" />
   </ItemGroup>

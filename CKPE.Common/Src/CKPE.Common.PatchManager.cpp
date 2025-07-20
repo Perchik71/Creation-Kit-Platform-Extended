@@ -54,8 +54,8 @@ namespace CKPE
 
 			if (!entry.db)
 			{
-				_WARNING("[%s]\tThe \"%s\" patch can't be installed, there is no data in the database",
-					game_short.c_str(), entry.patch->GetName().c_str());
+				_WARNING("The \"%s\" patch can't be installed, there is no data in the database",
+					entry.patch->GetName().c_str());
 				return false;
 			}
 
@@ -64,15 +64,8 @@ namespace CKPE
 				auto option_name = entry.patch->GetOptionName();
 				if (!option_name)
 				{
-					_ERROR("[%s]\tThe \"%s\" patch is a requirement for an option, but the option itself is specified as nullptr, skips",
-						game_short.c_str(), entry.patch->GetName().c_str());
-					return false;
-				}
-
-				if (gsettings->GetOptionTypeByName(option_name) != SettingOptionType::sotBool)
-				{
-					_ERROR("[%s]\tThe \"%s\" patch only logical option names are allowed, skips",
-						game_short.c_str(), entry.patch->GetName().c_str());
+					_ERROR("The \"%s\" patch is a requirement for an option, but the option itself is specified as nullptr, skips",
+						entry.patch->GetName().c_str());
 					return false;
 				}
 
@@ -80,8 +73,15 @@ namespace CKPE
 				std::string name;
 				if (!gsettings->SplitOptionName(option_name, section, name) || !section.length() || !name.length())
 				{
-					_ERROR("[%s]\tThe \"%s\" patch couldn't identify the section and the name of the option, skips",
-						game_short.c_str(), entry.patch->GetName().c_str());
+					_ERROR("The \"%s\" patch couldn't identify the section and the name of the option, skips",
+						entry.patch->GetName().c_str());
+					return false;
+				}
+
+				if (gsettings->GetOptionTypeByName(name) != SettingOptionType::sotBool)
+				{
+					_ERROR("The \"%s\" patch only logical option names are allowed, skips",
+						entry.patch->GetName().c_str());
 					return false;
 				}
 
@@ -97,8 +97,8 @@ namespace CKPE
 			{
 				auto depends = entry.patch->GetDependencies();
 				if (!depends.size())
-					_WARNING("[%s]\tThe \"%s\" patch says that there are dependencies that for some reason don't exist",
-						game_short.c_str(), entry.patch->GetName().c_str());
+					_WARNING("The \"%s\" patch says that there are dependencies that for some reason don't exist",
+						entry.patch->GetName().c_str());
 				else
 				{
 					for (auto& depend : depends)
@@ -110,8 +110,8 @@ namespace CKPE
 
 						if (it == _entries->end())
 						{
-							_ERROR("[%s]\tThe \"%s\" patch has a dependency that is not in the database, skips",
-								game_short.c_str(), depend.c_str());
+							_ERROR("The \"%s\" patch has a dependency that is not in the database, skips",
+								depend.c_str());
 							return false;
 						}
 
@@ -120,8 +120,8 @@ namespace CKPE
 
 						if (!ActivePatch(*it, game_short))
 						{
-							_ERROR("[%s]\tThe \"%s\" patch has a dependency that has not been initialized, skips",
-								game_short.c_str(), depend.c_str());
+							_ERROR("The \"%s\" patch has a dependency that has not been initialized, skips",
+								depend.c_str());
 							return false;
 						}
 					}
@@ -135,12 +135,12 @@ namespace CKPE
 					game_short.c_str(), entry.patch->GetName().c_str());
 				return true;
 			case -1:
-				_FATALERROR("[%s]\tThe \"%s\" patch has not been fully installed, there may be errors",
-					game_short.c_str(), entry.patch->GetName().c_str());
+				_FATALERROR("The \"%s\" patch has not been fully installed, there may be errors",
+					entry.patch->GetName().c_str());
 				break;
 			case -2:
-				_FATALERROR("[%s]\tAn internal error occurred while installing the \"%s\" patch",
-					game_short.c_str(), entry.patch->GetName().c_str());
+				_FATALERROR("An internal error occurred while installing the \"%s\" patch",
+					entry.patch->GetName().c_str());
 				break;
 			}
 
@@ -228,11 +228,7 @@ namespace CKPE
 			auto gshort = StringUtils::Utf16ToUtf8(game_short);	
 
 			for (auto& entry : *_entries)
-			{
-				if (!ActivePatch(entry, gshort))
-					_ERROR("[%s]\tThe \"%s\" patch was not initialized",
-						gshort.c_str(), entry.patch->GetName().c_str());
-			}
+				ActivePatch(entry, gshort);
 		}
 
 		void PatchManager::QueryAll(const std::wstring& game_short) noexcept(true)

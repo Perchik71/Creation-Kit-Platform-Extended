@@ -20,5 +20,5 @@ namespace CKPE
 }
 
 #define CKPE_ASSERT(Cond)					if(!(Cond)) Asserts::Trigger(__FILE__, __LINE__, #Cond);
-#define CKPE_ASSERT_MSG_VA(Cond, Msg, ...)	if(!(Cond)) Asserts::Trigger(__FILE__, __LINE__, "%s\n\n" Msg, #Cond, ##__VA_ARGS__);
-#define CKPE_ASSERT_MSG(Cond, Msg)			CKPE_ASSERT_MSG_VA(Cond, Msg)
+#define CKPE_ASSERT_MSG_FMT(Cond, Msg, ...)	if(!(Cond)) Asserts::Trigger(__FILE__, __LINE__, "%s\n\n" Msg, #Cond, ##__VA_ARGS__);
+#define CKPE_ASSERT_MSG(Cond, Msg)			CKPE_ASSERT_MSG_FMT(Cond, Msg)

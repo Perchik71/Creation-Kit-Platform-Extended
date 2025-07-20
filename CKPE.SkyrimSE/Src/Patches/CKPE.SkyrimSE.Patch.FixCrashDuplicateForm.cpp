@@ -1,4 +1,4 @@
-﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -58,7 +58,7 @@ namespace CKPE
 				// Integer underflow when string length is 0. TESForm::MakeUniqueEditorID.
 				//
 				uintptr_t addr = __CKPE_OFFSET(0);
-				Detours::DetourCall(addr, (uintptr_t)&sub);
+				Detours::DetourCall(addr, (std::uintptr_t)&sub);
 				SafeWrite::WriteNop(addr + 5, 1);
 
 				return true;

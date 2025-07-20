@@ -153,7 +153,7 @@ namespace CKPE
 		const RTTI::Info* RTTI::Find(const std::string_view& name) const noexcept(true)
 		{
 			auto it = srtti_data.find(HashUtils::MurmurHash32(name.data(), name.length()));
-			if (it != srtti_data.end())
+			if (it == srtti_data.end())
 			{
 				ErrorHandler::Trigger(std::format("RTTI::Find \"{}\" had no results", name));
 				return nullptr;

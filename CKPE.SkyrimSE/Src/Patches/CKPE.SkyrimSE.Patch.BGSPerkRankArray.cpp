@@ -1,4 +1,4 @@
-﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -69,8 +69,8 @@ namespace CKPE
 				// Fix for crash on null BGSPerkRankArray form ids and perk ranks being reset to 1 on save 
 				// (i.e DianaVampire2017Asherz.esp)
 				//
-				Detours::DetourJump(__CKPE_OFFSET(0), (uintptr_t)&sub1);
-				Detours::DetourCall(__CKPE_OFFSET(1), (uintptr_t)&sub2);
+				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub1);
+				Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&sub2);
 
 				BGSPerkRankArraySub1 = (TBGSPerkRankArraySub1)__CKPE_OFFSET(2);
 				BGSPerkRankArraySub2 = (TBGSPerkRankArraySub2)__CKPE_OFFSET(3);

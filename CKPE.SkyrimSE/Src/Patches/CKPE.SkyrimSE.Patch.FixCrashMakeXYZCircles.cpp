@@ -1,4 +1,4 @@
-﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -56,7 +56,7 @@ namespace CKPE
 				// Fix for crash when MakeXYZCircles passes an invalid line count to BSShaderResourceManager::CreateLineShape. 
 				// BGSPrimitiveSphere only creates these debug marker circles in the editor.
 				//
-				Detours::DetourCall(__CKPE_OFFSET(0), (uintptr_t)&sub);
+				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
 
 				return true;
 			}
