@@ -57,7 +57,7 @@ namespace CKPE
 				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
 				for (std::uint32_t i = 0; i < db->GetCount(); i++)
-					SafeWrite::WriteNop(__CKPE_OFFSET(i), 2);
+					text.WriteNop(__CKPE_OFFSET(i), 2);
 
 				return true;
 			}

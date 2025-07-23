@@ -20,6 +20,7 @@ namespace CKPE
 		static void Write(std::uintptr_t address, std::initializer_list<std::uint8_t> data) noexcept(true);
 		static void WriteSet(std::uintptr_t address, std::uint8_t value, std::size_t size) noexcept(true);
 		static void WriteNop(std::uintptr_t address, std::size_t size) noexcept(true);
+		static void WriteStringRef(std::uintptr_t address, const char* new_str) noexcept(true);
 	};
 
 	class CKPE_API ScopeSafeWrite
@@ -41,5 +42,6 @@ namespace CKPE
 		void Write(std::uintptr_t address, std::initializer_list<std::uint8_t> data) const noexcept(true);
 		void WriteSet(std::uintptr_t address, std::uint8_t value, std::size_t size) const noexcept(true);
 		void WriteNop(std::uintptr_t address, std::size_t size) const noexcept(true);
+		void WriteStringRef(std::uintptr_t address, const char* new_str) noexcept(true);
 	};
 }

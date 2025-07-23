@@ -35,6 +35,12 @@ namespace CKPE
 		WriteSet(address, 0x90, size);
 	}
 
+	void SafeWrite::WriteStringRef(std::uintptr_t address, const char* new_str) noexcept(true)
+	{
+		if (!address || !new_str) return;
+		Write(address, (uint8_t*)&new_str, (uint32_t)sizeof(new_str));
+	}
+
 	ScopeSafeWrite::ScopeSafeWrite(std::uintptr_t target, std::uintptr_t size) noexcept(true) :
 		_target(target), _size(size)
 	{
@@ -77,5 +83,11 @@ namespace CKPE
 	void ScopeSafeWrite::WriteNop(std::uintptr_t address, std::size_t size) const noexcept(true)
 	{
 		WriteSet(address, 0x90, size);
+	}
+
+	void ScopeSafeWrite::WriteStringRef(std::uintptr_t address, const char* new_str) noexcept(true)
+	{
+		if (Contain(address, sizeof(new_str)))
+			WriteStringRef(address, new_str);
 	}
 }

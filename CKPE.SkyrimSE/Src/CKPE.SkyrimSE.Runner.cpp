@@ -59,15 +59,23 @@
 #include <Patches/CKPE.SkyrimSE.Patch.FixWaterOrtho.h>
 #include <Patches/CKPE.SkyrimSE.Patch.IgnoreGroundHeightTest.h>
 #include <Patches/CKPE.SkyrimSE.Patch.IncreaseMaximumNavmesh.h>
+#include <Patches/CKPE.SkyrimSE.Patch.MemoryManager.h>
 #include <Patches/CKPE.SkyrimSE.Patch.NavMeshInfoMap.h>
 #include <Patches/CKPE.SkyrimSE.Patch.NiCollisionObjectClonedWarning.h>
+#include <Patches/CKPE.SkyrimSE.Patch.PapyrusEditorLimit.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ReEnableLandShadows.h>
 #include <Patches/CKPE.SkyrimSE.Patch.RefLinkGeometryHangWorkaround.h>
+#include <Patches/CKPE.SkyrimSE.Patch.RenameCreationKitApp.h>
+#include <Patches/CKPE.SkyrimSE.Patch.RenderWindow60FPS.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ResponseIgnoreMax.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ShowReloadShadersAlways.h>
+#include <Patches/CKPE.SkyrimSE.Patch.SkipTopicInfoValidation.h>
 #include <Patches/CKPE.SkyrimSE.Patch.TESModelTextureSwapCorrectlyLoad.h>
 #include <Patches/CKPE.SkyrimSE.Patch.TESParameters_CTDA.h>
+#include <Patches/CKPE.SkyrimSE.Patch.UIHotkeys.h>
 #include <Patches/CKPE.SkyrimSE.Patch.UnEquipSound.h>
+#include <Patches/CKPE.SkyrimSE.Patch.Unicode.h>
+#include <Patches/CKPE.SkyrimSE.Patch.VersionControlMergeWorkaround.h>
 #include <Patches/CKPE.SkyrimSE.Patch.WeaponCriticalEffect.h>
 
 namespace CKPE
@@ -130,15 +138,23 @@ namespace CKPE
 			mgr->Register(new Patch::FixWaterOrtho);
 			mgr->Register(new Patch::IgnoreGroundHeightTest);
 			mgr->Register(new Patch::IncreaseMaximumNavmesh);
+			mgr->Register(new Patch::MemoryManager);
 			mgr->Register(new Patch::NavMeshInfoMap);
 			mgr->Register(new Patch::NiCollisionObjectClonedWarning);
+			mgr->Register(new Patch::PapyrusEditorLimit);
 			mgr->Register(new Patch::ReEnableLandShadows);
 			mgr->Register(new Patch::RefLinkGeometryHangWorkaround);
+			mgr->Register(new Patch::RenameCreationKitApp);
+			mgr->Register(new Patch::RenderWindow60FPS);
 			mgr->Register(new Patch::ResponseIgnoreMax);
 			mgr->Register(new Patch::ShowReloadShadersAlways);
+			mgr->Register(new Patch::SkipTopicInfoValidation);
 			mgr->Register(new Patch::TESModelTextureSwapCorrectlyLoad);
 			mgr->Register(new Patch::TESParameters_CTDA);
+			mgr->Register(new Patch::UIHotkeys);
 			mgr->Register(new Patch::UnEquipSound);
+			mgr->Register(new Patch::Unicode);
+			mgr->Register(new Patch::VersionControlMergeWorkaround);
 			mgr->Register(new Patch::WeaponCriticalEffect);
 		}
 

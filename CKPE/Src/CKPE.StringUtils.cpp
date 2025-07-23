@@ -14,8 +14,170 @@ namespace CKPE
 {
 	bool StringUtils::IsASCII(const std::string& src) noexcept(true)
 	{
-		for (size_t i = 0; i < src.length(); i++)
+		for (std::size_t i = 0; i < src.length(); i++)
 			if (src[i] & 0x80) return false;
+		return true;
+	}
+
+	bool StringUtils::IsUtf8(const std::string& src) noexcept(true)
+	{
+		auto src_1 = (const uint8_t*)(src.c_str());
+		int32_t charlen = 0;
+		auto length = src.length();
+		int64_t result = 0;
+
+		while (result < length)
+		{
+			uint8_t c = *src_1;
+			if (c < 0x80)
+				// regular single byte ASCII character
+				charlen = 1;
+			else if (c <= 0xC1)
+			{
+				// single byte character, between valid UTF-8 encodings
+				// 11000000 and 11000001 map 2 byte to 0..128, which is invalid and used for XSS attacks
+				if (c >= 192) return false;
+				charlen = 1;
+			}
+			else if (c <= 0xDF)
+			{
+				// could be 2 byte character (%110xxxxx %10xxxxxx)
+				if ((result < (length - 1)) && ((src_1[1] & 0xC0) == 0x80))
+					charlen = 2;
+				else
+					// missing following bytes
+					return false;
+			}
+			else if (c <= 0xEF)
+			{
+				// could be 3 byte character (%1110xxxx %10xxxxxx %10xxxxxx)
+				if ((result < (length - 2)) && ((src_1[1] & 0xC0) == 0x80) && ((src_1[2] & 0xC0) == 0x80))
+				{
+					if ((c == 0xE0) && (src_1[1] <= 0x9F))
+						// XSS attack: 3 bytes are mapped to the 1 or 2 byte codes
+						return false;
+					charlen = 3;
+				}
+				else
+					// missing following bytes
+					return false;
+			}
+			else if (c <= 0xF7)
+			{
+				// could be 4 byte character (%11110xxx %10xxxxxx %10xxxxxx %10xxxxxx)
+				if ((result < (length - 3)) && ((src_1[1] & 0xC0) == 0x80) && ((src_1[2] & 0xC0) == 0x80) && ((src_1[3] & 0xC0) == 0x80))
+				{
+					if ((c == 0xF0) && (src_1[1] <= 0x8F))
+						// XSS attack: 4 bytes are mapped to the 1-3 byte codes
+						return false;
+
+					if ((c > 0xF4) || ((c == 0xF4) && (src_1[1] > 0x8F)))
+						// out of range U+10FFFF
+						return false;
+
+					charlen = 4;
+				}
+				else
+					// missing following bytes
+					return false;
+			}
+			else
+				return false;
+
+			result += charlen;
+			src_1 += charlen;
+
+			if (result > length)
+				// missing following bytes
+				return false;
+		}
+
+		return true;
+	}
+
+	bool StringUtils::IsASCII(const char* src) noexcept(true)
+	{
+		if (!src) return false;
+		for (std::size_t i = 0; src[i]; i++)
+			if (src[i] & 0x80) return false;
+		return true;
+	}
+
+	bool StringUtils::IsUtf8(const char* src) noexcept(true)
+	{
+		if (!src) return false;
+
+		auto src_1 = (const uint8_t*)(src);
+		int32_t charlen = 0;
+		auto length = strlen(src);
+		int64_t result = 0;
+
+		while (result < length)
+		{
+			uint8_t c = *src_1;
+			if (c < 0x80)
+				// regular single byte ASCII character
+				charlen = 1;
+			else if (c <= 0xC1)
+			{
+				// single byte character, between valid UTF-8 encodings
+				// 11000000 and 11000001 map 2 byte to 0..128, which is invalid and used for XSS attacks
+				if (c >= 192) return false;
+				charlen = 1;
+			}
+			else if (c <= 0xDF)
+			{
+				// could be 2 byte character (%110xxxxx %10xxxxxx)
+				if ((result < (length - 1)) && ((src_1[1] & 0xC0) == 0x80))
+					charlen = 2;
+				else
+					// missing following bytes
+					return false;
+			}
+			else if (c <= 0xEF)
+			{
+				// could be 3 byte character (%1110xxxx %10xxxxxx %10xxxxxx)
+				if ((result < (length - 2)) && ((src_1[1] & 0xC0) == 0x80) && ((src_1[2] & 0xC0) == 0x80))
+				{
+					if ((c == 0xE0) && (src_1[1] <= 0x9F))
+						// XSS attack: 3 bytes are mapped to the 1 or 2 byte codes
+						return false;
+					charlen = 3;
+				}
+				else
+					// missing following bytes
+					return false;
+			}
+			else if (c <= 0xF7)
+			{
+				// could be 4 byte character (%11110xxx %10xxxxxx %10xxxxxx %10xxxxxx)
+				if ((result < (length - 3)) && ((src_1[1] & 0xC0) == 0x80) && ((src_1[2] & 0xC0) == 0x80) && ((src_1[3] & 0xC0) == 0x80))
+				{
+					if ((c == 0xF0) && (src_1[1] <= 0x8F))
+						// XSS attack: 4 bytes are mapped to the 1-3 byte codes
+						return false;
+
+					if ((c > 0xF4) || ((c == 0xF4) && (src_1[1] > 0x8F)))
+						// out of range U+10FFFF
+						return false;
+
+					charlen = 4;
+				}
+				else
+					// missing following bytes
+					return false;
+			}
+			else
+				return false;
+
+			result += charlen;
+			src_1 += charlen;
+
+			if (result > length)
+				// missing following bytes
+				return false;
+		}
+
 		return true;
 	}
 

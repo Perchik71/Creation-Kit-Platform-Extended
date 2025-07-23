@@ -145,7 +145,7 @@ namespace CKPE
 			ReleaseDC(hWnd, hdc);
 		}
 
-		const std::unordered_set<std::string_view, std::hash<std::string_view>, std::equal_to<std::string_view>> 
+		std::unordered_set<std::string_view, std::hash<std::string_view>, std::equal_to<std::string_view>> 
 			_spermanentWindowSubclasses
 		{
 			// Main class Creation Kit
@@ -1770,6 +1770,12 @@ namespace CKPE
 			}
 
 			return CallNextHookEx(g_hkWndProcModernThemeHandle, nCode, wParam, lParam);
+		}
+
+		void ModernTheme::AddSpermanentWindowSubclass(const char* Name) noexcept(true)
+		{
+			if (!_spermanentWindowSubclasses.count(Name))
+				_spermanentWindowSubclasses.emplace(Name);
 		}
 
 		void ModernTheme::InitializeCurrentThread() noexcept(true)

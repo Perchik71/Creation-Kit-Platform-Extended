@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <cstring>
 #include <CKPE.Common.Common.h>
 
 namespace CKPE
@@ -23,6 +24,7 @@ namespace CKPE
 			[[nodiscard]] constexpr inline bool HasCaptionStylesSupported() const noexcept(true)
 			{ return _caption_styles_supported; }
 
+			static void AddSpermanentWindowSubclass(const char* Name) noexcept(true);
 			static void InitializeCurrentThread() noexcept(true);
 			static void InitializeThread(uint32_t u32ThreadId) noexcept(true);
 			static void ApplyDarkThemeForWindow(void* hWnd) noexcept(true);

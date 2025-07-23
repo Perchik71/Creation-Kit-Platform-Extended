@@ -17,6 +17,9 @@ namespace CKPE
 		StringUtils& operator=(const StringUtils&) = delete;
 	public:
 		static bool IsASCII(const std::string& src) noexcept(true);
+		static bool IsUtf8(const std::string& src) noexcept(true);
+		static bool IsASCII(const char* src) noexcept(true);
+		static bool IsUtf8(const char* src) noexcept(true);
 		static std::wstring Utf8ToUtf16(const std::string& src) noexcept(true);
 		static std::string Utf16ToUtf8(const std::wstring& src) noexcept(true);
 		static std::string Utf16ToWinCP(const std::wstring& src) noexcept(true);

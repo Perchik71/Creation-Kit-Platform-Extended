@@ -85,7 +85,7 @@ namespace CKPE
 					return false;
 				}
 
-				if (!gsettings->ReadBool(section, option_name, false))
+				if (!gsettings->ReadBool(section, name, false))
 				{
 					_MESSAGE("[%s]\tThe \"%s\" patch can't be installed, it is disabled by the option",
 						game_short.c_str(), entry.patch->GetName().c_str());

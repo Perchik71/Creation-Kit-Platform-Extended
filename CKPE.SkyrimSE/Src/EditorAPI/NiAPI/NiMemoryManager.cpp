@@ -16,20 +16,17 @@ namespace CKPE
 			{
 				void* NiMemoryManager::Alloc(const NiMemoryManager* lpManager, std::size_t dwSize, std::size_t dwAlignment)
 				{
-					auto p = aligned_malloc(dwSize, dwAlignment);
-					if (p) memset(p, 0, dwSize);
-					return p;
+					return Common::MemoryManager::GetSingleton()->MemAlloc(dwSize, dwAlignment, dwAlignment != 0);
 				}
 
 				void NiMemoryManager::Free(const NiMemoryManager* lpManager, void* lpPointer)
 				{
-					aligned_free(lpPointer);
+					Common::MemoryManager::GetSingleton()->MemFree(lpPointer);
 				}
 
 				std::size_t NiMemoryManager::Size(const NiMemoryManager* lpManager, void* lpPointer)
 				{
-					// only own memmgr
-					return msize(lpPointer);
+					return Common::MemoryManager::GetSingleton()->MemSize(lpPointer);
 				}
 			}
 		}
