@@ -41,13 +41,13 @@ namespace CKPE
 
 			[[nodiscard]] static Interface* GetSingleton() noexcept(true);
 			[[nodiscard]] constexpr inline std::uintptr_t GetInstanceDLL() const noexcept(true) { return _instDll; }
-			[[nodiscard]] constexpr inline const Logger* GetLogger() const noexcept(true) { return _interface->logger; }
-			[[nodiscard]] constexpr inline Application* GetApplication() const noexcept(true) { return _interface->application; }
-			[[nodiscard]] constexpr inline TOMLSettingCollection* GetSettings() const noexcept(true)
+			[[nodiscard]] inline Logger* GetLogger() noexcept(true) { return _interface->logger; }
+			[[nodiscard]] inline Application* GetApplication() noexcept(true) { return _interface->application; }
+			[[nodiscard]] inline TOMLSettingCollection* GetSettings() noexcept(true)
 			{ return _settings; }
-			[[nodiscard]] constexpr inline TOMLSettingCollection* GetCustomThemeSettings() const noexcept(true)
+			[[nodiscard]] inline TOMLSettingCollection* GetCustomThemeSettings() noexcept(true)
 			{ return _theme_settings; }
-			[[nodiscard]] constexpr inline CommandLineParser* GetCommandLineParser() const noexcept(true)
+			[[nodiscard]] inline CommandLineParser* GetCommandLineParser() noexcept(true)
 			{ return _cmdline; }
 		};
 	}

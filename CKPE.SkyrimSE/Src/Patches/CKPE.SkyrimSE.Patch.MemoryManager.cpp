@@ -20,7 +20,6 @@ namespace CKPE
 		namespace Patch
 		{
 			constexpr auto MEM_THRESHOLD = 2;	// 2Gb
-			constexpr auto MEM_GB = 1073741824llu;
 
 			class BSMemoryManager
 			{
@@ -194,8 +193,8 @@ namespace CKPE
 
 				auto Physical = HardwareInfo::OS::GetPhysicalMemory();
 				auto Shared = HardwareInfo::OS::GetSharedMemory();
-				_MESSAGE("Physical Memory (Total: %.1f Gb, Available: %.1f Gb)", Physical.Total, Physical.Free);
-				_MESSAGE("Memory (Total: %.1f Gb, Available: %.1f Gb)", Shared.Total, Shared.Free);
+				_MESSAGE("\t\tPhysical Memory (Total: %.1f Gb, Available: %.1f Gb)", Physical.Total, Physical.Free);
+				_MESSAGE("\t\tMemory (Total: %.1f Gb, Available: %.1f Gb)", Shared.Total, Shared.Free);
 
 				// Программа очень любит думать, а винде это не нравиться, скажем винде, чтоб не обращала внимание.
 				DisableProcessWindowsGhosting();
@@ -208,8 +207,6 @@ namespace CKPE
 						Detours::DetourIAT(base, module, "_recalloc", (uintptr_t)recalloc);
 						Detours::DetourIAT(base, module, "free", (uintptr_t)free);
 						Detours::DetourIAT(base, module, "_msize", (uintptr_t)msize);
-						//Detours::DetourIAT(base, module, "_aligned_malloc", (uintptr_t)aligned_malloc);
-						//Detours::DetourIAT(base, module, "_aligned_free", (uintptr_t)aligned_free);
 						Detours::DetourIAT(base, module, "_strdup", (uintptr_t)strdup);
 						Detours::DetourIAT(base, module, "memcpy_s", (uintptr_t)memcpy_s);
 						Detours::DetourIAT(base, module, "memmove_s", (uintptr_t)memmove_s);

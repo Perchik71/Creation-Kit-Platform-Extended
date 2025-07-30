@@ -9,7 +9,7 @@
 namespace CKPE
 {
 	template<typename _Ty>
-	class SmartPointerInfo
+	class CKPE_API SmartPointerInfo
 	{
 	public:
 		SmartPointerInfo() : _refCount(1), _ptr(nullptr), _is_Array(false) {}
@@ -52,7 +52,7 @@ namespace CKPE
 	};
 
 	template<typename _Ty>
-	class SmartPointer
+	class CKPE_API SmartPointer
 	{
 	public:
 		SmartPointer() : _info(new SmartPointerInfo<_Ty>()) {}

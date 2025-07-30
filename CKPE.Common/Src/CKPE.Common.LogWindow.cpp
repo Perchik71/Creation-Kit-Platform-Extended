@@ -530,7 +530,12 @@ namespace CKPE
 			{
 				// открываю\создаю файл, полностью заменяю его содержимое
 				// если файл существует
-				FileStream stream(fname, FileStream::fmCreate);
+				auto stream = new FileStream(fname, FileStream::fmCreate);
+				if (!stream)
+				{
+					_ERROR(L"I can't open the file for writing: \"%s\"", fname.c_str());
+					return false;
+				}
 
 				// функция обратного вызова для вывода в файл
 				auto MyOutFunction = [](
@@ -560,12 +565,14 @@ namespace CKPE
 				// сбрасываем ошибки
 				es.dwError = 0;
 				// в качестве Cookie передаем указатель на наш объект file
-				es.dwCookie = (DWORD_PTR)&stream;
+				es.dwCookie = (DWORD_PTR)stream;
 				// посылаем сообщение окну RichEdit, WPARAM==флаги,
 				// LPARAM - указатель на EDITSTREAM
 				SendMessageA((HWND)_handle_richedit, EM_STREAMOUT,
 					SF_TEXT /*получать обычный текст*/,
 					(LPARAM)&es);
+
+				delete stream;
 
 				// true - если не было ошибок, иначе что-то где-то вдруг
 				// порою не в порядке.

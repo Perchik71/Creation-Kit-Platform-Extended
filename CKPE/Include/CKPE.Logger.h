@@ -47,7 +47,7 @@ namespace CKPE
 		bool Open(const std::string& fname) noexcept(true);
 		bool Open(const std::wstring& fname) noexcept(true);
 		void Close() noexcept(true);
-		[[nodiscard]] static const Logger* GetSingleton() noexcept(true);
+		[[nodiscard]] static Logger* GetSingleton() noexcept(true);
 
 		virtual void Write(const std::string& formatted_message, ...) const noexcept(true);
 		virtual void Write(const std::wstring& formatted_message, ...) const noexcept(true);

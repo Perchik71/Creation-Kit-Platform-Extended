@@ -34,7 +34,7 @@ struct CKPEGameLibraryInterface
 	std::uint32_t interfaceVersion;
 	std::uint64_t ckpeVersion;
 	CKPE::Application* application;
-	const CKPE::Logger* logger;
+	CKPE::Logger* logger;
 	void* (*QueryInterface)(std::uint32_t id);
 };
 

@@ -20,12 +20,14 @@
 #include <Patches/CKPE.SkyrimSE.Patch.ChooseSoundFile.h>
 #include <Patches/CKPE.SkyrimSE.Patch.Console.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashAfterMultipleMastersWarning.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CrashDump.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashDuplicateWorldspace.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashFlowChartX.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashHairKS.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashNullptrDXGISurface.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashNullptrFaceGen.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashUsingMore16NPCForFaceGen.h>
+#include <Patches/CKPE.SkyrimSE.Patch.DisableAssertion.h>
 #include <Patches/CKPE.SkyrimSE.Patch.EnableGameButtonToVC.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixActorDlg.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixBGSEntryPointFunctionDataTwoValue.h>
@@ -57,6 +59,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.FixUnableToFindVariable.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixVertexNormals.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixWaterOrtho.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FlowChartX.h>
 #include <Patches/CKPE.SkyrimSE.Patch.IgnoreGroundHeightTest.h>
 #include <Patches/CKPE.SkyrimSE.Patch.IncreaseMaximumNavmesh.h>
 #include <Patches/CKPE.SkyrimSE.Patch.MemoryManager.h>
@@ -99,12 +102,14 @@ namespace CKPE
 			mgr->Register(new Patch::ChooseSoundFile);
 			mgr->Register(new Patch::Console);
 			mgr->Register(new Patch::CrashAfterMultipleMastersWarning);
+			mgr->Register(new Patch::CrashDump);
 			mgr->Register(new Patch::CrashDuplicateWorldspace);
 			mgr->Register(new Patch::CrashFlowChartX);
 			mgr->Register(new Patch::CrashHairKS);
 			mgr->Register(new Patch::CrashNullptrDXGISurface);
 			mgr->Register(new Patch::CrashNullptrFaceGen);
 			mgr->Register(new Patch::CrashUsingMore16NPCForFaceGen);
+			mgr->Register(new Patch::DisableAssertion);
 			mgr->Register(new Patch::EnableGameButtonToVC);
 			mgr->Register(new Patch::FixActorDlg);
 			mgr->Register(new Patch::FixBGSEntryPointFunctionDataTwoValue);
@@ -136,6 +141,7 @@ namespace CKPE
 			mgr->Register(new Patch::FixUnableToFindVariable);
 			mgr->Register(new Patch::FixVertexNormals);
 			mgr->Register(new Patch::FixWaterOrtho);
+			mgr->Register(new Patch::FlowChartX);
 			mgr->Register(new Patch::IgnoreGroundHeightTest);
 			mgr->Register(new Patch::IncreaseMaximumNavmesh);
 			mgr->Register(new Patch::MemoryManager);

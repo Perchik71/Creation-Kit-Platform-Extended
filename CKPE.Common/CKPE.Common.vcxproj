@@ -33,7 +33,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\toml11\include;$(SolutionDir)Dependencies\vmm\include;$(SolutionDir)Dependencies\jDialogs\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\toml11\include;$(SolutionDir)Dependencies\vmm\include;$(SolutionDir)Dependencies\jDialogs\include;$(SolutionDir)Dependencies\mzip\src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -62,7 +62,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CKPE.lib;Shell32.lib;Toml.lib;vmm.lib;libzydis.lib;comctl32.lib;msimg32.lib;uxtheme.lib;gdiplus.lib;shlwapi.lib;dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CKPE.lib;Shell32.lib;Toml.lib;vmm.lib;libzydis.lib;comctl32.lib;msimg32.lib;uxtheme.lib;gdiplus.lib;shlwapi.lib;dwmapi.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <StackCommitSize>
       </StackCommitSize>
     </Link>
@@ -75,6 +75,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Src\CKPE.Common.AboutWindow.cpp" />
     <ClCompile Include="Src\CKPE.Common.ClassicTheme.cpp" />
+    <ClCompile Include="Src\CKPE.Common.CrashHandler.cpp" />
     <ClCompile Include="Src\CKPE.Common.CreatePatterns.cpp" />
     <ClCompile Include="Src\CKPE.Common.DialogManager.cpp" />
     <ClCompile Include="Src\CKPE.Common.EditorUI.cpp" />
@@ -124,6 +125,7 @@
     <ClInclude Include="Include\CKPE.Common.AboutWindow.h" />
     <ClInclude Include="Include\CKPE.Common.ClassicTheme.h" />
     <ClInclude Include="Include\CKPE.Common.Common.h" />
+    <ClInclude Include="Include\CKPE.Common.CrashHandler.h" />
     <ClInclude Include="Include\CKPE.Common.CreatePatterns.h" />
     <ClInclude Include="Include\CKPE.Common.DialogManager.h" />
     <ClInclude Include="Include\CKPE.Common.EditorUI.h" />

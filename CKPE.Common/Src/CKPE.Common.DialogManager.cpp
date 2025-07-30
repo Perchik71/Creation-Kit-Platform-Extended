@@ -2,6 +2,7 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
+#include <vector>
 #include <CKPE.Common.DialogManager.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Exception.h>
@@ -127,19 +128,23 @@ namespace CKPE
 			try
 			{
 				std::string sName, sId;
-				Zipper zipper(fname);
-				
+				UnZipper zipper(fname);
+
+				if (!zipper.HasOpen())
+					throw RuntimeError("DIALOG: Can't opened file \"{}\"", fname);
+
 				_MESSAGE("DIALOG: Open archive \"%s\"", fname.c_str());
 
-				for (std::uint32_t i = 0; i < zipper.Count(); ++i)
+				for (std::size_t i = 0; i < zipper.GetEntries()->Count(); ++i)
 				{
-					Zipper::Entry entry(&zipper, i);
-					if (zipper.LastError())
-						throw std::runtime_error(zipper.LastErrorAsString());
+					auto entry = zipper.GetEntries()->At(i);
+					if (entry.Empty() || !entry->Get())
+						throw std::runtime_error(zipper.LastErrorByString());
 
-					if (entry.IsDir() || !entry.GetName(sName))
+					if (entry->Get()->IsDir())
 						continue;
 
+					sName = entry->Get()->GetName();
 					// only .json 
 					if (_stricmp(PathUtils::ExtractFileExt(sName).c_str(), ".json"))
 						continue;
@@ -151,8 +156,8 @@ namespace CKPE
 					sId = sName.substr(0, AtuID);
 
 					MemoryStream stream;
-					if (!entry.Read(stream))
-						throw RuntimeError("DIALOG: Failed read file \"{}\"", sName);
+					if (!entry->Get()->ReadToStream(stream))
+						throw RuntimeError("DIALOG: Failed read file \"{}\" {}", sName, zipper.LastErrorByString());
 					else
 					{
 						if (AddDialogByCode((const char*)stream.Data(), strtoul(sId.data(), nullptr, 10)))
@@ -178,13 +183,12 @@ namespace CKPE
 				if (!PathUtils::DirExists(dir))
 					throw RuntimeError("DIALOG: The specified directory \"{}\" does not exist", dir);
 				
-				Zipper zipper;
-				if (!zipper.Create(fname))
-					throw RuntimeError("DIALOG: Failed open archive \"{}\"", dir);
+				std::vector<std::string> flist;
 
 				WIN32_FIND_DATA FindFileData;
 				HANDLE hFind;
 				std::string path = dir;
+
 
 				if (hFind = FindFirstFileA((path + "\\*.json").c_str(), &FindFileData); hFind != INVALID_HANDLE_VALUE)
 				{
@@ -207,10 +211,13 @@ namespace CKPE
 						if ((FindFileData.dwFileAttributes & FILE_ATTRIBUTE_OFFLINE) == FILE_ATTRIBUTE_OFFLINE)
 							continue;
 
-						zipper.PackFromFile((path + FindFileData.cFileName).c_str());
+						flist.push_back(path + FindFileData.cFileName);
 					} while (FindNextFileA(hFind, &FindFileData));
 
 					FindClose(hFind);
+
+					if (flist.size())
+						Zipper::ZipFiles(fname, flist);
 				}
 
 				_MESSAGE("DIALOG: New archive created: \"%s\"", fname);

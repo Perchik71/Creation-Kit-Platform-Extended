@@ -9,6 +9,8 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Exception.h>
 
+#include <CKPE.MessageBox.h>
+
 namespace CKPE
 {
 	namespace Common
@@ -43,24 +45,22 @@ namespace CKPE
 				if (!PathUtils::FileExists(fname_pak))
 					throw RuntimeError(L"Relocator::Open file \"{}\" no found", fname_pak);
 
-				Zipper zip;
-				if (!zip.Open(fname_pak))
+				UnZipper zip(fname_pak);
+				if (!zip.HasOpen())
 					throw RuntimeError(L"Relocator::Open file \"{}\" can't opened", fname_pak);
 
 				auto db_name = StringUtils::Utf16ToWinCP(fname_db);
 
-				for (std::uint32_t i = 0; i < zip.Count(); i++)
+				for (std::uint32_t i = 0; i < zip.GetEntries()->Count(); i++)
 				{
-					Zipper::Entry entry(&zip, i);
+					auto entry = zip.GetEntries()->At(i);
+					if (entry.Empty() || !entry->Get()) continue;
 
-					std::string sname;
-					if (!entry.GetName(sname))
-						continue;
-
+					auto sname = entry->Get()->GetName();
 					if (!_stricmp(sname.c_str(), db_name.c_str()))
 					{
 						MemoryStream mstm;
-						if (!entry.Read(mstm))
+						if (!entry->Get()->ReadToStream(mstm))
 							throw RuntimeError(L"Relocator::Open file \"{}\" in \"{}\" is broken", fname_db, fname_pak);
 
 						// sets begin
@@ -106,14 +106,8 @@ namespace CKPE
 				_db->SaveToStream(mstm);
 				mstm.SetPosition(0);
 
-				Zipper zip;
-
-				if (!PathUtils::FileExists(fname_pak))
-					zip.Create(fname_pak);
-				else
-					zip.Open(fname_pak, true);
-
-				zip.PackFromStream(fname_db, mstm);
+				Zipper zip(fname_pak);
+				return zip.ZipFileAsStream(fname_db, mstm);
 			}
 			catch (const std::exception& e)
 			{

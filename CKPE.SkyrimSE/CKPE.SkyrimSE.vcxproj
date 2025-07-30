@@ -53,7 +53,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <CallingConvention>StdCall</CallingConvention>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
-      <DisableSpecificWarnings>6031;6387</DisableSpecificWarnings>
+      <DisableSpecificWarnings>6031;6387;26495</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -91,12 +91,14 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ChooseSoundFile.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.Console.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashAfterMultipleMastersWarning.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashDump.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashDuplicateWorldspace.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashFlowChartX.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashHairKS.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashNullptrDXGISurface.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashNullptrFaceGen.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashUsingMore16NPCForFaceGen.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.DisableAssertion.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.EnableGameButtonToVC.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixActorDlg.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixBGSEntryPointFunctionDataTwoValue.cpp" />
@@ -128,6 +130,7 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixUnableToFindVariable.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixVertexNormals.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixWaterOrtho.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FlowChartX.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.IgnoreGroundHeightTest.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.IncreaseMaximumNavmesh.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.MemoryManager.cpp" />
@@ -197,12 +200,14 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ChooseSoundFile.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.Console.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashAfterMultipleMastersWarning.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashDump.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashDuplicateWorldspace.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashFlowChartX.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashHairKS.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashNullptrDXGISurface.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashNullptrFaceGen.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashUsingMore16NPCForFaceGen.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.DisableAssertion.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.EnableGameButtonToVC.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixActorDlg.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixBGSEntryPointFunctionDataTwoValue.h" />
@@ -234,6 +239,7 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixUnableToFindVariable.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixVertexNormals.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixWaterOrtho.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FlowChartX.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.IgnoreGroundHeightTest.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.IncreaseMaximumNavmesh.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.MemoryManager.h" />

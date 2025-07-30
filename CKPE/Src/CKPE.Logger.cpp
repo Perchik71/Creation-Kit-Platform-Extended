@@ -100,7 +100,7 @@ namespace CKPE
 		}
 	}
 
-	const Logger* Logger::GetSingleton() noexcept(true)
+	Logger* Logger::GetSingleton() noexcept(true)
 	{
 		return &_slogger;
 	}

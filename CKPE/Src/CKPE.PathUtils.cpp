@@ -89,25 +89,49 @@ namespace CKPE
 
 	bool PathUtils::FileExists(const std::string& path) noexcept(true)
 	{
-		auto attr = GetFileAttributesA(path.c_str());
-		return ((attr != INVALID_FILE_ATTRIBUTES) && !(attr & FILE_ATTRIBUTE_DIRECTORY));
+		return FileExists(path.c_str());
 	}
 
 	bool PathUtils::DirExists(const std::string& path) noexcept(true)
 	{
-		auto attr = GetFileAttributesA(path.c_str());
-		return ((attr != INVALID_FILE_ATTRIBUTES) && (attr & FILE_ATTRIBUTE_DIRECTORY));
+		return DirExists(path.c_str());
 	}
 
 	bool PathUtils::FileExists(const std::wstring& path) noexcept(true)
 	{
-		auto attr = GetFileAttributesW(path.c_str());
-		return ((attr != INVALID_FILE_ATTRIBUTES) && !(attr & FILE_ATTRIBUTE_DIRECTORY));
+		return FileExists(path.c_str());
 	}
 
 	bool PathUtils::DirExists(const std::wstring& path) noexcept(true)
 	{
-		auto attr = GetFileAttributesW(path.c_str());
+		return DirExists(path.c_str());
+	}
+
+	bool PathUtils::FileExists(const char* path) noexcept(true)
+	{
+		if (!path) return false;
+		auto attr = GetFileAttributesA(path);
+		return ((attr != INVALID_FILE_ATTRIBUTES) && !(attr & FILE_ATTRIBUTE_DIRECTORY));
+	}
+
+	bool PathUtils::DirExists(const char* path) noexcept(true)
+	{
+		if (!path) return false;
+		auto attr = GetFileAttributesA(path);
+		return ((attr != INVALID_FILE_ATTRIBUTES) && (attr & FILE_ATTRIBUTE_DIRECTORY));
+	}
+
+	bool PathUtils::FileExists(const wchar_t* path) noexcept(true)
+	{
+		if (!path) return false;
+		auto attr = GetFileAttributesW(path);
+		return ((attr != INVALID_FILE_ATTRIBUTES) && !(attr & FILE_ATTRIBUTE_DIRECTORY));
+	}
+
+	bool PathUtils::DirExists(const wchar_t* path) noexcept(true)
+	{
+		if (!path) return false;
+		auto attr = GetFileAttributesW(path);
 		return ((attr != INVALID_FILE_ATTRIBUTES) && (attr & FILE_ATTRIBUTE_DIRECTORY));
 	}
 

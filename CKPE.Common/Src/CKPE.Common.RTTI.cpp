@@ -150,15 +150,27 @@ namespace CKPE
 			}
 		}
 
-		const RTTI::Info* RTTI::Find(const std::string_view& name) const noexcept(true)
+		const RTTI::Info* RTTI::Find(const std::string_view& name, bool error_if_no_found) const noexcept(true)
 		{
 			auto it = srtti_data.find(HashUtils::MurmurHash32(name.data(), name.length()));
 			if (it == srtti_data.end())
 			{
-				ErrorHandler::Trigger(std::format("RTTI::Find \"{}\" had no results", name));
+				if (error_if_no_found)
+					ErrorHandler::Trigger(std::format("RTTI::Find \"{}\" had no results", name));
 				return nullptr;
 			}
 			return &(it->second);
+		}
+
+		const RTTI::Info* RTTI::Find(const std::uintptr_t address, bool error_if_no_found) const noexcept(true)
+		{
+			for (const auto& info : srtti_data)
+				if (info.second.VTableAddress == address)
+					return &info.second;
+
+			if (error_if_no_found)
+				ErrorHandler::Trigger(std::format("RTTI::Find \"{:x}\" had no results", address));
+			return nullptr;
 		}
 
 		void* RTTI::Cast(const void* InPtr, long VfDelta, const char* lpstrFromType, const char* lpstrTargetType,

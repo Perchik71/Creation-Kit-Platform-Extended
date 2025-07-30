@@ -16,6 +16,13 @@ namespace CKPE
 		FileUtils(const FileUtils&) = delete;
 		FileUtils& operator=(const FileUtils&) = delete;
 	public:
+		[[nodiscard]] static std::uint64_t GetFileVersion(const std::string& fname) noexcept(true);
 		[[nodiscard]] static std::uint64_t GetFileVersion(const std::wstring& fname) noexcept(true);
+		[[nodiscard]] static std::uint64_t GetFileVersion(const char* fname) noexcept(true);
+		[[nodiscard]] static std::uint64_t GetFileVersion(const wchar_t* fname) noexcept(true);
+		[[nodiscard]] static std::uint64_t GetFileSize(const std::string& fname) noexcept(true);
+		[[nodiscard]] static std::uint64_t GetFileSize(const std::wstring& fname) noexcept(true);
+		[[nodiscard]] static std::uint64_t GetFileSize(const char* fname) noexcept(true);
+		[[nodiscard]] static std::uint64_t GetFileSize(const wchar_t* fname) noexcept(true);
 	};
 }

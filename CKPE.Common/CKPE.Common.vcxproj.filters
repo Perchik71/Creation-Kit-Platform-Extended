@@ -140,6 +140,9 @@
     <ClCompile Include="Src\CKPE.Common.Patch.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.CrashHandler.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -296,6 +299,9 @@
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.Common.PatchManager.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.CrashHandler.h">
       <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>

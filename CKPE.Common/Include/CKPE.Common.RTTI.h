@@ -129,7 +129,8 @@ namespace CKPE
 
 			void Initialize() noexcept(true);
 			virtual void Dump(const std::wstring& fname) const noexcept(true);
-			virtual const Info* Find(const std::string_view& name) const noexcept(true);
+			virtual const Info* Find(const std::string_view& name, bool error_if_no_found = true) const noexcept(true);
+			virtual const Info* Find(const std::uintptr_t address, bool error_if_no_found = true) const noexcept(true);
 			virtual void* Cast(const void* InPtr, long VfDelta,
 				const char* lpstrFromType, const char* lpstrTargetType, bool isReference = false);
 		};
