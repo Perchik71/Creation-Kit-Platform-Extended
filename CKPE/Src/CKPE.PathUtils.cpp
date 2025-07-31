@@ -157,7 +157,6 @@ namespace CKPE
 		return path;
 	}
 
-
 	std::string PathUtils::ExtractFileExt(const std::string& path) noexcept(true)
 	{
 		auto it = path.find_last_of(".");

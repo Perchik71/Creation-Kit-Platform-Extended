@@ -6,10 +6,15 @@
 #include <CKPE.Detours.h>
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
+#include <CKPE.StringUtils.h>
+#include <CKPE.Common.RTTI.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.CrashHandler.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
+#include <EditorAPI/Forms/TESForm.h>
+#include <EditorAPI/BGSLocalizedString.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashDump.h>
+#include <resource_version2.h>
 
 namespace CKPE
 {
@@ -89,7 +94,61 @@ namespace CKPE
 				SafeWrite::Write(__CKPE_OFFSET(2), { 0xC3 });	// SetUnhandledExceptionFilter, Unknown
 				SafeWrite::WriteNop(__CKPE_OFFSET(3), 6);		// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
 
+				Common::CrashHandler::GetSingleton()->OnAnalyzeClassRef = DoAnalyzeClassRef;
+				Common::CrashHandler::GetSingleton()->OnOutputVersion = DoOutputVersion;
+				Common::CrashHandler::GetSingleton()->OnOutputCKVersion = DoOutputCKVersion;
+
 				return true;
+			}
+
+			void CrashDump::DoOutputVersion(std::string& Result) noexcept(true)
+			{
+				Result = "SSE CKPE Game Library " VER_FILE_VERSION_STR " " __DATE__ " " __TIME__;
+			}
+
+			void CrashDump::DoAnalyzeClassRef(std::uintptr_t Address, const char* RttiName, std::string& Result)
+			{
+				if (!Address) return;
+
+				if (!strcmp(RttiName, "class BGSLocalizedString"))
+				{
+					auto str = (EditorAPI::BGSLocalizedString*)Address;
+					if (str->data())
+						Result = StringUtils::FormatString("\"%s\"", str->c_str());
+					else
+						Result = "nullptr";
+				}
+				else if (!strcmp(RttiName, "class BGSLocalizedStringDL"))
+				{
+					auto str = (EditorAPI::BGSLocalizedStringDL*)Address;
+					if (str->data())
+						Result = StringUtils::FormatString("\"%s\"", str->c_str());
+					else
+						Result = "nullptr";
+				}
+				else if (!strcmp(RttiName, "class BGSLocalizedStringIL"))
+				{
+					auto str = (EditorAPI::BGSLocalizedStringIL*)Address;
+					if (str->data())
+						Result = StringUtils::FormatString("\"%s\"", str->c_str());
+					else
+						Result = "nullptr";
+				}
+				else
+				{
+					auto form = _DYNAMIC_CAST((void*)Address, 0, RttiName, "class TESForm");
+					if (form)
+					{
+						auto buf = std::make_unique<char[]>(256);
+						((EditorAPI::Forms::TESForm*)form)->DebugInfo(buf.get(), 256);
+						Result = buf.get();
+					}
+				}
+			}
+
+			void CrashDump::DoOutputCKVersion(std::string& Result) noexcept(true)
+			{
+				Result = StringUtils::Utf16ToWinCP(VersionLists::GetEditorVersionByString());
 			}
 		}
 	}

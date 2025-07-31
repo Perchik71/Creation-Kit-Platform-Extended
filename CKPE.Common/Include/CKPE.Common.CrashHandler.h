@@ -28,6 +28,7 @@ namespace CKPE
 			TAnalyzeClassRefHandler OnAnalyzeClassRef{ nullptr };
 			typedef void (*TOutputVersionHandler)(std::string& Result);
 			TOutputVersionHandler OnOutputVersion{ nullptr };
+			TOutputVersionHandler OnOutputCKVersion{ nullptr };
 
 			CrashHandler() noexcept(true) = default;
 			virtual ~CrashHandler() noexcept(true) = default;

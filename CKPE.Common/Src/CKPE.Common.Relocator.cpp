@@ -9,8 +9,6 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Exception.h>
 
-#include <CKPE.MessageBox.h>
-
 namespace CKPE
 {
 	namespace Common

@@ -33,7 +33,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\toml11\include;$(SolutionDir)Dependencies\vmm\include;$(SolutionDir)Dependencies\jDialogs\include;$(SolutionDir)Dependencies\mzip\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\toml11\include;$(SolutionDir)Dependencies\vmm\include;$(SolutionDir)Dependencies\jDialogs\include;$(SolutionDir)Dependencies\mzip\src;$(SolutionDir)CKPE.Common;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

@@ -11,18 +11,21 @@
 #include <psapi.h>
 #include <DbgHelp.h>
 #include <Zydis/Zydis.h>
-#include "..\resource.h"
+#include <resource.h>
 #include <CKPE.Stream.h>
 #include <CKPE.Zipper.h>
 #include <CKPE.Application.h>
+#include <CKPE.HardwareInfo.h>
 #include <CKPE.PathUtils.h>
 #include <CKPE.FileUtils.h>
+#include <CKPE.Module.h>
 #include <CKPE.GDIPlus.h>
 #include <CKPE.Graphics.h>
 #include <CKPE.StringUtils.h>
 #include <CKPE.Common.RTTI.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.CrashHandler.h>
+#include <CKPE.Common.PatchManager.h>
 #include <CKPE.Common.ModernTheme.h>
 #include <CKPE.Common.UIVarCommon.h>
 #include <vector>
@@ -40,7 +43,6 @@ namespace CKPE
 		class CrashEvent
 		{
 			HANDLE Trigger{ nullptr };
-			HMODULE ModuleList[1024]{ nullptr };
 			NT_TIB64* Tib{ nullptr };
 			std::vector<std::uintptr_t> ProbablyCallStack;
 
@@ -51,6 +53,7 @@ namespace CKPE
 			virtual ~CrashEvent() noexcept(true);
 
 			virtual void IntoProbablyCallStack(std::uintptr_t address) noexcept(true);
+			virtual std::vector<std::uintptr_t>& GetProbablyCallStack() noexcept(true);
 			virtual NT_TIB64* GetTib() noexcept(true);
 			virtual void CallError(NT_TIB64* tib) noexcept(true);
 			virtual bool Wait() noexcept(true);
@@ -65,10 +68,9 @@ namespace CKPE
 			ZydisDecoder Decoder{};
 			ZydisFormatter Formatter{};
 		public:
-			struct Region { std::uintptr_t Start, End; };
-			struct Module { std::uintptr_t Start, End; Region SecCode; };
+			struct Module { std::uintptr_t Start, End; CKPE::Segment SecCode; };
 			using ModuleMapInfo = std::unordered_map<std::string, Module>;
-			using ArrayMemoryInfo = std::vector<Region>;
+			using ArrayMemoryInfo = std::vector<CKPE::Segment>;
 
 			enum AnalyzeItemType
 			{
@@ -90,29 +92,29 @@ namespace CKPE
 			Introspection();
 
 			static void PrintException(TextFileStream& Stream, ModuleMapInfo* Modules,
-				PEXCEPTION_RECORD lpExceptionRecord);
-			static void PrintSettings(TextFileStream& Stream);
-			static void PrintSysInfo(TextFileStream& Stream);
-			static void PrintMemory(TextFileStream& Stream, ArrayMemoryInfo* Memory);
+				PEXCEPTION_RECORD lpExceptionRecord) noexcept(true);
+			static void PrintSettings(TextFileStream& Stream) noexcept(true);
+			static void PrintSysInfo(TextFileStream& Stream) noexcept(true);
+			//static void PrintMemory(TextFileStream& Stream, ArrayMemoryInfo* Memory) noexcept(true);
 			static void PrintRegistry(TextFileStream& Stream, ModuleMapInfo* Modules, ArrayMemoryInfo* Memory,
-				PEXCEPTION_POINTERS lpExceptionRecord);
+				PEXCEPTION_POINTERS lpExceptionRecord) noexcept(true);
 			static void PrintRegistrySafe(TextFileStream& Stream, ModuleMapInfo* Modules, ArrayMemoryInfo* Memory,
 				PEXCEPTION_POINTERS lpExceptionRecord);
-			static void PrintCallStack(TextFileStream& Stream, ModuleMapInfo* Modules);
+			static void PrintCallStack(TextFileStream& Stream, ModuleMapInfo* Modules) noexcept(true);
 			static void PrintCallStackSafe(TextFileStream& Stream, ModuleMapInfo* Modules);
 			static void PrintStack(TextFileStream& Stream, ModuleMapInfo* Modules, ArrayMemoryInfo* Memory,
-				PEXCEPTION_POINTERS lpExceptionInfo);
+				PEXCEPTION_POINTERS lpExceptionInfo) noexcept(true);
 			static void PrintStackSafe(TextFileStream& Stream, ModuleMapInfo* Modules, ArrayMemoryInfo* Memory,
 				PEXCEPTION_POINTERS lpExceptionInfo);
-			static void PrintPatches(TextFileStream& Stream);
-			static void PrintModules(TextFileStream& Stream, ModuleMapInfo* Modules);
-			static void PrintPlugins(TextFileStream& Stream);
+			static void PrintPatches(TextFileStream& Stream) noexcept(true);
+			static void PrintModules(TextFileStream& Stream, ModuleMapInfo* Modules) noexcept(true);
+			static void PrintPlugins(TextFileStream& Stream) noexcept(true);
 
 			static void ContextWriteToCrashLogSafe(TextFileStream& Stream, 
 				PEXCEPTION_POINTERS ExceptionInfo) noexcept(true);
 			static void ContextWriteToCrashLog(TextFileStream& Stream, PEXCEPTION_POINTERS ExceptionInfo);
 
-			[[nodiscard]] AnalyzeInfo Analyze(CrashEvent* Event, std::uintptr_t Address, ModuleMapInfo* Modules,
+			[[nodiscard]] AnalyzeInfo Analyze(std::uintptr_t Address, ModuleMapInfo* Modules,
 				ArrayMemoryInfo* Memory) const noexcept(true);
 		private:
 			[[nodiscard]] bool AnalyzeClass(std::uintptr_t Address, AnalyzeInfo* Info,
@@ -136,6 +138,11 @@ namespace CKPE
 		void CrashEvent::IntoProbablyCallStack(std::uintptr_t address) noexcept(true)
 		{
 			ProbablyCallStack.push_back(address);
+		}
+
+		std::vector<std::uintptr_t>& CrashEvent::GetProbablyCallStack() noexcept(true)
+		{
+			return ProbablyCallStack;
 		}
 
 		NT_TIB64* CrashEvent::GetTib() noexcept(true)
@@ -164,6 +171,7 @@ namespace CKPE
 		Introspection GlobalCrashIntrospection;
 		std::atomic<PEXCEPTION_POINTERS> GlobalCrashDumpExceptionInfo;
 		std::atomic_uint32_t GlobalCrashDumpTargetThreadId;
+		HMODULE GlobalModuleList[1024];
 
 		///////////////////////////////////////////////////
 		/// Introspection continue
@@ -182,11 +190,12 @@ namespace CKPE
 			if (ObjRtti)
 			{
 				Info->Type = aitClass;
-				auto RttiName = strchr(ObjRtti->Name, ' ');
-				Info->Text = RttiName ? RttiName + 1 : ObjRtti->Name;
+				Info->Text = ObjRtti->Name;
+				auto it = Info->Text.find_first_of(' ');
+				if (it != std::string::npos) Info->Text.erase(0, it + 1);
 
 				if (RefAddress && GlobalCrashHandler.OnAnalyzeClassRef)
-					GlobalCrashHandler.OnAnalyzeClassRef(RefAddress, RttiName, Info->Additional);
+					GlobalCrashHandler.OnAnalyzeClassRef(RefAddress, ObjRtti->Name, Info->Additional);
 
 				return true;
 			}
@@ -194,7 +203,7 @@ namespace CKPE
 			return false;
 		}
 
-		Introspection::AnalyzeInfo Introspection::Analyze(CrashEvent* Event, std::uintptr_t Address,
+		Introspection::AnalyzeInfo Introspection::Analyze(std::uintptr_t Address,
 			ModuleMapInfo* Modules, ArrayMemoryInfo* Memory) const noexcept(true)
 		{
 			AnalyzeInfo Info;
@@ -223,9 +232,10 @@ namespace CKPE
 			{
 				// Address module
 
-				PIMAGE_NT_HEADERS ntHeaders = (PIMAGE_NT_HEADERS)(itMod->second.Start + ((PIMAGE_DOS_HEADER)itMod->second.Start)->e_lfanew);
+				PIMAGE_NT_HEADERS ntHeaders = (PIMAGE_NT_HEADERS)(itMod->second.Start + 
+					((PIMAGE_DOS_HEADER)itMod->second.Start)->e_lfanew);
 
-				if ((Address >= itMod->second.SecCode.Start) && (Address < itMod->second.SecCode.End))
+				if ((Address >= itMod->second.SecCode.GetAddress()) && (Address < itMod->second.SecCode.GetEndAddress()))
 				{
 					Info.Type = aitCode;
 					Info.Text = StringUtils::FormatString("%s+%X ", itMod->first.c_str(),
@@ -233,11 +243,12 @@ namespace CKPE
 
 					char InstructionText[256];
 					ZydisDecodedInstruction Instruction;
-					if (ZYDIS_SUCCESS(ZydisDecoderDecodeBuffer(&Decoder, (void*)Address, ZYDIS_MAX_INSTRUCTION_LENGTH, Address, &Instruction)))
+					if (ZYDIS_SUCCESS(ZydisDecoderDecodeBuffer(&Decoder, (void*)Address, ZYDIS_MAX_INSTRUCTION_LENGTH, 
+						Address, &Instruction)))
 					{
 						ZydisFormatterFormatInstruction(&Formatter, &Instruction, InstructionText, ARRAYSIZE(InstructionText));
 						Info.Text.append(InstructionText);
-						Event->IntoProbablyCallStack(Address);
+						GlobalCrashEvent.IntoProbablyCallStack(Address);
 					}
 					else
 						Info.Text.append("<FATAL DECODER INSTRUCTION>");
@@ -258,17 +269,17 @@ namespace CKPE
 					auto itMem = Memory->begin();
 					for (; itMem != Memory->end(); itMem++)
 					{
-						if ((Address >= itMem->Start) && (Address < itMem->End))
+						if ((Address >= itMem->GetAddress()) && (Address < itMem->GetEndAddress()))
 							break;
 					}
 
 					if (itMem != Memory->end())
 					{
-						auto Tib = Event->GetTib();
+						auto Tib = GlobalCrashEvent.GetTib();
 						if (Tib && (Tib->StackLimit <= Address) && (Tib->StackBase > Address))
 						{
 							// Stack
-							auto RefInfo = Analyze(Event, *(uintptr_t*)Address, Modules, Memory);
+							auto RefInfo = Analyze(*(uintptr_t*)Address, Modules, Memory);
 							if (RefInfo.Type != aitCode)
 							{
 								Info.Type = RefInfo.Type;
@@ -344,82 +355,79 @@ namespace CKPE
 		void Introspection::ContextWriteToCrashLogSafe(TextFileStream& Stream,
 			PEXCEPTION_POINTERS ExceptionInfo) noexcept(true)
 		{
-			//Stream.WriteString("====== CRASH INFO ======\n\n");
-			//Stream.WriteString("CK %s\n", allowedEditorVersionStr[(size_t)GlobalEnginePtr->GetEditorVersion()].data());
-			//Stream.WriteString("CKPE Runtime %s %s %s\n", VER_FILE_VERSION_STR, __DATE__, __TIME__);
-			//Stream.Flush();
+			Stream.WriteString("====== CRASH INFO ======\n\n");
+			
+			if (GlobalCrashHandler.OnOutputCKVersion)
+			{
+				std::string str;
+				GlobalCrashHandler.OnOutputCKVersion(str);
+				Stream.WriteLine("CK %s", str.c_str());
+			}
 
-			//Introspection::ModuleMapInfo Modules;
-			//Introspection::ArrayMemoryInfo Memory;
+			if (GlobalCrashHandler.OnOutputVersion)
+			{
+				std::string str;
+				GlobalCrashHandler.OnOutputVersion(str);
+				Stream.WriteLine(str.c_str());
+			}
 
-			//DWORD cbNeeded;
-			//auto hProcess = GetCurrentProcess();
+			Stream.Flush();
 
+			ModuleMapInfo Modules;
+			ArrayMemoryInfo Memory;
 
+			DWORD cbNeeded;
+			auto hProcess = GetCurrentProcess();
+			// Get a list of all the modules in this process.
+			if (EnumProcessModules(hProcess, GlobalModuleList, sizeof(GlobalModuleList), &cbNeeded))
+			{
+				for (DWORD i = 0; i < (cbNeeded / sizeof(HMODULE)); i++)
+				{
+					CHAR szModName[MAX_PATH];
+					// Get the full path to the module's file.
+					if (GetModuleFileNameExA(hProcess, GlobalModuleList[i], szModName, ARRAYSIZE(szModName)))
+					{
+						MODULEINFO Info;
+						GetModuleInformation(hProcess, GlobalModuleList[i], &Info, sizeof(MODULEINFO));
 
-			//// Get a list of all the modules in this process.
-			//if (EnumProcessModules(hProcess, GlobalCrashLoadedModules, sizeof(GlobalCrashLoadedModules), &cbNeeded))
-			//{
-			//	for (DWORD i = 0; i < (cbNeeded / sizeof(HMODULE)); i++)
-			//	{
-			//		CHAR szModName[MAX_PATH];
-			//		// Get the full path to the module's file.
-			//		if (GetModuleFileNameExA(hProcess, GlobalCrashLoadedModules[i], szModName, ARRAYSIZE(szModName)))
-			//		{
-			//			MODULEINFO Info;
-			//			GetModuleInformation(hProcess, GlobalCrashLoadedModules[i], &Info, sizeof(MODULEINFO));
+						CKPE::Module smodule(GlobalModuleList[i]);
+						auto secCode = smodule.GetSegment(CKPE::Segment::text);
+						Modules.insert(Modules.end(),
+							std::make_pair<std::string, Module>(PathFindFileNameA(szModName),
+								{ (uintptr_t)Info.lpBaseOfDll, (uintptr_t)Info.lpBaseOfDll + (uintptr_t)Info.SizeOfImage, 
+								  secCode }));
+					}
+				}
+			}
 
-			//			Introspection::Region secCode{};
-			//			voltek::get_pe_section_range((uintptr_t)Info.lpBaseOfDll, ".text", &secCode.Start, &secCode.End);
+			MEMORY_BASIC_INFORMATION mbi;
+			ZeroMemory(&mbi, sizeof(mbi));
 
-			//			uintptr_t tempStart, tempEnd;
-			//			if (voltek::get_pe_section_range((uintptr_t)Info.lpBaseOfDll, ".textbss", &tempStart, &tempEnd))
-			//			{
-			//				secCode.Start = std::min(secCode.Start, tempStart);
-			//				secCode.End = std::max(secCode.End, tempEnd);
-			//			}
+			uint64_t Address = 0;
+			while (Address < std::numeric_limits<uint64_t>::max() &&
+				VirtualQuery((LPCVOID)Address, std::addressof(mbi), sizeof(mbi)))
+			{
+				if ((mbi.State == MEM_COMMIT) && !(mbi.Protect & PAGE_GUARD) &&
+					!((mbi.Protect & PAGE_EXECUTE) || (mbi.Protect & PAGE_EXECUTE_READ) ||
+						(mbi.Protect & PAGE_EXECUTE_READWRITE) || (mbi.Protect & PAGE_EXECUTE_WRITECOPY)))
+					Memory.push_back({ (uintptr_t)mbi.BaseAddress, (uintptr_t)mbi.BaseAddress, mbi.RegionSize });
 
-			//			if (voltek::get_pe_section_range((uintptr_t)Info.lpBaseOfDll, ".interpr", &tempStart, &tempEnd))
-			//			{
-			//				secCode.Start = std::min(secCode.Start, tempStart);
-			//				secCode.End = std::max(secCode.End, tempEnd);
-			//			}
+				Address += mbi.RegionSize;
+				ZeroMemory(&mbi, sizeof(mbi));
+			}
 
-			//			Modules.insert(Modules.end(),
-			//				std::make_pair<String, Module>(PathFindFileNameA(szModName),
-			//					{ (uintptr_t)Info.lpBaseOfDll, (uintptr_t)Info.lpBaseOfDll + (uintptr_t)Info.SizeOfImage, secCode }));
-			//		}
-			//	}
-			//}
+			PEXCEPTION_RECORD lpExceptionRecord = ExceptionInfo->ExceptionRecord;
 
-			//MEMORY_BASIC_INFORMATION mbi;
-			//ZeroMemory(&mbi, sizeof(mbi));
-
-			//uint64_t Address = 0;
-			//while (Address < std::numeric_limits<uint64_t>::max() &&
-			//	VirtualQuery((LPCVOID)Address, std::addressof(mbi), sizeof(mbi)))
-			//{
-			//	if ((mbi.State == MEM_COMMIT) && !(mbi.Protect & PAGE_GUARD) &&
-			//		!((mbi.Protect & PAGE_EXECUTE) || (mbi.Protect & PAGE_EXECUTE_READ) ||
-			//			(mbi.Protect & PAGE_EXECUTE_READWRITE) || (mbi.Protect & PAGE_EXECUTE_WRITECOPY)))
-			//		Memory.push_back({ (uintptr_t)mbi.BaseAddress, (uintptr_t)mbi.BaseAddress + mbi.RegionSize });
-
-			//	Address += mbi.RegionSize;
-			//	ZeroMemory(&mbi, sizeof(mbi));
-			//}
-
-			//PEXCEPTION_RECORD lpExceptionRecord = ExceptionInfo->ExceptionRecord;
-
-			//PrintException(Stream, &Modules, lpExceptionRecord);
-			//PrintSettings(Stream);
-			//PrintSysInfo(Stream);
-			////PrintMemory(Stream, &Memory);
-			//PrintRegistrySafe(Stream, &Modules, &Memory, ExceptionInfo);
-			//PrintStackSafe(Stream, &Modules, &Memory, ExceptionInfo);
-			//PrintCallStackSafe(Stream, &Modules);
-			//PrintPatches(Stream);
-			//PrintModules(Stream, &Modules);
-			//PrintPlugins(Stream);
+			PrintException(Stream, &Modules, lpExceptionRecord);
+			PrintSettings(Stream);
+			PrintSysInfo(Stream);
+			//PrintMemory(Stream, &Memory);
+			PrintRegistrySafe(Stream, &Modules, &Memory, ExceptionInfo);
+			PrintStackSafe(Stream, &Modules, &Memory, ExceptionInfo);
+			PrintCallStackSafe(Stream, &Modules);
+			PrintPatches(Stream);
+			PrintModules(Stream, &Modules);
+			PrintPlugins(Stream);
 		}
 
 		void Introspection::ContextWriteToCrashLog(TextFileStream& Stream, PEXCEPTION_POINTERS ExceptionInfo)
@@ -434,200 +442,189 @@ namespace CKPE
 			}
 		}
 
-		///////////////////////////////////////////////////
-		/// CrashHandler
-
-		static void PrintException(TextFileStream& Stream, Introspection::ModuleMapInfo* Modules, 
+		void Introspection::PrintException(TextFileStream& Stream, ModuleMapInfo* Modules,
 			PEXCEPTION_RECORD lpExceptionRecord) noexcept(true)
 		{
-			//if (!Stream || !lpExceptionRecord || !Modules)
-			//	return;
+			if (!lpExceptionRecord || !Modules)
+				return;
 
-			//String ExceptionName;
-			//String ExceptionDescription;
-			//EditorAPI::BSString ExceptionInstructionText;
+			std::string ExceptionName;
+			std::string ExceptionDescription;
+			std::string ExceptionInstructionText;
 
-			//switch (lpExceptionRecord->ExceptionCode)
-			//{
-			//case EXCEPTION_ACCESS_VIOLATION:
-			//	ExceptionName = "EXCEPTION_ACCESS_VIOLATION";
-			//	ExceptionDescription = "The thread tried to read from or write to a virtual address for which it does not have the appropriate access.";
-			//	break;
-			//case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:
-			//	ExceptionName = "EXCEPTION_ARRAY_BOUNDS_EXCEEDED";
-			//	ExceptionDescription = "The thread tried to access an array element that is out of boundsand the underlying hardware supports bounds checking.";
-			//	break;
-			//case EXCEPTION_BREAKPOINT:
-			//	ExceptionName = "EXCEPTION_BREAKPOINT";
-			//	ExceptionDescription = "A breakpoint was encountered.";
-			//	break;
-			//case EXCEPTION_DATATYPE_MISALIGNMENT:
-			//	ExceptionName = "EXCEPTION_DATATYPE_MISALIGNMENT";
-			//	ExceptionDescription = "The thread tried to read or write data that is misaligned on hardware that does not provide alignment. "
-			//		"For example, 16 - bit values must be aligned on 2 - byte boundaries; 32 - bit values on 4 - byte boundaries, and so on.";
-			//	break;
-			//case EXCEPTION_FLT_DENORMAL_OPERAND:
-			//	ExceptionName = "EXCEPTION_FLT_DENORMAL_OPERAND";
-			//	ExceptionDescription = "One of the operands in a floating - point operation is denormal. A denormal value is one that is too small "
-			//		"to represent as a standard floating - point value.";
-			//	break;
-			//case EXCEPTION_FLT_DIVIDE_BY_ZERO:
-			//	ExceptionName = "EXCEPTION_FLT_DIVIDE_BY_ZERO";
-			//	ExceptionDescription = "The thread tried to divide a floating - point value by a floating - point divisor of zero.";
-			//	break;
-			//case EXCEPTION_FLT_INEXACT_RESULT:
-			//	ExceptionName = "EXCEPTION_FLT_INEXACT_RESULT";
-			//	ExceptionDescription = "The result of a floating - point operation cannot be represented exactly as a decimal fraction.";
-			//	break;
-			//case EXCEPTION_FLT_INVALID_OPERATION:
-			//	ExceptionName = "EXCEPTION_FLT_INVALID_OPERATION";
-			//	ExceptionDescription = "This exception represents any floating - point exception not included in this list.";
-			//	break;
-			//case EXCEPTION_FLT_OVERFLOW:
-			//	ExceptionName = "EXCEPTION_FLT_OVERFLOW";
-			//	ExceptionDescription = "The exponent of a floating - point operation is greater than the magnitude allowed by the corresponding type.";
-			//	break;
-			//case EXCEPTION_FLT_STACK_CHECK:
-			//	ExceptionName = "EXCEPTION_FLT_STACK_CHECK";
-			//	ExceptionDescription = "The stack overflowed or underflowed as the result of a floating - point operation.";
-			//	break;
-			//case EXCEPTION_FLT_UNDERFLOW:
-			//	ExceptionName = "EXCEPTION_FLT_UNDERFLOW";
-			//	ExceptionDescription = "The exponent of a floating - point operation is less than the magnitude allowed by the corresponding type.";
-			//	break;
-			//case EXCEPTION_ILLEGAL_INSTRUCTION:
-			//	ExceptionName = "EXCEPTION_ILLEGAL_INSTRUCTION";
-			//	ExceptionDescription = "The thread tried to execute an invalid instruction.";
-			//	break;
-			//case EXCEPTION_IN_PAGE_ERROR:
-			//	ExceptionName = "EXCEPTION_IN_PAGE_ERROR";
-			//	ExceptionDescription = "The thread tried to access a page that was not present, and the system was unable to load the page. "
-			//		"For example, this exception might occur if a network connection is lost while running a program over the network.";
-			//	break;
-			//case EXCEPTION_INT_DIVIDE_BY_ZERO:
-			//	ExceptionName = "EXCEPTION_INT_DIVIDE_BY_ZERO";
-			//	ExceptionDescription = "The thread tried to divide an integer value by an integer divisor of zero.";
-			//	break;
-			//case EXCEPTION_INT_OVERFLOW:
-			//	ExceptionName = "EXCEPTION_INT_OVERFLOW";
-			//	ExceptionDescription = "The result of an integer operation caused a carry out of the most significant bit of the result.";
-			//	break;
-			//case EXCEPTION_INVALID_DISPOSITION:
-			//	ExceptionName = "EXCEPTION_INVALID_DISPOSITION";
-			//	ExceptionDescription = "An exception handler returned an invalid disposition to the exception dispatcher. Programmers using a high -"
-			//		" level language such as C should never encounter this exception.";
-			//	break;
-			//case EXCEPTION_NONCONTINUABLE_EXCEPTION:
-			//	ExceptionName = "EXCEPTION_NONCONTINUABLE_EXCEPTION";
-			//	ExceptionDescription = "The thread tried to continue execution after a noncontinuable exception occurred.";
-			//	break;
-			//case EXCEPTION_PRIV_INSTRUCTION:
-			//	ExceptionName = "EXCEPTION_PRIV_INSTRUCTION";
-			//	ExceptionDescription = "The thread tried to execute an instruction whose operation is not allowed in the current machine mode.";
-			//	break;
-			//case EXCEPTION_SINGLE_STEP:
-			//	ExceptionName = "EXCEPTION_SINGLE_STEP";
-			//	ExceptionDescription = "A trace trap or other single - instruction mechanism signaled that one instruction has been executed.";
-			//	break;
-			//case EXCEPTION_STACK_OVERFLOW:
-			//	ExceptionName = "EXCEPTION_STACK_OVERFLOW";
-			//	ExceptionDescription = "The thread used up its stack.";
-			//	break;
-			//default:
-			//	ExceptionName = "EXCEPTION_UNKNOWN";
-			//	ExceptionDescription = "Unspecified exception.";
-			//	break;
-			//}
-
-			//if (GlobalIntrospection)
-			//{
-			//	auto Analize = GlobalIntrospection->Analyze(Stream, (uintptr_t)lpExceptionRecord->ExceptionAddress, Modules, nullptr);
-			//	ExceptionInstructionText.Append(Analize.Text);
-			//}
-
-			//fprintf(Stream, "\nUnhandled exception ""%s"" at 0x%016llX %s\n", ExceptionName.c_str(),
-			//	(uintptr_t)lpExceptionRecord->ExceptionAddress, ExceptionInstructionText.c_str());
-
-			//// Log exception flags
-			//fprintf(Stream, "Exception Flags: 0x%08X\n", lpExceptionRecord->ExceptionFlags);
-			//// Log number of parameters
-			//fprintf(Stream, "Number of Parameters: %u\n", lpExceptionRecord->NumberParameters);
-			//// Description
-			//fprintf(Stream, "Exception Description: %s\n", ExceptionDescription.c_str());
-
-			//// Log additional exception information for specific exception types
-			//if (lpExceptionRecord->ExceptionCode == EXCEPTION_ACCESS_VIOLATION)
-			//{
-			//	const auto accessType = lpExceptionRecord->ExceptionInformation[0] == 0 ? "read" :
-			//		lpExceptionRecord->ExceptionInformation[0] == 1 ? "write" :
-			//		lpExceptionRecord->ExceptionInformation[0] == 8 ? "execute" :
-			//		"unknown";
-			//	const auto faultAddress = lpExceptionRecord->ExceptionInformation[1];
-			//	fprintf(Stream, "Access Violation: Tried to %s memory at 0x%016llX\n", accessType, faultAddress);
-			//}
-			//else if (lpExceptionRecord->ExceptionCode == EXCEPTION_IN_PAGE_ERROR)
-			//{
-			//	const auto accessType = lpExceptionRecord->ExceptionInformation[0] == 0 ? "read" :
-			//		lpExceptionRecord->ExceptionInformation[0] == 1 ? "write" :
-			//		lpExceptionRecord->ExceptionInformation[0] == 8 ? "execute" :
-			//		"unknown";
-			//	const auto faultAddress = lpExceptionRecord->ExceptionInformation[1];
-			//	const auto ntStatus = lpExceptionRecord->ExceptionInformation[2];
-			//	fprintf(Stream, "In-Page Error: Tried to %s memory at 0x%016llX, NTSTATUS: 0x%08X\n", accessType, faultAddress, (uint32_t)ntStatus);
-			//}
-			//else if (lpExceptionRecord->NumberParameters > 0)
-			//{
-			//	fprintf(Stream, "Exception Information Parameters:\n");
-			//	for (DWORD i = 0; i < lpExceptionRecord->NumberParameters; ++i)
-			//		fprintf(Stream, "\tParameter[%u]: 0x%016llX:\n", i, lpExceptionRecord->ExceptionInformation[i]);
-			//}
-
-			//// Check for nested exceptions
-			//if (lpExceptionRecord->ExceptionRecord)
-			//{
-			//	fprintf(Stream, "Nested Exception:\n");
-			//	// Recursively print nested exception
-			//	PrintException(Stream, Modules, lpExceptionRecord->ExceptionRecord);
-			//}
-
-			//fprintf(Stream, "\n");
-			//fflush(Stream);
-		}
-
-		static void PrintSettings(TextFileStream& Stream) noexcept(true)
-		{
-			/*if (GlobalCKPEConfigPtr)
+			switch (lpExceptionRecord->ExceptionCode)
 			{
-				GlobalCKPEConfigPtr->Dump(Stream);
-				fprintf(Stream, "\n");
-				fflush(Stream);
-			}*/
-		}
-
-		static void PrintSysInfo(TextFileStream& Stream) noexcept(true)
-		{
-			/*fprintf(Stream, "SYSTEM SPECS:\n");
-			fprintf(Stream, "\tOS: %s\n", iw::system::os_info().c_str());
-
-			auto cpu_info = iw::cpu::cpu_info();
-			fprintf(Stream, "\tCPU: %s\n", iw::cpu::cpu_brand(&cpu_info).c_str());
-
-			auto gpu_info = iw::graphics::graphics_info();
-			for (uint8_t i = 0; i < gpu_info.videocard_num; i++)
-			{
-				auto gpu = gpu_info.videocards + i;
-				fprintf(Stream, "\tGPU #%u: %s %u Gb\n", i + 1, gpu->name, (uint16_t)std::roundf(gpu->memory));
+			case EXCEPTION_ACCESS_VIOLATION:
+				ExceptionName = "EXCEPTION_ACCESS_VIOLATION";
+				ExceptionDescription = "The thread tried to read from or write to a virtual address for which it does not have the appropriate access.";
+				break;
+			case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:
+				ExceptionName = "EXCEPTION_ARRAY_BOUNDS_EXCEEDED";
+				ExceptionDescription = "The thread tried to access an array element that is out of boundsand the underlying hardware supports bounds checking.";
+				break;
+			case EXCEPTION_BREAKPOINT:
+				ExceptionName = "EXCEPTION_BREAKPOINT";
+				ExceptionDescription = "A breakpoint was encountered.";
+				break;
+			case EXCEPTION_DATATYPE_MISALIGNMENT:
+				ExceptionName = "EXCEPTION_DATATYPE_MISALIGNMENT";
+				ExceptionDescription = "The thread tried to read or write data that is misaligned on hardware that does not provide alignment. "
+					"For example, 16 - bit values must be aligned on 2 - byte boundaries; 32 - bit values on 4 - byte boundaries, and so on.";
+				break;
+			case EXCEPTION_FLT_DENORMAL_OPERAND:
+				ExceptionName = "EXCEPTION_FLT_DENORMAL_OPERAND";
+				ExceptionDescription = "One of the operands in a floating - point operation is denormal. A denormal value is one that is too small "
+					"to represent as a standard floating - point value.";
+				break;
+			case EXCEPTION_FLT_DIVIDE_BY_ZERO:
+				ExceptionName = "EXCEPTION_FLT_DIVIDE_BY_ZERO";
+				ExceptionDescription = "The thread tried to divide a floating - point value by a floating - point divisor of zero.";
+				break;
+			case EXCEPTION_FLT_INEXACT_RESULT:
+				ExceptionName = "EXCEPTION_FLT_INEXACT_RESULT";
+				ExceptionDescription = "The result of a floating - point operation cannot be represented exactly as a decimal fraction.";
+				break;
+			case EXCEPTION_FLT_INVALID_OPERATION:
+				ExceptionName = "EXCEPTION_FLT_INVALID_OPERATION";
+				ExceptionDescription = "This exception represents any floating - point exception not included in this list.";
+				break;
+			case EXCEPTION_FLT_OVERFLOW:
+				ExceptionName = "EXCEPTION_FLT_OVERFLOW";
+				ExceptionDescription = "The exponent of a floating - point operation is greater than the magnitude allowed by the corresponding type.";
+				break;
+			case EXCEPTION_FLT_STACK_CHECK:
+				ExceptionName = "EXCEPTION_FLT_STACK_CHECK";
+				ExceptionDescription = "The stack overflowed or underflowed as the result of a floating - point operation.";
+				break;
+			case EXCEPTION_FLT_UNDERFLOW:
+				ExceptionName = "EXCEPTION_FLT_UNDERFLOW";
+				ExceptionDescription = "The exponent of a floating - point operation is less than the magnitude allowed by the corresponding type.";
+				break;
+			case EXCEPTION_ILLEGAL_INSTRUCTION:
+				ExceptionName = "EXCEPTION_ILLEGAL_INSTRUCTION";
+				ExceptionDescription = "The thread tried to execute an invalid instruction.";
+				break;
+			case EXCEPTION_IN_PAGE_ERROR:
+				ExceptionName = "EXCEPTION_IN_PAGE_ERROR";
+				ExceptionDescription = "The thread tried to access a page that was not present, and the system was unable to load the page. "
+					"For example, this exception might occur if a network connection is lost while running a program over the network.";
+				break;
+			case EXCEPTION_INT_DIVIDE_BY_ZERO:
+				ExceptionName = "EXCEPTION_INT_DIVIDE_BY_ZERO";
+				ExceptionDescription = "The thread tried to divide an integer value by an integer divisor of zero.";
+				break;
+			case EXCEPTION_INT_OVERFLOW:
+				ExceptionName = "EXCEPTION_INT_OVERFLOW";
+				ExceptionDescription = "The result of an integer operation caused a carry out of the most significant bit of the result.";
+				break;
+			case EXCEPTION_INVALID_DISPOSITION:
+				ExceptionName = "EXCEPTION_INVALID_DISPOSITION";
+				ExceptionDescription = "An exception handler returned an invalid disposition to the exception dispatcher. Programmers using a high -"
+					" level language such as C should never encounter this exception.";
+				break;
+			case EXCEPTION_NONCONTINUABLE_EXCEPTION:
+				ExceptionName = "EXCEPTION_NONCONTINUABLE_EXCEPTION";
+				ExceptionDescription = "The thread tried to continue execution after a noncontinuable exception occurred.";
+				break;
+			case EXCEPTION_PRIV_INSTRUCTION:
+				ExceptionName = "EXCEPTION_PRIV_INSTRUCTION";
+				ExceptionDescription = "The thread tried to execute an instruction whose operation is not allowed in the current machine mode.";
+				break;
+			case EXCEPTION_SINGLE_STEP:
+				ExceptionName = "EXCEPTION_SINGLE_STEP";
+				ExceptionDescription = "A trace trap or other single - instruction mechanism signaled that one instruction has been executed.";
+				break;
+			case EXCEPTION_STACK_OVERFLOW:
+				ExceptionName = "EXCEPTION_STACK_OVERFLOW";
+				ExceptionDescription = "The thread used up its stack.";
+				break;
+			default:
+				ExceptionName = "EXCEPTION_UNKNOWN";
+				ExceptionDescription = "Unspecified exception.";
+				break;
 			}
 
-			auto mem_info = iw::system::memory_info();
-			fprintf(Stream, "\tPHYSICAL MEMORY: %.2f GB / %.2f GB\n", mem_info.physical_total - mem_info.physical_free, mem_info.physical_total);
-			fprintf(Stream, "\tSHARED MEMORY: %.2f GB / %.2f GB\n\n", mem_info.shared_total - mem_info.shared_free, mem_info.shared_total);
-			fflush(Stream);*/
+			auto Analize = GlobalCrashIntrospection.Analyze((uintptr_t)lpExceptionRecord->ExceptionAddress, 
+				Modules, nullptr);
+			ExceptionInstructionText.append(Analize.Text);
+
+			Stream.WriteLine("\nUnhandled exception ""%s"" at 0x%016llX %s", ExceptionName.c_str(),
+				(uintptr_t)lpExceptionRecord->ExceptionAddress, ExceptionInstructionText.c_str());
+
+			// Log exception flags
+			Stream.WriteLine("Exception Flags: 0x%08X", lpExceptionRecord->ExceptionFlags);
+			// Log number of parameters
+			Stream.WriteLine("Number of Parameters: %u", lpExceptionRecord->NumberParameters);
+			// Description
+			Stream.WriteLine("Exception Description: %s", ExceptionDescription.c_str());
+
+			// Log additional exception information for specific exception types
+			if (lpExceptionRecord->ExceptionCode == EXCEPTION_ACCESS_VIOLATION)
+			{
+				const auto accessType = lpExceptionRecord->ExceptionInformation[0] == 0 ? "read" :
+					lpExceptionRecord->ExceptionInformation[0] == 1 ? "write" :
+					lpExceptionRecord->ExceptionInformation[0] == 8 ? "execute" :
+					"unknown";
+				const auto faultAddress = lpExceptionRecord->ExceptionInformation[1];
+				Stream.WriteLine("Access Violation: Tried to %s memory at 0x%016llX", accessType, faultAddress);
+			}
+			else if (lpExceptionRecord->ExceptionCode == EXCEPTION_IN_PAGE_ERROR)
+			{
+				const auto accessType = lpExceptionRecord->ExceptionInformation[0] == 0 ? "read" :
+					lpExceptionRecord->ExceptionInformation[0] == 1 ? "write" :
+					lpExceptionRecord->ExceptionInformation[0] == 8 ? "execute" :
+					"unknown";
+				const auto faultAddress = lpExceptionRecord->ExceptionInformation[1];
+				const auto ntStatus = lpExceptionRecord->ExceptionInformation[2];
+				Stream.WriteLine("In-Page Error: Tried to %s memory at 0x%016llX, NTSTATUS: 0x%08X", accessType, 
+					faultAddress, (uint32_t)ntStatus);
+			}
+			else if (lpExceptionRecord->NumberParameters > 0)
+			{
+				Stream.WriteLine("Exception Information Parameters:");
+				for (DWORD i = 0; i < lpExceptionRecord->NumberParameters; ++i)
+					Stream.WriteLine("\tParameter[%u]: 0x%016llX:", i, lpExceptionRecord->ExceptionInformation[i]);
+			}
+
+			// Check for nested exceptions
+			if (lpExceptionRecord->ExceptionRecord)
+			{
+				Stream.WriteLine("Nested Exception:");
+				// Recursively print nested exception
+				PrintException(Stream, Modules, lpExceptionRecord->ExceptionRecord);
+			}
+
+			Stream.WriteString("\n");
+			Stream.Flush();
 		}
 
-		static void PrintMemory(TextFileStream& Stream, Introspection::ArrayMemoryInfo* Memory) noexcept(true)
+		void Introspection::PrintSettings(TextFileStream& Stream) noexcept(true)
 		{
-			/*if (!Memory)
+			Interface::GetSingleton()->GetSettings()->Dump(Stream);
+			Stream.WriteString("\n");
+			Stream.Flush();
+		}
+
+		void Introspection::PrintSysInfo(TextFileStream& Stream) noexcept(true)
+		{
+			Stream.WriteLine("SYSTEM SPECS:");
+			Stream.WriteLine("\tOS: %s", StringUtils::Utf16ToWinCP(HardwareInfo::OS::GetVersionByStringEx()).c_str());
+			Stream.WriteLine("\tCPU: %s", HardwareInfo::CPU::GetBrand().c_str());
+
+			for (uint8_t i = 0; i < HardwareInfo::GPU::GetCount(); i++)
+				Stream.WriteLine("\tGPU #%u: %s %u Gb", i + 1, 
+					HardwareInfo::GPU::GetName(i).c_str(), HardwareInfo::GPU::GetMemorySizeByUint(i));
+
+			auto pm = HardwareInfo::OS::GetPhysicalMemory();
+			Stream.WriteLine("\tPHYSICAL MEMORY: %.2f GB / %.2f GB", pm.Total - pm.Free, pm.Total);
+			auto sm = HardwareInfo::OS::GetSharedMemory();
+			Stream.WriteLine("\tSHARED MEMORY: %.2f GB / %.2f GB\n", sm.Total - sm.Free, sm.Total);
+			Stream.Flush();
+		}
+
+		/*void Introspection::PrintMemory(TextFileStream& Stream, ArrayMemoryInfo* Memory) noexcept(true)
+		{
+			if (!Memory)
 				return;
 
 			fprintf(Stream, "MEMORY:\n");
@@ -636,120 +633,120 @@ namespace CKPE
 			for (auto itM = Memory->begin(); itM != Memory->end(); itM++, id++)
 				fprintf(Stream, "\t[%04u]: %llX / %llX\n", id, itM->Start, itM->End);
 
-			fprintf(Stream, "\n");
-			fflush(Stream);*/
-		}
+			Stream.WriteString("\n");
+			Stream.Flush();
+		}*/
 
-		static void PrintRegistry(TextFileStream& Stream, Introspection::ModuleMapInfo* Modules, 
-			Introspection::ArrayMemoryInfo* Memory, PEXCEPTION_POINTERS lpExceptionRecord) noexcept(true)
+		void Introspection::PrintRegistry(TextFileStream& Stream, ModuleMapInfo* Modules,
+			ArrayMemoryInfo* Memory, PEXCEPTION_POINTERS lpExceptionRecord) noexcept(true)
 		{
-			//if (!Modules || !lpExceptionRecord)
-			//	return;
+			if (!Modules || !lpExceptionRecord)
+				return;
 
-			//fprintf(Stream, "REGISTERS:\n");
+			Stream.WriteLine("REGISTERS:");
 
-			//auto lamda_print_register = [&](FILE* Stream, const char* NameReg, uintptr_t Value)
-			//	{
-			//		fprintf(Stream, "\t%s %-*llX ", NameReg, 16, Value);
+			auto lamda_print_register = [&](TextFileStream& Stream, const char* NameReg, uintptr_t Value)
+				{
+					Stream.WriteString("\t%s %-*llX ", NameReg, 16, Value);
 
-			//		EditorAPI::BSString AnalizeText;
-			//		auto Analize = GlobalIntrospection->Analyze(Stream, Value, Modules, Memory);
+					std::string AnalizeText;
+					auto Analize = GlobalCrashIntrospection.Analyze(Value, Modules, Memory);
 
-			//		switch (Analize.Type)
-			//		{
-			//		case Introspection::aitCode:
-			//			fprintf(Stream, "(void* -> %s)\n", Analize.Text.c_str());
-			//			break;
-			//		case Introspection::aitInstance:
-			//			fprintf(Stream, "(HINSTANCE*) %s\n", Analize.Text.c_str());
-			//			break;
-			//		case Introspection::aitNumber:
-			//			if (Value >> 63)
-			//				fprintf(Stream, "(size_t) [uint: %llu int: %lld]\n", Value, (ptrdiff_t)Value);
-			//			else
-			//				fprintf(Stream, "(size_t) [%llu]\n", Value);
-			//			break;
-			//		case Introspection::aitClass:
-			//			if (Analize.Additional.IsEmpty())
-			//				fprintf(Stream, "(%s*)\n", Analize.Text.c_str());
-			//			else
-			//				fprintf(Stream, "(%s*) | %s\n", Analize.Text.c_str(), Analize.Additional.c_str());
-			//			break;
-			//		case Introspection::aitString:
-			//			fprintf(Stream, "(char*) %s\n", Analize.Text.c_str());
-			//			break;
-			//		default:
-			//			fprintf(Stream, "(void*)\n");
-			//			break;
-			//		}
-			//	};
+					switch (Analize.Type)
+					{
+					case Introspection::aitCode:
+						Stream.WriteLine("(void* -> %s)", Analize.Text.c_str());
+						break;
+					case Introspection::aitInstance:
+						Stream.WriteLine("(HINSTANCE*) %s", Analize.Text.c_str());
+						break;
+					case Introspection::aitNumber:
+						if (Value >> 63)
+							Stream.WriteLine("(size_t) [uint: %llu int: %lld]", Value, (ptrdiff_t)Value);
+						else
+							Stream.WriteLine("(size_t) [%llu]", Value);
+						break;
+					case Introspection::aitClass:
+						if (!Analize.Additional.length())
+							Stream.WriteLine("(%s*)", Analize.Text.c_str());
+						else
+							Stream.WriteLine("(%s*) | %s", Analize.Text.c_str(), Analize.Additional.c_str());
+						break;
+					case Introspection::aitString:
+						Stream.WriteLine("(char*) %s", Analize.Text.c_str());
+						break;
+					default:
+						Stream.WriteLine("(void*)");
+						break;
+					}
+				};
 
-			//lamda_print_register(Stream, "RAX", (uintptr_t)lpExceptionRecord->ContextRecord->Rax);
-			//lamda_print_register(Stream, "RBX", (uintptr_t)lpExceptionRecord->ContextRecord->Rbx);
-			//lamda_print_register(Stream, "RCX", (uintptr_t)lpExceptionRecord->ContextRecord->Rcx);
-			//lamda_print_register(Stream, "RDX", (uintptr_t)lpExceptionRecord->ContextRecord->Rdx);
-			//lamda_print_register(Stream, "RBP", (uintptr_t)lpExceptionRecord->ContextRecord->Rbp);
-			//lamda_print_register(Stream, "RSP", (uintptr_t)lpExceptionRecord->ContextRecord->Rsp);
-			//lamda_print_register(Stream, "RSI", (uintptr_t)lpExceptionRecord->ContextRecord->Rsi);
-			//lamda_print_register(Stream, "RDI", (uintptr_t)lpExceptionRecord->ContextRecord->Rdi);
-			//lamda_print_register(Stream, "R8 ", (uintptr_t)lpExceptionRecord->ContextRecord->R8);
-			//lamda_print_register(Stream, "R9 ", (uintptr_t)lpExceptionRecord->ContextRecord->R9);
-			//lamda_print_register(Stream, "R10", (uintptr_t)lpExceptionRecord->ContextRecord->R10);
-			//lamda_print_register(Stream, "R11", (uintptr_t)lpExceptionRecord->ContextRecord->R11);
-			//lamda_print_register(Stream, "R12", (uintptr_t)lpExceptionRecord->ContextRecord->R12);
-			//lamda_print_register(Stream, "R13", (uintptr_t)lpExceptionRecord->ContextRecord->R13);
-			//lamda_print_register(Stream, "R14", (uintptr_t)lpExceptionRecord->ContextRecord->R14);
-			//lamda_print_register(Stream, "R15", (uintptr_t)lpExceptionRecord->ContextRecord->R15);
+			lamda_print_register(Stream, "RAX", (uintptr_t)lpExceptionRecord->ContextRecord->Rax);
+			lamda_print_register(Stream, "RBX", (uintptr_t)lpExceptionRecord->ContextRecord->Rbx);
+			lamda_print_register(Stream, "RCX", (uintptr_t)lpExceptionRecord->ContextRecord->Rcx);
+			lamda_print_register(Stream, "RDX", (uintptr_t)lpExceptionRecord->ContextRecord->Rdx);
+			lamda_print_register(Stream, "RBP", (uintptr_t)lpExceptionRecord->ContextRecord->Rbp);
+			lamda_print_register(Stream, "RSP", (uintptr_t)lpExceptionRecord->ContextRecord->Rsp);
+			lamda_print_register(Stream, "RSI", (uintptr_t)lpExceptionRecord->ContextRecord->Rsi);
+			lamda_print_register(Stream, "RDI", (uintptr_t)lpExceptionRecord->ContextRecord->Rdi);
+			lamda_print_register(Stream, "R8 ", (uintptr_t)lpExceptionRecord->ContextRecord->R8);
+			lamda_print_register(Stream, "R9 ", (uintptr_t)lpExceptionRecord->ContextRecord->R9);
+			lamda_print_register(Stream, "R10", (uintptr_t)lpExceptionRecord->ContextRecord->R10);
+			lamda_print_register(Stream, "R11", (uintptr_t)lpExceptionRecord->ContextRecord->R11);
+			lamda_print_register(Stream, "R12", (uintptr_t)lpExceptionRecord->ContextRecord->R12);
+			lamda_print_register(Stream, "R13", (uintptr_t)lpExceptionRecord->ContextRecord->R13);
+			lamda_print_register(Stream, "R14", (uintptr_t)lpExceptionRecord->ContextRecord->R14);
+			lamda_print_register(Stream, "R15", (uintptr_t)lpExceptionRecord->ContextRecord->R15);
 
-			//auto lamda_is_rflag = [](DWORD Flags, uint8_t bit) -> uint8_t
-			//	{
-			//		return (uint8_t)((Flags & (1 << bit)) >> bit);
-			//	};
+			auto lamda_is_rflag = [](DWORD Flags, uint8_t bit) -> uint8_t
+				{
+					return (uint8_t)((Flags & (1 << bit)) >> bit);
+				};
 
-			//fprintf(Stream, "\n\tZF\t%u\tPF\t%u\tAF\t%u\n\tOF\t%u\tSF\t%u\tDF\t%u\n\tCF\t%u\tTF\t%u\tIF\t%u\n\n",
-			//	lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 6), lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 2),
-			//	lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 4), lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 11),
-			//	lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 7), lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 10),
-			//	lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 0), lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 8),
-			//	lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 9));
+			Stream.WriteLine("\n\tZF\t%u\tPF\t%u\tAF\t%u\n\tOF\t%u\tSF\t%u\tDF\t%u\n\tCF\t%u\tTF\t%u\tIF\t%u\n",
+				lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 6), lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 2),
+				lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 4), lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 11),
+				lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 7), lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 10),
+				lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 0), lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 8),
+				lamda_is_rflag(lpExceptionRecord->ContextRecord->EFlags, 9));
 
-			//fprintf(Stream, "\tLastError\t%08X\n\n", GetLastError());
-			//fprintf(Stream, "\tGS\t%04X\tFS\t%04X\n\tES\t%04X\tDS\t%04X\n\tCS\t%04X\tSS\t%04X\n\n",
-			//	lpExceptionRecord->ContextRecord->SegGs, lpExceptionRecord->ContextRecord->SegFs, lpExceptionRecord->ContextRecord->SegEs,
-			//	lpExceptionRecord->ContextRecord->SegDs, lpExceptionRecord->ContextRecord->SegCs, lpExceptionRecord->ContextRecord->SegSs);
+			Stream.WriteLine("\tLastError\t%08X\n", GetLastError());
+			Stream.WriteLine("\tGS\t%04X\tFS\t%04X\n\tES\t%04X\tDS\t%04X\n\tCS\t%04X\tSS\t%04X\n",
+				lpExceptionRecord->ContextRecord->SegGs, lpExceptionRecord->ContextRecord->SegFs, lpExceptionRecord->ContextRecord->SegEs,
+				lpExceptionRecord->ContextRecord->SegDs, lpExceptionRecord->ContextRecord->SegCs, lpExceptionRecord->ContextRecord->SegSs);
 
-			//auto lamda_xmm_printf = [](FILE* Stream, uint8_t RegId, M128A Reg)
-			//	{
-			//		auto p = (DWORD*)&Reg;
-			//		//auto pf = (float*)&Reg;
-			//		//fprintf(Stream, "\tXMM%u\t%08X (%.6f)\t%08X (%.6f)\t%08X (%.6f)\t%08X (%.6f)\n", RegId, 
-			//		//	p[0], pf[0], p[1], pf[1], p[2], pf[2], p[3], pf[3]);
-			//		fprintf(Stream, "\tXMM%u\t%08X %08X %08X %08X\n", RegId, p[0], p[1], p[2], p[3]);
-			//	};
+			auto lamda_xmm_printf = [](TextFileStream& Stream, uint8_t RegId, M128A Reg)
+				{
+					auto p = (DWORD*)&Reg;
+					//auto pf = (float*)&Reg;
+					//fprintf(Stream, "\tXMM%u\t%08X (%.6f)\t%08X (%.6f)\t%08X (%.6f)\t%08X (%.6f)\n", RegId, 
+					//	p[0], pf[0], p[1], pf[1], p[2], pf[2], p[3], pf[3]);
+					Stream.WriteLine("\tXMM%u\t%08X %08X %08X %08X", RegId, p[0], p[1], p[2], p[3]);
+				};
 
-			//lamda_xmm_printf(Stream, 0, lpExceptionRecord->ContextRecord->Xmm0);
-			//lamda_xmm_printf(Stream, 1, lpExceptionRecord->ContextRecord->Xmm1);
-			//lamda_xmm_printf(Stream, 2, lpExceptionRecord->ContextRecord->Xmm2);
-			//lamda_xmm_printf(Stream, 3, lpExceptionRecord->ContextRecord->Xmm3);
-			//lamda_xmm_printf(Stream, 4, lpExceptionRecord->ContextRecord->Xmm4);
-			//lamda_xmm_printf(Stream, 5, lpExceptionRecord->ContextRecord->Xmm5);
-			//lamda_xmm_printf(Stream, 6, lpExceptionRecord->ContextRecord->Xmm6);
-			//lamda_xmm_printf(Stream, 7, lpExceptionRecord->ContextRecord->Xmm7);
-			//lamda_xmm_printf(Stream, 8, lpExceptionRecord->ContextRecord->Xmm8);
-			//lamda_xmm_printf(Stream, 9, lpExceptionRecord->ContextRecord->Xmm9);
-			//lamda_xmm_printf(Stream, 10, lpExceptionRecord->ContextRecord->Xmm10);
-			//lamda_xmm_printf(Stream, 11, lpExceptionRecord->ContextRecord->Xmm11);
-			//lamda_xmm_printf(Stream, 12, lpExceptionRecord->ContextRecord->Xmm12);
-			//lamda_xmm_printf(Stream, 13, lpExceptionRecord->ContextRecord->Xmm13);
-			//lamda_xmm_printf(Stream, 14, lpExceptionRecord->ContextRecord->Xmm14);
-			//lamda_xmm_printf(Stream, 15, lpExceptionRecord->ContextRecord->Xmm15);
+			lamda_xmm_printf(Stream, 0, lpExceptionRecord->ContextRecord->Xmm0);
+			lamda_xmm_printf(Stream, 1, lpExceptionRecord->ContextRecord->Xmm1);
+			lamda_xmm_printf(Stream, 2, lpExceptionRecord->ContextRecord->Xmm2);
+			lamda_xmm_printf(Stream, 3, lpExceptionRecord->ContextRecord->Xmm3);
+			lamda_xmm_printf(Stream, 4, lpExceptionRecord->ContextRecord->Xmm4);
+			lamda_xmm_printf(Stream, 5, lpExceptionRecord->ContextRecord->Xmm5);
+			lamda_xmm_printf(Stream, 6, lpExceptionRecord->ContextRecord->Xmm6);
+			lamda_xmm_printf(Stream, 7, lpExceptionRecord->ContextRecord->Xmm7);
+			lamda_xmm_printf(Stream, 8, lpExceptionRecord->ContextRecord->Xmm8);
+			lamda_xmm_printf(Stream, 9, lpExceptionRecord->ContextRecord->Xmm9);
+			lamda_xmm_printf(Stream, 10, lpExceptionRecord->ContextRecord->Xmm10);
+			lamda_xmm_printf(Stream, 11, lpExceptionRecord->ContextRecord->Xmm11);
+			lamda_xmm_printf(Stream, 12, lpExceptionRecord->ContextRecord->Xmm12);
+			lamda_xmm_printf(Stream, 13, lpExceptionRecord->ContextRecord->Xmm13);
+			lamda_xmm_printf(Stream, 14, lpExceptionRecord->ContextRecord->Xmm14);
+			lamda_xmm_printf(Stream, 15, lpExceptionRecord->ContextRecord->Xmm15);
 
-			//fprintf(Stream, "\n");
-			//fflush(Stream);
+			Stream.WriteString("\n");
+			Stream.Flush();
 		}
 
-		static void PrintRegistrySafe(TextFileStream& Stream, Introspection::ModuleMapInfo* Modules,
-			Introspection::ArrayMemoryInfo* Memory, PEXCEPTION_POINTERS lpExceptionRecord)
+		void Introspection::PrintRegistrySafe(TextFileStream& Stream, ModuleMapInfo* Modules,
+			ArrayMemoryInfo* Memory, PEXCEPTION_POINTERS lpExceptionRecord)
 		{
 			__try
 			{
@@ -761,29 +758,29 @@ namespace CKPE
 			}
 		}
 
-		static void PrintCallStack(TextFileStream& Stream, Introspection::ModuleMapInfo* Modules) noexcept(true)
+		void Introspection::PrintCallStack(TextFileStream& Stream, ModuleMapInfo* Modules) noexcept(true)
 		{
-			/*if (!Modules)
+			if (!Modules)
 				return;
 
-			fprintf(Stream, "PROBABLE CALL STACK:\n");
+			Stream.WriteLine("PROBABLE CALL STACK:");
 
 			uint32_t id = 0;
-			for (auto itS : ProbablyCallStack)
+			for (auto itS : GlobalCrashEvent.GetProbablyCallStack())
 			{
-				auto Info = GlobalIntrospection->Analyze(Stream, itS, Modules, nullptr);
+				auto Info = GlobalCrashIntrospection.Analyze(itS, Modules, nullptr);
 				if (Info.Type == Introspection::aitCode)
 				{
-					fprintf(Stream, "\t[%-*u]: 0x%016llX %s\n", 3, id, itS, Info.Text.c_str());
+					Stream.WriteLine("\t[%-*u]: 0x%016llX %s", 3, id, itS, Info.Text.c_str());
 					id++;
 				}
 			}
 
-			fprintf(Stream, "\n");
-			fflush(Stream);*/
+			Stream.WriteString("\n");
+			Stream.Flush();
 		}
 
-		static void PrintCallStackSafe(TextFileStream& Stream, Introspection::ModuleMapInfo* Modules)
+		void Introspection::PrintCallStackSafe(TextFileStream& Stream, ModuleMapInfo* Modules)
 		{
 			__try
 			{
@@ -795,57 +792,59 @@ namespace CKPE
 			}
 		}
 
-		static void PrintStack(TextFileStream& Stream, Introspection::ModuleMapInfo* Modules,
-			Introspection::ArrayMemoryInfo* Memory, PEXCEPTION_POINTERS lpExceptionInfo) noexcept(true)
+		void Introspection::PrintStack(TextFileStream& Stream, ModuleMapInfo* Modules,
+			ArrayMemoryInfo* Memory, PEXCEPTION_POINTERS lpExceptionInfo) noexcept(true)
 		{
-			/*if (!lpExceptionInfo || !Modules || !GlobalIntrospection)
+			if (!lpExceptionInfo || !Modules)
 				return;
 
-			fprintf(Stream, "STACK:\n");
+			Stream.WriteLine("STACK:");
 
-			if (!GlobalCrashTib || !GlobalCrashTib->StackBase)
-				fprintf(Stream, "\tFAILED TO READ TIB\n");
+			auto tib = GlobalCrashEvent.GetTib();
+			if (!tib || !tib->StackBase)
+				Stream.WriteLine("\tFAILED TO READ TIB");
 			else
 			{
-				uintptr_t stack_end = GlobalCrashTib->StackBase;
-				uintptr_t stack_base = GlobalCrashTib->StackLimit;
+				uintptr_t stack_end = tib->StackBase;
+				uintptr_t stack_base = tib->StackLimit;
 				uintptr_t stack_last = lpExceptionInfo->ContextRecord->Rsp;
 				uintptr_t stack_iter = stack_last;
 
-				fprintf(Stream, "\tBase: %llX / %llX Last: %llX\n", stack_base, stack_end, stack_last);
+				Stream.WriteLine("\tBase: %llX / %llX Last: %llX", stack_base, stack_end, stack_last);
 
 				while ((stack_iter < (stack_end - 8)) && ((stack_iter - stack_last) < 0x2500))
 				{
-					EditorAPI::BSString AnalizeText;
-					auto Analize = GlobalIntrospection->Analyze(Stream, *(uintptr_t*)stack_iter, Modules, Memory);
+					std::string AnalizeText;
+					auto Analize = GlobalCrashIntrospection.Analyze(*(uintptr_t*)stack_iter, Modules, Memory);
 
-					fprintf(Stream, "\t[RSP+%-*X] 0x%-*llX ", 4, (uint32_t)(stack_iter - stack_last), 16, *(uintptr_t*)stack_iter);
+					Stream.WriteString("\t[RSP+%-*X] 0x%-*llX ", 4, (uint32_t)(stack_iter - stack_last), 16, 
+						*(uintptr_t*)stack_iter);
 
 					switch (Analize.Type)
 					{
 					case Introspection::aitCode:
-						fprintf(Stream, "(void* -> %s)\n", Analize.Text.c_str());
+						Stream.WriteLine("(void* -> %s)", Analize.Text.c_str());
 						break;
 					case Introspection::aitInstance:
-						fprintf(Stream, "(HINSTANCE*) %s\n", Analize.Text.c_str());
+						Stream.WriteLine("(HINSTANCE*) %s", Analize.Text.c_str());
 						break;
 					case Introspection::aitNumber:
 						if (*(uintptr_t*)stack_iter >> 63)
-							fprintf(Stream, "(size_t) [uint: %llu int: %lld]\n", *(uintptr_t*)stack_iter, *(ptrdiff_t*)stack_iter);
+							Stream.WriteLine("(size_t) [uint: %llu int: %lld]", *(uintptr_t*)stack_iter, *(ptrdiff_t*)stack_iter);
 						else
-							fprintf(Stream, "(size_t) [%llu]\n", *(uintptr_t*)stack_iter);
+							Stream.WriteLine("(size_t) [%llu]", *(uintptr_t*)stack_iter);
 						break;
 					case Introspection::aitClass:
-						if (Analize.Additional.IsEmpty())
-							fprintf(Stream, "(%s*)\n", Analize.Text.c_str());
+						if (!Analize.Additional.length())
+							Stream.WriteLine("(%s*)", Analize.Text.c_str());
 						else
-							fprintf(Stream, "(%s*) | %s\n", Analize.Text.c_str(), Analize.Additional.c_str());
+							Stream.WriteLine("(%s*) | %s", Analize.Text.c_str(), Analize.Additional.c_str());
 						break;
 					case Introspection::aitString:
-						fprintf(Stream, "(char*) %s\n", Analize.Text.c_str());
+						Stream.WriteLine("(char*) %s", Analize.Text.c_str());
 						break;
 					default:
-						fprintf(Stream, "(void*)\n");
+						Stream.WriteLine("(void*)");
 						break;
 					}
 
@@ -853,12 +852,12 @@ namespace CKPE
 				}
 			}
 
-			fprintf(Stream, "\n");
-			fflush(Stream);*/
+			Stream.WriteString("\n");
+			Stream.Flush();
 		}
 
-		static void PrintStackSafe(TextFileStream& Stream, Introspection::ModuleMapInfo* Modules,
-			Introspection::ArrayMemoryInfo* Memory, PEXCEPTION_POINTERS lpExceptionInfo)
+		void Introspection::PrintStackSafe(TextFileStream& Stream, ModuleMapInfo* Modules,
+			ArrayMemoryInfo* Memory, PEXCEPTION_POINTERS lpExceptionInfo)
 		{
 			__try
 			{
@@ -870,47 +869,49 @@ namespace CKPE
 			}
 		}
 
-		static void PrintPatches(TextFileStream& Stream) noexcept(true)
+		void Introspection::PrintPatches(TextFileStream& Stream) noexcept(true)
 		{
-			/*fprintf(Stream, "PATCHES:\n");
+			Stream.WriteLine("PATCHES:");
 
-			auto Manager = GlobalEnginePtr->GetPatchesManager();
+			auto Manager = PatchManager::GetSingleton();
 
-			fprintf(Stream, "\tTotal: %u\n", Manager->Count());
+			Stream.WriteLine("\tTotal: %u", Manager->GetCount());
 
 			uint32_t id = 0;
-			auto Modules = Manager->GetModuleMap();
-			for (auto itM = Modules->begin(); itM != Modules->end(); itM++)
+			auto Entries = Manager->GetEntries();
+			if (Entries)
 			{
-				auto& Patch = itM->second;
-				if (Patch->HasActive())
+				for (auto& itP : *Entries)
 				{
-					fprintf(Stream, "\t[%04u]: %s\n", id, Patch->GetName());
-					id++;
+					if (itP.patch->IsActive())
+					{
+						Stream.WriteLine("\t[%04u]: %s", id, itP.patch->GetName().c_str());
+						id++;
+					}
 				}
 			}
 
-			fprintf(Stream, "\n");
-			fflush(Stream);*/
+			Stream.WriteString("\n");
+			Stream.Flush();
 		}
 
-		static void PrintModules(TextFileStream& Stream, Introspection::ModuleMapInfo* Modules) noexcept(true)
+		void Introspection::PrintModules(TextFileStream& Stream, ModuleMapInfo* Modules) noexcept(true)
 		{
-			/*fprintf(Stream, "MODULES:\n");
-			fprintf(Stream, "\tTotal: %u\n", (uint32_t)Modules->size());
+			Stream.WriteLine("MODULES:");
+			Stream.WriteLine("\tTotal: %u", (uint32_t)Modules->size());
 
 			std::size_t column_max = 0;
 			for (auto itM = Modules->begin(); itM != Modules->end(); itM++)
 				column_max = std::max(column_max, itM->first.length());
 
 			for (auto itM = Modules->begin(); itM != Modules->end(); itM++)
-				fprintf(Stream, "\t%-*s\t%016llX\n", (unsigned int)column_max, itM->first.c_str(), itM->second.Start);
+				Stream.WriteLine("\t%-*s\t%016llX", (unsigned int)column_max, itM->first.c_str(), itM->second.Start);
 
-			fprintf(Stream, "\n");
-			fflush(Stream);*/
+			Stream.WriteString("\n");
+			Stream.Flush();
 		}
 
-		static void PrintPlugins(TextFileStream& Stream) noexcept(true)
+		void Introspection::PrintPlugins(TextFileStream& Stream) noexcept(true)
 		{
 			/*Stream.WriteString("PLUGINS:\n");
 
@@ -926,6 +927,9 @@ namespace CKPE
 			fprintf(Stream, "\n");
 			Stream.Flush();*/
 		}
+
+		///////////////////////////////////////////////////
+		/// CrashHandler
 
 		static LONG WINAPI DumpExceptionHandler(PEXCEPTION_POINTERS ExceptionInfo) noexcept(true)
 		{
@@ -1049,6 +1053,8 @@ namespace CKPE
 				PEXCEPTION_POINTERS ExceptionInfo;
 			};
 
+			constexpr static auto CrashReportFName = "CreationKitPlatformExtendedCrashReport.log";
+
 			static CrashDlgParam Param;
 			Param.File = File;
 			Param.Line = Line;
@@ -1130,10 +1136,10 @@ namespace CKPE
 						SendMessageA(WndDetails, EM_SETSEL, (WPARAM)index, (LPARAM)index);
 						SendMessageA(WndDetails, EM_REPLACESEL, 0, (LPARAM)"\r\n\r\n");
 
-						auto fsize = FileUtils::GetFileSize("CreationKitPlatformExtendedCrash.log");
+						auto fsize = FileUtils::GetFileSize(CrashReportFName);
 						if (Param->ExceptionInfo && ((fsize > 10) && (fsize <= 499000)))
 						{
-							TextFileStream stm("CreationKitPlatformExtendedCrash.log", FileStream::fmOpenRead);
+							TextFileStream stm(CrashReportFName, FileStream::fmOpenRead);
 							
 							char* chSep = nullptr;
 							auto TextData = std::make_unique<char[]>(2048);
@@ -1157,6 +1163,11 @@ namespace CKPE
 						}
 					}
 
+					return TRUE;
+				}
+				case WM_SHOWWINDOW:
+				{
+					SetForegroundWindow(hwndDlg);
 					return TRUE;
 				}
 				case WM_NOTIFY:
@@ -1212,87 +1223,90 @@ namespace CKPE
 				return FALSE;
 				};
 
-			bool dumpWritten = false;
-			auto BigDump = _READ_OPTION_BOOL("Crashes", "bGenerateFullDump", false);
-
-			// Create a dump in the same folder of the exe itself
-			SYSTEMTIME sysTime;
-			char exePath[MAX_PATH];
-			GetModuleFileNameA(GetModuleHandleA(nullptr), exePath, ARRAYSIZE(exePath));
-			GetSystemTime(&sysTime);
-			auto zip_fname = StringUtils::FormatString("%s_%4d%02d%02d_%02d%02d%02d.zip", exePath,
-				sysTime.wYear, sysTime.wMonth, sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond);
-
-			std::vector<std::string> slist;
-			slist.push_back("CreationKitPlatformExtended.log");
-
-			// Close and added archive the log's
-			Interface::GetSingleton()->GetLogger()->Close();
-
-			// Generate minidump
-			if (Param.ExceptionInfo)
-			{
-				auto minidump_fname = PathUtils::ChangeFileExt(zip_fname, ".dmp");
-				HANDLE file = CreateFileA(minidump_fname.c_str(), GENERIC_READ | GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS,
-					FILE_ATTRIBUTE_NORMAL, nullptr);
-				if (file != INVALID_HANDLE_VALUE)
-				{
-					MINIDUMP_EXCEPTION_INFORMATION dumpInfo
-					{
-						.ThreadId = GlobalCrashDumpTargetThreadId.load(),
-						.ExceptionPointers = Param.ExceptionInfo,
-						.ClientPointers = FALSE,
-					};
-
-					UINT32 dumpFlags =
-						MiniDumpNormal | MiniDumpWithThreadInfo | MiniDumpWithIndirectlyReferencedMemory;
-
-					if (BigDump)
-						dumpFlags |= (MiniDumpWithDataSegs | MiniDumpWithFullMemory | MiniDumpWithHandleData | MiniDumpWithFullMemoryInfo);
-					else
-						dumpFlags |= MiniDumpWithoutOptionalData;
-
-					if (TryMiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(),
-						file, (MINIDUMP_TYPE)dumpFlags, &dumpInfo, nullptr, nullptr))
-						slist.push_back(minidump_fname);
-
-					CloseHandle(file);
-				}
-			}
-
 			LogWindow::GetSingleton()->CloseOutputFile();
+
 			if (Param.ExceptionInfo)
 			{
-				constexpr static auto crash_log = "CreationKitPlatformExtendedCrash.log";
-				LogWindow::GetSingleton()->SaveRichTextToFile(crash_log);
-				if (PathUtils::FileExists(crash_log))
-				{
-					TextFileStream stm(crash_log, FileStream::fmOpenReadWrite);
-					stm.Offset(0, Stream::ofEnd);
-					Introspection::ContextWriteToCrashLog(stm, Param.ExceptionInfo);
-					slist.push_back(crash_log);
-				}
+				TextFileStream stm(CrashReportFName, FileStream::fmCreate);
+				Introspection::ContextWriteToCrashLog(stm, Param.ExceptionInfo);
 			}
 
-			Zipper::ZipFiles(zip_fname, slist);
-				
-			for (size_t i = 1; i < slist.size(); i++)
-				DeleteFileA(slist[i].c_str());
+			if (DialogBoxParamA((HINSTANCE)Interface::GetSingleton()->GetInstanceDLL(),
+				MAKEINTRESOURCE(IDD_CRASHDIALOG), nullptr, proc, (LPARAM)&Param) == IDOK)
+			{
+				bool dumpWritten = false;
+				auto BigDump = _READ_OPTION_BOOL("Crashes", "bGenerateFullDump", false);
 
+				// Create a dump in the same folder of the exe itself
+				SYSTEMTIME sysTime;
+				char exePath[MAX_PATH];
+				GetModuleFileNameA(GetModuleHandleA(nullptr), exePath, ARRAYSIZE(exePath));
+				GetSystemTime(&sysTime);
+				auto zip_fname = StringUtils::FormatString("%s_%4d%02d%02d_%02d%02d%02d.zip", exePath,
+					sysTime.wYear, sysTime.wMonth, sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond);
 
-				//if (DialogBoxParamA((HINSTANCE)Interface::GetSingleton()->GetInstanceDLL(), 
-				//	MAKEINTRESOURCE(IDD_CRASHDIALOG), nullptr, proc, (LPARAM)&Param) == IDOK)
-				//{
-				//	strcpy(fileNames[3], fileNames[0]);
-				//	PathRenameExtensionA(fileNames[3], ".zip");
+				std::vector<std::string> slist;
+				slist.push_back("CreationKitPlatformExtended.log");
 
-				//	LPCSTR zNames[3]{};
-				//	zNames[0] = fileNames[0];
-				//	zNames[1] = fileNames[1];
-				//	zNames[2] = fileNames[2];
-				//	zip_create(fileNames[3], zNames, 3);
-				//}
+				// Close and added archive the log's
+				Interface::GetSingleton()->GetLogger()->Close();
 
+				// Generate minidump
+				if (Param.ExceptionInfo)
+				{
+					auto minidump_fname = PathUtils::ChangeFileExt(zip_fname, ".dmp");
+					HANDLE file = CreateFileA(minidump_fname.c_str(), GENERIC_READ | GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS,
+						FILE_ATTRIBUTE_NORMAL, nullptr);
+					if (file != INVALID_HANDLE_VALUE)
+					{
+						MINIDUMP_EXCEPTION_INFORMATION dumpInfo
+						{
+							.ThreadId = GlobalCrashDumpTargetThreadId.load(),
+							.ExceptionPointers = Param.ExceptionInfo,
+							.ClientPointers = FALSE,
+						};
+
+						UINT32 dumpFlags =
+							MiniDumpNormal | MiniDumpWithThreadInfo | MiniDumpWithIndirectlyReferencedMemory;
+
+						if (BigDump)
+							dumpFlags |= (MiniDumpWithDataSegs | MiniDumpWithFullMemory | MiniDumpWithHandleData | MiniDumpWithFullMemoryInfo);
+						else
+							dumpFlags |= MiniDumpWithoutOptionalData;
+
+						if (TryMiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(),
+							file, (MINIDUMP_TYPE)dumpFlags, &dumpInfo, nullptr, nullptr))
+							slist.push_back(minidump_fname);
+
+						CloseHandle(file);
+					}
+				}
+
+				LogWindow::GetSingleton()->CloseOutputFile();
+				if (Param.ExceptionInfo)
+				{
+					constexpr static auto crash_log = "CreationKitPlatformExtendedCrash.log";
+					LogWindow::GetSingleton()->SaveRichTextToFile(crash_log);
+					if (PathUtils::FileExists(crash_log) && PathUtils::FileExists(CrashReportFName))
+					{
+						FileStream stm(crash_log, FileStream::fmOpenReadWrite);
+						FileStream stm_cr(CrashReportFName, FileStream::fmOpenRead);
+
+						stm.Offset(0, Stream::ofEnd);
+						stm.CopyFrom(stm_cr, stm_cr.GetSize());
+
+						slist.push_back(crash_log);
+					}
+				}
+
+				Zipper::ZipFiles(zip_fname, slist);
+
+				for (size_t i = 1; i < slist.size(); i++)
+					DeleteFileA(slist[i].c_str());
+			}
+			
+			DeleteFileA(CrashReportFName);
+			
 			if (IsDebuggerPresent())
 			{
 				if (Param.ErrorMessage)

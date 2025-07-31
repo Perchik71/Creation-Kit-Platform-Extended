@@ -219,6 +219,11 @@ namespace CKPE
 			return _entries ? (std::uint32_t)_entries->size() : 0ul;
 		}
 
+		std::vector<PatchManager::Entry>* PatchManager::GetEntries() noexcept(true)
+		{
+			return _entries;
+		}
+
 		void PatchManager::ActiveAll(const std::wstring& game_short) noexcept(true)
 		{
 			if (!_entries)

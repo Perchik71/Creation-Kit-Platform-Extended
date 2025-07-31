@@ -10,8 +10,6 @@
 #include <CKPE.Zipper.h>
 #include <CKPE.Exception.h>
 
-#include <CKPE.MessageBox.h>
-
 #define CKPE_MZ_OPENARCHIVE_FROM_STREAM 1
 
 namespace CKPE

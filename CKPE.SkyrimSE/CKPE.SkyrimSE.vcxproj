@@ -33,7 +33,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.SkyrimSE\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.SkyrimSE\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)CKPE.SkyrimSE;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

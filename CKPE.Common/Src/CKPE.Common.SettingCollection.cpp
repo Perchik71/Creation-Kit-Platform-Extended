@@ -8,7 +8,6 @@
 #include <CKPE.PathUtils.h>
 #include <CKPE.DirUtils.h>
 #include <CKPE.Exception.h>
-#include <CKPE.Stream.h>
 #include <CKPE.Common.SettingCollection.h>
 #include <CKPE.Common.Interface.h>
 #include <algorithm>
@@ -187,9 +186,9 @@ namespace CKPE
 			OpenRelative(folderID, relPath);
 		}
 
-		void TOMLSettingCollection::Dump(FILE* file) const noexcept(true)
+		void TOMLSettingCollection::Dump(TextFileStream& Stream) const noexcept(true)
 		{
-			if (!IsOpen() || !file)
+			if (!IsOpen())
 				return;
 
 			auto& TOMLData = _PMTomlbase(_tomlData.data)->unwrap();
@@ -200,7 +199,7 @@ namespace CKPE
 				if (!TOMLSection.second.is_table() || !TOMLSection.second.size() || !_stricmp(TOMLSection.first.c_str(), "hotkeys"))
 					continue;
 
-				fprintf(file, "\t[%s]\n", TOMLSection.first.c_str());
+				Stream.WriteLine("\t[%s]", TOMLSection.first.c_str());
 
 				for (auto& TOMLValue : TOMLSection.second.as_table())
 				{
@@ -210,51 +209,51 @@ namespace CKPE
 					switch (CustomSettingCollection::GetOptionTypeByName(TOMLValue.first.c_str()))
 					{
 					case sotBool:
-						fprintf(file, "\t\t%s: %s\n", TOMLValue.first.c_str(),
+						Stream.WriteLine("\t\t%s: %s", TOMLValue.first.c_str(),
 							(TOMLValue.second.is_boolean() ? (TOMLValue.second.as_boolean() ? "true" : "false") : "false"));
 						break;
 					case sotChar:
-						fprintf(file, "\t\t%s: %c\n", TOMLValue.first.c_str(),
+						Stream.WriteLine("\t\t%s: %c", TOMLValue.first.c_str(),
 							(TOMLValue.second.is_string() ? TOMLValue.second.as_string()[0] : ' '));
 						break;
 					case sotInteger:
-						fprintf(file, "\t\t%s: %d\n", TOMLValue.first.c_str(),
+						Stream.WriteLine("\t\t%s: %d", TOMLValue.first.c_str(),
 							(TOMLValue.second.is_integer() ? (long)TOMLValue.second.as_integer() : 0l));
 						break;
 					case sotUnsignedInteger:
-						fprintf(file, "\t\t%s: %u\n", TOMLValue.first.c_str(),
+						Stream.WriteLine("\t\t%s: %u", TOMLValue.first.c_str(),
 							(TOMLValue.second.is_integer() ? (unsigned long)TOMLValue.second.as_integer() : 0ul));
 						break;
 					case sotHexadecimal:
-						fprintf(file, "\t\t%s: %X\n", TOMLValue.first.c_str(),
+						Stream.WriteLine("\t\t%s: %X", TOMLValue.first.c_str(),
 							(TOMLValue.second.is_integer() ? (unsigned long)TOMLValue.second.as_integer() : 0ul));
 						break;
 					case sotFloat:
-						fprintf(file, "\t\t%s: %f\n", TOMLValue.first.c_str(),
+						Stream.WriteLine("\t\t%s: %f", TOMLValue.first.c_str(),
 							(TOMLValue.second.is_floating() ? (float)TOMLValue.second.as_floating() : .0f));
 						break;
 					case sotColorRGB:
 						if (TOMLValue.second.is_array() && (TOMLValue.second.size() == 3))
 						{
 							auto& a = TOMLValue.second.as_array();
-							fprintf(file, "\t\t%s: %d, %d, %d\n", TOMLValue.first.c_str(),
+							Stream.WriteLine("\t\t%s: %d, %d, %d", TOMLValue.first.c_str(),
 								(long)a[0].as_integer(), (long)a[1].as_integer(), (long)a[2].as_integer());
 						}
 						else
-							fprintf(file, "\t\t%s: 0, 0, 0\n", TOMLValue.first.c_str());
+							Stream.WriteLine("\t\t%s: 0, 0, 0", TOMLValue.first.c_str());
 						break;
 					case sotColorRGBA:
 						if (TOMLValue.second.is_array() && (TOMLValue.second.size() == 4))
 						{
 							auto& a = TOMLValue.second.as_array();
-							fprintf(file, "\t\t%s: %d, %d, %d, %d\n", TOMLValue.first.c_str(),
+							Stream.WriteLine("\t\t%s: %d, %d, %d, %d", TOMLValue.first.c_str(),
 								(long)a[0].as_integer(), (long)a[1].as_integer(), (long)a[2].as_integer(), (long)a[3].as_integer());
 						}
 						else
-							fprintf(file, "\t\t%s: 0, 0, 0, 0\n", TOMLValue.first.c_str());
+							Stream.WriteLine("\t\t%s: 0, 0, 0, 0", TOMLValue.first.c_str());
 						break;
 					case sotString:
-						fprintf(file, "\t\t%s: %s\n", TOMLValue.first.c_str(),
+						Stream.WriteLine("\t\t%s: %s", TOMLValue.first.c_str(),
 							(TOMLValue.second.is_string() ? TOMLValue.second.as_string().c_str() : ""));
 						break;
 					}
@@ -1069,9 +1068,9 @@ namespace CKPE
 			OpenRelative(folderID, relPath);
 		}
 
-		void INISettingCollection::Dump(FILE* file) const noexcept(true)
+		void INISettingCollection::Dump(TextFileStream& Stream) const noexcept(true)
 		{
-			if (!IsOpen() || !file)
+			if (!IsOpen())
 				return;
 
 			for (auto& INISection : *(_iniData.data))
@@ -1079,14 +1078,14 @@ namespace CKPE
 				if (!INISection.first.length() || !INISection.first.size() || !_stricmp(INISection.first.c_str(), "hotkeys"))
 					continue;
 
-				fprintf(file, "\t[%s]\n", INISection.first.c_str());
+				Stream.WriteLine("\t[%s]", INISection.first.c_str());
 
 				for (auto& INIValue : INISection.second)
 				{
 					if (!INIValue.first.length())
 						continue;
 
-					fprintf(file, "\t\t%s: %s\n", INIValue.first.c_str(),
+					Stream.WriteLine("\t\t%s: %s", INIValue.first.c_str(),
 						(!INIValue.second.empty() ? INIValue.second.c_str() : ""));
 				}
 			}

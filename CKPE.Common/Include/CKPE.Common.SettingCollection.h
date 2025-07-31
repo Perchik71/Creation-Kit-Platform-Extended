@@ -5,6 +5,7 @@
 #pragma once
 
 #include <CKPE.Common.Common.h>
+#include <CKPE.Stream.h>
 #include <string>
 #include <cstdint>
 #include <cstdio>
@@ -61,7 +62,7 @@ namespace CKPE
 			virtual void OpenRelative(std::int32_t folderID, const std::string& relPath) noexcept(true);
 			virtual void OpenRelative(std::int32_t folderID, const std::wstring& relPath) noexcept(true);
 			virtual void Save() noexcept(true);
-			virtual void Dump(std::FILE* file) const noexcept(true) = 0;
+			virtual void Dump(TextFileStream& Stream) const noexcept(true) = 0;
 
 			inline virtual void MarkNeedSave(bool mark = true) noexcept(true) { _needSaves = mark; }
 			inline virtual bool IsOpen() const noexcept(true) { return _fileName ? _fileName->length() != 0 : false; }
@@ -150,7 +151,7 @@ namespace CKPE
 			TOMLSettingCollection(const std::wstring& filename) noexcept(true);
 			TOMLSettingCollection(std::int32_t folderID, const std::wstring& relPath) noexcept(true);
 
-			virtual void Dump(FILE* file) const noexcept(true);
+			virtual void Dump(TextFileStream& Stream) const noexcept(true);
 
 			virtual bool IsEmpty() const noexcept(true);
 			virtual bool Has(const std::string& section, const std::string& option) const noexcept(true);
@@ -233,7 +234,7 @@ namespace CKPE
 			INISettingCollection(const std::wstring& filename) noexcept(true);
 			INISettingCollection(std::int32_t folderID, const std::wstring& relPath) noexcept(true);
 
-			virtual void Dump(FILE* file) const noexcept(true);
+			virtual void Dump(TextFileStream& Stream) const noexcept(true);
 
 			virtual bool IsEmpty() const noexcept(true);
 			virtual bool Has(const std::string& section, const std::string& option) const noexcept(true);

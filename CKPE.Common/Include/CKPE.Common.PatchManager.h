@@ -38,6 +38,7 @@ namespace CKPE
 			virtual void Register(Patch* patch) noexcept(true);
 			virtual void Clear() noexcept(true);
 			virtual std::uint32_t GetCount() noexcept(true);
+			virtual std::vector<Entry>* GetEntries() noexcept(true);
 
 			virtual void ActiveAll(const std::wstring& game_short) noexcept(true);
 			virtual void QueryAll(const std::wstring& game_short) noexcept(true);

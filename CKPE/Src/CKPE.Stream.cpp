@@ -30,11 +30,14 @@ namespace CKPE
 
 		auto szBuf = std::make_unique<unsigned char[]>(BUF_SIZE);
 
-		do {
+		do 
+		{
 			dwBuf = (dw64Size - dw64Pos) > BUF_SIZE ? BUF_SIZE : (std::uint32_t)(dw64Size - dw64Pos);
-			dw64Pos += stream.Read(szBuf.get(), dwBuf);
-
-			Write(szBuf.get(), dwBuf);
+			auto numread = stream.Read(szBuf.get(), dwBuf);
+			dw64Pos += numread;
+			if (!numread) break;
+			Write(szBuf.get(), numread);
+			if (numread != dwBuf) break;
 		} while (dw64Pos < dw64Size);
 
 		return dw64Pos;
