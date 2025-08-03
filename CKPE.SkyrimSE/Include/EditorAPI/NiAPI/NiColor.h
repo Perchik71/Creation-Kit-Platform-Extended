@@ -64,8 +64,8 @@ namespace CKPE
 						a = A;
 					}
 
-					[nodiscard] inline const float* Data() const noexcept(true) { return &r; }
-					[nodiscard] inline __m128 AsXmm() const noexcept(true) { return _mm_load_ps(Data()); }
+					[[nodiscard]] inline const float* Data() const noexcept(true) { return &r; }
+					[[nodiscard]] inline __m128 AsXmm() const noexcept(true) { return _mm_load_ps(Data()); }
 				};
 				static_assert(sizeof(NiColorA) == 0x10);
 			}

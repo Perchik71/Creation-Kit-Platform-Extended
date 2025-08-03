@@ -31,3 +31,5 @@
 #include <CKPE.ImageList.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Utils.h>
+#include <CKPE.Float16.h>
+#include <CKPE.Singleton.h>

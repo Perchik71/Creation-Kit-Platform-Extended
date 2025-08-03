@@ -143,6 +143,9 @@
     <ClCompile Include="Src\CKPE.Common.CrashHandler.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.D3D11Proxy.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -302,6 +305,9 @@
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.Common.CrashHandler.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.D3D11Proxy.h">
       <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>

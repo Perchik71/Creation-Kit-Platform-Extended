@@ -41,10 +41,10 @@ namespace CKPE
 					vtbl_call<void>(0xF8, this, Buffer, BufferSize);
 				}
 
-				const char* TESForm::GetFullName() const noexcept(true)
+				const char* TESForm::TryGetFullName() const noexcept(true)
 				{
 					TESFullName* fullname = (TESFullName*)_DYNAMIC_CAST(this, 0, "class TESForm", "class TESFullName");
-					return fullname ? fullname->c_str() : "";
+					return fullname ? fullname->GetFullName() : "";
 				}
 			}
 		}

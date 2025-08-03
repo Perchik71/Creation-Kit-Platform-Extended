@@ -211,7 +211,7 @@ namespace CKPE
 					[[nodiscard]] inline const char* GetEditorID() const noexcept(true) { return _EditorID; }
 					// Not all forms have a localized name, but I'll add it here to simplify my life,
 					// since not all types of forms are known to me.
-					[[nodiscard]] const char* GetFullName() const noexcept(true);
+					[[nodiscard]] const char* TryGetFullName() const noexcept(true);
 
 					[[nodiscard]] inline bool IsFromMaster() const noexcept(true) { return (_FormFlags & FormFlags::fsMaster); }
 					[[nodiscard]] inline bool IsModified() const noexcept(true) { return (_FormFlags & FormFlags::fsModified); }
@@ -235,7 +235,7 @@ namespace CKPE
 					CKPE_READ_PROPERTY(IsModified) bool Active;
 					CKPE_READ_PROPERTY(GetFormID) std::uint32_t FormID;
 					CKPE_READ_PROPERTY(GetEditorID) const char* EditorID;
-					CKPE_READ_PROPERTY(GetFullName) const char* FullName;
+					CKPE_READ_PROPERTY(TryGetFullName) const char* FullName;
 					CKPE_READ_PROPERTY(GetFormType) FormType Type;
 				};	
 				static_assert(sizeof(TESForm) == 0x28);

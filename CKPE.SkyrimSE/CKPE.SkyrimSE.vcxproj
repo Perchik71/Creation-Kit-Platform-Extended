@@ -53,7 +53,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <CallingConvention>StdCall</CallingConvention>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
-      <DisableSpecificWarnings>6031;6387;26495</DisableSpecificWarnings>
+      <DisableSpecificWarnings>6031;6387;26495;4244</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -62,7 +62,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\scripts.ps1"</Command>
@@ -72,14 +72,20 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Src\CKPE.SkyrimSE.Runner.cpp" />
     <ClCompile Include="Src\CKPE.SkyrimSE.VersionLists.cpp" />
+    <ClCompile Include="Src\EditorAPI\BSGraphicsTypes.cpp" />
     <ClCompile Include="Src\EditorAPI\BSReadWriteLock.cpp" />
+    <ClCompile Include="Src\EditorAPI\BSShaderProperty.cpp" />
+    <ClCompile Include="Src\EditorAPI\BSShaderResourceManager.cpp" />
     <ClCompile Include="Src\EditorAPI\BSSimpleLock.cpp" />
     <ClCompile Include="Src\EditorAPI\BSSpinLock.cpp" />
+    <ClCompile Include="Src\EditorAPI\BSString.cpp" />
     <ClCompile Include="Src\EditorAPI\Forms\TESForm.cpp" />
     <ClCompile Include="Src\EditorAPI\NiAPI\NiCollisionUtils.cpp" />
     <ClCompile Include="Src\EditorAPI\NiAPI\NiMemoryManager.cpp" />
     <ClCompile Include="Src\EditorAPI\NiAPI\NiRefObject.cpp" />
     <ClCompile Include="Src\EditorAPI\NiAPI\NiRTTI.cpp" />
+    <ClCompile Include="Src\EditorAPI\TESDialogSpell.cpp" />
+    <ClCompile Include="Src\EditorAPI\TESFile.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AllowCreateBitArray.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AllowMultipleWindowAndMaster.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AllowPlayerKnowsCondition.cpp" />
@@ -98,6 +104,7 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashNullptrDXGISurface.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashNullptrFaceGen.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashUsingMore16NPCForFaceGen.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.D3D11.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.DisableAssertion.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.EnableGameButtonToVC.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixActorDlg.cpp" />
@@ -156,17 +163,43 @@
     <ClInclude Include="Include\CKPE.SkyrimSE.Runner.h" />
     <ClInclude Include="Include\CKPE.SkyrimSE.VersionLists.h" />
     <ClInclude Include="Include\EditorAPI\BGSLocalizedString.h" />
+    <ClInclude Include="Include\EditorAPI\BGSRenderWindow.h" />
+    <ClInclude Include="Include\EditorAPI\BGSRenderWindowCamera.h" />
+    <ClInclude Include="Include\EditorAPI\BSDynamicTriShape.h" />
+    <ClInclude Include="Include\EditorAPI\BSEffectShaderMaterial.h" />
     <ClInclude Include="Include\EditorAPI\BSEntryString.h" />
     <ClInclude Include="Include\EditorAPI\BSFixedString.h" />
+    <ClInclude Include="Include\EditorAPI\BSGeometry.h" />
+    <ClInclude Include="Include\EditorAPI\BSGraphicsTypes.h" />
     <ClInclude Include="Include\EditorAPI\BSReadWriteLock.h" />
+    <ClInclude Include="Include\EditorAPI\BSResources.h" />
+    <ClInclude Include="Include\EditorAPI\BSShaderMaterial.h" />
+    <ClInclude Include="Include\EditorAPI\BSShaderProperty.h" />
+    <ClInclude Include="Include\EditorAPI\BSShaderResourceManager.h" />
     <ClInclude Include="Include\EditorAPI\BSSimpleLock.h" />
     <ClInclude Include="Include\EditorAPI\BSSpinLock.h" />
+    <ClInclude Include="Include\EditorAPI\BSString.h" />
     <ClInclude Include="Include\EditorAPI\BSStringCache.h" />
     <ClInclude Include="Include\EditorAPI\BSTArray.h" />
     <ClInclude Include="Include\EditorAPI\BSTList.h" />
+    <ClInclude Include="Include\EditorAPI\BSTriShape.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BaseFormComponent.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\BGSFootstepSet.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\BGSImpactData.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\BGSImpactDataSet.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\BGSMaterialType.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\BGSSounds.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\BGSVoiceType.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESForm.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESFullName.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\TESLandTexture.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\TESObjectCELL.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\TESObjectLAND.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\TESObjectLIGH.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\TESObjectREFR.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\TESTopic.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\TESTopicInfo.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\TESWaterForm.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiTArray.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiAVObject.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiCollisionUtils.h" />
@@ -189,6 +222,10 @@
     <ClInclude Include="Include\EditorAPI\NiAPI\NiTransform.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiTSimpleArray.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiTypes.h" />
+    <ClInclude Include="Include\EditorAPI\TESDataHandler.h" />
+    <ClInclude Include="Include\EditorAPI\TESDialogSpell.h" />
+    <ClInclude Include="Include\EditorAPI\TESFile.h" />
+    <ClInclude Include="Include\EditorAPI\TESWater.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AllowCreateBitArray.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AllowMultipleWindowAndMaster.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AllowPlayerKnowsCondition.h" />
@@ -207,6 +244,7 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashNullptrDXGISurface.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashNullptrFaceGen.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashUsingMore16NPCForFaceGen.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.D3D11.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.DisableAssertion.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.EnableGameButtonToVC.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixActorDlg.h" />

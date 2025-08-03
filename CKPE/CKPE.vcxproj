@@ -114,10 +114,12 @@
     <ClInclude Include="Include\CKPE.Detours.h" />
     <ClInclude Include="Include\CKPE.DirUtils.h" />
     <ClInclude Include="Include\CKPE.ErrorHandler.h" />
+    <ClInclude Include="Include\CKPE.Float16.h" />
     <ClInclude Include="Include\CKPE.GDIPlus.h" />
     <ClInclude Include="Include\CKPE.Graphics.h" />
     <ClInclude Include="Include\CKPE.ImageList.h" />
     <ClInclude Include="Include\CKPE.Math.h" />
+    <ClInclude Include="Include\CKPE.Singleton.h" />
     <ClInclude Include="Include\CKPE.Stream.h" />
     <ClInclude Include="Include\CKPE.FileUtils.h" />
     <ClInclude Include="Include\CKPE.GameManager.h" />

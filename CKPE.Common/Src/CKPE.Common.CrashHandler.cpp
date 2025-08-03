@@ -1276,7 +1276,10 @@ namespace CKPE
 
 						if (TryMiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(),
 							file, (MINIDUMP_TYPE)dumpFlags, &dumpInfo, nullptr, nullptr))
-							slist.push_back(minidump_fname);
+						{
+							if (!BigDump)
+								slist.push_back(minidump_fname);
+						}
 
 						CloseHandle(file);
 					}

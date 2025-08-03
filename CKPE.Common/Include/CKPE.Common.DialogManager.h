@@ -16,7 +16,7 @@ namespace CKPE
 	{
 		using jDialog = perchik71::jDialogs::jDialogA;
 
-		class DialogManager
+		class CKPE_COMMON_API DialogManager
 		{
 			using DialogList = concurrency::concurrent_unordered_map<ULONG_PTR, jDialog*>;
 			DialogList* m_items{ nullptr };

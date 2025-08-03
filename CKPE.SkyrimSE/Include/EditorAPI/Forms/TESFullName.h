@@ -24,13 +24,13 @@ namespace CKPE
 				public:
 					virtual ~TESFullName() = default;
 
-					inline std::uint32_t length() const noexcept(true) { return name.length(); }
-					inline const char* c_str() const noexcept(true) 
+					inline std::uint32_t GetFullNameLength() const noexcept(true) { return name.length(); }
+					inline const char* GetFullName() const noexcept(true)
 					{ 
 						auto s = name.c_str();
 						return s ? s : ""; 
 					}
-					inline operator const char*() const { return c_str(); }
+					inline operator const char*() const { return GetFullName(); }
 
 					// 0x78 vtbl get_name
 				};	

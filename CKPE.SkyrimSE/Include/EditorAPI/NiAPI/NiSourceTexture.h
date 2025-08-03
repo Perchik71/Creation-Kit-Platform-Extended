@@ -2,24 +2,24 @@
 
 #pragma once
 
-//#include "NiTexture.h"
-//
-//namespace CKPE
-//{
-//	namespace SkyrimSE
-//	{
-//		namespace EditorAPI
-//		{
-//			namespace NiAPI
-//			{
-//				class NiSourceTexture : public NiTexture
-//				{
-//				public:
-//					NiSourceTexture() = default;
-//					virtual ~NiSourceTexture() = default;
-//				};
-//				static_assert(sizeof(NiSourceTexture) == 0x58);
-//			}
-//		}
-//	}
-//}
+#include "NiTexture.h"
+
+namespace CKPE
+{
+	namespace SkyrimSE
+	{
+		namespace EditorAPI
+		{
+			namespace NiAPI
+			{
+				class NiSourceTexture : public NiTexture
+				{
+				public:
+					NiSourceTexture() = default;
+					virtual ~NiSourceTexture() = default;
+				};
+				static_assert(sizeof(NiSourceTexture) == 0x58);
+			}
+		}
+	}
+}

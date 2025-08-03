@@ -27,6 +27,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.CrashNullptrDXGISurface.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashNullptrFaceGen.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashUsingMore16NPCForFaceGen.h>
+#include <Patches/CKPE.SkyrimSE.Patch.D3D11.h>
 #include <Patches/CKPE.SkyrimSE.Patch.DisableAssertion.h>
 #include <Patches/CKPE.SkyrimSE.Patch.EnableGameButtonToVC.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixActorDlg.h>
@@ -109,6 +110,7 @@ namespace CKPE
 			mgr->Register(new Patch::CrashNullptrDXGISurface);
 			mgr->Register(new Patch::CrashNullptrFaceGen);
 			mgr->Register(new Patch::CrashUsingMore16NPCForFaceGen);
+			mgr->Register(new Patch::D3D11);
 			mgr->Register(new Patch::DisableAssertion);
 			mgr->Register(new Patch::EnableGameButtonToVC);
 			mgr->Register(new Patch::FixActorDlg);

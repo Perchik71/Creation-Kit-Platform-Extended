@@ -77,6 +77,7 @@
     <ClCompile Include="Src\CKPE.Common.ClassicTheme.cpp" />
     <ClCompile Include="Src\CKPE.Common.CrashHandler.cpp" />
     <ClCompile Include="Src\CKPE.Common.CreatePatterns.cpp" />
+    <ClCompile Include="Src\CKPE.Common.D3D11Proxy.cpp" />
     <ClCompile Include="Src\CKPE.Common.DialogManager.cpp" />
     <ClCompile Include="Src\CKPE.Common.EditorUI.cpp" />
     <ClCompile Include="Src\CKPE.Common.Interface.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="Include\CKPE.Common.Common.h" />
     <ClInclude Include="Include\CKPE.Common.CrashHandler.h" />
     <ClInclude Include="Include\CKPE.Common.CreatePatterns.h" />
+    <ClInclude Include="Include\CKPE.Common.D3D11Proxy.h" />
     <ClInclude Include="Include\CKPE.Common.DialogManager.h" />
     <ClInclude Include="Include\CKPE.Common.EditorUI.h" />
     <ClInclude Include="Include\CKPE.Common.Interface.h" />
