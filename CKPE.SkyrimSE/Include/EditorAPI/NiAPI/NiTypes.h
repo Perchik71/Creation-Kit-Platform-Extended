@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #pragma once
-#pragma pack(push, 1)
 
 #include <windows.h>
 #include <EditorAPI/NiAPI/NiColor.h>
@@ -210,4 +209,3 @@ namespace CKPE
 }
 
 #pragma warning(default : 26451)
-#pragma pack(pop)

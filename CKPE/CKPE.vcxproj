@@ -52,7 +52,7 @@
       <CallingConvention>StdCall</CallingConvention>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <DisableSpecificWarnings>26444;6386;28619;28183;28182</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26444;6386;28619;28183;28182;26495</DisableSpecificWarnings>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>

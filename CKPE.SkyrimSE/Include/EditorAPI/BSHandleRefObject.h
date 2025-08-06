@@ -1,6 +1,6 @@
 // Special thanks to Nukem: https://github.com/Nukem9/SkyrimSETest/blob/master/skyrim64_test/src/patches/CKSSE/BSHandleRefObject_CK.h
 
-
+#include <CKPE.Asserts.h>
 #include <EditorAPI/NiAPI/NiPointer.h>
 
 #pragma once
@@ -33,7 +33,7 @@ namespace CKPE
 
 				inline std::uint32_t IncRefCount() noexcept(true)
 				{
-					AssertMsg(GetRefCount() < REF_COUNT_MASK,
+					CKPE_ASSERT_MSG(GetRefCount() < REF_COUNT_MASK,
 						"BSHandleRefObject - IncRefCount is about to cause refcount wraparound to 0.");
 
 					return ((NiRefObject*)this)->IncRefCount();
@@ -41,7 +41,7 @@ namespace CKPE
 
 				inline std::uint32_t DecRefCount() noexcept(true)
 				{
-					AssertMsg(GetRefCount() != 0,
+					CKPE_ASSERT_MSG(GetRefCount() != 0,
 						"BSHandleRefObject - DecRefCount called with refcount already 0.");
 
 					return ((NiRefObject*)this)->DecRefCount();
@@ -90,18 +90,18 @@ namespace CKPE
 
 				inline std::uint64_t IncRefCount() noexcept(true)
 				{
-					AssertMsg(GetRefCount() < REF_COUNT_MASK,
+					CKPE_ASSERT_MSG(GetRefCount() < REF_COUNT_MASK,
 						"BSHandleRefObject - IncRefCount is about to cause refcount wraparound to 0.");
 
-					return ((NiRefObject_64*)this)->IncRefCount();
+					return ((NiRefObject64*)this)->IncRefCount();
 				}
 
 				inline std::uint64_t DecRefCount() noexcept(true)
 				{
-					AssertMsg(GetRefCount() != 0,
+					CKPE_ASSERT_MSG(GetRefCount() != 0,
 						"BSHandleRefObject - DecRefCount called with refcount already 0.");
 
-					return ((NiRefObject_64*)this)->DecRefCount();
+					return ((NiRefObject64*)this)->DecRefCount();
 				}
 
 				[[nodiscard]] inline std::uint64_t GetRefCount() const noexcept(true)

@@ -17,7 +17,7 @@ namespace CKPE
 				public:
 					virtual ~TESWaterForm() = default;
 
-					inline uint32_t GetDamagePerSecond() const { return _DamagePerSecond; }
+					inline std::uint32_t GetDamagePerSecond() const { return _DamagePerSecond; }
 
 					inline NiAPI::NiRGBA GetShallowColor() const { return _Colors[0]; }
 					inline NiAPI::NiRGBA GetDeepColor() const { return _Colors[1]; }
@@ -33,7 +33,7 @@ namespace CKPE
 					inline NiAPI::NiPoint3 GetAngularVelocity() const { return _AngularVelocity; }
 
 					CKPE_READ_PROPERTY(GetName) const char* Name;
-					CKPE_READ_PROPERTY(GetDamagePerSecond) uint32_t DamagePerSecond;
+					CKPE_READ_PROPERTY(GetDamagePerSecond) std::uint32_t DamagePerSecond;
 
 					CKPE_READ_PROPERTY(GetShallowColor) NiAPI::NiRGBA ShallowColor;
 					CKPE_READ_PROPERTY(GetDeepColor) NiAPI::NiRGBA DeepColor;
@@ -49,7 +49,7 @@ namespace CKPE
 					CKPE_READ_PROPERTY(GetAngularVelocity) NiAPI::NiPoint3 AngularVelocity;
 				private:
 					char pad40[8];
-					uint32_t _DamagePerSecond;
+					std::uint32_t _DamagePerSecond;
 					char pad4C[0x3C];
 					char pad88[0xE0];
 					NiAPI::NiRGBA _Colors[3];

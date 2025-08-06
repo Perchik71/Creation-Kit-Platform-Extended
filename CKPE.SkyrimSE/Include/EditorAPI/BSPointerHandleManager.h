@@ -229,7 +229,7 @@ namespace CKPE
 
 				static void WarnForUndestroyedHandles()
 				{
-					AssertMsg(false, "Unimplemented");
+					CKPE_ASSERT_MSG(false, "Unimplemented");
 				}
 			};
 

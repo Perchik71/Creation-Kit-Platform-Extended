@@ -1,6 +1,6 @@
-// Copyright © 2023-2024 aka perchik71. All rights reserved.
+// Copyright © 2023-2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
-// License: https://www.gnu.org/licenses/gpl-3.0.html
+// License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #pragma once
 
@@ -67,16 +67,16 @@ namespace CKPE
 					virtual ~TESObjectREFR() = default;
 
 					// The function returns BSFadeNode, it has not been studied, I use parent class
-					inline NiAPI::NiNode* GetFadeNode() const { return vtbl_call<NiAPI::NiNode*>(0x458, this); }
-					inline TESForm* GetParent() const { return _Parent; }
-					inline void SetParent(TESForm* NewParentForm) { vtbl_call<void>(0x4F8, this, NewParentForm); MarkAsChanged(); }
-					inline NiAPI::NiPoint3 GetRotate() const { return _Rotate; }
-					inline NiAPI::NiPoint3 GetPosition() const { return _Position; }
-					inline float GetScale() const { return (float)_Scale / 100; }
-					inline TESObjectCELL* GetParentCell() const { return _ParentCell; }
-					inline bool IsInvisible() const { return (_FormFlags & SpecialFlagsForm::fs3DInvisible); }
-					inline bool IsChildrenInvisible() const { return (_FormFlags & SpecialFlagsForm::fsChildren3DInvisible); }
-					inline bool IsFrozen() const { return (_FormFlags & SpecialFlagsForm::fsFrozen); }
+					inline NiAPI::NiNode* GetFadeNode() const noexcept(true) { return vtbl_call<NiAPI::NiNode*>(0x458, this); }
+					inline TESForm* GetParent() const noexcept(true) { return _Parent; }
+					inline void SetParent(TESForm* NewParentForm) noexcept(true) { vtbl_call<void>(0x4F8, this, NewParentForm); MarkAsChanged(); }
+					inline NiAPI::NiPoint3 GetRotate() const noexcept(true) { return _Rotate; }
+					inline NiAPI::NiPoint3 GetPosition() const noexcept(true) { return _Position; }
+					inline float GetScale() const noexcept(true) { return (float)_Scale / 100; }
+					inline TESObjectCELL* GetParentCell() const noexcept(true) { return _ParentCell; }
+					inline bool IsInvisible() const noexcept(true) { return (_FormFlags & SpecialFlagsForm::fs3DInvisible); }
+					inline bool IsChildrenInvisible() const noexcept(true) { return (_FormFlags & SpecialFlagsForm::fsChildren3DInvisible); }
+					inline bool IsFrozen() const noexcept(true) { return (_FormFlags & SpecialFlagsForm::fsFrozen); }
 
 					// Added patch "Add Change Ref" (only 1.6 and newer)
 					inline static void (*SetParentWithRedraw)(TESObjectREFR*, TESForm*);

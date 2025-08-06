@@ -1,14 +1,12 @@
-// Copyright © 2023-2024 aka perchik71. All rights reserved.
+// Copyright © 2023-2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
-// License: https://www.gnu.org/licenses/gpl-3.0.html
+// License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #pragma once
 
 #include <CKPE.Stream.h>
 #include <EditorAPI/NiAPI/NiNode.h>
 #include "TESLandTexture.h"
-
-#pragma pack(push, 1)
 
 namespace CKPE
 {
@@ -127,5 +125,3 @@ namespace CKPE
 		}
 	}
 }
-
-#pragma pack(pop)

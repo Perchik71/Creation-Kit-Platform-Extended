@@ -117,7 +117,7 @@ namespace CKPE
 				_CONSOLEVA(Format, Va);
 			}
 
-			void Console::LogWarning(int Type, const char* Format, ...) noexcept(true)
+			void Console::LogWarning(MsgType Type, const char* Format, ...) noexcept(true)
 			{
 				va_list va;
 				va_start(va, Format);
@@ -125,7 +125,7 @@ namespace CKPE
 				va_end(va);
 			}
 
-			void Console::LogWarningVa(int Type, const char* Format, va_list Va) noexcept(true)
+			void Console::LogWarningVa(MsgType Type, const char* Format, va_list Va) noexcept(true)
 			{
 				char buffer[1024];
 				_vsnprintf_s(buffer, _TRUNCATE, Format, Va);

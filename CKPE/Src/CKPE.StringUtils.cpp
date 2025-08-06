@@ -6,9 +6,12 @@
 #include <limits.h>
 #include <cstdio>
 #include <cstdlib>
+#include <memory>
 #include <CKPE.StringUtils.h>
 #include "Impl/utfcpp/utf8.h"
 #include "Impl/utf8.h"
+
+//#define UNICODE_USES_WINDOWS
 
 namespace CKPE
 {
@@ -21,10 +24,11 @@ namespace CKPE
 
 	bool StringUtils::IsUtf8(const std::string& src) noexcept(true)
 	{
+#ifdef UNICODE_USES_WINDOWS
 		auto src_1 = (const uint8_t*)(src.c_str());
-		int32_t charlen = 0;
+		std::int32_t charlen = 0;
 		auto length = src.length();
-		int64_t result = 0;
+		std::size_t result = 0;
 
 		while (result < length)
 		{
@@ -93,6 +97,9 @@ namespace CKPE
 		}
 
 		return true;
+#else
+		return utf8::is_valid(src);
+#endif // DEBUG
 	}
 
 	bool StringUtils::IsASCII(const char* src) noexcept(true)
@@ -107,10 +114,11 @@ namespace CKPE
 	{
 		if (!src) return false;
 
+#ifdef UNICODE_USES_WINDOWS
 		auto src_1 = (const uint8_t*)(src);
-		int32_t charlen = 0;
+		std::int32_t charlen = 0;
 		auto length = strlen(src);
-		int64_t result = 0;
+		std::size_t result = 0;
 
 		while (result < length)
 		{
@@ -179,6 +187,9 @@ namespace CKPE
 		}
 
 		return true;
+#else
+		return utf8::is_valid(src);
+#endif // DEBUG
 	}
 
 	std::wstring StringUtils::Utf8ToUtf16(const std::string& src) noexcept(true)
@@ -215,30 +226,88 @@ namespace CKPE
 
 	std::wstring StringUtils::WinCPToUtf16(const std::string& src) noexcept(true)
 	{
-		std::wstring r{ L"" };
-		if (!src.empty() && (src.size() < (std::size_t)std::numeric_limits<int>::max()))
+		if (!src.empty() && (src.length() < (std::size_t)std::numeric_limits<int>::max()))
 		{
 			auto len = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, src.c_str(), (int)src.length(), 0, 0);
 			if (len > 0)
 			{
-				r.resize((std::size_t)len);
-				if (!r.empty())
-					MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, src.c_str(), (int)src.length(), r.data(), (int)r.length());
+				auto mem = std::make_unique<wchar_t[]>((std::size_t)len + 1);
+				if (mem)
+				{
+					if (MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, src.c_str(), (int)src.length(),
+						mem.get(), len) > 0)
+						return mem.get();
+				}
 			}
 		}
-		return r;
+		return L"";
 	}
 
 	std::string StringUtils::Utf8ToWinCP(const std::string& src) noexcept(true)
 	{
-		if (IsASCII(src)) return src;
-		return Utf16ToWinCP(Utf8ToUtf16(src));
+		if (IsASCII(src) || !src.length()) return src;
+
+#ifdef UNICODE_USES_WINDOWS
+		auto wlen = MultiByteToWideChar(CP_UTF8, 0, src.c_str(), (int)src.length(), 0, 0);
+		if ((wlen > 0) && (wlen < (std::size_t)std::numeric_limits<int>::max()))
+		{
+			auto wmem = std::make_unique<wchar_t[]>((std::size_t)wlen + 1);
+			if (wmem)
+			{
+				if (MultiByteToWideChar(CP_UTF8, 0, src.c_str(), (int)src.length(),
+					wmem.get(), wlen) <= 0)
+					return "";
+
+				wmem[wlen] = '\0';
+			}
+
+			auto len = WideCharToMultiByte(CP_ACP, 0, wmem.get(), (int)wlen, 0, 0, nullptr, nullptr);
+			if (len > 0)
+			{
+				auto mem = std::make_unique<char[]>((std::size_t)len + 1);
+				if (mem && (WideCharToMultiByte(CP_ACP, 0, wmem.get(), (int)wlen, mem.get(), (int)len,
+					nullptr, nullptr) > 0))
+				{
+					mem[len] = '\0';
+					return mem.get();
+				}
+			}
+		}
+#else
+		std::wstring u16s;
+		utf8::utf8to16(src.begin(), src.end(), std::back_inserter(u16s));
+
+		if ((u16s.length() > 0) && (u16s.length() < (std::size_t)std::numeric_limits<int>::max()))
+		{
+			auto len = WideCharToMultiByte(CP_ACP, 0, u16s.c_str(), (int)u16s.length(), 0, 0, nullptr, nullptr);
+			if (len > 0)
+			{
+				auto mem = std::make_unique<char[]>((std::size_t)len + 1);
+				if (mem && (WideCharToMultiByte(CP_ACP, 0, u16s.c_str(), (int)u16s.length(), mem.get(), (int)len,
+					nullptr, nullptr) > 0))
+				{
+					mem[len] = '\0';
+					return mem.get();
+				}
+			}
+		}
+#endif // UNICODE_USES_WINDOWS
+
+		return "";
 	}
 
 	std::string StringUtils::WinCPToUtf8(const std::string& src) noexcept(true)
 	{
-		if (IsASCII(src)) return src;
-		return Utf16ToUtf8(WinCPToUtf16(src));
+		if (IsASCII(src) || !src.length()) return src;
+
+		auto len = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, src.c_str(), (int)src.length(), 0, 0);
+		if (len > 0)
+		{
+			auto mem = std::make_unique<wchar_t[]>((std::size_t)len + 1);
+			if (mem && (MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, src.c_str(), (int)src.length(),
+				mem.get(), len) > 0))
+				return Utf16ToUtf8(mem.get());
+		}
 	}
 
 	std::string StringUtils::ToUpperUTF8(const std::string& src) noexcept(true)

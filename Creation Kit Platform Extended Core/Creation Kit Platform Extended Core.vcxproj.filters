@@ -775,9 +775,6 @@
     <ClCompile Include="Patches\FO4\FixBadPictureInRender.cpp">
       <Filter>Patches\FO4</Filter>
     </ClCompile>
-    <ClCompile Include="..\Dependencies\DirectXTex\src\ScreenGrab11.cpp">
-      <Filter>Dependecies\DirectXTexUtils</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Shaders.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -984,9 +981,6 @@
     <Filter Include="UITheme">
       <UniqueIdentifier>{3dd4e8a5-31e0-4799-a587-64ed548b9df1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources">
-      <UniqueIdentifier>{2519805f-7da8-47c6-87cf-e22529965190}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Patches\Windows">
       <UniqueIdentifier>{e8a81898-034e-49e4-be8d-5399d7b253d2}</UniqueIdentifier>
     </Filter>
@@ -1022,9 +1016,6 @@
     </Filter>
     <Filter Include="Editor API\SF\Forms">
       <UniqueIdentifier>{8c0ce81a-d9eb-4a96-ac96-1e14a1e870cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Dependecies\DirectXTexUtils">
-      <UniqueIdentifier>{af8e5418-ce4f-476e-819d-01125a452f54}</UniqueIdentifier>
     </Filter>
     <Filter Include="Shaders">
       <UniqueIdentifier>{c437f585-ff86-4d2a-90d6-73a423bfce06}</UniqueIdentifier>
@@ -1451,9 +1442,6 @@
     </ClInclude>
     <ClInclude Include="Patches\UIThemePatchAdditional.h">
       <Filter>Patches</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="Patches\Windows\BaseWindow.h">
       <Filter>Patches\Windows</Filter>
@@ -2113,9 +2101,6 @@
     <ClInclude Include="Patches\FO4\FixBadPictureInRender.h">
       <Filter>Patches\FO4</Filter>
     </ClInclude>
-    <ClInclude Include="..\Dependencies\DirectXTex\include\ScreenGrab11.h">
-      <Filter>Dependecies\DirectXTexUtils</Filter>
-    </ClInclude>
     <ClInclude Include="Editor API\SSE\BSResources.h">
       <Filter>Editor API\SSE</Filter>
     </ClInclude>
@@ -2295,9 +2280,6 @@
     <ResourceCompile Include="Version\resource_version.rc">
       <Filter>Version</Filter>
     </ResourceCompile>
-    <ResourceCompile Include="CoreRes.rc">
-      <Filter>Resources</Filter>
-    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Version\build_version.txt">
@@ -2308,61 +2290,5 @@
     <None Include="Version\resource_version2.tmp">
       <Filter>Version</Filter>
     </None>
-    <None Include="..\Resources\FXAA_PS.cso" />
-    <None Include="..\Resources\TAA_PS.cso" />
-    <None Include="..\Resources\FXAA_VS.cso" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\Resources\check.bmp">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\check_darktheme.bmp">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\toolbar.bmp">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\types.bmp">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\about.png">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\uncheck_darktheme.bmp">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\uncheck.bmp">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\navmesh.bmp">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\aboutf4.png">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\storymanager.bmp">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\aboutsf.png">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\scripts.bmp">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\ckpe.ico" />
-    <Image Include="..\Resources\ckpe_boo.png" />
-    <Image Include="..\Resources\icon_error.bmp" />
-    <Image Include="..\Resources\icon_error.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="..\Shaders\FXAA_PS.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Shaders\FXAA_VS.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Shaders\TAA_PS.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>

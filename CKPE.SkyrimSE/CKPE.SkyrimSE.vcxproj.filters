@@ -266,6 +266,30 @@
     <ClCompile Include="Src\EditorAPI\TESFile.cpp">
       <Filter>EditorAPI</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.Facegen.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.DataWindow.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.RenderWindow.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.SkyrimSE.D3D11ImagespaceAA.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.SkyrimSE.D3D11Shaders.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\DirectXTex\src\ScreenGrab11.cpp">
+      <Filter>_depend</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AllowSaveESMandMasterESP.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AlteredFormList.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -282,6 +306,18 @@
     </Filter>
     <Filter Include="EditorAPI\Forms">
       <UniqueIdentifier>{9a6969b8-9ecf-42e8-a4bf-908134cc9142}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{960c5197-1bf1-4fcc-bcfc-69dc3522533f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{f4bf1e3e-2191-4200-bfed-3af28f577ac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Version">
+      <UniqueIdentifier>{6435abc7-0374-4088-8b89-db0e214db9b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_depend">
+      <UniqueIdentifier>{575c950c-925d-44d5-b7ad-b5267af2ab0d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -699,11 +735,71 @@
     <ClInclude Include="Include\EditorAPI\TESDataHandler.h">
       <Filter>EditorAPI</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSGraphicsRenderTargetManager.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSPointerHandleManager.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSHandleRefObject.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSPickHandler.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSClasses.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.Facegen.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.DataWindow.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.RenderWindow.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.SkyrimSE.D3D11ImagespaceAA.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.SkyrimSE.D3D11Shaders.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\DirectXTex\include\ScreenGrab11.h">
+      <Filter>_depend</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AllowSaveESMandMasterESP.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AlteredFormList.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="resource_version.rc" />
+    <ResourceCompile Include="resource.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="resource_version.rc">
+      <Filter>Version</Filter>
+    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="build_version.txt" />
+    <FxCompile Include="..\Shaders\TAA_PS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Shaders\FXAA_PS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Shaders\FXAA_VS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="build_version.txt">
+      <Filter>Version</Filter>
+    </Text>
   </ItemGroup>
 </Project>

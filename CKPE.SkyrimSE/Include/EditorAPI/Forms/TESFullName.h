@@ -7,8 +7,6 @@
 #include <EditorAPI/BGSLocalizedString.h>
 #include <EditorAPI/Forms/BaseFormComponent.h>
 
-#pragma pack(push, 1)
-
 namespace CKPE
 {
 	namespace SkyrimSE
@@ -39,5 +37,3 @@ namespace CKPE
 		}
 	}
 }
-
-#pragma pack(pop)

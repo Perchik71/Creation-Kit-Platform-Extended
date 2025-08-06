@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #pragma once
-#pragma pack(push, 1)
 
 #include <CKPE.Asserts.h>
 #include <CKPE.Common.Interface.h>
@@ -19,7 +18,7 @@ namespace CKPE
 			template<class T>
 			class BSSimpleList
 			{
-				enum : std::uint32_t
+				enum : std::int32_t
 				{
 					eListCount = -3,
 					eListEnd = -2,
@@ -464,5 +463,3 @@ namespace CKPE
 		}
 	}
 }
-
-#pragma pack(pop)

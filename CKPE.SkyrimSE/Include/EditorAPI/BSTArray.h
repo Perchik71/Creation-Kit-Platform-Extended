@@ -3,10 +3,10 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #pragma once
-#pragma pack(push, 1)
 
 #include <limits.h>
 #include <memory.h>
+#include <CKPE.Asserts.h>
 #include <EditorAPI/NiAPI/NiMemoryManager.h>
 
 namespace CKPE
@@ -130,12 +130,12 @@ namespace CKPE
 			public:
 				[[nodiscard]] reference at(const size_type Pos) noexcept(true)
 				{
-					AssertMsg(Pos >= 0 && Pos < QSize(), "Exceeded array bounds");
+					CKPE_ASSERT_MSG(Pos >= 0 && Pos < QSize(), "Exceeded array bounds");
 					return (this->_Myfirst()[Pos]);
 				}
 				[[nodiscard]] const_reference at(const size_type Pos) const noexcept(true)
 				{
-					AssertMsg(Pos >= 0 && Pos < QSize(), "Exceeded array bounds");
+					CKPE_ASSERT_MSG(Pos >= 0 && Pos < QSize(), "Exceeded array bounds");
 					return (this->_const_Myfirst()[Pos]);
 				}
 			public:
@@ -276,5 +276,3 @@ namespace CKPE
 		}
 	}
 }
-
-#pragma pack(pop)

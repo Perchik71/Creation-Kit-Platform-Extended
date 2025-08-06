@@ -227,7 +227,13 @@ namespace CKPE
 		DoChange();
 	}
 
-	void Bitmap::Create(THandle hinst, std::uint32_t dwResId, const std::wstring& name) noexcept(true)
+	void Bitmap::Create(THandle hinst, std::uint32_t dwResId) noexcept(true)
+	{
+		m_fHandle = LoadBitmapW((HINSTANCE)hinst, MAKEINTRESOURCEW(dwResId));
+		DoChange();
+	}
+
+	void Bitmap::Create(THandle hinst, std::uint32_t dwResId, const wchar_t* name) noexcept(true)
 	{
 		m_fHandle = GDIPlus::LoadImageFromResource(hinst, dwResId, name);
 		DoChange();
@@ -239,7 +245,15 @@ namespace CKPE
 		DoChange();
 	}
 
-	bool Bitmap::LoadFromResource(THandle hinst, std::uint32_t dwResId, const std::wstring& name) noexcept(true)
+	bool Bitmap::LoadFromResource(THandle hinst, std::uint32_t dwResId) noexcept(true)
+	{
+		Release();
+		m_fHandle = LoadBitmapW((HINSTANCE)hinst, MAKEINTRESOURCEW(dwResId));
+		DoChange();
+		return true;
+	}
+
+	bool Bitmap::LoadFromResource(THandle hinst, std::uint32_t dwResId, const wchar_t* name) noexcept(true)
 	{
 		Release();
 		m_fHandle = GDIPlus::LoadImageFromResource(hinst, dwResId, name);
@@ -295,7 +309,12 @@ namespace CKPE
 		Create(fname); 
 	}
 
-	Bitmap::Bitmap(THandle hinst, std::uint32_t dwResId, const std::wstring& name) noexcept(true) : ObjectGUI(1), FileStreamIntf()
+	Bitmap::Bitmap(THandle hinst, std::uint32_t dwResId) noexcept(true) : ObjectGUI(1), FileStreamIntf()
+	{
+		Create(hinst, dwResId);
+	}
+
+	Bitmap::Bitmap(THandle hinst, std::uint32_t dwResId, const wchar_t* name) noexcept(true) : ObjectGUI(1), FileStreamIntf()
 	{
 		Create(hinst, dwResId, name);
 	}

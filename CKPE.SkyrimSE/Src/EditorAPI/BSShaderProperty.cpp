@@ -122,7 +122,7 @@ namespace CKPE
 				return &kDebugRenderPassList;
 			}
 
-			uint64_t BSShaderProperty::QFlags() const
+			std::uint64_t BSShaderProperty::QFlags() const
 			{
 				return ulFlags;
 			}

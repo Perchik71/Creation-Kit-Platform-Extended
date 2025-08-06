@@ -2,10 +2,14 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <Windows.h>
+#include <windows.h>
+#include <shlobj_core.h>
 #include <dxgi.h>
 #include <d3d11_2.h>
 #include <xbyak.h>
+#include <imgui.h>
+#include <backends/imgui_impl_win32.h>
+#include <backends/imgui_impl_dx11.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Detours.h>
 #include <CKPE.Patterns.h>
@@ -14,6 +18,7 @@
 #include <CKPE.HardwareInfo.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.D3D11Proxy.h>
+#include <CKPE.SkyrimSE.D3D11Shaders.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
 #include <Patches/CKPE.SkyrimSE.Patch.D3D11.h>
 
@@ -29,6 +34,15 @@ namespace CKPE
 			ID3D11Device* pointer_d3d11DeviceIntf = nullptr;
 			IDXGISwapChain* pointer_dxgiSwapChain = nullptr;
 			ID3D11DeviceContext* pointer_d3d11DeviceContext = nullptr;
+			D3D11ShaderEngine* pointer_D3D11ShaderEngine = nullptr;
+			std::uintptr_t gGlobAddrDeviceContext = 0;
+			ImFont* imguiFonts[3];
+
+			static const ImWchar GlobalFontRanges[] =
+			{
+				0x0020, 0xFFFF, // ALL
+				0,
+			};
 
 			static HRESULT WINAPI HKCreateDXGIFactory(REFIID riid, void** ppFactory) noexcept(true)
 			{
@@ -190,32 +204,32 @@ namespace CKPE
 				(*ppDevice)->SetExceptionMode(D3D11_RAISE_FLAG_DRIVER_INTERNAL_ERROR);
 				pointer_dxgiSwapChain = *ppSwapChain;
 
-				//IMGUI_CHECKVERSION();
-				//ImGui::CreateContext();
+				IMGUI_CHECKVERSION();
+				ImGui::CreateContext();
 
-				//ImGuiIO& io = ImGui::GetIO();
-				//io.ConfigFlags |= ImGuiConfigFlags_NoKeyboard;
-				//io.ConfigFlags |= ImGuiConfigFlags_NoMouse;
-				//io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;		// Hide cursor
+				ImGuiIO& io = ImGui::GetIO();
+				io.ConfigFlags |= ImGuiConfigFlags_NoKeyboard;
+				io.ConfigFlags |= ImGuiConfigFlags_NoMouse;
+				io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;		// Hide cursor
 
-				//io.Fonts->AddFontDefault();
+				io.Fonts->AddFontDefault();
 
-				//char path[MAX_PATH];
-				//if (FAILED(SHGetFolderPath(NULL, CSIDL_FONTS, NULL, SHGFP_TYPE_CURRENT, path)))
-				//	return E_FAIL;
-				//String ps(path);
+				char path[MAX_PATH];
+				if (FAILED(SHGetFolderPath(NULL, CSIDL_FONTS, NULL, SHGFP_TYPE_CURRENT, path)))
+					return E_FAIL;
+				std::string ps(path);
 
-				//imguiFonts[0] = io.Fonts->AddFontFromFileTTF((ps + "\\consola.ttf").c_str(), 12.0f, nullptr, GlobalFontRanges);
-				//imguiFonts[1] = io.Fonts->AddFontFromFileTTF((ps + "\\consolab.ttf").c_str(), 12.0f, nullptr, GlobalFontRanges);
-				//imguiFonts[2] = io.Fonts->AddFontFromFileTTF((ps + "\\consola.ttf").c_str(), 10.0f, nullptr, GlobalFontRanges);
-				//if (!imguiFonts[0] || !imguiFonts[1] || !imguiFonts[2])
-				//	return E_FAIL;
+				imguiFonts[0] = io.Fonts->AddFontFromFileTTF((ps + "\\consola.ttf").c_str(), 12.0f, nullptr, GlobalFontRanges);
+				imguiFonts[1] = io.Fonts->AddFontFromFileTTF((ps + "\\consolab.ttf").c_str(), 12.0f, nullptr, GlobalFontRanges);
+				imguiFonts[2] = io.Fonts->AddFontFromFileTTF((ps + "\\consola.ttf").c_str(), 10.0f, nullptr, GlobalFontRanges);
+				if (!imguiFonts[0] || !imguiFonts[1] || !imguiFonts[2])
+					return E_FAIL;
 
-				//ImGui_ImplWin32_Init(pSwapChainDesc->OutputWindow);
-				//ImGui_ImplDX11_Init(*ppDevice, *ppImmediateContext);
+				ImGui_ImplWin32_Init(pSwapChainDesc->OutputWindow);
+				ImGui_ImplDX11_Init(*ppDevice, *ppImmediateContext);
 
-				//GlobalD3D11ShaderEngine = new D3D11ShaderEngine(*ppDevice, *ppImmediateContext);
-				//gGlobAddrDeviceContext = (uintptr_t)ppImmediateContext;
+				pointer_D3D11ShaderEngine = new D3D11ShaderEngine(*ppDevice, *ppImmediateContext);
+				gGlobAddrDeviceContext = (std::uintptr_t)ppImmediateContext;
 
 				return hr;
 			}
@@ -223,6 +237,13 @@ namespace CKPE
 			D3D11::D3D11() : Common::Patch()
 			{
 				SetName("D3D11 Patch");
+			}
+
+			D3D11::~D3D11()
+			{
+				ImGui_ImplDX11_Shutdown();
+				ImGui_ImplWin32_Shutdown();
+				ImGui::DestroyContext();
 			}
 
 			bool D3D11::HasOption() const noexcept(true)
@@ -294,15 +315,8 @@ namespace CKPE
 
 				Detours::DetourIAT(base, "dxgi.dll", "CreateDXGIFactory", (std::uintptr_t)HKCreateDXGIFactory);
 				Detours::DetourIAT(base, "d3d11.dll", "D3D11CreateDeviceAndSwapChain", (std::uintptr_t)HKD3D11CreateDeviceAndSwapChain);
-
+				
 				return true;
-			}
-
-			void D3D11::sub() noexcept(true)
-			{
-				CKPE_ASSERT_MSG(false,
-					"Creation Kit renderer initialization failed because your graphics card doesn't support D3D11 Feature Level 11 (FL11_0).\n"
-					"Updating your drivers may fix this.");
 			}
 		}
 	}

@@ -6,8 +6,6 @@
 
 #include "BGSImpactDataSet.h"
 
-#pragma pack(push, 1)
-
 namespace CKPE
 {
 	namespace SkyrimSE
@@ -31,32 +29,29 @@ namespace CKPE
 				public:
 					virtual ~BGSMaterialType() = default;
 
-					inline BGSMaterialType* GetParent() const { return _Parent; }
-					inline const char* GetName() const { return _Name; }
-					inline NiAPI::NiColor GetHavokDisplayColor() const { return _HavokDisplayColor; }
-					inline void SetHavokDisplayColor(const NiAPI::NiColor& v) { _HavokDisplayColor = v; }
-					inline void SetHavokDisplayColorRGB(uint8_t r, uint8_t g, uint8_t b)
-					{
-						_HavokDisplayColor = { r / 255.f , g / 255.f, b / 255.f };
-					}
-					inline float GetBouyancy() const { return _Bouyancy; }
-					inline void SetBouyancy(float v) { _Bouyancy = v; }
-
-					inline bool HasStairMaterial() const { return (_MatFlags & mtfStairMaterial) == mtfStairMaterial; }
-					inline bool HasArrowStick() const { return (_MatFlags & mtfArrowStick) == mtfArrowStick; }
-					inline void SetStairMaterial(bool v)
+					inline BGSMaterialType* GetParent() const noexcept(true) { return _Parent; }
+					inline const char* GetName() const noexcept(true) { return _Name; }
+					inline NiAPI::NiColor GetHavokDisplayColor() const noexcept(true) { return _HavokDisplayColor; }
+					inline void SetHavokDisplayColor(const NiAPI::NiColor& v) noexcept(true) { _HavokDisplayColor = v; }
+					inline void SetHavokDisplayColorRGB(uint8_t r, uint8_t g, uint8_t b) noexcept(true)
+					{ _HavokDisplayColor = { r / 255.f , g / 255.f, b / 255.f }; }
+					inline float GetBouyancy() const noexcept(true) { return _Bouyancy; }
+					inline void SetBouyancy(float v) noexcept(true) { _Bouyancy = v; }
+					inline bool HasStairMaterial() const noexcept(true) { return (_MatFlags & mtfStairMaterial) == mtfStairMaterial; }
+					inline bool HasArrowStick() const noexcept(true) { return (_MatFlags & mtfArrowStick) == mtfArrowStick; }
+					inline void SetStairMaterial(bool v) noexcept(true)
 					{
 						_MatFlags &= ~mtfStairMaterial;
 						if (v)
 							_MatFlags |= mtfStairMaterial;
 					}
-					inline void SetArrowStick(bool v)
+					inline void SetArrowStick(bool v) noexcept(true)
 					{
 						_MatFlags &= ~mtfArrowStick;
 						if (v)
 							_MatFlags |= mtfArrowStick;
 					}
-					inline BGSImpactDataSet* GetImpactDataSet() const { return _ImpactDataSet; }
+					inline BGSImpactDataSet* GetImpactDataSet() const noexcept(true) { return _ImpactDataSet; }
 
 					CKPE_READ_PROPERTY(GetParent) BGSMaterialType* Parent;
 					CKPE_READ_PROPERTY(GetName) const char* Name;
@@ -77,5 +72,3 @@ namespace CKPE
 		}
 	}
 }
-
-#pragma pack(pop)

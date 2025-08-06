@@ -146,6 +146,9 @@
     <ClCompile Include="Src\CKPE.Common.D3D11Proxy.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.PatchBaseWindow.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -156,6 +159,12 @@
     </Filter>
     <Filter Include="_depend">
       <UniqueIdentifier>{2129f330-812a-45a4-9173-c9bc8505f039}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{b256e488-c228-4b2c-8937-1cb104229632}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Version">
+      <UniqueIdentifier>{fa3f8619-5e8e-4310-9b15-934db6924ddd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -285,7 +294,6 @@
     <ClInclude Include="Include\CKPE.Common.AboutWindow.h">
       <Filter>API</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Include\CKPE.Common.Registry.h">
       <Filter>API</Filter>
     </ClInclude>
@@ -310,12 +318,76 @@
     <ClInclude Include="Include\CKPE.Common.D3D11Proxy.h">
       <Filter>API</Filter>
     </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.PatchBaseWindow.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="resource_version.rc" />
-    <ResourceCompile Include="resource.rc" />
+    <ResourceCompile Include="resource.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="resource_version.rc">
+      <Filter>Version</Filter>
+    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="build_version.txt" />
+    <None Include="scripts.ps1">
+      <Filter>Version</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resources\about.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\aboutf4.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\aboutsf.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\check.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\check_darktheme.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\navmesh.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\scripts.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\storymanager.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\types.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\uncheck.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\uncheck_darktheme.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\icon_error.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\icon_error.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\ckpe_boo.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\ckpe.ico">
+      <Filter>Resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="build_version.txt">
+      <Filter>Version</Filter>
+    </Text>
   </ItemGroup>
 </Project>

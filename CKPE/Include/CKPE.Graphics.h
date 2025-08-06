@@ -57,11 +57,13 @@ namespace CKPE
 	protected:
 		void Create(std::int32_t width, std::int32_t height, std::int32_t bpp);
 		void Create(const std::wstring& fname) noexcept(true);
-		void Create(THandle hinst, std::uint32_t dwResId, const std::wstring& name) noexcept(true);
+		void Create(THandle hinst, std::uint32_t dwResId) noexcept(true);
+		void Create(THandle hinst, std::uint32_t dwResId, const wchar_t* name) noexcept(true);
 	public:
 		virtual void FreeImage() noexcept(true);
 		virtual bool Empty() const noexcept(true) { return !m_fHandle; };
-		virtual bool LoadFromResource(THandle hinst, std::uint32_t dwResId, const std::wstring& name) noexcept(true);
+		virtual bool LoadFromResource(THandle hinst, std::uint32_t dwResId) noexcept(true);
+		virtual bool LoadFromResource(THandle hinst, std::uint32_t dwResId, const wchar_t* name) noexcept(true);
 		virtual bool LoadFromStream(Stream& stream) noexcept(true);
 		virtual bool SaveToStream(Stream& stream) const noexcept(true);
 		virtual void Assign(const Bitmap& bitmap) noexcept(true);
@@ -72,7 +74,8 @@ namespace CKPE
 		Bitmap(THandle bitmap) noexcept(true);
 		Bitmap(std::int32_t width, std::int32_t height, std::int32_t bpp);
 		Bitmap(const std::wstring& fname) noexcept(true);
-		Bitmap(THandle hinst, std::uint32_t dwResId, const std::wstring& name) noexcept(true);
+		Bitmap(THandle hinst, std::uint32_t dwResId) noexcept(true);
+		Bitmap(THandle hinst, std::uint32_t dwResId, const wchar_t* name) noexcept(true);
 		Bitmap(const Bitmap& bitmap) noexcept(true);
 	};
 

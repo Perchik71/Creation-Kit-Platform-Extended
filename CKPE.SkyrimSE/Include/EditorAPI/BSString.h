@@ -8,8 +8,6 @@
 #include <climits>
 #include <string>
 
-#pragma pack(push, 1)
-
 namespace CKPE
 {
 	namespace SkyrimSE
@@ -173,5 +171,3 @@ namespace CKPE
 		}
 	}
 }
-
-#pragma pack(pop)

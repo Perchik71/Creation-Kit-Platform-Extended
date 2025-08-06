@@ -4,8 +4,6 @@
 
 #pragma once
 
-#pragma pack(push, 8)
-
 #include <EditorAPI/NiAPI/NiMemoryManager.h>
 
 namespace CKPE
@@ -94,5 +92,3 @@ namespace CKPE
 		}
 	}
 }
-
-#pragma pack(pop)

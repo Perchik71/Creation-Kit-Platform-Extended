@@ -121,7 +121,7 @@ namespace CKPE
 				if (Entry->FormId != 0)
 					BGSPerkRankArraySub4(ArrayHandle, Entry);
 				else
-					Console::LogWarning(13, "Null perk found while loading a PerkRankArray. Entry will be discarded.");
+					Console::LogWarning(Console::MASTERFILE, "Null perk found while loading a PerkRankArray. Entry will be discarded.");
 			}
 		}
 	}

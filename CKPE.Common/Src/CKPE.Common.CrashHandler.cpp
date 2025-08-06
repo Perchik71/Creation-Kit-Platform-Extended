@@ -84,7 +84,7 @@ namespace CKPE
 
 			struct AnalyzeInfo
 			{
-				AnalyzeItemType Type;
+				AnalyzeItemType Type{ aitUnknown };
 				std::string Text;
 				std::string Additional;
 			};

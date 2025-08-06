@@ -7,8 +7,6 @@
 #include <EditorAPI/BSFixedString.h>
 #include "NiObject.h"
 
-#pragma pack(push, 8)
-
 namespace CKPE
 {
 	namespace SkyrimSE
@@ -46,5 +44,3 @@ namespace CKPE
 		}
 	}
 }
-
-#pragma pack(pop)

@@ -11,8 +11,6 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
-			using namespace NiAPI;
-
 			class BSRenderPass;
 
 			class BSShaderProperty : public NiAPI::NiShadeProperty
@@ -21,7 +19,6 @@ namespace CKPE
 				static const std::uint32_t UniqueFlagIndexes[15];
 				static const char* UniqueFlagNames[15];
 				static const char* FlagNames[64];
-
 			public:
 				enum EShaderPropertyFlag
 				{

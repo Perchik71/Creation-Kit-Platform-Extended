@@ -33,7 +33,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\toml11\include;$(SolutionDir)Dependencies\vmm\include;$(SolutionDir)Dependencies\jDialogs\include;$(SolutionDir)Dependencies\mzip\src;$(SolutionDir)CKPE.Common;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\toml11\include;$(SolutionDir)Dependencies\vmm\include;$(SolutionDir)Dependencies\jDialogs\include;$(SolutionDir)Dependencies\mzip\src;$(SolutionDir)CKPE.Common;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -53,7 +53,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <CallingConvention>StdCall</CallingConvention>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
-      <DisableSpecificWarnings>26478;26819;4996;4244;4005;6387;6031</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26478;26819;4996;4244;4005;6387;6031;26495</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -61,8 +61,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CKPE.lib;Shell32.lib;Toml.lib;vmm.lib;libzydis.lib;comctl32.lib;msimg32.lib;uxtheme.lib;gdiplus.lib;shlwapi.lib;dwmapi.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CKPE.lib;Shell32.lib;Toml.lib;vmm.lib;libzydis.lib;comctl32.lib;msimg32.lib;uxtheme.lib;gdiplus.lib;shlwapi.lib;dwmapi.lib;dbghelp.lib;libzip.lib;dxgi.lib;d3d11.lib;DirectXTex.lib;d3dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <StackCommitSize>
       </StackCommitSize>
     </Link>
@@ -85,6 +85,7 @@
     <ClCompile Include="Src\CKPE.Common.MemoryManager.cpp" />
     <ClCompile Include="Src\CKPE.Common.ModernTheme.cpp" />
     <ClCompile Include="Src\CKPE.Common.Patch.cpp" />
+    <ClCompile Include="Src\CKPE.Common.PatchBaseWindow.cpp" />
     <ClCompile Include="Src\CKPE.Common.PatchManager.cpp" />
     <ClCompile Include="Src\CKPE.Common.Registry.cpp" />
     <ClCompile Include="Src\CKPE.Common.Relocator.cpp" />
@@ -124,6 +125,7 @@
   <ItemGroup>
     <ClInclude Include="..\Dependencies\jDialogs\include\jdialogs.h" />
     <ClInclude Include="Include\CKPE.Common.AboutWindow.h" />
+    <ClInclude Include="Include\CKPE.Common.PatchBaseWindow.h" />
     <ClInclude Include="Include\CKPE.Common.ClassicTheme.h" />
     <ClInclude Include="Include\CKPE.Common.Common.h" />
     <ClInclude Include="Include\CKPE.Common.CrashHandler.h" />
@@ -180,6 +182,26 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="build_version.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scripts.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resources\about.png" />
+    <Image Include="..\Resources\aboutf4.png" />
+    <Image Include="..\Resources\aboutsf.png" />
+    <Image Include="..\Resources\check.bmp" />
+    <Image Include="..\Resources\check_darktheme.bmp" />
+    <Image Include="..\Resources\ckpe.ico" />
+    <Image Include="..\Resources\ckpe_boo.png" />
+    <Image Include="..\Resources\icon_error.bmp" />
+    <Image Include="..\Resources\icon_error.png" />
+    <Image Include="..\Resources\navmesh.bmp" />
+    <Image Include="..\Resources\scripts.bmp" />
+    <Image Include="..\Resources\storymanager.bmp" />
+    <Image Include="..\Resources\types.bmp" />
+    <Image Include="..\Resources\uncheck.bmp" />
+    <Image Include="..\Resources\uncheck_darktheme.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

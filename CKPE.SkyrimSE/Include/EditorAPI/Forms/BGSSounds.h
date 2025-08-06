@@ -9,8 +9,6 @@
 #include "TESForm.h"
 #include "TESFullName.h"
 
-#pragma pack(push, 1)
-
 namespace CKPE
 {
 	namespace SkyrimSE
@@ -198,8 +196,9 @@ namespace CKPE
 				public:
 					virtual ~BSISoundDescriptor() = default;
 
-					inline BGSStandardSoundDef* GetSound() const { return _sound; }
+					[[nodiscard]] inline BGSStandardSoundDef* GetSound() const noexcept(true) { return _sound; }
 				};
+				static_assert(sizeof(BSISoundDescriptor) == 0x18);
 
 				// size 0x40
 				// func 101
@@ -215,11 +214,7 @@ namespace CKPE
 					virtual ~BGSSoundDescriptorForm() = default;
 				};
 				static_assert(sizeof(BGSSoundDescriptorForm) == 0x40);
-
-				
 			}
 		}
 	}
 }
-
-#pragma pack(pop)

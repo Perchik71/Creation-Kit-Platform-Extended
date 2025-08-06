@@ -75,7 +75,7 @@ namespace CKPE
 				std::int64_t sourceNodeParent = *(std::int64_t*)(SourceNode + 0x30);
 
 				if (*(const char**)(SourceNode + 0x40) && !sourceNodeName && sourceNodeParent)
-					Console::LogWarning(10, "Cloning a child node with collision and no name present. Parent is \"%s\".",
+					Console::LogWarning(Console::MODELS, "Cloning a child node with collision and no name present. Parent is \"%s\".",
 						*(const char**)(sourceNodeParent + 0x10));
 
 				NiCollisionObjectClonedWarningSub(SourceNode, DestNode, CloningProcess);

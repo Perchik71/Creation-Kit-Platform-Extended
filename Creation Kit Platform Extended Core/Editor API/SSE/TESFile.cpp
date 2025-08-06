@@ -103,7 +103,7 @@ namespace CreationKitPlatformExtended
 				return form;
 			}
 
-			bool TESFile::IsActiveFileBlacklist()
+			bool TESFile::IsActiveFileBlacklist() noexcept(true)
 			{
 				if ((m_RecordFlags & FILE_RECORD_ESM) == FILE_RECORD_ESM)
 				{

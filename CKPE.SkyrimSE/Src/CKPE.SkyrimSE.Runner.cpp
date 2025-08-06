@@ -12,6 +12,8 @@
 #include <Patches/CKPE.SkyrimSE.Patch.AllowCreateBitArray.h>
 #include <Patches/CKPE.SkyrimSE.Patch.AllowMultipleWindowAndMaster.h>
 #include <Patches/CKPE.SkyrimSE.Patch.AllowPlayerKnowsCondition.h>
+#include <Patches/CKPE.SkyrimSE.Patch.AllowSaveESMandMasterESP.h>
+#include <Patches/CKPE.SkyrimSE.Patch.AlteredFormList.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BGSPerkRankArray.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BNetConvertUnicodeString.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BrokenTerrainEditDlg.h>
@@ -28,8 +30,10 @@
 #include <Patches/CKPE.SkyrimSE.Patch.CrashNullptrFaceGen.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashUsingMore16NPCForFaceGen.h>
 #include <Patches/CKPE.SkyrimSE.Patch.D3D11.h>
+#include <Patches/CKPE.SkyrimSE.Patch.DataWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.DisableAssertion.h>
 #include <Patches/CKPE.SkyrimSE.Patch.EnableGameButtonToVC.h>
+#include <Patches/CKPE.SkyrimSE.Patch.Facegen.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixActorDlg.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixBGSEntryPointFunctionDataTwoValue.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixBrightLightColor.h>
@@ -70,6 +74,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.ReEnableLandShadows.h>
 #include <Patches/CKPE.SkyrimSE.Patch.RefLinkGeometryHangWorkaround.h>
 #include <Patches/CKPE.SkyrimSE.Patch.RenameCreationKitApp.h>
+#include <Patches/CKPE.SkyrimSE.Patch.RenderWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.RenderWindow60FPS.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ResponseIgnoreMax.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ShowReloadShadersAlways.h>
@@ -95,6 +100,8 @@ namespace CKPE
 			mgr->Register(new Patch::AllowCreateBitArray);
 			mgr->Register(new Patch::AllowMultipleWindowAndMaster);
 			mgr->Register(new Patch::AllowPlayerKnowsCondition);
+			mgr->Register(new Patch::AllowSaveESMandMasterESP);
+			mgr->Register(new Patch::AlteredFormList);
 			mgr->Register(new Patch::BGSPerkRankArray);
 			mgr->Register(new Patch::BNetConvertUnicodeString);
 			mgr->Register(new Patch::BrokenTerrainEditDlg);
@@ -111,8 +118,10 @@ namespace CKPE
 			mgr->Register(new Patch::CrashNullptrFaceGen);
 			mgr->Register(new Patch::CrashUsingMore16NPCForFaceGen);
 			mgr->Register(new Patch::D3D11);
+			mgr->Register(new Patch::DataWindow);
 			mgr->Register(new Patch::DisableAssertion);
 			mgr->Register(new Patch::EnableGameButtonToVC);
+			mgr->Register(new Patch::Facegen);
 			mgr->Register(new Patch::FixActorDlg);
 			mgr->Register(new Patch::FixBGSEntryPointFunctionDataTwoValue);
 			mgr->Register(new Patch::FixBrightLightColor);
@@ -153,6 +162,7 @@ namespace CKPE
 			mgr->Register(new Patch::ReEnableLandShadows);
 			mgr->Register(new Patch::RefLinkGeometryHangWorkaround);
 			mgr->Register(new Patch::RenameCreationKitApp);
+			mgr->Register(new Patch::RenderWindow);
 			mgr->Register(new Patch::RenderWindow60FPS);
 			mgr->Register(new Patch::ResponseIgnoreMax);
 			mgr->Register(new Patch::ShowReloadShadersAlways);

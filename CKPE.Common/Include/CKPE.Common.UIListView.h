@@ -28,8 +28,8 @@ namespace CKPE
 				CKPE_COMMON_API void OnCustomDrawItemPlugins(HWND hWindow, LPDRAWITEMSTRUCT lpDrawItem) noexcept(true);
 				CKPE_COMMON_API LRESULT OnCustomDraw(HWND hWindow, LPNMLVCUSTOMDRAW lpListView) noexcept(true);
 
-				CKPE_COMMON_API void InstallCustomDrawHandler(OnCustomDrawHandler handler, 
-					OnCustomDrawPluginsHandler plugins_handler) noexcept(true);
+				CKPE_COMMON_API void InstallCustomDrawHandler(OnCustomDrawHandler handler) noexcept(true);
+				CKPE_COMMON_API void InstallCustomDrawPluginsHandler(OnCustomDrawPluginsHandler handler) noexcept(true);
 			}
 		}
 	}

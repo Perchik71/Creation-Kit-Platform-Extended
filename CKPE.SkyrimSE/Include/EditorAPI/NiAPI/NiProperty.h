@@ -5,8 +5,6 @@
 #include <CKPE.Utils.h>
 #include <EditorAPI/NiAPI/NiObjectNET.h>
 
-#pragma pack(push, 4)
-
 namespace CKPE
 {
 	namespace SkyrimSE
@@ -90,5 +88,3 @@ namespace CKPE
 		}
 	}
 }
-
-#pragma pack(pop)

@@ -21,13 +21,12 @@ namespace CKPE
 				virtual bool DoQuery() const noexcept(true);
 			public:
 				D3D11();
+				virtual ~D3D11();
 
 				virtual bool HasOption() const noexcept(true);
 				virtual const char* GetOptionName() const noexcept(true);
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
-
-				static void sub() noexcept(true);
 			};
 		}
 	}

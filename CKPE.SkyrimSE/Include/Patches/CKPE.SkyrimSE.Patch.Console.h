@@ -21,6 +21,40 @@ namespace CKPE
 				virtual bool DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true);
 				virtual bool DoQuery() const noexcept(true);
 			public:
+				enum MsgType : std::int32_t
+				{
+					DEFAULT,
+					COMBAT,
+					ANIMATION,
+					AI,
+					SCRIPTS,
+					SAVELOAD,
+					DIALOGUE,
+					QUESTS,
+					PACKAGES,
+					EDITOR,
+					MODELS,
+					TEXTURES,
+					PLUGINS,
+					MASTERFILE,
+					FORMS,
+					MAGIC,
+					SHADERS,
+					RENDERING,
+					PATHFINDING,
+					MENUS,
+					AUDIO,
+					CELLS,
+					HAVOK,
+					FACEGEN,
+					WATER,
+					INGAME,
+					MEMORY,
+					PERFORMANCE,
+					JOBS,
+					SYSTEM
+				};
+
 				Console();
 
 				virtual bool HasOption() const noexcept(true);
@@ -30,8 +64,8 @@ namespace CKPE
 
 				static void Log(const char* Format, ...) noexcept(true);
 				static void LogVa(const char* Format, va_list Va) noexcept(true);
-				static void LogWarning(int Type, const char* Format, ...) noexcept(true);
-				static void LogWarningVa(int Type, const char* Format, va_list Va) noexcept(true);
+				static void LogWarning(MsgType Type, const char* Format, ...) noexcept(true);
+				static void LogWarningVa(MsgType Type, const char* Format, va_list Va) noexcept(true);
 				static void LogWarningUnknown1(const char* Format, ...) noexcept(true);
 				static void LogWarningUnknown2(__int64 Unused, const char* Format, ...) noexcept(true);
 				static void LogAssert(const char* File, int Line, const char* Message, ...) noexcept(true);

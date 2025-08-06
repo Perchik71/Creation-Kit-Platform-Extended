@@ -27,17 +27,17 @@ namespace CKPE
 				public:
 					virtual ~BGSVoiceType() = default;
 				public:
-					inline bool HasMale() const { return !HasWoman(); }
-					inline bool HasWoman() const { return (flag & Woman) == Woman; }
-					inline bool HasAllowDefaultDialogue() const { return (flag & 1) == 1; }
+					inline bool HasMale() const noexcept(true) { return !HasWoman(); }
+					inline bool HasWoman() const noexcept(true) { return (flag & Woman) == Woman; }
+					inline bool HasAllowDefaultDialogue() const noexcept(true) { return (flag & 1) == 1; }
 
-					inline void SetGender(Gender NewGender)
+					inline void SetGender(Gender NewGender) noexcept(true)
 					{
 						flag = (HasAllowDefaultDialogue() ? 1 : 0) +
 							((NewGender == Woman) ? (uint8_t)Woman : (uint8_t)Male);
 					}
 
-					inline void SetAllowDefaultDialogue(bool v) { flag = (flag & 1) + (v ? 1 : 0); }
+					inline void SetAllowDefaultDialogue(bool v) noexcept(true) { flag = (flag & 1) + (v ? 1 : 0); }
 				private:
 					uint8_t flag;
 					char pad29[0x7];

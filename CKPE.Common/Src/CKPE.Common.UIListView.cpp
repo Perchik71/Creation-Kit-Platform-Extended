@@ -194,10 +194,14 @@ namespace CKPE
 					}
 				}
 
-				CKPE_COMMON_API void InstallCustomDrawHandler(OnCustomDrawHandler handler,
-					OnCustomDrawPluginsHandler plugins_handler) noexcept(true)
+				CKPE_COMMON_API void InstallCustomDrawHandler(OnCustomDrawHandler handler) noexcept(true)
 				{
 					sCustomDrawHandler = handler;
+				}
+
+				CKPE_COMMON_API void InstallCustomDrawPluginsHandler(OnCustomDrawPluginsHandler handler) noexcept(true)
+				{
+					sCustomDrawPluginsHandler = handler;
 				}
 			}
 		}

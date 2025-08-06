@@ -28,13 +28,13 @@ namespace CKPE
 					NiPoint3 Position;
 				};
 			public:
-				enum ViewModeT : uint32_t
+				enum ViewModeT : std::uint32_t
 				{
 					Perspective = 0,
 					Orthographic
 				};
 
-				enum CameraModeT : uint32_t
+				enum CameraModeT : std::uint32_t
 				{
 					Front = 0,
 					Left,

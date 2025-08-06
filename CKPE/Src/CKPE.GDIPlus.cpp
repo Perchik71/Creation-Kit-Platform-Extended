@@ -150,7 +150,7 @@ namespace CKPE
 	}
 
 	THandle GDIPlus::LoadImageFromResource(THandle hInst, std::uint32_t dwResId,
-		const std::wstring& ResType) noexcept(true)
+		const wchar_t* ResType) noexcept(true)
 	{
 		// https://code911.top/howto/c-gdi-how-to-get-and-load-image-from-resource
 
@@ -160,7 +160,7 @@ namespace CKPE
 		Gdiplus::Bitmap* pBmp = nullptr;
 		HGLOBAL hGlobal = nullptr;
 		// get the handle to the resource
-		HRSRC hrsrc = FindResourceW((HINSTANCE)hInst, MAKEINTRESOURCEW(dwResId), ResType.c_str());
+		HRSRC hrsrc = FindResourceW((HINSTANCE)hInst, MAKEINTRESOURCEW(dwResId), ResType);
 		if (hrsrc)
 		{
 			DWORD dwResourceSize = SizeofResource((HINSTANCE)hInst, hrsrc);

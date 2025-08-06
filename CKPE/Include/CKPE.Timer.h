@@ -22,6 +22,6 @@ namespace CKPE
 
 		virtual void Start() noexcept(true);
 		virtual void Reset() noexcept(true);
-		virtual double Get() const noexcept(true);
+		[[nodiscard]] virtual double Get() const noexcept(true);
 	};
 }

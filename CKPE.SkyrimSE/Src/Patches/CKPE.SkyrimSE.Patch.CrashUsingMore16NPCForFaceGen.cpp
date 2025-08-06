@@ -75,7 +75,7 @@ namespace CKPE
 			{
 				const char* texName = CrashUsingMore16NPCForFaceGenSub(*(__int64*)Texture);
 
-				Console::LogWarning(23, "Exceeded limit of 16 tint masks. Skipping texture: %s", texName);
+				Console::LogWarning(Console::FACEGEN, "Exceeded limit of 16 tint masks. Skipping texture: %s", texName);
 			}
 		}
 	}

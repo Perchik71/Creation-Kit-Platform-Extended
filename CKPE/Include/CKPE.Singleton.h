@@ -5,42 +5,50 @@
 #pragma once
 
 #include <cstdint>
-#include "CKPE.Common.h"
+#include <CKPE.Asserts.h>
 
 namespace CKPE
 {
 	template<typename _Ty>
-	class Singleton
+	class ISingleton
 	{
 	public:
-		Singleton() : _singleton(nullptr)
-		{}
-		Singleton(const Singleton& S) : _singleton(S._singleton)
-		{}
+		ISingleton() noexcept(true) : _singleton(nullptr) {}
+		ISingleton(const _Ty* S) noexcept(true) : _singleton(nullptr) 
+		{
+			static _Ty* _S = const_cast<_Ty*>(S);
+			_singleton = (_Ty**)&_S;
+		}
+		ISingleton(const ISingleton& S) noexcept(true) : _singleton(S._singleton) {}
 
-		inline Singleton& operator=(const Singleton& S)
+		inline ISingleton& operator=(const ISingleton& S) noexcept(true)
 		{
 			_singleton = S._singleton;
 			return *this;
 		}
 
-		inline Singleton& operator=(const _Ty** S)
+		inline ISingleton& operator=(const _Ty** S) noexcept(true)
 		{
 			_singleton = S;
 			return *this;
 		}
 
-		inline Singleton& operator=(const std::uintptr_t addr)
+		inline ISingleton& operator=(const std::uintptr_t addr) noexcept(true)
 		{
 			_singleton = (_Ty**)addr;
 			return *this;
 		}
 		
-		inline _Ty* GetSingleton() const
+		[[nodiscard]] inline _Ty* GetSingleton() const noexcept(true)
 		{
-			Assert(_singleton);
+			CKPE_ASSERT(_singleton);
 			return *_singleton;
 		}
+
+		inline _Ty* operator->() noexcept(true) { return GetSingleton(); }
+		inline const _Ty* operator->() const noexcept(true) { return GetSingleton(); }
+		inline _Ty& operator*() noexcept(true) { return *GetSingleton(); }
+		inline const _Ty& operator*() const noexcept(true) { return *GetSingleton(); }
 
 		CKPE_READ_PROPERTY(GetSingleton) _Ty* Singleton;
 	private:

@@ -8,8 +8,6 @@
 #include <CKPE.Common.h>
 #include <EditorAPI/BSTArray.h>
 
-#pragma pack(push, 1)
-
 namespace CKPE
 {
 	namespace SkyrimSE
@@ -246,5 +244,3 @@ namespace CKPE
 		}
 	}
 }
-
-#pragma pack(pop)

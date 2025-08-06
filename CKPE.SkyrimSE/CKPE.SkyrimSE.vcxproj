@@ -33,7 +33,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.SkyrimSE\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)CKPE.SkyrimSE;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.SkyrimSE\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)CKPE.SkyrimSE;$(SolutionDir)Dependencies\imgui;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -53,7 +53,8 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <CallingConvention>StdCall</CallingConvention>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
-      <DisableSpecificWarnings>6031;6387;26495;4244</DisableSpecificWarnings>
+      <DisableSpecificWarnings>6031;6387;26495;4244;26813</DisableSpecificWarnings>
+      <StructMemberAlignment>Default</StructMemberAlignment>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -61,15 +62,18 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;d3d11.lib;dxgi.lib;d3dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;comctl32.lib;dxgi.lib;d3d11.lib;DirectXTex.lib;d3dcompiler.lib;dxguid.lib;ImGUI.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\scripts.ps1"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Dependencies\DirectXTex\src\ScreenGrab11.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Src\CKPE.SkyrimSE.D3D11ImagespaceAA.cpp" />
+    <ClCompile Include="Src\CKPE.SkyrimSE.D3D11Shaders.cpp" />
     <ClCompile Include="Src\CKPE.SkyrimSE.Runner.cpp" />
     <ClCompile Include="Src\CKPE.SkyrimSE.VersionLists.cpp" />
     <ClCompile Include="Src\EditorAPI\BSGraphicsTypes.cpp" />
@@ -89,6 +93,8 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AllowCreateBitArray.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AllowMultipleWindowAndMaster.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AllowPlayerKnowsCondition.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AllowSaveESMandMasterESP.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AlteredFormList.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.BGSPerkRankArray.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.BNetConvertUnicodeString.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.BrokenTerrainEditDlg.cpp" />
@@ -105,8 +111,10 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashNullptrFaceGen.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashUsingMore16NPCForFaceGen.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.D3D11.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.DataWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.DisableAssertion.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.EnableGameButtonToVC.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.Facegen.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixActorDlg.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixBGSEntryPointFunctionDataTwoValue.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixBrightLightColor.cpp" />
@@ -147,6 +155,7 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ReEnableLandShadows.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.RefLinkGeometryHangWorkaround.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.RenameCreationKitApp.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.RenderWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.RenderWindow60FPS.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ResponseIgnoreMax.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ShowReloadShadersAlways.cpp" />
@@ -160,9 +169,14 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.WeaponCriticalEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Dependencies\DirectXTex\include\ScreenGrab11.h" />
+    <ClInclude Include="Include\CKPE.SkyrimSE.D3D11ImagespaceAA.h" />
+    <ClInclude Include="Include\CKPE.SkyrimSE.D3D11Shaders.h" />
     <ClInclude Include="Include\CKPE.SkyrimSE.Runner.h" />
     <ClInclude Include="Include\CKPE.SkyrimSE.VersionLists.h" />
+    <ClInclude Include="Include\EditorAPI\BGSClasses.h" />
     <ClInclude Include="Include\EditorAPI\BGSLocalizedString.h" />
+    <ClInclude Include="Include\EditorAPI\BGSPickHandler.h" />
     <ClInclude Include="Include\EditorAPI\BGSRenderWindow.h" />
     <ClInclude Include="Include\EditorAPI\BGSRenderWindowCamera.h" />
     <ClInclude Include="Include\EditorAPI\BSDynamicTriShape.h" />
@@ -170,7 +184,10 @@
     <ClInclude Include="Include\EditorAPI\BSEntryString.h" />
     <ClInclude Include="Include\EditorAPI\BSFixedString.h" />
     <ClInclude Include="Include\EditorAPI\BSGeometry.h" />
+    <ClInclude Include="Include\EditorAPI\BSGraphicsRenderTargetManager.h" />
     <ClInclude Include="Include\EditorAPI\BSGraphicsTypes.h" />
+    <ClInclude Include="Include\EditorAPI\BSHandleRefObject.h" />
+    <ClInclude Include="Include\EditorAPI\BSPointerHandleManager.h" />
     <ClInclude Include="Include\EditorAPI\BSReadWriteLock.h" />
     <ClInclude Include="Include\EditorAPI\BSResources.h" />
     <ClInclude Include="Include\EditorAPI\BSShaderMaterial.h" />
@@ -229,6 +246,8 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AllowCreateBitArray.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AllowMultipleWindowAndMaster.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AllowPlayerKnowsCondition.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AllowSaveESMandMasterESP.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AlteredFormList.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.BGSPerkRankArray.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.BNetConvertUnicodeString.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.BrokenTerrainEditDlg.h" />
@@ -245,8 +264,10 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashNullptrFaceGen.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashUsingMore16NPCForFaceGen.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.D3D11.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.DataWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.DisableAssertion.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.EnableGameButtonToVC.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.Facegen.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixActorDlg.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixBGSEntryPointFunctionDataTwoValue.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixBrightLightColor.h" />
@@ -287,6 +308,7 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ReEnableLandShadows.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.RefLinkGeometryHangWorkaround.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.RenameCreationKitApp.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.RenderWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.RenderWindow60FPS.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ResponseIgnoreMax.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ShowReloadShadersAlways.h" />
@@ -298,12 +320,28 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.Unicode.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.VersionControlMergeWorkaround.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.WeaponCriticalEffect.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="resource.rc" />
     <ResourceCompile Include="resource_version.rc" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="build_version.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Shaders\FXAA_PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="..\Shaders\FXAA_VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="..\Shaders\TAA_PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

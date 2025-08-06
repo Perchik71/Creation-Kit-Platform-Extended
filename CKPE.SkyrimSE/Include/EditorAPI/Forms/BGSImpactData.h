@@ -7,8 +7,6 @@
 #include <EditorAPI/NiAPI/NiTypes.h>
 #include "BGSSounds.h"
 
-#pragma pack(push, 1)
-
 namespace CKPE
 {
 	namespace SkyrimSE
@@ -155,5 +153,3 @@ namespace CKPE
 		}
 	}
 }
-
-#pragma pack(pop)

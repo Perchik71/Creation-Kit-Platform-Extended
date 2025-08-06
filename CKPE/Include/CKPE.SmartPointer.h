@@ -12,10 +12,10 @@ namespace CKPE
 	class CKPE_API SmartPointerInfo
 	{
 	public:
-		SmartPointerInfo() : _refCount(1), _ptr(nullptr), _is_Array(false) {}
-		SmartPointerInfo(const _Ty* ptr, bool is_Array = false) : _refCount(1),
+		SmartPointerInfo() noexcept(true) : _refCount(1), _ptr(nullptr), _is_Array(false) {}
+		SmartPointerInfo(const _Ty* ptr, bool is_Array = false) noexcept(true) : _refCount(1),
 			_ptr(const_cast<_Ty*>(ptr)), _is_Array(is_Array) {}
-		~SmartPointerInfo()
+		~SmartPointerInfo() noexcept(true)
 		{
 			if (!_refCount && _ptr)
 			{
@@ -26,22 +26,22 @@ namespace CKPE
 			}
 		}
 
-		inline bool operator==(const SmartPointerInfo& info) { return _ptr == info._ptr; }
-		inline bool operator!=(const SmartPointerInfo& info) { return _ptr != info._ptr; }
+		inline bool operator==(const SmartPointerInfo& info) noexcept(true) { return _ptr == info._ptr; }
+		inline bool operator!=(const SmartPointerInfo& info) noexcept(true) { return _ptr != info._ptr; }
 
-		inline void IncRef() { _refCount++; }
-		inline void DecRef() { if (_refCount > 0) _refCount--; }
+		inline void IncRef() noexcept(true) { _refCount++; }
+		inline void DecRef() noexcept(true) { if (_refCount > 0) _refCount--; }
 
-		inline _Ty* Get() { return _ptr; }
-		inline const _Ty* Get() const { return _ptr; }
+		[[nodiscard]] inline _Ty* Get() noexcept(true) { return _ptr; }
+		[[nodiscard]] inline const _Ty* Get() const noexcept(true) { return _ptr; }
 
-		inline _Ty* operator->() { return Get(); }
-		inline const _Ty* operator->() const { return Get(); }
-		inline _Ty& operator*() { return *Get(); }
-		inline const _Ty& operator*() const { return *Get(); }
+		inline _Ty* operator->() noexcept(true) { return Get(); }
+		inline const _Ty* operator->() const noexcept(true) { return Get(); }
+		inline _Ty& operator*() noexcept(true) { return *Get(); }
+		inline const _Ty& operator*() const noexcept(true) { return *Get(); }
 
-		inline uint32_t GetRefCount() const { return _refCount; }
-		inline bool Empty() const { return !_ptr; }
+		[[nodiscard]] inline uint32_t GetRefCount() const noexcept(true) { return _refCount; }
+		[[nodiscard]] inline bool Empty() const noexcept(true) { return !_ptr; }
 	private:
 		SmartPointerInfo(const SmartPointerInfo& info) = delete;
 		SmartPointerInfo& operator=(const SmartPointerInfo& info) = delete;

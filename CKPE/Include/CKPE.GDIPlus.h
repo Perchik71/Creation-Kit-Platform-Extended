@@ -25,7 +25,7 @@ namespace CKPE
 		static THandle LoadImageFromFile(const std::wstring& fname) noexcept(true);
 		static THandle LoadImageFromStream(Stream& stream) noexcept(true);
 		static THandle LoadImageFromResource(THandle hInst, std::uint32_t dwResId,
-			const std::wstring& ResType) noexcept(true);
+			const wchar_t* ResType) noexcept(true);
 
 		[[nodiscard]] static GDIPlus* GetSingleton() noexcept(true);
 	};
