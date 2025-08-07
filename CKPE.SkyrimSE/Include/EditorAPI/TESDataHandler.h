@@ -199,8 +199,8 @@ namespace CKPE
 				inline TESFile* GetActiveMod() const { return activePlugin; }
 				inline bool IsActiveMod() const { return activePlugin != nullptr; }
 
-				inline static Singleton<bool> UserModdedSingleton;
-				inline static Singleton<TESDataHandler> Singleton;
+				inline static ISingleton<bool> UserModdedSingleton;
+				inline static ISingleton<TESDataHandler> Singleton;
 			public:
 				CKPE_READ_PROPERTY(GetMods) TESFileList* Mods;
 				CKPE_READ_PROPERTY(GetLoadedMods) const TESFileArray* LoadedMods;

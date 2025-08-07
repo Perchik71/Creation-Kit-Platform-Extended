@@ -1017,14 +1017,14 @@
     <Filter Include="Editor API\SF\Forms">
       <UniqueIdentifier>{8c0ce81a-d9eb-4a96-ac96-1e14a1e870cb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shaders">
-      <UniqueIdentifier>{c437f585-ff86-4d2a-90d6-73a423bfce06}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Patches\SSE\51-100">
       <UniqueIdentifier>{536a2b0e-b070-43bb-91aa-1b9b396f5423}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dependecies\iw">
       <UniqueIdentifier>{71015db3-e55c-4373-87e2-4f5f73d87377}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Steam API\Shaders">
+      <UniqueIdentifier>{c437f585-ff86-4d2a-90d6-73a423bfce06}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

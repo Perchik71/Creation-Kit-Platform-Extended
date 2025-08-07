@@ -217,7 +217,11 @@ namespace CKPE
                     return;
                 }
 
-                switch (game_mgr->QueryLib())
+                std::wstring version;
+                auto result = game_mgr->QueryLib(version);
+                _MESSAGE(L"\tLaunch: %s\n", version.c_str());
+                
+                switch (result)
                 {
                 case GameManager::UNSUPPORTED:
                     goto Unsupported;
@@ -228,6 +232,14 @@ namespace CKPE
                 default:
                     break;
                 }
+
+                // Check admin rights
+                if (!CKPE_UserHasAdminRights())
+                    throw RuntimeError(
+                        "You are running the Creation Kit without administrator rights.\n\nProblems:\n"
+                        "1. There is no way to register flowchartx64.dll.\n"
+                        "2. CTD inside comctl32.dll when searching for the desired plugin.\n\n"
+                        "The Creation Kit will be closed.");
 
                 EnableBreakpoint();
                 _run = true;

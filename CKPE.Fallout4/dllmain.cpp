@@ -20,9 +20,10 @@ extern "C"
 		"Perchik71",
 	};
 
-	__declspec(dllexport) std::uint32_t CKPEGameLibrary_Query()
+	__declspec(dllexport) std::uint32_t CKPEGameLibrary_Query(std::wstring& version)
 	{
 		CKPE::Fallout4::VersionLists::Verify();
+		version = CKPE::Fallout4::VersionLists::GetEditorVersionByString();
 		if (CKPE::Fallout4::VersionLists::HasAllowedEditorVersion())
 			return CKPE::GameManager::SUPPORTED;
 		if (CKPE::Fallout4::VersionLists::HasOutdatedEditorVersion())

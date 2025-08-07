@@ -23,6 +23,7 @@ namespace CKPE
 			};
 
 			std::vector<Entry>* _entries{ nullptr };
+			std::vector<std::string>* _blacklist{ nullptr };
 			CriticalSection _locker;
 
 			[[nodiscard]] std::int32_t ActivePatchSafe(Entry& entry);
@@ -42,6 +43,7 @@ namespace CKPE
 
 			virtual void ActiveAll(const std::wstring& game_short) noexcept(true);
 			virtual void QueryAll(const std::wstring& game_short) noexcept(true);
+			virtual void OpenBlackList() noexcept(true);
 
 			static PatchManager* GetSingleton() noexcept(true);
 		};

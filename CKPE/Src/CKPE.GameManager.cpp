@@ -79,7 +79,7 @@ namespace CKPE
 			{
 				_MESSAGE("\tName: %s", _data->name);
 				_MESSAGE("\tAuthor: %s", _data->author);
-				_MESSAGE("\tVersion: %llX (%u.%u.%u.%u)\n", _data->dataVersion,
+				_MESSAGE("\tVersion: %llX (%u.%u.%u.%u)", _data->dataVersion,
 					GET_EXE_VERSION_EX_MAJOR(_data->dataVersion), GET_EXE_VERSION_EX_MINOR(_data->dataVersion),
 					GET_EXE_VERSION_EX_BUILD(_data->dataVersion), GET_EXE_VERSION_EX_REVISION(_data->dataVersion));
 			}
@@ -115,11 +115,11 @@ namespace CKPE
 		return &_sgmanager;
 	}
 
-	std::uint32_t GameManager::QueryLib()
+	std::uint32_t GameManager::QueryLib(std::wstring& version)
 	{
 		__try
 		{
-			return _query();
+			return _query(version);
 		}
 		__except (1)
 		{

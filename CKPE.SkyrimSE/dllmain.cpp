@@ -20,9 +20,10 @@ extern "C"
 		"Perchik71",
 	};
 
-	__declspec(dllexport) std::uint32_t CKPEGameLibrary_Query()
+	__declspec(dllexport) std::uint32_t CKPEGameLibrary_Query(std::wstring& version)
 	{
 		CKPE::SkyrimSE::VersionLists::Verify();
+		version = CKPE::SkyrimSE::VersionLists::GetEditorVersionByString();
 		if (CKPE::SkyrimSE::VersionLists::HasAllowedEditorVersion())
 			return CKPE::GameManager::SUPPORTED;
 		if (CKPE::SkyrimSE::VersionLists::HasOutdatedEditorVersion())

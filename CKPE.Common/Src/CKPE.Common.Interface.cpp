@@ -10,6 +10,7 @@
 #include <CKPE.Graphics.h>
 #include <CKPE.Common.Include.h>
 #include <CKPE.Common.DialogManager.h>
+#include <CKPE.Common.PatchManager.h>
 #include <CKPE.Common.Relocator.h>
 #if 0
 #include <CKPE.Common.GenerateTableID.h>
@@ -73,10 +74,11 @@ namespace CKPE
 				else
 					_theme_settings = nullptr;
 				_version = FileUtils::GetFileVersion(spath + _dllName);
+				Common::PatchManager::GetSingleton()->OpenBlackList();
 
 				// IMPORTANT SYSTEM
 				RTTI::GetSingleton()->Initialize();
-				
+
 				CommandLineParser cmd;
 				if (cmd.HasCommandRun())
 				{

@@ -7,6 +7,7 @@
 #include <CKPE.Common.h>
 #include <EditorAPI/NiAPI/NiTypes.h>
 #include <EditorAPI/BGSLocalizedString.h>
+#include "TESForm.h"
 #include "TESFullName.h"
 
 namespace CKPE

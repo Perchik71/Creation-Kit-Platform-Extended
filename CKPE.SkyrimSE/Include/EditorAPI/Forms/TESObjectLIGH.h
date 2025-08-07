@@ -28,7 +28,7 @@ namespace CKPE
 					char pad28[0x138];
 					NiAPI::NiRGB m_SpecularColor;
 				};
-				static_assert(sizeof(TESObjectLIGH) == 0x163);
+				static_assert(sizeof(TESObjectLIGH) == 0x168);
 			}
 		}
 	}

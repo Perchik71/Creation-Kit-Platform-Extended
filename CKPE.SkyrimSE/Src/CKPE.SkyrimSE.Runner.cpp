@@ -17,6 +17,8 @@
 #include <Patches/CKPE.SkyrimSE.Patch.BGSPerkRankArray.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BNetConvertUnicodeString.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BrokenTerrainEditDlg.h>
+#include <Patches/CKPE.SkyrimSE.Patch.BSArchiveManager.h>
+#include <Patches/CKPE.SkyrimSE.Patch.BSPointerHandleManager.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CheckD3D11.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CheckTextureInMaterial.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ChooseSoundFile.h>
@@ -26,6 +28,8 @@
 #include <Patches/CKPE.SkyrimSE.Patch.CrashDuplicateWorldspace.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashFlowChartX.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashHairKS.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CrashMergeForms.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CrashMHDTMoreThan70.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashNullptrDXGISurface.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashNullptrFaceGen.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashUsingMore16NPCForFaceGen.h>
@@ -49,6 +53,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.FixDialogueBranch.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixFileInUse.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixIconsScriptProp.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixLoadArchiveActivePlugin.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixLoadMore32KAnimation.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixMemoryLeakActorDlg.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixMoveToTopic.h>
@@ -69,16 +74,22 @@
 #include <Patches/CKPE.SkyrimSE.Patch.IncreaseMaximumNavmesh.h>
 #include <Patches/CKPE.SkyrimSE.Patch.MemoryManager.h>
 #include <Patches/CKPE.SkyrimSE.Patch.NavMeshInfoMap.h>
+#include <Patches/CKPE.SkyrimSE.Patch.NewFormat171.h>
 #include <Patches/CKPE.SkyrimSE.Patch.NiCollisionObjectClonedWarning.h>
 #include <Patches/CKPE.SkyrimSE.Patch.PapyrusEditorLimit.h>
+#include <Patches/CKPE.SkyrimSE.Patch.ReEnableFog.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ReEnableLandShadows.h>
 #include <Patches/CKPE.SkyrimSE.Patch.RefLinkGeometryHangWorkaround.h>
+#include <Patches/CKPE.SkyrimSE.Patch.RemoveUselessMessages.h>
 #include <Patches/CKPE.SkyrimSE.Patch.RenameCreationKitApp.h>
 #include <Patches/CKPE.SkyrimSE.Patch.RenderWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.RenderWindow60FPS.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ResponseIgnoreMax.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ShowReloadShadersAlways.h>
 #include <Patches/CKPE.SkyrimSE.Patch.SkipTopicInfoValidation.h>
+#include <Patches/CKPE.SkyrimSE.Patch.SpellEnableCastingAndDeliveryAlways.h>
+#include <Patches/CKPE.SkyrimSE.Patch.StableSortForPerks.h>
+#include <Patches/CKPE.SkyrimSE.Patch.TESDataHandlerHook.h>
 #include <Patches/CKPE.SkyrimSE.Patch.TESModelTextureSwapCorrectlyLoad.h>
 #include <Patches/CKPE.SkyrimSE.Patch.TESParameters_CTDA.h>
 #include <Patches/CKPE.SkyrimSE.Patch.UIHotkeys.h>
@@ -105,6 +116,8 @@ namespace CKPE
 			mgr->Register(new Patch::BGSPerkRankArray);
 			mgr->Register(new Patch::BNetConvertUnicodeString);
 			mgr->Register(new Patch::BrokenTerrainEditDlg);
+			mgr->Register(new Patch::BSArchiveManager);
+			mgr->Register(new Patch::BSPointerHandleManager);
 			mgr->Register(new Patch::CheckD3D11);
 			mgr->Register(new Patch::CheckTextureInMaterial);
 			mgr->Register(new Patch::ChooseSoundFile);
@@ -114,6 +127,8 @@ namespace CKPE
 			mgr->Register(new Patch::CrashDuplicateWorldspace);
 			mgr->Register(new Patch::CrashFlowChartX);
 			mgr->Register(new Patch::CrashHairKS);
+			mgr->Register(new Patch::CrashMergeForms);
+			mgr->Register(new Patch::CrashMHDTMoreThan70);
 			mgr->Register(new Patch::CrashNullptrDXGISurface);
 			mgr->Register(new Patch::CrashNullptrFaceGen);
 			mgr->Register(new Patch::CrashUsingMore16NPCForFaceGen);
@@ -137,6 +152,7 @@ namespace CKPE
 			mgr->Register(new Patch::FixDialogueBranch);
 			mgr->Register(new Patch::FixFileInUse);
 			mgr->Register(new Patch::FixIconsScriptProp);
+			mgr->Register(new Patch::FixLoadArchiveActivePlugin);
 			mgr->Register(new Patch::FixLoadMore32KAnimation);
 			mgr->Register(new Patch::FixMemoryLeakActorDlg);
 			mgr->Register(new Patch::FixMoveToTopic);
@@ -157,16 +173,22 @@ namespace CKPE
 			mgr->Register(new Patch::IncreaseMaximumNavmesh);
 			mgr->Register(new Patch::MemoryManager);
 			mgr->Register(new Patch::NavMeshInfoMap);
+			mgr->Register(new Patch::NewFormat171);
 			mgr->Register(new Patch::NiCollisionObjectClonedWarning);
 			mgr->Register(new Patch::PapyrusEditorLimit);
+			mgr->Register(new Patch::ReEnableFog);
 			mgr->Register(new Patch::ReEnableLandShadows);
 			mgr->Register(new Patch::RefLinkGeometryHangWorkaround);
+			mgr->Register(new Patch::RemoveUselessMessages);
 			mgr->Register(new Patch::RenameCreationKitApp);
 			mgr->Register(new Patch::RenderWindow);
 			mgr->Register(new Patch::RenderWindow60FPS);
 			mgr->Register(new Patch::ResponseIgnoreMax);
 			mgr->Register(new Patch::ShowReloadShadersAlways);
 			mgr->Register(new Patch::SkipTopicInfoValidation);
+			mgr->Register(new Patch::SpellEnableCastingAndDeliveryAlways);
+			mgr->Register(new Patch::StableSortForPerks);
+			mgr->Register(new Patch::TESDataHandlerHook);
 			mgr->Register(new Patch::TESModelTextureSwapCorrectlyLoad);
 			mgr->Register(new Patch::TESParameters_CTDA);
 			mgr->Register(new Patch::UIHotkeys);

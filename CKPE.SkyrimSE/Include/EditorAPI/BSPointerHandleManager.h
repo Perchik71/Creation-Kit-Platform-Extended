@@ -5,6 +5,7 @@
 #pragma once
 
 #include <vector>
+#include <CKPE.Asserts.h>
 #include <EditorAPI/NiAPI/NiPointer.h>
 #include <EditorAPI/Forms/TESObjectREFR.h>
 #include "BSHandleRefObject.h"
@@ -56,14 +57,14 @@ namespace CKPE
 
 				void Set(_Ty Index, _Ty Age)
 				{
-					AssertMsg(Index < MAX_HANDLE_COUNT, "BSUntypedPointerHandle::Set - parameter Index is too large");
+					CKPE_ASSERT_MSG(Index < MAX_HANDLE_COUNT, "BSUntypedPointerHandle::Set - parameter Index is too large");
 
 					m_Bits = Index | Age;
 				}
 
 				void SetIndex(_Ty Index)
 				{
-					AssertMsg(Index < MAX_HANDLE_COUNT, "BSUntypedPointerHandle::Set - parameter Index is too large");
+					CKPE_ASSERT_MSG(Index < MAX_HANDLE_COUNT, "BSUntypedPointerHandle::Set - parameter Index is too large");
 
 					m_Bits = (Index & INDEX_MASK) | (m_Bits & ~INDEX_MASK);
 				}
@@ -250,7 +251,7 @@ namespace CKPE
 						auto& handle = Manager::HandleEntries[Refr->GetHandleEntryIndex()];
 						untypedHandle.Set(Refr->GetHandleEntryIndex(), handle.GetAge());
 
-						AssertMsg(untypedHandle.GetAge() == handle.GetAge(),
+						CKPE_ASSERT_MSG(untypedHandle.GetAge() == handle.GetAge(),
 							"BSPointerHandleManagerInterface::GetCurrentHandle - Handle already exists but has wrong age!");
 					}
 
@@ -280,7 +281,7 @@ namespace CKPE
 							if (Manager::FreeListHead == Manager::INVALID_INDEX)
 							{
 								untypedHandle.SetBitwiseNull();
-								AssertMsgVa(false, "OUT OF HANDLE ARRAY ENTRIES. Null handle created for pointer 0x%p.", Refr);
+								CKPE_ASSERT_MSG_FMT(false, "OUT OF HANDLE ARRAY ENTRIES. Null handle created for pointer 0x%p.", Refr);
 							}
 							else
 							{
@@ -292,19 +293,19 @@ namespace CKPE
 								newHandle.SetPointer(Refr);
 
 								Refr->SetHandleEntryIndex(Manager::FreeListHead);
-								Assert(Refr->GetHandleEntryIndex() == Manager::FreeListHead);
+								CKPE_ASSERT(Refr->GetHandleEntryIndex() == Manager::FreeListHead);
 
 								if (newHandle.GetNextFreeEntry() == Manager::FreeListHead)
 								{
 									// Table reached the maximum count
-									Assert(Manager::FreeListHead == Manager::FreeListTail);
+									CKPE_ASSERT(Manager::FreeListHead == Manager::FreeListTail);
 
 									Manager::FreeListHead = Manager::INVALID_INDEX;
 									Manager::FreeListTail = Manager::INVALID_INDEX;
 								}
 								else
 								{
-									Assert(Manager::FreeListHead != Manager::FreeListTail);
+									CKPE_ASSERT(Manager::FreeListHead != Manager::FreeListTail);
 									Manager::FreeListHead = newHandle.GetNextFreeEntry();
 								}
 							}

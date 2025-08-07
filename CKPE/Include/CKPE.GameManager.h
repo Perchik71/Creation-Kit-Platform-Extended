@@ -38,8 +38,8 @@ struct CKPEGameLibraryInterface
 	void* (*QueryInterface)(std::uint32_t id);
 };
 
-typedef std::uint32_t (__stdcall *_CKPEGameLibrary_Query)();
-typedef bool (__stdcall *_CKPEGameLibrary_Load)(const CKPEGameLibraryInterface* ckpe);
+typedef std::uint32_t (__stdcall *_CKPEGameLibrary_Query)(std::wstring&);
+typedef bool (__stdcall *_CKPEGameLibrary_Load)(const CKPEGameLibraryInterface*);
 
 namespace CKPE
 {
@@ -70,7 +70,7 @@ namespace CKPE
 		[[nodiscard]] bool Initialize(Game game) noexcept(true);
 		[[nodiscard]] static const GameManager* GetSingleton() noexcept(true);
 		[[nodiscard]] inline constexpr virtual Game GetType() const noexcept(true) { return _game_type; }
-		[[nodiscard]] virtual std::uint32_t QueryLib();
+		[[nodiscard]] virtual std::uint32_t QueryLib(std::wstring& version);
 		[[nodiscard]] virtual bool LoadLib();
 
 		static void* QueryInterface(std::uint32_t id) noexcept(true);

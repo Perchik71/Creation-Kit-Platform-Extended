@@ -20,9 +20,10 @@ extern "C"
 		"Perchik71",
 	};
 
-	__declspec(dllexport) std::uint32_t CKPEGameLibrary_Query()
+	__declspec(dllexport) std::uint32_t CKPEGameLibrary_Query(std::wstring& version)
 	{
 		CKPE::Starfield::VersionLists::Verify();
+		version = CKPE::Starfield::VersionLists::GetEditorVersionByString();
 		if (CKPE::Starfield::VersionLists::HasAllowedEditorVersion())
 			return CKPE::GameManager::SUPPORTED;
 		if (CKPE::Starfield::VersionLists::HasOutdatedEditorVersion())

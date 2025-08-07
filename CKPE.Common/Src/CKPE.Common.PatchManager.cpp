@@ -2,8 +2,11 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
+#include <memory>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.PatchManager.h>
+#include <CKPE.PathUtils.h>
+#include <CKPE.StringUtils.h>
 #include <CKPE.Exception.h>
 
 namespace CKPE
@@ -110,18 +113,18 @@ namespace CKPE
 
 						if (it == _entries->end())
 						{
-							_ERROR("The \"%s\" patch has a dependency that is not in the database, skips",
-								depend.c_str());
+							_ERROR("The \"%s\" patch has a dependency \"%s\" that is not in the database or is not registered, skips",
+								entry.patch->GetName().c_str(), depend.c_str());
 							return false;
 						}
-
+						
 						if (it->patch->IsActive())
 							continue;
 
 						if (!ActivePatch(*it, game_short))
 						{
-							_ERROR("The \"%s\" patch has a dependency that has not been initialized, skips",
-								depend.c_str());
+							_ERROR("The \"%s\" patch has a dependency \"%s\" that has not been initialized, skips",
+								entry.patch->GetName().c_str(), depend.c_str());
 							return false;
 						}
 					}
@@ -148,7 +151,7 @@ namespace CKPE
 		}
 
 		PatchManager::PatchManager() noexcept(true) :
-			_entries(new std::vector<Entry>)
+			_entries(new std::vector<Entry>), _blacklist(new std::vector<std::string>)
 		{}
 
 		PatchManager::~PatchManager() noexcept(true)
@@ -159,6 +162,12 @@ namespace CKPE
 			{
 				delete _entries;
 				_entries = nullptr;
+			}
+
+			if (_blacklist)
+			{
+				delete _blacklist;
+				_blacklist = nullptr;
 			}
 		}
 
@@ -177,6 +186,15 @@ namespace CKPE
 			{
 				_ERROR("PatchManager::Register patch haven't name");
 				return;
+			}
+
+			for (auto& s : *_blacklist)
+			{
+				if (!_stricmp(s.c_str(), name.c_str()))
+				{
+					_WARNING("PatchManager::Register \"%s\" is blacklisted", name.c_str());
+					return;
+				}
 			}
 
 			auto db = Relocator::GetSingleton()->GetByName(name);
@@ -279,6 +297,46 @@ namespace CKPE
 					delete it->patch;
 
 				_entries->erase(it);
+			}
+		}
+
+		void PatchManager::OpenBlackList() noexcept(true)
+		{
+			constexpr auto fname = "CreationKitPlatformExtendedFilter.txt";
+			if (PathUtils::FileExists(fname))
+			{
+				try
+				{
+					TextFileStream fstm(fname, FileStream::fmOpenRead);
+
+					auto line = std::make_unique<char[]>(260);
+					if (!line)
+						throw RuntimeError("Out of memory");
+
+					while (!fstm.Eof())
+					{
+						fstm.ReadLine(line.get(), 260);
+						std::string str_line = StringUtils::Trim(line.get());
+						bool append = true;
+
+						for (auto& s : *_blacklist)
+						{
+							if (!_stricmp(s.c_str(), str_line.c_str()))
+							{
+								_WARNING("PatchManager::OpenBlackList \"%s\" duplicate", str_line.c_str());
+								append = false;
+								break;
+							}
+						}
+
+						if (append)
+							_blacklist->push_back(str_line);
+					}
+				}
+				catch (const std::exception& e)
+				{
+					_ERROR("PatchManager::OpenBlackList %s", e.what());
+				}
 			}
 		}
 
