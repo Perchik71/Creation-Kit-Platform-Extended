@@ -60,10 +60,10 @@ namespace CKPE
 	bool ScopeSafeWrite::Contain(std::uintptr_t address, std::size_t size) const noexcept(true)
 	{
 		if (!_init) return false;
-		return (_target >= address) && ((address + size) < (_target + _size));
+		return (_target <= address) && ((address + size) < (_target + _size));
 	}
 
-	void ScopeSafeWrite::Write(std::uintptr_t address, const uint8_t* data, std::size_t size) const noexcept(true)
+	void ScopeSafeWrite::Write(std::uintptr_t address, const std::uint8_t* data, std::size_t size) const noexcept(true)
 	{
 		if (Contain(address, size))
 			memcpy((void*)address, (const void*)data, size);

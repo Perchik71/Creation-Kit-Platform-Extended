@@ -23,12 +23,12 @@ namespace CKPE
 				class NiTexture : public NiObject
 				{
 				public:
-					inline BSFixedString GetFileNameFS() const noexcept { return _FileName; }
-					inline const char* GetFileName() const noexcept { return _FileName.c_str(); }
-					inline NiTexture* GetPrev() const noexcept { return _PrevTexture; }
-					inline NiTexture* GetNext() const noexcept { return _NextTexture; }
-					inline BSGraphics::Texture* GetTexture() const noexcept { return _Texture; }
-					inline void SetTexture(BSGraphics::Texture* Texture) noexcept { _Texture = Texture; }
+					[[nodiscard]] inline BSFixedString GetFileNameFS() const noexcept { return _FileName; }
+					[[nodiscard]] inline const char* GetFileName() const noexcept { return _FileName.c_str(); }
+					[[nodiscard]] inline NiTexture* GetPrev() const noexcept { return _PrevTexture; }
+					[[nodiscard]] inline NiTexture* GetNext() const noexcept { return _NextTexture; }
+					[[nodiscard]] inline BSGraphics::Texture* GetTexture() const noexcept { return _Texture; }
+					[[nodiscard]] inline void SetTexture(BSGraphics::Texture* Texture) noexcept { _Texture = Texture; }
 				private:
 					std::uint32_t Unk10[4];			// 10
 					BSFixedString _FileName;		// 20

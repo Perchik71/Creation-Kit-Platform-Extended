@@ -38,7 +38,7 @@ namespace CKPE
 		~ScopeSafeWrite() noexcept(true);
 
 		[[nodiscard]] bool Contain(std::uintptr_t address, std::size_t size) const noexcept(true);
-		void Write(std::uintptr_t address, const uint8_t* data, std::size_t size) const noexcept(true);
+		void Write(std::uintptr_t address, const std::uint8_t* data, std::size_t size) const noexcept(true);
 		void Write(std::uintptr_t address, std::initializer_list<std::uint8_t> data) const noexcept(true);
 		void WriteSet(std::uintptr_t address, std::uint8_t value, std::size_t size) const noexcept(true);
 		void WriteNop(std::uintptr_t address, std::size_t size) const noexcept(true);

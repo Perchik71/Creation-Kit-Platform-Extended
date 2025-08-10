@@ -317,6 +317,54 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixLoadArchiveActivePlugin.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashMHDTMoreThan70.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashMergeForms.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashSortFunc.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashTestRadius.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashUploadBNetModWithArchive.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.DeferredDlg.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixFormIDsInLoadFile.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixParamsVTXT.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixRenderPass.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.MemoryLeakBSString.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.LightRadiusMessage.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.NavMeshPseudoDelete.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashFootstepSetRemove.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.LoadOptimization.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.LoadDDSFile.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ObjectWindow.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -829,6 +877,57 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixLoadArchiveActivePlugin.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashMHDTMoreThan70.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashMergeForms.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashSortFunc.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashTestRadius.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashUploadBNetModWithArchive.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.DeferredDlg.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixFormIDsInLoadFile.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixParamsVTXT.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixRenderPass.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.MemoryLeakBSString.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.LightRadiusMessage.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.NavMeshPseudoDelete.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashFootstepSetRemove.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.LoadOptimization.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.LoadDDSFile.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSFile.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ObjectWindow.h">
       <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>

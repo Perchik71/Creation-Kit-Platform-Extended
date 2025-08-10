@@ -24,6 +24,26 @@ namespace CKPE
 			EditorUI(const EditorUI&) = delete;
 			EditorUI& operator=(const EditorUI&) = delete;
 		public:
+			constexpr static const char* UI_USER_DATA_ACTIVE_CELLS_ONLY = "ActiveCellsOnly";
+			constexpr static const char* UI_USER_DATA_FILTER_CELLS_LEN = "FilterCellsLen";
+			constexpr static const char* UI_USER_DATA_ACTIVE_OBJECT_ONLY = "ActiveObjectsOnly";
+			constexpr static const char* UI_USER_DATA_SELECT_OBJECT_ONLY = "SelectObjectsOnly";
+			constexpr static const char* UI_USER_DATA_VISIBLE_OBJECT_ONLY = "VisibleObjectsOnly";
+
+			constexpr static const char* UI_EDITOR_CHANGEBASEFORM_STR = "Replace base for select Ref's";
+
+			constexpr static std::uint32_t UI_EDITOR_TOOLBAR = 1;
+			constexpr static std::uint32_t UI_EDITOR_STATUSBAR = 40139;
+			constexpr static std::uint32_t UI_EDITOR_TOGGLEOBJECTWND = 40199;		// Object Window's
+			constexpr static std::uint32_t UI_EDITOR_TOGGLECELLVIEW = 40200;		// Cell View
+			constexpr static std::uint32_t UI_EDITOR_TOGGLEFOG = 40937;				// "View" menu
+			constexpr static std::uint32_t UI_EDITOR_TOGGLEGRASS_BUTTON = 40960;	// Main toolbar
+			constexpr static std::uint32_t UI_EDITOR_TOGGLEGRASS = 40963;			// "View" menu
+			constexpr static std::uint32_t UI_EDITOR_OPENFORMBYID = 52001;			// Sent from the LogWindow on double click
+			constexpr static std::uint32_t UI_EDITOR_CHANGEBASEFORM = 40670;		// "Change Base Form"
+
+			constexpr static std::uint32_t UI_DATA_DIALOG_PLUGINLISTVIEW = 1056;
+
 			EditorUI() noexcept(true);
 
 			[[nodiscard]] static EditorUI* GetSingleton() noexcept(true);

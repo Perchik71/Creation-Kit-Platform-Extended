@@ -11,7 +11,11 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.CrashHandler.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
+#include <EditorAPI/NiAPI/NiSourceTexture.h>
 #include <EditorAPI/Forms/TESForm.h>
+#include <EditorAPI/BSResources.h>
+#include <EditorAPI/BSShaderProperty.h>
+#include <EditorAPI/BSFile.h>
 #include <EditorAPI/BGSLocalizedString.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashDump.h>
 #include <resource_version2.h>
@@ -131,6 +135,35 @@ namespace CKPE
 					auto str = (EditorAPI::BGSLocalizedStringIL*)Address;
 					if (str->data())
 						Result = StringUtils::FormatString("\"%s\"", str->c_str());
+					else
+						Result = "nullptr";
+				}
+				else if (!strcmp(RttiName, "class BSFile"))
+				{
+					auto fstm = (EditorAPI::BSFile*)Address;
+					if (fstm->GetFileName())
+						Result = StringUtils::FormatString("\"%s\"", fstm->GetFileName());
+					else
+						Result = "nullptr";
+				}
+				else if (!strcmp(RttiName, "class NiTexture") || !strcmp(RttiName, "class NiSourceTexture"))
+				{
+					auto tex = (EditorAPI::NiAPI::NiTexture*)Address;
+					if (tex->GetFileName())
+						Result = StringUtils::FormatString("\"%s\"", tex->GetFileName());
+					else
+						Result = "nullptr";
+				}
+				else if (!strcmp(RttiName, "class BSResourceNiBinaryStream"))
+				{
+					auto resource = (EditorAPI::BSResourceNiBinaryStream*)Address;
+					auto stream = resource->GetStream();
+					if (stream)
+					{
+						EditorAPI::BSFixedString FileName;
+						stream->GetFileName(FileName);
+						Result = StringUtils::FormatString("\"%s\"", FileName.c_str());
+					}
 					else
 						Result = "nullptr";
 				}

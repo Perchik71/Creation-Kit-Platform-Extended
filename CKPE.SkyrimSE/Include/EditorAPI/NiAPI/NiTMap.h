@@ -57,8 +57,8 @@ namespace CKPE
 						}
 					};
 
-					inline _Node* Head(VOID) const noexcept(true) { return const_cast<_Node*>(&m_listHead); }
-					inline _Node* Tail(VOID) const noexcept(true)
+					inline _Node* Head() const noexcept(true) { return const_cast<_Node*>(&m_listHead); }
+					inline _Node* Tail() const noexcept(true)
 					{
 						_Node* node = const_cast<_Node*>(&m_listHead);
 

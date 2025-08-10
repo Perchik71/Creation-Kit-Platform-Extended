@@ -1,54 +1,40 @@
-﻿//////////////////////////////////////////
-/*
-* Copyright (c) 2020-2021 Perchik71 <email:perchik71@outlook.com>
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy of this
-* software and associated documentation files (the "Software"), to deal in the Software
-* without restriction, including without limitation the rights to use, copy, modify, merge,
-* publish, distribute, sublicense, and/or sell copies of the Software, and to permit
-* persons to whom the Software is furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in all copies or
-* substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-* INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-* PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-* FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-* OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-* DEALINGS IN THE SOFTWARE.
-*/
-//////////////////////////////////////////
+﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
+// Contacts: <email:timencevaleksej@gmail.com>
+// License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include "UICheckboxControl.h"
+#include <CKPE.Asserts.h>
+#include "CKPE.Common.UICheckboxControl.h"
 
 #pragma warning(disable: 4312)
 
-namespace Core
+namespace CKPE
 {
-	namespace Classes
+	namespace Common
 	{
 		namespace UI
 		{
-			VOID CUICheckbox::CreateWnd(const CUIBaseWindow& parent, const CUIBaseControl& control, const UINT menu_id)
+			void CUICheckbox::CreateWnd(const CUIBaseWindow& parent, const CUIBaseControl& control, 
+				const std::uint32_t menu_id) noexcept(true)
 			{
-				Assert(!m_hWnd);
-				Assert(menu_id);
-				Assert(parent.Is());
-				m_Created = FALSE;
+				CKPE_ASSERT(!m_hWnd);
+				CKPE_ASSERT(menu_id);
+				CKPE_ASSERT(parent.Is());
+				m_Created = false;
 
 				m_hWnd = control.Handle;
 
-				Assert(m_hWnd);
+				CKPE_ASSERT(m_hWnd);
 				m_MenuId = menu_id;
 			}
 
-			VOID CUICheckbox::CreateWnd(const CUIBaseWindow &parent, const std::string &caption, const LONG l, const LONG t, const LONG w, const LONG h, const UINT menu_id)
+			void CUICheckbox::CreateWnd(const CUIBaseWindow &parent, const std::string &caption, 
+				const std::int32_t l, const std::int32_t t, const std::int32_t w, const std::int32_t h, 
+				const std::uint32_t menu_id) noexcept(true)
 			{
-				Assert(!m_hWnd);
-				Assert(menu_id);
-				Assert(parent.Is());
-				m_Created = TRUE;
+				CKPE_ASSERT(!m_hWnd);
+				CKPE_ASSERT(menu_id);
+				CKPE_ASSERT(parent.Is());
+				m_Created = true;
 
 				m_hWnd = CreateWindowExA(NULL, "button", caption.c_str(), 
 					WS_VISIBLE | WS_CHILD | BS_CHECKBOX, 
@@ -56,28 +42,27 @@ namespace Core
 					(HMENU)menu_id,
 					GetModuleHandleA(NULL), NULL);
 
-				Assert(m_hWnd);
+				CKPE_ASSERT(m_hWnd);
 
 				CheckDlgButton(m_hWnd, menu_id, BST_UNCHECKED);
 				m_MenuId = menu_id;
 			}
 
-			VOID CUICheckbox::SetChecked(const BOOL value)
+			void CUICheckbox::SetChecked(const bool value) noexcept(true)
 			{
 				auto State = GetChecked();
-
 				if (State == value)
 					return;
 				
 				CheckDlgButton(Parent(), ID, (!State) ? BST_CHECKED : BST_UNCHECKED);
 			}
 
-			BOOL CUICheckbox::GetChecked(VOID) const
+			bool CUICheckbox::GetChecked() const noexcept(true)
 			{
 				return IsDlgButtonChecked(Parent(), ID);
 			}
 
-			VOID CUICheckbox::Release(VOID)
+			void CUICheckbox::Release() noexcept(true)
 			{
 				if (m_Created && m_hWnd)
 					DestroyWindow(m_hWnd);

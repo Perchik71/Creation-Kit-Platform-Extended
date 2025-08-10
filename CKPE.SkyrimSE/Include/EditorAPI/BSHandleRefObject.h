@@ -1,5 +1,6 @@
 // Special thanks to Nukem: https://github.com/Nukem9/SkyrimSETest/blob/master/skyrim64_test/src/patches/CKSSE/BSHandleRefObject_CK.h
 
+#include <windows.h>
 #include <CKPE.Asserts.h>
 #include <EditorAPI/NiAPI/NiPointer.h>
 

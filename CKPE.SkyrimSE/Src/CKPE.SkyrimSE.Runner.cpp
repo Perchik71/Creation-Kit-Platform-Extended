@@ -27,14 +27,19 @@
 #include <Patches/CKPE.SkyrimSE.Patch.CrashDump.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashDuplicateWorldspace.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashFlowChartX.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CrashFootstepSetRemove.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashHairKS.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashMergeForms.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashMHDTMoreThan70.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashNullptrDXGISurface.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashNullptrFaceGen.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CrashSortFunc.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CrashTestRadius.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CrashUploadBNetModWithArchive.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashUsingMore16NPCForFaceGen.h>
 #include <Patches/CKPE.SkyrimSE.Patch.D3D11.h>
 #include <Patches/CKPE.SkyrimSE.Patch.DataWindow.h>
+#include <Patches/CKPE.SkyrimSE.Patch.DeferredDlg.h>
 #include <Patches/CKPE.SkyrimSE.Patch.DisableAssertion.h>
 #include <Patches/CKPE.SkyrimSE.Patch.EnableGameButtonToVC.h>
 #include <Patches/CKPE.SkyrimSE.Patch.Facegen.h>
@@ -52,6 +57,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.FixDataDlgWithPluginTXT.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixDialogueBranch.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixFileInUse.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixFormIDsInLoadFile.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixIconsScriptProp.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixLoadArchiveActivePlugin.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixLoadMore32KAnimation.h>
@@ -61,8 +67,10 @@
 #include <Patches/CKPE.SkyrimSE.Patch.FixNiSkinInstance.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixObjectPalette.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixParamsATXT.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixParamsVTXT.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixRaceDlg.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixRemoteDesktop.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixRenderPass.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixReverbParameters.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixSelectedPackageData.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixSpellEffectsDuration.h>
@@ -72,10 +80,16 @@
 #include <Patches/CKPE.SkyrimSE.Patch.FlowChartX.h>
 #include <Patches/CKPE.SkyrimSE.Patch.IgnoreGroundHeightTest.h>
 #include <Patches/CKPE.SkyrimSE.Patch.IncreaseMaximumNavmesh.h>
+#include <Patches/CKPE.SkyrimSE.Patch.LightRadiusMessage.h>
+#include <Patches/CKPE.SkyrimSE.Patch.LoadDDSFile.h>
+#include <Patches/CKPE.SkyrimSE.Patch.LoadOptimization.h>
+#include <Patches/CKPE.SkyrimSE.Patch.MemoryLeakBSString.h>
 #include <Patches/CKPE.SkyrimSE.Patch.MemoryManager.h>
 #include <Patches/CKPE.SkyrimSE.Patch.NavMeshInfoMap.h>
+#include <Patches/CKPE.SkyrimSE.Patch.NavMeshPseudoDelete.h>
 #include <Patches/CKPE.SkyrimSE.Patch.NewFormat171.h>
 #include <Patches/CKPE.SkyrimSE.Patch.NiCollisionObjectClonedWarning.h>
+#include <Patches/CKPE.SkyrimSE.Patch.ObjectWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.PapyrusEditorLimit.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ReEnableFog.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ReEnableLandShadows.h>
@@ -126,14 +140,19 @@ namespace CKPE
 			mgr->Register(new Patch::CrashDump);
 			mgr->Register(new Patch::CrashDuplicateWorldspace);
 			mgr->Register(new Patch::CrashFlowChartX);
+			mgr->Register(new Patch::CrashFootstepSetRemove);
 			mgr->Register(new Patch::CrashHairKS);
 			mgr->Register(new Patch::CrashMergeForms);
 			mgr->Register(new Patch::CrashMHDTMoreThan70);
 			mgr->Register(new Patch::CrashNullptrDXGISurface);
 			mgr->Register(new Patch::CrashNullptrFaceGen);
+			mgr->Register(new Patch::CrashSortFunc);
+			mgr->Register(new Patch::CrashTestRadius);
+			mgr->Register(new Patch::CrashUploadBNetModWithArchive);
 			mgr->Register(new Patch::CrashUsingMore16NPCForFaceGen);
 			mgr->Register(new Patch::D3D11);
 			mgr->Register(new Patch::DataWindow);
+			mgr->Register(new Patch::DeferredDlg);
 			mgr->Register(new Patch::DisableAssertion);
 			mgr->Register(new Patch::EnableGameButtonToVC);
 			mgr->Register(new Patch::Facegen);
@@ -151,6 +170,7 @@ namespace CKPE
 			mgr->Register(new Patch::FixDataDlgWithPluginTXT);
 			mgr->Register(new Patch::FixDialogueBranch);
 			mgr->Register(new Patch::FixFileInUse);
+			mgr->Register(new Patch::FixFormIDsInLoadFile);
 			mgr->Register(new Patch::FixIconsScriptProp);
 			mgr->Register(new Patch::FixLoadArchiveActivePlugin);
 			mgr->Register(new Patch::FixLoadMore32KAnimation);
@@ -160,8 +180,10 @@ namespace CKPE
 			mgr->Register(new Patch::FixNiSkinInstance);
 			mgr->Register(new Patch::FixObjectPalette);
 			mgr->Register(new Patch::FixParamsATXT);
+			mgr->Register(new Patch::FixParamsVTXT);
 			mgr->Register(new Patch::FixRaceDlg);
 			mgr->Register(new Patch::FixRemoteDesktop);
+			mgr->Register(new Patch::FixRenderPass);
 			mgr->Register(new Patch::FixReverbParameters);
 			mgr->Register(new Patch::FixSelectedPackageData);
 			mgr->Register(new Patch::FixSpellEffectsDuration);
@@ -171,10 +193,16 @@ namespace CKPE
 			mgr->Register(new Patch::FlowChartX);
 			mgr->Register(new Patch::IgnoreGroundHeightTest);
 			mgr->Register(new Patch::IncreaseMaximumNavmesh);
+			mgr->Register(new Patch::LightRadiusMessage);
+			mgr->Register(new Patch::LoadDDSFile);
+			mgr->Register(new Patch::LoadOptimization);
+			mgr->Register(new Patch::MemoryLeakBSString);
 			mgr->Register(new Patch::MemoryManager);
 			mgr->Register(new Patch::NavMeshInfoMap);
+			mgr->Register(new Patch::NavMeshPseudoDelete);
 			mgr->Register(new Patch::NewFormat171);
 			mgr->Register(new Patch::NiCollisionObjectClonedWarning);
+			mgr->Register(new Patch::ObjectWindow);
 			mgr->Register(new Patch::PapyrusEditorLimit);
 			mgr->Register(new Patch::ReEnableFog);
 			mgr->Register(new Patch::ReEnableLandShadows);
@@ -203,6 +231,7 @@ namespace CKPE
 			auto mgr = Common::PatchManager::GetSingleton();
 
 			_MESSAGE("[SSE]\tTotal patches: %u", mgr->GetCount());
+
 			// Query all patches
 			mgr->QueryAll(VersionLists::GetGameName());
 			// Active remaining patches

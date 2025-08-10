@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <windows.h>
+#include <cstdio>
 #include <EditorAPI/NiAPI/NiColor.h>
 #include <EditorAPI/NiAPI/NiMatrix.h>
 #include <EditorAPI/NiAPI/NiPoint.h>
@@ -23,27 +23,36 @@ namespace CKPE
 				class NiCamera
 				{
 				public:
-					virtual ~NiCamera() = default;
+					virtual ~NiCamera();
 				};
 
 				class NiWindow
 				{
 				public:
-					virtual ~NiWindow() = default;
+					virtual ~NiWindow();
 				};
 
 				class NiBinaryStream
 				{
+				protected:
+					/*000*/							// --vtbls
+					std::int32_t _Pos;				// negative
+					char pad0C[4];
+					void* _lpfnReadFunc;
+					void* _lpfnWriteFunc;
 				public:
 					virtual ~NiBinaryStream();
-				public:
-					virtual bool IsValid() = 0;
+			
+					[[nodiscard]] virtual bool IsOpen() = 0;
+					virtual void Unk10() = 0;
+					virtual std::int32_t GetPositionNeg();
+					virtual void Cleanup();
+					virtual void InitReadWriteFunction(bool mode) = 0;
 				};
+				static_assert(sizeof(NiBinaryStream) == 0x20);
 
 				class NiFile : public NiBinaryStream 
 				{
-				public:
-					virtual ~NiFile();
 				public:
 					enum FileModes {
 						kFileMode_ReadOnly = 0,
@@ -52,27 +61,29 @@ namespace CKPE
 					};
 				protected:
 					// members
-					/*000*/ // --vtbls
-					/*008*/ std::uint64_t _Pos;				// init to 0
-					/*010*/ std::uint64_t _BufferAllocSize;	// init to 0x800	(sent for reading/writing)
-					/*018*/ std::uint64_t _BufferReadSize;	// init to 0		(answered by the function)
-					/*020*/ std::uint64_t _BufferOffset;		// init to 0
-					/*028*/ std::uint64_t _SizeBuffer;		// init to 0
-					/*030*/ void* _Buffer;				// allocated/deallocated on form heap by constructor/destructor
-					/*038*/ std::uint64_t _dwUnk38;
-					/*040*/ HANDLE _FileHandle;
-					/*048*/ char _FileName[MAX_PATH];
-					/*14C*/ std::uint32_t _Good;				// true if file is exist or no error
+					/*000*/							// --vtbls
+					std::uint32_t _BufferAllocSize;	// init to 0x800	(sent for reading/writing)
+					std::uint32_t _BufferReadSize;	// init to 0		(answered by the function)
+					std::uint32_t _BufferOffset;	// init to 0
+					std::uint32_t _SizeBuffer;		// init to 0
+					char* _Buffer;
+					FILE* _Handle; 
+					std::uint32_t _Unk;
+					std::uint32_t _IsOpen;
 				public:
-					[[nodiscard]] inline std::uint64_t GetPosition() const noexcept(true) { return _Pos; }
-					[[nodiscard]] inline std::uint64_t GetOffsetOfTheBuffer() const noexcept(true) { return _BufferOffset; }
-					[[nodiscard]] inline std::uint64_t GetSizeBuffer() const noexcept(true) { return _SizeBuffer; }
-					[[nodiscard]] inline HANDLE GetHandle() const noexcept(true) { return _FileHandle; }
-					[[nodiscard]] inline const char* GetFileName() const noexcept(true) { return _FileName; }
-					[[nodiscard]] inline bool IsGood() const noexcept(true) { return (bool)_Good; }
-				public:
-					[[nodiscard]] virtual bool IsValid() { return IsGood(); }
+					virtual ~NiFile();
+
+					[[nodiscard]] inline std::uint32_t GetBufferAllocSize() const noexcept(true) { return _BufferAllocSize; }
+					[[nodiscard]] inline std::uint32_t GetBufferReadSize() const noexcept(true) { return _BufferReadSize; }
+					[[nodiscard]] inline std::uint32_t GetOffsetOfTheBuffer() const noexcept(true) { return _BufferOffset; }
+					[[nodiscard]] inline std::uint32_t GetSizeBuffer() const noexcept(true) { return _SizeBuffer; }
+					[[nodiscard]] inline FILE* GetHandle() const noexcept(true) { return _Handle; }
+					[[nodiscard]] inline virtual bool IsOpen() const noexcept(true) { return (bool)_IsOpen; }
+					virtual void Unk10();
+					[[nodiscard]] virtual std::uint32_t GetPosition();
+					[[nodiscard]] virtual std::uint32_t GetSize();
 				};
+				static_assert(sizeof(NiFile) == 0x48);
 
 				// 3
 				struct NiRGB

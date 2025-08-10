@@ -97,6 +97,7 @@
     <ClCompile Include="Src\CKPE.Common.Threads.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIBaseWindow.cpp" />
     <ClCompile Include="Src\CKPE.Common.UICheckBox.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UICheckboxControl.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIColored.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIComboBox.cpp" />
     <ClCompile Include="Src\CKPE.Common.UICustomBox.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Include\CKPE.Common.Threads.h" />
     <ClInclude Include="Include\CKPE.Common.UIBaseWindow.h" />
     <ClInclude Include="Include\CKPE.Common.UICheckBox.h" />
+    <ClInclude Include="Include\CKPE.Common.UICheckboxControl.h" />
     <ClInclude Include="Include\CKPE.Common.UIColored.h" />
     <ClInclude Include="Include\CKPE.Common.UIComboBox.h" />
     <ClInclude Include="Include\CKPE.Common.UICustomBox.h" />

@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <string>			// std::size_t :/
 #include <CKPE.Common.h>
 
 namespace CKPE

@@ -33,7 +33,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.SkyrimSE\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)CKPE.SkyrimSE;$(SolutionDir)Dependencies\imgui;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.SkyrimSE\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)CKPE.SkyrimSE;$(SolutionDir)Dependencies\imgui;$(SolutionDir)Dependencies\libdeflate;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -63,7 +63,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;comctl32.lib;dxgi.lib;d3d11.lib;DirectXTex.lib;d3dcompiler.lib;dxguid.lib;ImGUI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;comctl32.lib;dxgi.lib;d3d11.lib;DirectXTex.lib;d3dcompiler.lib;dxguid.lib;ImGUI.lib;libdeflate.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\scripts.ps1"</Command>
@@ -108,12 +108,19 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashDump.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashDuplicateWorldspace.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashFlowChartX.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashFootstepSetRemove.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashHairKS.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashMergeForms.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashMHDTMoreThan70.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashNullptrDXGISurface.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashNullptrFaceGen.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashSortFunc.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashTestRadius.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashUploadBNetModWithArchive.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashUsingMore16NPCForFaceGen.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.D3D11.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.DataWindow.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.DeferredDlg.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.DisableAssertion.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.EnableGameButtonToVC.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.Facegen.cpp" />
@@ -131,6 +138,7 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixDataDlgWithPluginTXT.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixDialogueBranch.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixFileInUse.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixFormIDsInLoadFile.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixIconsScriptProp.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixLoadArchiveActivePlugin.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixLoadMore32KAnimation.cpp" />
@@ -140,8 +148,10 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixNiSkinInstance.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixObjectPalette.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixParamsATXT.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixParamsVTXT.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixRaceDlg.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixRemoteDesktop.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixRenderPass.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixReverbParameters.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixSelectedPackageData.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixSpellEffectsDuration.cpp" />
@@ -151,10 +161,16 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FlowChartX.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.IgnoreGroundHeightTest.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.IncreaseMaximumNavmesh.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.LightRadiusMessage.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.LoadDDSFile.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.LoadOptimization.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.MemoryLeakBSString.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.MemoryManager.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.NavMeshInfoMap.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.NavMeshPseudoDelete.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.NewFormat171.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.NiCollisionObjectClonedWarning.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ObjectWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.PapyrusEditorLimit.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ReEnableFog.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ReEnableLandShadows.cpp" />
@@ -191,6 +207,7 @@
     <ClInclude Include="Include\EditorAPI\BSDynamicTriShape.h" />
     <ClInclude Include="Include\EditorAPI\BSEffectShaderMaterial.h" />
     <ClInclude Include="Include\EditorAPI\BSEntryString.h" />
+    <ClInclude Include="Include\EditorAPI\BSFile.h" />
     <ClInclude Include="Include\EditorAPI\BSFixedString.h" />
     <ClInclude Include="Include\EditorAPI\BSGeometry.h" />
     <ClInclude Include="Include\EditorAPI\BSGraphicsRenderTargetManager.h" />
@@ -270,12 +287,19 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashDump.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashDuplicateWorldspace.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashFlowChartX.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashFootstepSetRemove.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashHairKS.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashMergeForms.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashMHDTMoreThan70.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashNullptrDXGISurface.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashNullptrFaceGen.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashSortFunc.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashTestRadius.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashUploadBNetModWithArchive.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashUsingMore16NPCForFaceGen.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.D3D11.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.DataWindow.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.DeferredDlg.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.DisableAssertion.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.EnableGameButtonToVC.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.Facegen.h" />
@@ -293,6 +317,7 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixDataDlgWithPluginTXT.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixDialogueBranch.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixFileInUse.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixFormIDsInLoadFile.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixIconsScriptProp.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixLoadArchiveActivePlugin.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixLoadMore32KAnimation.h" />
@@ -302,8 +327,10 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixNiSkinInstance.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixObjectPalette.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixParamsATXT.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixParamsVTXT.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixRaceDlg.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixRemoteDesktop.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixRenderPass.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixReverbParameters.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixSelectedPackageData.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixSpellEffectsDuration.h" />
@@ -313,10 +340,16 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FlowChartX.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.IgnoreGroundHeightTest.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.IncreaseMaximumNavmesh.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.LightRadiusMessage.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.LoadDDSFile.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.LoadOptimization.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.MemoryLeakBSString.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.MemoryManager.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.NavMeshInfoMap.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.NavMeshPseudoDelete.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.NewFormat171.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.NiCollisionObjectClonedWarning.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ObjectWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.PapyrusEditorLimit.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ReEnableFog.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ReEnableLandShadows.h" />

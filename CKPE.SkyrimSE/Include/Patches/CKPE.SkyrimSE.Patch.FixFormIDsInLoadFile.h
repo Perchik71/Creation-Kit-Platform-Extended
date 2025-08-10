@@ -1,0 +1,35 @@
+﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
+// Contacts: <email:timencevaleksej@gmail.com>
+// License: https://www.gnu.org/licenses/lgpl-3.0.html
+
+#pragma once
+
+#include <CKPE.Common.Patch.h>
+
+namespace CKPE
+{
+	namespace SkyrimSE
+	{
+		namespace Patch
+		{
+			class FixFormIDsInLoadFile : public Common::Patch
+			{
+				FixFormIDsInLoadFile(const FixFormIDsInLoadFile&) = delete;
+				FixFormIDsInLoadFile& operator=(const FixFormIDsInLoadFile&) = delete;
+			protected:
+				virtual bool DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true);
+				virtual bool DoQuery() const noexcept(true);
+			public:
+				FixFormIDsInLoadFile();
+
+				virtual bool HasOption() const noexcept(true);
+				virtual const char* GetOptionName() const noexcept(true);
+				virtual bool HasDependencies() const noexcept(true);
+				virtual std::vector<std::string> GetDependencies() const noexcept(true);
+
+				static bool sub(void* World, std::uint32_t* ParentFormIDs, std::uint32_t* FormIDs) noexcept(true);
+				static std::uint32_t sub2(void* World, std::uint32_t* FormIDs) noexcept(true);
+			};
+		}
+	}
+}

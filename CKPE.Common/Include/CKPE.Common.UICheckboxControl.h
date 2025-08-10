@@ -1,53 +1,36 @@
-﻿//////////////////////////////////////////
-/*
-* Copyright (c) 2020-2021 Perchik71 <email:perchik71@outlook.com>
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy of this
-* software and associated documentation files (the "Software"), to deal in the Software
-* without restriction, including without limitation the rights to use, copy, modify, merge,
-* publish, distribute, sublicense, and/or sell copies of the Software, and to permit
-* persons to whom the Software is furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in all copies or
-* substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-* INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-* PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-* FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-* OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-* DEALINGS IN THE SOFTWARE.
-*/
-//////////////////////////////////////////
+﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
+// Contacts: <email:timencevaleksej@gmail.com>
+// License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #pragma once
 
-#include "UIBaseWindow.h"
+#include "CKPE.Common.UIBaseWindow.h"
 
-namespace Core
+namespace CKPE
 {
-	namespace Classes
+	namespace Common
 	{
 		namespace UI
 		{
-			class CUICheckbox : public CUIBaseControl
+			class CKPE_COMMON_API CUICheckbox : public CUIBaseControl
 			{
 			private:
-				BOOL m_Created;
-				BOOL m_Checked;
-				UINT m_MenuId;
+				bool m_Created;
+				bool m_Checked;
+				std::uint32_t m_MenuId;
 			public:
-				CUICheckbox(void) : CUIBaseControl(), m_Created(FALSE), m_Checked(FALSE), m_MenuId(0) {}
-				CUICheckbox(const HWND hWnd) : CUIBaseControl(hWnd), m_Created(FALSE), m_Checked(FALSE), m_MenuId(0) {}
-				CUICheckbox(const CUICheckbox& base) : CUIBaseControl(base), m_Created(FALSE), m_Checked(FALSE), m_MenuId(0) {}
+				CUICheckbox(void) noexcept(true) : CUIBaseControl(), m_Created(false), m_Checked(false), m_MenuId(0) {}
+				CUICheckbox(const HWND hWnd) noexcept(true) : CUIBaseControl(hWnd), m_Created(false), m_Checked(false), m_MenuId(0) {}
+				CUICheckbox(const CUICheckbox& base) noexcept(true) : CUIBaseControl(base), m_Created(false), m_Checked(false), m_MenuId(0) {}
 
-				VOID CreateWnd(const CUIBaseWindow &parent, const CUIBaseControl& control, const UINT menu_id);
-				VOID CreateWnd(const CUIBaseWindow &parent, const std::string &caption, const LONG l, const LONG t, const LONG w, const LONG h, const UINT menu_id);
-				VOID SetChecked(const BOOL value);
-				BOOL GetChecked(VOID) const;
-				VOID Release(VOID);
+				void CreateWnd(const CUIBaseWindow &parent, const CUIBaseControl& control, const std::uint32_t menu_id) noexcept(true);
+				void CreateWnd(const CUIBaseWindow &parent, const std::string &caption, const std::int32_t l, 
+					const std::int32_t t, const std::int32_t w, const std::int32_t h, const std::uint32_t menu_id) noexcept(true);
+				void SetChecked(const bool value) noexcept(true);
+				bool GetChecked() const noexcept(true);
+				void Release() noexcept(true);
 			public:
-				PROPERTY(GetChecked, SetChecked) BOOL Checked;
+				CKPE_PROPERTY(GetChecked, SetChecked) bool Checked;
 			};
 		}
 	}

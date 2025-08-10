@@ -149,6 +149,9 @@
     <ClCompile Include="Src\CKPE.Common.PatchBaseWindow.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UICheckboxControl.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -323,6 +326,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UICheckboxControl.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
