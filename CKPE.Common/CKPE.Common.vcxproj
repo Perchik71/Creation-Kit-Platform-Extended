@@ -54,6 +54,7 @@
       <CallingConvention>StdCall</CallingConvention>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
       <DisableSpecificWarnings>26478;26819;4996;4244;4005;6387;6031;26495</DisableSpecificWarnings>
+      <UseFullPaths>false</UseFullPaths>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -87,6 +88,7 @@
     <ClCompile Include="Src\CKPE.Common.Patch.cpp" />
     <ClCompile Include="Src\CKPE.Common.PatchBaseWindow.cpp" />
     <ClCompile Include="Src\CKPE.Common.PatchManager.cpp" />
+    <ClCompile Include="Src\CKPE.Common.ProgressTaskBar.cpp" />
     <ClCompile Include="Src\CKPE.Common.Registry.cpp" />
     <ClCompile Include="Src\CKPE.Common.Relocator.cpp" />
     <ClCompile Include="Src\CKPE.Common.RelocatorDB.cpp" />
@@ -140,6 +142,7 @@
     <ClInclude Include="Include\CKPE.Common.ModernTheme.h" />
     <ClInclude Include="Include\CKPE.Common.Patch.h" />
     <ClInclude Include="Include\CKPE.Common.PatchManager.h" />
+    <ClInclude Include="Include\CKPE.Common.ProgressTaskBar.h" />
     <ClInclude Include="Include\CKPE.Common.Registry.h" />
     <ClInclude Include="Include\CKPE.Common.Relocator.h" />
     <ClInclude Include="Include\CKPE.Common.RelocatorDB.h" />

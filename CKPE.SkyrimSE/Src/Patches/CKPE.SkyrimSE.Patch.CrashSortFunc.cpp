@@ -25,9 +25,9 @@ namespace CKPE
 					};
 
 				if constexpr (Stable)
-					std::stable_sort(&Array[0], &Array[Array.QSize()], compare);
+					std::stable_sort(&Array[0], &Array[Array.size()], compare);
 				else
-					std::sort(&Array[0], &Array[Array.QSize()], compare);
+					std::sort(&Array[0], &Array[Array.size()], compare);
 			}
 
 			CrashSortFunc::CrashSortFunc() : Common::Patch()

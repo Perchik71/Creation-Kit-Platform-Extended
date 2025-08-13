@@ -13,6 +13,7 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
 #include <EditorAPI/BSTArray.h>
+#include <Patches/CKPE.SkyrimSE.Patch.ProgressWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.LoadOptimization.h>
 
 namespace CKPE
@@ -88,7 +89,7 @@ namespace CKPE
 				if (abs(lastPercent - newPercent) <= 0.25f)
 					return;
 
-				//GlobalProgressWindowPtr->step();
+				ProgressWindow::Singleton->step();
 				UpdateProgressBar();
 				lastPercent = newPercent;
 			}
@@ -222,7 +223,7 @@ namespace CKPE
 				if (fileInfo.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 					return false;
 
-				*TotalSize = ((uint64_t)fileInfo.nFileSizeHigh << 32) | fileInfo.nFileSizeLow;
+				*TotalSize = ((std::uint64_t)fileInfo.nFileSizeHigh << 32) | fileInfo.nFileSizeLow;
 				return true;
 			}
 
@@ -230,10 +231,10 @@ namespace CKPE
 				DWORD _start_index, std::int64_t Unused)
 			{
 				std::uint32_t index = _start_index;
-				std::int64_t* data = (std::int64_t*)_array.QBuffer();
+				std::int64_t* data = (std::int64_t*)_array.data();
 
 				const std::uint32_t comparesPerIter = 4;
-				const std::uint32_t vectorizedIterations = (_array.QSize() - index) / comparesPerIter;
+				const std::uint32_t vectorizedIterations = (_array.size() - index) / comparesPerIter;
 
 				//
 				// Compare 4 pointers per iteration - use SIMD instructions to generate a bit mask. Set
@@ -258,7 +259,7 @@ namespace CKPE
 				}
 
 				// Scan the rest 1-by-1
-				for (; index < _array.QSize(); index++)
+				for (; index < _array.size(); index++)
 				{
 					if (data[index] == (std::int64_t)_target)
 						return index;
@@ -270,7 +271,7 @@ namespace CKPE
 			static DWORD SearchArrayItem(EditorAPI::BSTArray<void*>& _array, void*& _target,
 				DWORD _start_index, std::int64_t Unused)
 			{
-				for (std::uint32_t i = _start_index; i < _array.QSize(); i++)
+				for (std::uint32_t i = _start_index; i < _array.size(); i++)
 				{
 					if (_array[i] == _target)
 						return i;
@@ -278,8 +279,6 @@ namespace CKPE
 
 				return 0xFFFFFFFF;
 			}
-
-			
 
 			LoadOptimization::LoadOptimization() : Common::Patch()
 			{
@@ -298,12 +297,12 @@ namespace CKPE
 
 			bool LoadOptimization::HasDependencies() const noexcept(true)
 			{
-				return false;
+				return true;
 			}
 
 			std::vector<std::string> LoadOptimization::GetDependencies() const noexcept(true)
 			{
-				return {};
+				return { "Progress Window" };
 			}
 
 			bool LoadOptimization::DoQuery() const noexcept(true)

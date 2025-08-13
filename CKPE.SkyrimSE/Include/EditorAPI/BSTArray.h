@@ -6,7 +6,8 @@
 
 #include <limits.h>
 #include <memory.h>
-#include <CKPE.Asserts.h>
+#include <iterator>
+#include <CKPE.Exception.h>
 #include <EditorAPI/NiAPI/NiMemoryManager.h>
 
 namespace CKPE
@@ -23,20 +24,27 @@ namespace CKPE
 				friend class __BSTArrayCheckOffsets;
 			public:
 				using value_type = _Ty;
-				using reference = _Ty&;
-				using const_reference = const _Ty&;
 				using size_type = std::uint32_t;
+				using difference_type = std::ptrdiff_t;
+				using reference = value_type&;
+				using const_reference = const value_type&;
+				using pointer = value_type*;
+				using const_pointer = const value_type*;
+				using iterator = pointer;
+				using const_iterator = const_pointer;
+				using reverse_iterator = std::reverse_iterator<iterator>;
+				using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 			private:
-				[[nodiscard]] _Ty* _Myfirst() { return (_Ty*)QBuffer(); }
-				[[nodiscard]] _Ty* _Mylast() { return ((_Ty*)QBuffer()) + QSize(); }
-				[[nodiscard]] const _Ty* _const_Myfirst() const { return (_Ty*)QBuffer(); }
-				[[nodiscard]] const _Ty* _const_Mylast() const { return ((_Ty*)QBuffer()) + QSize(); }
+				[[nodiscard]] inline _Ty* _Myfirst() noexcept(true) { return (_Ty*)data(); }
+				[[nodiscard]] inline _Ty* _Mylast() noexcept(true) { return ((_Ty*)data()) + size(); }
+				[[nodiscard]] inline const _Ty* _const_Myfirst() const noexcept(true) { return (_Ty*)data(); }
+				[[nodiscard]] inline const _Ty* _const_Mylast() const noexcept(true) { return ((_Ty*)data()) + size(); }
 			private:
-				_Ty* m_Buffer;
-				size_type m_AllocSize;
-				size_type pad0C;
-				size_type m_Size;
-				size_type pad14;
+				_Ty* m_Buffer{ nullptr };
+				size_type m_AllocSize{ 0 };
+				size_type pad0C{ 0 };
+				size_type m_Size{ 0 };
+				size_type pad14{ 0 };
 			private:
 				void Deallocate() 
 				{
@@ -121,78 +129,108 @@ namespace CKPE
 					return false;
 				}
 			public:
-				BSTArray() noexcept(true) : m_Buffer(nullptr), m_AllocSize(0), m_Size(0) {}
+				BSTArray() noexcept(true) = default;
+				~BSTArray() { clear(); }
 			public:
-				[[nodiscard]] inline _Ty* QBuffer() const noexcept(true) { return m_Buffer; }
-				[[nodiscard]] inline size_type QAllocSize() const noexcept(true) { return m_AllocSize; }
-				[[nodiscard]] inline size_type QSize() const noexcept(true) { return m_Size; }
-				[[nodiscard]] inline bool QEmpty() const noexcept(true) { return m_Size == 0; }
-			public:
-				[[nodiscard]] reference at(const size_type Pos) noexcept(true)
+				[[nodiscard]] inline constexpr reference operator[](const size_type Pos) noexcept(true) { return (this->_Myfirst()[Pos]); }
+				[[nodiscard]] inline constexpr const_reference operator[](const size_type Pos) const noexcept(true) { return (this->_const_Myfirst()[Pos]); }
+
+				[[nodiscard]] inline constexpr pointer       data() noexcept(true) { return static_cast<pointer>(m_Buffer); }
+				[[nodiscard]] inline constexpr const_pointer data() const noexcept(true) { return static_cast<const_pointer>(m_Buffer); }
+				[[nodiscard]] inline constexpr size_type size() const noexcept(true) { return m_Size; }
+				[[nodiscard]] inline constexpr size_type capacity() const noexcept(true) { return m_AllocSize; }
+				[[nodiscard]] inline constexpr size_type max_size() const noexcept(true) { return std::numeric_limits<size_type>::max(); }
+				[[nodiscard]] inline constexpr bool empty() const noexcept(true) { return m_Size == 0; }
+				[[nodiscard]] inline constexpr reference front() noexcept(true) { return (*this->_Myfirst()); }
+				[[nodiscard]] inline constexpr const_reference const_front() const noexcept(true) { return (*this->_const_Myfirst()); }
+				[[nodiscard]] inline constexpr reference back() noexcept(true) { return (this->_Mylast()[-1]); }
+				[[nodiscard]] inline constexpr const_reference const_back() const noexcept(true) { return (this->_const_Mylast()[-1]); }
+				[[nodiscard]] inline constexpr iterator       begin() noexcept(true) { return data(); }
+				[[nodiscard]] inline constexpr const_iterator begin() const noexcept(true) { return data(); }
+				[[nodiscard]] inline constexpr const_iterator cbegin() const noexcept(true) { return begin(); }
+				[[nodiscard]] inline constexpr iterator       end() noexcept(true) { return begin() + size(); }
+				[[nodiscard]] inline constexpr const_iterator end() const noexcept(true) { return begin() + size(); }
+				[[nodiscard]] inline constexpr const_iterator cend() const noexcept(true) { return end(); }
+				[[nodiscard]] inline constexpr reverse_iterator       rbegin() noexcept(true) { return reverse_iterator(end()); }
+				[[nodiscard]] inline constexpr const_reverse_iterator rbegin() const noexcept(true) { return rbegin(); }
+				[[nodiscard]] inline constexpr const_reverse_iterator crbegin() const noexcept(true) { return rbegin(); }
+				[[nodiscard]] inline constexpr reverse_iterator       rend() noexcept(true) { return reverse_iterator(begin()); }
+				[[nodiscard]] inline constexpr const_reverse_iterator rend() const noexcept(true) { return rend(); }
+				[[nodiscard]] inline constexpr const_reverse_iterator crend() const noexcept(true) { return rend(); }
+
+				[[nodiscard]] reference at(const size_type Pos)
 				{
-					CKPE_ASSERT_MSG(Pos >= 0 && Pos < QSize(), "Exceeded array bounds");
+					if (size() <= Pos)
+						throw std::out_of_range("bounds check failed in BSTArray::at()");
+
+					//CKPE_ASSERT_MSG(Pos >= 0 && Pos < QSize(), "Exceeded array bounds");
 					return (this->_Myfirst()[Pos]);
 				}
-				[[nodiscard]] const_reference at(const size_type Pos) const noexcept(true)
+				[[nodiscard]] const_reference at(const size_type Pos) const
 				{
-					CKPE_ASSERT_MSG(Pos >= 0 && Pos < QSize(), "Exceeded array bounds");
-					return (this->_const_Myfirst()[Pos]);
-				}
-			public:
-				inline reference operator[](const size_type Pos) noexcept(true) { return (this->_Myfirst()[Pos]); }
-				inline const_reference operator[](const size_type Pos) const noexcept(true) { return (this->_const_Myfirst()[Pos]); }
-			public:
-				inline reference front() noexcept(true) { return (*this->_Myfirst()); }
-				inline const_reference const_front() const noexcept(true) { return (*this->_const_Myfirst()); }
-				inline reference back() noexcept(true) { return (this->_Mylast()[-1]); }
-				inline const_reference const_back() const noexcept(true) { return (this->_const_Mylast()[-1]); }
-			public:
-				inline void Clear() noexcept(true) { Deallocate(); }
+					if (size() <= Pos)
+						throw std::out_of_range("bounds check failed in BSTArray::at()");
 
-				bool Resize(size_type numEntries) noexcept(true)
-				{
-					if (numEntries == m_AllocSize)
+					//CKPE_ASSERT_MSG(Pos >= 0 && Pos < QSize(), "Exceeded array bounds");
+					return (this->_const_Myfirst()[Pos]);
+				}				
+			public:
+				inline bool resize(size_type num) noexcept(true)
+				{ 
+					if (num == m_AllocSize)
 						return false;
 
-					if (!m_Buffer) 
+					if (!m_Buffer)
 					{
-						Allocate(numEntries);
+						Allocate(num);
 						return true;
 					}
 
-					if (numEntries < m_AllocSize) 
+					if (num < m_AllocSize)
 					{
 						// Delete the truncated entries
-						for (size_type i = numEntries; i < m_AllocSize; i++)
+						for (size_type i = num; i < m_AllocSize; i++)
 							delete& m_Buffer[i];
 					}
 
-					_Ty* newBlock = (_Ty*)NiAPI::NiMemoryManager::Alloc(nullptr, sizeof(_Ty) * numEntries);	// Create a new block
-					memmove_s(newBlock, sizeof(_Ty) * numEntries, m_Buffer, sizeof(_Ty) * numEntries);		// Move the old memory to the new block
-					if (numEntries > m_AllocSize)															// Fill in new remaining entries
-					{															
-						for (size_type i = m_AllocSize; i < numEntries; i++)
+					_Ty* newBlock = (_Ty*)NiAPI::NiMemoryManager::Alloc(nullptr, sizeof(_Ty) * num);	// Create a new block
+					memmove_s(newBlock, sizeof(_Ty) * num, m_Buffer, sizeof(_Ty) * num);				// Move the old memory to the new block
+					if (num > m_AllocSize)																// Fill in new remaining entries
+					{
+						for (size_type i = m_AllocSize; i < num; i++)
 							new (&m_Buffer[i]) _Ty;
 					}
-					NiAPI::NiMemoryManager::Free(nullptr, m_Buffer);										// Free the old block
-					m_Buffer = newBlock;																	// Assign the new block
-					m_AllocSize = numEntries;																// Capacity is now the number of total entries in the block
-					m_Size = std::min(m_AllocSize, m_Size);													// Count stays the same, or is truncated to capacity
+					NiAPI::NiMemoryManager::Free(nullptr, m_Buffer);									// Free the old block
+					m_Buffer = newBlock;																// Assign the new block
+					m_AllocSize = num;																	// Capacity is now the number of total entries in the block
+					m_Size = std::min(m_AllocSize, m_Size);												// Count stays the same, or is truncated to capacity
 					return true;
 				}
 
-				bool Push(const _Ty& entry) noexcept(true)
+				inline bool resize(size_type num, const value_type& value) noexcept(true)
+				{ 
+					if (resize(num))
+						std::fill(begin(), end(), value);
+				}
+
+				inline void clear() noexcept(true) { Deallocate(); }
+
+				void push_back(value_type const& entry)
 				{
-					if (!m_Buffer || m_Size + 1 > m_AllocSize) 
+					if (!m_Buffer || m_Size + 1 > m_AllocSize)
 					{
 						if (!Grow(GROW))
-							return false;
+							throw RuntimeError("out of memory BSTArray::push_back()");
 					}
 
 					m_Buffer[m_Size] = entry;
 					m_Size++;
-					return true;
-				};
+				}
+
+				void push_back(value_type&& entry)
+				{
+					push_back(std::move(entry));
+				}
 
 				bool Insert(size_type index, const _Ty& entry) noexcept(true)
 				{
@@ -273,6 +311,7 @@ namespace CKPE
 					return std::numeric_limits<size_type>::max();
 				}
 			};
+			static_assert(sizeof(BSTArray<void*>) == 0x18);
 		}
 	}
 }

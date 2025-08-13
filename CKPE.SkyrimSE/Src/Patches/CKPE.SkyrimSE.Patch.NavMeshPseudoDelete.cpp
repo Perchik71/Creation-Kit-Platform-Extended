@@ -114,14 +114,14 @@ namespace CKPE
 
 				EdgeExtraInfo* GetEdgeExtraInfo(uint16_t TriangleIndex, std::uint32_t EdgeIndex) noexcept(true)
 				{
-					CKPE_ASSERT_MSG(TriangleIndex < m_Triangles.QSize(), "Invalid triangle index");
+					CKPE_ASSERT_MSG(TriangleIndex < m_Triangles.size(), "Invalid triangle index");
 					CKPE_ASSERT_MSG(EdgeIndex < 3, "Invalid edge index");
 
 					if (m_Triangles[TriangleIndex].HasExtraInfo(EdgeIndex))
 					{
 						uint16_t index = m_Triangles[TriangleIndex].GetEdgeLinkIndex(EdgeIndex);
 
-						if (index < m_ExtraInfo.QSize())
+						if (index < m_ExtraInfo.size())
 							return &m_ExtraInfo.at(index);
 					}
 
@@ -202,7 +202,7 @@ namespace CKPE
 							{ tri.GetVertexIndex(2), true },
 						};
 
-						for (std::uint32_t i = 0; i < m_Data.m_Triangles.QSize(); i++)
+						for (std::uint32_t i = 0; i < m_Data.m_Triangles.size(); i++)
 						{
 							if (i == TriangleIndex)
 								continue;

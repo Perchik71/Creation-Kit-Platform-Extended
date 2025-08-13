@@ -28,6 +28,7 @@ namespace CKPE
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
 
 				static void sub(std::int64_t a1, std::int64_t a2, std::int64_t a3) noexcept(true);
+				static bool IsFogEnabled();
 			};
 		}
 	}

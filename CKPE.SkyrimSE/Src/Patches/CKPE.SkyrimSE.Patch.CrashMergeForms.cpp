@@ -165,7 +165,7 @@ namespace CKPE
 							if (NeedAdd)
 							{
 								// Added
-								FormIds.Push(FormId);
+								FormIds.push_back(FormId);
 								// Inc count to temp object
 								SomePluginFile->IncCountOwnedIds();
 							}
@@ -183,7 +183,7 @@ namespace CKPE
 						auto data = fast_call<std::uint32_t*>(pointer_CrashMergeForms_subA, size);
 						if (data)
 						{
-							memcpy(data, FormIds.QBuffer(), size);
+							memcpy(data, FormIds.data(), size);
 
 							// Set new array
 							plugin->SetArrayOwnedIds(data, SomePluginFile->CountOwnedIds());
@@ -192,7 +192,7 @@ namespace CKPE
 						else
 							_CONSOLE("......[CKPE] Failure to update owned ID array, lack of memory.", size);
 
-						FormIds.Clear();
+						FormIds.clear();
 					}
 				}
 			}

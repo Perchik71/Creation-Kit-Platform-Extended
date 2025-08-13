@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <CKPE.Singleton.h>
 #include <EditorAPI/Forms/TESObjectREFR.h>
 #include <CKPE.Common.PatchBaseWindow.h>
 
@@ -32,7 +33,7 @@ namespace CKPE
 				Common::UI::CUIBaseControl m_CellListView;
 				Common::UI::CUIBaseControl m_ObjectListView;
 				Common::UI::CUIBaseControl m_FilterCellEdit;
-				bool lock;
+				bool lock{ false };
 
 				CellViewWindow(const CellViewWindow&) = delete;
 				CellViewWindow& operator=(const CellViewWindow&) = delete;
@@ -47,6 +48,7 @@ namespace CKPE
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
 
+				inline static ISingleton<CellViewWindow> Singleton;
 				static LRESULT CALLBACK HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam) noexcept(true);
 				static void sub1(HWND ListViewHandle, EditorAPI::Forms::TESForm* Form, bool UseImage, std::int32_t ItemIndex) noexcept(true);
 				static std::int32_t sub2(HWND** ListViewHandle, EditorAPI::Forms::TESForm** Form, std::int64_t a3) noexcept(true);

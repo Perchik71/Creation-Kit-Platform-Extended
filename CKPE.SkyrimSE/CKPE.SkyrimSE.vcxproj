@@ -53,8 +53,9 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <CallingConvention>StdCall</CallingConvention>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
-      <DisableSpecificWarnings>6031;6387;26495;4244;26813</DisableSpecificWarnings>
+      <DisableSpecificWarnings>6031;6387;26495;4244;26813;4312;4302;4311</DisableSpecificWarnings>
       <StructMemberAlignment>Default</StructMemberAlignment>
+      <UseFullPaths>false</UseFullPaths>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -63,7 +64,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;comctl32.lib;dxgi.lib;d3d11.lib;DirectXTex.lib;d3dcompiler.lib;dxguid.lib;ImGUI.lib;libdeflate.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;comctl32.lib;dxgi.lib;d3d11.lib;DirectXTex.lib;d3dcompiler.lib;dxguid.lib;ImGUI.lib;libdeflate.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\scripts.ps1"</Command>
@@ -100,6 +101,7 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.BrokenTerrainEditDlg.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.BSArchiveManager.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.BSPointerHandleManager.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CellViewWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CheckD3D11.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CheckTextureInMaterial.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ChooseSoundFile.cpp" />
@@ -164,6 +166,7 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.LightRadiusMessage.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.LoadDDSFile.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.LoadOptimization.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.MainWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.MemoryLeakBSString.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.MemoryManager.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.NavMeshInfoMap.cpp" />
@@ -172,6 +175,7 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.NiCollisionObjectClonedWarning.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ObjectWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.PapyrusEditorLimit.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ProgressWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ReEnableFog.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ReEnableLandShadows.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.RefLinkGeometryHangWorkaround.cpp" />
@@ -279,6 +283,7 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.BrokenTerrainEditDlg.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.BSArchiveManager.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.BSPointerHandleManager.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CellViewWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CheckD3D11.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CheckTextureInMaterial.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ChooseSoundFile.h" />
@@ -343,6 +348,7 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.LightRadiusMessage.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.LoadDDSFile.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.LoadOptimization.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.MainWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.MemoryLeakBSString.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.MemoryManager.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.NavMeshInfoMap.h" />
@@ -351,6 +357,7 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.NiCollisionObjectClonedWarning.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ObjectWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.PapyrusEditorLimit.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ProgressWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ReEnableFog.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ReEnableLandShadows.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.RefLinkGeometryHangWorkaround.h" />

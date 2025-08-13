@@ -19,6 +19,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.BrokenTerrainEditDlg.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BSArchiveManager.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BSPointerHandleManager.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CellViewWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CheckD3D11.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CheckTextureInMaterial.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ChooseSoundFile.h>
@@ -83,6 +84,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.LightRadiusMessage.h>
 #include <Patches/CKPE.SkyrimSE.Patch.LoadDDSFile.h>
 #include <Patches/CKPE.SkyrimSE.Patch.LoadOptimization.h>
+#include <Patches/CKPE.SkyrimSE.Patch.MainWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.MemoryLeakBSString.h>
 #include <Patches/CKPE.SkyrimSE.Patch.MemoryManager.h>
 #include <Patches/CKPE.SkyrimSE.Patch.NavMeshInfoMap.h>
@@ -91,6 +93,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.NiCollisionObjectClonedWarning.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ObjectWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.PapyrusEditorLimit.h>
+#include <Patches/CKPE.SkyrimSE.Patch.ProgressWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ReEnableFog.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ReEnableLandShadows.h>
 #include <Patches/CKPE.SkyrimSE.Patch.RefLinkGeometryHangWorkaround.h>
@@ -132,6 +135,7 @@ namespace CKPE
 			mgr->Register(new Patch::BrokenTerrainEditDlg);
 			mgr->Register(new Patch::BSArchiveManager);
 			mgr->Register(new Patch::BSPointerHandleManager);
+			mgr->Register(new Patch::CellViewWindow);
 			mgr->Register(new Patch::CheckD3D11);
 			mgr->Register(new Patch::CheckTextureInMaterial);
 			mgr->Register(new Patch::ChooseSoundFile);
@@ -196,6 +200,7 @@ namespace CKPE
 			mgr->Register(new Patch::LightRadiusMessage);
 			mgr->Register(new Patch::LoadDDSFile);
 			mgr->Register(new Patch::LoadOptimization);
+			mgr->Register(new Patch::MainWindow);
 			mgr->Register(new Patch::MemoryLeakBSString);
 			mgr->Register(new Patch::MemoryManager);
 			mgr->Register(new Patch::NavMeshInfoMap);
@@ -204,6 +209,7 @@ namespace CKPE
 			mgr->Register(new Patch::NiCollisionObjectClonedWarning);
 			mgr->Register(new Patch::ObjectWindow);
 			mgr->Register(new Patch::PapyrusEditorLimit);
+			mgr->Register(new Patch::ProgressWindow);
 			mgr->Register(new Patch::ReEnableFog);
 			mgr->Register(new Patch::ReEnableLandShadows);
 			mgr->Register(new Patch::RefLinkGeometryHangWorkaround);

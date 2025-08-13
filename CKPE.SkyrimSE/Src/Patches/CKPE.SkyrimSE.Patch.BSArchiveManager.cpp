@@ -121,6 +121,8 @@ namespace CKPE
 
 					static const char* SC_NONE = "<NONE>";
 
+					//ctd ??? (random times)
+#if 0
 					Common::INISettingCollection _conf("CreationKit.ini");
 					Common::INISettingCollection _User_conf("CreationKitCustom.ini");
 
@@ -134,6 +136,60 @@ namespace CKPE
 					func((s == SC_NONE) ? _conf.ReadString("Archive", "sResourceStartUpArchiveList", "") : s);
 					s = _User_conf.ReadString("Archive", "sResourceIndexFileList", SC_NONE);
 					func((s == SC_NONE) ? _conf.ReadString("Archive", "sResourceIndexFileList", "") : s);
+#else
+					auto buff = std::make_unique<char[]>(2048);
+					auto buff_def = std::make_unique<char[]>(2048);
+
+					ZeroMemory(buff.get(), 2048);
+					ZeroMemory(buff_def.get(), 2048);
+
+					GetPrivateProfileStringA("Archive", "sResourceArchiveList", SC_NONE,
+						buff.get(), 2048, "CreationKitCustom.ini");
+					GetPrivateProfileStringA("Archive", "sResourceArchiveList", "",
+						buff_def.get(), 2048, "CreationKit.ini");
+
+					func((!strcmp(buff.get(), SC_NONE)) ? buff_def.get() : buff.get());
+
+					ZeroMemory(buff.get(), 2048);
+					ZeroMemory(buff_def.get(), 2048);
+
+					GetPrivateProfileStringA("Archive", "sResourceArchiveList2", SC_NONE,
+						buff.get(), 2048, "CreationKitCustom.ini");
+					GetPrivateProfileStringA("Archive", "sResourceArchiveList2", "",
+						buff_def.get(), 2048, "CreationKit.ini");
+
+					func((!strcmp(buff.get(), SC_NONE)) ? buff_def.get() : buff.get());
+
+					ZeroMemory(buff.get(), 2048);
+					ZeroMemory(buff_def.get(), 2048);
+
+					GetPrivateProfileStringA("Archive", "sResourceArchiveMemoryCacheList", SC_NONE,
+						buff.get(), 2048, "CreationKitCustom.ini");
+					GetPrivateProfileStringA("Archive", "sResourceArchiveMemoryCacheList", "",
+						buff_def.get(), 2048, "CreationKit.ini");
+
+					func((!strcmp(buff.get(), SC_NONE)) ? buff_def.get() : buff.get());
+
+					ZeroMemory(buff.get(), 2048);
+					ZeroMemory(buff_def.get(), 2048);
+
+					GetPrivateProfileStringA("Archive", "sResourceStartUpArchiveList", SC_NONE,
+						buff.get(), 2048, "CreationKitCustom.ini");
+					GetPrivateProfileStringA("Archive", "sResourceStartUpArchiveList", "",
+						buff_def.get(), 2048, "CreationKit.ini");
+
+					func((!strcmp(buff.get(), SC_NONE)) ? buff_def.get() : buff.get());
+
+					ZeroMemory(buff.get(), 2048);
+					ZeroMemory(buff_def.get(), 2048);
+
+					GetPrivateProfileStringA("Archive", "sResourceIndexFileList", SC_NONE,
+						buff.get(), 2048, "CreationKitCustom.ini");
+					GetPrivateProfileStringA("Archive", "sResourceIndexFileList", "",
+						buff_def.get(), 2048, "CreationKit.ini");
+
+					func((!strcmp(buff.get(), SC_NONE)) ? buff_def.get() : buff.get());
+#endif
 				}
 
 				static bool IsAvailableForLoad(LPCSTR ArchiveName)

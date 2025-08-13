@@ -49,26 +49,26 @@ namespace CKPE
 					};
 
 				if constexpr (Stable)
-					std::stable_sort(&Array[0], &Array[Array.QSize()], compare);
+					std::stable_sort(&Array[0], &Array[Array.size()], compare);
 				else
-					std::sort(&Array[0], &Array[Array.QSize()], compare);
+					std::sort(&Array[0], &Array[Array.size()], compare);
 			}
 
 			static void DeferredDlg_SortDialogueInfo(std::int64_t TESDataHandler, std::uint32_t FormType,
 				int(*SortFunction)(const void*, const void*)) noexcept(true)
 			{
-				static std::unordered_map<EditorAPI::BSTArray<EditorAPI::Forms::TESForm*>*, std::pair<void*, uint32_t>> arrayCache;
+				static std::unordered_map<EditorAPI::BSTArray<EditorAPI::Forms::TESForm*>*, std::pair<void*, std::uint32_t>> arrayCache;
 
 				auto formArray = &((EditorAPI::BSTArray<EditorAPI::Forms::TESForm*>*)(TESDataHandler + 104))[FormType];
 				auto itr = arrayCache.find(formArray);
 
 				// If not previously found or any counters changed...
-				if (itr == arrayCache.end() || itr->second.first != formArray->QBuffer() || itr->second.second != formArray->QSize())
+				if (itr == arrayCache.end() || itr->second.first != formArray->data() || itr->second.second != formArray->size())
 				{
 					// Update and resort the array
 					DeferredDlg_ArrayQuickSortRecursive(*formArray, SortFunction);
 
-					arrayCache[formArray] = std::make_pair(formArray->QBuffer(), formArray->QSize());
+					arrayCache[formArray] = std::make_pair(formArray->data(), formArray->size());
 				}
 			}
 

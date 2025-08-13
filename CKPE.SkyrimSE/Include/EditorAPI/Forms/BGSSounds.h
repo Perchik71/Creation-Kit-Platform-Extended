@@ -172,7 +172,7 @@ namespace CKPE
 					[[nodiscard]] inline BGSSoundCategory* GetSoundCategory() const noexcept(true) { return _SoundCategory; }
 					[[nodiscard]] inline BGSSoundOutput* GetSoundOutput() const noexcept(true) { return _SoundOutput; }
 					[[nodiscard]] inline BGSSoundDescriptorForm* GetDescriptor() const noexcept(true) { return _Descriptor; }
-					[[nodiscard]] inline std::uint32_t GetAudioCount() const noexcept(true) { return _SoundPaths.QSize(); }
+					[[nodiscard]] inline std::uint32_t GetAudioCount() const noexcept(true) { return _SoundPaths.size(); }
 					[[nodiscard]] inline const char* GetAudioPathByAt(std::uint32_t idx) const noexcept(true) { return _SoundPaths[idx]; }
 				private:
 					BGSSoundCategory* _SoundCategory;

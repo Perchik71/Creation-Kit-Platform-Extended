@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <CKPE.Common.h>
 #include <CKPE.Asserts.h>
 
 namespace CKPE
@@ -19,7 +20,23 @@ namespace CKPE
 			static _Ty* _S = const_cast<_Ty*>(S);
 			_singleton = (_Ty**)&_S;
 		}
+		ISingleton(const _Ty** S) noexcept(true) : _singleton(S) {}
+		ISingleton(std::uintptr_t addr) noexcept(true) : _singleton((_Ty**)addr) {}
 		ISingleton(const ISingleton& S) noexcept(true) : _singleton(S._singleton) {}
+
+		inline void Reset(bool destroy = false) noexcept(true)
+		{ 
+			if (_singleton)
+			{
+				if (destroy) delete *_singleton;
+				_singleton = nullptr;
+			}
+		}
+
+		[[nodiscard]] constexpr inline bool Empty() const noexcept(true)
+		{
+			return !_singleton || !(*_singleton);
+		}
 
 		inline ISingleton& operator=(const ISingleton& S) noexcept(true)
 		{
@@ -33,7 +50,14 @@ namespace CKPE
 			return *this;
 		}
 
-		inline ISingleton& operator=(const std::uintptr_t addr) noexcept(true)
+		inline ISingleton& operator=(const _Ty* S) noexcept(true)
+		{
+			static _Ty* _S = const_cast<_Ty*>(S);
+			_singleton = (_Ty**)&_S;
+			return *this;
+		}
+
+		inline ISingleton& operator=(std::uintptr_t addr) noexcept(true)
 		{
 			_singleton = (_Ty**)addr;
 			return *this;

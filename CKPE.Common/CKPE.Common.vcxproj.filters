@@ -152,6 +152,9 @@
     <ClCompile Include="Src\CKPE.Common.UICheckboxControl.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.ProgressTaskBar.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -329,6 +332,9 @@
     </ClInclude>
     <ClInclude Include="Include\CKPE.Common.UICheckboxControl.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.ProgressTaskBar.h">
+      <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

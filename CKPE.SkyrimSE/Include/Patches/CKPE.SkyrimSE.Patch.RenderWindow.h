@@ -38,6 +38,10 @@ namespace CKPE
 				static void setFlagLoadCell() noexcept(true);
 				static void ImGuiDrawInfo() noexcept(true);
 
+				inline D3D11ImagespaceAA* GetImagespaceAA() const noexcept(true) { return _ImagespaceAA.get(); }
+				virtual bool HasAntiAliasing() const noexcept(true) { return _ImagespaceAA ? _ImagespaceAA->IsEnabled() : false; }
+				virtual void SetAntiAliasingEnabled(bool v) noexcept(true) { if (_ImagespaceAA) _ImagespaceAA->SetEnabled(v); }
+
 				virtual bool HasOption() const noexcept(true);
 				virtual const char* GetOptionName() const noexcept(true);
 				virtual bool HasDependencies() const noexcept(true);

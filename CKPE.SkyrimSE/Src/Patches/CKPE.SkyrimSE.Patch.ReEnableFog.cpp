@@ -130,6 +130,11 @@ namespace CKPE
 					((void(__fastcall*)())pointer_ReEnableFog_sub4)();
 				}
 			}
+
+			bool ReEnableFog::IsFogEnabled()
+			{
+				return *reinterpret_cast<bool*>(pointer_ReEnableFog_data);
+			}
 		}
 	}
 }

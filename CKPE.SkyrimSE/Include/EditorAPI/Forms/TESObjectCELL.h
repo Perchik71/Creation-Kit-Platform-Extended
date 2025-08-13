@@ -119,7 +119,7 @@ namespace CKPE
 					[[nodiscard]] inline std::int32_t GetGridX() const noexcept(true) { return (IsExterior() && _CellData.Grid) ? _CellData.Grid->X : 0; }
 					[[nodiscard]] inline std::int32_t GetGridY() const noexcept(true) { return (IsExterior() && _CellData.Grid) ? _CellData.Grid->Y : 0; }
 					[[nodiscard]] inline TESFormArray* GetNavMeshes() const noexcept(true) { return _NavMeshes; }
-					[[nodiscard]] inline std::uint32_t GetNavMeshesCount() const  noexcept(true) { return _NavMeshes->QSize(); }
+					[[nodiscard]] inline std::uint32_t GetNavMeshesCount() const  noexcept(true) { return _NavMeshes->size(); }
 					[[nodiscard]] inline TESObjectLAND* GetLandspace() const noexcept(true) { return _Landspace; }
 					[[nodiscard]] inline LightingData* GetLighting() const noexcept(true) { return (IsInterior()) ? _CellData.Lighting : nullptr; }
 					[[nodiscard]] inline Item* GetItems() const noexcept(true) { return (Item*)_AddrRefrs; }
