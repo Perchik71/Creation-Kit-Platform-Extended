@@ -83,7 +83,8 @@
       <AdditionalDependencies>version.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)Creation Kit Platform Extended Tools\$(ProjectName)\Version\scripts.ps1"</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
