@@ -1,9 +1,10 @@
 // Special thanks to Nukem: https://github.com/Nukem9/SkyrimSETest/blob/master/skyrim64_test/src/patches/CKSSE/BSGraphicsRenderTargetManager_CK.h
 
 #pragma once
+#include <CKPE.Asserts.h>
 #include "BSGraphicsTypes.h"
 
-#define CHECK_RESULT(ReturnVar, Statement) do { (ReturnVar) = (Statement); AssertMsgVa(SUCCEEDED(ReturnVar), "Renderer target '%s' creation failed. HR = 0x%X.", Name, (ReturnVar)); } while (0)
+#define CHECK_RESULT(ReturnVar, Statement) do { (ReturnVar) = (Statement); CKPE_ASSERT_MSG_FMT(SUCCEEDED(ReturnVar), "Renderer target '%s' creation failed. HR = 0x%X.", Name, (ReturnVar)); } while (0)
 
 namespace CKPE
 {
@@ -49,7 +50,7 @@ namespace CKPE
 				void CreateRenderTarget(std::uint32_t TargetIndex, const char* Name,
 					const RenderTargetProperties* Properties)
 				{
-					Assert(TargetIndex < RenderTargetCount && TargetIndex != RENDER_TARGET_NONE);
+					CKPE_ASSERT(TargetIndex < RenderTargetCount && TargetIndex != RENDER_TARGET_NONE);
 
 					auto device = *reinterpret_cast<ID3D11Device**>(pointer_D3D11Device);
 					auto data = &pRenderTargets[TargetIndex];
@@ -115,7 +116,7 @@ namespace CKPE
 					{
 						ID3D11Texture2D* textureTarget = pRenderTargets[Properties->uiTextureTarget].Texture;
 
-						AssertMsg(textureTarget, "Can't create a render texture on a specified mip level because the texture has not been created.");
+						CKPE_ASSERT_MSG(textureTarget, "Can't create a render texture on a specified mip level because the texture has not been created.");
 
 						D3D11_RENDER_TARGET_VIEW_DESC rtvDesc;
 						ZeroMemory(&rtvDesc, sizeof(D3D11_RENDER_TARGET_VIEW_DESC));
@@ -154,7 +155,7 @@ namespace CKPE
 				void CreateDepthStencil(std::uint32_t TargetIndex, const char* Name,
 					const DepthStencilTargetProperties* Properties)
 				{
-					Assert(TargetIndex < DepthStencilsCount && TargetIndex != RENDER_TARGET_NONE);
+					CKPE_ASSERT(TargetIndex < DepthStencilsCount && TargetIndex != RENDER_TARGET_NONE);
 
 					auto device = *reinterpret_cast<ID3D11Device**>(pointer_D3D11Device);
 					auto data = &pDepthStencils[TargetIndex];
@@ -272,7 +273,7 @@ namespace CKPE
 				void CreateCubemapRenderTarget(std::uint32_t TargetIndex, const char* Name,
 					const CubeMapRenderTargetProperties* Properties)
 				{
-					Assert(TargetIndex < CubemapRenderTargetCount);
+					CKPE_ASSERT(TargetIndex < CubemapRenderTargetCount);
 
 					auto device = *reinterpret_cast<ID3D11Device**>(pointer_D3D11Device);
 					auto data = &pCubemapRenderTargets[TargetIndex];
@@ -411,8 +412,8 @@ namespace CKPE
 				void CreateRenderTarget(std::uint32_t TargetIndex,
 					const RenderTargetProperties* Properties)
 				{
-					AssertMsg(TargetIndex < RenderTargetCount && TargetIndex != RENDER_TARGET_NONE, "Wrong target index");
-					AssertMsg(TargetIndex != 0, "Framebuffer properties come from the renderer");
+					CKPE_ASSERT_MSG(TargetIndex < RenderTargetCount && TargetIndex != RENDER_TARGET_NONE, "Wrong target index");
+					CKPE_ASSERT_MSG(TargetIndex != 0, "Framebuffer properties come from the renderer");
 
 					RendererT::QInstance()->DestroyRenderTarget(TargetIndex);
 					pRenderTargetDataA[TargetIndex] = *Properties;
@@ -423,7 +424,7 @@ namespace CKPE
 				void CreateDepthStencil(std::uint32_t TargetIndex,
 					const DepthStencilTargetProperties* Properties)
 				{
-					AssertMsg(TargetIndex < DepthStencilCount && TargetIndex != DEPTH_STENCIL_TARGET_NONE, "Wrong target index");
+					CKPE_ASSERT_MSG(TargetIndex < DepthStencilCount && TargetIndex != DEPTH_STENCIL_TARGET_NONE, "Wrong target index");
 
 					RendererT::QInstance()->DestroyDepthStencil(TargetIndex);
 					pDepthStencilTargetDataA[TargetIndex] = *Properties;
@@ -434,7 +435,7 @@ namespace CKPE
 				void CreateCubemapRenderTarget(std::uint32_t TargetIndex,
 					const CubeMapRenderTargetProperties* Properties)
 				{
-					AssertMsg(TargetIndex < CubemapRenderTargetCount, "Wrong target index");
+					CKPE_ASSERT_MSG(TargetIndex < CubemapRenderTargetCount, "Wrong target index");
 
 					RendererT::QInstance()->DestroyCubemapRenderTarget(TargetIndex);
 					pCubeMapRenderTargetDataA[TargetIndex] = *Properties;
@@ -444,7 +445,7 @@ namespace CKPE
 
 				const char* GetRenderTargetName(std::uint32_t Index)
 				{
-					Assert(Index < RenderTargetCount);
+					CKPE_ASSERT(Index < RenderTargetCount);
 
 					if (Index == RENDER_TARGET_NONE)
 						return "RENDER_TARGET_NONE";
@@ -454,7 +455,7 @@ namespace CKPE
 
 				const char* GetDepthStencilName(std::uint32_t Index)
 				{
-					Assert(Index < DepthStencilCount);
+					CKPE_ASSERT(Index < DepthStencilCount);
 
 					if (Index == DEPTH_STENCIL_TARGET_NONE)
 						return "DEPTH_STENCIL_TARGET_NONE";
@@ -464,7 +465,7 @@ namespace CKPE
 
 				const char* GetCubemapRenderTargetName(std::uint32_t Index)
 				{
-					Assert(Index < CubemapRenderTargetCount);
+					CKPE_ASSERT(Index < CubemapRenderTargetCount);
 
 					if (Index == RENDER_TARGET_CUBEMAP_NONE)
 						return "RENDER_TARGET_CUBEMAP_NONE";

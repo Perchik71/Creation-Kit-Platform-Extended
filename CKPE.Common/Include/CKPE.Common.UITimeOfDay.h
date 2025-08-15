@@ -4,8 +4,7 @@
 
 #pragma once
 
-#include <CKPE.Common.UIGraphics.h>
-#include "Editor API/UI/UIBaseWindow.h"
+#include <CKPE.Common.UIBaseWindow.h>
 
 namespace CKPE
 {
@@ -15,20 +14,20 @@ namespace CKPE
 		{
 			namespace TimeOfDay
 			{
-				namespace Graphics = ::Core::Classes::UI;
-
 				typedef struct UITimeOfDayComponentsTag
 				{
-					Graphics::CUIToolWindow hWndToolBar;
-					Graphics::CUIBaseControl hWndLabel, hWndTrackBar, hWndEdit;
-				} UITimeOfDayComponents, * LPUITimeOfDayComponents, * PUITimeOfDayComponents;
+					HWND hMainWnd;
+					CUIToolWindow hWndToolBar;
+					CUIBaseControl hWndLabel, hWndTrackBar, hWndEdit;
+				} UITimeOfDayComponents, *LPUITimeOfDayComponents, *PUITimeOfDayComponents;
 
-				HWND Initialization(HWND hWnd);
+				CKPE_COMMON_API HWND Initialization(HWND hWnd, HWND hMainWnd) noexcept(true);
 
-				extern UITimeOfDayComponents OldUITimeOfDayComponents;
-				extern UITimeOfDayComponents NewUITimeOfDayComponents;
+				CKPE_COMMON_API UITimeOfDayComponents* GetOldUITimeOfDayComponents() noexcept(true);
+				CKPE_COMMON_API UITimeOfDayComponents* GetNewUITimeOfDayComponents() noexcept(true);
 
-				LRESULT CALLBACK TimeOfDayClassWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+				CKPE_COMMON_API LRESULT TimeOfDayClassWndProc(HWND hWnd, UINT uMsg, 
+					WPARAM wParam, LPARAM lParam) noexcept(true);
 			}
 		}
 	}

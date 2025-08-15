@@ -11,7 +11,6 @@
 [Wiki](https://github.com/Perchik71/Creation-Kit-Platform-Extended/wiki) page  
 
 # Dependencies
-[VoltekLib](https://github.com/Perchik71/VoltekLib.git) by `perchik71` *(recursive)*  
 [toml11](https://github.com/ToruNiina/toml11) by `ToruNiina` and other  
 [Zydis](https://github.com/zyantific/zydis.git) by `zyantifi` and other  
 [zipper](https://github.com/kuba--/zip.git) by `kuba--`  

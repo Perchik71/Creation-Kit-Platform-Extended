@@ -13,7 +13,7 @@ namespace CKPE
 		{
 			using namespace NiAPI;
 
-			class BSShaderResourceManager_CK
+			class BSShaderResourceManager
 			{
 			public:
 				bool FindIntersectionsTriShapeFastPath(NiPoint3& kOrigin, const NiPoint3& kDir, NiPick& kPick, 

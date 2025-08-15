@@ -55,7 +55,7 @@ namespace CKPE
 				auto interface = CKPE::Common::Interface::GetSingleton();
 				auto base = interface->GetApplication()->GetBase();
 
-				Detours::DetourCall(__CKPE_OFFSET(0), 
+				Detours::DetourJump(__CKPE_OFFSET(0), 
 					(std::uintptr_t)&EditorAPI::Forms::TESObjectLAND::Layers::HKNormalize);
 
 				return true;

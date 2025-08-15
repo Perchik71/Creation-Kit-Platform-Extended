@@ -155,6 +155,9 @@
     <ClCompile Include="Src\CKPE.Common.ProgressTaskBar.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.UITimeOfDay.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -335,6 +338,9 @@
     </ClInclude>
     <ClInclude Include="Include\CKPE.Common.ProgressTaskBar.h">
       <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.UITimeOfDay.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

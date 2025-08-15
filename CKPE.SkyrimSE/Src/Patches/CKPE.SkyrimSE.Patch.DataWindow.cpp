@@ -69,7 +69,7 @@ namespace CKPE
 				auto _interface = Common::Interface::GetSingleton();
 				auto base = _interface->GetApplication()->GetBase();
 
-				*(uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (uintptr_t)&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
 
 				return true;
 			}
@@ -159,7 +159,7 @@ namespace CKPE
 						HWND pluginListHandle = GetDlgItem(Hwnd, UI_LISTVIEW_PLUGINS);
 						char filter[1024] = {};
 
-						GetWindowTextA(reinterpret_cast<HWND>(lParam), filter, static_cast<int>(std::ssize(filter)));
+						GetWindowTextA(reinterpret_cast<HWND>(lParam), filter, static_cast<std::int32_t>(std::ssize(filter)));
 
 						if (strlen(filter) <= 0)
 							// No filtering

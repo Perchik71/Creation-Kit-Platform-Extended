@@ -9,6 +9,7 @@
 #include <CKPE.SkyrimSE.Runner.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
 
+#include <Patches/CKPE.SkyrimSE.Patch.AddChangeRef.h>
 #include <Patches/CKPE.SkyrimSE.Patch.AllowCreateBitArray.h>
 #include <Patches/CKPE.SkyrimSE.Patch.AllowMultipleWindowAndMaster.h>
 #include <Patches/CKPE.SkyrimSE.Patch.AllowPlayerKnowsCondition.h>
@@ -16,6 +17,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.AlteredFormList.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BGSPerkRankArray.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BNetConvertUnicodeString.h>
+#include <Patches/CKPE.SkyrimSE.Patch.BNetUploadWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BrokenTerrainEditDlg.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BSArchiveManager.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BSPointerHandleManager.h>
@@ -30,6 +32,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.CrashFlowChartX.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashFootstepSetRemove.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashHairKS.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CrashInventoryIterators.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashMergeForms.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashMHDTMoreThan70.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashNullptrDXGISurface.h>
@@ -43,11 +46,13 @@
 #include <Patches/CKPE.SkyrimSE.Patch.DeferredDlg.h>
 #include <Patches/CKPE.SkyrimSE.Patch.DisableAssertion.h>
 #include <Patches/CKPE.SkyrimSE.Patch.EnableGameButtonToVC.h>
+#include <Patches/CKPE.SkyrimSE.Patch.EnableStateParentWorkaround.h>
 #include <Patches/CKPE.SkyrimSE.Patch.Facegen.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixActorDlg.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixBGSEntryPointFunctionDataTwoValue.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixBrightLightColor.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixBSShadowDirectionalLight.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixCellViewObjectList.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixClassDlg.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixCrashDuplicateForm.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixCrashInArmorAddon.h>
@@ -60,6 +65,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.FixFileInUse.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixFormIDsInLoadFile.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixIconsScriptProp.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixIntersectionTriangle.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixLoadArchiveActivePlugin.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixLoadMore32KAnimation.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixMemoryLeakActorDlg.h>
@@ -74,21 +80,27 @@
 #include <Patches/CKPE.SkyrimSE.Patch.FixRenderPass.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixReverbParameters.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixSelectedPackageData.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixSpellDlg.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixSpellEffectsDuration.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixUnableToFindVariable.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixVertexNormals.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixWaterOrtho.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixWaterType.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FlowChartX.h>
 #include <Patches/CKPE.SkyrimSE.Patch.IgnoreGroundHeightTest.h>
 #include <Patches/CKPE.SkyrimSE.Patch.IncreaseMaximumNavmesh.h>
 #include <Patches/CKPE.SkyrimSE.Patch.LightRadiusMessage.h>
+#include <Patches/CKPE.SkyrimSE.Patch.LipGen.h>
 #include <Patches/CKPE.SkyrimSE.Patch.LoadDDSFile.h>
 #include <Patches/CKPE.SkyrimSE.Patch.LoadOptimization.h>
 #include <Patches/CKPE.SkyrimSE.Patch.MainWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.MemoryLeakBSString.h>
+#include <Patches/CKPE.SkyrimSE.Patch.MemoryLeakInPreviewWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.MemoryManager.h>
+#include <Patches/CKPE.SkyrimSE.Patch.ModernThemePatchAdditional.h>
 #include <Patches/CKPE.SkyrimSE.Patch.NavMeshInfoMap.h>
 #include <Patches/CKPE.SkyrimSE.Patch.NavMeshPseudoDelete.h>
+#include <Patches/CKPE.SkyrimSE.Patch.NavMeshWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.NewFormat171.h>
 #include <Patches/CKPE.SkyrimSE.Patch.NiCollisionObjectClonedWarning.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ObjectWindow.h>
@@ -112,6 +124,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.UIHotkeys.h>
 #include <Patches/CKPE.SkyrimSE.Patch.UnEquipSound.h>
 #include <Patches/CKPE.SkyrimSE.Patch.Unicode.h>
+#include <Patches/CKPE.SkyrimSE.Patch.UpdateUIWhenFogToggled.h>
 #include <Patches/CKPE.SkyrimSE.Patch.VersionControlMergeWorkaround.h>
 #include <Patches/CKPE.SkyrimSE.Patch.WeaponCriticalEffect.h>
 
@@ -125,6 +138,7 @@ namespace CKPE
 		{
 			auto mgr = Common::PatchManager::GetSingleton();
 
+			mgr->Register(new Patch::AddChangeRef);
 			mgr->Register(new Patch::AllowCreateBitArray);
 			mgr->Register(new Patch::AllowMultipleWindowAndMaster);
 			mgr->Register(new Patch::AllowPlayerKnowsCondition);
@@ -132,6 +146,7 @@ namespace CKPE
 			mgr->Register(new Patch::AlteredFormList);
 			mgr->Register(new Patch::BGSPerkRankArray);
 			mgr->Register(new Patch::BNetConvertUnicodeString);
+			mgr->Register(new Patch::BNetUploadWindow);
 			mgr->Register(new Patch::BrokenTerrainEditDlg);
 			mgr->Register(new Patch::BSArchiveManager);
 			mgr->Register(new Patch::BSPointerHandleManager);
@@ -146,6 +161,7 @@ namespace CKPE
 			mgr->Register(new Patch::CrashFlowChartX);
 			mgr->Register(new Patch::CrashFootstepSetRemove);
 			mgr->Register(new Patch::CrashHairKS);
+			mgr->Register(new Patch::CrashInventoryIterators);
 			mgr->Register(new Patch::CrashMergeForms);
 			mgr->Register(new Patch::CrashMHDTMoreThan70);
 			mgr->Register(new Patch::CrashNullptrDXGISurface);
@@ -159,11 +175,13 @@ namespace CKPE
 			mgr->Register(new Patch::DeferredDlg);
 			mgr->Register(new Patch::DisableAssertion);
 			mgr->Register(new Patch::EnableGameButtonToVC);
+			mgr->Register(new Patch::EnableStateParentWorkaround);
 			mgr->Register(new Patch::Facegen);
 			mgr->Register(new Patch::FixActorDlg);
 			mgr->Register(new Patch::FixBGSEntryPointFunctionDataTwoValue);
 			mgr->Register(new Patch::FixBrightLightColor);
 			mgr->Register(new Patch::FixBSShadowDirectionalLight);
+			mgr->Register(new Patch::FixCellViewObjectList);
 			mgr->Register(new Patch::FixClassDlg);
 			mgr->Register(new Patch::FixCrashDuplicateForm);
 			mgr->Register(new Patch::FixCrashInArmorAddon);
@@ -176,6 +194,7 @@ namespace CKPE
 			mgr->Register(new Patch::FixFileInUse);
 			mgr->Register(new Patch::FixFormIDsInLoadFile);
 			mgr->Register(new Patch::FixIconsScriptProp);
+			mgr->Register(new Patch::FixIntersectionTriangle);
 			mgr->Register(new Patch::FixLoadArchiveActivePlugin);
 			mgr->Register(new Patch::FixLoadMore32KAnimation);
 			mgr->Register(new Patch::FixMemoryLeakActorDlg);
@@ -190,21 +209,27 @@ namespace CKPE
 			mgr->Register(new Patch::FixRenderPass);
 			mgr->Register(new Patch::FixReverbParameters);
 			mgr->Register(new Patch::FixSelectedPackageData);
+			mgr->Register(new Patch::FixSpellDlg);
 			mgr->Register(new Patch::FixSpellEffectsDuration);
 			mgr->Register(new Patch::FixUnableToFindVariable);
 			mgr->Register(new Patch::FixVertexNormals);
 			mgr->Register(new Patch::FixWaterOrtho);
+			mgr->Register(new Patch::FixWaterType);
 			mgr->Register(new Patch::FlowChartX);
 			mgr->Register(new Patch::IgnoreGroundHeightTest);
 			mgr->Register(new Patch::IncreaseMaximumNavmesh);
 			mgr->Register(new Patch::LightRadiusMessage);
+			mgr->Register(new Patch::LipGen);
 			mgr->Register(new Patch::LoadDDSFile);
 			mgr->Register(new Patch::LoadOptimization);
 			mgr->Register(new Patch::MainWindow);
 			mgr->Register(new Patch::MemoryLeakBSString);
+			mgr->Register(new Patch::MemoryLeakInPreviewWindow);
 			mgr->Register(new Patch::MemoryManager);
+			mgr->Register(new Patch::ModernThemePatchAdditional);
 			mgr->Register(new Patch::NavMeshInfoMap);
 			mgr->Register(new Patch::NavMeshPseudoDelete);
+			mgr->Register(new Patch::NavMeshWindow);
 			mgr->Register(new Patch::NewFormat171);
 			mgr->Register(new Patch::NiCollisionObjectClonedWarning);
 			mgr->Register(new Patch::ObjectWindow);
@@ -228,6 +253,7 @@ namespace CKPE
 			mgr->Register(new Patch::UIHotkeys);
 			mgr->Register(new Patch::UnEquipSound);
 			mgr->Register(new Patch::Unicode);
+			mgr->Register(new Patch::UpdateUIWhenFogToggled);
 			mgr->Register(new Patch::VersionControlMergeWorkaround);
 			mgr->Register(new Patch::WeaponCriticalEffect);
 		}

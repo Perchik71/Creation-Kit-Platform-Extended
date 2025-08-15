@@ -29,7 +29,7 @@ namespace CKPE
 			Interface(const Interface&) = delete;
 			Interface& operator=(const Interface&) = delete;
 		public:
-			constexpr Interface() noexcept(true) = default;
+			Interface() noexcept(true) = default;
 			virtual ~Interface() noexcept(true);
 
 			void Initialize(const CKPEGameLibraryInterface* a_interface, std::uint64_t a_version, 

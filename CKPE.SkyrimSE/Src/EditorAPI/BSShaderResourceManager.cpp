@@ -16,7 +16,7 @@ namespace CKPE
 
 			std::uintptr_t pointer_PickGetRecord_sub = 0;
 
-			bool BSShaderResourceManager_CK::FindIntersectionsTriShapeFastPath(NiPoint3& kOrigin, const NiPoint3& kDir, 
+			bool BSShaderResourceManager::FindIntersectionsTriShapeFastPath(NiPoint3& kOrigin, const NiPoint3& kDir, 
 				NiPick& kPick, BSTriShape* pkTriShape)
 			{
 				if (pkTriShape->m_TriangleCount <= 0 || !pkTriShape->QRendererData())
@@ -145,7 +145,7 @@ namespace CKPE
 
 						if (NiCollisionUtils::IntersectTriangle(kModelOrigin, kModelDir, v[0], v[1], v[2], kPick.GetFrontOnly(), intersect, lineParam, triParam1, triParam2))
 						{
-							auto record = ((NiPick::Record * (__fastcall*)(std::uintptr_t, BSTriShape*))pointer_PickGetRecord_sub)((std::uintptr_t)&kPick + 0x20, pkTriShape);
+							auto record = ((NiPick::Record* (__fastcall*)(std::uintptr_t, BSTriShape*))pointer_PickGetRecord_sub)((std::uintptr_t)&kPick + 0x20, pkTriShape);
 							intersectionFound = true;
 
 							// Ray intersection point
@@ -205,7 +205,7 @@ namespace CKPE
 				return intersectionFound;
 			}
 
-			bool BSShaderResourceManager_CK::FindIntersectionsTriShapeFastPathEx(NiPoint3& kOrigin, const NiPoint3& kDir, 
+			bool BSShaderResourceManager::FindIntersectionsTriShapeFastPathEx(NiPoint3& kOrigin, const NiPoint3& kDir, 
 				NiPick& kPick, class BSTriShape* pkTriShape) {
 				//
 				// This function is for the new version of CK. 

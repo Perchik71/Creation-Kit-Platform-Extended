@@ -119,6 +119,7 @@
     <ClCompile Include="Src\CKPE.Common.UIRichEdit20.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIScrollBar.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIStatusBar.cpp" />
+    <ClCompile Include="Src\CKPE.Common.UITimeOfDay.cpp" />
     <ClCompile Include="Src\CKPE.Common.UIToolBar.cpp" />
     <ClCompile Include="Src\CKPE.Common.UITrackBar.cpp" />
     <ClCompile Include="Src\CKPE.Common.UITreeView.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Include\CKPE.Common.UIRichEdit20.h" />
     <ClInclude Include="Include\CKPE.Common.UIScrollBar.h" />
     <ClInclude Include="Include\CKPE.Common.UIStatusBar.h" />
+    <ClInclude Include="Include\CKPE.Common.UITimeOfDay.h" />
     <ClInclude Include="Include\CKPE.Common.UIToolBar.h" />
     <ClInclude Include="Include\CKPE.Common.UITrackBar.h" />
     <ClInclude Include="Include\CKPE.Common.UITreeView.h" />
