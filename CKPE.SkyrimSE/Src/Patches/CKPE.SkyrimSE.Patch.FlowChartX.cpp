@@ -52,25 +52,11 @@ namespace CKPE
 				auto _interface = CKPE::Common::Interface::GetSingleton();
 				auto base = _interface->GetApplication()->GetBase();
 
-				switch (db->GetVersion())
-				{
-				case 1:
-					//
-					// FlowChartX needs to be registered as a COM server dll (DllRegisterServer), 
-					// but it never tells you that administrator permissions are required.
-					//
-					Detours::DetourCall(__CKPE_OFFSET(0), (uintptr_t)&sub);
-					return true;
-				case 2:
-					//
-					// Did the developers at Bethesda find this superfluous? lol.
-					// Okay...
-					//
-					Detours::DetourCall(__CKPE_OFFSET(0), (uintptr_t)&HKCoGetClassObject);
-					return true;
-				default:
+				if (db->GetVersion() != 1)
 					return false;
-				}
+
+				for (std::uint32_t i = 0; i < db->GetCount(); i++)
+					Detours::DetourCall(__CKPE_OFFSET(i), (std::uintptr_t)&sub);
 
 				return true;
 			}
@@ -81,14 +67,6 @@ namespace CKPE
 					"Note that the Creation Kit needs to be run as administrator at least one time to register FlowChartX. "
 					"If this does not help, then run the console as an administrator and run the command: regsvr32 flowchartx64.dll.\n"
 					"Of course, the current directory should be a game directory.");
-			}
-
-			std::int64_t FlowChartX::HKCoGetClassObject(void* rclsid, std::uint32_t dwClsContext, void* pvReserved,
-				void* riid, void** ppv) noexcept(true)
-			{
-				HRESULT hr = CoGetClassObject((REFCLSID)rclsid, dwClsContext, pvReserved, (REFIID)riid, ppv);
-				if (FAILED(hr)) sub();
-				return hr;
 			}
 		}
 	}

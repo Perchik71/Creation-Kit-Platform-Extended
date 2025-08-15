@@ -28,8 +28,6 @@ namespace CKPE
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
 
 				static void sub() noexcept(true);
-				static std::int64_t HKCoGetClassObject(void* rclsid, std::uint32_t dwClsContext, void* pvReserved,
-					void* riid, void** ppv) noexcept(true);
 			};
 		}
 	}
