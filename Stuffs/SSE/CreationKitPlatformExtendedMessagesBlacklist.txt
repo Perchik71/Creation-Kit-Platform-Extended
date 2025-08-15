@@ -1,171 +1,172 @@
 Placeholder entry
 ASSERTION: Tried to set a character outside the range of the string. (e:\_skyrimhd\code\gamesln\bscore\bsstring.h line 731)
 ASSERTION: This functor is only inteded to be called offline. (e:\_skyrimhd\code\gamesln\bsmain\bsninodeutils.cpp line 28)
-MASTERFILE: Potentially duplicate Land (000028df) encountered in file Dawnguard.esm.
-MASTERFILE: Potentially duplicate Land (000028fd) encountered in file Dawnguard.esm.
-QUESTS: Could not find previous info (02004DE6) for TopicInfo (02018B1D) in Topic "" (02004DAA).
-QUESTS: Could not find previous info (02015C85) for TopicInfo (02015C86) in Topic "" (02004DAA).
-QUESTS: Could not find previous info (02013721) for TopicInfo (02013722) in Topic "DLC1VQ03VampireShared" (020098B2).
-QUESTS: Could not find previous info (0201329B) for TopicInfo (02013709) in Topic "DLC1VQ03VampireShared" (020098B2).
-FORMS: Non-parent CONT form 'MerchantCaravanCChest' (0007434E) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent CONT form 'MerchantCaravanBChest' (0007434D) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent CONT form 'MerchantCaravanAChest' (0007434B) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-EDITOR: Editor ID 'DweRmSmCounter01Half' for STAT (03003F0D) is not unique, previous object (02003F0D) is type STAT. Editor ID will be set to 'DweRmSmCounter01HalfDUPLICATE001'.
-FORMS: Non-parent REFR form 'WRShackDoor01' (000166A9) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (000CB4F4) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (000CB4F3) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent REFR form 'WETrigger' (00099C60) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent REFR form 'WETrigger' (0008F645) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (00101F29) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (00101F2B) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (00101F26) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (00101F30) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (00101F2F) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (00101F2E) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (00101F2D) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (00101F34) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (000EF63C) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (000EF63B) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (000EA181) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (001050E5) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (001050D4) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (00105A90) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (00105A8F) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (00105A8E) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (00105A8D) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (00105A75) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (00105A6E) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (000F2E24) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (000F13F4) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (000F13F3) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (000F13F2) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (000F065F) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (00108B64) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent NAVM form '' (00108B63) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-QUESTS: Could not find previous info (03003ECB) for TopicInfo (03003ECC) in Topic "RelationshipAdoption_SharedInfos" (03003D00).
-QUESTS: Could not find previous info (03003EFE) for TopicInfo (03003EFF) in Topic "RelationshipAdoption_JustAdoptedBranchTopic" (03003D23).
-QUESTS: Could not find previous info (0301770C) for TopicInfo (0301770D) in Topic "BYOHHousePalePurchaseTopic" (03017709).
-FORMS: Non-parent IDLE form 'ReactionToPlayer' (0002F61F) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-EDITOR: Editor ID 'IdleChildCryingEnd' for IDLE (03018300) is not unique, previous object (020029D4) is type IDLE. Editor ID will be set to 'IdleChildCryingEndDUPLICATE001'.
-EDITOR: Editor ID 'IdleChildCryingStart' for IDLE (030182FF) is not unique, previous object (020029D3) is type IDLE. Editor ID will be set to 'IdleChildCryingStartDUPLICATE001'.
-EDITOR: Editor ID 'AnimObjectWoodScrap' for ANIO (03014352) is not unique, previous object (02013795) is type ANIO. Editor ID will be set to 'AnimObjectWoodScrapDUPLICATE001'.
-EDITOR: Editor ID 'AnimObjectDrawBlade' for ANIO (0300A256) is not unique, previous object (02013794) is type ANIO. Editor ID will be set to 'AnimObjectDrawBladeDUPLICATE001'.
-FORMS: Non-parent LCTN form 'SolitudeLocation' (00018A5A) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent LCTN form 'MarkarthLocation' (00018A59) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent LCTN form 'RiftenLocation' (00018A58) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent LCTN form 'WhiterunLocation' (00018A56) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent LCTN form 'MorthalLocation' (00018A53) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent LCTN form 'FalkreathLocation' (00018A49) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent SMBN form 'WIChangeLocationNode' (000A39C6) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
-FORMS: Non-parent MGEF form 'VoiceFireBreathEffect1' (00020E16) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-EDITOR: Editor ID 'SummonValorTargetFXActivator' for ACTI (04028214) is not unique, previous object (020142BE) is type ACTI. Editor ID will be set to 'SummonValorTargetFXActivatorDUPLICATE001'.
-EDITOR: Editor ID 'DLC1GroundAmbush01' for FURN (04034F98) is not unique, previous object (0200825D) is type FURN. Editor ID will be set to 'DLC1GroundAmbushDUPLICATE002'.
-FORMS: Non-parent REFR form 'PickaxeMiningTableMarker' (0010D7F1) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-FORMS: Non-parent INFO form '' (000DE50E) exists in both file 'Dragonborn.esm' and 'HearthFires.esm'
-FORMS: Non-parent INFO form '' (000B0EE9) exists in both file 'Dragonborn.esm' and 'HearthFires.esm'
-QUESTS: Could not find previous info (04036A5F) for TopicInfo (04036A60) in Topic "" (04017E6A).
-QUESTS: Could not find previous info (0402BA29) for TopicInfo (0402BA2A) in Topic "" (0402B9F9).
-QUESTS: Could not find previous info (0402BA1A) for TopicInfo (0402BA19) in Topic "" (0402B9FB).
-QUESTS: Could not find previous info (04035C0D) for TopicInfo (04038ABE) in Topic "" (0403177A).
-QUESTS: Could not find previous info (04035BF8) for TopicInfo (04035BF9) in Topic "" (04032088).
-QUESTS: Could not find previous info (0402BA22) for TopicInfo (0402BA23) in Topic "" (0403208A).
-QUESTS: Could not find previous info (04035BFF) for TopicInfo (04035C00) in Topic "" (0403208D).
-FORMS: Non-parent QUST form 'DA04' (0002D512) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-FORMS: Non-parent IDLE form 'IdleDrinkFountain' (00102012) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-EDITOR: Editor ID 'DraugrGroundLayExit' for IDLE (04034F9A) is not unique, previous object (020058AC) is type IDLE. Editor ID will be set to 'DraugrGroundLayExitDUPLICATE001'.
-EDITOR: Editor ID 'DraugrGroundLayEnterInstant' for IDLE (04034F99) is not unique, previous object (020058AB) is type IDLE. Editor ID will be set to 'DraugrGroundLayEnterInstantDUPLICATE001'.
-FORMS: Non-parent IDLE form 'DraugrSlouched2EnterInstant' (00089A92) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-EDITOR: Editor ID 'DraugrSummonedStart' for IDLE (04031DA0) is not unique, previous object (020023E5) is type IDLE. Editor ID will be set to 'DraugrSummonedStartDUPLICATE001'.
-EDITOR: Editor ID 'DraugrSummonedStartRoot' for IDLE (04031D9F) is not unique, previous object (020023E4) is type IDLE. Editor ID will be set to 'DraugrSummonedStartRootDUPLICATE001'.
-FORMS: Non-parent IDLE form 'EnterChairCHILDInstant' (001090B1) exists in both file 'Dragonborn.esm' and 'HearthFires.esm'
-FORMS: Non-parent IDLE form 'IdleBlessingKneel' (000F11EC) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-FORMS: Non-parent IDLE form 'MountedBowZoom' (01000986) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-FORMS: Non-parent IDLE form 'AttackRightSide' (01000981) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-FORMS: Non-parent PERK form 'HackAndSlash90' (000C3679) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-FORMS: Non-parent PERK form 'HackAndSlash60' (000C3678) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-FORMS: Non-parent PERK form 'HackAndSlash30' (0003FFFA) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-FORMS: Non-parent PERK form 'Warmaster' (0003AFA7) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-FORMS: Non-parent LCTN form 'VirtualLocation' (00018ED2) exists in both file 'Dragonborn.esm' and 'HearthFires.esm'
-FORMS: Non-parent LCTN form 'DeepFolkCrossingLocation' (000B2391) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-FORMS: Non-parent SMBN form 'WEQuestNode' (000896A8) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-FORMS: Non-parent SMBN form 'WIScriptEventBranchNode' (0006D1E6) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-FORMS: Non-parent SMBN form 'DungeonNode' (00030B13) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-FORMS: Non-parent SMQN form 'WICourierNodeSharesEvent' (00039FBD) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-FORMS: Non-parent SMEN form '(Uninitialized event node)' (0001320E) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
-EDITOR: Editor ID 'NPCHumanWorkbenchHammerDistant' for SNDR (04035C21) is not unique, previous object (03017ECC) is type SNDR. Editor ID will be set to 'NPCHumanWorkbenchHammerDistantDUPLICATE001'.
-EDITOR: Editor ID 'NPCHumanWorkbenchHammer' for SNDR (04035C20) is not unique, previous object (03017ECB) is type SNDR. Editor ID will be set to 'NPCHumanWorkbenchHammerDUPLICATE001'.
-MASTERFILE: Armor 'DLC01ReaperBracers' (0201A755) used invalid Biped Object slot 33 for race 'SkeletonRace'.
-MASTERFILE: Unique ActorBase 'DLC01SoulCairnReaper' (0201A73E) has more than one reference in the world. Data access when unloaded may not work correctly.
-MASTERFILE: Unable to find Package Target Reference (00000000) on owner object "DLC1VQ02SeranaPullLever".
-MASTERFILE: Automatic door 'AutoLoadDoor01' (00015E1D) [324 units] in cell 'YngolBarrowExterior' has its teleport marker too close to the linked door.
-MASTERFILE: Cell contains more than one water current marker: 'Wilderness' (0000954C) (-12, 3) in WorldSpace 'Tamriel' (0000003C)
-MASTERFILE: Automatic door 'WRShackDoorMinUse01' (0006767F) [48 units] in cell 'WhiterunExterior10' has its teleport marker too close to the linked door.
-MASTERFILE: Automatic door 'AutoLoadDoor01' (0001779F) [125 units] in cell 'KarthwastenExterior03' has its teleport marker too close to the linked door.
-MASTERFILE: Automatic door 'ShipTrapdoor01MinUseHidden' (00099315) [0 units] in cell 'Wilderness' has its teleport marker too close to the linked door.
-MASTERFILE: Unable to find attach ref 02006718. Attach ref data will be removed.
-MASTERFILE: Unable to find attach ref 02006718. Attach ref data will be removed.
-MASTERFILE: Unable to find attach ref 02006718. Attach ref data will be removed.
-MASTERFILE: Automatic door 'dunda14PortalDoor01' (0003DC3F) [287 units] in cell 'DA14Interior' has its teleport marker too close to the linked door.
-MASTERFILE: Automatic door 'AutoLoadDoor01' (00015D12) [307 units] in cell 'WolfskullCave01' has its teleport marker too close to the linked door.
-MASTERFILE: Automatic door 'HelgenKeep01btoExteriorREF' (000909D2) [275 units] in cell 'HelgenKeep01' has its teleport marker too close to the linked door.
-MASTERFILE: Automatic door 'HelgenKeeptoExterior01REF' (0005DF95) [304 units] in cell 'HelgenKeep01' has its teleport marker too close to the linked door.
-MASTERFILE: Occlusion box has < 16.0 half-extent and should be switched to a plane : REFR Form '' (02014641) to STAT form 'PlaneMarker' (00000017) in Cell 'DLC1DawnguardHQ01' (02001DBA)
-MASTERFILE: Occlusion box has < 16.0 half-extent and should be switched to a plane : REFR Form '' (02014642) to STAT form 'PlaneMarker' (00000017) in Cell 'DLC1DawnguardHQ01' (02001DBA)
-MASTERFILE: Cell contains more than one COC marker:  'testFalmer' (0200362A)
-MASTERFILE: Cell contains more than one COC marker:  'testGiant' (02007D95)
-MASTERFILE: Idle 'DraugrSummonedStartRoot' (020023E4) has no parent and is not an action root.
-MASTERFILE: Multiple next idles for IDLE Form 'EnterTable' (00098C27).
-MASTERFILE: Multiple next idles for IDLE Form 'EnterTable' (00098C27).
-MASTERFILE: Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
-MASTERFILE: Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
-MASTERFILE: Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
-MASTERFILE: Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
-MASTERFILE: Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
-MASTERFILE: Multiple next idles for IDLE Form 'EnterTable' (00098C27).
-MASTERFILE: Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
-MASTERFILE: Multiple next idles for IDLE Form 'EnterTable' (00098C27).
-MASTERFILE: Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
-MASTERFILE: Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
-MASTERFILE: Multiple next idles for IDLE Form 'IdleCartTravelDriver' (00103446).
-MASTERFILE: Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
-MASTERFILE: Multiple next idles for IDLE Form 'IdleCartTravelDriver' (00103446).
-MASTERFILE: Multiple next idles for IDLE Form 'IdleCartTravelDriver' (00103446).
-MASTERFILE: Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
-MASTERFILE: Multiple next idles for IDLE Form 'EnterTable' (00098C27).
-MASTERFILE: Multiple next idles for IDLE Form 'IdleCartTravelDriver' (00103446).
-MASTERFILE: Multiple next idles for IDLE Form 'IdleCartTravelDriver' (00103446).
-MASTERFILE: Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
-MASTERFILE: Multiple next idles for IDLE Form 'IdleCartTravelDriver' (00103446).
-MASTERFILE: Invalid prev idle on IDLE Form 'DLC2_ChildSitOnKnees' (04031442)
-MASTERFILE: Invalid prev idle on IDLE Form 'StonePickUpRoot' (04034EF0)
-MASTERFILE: Invalid prev idle on IDLE Form 'IdleDLC02TentacleWordBurnRoot' (04039BAA)
-SCRIPTS: Property Collision on script DLC1VampireLordBlockerSCRIPT on DLC1VampireLordBlocker (02014760) is pointing at an invalid object
-QUESTS: Could not find previous info (02003ECB) for TopicInfo (02003ECC) in Topic "RelationshipAdoption_SharedInfos" (02003D00).
-QUESTS: Could not find previous info (02003EFE) for TopicInfo (02003EFF) in Topic "RelationshipAdoption_JustAdoptedBranchTopic" (02003D23).
-QUESTS: Could not find previous info (0201770C) for TopicInfo (0201770D) in Topic "BYOHHousePalePurchaseTopic" (02017709).
-QUESTS: Could not find previous info (02036A5F) for TopicInfo (02036A60) in Topic "" (02017E6A).
-QUESTS: Could not find previous info (0202BA29) for TopicInfo (0202BA2A) in Topic "" (0202B9F9).
-QUESTS: Could not find previous info (0202BA1A) for TopicInfo (0202BA19) in Topic "" (0202B9FB).
-QUESTS: Could not find previous info (02035C0D) for TopicInfo (02038ABE) in Topic "" (0203177A).
-QUESTS: Could not find previous info (02035BF8) for TopicInfo (02035BF9) in Topic "" (02032088).
-QUESTS: Could not find previous info (0202BA22) for TopicInfo (0202BA23) in Topic "" (0203208A).
-QUESTS: Could not find previous info (02035BFF) for TopicInfo (02035C00) in Topic "" (0203208D).
-QUESTS: Could not find previous info (02015C83) for TopicInfo (02015C84) in Topic "" (02004DAA).
-QUESTS: Could not find previous info (03003ECA) for TopicInfo (03003ECB) in Topic "RelationshipAdoption_SharedInfos" (03003D00).
-QUESTS: Could not find previous info (03013EF1) for TopicInfo (03013EF2) in Topic "RelationshipAdoption_FGPetTopic" (03013ECB).
-QUESTS: Could not find previous info (0402BA23) for TopicInfo (0402BA24) in Topic "" (0403208A).
-QUESTS: Could not find previous info (04035BFE) for TopicInfo (04035BFF) in Topic "" (0403208D).
-MASTERFILE: Cell contains more than one COC marker:  'POIReach24' (0000711B) (-40, 4) in WorldSpace 'Tamriel' (0000003C)
-MASTERFILE: Invalid prev idle on IDLE Form 'ChildSitOnKnees' (0300ED58)
-MASTERFILE: Invalid prev idle on IDLE Form 'IdleBloodPortalActivate' (0201503B)
-MASTERFILE: Ref 'EncElk' (000D1908) uses location but is not in the unloaded ref data.
-MASTERFILE: Ref 'EncElkFemale' (000D190A) uses location but is not in the unloaded ref data.
-MASTERFILE: Ref 'EncElkFemale' (000D1909) uses location but is not in the unloaded ref data.
-MASTERFILE: Special Ref 'TreasBanditChest' (000CE5FA) with type 'BossContainer' (000130F8) is not in the Special Ref data.
-QUESTS: Could not find previous info (02003ECA) for TopicInfo (02003ECB) in Topic "RelationshipAdoption_SharedInfos" (02003D00).
-QUESTS: Could not find previous info (02013EF1) for TopicInfo (02013EF2) in Topic "RelationshipAdoption_FGPetTopic" (02013ECB).
-QUESTS: Could not find previous info (0202BA23) for TopicInfo (0202BA24) in Topic "" (0203208A).
-QUESTS: Could not find previous info (02035BFE) for TopicInfo (02035BFF) in Topic "" (0203208D).
-DEFAULT: Setting key 'sControlsDefinitionFile' already used in list. Setting keys must be unique.
-DEFAULT: Setting key 'fMaxDistanceMoved:Pathfinding' already used in list. Setting keys must be unique.
-MASTERFILE: Did not find matching NavMeshInfo for NavMesh ID 00106EAA in cell Wilderness, Creating a temporary one
+[MASTERFILE] Potentially duplicate Land (000028df) encountered in file Dawnguard.esm.
+[MASTERFILE] Potentially duplicate Land (000028fd) encountered in file Dawnguard.esm.
+[QUESTS] Could not find previous info (02004DE6) for TopicInfo (02018B1D) in Topic "" (02004DAA).
+[QUESTS] Could not find previous info (02015C85) for TopicInfo (02015C86) in Topic "" (02004DAA).
+[QUESTS] Could not find previous info (02013721) for TopicInfo (02013722) in Topic "DLC1VQ03VampireShared" (020098B2).
+[QUESTS] Could not find previous info (0201329B) for TopicInfo (02013709) in Topic "DLC1VQ03VampireShared" (020098B2).
+[FORMS] Non-parent CONT form 'MerchantCaravanCChest' (0007434E) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent CONT form 'MerchantCaravanBChest' (0007434D) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent CONT form 'MerchantCaravanAChest' (0007434B) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[EDITOR] Editor ID 'DweRmSmCounter01Half' for STAT (03003F0D) is not unique, previous object (02003F0D) is type STAT. Editor ID will be set to 'DweRmSmCounter01HalfDUPLICATE001'.
+[FORMS] Non-parent REFR form 'WRShackDoor01' (000166A9) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (000CB4F4) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (000CB4F3) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent REFR form 'WETrigger' (00099C60) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent REFR form 'WETrigger' (0008F645) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (00101F29) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (00101F2B) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (00101F26) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (00101F30) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (00101F2F) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (00101F2E) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (00101F2D) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (00101F34) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (000EF63C) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (000EF63B) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (000EA181) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (001050E5) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (001050D4) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (00105A90) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (00105A8F) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (00105A8E) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (00105A8D) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (00105A75) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (00105A6E) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (000F2E24) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (000F13F4) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (000F13F3) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (000F13F2) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (000F065F) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (00108B64) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent NAVM form '' (00108B63) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[MASTERFILE] Automatic door 'HelgenKeeptoExterior01REF' (0005DF95) [304 units] in cell 'HelgenKeep01' has its teleport marker too close to the linked door.
+[QUESTS] Could not find previous info (03003ECB) for TopicInfo (03003ECC) in Topic "RelationshipAdoption_SharedInfos" (03003D00).
+[QUESTS] Could not find previous info (03003EFE) for TopicInfo (03003EFF) in Topic "RelationshipAdoption_JustAdoptedBranchTopic" (03003D23).
+[QUESTS] Could not find previous info (0301770C) for TopicInfo (0301770D) in Topic "BYOHHousePalePurchaseTopic" (03017709).
+[FORMS] Non-parent IDLE form 'ReactionToPlayer' (0002F61F) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[EDITOR] Editor ID 'IdleChildCryingEnd' for IDLE (03018300) is not unique, previous object (020029D4) is type IDLE. Editor ID will be set to 'IdleChildCryingEndDUPLICATE001'.
+[EDITOR] Editor ID 'IdleChildCryingStart' for IDLE (030182FF) is not unique, previous object (020029D3) is type IDLE. Editor ID will be set to 'IdleChildCryingStartDUPLICATE001'.
+[EDITOR] Editor ID 'AnimObjectWoodScrap' for ANIO (03014352) is not unique, previous object (02013795) is type ANIO. Editor ID will be set to 'AnimObjectWoodScrapDUPLICATE001'.
+[EDITOR] Editor ID 'AnimObjectDrawBlade' for ANIO (0300A256) is not unique, previous object (02013794) is type ANIO. Editor ID will be set to 'AnimObjectDrawBladeDUPLICATE001'.
+[FORMS] Non-parent LCTN form 'SolitudeLocation' (00018A5A) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent LCTN form 'MarkarthLocation' (00018A59) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent LCTN form 'RiftenLocation' (00018A58) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent LCTN form 'WhiterunLocation' (00018A56) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent LCTN form 'MorthalLocation' (00018A53) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent LCTN form 'FalkreathLocation' (00018A49) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent SMBN form 'WIChangeLocationNode' (000A39C6) exists in both file 'HearthFires.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent MGEF form 'VoiceFireBreathEffect1' (00020E16) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[EDITOR] Editor ID 'SummonValorTargetFXActivator' for ACTI (04028214) is not unique, previous object (020142BE) is type ACTI. Editor ID will be set to 'SummonValorTargetFXActivatorDUPLICATE001'.
+[EDITOR] Editor ID 'DLC1GroundAmbush01' for FURN (04034F98) is not unique, previous object (0200825D) is type FURN. Editor ID will be set to 'DLC1GroundAmbushDUPLICATE002'.
+[FORMS] Non-parent REFR form 'PickaxeMiningTableMarker' (0010D7F1) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent INFO form '' (000DE50E) exists in both file 'Dragonborn.esm' and 'HearthFires.esm'
+[FORMS] Non-parent INFO form '' (000B0EE9) exists in both file 'Dragonborn.esm' and 'HearthFires.esm'
+[QUESTS] Could not find previous info (04036A5F) for TopicInfo (04036A60) in Topic "" (04017E6A).
+[QUESTS] Could not find previous info (0402BA29) for TopicInfo (0402BA2A) in Topic "" (0402B9F9).
+[QUESTS] Could not find previous info (0402BA1A) for TopicInfo (0402BA19) in Topic "" (0402B9FB).
+[QUESTS] Could not find previous info (04035C0D) for TopicInfo (04038ABE) in Topic "" (0403177A).
+[QUESTS] Could not find previous info (04035BF8) for TopicInfo (04035BF9) in Topic "" (04032088).
+[QUESTS] Could not find previous info (0402BA22) for TopicInfo (0402BA23) in Topic "" (0403208A).
+[QUESTS] Could not find previous info (04035BFF) for TopicInfo (04035C00) in Topic "" (0403208D).
+[FORMS] Non-parent QUST form 'DA04' (0002D512) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent IDLE form 'IdleDrinkFountain' (00102012) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[EDITOR] Editor ID 'DraugrGroundLayExit' for IDLE (04034F9A) is not unique, previous object (020058AC) is type IDLE. Editor ID will be set to 'DraugrGroundLayExitDUPLICATE001'.
+[EDITOR] Editor ID 'DraugrGroundLayEnterInstant' for IDLE (04034F99) is not unique, previous object (020058AB) is type IDLE. Editor ID will be set to 'DraugrGroundLayEnterInstantDUPLICATE001'.
+[FORMS] Non-parent IDLE form 'DraugrSlouched2EnterInstant' (00089A92) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[EDITOR] Editor ID 'DraugrSummonedStart' for IDLE (04031DA0) is not unique, previous object (020023E5) is type IDLE. Editor ID will be set to 'DraugrSummonedStartDUPLICATE001'.
+[EDITOR] Editor ID 'DraugrSummonedStartRoot' for IDLE (04031D9F) is not unique, previous object (020023E4) is type IDLE. Editor ID will be set to 'DraugrSummonedStartRootDUPLICATE001'.
+[FORMS] Non-parent IDLE form 'EnterChairCHILDInstant' (001090B1) exists in both file 'Dragonborn.esm' and 'HearthFires.esm'
+[FORMS] Non-parent IDLE form 'IdleBlessingKneel' (000F11EC) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent IDLE form 'MountedBowZoom' (01000986) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent IDLE form 'AttackRightSide' (01000981) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent PERK form 'HackAndSlash90' (000C3679) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent PERK form 'HackAndSlash60' (000C3678) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent PERK form 'HackAndSlash30' (0003FFFA) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent PERK form 'Warmaster' (0003AFA7) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent LCTN form 'VirtualLocation' (00018ED2) exists in both file 'Dragonborn.esm' and 'HearthFires.esm'
+[FORMS] Non-parent LCTN form 'DeepFolkCrossingLocation' (000B2391) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent SMBN form 'WEQuestNode' (000896A8) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent SMBN form 'WIScriptEventBranchNode' (0006D1E6) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent SMBN form 'DungeonNode' (00030B13) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent SMQN form 'WICourierNodeSharesEvent' (00039FBD) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[FORMS] Non-parent SMEN form '(Uninitialized event node)' (0001320E) exists in both file 'Dragonborn.esm' and 'Dawnguard.esm'
+[EDITOR] Editor ID 'NPCHumanWorkbenchHammerDistant' for SNDR (04035C21) is not unique, previous object (03017ECC) is type SNDR. Editor ID will be set to 'NPCHumanWorkbenchHammerDistantDUPLICATE001'.
+[EDITOR] Editor ID 'NPCHumanWorkbenchHammer' for SNDR (04035C20) is not unique, previous object (03017ECB) is type SNDR. Editor ID will be set to 'NPCHumanWorkbenchHammerDUPLICATE001'.
+[MASTERFILE] Armor 'DLC01ReaperBracers' (0201A755) used invalid Biped Object slot 33 for race 'SkeletonRace'.
+[MASTERFILE] Unique ActorBase 'DLC01SoulCairnReaper' (0201A73E) has more than one reference in the world. Data access when unloaded may not work correctly.
+[MASTERFILE] Unable to find Package Target Reference (00000000) on owner object "DLC1VQ02SeranaPullLever".
+[MASTERFILE] Automatic door 'AutoLoadDoor01' (00015E1D) [324 units] in cell 'YngolBarrowExterior' has its teleport marker too close to the linked door.
+[MASTERFILE] Cell contains more than one water current marker] 'Wilderness' (0000954C) (-12, 3) in WorldSpace 'Tamriel' (0000003C)
+[MASTERFILE] Automatic door 'WRShackDoorMinUse01' (0006767F) [48 units] in cell 'WhiterunExterior10' has its teleport marker too close to the linked door.
+[MASTERFILE] Automatic door 'AutoLoadDoor01' (0001779F) [125 units] in cell 'KarthwastenExterior03' has its teleport marker too close to the linked door.
+[MASTERFILE] Automatic door 'ShipTrapdoor01MinUseHidden' (00099315) [0 units] in cell 'Wilderness' has its teleport marker too close to the linked door.
+[MASTERFILE] Unable to find attach ref 02006718. Attach ref data will be removed.
+[MASTERFILE] Unable to find attach ref 02006718. Attach ref data will be removed.
+[MASTERFILE] Unable to find attach ref 02006718. Attach ref data will be removed.
+[MASTERFILE] Automatic door 'dunda14PortalDoor01' (0003DC3F) [287 units] in cell 'DA14Interior' has its teleport marker too close to the linked door.
+[MASTERFILE] Automatic door 'AutoLoadDoor01' (00015D12) [307 units] in cell 'WolfskullCave01' has its teleport marker too close to the linked door.
+[MASTERFILE] Automatic door 'HelgenKeep01btoExteriorREF' (000909D2) [275 units] in cell 'HelgenKeep01' has its teleport marker too close to the linked door.
+[MASTERFILE] Automatic door 'HelgenKeeptoExterior01REF' (0005DF95) [304 units] in cell 'HelgenKeep01' has its teleport marker too close to the linked door.
+[MASTERFILE] Occlusion box has < 16.0 half-extent and should be switched to a plane ] REFR Form '' (02014641) to STAT form 'PlaneMarker' (00000017) in Cell 'DLC1DawnguardHQ01' (02001DBA)
+[MASTERFILE] Occlusion box has < 16.0 half-extent and should be switched to a plane ] REFR Form '' (02014642) to STAT form 'PlaneMarker' (00000017) in Cell 'DLC1DawnguardHQ01' (02001DBA)
+[MASTERFILE] Cell contains more than one COC marker]  'testFalmer' (0200362A)
+[MASTERFILE] Cell contains more than one COC marker]  'testGiant' (02007D95)
+[MASTERFILE] Idle 'DraugrSummonedStartRoot' (020023E4) has no parent and is not an action root.
+[MASTERFILE] Multiple next idles for IDLE Form 'EnterTable' (00098C27).
+[MASTERFILE] Multiple next idles for IDLE Form 'EnterTable' (00098C27).
+[MASTERFILE] Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
+[MASTERFILE] Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
+[MASTERFILE] Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
+[MASTERFILE] Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
+[MASTERFILE] Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
+[MASTERFILE] Multiple next idles for IDLE Form 'EnterTable' (00098C27).
+[MASTERFILE] Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
+[MASTERFILE] Multiple next idles for IDLE Form 'EnterTable' (00098C27).
+[MASTERFILE] Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
+[MASTERFILE] Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
+[MASTERFILE] Multiple next idles for IDLE Form 'IdleCartTravelDriver' (00103446).
+[MASTERFILE] Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
+[MASTERFILE] Multiple next idles for IDLE Form 'IdleCartTravelDriver' (00103446).
+[MASTERFILE] Multiple next idles for IDLE Form 'IdleCartTravelDriver' (00103446).
+[MASTERFILE] Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
+[MASTERFILE] Multiple next idles for IDLE Form 'EnterTable' (00098C27).
+[MASTERFILE] Multiple next idles for IDLE Form 'IdleCartTravelDriver' (00103446).
+[MASTERFILE] Multiple next idles for IDLE Form 'IdleCartTravelDriver' (00103446).
+[MASTERFILE] Multiple next idles for IDLE Form 'IdleTGFalmerStatue' (000DBE41).
+[MASTERFILE] Multiple next idles for IDLE Form 'IdleCartTravelDriver' (00103446).
+[MASTERFILE] Invalid prev idle on IDLE Form 'DLC2_ChildSitOnKnees' (04031442)
+[MASTERFILE] Invalid prev idle on IDLE Form 'StonePickUpRoot' (04034EF0)
+[MASTERFILE] Invalid prev idle on IDLE Form 'IdleDLC02TentacleWordBurnRoot' (04039BAA)
+[SCRIPTS] Property Collision on script DLC1VampireLordBlockerSCRIPT on DLC1VampireLordBlocker (02014760) is pointing at an invalid object
+[QUESTS] Could not find previous info (02003ECB) for TopicInfo (02003ECC) in Topic "RelationshipAdoption_SharedInfos" (02003D00).
+[QUESTS] Could not find previous info (02003EFE) for TopicInfo (02003EFF) in Topic "RelationshipAdoption_JustAdoptedBranchTopic" (02003D23).
+[QUESTS] Could not find previous info (0201770C) for TopicInfo (0201770D) in Topic "BYOHHousePalePurchaseTopic" (02017709).
+[QUESTS] Could not find previous info (02036A5F) for TopicInfo (02036A60) in Topic "" (02017E6A).
+[QUESTS] Could not find previous info (0202BA29) for TopicInfo (0202BA2A) in Topic "" (0202B9F9).
+[QUESTS] Could not find previous info (0202BA1A) for TopicInfo (0202BA19) in Topic "" (0202B9FB).
+[QUESTS] Could not find previous info (02035C0D) for TopicInfo (02038ABE) in Topic "" (0203177A).
+[QUESTS] Could not find previous info (02035BF8) for TopicInfo (02035BF9) in Topic "" (02032088).
+[QUESTS] Could not find previous info (0202BA22) for TopicInfo (0202BA23) in Topic "" (0203208A).
+[QUESTS] Could not find previous info (02035BFF) for TopicInfo (02035C00) in Topic "" (0203208D).
+[QUESTS] Could not find previous info (02015C83) for TopicInfo (02015C84) in Topic "" (02004DAA).
+[QUESTS] Could not find previous info (03003ECA) for TopicInfo (03003ECB) in Topic "RelationshipAdoption_SharedInfos" (03003D00).
+[QUESTS] Could not find previous info (03013EF1) for TopicInfo (03013EF2) in Topic "RelationshipAdoption_FGPetTopic" (03013ECB).
+[QUESTS] Could not find previous info (0402BA23) for TopicInfo (0402BA24) in Topic "" (0403208A).
+[QUESTS] Could not find previous info (04035BFE) for TopicInfo (04035BFF) in Topic "" (0403208D).
+[MASTERFILE] Cell contains more than one COC marker]  'POIReach24' (0000711B) (-40, 4) in WorldSpace 'Tamriel' (0000003C)
+[MASTERFILE] Invalid prev idle on IDLE Form 'ChildSitOnKnees' (0300ED58)
+[MASTERFILE] Invalid prev idle on IDLE Form 'IdleBloodPortalActivate' (0201503B)
+[MASTERFILE] Ref 'EncElk' (000D1908) uses location but is not in the unloaded ref data.
+[MASTERFILE] Ref 'EncElkFemale' (000D190A) uses location but is not in the unloaded ref data.
+[MASTERFILE] Ref 'EncElkFemale' (000D1909) uses location but is not in the unloaded ref data.
+[MASTERFILE] Special Ref 'TreasBanditChest' (000CE5FA) with type 'BossContainer' (000130F8) is not in the Special Ref data.
+[QUESTS] Could not find previous info (02003ECA) for TopicInfo (02003ECB) in Topic "RelationshipAdoption_SharedInfos" (02003D00).
+[QUESTS] Could not find previous info (02013EF1) for TopicInfo (02013EF2) in Topic "RelationshipAdoption_FGPetTopic" (02013ECB).
+[QUESTS] Could not find previous info (0202BA23) for TopicInfo (0202BA24) in Topic "" (0203208A).
+[QUESTS] Could not find previous info (02035BFE) for TopicInfo (02035BFF) in Topic "" (0203208D).
+[DEFAULT] Setting key 'sControlsDefinitionFile' already used in list. Setting keys must be unique.
+[DEFAULT] Setting key 'fMaxDistanceMoved:Pathfinding' already used in list. Setting keys must be unique.
+[MASTERFILE] Did not find matching NavMeshInfo for NavMesh ID 00106EAA in cell Wilderness, Creating a temporary one

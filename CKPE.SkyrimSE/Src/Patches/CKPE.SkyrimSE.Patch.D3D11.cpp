@@ -10,6 +10,7 @@
 #include <imgui.h>
 #include <backends/imgui_impl_win32.h>
 #include <backends/imgui_impl_dx11.h>
+#include <CKPE.Utils.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Detours.h>
 #include <CKPE.Patterns.h>
@@ -115,6 +116,14 @@ namespace CKPE
 				return newPtr(pAdapter, DriverType, Software, Flags, pFeatureLevels, FeatureLevels, SDKVersion, pSwapChainDesc, ppSwapChain, ppDevice, pFeatureLevel, ppImmediateContext);
 			}
 
+			static std::uintptr_t old_Present = 0;
+
+			static HRESULT WINAPI HKPresent(IDXGISwapChain* This,  UINT SyncInterval, UINT Flags)
+			{
+				_MESSAGE("RA: %p", _ReturnAddress()); 
+				return fast_call<HRESULT>(old_Present, This, SyncInterval, Flags);
+			}
+
 			static HRESULT WINAPI HKD3D11CreateDeviceAndSwapChain(
 				IDXGIAdapter* pAdapter,
 				D3D_DRIVER_TYPE DriverType,
@@ -204,6 +213,8 @@ namespace CKPE
 				(*ppDevice)->SetExceptionMode(D3D11_RAISE_FLAG_DRIVER_INTERNAL_ERROR);
 				pointer_dxgiSwapChain = *ppSwapChain;
 
+				//old_Present = Detours::DetourClassVTable(*(std::uintptr_t*)pointer_dxgiSwapChain, HKPresent, 8);
+
 				IMGUI_CHECKVERSION();
 				ImGui::CreateContext();
 
@@ -224,7 +235,7 @@ namespace CKPE
 				imguiFonts[2] = io.Fonts->AddFontFromFileTTF((ps + "\\consola.ttf").c_str(), 10.0f, nullptr, GlobalFontRanges);
 				if (!imguiFonts[0] || !imguiFonts[1] || !imguiFonts[2])
 					return E_FAIL;
-
+				
 				ImGui_ImplWin32_Init(pSwapChainDesc->OutputWindow);
 				ImGui_ImplDX11_Init(*ppDevice, *ppImmediateContext);
 
@@ -312,7 +323,7 @@ namespace CKPE
 
 				CKPE_ASSERT_MSG(ptrCreateDXGIFactory, "CreateDXGIFactory import not found");
 				CKPE_ASSERT_MSG(ptrD3D11CreateDeviceAndSwapChain, "D3D11CreateDeviceAndSwapChain import not found");
-
+				
 				Detours::DetourIAT(base, "dxgi.dll", "CreateDXGIFactory", (std::uintptr_t)HKCreateDXGIFactory);
 				Detours::DetourIAT(base, "d3d11.dll", "D3D11CreateDeviceAndSwapChain", (std::uintptr_t)HKD3D11CreateDeviceAndSwapChain);
 				

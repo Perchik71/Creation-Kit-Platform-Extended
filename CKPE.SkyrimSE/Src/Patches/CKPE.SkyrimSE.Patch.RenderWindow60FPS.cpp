@@ -69,7 +69,7 @@ namespace CKPE
 
 				// Remove lock framerate
 				text.Write(__CKPE_OFFSET(2), { 0xEB });
-				text.Write(__CKPE_OFFSET(3), { 0xEB });
+				text.WriteNop(__CKPE_OFFSET(3), 2);
 
 				return true;
 			}

@@ -87,7 +87,7 @@ namespace CKPE
 				void* riid, void** ppv) noexcept(true)
 			{
 				HRESULT hr = CoGetClassObject((REFCLSID)rclsid, dwClsContext, pvReserved, (REFIID)riid, ppv);
-				if (hr) sub();
+				if (FAILED(hr)) sub();
 				return hr;
 			}
 		}
