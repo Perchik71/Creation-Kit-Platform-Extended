@@ -10,7 +10,6 @@
 #include <imgui.h>
 #include <backends/imgui_impl_win32.h>
 #include <backends/imgui_impl_dx11.h>
-#include <CKPE.Utils.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Detours.h>
 #include <CKPE.Patterns.h>
@@ -118,12 +117,6 @@ namespace CKPE
 
 			static std::uintptr_t old_Present = 0;
 
-			static HRESULT WINAPI HKPresent(IDXGISwapChain* This,  UINT SyncInterval, UINT Flags)
-			{
-				_MESSAGE("RA: %p", _ReturnAddress()); 
-				return fast_call<HRESULT>(old_Present, This, SyncInterval, Flags);
-			}
-
 			static HRESULT WINAPI HKD3D11CreateDeviceAndSwapChain(
 				IDXGIAdapter* pAdapter,
 				D3D_DRIVER_TYPE DriverType,
@@ -212,8 +205,6 @@ namespace CKPE
 
 				(*ppDevice)->SetExceptionMode(D3D11_RAISE_FLAG_DRIVER_INTERNAL_ERROR);
 				pointer_dxgiSwapChain = *ppSwapChain;
-
-				//old_Present = Detours::DetourClassVTable(*(std::uintptr_t*)pointer_dxgiSwapChain, HKPresent, 8);
 
 				IMGUI_CHECKVERSION();
 				ImGui::CreateContext();

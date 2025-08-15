@@ -72,12 +72,12 @@ namespace CKPE
 				auto rel = __CKPE_OFFSET(3);
 				SafeWrite::WriteNop(rel, 0xB);
 				Detours::DetourCall(rel, (uintptr_t)&DrawFrameEx);
-/*
+
 				*(uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::Update =
 					Detours::DetourClassJump(__CKPE_OFFSET(6), (uintptr_t)&EditorAPI::BGSRenderWindow::Pick::HKUpdate);
 				*(uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromTriShape = __CKPE_OFFSET(5);
 				Detours::DetourCall(__CKPE_OFFSET(4), 
-					(uintptr_t)&EditorAPI::BGSRenderWindow::Pick::HKGetRefFromTriShape);*/
+					(uintptr_t)&EditorAPI::BGSRenderWindow::Pick::HKGetRefFromTriShape);
 
 				return true;
 			}
