@@ -45,7 +45,8 @@ Possible errors.
 [Dio-Kyrie](https://github.com/Dio-Kyrie) (For the design of the readme)  
 
 # License
-The project itself is licensed by [LGPLv3](https://www.gnu.org/licenses/lgpl-3.0.html). <br />
+Starting with the v0.6 (commit [9d93970](https://github.com/Perchik71/Creation-Kit-Platform-Extended/commit/9d93970cc3918099c895872d46a24aa29a34db11)) project is licensed by [LGPLv3](https://www.gnu.org/licenses/lgpl-3.0.html). <br />
+Early versions is licensed by [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html) <br />
 Copyright © 2023-2025 aka perchik71. All rights reserved. <br />
 File `Stuffs\FO4\CreationKitPlatformExtended_FO4_Resources.pak` contains proprietary and not licensed files; the same applies to files in `d3dcompiler\*.*`. <br />
 Dependencies are under their respective licenses. 
