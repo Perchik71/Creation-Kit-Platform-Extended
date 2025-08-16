@@ -61,6 +61,7 @@ bGenerateFullDump=false					# Generates a full dump with more information, inclu
 fMipLODBias=-1.3						# Force set mipmap level bias value (value must be [-5.0 : 5.0] where there is less than 0.0, the further away the 0 mipmap is).
 uMaxAnisotropy=16						# Distortion visible in the texels of a three-dimensional object whose surface is oriented at an angle relative to the screen plane is called anisotropy (value must be [0 : 16]).
 fTAAJitter=0.125						# Fake frame offset, creating effect of frame movement, using bilinear texture (value must be [0.0 : 0.5]).
+fStepInRender=30.0						# Number of units when moving in the rendering window as in Starfield (value must be [15.0 : 100.0]).
 
 [FaceGen]
 bAutoCompressionDDS=true				# Texture compression during generation

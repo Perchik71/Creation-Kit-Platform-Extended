@@ -5,6 +5,7 @@
 #pragma once
 
 #include <EditorAPI/NiAPI/NiAVObject.h>
+#include <EditorAPI/NiAPI/NiTObjectArray.h>
 
 namespace CKPE
 {
@@ -16,11 +17,11 @@ namespace CKPE
 			{
 				class NiNode : public NiAVObject
 				{
+					NiTObjectArray<NiAVObject*> _array_objs;
 				public:
 					virtual ~NiNode() = default;
-
 				};
-				static_assert(sizeof(NiNode) == 0x110);
+				static_assert(sizeof(NiNode) == 0x128);
 			}
 		}
 	}

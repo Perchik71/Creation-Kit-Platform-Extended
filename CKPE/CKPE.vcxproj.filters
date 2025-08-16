@@ -92,6 +92,9 @@
     <ClCompile Include="Src\CKPE.Utils.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Keyboard.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -212,6 +215,9 @@
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.Singleton.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Keyboard.h">
       <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>

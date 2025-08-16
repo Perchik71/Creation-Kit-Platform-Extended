@@ -81,6 +81,7 @@
     <ClCompile Include="Src\CKPE.Common.D3D11Proxy.cpp" />
     <ClCompile Include="Src\CKPE.Common.DialogManager.cpp" />
     <ClCompile Include="Src\CKPE.Common.EditorUI.cpp" />
+    <ClCompile Include="Src\CKPE.Common.FormInfoOutputWindow.cpp" />
     <ClCompile Include="Src\CKPE.Common.Interface.cpp" />
     <ClCompile Include="Src\CKPE.Common.LogWindow.cpp" />
     <ClCompile Include="Src\CKPE.Common.MemoryManager.cpp" />
@@ -129,6 +130,7 @@
   <ItemGroup>
     <ClInclude Include="..\Dependencies\jDialogs\include\jdialogs.h" />
     <ClInclude Include="Include\CKPE.Common.AboutWindow.h" />
+    <ClInclude Include="Include\CKPE.Common.FormInfoOutputWindow.h" />
     <ClInclude Include="Include\CKPE.Common.PatchBaseWindow.h" />
     <ClInclude Include="Include\CKPE.Common.ClassicTheme.h" />
     <ClInclude Include="Include\CKPE.Common.Common.h" />

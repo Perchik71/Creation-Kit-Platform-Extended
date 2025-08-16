@@ -17,11 +17,11 @@ namespace CKPE
 				// sparse array, can have NULL entries that should be skipped
 				// iterate from 0 to m_emptyRunStart - 1
 				template <typename T>
-				class NiTArray
+				class NiTObjectArray
 				{
 				public:
-					NiTArray() = default;
-					virtual ~NiTArray() = default;
+					NiTObjectArray() = default;
+					virtual ~NiTObjectArray() = default;
 
 					T* Data;							// 08
 					std::uint16_t	ArrayBufLen;		// 10 - max elements storable in m_data

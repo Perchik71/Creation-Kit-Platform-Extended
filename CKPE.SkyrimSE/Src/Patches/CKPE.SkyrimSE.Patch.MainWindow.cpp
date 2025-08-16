@@ -10,6 +10,7 @@
 #include <CKPE.Graphics.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.LogWindow.h>
+#include <CKPE.Common.FormInfoOutputWindow.h>
 #include <CKPE.Common.UIVarCommon.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.EditorUI.h>
@@ -23,6 +24,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.Console.h>
 #include <Patches/CKPE.SkyrimSE.Patch.RenderWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ReEnableFog.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CellViewWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.MainWindow.h>
 #include "..\CKPE.Common\resource.h"
 
@@ -80,6 +82,20 @@ namespace CKPE
 				}
 			}
 
+			static void ShowDialogEdit(HWND Hwnd, LPARAM lParam)
+			{
+				__try
+				{
+					auto form = EditorAPI::Forms::TESForm::FindFormByFormID(static_cast<std::uint32_t>(lParam));
+					if (form)
+						form->EditFormToWindow((std::int64_t)Hwnd, 0, 1);
+				}
+				__except (1)
+				{
+					// skip fatal error
+				}
+			}
+
 			static void CreateExtensionMenu(HWND _MainWindow, HMENU _MainMenu) noexcept(true)
 			{
 				// Creating a submenu to open the hidden functions of the Creation Kit
@@ -110,9 +126,7 @@ namespace CKPE
 				ExtMenu.Append("Dump RTTI Data", MainWindow::UI_EXTMENU_DUMPRTTI);
 				ExtMenu.Append("Dump SDM Info", MainWindow::UI_EXTMENU_SDM);
 				ExtMenu.Append("Form Info Output", MainWindow::UI_EXTMENU_FORMINFOOUTPUT);
-
-				if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1130)
-					ExtMenu.Append("Toggle Anti-aliasing", MainWindow::UI_EXTMENU_TOGGLE_ANTIALIASING, true, true);
+				ExtMenu.Append("Toggle Anti-aliasing", MainWindow::UI_EXTMENU_TOGGLE_ANTIALIASING, true, true);
 
 #if CKPE_USES_TRACER
 				// Create tracer menu
@@ -313,15 +327,16 @@ namespace CKPE
 							return 0;
 							case Common::EditorUI::UI_EDITOR_TOGGLECELLVIEW:
 							{
-								/*GlobalCellViewWindowPtr->Visible = !GlobalCellViewWindowPtr->Visible;
-								auto MenuItem = 
+								auto wnd = CellViewWindow::Singleton.GetSingleton();
+								wnd->Visible = !wnd->Visible;
+								auto MenuItem =
 									MainWindow::Singleton->MainMenu.GetItem(Common::EditorUI::UI_EDITOR_TOGGLECELLVIEW);
-								MenuItem.Checked = !MenuItem.Checked;*/
+								MenuItem.Checked = !MenuItem.Checked;
 							}
 							return 0;
 							case Common::EditorUI::UI_EDITOR_OPENFORMBYID:
 							{
-								//show_dialog_edit(Hwnd, lParam);
+								ShowDialogEdit(Hwnd, lParam);
 							}
 							return 0;
 							case UI_EXTMENU_SHOWLOG:
@@ -336,13 +351,14 @@ namespace CKPE
 							return 0;
 							case UI_EXTMENU_FORMINFOOUTPUT:
 							{
-								//FormInfoOutputWindow Wnd;
-								//OutputFormInfo((uint32_t)Wnd.OpenModal(Hwnd));
+								Common::FormInfoOutputWindow Wnd;
+								OutputFormInfo((std::uint32_t)Wnd.OpenModal(Hwnd));
 							}
 							return 0;
 							case Common::EditorUI::UI_EDITOR_TOGGLEOBJECTWND:
 							{
-								for (auto& Wnd : ObjectWindows) {
+								for (auto& Wnd : ObjectWindows) 
+								{
 									Wnd.second->ObjectWindow.Visible = !Wnd.second->ObjectWindow.Visible;
 									if (Wnd.second->ObjectWindow.Visible)
 										Wnd.second->ObjectWindow.Foreground();

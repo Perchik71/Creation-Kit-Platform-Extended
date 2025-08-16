@@ -6,6 +6,7 @@
 
 #include <CKPE.Common.h>
 #include <CKPE.Singleton.h>
+#include <CKPE.SkyrimSE.VersionLists.h>
 #include <EditorAPI/NiAPI/NiTypes.h>
 #include <EditorAPI/Forms/TESObjectREFR.h>
 #include "BGSClasses.h"
@@ -20,7 +21,7 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
-			// size 0x100
+			// size 0xE0
 			// func 2
 			class BGSRenderWindow
 			{
@@ -52,30 +53,50 @@ namespace CKPE
 					inline static Forms::TESObjectREFR* Result;
 					inline static Forms::TESObjectREFR* (*GetRefFromTriShape)(BSTriShape* TriShape);
 					inline static void* (*Update)(BGSRenderWindowReferenceEditModule* EditModule, POINT* MousePos, POINT* MousePos2);
-					inline static Forms::TESObjectREFR* HKGetRefFromTriShape(BSTriShape* TriShape)
+					inline static Forms::TESObjectREFR* HKGetRefFromTriShape(BSTriShape* TriShape) noexcept(true)
 					{
 						Result = GetRefFromTriShape(TriShape);
 						return Result;
 					}
-					inline static void* HKUpdate(BGSRenderWindowReferenceEditModule* EditModule, POINT* MousePos, POINT* MousePos2)
+					inline static void* HKUpdate(BGSRenderWindowReferenceEditModule* EditModule, 
+						POINT* MousePos, POINT* MousePos2) noexcept(true)
 					{
 						Result = nullptr;
 						return Update(EditModule, MousePos, MousePos2);
 					}
 				};
 
-				inline HWND GetWindowHandle() const { return _WindowHandle; }
-				inline SIZE GetWindowSize() const { return _WindowSize; }
-				inline POINT GetMousePos() const { return _MousePos[0]; }
-				inline POINT GetMousePosBefore() const { return _MousePos[1]; }
+				[[nodiscard]] constexpr inline HWND GetWindowHandle() const noexcept(true) { return _WindowHandle; }
+				
+				[[nodiscard]] constexpr inline SIZE GetWindowSize() const noexcept(true) 
+				{ 
+					return (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ?
+						difference.v1_5._WindowSize : difference.v1_6._WindowSize;
+				}
 
-				inline BGSRenderWindowEditModuleManager<BGSRenderWindow>* GetEditModuleManager() const { return _EditModuleManager; }
-				inline BGSRenderWindowBorder* GetBorder() const { return _Border; }
-				inline BGSRenderWindowCamera* GetCamera() const { return _Camera; }
-				inline BGSRenderOrthoGrid* GetOrthoGrid() const { return _OrthoGrid; }
-				inline BGSPickHandler<Forms::TESObjectREFR, BGSRenderWindow>* GetPickHandler() const { return _PickHandler; }
-				inline Forms::TESObjectCELL* GetCurrentCell() const { return _CurrentCell[0]; }
-				inline Forms::TESObjectCELL* GetCurrentCellParentExt() const { return _CurrentCell[1]; }
+				[[nodiscard]] constexpr inline POINT GetMousePos() const noexcept(true) 
+				{
+					return (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ?
+						difference.v1_5._MousePos[0] : difference.v1_6._MousePos[0];
+				}
+
+				[[nodiscard]] constexpr inline POINT GetMousePosBefore() const noexcept(true)
+				{ 
+					return (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ?
+						difference.v1_5._MousePos[1] : difference.v1_6._MousePos[1];
+				}
+
+				[[nodiscard]] inline BGSRenderWindowEditModuleManager<BGSRenderWindow>* GetEditModuleManager() const noexcept(true) { return _EditModuleManager; }
+				[[nodiscard]] inline BGSRenderWindowBorder* GetBorder() const noexcept(true) { return _Border; }
+				[[nodiscard]] inline BGSRenderWindowCamera* GetCamera() const noexcept(true) { return _Camera; }
+				[[nodiscard]] inline BGSRenderOrthoGrid* GetOrthoGrid() const noexcept(true) { return _OrthoGrid; }
+				[[nodiscard]] inline BGSPickHandler<Forms::TESObjectREFR, BGSRenderWindow>* GetPickHandler() const noexcept(true) { return _PickHandler; }
+				
+				[[nodiscard]] inline Forms::TESObjectCELL* GetCurrentCell() const noexcept(true) 
+				{ 
+					return (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ?
+						difference.v1_5._CurrentCell : difference.v1_6._CurrentCell[0];
+				}
 
 				CKPE_READ_PROPERTY(GetWindowHandle) HWND WindowHandle;
 				CKPE_READ_PROPERTY(GetWindowSize) SIZE WindowSize;
@@ -90,7 +111,7 @@ namespace CKPE
 				CKPE_READ_PROPERTY(GetCurrentCell) Forms::TESObjectCELL* CurrentCell;
 				CKPE_READ_PROPERTY(GetCurrentCellParentExt) Forms::TESObjectCELL* CurrentCellParentExt;
 			private:
-				struct SceneTag
+				struct SceneData
 				{
 					class ShadowSceneNode* _ShadowSceneNode;
 					NiNode* _UnkNode[2];
@@ -107,14 +128,29 @@ namespace CKPE
 				BGSPickHandler<Forms::TESObjectREFR, BGSRenderWindow>* _PickHandler;
 				BSCullingProcess* _CullingProcess;
 				BSPortalGraphEntry* _PortalGraphEntry;
-				SceneTag* _Scene;
-				Forms::TESObjectCELL* _CurrentCell[2];
-				char pad98[0x04];
-				SIZE _WindowSize;
-				POINT _MousePos[2];
-				char padB4[0x4C];
+				SceneData* _Scene;
+
+				union
+				{
+					struct _v1_5
+					{
+						Forms::TESObjectCELL* _CurrentCell;
+						char pad98[0x04];
+						SIZE _WindowSize;
+						POINT _MousePos[2];
+						char pad__[0x28];
+					} v1_5;
+					struct _v1_6
+					{
+						Forms::TESObjectCELL* _CurrentCell[2];
+						char pad98[0x04];
+						SIZE _WindowSize;
+						POINT _MousePos[2];
+						char pad__[0x28];
+					} v1_6;
+				} difference;
 			};
-			static_assert(sizeof(BGSRenderWindow) == 0x100);
+			static_assert(sizeof(BGSRenderWindow) == 0xE0);
 		}
 	}
 }

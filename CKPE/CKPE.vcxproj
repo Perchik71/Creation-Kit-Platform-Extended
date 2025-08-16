@@ -82,6 +82,7 @@
     <ClCompile Include="Src\CKPE.GDIPlus.cpp" />
     <ClCompile Include="Src\CKPE.Graphics.cpp" />
     <ClCompile Include="Src\CKPE.ImageList.cpp" />
+    <ClCompile Include="Src\CKPE.Keyboard.cpp" />
     <ClCompile Include="Src\CKPE.Math.cpp" />
     <ClCompile Include="Src\CKPE.Stream.cpp" />
     <ClCompile Include="Src\CKPE.GameManager.cpp" />
@@ -120,6 +121,7 @@
     <ClInclude Include="Include\CKPE.GDIPlus.h" />
     <ClInclude Include="Include\CKPE.Graphics.h" />
     <ClInclude Include="Include\CKPE.ImageList.h" />
+    <ClInclude Include="Include\CKPE.Keyboard.h" />
     <ClInclude Include="Include\CKPE.Math.h" />
     <ClInclude Include="Include\CKPE.Singleton.h" />
     <ClInclude Include="Include\CKPE.Stream.h" />

@@ -5,7 +5,7 @@
 #pragma once
 
 #include <CKPE.Singleton.h>
-#include <EditorAPI/NiAPI/NiTArray.h>
+#include <EditorAPI/NiAPI/NiTObjectArray.h>
 #include <EditorAPI/Forms/TESObjectREFR.h>
 #include <EditorAPI/Forms/TESObjectCELL.h>
 #include <EditorAPI/Forms/TESObjectLAND.h>
@@ -24,7 +24,7 @@ namespace CKPE
 		namespace EditorAPI
 		{
 			template<typename _Ty>
-			using NiTPrimitiveArray = NiAPI::NiTArray<_Ty>;
+			using NiTPrimitiveArray = NiAPI::NiTObjectArray<_Ty>;
 			using TESFormArray = BSTArray<Forms::TESForm*>;
 
 			class TESDataHandler

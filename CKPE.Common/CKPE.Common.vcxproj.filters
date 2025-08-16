@@ -158,6 +158,9 @@
     <ClCompile Include="Src\CKPE.Common.UITimeOfDay.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.FormInfoOutputWindow.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -341,6 +344,9 @@
     </ClInclude>
     <ClInclude Include="Include\CKPE.Common.UITimeOfDay.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.FormInfoOutputWindow.h">
+      <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

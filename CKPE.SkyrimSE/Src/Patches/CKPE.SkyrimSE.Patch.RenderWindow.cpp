@@ -7,6 +7,7 @@
 #include <imgui.h>
 #include <backends/imgui_impl_win32.h>
 #include <backends/imgui_impl_dx11.h>
+#include <CKPE.Keyboard.h>
 #include <CKPE.Detours.h>
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Graphics.h>
@@ -25,6 +26,8 @@ namespace CKPE
 			extern ID3D11DeviceContext* pointer_d3d11DeviceContext;
 			extern ImFont* imguiFonts[3];
 			extern std::uintptr_t gGlobAddrDeviceContext;
+
+			static float StepInRender = 15.f;
 
 			RenderWindow::RenderWindow() : Common::PatchBaseWindow()
 			{
@@ -64,6 +67,9 @@ namespace CKPE
 
 				auto _interface = Common::Interface::GetSingleton();
 				auto base = _interface->GetApplication()->GetBase();
+
+				StepInRender = _READ_OPTION_FLOAT("Graphics", "fStepInRender", 15.f);
+				StepInRender = std::min(std::max(StepInRender, 15.f), 100.f);
 
 				*(uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (uintptr_t)&HKWndProc);
 				Detours::DetourJump(__CKPE_OFFSET(1), (uintptr_t)&RenderWindow::setFlagLoadCell);
@@ -149,6 +155,68 @@ namespace CKPE
 						return 0;
 					default:
 						break;
+					}
+				}
+				else
+				{
+					if (Message == WM_KEYDOWN)
+					{
+						if (Keyboard::IsShiftPressed())
+						{
+							switch (wParam)
+							{
+							case 'W':
+							{
+								auto delta = StepInRender;
+								auto& local = const_cast<EditorAPI::NiAPI::NiTransform&>(
+									EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform());
+
+								local.m_Translate.x += local.m_Rotate.m_pEntry[0][1] * delta;
+								local.m_Translate.y += local.m_Rotate.m_pEntry[1][1] * delta;
+								local.m_Translate.z += local.m_Rotate.m_pEntry[2][1] * delta;
+								return 0;
+								break;
+							}
+							case 'S':
+							{
+								auto delta = -StepInRender;
+								auto& local = const_cast<EditorAPI::NiAPI::NiTransform&>(
+									EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform());
+
+								local.m_Translate.x += local.m_Rotate.m_pEntry[0][1] * delta;
+								local.m_Translate.y += local.m_Rotate.m_pEntry[1][1] * delta;
+								local.m_Translate.z += local.m_Rotate.m_pEntry[2][1] * delta;
+								break;
+							}
+							case 'A':
+							{
+								auto delta = -StepInRender;
+								auto& local = const_cast<EditorAPI::NiAPI::NiTransform&>(
+									EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform());
+
+								local.m_Translate.x += local.m_Rotate.m_pEntry[0][0] * delta;
+								local.m_Translate.y += local.m_Rotate.m_pEntry[1][0] * delta;
+								local.m_Translate.z += local.m_Rotate.m_pEntry[2][0] * delta;
+								return 0;
+								break;
+								break;
+							}
+							case 'D':
+							{
+								auto delta = StepInRender;
+								auto& local = const_cast<EditorAPI::NiAPI::NiTransform&>(
+									EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform());
+
+								local.m_Translate.x += local.m_Rotate.m_pEntry[0][0] * delta;
+								local.m_Translate.y += local.m_Rotate.m_pEntry[1][0] * delta;
+								local.m_Translate.z += local.m_Rotate.m_pEntry[2][0] * delta;
+								break;
+								break;
+							}
+							default:
+								break;
+							}
+						}
 					}
 				}
 
@@ -237,6 +305,15 @@ namespace CKPE
 
 					ImGui::TableNextColumn();
 					ImGui::Text("%.0f", io.Framerate);
+
+					auto ii = EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform();
+
+					ImGui::TableNextRow();
+					ImGui::TableNextColumn();
+					ImGui::Text("Camera:");
+
+					ImGui::TableNextColumn();
+					ImGui::Text("%.0f %.0f %.0f", ii.m_Translate.x, ii.m_Translate.y, ii.m_Translate.z);
 
 					ImGui::PopFont();
 					ImGui::EndTable();

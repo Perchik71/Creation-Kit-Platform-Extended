@@ -97,11 +97,11 @@ namespace CKPE
 				auto pNewButtons = std::make_unique<TBBUTTON[]>(iNumButtons);
 				auto verEditor = VersionLists::GetEditorVersion();
 
-				if (verEditor >= VersionLists::EDITOR_SKYRIM_SE_1_6_1130)
-				{
-					size_t aa_index = 19;
-					if (verEditor <= VersionLists::EDITOR_SKYRIM_SE_LAST)
-						aa_index++;
+				//if (verEditor >= VersionLists::EDITOR_SKYRIM_SE_1_6_1130)
+			//	{
+					size_t aa_index = 20;
+					//if (verEditor <= VersionLists::EDITOR_SKYRIM_SE_LAST)
+					//	aa_index++;
 
 					memcpy(pNewButtons.get(), lpButtons, sizeof(TBBUTTON) * aa_index);
 
@@ -111,9 +111,9 @@ namespace CKPE
 					pNewButtons[aa_index].fsState |= TBSTATE_CHECKED;
 
 					memcpy(&(pNewButtons.get())[aa_index + 1], &lpButtons[aa_index], sizeof(TBBUTTON) * ((size_t)iNumButtons - (aa_index + 1)));
-				}
-				else
-					memcpy(pNewButtons.get(), lpButtons, sizeof(TBBUTTON) * iNumButtons);
+		//		}
+			//	else
+			//		memcpy(pNewButtons.get(), lpButtons, sizeof(TBBUTTON) * iNumButtons);
 
 				if (Common::UI::GetTheme() == Common::UI::Theme_Custom)
 				{

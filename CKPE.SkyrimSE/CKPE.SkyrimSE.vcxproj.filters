@@ -666,7 +666,7 @@
     <ClInclude Include="Include\EditorAPI\NiAPI\NiTypes.h">
       <Filter>EditorAPI\NiAPI</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\NiAPI\NiTArray.h">
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTObjectArray.h">
       <Filter>EditorAPI\NiAPI</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\NiAPI\NiAVObject.h">

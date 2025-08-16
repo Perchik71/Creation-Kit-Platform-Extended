@@ -9,7 +9,6 @@
 #include <EditorAPI/NiAPI/NiMatrix.h>
 #include <EditorAPI/NiAPI/NiPoint.h>
 #include <EditorAPI/NiAPI/NiTransform.h>
-#include <EditorAPI/NiAPI/NiTArray.h>
 #include <EditorAPI/NiAPI/NiRefObject.h>
 
 namespace CKPE

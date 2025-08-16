@@ -58,17 +58,21 @@ namespace CKPE
 			public:
 				virtual ~BGSRenderWindowCamera() = default;
 
-				inline NiPoint3 GetPosition() const { return _Data->Position; }
-				inline ViewModeT GetViewMode() const { return _ViewMode; }
-				inline const char* GetViewModeByStr() const { return _ViewMode == Perspective ? "perspective" : "orthographic"; }
-				inline CameraModeT GetCameraMode() const { return _CameraMode; }
-				inline const char* GetCameraModeByStr() const { return CameraModeS[(int)_CameraMode]; }
+				[[nodiscard]] inline NiNode* GetNode() const noexcept(true) { return _Node; }
+				[[nodiscard]] inline NiMatrix3 GetRotate() const noexcept(true) { return _Node->GetLocalTransform().m_Rotate; }
+				[[nodiscard]] inline NiPoint3 GetPosition() const noexcept(true) { return _Node->GetLocalTransform().m_Translate; }
+				[[nodiscard]] inline ViewModeT GetViewMode() const noexcept(true) { return _ViewMode; }
+				[[nodiscard]] inline const char* GetViewModeByStr() const noexcept(true) { return _ViewMode == Perspective ? "perspective" : "orthographic"; }
+				[[nodiscard]] inline CameraModeT GetCameraMode() const noexcept(true) { return _CameraMode; }
+				[[nodiscard]] inline const char* GetCameraModeByStr() const noexcept(true) { return CameraModeS[(int)_CameraMode]; }
 
+				CKPE_READ_PROPERTY(GetNode) NiNode* Node;
+				CKPE_READ_PROPERTY(GetRotate) NiMatrix3 Rotate;
 				CKPE_READ_PROPERTY(GetPosition) NiPoint3 Position;
 				CKPE_READ_PROPERTY(GetViewMode) ViewModeT ViewMode;
 				CKPE_READ_PROPERTY(GetCameraMode) CameraModeT CameraMode;
 			private:
-				DataInfo* _Data;
+				NiNode* _Node;
 				NiCamera* _Camera;
 				ViewModeT _ViewMode;
 				CameraModeT _CameraMode;
