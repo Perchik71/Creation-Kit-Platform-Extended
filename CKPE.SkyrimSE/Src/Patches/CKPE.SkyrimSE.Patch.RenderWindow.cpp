@@ -85,6 +85,10 @@ namespace CKPE
 				Detours::DetourCall(__CKPE_OFFSET(4), 
 					(uintptr_t)&EditorAPI::BGSRenderWindow::Pick::HKGetRefFromTriShape);
 
+				// Enable drawing always
+				if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1130)
+					SafeWrite::WriteNop(__CKPE_OFFSET(7), 0x69);
+
 				return true;
 			}
 
@@ -99,7 +103,7 @@ namespace CKPE
 						Hwnd, Message, wParam, lParam);
 				}
 				////// Fix WHITE area (Eats my eyes at startup) (only 1.6.1130 or newer)
-				else if (Message == WM_PAINT)
+				/*else if (Message == WM_PAINT)
 				{
 					PAINTSTRUCT ps;
 					HDC dc = BeginPaint(Hwnd, &ps);
@@ -112,7 +116,7 @@ namespace CKPE
 
 					EndPaint(Hwnd, &ps);
 					return S_OK;
-				}
+				}*/
 				else if (Message == WM_ERASEBKGND)
 				{
 					// An application should return nonzero if it erases the background; otherwise, it should return zero.

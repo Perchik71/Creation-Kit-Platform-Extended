@@ -167,6 +167,6 @@ ASSERTION: This functor is only inteded to be called offline. (e:\_skyrimhd\code
 [QUESTS] Could not find previous info (02013EF1) for TopicInfo (02013EF2) in Topic "RelationshipAdoption_FGPetTopic" (02013ECB).
 [QUESTS] Could not find previous info (0202BA23) for TopicInfo (0202BA24) in Topic "" (0203208A).
 [QUESTS] Could not find previous info (02035BFE) for TopicInfo (02035BFF) in Topic "" (0203208D).
-[DEFAULT] Setting key 'sControlsDefinitionFile' already used in list. Setting keys must be unique.
-[DEFAULT] Setting key 'fMaxDistanceMoved:Pathfinding' already used in list. Setting keys must be unique.
+DEFAULT: Setting key 'sControlsDefinitionFile' already used in list. Setting keys must be unique.
+DEFAULT: Setting key 'fMaxDistanceMoved:Pathfinding' already used in list. Setting keys must be unique.
 [MASTERFILE] Did not find matching NavMeshInfo for NavMesh ID 00106EAA in cell Wilderness, Creating a temporary one

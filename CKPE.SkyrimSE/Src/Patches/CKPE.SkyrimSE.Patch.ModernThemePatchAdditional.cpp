@@ -97,23 +97,17 @@ namespace CKPE
 				auto pNewButtons = std::make_unique<TBBUTTON[]>(iNumButtons);
 				auto verEditor = VersionLists::GetEditorVersion();
 
-				//if (verEditor >= VersionLists::EDITOR_SKYRIM_SE_1_6_1130)
-			//	{
-					size_t aa_index = 20;
-					//if (verEditor <= VersionLists::EDITOR_SKYRIM_SE_LAST)
-					//	aa_index++;
+				std::size_t aa_index = 20;
 
-					memcpy(pNewButtons.get(), lpButtons, sizeof(TBBUTTON) * aa_index);
+				memcpy(pNewButtons.get(), lpButtons, sizeof(TBBUTTON) * aa_index);
 
-					pNewButtons[aa_index] = (pNewButtons.get())[aa_index - 1];
-					pNewButtons[aa_index].iBitmap = 59;
-					pNewButtons[aa_index].idCommand = UI_EXTMENU_TOGGLE_ANTIALIASING;
-					pNewButtons[aa_index].fsState |= TBSTATE_CHECKED;
+				pNewButtons[aa_index] = (pNewButtons.get())[aa_index - 1];
+				pNewButtons[aa_index].iBitmap = 59;
+				pNewButtons[aa_index].idCommand = UI_EXTMENU_TOGGLE_ANTIALIASING;
+				pNewButtons[aa_index].fsState |= TBSTATE_CHECKED;
 
-					memcpy(&(pNewButtons.get())[aa_index + 1], &lpButtons[aa_index], sizeof(TBBUTTON) * ((size_t)iNumButtons - (aa_index + 1)));
-		//		}
-			//	else
-			//		memcpy(pNewButtons.get(), lpButtons, sizeof(TBBUTTON) * iNumButtons);
+				memcpy(&(pNewButtons.get())[aa_index + 1], &lpButtons[aa_index], sizeof(TBBUTTON) * 
+					((std::size_t)iNumButtons - (aa_index + 1)));
 
 				if (Common::UI::GetTheme() == Common::UI::Theme_Custom)
 				{
@@ -136,8 +130,8 @@ namespace CKPE
 						LR_CREATEDIBSECTION | LR_LOADTRANSPARENT);
 
 				HWND ret = CreateToolbarEx(hwnd, WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, wID, nBitmaps,
-					NULL, NULL, pNewButtons.get(), SupportedAA ? (iNumButtons - 1) : (iNumButtons - 2) /*delete two divider*/, dxButton, dyButton,
-					dxBitmap, dyBitmap, uStructSize);
+					NULL, NULL, pNewButtons.get(), SupportedAA ? (iNumButtons - 1) : (iNumButtons - 2) 
+					/*delete two divider*/, dxButton, dyButton, dxBitmap, dyBitmap, uStructSize);
 
 				if (ret)
 				{

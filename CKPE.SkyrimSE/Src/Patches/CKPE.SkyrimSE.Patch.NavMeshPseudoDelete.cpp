@@ -239,7 +239,7 @@ namespace CKPE
 
 			bool NavMeshPseudoDelete::HasOption() const noexcept(true)
 			{
-				return false;
+				return true;
 			}
 
 			const char* NavMeshPseudoDelete::GetOptionName() const noexcept(true)

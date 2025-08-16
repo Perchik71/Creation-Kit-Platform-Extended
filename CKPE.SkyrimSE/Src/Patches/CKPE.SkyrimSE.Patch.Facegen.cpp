@@ -44,7 +44,7 @@ namespace CKPE
 			static bool CompressionDDSFile(const char* FileName, DDS_COMPRESSION Flag)
 			{
 				// Checking the existence of the file
-				if (PathUtils::FileExists(FileName))
+				if (!PathUtils::FileExists(FileName))
 				{
 					Console::LogWarning(Console::FACEGEN, "File was \"%s\" not found", FileName);
 					return false;
