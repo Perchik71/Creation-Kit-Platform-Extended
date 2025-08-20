@@ -308,6 +308,8 @@ namespace CKPE
 				mem.get(), len) > 0))
 				return Utf16ToUtf8(mem.get());
 		}
+
+		return "";
 	}
 
 	std::string StringUtils::ToUpperUTF8(const std::string& src) noexcept(true)

@@ -3,10 +3,10 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Asserts.h>
+#include <CKPE.ErrorHandler.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.D3D11Shaders.h>
 
-#include <comdef.h>
 #include <d3dcompiler.h>
 #include <ScreenGrab11.h>
 
@@ -18,7 +18,8 @@ namespace CKPE
 		{
 			bool Result = SUCCEEDED(hr);
 			if (!Result)
-				_ERROR("An error has occurred in the \"%s\" class. Message: \"%s\"", ClassName, _com_error(hr).ErrorMessage());
+				_ERROR("An error has occurred in the \"%s\" class. Message: \"%s\"", ClassName, 
+					ErrorHandler::GetSystemMessage(hr).c_str());
 			return Result;
 		}
 
@@ -756,7 +757,8 @@ namespace CKPE
 				nullptr, _PixelShader.ReleaseAndGetAddressOf());
 			if (FAILED(hr))
 			{
-				_ERROR("CreatePixelShader: \"%s\" error has occurred: \"%s\"", Name().c_str(), _com_error(hr).ErrorMessage());
+				_ERROR("CreatePixelShader: \"%s\" error has occurred: \"%s\"", Name().c_str(),
+					ErrorHandler::GetSystemMessage(hr).c_str());
 				return false;
 			}
 
@@ -804,7 +806,8 @@ namespace CKPE
 				nullptr, _VertexShader.GetAddressOf());
 			if (FAILED(hr))
 			{
-				_ERROR("CreateVertexShader: \"%s\" error has occurred: \"%s\"", Name().c_str(), _com_error(hr).ErrorMessage());
+				_ERROR("CreateVertexShader: \"%s\" error has occurred: \"%s\"", Name().c_str(),
+					ErrorHandler::GetSystemMessage(hr).c_str());
 				return false;
 			}
 
@@ -818,7 +821,8 @@ namespace CKPE
 				StreamBinary.GetSize(), _InputLayout.GetAddressOf());
 			if (FAILED(hr))
 			{
-				_ERROR("CreateInputLayout: \"%s\" error has occurred: \"%s\"", Name().c_str(), _com_error(hr).ErrorMessage());
+				_ERROR("CreateInputLayout: \"%s\" error has occurred: \"%s\"", Name().c_str(),
+					ErrorHandler::GetSystemMessage(hr).c_str());
 				return false;
 			}
 
@@ -880,7 +884,8 @@ namespace CKPE
 				nullptr, _ComputeShader.GetAddressOf());
 			if (FAILED(hr))
 			{
-				_ERROR("CreateComputeShader: \"%s\" error has occurred: \"%s\"", Name().c_str(), _com_error(hr).ErrorMessage());
+				_ERROR("CreateComputeShader: \"%s\" error has occurred: \"%s\"", Name().c_str(),
+					ErrorHandler::GetSystemMessage(hr).c_str());
 				return false;
 			}
 

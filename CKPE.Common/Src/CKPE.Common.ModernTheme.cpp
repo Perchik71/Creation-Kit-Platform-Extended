@@ -1739,12 +1739,12 @@ namespace CKPE
 					}
 					case WM_INITDIALOG:
 					{
-						/*_CONSOLE("iw %llx %llx", wParam, lParam);*/
+						// _CONSOLE("iw %llx %llx", wParam, lParam);
 
 						auto wnd = WindowHandles.find(messageData->hwnd);
 						if (wnd == WindowHandles.end())
 						{
-							if (!ExcludeSubclassKnownWindowsAndApplyDarkTheme(messageData->hwnd))
+							if (ExcludeSubclassKnownWindowsAndApplyDarkTheme(messageData->hwnd))
 							{
 								SetWindowSubclass(messageData->hwnd, DialogSubclassModernTheme, 0,
 									reinterpret_cast<DWORD_PTR>(DialogSubclassModernTheme));
@@ -1753,7 +1753,7 @@ namespace CKPE
 						}
 						else
 						{
-							if (!ExcludeSubclassKnownWindowsAndApplyDarkTheme(messageData->hwnd, true))
+							if (ExcludeSubclassKnownWindowsAndApplyDarkTheme(messageData->hwnd, true))
 							{
 								RemoveWindowSubclass(messageData->hwnd, WindowSubclassModernTheme, 0);
 								SetWindowSubclass(messageData->hwnd, DialogSubclassModernTheme, 0, 

@@ -38,7 +38,7 @@ extern "C"
 		auto database_pakfn = CKPE::StringUtils::FormatString(L"CreationKitPlatformExtended_%s_Databases.pak",
 			CKPE::SkyrimSE::VersionLists::GetGameName().c_str());
 		auto interface = CKPE::Common::Interface::GetSingleton();
-		interface->Initialize(ckpe, CKPEGameLibrary_Data.dataVersion,
+		interface->Initialize(ckpe, CKPE::SkyrimSE::VersionLists::GetEditorVersion(), CKPEGameLibrary_Data.dataVersion,
 			dialog_pakfn, database_pakfn, CKPE::SkyrimSE::VersionLists::GetDatabaseFileName(), 
 			CKPE::SkyrimSE::VersionLists::GetExternalResourcePackageFileName());
 		interface->CmdLineHandler();

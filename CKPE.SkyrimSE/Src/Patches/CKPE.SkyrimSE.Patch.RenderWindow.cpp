@@ -28,6 +28,7 @@ namespace CKPE
 			extern std::uintptr_t gGlobAddrDeviceContext;
 
 			static float StepInRender = 15.f;
+			static bool HideMainImguiWnd = true;
 
 			RenderWindow::RenderWindow() : Common::PatchBaseWindow()
 			{
@@ -222,6 +223,11 @@ namespace CKPE
 							}
 						}
 					}
+					else if (Message == WM_KEYUP)
+					{
+						if (wParam == VK_F1)
+							HideMainImguiWnd = !HideMainImguiWnd;
+					}
 				}
 
 				return CallWindowProc(RenderWindow::Singleton->GetOldWndProc(), Hwnd, Message, wParam, lParam);
@@ -277,6 +283,9 @@ namespace CKPE
 
 			void RenderWindow::ImGuiDrawInfo() noexcept(true)
 			{
+				if (HideMainImguiWnd)
+					return;
+
 				// IMGUI
 				ImGui_ImplDX11_NewFrame();
 				ImGui_ImplWin32_NewFrame();
@@ -310,14 +319,16 @@ namespace CKPE
 					ImGui::TableNextColumn();
 					ImGui::Text("%.0f", io.Framerate);
 
-					auto ii = EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform();
+					auto& ii = EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform();
 
 					ImGui::TableNextRow();
 					ImGui::TableNextColumn();
 					ImGui::Text("Camera:");
 
 					ImGui::TableNextColumn();
-					ImGui::Text("%.0f %.0f %.0f", ii.m_Translate.x, ii.m_Translate.y, ii.m_Translate.z);
+					ImGui::Text("p(%.0f,%.0f,%.0f) r(%.0f,%.0f,%.0f)", ii.m_Translate.x, ii.m_Translate.y, ii.m_Translate.z,
+						Math::Rad2Deg(ii.m_Rotate.m_pEntry[1][0]), Math::Rad2Deg(ii.m_Rotate.m_pEntry[1][1]), 
+						Math::Rad2Deg(ii.m_Rotate.m_pEntry[1][2]));
 
 					ImGui::PopFont();
 					ImGui::EndTable();

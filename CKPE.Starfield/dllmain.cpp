@@ -38,7 +38,7 @@ extern "C"
 		auto database_pakfn = CKPE::StringUtils::FormatString(L"CreationKitPlatformExtended_%s_Databases.pak",
 			CKPE::Starfield::VersionLists::GetGameName().c_str());
 		auto interface = CKPE::Common::Interface::GetSingleton();
-		interface->Initialize(ckpe, CKPEGameLibrary_Data.dataVersion,
+		interface->Initialize(ckpe, CKPE::Starfield::VersionLists::GetEditorVersion(), CKPEGameLibrary_Data.dataVersion,
 			dialog_pakfn, database_pakfn, CKPE::Starfield::VersionLists::GetDatabaseFileName(),
 			CKPE::Starfield::VersionLists::GetExternalResourcePackageFileName(), false);
 		interface->CmdLineHandler();

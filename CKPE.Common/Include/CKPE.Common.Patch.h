@@ -26,11 +26,11 @@ namespace CKPE
 			Patch() noexcept(true);
 			virtual ~Patch() noexcept(true);
 
-			virtual bool Active(RelocatorDB::PatchDB* db) noexcept(true);
-			virtual bool Query() const noexcept(true);
+			[[nodiscard]] virtual bool Active(RelocatorDB::PatchDB* db) noexcept(true);
+			[[nodiscard]] virtual bool Query() const noexcept(true);
 
-			virtual std::string GetName() const noexcept(true);
-			virtual bool IsActive() const noexcept(true);
+			[[nodiscard]] virtual std::string GetName() const noexcept(true);
+			[[nodiscard]] virtual bool IsActive() const noexcept(true);
 
 			virtual bool HasOption() const noexcept(true) = 0;
 			virtual const char* GetOptionName() const noexcept(true) = 0;

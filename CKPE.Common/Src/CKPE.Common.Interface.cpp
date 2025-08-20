@@ -54,9 +54,9 @@ namespace CKPE
 			}
 		}
 
-		void Interface::Initialize(const CKPEGameLibraryInterface* a_interface, std::uint64_t a_version,
-			const std::wstring& a_dialogs_fn, const std::wstring& a_databases_fn, const std::wstring& a_database_fn,
-			const std::wstring& a_resources_fn, bool support_more_theme) noexcept(true)
+		void Interface::Initialize(const CKPEGameLibraryInterface* a_interface, std::uint64_t a_editor_version, 
+			std::uint64_t a_version, const std::wstring& a_dialogs_fn, const std::wstring& a_databases_fn, 
+			const std::wstring& a_database_fn, const std::wstring& a_resources_fn, bool support_more_theme) noexcept(true)
 		{
 			if (_cmdline) return;
 
@@ -66,6 +66,8 @@ namespace CKPE
 				// IMPORTANT OBJECTS
 				_instDll = (std::uintptr_t)GetModuleHandleW(_dllName);
 				_interface = a_interface;
+				_version_gamelib = a_version;
+				_version_editor = a_editor_version;
 				std::wstring spath = _interface->application->GetPath();
 				_cmdline = new CommandLineParser;
 				_settings = new TOMLSettingCollection(spath + _ssettings_fname);

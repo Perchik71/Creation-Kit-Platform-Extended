@@ -2,10 +2,10 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <Windows.h>
-#include <comdef.h>
+#include <windows.h>
 #include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
+#include <CKPE.ErrorHandler.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.RTTI.h>
@@ -89,7 +89,7 @@ namespace CKPE
 						"Fatal error while trying to load texture \"%s\" due to an incompatible file format. This "
 						"indicates a problem with your mod or game files. Note that B5G6R5 and B5G5R5A1 texture "
 						"formats are not supported on Windows 7. HR = (0x%08X) %s.",
-						FileName.c_str(), hr, _com_error(hr).ErrorMessage());
+						FileName.c_str(), hr, ErrorHandler::GetSystemMessage(hr).c_str());
 				}
 
 				// This return value is ignored. If it fails it returns a null pointer (a3) and crashes later on.

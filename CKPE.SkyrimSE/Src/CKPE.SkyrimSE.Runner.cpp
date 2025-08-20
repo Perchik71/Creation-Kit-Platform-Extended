@@ -5,6 +5,7 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.RuntimeOptimization.h>
 #include <CKPE.Common.PatchManager.h>
+#include <CKPE.PluginAPI.PluginManager.h>
 
 #include <CKPE.SkyrimSE.Runner.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -270,6 +271,14 @@ namespace CKPE
 			mgr->ActiveAll(VersionLists::GetGameName());
 		}
 
+		void Runner::InstallPlugins() noexcept(true)
+		{
+			auto mgr_plug = PluginAPI::PluginManager::GetSingleton();
+
+			if (mgr_plug->Search())
+				mgr_plug->InstallPlugins();
+		}
+
 		Runner* Runner::GetSingleton() noexcept(true)
 		{
 			return &_srunner;
@@ -283,6 +292,7 @@ namespace CKPE
 				RegisterPatches();
 				_MESSAGE("[SSE] Install patches...");
 				InstallPatches();
+				InstallPlugins();
 				_MESSAGE("[SSE] Important optimization patch...");
 				// Important: this end operation
 				Common::RuntimeOptimization ro;

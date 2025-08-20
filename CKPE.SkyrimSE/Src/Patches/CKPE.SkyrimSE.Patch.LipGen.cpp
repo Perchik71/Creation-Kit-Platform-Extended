@@ -2,8 +2,9 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <comdef.h>
+#include <windows.h>
 #include <commctrl.h>
+#include <CKPE.ErrorHandler.h>
 #include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -110,7 +111,7 @@ namespace CKPE
 					&startupInfo, procInfo))
 					Console::LogWarning(Console::DIALOGUE,
 						"FaceFXWrapper could not be started (%d : %s). LIP generation will be disabled.", 
-						GetLastError(), _com_error(GetLastError()).ErrorMessage());
+						GetLastError(), ErrorHandler::GetSystemMessage(GetLastError()).c_str());
 				else
 					Console::LogWarning(Console::DIALOGUE, "FaceFXWrapper background process started.");
 			}

@@ -136,4 +136,14 @@ namespace CKPE
 	};
 
 	typedef CRECT *LPCCRECT, *PCCRECT;
+
+	class CKPE_API Math
+	{
+		constexpr Math() noexcept(true) = default;
+		Math(const Math&) = delete;
+		Math& operator=(const Math&) = delete;
+	public:
+		[[nodiscard]] inline static double Rad2Deg(double rad) noexcept(true) { return rad * 180. / 3.1415926536; }
+		[[nodiscard]] inline static double Deg2Rad(double deg) noexcept(true) { return deg * 3.1415926536 / 180.; }
+	};
 }

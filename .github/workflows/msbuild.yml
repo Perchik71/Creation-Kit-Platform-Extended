@@ -22,6 +22,7 @@ env:
   # You can convert this to a build matrix if you need coverage of multiple configuration types.
   # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
   BUILD_CONFIGURATION: Release
+  BUILD_NOAVX2_CONFIGURATION: Release-NoAVX2
 
 permissions:
   contents: read
@@ -54,7 +55,7 @@ jobs:
 
     - name: Copy SSE CKPE
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: Get-ChildItem -Recurse -Path ".\x64" -Include "ckpe_loader.exe", "winhttp.dll", "ckpe.dll", "ckpe.common.dll", "ckpe.skyrimse.dll" | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-${{env.SHORT_SHA}}" $_.Name) -Force }
+      run: Get-ChildItem -Recurse -Path ".\x64" -Include "ckpe_loader.exe", "winhttp.dll", "ckpe.dll", "ckpe.common.dll", "ckpe.skyrimse.dll", "ckpe.pluginapi.dll" | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-${{env.SHORT_SHA}}" $_.Name) -Force }
 
     - name: Copy Others to SSE
       working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -81,3 +82,58 @@ jobs:
       with:
         name: ckpe-sse-master-${{env.SHORT_SHA}}
         path: "ckpe-sse-master-${{env.SHORT_SHA}}"
+        
+  noavx2-build-master:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        
+      # gets the short sha to append it to the archive name
+    - name: Get short SHA
+      run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
+      
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Build
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      # Add additional options to the MSBuild command line here (like platform or verbosity level).
+      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+      run: msbuild /m /p:Configuration=${{env.BUILD_NOAVX2_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
+
+    - name: Make Bundle Directory
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: New-Item -ItemType Directory -Path "ckpe-sse-master-noavx2-${{env.SHORT_SHA}}"
+
+    - name: Copy SSE CKPE
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Recurse -Path ".\x64" -Include "ckpe_loader.exe", "winhttp.dll", "ckpe.dll", "ckpe.common.dll", "ckpe.skyrimse.dll", "ckpe.pluginapi.dll" | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-noavx2-${{env.SHORT_SHA}}" $_.Name) -Force }
+
+    - name: Copy Others to SSE
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\Others -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-noavx2-${{env.SHORT_SHA}}" $_.Name) -Force }
+
+    - name: Copy SSE Database
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path Database\SSE\*.pak "ckpe-sse-master-noavx2-${{env.SHORT_SHA}}"
+
+    - name: Copy SSE Dialog
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path Dialogs\SSE\*.pak "ckpe-sse-master-noavx2-${{env.SHORT_SHA}}"
+      
+    - name: Copy SSE D3DCompiler
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path d3dcompiler\*.dll "ckpe-sse-master-noavx2-${{env.SHORT_SHA}}"
+
+    - name: Copy SSE Stuff
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\Stuffs\SSE -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-noavx2-${{env.SHORT_SHA}}" $_.Name) -Force }
+      
+    - name: Upload SSE build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ckpe-sse-master-noavx2-${{env.SHORT_SHA}}
+        path: "ckpe-sse-master-noavx2-${{env.SHORT_SHA}}"
