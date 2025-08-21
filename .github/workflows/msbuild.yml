@@ -77,6 +77,10 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: Get-ChildItem -Path .\Stuffs\SSE -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-${{env.SHORT_SHA}}" $_.Name) -Force }
       
+    - name: Copy Custom Theme Stuff
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\Stuffs\CustomTheme -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-${{env.SHORT_SHA}}" $_.Name) -Force }
+      
     - name: Copy SSE Vortex Stuff
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: Get-ChildItem -Path .\Stuffs\Vortex -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-${{env.SHORT_SHA}}" $_.Name) -Force }
@@ -135,6 +139,10 @@ jobs:
     - name: Copy SSE Stuff
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: Get-ChildItem -Path .\Stuffs\SSE -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-noavx2-${{env.SHORT_SHA}}" $_.Name) -Force }
+      
+    - name: Copy Custom Theme Stuff
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\Stuffs\CustomTheme -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-noavx2-${{env.SHORT_SHA}}" $_.Name) -Force }
       
     - name: Copy SSE Vortex Stuff
       working-directory: ${{env.GITHUB_WORKSPACE}}
