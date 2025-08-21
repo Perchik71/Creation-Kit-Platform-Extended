@@ -250,6 +250,7 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.RenderWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.RenderWindow60FPS.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ResponseIgnoreMax.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.RuntimeOptimization.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ShowReloadShadersAlways.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.SkipTopicInfoValidation.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.SpellEnableCastingAndDeliveryAlways.cpp" />
@@ -445,6 +446,7 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.RenderWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.RenderWindow60FPS.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ResponseIgnoreMax.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.RuntimeOptimization.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ShowReloadShadersAlways.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.SkipTopicInfoValidation.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.SpellEnableCastingAndDeliveryAlways.h" />

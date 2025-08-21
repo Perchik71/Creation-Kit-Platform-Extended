@@ -201,7 +201,7 @@ namespace CKPE
 							if (opcode != 0xE9 && opcode != 0xE8)
 								continue;
 
-							std::uintptr_t destination = ip + *(std::int32_t*)(ip + 1) + 5;
+							std::uintptr_t destination = ip + (std::uintptr_t)(*(std::int32_t*)(ip + 1)) + 5;
 
 							// if (destination is within E&C table)
 							if ((destination >= ecTableStart) && (destination < ecTableEnd) &&
@@ -210,7 +210,7 @@ namespace CKPE
 								// Determine where the E&C trampoline jumps to, then remove it. 
 								// Each function is processed separately so thread safety is not an issue when patching. 
 								// The 0xE9 opcode never changes.
-								std::uintptr_t real = destination + *(std::int32_t*)(destination + 1) + 5;
+								std::uintptr_t real = destination + (std::uintptr_t)(*(std::int32_t*)(destination + 1)) + 5;
 
 								std::int32_t disp = (std::int32_t)(real - ip) - 5;
 								memcpy((void*)(ip + 1), &disp, sizeof(disp));
@@ -230,7 +230,7 @@ namespace CKPE
 
 			for (auto& [ip, patch] : nullsubTargets)
 			{
-				uintptr_t destination = ip + *(std::int32_t*)(ip + 1) + 5;
+				std::uintptr_t destination = ip + (std::uintptr_t)(*(std::int32_t*)(ip + 1)) + 5;
 
 				if (PatchNullsub(ip, destination, patch))
 					patchCount++;
@@ -239,7 +239,7 @@ namespace CKPE
 			// Secondary pass to remove nullsubs missed or created above
 			for (uintptr_t ip : branchTargets)
 			{
-				uintptr_t destination = ip + *(std::int32_t*)(ip + 1) + 5;
+				uintptr_t destination = ip + (std::uintptr_t)(*(std::int32_t*)(ip + 1)) + 5;
 
 				if (PatchNullsub(ip, destination))
 					patchCount++;

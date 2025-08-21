@@ -413,6 +413,9 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ModernThemePatchAdditional.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.RuntimeOptimization.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -1024,6 +1027,9 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ModernThemePatchAdditional.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.RuntimeOptimization.h">
       <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>

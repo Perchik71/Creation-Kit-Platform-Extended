@@ -12,17 +12,19 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			class AllowPlayerKnowsCondition : public Common::Patch
+			class RuntimeOptimization : public Common::Patch
 			{
-				static void sub(std::int64_t ControlHandle) noexcept(true);
+				std::uint64_t PatchLinkedList(std::uintptr_t beg, std::uintptr_t end) noexcept(true);
+				std::uint64_t PatchTemplatedFormIterator(std::uintptr_t _beg, std::uintptr_t _end,
+					std::uintptr_t base, Common::RelocatorDB::PatchDB* db) noexcept(true);
 
-				AllowPlayerKnowsCondition(const AllowPlayerKnowsCondition&) = delete;
-				AllowPlayerKnowsCondition& operator=(const AllowPlayerKnowsCondition&) = delete;
+				RuntimeOptimization(const RuntimeOptimization&) = delete;
+				RuntimeOptimization& operator=(const RuntimeOptimization&) = delete;
 			protected:
 				virtual bool DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true);
 				virtual bool DoQuery() const noexcept(true);
 			public:
-				AllowPlayerKnowsCondition();
+				RuntimeOptimization();
 
 				virtual bool HasOption() const noexcept(true);
 				virtual const char* GetOptionName() const noexcept(true);

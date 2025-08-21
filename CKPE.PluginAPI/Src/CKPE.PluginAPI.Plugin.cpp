@@ -138,20 +138,21 @@ namespace CKPE
 
 		bool Plugin::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 		{
-			auto log_fname = PathUtils::ChangeFileExt(*_dllname, L".log");	
-			if (!_log->Open(log_fname))
+			auto path = std::make_unique<wchar_t[]>(MAX_PATH);
+			if (!path) return false;
+
+			GetTempPathW(MAX_PATH, path.get());	
+			std::wstring sfname = path.get();
+			PathUtils::IncludeTrailingPathDelimiter(sfname);
+			sfname += L"My Games/Creation Kit Platform Extended/Plug-ins/" + PathUtils::ExtractFileName(sfname);
+			sfname = PathUtils::ChangeFileExt(sfname, L".log");
+			PathUtils::CreateFolder(PathUtils::ExtractFilePath(PathUtils::Normalize(sfname)));
+
+			if (!_log->Open(sfname))
 			{
-				CKPE::_ERROR(L"Couldn't create \"%s\" file", log_fname.c_str());
+				CKPE::_ERROR(L"Couldn't create \"%s\" file", sfname.c_str());
 				return false;
 			}
-
-			char timeBuffer[80];
-			struct tm* timeInfo;
-			time_t rawtime;
-			time(&rawtime);
-			timeInfo = localtime(&rawtime);
-			strftime(timeBuffer, sizeof(timeBuffer), "%A %d %b %Y %r %Z", timeInfo);
-			_log->Write("Now: %s", timeBuffer);
 
 			return SafeActive((const CKPEPluginInterface*)db);
 		}

@@ -115,6 +115,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.RenderWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.RenderWindow60FPS.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ResponseIgnoreMax.h>
+#include <Patches/CKPE.SkyrimSE.Patch.RuntimeOptimization.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ShowReloadShadersAlways.h>
 #include <Patches/CKPE.SkyrimSE.Patch.SkipTopicInfoValidation.h>
 #include <Patches/CKPE.SkyrimSE.Patch.SpellEnableCastingAndDeliveryAlways.h>
@@ -257,6 +258,9 @@ namespace CKPE
 			mgr->Register(new Patch::UpdateUIWhenFogToggled);
 			mgr->Register(new Patch::VersionControlMergeWorkaround);
 			mgr->Register(new Patch::WeaponCriticalEffect);
+
+			// Important: at the very end
+			mgr->Register(new Patch::RuntimeOptimization);
 		}
 
 		void Runner::InstallPatches() noexcept(true)

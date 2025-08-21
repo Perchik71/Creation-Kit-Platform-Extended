@@ -158,7 +158,6 @@ namespace CKPE
 				//auto Plugins = GlobalEnginePtr->GetUserPluginsManager();
 				//Plugins->CreatePluginsMenu(MainMenu, UI_EXTMENU_ID + 1);
 
-
 				auto ver = FileUtils::GetFileVersion("CKPE.SkyrimSE.dll");
 				auto customTitle = std::make_unique<char[]>(100);
 				sprintf(customTitle.get(), "[CKPE: v%u.%u. build %u]",
@@ -424,14 +423,14 @@ namespace CKPE
 								}
 								else
 								{
-									auto head = EditorAPI::BSPointerHandleManager_Original::GetHead();
-									auto tail = EditorAPI::BSPointerHandleManager_Original::GetTail();
+									auto head = EditorAPI::BSPointerHandleManager_Extended::GetHead();
+									auto tail = EditorAPI::BSPointerHandleManager_Extended::GetTail();
 
 									Console::LogWarning(Console::SYSTEM, 
 										"Dump SDM Info:\n\tHead: 0x%08X\n\tTail: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",
-										head, tail, EditorAPI::BSUntypedPointerHandle_Original::MAX_HANDLE_COUNT,
+										head, tail, EditorAPI::BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT,
 										((((long double)head) * 100.0f) /
-											(long double)EditorAPI::BSUntypedPointerHandle_Original::MAX_HANDLE_COUNT));
+											(long double)EditorAPI::BSUntypedPointerHandle_Extended::MAX_HANDLE_COUNT));
 								}
 							}
 							return 0;
