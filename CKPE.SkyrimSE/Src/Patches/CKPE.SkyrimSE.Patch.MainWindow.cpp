@@ -160,7 +160,7 @@ namespace CKPE
 
 				auto ver = FileUtils::GetFileVersion("CKPE.SkyrimSE.dll");
 				auto customTitle = std::make_unique<char[]>(100);
-				sprintf(customTitle.get(), "[CKPE: v%u.%u. build %u]",
+				sprintf(customTitle.get(), "[CKPE: v%u.%u build %u]",
 					GET_EXE_VERSION_EX_MAJOR(ver), GET_EXE_VERSION_EX_MINOR(ver), GET_EXE_VERSION_EX_BUILD(ver));		
 				ZeroMemory(&menuInfo, sizeof(MENUITEMINFO));
 				menuInfo.cbSize = sizeof(MENUITEMINFO),

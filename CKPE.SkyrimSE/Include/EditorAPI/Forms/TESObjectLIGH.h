@@ -18,15 +18,15 @@ namespace CKPE
 				// size = 0x1A8
 				class TESObjectLIGH : public TESForm
 				{
-				public:
-					virtual ~TESObjectLIGH() = default;
-				public:
-					inline NiAPI::NiRGB GetSpecularColor() const noexcept(true) { return m_SpecularColor; }
-				public:
-					CKPE_READ_PROPERTY(GetSpecularColor) NiAPI::NiRGB SpecularColor;
-				private:
 					char pad28[0x138];
 					NiAPI::NiRGB m_SpecularColor;
+				public:
+					constexpr static std::uint8_t TYPE_ID = ftLight;
+
+					virtual ~TESObjectLIGH() = default;
+				
+					inline NiAPI::NiRGB GetSpecularColor() const noexcept(true) { return m_SpecularColor; }
+					CKPE_READ_PROPERTY(GetSpecularColor) NiAPI::NiRGB SpecularColor;
 				};
 				static_assert(sizeof(TESObjectLIGH) == 0x168);
 			}

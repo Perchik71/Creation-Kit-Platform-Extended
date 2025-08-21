@@ -9,8 +9,10 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.UIVarCommon.h>
 #include <CKPE.Common.UITimeOfDay.h>
+#include <CKPE.Common.UIListView.h>
 #include <CKPE.Common.ModernTheme.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
+#include <EditorAPI/Forms/TESObjectLIGH.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ModernThemePatchAdditional.h>
 #include "..\CKPE.Common\resource.h"
 
@@ -21,6 +23,69 @@ namespace CKPE
 		namespace Patch
 		{
 			std::uintptr_t pointer_UIThemePatchAdditional_sub = 0;
+
+			static LRESULT OnCustomDrawObjectList(HWND hWindow, LPNMLVCUSTOMDRAW lpListView)
+			{
+				switch (lpListView->nmcd.dwDrawStage)
+				{
+					//Before the paint cycle begins
+				case CDDS_PREPAINT:
+					//request notifications for individual listview items
+					return CDRF_NOTIFYITEMDRAW;
+					//Before an item is drawn
+				case CDDS_ITEMPREPAINT:
+					return CDRF_NOTIFYSUBITEMDRAW;
+					//Before a subitem is drawn
+				case CDDS_SUBITEM | CDDS_ITEMPREPAINT:
+				{
+					LVITEM lvItem;
+					ZeroMemory(&lvItem, sizeof(LVITEM));
+					lvItem.iItem = lpListView->nmcd.dwItemSpec;
+					lvItem.mask = LVIF_PARAM | LVIF_STATE;
+					if (!ListView_GetItem(lpListView->nmcd.hdr.hwndFrom, &lvItem))
+					{
+					def_color:
+						lpListView->clrText = Common::UI::GetThemeSysColor(Common::UI::ThemeColor_Text_4);
+						return CDRF_NEWFONT;
+					}
+
+					auto form = (EditorAPI::Forms::TESForm*)lvItem.lParam;
+					if ((form->Type == EditorAPI::Forms::TESObjectLIGH::TYPE_ID) && (lpListView->iSubItem == 1))
+					{
+						if (((lvItem.state & 0xFF) & LVIS_SELECTED) == LVIS_SELECTED)
+							goto def_color;
+
+						auto color = ((EditorAPI::Forms::TESObjectLIGH*)form)->GetSpecularColor();
+						lpListView->clrText = RGB(color.r, color.g, color.b);
+					}
+					else
+						goto def_color;
+				}
+				}
+
+				return CDRF_DODEFAULT;
+			}
+
+			LRESULT ModernThemePatchAdditional::DoCustomDrawListView(HWND hWindow, LPNMLVCUSTOMDRAW lpListView,
+				bool& bReturn) noexcept(true)
+			{
+				// skip it controls
+				switch (lpListView->nmcd.hdr.idFrom) 
+				{
+					// Object list
+				case 1041:
+					bReturn = true;
+					return OnCustomDrawObjectList(hWindow, lpListView);
+					// Cell list
+				case 1155:
+					// Cell object list	
+				case 1156:
+					bReturn = true;
+					return DefSubclassProc(hWindow, WM_NOTIFY, 0, (LPARAM)lpListView);
+				}
+
+				return S_OK;
+			}
 
 			ModernThemePatchAdditional::ModernThemePatchAdditional() : Common::Patch()
 			{
@@ -81,6 +146,8 @@ namespace CKPE
 				Detours::DetourCall(__CKPE_OFFSET(8), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);		// Scripts icons
 				Detours::DetourCall(__CKPE_OFFSET(9), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);		// Scripts icons
 				Detours::DetourCall(__CKPE_OFFSET(10), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);	// Scripts icons
+
+				Common::UI::ListView::InstallCustomDrawHandler(&DoCustomDrawListView);
 
 				return true;
 			}

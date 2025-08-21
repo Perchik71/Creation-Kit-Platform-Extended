@@ -16,6 +16,9 @@ namespace CKPE
 		{
 			class ModernThemePatchAdditional : public Common::Patch
 			{
+				static LRESULT DoCustomDrawListView(HWND hWindow, LPNMLVCUSTOMDRAW lpListView,
+					bool& bReturn) noexcept(true);
+
 				ModernThemePatchAdditional(const ModernThemePatchAdditional&) = delete;
 				ModernThemePatchAdditional& operator=(const ModernThemePatchAdditional&) = delete;
 			protected:
