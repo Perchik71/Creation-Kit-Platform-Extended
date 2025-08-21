@@ -94,12 +94,12 @@ namespace CKPE
 
 			bool ModernThemePatchAdditional::HasOption() const noexcept(true)
 			{
-				return false;
+				return true;
 			}
 
 			const char* ModernThemePatchAdditional::GetOptionName() const noexcept(true)
 			{
-				return nullptr;
+				return "CreationKit:bUIDarkTheme";
 			}
 
 			bool ModernThemePatchAdditional::HasDependencies() const noexcept(true)
