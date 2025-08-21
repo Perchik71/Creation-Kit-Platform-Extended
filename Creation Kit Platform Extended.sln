@@ -88,6 +88,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plug-ins", "Plug-ins", "{639DACA4-5488-4075-8B5B-8E18B9CF9205}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestPlugin", "Plug-ins\TestPlugin\TestPlugin.vcxproj", "{DDDCC92D-4D95-48B7-B685-DC31145D0CD0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{03C83950-16C9-4F53-8298-E118155F4774} = {03C83950-16C9-4F53-8298-E118155F4774}
+		{D3C5714A-688F-4D85-964F-712E692EC496} = {D3C5714A-688F-4D85-964F-712E692EC496}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
