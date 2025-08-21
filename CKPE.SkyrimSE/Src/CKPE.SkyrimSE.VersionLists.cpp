@@ -5,6 +5,7 @@
 #include <vector>
 #include <unordered_map>
 #include <windows.h>
+#include <CKPE.Module.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
 
 namespace CKPE
@@ -45,6 +46,17 @@ namespace CKPE
 			//{ 0x2E835D8ul,	{ "1.6.438.0",	VersionLists::EDITOR_SKYRIM_SE_1_6_438			} },
 			{ 0x2F3E698ul,		{ "1.6.1130.0",	VersionLists::EDITOR_SKYRIM_SE_1_6_1130			} },
 			{ 0x2F7F018ul,		{ "1.6.1378.1",	VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1		} },
+		};
+
+		// Список версий
+		static std::vector<std::uint64_t> _sEditorVersion =
+		{
+			0,
+			MAKE_EXE_VERSION_EX(1, 5, 3, 0),
+			MAKE_EXE_VERSION_EX(1, 5, 73, 0),
+			MAKE_EXE_VERSION_EX(1, 6, 438, 0),
+			MAKE_EXE_VERSION_EX(1, 6, 1130, 0),
+			MAKE_EXE_VERSION_EX(1, 6, 1378, 1),
 		};
 
 		// Список названий редакторов
@@ -107,6 +119,11 @@ namespace CKPE
 		std::wstring VersionLists::GetGameName() noexcept(true)
 		{
 			return L"SSE";
+		}
+
+		std::uint64_t VersionLists::GetEditorVersionByNum() noexcept(true)
+		{
+			return _sEditorVersion[_seditor_ver];
 		}
 
 		std::wstring VersionLists::GetDatabaseFileName() noexcept(true)

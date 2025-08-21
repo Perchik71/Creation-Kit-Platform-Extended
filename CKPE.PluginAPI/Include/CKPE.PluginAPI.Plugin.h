@@ -46,10 +46,10 @@ namespace CKPE
 			char			Name[256];				// null-terminated UTF16 plugin name
 			char			Author[256];			// null-terminated UTF16 plugin author name (can be empty)
 
-			std::uint32_t	Game;					// set to [kGameSkyrimSE, kGameFallout4 or kGameStarfield]
-			std::uint32_t	CommLibVersionRequired;	// minimum version of the CKPE.Common required (MAKE_EXE_VERSION_EX)
+			std::uint8_t	Game;					// set to [kGameSkyrimSE, kGameFallout4 or kGameStarfield]
+			std::uint64_t	CommLibVersionRequired;	// minimum version of the CKPE.Common required (MAKE_EXE_VERSION_EX)
 													// you probably should just set this to 0 unless you know what you are doing
-			std::uint32_t	CompatibleVersions[16];	// zero-terminated list MAKE_EXE_VERSION_EX() of defines your plugin is compatible with
+			std::uint64_t	CompatibleVersions[16];	// zero-terminated list MAKE_EXE_VERSION_EX() of defines your plugin is compatible with
 			std::uint32_t	Flags;					// 
 			std::uint8_t	Reserved[512];			// set to 0
 		};
@@ -78,7 +78,7 @@ namespace CKPE
 			Plugin& operator=(const Plugin&) = delete;
 
 			[[nodiscard]] static std::uintptr_t SafeLoadLibraryW(const wchar_t* fname);
-			[[nodiscard]] bool SafeActive(const CKPEPluginInterface* interface) const;
+			[[nodiscard]] bool SafeActive(const CKPEPluginInterface* intf) const;
 			static void Sanitize(CKPEPluginVersionData* version) noexcept(true);
 			[[nodiscard]] static const wchar_t* CheckPluginCompatibility(const CKPEPluginVersionData* version) noexcept(true);
 		protected:

@@ -21,8 +21,8 @@ namespace CKPE
 
 		void PluginManager::ReportPluginErrors(const std::vector<std::wstring>* v) const noexcept(true)
 		{
-			std::wstring message = L"A plug-in you have installed contains a DLL plugin that has failed to load correctly."
-				"If a new version of Creation Kit was just released, the plugin needs to be updated."
+			std::wstring message = L"A plug-in you have installed contains a DLL plugin that has failed to load correctly. "
+				"If a new version of Creation Kit was just released, the plugin needs to be updated. "
 				"Please check the mod's webpage for updates. This is not a problem with CKPE.\n";
 
 			for (auto& plugin : *v)
@@ -84,7 +84,7 @@ namespace CKPE
 				auto result = plugin->CanLoad(info.first);
 				if (result == Plugin::ErrorNoCompatibility)
 					pluginInv.push_back(PathUtils::ExtractFileName(info.first));
-				
+
 				if (result == Plugin::NoError)
 				{
 					if (plugin->Load(info.first, false))

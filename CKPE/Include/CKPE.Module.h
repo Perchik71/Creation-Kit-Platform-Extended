@@ -16,9 +16,9 @@
 
 #define MAKE_EXE_VERSION(major, minor, build)	((((major) & 0xF) << 28) | (((minor) & 0xFFF) << 16) | ((build) & 0xFFFF))
 
-#define GET_EXE_VERSION_MAJOR(a)	(((a) & 0xF0000000ul) >> 28)
-#define GET_EXE_VERSION_MINOR(a)	(((a) & 0x0FFF0000ul) >> 16)
-#define GET_EXE_VERSION_BUILD(a)	(((a) & 0x0000FFFFul))
+#define GET_EXE_VERSION_MAJOR(a)	((std::uint16_t)(((a) & 0xF0000000ul) >> 28))
+#define GET_EXE_VERSION_MINOR(a)	((std::uint16_t)(((a) & 0x0FFF0000ul) >> 16))
+#define GET_EXE_VERSION_BUILD(a)	((std::uint16_t)(((a) & 0x0000FFFFul)))
 
 // xxxx------------ major
 // ----xxxx-------- minor

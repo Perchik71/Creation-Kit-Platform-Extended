@@ -30,11 +30,11 @@ namespace CKPE
 			}
 		}
 
-		bool Plugin::SafeActive(const CKPEPluginInterface* interface) const
+		bool Plugin::SafeActive(const CKPEPluginInterface* intf) const
 		{
 			__try
 			{
-				return fast_call<bool>((*_funcs)[3], interface);
+				return fast_call<bool>((*_funcs)[3], intf);
 			}
 			__except (EXCEPTION_EXECUTE_HANDLER)
 			{
@@ -45,8 +45,8 @@ namespace CKPE
 
 		void Plugin::Sanitize(CKPEPluginVersionData* version) noexcept(true)
 		{
-			version->Name[_countof(version->Name) - 1] = 0;
-			version->Author[_countof(version->Author) - 1] = 0;
+			version->Name[sizeof(version->Name) - 1] = 0;
+			version->Author[sizeof(version->Author) - 1] = 0;
 		}
 
 		const wchar_t* Plugin::CheckPluginCompatibility(const CKPEPluginVersionData* version) noexcept(true)
@@ -113,7 +113,7 @@ namespace CKPE
 
 					for (std::uint32_t i = 0; i < _countof(version->CompatibleVersions); i++)
 					{
-						std::uint32_t compatibleVersion = version->CompatibleVersions[i];
+						auto compatibleVersion = version->CompatibleVersions[i];
 						if (compatibleVersion == editor_ver)
 						{
 							found = true;
@@ -267,13 +267,15 @@ namespace CKPE
 				return ErrorInvalidLib;
 			}
 
-			Sanitize(version);
+			char Name[256];
+			ZeroMemory(Name, 256);
+			memcpy_s(Name, 255, version->Name, 255);
 
 			auto result_check = CheckPluginCompatibility(version);
 			if (result_check)
 			{
 				CKPE::_ERROR(L"CKPE plug-in \"%s\" (%08X %s %08X) %s",
-					sfname.c_str(), version->DataVersion, StringUtils::WinCPToUtf16(version->Name).c_str(),
+					sfname.c_str(), version->DataVersion, StringUtils::WinCPToUtf16(Name).c_str(),
 					version->PluginVersion, result_check);
 				return ErrorNoCompatibility;
 			}
@@ -335,8 +337,8 @@ namespace CKPE
 					return false;
 				}
 
-				Sanitize(version);
 				memcpy(&_ver_data, version, sizeof(CKPEPluginVersionData));
+				Sanitize(&_ver_data);
 			}
 
 			_base = SafeLoadLibraryW(_dllname->c_str());
