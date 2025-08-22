@@ -1546,7 +1546,7 @@ procedure TFormMainInstaller.FloatSpinEditSettingChange(Sender: TObject);
 var
   _This: TFloatSpinEdit;
   Range: TRange;
-  STemp: String;
+  STemp, SVal: String;
   Strs: TStringList;
 begin
   _This := Sender as TFloatSpinEdit;
@@ -1560,8 +1560,9 @@ begin
 
   STemp := Strs[Range._Line];
   System.Delete(STemp, Range._Beg, Range._End - Range._Beg);
-  System.Insert(StringReplace(FloatToStr(_This.Value), ',', '.', []),
-    STemp, Range._Beg);
+  SVal := StringReplace(FloatToStr(_This.Value), ',', '.', []);
+  if Pos('.', SVal) = 0 then SVal := SVal + '.0';
+  System.Insert(SVal, STemp, Range._Beg);
   Strs[Range._Line] := STemp;
 end;
 

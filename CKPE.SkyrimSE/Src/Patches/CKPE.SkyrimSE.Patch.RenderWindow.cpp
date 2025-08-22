@@ -72,19 +72,19 @@ namespace CKPE
 				StepInRender = _READ_OPTION_FLOAT("Graphics", "fStepInRender", 15.f);
 				StepInRender = std::min(std::max(StepInRender, 15.f), 100.f);
 
-				*(uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (uintptr_t)&HKWndProc);
-				Detours::DetourJump(__CKPE_OFFSET(1), (uintptr_t)&RenderWindow::setFlagLoadCell);
+				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
+				Detours::DetourJump(__CKPE_OFFSET(1), (std::uintptr_t)&RenderWindow::setFlagLoadCell);
 				EditorAPI::BGSRenderWindow::Singleton = __CKPE_OFFSET(2);
 
 				auto rel = __CKPE_OFFSET(3);
 				SafeWrite::WriteNop(rel, 0xB);
-				Detours::DetourCall(rel, (uintptr_t)&DrawFrameEx);
+				Detours::DetourCall(rel, (std::uintptr_t)&DrawFrameEx);
 
-				*(uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::Update =
-					Detours::DetourClassJump(__CKPE_OFFSET(6), (uintptr_t)&EditorAPI::BGSRenderWindow::Pick::HKUpdate);
-				*(uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromTriShape = __CKPE_OFFSET(5);
+				*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::Update =
+					Detours::DetourClassJump(__CKPE_OFFSET(6), (std::uintptr_t)&EditorAPI::BGSRenderWindow::Pick::HKUpdate);
+				*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromTriShape = __CKPE_OFFSET(5);
 				Detours::DetourCall(__CKPE_OFFSET(4), 
-					(uintptr_t)&EditorAPI::BGSRenderWindow::Pick::HKGetRefFromTriShape);
+					(std::uintptr_t)&EditorAPI::BGSRenderWindow::Pick::HKGetRefFromTriShape);
 
 				// Enable drawing always
 				if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1130)

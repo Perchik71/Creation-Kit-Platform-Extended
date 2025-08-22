@@ -457,7 +457,11 @@ namespace CKPE
 
 			auto& TOMLValue = TOMLSection.at(option);
 			if (!TOMLValue.is_floating())
-				return def;
+			{
+				if (!TOMLValue.is_integer())
+					return def;
+				return (float)TOMLValue.as_integer();
+			}
 
 			return (float)TOMLValue.as_floating();
 		}

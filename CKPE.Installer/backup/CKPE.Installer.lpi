@@ -22,7 +22,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="6"/>
-      <BuildNr Value="468"/>
+      <BuildNr Value="469"/>
       <StringTable CompanyName="perchik71" FileDescription="Installer for Creation Kit Platform Extended" InternalName="ckpe.installer" LegalCopyright="perchik71 © 2025" OriginalFilename="ckpe.installer" ProductName="Creation Kit Platform Extended Installer" ProductVersion="0.6.0.0"/>
     </VersionInfo>
     <BuildModes>
