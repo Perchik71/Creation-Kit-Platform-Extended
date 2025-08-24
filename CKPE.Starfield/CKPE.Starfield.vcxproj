@@ -47,12 +47,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Starfield\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Starfield\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)CKPE.PluginAPI\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Starfield\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Starfield\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)CKPE.PluginAPI\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -80,8 +80,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;CKPE.PluginAPI.lib;comctl32.lib;dxgi.lib;d3d11.lib;DirectXTex.lib;d3dcompiler.lib;dxguid.lib;ImGUI.lib;libdeflate.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\scripts.ps1"</Command>
@@ -113,8 +113,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\Release\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\Release\;$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;CKPE.PluginAPI.lib;comctl32.lib;dxgi.lib;d3d11.lib;DirectXTex.lib;d3dcompiler.lib;dxguid.lib;ImGUI.lib;libdeflate.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\scripts.ps1"</Command>
@@ -125,6 +125,9 @@
     <ClCompile Include="Src\CKPE.Starfield.Runner.cpp" />
     <ClCompile Include="Src\CKPE.Starfield.VersionLists.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.CellViewWindow.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.RemoveCheckDriver.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.RunAppWithoutNet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource_version.rc" />
@@ -132,7 +135,15 @@
   <ItemGroup>
     <ClInclude Include="Include\CKPE.Starfield.Runner.h" />
     <ClInclude Include="Include\CKPE.Starfield.VersionLists.h" />
+    <ClInclude Include="Include\EditorAPI\TESFormComponent.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.CellViewWindow.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.RemoveCheckDriver.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.RunAppWithoutNet.h" />
+    <ClInclude Include="resource_version.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="build_version.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

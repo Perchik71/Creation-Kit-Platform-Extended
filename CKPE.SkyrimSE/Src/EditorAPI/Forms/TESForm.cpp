@@ -41,6 +41,11 @@ namespace CKPE
 					vtbl_call<void>(0xF8, this, Buffer, BufferSize);
 				}
 
+				const char* TESForm::GetEditorID_orig() const noexcept(true)
+				{
+					return vtbl_call<const char*>(0x1E8, this);
+				}
+
 				const char* TESForm::TryGetFullName() const noexcept(true)
 				{
 					TESFullName* fullname = (TESFullName*)_DYNAMIC_CAST(this, 0, "class TESForm", "class TESFullName");

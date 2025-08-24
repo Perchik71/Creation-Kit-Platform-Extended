@@ -5,11 +5,15 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.RuntimeOptimization.h>
 #include <CKPE.Common.PatchManager.h>
+#include <CKPE.PluginAPI.PluginManager.h>
 
 #include <CKPE.Starfield.Runner.h>
 #include <CKPE.Starfield.VersionLists.h>
 
 #include <Patches/CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.h>
+#include <Patches/CKPE.Starfield.Patch.CellViewWindow.h>
+#include <Patches/CKPE.Starfield.Patch.RemoveCheckDriver.h>
+#include <Patches/CKPE.Starfield.Patch.RunAppWithoutNet.h>
 
 namespace CKPE
 {
@@ -22,6 +26,9 @@ namespace CKPE
 			auto mgr = Common::PatchManager::GetSingleton();
 
 			mgr->Register(new Patch::AllowMultipleWindowAndMaster);
+			mgr->Register(new Patch::CellViewWindow);
+			mgr->Register(new Patch::RemoveCheckDriver);
+			mgr->Register(new Patch::RunAppWithoutNet);
 		}
 
 		void Runner::InstallPatches() noexcept(true)
@@ -33,6 +40,14 @@ namespace CKPE
 			mgr->QueryAll(VersionLists::GetGameName());
 			// Active remaining patches
 			mgr->ActiveAll(VersionLists::GetGameName());
+		}
+
+		void Runner::InstallPlugins() noexcept(true)
+		{
+			auto mgr_plug = PluginAPI::PluginManager::GetSingleton();
+
+			if (mgr_plug->Search())
+				mgr_plug->InstallPlugins();
 		}
 
 		Runner* Runner::GetSingleton() noexcept(true)
@@ -48,6 +63,7 @@ namespace CKPE
 				RegisterPatches();
 				_MESSAGE("[SF] Install patches...");
 				InstallPatches();
+				InstallPlugins();
 				_MESSAGE("[SF] Important optimization patch...");
 				// Important: this end operation
 				Common::RuntimeOptimization ro;

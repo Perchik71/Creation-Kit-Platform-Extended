@@ -25,7 +25,8 @@ namespace CKPE
 				EDITOR_STARFIELD_1_14_74_0,
 				EDITOR_STARFIELD_1_14_78_0,
 				EDITOR_STARFIELD_1_15_216_0,
-				EDITOR_STARFIELD_LAST = EDITOR_STARFIELD_1_15_216_0,
+				EDITOR_STARFIELD_1_15_222_0,
+				EDITOR_STARFIELD_LAST = EDITOR_STARFIELD_1_15_222_0,
 			};
 
 			static void Verify();
@@ -33,6 +34,7 @@ namespace CKPE
 			[[nodiscard]] static bool HasOutdatedEditorVersion() noexcept(true);
 			[[nodiscard]] static std::wstring GetGameName() noexcept(true);
 			[[nodiscard]] static std::wstring GetDatabaseFileName() noexcept(true);
+			[[nodiscard]] static std::uint64_t GetEditorVersionByNum() noexcept(true);
 			[[nodiscard]] static std::wstring GetEditorVersionByString() noexcept(true);
 			[[nodiscard]] static std::wstring GetExternalResourcePackageFileName() noexcept(true);
 			[[nodiscard]] static EDITOR_EXECUTABLE_TYPE GetEditorVersion() noexcept(true);

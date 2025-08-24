@@ -207,6 +207,7 @@ namespace CKPE
 					[[nodiscard]] inline std::uint32_t GetFormID() const noexcept(true) { return _FormID; }
 					[[nodiscard]] inline FormType GetFormType() const noexcept(true) { return _FormType; }
 					[[nodiscard]] inline const char* GetEditorID() const noexcept(true) { return _EditorID; }
+					[[nodiscard]] const char* GetEditorID_orig() const noexcept(true);
 					// Not all forms have a localized name, but I'll add it here to simplify my life,
 					// since not all types of forms are known to me.
 					[[nodiscard]] const char* TryGetFullName() const noexcept(true);

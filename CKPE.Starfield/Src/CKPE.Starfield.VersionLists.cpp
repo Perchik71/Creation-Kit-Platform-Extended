@@ -5,6 +5,7 @@
 #include <vector>
 #include <unordered_map>
 #include <windows.h>
+#include <CKPE.Module.h>
 #include <CKPE.Starfield.VersionLists.h>
 
 namespace CKPE
@@ -20,7 +21,8 @@ namespace CKPE
 			//{ 0x8777A522ul, VersionLists::EDITOR_STARFIELD_1_14_70_0		},	// Redirect Steam
 			//{ 0x01BF6FB3ul, VersionLists::EDITOR_STARFIELD_1_14_74_0		},	// Redirect Steam
 			{ 0x8C475320ul, VersionLists::EDITOR_STARFIELD_1_14_78_0		},	// Redirect Steam
-			{ 0x8C475320ul, VersionLists::EDITOR_STARFIELD_1_15_216_0		},	// Redirect Steam
+			{ 0x24C2C928ul, VersionLists::EDITOR_STARFIELD_1_15_216_0		},	// Redirect Steam
+			{ 0xAA061EEBul, VersionLists::EDITOR_STARFIELD_1_15_222_0		},	// Redirect Steam
 		};
 
 		// Список устаревших версий редакторов
@@ -40,6 +42,7 @@ namespace CKPE
 			//{ 0x875F450ul, { "1.14.74.0",	VersionLists::EDITOR_STARFIELD_1_14_74_0		} },
 			{ 0x875F550ul, { "1.14.78.0",	VersionLists::EDITOR_STARFIELD_1_14_78_0		} },
 			{ 0x84D9B40ul, { "1.15.216.0",	VersionLists::EDITOR_STARFIELD_1_15_216_0		} },
+			{ 0x84C7B20ul, { "1.15.222.0",	VersionLists::EDITOR_STARFIELD_1_15_222_0		} },
 		};
 
 		// Список названий редакторов
@@ -51,6 +54,19 @@ namespace CKPE
 			L"Starfield [v1.14.74.0]",
 			L"Starfield [v1.14.78.0]",
 			L"Starfield [v1.15.216.0]",
+			L"Starfield [v1.15.222.0]",
+		};
+
+		// Список версий
+		static std::vector<std::uint64_t> _sEditorVersion =
+		{
+			0,
+			MAKE_EXE_VERSION_EX(1, 13, 61, 0),
+			MAKE_EXE_VERSION_EX(1, 14, 70, 0),
+			MAKE_EXE_VERSION_EX(1, 14, 74, 0),
+			MAKE_EXE_VERSION_EX(1, 14, 78, 0),
+			MAKE_EXE_VERSION_EX(1, 15, 216, 0),
+			MAKE_EXE_VERSION_EX(1, 15, 222, 0),
 		};
 
 		// Список имён файлов базы данных
@@ -61,6 +77,7 @@ namespace CKPE
 			//{ VersionLists::EDITOR_STARFIELD_1_14_74_0,	L"CreationKitPlatformExtended_SF_1_14_74_0.database"	},
 			{ VersionLists::EDITOR_STARFIELD_1_14_78_0,		L"CreationKitPlatformExtended_SF_1_14_78_0.database"	},
 			{ VersionLists::EDITOR_STARFIELD_1_15_216_0,	L"CreationKitPlatformExtended_SF_1_15_216_0.database"	},
+			{ VersionLists::EDITOR_STARFIELD_1_15_222_0,	L"CreationKitPlatformExtended_SF_1_15_222_0.database"	},
 		};
 
 		static constexpr auto QT_RESOURCE = L"CreationKitPlatformExtended_SF_QResources.pak";
@@ -110,6 +127,11 @@ namespace CKPE
 		{
 			auto it = _sallowedDatabaseVersion.find(_seditor_ver);
 			return (it != _sallowedDatabaseVersion.end()) ? it->second.data() : L"";
+		}
+
+		std::uint64_t VersionLists::GetEditorVersionByNum() noexcept(true)
+		{
+			return _sEditorVersion[_seditor_ver];
 		}
 
 		std::wstring VersionLists::GetEditorVersionByString() noexcept(true)

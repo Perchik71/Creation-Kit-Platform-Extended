@@ -116,14 +116,52 @@ namespace CKPE
 					[[nodiscard]] inline bool IsInterior() const noexcept(true) { return _cell_flags & CellFlags::cfInterior; }
 					[[nodiscard]] inline bool IsExterior() const noexcept(true) { return _cell_flags & CellFlags::cfExterior; }
 					[[nodiscard]] inline bool IsFragment() const noexcept(true) { return _cell_flags & CellFlags::cfFragment; }
-					[[nodiscard]] inline std::int32_t GetGridX() const noexcept(true) { return (IsExterior() && _CellData.Grid) ? _CellData.Grid->X : 0; }
-					[[nodiscard]] inline std::int32_t GetGridY() const noexcept(true) { return (IsExterior() && _CellData.Grid) ? _CellData.Grid->Y : 0; }
-					[[nodiscard]] inline TESFormArray* GetNavMeshes() const noexcept(true) { return _NavMeshes; }
-					[[nodiscard]] inline std::uint32_t GetNavMeshesCount() const  noexcept(true) { return _NavMeshes->size(); }
-					[[nodiscard]] inline TESObjectLAND* GetLandspace() const noexcept(true) { return _Landspace; }
-					[[nodiscard]] inline LightingData* GetLighting() const noexcept(true) { return (IsInterior()) ? _CellData.Lighting : nullptr; }
-					[[nodiscard]] inline Item* GetItems() const noexcept(true) { return (Item*)_AddrRefrs; }
-					[[nodiscard]] inline std::uint32_t GetItemCount() const noexcept(true) { return _SizeRefrs; }
+					[[nodiscard]] inline std::int32_t GetGridX() const noexcept(true)
+					{
+						if (!IsExterior()) return 0;
+						auto Grid = (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ?
+							difference.v1_5._CellData.Grid : difference.v1_6._CellData.Grid;
+						return Grid ? Grid->X : 0;
+					}
+					[[nodiscard]] inline std::int32_t GetGridY() const noexcept(true)
+					{
+						if (!IsExterior()) return 0;
+						auto Grid = (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ?
+							difference.v1_5._CellData.Grid : difference.v1_6._CellData.Grid;
+						return Grid ? Grid->Y : 0;
+					}
+					[[nodiscard]] inline TESFormArray* GetNavMeshes() const noexcept(true) 
+					{
+						return (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ?
+							difference.v1_5._NavMeshes : difference.v1_6._NavMeshes;
+					}
+					[[nodiscard]] inline std::uint32_t GetNavMeshesCount() const  noexcept(true) 
+					{
+						return (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ?
+							difference.v1_5._NavMeshes->size() : difference.v1_6._NavMeshes->size();
+					}
+					[[nodiscard]] inline TESObjectLAND* GetLandspace() const noexcept(true) 
+					{
+						return (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ?
+							difference.v1_5._Landspace : difference.v1_6._Landspace;
+					}
+					[[nodiscard]] inline LightingData* GetLighting() const noexcept(true) 
+					{
+						if (!IsInterior()) return nullptr;
+						auto Lighting = (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ?
+							difference.v1_5._CellData.Lighting : difference.v1_6._CellData.Lighting;
+						return Lighting;
+					}
+					[[nodiscard]] inline Item* GetItems() const noexcept(true) 
+					{
+						return (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ?
+							(Item*)difference.v1_5._AddrRefrs : (Item*)difference.v1_6._AddrRefrs;
+					}
+					[[nodiscard]] inline std::uint32_t GetItemCount() const noexcept(true) 
+					{ 
+						return (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ? 
+							difference.v1_5._SizeRefrs : difference.v1_6._SizeRefrs;
+					}
 				public:
 					CKPE_READ_PROPERTY(GetFullName) const char* FullName;
 					CKPE_READ_PROPERTY(GetLandspace) TESObjectLAND* Landspace;
@@ -134,21 +172,48 @@ namespace CKPE
 					char pad40[0x10];
 					CellFlags _cell_flags;
 					CellProcessLevels _cell_process_level;
-					char _pad54[0xC];	// 0x8 added with 1.6.1130 (maybe ExtraData without ref)
-					void* _ExtraData;
-					TESForm* Imagespace;
-					CellData _CellData;
-					TESObjectLAND* _Landspace;
-					char _pad78[0x8];
-					TESFormArray* _NavMeshes;
-					char _pad90[0xC];
-					std::uint32_t _SizeRefrs;
-					char _padA0[0x4];
-					std::uint32_t _TotalRefrs;
-					char _padA8[0x8];
-					std::uint32_t _AllocateSizeRefrs;
-					char _padB4[0xC];
-					Item* _AddrRefrs;
+
+#pragma pack(push, 1)
+					union
+					{
+						struct _v1_5
+						{
+							char _pad54[0x4];
+							void* _ExtraData;
+							TESForm* Imagespace;
+							CellData _CellData;
+							TESObjectLAND* _Landspace;
+							char _pad78[0x8];
+							TESFormArray* _NavMeshes;
+							char _pad90[0xC];
+							std::uint32_t _SizeRefrs;
+							char _padA0[0x4];
+							std::uint32_t _TotalRefrs;
+							char _padA8[0x8];
+							std::uint32_t _AllocateSizeRefrs;
+							char _padB4[0xC];
+							Item* _AddrRefrs;
+						} v1_5;
+						struct _v1_6
+						{
+							char _pad54[0xC];	// 0x8 added with 1.6.1130 (maybe ExtraData without ref)
+							void* _ExtraData;
+							TESForm* Imagespace;
+							CellData _CellData;
+							TESObjectLAND* _Landspace;
+							char _pad78[0x8];
+							TESFormArray* _NavMeshes;
+							char _pad90[0xC];
+							std::uint32_t _SizeRefrs;
+							char _padA0[0x4];
+							std::uint32_t _TotalRefrs;
+							char _padA8[0x8];
+							std::uint32_t _AllocateSizeRefrs;
+							char _padB4[0xC];
+							Item* _AddrRefrs;
+						} v1_6;
+					} difference;
+#pragma pack(pop)
 				};
 				static_assert(sizeof(TESObjectCELL) == 0xC8);
 			}

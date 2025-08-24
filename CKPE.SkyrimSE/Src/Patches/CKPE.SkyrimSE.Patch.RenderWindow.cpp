@@ -25,6 +25,7 @@ namespace CKPE
 		{
 			extern ID3D11DeviceContext* pointer_d3d11DeviceContext;
 			extern ImFont* imguiFonts[3];
+			extern ImVec4 gImGuiGreyColor;
 			extern std::uintptr_t gGlobAddrDeviceContext;
 
 			static float StepInRender = 15.f;
@@ -103,21 +104,6 @@ namespace CKPE
 					return CallWindowProc(RenderWindow::Singleton->GetOldWndProc(),
 						Hwnd, Message, wParam, lParam);
 				}
-				////// Fix WHITE area (Eats my eyes at startup) (only 1.6.1130 or newer)
-				/*else if (Message == WM_PAINT)
-				{
-					PAINTSTRUCT ps;
-					HDC dc = BeginPaint(Hwnd, &ps);
-
-					if (RenderWindow::Singleton->_BlockInputMessage)
-					{
-						Canvas canvas = dc;
-						canvas.Fill(RGB(0x6A, 0x6A, 0x6A));
-					}
-
-					EndPaint(Hwnd, &ps);
-					return S_OK;
-				}*/
 				else if (Message == WM_ERASEBKGND)
 				{
 					// An application should return nonzero if it erases the background; otherwise, it should return zero.
@@ -319,16 +305,46 @@ namespace CKPE
 					ImGui::TableNextColumn();
 					ImGui::Text("%.0f", io.Framerate);
 
-					auto& ii = EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform();
+					auto ActiveCell = EditorAPI::BGSRenderWindow::Singleton->GetCurrentCell();
+					if (ActiveCell)
+					{
+						ImGui::Dummy(ImVec2(1, 10));
 
-					ImGui::TableNextRow();
-					ImGui::TableNextColumn();
-					ImGui::Text("Camera:");
+						ImGui::TableNextRow();
+						ImGui::TableNextColumn();
+						ImGui::Text("Current Cell: ");
 
-					ImGui::TableNextColumn();
-					ImGui::Text("p(%.0f,%.0f,%.0f) r(%.0f,%.0f,%.0f)", ii.m_Translate.x, ii.m_Translate.y, ii.m_Translate.z,
-						Math::Rad2Deg(ii.m_Rotate.m_pEntry[1][0]), Math::Rad2Deg(ii.m_Rotate.m_pEntry[1][1]), 
-						Math::Rad2Deg(ii.m_Rotate.m_pEntry[1][2]));
+						ImGui::TableNextColumn();
+
+						auto Name = ActiveCell->GetEditorID_orig();
+						if (!Name) Name = "";
+
+						if (ActiveCell->IsInterior())
+							ImGui::Text("%s (%08X)", StringUtils::WinCPToUtf8(Name).c_str(), ActiveCell->FormID);
+						else
+							ImGui::Text("%s (%i, %i) (%08X)", StringUtils::WinCPToUtf8(Name).c_str(),
+								ActiveCell->GridX, ActiveCell->GridY, ActiveCell->FormID);
+
+						auto& ii = EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform();
+
+						ImGui::TableNextRow();
+						ImGui::TableNextColumn();
+						ImGui::Text("Camera:");
+						ImGui::TableNextColumn();
+						ImGui::Text("p(%.3f, %.3f, %.3f)", ii.m_Translate.x, ii.m_Translate.y, ii.m_Translate.z);
+						ImGui::TableNextRow();
+						ImGui::TableNextColumn();
+						ImGui::TableNextColumn();
+						ImGui::Text("r(%.3f, %.3f, %.3f)", Math::Rad2Deg(ii.m_Rotate.m_pEntry[1][0]),
+							Math::Rad2Deg(ii.m_Rotate.m_pEntry[1][1]), Math::Rad2Deg(ii.m_Rotate.m_pEntry[1][2]));
+
+						ImGui::TableNextRow();
+						ImGui::TableNextColumn();
+						ImGui::TableNextColumn();
+						ImGui::PushFont(imguiFonts[2]);
+						ImGui::TextColored({ 0.4, 0.4, 0.4, 1.0 }, "(Show/Hide press key F1)");
+						ImGui::PopFont();
+					}
 
 					ImGui::PopFont();
 					ImGui::EndTable();

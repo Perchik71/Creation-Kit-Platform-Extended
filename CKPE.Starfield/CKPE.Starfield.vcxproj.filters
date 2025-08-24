@@ -11,6 +11,15 @@
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.RemoveCheckDriver.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.RunAppWithoutNet.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.CellViewWindow.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -19,12 +28,12 @@
     <Filter Include="Patches">
       <UniqueIdentifier>{3321cb66-f02c-41eb-b161-58b9c1fe856a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="StarfieldAPI">
+    <Filter Include="EditorAPI">
       <UniqueIdentifier>{abb0447e-2dc9-4164-b499-045d8e1d4d05}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="resource_version.rc" />
+    <Filter Include="Version">
+      <UniqueIdentifier>{f36cf06f-c45e-44a6-82d7-271575e5f223}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\CKPE.Starfield.VersionLists.h">
@@ -36,5 +45,30 @@
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.h">
       <Filter>Patches</Filter>
     </ClInclude>
+    <ClInclude Include="resource_version.h">
+      <Filter>Version</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.RemoveCheckDriver.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.RunAppWithoutNet.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.CellViewWindow.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\TESFormComponent.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource_version.rc">
+      <Filter>Version</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="build_version.txt">
+      <Filter>Version</Filter>
+    </Text>
   </ItemGroup>
 </Project>
