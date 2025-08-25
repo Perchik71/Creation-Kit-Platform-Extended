@@ -12,6 +12,7 @@
 
 #include <Patches/CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.h>
 #include <Patches/CKPE.Starfield.Patch.CellViewWindow.h>
+#include <Patches/CKPE.Starfield.Patch.MemoryManager.h>
 #include <Patches/CKPE.Starfield.Patch.RemoveCheckDriver.h>
 #include <Patches/CKPE.Starfield.Patch.RunAppWithoutNet.h>
 
@@ -27,6 +28,7 @@ namespace CKPE
 
 			mgr->Register(new Patch::AllowMultipleWindowAndMaster);
 			mgr->Register(new Patch::CellViewWindow);
+			mgr->Register(new Patch::MemoryManager);
 			mgr->Register(new Patch::RemoveCheckDriver);
 			mgr->Register(new Patch::RunAppWithoutNet);
 		}

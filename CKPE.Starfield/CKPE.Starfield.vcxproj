@@ -126,6 +126,7 @@
     <ClCompile Include="Src\CKPE.Starfield.VersionLists.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.CellViewWindow.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.MemoryManager.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.RemoveCheckDriver.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.RunAppWithoutNet.cpp" />
   </ItemGroup>
@@ -138,6 +139,7 @@
     <ClInclude Include="Include\EditorAPI\TESFormComponent.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.CellViewWindow.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.MemoryManager.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.RemoveCheckDriver.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.RunAppWithoutNet.h" />
     <ClInclude Include="resource_version.h" />

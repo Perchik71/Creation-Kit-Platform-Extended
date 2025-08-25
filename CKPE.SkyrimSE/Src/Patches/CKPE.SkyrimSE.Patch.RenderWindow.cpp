@@ -152,7 +152,7 @@ namespace CKPE
 				{
 					if (Message == WM_KEYDOWN)
 					{
-						if (Keyboard::IsShiftPressed())
+						if (!Keyboard::IsAltPressed() && !Keyboard::IsControlPressed() && Keyboard::IsShiftPressed())
 						{
 							switch (wParam)
 							{

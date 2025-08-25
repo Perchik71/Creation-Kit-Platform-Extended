@@ -20,6 +20,9 @@
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.CellViewWindow.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.MemoryManager.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -59,6 +62,9 @@
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\TESFormComponent.h">
       <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.MemoryManager.h">
+      <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

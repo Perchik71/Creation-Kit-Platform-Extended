@@ -10,90 +10,108 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.MemoryManager.h>
-#include <CKPE.SkyrimSE.VersionLists.h>
-#include <Patches/CKPE.SkyrimSE.Patch.MemoryManager.h>
+#include <CKPE.Starfield.VersionLists.h>
+#include <Patches/CKPE.Starfield.Patch.MemoryManager.h>
 
 namespace CKPE
 {
-	namespace SkyrimSE
+	namespace Starfield
 	{
 		namespace Patch
 		{
-			constexpr auto MEM_THRESHOLD = 2;	// 2Gb
+			constexpr auto MEM_THRESHOLD = 20;	// 20Gb
 
 			class BSMemoryManager
 			{
 				// Не описываем конструкторы и деструкторы
 				// Класс - это просто оболочка
 			public:
-				static void* Allocate(BSMemoryManager* manager, std::size_t size, std::uint32_t alignment, bool aligned)
+				[[nodiscard]] inline static std::size_t GetAlignSize(std::size_t size, std::size_t alignment)
 				{
-					auto ptr = Common::MemoryManager::GetSingleton()->MemAlloc(size, alignment, aligned, true);
-					// _CKPE_TracerPush("MemoryManager", ptr, size);
+					alignment = ((alignment + 15) & ~15);
+					return (alignment + size) & ~alignment;
+				}
+
+				[[nodiscard]] inline static void* Allocate(BSMemoryManager* manager, std::size_t size, 
+					std::uint32_t alignment, bool aligned)
+				{
+					auto ptr = Common::MemoryManager::GetSingleton()->MemAlloc(GetAlignSize(size, alignment), 16, true);
 					return ptr;
 				}
 
-				static void Deallocate(BSMemoryManager* manager, void* memory, bool aligned)
+				inline static void Deallocate(BSMemoryManager* manager, void* memory, bool aligned)
 				{
-					//_CKPE_TracerPop(memory);
 					Common::MemoryManager::GetSingleton()->MemFree(memory);
 				}
 
-				static std::size_t Size(BSMemoryManager* manager, void* memory)
+				[[nodiscard]] inline static std::size_t Size(BSMemoryManager* manager, void* memory)
 				{
 					return Common::MemoryManager::GetSingleton()->MemSize(memory);
 				}
 			};
 
-			class BSScrapHeap
+			class HeapAllocator
 			{
 				// Не описываем конструкторы и деструкторы
 				// Класс - это просто оболочка
 			public:
-				static void* Allocate(BSScrapHeap* manager, std::size_t size, std::uint32_t alignment)
+				[[nodiscard]] inline static void* Allocate(HeapAllocator* manager, std::size_t size, std::uint32_t alignment)
 				{
-					auto ptr = Common::MemoryManager::GetSingleton()->MemAlloc(size, alignment, alignment != 0);
-					//_CKPE_TracerPush("ScrapHeap", ptr, size);
-					return ptr;
+					return Common::MemoryManager::GetSingleton()->MemAlloc(
+						BSMemoryManager::GetAlignSize(size, alignment), 16, true);
 				}
 
-				static void Deallocate(BSScrapHeap* manager, void* memory)
+				inline static void Deallocate(HeapAllocator* manager, void* memory)
 				{
-					//_CKPE_TracerPop(memory);
 					Common::MemoryManager::GetSingleton()->MemFree(memory);
+				}
+
+				[[nodiscard]] inline static std::size_t Size(HeapAllocator* manager, void* memory)
+				{
+					return Common::MemoryManager::GetSingleton()->MemSize(memory);
+				}
+
+				[[nodiscard]] static std::size_t BlockSize(HeapAllocator* manager, void* memory)
+				{
+					return BSMemoryManager::GetAlignSize(Size(nullptr, memory), 16) + 16;
 				}
 			};
 
 			class bhkThreadMemorySource
 			{
 			private:
-				char _pad0[0x8];
-				CRITICAL_SECTION m_CritSec;
+				char _pad0[0x8]{};
+				char _nameClass[0x20]{};
 			public:
-				CKPE_DECLARE_CONSTRUCTOR_HOOK(bhkThreadMemorySource);
+				inline static bhkThreadMemorySource** Instance;
+				static bhkThreadMemorySource* init(bhkThreadMemorySource* newInstance);
 
 				bhkThreadMemorySource();
-				virtual ~bhkThreadMemorySource();
+				virtual ~bhkThreadMemorySource() = default;
 				virtual void* blockAlloc(std::size_t numBytes);
 				virtual void blockFree(void* p, std::size_t numBytes);
-				virtual void* bufAlloc(std::size_t& reqNumBytesInOut);
-				virtual void bufFree(void* p, std::size_t numBytes);
-				virtual void* bufRealloc(void* pold, std::size_t oldNumBytes, std::size_t& reqNumBytesInOut);
+				virtual void* blockRealloc(void* pold, std::size_t oldNumBytes, std::size_t& reqNumBytesInOut);
 				virtual void blockAllocBatch(void** ptrsOut, std::size_t numPtrs, std::size_t blockSize);
 				virtual void blockFreeBatch(void** ptrsIn, std::size_t numPtrs, std::size_t blockSize);
 				virtual void getMemoryStatistics(class MemoryStatistics& u);
 				virtual std::size_t getAllocatedSize(const void* obj, std::size_t nbytes);
 				virtual void resetPeakMemoryStatistics();
+				virtual void unk40();
+				virtual void unk48();
+				virtual void unk50();
+				virtual void unk58();
+				virtual void* getExtendedInterface();
 			};
+
+			bhkThreadMemorySource* bhkThreadMemorySource::init(bhkThreadMemorySource* newInstance)
+			{
+				*Instance = new(newInstance) bhkThreadMemorySource();
+				return newInstance;
+			}
 
 			bhkThreadMemorySource::bhkThreadMemorySource()
 			{
-				InitializeCriticalSection(&m_CritSec);
-			}
-
-			bhkThreadMemorySource::~bhkThreadMemorySource()
-			{
-				DeleteCriticalSection(&m_CritSec);
+				strcpy_s(_nameClass, "bhkThreadMemorySource");
 			}
 
 			void* bhkThreadMemorySource::blockAlloc(std::size_t numBytes)
@@ -106,17 +124,7 @@ namespace CKPE
 				BSMemoryManager::Deallocate(nullptr, p, true);
 			}
 
-			void* bhkThreadMemorySource::bufAlloc(std::size_t& reqNumBytesInOut)
-			{
-				return blockAlloc(reqNumBytesInOut);
-			}
-
-			void bhkThreadMemorySource::bufFree(void* p, std::size_t numBytes)
-			{
-				return blockFree(p, numBytes);
-			}
-
-			void* bhkThreadMemorySource::bufRealloc(void* pold, std::size_t oldNumBytes, std::size_t& reqNumBytesInOut)
+			void* bhkThreadMemorySource::blockRealloc(void* pold, std::size_t oldNumBytes, std::size_t& reqNumBytesInOut)
 			{
 				void* p = blockAlloc(reqNumBytesInOut);
 				memcpy(p, pold, oldNumBytes);
@@ -153,6 +161,31 @@ namespace CKPE
 				// Ничего
 			}
 
+			void bhkThreadMemorySource::unk40()
+			{
+				// Ничего
+			}
+
+			void bhkThreadMemorySource::unk48()
+			{
+				// Ничего
+			}
+
+			void bhkThreadMemorySource::unk50()
+			{
+				// Ничего
+			}
+
+			void bhkThreadMemorySource::unk58()
+			{
+				// Ничего
+			}
+
+			void* bhkThreadMemorySource::getExtendedInterface()
+			{
+				return nullptr;
+			}
+
 			MemoryManager::MemoryManager() : Common::Patch()
 			{
 				SetName("Memory Manager");
@@ -180,12 +213,12 @@ namespace CKPE
 
 			bool MemoryManager::DoQuery() const noexcept(true)
 			{
-				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
+				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_STARFIELD_LAST;
 			}
 
 			bool MemoryManager::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
+				if (db->GetVersion() != 3)
 					return false;
 
 				auto interface = CKPE::Common::Interface::GetSingleton();
@@ -225,14 +258,25 @@ namespace CKPE
 				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&BSMemoryManager::Allocate);
 				Detours::DetourJump(__CKPE_OFFSET(1), (std::uintptr_t)&BSMemoryManager::Deallocate);
 				Detours::DetourJump(__CKPE_OFFSET(2), (std::uintptr_t)&BSMemoryManager::Size);
-				Detours::DetourJump(__CKPE_OFFSET(3), (std::uintptr_t)&BSScrapHeap::Allocate);
-				Detours::DetourJump(__CKPE_OFFSET(4), (std::uintptr_t)&BSScrapHeap::Deallocate);
-				Detours::DetourJump(__CKPE_OFFSET(5), (std::uintptr_t)&bhkThreadMemorySource::__ctor__);
-				
-				SafeWrite::Write(__CKPE_OFFSET(6), { 0xC3 });
-				SafeWrite::Write(__CKPE_OFFSET(7), { 0xC3 });
-				SafeWrite::Write(__CKPE_OFFSET(8), { 0xC3 });
-				SafeWrite::Write(__CKPE_OFFSET(9), { 0xC3 });
+
+				// They added a static variable, surprisingly, they preferred setting this in the class constructor,
+				// they clearly did not read Alen I. Holub... (as can't write in C/C++)
+				// https://www.amazon.com/Enough-Rope-Shoot-Yourself-Foot/dp/0070296898
+				bhkThreadMemorySource::Instance = (bhkThreadMemorySource**)(__CKPE_OFFSET(3));
+				Detours::DetourJump(__CKPE_OFFSET(4), (std::uintptr_t)&bhkThreadMemorySource::init);
+
+				// Reducing performance, it looks like Bethesda has created something wonderful this time
+				// 
+				// ScrapHeap, HeapAllocator, SharedHeapAllocator and etc.
+				//Detours::DetourJump(__CKPE_OFFSET(5), (std::uintptr_t)&HeapAllocator::Allocate);
+				//Detours::DetourJump(__CKPE_OFFSET(6), (std::uintptr_t)&HeapAllocator::Deallocate);
+				//Detours::DetourJump(__CKPE_OFFSET(7), (std::uintptr_t)&HeapAllocator::Size);
+				//Detours::DetourJump(__CKPE_OFFSET(8), (std::uintptr_t)&HeapAllocator::BlockSize);
+				// 
+				//SafeWrite::Write(__CKPE_OFFSET(9), { 0xC3 });
+				// This condition causes a leak, as it blocks the release of memory, perhaps this is due to interception.
+				// Solution: delete the condition.
+				//SafeWrite::WriteNop(__CKPE_OFFSET(10), 2);
 
 				return true;
 			}
