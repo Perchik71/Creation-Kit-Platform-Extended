@@ -136,7 +136,7 @@
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
       <CallingConvention>StdCall</CallingConvention>
-      <DisableSpecificWarnings>26444;6386;28619;28183;28182;26495</DisableSpecificWarnings>
+      <DisableSpecificWarnings>26444;6386;28619;28183;28182;26495;6054</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -185,6 +185,7 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Src\CKPE.PluginAPI.Plugin.cpp" />
+    <ClCompile Include="Src\CKPE.PluginAPI.PluginAPI.cpp" />
     <ClCompile Include="Src\CKPE.PluginAPI.PluginManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +198,7 @@
     <ClInclude Include="Include\CKPE.PluginAPI.Common.h" />
     <ClInclude Include="Include\CKPE.PluginAPI.h" />
     <ClInclude Include="Include\CKPE.PluginAPI.Plugin.h" />
+    <ClInclude Include="Include\CKPE.PluginAPI.PluginAPI.h" />
     <ClInclude Include="Include\CKPE.PluginAPI.PluginManager.h" />
     <ClInclude Include="resource_version.h" />
   </ItemGroup>

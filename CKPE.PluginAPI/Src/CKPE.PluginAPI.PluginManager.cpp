@@ -44,6 +44,15 @@ namespace CKPE
 
 		void* PluginManager::QueryInterface(std::uint32_t id) noexcept(true)
 		{
+			if (!_PluginManager._plugins || !_currentHandle)
+				return nullptr;
+
+			/*switch (id)
+			{
+			default:
+				return nullptr;
+			}*/
+
 			return nullptr;
 		}
 
@@ -56,7 +65,10 @@ namespace CKPE
 			if (_plugins)
 			{
 				for (auto plugin : *_plugins)
-					delete plugin;
+				{
+					if (plugin)
+						delete plugin;
+				}
 
 				delete _plugins;
 				_plugins = nullptr;
@@ -69,7 +81,7 @@ namespace CKPE
 				return 0;
 
 			auto path = PathUtils::GetCKPEPluginPath();
-			_MESSAGE(L"Scanning plugin directory: \"%s\"", path.c_str());
+			CKPE::_MESSAGE(L"Scanning plugin directory: \"%s\"", path.c_str());
 
 			std::vector<std::wstring> pluginInv;
 

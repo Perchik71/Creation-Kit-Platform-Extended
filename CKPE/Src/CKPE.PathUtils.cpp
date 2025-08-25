@@ -25,11 +25,11 @@ namespace CKPE
 	std::wstring PathUtils::GetApplicationPath() noexcept(true)
 	{
 		std::wstring r = GetApplicationFileName();
-		auto it = r.find_last_of(L'/');
+		auto it = r.find_last_of(L"\\/");
 		if (it != std::wstring::npos)
 			r.erase(it + 1, -1);
 		else
-			r += L"/";
+			r += L"\\";
 		return r;
 	}
 
@@ -43,12 +43,22 @@ namespace CKPE
 
 	std::wstring PathUtils::GetDataPath() noexcept(true)
 	{
-		return GetApplicationPath() + L"Data/";
+		return GetApplicationPath() + L"Data\\";
+	}
+
+	std::wstring PathUtils::GetCKPELogsPath() noexcept(true)
+	{
+		return GetApplicationPath() + L"Logs\\CKPE\\";
 	}
 
 	std::wstring PathUtils::GetCKPEPluginPath() noexcept(true)
 	{
-		return GetApplicationPath() + L"CKPEPlugins/";
+		return GetApplicationPath() + L"CKPEPlugins\\";
+	}
+
+	std::wstring PathUtils::GetCKPELogsPluginPath() noexcept(true)
+	{
+		return GetApplicationPath() + L"Logs\\CKPE\\Plug-ins\\";
 	}
 
 	bool PathUtils::CreateFolder(const std::string& path) noexcept(true)
@@ -137,7 +147,7 @@ namespace CKPE
 
 	std::wstring& PathUtils::Normalize(std::wstring& path) noexcept(true)
 	{
-		std::replace(path.begin(), path.end(), L'\\', L'/');
+		std::replace(path.begin(), path.end(), L'/', L'\\');
 		return path;
 	}
 
@@ -145,7 +155,7 @@ namespace CKPE
 	{
 		if (!path.empty() && (path.size() > 0))
 			if (!wcschr(L"\\/", path[path.size() - 1]))
-				path += L"/";
+				path += L"\\";
 		return path;
 	}
 

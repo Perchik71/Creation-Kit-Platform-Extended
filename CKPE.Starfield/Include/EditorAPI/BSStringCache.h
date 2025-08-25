@@ -9,7 +9,7 @@
 
 namespace CKPE
 {
-	namespace SkyrimSE
+	namespace Starfield
 	{
 		namespace EditorAPI
 		{
@@ -23,56 +23,83 @@ namespace CKPE
 
 				struct Entry
 				{
-					Entry* next;		// 00
+					enum : std::uint8_t
+					{
+						kExternal = 1 << 1,
+					};
+
+					Entry* left;  // 00
 					union
 					{
-						struct
-						{
-							std::uint16_t refCount;	// invalid if 0x8000 is set
-							std::uint16_t hash;
-						};
-						std::uint32_t refCountAndHash;
-					} state;				// 08 - refcount, hash
-					std::uint64_t length;	// 10
-					char* data;				// 18
+						std::uint32_t len;	// Number of bytes (even for wchar_t).
+						Entry* right;
+					};  // 08
+					volatile std::uint32_t refCount;  // 10
+					std::uint32_t          flags;     // 14
 
-					inline const char* c_str() const noexcept(true) { return data; }
-					inline operator const char*() const { return data ? data : ""; }
+					std::uint32_t acquire() noexcept(true);
+
+					template <class T>
+					[[nodiscard]] inline const T* data() const noexcept(true)
+					{
+						const auto entry = leaf();
+						if (entry)
+							return reinterpret_cast<const T*>(entry + 1);
+						else
+							return nullptr;
+					}
+
+					[[nodiscard]] inline const Entry* leaf() const noexcept(true)
+					{
+						auto iter = this;
+						while (iter && iter->external())
+							iter = iter->right;
+						return iter;
+					}
+
+					[[nodiscard]] inline std::uint32_t length() const noexcept(true)
+					{
+						const auto entry = leaf();
+						return entry ? entry->len : 0;
+					}
+
+					[[nodiscard]] inline bool          external() const noexcept(true) { return flags & kExternal; }
+					[[nodiscard]] inline std::uint32_t size()	  const noexcept(true) { return length(); }
+
+					template <class T>
+					[[nodiscard]] inline const T* c_str() const noexcept(true) { return data<T>(); }
+					template <class T>
+					[[nodiscard]] inline operator const T*() const { return data<T>() ? data<T>() : ""; }
 				};
 
 				struct Ref
 				{
-					char* data{ nullptr };
-
-					// For 1.6.378.1
-					//260BC00 (ctor, Ref*, 0x00CEC5D0, const char* buf);
-					//260BC70 (ctor_ref, Ref*, 0x00CEC680, const Ref& rhs);
-					//260BD50 (Set, Ref*, 0x00CEC760, const char* buf);
-					//260BDD0 (Set_ref, Ref*, 0x00CEC820, const Ref& rhs);
-					//260E040 (Release, void, 0x00CED9A0);
+					Entry* data{ nullptr };
 
 					constexpr Ref() noexcept(true) = default;
 
 					inline bool operator==(const Ref& lhs) const noexcept(true) { return data == lhs.data; }
 					inline bool operator<(const Ref& lhs) const noexcept(true) { return data < lhs.data; }
 
-					inline const char* c_str() const { return data; }
-					inline operator const char*() const { return data ? data : ""; }
+					template <class T>
+					[[nodiscard]] inline const T* c_str() const noexcept(true) { return data->data<T>(); }
+					template <class T>
+					[[nodiscard]] inline operator const T*() const { return data->data<T>() ? data->data<T>() : ""; }
 				};
 
 				BSStringCache() = default;
 				~BSStringCache() = default;
 
-				inline Lock* GetLock(std::uint32_t crc16) { return &locks[crc16 & 0x1F]; }
+				inline Lock* GetLock(std::uint32_t crc16) { return &locks[crc16 & 0xFF]; }
 			private:
-				Entry* lut[0x10000];
-				Lock locks[0x20];
+				Entry* lut[0x40000];
+				Lock locks[0x100];
 				std::uint8_t isInit;
 			};
 
 			static_assert(sizeof(BSStringCache::Lock) == 0x8);
 			static_assert(sizeof(BSStringCache::Ref) == 0x8);
-			static_assert(sizeof(BSStringCache::Entry) == 0x20);
+			static_assert(sizeof(BSStringCache::Entry) == 0x18);
 		}
 	}
 }

@@ -108,7 +108,6 @@ namespace CKPE
 				PEXCEPTION_POINTERS lpExceptionInfo);
 			static void PrintPatches(TextFileStream& Stream) noexcept(true);
 			static void PrintModules(TextFileStream& Stream, ModuleMapInfo* Modules) noexcept(true);
-			static void PrintPlugins(TextFileStream& Stream) noexcept(true);
 
 			static void ContextWriteToCrashLogSafe(TextFileStream& Stream, 
 				PEXCEPTION_POINTERS ExceptionInfo) noexcept(true);
@@ -427,7 +426,6 @@ namespace CKPE
 			PrintCallStackSafe(Stream, &Modules);
 			PrintPatches(Stream);
 			PrintModules(Stream, &Modules);
-			PrintPlugins(Stream);
 		}
 
 		void Introspection::ContextWriteToCrashLog(TextFileStream& Stream, PEXCEPTION_POINTERS ExceptionInfo)
@@ -911,23 +909,6 @@ namespace CKPE
 			Stream.Flush();
 		}
 
-		void Introspection::PrintPlugins(TextFileStream& Stream) noexcept(true)
-		{
-			/*Stream.WriteString("PLUGINS:\n");
-
-			auto Manager = GlobalEnginePtr->GetUserPluginsManager();
-
-			Stream.WriteString("\tTotal: %u\n", Manager->Count());
-
-			uint32_t id = 0;
-			auto Plugins = Manager->GetPluginMap();
-			for (auto itP = Plugins->begin(); itP != Plugins->end(); itP++, id++)
-				Stream.WriteString("\t[%04u]: %s\n", id, itP->second->GetPluginDllName());
-
-			fprintf(Stream, "\n");
-			Stream.Flush();*/
-		}
-
 		///////////////////////////////////////////////////
 		/// CrashHandler
 
@@ -1242,8 +1223,9 @@ namespace CKPE
 				char exePath[MAX_PATH];
 				GetModuleFileNameA(GetModuleHandleA(nullptr), exePath, ARRAYSIZE(exePath));
 				GetSystemTime(&sysTime);
-				auto zip_fname = StringUtils::FormatString("%s_%4d%02d%02d_%02d%02d%02d.zip", exePath,
+				auto zip_fname = StringUtils::FormatString("Logs/CKPE/Crashes/%s_%4d%02d%02d_%02d%02d%02d.zip", exePath,
 					sysTime.wYear, sysTime.wMonth, sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond);
+				PathUtils::CreateFolder(PathUtils::ExtractFilePath(zip_fname));
 
 				std::vector<std::string> slist;
 				slist.push_back("CreationKitPlatformExtended.log");

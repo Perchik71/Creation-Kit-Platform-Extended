@@ -8,6 +8,9 @@
     <ClCompile Include="Src\CKPE.PluginAPI.PluginManager.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.PluginAPI.PluginAPI.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource_version.rc" />
@@ -27,6 +30,9 @@
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.PluginAPI.PluginManager.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.PluginAPI.PluginAPI.h">
       <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>

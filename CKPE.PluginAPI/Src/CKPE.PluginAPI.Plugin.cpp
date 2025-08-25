@@ -138,22 +138,6 @@ namespace CKPE
 
 		bool Plugin::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 		{
-			auto path = std::make_unique<wchar_t[]>(MAX_PATH);
-			if (!path) return false;
-
-			GetTempPathW(MAX_PATH, path.get());	
-			std::wstring sfname = path.get();
-			PathUtils::IncludeTrailingPathDelimiter(sfname);
-			sfname += L"My Games/Creation Kit Platform Extended/Plug-ins/" + PathUtils::ExtractFileName(sfname);
-			sfname = PathUtils::ChangeFileExt(sfname, L".log");
-			PathUtils::CreateFolder(PathUtils::ExtractFilePath(PathUtils::Normalize(sfname)));
-
-			if (!_log->Open(sfname))
-			{
-				CKPE::_ERROR(L"Couldn't create \"%s\" file", sfname.c_str());
-				return false;
-			}
-
 			return SafeActive((const CKPEPluginInterface*)db);
 		}
 
@@ -163,18 +147,12 @@ namespace CKPE
 		}
 
 		Plugin::Plugin() noexcept(true) :
-			_dllname(new std::wstring), _funcs(new std::vector<std::uintptr_t>), _log(new Logger())
+			_dllname(new std::wstring), _funcs(new std::vector<std::uintptr_t>)
 		{}
 
 		Plugin::~Plugin() noexcept(true)
 		{
 			Unload();
-
-			if (_log)
-			{
-				delete _log;
-				_log = nullptr;
-			}
 
 			if (_funcs)
 			{
@@ -389,98 +367,6 @@ namespace CKPE
 			}
 
 			return result;
-		}
-
-		void Plugin::_FATALERROR(const std::string_view& formatted_message, ...) noexcept(true)
-		{
-			va_list ap;
-			va_start(ap, &formatted_message);
-			_log->WriteString(Logger::tFatalError, StringUtils::FormatStringVa(formatted_message.data(), ap));
-			va_end(ap);
-		}
-
-		void Plugin::_ERROR(const std::string_view& formatted_message, ...) noexcept(true)
-		{
-			va_list ap;
-			va_start(ap, &formatted_message);
-			_log->WriteString(Logger::tError, StringUtils::FormatStringVa(formatted_message.data(), ap));
-			va_end(ap);
-		}
-
-		void Plugin::_WARNING(const std::string_view& formatted_message, ...) noexcept(true)
-		{
-			va_list ap;
-			va_start(ap, &formatted_message);
-			_log->WriteString(Logger::tWarning, StringUtils::FormatStringVa(formatted_message.data(), ap));
-			va_end(ap);
-		}
-
-		void Plugin::_MESSAGE(const std::string_view& formatted_message, ...) noexcept(true)
-		{
-			va_list ap;
-			va_start(ap, &formatted_message);
-			_log->WriteString(Logger::tMessage, StringUtils::FormatStringVa(formatted_message.data(), ap));
-			va_end(ap);
-		}
-
-		void Plugin::_FATALERROR(const std::wstring_view& formatted_message, ...) noexcept(true)
-		{
-			va_list ap;
-			va_start(ap, &formatted_message);
-			_log->WriteString(Logger::tFatalError, StringUtils::Utf16ToUtf8(StringUtils::FormatStringVa(formatted_message.data(), ap)));
-			va_end(ap);
-		}
-
-		void Plugin::_ERROR(const std::wstring_view& formatted_message, ...) noexcept(true)
-		{
-			va_list ap;
-			va_start(ap, &formatted_message);
-			_log->WriteString(Logger::tError, StringUtils::Utf16ToUtf8(StringUtils::FormatStringVa(formatted_message.data(), ap)));
-			va_end(ap);
-		}
-
-		void Plugin::_WARNING(const std::wstring_view& formatted_message, ...) noexcept(true)
-		{
-			va_list ap;
-			va_start(ap, &formatted_message);
-			_log->WriteString(Logger::tWarning, StringUtils::Utf16ToUtf8(StringUtils::FormatStringVa(formatted_message.data(), ap)));
-			va_end(ap);
-		}
-
-		void Plugin::_MESSAGE(const std::wstring_view& formatted_message, ...) noexcept(true)
-		{
-			va_list ap;
-			va_start(ap, &formatted_message);
-			_log->WriteString(Logger::tMessage, StringUtils::Utf16ToUtf8(StringUtils::FormatStringVa(formatted_message.data(), ap)));
-			va_end(ap);
-		}
-
-		void Plugin::_CONSOLE(const std::string_view& formatted_message, ...) noexcept(true)
-		{
-			va_list va;
-			va_start(va, &formatted_message);
-			_CONSOLEVA(formatted_message, va);
-			va_end(va);
-		}
-
-		void Plugin::_CONSOLEVA(const std::string_view& formatted_message, va_list va) noexcept(true)
-		{
-			auto s = Common::LogWindow::GetSingleton();
-			if (s) s->InputLogVa(formatted_message, va);
-		}
-
-		void Plugin::_CONSOLE(const std::wstring_view& formatted_message, ...) noexcept(true)
-		{
-			va_list va;
-			va_start(va, &formatted_message);
-			_CONSOLEVA(formatted_message, va);
-			va_end(va);
-		}
-
-		void Plugin::_CONSOLEVA(const std::wstring_view& formatted_message, va_list va) noexcept(true)
-		{
-			auto s = Common::LogWindow::GetSingleton();
-			if (s) s->InputLogVa(formatted_message, va);
 		}
 	}
 }

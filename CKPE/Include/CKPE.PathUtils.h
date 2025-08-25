@@ -21,7 +21,9 @@ namespace CKPE
 		[[nodiscard]] static std::wstring GetApplicationPath() noexcept(true);
 		[[nodiscard]] static std::wstring GetCurrentPath() noexcept(true);
 		[[nodiscard]] static std::wstring GetDataPath() noexcept(true);
+		[[nodiscard]] static std::wstring GetCKPELogsPath() noexcept(true);
 		[[nodiscard]] static std::wstring GetCKPEPluginPath() noexcept(true);
+		[[nodiscard]] static std::wstring GetCKPELogsPluginPath() noexcept(true);
 
 		static bool CreateFolder(const std::string& path) noexcept(true);
 		static bool CreateFolder(const std::wstring& path) noexcept(true);

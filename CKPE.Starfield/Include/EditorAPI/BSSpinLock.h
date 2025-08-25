@@ -6,7 +6,7 @@
 
 namespace CKPE
 {
-	namespace SkyrimSE
+	namespace Starfield
 	{
 		namespace EditorAPI
 		{

@@ -83,16 +83,16 @@ namespace CKPE
 				SafeWrite::Write(__CKPE_OFFSET(3), { 0xC3, 0x90 });
 
 				// Allow forms to be filtered in CellViewProc
-				//Detours::DetourCall(__CKPE_OFFSET(4), &CellViewWindow::sub1);
-				//Detours::DetourCall(__CKPE_OFFSET(5), &CellViewWindow::sub1);
-				//pointer_CellViewWindow_sub1 = __CKPE_OFFSET(6);
+				Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&CellViewWindow::sub1);
+				Detours::DetourCall(__CKPE_OFFSET(5), (std::uintptr_t)&CellViewWindow::sub1);
+				pointer_CellViewWindow_sub1 = __CKPE_OFFSET(6);
 				// For Recent Cells
-				//Detours::DetourCall(__CKPE_OFFSET(10), &CellViewWindow::sub3);
-				//Detours::DetourCall(__CKPE_OFFSET(11), &CellViewWindow::sub3);
-				//pointer_CellViewWindow_sub3 = __CKPE_OFFSET(9);
+				Detours::DetourCall(__CKPE_OFFSET(10), (std::uintptr_t)&CellViewWindow::sub3);
+				Detours::DetourCall(__CKPE_OFFSET(11), (std::uintptr_t)&CellViewWindow::sub3);
+				pointer_CellViewWindow_sub3 = __CKPE_OFFSET(9);
 				// Allow objects to be filtered in CellViewProc
-				//Detours::DetourCall(__CKPE_OFFSET(7), &CellViewWindow::sub2);
-				//pointer_CellViewWindow_sub2 = __CKPE_OFFSET(8);
+				Detours::DetourCall(__CKPE_OFFSET(7), (std::uintptr_t)&CellViewWindow::sub2);
+				pointer_CellViewWindow_sub2 = __CKPE_OFFSET(8);
 
 				return true;
 			}
@@ -228,6 +228,45 @@ namespace CKPE
 				m_ActiveObjectsOnly.BoundsRect = Bounds;
 			}
 
+			void CellViewWindow::sub1(HWND ListViewHandle, EditorAPI::Forms::TESForm* Form, bool UseImage, 
+				int ItemIndex) noexcept(true)
+			{
+				bool allowInsert = true;
+				CellViewWindow::Singleton.GetSingleton()->Perform(UI_CELL_VIEW_ADD_CELL_ITEM, (WPARAM)Form, (LPARAM)&allowInsert);
+
+				if (!allowInsert)
+					return;
+
+				fast_call<void>(pointer_CellViewWindow_sub1, ListViewHandle, Form, UseImage, ItemIndex);
+			}
+
+			void CellViewWindow::sub2(HWND ListViewHandle, EditorAPI::Forms::TESForm* Form) noexcept(true)
+			{
+				{
+					bool allowInsert = true;
+					CellViewWindow::Singleton.GetSingleton()->Perform(UI_CELL_VIEW_ADD_CELL_OBJECT_ITEM, (WPARAM)Form, (LPARAM)&allowInsert);
+
+					if (!allowInsert)
+						return;
+				}
+
+				fast_call<void>(pointer_CellViewWindow_sub2, ListViewHandle, Form);
+			}
+
+			bool CellViewWindow::sub3(EditorAPI::Forms::TESForm* Form) noexcept(true)
+			{
+				bool skipsInsert = fast_call<bool>(pointer_CellViewWindow_sub3, Form);
+				if (!skipsInsert)
+				{
+					bool allowInsert = true;
+					CellViewWindow::Singleton.GetSingleton()->Perform(UI_CELL_VIEW_ADD_CELL_ITEM, (WPARAM)Form, (LPARAM)&allowInsert);
+					if (!allowInsert)
+						return true;
+				}
+
+				return skipsInsert;
+			}
+
 			LRESULT CALLBACK CellViewWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam) noexcept(true)
 			{
 				if (Message == WM_INITDIALOG)
@@ -273,7 +312,7 @@ namespace CKPE
 				}
 				else if (Message == WM_COMMAND)
 				{
-					const uint32_t param = LOWORD(wParam);
+					const std::uint32_t param = LOWORD(wParam);
 
 					if (param == UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX)
 					{
@@ -302,33 +341,33 @@ namespace CKPE
 				}
 				else if (Message == UI_CELL_VIEW_ADD_CELL_ITEM)
 				{
-					//auto form = reinterpret_cast<const TESForm*>(wParam);
-					//auto allowInsert = reinterpret_cast<bool*>(lParam);
+					auto form = reinterpret_cast<const EditorAPI::Forms::TESForm*>(wParam);
+					auto allowInsert = reinterpret_cast<bool*>(lParam);
 
-					//*allowInsert = true;
+					*allowInsert = true;
 
-					//// Skip the entry if "Show only active cells" is checked
-					//if (static_cast<bool>(GetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_ACTIVE_CELLS_ONLY)))
-					//{
-					//	if (form && !form->Active)
-					//		*allowInsert = false;
-					//}
+					// Skip the entry if "Show only active cells" is checked
+					if (static_cast<bool>(GetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_ACTIVE_CELLS_ONLY)))
+					{
+						if (form && !form->Active)
+							*allowInsert = false;
+					}
 
 					return 1;
 				}
 				else if (Message == UI_CELL_VIEW_ADD_CELL_OBJECT_ITEM)
 				{
-					//auto form = reinterpret_cast<const TESForm*>(wParam);
-					//auto allowInsert = reinterpret_cast<bool*>(lParam);
+					auto form = reinterpret_cast<const EditorAPI::Forms::TESForm*>(wParam);
+					auto allowInsert = reinterpret_cast<bool*>(lParam);
 
-					//*allowInsert = true;
+					*allowInsert = true;
 
-					//// Skip the entry if "Show only active objects" is checked
-					//if (static_cast<bool>(GetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_ACTIVE_OBJECT_ONLY)))
-					//{
-					//	if (form && !form->Active)
-					//		*allowInsert = false;
-					//}
+					// Skip the entry if "Show only active objects" is checked
+					if (static_cast<bool>(GetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_ACTIVE_OBJECT_ONLY)))
+					{
+						if (form && !form->Active)
+							*allowInsert = false;
+					}
 
 					return 1;
 				}

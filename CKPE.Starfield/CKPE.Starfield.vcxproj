@@ -47,12 +47,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Starfield\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)CKPE.PluginAPI\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Starfield\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)CKPE.PluginAPI\Include;$(SolutionDir)Dependencies\qt5;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Starfield\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)CKPE.PluginAPI\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Starfield\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)CKPE.PluginAPI\Include;$(SolutionDir)Dependencies\qt5;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -80,8 +80,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;CKPE.PluginAPI.lib;comctl32.lib;dxgi.lib;d3d11.lib;DirectXTex.lib;d3dcompiler.lib;dxguid.lib;ImGUI.lib;libdeflate.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\Release\;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)\Dependencies\qt5\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;CKPE.PluginAPI.lib;comctl32.lib;dxgi.lib;d3d11.lib;DirectXTex.lib;d3dcompiler.lib;dxguid.lib;ImGUI.lib;libdeflate.lib;shlwapi.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\scripts.ps1"</Command>
@@ -113,8 +113,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\Release\;$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;CKPE.PluginAPI.lib;comctl32.lib;dxgi.lib;d3d11.lib;DirectXTex.lib;d3dcompiler.lib;dxguid.lib;ImGUI.lib;libdeflate.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\Release\;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)\Dependencies\qt5\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;CKPE.PluginAPI.lib;comctl32.lib;dxgi.lib;d3d11.lib;DirectXTex.lib;d3dcompiler.lib;dxguid.lib;ImGUI.lib;libdeflate.lib;shlwapi.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\scripts.ps1"</Command>
@@ -127,6 +127,8 @@
     <ClCompile Include="Src\EditorAPI\BSSimpleLock.cpp" />
     <ClCompile Include="Src\EditorAPI\BSSpinLock.cpp" />
     <ClCompile Include="Src\EditorAPI\BSString.cpp" />
+    <ClCompile Include="Src\EditorAPI\BSStringCache.cpp" />
+    <ClCompile Include="Src\EditorAPI\Forms\TESForm.cpp" />
     <ClCompile Include="Src\EditorAPI\NiAPI\NiMemoryManager.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.CellViewWindow.cpp" />
@@ -140,12 +142,18 @@
   <ItemGroup>
     <ClInclude Include="Include\CKPE.Starfield.Runner.h" />
     <ClInclude Include="Include\CKPE.Starfield.VersionLists.h" />
+    <ClInclude Include="Include\EditorAPI\BGSLocalizedString.h" />
+    <ClInclude Include="Include\EditorAPI\BSEntryString.h" />
+    <ClInclude Include="Include\EditorAPI\BSFixedString.h" />
+    <ClInclude Include="Include\EditorAPI\BSReflection.h" />
     <ClInclude Include="Include\EditorAPI\BSSimpleLock.h" />
     <ClInclude Include="Include\EditorAPI\BSSpinLock.h" />
     <ClInclude Include="Include\EditorAPI\BSString.h" />
     <ClInclude Include="Include\EditorAPI\BSStringCache.h" />
     <ClInclude Include="Include\EditorAPI\BSTArray.h" />
     <ClInclude Include="Include\EditorAPI\BSTList.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\BaseFormComponent.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\TESForm.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiMemoryManager.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.CellViewWindow.h" />

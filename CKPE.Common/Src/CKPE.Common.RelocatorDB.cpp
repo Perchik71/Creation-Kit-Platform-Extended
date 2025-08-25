@@ -399,9 +399,9 @@ namespace CKPE
 
 				auto l = entry.Mask->length();
 				if ((c + 1) < _entries->size())
-					stream.WriteLine("%X %u %s", entry.Rva, l, (l < 1) ? "<nope>" : entry.Mask->c_str());
+					stream.WriteLine("%X %u %s", entry.Rva, l, (l < 7) ? "<nope>" : entry.Mask->c_str());
 				else
-					stream.WriteString("%X %u %s", entry.Rva, l, (l < 1) ? "<nope>" : entry.Mask->c_str());
+					stream.WriteString("%X %u %s", entry.Rva, l, (l < 7) ? "<nope>" : entry.Mask->c_str());
 			}
 
 			return NO_ERR;

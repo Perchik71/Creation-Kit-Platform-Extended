@@ -5,8 +5,8 @@
 #pragma once
 
 #include <CKPE.Singleton.h>
-//#include 
 #include <CKPE.Common.PatchBaseWindow.h>
+#include <EditorAPI/Forms/TESForm.h>
 
 namespace CKPE
 {
@@ -59,9 +59,10 @@ namespace CKPE
 
 				inline static ISingleton<CellViewWindow> Singleton;
 				static LRESULT CALLBACK HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam) noexcept(true);
-				//static void sub1(HWND ListViewHandle, TESForm* Form, bool UseImage, int ItemIndex);
-				//static void sub2(HWND ListViewHandle, TESForm* Form);
-				//static bool sub3(TESForm* Form);
+				static void sub1(HWND ListViewHandle, EditorAPI::Forms::TESForm* Form, bool UseImage, 
+					int ItemIndex) noexcept(true);
+				static void sub2(HWND ListViewHandle, EditorAPI::Forms::TESForm* Form) noexcept(true);
+				static bool sub3(EditorAPI::Forms::TESForm* Form) noexcept(true);
 			};
 		}
 	}

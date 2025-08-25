@@ -211,8 +211,11 @@ namespace CKPE
 					}
 					else if (Message == WM_KEYUP)
 					{
-						if (wParam == VK_F1)
-							HideMainImguiWnd = !HideMainImguiWnd;
+						if (!Keyboard::IsAltPressed() && !Keyboard::IsControlPressed() && !Keyboard::IsShiftPressed())
+						{
+							if (wParam == VK_F1)
+								HideMainImguiWnd = !HideMainImguiWnd;
+						}
 					}
 				}
 

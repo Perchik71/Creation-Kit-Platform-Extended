@@ -7,7 +7,8 @@
 #include <CKPE.Module.h>
 #include <CKPE.MessageBox.h>
 #include <CKPE.StringUtils.h>
-#include <CKPE.PluginAPI.Plugin.h>
+#include <CKPE.PathUtils.h>
+#include <CKPE.PluginAPI.PluginAPI.h>
 
 using namespace CKPE;
 
@@ -42,9 +43,25 @@ extern "C"
 
     __declspec(dllexport) std::uint32_t CKPEPlugin_Load(const PluginAPI::CKPEPluginInterface* intf) noexcept(true)
     {
+        auto path = std::make_unique<wchar_t[]>(MAX_PATH);
+        if (!path) return false;
+
+        auto sfname = PathUtils::GetCKPELogsPluginPath() + L"TestPlugin.log";
+        PathUtils::CreateFolder(PathUtils::ExtractFilePath(PathUtils::Normalize(sfname)));
+
+        if (!PluginAPI::UserPluginLogger.Open(sfname))
+        {
+            CKPE::_ERROR(L"Couldn't create \"%s\" file", sfname.c_str());
+            return false;
+        }
+
+        PluginAPI::_MESSAGE("TEST");
+
+    #if 0
         MessageBox::OpenInfo(StringUtils::FormatString("Good %u.%u.%u.%u", 
             GET_EXE_VERSION_EX_MAJOR(intf->RuntimeVersion), GET_EXE_VERSION_EX_MINOR(intf->RuntimeVersion),
             GET_EXE_VERSION_EX_BUILD(intf->RuntimeVersion), GET_EXE_VERSION_EX_REVISION(intf->RuntimeVersion)));
+    #endif
 
         return true;
     }

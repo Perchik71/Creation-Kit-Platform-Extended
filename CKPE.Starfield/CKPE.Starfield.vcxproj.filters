@@ -35,6 +35,12 @@
     <ClCompile Include="Src\EditorAPI\NiAPI\NiMemoryManager.cpp">
       <Filter>EditorAPI\NiAPI</Filter>
     </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSStringCache.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\Forms\TESForm.cpp">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -101,6 +107,24 @@
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\NiAPI\NiMemoryManager.h">
       <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSLocalizedString.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSEntryString.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSFixedString.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BaseFormComponent.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSReflection.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESForm.h">
+      <Filter>EditorAPI\Forms</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
