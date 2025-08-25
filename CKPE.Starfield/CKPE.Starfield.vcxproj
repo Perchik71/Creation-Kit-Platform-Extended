@@ -124,6 +124,10 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Src\CKPE.Starfield.Runner.cpp" />
     <ClCompile Include="Src\CKPE.Starfield.VersionLists.cpp" />
+    <ClCompile Include="Src\EditorAPI\BSSimpleLock.cpp" />
+    <ClCompile Include="Src\EditorAPI\BSSpinLock.cpp" />
+    <ClCompile Include="Src\EditorAPI\BSString.cpp" />
+    <ClCompile Include="Src\EditorAPI\NiAPI\NiMemoryManager.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.CellViewWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.MemoryManager.cpp" />
@@ -136,7 +140,13 @@
   <ItemGroup>
     <ClInclude Include="Include\CKPE.Starfield.Runner.h" />
     <ClInclude Include="Include\CKPE.Starfield.VersionLists.h" />
-    <ClInclude Include="Include\EditorAPI\TESFormComponent.h" />
+    <ClInclude Include="Include\EditorAPI\BSSimpleLock.h" />
+    <ClInclude Include="Include\EditorAPI\BSSpinLock.h" />
+    <ClInclude Include="Include\EditorAPI\BSString.h" />
+    <ClInclude Include="Include\EditorAPI\BSStringCache.h" />
+    <ClInclude Include="Include\EditorAPI\BSTArray.h" />
+    <ClInclude Include="Include\EditorAPI\BSTList.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiMemoryManager.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.CellViewWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.MemoryManager.h" />

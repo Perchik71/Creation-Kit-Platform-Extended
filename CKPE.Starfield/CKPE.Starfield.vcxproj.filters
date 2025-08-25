@@ -23,6 +23,18 @@
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.MemoryManager.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSString.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSSimpleLock.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSSpinLock.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\NiAPI\NiMemoryManager.cpp">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -36,6 +48,12 @@
     </Filter>
     <Filter Include="Version">
       <UniqueIdentifier>{f36cf06f-c45e-44a6-82d7-271575e5f223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditorAPI\NiAPI">
+      <UniqueIdentifier>{2b674e23-8536-4174-b7ac-d52e42336517}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditorAPI\Forms">
+      <UniqueIdentifier>{174145f0-a3c1-4616-896c-a278ea5bc157}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -60,11 +78,29 @@
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.CellViewWindow.h">
       <Filter>Patches</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\TESFormComponent.h">
-      <Filter>EditorAPI</Filter>
-    </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.MemoryManager.h">
       <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSTArray.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSTList.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSSimpleLock.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSSpinLock.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSString.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSStringCache.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiMemoryManager.h">
+      <Filter>EditorAPI\NiAPI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
