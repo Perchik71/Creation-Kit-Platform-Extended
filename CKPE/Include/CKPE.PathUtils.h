@@ -42,6 +42,10 @@ namespace CKPE
 		[[nodiscard]] static bool FileExists(const wchar_t* path) noexcept(true);
 		[[nodiscard]] static bool DirExists(const wchar_t* path) noexcept(true);
 
+		static std::string& Normalize(std::string& path) noexcept(true);
+		static std::string& IncludeTrailingPathDelimiter(std::string& path) noexcept(true);
+		static std::string& ExcludeTrailingPathDelimiter(std::string& path) noexcept(true);
+
 		static std::wstring& Normalize(std::wstring& path) noexcept(true);
 		static std::wstring& IncludeTrailingPathDelimiter(std::wstring& path) noexcept(true);
 		static std::wstring& ExcludeTrailingPathDelimiter(std::wstring& path) noexcept(true);

@@ -62,7 +62,7 @@ namespace CKPE
 				// Also hide the unused "Recharge" option.
 				//
 				Detours::DetourClassVTable(__CKPE_OFFSET(0), &sub, 86);
-				FixClassDlgSub = (TFixClassDlgSub)__CKPE_OFFSET(1);
+				FixClassDlgSub = (TFixClassDlgSub)(__CKPE_OFFSET(1));
 
 				return true;
 			}

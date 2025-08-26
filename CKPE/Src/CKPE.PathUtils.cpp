@@ -25,6 +25,7 @@ namespace CKPE
 	std::wstring PathUtils::GetApplicationPath() noexcept(true)
 	{
 		std::wstring r = GetApplicationFileName();
+		Normalize(r);
 		auto it = r.find_last_of(L"\\/");
 		if (it != std::wstring::npos)
 			r.erase(it + 1, -1);
@@ -143,6 +144,28 @@ namespace CKPE
 		if (!path) return false;
 		auto attr = GetFileAttributesW(path);
 		return ((attr != INVALID_FILE_ATTRIBUTES) && (attr & FILE_ATTRIBUTE_DIRECTORY));
+	}
+
+	std::string& PathUtils::Normalize(std::string& path) noexcept(true)
+	{
+		std::replace(path.begin(), path.end(), '/', '\\');
+		return path;
+	}
+
+	std::string& PathUtils::IncludeTrailingPathDelimiter(std::string& path) noexcept(true)
+	{
+		if (!path.empty() && (path.size() > 0))
+			if (!strchr("\\/", path[path.size() - 1]))
+				path += "\\";
+		return path;
+	}
+
+	std::string& PathUtils::ExcludeTrailingPathDelimiter(std::string& path) noexcept(true)
+	{
+		if (!path.empty() && (path.size() > 0))
+			if (strchr("\\/", path[path.size() - 1]))
+				path.resize(path.size() - 1);
+		return path;
 	}
 
 	std::wstring& PathUtils::Normalize(std::wstring& path) noexcept(true)

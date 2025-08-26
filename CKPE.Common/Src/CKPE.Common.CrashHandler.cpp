@@ -33,6 +33,8 @@
 #include <thread>
 #include <unordered_map>
 
+#include <CKPE.ErrorHandler.h>
+
 namespace CKPE
 {
 	namespace Common
@@ -1220,15 +1222,18 @@ namespace CKPE
 
 				// Create a dump in the same folder of the exe itself
 				SYSTEMTIME sysTime;
-				char exePath[MAX_PATH];
-				GetModuleFileNameA(GetModuleHandleA(nullptr), exePath, ARRAYSIZE(exePath));
+
+				auto exePath = PathUtils::GetApplicationFileName();
 				GetSystemTime(&sysTime);
-				auto zip_fname = StringUtils::FormatString("Logs/CKPE/Crashes/%s_%4d%02d%02d_%02d%02d%02d.zip", exePath,
-					sysTime.wYear, sysTime.wMonth, sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond);
-				PathUtils::CreateFolder(PathUtils::ExtractFilePath(zip_fname));
+
+				auto zip_fname = StringUtils::FormatString(L"%s_%4d%02d%02d_%02d%02d%02d.zip", 
+					PathUtils::ExtractFileName(exePath).c_str(), sysTime.wYear, sysTime.wMonth, sysTime.wDay, 
+					sysTime.wHour, sysTime.wMinute, sysTime.wSecond);
+				PathUtils::CreateFolder(PathUtils::GetCKPELogsPath() + L"Crashes");
+				zip_fname = PathUtils::GetCKPELogsPath() + L"Crashes\\" + zip_fname;
 
 				std::vector<std::string> slist;
-				slist.push_back("CreationKitPlatformExtended.log");
+				slist.push_back(StringUtils::Utf16ToWinCP(PathUtils::GetCKPELogsPath() + L"CreationKitPlatformExtended.log"));
 
 				// Close and added archive the log's
 				Interface::GetSingleton()->GetLogger()->Close();
@@ -1236,8 +1241,8 @@ namespace CKPE
 				// Generate minidump
 				if (Param.ExceptionInfo)
 				{
-					auto minidump_fname = PathUtils::ChangeFileExt(zip_fname, ".dmp");
-					HANDLE file = CreateFileA(minidump_fname.c_str(), GENERIC_READ | GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS,
+					auto minidump_fname = PathUtils::ChangeFileExt(zip_fname, L".dmp");
+					HANDLE file = CreateFileW(minidump_fname.c_str(), GENERIC_READ | GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS,
 						FILE_ATTRIBUTE_NORMAL, nullptr);
 					if (file != INVALID_HANDLE_VALUE)
 					{
@@ -1260,7 +1265,7 @@ namespace CKPE
 							file, (MINIDUMP_TYPE)dumpFlags, &dumpInfo, nullptr, nullptr))
 						{
 							if (!BigDump)
-								slist.push_back(minidump_fname);
+								slist.push_back(StringUtils::Utf16ToWinCP(minidump_fname));
 						}
 
 						CloseHandle(file);
@@ -1284,7 +1289,7 @@ namespace CKPE
 					}
 				}
 
-				Zipper::ZipFiles(zip_fname, slist);
+				Zipper::ZipFiles(StringUtils::Utf16ToWinCP(zip_fname), slist);
 
 				for (size_t i = 1; i < slist.size(); i++)
 					DeleteFileA(slist[i].c_str());
