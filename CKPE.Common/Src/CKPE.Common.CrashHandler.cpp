@@ -33,8 +33,6 @@
 #include <thread>
 #include <unordered_map>
 
-#include <CKPE.ErrorHandler.h>
-
 namespace CKPE
 {
 	namespace Common

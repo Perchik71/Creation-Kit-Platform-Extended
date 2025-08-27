@@ -66,6 +66,8 @@ namespace CKPE
 		_This->_init = true;
 
 		auto slog = const_cast<Logger*>(Logger::GetSingleton());
+		auto path = PathUtils::GetCKPELogsPath();
+		PathUtils::CreateFolder(PathUtils::ExcludeTrailingPathDelimiter(path));
 		if (!slog->Open(PathUtils::GetCKPELogsPath() + L"CreationKitPlatformExtended.log"))
 			throw RuntimeError("Failed to create a file: CreationKitPlatformExtended.log");
 
