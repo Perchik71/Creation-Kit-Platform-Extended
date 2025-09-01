@@ -207,7 +207,9 @@ namespace CKPE
 					if (!GetCharABCWidthsA(hdc, 0, static_cast<UINT>(trueTypeFontWidths.size() - 1), trueTypeFontWidths.data()))
 					{
 						BOOL result = GetCharWidthA(hdc, 0, static_cast<UINT>(fontWidths.size() - 1), fontWidths.data());
-						if (!result) ErrorHandler::Trigger("Failed to determine any font widths");
+						if (!result) 
+							ErrorHandler::Trigger(StringUtils::FormatString("Failed to determine any font widths: %s",
+								ErrorHandler::GetSystemMessage(GetLastError()).c_str()));
 					}
 					else
 					{

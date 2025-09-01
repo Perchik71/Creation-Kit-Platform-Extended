@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <EditorAPI/Forms/TESObjectREFR.h>
 #include <CKPE.Singleton.h>
 #include <CKPE.Common.PatchBaseWindow.h>
 #include <CKPE.ImageList.h>

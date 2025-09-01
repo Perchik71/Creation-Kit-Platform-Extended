@@ -6,6 +6,7 @@
 
 #include <QtCore/qarraydata.h>
 #include <CKPE.Common.h>
+#include <EditorAPI/BSTArray.h>
 #include <EditorAPI/BSReflection.h>
 #include <EditorAPI/BSFixedString.h>
 #include <EditorAPI/Forms/BaseFormComponent.h>
@@ -42,10 +43,10 @@ namespace CKPE
 
 					// Form Type
 					enum FormType : std::uint8_t {
-						ftReserved000 = 0,			// NONE
-						ftReserved001,				// TES4
-						ftReserved002,				// GRUP
-						ftReserved003,				// GMST
+						ftNone = 0,					// NONE
+						ftPluginInfo,				// TES4
+						ftFormGroup,				// GRUP
+						ftGameSetting,				// GMST
 						ftKeyword,
 						ftFolderKeywordList,
 						ftLocationRefType,
@@ -64,7 +65,7 @@ namespace CKPE
 						ftSoundEcho,
 						ftAcousticSpace,
 						ftAudioOcclusionPrimitive,
-						ftReserved020,				// SKIL
+						ftReserved022,
 						ftEffectSetting,
 						ftScript,
 						ftLandTexture,
@@ -101,7 +102,7 @@ namespace CKPE
 						ftBiomeMarkerObject,
 						ftNote,
 						ftProjectile,
-						ftHazard03b,
+						ftReserved059,
 						ftBendableSpline,
 						ftSoulGem,
 						ftTerminal,
@@ -127,10 +128,10 @@ namespace CKPE
 						ftPlasma,
 						ftBarrier,
 						ftEmitter,
-						ftHazard055,				// Hazard ?		
+						ftReserved085,				// Hazard ?		
 						ftWorldSpace,
 						ftNavMesh,
-						ftReserved058,				// TLOD
+						ftReserved088,				// TLOD
 						ftTopic,
 						ftTopicInfo,
 						ftQuest,
@@ -139,10 +140,10 @@ namespace CKPE
 						ftCombatStyle,
 						ftLoadScreen,
 						ftLeveledSpell,
-						ftReserved061,				// ANIO
+						ftReserved097,				// ANIO
 						ftWater,
 						ftEffectShader,
-						ftReserved089,				// TOFT
+						ftReserved100,				// TOFT
 						ftExplosion,
 						ftDebris,
 						ftImageSpace,
@@ -158,7 +159,7 @@ namespace CKPE
 						ftMaterial,
 						ftImpactData,
 						ftImpactDataSet,
-						ftReserved074,				// ARMA
+						ftReserved116,				// ARMA
 						ftLocation,
 						ftMessage,
 						ftRagdoll,
@@ -173,7 +174,7 @@ namespace CKPE
 						ftStoryManagerEventNode,
 						ftDialogue,
 						ftMusicTrackFormWrapper,
-						ftReserved083,				// DLVW
+						ftReserved131,				// DLVW
 						ftWordOfPower,
 						ftShout,
 						ftEquipSlot,
@@ -198,16 +199,16 @@ namespace CKPE
 						ftAimDownSightModel,
 						ftInstanceNamingRules,
 						ftSoundKeywordMapping,
-						ftReserved09C,				// SCCO
+						ftReserved156,				// SCCO
 						ftAttractionRule,
 						ftSoundTagSet,				// STAG
 						ftResource,
 						ftBiome,
 						ftNavMeshObstacleCoverManager,
 						ftLensFlare,
-						ftReserved0a3,				// LSPR
+						ftReserved163,				// LSPR
 						ftObjectVisibilityManager,
-						ftReserved0a5,				// DLYR
+						ftReserved165,				// DLYR
 						ftSnapTemplateNode,
 						ftSnapTemplate,
 						ftGroundCover,
@@ -218,18 +219,18 @@ namespace CKPE
 						ftAtmosphere,
 						ftLevelSpaceCell,
 						ftSpeechChallengeObject,
-						ftReserved0b0,				// RESO
+						ftReserved176,				// RESO
 						ftAimAssistPoseData,
 						ftVolumetricLighting,
 						ftSurfaceBlock,
-						ftReserved0b4,				// SFPC
+						ftReserved180,				// SFPC
 						ftSurfacePattern,
 						ftSurfaceTree,
 						ftPlanetContentManagerTree,
 						ftBoneModifier,
 						ftSnapBehavior,
 						ftPlanetData,
-						ftReserved0bb,				// IUTF
+						ftReserved187,				// IUTF
 						ftConditionForm,
 						ftPlanetContentManagerBranchNode,
 						ftPlanetContentManagerContentNode,
@@ -257,9 +258,9 @@ namespace CKPE
 						ftAVMData,
 						ftPersistentIDs,
 						ftChallenge,
-						ftReserved0d7,				// FXPD
-						ftReserved0d8,				// GPOF
-						ftReserved0d9,				// GPOG
+						ftReserved215,				// FXPD
+						ftReserved216,				// GPOF
+						ftReserved217,				// GPOG
 						ftMax
 					};
 					// Form State
@@ -301,7 +302,7 @@ namespace CKPE
 					FormType _FormType;
 					std::uint8_t _ModIndex;
 				public:
-					using Array = QTypedArrayData<TESForm*>;
+					using Array = BSTArray<TESForm*>;
 
 					virtual ~TESForm() = default;
 
@@ -310,7 +311,7 @@ namespace CKPE
 
 					[[nodiscard]] inline const char* GetFormTypeShortStr() const noexcept(true)
 					{
-						return szFormTypeStr[std::min(GetFormType(), ftReserved0d9)];
+						return szFormTypeStr[std::min(GetFormType(), ftReserved217)];
 					}
 
 					[[nodiscard]] inline bool IsFromMaster() const noexcept(true) { return (_FormFlags & FormFlags::fsMaster); }

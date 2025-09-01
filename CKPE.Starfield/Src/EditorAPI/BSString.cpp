@@ -22,8 +22,10 @@ namespace CKPE
 		namespace EditorAPI
 		{
 			BSString::BSString() noexcept(true) :
-				m_data(nullptr), m_dataLen(0), m_bufLen(0)
-			{}
+				m_dataLen(0), m_bufLen(0)
+			{
+				memset(val.fixed.m_data, 0, 12);
+			}
 
 			BSString::BSString(const char* string, std::uint16_t size) noexcept(true) : BSString()
 			{
@@ -54,30 +56,49 @@ namespace CKPE
 			{
 				std::uint16_t newLen = size;
 				std::uint16_t newSize = newLen + 1;
-				auto newData = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, newSize);
-				if (!newData)
-					return false;
 
-				if (m_bufLen)
+				if (newSize <= 12)
 				{
-					strncpy(newData, m_data, newLen);
-					NiAPI::NiMemoryManager::Free(nullptr, (void*)m_data);
-					newData[newLen] = 0;
+					if (m_bufLen > 12)
+					{
+						char ss[12];
+						memcpy_s(ss, 12, val.dinamic.m_data, newLen);
+						Clear();
+						memcpy_s(val.fixed.m_data, 12, ss, newLen);
+					}
+
+					m_bufLen = newSize;
+					m_dataLen = newLen;
 				}
 				else
-					newData[0] = 0;
+				{
+					auto newData = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, newSize);
+					if (!newData)
+						return false;
 
-				m_data = newData;
-				m_bufLen = newSize;
-				m_dataLen = newLen;
+					if ((m_bufLen > 12) && val.dinamic.m_data)
+					{
+						strncpy(newData, val.dinamic.m_data, newLen);
+						NiAPI::NiMemoryManager::Free(nullptr, (void*)val.dinamic.m_data);
+						newData[newLen] = 0;
+					}
+					else if (m_bufLen)
+					{
+						memcpy_s(newData, newLen, val.fixed.m_data, m_bufLen);
+						newData[newLen] = 0;
+					}
+
+					val.dinamic.m_data = newData;
+					val.dinamic.pad08 = 0;
+					m_bufLen = newSize;
+					m_dataLen = newLen;
+				}
 
 				return true;
 			}
 
 			bool BSString::Set(const char* string, std::uint16_t size) noexcept(true)
 			{
-				pad0C = 0;
-
 				std::uint16_t wNeedLen, wNeedBuf;
 
 				wNeedLen = (string) ? (std::uint16_t)strlen(string) : 0;
@@ -86,45 +107,33 @@ namespace CKPE
 
 				wNeedBuf = wNeedLen + 1;
 
-				if (wNeedBuf > m_bufLen) 
+				if (wNeedBuf <= 12)
 				{
-					if (!wNeedLen)
-						goto __dealloc;
-					else {
-						char* newData = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, wNeedBuf, 4);
-						memcpy(newData, string, wNeedLen);
-						newData[wNeedLen] = 0;
+					Clear();
 
-						if (m_data)
-							NiAPI::NiMemoryManager::Free(nullptr, (void*)m_data);
-
-						std::uint16_t wRealBuf = (std::uint16_t)NiAPI::NiMemoryManager::Size(nullptr, newData);
-
-						m_data = newData;
-						m_bufLen = wRealBuf > wNeedBuf ? wRealBuf : wNeedBuf;
+					if (wNeedLen)
+					{
+						memcpy_s(val.fixed.m_data, 12, string, wNeedLen);
+						val.fixed.m_data[wNeedLen] = 0;
+						m_bufLen = wNeedBuf;
 						m_dataLen = wNeedLen;
 					}
 				}
-				else 
+				else
 				{
-					if (!string)
-					{
-					__dealloc:
-						if (m_data)
-						{
-							NiAPI::NiMemoryManager::Free(nullptr, (void*)m_data);
+					if (!IsEmpty())
+						Clear();
 
-							m_data = nullptr;
-							m_bufLen = 0;
-							m_dataLen = 0;
-						}
-					}
-					else 
-					{
-						memcpy(m_data, string, wNeedLen);
-						m_dataLen = wNeedLen;
-						m_data[wNeedLen] = 0;
-					}
+					char* newData = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, wNeedBuf, 4);
+					if (!newData) return false;
+					memcpy(newData, string, wNeedLen);
+					newData[wNeedLen] = 0;
+
+					std::uint16_t wRealBuf = (std::uint16_t)NiAPI::NiMemoryManager::Size(nullptr, newData);
+
+					val.dinamic.m_data = newData;
+					m_bufLen = wRealBuf > wNeedBuf ? wRealBuf : wNeedBuf;
+					m_dataLen = wNeedLen;
 				}
 
 				return true;
@@ -132,18 +141,35 @@ namespace CKPE
 
 			bool BSString::Set(const BSString& string, std::uint16_t size) noexcept(true)
 			{
-				return Set(string.m_data ? *string : "", size);
+				if (string.IsEmpty())
+				{
+					Clear();
+					return true;
+				}
+
+				return Set(string.Get(), size);
+			}
+
+			const char* BSString::Get() const noexcept(true)
+			{ 
+				if (IsEmpty()) return "";
+				if (m_bufLen > 12) return val.dinamic.m_data ? val.dinamic.m_data : "";
+				return val.fixed.m_data;
 			}
 
 			void BSString::Clear() noexcept(true)
 			{
-				if (m_data) 
+				if (m_bufLen > 12)
 				{
-					NiAPI::NiMemoryManager::Free(nullptr, (void*)m_data);
-					m_data = nullptr;
-					m_dataLen = 0;
-					m_bufLen = 0;
+					NiAPI::NiMemoryManager::Free(nullptr, (void*)val.dinamic.m_data);
+					val.dinamic.m_data = nullptr;
+					val.dinamic.pad08 = 0;	
 				}
+				else
+					memset(val.fixed.m_data, 0, 12);
+
+				m_dataLen = 0;
+				m_bufLen = 0;
 			}
 
 			BSString BSString::Reverse() const noexcept(true)
@@ -151,7 +177,7 @@ namespace CKPE
 				if (!m_dataLen)
 					return "";
 
-				auto s = BSString(m_data);
+				auto s = BSString(Get());
 				return _strrev(*s);
 			}
 
@@ -162,20 +188,29 @@ namespace CKPE
 				va_list va;
 				va_start(va, format);
 				auto size = _vsnprintf(nullptr, 0, format, va);
-				if (size) {
+				if (size > 12) 
+				{
 					m_bufLen = size + 1;
 					m_dataLen = size;
-					m_data = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, m_bufLen);
-					if (!m_data) 
+					val.dinamic.m_data = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, m_bufLen);
+					if (!val.dinamic.m_data)
 					{
 						m_bufLen = 0;
 						m_dataLen = 0;
 					}
 					else
 					{
-						vsprintf(m_data, format, va);
-						m_data[size] = 0;
+						vsprintf(val.dinamic.m_data, format, va);
+						val.dinamic.m_data[size] = 0;
 					}
+				}
+				else
+				{
+					m_bufLen = size + 1;
+					m_dataLen = size;
+
+					vsprintf_s(val.fixed.m_data, format, va);
+					val.dinamic.m_data[m_dataLen] = 0;
 				}
 				va_end(va);
 
@@ -185,20 +220,29 @@ namespace CKPE
 			BSString& BSString::FormatVa(const char* format, va_list ap) noexcept(true)
 			{
 				auto size = _vsnprintf(nullptr, 0, format, ap);
-				if (size) {
+				if (size > 12)
+				{
 					m_bufLen = size + 1;
 					m_dataLen = size;
-					m_data = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, m_bufLen);
-					if (!m_data)
+					val.dinamic.m_data = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, m_bufLen);
+					if (!val.dinamic.m_data)
 					{
 						m_bufLen = 0;
 						m_dataLen = 0;
 					}
-					else 
+					else
 					{
-						vsprintf(m_data, format, ap);
-						m_data[size] = 0;
+						vsprintf(val.dinamic.m_data, format, ap);
+						val.dinamic.m_data[size] = 0;
 					}
+				}
+				else
+				{
+					m_bufLen = size + 1;
+					m_dataLen = size;
+
+					vsprintf_s(val.fixed.m_data, format, ap);
+					val.dinamic.m_data[m_dataLen] = 0;
 				}
 
 				return *this;
@@ -207,19 +251,22 @@ namespace CKPE
 			std::int32_t BSString::Compare(const char* string, bool ignoreCase) const noexcept(true)
 			{
 				if (ignoreCase)
-					return _stricmp(m_data, string);
+					return _stricmp(Get(), string);
 				else
-					return strcmp(m_data, string);
+					return strcmp(Get(), string);
 			}
 
 			BSString& BSString::Append(const char* str) noexcept(true)
 			{
-				if (str) {
+				if (str) 
+				{
 					std::uint16_t dwLen = (std::uint16_t)strlen(str);
-					if (dwLen) {
-						if (m_dataLen) {
+					if (dwLen) 
+					{
+						if (m_dataLen) 
+						{
 							if (Reserved(m_dataLen + dwLen + 1))
-								strcat(m_data, str);
+								strcat(const_cast<char*>(Get()), str);
 						}
 						else
 							Set(str);
@@ -241,12 +288,12 @@ namespace CKPE
 							if (dwLen <= len)
 							{
 								if (Reserved(m_dataLen + dwLen + 1))
-									strcat(m_data, str);
+									strcat(const_cast<char*>(Get()), str);
 							}
 							else
 							{
 								if (Reserved(m_dataLen + len + 1))
-									strncat(m_data, str, len);
+									strncat(const_cast<char*>(Get()), str, len);
 							}
 						}
 						else
@@ -267,10 +314,10 @@ namespace CKPE
 						if (m_dataLen)
 						{
 							if (Reserved(m_dataLen + dwLen + 1))
-								strcat(m_data, string.m_data);
+								strcat(const_cast<char*>(Get()), string.Get());
 						}
 						else
-							Set(string.m_data);
+							Set(string.Get());
 					}
 				}
 
@@ -289,16 +336,16 @@ namespace CKPE
 							if (dwLen <= len)
 							{
 								if (Reserved(m_dataLen + dwLen + 1))
-									strcat(m_data, string.m_data);
+									strcat(const_cast<char*>(Get()), string.Get());
 							}
 							else
 							{
 								if (Reserved(m_dataLen + len + 1))
-									strncat(m_data, string.m_data, len);
+									strncat(const_cast<char*>(Get()), string.Get(), len);
 							}
 						}
 						else
-							Set(string.m_data, len);
+							Set(string.Get(), len);
 					}
 				}
 
@@ -331,7 +378,7 @@ namespace CKPE
 
 			BSString& BSString::Copy(std::uint16_t start, std::uint16_t len) noexcept(true)
 			{
-				return Assign(m_data, start, len);
+				return Assign(Get(), start, len);
 			}
 
 			BSString& BSString::Assign(const char* str, std::uint16_t start, std::uint16_t len) noexcept(true)
@@ -363,17 +410,20 @@ namespace CKPE
 				if ((!start && !len) || (start >= len))
 					return *this;
 
-				if (!start) {
+				if (!start) 
+				{
 					if (len >= m_dataLen)
 						Clear();
 					else
-						return Assign(m_data, len);
+						return Assign(Get(), len);
 				}
-				else {
+				else 
+				{
+					auto s = Get();
 					if (len >= m_dataLen)
-						return Assign(m_data, 0, start);
+						return Assign(s, 0, start);
 					else
-						return Assign(m_data, 0, start).Append(m_data + (start + len));
+						return Assign(s, 0, start).Append(s + (start + len));
 				}
 
 				return *this;
@@ -381,11 +431,12 @@ namespace CKPE
 
 			std::uint16_t BSString::FindLastOf(char ch, std::uint16_t offset) const noexcept(true)
 			{
-				if (!m_data)
+				if (IsEmpty())
 					return srNone;
 
-				char* Ret = strrchr(m_data + offset, ch);
-				return Ret ? (std::uint16_t)(Ret - m_data) : srNone;
+				auto s = const_cast<char*>(Get());
+				char* Ret = strrchr(s + offset, ch);
+				return Ret ? (std::uint16_t)(Ret - s) : srNone;
 			}
 
 			std::uint16_t BSString::FindFirstOf(char ch, std::uint16_t offset) const noexcept(true)
@@ -393,8 +444,9 @@ namespace CKPE
 				if (IsEmpty())
 					return srNone;
 
-				char* Ret = strchr(m_data + offset, ch);
-				return Ret ? (std::uint16_t)(Ret - m_data) : srNone;
+				auto s = const_cast<char*>(Get());
+				char* Ret = strchr(s + offset, ch);
+				return Ret ? (std::uint16_t)(Ret - s) : srNone;
 			}
 
 			std::uint16_t BSString::FindLastOf(const char* chs, std::uint16_t offset) const noexcept(true)
@@ -408,8 +460,9 @@ namespace CKPE
 				if (IsEmpty() || !chs)
 					return srNone;
 
-				char* Ret = strpbrk(m_data + offset, chs);
-				return Ret ? (std::uint16_t)(Ret - m_data) : srNone;
+				auto s = const_cast<char*>(Get());
+				char* Ret = strpbrk(s + offset, chs);
+				return Ret ? (std::uint16_t)(Ret - s) : srNone;
 			}
 
 			BSString BSString::UpperCase() const noexcept(true)
@@ -417,7 +470,7 @@ namespace CKPE
 				if (IsEmpty())
 					return "";
 
-				auto s = BSString(m_data);
+				auto s = BSString(Get());
 				UpperCase(*s);
 				return s;
 			}
@@ -427,7 +480,7 @@ namespace CKPE
 				if (IsEmpty())
 					return "";
 
-				auto s = BSString(m_data);
+				auto s = BSString(Get());
 				LowerCase(*s);
 				return s;
 			}
@@ -454,12 +507,13 @@ namespace CKPE
 					return srNone;
 
 				char* Ret = nullptr;
+				auto s = const_cast<char*>(Get());
 				if (flags == sfInsensitiveCase)
 					Ret = strstr(*LowerCase(), *(BSString(substr).LowerCase()));
 				else
-					char* Ret = strstr(m_data, substr);
+					char* Ret = strstr(s, substr);
 
-				return Ret ? (std::uint16_t)(Ret - m_data) : srNone;
+				return Ret ? (std::uint16_t)(Ret - s) : srNone;
 			}
 
 			BSString BSString::Trim() const noexcept(true)
@@ -467,7 +521,7 @@ namespace CKPE
 				if (IsEmpty())
 					return "";
 
-				return StringUtils::Trim(m_data).c_str();
+				return StringUtils::Trim(Get()).c_str();
 			}
 
 			BSString BSString::FormatString(const char* format, ...) noexcept(true)

@@ -6,7 +6,6 @@
 [CreationKit]
 bVersionControlMergeWorkaround=false	# [Experimental] Workaround for version control not allowing merges with more than 2 masters present. Do NOT use this for anything else.
 
-bINICache=true							# Abandoning outdated "profile" functions, using the cache, for fast reading and saving options.
 bDisableAssertions=false				# Remove assertion message popups (not recommended).
 bGenerateCrashdumps=true				# Generate a dump in the game folder when the CK crashes.
 bUnicode=false							# Translates UTF8 to ANSI when opening the plugin and back when saving.

@@ -20,7 +20,8 @@ namespace CKPE
 			constexpr auto BSTARRAY_SHRINK_SIZE = 10;
 
 			template <class _Ty, std::uint32_t GROW = BSTARRAY_GROW_SIZE, std::uint32_t SHRINK = BSTARRAY_SHRINK_SIZE>
-			class BSTArray {
+			class BSTArray 
+			{
 				friend class __BSTArrayCheckOffsets;
 			public:
 				using value_type = _Ty;
@@ -40,11 +41,9 @@ namespace CKPE
 				[[nodiscard]] inline const _Ty* _const_Myfirst() const noexcept(true) { return (_Ty*)data(); }
 				[[nodiscard]] inline const _Ty* _const_Mylast() const noexcept(true) { return ((_Ty*)data()) + size(); }
 			private:
-				_Ty* m_Buffer{ nullptr };
-				size_type m_AllocSize{ 0 };
-				size_type pad0C{ 0 };
 				size_type m_Size{ 0 };
-				size_type pad14{ 0 };
+				size_type m_AllocSize{ 0 };		
+				_Ty* m_Buffer{ nullptr };
 			private:
 				void Deallocate() 
 				{
@@ -311,7 +310,7 @@ namespace CKPE
 					return std::numeric_limits<size_type>::max();
 				}
 			};
-			static_assert(sizeof(BSTArray<void*>) == 0x18);
+			static_assert(sizeof(BSTArray<void*>) == 0x10);
 		}
 	}
 }

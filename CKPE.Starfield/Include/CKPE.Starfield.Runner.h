@@ -14,6 +14,7 @@ namespace CKPE
 			Runner& operator=(const Runner&) = delete;
 
 			void RegisterPatches() noexcept(true);
+			bool RegisterExternalResources() noexcept(true);
 			void InstallPatches() noexcept(true);
 			void InstallPlugins() noexcept(true);
 		public:

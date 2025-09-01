@@ -1247,3 +1247,6 @@ MODELS: Could not find model Meshes\Effects\MPSFootStoneBits.nif
 MODELS: Could not find model Meshes\Effects\MPSFootWaterSplash.nif
 MODELS: Could not find model Meshes\Effects\MPSFootWaterSplashPA.nif
 AUDIO: LocalErrorCallback: Voice Starvation
+HAVOK: Keycode\hkKeycodeManager.cpp:214: Warning :  Keycode for Physics will expire in less than 30 days.'
+HAVOK: Keycode\hkKeycodeManager.cpp:214: Warning :  Keycode for Cloth will expire in less than 30 days.'
+HAVOK: Keycode\hkKeycodeManager.cpp:214: Warning :  Keycode for Physics_2012 will expire in less than 30 days.'

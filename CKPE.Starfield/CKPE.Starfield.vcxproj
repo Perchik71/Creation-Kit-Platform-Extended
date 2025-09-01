@@ -73,6 +73,7 @@
       <CallingConvention>StdCall</CallingConvention>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
       <UseFullPaths>false</UseFullPaths>
+      <DisableSpecificWarnings>6031;6387;26495;4244;26813;4312;4302;4311</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -106,6 +107,7 @@
       <CallingConvention>StdCall</CallingConvention>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <UseFullPaths>false</UseFullPaths>
+      <DisableSpecificWarnings>6031;6387;26495;4244;26813;4312;4302;4311;6386</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -130,11 +132,27 @@
     <ClCompile Include="Src\EditorAPI\BSStringCache.cpp" />
     <ClCompile Include="Src\EditorAPI\Forms\TESForm.cpp" />
     <ClCompile Include="Src\EditorAPI\NiAPI\NiMemoryManager.cpp" />
+    <ClCompile Include="Src\EditorAPI\TESFile.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.AboutWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.CellViewWindow.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.Console.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.CrashDump.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.DataWindow.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.DisableAssertion.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.LoadMaterialsQSplash.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.MemoryManager.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.ObjectWindow.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.PapyrusEditorLimit.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.RemoveCheckDriver.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.RemoveThreadDpi.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.ReplaceImgQSplashWnd.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.RTDynamicCastCrash.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.RunAppWithoutNet.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.TESDataHandlerRE.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.TESFormRE.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.Unicode.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.VersionControlMergeWorkaround.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource_version.rc" />
@@ -144,8 +162,10 @@
     <ClInclude Include="Include\CKPE.Starfield.VersionLists.h" />
     <ClInclude Include="Include\EditorAPI\BGSLocalizedString.h" />
     <ClInclude Include="Include\EditorAPI\BSEntryString.h" />
+    <ClInclude Include="Include\EditorAPI\BSFile.h" />
     <ClInclude Include="Include\EditorAPI\BSFixedString.h" />
     <ClInclude Include="Include\EditorAPI\BSReflection.h" />
+    <ClInclude Include="Include\EditorAPI\BSResources.h" />
     <ClInclude Include="Include\EditorAPI\BSSimpleLock.h" />
     <ClInclude Include="Include\EditorAPI\BSSpinLock.h" />
     <ClInclude Include="Include\EditorAPI\BSString.h" />
@@ -154,12 +174,36 @@
     <ClInclude Include="Include\EditorAPI\BSTList.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BaseFormComponent.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESForm.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiColor.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiMatrix.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiMemoryManager.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiPoint.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTObjectArray.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTransform.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTSimpleArray.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTypes.h" />
+    <ClInclude Include="Include\EditorAPI\TESDataHandler.h" />
+    <ClInclude Include="Include\EditorAPI\TESFile.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.AboutWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.CellViewWindow.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.Console.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.CrashDump.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.DataWindow.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.DisableAssertion.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.LoadMaterialsQSplash.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.MemoryManager.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.ObjectWindow.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.PapyrusEditorLimit.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.RemoveCheckDriver.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.RemoveThreadDpi.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.ReplaceImgQSplashWnd.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.RTDynamicCastCrash.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.RunAppWithoutNet.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.TESDataHandlerRE.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.TESFormRE.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.Unicode.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.VersionControlMergeWorkaround.h" />
     <ClInclude Include="resource_version.h" />
   </ItemGroup>
   <ItemGroup>

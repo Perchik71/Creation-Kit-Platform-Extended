@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <EditorAPI/BSFixedString.h>
 
 namespace CKPE
 {
@@ -21,6 +22,7 @@ namespace CKPE
 				virtual void release(bool free = false) noexcept(true);
 				virtual void unk08() const noexcept(true);					// tag ???
 				virtual void unk10() const noexcept(true);					// ^
+				virtual void unk18() const noexcept(true);					// ??
 				virtual std::uint32_t length() const noexcept(true);
 				virtual const char* c_str() const noexcept(true);
 			};
@@ -29,21 +31,21 @@ namespace CKPE
 			class BGSLocalizedString : public IBGSLocalizedString
 			{
 			public:
-				inline char* data() { return _Str; }
+				inline char* data() { return const_cast<char*>(_Str.c_str<char>()); }
 			private:
 				// members
-				/*08*/ char* _Str;
+				/*08*/ BSFixedString _Str;
 			};
 
 			// 0x18 5 functions
 			class BGSLocalizedStringDL : public IBGSLocalizedString
 			{
 			public:
-				inline char* data() { return _Str; }
+				inline char* data() { return const_cast<char*>(_Str.c_str<char>()); }
 			private:
 				// members
 				/*08*/ char pad08[0x8];
-				/*10*/ char* _Str;
+				/*10*/ BSFixedString _Str;
 			};
 
 			// 0x10 5 functions

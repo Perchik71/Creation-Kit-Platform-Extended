@@ -12,7 +12,7 @@
 #include <CKPE.SkyrimSE.VersionLists.h>
 #include <EditorAPI/TESFile.h>
 #include <Patches/CKPE.SkyrimSE.Patch.DataWindow.h>
-#include "..\CKPE.Common\resource.h"
+#include "../CKPE.Common/resource.h"
 
 #include <richedit.h>
 #include <commctrl.h>

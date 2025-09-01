@@ -9,16 +9,19 @@ namespace CKPE
 {
 	std::uintptr_t Detours::DetourJump(std::uintptr_t target, std::uintptr_t destination) noexcept(true)
 	{
+		if (!target) return 0;
 		return ::Detours::X64::DetourFunction(target, destination, ::Detours::X64Option::USE_REL32_JUMP);
 	}
 
 	std::uintptr_t Detours::DetourCall(std::uintptr_t target, std::uintptr_t destination) noexcept(true)
 	{
+		if (!target) return 0;
 		return ::Detours::X64::DetourFunction(target, destination, ::Detours::X64Option::USE_REL32_CALL);
 	}
 
 	std::uintptr_t Detours::DetourVTable(std::uintptr_t target, std::uintptr_t detour, std::uint32_t index) noexcept(true)
 	{
+		if (!target) return 0;
 		return ::Detours::X64::DetourVTable(target, detour, index);
 	}
 
