@@ -301,10 +301,9 @@ namespace CKPE
 					char pad7C[0xC];
 					FormType _FormType;
 					std::uint8_t _ModIndex;
+					char pad8A[0x8E];
 				public:
 					using Array = BSTArray<TESForm*>;
-
-					virtual ~TESForm() = default;
 
 					inline static TESForm* (*FindFormByFormID)(std::uint32_t);
 					inline static TESForm* (*FindFormByEditorID)(const char*);
@@ -342,7 +341,7 @@ namespace CKPE
 					CKPE_READ_PROPERTY(GetFormType) FormType Type;
 					CKPE_READ_PROPERTY(GetFormTypeShortStr) const char* TypeStr;
 				};
-				static_assert(sizeof(TESForm) == 0x90);
+				static_assert(sizeof(TESForm) == 0x118);
 
 				typedef TESForm::Array TESFormArray;
 			}

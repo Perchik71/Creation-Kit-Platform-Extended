@@ -89,6 +89,24 @@
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.Unicode.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.FlowChartX.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.SkipTopicInfoValidation.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.RenameCreationKitApp.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.ModernThemePatchAdditional.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.MainWindow.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\NiAPI\NiRTTI.cpp">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -108,6 +126,9 @@
     </Filter>
     <Filter Include="EditorAPI\Forms">
       <UniqueIdentifier>{174145f0-a3c1-4616-896c-a278ea5bc157}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditorAPI\Interfaces">
+      <UniqueIdentifier>{586c4e5a-3833-4b72-8f11-577040414a04}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -251,6 +272,126 @@
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.Unicode.h">
       <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.FlowChartX.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.SkipTopicInfoValidation.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.RenameCreationKitApp.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.ModernThemePatchAdditional.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESObjectLIGH.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.MainWindow.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\TESPointerHandleDetail.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESObjectREFR.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiNode.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiObject.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiObjectNET.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiAVObject.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiRTTI.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiRefObject.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSSnapTemplateComponent.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESObject.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSSnapBehavior.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSSnapTemplate.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSTransform.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSPreviewTransform.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESBoundObject.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSMod.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSObjectPlacementDefaults.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESBoundAnimObject.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSDefaultLayer.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESFullName.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSModelMaterialSwap.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESModel.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESWeightForm.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESValueForm.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSDestructibleObjectForm.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSEquip.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSPropertySheet.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSOpenCloseForm.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSKeywordForm.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSKeyword.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSPapyrusScriptsComponent.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Interfaces\IKeywordFormBase.h">
+      <Filter>EditorAPI\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Interfaces\IPapyrusScriptsBase.h">
+      <Filter>EditorAPI\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESCellUseList.h">
+      <Filter>EditorAPI\Forms</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -20,15 +20,20 @@
 #include <Patches/CKPE.Starfield.Patch.Console.h>
 #include <Patches/CKPE.Starfield.Patch.DataWindow.h>
 #include <Patches/CKPE.Starfield.Patch.DisableAssertion.h>
+#include <Patches/CKPE.Starfield.Patch.FlowChartX.h>
 #include <Patches/CKPE.Starfield.Patch.LoadMaterialsQSplash.h>
+#include <Patches/CKPE.Starfield.Patch.MainWindow.h>
 #include <Patches/CKPE.Starfield.Patch.MemoryManager.h>
+#include <Patches/CKPE.Starfield.Patch.ModernThemePatchAdditional.h>
 #include <Patches/CKPE.Starfield.Patch.ObjectWindow.h>
 #include <Patches/CKPE.Starfield.Patch.PapyrusEditorLimit.h>
 #include <Patches/CKPE.Starfield.Patch.RemoveCheckDriver.h>
 #include <Patches/CKPE.Starfield.Patch.RemoveThreadDpi.h>
+#include <Patches/CKPE.Starfield.Patch.RenameCreationKitApp.h>
 #include <Patches/CKPE.Starfield.Patch.ReplaceImgQSplashWnd.h>
 #include <Patches/CKPE.Starfield.Patch.RTDynamicCastCrash.h>
 #include <Patches/CKPE.Starfield.Patch.RunAppWithoutNet.h>
+#include <Patches/CKPE.Starfield.Patch.SkipTopicInfoValidation.h>
 #include <Patches/CKPE.Starfield.Patch.TESDataHandlerRE.h>
 #include <Patches/CKPE.Starfield.Patch.TESFormRE.h>
 #include <Patches/CKPE.Starfield.Patch.Unicode.h>
@@ -51,15 +56,20 @@ namespace CKPE
 			mgr->Register(new Patch::CellViewWindow);
 			mgr->Register(new Patch::DataWindow);
 			mgr->Register(new Patch::DisableAssertion);
+			mgr->Register(new Patch::FlowChartX);
 			mgr->Register(new Patch::LoadMaterialsQSplash);
+			mgr->Register(new Patch::MainWindow);
 			mgr->Register(new Patch::MemoryManager);
+			mgr->Register(new Patch::ModernThemePatchAdditional);
 			mgr->Register(new Patch::ObjectWindow);
 			mgr->Register(new Patch::PapyrusEditorLimit);
 			mgr->Register(new Patch::RemoveCheckDriver);
 			mgr->Register(new Patch::RemoveThreadDpi);
+			mgr->Register(new Patch::RenameCreationKitApp);
 			mgr->Register(new Patch::ReplaceImgQSplashWnd);
 			mgr->Register(new Patch::RTDynamicCastCrash);
 			mgr->Register(new Patch::RunAppWithoutNet);
+			mgr->Register(new Patch::SkipTopicInfoValidation);
 			mgr->Register(new Patch::TESDataHandlerRE);
 			mgr->Register(new Patch::TESFormRE);
 			mgr->Register(new Patch::Unicode);

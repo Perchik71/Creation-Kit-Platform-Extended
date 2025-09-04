@@ -2,8 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-// Special thanks to Nukem: https://github.com/Nukem9/SkyrimSETest/blob/master/skyrim64_test/src/patches/TES/NiMain/NiTransform.h
-
 #pragma once
 
 #include <EditorAPI/NiAPI/NiMatrix.h>
@@ -19,7 +17,7 @@ namespace CKPE
 				class NiTransform
 				{
 				public:
-					NiMatrix3 m_Rotate;
+					NiMatrix43 m_Rotate;
 					NiPoint3 m_Translate;
 					float m_fScale;
 
@@ -47,7 +45,7 @@ namespace CKPE
 						return res;
 					}
 				};
-				static_assert(sizeof(NiTransform) == 0x34);
+				static_assert(sizeof(NiTransform) == 0x40);
 			}
 		}
 	}

@@ -95,7 +95,7 @@ namespace CKPE
 			class TESDataHandler : public BSTEventDetail::SourceBase, public BSTSingletonSDMOpStaticBuffer, public BSService
 			{
 				TESFormDetail::Fixed<EditorAPI::Forms::TESForm> _ClipboardDependencyForm;
-				char _unk[0x98];
+				char _unk[0x10];
 			public:
 				virtual ~TESDataHandler();
 
