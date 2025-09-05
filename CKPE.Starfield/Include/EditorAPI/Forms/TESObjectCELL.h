@@ -111,5 +111,3 @@ namespace CKPE
 		}
 	}
 }
-
-#pragma pack(pop)

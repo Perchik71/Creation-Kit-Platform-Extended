@@ -152,7 +152,7 @@ namespace CKPE
 
 			bool ObjectWindow::HasDependencies() const noexcept(true)
 			{
-				return true;
+				return false;
 			}
 
 			std::vector<std::string> ObjectWindow::GetDependencies() const noexcept(true)

@@ -107,6 +107,21 @@
     <ClCompile Include="Src\EditorAPI\NiAPI\NiRTTI.cpp">
       <Filter>EditorAPI\NiAPI</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.RemoveUselessMessages.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.RemoveSpamMessage.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.FixQuoteCmdLine.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.OptimizationLoad.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.AllowSaveESMandMasterESP.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -392,6 +407,24 @@
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\Forms\TESCellUseList.h">
       <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESObjectCELL.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.RemoveUselessMessages.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.RemoveSpamMessage.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.FixQuoteCmdLine.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.OptimizationLoad.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.AllowSaveESMandMasterESP.h">
+      <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

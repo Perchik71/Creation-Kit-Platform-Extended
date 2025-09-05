@@ -15,12 +15,8 @@ namespace CKPE
 		{
 			namespace Forms
 			{
-				class BGSPapyrusScriptsComponent : public BaseFormComponent
+				class BGSPapyrusScriptsComponent : public BaseFormComponent, public Interfaces::IPapyrusScriptsBase
 				{
-				public:
-					inline ~BGSPapyrusScriptsComponent() {}
-
-					Interfaces::IPapyrusScriptsBase PapyrusScriptsIntf;
 				private:
 					char pad40__[0xA0];
 				};

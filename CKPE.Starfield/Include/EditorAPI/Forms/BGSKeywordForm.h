@@ -15,10 +15,8 @@ namespace CKPE
 		{
 			namespace Forms
 			{
-				class BGSKeywordForm : public BaseFormComponent
+				class BGSKeywordForm : public BaseFormComponent, public Interfaces::IKeywordFormBase
 				{
-				public:
-					Interfaces::IKeywordFormBase KeywordFormIntf;
 				private:
 					char pad40_22[0x78];
 				};
