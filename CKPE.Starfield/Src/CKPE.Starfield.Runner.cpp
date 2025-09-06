@@ -24,6 +24,8 @@
 #include <Patches/CKPE.Starfield.Patch.DisableAssertion.h>
 #include <Patches/CKPE.Starfield.Patch.FixQuoteCmdLine.h>
 #include <Patches/CKPE.Starfield.Patch.FlowChartX.h>
+#include <Patches/CKPE.Starfield.Patch.LayersWindow.h>
+#include <Patches/CKPE.Starfield.Patch.LooseFileStream.h>
 #include <Patches/CKPE.Starfield.Patch.LoadMaterialsQSplash.h>
 #include <Patches/CKPE.Starfield.Patch.MainWindow.h>
 #include <Patches/CKPE.Starfield.Patch.MemoryManager.h>
@@ -31,6 +33,7 @@
 #include <Patches/CKPE.Starfield.Patch.ObjectWindow.h>
 #include <Patches/CKPE.Starfield.Patch.OptimizationLoad.h>
 #include <Patches/CKPE.Starfield.Patch.PapyrusEditorLimit.h>
+#include <Patches/CKPE.Starfield.Patch.ProgressWindow.h>
 #include <Patches/CKPE.Starfield.Patch.RemoveCheckDriver.h>
 #include <Patches/CKPE.Starfield.Patch.RemoveSpamMessage.h>
 #include <Patches/CKPE.Starfield.Patch.RemoveThreadDpi.h>
@@ -42,6 +45,7 @@
 #include <Patches/CKPE.Starfield.Patch.SkipTopicInfoValidation.h>
 #include <Patches/CKPE.Starfield.Patch.TESDataHandlerRE.h>
 #include <Patches/CKPE.Starfield.Patch.TESFormRE.h>
+#include <Patches/CKPE.Starfield.Patch.TESPointerHandleDetail.h>
 #include <Patches/CKPE.Starfield.Patch.Unicode.h>
 #include <Patches/CKPE.Starfield.Patch.VersionControlMergeWorkaround.h>
 
@@ -66,6 +70,8 @@ namespace CKPE
 			mgr->Register(new Patch::DisableAssertion);
 			mgr->Register(new Patch::FixQuoteCmdLine);
 			mgr->Register(new Patch::FlowChartX);
+			mgr->Register(new Patch::LayersWindow);
+			mgr->Register(new Patch::LooseFileStream);
 			mgr->Register(new Patch::LoadMaterialsQSplash);
 			mgr->Register(new Patch::MainWindow);
 			mgr->Register(new Patch::MemoryManager);
@@ -73,6 +79,7 @@ namespace CKPE
 			mgr->Register(new Patch::ObjectWindow);
 			mgr->Register(new Patch::OptimizationLoad);
 			mgr->Register(new Patch::PapyrusEditorLimit);
+			mgr->Register(new Patch::ProgressWindow);
 			mgr->Register(new Patch::RemoveCheckDriver);
 			mgr->Register(new Patch::RemoveSpamMessage);
 			mgr->Register(new Patch::RemoveThreadDpi);
@@ -84,6 +91,7 @@ namespace CKPE
 			mgr->Register(new Patch::SkipTopicInfoValidation);
 			mgr->Register(new Patch::TESDataHandlerRE);
 			mgr->Register(new Patch::TESFormRE);
+			mgr->Register(new Patch::TESPointerHandleDetail);
 			mgr->Register(new Patch::Unicode);
 			mgr->Register(new Patch::VersionControlMergeWorkaround);
 		}

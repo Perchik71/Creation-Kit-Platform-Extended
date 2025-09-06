@@ -65,7 +65,6 @@ namespace CKPE
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
 
 				static void CALLBACK ShowForm(std::uint32_t FormID) noexcept(true);
-				static HWND CALLBACK GetWindowHandle();
 			};
 		}
 	}

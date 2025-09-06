@@ -10,6 +10,8 @@
 #include <CKPE.Starfield.VersionLists.h>
 #include <Patches/CKPE.Starfield.Patch.Console.h>
 
+#include <QtWidgets/qwidget.h>
+
 namespace CKPE
 {
 	namespace Starfield
@@ -70,6 +72,13 @@ namespace CKPE
 				"HOTLOADING",
 				"AVMS"
 			};
+
+			static void DisableDialogWarning(QWidget* Sender, std::int32_t w, std::int32_t h) noexcept(true)
+			{
+				Sender->resize(0, 0);
+				Sender->setVisible(false);
+				Sender->setDisabled(true);
+			}
 
 			Console::Console() : Common::Patch()
 			{
@@ -137,6 +146,9 @@ namespace CKPE
 				}
 
 				Detours::DetourJump(__CKPE_OFFSET(21), (std::uintptr_t)&LogWarningUnknown2);
+
+				if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_STARFIELD_1_14_78_0)
+					Detours::DetourCall(__CKPE_OFFSET(22), (std::uintptr_t)&DisableDialogWarning);
 
 				return true;
 			}

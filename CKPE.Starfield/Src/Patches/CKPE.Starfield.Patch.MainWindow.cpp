@@ -210,8 +210,6 @@ namespace CKPE
 				return true;
 			}
 
-			static HWND WndHandle = NULL;
-
 			bool CALLBACK MainWindow::HKInitialize(void* MainWindow, const char* ExeFileName, 
 				std::uint32_t Unk01) noexcept(true)
 			{
@@ -219,7 +217,7 @@ namespace CKPE
 				{
 					// Inofficially, (HWND)widget->winId(); still works, note that it enforces 
 					// the creation of a native window, though.
-					WndHandle = (HWND)((QMainWindow*)MainWindow)->windowHandle()->winId();
+					MainWindow::Singleton->m_hWnd = (HWND)((QMainWindow*)MainWindow)->windowHandle()->winId();
 					return true;
 				}
 
@@ -745,9 +743,17 @@ namespace CKPE
 				}
 			}
 
-			HWND CALLBACK MainWindow::GetWindowHandle()
+			void CALLBACK MainWindow::ShowForm(std::uint32_t FormID) noexcept(true)
 			{
-				return WndHandle;
+				_try
+				{
+					auto form = EditorAPI::Forms::TESForm::FindFormByFormID(FormID);
+					if (form) form->ShowEditWindow(MainWindow::Singleton->Handle);
+				}
+				__except (1)
+				{
+					// skip fatal error
+				}
 			}
 		}
 	}

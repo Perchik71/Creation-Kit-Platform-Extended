@@ -31,9 +31,6 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			constexpr std::int32_t VisibleGroupId = 0;
-			constexpr std::int32_t FilteredGroupId = 1;
-
 			DataWindow::DataWindow() : Common::PatchBaseWindow()
 			{
 				SetName("Data Window");

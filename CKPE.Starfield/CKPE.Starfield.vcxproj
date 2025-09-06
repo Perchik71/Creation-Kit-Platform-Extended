@@ -145,6 +145,7 @@
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.DisableAssertion.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.FixQuoteCmdLine.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.FlowChartX.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.LayersWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.LoadMaterialsQSplash.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.LooseFileStream.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.MainWindow.cpp" />
@@ -153,6 +154,7 @@
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.ObjectWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.OptimizationLoad.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.PapyrusEditorLimit.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.ProgressWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.RemoveCheckDriver.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.RemoveSpamMessage.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.RemoveThreadDpi.cpp" />
@@ -164,6 +166,7 @@
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.SkipTopicInfoValidation.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.TESDataHandlerRE.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.TESFormRE.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.TESPointerHandleDetail.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.Unicode.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.VersionControlMergeWorkaround.cpp" />
   </ItemGroup>
@@ -244,6 +247,7 @@
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.DisableAssertion.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.FixQuoteCmdLine.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.FlowChartX.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.LayersWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.LoadMaterialsQSplash.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.LooseFileStream.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.MainWindow.h" />
@@ -252,6 +256,7 @@
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.ObjectWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.OptimizationLoad.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.PapyrusEditorLimit.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.ProgressWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.RemoveCheckDriver.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.RemoveSpamMessage.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.RemoveThreadDpi.h" />
@@ -263,6 +268,7 @@
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.SkipTopicInfoValidation.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.TESDataHandlerRE.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.TESFormRE.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.TESPointerHandleDetail.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.Unicode.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.VersionControlMergeWorkaround.h" />
     <ClInclude Include="resource_version.h" />
