@@ -137,6 +137,7 @@
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.AboutWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.AllowSaveESMandMasterESP.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.BSArchiveManager.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.CellViewWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.Console.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.CrashDump.cpp" />
@@ -145,6 +146,7 @@
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.FixQuoteCmdLine.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.FlowChartX.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.LoadMaterialsQSplash.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.LooseFileStream.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.MainWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.MemoryManager.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.ModernThemePatchAdditional.cpp" />
@@ -234,6 +236,7 @@
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.AboutWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.AllowSaveESMandMasterESP.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.BSArchiveManager.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.CellViewWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.Console.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.CrashDump.h" />
@@ -242,6 +245,7 @@
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.FixQuoteCmdLine.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.FlowChartX.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.LoadMaterialsQSplash.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.LooseFileStream.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.MainWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.MemoryManager.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.ModernThemePatchAdditional.h" />

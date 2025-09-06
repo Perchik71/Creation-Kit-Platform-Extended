@@ -122,6 +122,12 @@
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.AllowSaveESMandMasterESP.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.BSArchiveManager.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.LooseFileStream.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -424,6 +430,12 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.AllowSaveESMandMasterESP.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.BSArchiveManager.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.LooseFileStream.h">
       <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>

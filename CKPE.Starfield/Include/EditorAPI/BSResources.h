@@ -51,6 +51,9 @@ namespace CKPE
 					virtual void Close() = 0;
 					virtual std::uint32_t GetKey();		// return 0;
 					virtual ErrorCode GetInfo();		// return kUnsupported;
+
+					[[nodiscard]] inline std::uint64_t GetTotalSize() const noexcept(true) { return _TotalSize; }
+					[[nodiscard]] inline std::uint64_t GetFlags() const noexcept(true) { return _Flags; }
 				};
 				static_assert(sizeof(StreamBase) == 0x18);
 
@@ -82,8 +85,11 @@ namespace CKPE
 
 				struct LooseFileStreamInfo
 				{
-					char _pad20[0x10];
-					char FileName[256];
+					/* 000 */ std::uint32_t BufferSize;
+					/* 004 */ std::uint32_t dwUnk2C;
+					/* 008 */ std::uint32_t dwUnk30;
+					/* 00C */ std::uint32_t dwUnk34;
+					/* 010 */ char FileName[0x100];
 				};
 				static_assert(sizeof(LooseFileStreamInfo) == 0x110);
 
@@ -93,18 +99,38 @@ namespace CKPE
 					BSFixedString RelativeDataSourcePath;
 					BSFixedString ShortFileName;
 					LooseFileStreamInfo Info;
-					char _pad130[0x28];
+					/* 138 */ std::uint32_t dwUnk138;
+					/* 13C */ std::uint32_t dwUnk13C;
+					/* 140 */ std::uint32_t UsefulDataSize;
+					/* 144 */ std::uint32_t dwUnk144;
+					/* 148 */ void* lpData;						// BSResource::LooseFileLocation
+					char _pad130[0x10];
+#if 0
+					///////////////////////////////
+					/// SFCK CKPE ADDED
+					///////////////////////////////
+					/* 170 */ std::uint64_t dw64FileSize;		// If zero, then the file is not found or inside the archive
+					/* 178 */ std::uint64_t dw64Position;		// while unused
+#endif
 
 					virtual ~LooseFileStreamBase();
 				};
+#if 0
+				static_assert(sizeof(LooseFileStreamBase) == 0x168);
+#else
 				static_assert(sizeof(LooseFileStreamBase) == 0x158);
+#endif
 
 				class LooseFileStream : public Stream, public LooseFileStreamBase
 				{
 				public:
 					virtual ~LooseFileStream();
 				};
-				static_assert(sizeof(LooseFileStream) == 0x170);
+#if 0
+				static_assert(sizeof(LooseFileStream) == 0x180, "LooseFileStream class should be the size of 0x180");
+#else
+				static_assert(sizeof(LooseFileStream) == 0x170, "LooseFileStream class should be the size of 0x170");
+#endif
 			}
 
 			class BSResourceNiBinaryStream : public NiAPI::NiBinaryStream

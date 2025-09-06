@@ -54,6 +54,9 @@ namespace CKPE
 					virtual void Close() = 0;
 					virtual std::uint32_t GetKey();		// return 0;
 					virtual ErrorCode GetInfo();		// return kUnsupported;
+
+					[[nodiscard]] inline std::uint32_t GetTotalSize() const noexcept(true) { return _TotalSize; }
+					[[nodiscard]] inline std::uint32_t GetFlags() const noexcept(true) { return _Flags; }
 				};
 				static_assert(sizeof(StreamBase) == 0x18);
 

@@ -188,7 +188,7 @@ namespace CKPE
 				va_list va;
 				va_start(va, format);
 				auto size = _vsnprintf(nullptr, 0, format, va);
-				if (size > 12) 
+				if (size >= 12) 
 				{
 					m_bufLen = size + 1;
 					m_dataLen = size;
@@ -206,11 +206,20 @@ namespace CKPE
 				}
 				else
 				{
-					m_bufLen = size + 1;
-					m_dataLen = size;
+					if (size > 0)
+					{
+						m_bufLen = size + 1;
+						m_dataLen = size;
 
-					vsprintf_s(val.fixed.m_data, format, va);
-					val.dinamic.m_data[m_dataLen] = 0;
+						vsprintf_s(val.fixed.m_data, format, va);
+						val.fixed.m_data[m_dataLen] = 0;
+					}
+					else
+					{
+						m_bufLen = 0;
+						m_dataLen = 0;
+						val.fixed.m_data[0] = 0;
+					}
 				}
 				va_end(va);
 
@@ -220,7 +229,7 @@ namespace CKPE
 			BSString& BSString::FormatVa(const char* format, va_list ap) noexcept(true)
 			{
 				auto size = _vsnprintf(nullptr, 0, format, ap);
-				if (size > 12)
+				if (size >= 12)
 				{
 					m_bufLen = size + 1;
 					m_dataLen = size;
@@ -238,11 +247,20 @@ namespace CKPE
 				}
 				else
 				{
-					m_bufLen = size + 1;
-					m_dataLen = size;
+					if (size > 0)
+					{
+						m_bufLen = size + 1;
+						m_dataLen = size;
 
-					vsprintf_s(val.fixed.m_data, format, ap);
-					val.dinamic.m_data[m_dataLen] = 0;
+						vsprintf_s(val.fixed.m_data, format, ap);
+						val.fixed.m_data[m_dataLen] = 0;
+					}
+					else
+					{
+						m_bufLen = 0;
+						m_dataLen = 0;
+						val.fixed.m_data[0] = 0;
+					}
 				}
 
 				return *this;

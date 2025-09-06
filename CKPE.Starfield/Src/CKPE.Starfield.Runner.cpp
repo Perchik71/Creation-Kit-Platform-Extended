@@ -16,6 +16,7 @@
 #include <Patches/CKPE.Starfield.Patch.AboutWindow.h>
 #include <Patches/CKPE.Starfield.Patch.AllowMultipleWindowAndMaster.h>
 #include <Patches/CKPE.Starfield.Patch.AllowSaveESMandMasterESP.h>
+#include <Patches/CKPE.Starfield.Patch.BSArchiveManager.h>
 #include <Patches/CKPE.Starfield.Patch.CrashDump.h>
 #include <Patches/CKPE.Starfield.Patch.CellViewWindow.h>
 #include <Patches/CKPE.Starfield.Patch.Console.h>
@@ -57,6 +58,7 @@ namespace CKPE
 			mgr->Register(new Patch::AboutWindow);
 			mgr->Register(new Patch::AllowMultipleWindowAndMaster);
 			mgr->Register(new Patch::AllowSaveESMandMasterESP);
+			mgr->Register(new Patch::BSArchiveManager);
 			mgr->Register(new Patch::CrashDump);
 			mgr->Register(new Patch::Console);
 			mgr->Register(new Patch::CellViewWindow);
