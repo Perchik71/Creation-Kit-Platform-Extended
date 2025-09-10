@@ -6,6 +6,8 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Module.h>
 #include <CKPE.StringUtils.h>
+#include <CKPE.PathUtils.h>
+#include <CKPE.FileUtils.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
 #include <CKPE.SkyrimSE.Runner.h>
 #include "resource_version2.h"
@@ -24,6 +26,9 @@ extern "C"
 	{
 		CKPE::SkyrimSE::VersionLists::Verify();
 		version = CKPE::SkyrimSE::VersionLists::GetEditorVersionByString();
+		auto ver = CKPE::FileUtils::GetFileVersion(CKPE::PathUtils::GetApplicationFileName());
+		if (ver != CKPE::SkyrimSE::VersionLists::GetEditorVersionByNum())
+			return CKPE::GameManager::FAKE;
 		if (CKPE::SkyrimSE::VersionLists::HasAllowedEditorVersion())
 			return CKPE::GameManager::SUPPORTED;
 		if (CKPE::SkyrimSE::VersionLists::HasOutdatedEditorVersion())

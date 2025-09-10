@@ -124,7 +124,7 @@ namespace CKPE
 							ProgressTaskBarPtr->SetTotal(MAX_PROGRESSBAR_VALUE);
 							ProgressTaskBarPtr->Begin();
 							// default more often than not, we see uncertain progress
-							ProgressTaskBarPtr->SetMarquee(true);
+							//ProgressTaskBarPtr->SetMarquee(true);
 						}
 
 						ShowWindow(Hwnd, SW_SHOW);

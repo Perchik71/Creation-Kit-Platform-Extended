@@ -6,6 +6,8 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Module.h>
 #include <CKPE.StringUtils.h>
+#include <CKPE.PathUtils.h>
+#include <CKPE.FileUtils.h>
 #include <CKPE.Starfield.VersionLists.h>
 #include <CKPE.Starfield.Runner.h>
 #include "resource_version2.h"
@@ -24,6 +26,9 @@ extern "C"
 	{
 		CKPE::Starfield::VersionLists::Verify();
 		version = CKPE::Starfield::VersionLists::GetEditorVersionByString();
+		auto ver = CKPE::FileUtils::GetFileVersion(CKPE::PathUtils::GetApplicationFileName());
+		if (ver != CKPE::Starfield::VersionLists::GetEditorVersionByNum())
+			return CKPE::GameManager::FAKE;
 		if (CKPE::Starfield::VersionLists::HasAllowedEditorVersion())
 			return CKPE::GameManager::SUPPORTED;
 		if (CKPE::Starfield::VersionLists::HasOutdatedEditorVersion())

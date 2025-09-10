@@ -30,7 +30,7 @@ Extract all contents into game directory, so that **ckpe_loader.exe** is in the 
 Agree to replace all files.
 ### Compilation
 Regular users only need this method to access the newest features which haven't been released yet.  
-Open a project in **`Visual Studio 2022`** or later. Build the project in **`Release`** mode or **`Release-NoAVX2`** for `Starfield`.  
+Open a project in **`Visual Studio 2022`** or later. Build the project in **`Release`** mode or **`Release-NoAVX2`**.  
 Then move your build output into game directory, so that **ckpe_loader.exe** is in the same folder as **CreationKit.exe**.  
 If you are asked to replace old files agree to replace all.
 ### Automate builds (Beta)
@@ -41,7 +41,7 @@ Possible errors.
 # Credits
 [Nukem9](https://github.com/Nukem9) (for experimental functions, hash and so on, very useful)  
 [adzm](https://github.com/adzm) (I really appreciate your work, you have [done](https://github.com/adzm/win32-custom-menubar-aero-theme) what I have long wanted to do myself)  
-[yak3d](https://github.com/yak3d) (For the contribution and development of workflow)  
+[yak3d](https://github.com/yak3d) (For the contribution and development of workflow and support newest Starfield)  
 [Dio-Kyrie](https://github.com/Dio-Kyrie) (For the design of the readme)  
 
 # License

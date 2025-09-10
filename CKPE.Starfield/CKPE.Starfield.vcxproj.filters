@@ -137,6 +137,9 @@
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.TESPointerHandleDetail.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.DeferredDlg.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -454,6 +457,9 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.TESPointerHandleDetail.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.DeferredDlg.h">
       <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>

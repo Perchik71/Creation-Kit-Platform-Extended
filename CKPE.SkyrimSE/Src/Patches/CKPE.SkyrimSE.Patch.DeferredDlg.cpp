@@ -226,8 +226,6 @@ namespace CKPE
 
 				return true;
 			}
-
-			
 		}
 	}
 }

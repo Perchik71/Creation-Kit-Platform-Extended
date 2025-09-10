@@ -5,6 +5,7 @@
 #include <vector>
 #include <unordered_map>
 #include <windows.h>
+#include <CKPE.Module.h>
 #include <CKPE.Fallout4.VersionLists.h>
 
 namespace CKPE
@@ -36,6 +37,15 @@ namespace CKPE
 			{ 0x3896168ul, { "1.10.162.0",	VersionLists::EDITOR_FALLOUT_C4_1_10_162_0		} },
 			//{ 0x2F8D1C8ul, { "1.10.943.1",	VersionLists::EDITOR_FALLOUT_C4_1_10_943_1	} },
 			{ 0x2F8D298ul, { "1.10.982.3",	VersionLists::EDITOR_FALLOUT_C4_1_10_982_3		} },
+		};
+
+		// Список версий
+		static std::vector<std::uint64_t> _sEditorVersion =
+		{
+			0,
+			MAKE_EXE_VERSION_EX(1, 10, 162, 0),
+			MAKE_EXE_VERSION_EX(1, 10, 943, 1),
+			MAKE_EXE_VERSION_EX(1, 10, 982, 3),
 		};
 
 		// Список названий редакторов
@@ -94,6 +104,11 @@ namespace CKPE
 		std::wstring VersionLists::GetGameName() noexcept(true)
 		{
 			return L"FO4";
+		}
+
+		std::uint64_t VersionLists::GetEditorVersionByNum() noexcept(true)
+		{
+			return _sEditorVersion[_seditor_ver];
 		}
 
 		std::wstring VersionLists::GetDatabaseFileName() noexcept(true)

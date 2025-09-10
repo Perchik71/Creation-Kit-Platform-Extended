@@ -6,6 +6,8 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Module.h>
 #include <CKPE.StringUtils.h>
+#include <CKPE.PathUtils.h>
+#include <CKPE.FileUtils.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <CKPE.Fallout4.Runner.h>
 #include "resource_version2.h"
@@ -24,6 +26,9 @@ extern "C"
 	{
 		CKPE::Fallout4::VersionLists::Verify();
 		version = CKPE::Fallout4::VersionLists::GetEditorVersionByString();
+		auto ver = CKPE::FileUtils::GetFileVersion(CKPE::PathUtils::GetApplicationFileName());
+		if (ver != CKPE::Fallout4::VersionLists::GetEditorVersionByNum())
+			return CKPE::GameManager::FAKE;
 		if (CKPE::Fallout4::VersionLists::HasAllowedEditorVersion())
 			return CKPE::GameManager::SUPPORTED;
 		if (CKPE::Fallout4::VersionLists::HasOutdatedEditorVersion())

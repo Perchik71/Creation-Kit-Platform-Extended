@@ -63,6 +63,7 @@ namespace CKPE
 			SUPPORTED = 0,
 			UNSUPPORTED,
 			DEPRECATED,
+			FAKE,
 		};
 
 		GameManager() = default;

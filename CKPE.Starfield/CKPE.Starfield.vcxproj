@@ -142,6 +142,7 @@
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.Console.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.CrashDump.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.DataWindow.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.DeferredDlg.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.DisableAssertion.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.FixQuoteCmdLine.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Starfield.Patch.FlowChartX.cpp" />
@@ -244,6 +245,7 @@
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.Console.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.CrashDump.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.DataWindow.h" />
+    <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.DeferredDlg.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.DisableAssertion.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.FixQuoteCmdLine.h" />
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.FlowChartX.h" />

@@ -21,6 +21,7 @@
 #include <Patches/CKPE.Starfield.Patch.CellViewWindow.h>
 #include <Patches/CKPE.Starfield.Patch.Console.h>
 #include <Patches/CKPE.Starfield.Patch.DataWindow.h>
+#include <Patches/CKPE.Starfield.Patch.DeferredDlg.h>
 #include <Patches/CKPE.Starfield.Patch.DisableAssertion.h>
 #include <Patches/CKPE.Starfield.Patch.FixQuoteCmdLine.h>
 #include <Patches/CKPE.Starfield.Patch.FlowChartX.h>
@@ -67,6 +68,7 @@ namespace CKPE
 			mgr->Register(new Patch::Console);
 			mgr->Register(new Patch::CellViewWindow);
 			mgr->Register(new Patch::DataWindow);
+			mgr->Register(new Patch::DeferredDlg);
 			mgr->Register(new Patch::DisableAssertion);
 			mgr->Register(new Patch::FixQuoteCmdLine);
 			mgr->Register(new Patch::FlowChartX);

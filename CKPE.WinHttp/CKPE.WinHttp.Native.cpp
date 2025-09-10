@@ -229,6 +229,10 @@ namespace CKPE
                     throw RuntimeError(
                         "Deprecated version of Creation Kit.\nYou need to update the Creation Kit."
                         "\nCheck out the list of supported versions on the mod page.");
+                case GameManager::FAKE:
+                    throw RuntimeError(
+                        "Faked Creation Kit.\nYou need to use the original Creation Kit."
+                        "\nCheck out the list of supported versions on the mod page.");
                 default:
                     break;
                 }
