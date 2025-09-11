@@ -2,13 +2,18 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include "QtWidgets/qwidget.h"
-#include "QtWidgets/qsplashscreen.h"
+#include <QtWidgets/qwidget.h>
+#include <QtWidgets/qmainwindow.h>
+#include <QtWidgets/qaction.h>
+#include <QtWidgets/qmenu.h>
+#include <QtWidgets/qmenubar.h>
+#include <QtWidgets/qsplashscreen.h>
 
 #include <CKPE.Detours.h>
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.UIVarCommon.h>
 #include <CKPE.Starfield.VersionLists.h>
 #include <Patches/CKPE.Starfield.Patch.LoadMaterialsQSplash.h>
 
@@ -71,6 +76,24 @@ namespace CKPE
 				// Show main window
 				((QWidget*)mainWin)->show();
 				((QSplashScreen*)logoWin)->finish((QWidget*)mainWin);
+
+				// Fixed UI theme
+
+				auto menuActionList = ((QMainWindow*)mainWin)->menuBar()->actions();
+				auto menuFileActionList = menuActionList.at(0)->menu()->actions();
+				auto actionThemes = menuFileActionList.at(8);
+				if (actionThemes->menu())
+				{
+					// hide action themes
+					actionThemes->setVisible(false);
+
+					if (Common::UI::IsDarkTheme())
+						// Fake set theme Plastique Dark 
+						actionThemes->menu()->actions().at(3)->activate(QAction::Trigger);
+					else
+						// Fake set theme Default
+						actionThemes->menu()->actions().at(0)->activate(QAction::Trigger);
+				}
 			}
 		}
 	}

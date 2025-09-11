@@ -224,11 +224,13 @@ namespace CKPE
 				return false;
 			}
 
+			static QMainWindow* mwnd = nullptr;
+
 			void CALLBACK MainWindow::HKInitializeActions(void* MainWindow) noexcept(true)
 			{
 				fast_call<void>(pointer_MainWindow_sub1, MainWindow);
 
-				auto mwnd = (QMainWindow*)MainWindow;
+				mwnd = (QMainWindow*)MainWindow;
 				// Replace icon
 				mwnd->setWindowIcon(QIcon("/CKPE/ckpe_ico.png"));
 
@@ -268,20 +270,6 @@ namespace CKPE
 
 					auto menuFileActionList = menuActionList.at(0)->menu()->actions();
 					static auto actionSaveAs = menuFileActionList.at(1);
-
-					auto actionThemes = menuFileActionList.at(8);
-					if (actionThemes->menu())
-					{
-						// hide action themes
-						actionThemes->setVisible(false);
-
-						if (Common::UI::IsDarkTheme())
-							// Fake set theme Plastique Dark 
-							actionThemes->menu()->actions().at(3)->activate(QAction::Trigger);
-						else
-							// Fake set theme Default
-							actionThemes->menu()->actions().at(0)->activate(QAction::Trigger);
-					}
 
 					// remove Warnings
 					auto menuViewActionList = menuActionList.at(2)->menu()->actions();
