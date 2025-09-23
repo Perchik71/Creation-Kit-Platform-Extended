@@ -15,7 +15,7 @@ namespace CKPE
 		enum Name : std::uint32_t
 		{
 			//textbss,
-			text,
+			text = 0,
 			interpr,
 			idata,
 			rdata,

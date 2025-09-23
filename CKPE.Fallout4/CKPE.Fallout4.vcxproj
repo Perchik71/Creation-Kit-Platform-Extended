@@ -47,12 +47,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Fallout4\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Fallout4\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)CKPE.Fallout4;$(SolutionDir)Dependencies\imgui;$(SolutionDir)Dependencies\libdeflate;$(SolutionDir)CKPE.PluginAPI\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Fallout4\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Fallout4\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\xbyak;$(SolutionDir)CKPE.Fallout4;$(SolutionDir)Dependencies\imgui;$(SolutionDir)Dependencies\libdeflate;$(SolutionDir)CKPE.PluginAPI\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -73,6 +73,7 @@
       <CallingConvention>StdCall</CallingConvention>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
       <UseFullPaths>false</UseFullPaths>
+      <DisableSpecificWarnings>6031;6387;26495;4244;26813;4312;4302;4311</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -80,8 +81,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\Release\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;CKPE.PluginAPI.lib;comctl32.lib;dxgi.lib;d3d11.lib;DirectXTex.lib;d3dcompiler.lib;dxguid.lib;ImGUI.lib;libdeflate.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\scripts.ps1"</Command>
@@ -106,6 +107,7 @@
       <CallingConvention>StdCall</CallingConvention>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <UseFullPaths>false</UseFullPaths>
+      <DisableSpecificWarnings>6031;6387;26495;4244;26813;4312;4302;4311</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -113,26 +115,117 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\Release\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)$(Platform)\Release\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CKPE.lib;CKPE.Common.lib;CKPE.PluginAPI.lib;comctl32.lib;dxgi.lib;d3d11.lib;DirectXTex.lib;d3dcompiler.lib;dxguid.lib;ImGUI.lib;libdeflate.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>powershell -ExecutionPolicy Bypass -File "$(SolutionDir)$(ProjectName)\scripts.ps1"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Dependencies\DirectXTex\src\ScreenGrab11.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Src\CKPE.Fallout4.D3D11ImagespaceAA.cpp" />
+    <ClCompile Include="Src\CKPE.Fallout4.D3D11Shaders.cpp" />
     <ClCompile Include="Src\CKPE.Fallout4.Runner.cpp" />
     <ClCompile Include="Src\CKPE.Fallout4.VersionLists.cpp" />
+    <ClCompile Include="Src\EditorAPI\BSSettings.cpp" />
+    <ClCompile Include="Src\EditorAPI\BSSimpleLock.cpp" />
+    <ClCompile Include="Src\EditorAPI\BSSpinLock.cpp" />
+    <ClCompile Include="Src\EditorAPI\BSString.cpp" />
+    <ClCompile Include="Src\EditorAPI\BSStringCache.cpp" />
+    <ClCompile Include="Src\EditorAPI\NiAPI\NiMemoryManager.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.AllowMultipleWindowAndMaster.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.Console.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.CrashConditionItemGetCrime.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.D3D11.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.DontMatchForms.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.EnableGoInSelGame.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.EncounterZone.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.Facegen.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixBadPictureInRender.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixBNet.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixCrashMapMarkerCmd.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixCrashNoRootMat.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixCrashSpellEaxDur.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixDeleteTintToRace.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixSmoothValue.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixTabDeleteCrash.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.IncreaseChunkSizeForSNAM.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.MemoryManager.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.Unicode.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.VersionControlMergeWorkaround.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Dependencies\DirectXTex\include\ScreenGrab11.h" />
+    <ClInclude Include="Include\CKPE.Fallout4.D3D11ImagespaceAA.h" />
+    <ClInclude Include="Include\CKPE.Fallout4.D3D11Shaders.h" />
     <ClInclude Include="Include\CKPE.Fallout4.Runner.h" />
     <ClInclude Include="Include\CKPE.Fallout4.VersionLists.h" />
+    <ClInclude Include="Include\EditorAPI\BGSLocalizedString.h" />
+    <ClInclude Include="Include\EditorAPI\BSEntryString.h" />
+    <ClInclude Include="Include\EditorAPI\BSFixedString.h" />
+    <ClInclude Include="Include\EditorAPI\BSSettings.h" />
+    <ClInclude Include="Include\EditorAPI\BSSimpleLock.h" />
+    <ClInclude Include="Include\EditorAPI\BSSpinLock.h" />
+    <ClInclude Include="Include\EditorAPI\BSString.h" />
+    <ClInclude Include="Include\EditorAPI\BSStringCache.h" />
+    <ClInclude Include="Include\EditorAPI\BSTArray.h" />
+    <ClInclude Include="Include\EditorAPI\BSTList.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiColor.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiMatrix.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiMemoryManager.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiPoint.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiRTTI.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTObjectArray.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTransform.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTSimpleArray.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTypes.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AllowMultipleWindowAndMaster.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.Console.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.CrashConditionItemGetCrime.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.D3D11.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.DontMatchForms.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.EnableGoInSelGame.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.EncounterZone.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.Facegen.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixBadPictureInRender.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixBNet.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixCrashMapMarkerCmd.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixCrashNoRootMat.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixCrashSpellEaxDur.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixDeleteTintToRace.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixSmoothValue.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixTabDeleteCrash.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.IncreaseChunkSizeForSNAM.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.MemoryManager.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.Unicode.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.VersionControlMergeWorkaround.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="resource.rc" />
     <ResourceCompile Include="resource_version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Shaders\FXAA_PS.hlsl">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\Shaders\FXAA_VS.hlsl">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="..\Shaders\TAA_PS.hlsl">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

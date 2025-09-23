@@ -11,6 +11,90 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.AllowMultipleWindowAndMaster.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.EncounterZone.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixDeleteTintToRace.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.Console.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.MemoryManager.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.Facegen.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.D3D11.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Fallout4.D3D11ImagespaceAA.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\CKPE.Fallout4.D3D11Shaders.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\DirectXTex\src\ScreenGrab11.cpp">
+      <Filter>_depend</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixSmoothValue.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixCrashSpellEaxDur.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixCrashNoRootMat.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixCrashMapMarkerCmd.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixBNet.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixBadPictureInRender.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.EnableGoInSelGame.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.DontMatchForms.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.CrashConditionItemGetCrime.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSSettings.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSSimpleLock.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSSpinLock.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSString.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSStringCache.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.VersionControlMergeWorkaround.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.Unicode.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\NiAPI\NiMemoryManager.cpp">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.IncreaseChunkSizeForSNAM.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixTabDeleteCrash.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -19,8 +103,23 @@
     <Filter Include="Patches">
       <UniqueIdentifier>{e1e37d04-c45d-4e00-b12e-637c1edc6ce9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fallout4API">
+    <Filter Include="Resources">
+      <UniqueIdentifier>{4682d2f7-f109-41f2-80a2-ad05770b361b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{a278e88f-1f5d-4467-9cdc-0ced26acbd65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_depend">
+      <UniqueIdentifier>{1217bd2b-09ee-4fd9-add7-5811c91c0cf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditorAPI">
       <UniqueIdentifier>{1ad15b36-3004-4b1d-9801-881529b4b1ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditorAPI\NiAPI">
+      <UniqueIdentifier>{34382fdc-f755-41cc-abc6-7ff341126c6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditorAPI\Forms">
+      <UniqueIdentifier>{284bc3dd-4390-4324-97f9-8467d3347ebc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -33,8 +132,148 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AllowMultipleWindowAndMaster.h">
       <Filter>Patches</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.EncounterZone.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixDeleteTintToRace.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.Console.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.MemoryManager.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.Facegen.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.D3D11.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Fallout4.D3D11ImagespaceAA.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Fallout4.D3D11Shaders.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\DirectXTex\include\ScreenGrab11.h">
+      <Filter>_depend</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixSmoothValue.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixCrashSpellEaxDur.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixCrashNoRootMat.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixCrashMapMarkerCmd.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixBNet.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixBadPictureInRender.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.EnableGoInSelGame.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.DontMatchForms.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.CrashConditionItemGetCrime.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSSettings.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSSimpleLock.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSSpinLock.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSTArray.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSTList.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSEntryString.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSFixedString.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSString.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSStringCache.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSLocalizedString.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTObjectArray.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTransform.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTSimpleArray.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTypes.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiColor.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiMatrix.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiMemoryManager.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiRTTI.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiPoint.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.VersionControlMergeWorkaround.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.Unicode.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.IncreaseChunkSizeForSNAM.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixTabDeleteCrash.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource_version.rc" />
+    <ResourceCompile Include="resource.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Shaders\FXAA_VS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Shaders\TAA_PS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Shaders\FXAA_PS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

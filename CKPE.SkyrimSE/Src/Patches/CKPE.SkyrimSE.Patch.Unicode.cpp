@@ -140,7 +140,7 @@ namespace CKPE
 				UnicodeConvertorString.SetMode(ConvertorString::MODE_ANSI);
 
 				// Intercepting the receipt of a string
-				*(uintptr_t*)&UnicodeSub = Detours::DetourClassJump(__CKPE_OFFSET(0), &BGSLocalizedString::GetStr);
+				*(std::uintptr_t*)&UnicodeSub = Detours::DetourClassJump(__CKPE_OFFSET(0), &BGSLocalizedString::GetStr);
 
 				// Also delete it message "You must close all Dialoge Boxes",
 				// which has problems with programs that work with multiple monitors.

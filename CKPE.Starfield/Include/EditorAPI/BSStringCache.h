@@ -69,7 +69,7 @@ namespace CKPE
 					template <class T>
 					[[nodiscard]] inline const T* c_str() const noexcept(true) { return data<T>(); }
 					template <class T>
-					[[nodiscard]] inline operator const T*() const { return data<T>() ? data<T>() : ""; }
+					[[nodiscard]] inline operator const T*() const noexcept(true) { return data<T>() ? data<T>() : ""; }
 				};
 
 				struct Ref

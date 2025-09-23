@@ -16,6 +16,8 @@
 #include <execution>
 #include <chrono>
 
+#include <CKPE.StringUtils.h>
+
 namespace CKPE
 {
 	namespace Common
@@ -132,6 +134,20 @@ namespace CKPE
 			return false;
 		}
 
+		static void* TryMemcpy(void* Dst, const void* Src, std::size_t size)
+		{
+			__try
+			{
+				memcpy(Dst, Src, size);
+			}
+			__except (1)
+			{
+				_CONSOLE("Fatal optimization: remove trampoline %016llX size %016llX", (std::uintptr_t)Dst, size);
+			}
+
+			return Dst;
+		}
+
 		std::uint64_t RuntimeOptimization::RemoveTrampolinesAndNullsubs(std::uintptr_t target, std::uintptr_t size) const
 		{
 			auto interface = Interface::GetSingleton();
@@ -213,7 +229,11 @@ namespace CKPE
 								std::uintptr_t real = destination + (std::uintptr_t)(*(std::int32_t*)(destination + 1)) + 5;
 
 								std::int32_t disp = (std::int32_t)(real - ip) - 5;
+#if 0
 								memcpy((void*)(ip + 1), &disp, sizeof(disp));
+#else
+								TryMemcpy((void*)(ip + 1), &disp, sizeof(disp));
+#endif
 
 								if (auto patch = FindNullsubPatch(ip, real))
 									nullsubTargets.insert(std::make_pair(ip, patch));
@@ -271,9 +291,19 @@ namespace CKPE
 		{
 			auto interface = Interface::GetSingleton();
 			auto app = interface->GetApplication();
-			auto seg_code = app->GetSegment(Segment::text);
+			auto seg_text = app->GetSegment(Segment::text);
+			auto seg_interpr = app->GetSegment(Segment::interpr);
 
-			ScopeSafeWrite protect(seg_code.GetAddress(), seg_code.GetSize());
+			std::uintptr_t seg_begin = seg_text.GetAddress();
+			std::uintptr_t seg_end = seg_text.GetEndAddress();
+
+			if (seg_interpr.GetSize())
+			{
+				seg_begin = std::min(seg_begin, seg_interpr.GetAddress());
+				seg_end = std::max(seg_end, seg_interpr.GetEndAddress());
+			}
+
+			ScopeSafeWrite protect(seg_begin, seg_end - seg_begin);
 
 			_base = app->GetBase();
 			std::vector<std::uint64_t> tasks;
@@ -283,8 +313,8 @@ namespace CKPE
 				using namespace std::chrono;
 				auto timerStart = high_resolution_clock::now();
 
-				tasks.push_back(RemoveMemInit(seg_code.GetAddress(), seg_code.GetSize()));
-				tasks.push_back(RemoveTrampolinesAndNullsubs(seg_code.GetAddress(), seg_code.GetSize()));
+				tasks.push_back(RemoveMemInit(seg_begin, seg_end - seg_begin));
+				tasks.push_back(RemoveTrampolinesAndNullsubs(seg_begin, seg_end - seg_begin));
 
 				auto duration = duration_cast<milliseconds>(high_resolution_clock::now() - timerStart).count();
 

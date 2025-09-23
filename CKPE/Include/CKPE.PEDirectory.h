@@ -38,7 +38,7 @@ namespace CKPE
 		{}
 
 		[[nodiscard]] inline constexpr std::uintptr_t GetAddress() const noexcept(true) { return _address; }
-		[[nodiscard]] inline constexpr std::uint32_t GetOffset() const noexcept(true) { return (std::uint32_t)(GetAddress() - _proxyBase); }
+		[[nodiscard]] inline constexpr std::uintptr_t GetOffset() const noexcept(true) { return GetAddress() - _proxyBase; }
 		[[nodiscard]] inline constexpr std::uint32_t GetSize() const noexcept(true) { return _size; }
 		[[nodiscard]] inline void* GetPointer() const noexcept(true) { return reinterpret_cast<void*>(GetAddress()); }
 		template <class T> [[nodiscard]] inline T* GetPointer() const noexcept(true) { return static_cast<T*>(GetPointer()); }

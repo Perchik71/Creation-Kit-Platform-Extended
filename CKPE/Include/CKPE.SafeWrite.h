@@ -21,6 +21,9 @@ namespace CKPE
 		static void WriteSet(std::uintptr_t address, std::uint8_t value, std::size_t size) noexcept(true);
 		static void WriteNop(std::uintptr_t address, std::size_t size) noexcept(true);
 		static void WriteStringRef(std::uintptr_t address, const char* new_str) noexcept(true);
+		static void WriteJump(std::uintptr_t rav_from, std::uintptr_t rav_to) noexcept(true);
+		static void WriteCall(std::uintptr_t rav_from, std::uintptr_t rav_to) noexcept(true);
+		static void WriteMovFromRax(std::uintptr_t rav_from, std::uintptr_t rav_to) noexcept(true);
 	};
 
 	class CKPE_API ScopeSafeWrite
@@ -42,6 +45,9 @@ namespace CKPE
 		void Write(std::uintptr_t address, std::initializer_list<std::uint8_t> data) const noexcept(true);
 		void WriteSet(std::uintptr_t address, std::uint8_t value, std::size_t size) const noexcept(true);
 		void WriteNop(std::uintptr_t address, std::size_t size) const noexcept(true);
-		void WriteStringRef(std::uintptr_t address, const char* new_str) noexcept(true);
+		void WriteStringRef(std::uintptr_t address, const char* new_str) const noexcept(true);
+		void WriteJump(std::uintptr_t rav_from, std::uintptr_t rav_to) const noexcept(true);
+		void WriteCall(std::uintptr_t rav_from, std::uintptr_t rav_to) const noexcept(true);
+		void WriteMovFromRax(std::uintptr_t rav_from, std::uintptr_t rav_to) const noexcept(true);
 	};
 }

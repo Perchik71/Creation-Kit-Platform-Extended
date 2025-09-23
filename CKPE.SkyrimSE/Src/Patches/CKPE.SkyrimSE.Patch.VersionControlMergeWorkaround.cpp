@@ -62,7 +62,7 @@ namespace CKPE
 				auto stext = interface->GetApplication()->GetSegment(Segment::text);
 				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
-				for (uint32_t i = 0; i < db->GetCount(); i++)
+				for (std::uint32_t i = 0; i < db->GetCount(); i++)
 					text.Write(__CKPE_OFFSET(i), { 0xEB });
 
 				return true;
