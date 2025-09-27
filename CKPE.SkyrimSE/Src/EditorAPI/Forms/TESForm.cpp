@@ -28,7 +28,7 @@ namespace CKPE
 
 				void TESForm::SetNewFormID(std::uint32_t NewIndex, bool Unk) noexcept(true)
 				{
-					vtbl_call<char*>(0x310, this, NewIndex, Unk);
+					vtbl_call<void>(0x310, this, NewIndex, Unk);
 				}
 
 				bool TESForm::CanPreview() const noexcept(true)

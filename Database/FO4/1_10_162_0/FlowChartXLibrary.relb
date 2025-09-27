@@ -1,4 +1,6 @@
 FlowChartX Library
-2
+1
 extended
-3A6683 0 FF15????????85C00F88????????488B7C24584885FF0F84????????
+95812D 0 str_"Dialogue view editing will not be available as the FlowChartX DLL failed to register successfully."
+99AC31 0 str_"Scene editing will not be available as the FlowChartX DLL failed to register successfully."
+A1A43D 0 str_"Scene editing will not be available as the FlowChartX DLL failed to register successfully."

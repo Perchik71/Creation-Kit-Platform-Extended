@@ -95,6 +95,33 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixTabDeleteCrash.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.SkipTopicInfoValidation.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.UIHotkeys.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FlowChartX.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.PapyrusEditorLimit.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.RenderWindow60FPS.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.RenameCreationKitApp.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\Forms\TESForm.cpp">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.CrashDump.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ModernThemePatchAdditional.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -256,6 +283,102 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixTabDeleteCrash.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FlowChartX.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.PapyrusEditorLimit.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.RenderWindow60FPS.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.SkipTopicInfoValidation.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.UIHotkeys.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.RenameCreationKitApp.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BaseFormComponent.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESFullName.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESDescription.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESForm.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSShaderMaterial.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSTextureSet.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiObject.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiObjectNET.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiPointer.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTexture.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiNode.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiAVObject.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiRefObject.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSSystemFile.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiCollisionObject.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiFlags.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSAtomicValue.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiProperty.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSShaderProperty.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSFadeNode.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSDynamicTriShape.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSTriShape.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSGeometry.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSSkin.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.CrashDump.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ModernThemePatchAdditional.h">
       <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>

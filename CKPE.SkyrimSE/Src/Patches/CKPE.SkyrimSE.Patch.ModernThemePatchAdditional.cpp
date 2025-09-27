@@ -2,6 +2,7 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
+#include <CKPE.SafeWrite.h>
 #include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.PathUtils.h>
@@ -141,11 +142,12 @@ namespace CKPE
 				Detours::DetourCall(__CKPE_OFFSET(5), (std::uintptr_t)&HKInitializeTimeOfDay);
 				Detours::DetourCall(__CKPE_OFFSET(6), (std::uintptr_t)&HKSetNewValueTimeOfDay);
 
+				SafeWrite::WriteNop(__CKPE_OFFSET(7), 7);			// Prevent setting redundant colors in the condition list view NM_CUSTOMDRAW (breaks dark theme)
+				SafeWrite::Write(__CKPE_OFFSET(8), { 0x74, 0x20 });	// ^
 				// replace ImageList_LoadImage
-				Detours::DetourCall(__CKPE_OFFSET(7), (std::uintptr_t)&Comctl32ImageList_LoadImageA_2);		// item type Task Manager
-				Detours::DetourCall(__CKPE_OFFSET(8), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);		// Scripts icons
-				Detours::DetourCall(__CKPE_OFFSET(9), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);		// Scripts icons
+				Detours::DetourCall(__CKPE_OFFSET(9), (std::uintptr_t)&Comctl32ImageList_LoadImageA_2);		// item type Task Manager
 				Detours::DetourCall(__CKPE_OFFSET(10), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);	// Scripts icons
+				Detours::DetourCall(__CKPE_OFFSET(11), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);	// Scripts icons
 
 				Common::UI::ListView::InstallCustomDrawHandler(&DoCustomDrawListView);
 

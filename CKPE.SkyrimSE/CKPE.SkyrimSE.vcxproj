@@ -315,6 +315,7 @@
     <ClInclude Include="Include\EditorAPI\Forms\TESTopic.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESTopicInfo.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESWaterForm.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiFlags.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiTObjectArray.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiAVObject.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiCollisionUtils.h" />

@@ -78,14 +78,14 @@ namespace CKPE
 
 				auto patchIAT = [&terminateHandler, &purecallHandler, &base](const char* module)
 					{
-						Detours::DetourIAT(base, module, "_cexit", (uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "_exit", (uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "_Exit", (uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "_c_exit", (uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "exit", (uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "abort", (uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "terminate", (uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "_purecall", (uintptr_t)(void(*)())purecallHandler);
+						Detours::DetourIAT(base, module, "_cexit", (std::uintptr_t)(void(*)())terminateHandler);
+						Detours::DetourIAT(base, module, "_exit", (std::uintptr_t)(void(*)())terminateHandler);
+						Detours::DetourIAT(base, module, "_Exit", (std::uintptr_t)(void(*)())terminateHandler);
+						Detours::DetourIAT(base, module, "_c_exit", (std::uintptr_t)(void(*)())terminateHandler);
+						Detours::DetourIAT(base, module, "exit", (std::uintptr_t)(void(*)())terminateHandler);
+						Detours::DetourIAT(base, module, "abort", (std::uintptr_t)(void(*)())terminateHandler);
+						Detours::DetourIAT(base, module, "terminate", (std::uintptr_t)(void(*)())terminateHandler);
+						Detours::DetourIAT(base, module, "_purecall", (std::uintptr_t)(void(*)())purecallHandler);
 					};
 
 				// Патчим все известные библы используемые в CK

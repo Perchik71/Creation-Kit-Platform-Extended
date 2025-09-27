@@ -138,6 +138,7 @@
     <ClCompile Include="Src\CKPE.Common.EditorUI.cpp" />
     <ClCompile Include="Src\CKPE.Common.FormInfoOutputWindow.cpp" />
     <ClCompile Include="Src\CKPE.Common.Interface.cpp" />
+    <ClCompile Include="Src\CKPE.Common.KillerGuardMalware.cpp" />
     <ClCompile Include="Src\CKPE.Common.LogWindow.cpp" />
     <ClCompile Include="Src\CKPE.Common.MemoryManager.cpp" />
     <ClCompile Include="Src\CKPE.Common.ModernTheme.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="..\Dependencies\jDialogs\include\jdialogs.h" />
     <ClInclude Include="Include\CKPE.Common.AboutWindow.h" />
     <ClInclude Include="Include\CKPE.Common.FormInfoOutputWindow.h" />
+    <ClInclude Include="Include\CKPE.Common.KillerGuardMalware.h" />
     <ClInclude Include="Include\CKPE.Common.PatchBaseWindow.h" />
     <ClInclude Include="Include\CKPE.Common.ClassicTheme.h" />
     <ClInclude Include="Include\CKPE.Common.Common.h" />

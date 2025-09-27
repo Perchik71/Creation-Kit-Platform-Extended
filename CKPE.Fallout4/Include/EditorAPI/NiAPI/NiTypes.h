@@ -9,6 +9,7 @@
 #include <EditorAPI/NiAPI/NiMatrix.h>
 #include <EditorAPI/NiAPI/NiPoint.h>
 #include <EditorAPI/NiAPI/NiTransform.h>
+#include <EditorAPI/BSSystemFile.h>
 
 namespace CKPE
 {
@@ -27,17 +28,19 @@ namespace CKPE
 					virtual ~NiBinaryStream();
 			
 					[[nodiscard]] virtual bool IsOpen() = 0;
-					virtual void Unk10() = 0;
-					virtual std::uint64_t GetPosition();
+					virtual void Seek(std::ptrdiff_t numBytes) = 0;   
+					[[nodiscard]] virtual std::uint64_t GetPosition();
 					virtual void Cleanup();
-					virtual void InitReadWriteFunction(bool mode) = 0;
+					virtual std::uint64_t DoRead(void* buffer, std::uint64_t bytes) = 0;
+					virtual std::uint64_t DoWrite(const void* buffer, std::uint64_t bytes) = 0;
 				};
 				static_assert(sizeof(NiBinaryStream) == 0x10);
 
 				class NiFile : public NiBinaryStream 
 				{
 				public:
-					enum FileModes : std::uint32_t {
+					enum FileModes : std::uint32_t 
+					{
 						kFileMode_ReadOnly = 0,
 						kFileMode_WriteOnly = 1,
 						kFileMode_AppendOnly = 2,
@@ -47,11 +50,10 @@ namespace CKPE
 					/*000*/							// --vtbls
 					std::uint64_t _BufferAllocSize;	// init to 0x800	(sent for reading/writing)
 					std::uint64_t _BufferReadSize;	// init to 0		(answered by the function)
-					std::uint64_t _BufferOffset;	// init to 0
-					std::uint64_t _SizeBuffer;		// init to 0
+					std::uint64_t _Pos;				// init to 0
+					std::uint64_t _CurrentFilePos;	// init to 0
 					std::uint8_t* _Buffer;
-					std::uint64_t _IsInvalid;		// sets 1 and call CloseHandle _Handle (sets -1 to _Handle)
-					FILE* _Handle; 
+					BSSystemFile _SysFile;
 					char _FileName[256];
 					FileModes _Mode;
 					std::uint32_t _IsOpen;
@@ -60,13 +62,11 @@ namespace CKPE
 
 					[[nodiscard]] inline std::uint64_t GetBufferAllocSize() const noexcept(true) { return _BufferAllocSize; }
 					[[nodiscard]] inline std::uint64_t GetBufferReadSize() const noexcept(true) { return _BufferReadSize; }
-					[[nodiscard]] inline std::uint64_t GetOffsetOfTheBuffer() const noexcept(true) { return _BufferOffset; }
-					[[nodiscard]] inline std::uint64_t GetSizeBuffer() const noexcept(true) { return _SizeBuffer; }
-					[[nodiscard]] inline FILE* GetHandle() const noexcept(true) { return _Handle; }
+					[[nodiscard]] inline std::uint64_t GetCurrentPos() const noexcept(true) { return _Pos; }
+					[[nodiscard]] inline std::uint64_t GetCurrentFilePos() const noexcept(true) { return _CurrentFilePos; }
+					[[nodiscard]] inline HANDLE GetHandle() const noexcept(true) { return _SysFile.Handle; }
 					[[nodiscard]] inline const char* GetFileName() const noexcept(true) { return _FileName; }
 					[[nodiscard]] inline virtual bool IsOpen() const noexcept(true) { return (bool)_IsOpen; }
-					virtual void Unk10();
-					[[nodiscard]] virtual std::uint64_t GetPosition();
 					[[nodiscard]] virtual std::uint64_t GetSize();
 				};
 				static_assert(sizeof(NiFile) == 0x150);

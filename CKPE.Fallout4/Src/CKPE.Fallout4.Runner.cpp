@@ -12,6 +12,7 @@
 #include <Patches/CKPE.Fallout4.Patch.AllowMultipleWindowAndMaster.h>
 #include <Patches/CKPE.Fallout4.Patch.Console.h>
 #include <Patches/CKPE.Fallout4.Patch.CrashConditionItemGetCrime.h>
+#include <Patches/CKPE.Fallout4.Patch.CrashDump.h>
 #include <Patches/CKPE.Fallout4.Patch.D3D11.h>
 #include <Patches/CKPE.Fallout4.Patch.DontMatchForms.h>
 #include <Patches/CKPE.Fallout4.Patch.EnableGoInSelGame.h>
@@ -25,8 +26,15 @@
 #include <Patches/CKPE.Fallout4.Patch.FixDeleteTintToRace.h>
 #include <Patches/CKPE.Fallout4.Patch.FixSmoothValue.h>
 #include <Patches/CKPE.Fallout4.Patch.FixTabDeleteCrash.h>
+#include <Patches/CKPE.Fallout4.Patch.FlowChartX.h>
 #include <Patches/CKPE.Fallout4.Patch.IncreaseChunkSizeForSNAM.h>
 #include <Patches/CKPE.Fallout4.Patch.MemoryManager.h>
+#include <Patches/CKPE.Fallout4.Patch.ModernThemePatchAdditional.h>
+#include <Patches/CKPE.Fallout4.Patch.PapyrusEditorLimit.h>
+#include <Patches/CKPE.Fallout4.Patch.RenameCreationKitApp.h>
+#include <Patches/CKPE.Fallout4.Patch.RenderWindow60FPS.h>
+#include <Patches/CKPE.Fallout4.Patch.SkipTopicInfoValidation.h>
+#include <Patches/CKPE.Fallout4.Patch.UIHotkeys.h>
 #include <Patches/CKPE.Fallout4.Patch.Unicode.h>
 #include <Patches/CKPE.Fallout4.Patch.VersionControlMergeWorkaround.h>
 
@@ -43,6 +51,7 @@ namespace CKPE
 			mgr->Register(new Patch::AllowMultipleWindowAndMaster);
 			mgr->Register(new Patch::Console);
 			mgr->Register(new Patch::CrashConditionItemGetCrime);
+			mgr->Register(new Patch::CrashDump);
 			mgr->Register(new Patch::D3D11);
 			mgr->Register(new Patch::DontMatchForms);
 			mgr->Register(new Patch::EnableGoInSelGame);
@@ -56,8 +65,15 @@ namespace CKPE
 			mgr->Register(new Patch::FixDeleteTintToRace);
 			mgr->Register(new Patch::FixSmoothValue);
 			mgr->Register(new Patch::FixTabDeleteCrash);
+			mgr->Register(new Patch::FlowChartX);
 			mgr->Register(new Patch::IncreaseChunkSizeForSNAM);
 			mgr->Register(new Patch::MemoryManager);
+			mgr->Register(new Patch::ModernThemePatchAdditional);
+			mgr->Register(new Patch::PapyrusEditorLimit);
+			mgr->Register(new Patch::RenameCreationKitApp);
+			mgr->Register(new Patch::RenderWindow60FPS);
+			mgr->Register(new Patch::SkipTopicInfoValidation);
+			mgr->Register(new Patch::UIHotkeys);
 			mgr->Register(new Patch::Unicode);
 			mgr->Register(new Patch::VersionControlMergeWorkaround);
 		}

@@ -41,9 +41,11 @@ namespace CKPE
 				[[nodiscard]] inline const _Ty* _const_Myfirst() const noexcept(true) { return (_Ty*)data(); }
 				[[nodiscard]] inline const _Ty* _const_Mylast() const noexcept(true) { return ((_Ty*)data()) + size(); }
 			private:
-				size_type m_Size{ 0 };
-				size_type m_AllocSize{ 0 };		
-				_Ty* m_Buffer{ nullptr };
+				_Ty* m_Buffer;
+				size_type m_AllocSize;
+				size_type pad0C;
+				size_type m_Size;
+				size_type pad14;
 			private:
 				void Deallocate() 
 				{
@@ -310,7 +312,7 @@ namespace CKPE
 					return std::numeric_limits<size_type>::max();
 				}
 			};
-			static_assert(sizeof(BSTArray<void*>) == 0x10);
+			static_assert(sizeof(BSTArray<void*>) == 0x18);
 		}
 	}
 }

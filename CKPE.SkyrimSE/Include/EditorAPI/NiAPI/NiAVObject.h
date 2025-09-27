@@ -6,6 +6,7 @@
 #include <EditorAPI/NiAPI/NiTSimpleArray.h>
 #include <EditorAPI/NiAPI/NiTransform.h>
 #include <EditorAPI/NiAPI/NiObjectNET.h>
+#include <EditorAPI/NiAPI/NiFlags.h>
 
 namespace CKPE
 {
@@ -36,36 +37,36 @@ namespace CKPE
 					[[nodiscard]] inline const NiPoint3& GetWorldTranslate() const noexcept(true) { return _World.m_Translate; }
 					[[nodiscard]] inline const void* GetFormRef() const noexcept(true) { return FormRef; }
 
-					[[nodiscard]] inline bool QAppCulled() const noexcept(true) { return (m_uFlags & APP_CULLED) != 0; }
-					[[nodiscard]] inline bool QAlwaysDraw() const noexcept(true) { return (m_uFlags & ALWAYS_DRAW) != 0; }
-					[[nodiscard]] inline bool QPreProcessedNode() const noexcept(true) { return (m_uFlags & PREPROCESSED) != 0; }
-					[[nodiscard]] inline bool QNotVisible() const noexcept(true) { return (m_uFlags & NOT_VISIBLE) != 0; }
-					[[nodiscard]] inline bool QAccumulated() const noexcept(true) { return (m_uFlags & ACCUMULATED) != 0; }
+					[[nodiscard]] inline bool QAppCulled() const noexcept(true) { return  _Flags.Has(APP_CULLED); }
+					[[nodiscard]] inline bool QAlwaysDraw() const noexcept(true) { return  _Flags.Has(ALWAYS_DRAW); }
+					[[nodiscard]] inline bool QPreProcessedNode() const noexcept(true) { return  _Flags.Has(PREPROCESSED); }
+					[[nodiscard]] inline bool QNotVisible() const noexcept(true) { return  _Flags.Has(NOT_VISIBLE); }
+					[[nodiscard]] inline bool QAccumulated() const noexcept(true) { return  _Flags.Has(ACCUMULATED); }
 
 					[[nodiscard]] inline int IsVisualObjectI() const noexcept(true) { return _WorldBound.m_iRadiusAsInt; }
 
 					inline void SetAppCulled(bool Culled) noexcept(true)
 					{
 						if (Culled)
-							m_uFlags |= APP_CULLED;
+							_Flags.Set(APP_CULLED);
 						else
-							m_uFlags &= ~APP_CULLED;
+							_Flags.Unset(APP_CULLED);
 					}
 
-					inline void SetNotVisible(bool Culled) noexcept(true)
+					inline void SetNotVisible(bool NotVisible) noexcept(true)
 					{
-						if (Culled)
-							m_uFlags |= NOT_VISIBLE;
+						if (NotVisible)
+							_Flags.Set(NOT_VISIBLE);
 						else
-							m_uFlags &= ~NOT_VISIBLE;
+							_Flags.Unset(NOT_VISIBLE);
 					}
 
 					inline void SetAccumulated(bool Accumulated) noexcept(true)
 					{
 						if (Accumulated)
-							m_uFlags |= ACCUMULATED;
+							_Flags.Set(ACCUMULATED);
 						else
-							m_uFlags &= ~ACCUMULATED;
+							_Flags.Unset(ACCUMULATED);
 					}
 				private:
 					NiAVObject* _Parent;
@@ -75,7 +76,7 @@ namespace CKPE
 					NiTransform _World;
 					NiTransform _PreviousWorld;
 					NiBound _WorldBound;
-					std::uint32_t m_uFlags;
+					NiTFlags<std::uint32_t, NiAVObject> _Flags;
 					void* FormRef;
 					char pad100[0x10];
 				};

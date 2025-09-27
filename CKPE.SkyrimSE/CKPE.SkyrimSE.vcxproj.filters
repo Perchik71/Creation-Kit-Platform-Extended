@@ -1032,6 +1032,9 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.RuntimeOptimization.h">
       <Filter>Patches</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiFlags.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">

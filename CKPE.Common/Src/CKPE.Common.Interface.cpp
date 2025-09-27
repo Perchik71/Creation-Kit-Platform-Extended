@@ -16,6 +16,7 @@
 #include <CKPE.Common.GenerateTableID.h>
 #endif
 #include <CKPE.Common.Registry.h>
+#include <CKPE.Common.KillerGuardMalware.h>
 #include <CKPE.Common.RTTI.h>
 #include <CKPE.Exception.h>
 #include <algorithm>
@@ -337,7 +338,11 @@ namespace CKPE
 					CloseHandle(pi.hProcess);
 				}
 
-			SkipsInstaller:			
+			SkipsInstaller:		
+				// Deleting the code that crashes the application if you run it through the debugger
+				KillerGuardMalware killer;
+				killer.Kill();
+
 				// IMPORTANT HOOKS
 				EditorUI::Hook::Initialize();	// Init UI patch (Dialogs)
 				SafeExit::Hook::Initialize();	// Init fast quit
@@ -357,7 +362,7 @@ namespace CKPE
 			struct tm* timeInfo;
 			time_t rawtime;
 			time(&rawtime);
-			timeInfo = localtime(&rawtime);
+			timeInfo = localtime(std::addressof(rawtime));
 			strftime(timeBuffer, sizeof(timeBuffer), "%A %d %b %Y %r %Z", timeInfo);
 
 			auto v = _interface->ckpeVersion;

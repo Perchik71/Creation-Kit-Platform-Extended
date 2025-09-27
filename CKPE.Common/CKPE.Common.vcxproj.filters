@@ -161,6 +161,9 @@
     <ClCompile Include="Src\CKPE.Common.FormInfoOutputWindow.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.KillerGuardMalware.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -346,6 +349,9 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.Common.FormInfoOutputWindow.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.KillerGuardMalware.h">
       <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>

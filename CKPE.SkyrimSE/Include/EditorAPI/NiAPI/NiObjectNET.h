@@ -3,6 +3,7 @@
 #pragma once
 
 #include <EditorAPI/NiAPI/NiObject.h>
+#include <EditorAPI/BSFixedString.h>
 
 namespace CKPE
 {
@@ -12,15 +13,17 @@ namespace CKPE
 		{
 			namespace NiAPI
 			{
-				// 20
-				class NiExtraData
+				// 18
+				class NiExtraData : public NiObject
 				{
 				public:
 					virtual ~NiExtraData() = 0;
+
+					[[nodiscard]] inline const char* GetName() const noexcept(true) { return name; }
 				private:
-					char pad08[0x18];
+					BSFixedString name;  // 10
 				};
-				static_assert(sizeof(NiExtraData) == 0x20);
+				static_assert(sizeof(NiExtraData) == 0x18);
 
 				// 30
 				class NiObjectNET : public NiObject
