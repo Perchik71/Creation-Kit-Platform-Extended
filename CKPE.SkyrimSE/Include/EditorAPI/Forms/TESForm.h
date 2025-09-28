@@ -7,6 +7,7 @@
 #include <cstdint>
 #include <CKPE.Common.h>
 #include <EditorAPI/BSTArray.h>
+#include <EditorAPI/NiAPI/NiFlags.h>
 
 namespace CKPE
 {
@@ -188,7 +189,7 @@ namespace CKPE
 					using Array = BSTArray<TESForm*>;
 				protected:
 					char _pad0[0x8];
-					std::uint32_t _FormFlags;
+					NiAPI::NiTFlags<std::uint32_t, TESForm> _FormFlags;
 					std::uint32_t _FormID;
 					char* _EditorID;
 					BSTrackingData _TrackingData;
@@ -212,14 +213,14 @@ namespace CKPE
 					// since not all types of forms are known to me.
 					[[nodiscard]] const char* TryGetFullName() const noexcept(true);
 
-					[[nodiscard]] inline bool IsFromMaster() const noexcept(true) { return (_FormFlags & FormFlags::fsMaster); }
-					[[nodiscard]] inline bool IsModified() const noexcept(true) { return (_FormFlags & FormFlags::fsModified); }
-					[[nodiscard]] inline bool IsLinked() const noexcept(true) { return (_FormFlags & FormFlags::fsLinked); }
-					[[nodiscard]] inline bool IsDeleted() const noexcept(true) { return (_FormFlags & FormFlags::fsDeleted); }
-					[[nodiscard]] inline bool IsInitialDisabled() const noexcept(true) { return (_FormFlags & FormFlags::fsInitialDisabled); }
-					[[nodiscard]] inline bool IsIgnored() const noexcept(true) { return (_FormFlags & FormFlags::fsIgnored); }
-					[[nodiscard]] inline bool IsTemporary() const noexcept(true) { return (_FormFlags & FormFlags::fsTemporary); }
-					[[nodiscard]] inline bool IsQuestItem() const noexcept(true) { return (_FormFlags & FormFlags::fsQuestItem); }
+					[[nodiscard]] inline bool IsFromMaster() const noexcept(true) { return _FormFlags.Has(fsMaster); }
+					[[nodiscard]] inline bool IsModified() const noexcept(true) { return _FormFlags.Has(fsModified); }
+					[[nodiscard]] inline bool IsLinked() const noexcept(true) { return _FormFlags.Has(fsLinked); }
+					[[nodiscard]] inline bool IsDeleted() const noexcept(true) { return _FormFlags.Has(fsDeleted); }
+					[[nodiscard]] inline bool IsInitialDisabled() const noexcept(true) { return _FormFlags.Has(fsInitialDisabled); }
+					[[nodiscard]] inline bool IsIgnored() const noexcept(true) { return _FormFlags.Has(fsIgnored); }
+					[[nodiscard]] inline bool IsTemporary() const noexcept(true) { return _FormFlags.Has(fsTemporary); }
+					[[nodiscard]] inline bool IsQuestItem() const noexcept(true) { return _FormFlags.Has(fsQuestItem); }
 				
 					// Inaccurate, because there is a REFR class for this and it is of its own type (taken from SSE)
 					[[nodiscard]] inline bool IsReference() const noexcept(true)

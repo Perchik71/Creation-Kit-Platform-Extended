@@ -14,9 +14,12 @@
 #include <Patches/CKPE.Fallout4.Patch.CrashConditionItemGetCrime.h>
 #include <Patches/CKPE.Fallout4.Patch.CrashDump.h>
 #include <Patches/CKPE.Fallout4.Patch.D3D11.h>
+#include <Patches/CKPE.Fallout4.Patch.DataWindow.h>
+#include <Patches/CKPE.Fallout4.Patch.DisableAssertion.h>
 #include <Patches/CKPE.Fallout4.Patch.DontMatchForms.h>
 #include <Patches/CKPE.Fallout4.Patch.EnableGoInSelGame.h>
 #include <Patches/CKPE.Fallout4.Patch.EncounterZone.h>
+#include <Patches/CKPE.Fallout4.Patch.ESLTip.h>
 #include <Patches/CKPE.Fallout4.Patch.Facegen.h>
 #include <Patches/CKPE.Fallout4.Patch.FixBadPictureInRender.h>
 #include <Patches/CKPE.Fallout4.Patch.FixBNet.h>
@@ -34,6 +37,7 @@
 #include <Patches/CKPE.Fallout4.Patch.RenameCreationKitApp.h>
 #include <Patches/CKPE.Fallout4.Patch.RenderWindow60FPS.h>
 #include <Patches/CKPE.Fallout4.Patch.SkipTopicInfoValidation.h>
+#include <Patches/CKPE.Fallout4.Patch.TESDataHandlerHook.h>
 #include <Patches/CKPE.Fallout4.Patch.UIHotkeys.h>
 #include <Patches/CKPE.Fallout4.Patch.Unicode.h>
 #include <Patches/CKPE.Fallout4.Patch.VersionControlMergeWorkaround.h>
@@ -53,9 +57,12 @@ namespace CKPE
 			mgr->Register(new Patch::CrashConditionItemGetCrime);
 			mgr->Register(new Patch::CrashDump);
 			mgr->Register(new Patch::D3D11);
+			mgr->Register(new Patch::DataWindow);
+			mgr->Register(new Patch::DisableAssertion);
 			mgr->Register(new Patch::DontMatchForms);
 			mgr->Register(new Patch::EnableGoInSelGame);
 			mgr->Register(new Patch::EncounterZone);
+			mgr->Register(new Patch::ESLTip);
 			mgr->Register(new Patch::Facegen);
 			mgr->Register(new Patch::FixBadPictureInRender);
 			mgr->Register(new Patch::FixBNet);
@@ -73,6 +80,7 @@ namespace CKPE
 			mgr->Register(new Patch::RenameCreationKitApp);
 			mgr->Register(new Patch::RenderWindow60FPS);
 			mgr->Register(new Patch::SkipTopicInfoValidation);
+			mgr->Register(new Patch::TESDataHandlerHook);
 			mgr->Register(new Patch::UIHotkeys);
 			mgr->Register(new Patch::Unicode);
 			mgr->Register(new Patch::VersionControlMergeWorkaround);

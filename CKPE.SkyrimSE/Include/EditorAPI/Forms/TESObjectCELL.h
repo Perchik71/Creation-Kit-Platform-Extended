@@ -5,6 +5,7 @@
 #pragma once
 
 #include <CKPE.Common.h>
+#include <EditorAPI/NiAPI/NiFlags.h>
 #include <EditorAPI/NiAPI/NiTypes.h>
 #include <EditorAPI/BGSLocalizedString.h>
 #include "TESForm.h"
@@ -92,40 +93,45 @@ namespace CKPE
 					enum CellFlags : std::uint16_t
 					{
 						cfInterior = 0x1,
-						cfExterior = 0x2,
+						cfWater = 0x2,
 						cfInvertFastTravel = 0x4,						// interiors: can travel, exteriors: cannot travel
 						cfFragment = 0x40,								// (exteriors only) Exists Ext01, ... ExtXX
 					};
 
 					enum CellProcessLevels : std::uint16_t
 					{
-						cplNone = 0x0,									// default value
-						cplLoaded = 0x4,								// loaded cells that are not processed
-						cplActive = 0x8,								// current interior cell, or exterior cells within fixed radius of current exterior cell
+						cplNotLoaded,									// default value
+						cplUnloading,
+						cplLoadingData,
+						cplLoading,
+						cplLoaded,										// loaded cells that are not processed
+						cplDetaching,
+						cplAttachQueued,
+						cplAttaching,
+						cplAttached										// current interior cell, or exterior cells within fixed radius of current exterior cell						
 					};
 				public:
 					virtual ~TESObjectCELL() = default;
 
-					[[nodiscard]] inline bool IsActive() const noexcept(true) { return _cell_process_level == CellProcessLevels::cplActive; }
+					[[nodiscard]] inline bool IsAttached() const noexcept(true) { return _cell_process_level == CellProcessLevels::cplAttached; }
 					[[nodiscard]] inline bool IsLoaded() const noexcept(true) { return _cell_process_level == CellProcessLevels::cplLoaded; }
-					[[nodiscard]] inline bool IsFastTravelEnabled() const noexcept(true)
+					[[nodiscard]] inline bool HasFastTravel() const noexcept(true)
 					{
-						return IsInterior() ? (CellFlags::cfInvertFastTravel & _cell_flags) :
-							((CellFlags::cfInvertFastTravel & _cell_flags) != CellFlags::cfInvertFastTravel);
+						return HasInterior() ? _cell_flags.Has(cfInvertFastTravel) : (!_cell_flags.Has(cfInvertFastTravel));
 					}
-					[[nodiscard]] inline bool IsInterior() const noexcept(true) { return _cell_flags & CellFlags::cfInterior; }
-					[[nodiscard]] inline bool IsExterior() const noexcept(true) { return _cell_flags & CellFlags::cfExterior; }
-					[[nodiscard]] inline bool IsFragment() const noexcept(true) { return _cell_flags & CellFlags::cfFragment; }
+					[[nodiscard]] inline bool HasInterior() const noexcept(true) { return _cell_flags.Has(cfInterior); }
+					[[nodiscard]] inline bool HasWater() const noexcept(true) { return _cell_flags.Has(cfWater); }
+					[[nodiscard]] inline bool HasFragment() const noexcept(true) { return _cell_flags.Has(cfFragment); }
 					[[nodiscard]] inline std::int32_t GetGridX() const noexcept(true)
 					{
-						if (!IsExterior()) return 0;
+						if (HasInterior()) return 0;
 						auto Grid = (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ?
 							difference.v1_5._CellData.Grid : difference.v1_6._CellData.Grid;
 						return Grid ? Grid->X : 0;
 					}
 					[[nodiscard]] inline std::int32_t GetGridY() const noexcept(true)
 					{
-						if (!IsExterior()) return 0;
+						if (HasInterior()) return 0;
 						auto Grid = (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ?
 							difference.v1_5._CellData.Grid : difference.v1_6._CellData.Grid;
 						return Grid ? Grid->Y : 0;
@@ -147,7 +153,7 @@ namespace CKPE
 					}
 					[[nodiscard]] inline LightingData* GetLighting() const noexcept(true) 
 					{
-						if (!IsInterior()) return nullptr;
+						if (!HasInterior()) return nullptr;
 						auto Lighting = (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ?
 							difference.v1_5._CellData.Lighting : difference.v1_6._CellData.Lighting;
 						return Lighting;
@@ -170,7 +176,7 @@ namespace CKPE
 					CKPE_READ_PROPERTY(GetLighting) LightingData* Lighting;
 				private:
 					char pad40[0x10];
-					CellFlags _cell_flags;
+					NiAPI::NiTFlags<CellFlags, TESObjectCELL> _cell_flags;
 					CellProcessLevels _cell_process_level;
 
 #pragma pack(push, 1)

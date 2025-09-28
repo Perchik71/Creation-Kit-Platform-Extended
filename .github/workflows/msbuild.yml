@@ -93,6 +93,50 @@ jobs:
         name: ckpe-sse-master-${{env.SHORT_SHA}}
         path: "ckpe-sse-master-${{env.SHORT_SHA}}"
         
+    # FO4
+
+    - name: Make Bundle Directory
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: New-Item -ItemType Directory -Path "ckpe-fo4-master-${{env.SHORT_SHA}}"
+
+    - name: Copy FO4 CKPE
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Recurse -Path ".\x64" -Include "ckpe_loader.exe", "winhttp.dll", "ckpe.dll", "ckpe.common.dll", "ckpe.fallout4.dll", "ckpe.pluginapi.dll" | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-${{env.SHORT_SHA}}" $_.Name) -Force }
+
+    - name: Copy Others to FO4
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\Others -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-${{env.SHORT_SHA}}" $_.Name) -Force }
+
+    - name: Copy FO4 Database
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path Database\FO4\*.pak "ckpe-fo4-master-${{env.SHORT_SHA}}"
+
+    - name: Copy FO4 Dialog
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path Dialogs\FO4\*.pak "ckpe-fo4-master-${{env.SHORT_SHA}}"
+      
+    - name: Copy FO4 D3DCompiler
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path d3dcompiler\*.dll "ckpe-fo4-master-${{env.SHORT_SHA}}"
+
+    - name: Copy FO4 Stuff
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\Stuffs\FO4 -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-${{env.SHORT_SHA}}" $_.Name) -Force }
+      
+    - name: Copy Custom Theme Stuff
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\Stuffs\CustomTheme -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-${{env.SHORT_SHA}}" $_.Name) -Force }
+      
+    - name: Copy FO4 Vortex Stuff
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\Stuffs\Vortex -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-${{env.SHORT_SHA}}" $_.Name) -Force }
+      
+    - name: Upload FO4 build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ckpe-fo4-master-${{env.SHORT_SHA}}
+        path: "ckpe-fo4-master-${{env.SHORT_SHA}}"
+        
     # SF
 
     - name: Make Bundle Directory
@@ -197,6 +241,50 @@ jobs:
       with:
         name: ckpe-sse-master-noavx2-${{env.SHORT_SHA}}
         path: "ckpe-sse-master-noavx2-${{env.SHORT_SHA}}"
+        
+    # FO4
+
+    - name: Make Bundle Directory
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: New-Item -ItemType Directory -Path "ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}"
+
+    - name: Copy FO4 CKPE
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Recurse -Path ".\x64" -Include "ckpe_loader.exe", "winhttp.dll", "ckpe.dll", "ckpe.common.dll", "ckpe.fallout4.dll", "ckpe.pluginapi.dll" | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}" $_.Name) -Force }
+
+    - name: Copy Others to FO4
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\Others -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}" $_.Name) -Force }
+
+    - name: Copy FO4 Database
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path Database\FO4\*.pak "ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}"
+
+    - name: Copy FO4 Dialog
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path Dialogs\FO4\*.pak "ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}"
+      
+    - name: Copy FO4 D3DCompiler
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path d3dcompiler\*.dll "ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}"
+
+    - name: Copy FO4 Stuff
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\Stuffs\FO4 -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}" $_.Name) -Force }
+      
+    - name: Copy Custom Theme Stuff
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\Stuffs\CustomTheme -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}" $_.Name) -Force }
+      
+    - name: Copy FO4 Vortex Stuff
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Get-ChildItem -Path .\Stuffs\Vortex -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}" $_.Name) -Force }
+      
+    - name: Upload FO4 build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}
+        path: "ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}"
         
     # SF
 

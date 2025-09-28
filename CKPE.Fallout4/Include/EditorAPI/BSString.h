@@ -8,8 +8,6 @@
 #include <climits>
 #include <string>
 
-#pragma pack(push, 4)
-
 namespace CKPE
 {
 	namespace Fallout4
@@ -54,8 +52,8 @@ namespace CKPE
 				bool Reserved(std::uint16_t size) noexcept(true);
 				bool Set(const char* string, std::uint16_t size = 0) noexcept(true);		// 0 to allocate automatically
 				bool Set(const BSString& string, std::uint16_t size = 0) noexcept(true);	// 0 to allocate automatically
-				[[nodiscard]] const char* Get() const noexcept(true);
-				[[nodiscard]] inline const char* c_str() const noexcept(true) { return Get(); }
+				[[nodiscard]] inline const char* Get() const noexcept(true) { return m_data ? m_data : ""; }
+				[[nodiscard]] inline const char* c_str() const noexcept(true) { return m_data ? m_data : ""; }
 				[[nodiscard]] inline std::uint16_t Length() const noexcept(true) { return m_dataLen; }
 				[[nodiscard]] inline std::uint16_t Size() const noexcept(true) { return m_bufLen; }
 				[[nodiscard]] std::int32_t Compare(const char* string, bool ignoreCase = true) const noexcept(true);
@@ -129,8 +127,8 @@ namespace CKPE
 				static BSString FormatString(const char* format, ...) noexcept(true);
 				static BSString FormatStringVa(const char* format, va_list ap) noexcept(true) { return BSString().FormatVa(format, ap); }
 			public:
-				inline char& operator[](const std::uint16_t Pos) noexcept(true) { return const_cast<char*>(Get())[Pos]; }
-				inline const char operator[](const std::uint16_t Pos) const noexcept(true) { return Get()[Pos]; }
+				inline char& operator[](const std::uint16_t Pos) noexcept(true) { return m_data[Pos]; }
+				inline const char operator[](const std::uint16_t Pos) const noexcept(true) { return m_data[Pos]; }
 			public:
 				inline BSString& operator=(char ch) noexcept(true) { char szCS[2] = { ch, 0 }; Set(szCS, 1); return *this; }
 				inline BSString& operator=(const char* string) noexcept(true) { Set(string, (std::uint16_t)strlen(string)); return *this; }
@@ -156,7 +154,7 @@ namespace CKPE
 				inline BSString operator+(std::int64_t value) const noexcept(true) { return BSString(*this).Append(BSString::Transforms::IntToStr(value)); }
 				inline BSString operator+(std::uint64_t value) const noexcept(true) { return BSString(*this).Append(BSString::Transforms::UIntToStr(value)); }
 				inline BSString operator+(double value) const noexcept(true) { return BSString(*this).Append(BSString::Transforms::FloatToStr(value)); }
-				inline char* operator*() noexcept(true) { return const_cast<char*>(Get()); }
+				inline char* operator*() noexcept(true) { return m_data ? m_data : nullptr; }
 				inline const char* operator*() const noexcept(true) { return Get(); }
 				inline bool operator==(const char* string) const noexcept(true) { return !Compare(string); }
 				inline bool operator==(const std::string& string) const noexcept(true) { return !Compare(string); }
@@ -165,25 +163,11 @@ namespace CKPE
 				inline bool operator!=(const std::string& string) const noexcept(true) { return Compare(string); }
 				inline bool operator!=(const BSString& string) const noexcept(true) { return Compare(string); }
 			private:
-				union _val
-				{
-					struct _fixed
-					{
-						char			m_data[0xC];	// 00
-					} fixed;
-					struct _dinamic
-					{
-						char*			m_data;			// 00
-						std::uint32_t	pad08;			// 08
-					} dinamic;
-				} val;
-				std::uint16_t	m_dataLen;				// 0C
-				std::uint16_t	m_bufLen;				// 0E
+				char* m_data;		// 00
+				std::uint16_t	m_dataLen;	// 08
+				std::uint16_t	m_bufLen;	// 0A
+				std::uint32_t	pad0C;		// 0C
 			};
-			static_assert(sizeof(BSString) == 0x10);
-			//static_assert(offsetof(BSString, m_dataLen) == 0xC);
 		}
 	}
 }
-
-#pragma pack(pop)

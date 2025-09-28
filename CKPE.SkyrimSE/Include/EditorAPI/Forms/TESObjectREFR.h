@@ -74,9 +74,9 @@ namespace CKPE
 					inline NiAPI::NiPoint3 GetPosition() const noexcept(true) { return _Position; }
 					inline float GetScale() const noexcept(true) { return (float)_Scale / 100; }
 					inline TESObjectCELL* GetParentCell() const noexcept(true) { return _ParentCell; }
-					inline bool IsInvisible() const noexcept(true) { return (_FormFlags & SpecialFlagsForm::fs3DInvisible); }
-					inline bool IsChildrenInvisible() const noexcept(true) { return (_FormFlags & SpecialFlagsForm::fsChildren3DInvisible); }
-					inline bool IsFrozen() const noexcept(true) { return (_FormFlags & SpecialFlagsForm::fsFrozen); }
+					inline bool HasInvisible() const noexcept(true) { return _FormFlags.Has(fs3DInvisible); }
+					inline bool HasChildrenInvisible() const noexcept(true) { return _FormFlags.Has(fsChildren3DInvisible); }
+					inline bool HasFrozen() const noexcept(true) { return _FormFlags.Has(fsFrozen); }
 
 					// Added patch "Add Change Ref" (only 1.6 and newer)
 					inline static void (*SetParentWithRedraw)(TESObjectREFR*, TESForm*);

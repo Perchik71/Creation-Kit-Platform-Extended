@@ -136,14 +136,14 @@ namespace CKPE
 				return T;
 			}
 
-			SYSTEMTIME TESFile::GetCreationTime() const noexcept(true)
+			SYSTEMTIME TESFile::GetCreateTime() const noexcept(true)
 			{
-				return FileTimeToSystemTimeEx(m_findData.ftCreationTime);
+				return FileTimeToSystemTimeEx(m_findData.CreateTime);
 			}
 
-			SYSTEMTIME TESFile::GetLastWriteTime() const noexcept(true)
+			SYSTEMTIME TESFile::GetModifyTime() const noexcept(true)
 			{
-				return FileTimeToSystemTimeEx(m_findData.ftLastWriteTime);
+				return FileTimeToSystemTimeEx(m_findData.ModifyTime);
 			}
 		}
 	}

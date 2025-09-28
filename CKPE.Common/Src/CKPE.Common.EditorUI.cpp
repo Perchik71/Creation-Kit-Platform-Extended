@@ -345,6 +345,9 @@ namespace CKPE
 		void* EditorUI::Hook::HKCreateDialogParamA(void* hInstance, const char* lpTemplateName, void* hWndParent,
 			std::uintptr_t lpDialogFunc, std::ptrdiff_t dwInitParam) noexcept(true)
 		{
+			if (reinterpret_cast<uintptr_t>(lpTemplateName) == 0x1D6) // "Warnings"
+				return 0;
+
 			// EndDialog MUST NOT be used
 			ThreadDialogData.DialogFunc = (DLGPROC)lpDialogFunc;
 			ThreadDialogData.IsDialog = false;
@@ -382,6 +385,9 @@ namespace CKPE
 		std::ptrdiff_t EditorUI::Hook::HKDialogBoxParamA(void* hInstance, const char* lpTemplateName, void* hWndParent,
 			std::uintptr_t lpDialogFunc, std::ptrdiff_t dwInitParam) noexcept(true)
 		{
+			if (reinterpret_cast<uintptr_t>(lpTemplateName) == 0x1D6) // "Warnings"
+				return 0;
+
 			// EndDialog MUST be used
 			ThreadDialogData.DialogFunc = (DLGPROC)lpDialogFunc;
 			ThreadDialogData.IsDialog = true;

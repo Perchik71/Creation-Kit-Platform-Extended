@@ -91,4 +91,4 @@ namespace CKPE
 }
 
 #define __CKPE_RVA(idx) (db->GetAt(idx).Rva)
-#define __CKPE_OFFSET(idx) (base + db->GetAt(idx).Rva)
+#define __CKPE_OFFSET(idx) (db->GetAt(idx).Rva ? (base + db->GetAt(idx).Rva) : 0)

@@ -18,8 +18,6 @@ namespace CKPE
 				public:
 					using integral_type = Integral;
 
-					static_assert(std::is_integral_v<integral_type>);
-
 					constexpr NiTFlags() noexcept(true) {}
 
 					integral_type Flags{ 0 };

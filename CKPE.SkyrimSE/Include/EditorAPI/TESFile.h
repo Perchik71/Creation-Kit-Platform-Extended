@@ -7,6 +7,7 @@
 #include <windows.h>
 #include "BSTList.h"
 #include "BSString.h"
+#include "BSSystemFile.h"
 
 namespace CKPE
 {
@@ -47,20 +48,17 @@ namespace CKPE
 				/* 15C */ char m_FilePath[MAX_PATH];
 				/* 260 */ char _pad1[0x8];
 				/* 268 */ std::uint32_t m_bufsize;
-				/* 26C */ char _pad2[0x38];
+				/* 26C */ char _pad2[0x18];
+				/* 284 */ TESChunk m_header_chunk;						// should be 'TES4'
+				/* 29C */ std::uint32_t m_header_type;					// should be 'HEDR'
+				/* 2A0 */ std::uint32_t m_size_chunk_may_unused;
 				/* 2A4 */ std::uint32_t m_fileSize;
-				/* 2A8 */ char _pad3[0x48];
+				/* 2A8 */ std::uint32_t m_currentRecordOffset;			// offset of current record in file
+				/* 2AC */ std::uint32_t m_currentChunkOffset;			// offset of current chunk in record
+				/* 2B0 */ std::uint32_t m_fetchedChunkDataSize;			// number of bytes read in last GetChunkData() call
+				/* 2B4 */ char _pad3[0x3C];
 
-				struct WIN32_FIND_DATA_UNKNOWN 
-				{
-					FILETIME ftCreationTime;
-					char _pad0[0x8];
-					FILETIME ftLastWriteTime;
-					std::uint32_t nFileSizeHigh;
-					std::uint32_t nFileSizeLow;
-				};
-
-				/* 2F0 */ WIN32_FIND_DATA_UNKNOWN m_findData;
+				BSSystemFile::Info m_findData;
 				/* 310 */ char _pad4[0x11C];
 
 				struct FileHeaderInfo 
@@ -100,7 +98,7 @@ namespace CKPE
 				/* 4D0 */ std::uint32_t* m_ownedIds;
 				/* 4D8 */ std::uint64_t m_countOwned;
 			public:
-				[[nodiscard]] inline BSString GetAuthorName() const noexcept(true) { return *m_authorName ? m_authorName : "Bethesda Software"; }
+				[[nodiscard]] inline BSString GetAuthorName() const noexcept(true) { return *m_authorName ? m_authorName : "Bethesda Game Studios"; }
 				[[nodiscard]] inline BSString GetDescription() const noexcept(true) { return *m_description ? m_description : ""; }
 				[[nodiscard]] inline BSString GetFileName() const noexcept(true) { return m_FileName ? m_FileName : ""; }
 				[[nodiscard]] inline BSString GetFilePath() const noexcept(true) { return m_FilePath ? m_FilePath : ""; }
@@ -121,8 +119,8 @@ namespace CKPE
 				inline void CleanCountOwnedIds() noexcept(true) { m_countOwned = 0; }
 				[[nodiscard]] inline std::uint32_t* GetArrayOwnedIds() const noexcept(true) { return m_ownedIds; }
 				inline void SetArrayOwnedIds(std::uint32_t* FormIds, std::uint32_t Count) noexcept(true) { m_ownedIds = FormIds; m_countOwned = Count; }
-				[[nodiscard]] SYSTEMTIME GetCreationTime() const noexcept(true);
-				[[nodiscard]] SYSTEMTIME GetLastWriteTime() const noexcept(true);
+				[[nodiscard]] SYSTEMTIME GetCreateTime() const noexcept(true);
+				[[nodiscard]] SYSTEMTIME GetModifyTime() const noexcept(true);
 
 				inline static int (*LoadTESInfo)(TESFile*);
 				inline static __int64 (*WriteTESInfo)(TESFile*);

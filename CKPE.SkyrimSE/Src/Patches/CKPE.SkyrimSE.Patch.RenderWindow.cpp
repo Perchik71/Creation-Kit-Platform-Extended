@@ -322,7 +322,7 @@ namespace CKPE
 						auto Name = ActiveCell->GetEditorID_orig();
 						if (!Name) Name = "";
 
-						if (ActiveCell->IsInterior())
+						if (ActiveCell->HasInterior())
 							ImGui::Text("%s (%08X)", StringUtils::WinCPToUtf8(Name).c_str(), ActiveCell->FormID);
 						else
 							ImGui::Text("%s (%i, %i) (%08X)", StringUtils::WinCPToUtf8(Name).c_str(),

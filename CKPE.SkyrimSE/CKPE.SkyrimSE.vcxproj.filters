@@ -1035,6 +1035,9 @@
     <ClInclude Include="Include\EditorAPI\NiAPI\NiFlags.h">
       <Filter>EditorAPI\NiAPI</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSSystemFile.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">

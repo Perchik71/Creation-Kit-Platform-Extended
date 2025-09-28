@@ -339,9 +339,11 @@ namespace CKPE
 				}
 
 			SkipsInstaller:		
+#if 1
 				// Deleting the code that crashes the application if you run it through the debugger
 				KillerGuardMalware killer;
 				killer.Kill();
+#endif
 
 				// IMPORTANT HOOKS
 				EditorUI::Hook::Initialize();	// Init UI patch (Dialogs)

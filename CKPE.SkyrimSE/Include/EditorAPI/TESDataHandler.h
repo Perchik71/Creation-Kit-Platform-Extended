@@ -188,8 +188,8 @@ namespace CKPE
 				NiTPrimitiveArray<Forms::TESForm*>	addonNodes;			// D68
 			private:
 				char padD80[0x18];										// D80
-				uint32_t NextFormId;									// DA8
-				uint32_t UnkDAC;										// DAC
+				std::uint32_t NextFormId;								// DA8
+				std::uint32_t UnkDAC;									// DAC
 				TESFile* activePlugin;									// DB0
 			public:
 				ModList modList;										// DB8

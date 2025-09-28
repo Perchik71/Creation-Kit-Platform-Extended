@@ -41,7 +41,8 @@ namespace CKPE
 
 			bool EnableGoInSelGame::DoQuery() const noexcept(true)
 			{
-				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_FALLOUT_C4_LAST;
+				// remove 1.10.943.1
+				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_FALLOUT_C4_1_10_162_0;
 			}
 
 			bool EnableGoInSelGame::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)

@@ -295,6 +295,7 @@
     <ClInclude Include="Include\EditorAPI\BSSpinLock.h" />
     <ClInclude Include="Include\EditorAPI\BSString.h" />
     <ClInclude Include="Include\EditorAPI\BSStringCache.h" />
+    <ClInclude Include="Include\EditorAPI\BSSystemFile.h" />
     <ClInclude Include="Include\EditorAPI\BSTArray.h" />
     <ClInclude Include="Include\EditorAPI\BSTList.h" />
     <ClInclude Include="Include\EditorAPI\BSTriShape.h" />

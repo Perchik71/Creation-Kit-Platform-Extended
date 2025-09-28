@@ -12,7 +12,7 @@
 #include <CKPE.Common.UIListView.h>
 #include <CKPE.Common.ModernTheme.h>
 #include <CKPE.Fallout4.VersionLists.h>
-//#include <EditorAPI/Forms/TESObjectLIGH.h>
+#include <EditorAPI/Forms/TESObjectLIGH.h>
 #include <Patches/CKPE.Fallout4.Patch.ModernThemePatchAdditional.h>
 #include "..\CKPE.Common\resource.h"
 
@@ -49,7 +49,7 @@ namespace CKPE
 						return CDRF_NEWFONT;
 					}
 
-					/*auto form = (EditorAPI::Forms::TESForm*)lvItem.lParam;
+					auto form = (EditorAPI::Forms::TESForm*)lvItem.lParam;
 					if ((form->Type == EditorAPI::Forms::TESObjectLIGH::TYPE_ID) && (lpListView->iSubItem == 1))
 					{
 						if (((lvItem.state & 0xFF) & LVIS_SELECTED) == LVIS_SELECTED)
@@ -58,7 +58,7 @@ namespace CKPE
 						auto color = ((EditorAPI::Forms::TESObjectLIGH*)form)->GetSpecularColor();
 						lpListView->clrText = RGB(color.r, color.g, color.b);
 					}
-					else*/
+					else
 						goto def_color;
 				}
 				}
@@ -141,13 +141,16 @@ namespace CKPE
 				Detours::DetourCall(__CKPE_OFFSET(5), (std::uintptr_t)&HKInitializeTimeOfDay);
 				Detours::DetourCall(__CKPE_OFFSET(6), (std::uintptr_t)&HKSetNewValueTimeOfDay);
 
-				// replace ImageList_LoadImage
-				Detours::DetourCall(__CKPE_OFFSET(7), (std::uintptr_t)&Comctl32ImageList_LoadImageA_2);		// item type Task Manager
-				Detours::DetourCall(__CKPE_OFFSET(8), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);		// Scripts icons
-				Detours::DetourCall(__CKPE_OFFSET(9), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);		// Scripts icons
-				Detours::DetourCall(__CKPE_OFFSET(10), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);	// Scripts icons
+				if (VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_943_1)
+				{
+					// replace ImageList_LoadImage
+					Detours::DetourCall(__CKPE_OFFSET(7), (std::uintptr_t)&Comctl32ImageList_LoadImageA_2);			// item type Task Manager
+					Detours::DetourCall(__CKPE_OFFSET(8), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);			// Scripts icons
+					Detours::DetourCall(__CKPE_OFFSET(9), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);			// Scripts icons
 
-				
+					if (VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+						Detours::DetourCall(__CKPE_OFFSET(10), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);	// Scripts icons
+				}
 
 				Common::UI::ListView::InstallCustomDrawHandler(&DoCustomDrawListView);
 
