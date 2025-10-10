@@ -41,7 +41,9 @@ namespace CKPE
 
 			bool FixBadPictureInRender::DoQuery() const noexcept(true)
 			{
-				return VersionLists::GetEditorVersion() >= VersionLists::EDITOR_FALLOUT_C4_1_10_943_1;
+				auto ver = VersionLists::GetEditorVersion();
+				return (ver != VersionLists::EDITOR_FALLOUT_C4_1_10_943_1) &&
+					(ver <= VersionLists::EDITOR_FALLOUT_C4_LAST);
 			}
 
 			bool FixBadPictureInRender::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)

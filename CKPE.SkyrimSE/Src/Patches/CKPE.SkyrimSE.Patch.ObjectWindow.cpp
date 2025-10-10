@@ -32,7 +32,7 @@ namespace CKPE
 			ObjectWindow* GlobalObjectWindowBasePtr = nullptr;
 			std::uintptr_t pointer_ObjectWindow_sub = 0;
 
-			void ResizeObjectWndChildControls(LPOBJWND lpObjWnd)
+			static void ResizeObjectWndChildControls(LPOBJWND lpObjWnd) noexcept(true)
 			{
 				// The perfectionist in me is dying....
 
@@ -68,7 +68,7 @@ namespace CKPE
 				lpObjWnd->Controls.EditFilter.Repaint();
 			}
 
-			void SplitterResizeObjectWndChildControls(LPOBJWND lpObjWnd)
+			static void SplitterResizeObjectWndChildControls(LPOBJWND lpObjWnd) noexcept(true)
 			{
 				lpObjWnd->Controls.TreeList.LockUpdate();
 				lpObjWnd->Controls.ItemList.LockUpdate();
@@ -141,19 +141,19 @@ namespace CKPE
 				auto _interface = Common::Interface::GetSingleton();
 				auto base = _interface->GetApplication()->GetBase();
 
-				*(uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (uintptr_t)&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
 
 				// Fix resize ObjectWindowProc
 				auto OffsetTotal = __CKPE_OFFSET(1);
 				SafeWrite::WriteNop(OffsetTotal, 0x70);
-				Detours::DetourCall(OffsetTotal, (uintptr_t)&HKMoveWindow);
+				Detours::DetourCall(OffsetTotal, (std::uintptr_t)&HKMoveWindow);
 
 				// In 1.6.1130 the filter is no longer needed
 				if (verPatch == 1)
 				{
 					pointer_ObjectWindow_sub = __CKPE_OFFSET(3);
 					// Allow forms to be filtered in EditorUI_ObjectWindowProc
-					Detours::DetourCall(__CKPE_OFFSET(2), (uintptr_t)&sub);
+					Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&sub);
 				}
 
 				return true;
@@ -172,7 +172,7 @@ namespace CKPE
 				return bResult;
 			}
 
-			std::int32_t ObjectWindow::sub(std::int64_t ObjectListInsertData, void* Form)
+			std::int32_t ObjectWindow::sub(std::int64_t ObjectListInsertData, void* Form) noexcept(true)
 			{
 				const std::int64_t objectWindowInstance = *(std::int64_t*)(ObjectListInsertData + 0x8) - 0x28;
 				const HWND objectWindowHandle = *(HWND*)(objectWindowInstance);

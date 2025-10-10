@@ -92,20 +92,20 @@ namespace CKPE
 					return false;
 				}
 
-				bool Grow(std::uint64_t numEntries)
+				bool Grow(size_type numEntries)
 				{
 					if (!m_Buffer)
 					{
-						m_Buffer = (_Ty*)NiAPI::NiMemoryManager::Alloc(nullptr, sizeof(_Ty) * (std::uint32_t)numEntries);
+						m_Buffer = (_Ty*)NiAPI::NiMemoryManager::Alloc(nullptr, sizeof(_Ty) * numEntries);
 						m_Size = 0;
-						m_AllocSize = (std::uint32_t)numEntries;
+						m_AllocSize = numEntries;
 						return true;
 					}
 
 					try 
 					{
 						size_type oldSize = m_AllocSize;
-						size_type newSize = oldSize + (std::uint32_t)numEntries;
+						size_type newSize = oldSize + numEntries;
 						_Ty* oldArray = m_Buffer;
 						_Ty* newArray = (_Ty*)NiAPI::NiMemoryManager::Alloc(nullptr, sizeof(_Ty) * newSize);	// Allocate new block
 						if (oldArray)
@@ -190,7 +190,7 @@ namespace CKPE
 					{
 						// Delete the truncated entries
 						for (size_type i = num; i < m_AllocSize; i++)
-							delete& m_Buffer[i];
+							(&m_Buffer[i])->~value_type();
 					}
 
 					_Ty* newBlock = (_Ty*)NiAPI::NiMemoryManager::Alloc(nullptr, sizeof(_Ty) * num);	// Create a new block

@@ -2,6 +2,7 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
+#include <CKPE.Utils.h>
 #include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.PathUtils.h>
@@ -114,7 +115,7 @@ namespace CKPE
 
 			bool ModernThemePatchAdditional::DoQuery() const noexcept(true)
 			{
-				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_FALLOUT_C4_LAST;
+				return !CKPE_UserUseWine() && (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_FALLOUT_C4_LAST);
 			}
 
 			bool ModernThemePatchAdditional::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
@@ -169,7 +170,10 @@ namespace CKPE
 				auto pNewButtons = std::make_unique<TBBUTTON[]>(iNumButtons);
 				auto verEditor = VersionLists::GetEditorVersion();
 
-				std::size_t aa_index = 20;
+				size_t aa_index = 19;
+
+				if (verEditor == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+					aa_index += 4;
 
 				memcpy(pNewButtons.get(), lpButtons, sizeof(TBBUTTON) * aa_index);
 

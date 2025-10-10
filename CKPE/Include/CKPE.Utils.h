@@ -115,5 +115,6 @@ namespace CKPE
 		return ((TR(__fastcall*)(const void*, T1, T2, T3, T4))(addr))(ths, a1, a2, a3, a4);
 	}
 
+	CKPE_API bool CKPE_UserUseWine() noexcept(true);
 	CKPE_API bool CKPE_UserHasAdminRights() noexcept(true);
 }

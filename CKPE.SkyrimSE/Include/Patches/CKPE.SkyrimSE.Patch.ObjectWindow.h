@@ -48,7 +48,7 @@ namespace CKPE
 
 				static INT_PTR CALLBACK HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 				static BOOL WINAPI HKMoveWindow(HWND hWindow, INT32 X, INT32 Y, INT32 nWidth, INT32 nHeight, BOOL bRepaint);
-				static std::int32_t sub(std::int64_t ObjectListInsertData, void* Form);
+				static std::int32_t sub(std::int64_t ObjectListInsertData, void* Form) noexcept(true);
 
 				virtual bool HasOption() const noexcept(true);
 				virtual const char* GetOptionName() const noexcept(true);

@@ -6,6 +6,7 @@
 
 #include <CKPE.Singleton.h>
 #include <EditorAPI/NiAPI/NiTObjectArray.h>
+#include <EditorAPI/BSTList.h>
 #include <EditorAPI/Forms/BGSLayer.h>
 #include <EditorAPI/Forms/BGSColorForm.h>
 #include <EditorAPI/Forms/TESObjectARMO.h>
@@ -26,6 +27,17 @@ namespace CKPE
 			template<typename _Ty>
 			using NiTPrimitiveArray = NiAPI::NiTObjectArray<_Ty>;
 			using TESFormArray = BSTArray<Forms::TESForm*>;
+
+			class TESRegionList
+			{
+				BSSimpleList<Forms::TESForm*> Region;
+				std::uint32_t unk;
+			public:
+				virtual ~TESRegionList();
+
+				[[nodiscard]] inline const BSSimpleList<Forms::TESForm*>& GetRegions() const noexcept(true) { return Region; }
+			};
+			static_assert(sizeof(TESRegionList) == 0x20);
 
 			class TESDataHandler
 			{
@@ -202,11 +214,9 @@ namespace CKPE
 				TESFormArray arrLSPR;									// F08 Form Type 156
 				TESFormArray arrGDRY;									// F20 Form Type 157
 				TESFormArray arrOVIS;									// F38 Form Type 158
-			private:
-				void* UnkPtrD48;										// F50
-			public:
+				TESRegionList* regionList;								// F50
 				NiTPrimitiveArray<Forms::TESObjectCELL*> cellList;		// F58
-				NiTPrimitiveArray<Forms::TESForm*>	addonNodes;			// F70
+				NiTPrimitiveArray<Forms::TESForm*> addonNodes;			// F70
 			private:
 				char padD80[0x18];										// F88
 				std::uint32_t NextFormId;								// FA0

@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <cstdarg>
+#include <CKPE.Utils.h>
 #include <CKPE.PathUtils.h>
 #include <CKPE.StringUtils.h>
 #include <CKPE.Application.h>
@@ -350,11 +351,14 @@ namespace CKPE
 				SafeExit::Hook::Initialize();	// Init fast quit
 				Threads::Hook::Initialize();	// Init threads
 
-				if (_READ_OPTION_BOOL("CreationKit", "bUIClassicTheme", false))
-					ClassicTheme::Hook::Initialize();
+				if (!CKPE_UserUseWine())
+				{
+					if (_READ_OPTION_BOOL("CreationKit", "bUIClassicTheme", false))
+						ClassicTheme::Hook::Initialize();
 
-				else if (_READ_OPTION_BOOL("CreationKit", "bUIDarkTheme", false))
-					ModernTheme::Hook::Initialize();
+					else if (_READ_OPTION_BOOL("CreationKit", "bUIDarkTheme", false))
+						ModernTheme::Hook::Initialize();
+				}
 
 				// LOG WINDOW
 				/* call constructor */ new LogWindow();		

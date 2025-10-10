@@ -23,14 +23,8 @@ namespace CKPE
 			{
 				class TESObjectCELL;
 
-				class TESChildCell
-				{
-				private:
-					BSTEventSink<void*> unk00;
-				};
-
 				template<class _Ty>
-				class TESObjectREFR_base : public TESForm, public TESChildCell, public _Ty, 
+				class TESObjectREFR_base : public TESForm, public BSTEventSink<void*>, public _Ty, 
 					public BSTEventSink<BSActiveGraphIfInactiveEvent>, public BSTEventSink<BSAnimationGraphEvent>, 
 					public BSTEventSink<BGSInventoryListEvent::Event>
 				{

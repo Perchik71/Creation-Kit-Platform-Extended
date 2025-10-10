@@ -19,6 +19,18 @@ namespace CKPE
 		{
 			namespace NiAPI
 			{
+				class NiCamera
+				{
+				public:
+					virtual ~NiCamera() = default;
+				};
+
+				class NiWindow
+				{
+				public:
+					virtual ~NiWindow() = default;
+				};
+
 				class NiBinaryStream
 				{
 				protected:

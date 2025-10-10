@@ -7,8 +7,22 @@
 #include <lmapibuf.h>
 #include <CKPE.Utils.h>
 
+#include <CKPE.HardwareInfo.h>
+
 namespace CKPE
 {
+	CKPE_API bool CKPE_UserUseWine() noexcept(true)
+	{
+		auto hmod = GetModuleHandleA("kernel32.dll");
+		if (hmod && GetProcAddress(hmod, "wine_get_unix_file_name"))
+			return true;
+
+		if (getenv("WINEDATADIR") || getenv("WINEPREFIX") || getenv("WINEHOMEDIR"))
+			return true;
+		
+		return false;
+	}
+
 	// https://stackoverflow.com/questions/45125550/check-a-user-is-an-admin-on-local-machine-in-c-in-windows
 	CKPE_API bool CKPE_UserHasAdminRights() noexcept(true)
 	{

@@ -143,6 +143,114 @@
     <ClCompile Include="Src\EditorAPI\BSReadWriteLock.cpp">
       <Filter>EditorAPI</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixLandspaceVNML.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixPluginTXT.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixRecursiveSorting.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixLoadD3DCompiler.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ResponseIgnoreMax.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.RunNetworkDisable.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.SortCrashCombined.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.SkipUpdateCheck.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ChooseSoundFile.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixInfiniteLoopPapyrusCompile.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixSortPropObjectMod.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.CreateDDS.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.Misc.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.RemoveUselessMessages.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.TESFormHook.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixVC.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ObjectWindow.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\EditorAPI\BGSRenderWindowReferenceEditModule.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.RenderWindow.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\NiAPI\NiRefObject.cpp">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixSSAOInIntCell.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.TESHook.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.NavMeshWindow.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.CellViewWindow.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.MainWindow.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ProgressWindow.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ReplaceBSPointerHandleAndManager.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.AllowSaveESMandMasterESP.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.AddChangeRef.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.AssertD3D11.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.BSArchiveManagerModded.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSResourceEntryDB.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSResourceLooseFiles.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSResourceArchive2.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.BSResourceLooseFiles.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.LoadShaders.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -502,6 +610,135 @@
       <Filter>EditorAPI</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\BSTEvents.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixLandspaceVNML.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixPluginTXT.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixRecursiveSorting.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixLoadD3DCompiler.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ResponseIgnoreMax.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.RunNetworkDisable.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.SortCrashCombined.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.SkipUpdateCheck.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ChooseSoundFile.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixInfiniteLoopPapyrusCompile.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixSortPropObjectMod.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.CreateDDS.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.Misc.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.RemoveUselessMessages.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.TESFormHook.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixVC.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ObjectWindow.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSRenderWindowReferenceEditModule.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSRenderWindow.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSRenderWindowCamera.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSRenderWindowEditModuleManager.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSPickHandler.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSUniqueObjectRef.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.RenderWindow.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\TES.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixSSAOInIntCell.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.TESHook.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.NavMeshWindow.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.CellViewWindow.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.MainWindow.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ProgressWindow.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ReplaceBSPointerHandleAndManager.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AllowSaveESMandMasterESP.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AddChangeRef.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AssertD3D11.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.BSArchiveManagerModded.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSResourceEntryDB.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSResourceLooseFiles.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSResourceArchive2.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.BSResourceLooseFiles.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSIStream.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.LoadShaders.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSResource.h">
       <Filter>EditorAPI</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,3 +1,7 @@
+// Copyright © 2024-2025 aka perchik71. All rights reserved.
+// Contacts: <email:timencevaleksej@gmail.com>
+// License: https://www.gnu.org/licenses/lgpl-3.0.html
+
 // Special thanks to Nukem: https://github.com/Nukem9/SkyrimSETest/blob/master/skyrim64_test/src/patches/TES/BSSpinLock.cpp
 
 #include <windows.h>

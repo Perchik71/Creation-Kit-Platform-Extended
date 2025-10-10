@@ -2,6 +2,7 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
+#include <CKPE.Utils.h>
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
@@ -115,7 +116,7 @@ namespace CKPE
 
 			bool ModernThemePatchAdditional::DoQuery() const noexcept(true)
 			{
-				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
+				return !CKPE_UserUseWine() && (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST);
 			}
 
 			bool ModernThemePatchAdditional::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)

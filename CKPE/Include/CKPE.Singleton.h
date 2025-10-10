@@ -46,7 +46,7 @@ namespace CKPE
 
 		inline ISingleton& operator=(const _Ty** S) noexcept(true)
 		{
-			_singleton = S;
+			_singleton = const_cast<_Ty**>(S);
 			return *this;
 		}
 

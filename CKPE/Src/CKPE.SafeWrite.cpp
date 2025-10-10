@@ -9,6 +9,8 @@ namespace CKPE
 {
 	void SafeWrite::Write(std::uintptr_t address, const std::uint8_t* data, std::size_t size) noexcept(true)
 	{
+		if (!address) return;
+
 		DWORD d = 0;
 		VirtualProtect((LPVOID)address, (SIZE_T)size, PAGE_EXECUTE_READWRITE, &d);
 		memcpy((void*)address, (const void*)data, size);
@@ -23,6 +25,8 @@ namespace CKPE
 
 	void SafeWrite::WriteSet(std::uintptr_t address, std::uint8_t value, std::size_t size) noexcept(true)
 	{
+		if (!address) return;
+
 		DWORD d = 0;
 		VirtualProtect((LPVOID)address, (SIZE_T)size, PAGE_EXECUTE_READWRITE, &d);
 		memset((void*)address, value, size);

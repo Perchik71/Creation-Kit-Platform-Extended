@@ -66,6 +66,9 @@ namespace CKPE
 
 					template<typename T>
 					inline T* GetPtr() const noexcept(true) { return (T*)m_pObject; }
+
+					template<typename T>
+					inline void Reset(T* p) noexcept(true) { m_pObject = p; }
 				};
 				static_assert(sizeof(NiPointer<NiRefObject>) == 0x8);
 			}

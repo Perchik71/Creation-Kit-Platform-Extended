@@ -167,7 +167,7 @@ namespace CKPE
 					menuInfo.fMask = MIIM_STRING | MIIM_ID;
 				menuInfo.wID = 40016;
 				menuInfo.dwTypeData = LPSTR(customTitle.get());
-				menuInfo.cch = static_cast<uint32_t>(strlen(menuInfo.dwTypeData));
+				menuInfo.cch = static_cast<std::uint32_t>(strlen(menuInfo.dwTypeData));
 				CKPE_ASSERT_MSG(InsertMenuItem(_MainMenu, -1, TRUE, &menuInfo), "Failed to create version menuitem");
 			}
 
@@ -212,7 +212,7 @@ namespace CKPE
 				auto _interface = Common::Interface::GetSingleton();
 				auto base = _interface->GetApplication()->GetBase();
 
-				*(uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (uintptr_t)&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
 				
 				pointer_MainWindow_sub1 = __CKPE_OFFSET(1);
 				pointer_MainWindow_sub2 = __CKPE_OFFSET(3);
@@ -446,7 +446,7 @@ namespace CKPE
 									auto form = EditorAPI::Forms::TESForm::FindFormByFormID(i);
 									if (form)
 									{
-										(*(void(__fastcall**)(EditorAPI::Forms::TESForm*, __int64))(*(__int64*)form + 360))(form, 1);
+										form->MarkAsChanged(true);
 										Console::LogWarning(Console::FORMS, "SetFormModified(%08X)", i);
 									}
 								}

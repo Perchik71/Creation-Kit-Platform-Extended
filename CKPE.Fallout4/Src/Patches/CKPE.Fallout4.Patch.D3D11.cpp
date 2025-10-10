@@ -10,6 +10,7 @@
 #include <imgui.h>
 #include <backends/imgui_impl_win32.h>
 #include <backends/imgui_impl_dx11.h>
+#include <CKPE.Utils.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Detours.h>
 #include <CKPE.Patterns.h>
@@ -221,9 +222,19 @@ namespace CKPE
 					return E_FAIL;
 				std::string ps(path);
 
-				imguiFonts[0] = io.Fonts->AddFontFromFileTTF((ps + "\\consola.ttf").c_str(), 12.0f, nullptr, GlobalFontRanges);
-				imguiFonts[1] = io.Fonts->AddFontFromFileTTF((ps + "\\consolab.ttf").c_str(), 12.0f, nullptr, GlobalFontRanges);
-				imguiFonts[2] = io.Fonts->AddFontFromFileTTF((ps + "\\consola.ttf").c_str(), 10.0f, nullptr, GlobalFontRanges);
+				if (CKPE_UserUseWine())
+				{
+					imguiFonts[0] = io.Fonts->AddFontFromFileTTF((ps + "\\tahoma.ttf").c_str(), 12.0f, nullptr, GlobalFontRanges);
+					imguiFonts[1] = io.Fonts->AddFontFromFileTTF((ps + "\\tahomabd.ttf").c_str(), 12.0f, nullptr, GlobalFontRanges);
+					imguiFonts[2] = io.Fonts->AddFontFromFileTTF((ps + "\\tahoma.ttf").c_str(), 10.0f, nullptr, GlobalFontRanges);
+				}
+				else
+				{
+					imguiFonts[0] = io.Fonts->AddFontFromFileTTF((ps + "\\consola.ttf").c_str(), 12.0f, nullptr, GlobalFontRanges);
+					imguiFonts[1] = io.Fonts->AddFontFromFileTTF((ps + "\\consolab.ttf").c_str(), 12.0f, nullptr, GlobalFontRanges);
+					imguiFonts[2] = io.Fonts->AddFontFromFileTTF((ps + "\\consola.ttf").c_str(), 10.0f, nullptr, GlobalFontRanges);
+				}
+				
 				if (!imguiFonts[0] || !imguiFonts[1] || !imguiFonts[2])
 					return E_FAIL;
 				

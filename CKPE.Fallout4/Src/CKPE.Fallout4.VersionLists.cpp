@@ -124,7 +124,7 @@ namespace CKPE
 
 		std::wstring VersionLists::GetExternalResourcePackageFileName() noexcept(true)
 		{
-			return L"";
+			return L"CreationKitPlatformExtended_FO4_Resources.pak";
 		}
 
 		VersionLists::EDITOR_EXECUTABLE_TYPE VersionLists::GetEditorVersion() noexcept(true)

@@ -29,57 +29,56 @@ namespace CKPE
 				// | Active |    Age |    Handle Index    |
 				// |--------|--------|--------------------|
 				//
-				constexpr static _Ty INDEX_BITS = IndexBits;
-				constexpr static _Ty AGE_BITS = AgeCountBits;
-				constexpr static _Ty UNUSED_BIT_START = INDEX_BITS + AGE_BITS;							// 26 in vanilla
+				constexpr static _Ty INDEX_BIT = IndexBits;
+				constexpr static _Ty AGE_BIT = AgeCountBits;
+				constexpr static _Ty UNUSED_BIT_START = INDEX_BIT + AGE_BIT;							// 26 in vanilla
 
-				constexpr static _Ty INDEX_MASK = (((_Ty)1) << INDEX_BITS) - ((_Ty)1);					// 03FFFFFF
-				constexpr static _Ty AGE_MASK = ((((_Ty)1) << AGE_BITS) - ((_Ty)1)) << INDEX_BITS;		// 7C000000
-				constexpr static _Ty ACTIVE_BIT_MASK = ((_Ty)1) << UNUSED_BIT_START;					// 80000000
-
-				constexpr static _Ty MAX_HANDLE_COUNT = ((_Ty)1) << INDEX_BITS;
-
+				constexpr static _Ty MASK_INDEX_BIT = (((_Ty)1) << INDEX_BIT) - ((_Ty)1);				// 03FFFFFF
+				constexpr static _Ty MASK_AGE_BIT = ((((_Ty)1) << AGE_BIT) - ((_Ty)1)) << INDEX_BIT;	// 7C000000
+				constexpr static _Ty MASK_ACTIVE_BIT = ((_Ty)1) << UNUSED_BIT_START;					// 80000000
+				constexpr static _Ty MAX_HANDLE_COUNT = ((_Ty)1) << INDEX_BIT;							// 04000000
 			protected:
 				_Ty m_Bits;
 			public:
-				inline void SetBitwiseNull() { m_Bits = 0; }
-				inline bool IsBitwiseNull() const { return !m_Bits; }
-				inline _Ty GetIndex() const { return m_Bits & INDEX_MASK; }
-				inline _Ty GetAge() const { return m_Bits & AGE_MASK; }
-				inline void SetInUse() { m_Bits |= ACTIVE_BIT_MASK; }
-				inline void SetNotInUse() { m_Bits &= ~ACTIVE_BIT_MASK; }
-				inline bool IsInUse() const { return (m_Bits & ACTIVE_BIT_MASK) != 0; }
-				inline void IncrementAge() {
-					m_Bits = ((m_Bits << INDEX_BITS) & AGE_MASK) | (m_Bits & ~AGE_MASK);
+				inline void SetBitwiseNull() noexcept(true) { m_Bits = 0; }
+				[[nodiscard]] inline bool IsBitwiseNull() const noexcept(true) { return !m_Bits; }
+				[[nodiscard]] inline _Ty GetIndex() const noexcept(true) { return m_Bits & MASK_INDEX_BIT; }
+				[[nodiscard]] inline _Ty GetAge() const noexcept(true) { return m_Bits & MASK_AGE_BIT; }
+				inline void SetInUse() noexcept(true) { m_Bits |= MASK_ACTIVE_BIT; }
+				inline void SetNotInUse() noexcept(true) { m_Bits &= ~MASK_ACTIVE_BIT; }
+				[[nodiscard]] inline bool IsInUse() const noexcept(true) { return (m_Bits & MASK_ACTIVE_BIT) != 0; }
+				inline void IncrementAge() noexcept(true)
+				{
+					m_Bits = ((m_Bits << INDEX_BIT) & MASK_AGE_BIT) | (m_Bits & ~MASK_AGE_BIT);
 				}
 
-				void Set(_Ty Index, _Ty Age)
+				void Set(_Ty Index, _Ty Age) noexcept(true)
 				{
 					CKPE_ASSERT_MSG(Index < MAX_HANDLE_COUNT, "BSUntypedPointerHandle::Set - parameter Index is too large");
 
 					m_Bits = Index | Age;
 				}
 
-				void SetIndex(_Ty Index)
+				void SetIndex(_Ty Index) noexcept(true)
 				{
 					CKPE_ASSERT_MSG(Index < MAX_HANDLE_COUNT, "BSUntypedPointerHandle::Set - parameter Index is too large");
 
-					m_Bits = (Index & INDEX_MASK) | (m_Bits & ~INDEX_MASK);
+					m_Bits = (Index & MASK_INDEX_BIT) | (m_Bits & ~MASK_INDEX_BIT);
 				}
 
 
-				IBSUntypedPointerHandle& operator=(const IBSUntypedPointerHandle& Other)
+				IBSUntypedPointerHandle& operator=(const IBSUntypedPointerHandle& Other) noexcept(true)
 				{
 					m_Bits = Other.m_Bits;
 					return *this;
 				}
 
-				bool operator==(const IBSUntypedPointerHandle& Other) const
+				bool operator==(const IBSUntypedPointerHandle& Other) const noexcept(true)
 				{
 					return m_Bits == Other.m_Bits;
 				}
 
-				bool operator!=(const IBSUntypedPointerHandle& Other) const
+				bool operator!=(const IBSUntypedPointerHandle& Other) const noexcept(true)
 				{
 					return m_Bits != Other.m_Bits;
 				}
@@ -98,27 +97,20 @@ namespace CKPE
 			private:
 				NiAPI::NiPointer<HandleRef> m_Pointer;
 			public:
-				void SetNextFreeEntry(_Ty Index)
+				inline void SetNextFreeEntry(_Ty Index) noexcept(true)
 				{
-					HandleType::m_Bits = (Index & HandleType::INDEX_MASK) | (HandleType::m_Bits & ~HandleType::INDEX_MASK);
+					HandleType::m_Bits = (Index & HandleType::MASK_INDEX_BIT) | (HandleType::m_Bits & ~HandleType::MASK_INDEX_BIT);
 				}
 
-				_Ty GetNextFreeEntry() const
+				[[nodiscard]] inline _Ty GetNextFreeEntry() const noexcept(true)
 				{
-					return HandleType::m_Bits & HandleType::INDEX_MASK;
+					return HandleType::m_Bits & HandleType::MASK_INDEX_BIT;
 				}
 
-				void SetPointer(HandleRef* Pointer)
-				{
-					m_Pointer = Pointer;
-				}
+				inline void SetPointer(HandleRef* Pointer) noexcept(true) { m_Pointer = Pointer; }
+				[[nodiscard]] inline HandleRef* GetPointer() const noexcept(true) { return m_Pointer.operator HandleRef* (); }
 
-				HandleRef* GetPointer() const
-				{
-					return m_Pointer.operator HandleRef * ();
-				}
-
-				bool IsValid(_Ty Age) const
+				[[nodiscard]] inline bool IsValid(_Ty Age) const noexcept(true)
 				{
 					return HandleType::IsInUse() && HandleType::GetAge() == Age;
 				}
@@ -147,13 +139,21 @@ namespace CKPE
 			public:
 				constexpr static _Ty INVALID_INDEX = (_Ty)-1;
 			public:
-				inline static _Ty GetHead() { return FreeListHead; }
-				inline static _Ty GetTail() { return FreeListTail; }
+				[[nodiscard]] inline static _Ty GetHead() { return FreeListHead; }
+				[[nodiscard]] inline static _Ty GetTail() { return FreeListTail; }
 
-				static void InitSDM()
+				static IBSPointerHandleManagerEntry<_Ty, HandleType, HandleRef>* InitSDM()
+				{
+					HandleEntries.resize(HandleType::MAX_HANDLE_COUNT);
+					// Reset
+					CleanSDM();
+					// Return address
+					return HandleEntries.data();
+				}
+
+				static void CleanSDM()
 				{
 					FreeListHead = 0;
-					HandleEntries.resize(HandleType::MAX_HANDLE_COUNT);
 
 					for (_Ty i = 0; i < HandleType::MAX_HANDLE_COUNT; i++)
 					{
@@ -165,6 +165,7 @@ namespace CKPE
 
 					FreeListTail = HandleType::MAX_HANDLE_COUNT - 1;
 				}
+
 				static void KillSDM()
 				{
 					HandleManagerLock.LockForWrite();
@@ -358,7 +359,7 @@ namespace CKPE
 					Manager::HandleManagerLock.UnlockWrite();
 				}
 
-				static bool GetSmartPointer1(const HandleType& Handle, NiPointer<ObjectType>& Out)
+				static bool GetSmartPointer1(const HandleType& Handle, NiAPI::NiPointer<ObjectType>& Out)
 				{
 					if (Handle.IsBitwiseNull())
 					{
@@ -377,7 +378,7 @@ namespace CKPE
 					return Out != nullptr;
 				}
 
-				static bool GetSmartPointer2(HandleType& Handle, NiPointer<ObjectType>& Out)
+				static bool GetSmartPointer2(HandleType& Handle, NiAPI::NiPointer<ObjectType>& Out)
 				{
 					if (Handle.IsBitwiseNull())
 					{
@@ -402,7 +403,7 @@ namespace CKPE
 
 				static ObjectType* GetPointer(std::uint32_t UniqueId)
 				{
-					const auto handleIndex = UniqueId & HandleType::INDEX_MASK;
+					const auto handleIndex = UniqueId & HandleType::MASK_INDEX_BIT;
 					auto& arrayHandle = Manager::HandleEntries[handleIndex];
 					auto Out = static_cast<ObjectType*>(arrayHandle.GetPointer());
 
