@@ -171,6 +171,11 @@ namespace CKPE
 				CKPE_ASSERT_MSG(InsertMenuItem(_MainMenu, -1, TRUE, &menuInfo), "Failed to create version menuitem");
 			}
 
+			void MainWindow::DoOpenFormByIdHandler(std::uint32_t id) noexcept(true)
+			{
+				MainWindow::Singleton->Perform(WM_COMMAND, Common::EditorUI::UI_EDITOR_OPENFORMBYID, id);
+			}
+
 			MainWindow::MainWindow() : PatchMainWindow()
 			{
 				SetName("Main Window");
@@ -196,7 +201,7 @@ namespace CKPE
 
 			std::vector<std::string> MainWindow::GetDependencies() const noexcept(true)
 			{
-				return { "TES", "Console", "Object Window" };
+				return { "TES", "Console", "Object Window", "TESForm" };
 			}
 
 			bool MainWindow::DoQuery() const noexcept(true)
@@ -217,6 +222,8 @@ namespace CKPE
 				pointer_MainWindow_sub1 = __CKPE_OFFSET(1);
 				pointer_MainWindow_sub2 = __CKPE_OFFSET(3);
 				pointer_MainWindow_sub3 = __CKPE_OFFSET(4);
+
+				Common::LogWindow::GetSingleton()->OnOpenFormById = DoOpenFormByIdHandler;
 
 				return true;
 			}
@@ -320,17 +327,23 @@ namespace CKPE
 							{
 							case Common::EditorUI::UI_EDITOR_TOGGLEFOG:
 							{
-								// Call the CTRL+F5 hotkey function directly
-								//((void(__fastcall*)())pointer_MainWindow_sub1)();
+								auto MenuItem =
+									MainWindow::Singleton->MainMenu.GetItem(Common::EditorUI::UI_EDITOR_TOGGLEFOG);
+								MenuItem.Checked = !MenuItem.Checked;
+
+								if (MenuItem.Checked)
+									EditorAPI::TES::Singleton->GetSky()->SetFog();
+								else
+									EditorAPI::TES::Singleton->GetSky()->UnsetFog();
 							}
 							return 0;
 							case Common::EditorUI::UI_EDITOR_TOGGLECELLVIEW:
 							{
-								/*auto wnd = CellViewWindow::Singleton.GetSingleton();
+								auto wnd = CellViewWindow::Singleton.GetSingleton();
 								wnd->Visible = !wnd->Visible;
 								auto MenuItem =
 									MainWindow::Singleton->MainMenu.GetItem(Common::EditorUI::UI_EDITOR_TOGGLECELLVIEW);
-								MenuItem.Checked = !MenuItem.Checked;*/
+								MenuItem.Checked = !MenuItem.Checked;
 							}
 							return 0;
 							case Common::EditorUI::UI_EDITOR_OPENFORMBYID:

@@ -250,6 +250,19 @@ namespace CKPE
 				return 1;
 			}
 
+			void ObjectWindow::SetObjectWindowFilter(LPOBJWND lpObjWnd, const char* name,
+				const bool SkipText, const bool actived) noexcept(true)
+			{
+				if (!SkipText)
+					lpObjWnd->Controls.EditFilter.SetCaption(name);
+
+				//lpObjWnd->Controls.ActiveOnly.Checked = actived;
+				// Force the list items to update as if it was by timer
+				//lpObjWnd->ObjectWindow.Perform(WM_TIMER, 0x1B58, 0);
+				// This is a bit slower but works in multi windows
+				lpObjWnd->Controls.EditFilter.SetCaption(lpObjWnd->Controls.EditFilter.GetCaption());
+			}
+
 			INT_PTR CALLBACK ObjectWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 			{
 				if (Message == WM_INITDIALOG)
@@ -341,8 +354,13 @@ namespace CKPE
 						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
 						SetPropA(Hwnd, "ActiveOnly", reinterpret_cast<HANDLE>(enableFilter));
 
-						// Force the list items to update as if it was by timer
-						SendMessageA(Hwnd, WM_TIMER, 0x4D, 0);
+						if (auto iterator = ObjectWindows.find(Hwnd); iterator != ObjectWindows.end())
+						{
+							LPOBJWND lpObjWnd = (*iterator).second;
+							if (lpObjWnd) SetObjectWindowFilter(lpObjWnd, "", TRUE,
+								!lpObjWnd->Controls.ActiveOnly.Checked);
+						}
+
 						return S_OK;
 					}
 					else if (param == UI_CMD_CHANGE_SPLITTER_OBJECTWINDOW)

@@ -130,6 +130,7 @@
     <ClCompile Include="Src\CKPE.Fallout4.D3D11Shaders.cpp" />
     <ClCompile Include="Src\CKPE.Fallout4.Runner.cpp" />
     <ClCompile Include="Src\CKPE.Fallout4.VersionLists.cpp" />
+    <ClCompile Include="Src\EditorAPI\BSFile.cpp" />
     <ClCompile Include="Src\EditorAPI\BSReadWriteLock.cpp" />
     <ClCompile Include="Src\EditorAPI\BSResourceArchive2.cpp" />
     <ClCompile Include="Src\EditorAPI\BSResourceEntryDB.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixVC.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FlowChartX.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.IncreaseChunkSizeForSNAM.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.LayersWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.LoadShaders.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.MainWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.MemoryManager.cpp" />
@@ -189,7 +191,10 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ModernThemePatchAdditional.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.NavMeshWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ObjectWindow.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.OptimizationLoad.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.PapyrusEditorLimit.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.PreCombined.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.PreVis.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ProgressWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.RemoveUselessMessages.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.RenameCreationKitApp.cpp" />
@@ -225,6 +230,7 @@
     <ClInclude Include="Include\EditorAPI\BSDynamicTriShape.h" />
     <ClInclude Include="Include\EditorAPI\BSEntryString.h" />
     <ClInclude Include="Include\EditorAPI\BSFadeNode.h" />
+    <ClInclude Include="Include\EditorAPI\BSFile.h" />
     <ClInclude Include="Include\EditorAPI\BSFixedString.h" />
     <ClInclude Include="Include\EditorAPI\BSGeometry.h" />
     <ClInclude Include="Include\EditorAPI\BSHandleRefObject.h" />
@@ -337,6 +343,7 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixVC.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FlowChartX.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.IncreaseChunkSizeForSNAM.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.LayersWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.LoadShaders.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.MainWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.MemoryManager.h" />
@@ -344,7 +351,10 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ModernThemePatchAdditional.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.NavMeshWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ObjectWindow.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.OptimizationLoad.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.PapyrusEditorLimit.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.PreCombined.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.PreVis.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ProgressWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.RemoveUselessMessages.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.RenameCreationKitApp.h" />

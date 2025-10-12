@@ -12,20 +12,15 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			class ChooseSoundFile : public Common::Patch
+			class PreCombined : public Common::Patch
 			{
-				static bool sub(std::int64_t unknown, const char* lpPath, const char* lpFormat, const char* lpCaption,
-					char* lpFileName, void* pHandler, std::int32_t iUnknown, bool bSaveDlg, const char* lpUnknownStr, 
-					std::uint32_t uUnknown, const char* lpBuffer, void* _CrtBuffer, std::int64_t unk02,
-					std::int64_t unk03, std::int64_t unk04, std::int64_t unk05) noexcept(true);
-
-				ChooseSoundFile(const ChooseSoundFile&) = delete;
-				ChooseSoundFile& operator=(const ChooseSoundFile&) = delete;
+				PreCombined(const PreCombined&) = delete;
+				PreCombined& operator=(const PreCombined&) = delete;
 			protected:
 				virtual bool DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true);
 				virtual bool DoQuery() const noexcept(true);
 			public:
-				ChooseSoundFile();
+				PreCombined();
 
 				virtual bool HasOption() const noexcept(true);
 				virtual const char* GetOptionName() const noexcept(true);

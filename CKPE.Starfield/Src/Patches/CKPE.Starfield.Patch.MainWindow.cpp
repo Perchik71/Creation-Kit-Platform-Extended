@@ -88,20 +88,6 @@ namespace CKPE
 				}
 			}
 
-			static void ShowDialogEdit(HWND Hwnd, LPARAM lParam)
-			{
-				__try
-				{
-					auto form = EditorAPI::Forms::TESForm::FindFormByFormID(static_cast<std::uint32_t>(lParam));
-					if (form)
-						form->ShowEditWindow(Hwnd);
-				}
-				__except (1)
-				{
-					// skip fatal error
-				}
-			}
-
 			static void CreateExtensionMenu(HWND _MainWindow, HMENU _MainMenu) noexcept(true)
 			{
 				// Creating a submenu to open the hidden functions of the Creation Kit
@@ -188,7 +174,7 @@ namespace CKPE
 
 			std::vector<std::string> MainWindow::GetDependencies() const noexcept(true)
 			{
-				return { "About Window" };
+				return { "About Window", "TESForm" };
 			}
 
 			bool MainWindow::DoQuery() const noexcept(true)
@@ -206,6 +192,8 @@ namespace CKPE
 
 				pointer_MainWindow_sub0 = Detours::DetourClassJump(__CKPE_OFFSET(1), (std::uintptr_t)&HKInitialize);
 				pointer_MainWindow_sub1 = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKInitializeActions);
+
+				Common::LogWindow::GetSingleton()->OnOpenFormById = ShowForm;
 
 				return true;
 			}

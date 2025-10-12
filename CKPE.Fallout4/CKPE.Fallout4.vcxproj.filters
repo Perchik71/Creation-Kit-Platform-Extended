@@ -251,6 +251,21 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.LoadShaders.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.PreVis.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.PreCombined.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.OptimizationLoad.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSFile.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.LayersWindow.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -740,6 +755,21 @@
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\BSResource.h">
       <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.PreVis.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.PreCombined.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.OptimizationLoad.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSFile.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.LayersWindow.h">
+      <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

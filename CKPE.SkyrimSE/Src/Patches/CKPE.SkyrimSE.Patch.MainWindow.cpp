@@ -171,6 +171,11 @@ namespace CKPE
 				CKPE_ASSERT_MSG(InsertMenuItem(_MainMenu, -1, TRUE, &menuInfo), "Failed to create version menuitem");
 			}
 
+			void MainWindow::DoOpenFormByIdHandler(std::uint32_t id) noexcept(true)
+			{
+				MainWindow::Singleton->Perform(WM_COMMAND, Common::EditorUI::UI_EDITOR_OPENFORMBYID, id);
+			}
+
 			MainWindow::MainWindow() : PatchMainWindow()
 			{
 				SetName("Main Window");
@@ -196,7 +201,7 @@ namespace CKPE
 
 			std::vector<std::string> MainWindow::GetDependencies() const noexcept(true)
 			{
-				return { "Re-enable fog rendering", "Console", "Object Window" };
+				return { "Re-enable fog rendering", "Console", "Object Window", "TESForm" };
 			}
 
 			bool MainWindow::DoQuery() const noexcept(true)
@@ -217,6 +222,8 @@ namespace CKPE
 				pointer_MainWindow_sub1 = __CKPE_OFFSET(1);
 				pointer_MainWindow_sub2 = __CKPE_OFFSET(3);
 				pointer_MainWindow_sub3 = __CKPE_OFFSET(4);
+
+				Common::LogWindow::GetSingleton()->OnOpenFormById = DoOpenFormByIdHandler;
 
 				return true;
 			}

@@ -217,7 +217,7 @@ namespace CKPE
 
 				void Archive2::HKLoadArchive(const char* fileName, void* Unk1, void* Unk2, std::uint32_t Unk3) noexcept(true)
 				{
-					if (NoTextureLoad && (StrStrIA(fileName, " - Textures") != NULL))
+					if (NoTextureLoad && (StrStrIA(fileName, " - Textures") != nullptr))
 						return;
 
 					fast_call<void>(pointer_Archive2_sub3, fileName, Unk1, Unk2, Unk3);

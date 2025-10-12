@@ -23,10 +23,8 @@
 #define UI_CELL_VIEW_ADD_CELL_OBJECT_ITEM			2583
 #define UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX			2580	
 #define UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX	2582	
-#define UI_CELL_VIEW_SELECT_CELL_OBJECTS_CHECKBOX	5665	
-#define UI_CELL_VIEW_VISIBLE_CELL_OBJECTS_CHECKBOX	5666	
 #define UI_CELL_VIEW_FILTER_CELL					2584	
-#define UI_CELL_VIEW_GO_BUTTON						3681
+#define UI_CELL_VIEW_GO_BUTTON						3681	
 
 #define UI_CELL_VIEW_FILTER_CELL_SIZE				1024
 
@@ -264,21 +262,22 @@ namespace CKPE
 					auto __This = CellViewWindow::Singleton.GetSingleton();
 
 					__This->m_hWnd = Hwnd;
+
 					__This->m_WorldSpaceLabel = GetDlgItem(Hwnd, 1164);
 					__This->m_WorldSpaceComboBox = GetDlgItem(Hwnd, 2083);
 					__This->m_XEdit = GetDlgItem(Hwnd, 5283);
 					__This->m_YEdit = GetDlgItem(Hwnd, 5099);
 					__This->m_XLabel = GetDlgItem(Hwnd, 5281);
 					__This->m_YLabel = GetDlgItem(Hwnd, 5282);
-					__This->m_GoButton = GetDlgItem(Hwnd, 3681);
+					__This->m_GoButton = GetDlgItem(Hwnd, UI_CELL_VIEW_GO_BUTTON);
 					__This->m_LoadedAtTop = GetDlgItem(Hwnd, 5662);
 					__This->m_FilteredOnly = GetDlgItem(Hwnd, 5664);
+					__This->m_VisibleObjectsOnly = GetDlgItem(Hwnd, 5666);
+					__This->m_SelectObjectsOnly = GetDlgItem(Hwnd, 5665);
 					__This->m_IdEdit = GetDlgItem(Hwnd, 2581);
 					__This->m_SelectedObjectLabel = GetDlgItem(Hwnd, 1163);
 					__This->m_ActiveCellsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX);
 					__This->m_ActiveObjectsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX);
-					__This->m_SelectObjectsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_SELECT_CELL_OBJECTS_CHECKBOX);
-					__This->m_VisibleObjectsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_VISIBLE_CELL_OBJECTS_CHECKBOX);
 					__This->m_CellListView = GetDlgItem(Hwnd, 1155);
 					__This->m_ObjectListView = GetDlgItem(Hwnd, 1156);
 					__This->m_FilterCellEdit = GetDlgItem(Hwnd, UI_CELL_VIEW_FILTER_CELL);
@@ -290,10 +289,6 @@ namespace CKPE
 						LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
 					ListView_SetExtendedListViewStyleEx(__This->m_ObjectListView.Handle,
 						LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
-
-					SendMessage(__This->m_SelectObjectsOnly.Handle, BM_SETCHECK, BST_CHECKED, 0);
-					SendMessage(__This->m_VisibleObjectsOnly.Handle, BM_SETCHECK, BST_UNCHECKED, 0);
-					SetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY, reinterpret_cast<HANDLE>(true));
 				}
 				else if (Message == WM_SIZE)
 				{
@@ -315,20 +310,6 @@ namespace CKPE
 					{
 						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
 						SetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_ACTIVE_OBJECT_ONLY, reinterpret_cast<HANDLE>(enableFilter));
-						CellViewWindow::Singleton->UpdateObjectList();
-						return 1;
-					}
-					else if (param == UI_CELL_VIEW_SELECT_CELL_OBJECTS_CHECKBOX)
-					{
-						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
-						SetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_SELECT_OBJECT_ONLY, reinterpret_cast<HANDLE>(enableFilter));
-						CellViewWindow::Singleton->UpdateObjectList();
-						return 1;
-					}
-					else if (param == UI_CELL_VIEW_VISIBLE_CELL_OBJECTS_CHECKBOX)
-					{
-						bool enableFilter = SendMessage(reinterpret_cast<HWND>(lParam), BM_GETCHECK, 0, 0) == BST_CHECKED;
-						SetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY, reinterpret_cast<HANDLE>(enableFilter));
 						CellViewWindow::Singleton->UpdateObjectList();
 						return 1;
 					}
@@ -393,25 +374,6 @@ namespace CKPE
 					// Skip the entry if "Show only active objects" is checked
 					if (static_cast<bool>(GetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_ACTIVE_OBJECT_ONLY)))
 						*allowInsert = form->Active;
-
-					// Skip the entry if "Visible Only" is checked
-					if (*allowInsert && static_cast<bool>(GetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY)))
-					{
-						auto Node = ((EditorAPI::Forms::TESObjectREFR*)(form))->GetFadeNode();
-						if (Node && (Node->QAppCulled() || Node->QNotVisible()))
-							*allowInsert = false;
-					}
-
-					// Skip the entry if "Selected Only" is checked
-					if (*allowInsert && static_cast<bool>(GetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_SELECT_OBJECT_ONLY)))
-					{
-						auto Renderer = EditorAPI::BGSRenderWindow::Singleton.Singleton;
-						if (Renderer)
-						{
-							if (!Renderer->PickHandler->Has((EditorAPI::Forms::TESObjectREFR*)form))
-								*allowInsert = false;
-						}
-					}
 
 					return 1;
 				}

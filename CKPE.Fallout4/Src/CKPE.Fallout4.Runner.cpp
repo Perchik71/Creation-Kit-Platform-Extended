@@ -42,11 +42,12 @@
 #include <Patches/CKPE.Fallout4.Patch.FixRecursiveSorting.h>
 #include <Patches/CKPE.Fallout4.Patch.FixSmoothValue.h>
 #include <Patches/CKPE.Fallout4.Patch.FixSortPropObjectMod.h>
-#include <Patches/CKPE.Fallout4.Patch.FixSSAOInIntCell.h>
+//#include <Patches/CKPE.Fallout4.Patch.FixSSAOInIntCell.h>
 #include <Patches/CKPE.Fallout4.Patch.FixTabDeleteCrash.h>
 #include <Patches/CKPE.Fallout4.Patch.FixVC.h>
 #include <Patches/CKPE.Fallout4.Patch.FlowChartX.h>
 #include <Patches/CKPE.Fallout4.Patch.IncreaseChunkSizeForSNAM.h>
+#include <Patches/CKPE.Fallout4.Patch.LayersWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.LoadShaders.h>
 #include <Patches/CKPE.Fallout4.Patch.MainWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.MemoryManager.h>
@@ -54,7 +55,10 @@
 #include <Patches/CKPE.Fallout4.Patch.ModernThemePatchAdditional.h>
 #include <Patches/CKPE.Fallout4.Patch.NavMeshWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.ObjectWindow.h>
+#include <Patches/CKPE.Fallout4.Patch.OptimizationLoad.h>
 #include <Patches/CKPE.Fallout4.Patch.PapyrusEditorLimit.h>
+#include <Patches/CKPE.Fallout4.Patch.PreCombined.h>
+#include <Patches/CKPE.Fallout4.Patch.PreVis.h>
 #include <Patches/CKPE.Fallout4.Patch.ProgressWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.RemoveUselessMessages.h>
 #include <Patches/CKPE.Fallout4.Patch.RenameCreationKitApp.h>
@@ -121,6 +125,7 @@ namespace CKPE
 			mgr->Register(new Patch::FixVC);
 			mgr->Register(new Patch::FlowChartX);
 			mgr->Register(new Patch::IncreaseChunkSizeForSNAM);
+			mgr->Register(new Patch::LayersWindow);
 			mgr->Register(new Patch::LoadShaders);
 			mgr->Register(new Patch::MainWindow);
 			mgr->Register(new Patch::MemoryManager);
@@ -128,7 +133,9 @@ namespace CKPE
 			mgr->Register(new Patch::ModernThemePatchAdditional);
 			mgr->Register(new Patch::NavMeshWindow);
 			mgr->Register(new Patch::ObjectWindow);
+			mgr->Register(new Patch::OptimizationLoad);
 			mgr->Register(new Patch::PapyrusEditorLimit);
+			mgr->Register(new Patch::PreVis);
 			mgr->Register(new Patch::ProgressWindow);
 			mgr->Register(new Patch::RemoveUselessMessages);
 			mgr->Register(new Patch::RenameCreationKitApp);
@@ -146,6 +153,23 @@ namespace CKPE
 			mgr->Register(new Patch::UIHotkeys);
 			mgr->Register(new Patch::Unicode);
 			mgr->Register(new Patch::VersionControlMergeWorkaround);
+
+			auto cmd = Common::Interface::GetSingleton()->GetCommandLineParser();
+			if (cmd->HasCommandRun())
+			{
+				if (!_wcsicmp(cmd->GetCommand().c_str(), L"-GeneratePreCombined"))
+				{
+					_CONSOLE("The precombining operation has been launched");
+
+					mgr->Register(new Patch::PreCombined);
+				}
+				else if (!_wcsicmp(cmd->GetCommand().c_str(), L"-GeneratePreVisData"))
+				{
+					_CONSOLE("The prevising operation has been launched");
+
+					EditorAPI::BSResource::NoTextureLoad = true;
+				}
+			}
 		}
 
 		void Runner::InstallPatches() noexcept(true)

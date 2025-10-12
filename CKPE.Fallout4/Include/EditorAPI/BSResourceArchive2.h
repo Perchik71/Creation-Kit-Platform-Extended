@@ -19,6 +19,8 @@ namespace CKPE
 		{
 			namespace BSResource
 			{
+				extern bool NoTextureLoad;
+
 				struct InfoEx
 				{
 					LooseFileStream* resFile;

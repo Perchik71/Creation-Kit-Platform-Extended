@@ -43,6 +43,8 @@ namespace CKPE
 			{
 				static std::int32_t sub(std::int64_t ObjectListInsertData, void* Form) noexcept(true);
 				static std::int32_t sub2(HWND Hwnd, void* Form, const char* filterText) noexcept(true);
+				static void SetObjectWindowFilter(LPOBJWND lpObjWnd, const char* name,
+					const bool SkipText, const bool actived) noexcept(true);
 
 				ObjectWindow(const ObjectWindow&) = delete;
 				ObjectWindow& operator=(const ObjectWindow&) = delete;
