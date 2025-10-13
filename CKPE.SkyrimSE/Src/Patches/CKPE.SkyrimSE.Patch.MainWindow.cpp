@@ -201,7 +201,7 @@ namespace CKPE
 
 			std::vector<std::string> MainWindow::GetDependencies() const noexcept(true)
 			{
-				return { "Re-enable fog rendering", "Console", "Object Window", "TESForm" };
+				return { "Re-enable fog rendering", "Console", "Object Window" };
 			}
 
 			bool MainWindow::DoQuery() const noexcept(true)
