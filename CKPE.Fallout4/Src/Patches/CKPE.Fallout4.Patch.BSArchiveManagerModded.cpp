@@ -36,8 +36,8 @@ namespace CKPE
 			bool IsLoaded;
 			std::uint8_t supportedBA2Version = 8;
 
-			static constexpr char szArchiveList[] = "Fallout4 - Voices1.ba2, Fallout4 - Voices2.ba2, Fallout4 - Meshes.ba2, Fallout4 - Animations.ba2, Fallout4 - Interface.ba2, Fallout4 - Misc.ba2, Fallout4 - Sounds.ba2";
-			static constexpr char szArchiveList2[] = "Fallout4 - Voices.ba2, Fallout4 - Interface.ba2, Fallout4 - Meshes.ba2, Fallout4 - MeshesExtra.ba2, Fallout4 - Misc.ba2, Fallout4 - Sounds.ba2, Fallout4 - Materials.ba2";
+			//static constexpr char szArchiveList[] = "Fallout4 - Voices1.ba2, Fallout4 - Voices2.ba2, Fallout4 - Meshes.ba2, Fallout4 - Animations.ba2, Fallout4 - Interface.ba2, Fallout4 - Misc.ba2, Fallout4 - Sounds.ba2";
+			//static constexpr char szArchiveList2[] = "Fallout4 - Voices.ba2, Fallout4 - Interface.ba2, Fallout4 - Meshes.ba2, Fallout4 - MeshesExtra.ba2, Fallout4 - Misc.ba2, Fallout4 - Sounds.ba2, Fallout4 - Materials.ba2";
 
 			static void AttachBA2File(const char* _filename) noexcept(true)
 			{
@@ -148,8 +148,8 @@ namespace CKPE
 				SafeWrite::Write(__CKPE_OFFSET(5), { 0xC3 });
 
 				// Исключение из списков архив шейдеров
-				SafeWrite::WriteStringRef(__CKPE_OFFSET(8), szArchiveList);
-				SafeWrite::WriteStringRef(__CKPE_OFFSET(9), szArchiveList2);
+				//SafeWrite::WriteStringRef(__CKPE_OFFSET(8), szArchiveList);
+				//SafeWrite::WriteStringRef(__CKPE_OFFSET(9), szArchiveList2);
 
 				// Так как разница между первой и 8 версией лишь, то что был удалён GNF формат для PlayStation.
 				// То очевидно, 8 версии с GNF форматом просто не будет, то вполне безопасно, открывать любые версии архивы.

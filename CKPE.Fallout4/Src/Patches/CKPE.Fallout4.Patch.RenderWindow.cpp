@@ -99,7 +99,6 @@ namespace CKPE
 				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
 				_TempDrawArea = (Area*)__CKPE_OFFSET(1);
 
-			//	TESUnknown::Instance = (TESUnknown*)__CKPE_OFFSET(2);
 				EditorAPI::BGSRenderWindow::Singleton = __CKPE_OFFSET(3);
 
 				EditorAPI::BGSRenderWindow::Settings::Movement::FlagsSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(4);
@@ -172,7 +171,7 @@ namespace CKPE
 				}
 				else
 				{
-					/*if (Message == WM_KEYDOWN)
+					if (Message == WM_KEYDOWN)
 					{
 						if (!Keyboard::IsAltPressed() && !Keyboard::IsControlPressed() && Keyboard::IsShiftPressed())
 						{
@@ -231,7 +230,7 @@ namespace CKPE
 							}
 						}
 					}
-					else */if (Message == WM_KEYUP)
+					else if (Message == WM_KEYUP)
 					{
 						if (!Keyboard::IsAltPressed() && !Keyboard::IsControlPressed() && !Keyboard::IsShiftPressed())
 						{

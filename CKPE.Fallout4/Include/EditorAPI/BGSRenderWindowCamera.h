@@ -12,26 +12,22 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
+			using namespace NiAPI;
+
 			class BGSRenderWindow;
 
 			// size 0x88
 			// func 1
 			class BGSRenderWindowCamera
 			{
-			private:
-				struct DataInfo
-				{
-					char pad00[0x60];
-					NiAPI::NiPoint3 Position;
-				};
 			public:
-				enum ViewModeT : uint32_t
+				enum ViewModeT : std::uint32_t
 				{
 					Perspective = 0,
 					Orthographic
 				};
 
-				enum CameraModeT : uint32_t
+				enum CameraModeT : std::uint32_t
 				{
 					Front = 0,
 					Left,
@@ -55,18 +51,22 @@ namespace CKPE
 			public:
 				virtual ~BGSRenderWindowCamera() = default;
 
-				inline NiAPI::NiPoint3 GetPosition() const { return _Data->Position; }
-				inline ViewModeT GetViewMode() const { return _ViewMode; }
-				inline const char* GetViewModeByStr() const { return _ViewMode == Perspective ? "perspective" : "orthographic"; }
-				inline CameraModeT GetCameraMode() const { return _CameraMode; }
-				inline const char* GetCameraModeByStr() const { return CameraModeS[(int)_CameraMode]; }
+				[[nodiscard]] inline NiNode* GetNode() const noexcept(true) { return _Node; }
+				[[nodiscard]] inline NiMatrix43 GetRotate() const noexcept(true) { return _Node->GetLocalTransform().m_Rotate; }
+				[[nodiscard]] inline NiPoint3 GetPosition() const noexcept(true) { return _Node->GetLocalTransform().m_Translate; }
+				[[nodiscard]] inline ViewModeT GetViewMode() const noexcept(true) { return _ViewMode; }
+				[[nodiscard]] inline const char* GetViewModeByStr() const noexcept(true) { return _ViewMode == Perspective ? "perspective" : "orthographic"; }
+				[[nodiscard]] inline CameraModeT GetCameraMode() const noexcept(true) { return _CameraMode; }
+				[[nodiscard]] inline const char* GetCameraModeByStr() const noexcept(true) { return CameraModeS[(int)_CameraMode]; }
 
-				CKPE_READ_PROPERTY(GetPosition) NiAPI::NiPoint3 Position;
+				CKPE_READ_PROPERTY(GetNode) NiNode* Node;
+				CKPE_READ_PROPERTY(GetRotate) NiMatrix43 Rotate;
+				CKPE_READ_PROPERTY(GetPosition) NiPoint3 Position;
 				CKPE_READ_PROPERTY(GetViewMode) ViewModeT ViewMode;
 				CKPE_READ_PROPERTY(GetCameraMode) CameraModeT CameraMode;
 			private:
-				DataInfo* _Data;
-				NiAPI::NiCamera* _Camera;
+				NiNode* _Node;
+				NiCamera* _Camera;
 				ViewModeT _ViewMode;
 				CameraModeT _CameraMode;
 				float _Nums[14];
