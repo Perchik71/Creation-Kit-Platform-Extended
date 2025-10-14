@@ -272,6 +272,25 @@ namespace CKPE
 				{
 				case COLOR_BTNFACE: return ThemeData::GetSingleton()->hThemeDefaultBrush;
 				case COLOR_BTNTEXT: return ThemeData::GetSingleton()->hThemeText3Brush;
+				//case COLOR_WINDOW: return ThemeData::GetSingleton()->hThemeEditBrush;
+				case COLOR_WINDOWFRAME: return ThemeData::GetSingleton()->hThemeDividerBrush;
+				case COLOR_WINDOWTEXT: return ThemeData::GetSingleton()->hThemeText4Brush;
+				case COLOR_ACTIVEBORDER: return ThemeData::GetSingleton()->hThemeBorderWindowBrush;
+				case COLOR_INACTIVEBORDER: return ThemeData::GetSingleton()->hThemeDividerBrush;
+				case COLOR_HIGHLIGHT: return ThemeData::GetSingleton()->hThemeHighlightBrush;
+				case COLOR_HIGHLIGHTTEXT: return ThemeData::GetSingleton()->hThemeHighlightTextBrush;
+				default:
+					return ::GetSysColorBrush(nIndex);
+				}
+			}
+
+			CKPE_COMMON_API THandle Comctl32GetSysColorBrush2(std::int32_t nIndex) noexcept(true)
+			{
+				switch (nIndex)
+				{
+				case COLOR_BTNFACE: return ThemeData::GetSingleton()->hThemeDefaultBrush;
+				case COLOR_BTNTEXT: return ThemeData::GetSingleton()->hThemeText3Brush;
+				case COLOR_WINDOW: return ThemeData::GetSingleton()->hThemeEditBrush;
 				case COLOR_WINDOWFRAME: return ThemeData::GetSingleton()->hThemeDividerBrush;
 				case COLOR_WINDOWTEXT: return ThemeData::GetSingleton()->hThemeText4Brush;
 				case COLOR_ACTIVEBORDER: return ThemeData::GetSingleton()->hThemeBorderWindowBrush;

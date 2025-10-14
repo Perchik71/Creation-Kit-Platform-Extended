@@ -47,6 +47,7 @@ namespace CKPE
 
 			CKPE_COMMON_API std::uint32_t Comctl32GetSysColor(std::int32_t nIndex) noexcept(true);
 			CKPE_COMMON_API THandle Comctl32GetSysColorBrush(std::int32_t nIndex) noexcept(true);
+			CKPE_COMMON_API THandle Comctl32GetSysColorBrush2(std::int32_t nIndex) noexcept(true);
 			CKPE_COMMON_API THandle Comctl32GetSysColorBrushEx(std::int32_t nIndex, bool reCreate = true) noexcept(true);
 
 			CKPE_COMMON_API bool IsDarkTheme() noexcept(true);

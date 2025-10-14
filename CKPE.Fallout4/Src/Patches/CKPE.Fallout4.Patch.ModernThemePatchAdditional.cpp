@@ -168,6 +168,17 @@ namespace CKPE
 				return ::ImageList_LoadImageA(hi, lpbmp, cx, cGrow, crMask, uType, uFlags);
 			}
 
+			static HWND HkCreateWindowExAForPropGrid(DWORD dwExStyle, LPCSTR lpClassName, LPCSTR lpWindowName,
+				DWORD dwStyle, std::int32_t X, std::int32_t Y, std::int32_t nWidth, std::int32_t nHeight,
+				HWND hWndParent, HMENU hMenu, HINSTANCE hInstance, LPVOID lpParam) noexcept(true)
+			{
+				auto hWnd = CreateWindowExA(dwExStyle, lpClassName, lpWindowName, dwStyle, X, Y, nWidth, nHeight,
+					hWndParent, hMenu, hInstance, lpParam);
+
+				SetClassLong(hWnd, GCLP_HBRBACKGROUND, (LONG)::CreateSolidBrush(RGB(90, 0, 0)));
+				return hWnd;
+			}
+
 			LRESULT ModernThemePatchAdditional::DoCustomDrawListView(HWND hWindow, LPNMLVCUSTOMDRAW lpListView,
 				bool& bReturn) noexcept(true)
 			{

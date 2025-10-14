@@ -377,6 +377,11 @@ namespace CKPE
 				return (HBRUSH)UI::Comctl32GetSysColorBrush(nIndex);
 			}
 
+			static HBRUSH Comctl32GetSysColorBrush2(INT nIndex) noexcept(true)
+			{
+				return (HBRUSH)UI::Comctl32GetSysColorBrush2(nIndex);
+			}
+
 			static HRESULT Comctl32DrawThemeText(HTHEME hTheme, HDC hdc, INT iPartId, INT iStateId,
 				LPCWSTR pszText, INT cchText, DWORD dwTextFlags, DWORD dwTextFlags2, LPCRECT pRect) noexcept(true)
 			{
@@ -1827,6 +1832,11 @@ namespace CKPE
 			if (!comDll)
 				ErrorHandler::Trigger("No found comctl32.dll");
 
+			auto pcurrent = (std::uintptr_t)GetModuleHandleA(nullptr);
+			Detours::DetourIAT(pcurrent, "USER32.dll", "GetSysColor",
+				(std::uintptr_t)&APIHook::Comctl32GetSysColor);
+			Detours::DetourIAT(pcurrent, "USER32.dll", "GetSysColorBrush",
+				(std::uintptr_t)&APIHook::Comctl32GetSysColorBrush2);			// Нужна именно эта функция так как первая вызывает зависание 
 			Detours::DetourIAT(comDll, "USER32.dll", "GetSysColor", 
 				(std::uintptr_t)&APIHook::Comctl32GetSysColor);
 			Detours::DetourIAT(comDll, "USER32.dll", "GetSysColorBrush", 
