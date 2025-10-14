@@ -69,6 +69,8 @@ IDB_BITMAP8             BITMAP                  "..\\Resources\\storymanager.bmp
 
 IDB_BITMAP9             BITMAP                  "..\\Resources\\scripts.bmp"
 
+IDB_BITMAP10            BITMAP                  "..\\Resources\\Bitmap_430_w.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //

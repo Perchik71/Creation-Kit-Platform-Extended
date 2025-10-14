@@ -19,6 +19,7 @@ namespace CKPE
 				Common::UI::CUIBaseControl PushbuttonAddSelection;
 				Common::UI::CUIBaseControl EdittextFilter;
 				Common::UI::CUIBaseControl PushbuttonPlus;
+				Common::UI::CUIBaseControl BodyForData;
 
 				static LRESULT sub(HWND TVHwnd, UINT Message, WPARAM wParam, LPARAM lParam) noexcept(true);
 				static bool MoveWindowBody(HWND hWnd, std::int32_t X, std::int32_t Y, std::int32_t nWidth,
@@ -36,8 +37,6 @@ namespace CKPE
 
 				inline static ISingleton<LayersWindow> Singleton;
 				static INT_PTR CALLBACK HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-				static void DoListViewDraw(HWND hWindow, LPDRAWITEMSTRUCT lpDrawItem,
-					const char* lpstrFileName, const char* lpstrTypeName) noexcept(true);
 
 				virtual bool HasOption() const noexcept(true);
 				virtual const char* GetOptionName() const noexcept(true);

@@ -25,6 +25,7 @@
 #define IDB_PNG5                        124
 #define IDD_DIALOGCONFIG                125
 #define IDB_PNG6                        126
+#define IDB_BITMAP10                    127
 #define IDC_STATIC1                     1001
 #define IDC_EDIT1                       1002
 #define IDC_STATIC_CRASH_CAPTION        1003

@@ -4,11 +4,13 @@
 
 #include <CKPE.Utils.h>
 #include <CKPE.Detours.h>
+#include <CKPE.SafeWrite.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.PathUtils.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.UIVarCommon.h>
+#include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.UITimeOfDay.h>
 #include <CKPE.Common.UIListView.h>
 #include <CKPE.Common.ModernTheme.h>
@@ -65,6 +67,105 @@ namespace CKPE
 				}
 
 				return CDRF_DODEFAULT;
+			}
+
+			static LRESULT HkSendMsgChangeColorTextForLayers(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) noexcept(true)
+			{
+				//TreeView_SetBorder(hWnd, TVSBF_XBORDER | TVSBF_YBORDER, 0, 0);
+				TreeView_SetLineColor(hWnd, Common::UI::Comctl32GetSysColor(COLOR_WINDOWFRAME));
+				TreeView_SetBkColor(hWnd, Common::UI::Comctl32GetSysColor(COLOR_WINDOW));
+				return TreeView_SetTextColor(hWnd, Common::UI::Comctl32GetSysColor(COLOR_WINDOWTEXT));
+			}
+
+			static COLORREF HkSetTextColorForLayers(HDC hDC, COLORREF c) noexcept(true)
+			{
+				return SetTextColor(hDC, Common::UI::Comctl32GetSysColor(COLOR_WINDOWTEXT));
+			}
+
+			static BOOL WINAPI HkDrawEdgeForLayers(HDC hdc, LPRECT qrc, UINT edge, UINT grfFlags) noexcept(true)
+			{
+				if (!qrc || !hdc)
+					return FALSE;
+
+				Canvas canvas = hdc;
+
+				if ((grfFlags & BF_MIDDLE) == BF_MIDDLE)
+					canvas.Fill((CRECT)*qrc, Common::UI::GetThemeSysColor(Common::UI::ThemeColor_TreeView_Color));
+
+				canvas.Pen.Color = Common::UI::GetThemeSysColor(Common::UI::ThemeColor_Default);
+
+				if ((grfFlags & BF_LEFT) == BF_LEFT)
+				{
+					canvas.MoveTo(qrc->left, qrc->top);
+					canvas.LineTo(qrc->left, qrc->bottom - 1);
+
+					if ((grfFlags & BF_ADJUST) == BF_ADJUST)
+						qrc->left++;
+				}
+
+				if ((grfFlags & BF_TOP) == BF_TOP)
+				{
+					canvas.MoveTo(qrc->left, qrc->top);
+					canvas.LineTo(qrc->right, qrc->top);
+
+					if ((grfFlags & BF_ADJUST) == BF_ADJUST)
+						qrc->top++;
+				}
+
+				if ((grfFlags & BF_RIGHT) == BF_RIGHT)
+				{
+					canvas.MoveTo(qrc->right, qrc->top);
+					canvas.LineTo(qrc->right, qrc->bottom - 1);
+
+					if ((grfFlags & BF_ADJUST) == BF_ADJUST)
+						qrc->right--;
+				}
+
+				if ((grfFlags & BF_BOTTOM) == BF_BOTTOM)
+				{
+					canvas.MoveTo(qrc->left, qrc->bottom - 1);
+					canvas.LineTo(qrc->right, qrc->bottom - 1);
+
+					if ((grfFlags & BF_ADJUST) == BF_ADJUST)
+						qrc->bottom--;
+				}
+
+				if ((grfFlags & BF_DIAGONAL_ENDBOTTOMLEFT) == BF_DIAGONAL_ENDBOTTOMLEFT)
+				{
+					canvas.MoveTo(qrc->right, qrc->top);
+					canvas.LineTo(qrc->left, qrc->bottom - 1);
+				}
+
+				if ((grfFlags & BF_DIAGONAL_ENDBOTTOMRIGHT) == BF_DIAGONAL_ENDBOTTOMRIGHT)
+				{
+					canvas.MoveTo(qrc->left, qrc->top);
+					canvas.LineTo(qrc->right, qrc->bottom - 1);
+				}
+
+				if ((grfFlags & BF_DIAGONAL_ENDTOPLEFT) == BF_DIAGONAL_ENDTOPLEFT)
+				{
+					canvas.MoveTo(qrc->right, qrc->bottom - 1);
+					canvas.LineTo(qrc->left, qrc->top);
+				}
+
+				if ((grfFlags & BF_DIAGONAL_ENDTOPRIGHT) == BF_DIAGONAL_ENDTOPRIGHT)
+				{
+					canvas.MoveTo(qrc->left, qrc->bottom - 1);
+					canvas.LineTo(qrc->right, qrc->top);
+				}
+
+				return TRUE;
+			}
+
+			static HIMAGELIST HkImageListForLayers_LoadImageA(HINSTANCE hi, LPCSTR lpbmp, INT cx, INT cGrow,
+				COLORREF crMask, UINT uType, UINT uFlags) noexcept(true)
+			{
+				if ((ULONG_PTR)lpbmp == 430) 
+					return ::ImageList_LoadImageA((HINSTANCE)Common::Interface::GetSingleton()->GetInstanceDLL(),
+						MAKEINTRESOURCEA(IDB_BITMAP10), 16, 0, RGB(63, 63, 63), IMAGE_BITMAP,
+						LR_CREATEDIBSECTION | LR_LOADTRANSPARENT);
+
+				return ::ImageList_LoadImageA(hi, lpbmp, cx, cGrow, crMask, uType, uFlags);
 			}
 
 			LRESULT ModernThemePatchAdditional::DoCustomDrawListView(HWND hWindow, LPNMLVCUSTOMDRAW lpListView,
@@ -154,6 +255,46 @@ namespace CKPE
 				}
 
 				Common::UI::ListView::InstallCustomDrawHandler(&DoCustomDrawListView);
+
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+				{
+					// Layers Window
+					Detours::DetourCall(__CKPE_OFFSET(11), (std::uintptr_t)&HkSendMsgChangeColorTextForLayers);
+					// Rechange color text
+					auto rva = __CKPE_OFFSET(12);
+					Detours::DetourCall(rva, (std::uintptr_t)&HkSetTextColorForLayers);
+					Detours::DetourCall(rva + 0x212, (std::uintptr_t)&HkSetTextColorForLayers);
+					Detours::DetourCall(rva + 0x471, (std::uintptr_t)&HkSetTextColorForLayers);
+					Detours::DetourCall(rva + 0x48B, (std::uintptr_t)&HkSetTextColorForLayers);
+					Detours::DetourCall(rva + 0x547, (std::uintptr_t)&HkSetTextColorForLayers);
+					// Skip edge draw
+					rva = __CKPE_OFFSET(13);
+					Detours::DetourCall(rva, (std::uintptr_t)&HkDrawEdgeForLayers);
+					Detours::DetourCall(rva + 0x2C, (std::uintptr_t)&HkDrawEdgeForLayers);
+					Detours::DetourCall(rva + 0x46C, (std::uintptr_t)&HkDrawEdgeForLayers);
+					// Icons
+					Detours::DetourCall(__CKPE_OFFSET(14), (std::uintptr_t)&HkImageListForLayers_LoadImageA);
+				}
+				else if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_982_3)
+				{
+					// Layers Window
+					Detours::DetourCall(__CKPE_OFFSET(11), (std::uintptr_t)&HkSendMsgChangeColorTextForLayers);
+					// Rechange color text
+					auto rva = __CKPE_OFFSET(12);
+					Detours::DetourCall(rva, (std::uintptr_t)&HkSetTextColorForLayers);
+					Detours::DetourCall(rva + 0x214, (std::uintptr_t)&HkSetTextColorForLayers);
+					Detours::DetourCall(rva + 0x457, (std::uintptr_t)&HkSetTextColorForLayers);
+					Detours::DetourCall(rva + 0x471, (std::uintptr_t)&HkSetTextColorForLayers);
+					Detours::DetourCall(rva + 0x530, (std::uintptr_t)&HkSetTextColorForLayers);
+					// Skip edge draw
+					rva = __CKPE_OFFSET(13);
+					Detours::DetourCall(rva, (std::uintptr_t)&HkDrawEdgeForLayers);
+					Detours::DetourCall(rva + 0x2C, (std::uintptr_t)&HkDrawEdgeForLayers);
+					Detours::DetourCall(rva + 0x459, (std::uintptr_t)&HkDrawEdgeForLayers);
+					// Icons
+					Detours::DetourCall(__CKPE_OFFSET(14), (std::uintptr_t)&HkImageListForLayers_LoadImageA);
+					Detours::DetourCall(__CKPE_OFFSET(15), (std::uintptr_t)&HkImageListForLayers_LoadImageA);
+				}
 
 				return true;
 			}

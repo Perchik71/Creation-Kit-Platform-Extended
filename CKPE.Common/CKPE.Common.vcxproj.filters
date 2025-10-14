@@ -414,6 +414,9 @@
     <Image Include="..\Resources\ckpe.ico">
       <Filter>Resources</Filter>
     </Image>
+    <Image Include="..\Resources\Bitmap_430_w.bmp">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="build_version.txt">
