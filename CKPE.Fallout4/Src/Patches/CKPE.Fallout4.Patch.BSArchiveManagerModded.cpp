@@ -156,6 +156,14 @@ namespace CKPE
 				if (verPatch == 1)
 					// Первая версия патча для 1.10.162.0
 					SafeWrite::Write(__CKPE_OFFSET(7), &supportedBA2Version, 1);
+	
+				if (verPatch == 2)
+				{
+					// Удаление повторной загрузки архивов
+					SafeWrite::Write(__CKPE_OFFSET(11), { 0xEB });
+					// Удаление загрузки бреда, который не является активным файлом
+					SafeWrite::Write(__CKPE_OFFSET(12), { 0xEB });
+				}
 
 				return true;
 			}
