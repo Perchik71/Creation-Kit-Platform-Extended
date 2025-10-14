@@ -163,6 +163,8 @@ namespace CKPE
 					SafeWrite::Write(__CKPE_OFFSET(11), { 0xEB });
 					// Удаление загрузки бреда, который не является активным файлом
 					SafeWrite::Write(__CKPE_OFFSET(12), { 0xEB });
+					// Удаление проверки, что приводит пропуску загрузки архивов
+					SafeWrite::WriteNop(__CKPE_OFFSET(13), 6);
 				}
 
 				return true;
