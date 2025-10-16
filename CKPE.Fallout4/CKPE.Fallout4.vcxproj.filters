@@ -266,6 +266,9 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.LayersWindow.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ResponseWindow.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -769,6 +772,9 @@
       <Filter>EditorAPI</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.LayersWindow.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ResponseWindow.h">
       <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>

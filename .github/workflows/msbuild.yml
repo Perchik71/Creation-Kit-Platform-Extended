@@ -127,6 +127,10 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: Copy-Item -Path .\Stuffs\FO4\Data -Destination "ckpe-fo4-master-${{env.SHORT_SHA}}" -Recurse -Force
       
+    - name: Copy FO4 Tools
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path .\Stuffs\Tools -Destination "ckpe-fo4-master-${{env.SHORT_SHA}}" -Recurse -Force
+      
     - name: Copy Custom Theme Stuff
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: Get-ChildItem -Path .\Stuffs\CustomTheme -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-${{env.SHORT_SHA}}" $_.Name) -Force }

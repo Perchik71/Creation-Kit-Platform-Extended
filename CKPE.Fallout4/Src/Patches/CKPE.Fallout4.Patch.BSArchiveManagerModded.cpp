@@ -147,7 +147,7 @@ namespace CKPE
 				// Пропуск загрузки архивов, что не имеют отношения к загружаемому моду, но является предыдущей работой
 				SafeWrite::Write(__CKPE_OFFSET(5), { 0xC3 });
 
-				// Исключение из списков архив шейдеров
+				// Исключение из списков архив шейдеров (закоменчено, нельзя этого делать)
 				//SafeWrite::WriteStringRef(__CKPE_OFFSET(8), szArchiveList);
 				//SafeWrite::WriteStringRef(__CKPE_OFFSET(9), szArchiveList2);
 

@@ -183,11 +183,10 @@ namespace CKPE
 								auto& local = const_cast<EditorAPI::NiAPI::NiTransform&>(
 									EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform());
 
-								local.m_Translate.x += local.m_Rotate.m_pEntry[0][1] * delta;
+								local.m_Translate.x += local.m_Rotate.m_pEntry[1][0] * delta;
 								local.m_Translate.y += local.m_Rotate.m_pEntry[1][1] * delta;
-								local.m_Translate.z += local.m_Rotate.m_pEntry[2][1] * delta;
+								local.m_Translate.z += local.m_Rotate.m_pEntry[1][2] * delta;
 								return 0;
-								break;
 							}
 							case 'S':
 							{
@@ -195,10 +194,10 @@ namespace CKPE
 								auto& local = const_cast<EditorAPI::NiAPI::NiTransform&>(
 									EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform());
 
-								local.m_Translate.x += local.m_Rotate.m_pEntry[0][1] * delta;
+								local.m_Translate.x += local.m_Rotate.m_pEntry[1][0] * delta;
 								local.m_Translate.y += local.m_Rotate.m_pEntry[1][1] * delta;
-								local.m_Translate.z += local.m_Rotate.m_pEntry[2][1] * delta;
-								break;
+								local.m_Translate.z += local.m_Rotate.m_pEntry[1][2] * delta;
+								return 0;
 							}
 							case 'A':
 							{
@@ -207,11 +206,9 @@ namespace CKPE
 									EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform());
 
 								local.m_Translate.x += local.m_Rotate.m_pEntry[0][0] * delta;
-								local.m_Translate.y += local.m_Rotate.m_pEntry[1][0] * delta;
-								local.m_Translate.z += local.m_Rotate.m_pEntry[2][0] * delta;
+								local.m_Translate.y += local.m_Rotate.m_pEntry[0][1] * delta;
+								local.m_Translate.z += local.m_Rotate.m_pEntry[0][2] * delta;
 								return 0;
-								break;
-								break;
 							}
 							case 'D':
 							{
@@ -220,10 +217,9 @@ namespace CKPE
 									EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform());
 
 								local.m_Translate.x += local.m_Rotate.m_pEntry[0][0] * delta;
-								local.m_Translate.y += local.m_Rotate.m_pEntry[1][0] * delta;
-								local.m_Translate.z += local.m_Rotate.m_pEntry[2][0] * delta;
-								break;
-								break;
+								local.m_Translate.y += local.m_Rotate.m_pEntry[0][1] * delta;
+								local.m_Translate.z += local.m_Rotate.m_pEntry[0][2] * delta;
+								return 0;
 							}
 							default:
 								break;
@@ -318,70 +314,154 @@ namespace CKPE
 					// io.MousePos always { -1, -1 }, let's fix it
 					auto p = Root->GetMousePos();
 					io.MousePos = { (float)p.x, (float)p.y };
-				}
 
-				// DRAW
+					// DRAW
 
-				ImGui::SetNextWindowPos({ 5.0f, 5.0f });
-				ImGui::Begin("#Default Info Overlay", nullptr, ImGuiWindowFlags_NoSavedSettings |
-					ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize);
+					ImGui::SetNextWindowPos({ 5.0f, 5.0f });
+					ImGui::Begin("#Default Info Overlay", nullptr, ImGuiWindowFlags_NoSavedSettings |
+						ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize);
 
-				if (ImGui::BeginTable("##Info Overlay Data", 2))
-				{
-					ImGui::PushFont(imguiFonts[1]);
-					ImGui::TableSetupColumn("First", ImGuiTableColumnFlags_WidthStretch, 130);
-					ImGui::TableSetupColumn("Second", ImGuiTableColumnFlags_WidthFixed | ImGuiTableColumnFlags_NoResize);
-
-					ImGui::TableNextRow();
-					ImGui::TableNextColumn();
-					ImGui::Text("FPS:");
-
-					ImGui::TableNextColumn();
-					ImGui::Text("%.0f", io.Framerate);
-
-					auto ActiveCell = EditorAPI::BGSRenderWindow::Singleton->GetCurrentCell();
-					if (ActiveCell)
+					if (ImGui::BeginTable("##Info Overlay Data", 2))
 					{
-						ImGui::Dummy(ImVec2(1, 10));
+						ImGui::PushFont(imguiFonts[1]);
+						ImGui::TableSetupColumn("First", ImGuiTableColumnFlags_WidthStretch, 130);
+						ImGui::TableSetupColumn("Second", ImGuiTableColumnFlags_WidthFixed | ImGuiTableColumnFlags_NoResize);
 
 						ImGui::TableNextRow();
 						ImGui::TableNextColumn();
-						ImGui::Text("Current Cell: ");
-
+						ImGui::Text("FPS/DC/Polys:");
 						ImGui::TableNextColumn();
-
-						auto Name = ActiveCell->GetEditorID_orig();
-						if (!Name) Name = "";
-
-						if (ActiveCell->HasInterior())
-							ImGui::Text("%s (%08X)", StringUtils::WinCPToUtf8(Name).c_str(), ActiveCell->FormID);
+						ImGui::Text("%u / ", EditorAPI::BGSRenderWindow::DrawInfo::FramePerSecond);
+						ImGui::SameLine(0.0f, 0.0f);
+						if (EditorAPI::BGSRenderWindow::DrawInfo::DrawCalls < 8000)
+							ImGui::TextColored(gImGuiGreenColor, "%u", EditorAPI::BGSRenderWindow::DrawInfo::DrawCalls);
+						else if (EditorAPI::BGSRenderWindow::DrawInfo::DrawCalls < 12000)
+							ImGui::TextColored(gImGuiOrangeColor, "%u", EditorAPI::BGSRenderWindow::DrawInfo::DrawCalls);
 						else
-							ImGui::Text("%s (%i, %i) (%08X)", StringUtils::WinCPToUtf8(Name).c_str(),
-								ActiveCell->GridX, ActiveCell->GridY, ActiveCell->FormID);
+							ImGui::TextColored(gImGuiRedColor, "%u", EditorAPI::BGSRenderWindow::DrawInfo::DrawCalls);
+						ImGui::SameLine(0.0f, 0.0f);
+						ImGui::Text(" / %u", EditorAPI::BGSRenderWindow::DrawInfo::Polys);
 
-						/*auto& ii = EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform();
+						auto ActiveCell = Root->GetCurrentCell();
+						if (ActiveCell)
+						{
+							ImGui::Dummy(ImVec2(1, 10));
 
-						ImGui::TableNextRow();
-						ImGui::TableNextColumn();
-						ImGui::Text("Camera:");
-						ImGui::TableNextColumn();
-						ImGui::Text("p(%.3f, %.3f, %.3f)", ii.m_Translate.x, ii.m_Translate.y, ii.m_Translate.z);
-						ImGui::TableNextRow();
-						ImGui::TableNextColumn();
-						ImGui::TableNextColumn();
-						ImGui::Text("r(%.3f, %.3f, %.3f)", Math::Rad2Deg(ii.m_Rotate.m_pEntry[1][0]),
-							Math::Rad2Deg(ii.m_Rotate.m_pEntry[1][1]), Math::Rad2Deg(ii.m_Rotate.m_pEntry[1][2]));*/
+							ImGui::TableNextRow();
+							ImGui::TableNextColumn();
+							ImGui::Text("Current Cell: ");
 
-						ImGui::TableNextRow();
-						ImGui::TableNextColumn();
-						ImGui::TableNextColumn();
-						ImGui::PushFont(imguiFonts[2]);
-						ImGui::TextColored({ 0.4, 0.4, 0.4, 1.0 }, "(Show/Hide press key F1)");
+							ImGui::TableNextColumn();
+							ImGui::TextDisabled("[?]");
+
+							// ImGui::IsItemHovered() -- no worked
+
+							auto ip = ImGui::GetCursorScreenPos();
+							auto is = ImGui::GetItemRectSize();
+					
+							std::uint32_t uCountNPCs, uCountLight, uCountObject, uCountSelNPCs = 0,
+								uCountSelLight = 0, uCountSelObject = 0;
+
+							// It looks like the coordinates of the origin are the lower left corner (so ip.y - is.y - 2)
+							if ((ip.x <= p.x) && ((ip.y - is.y - 2) <= p.y) && ((ip.x + is.x) > p.x) && (ip.y > p.y))
+							{
+								auto Counter = [](EditorAPI::Forms::TESObjectREFR** refrs, std::uint32_t count,
+									std::uint32_t& npcs, std::uint32_t& lights, std::uint32_t& objs)
+									{
+										std::uint32_t uId = 0;
+										npcs = 0;
+										lights = 0;
+										objs = 0;
+
+										for (uId = 0; uId < count; uId++)
+										{
+											auto form = refrs[uId];
+											auto formType = form->Parent->GetFormType();
+
+											if (!form->IsDeleted()) {
+												switch (formType) {
+												case EditorAPI::Forms::TESForm::ftActor:
+													npcs++;
+													break;
+												case EditorAPI::Forms::TESForm::ftLight:
+													lights++;
+													break;
+												default:
+													objs++;
+													break;
+												}
+											}
+										}
+									};
+
+								Counter(ActiveCell->GetItems(), ActiveCell->GetItemCount(), uCountNPCs, uCountLight, uCountObject);
+
+								auto TotalSel = Root->PickHandler->Count;
+								if (TotalSel > 0)
+								{
+									std::uint32_t i = 0;
+									auto Items = Root->PickHandler->Items;
+									for (auto It = Items->First; i < TotalSel; It = It->Next, i++)
+									{
+										auto form = It->Ref;
+										if (form->IsDeleted()) continue;
+										switch (form->GetParent()->GetFormType())
+										{
+										case EditorAPI::Forms::TESForm::ftActor:
+											uCountSelNPCs++;
+											break;
+										case EditorAPI::Forms::TESForm::ftLight:
+											uCountSelLight++;
+											break;
+										default:
+											uCountSelObject++;
+											break;
+										}
+									}
+
+									ImGui::SetTooltip("Geometry:\n\tObjects: %d\n\tLights: %d\n\tNPCs: %d\nSelected:"
+										"\n\tObjects: %d\n\tLights: %d\n\tNPCs: %d", uCountObject, uCountLight,
+										uCountNPCs, uCountSelObject, uCountSelLight, uCountSelNPCs);
+								}
+								else
+									ImGui::SetTooltip("Geometry:\n\tObjects: %u\n\tLights: %u\n\tNPCs: %u",
+										uCountObject, uCountLight, uCountNPCs);
+							}
+
+
+							auto Name = ActiveCell->GetEditorID_orig();
+							if (!Name) Name = "";
+
+							ImGui::SameLine(0, 5);
+							if (ActiveCell->HasInterior())
+								ImGui::Text("%s (%08X)", StringUtils::WinCPToUtf8(Name).c_str(), ActiveCell->FormID);
+							else
+								ImGui::Text("%s (%i, %i) (%08X)", StringUtils::WinCPToUtf8(Name).c_str(),
+									ActiveCell->GridX, ActiveCell->GridY, ActiveCell->FormID);
+
+							auto& ii = Root->Camera->Node->GetLocalTransform();
+
+							ImGui::TableNextRow();
+							ImGui::TableNextColumn();
+							ImGui::Text("Camera:");
+							ImGui::TableNextColumn();
+							ImGui::Text("p(%.3f, %.3f, %.3f)", ii.m_Translate.x, ii.m_Translate.y, ii.m_Translate.z);
+							ImGui::TableNextRow();
+							ImGui::TableNextColumn();
+							ImGui::TableNextColumn();
+							ImGui::Text("r(%.3f, %.3f, %.3f)", Math::Rad2Deg(ii.m_Rotate.m_pEntry[1][0]),
+								Math::Rad2Deg(ii.m_Rotate.m_pEntry[1][1]), Math::Rad2Deg(ii.m_Rotate.m_pEntry[1][2]));
+							ImGui::TableNextRow();
+							ImGui::TableNextColumn();
+							ImGui::TableNextColumn();
+							ImGui::PushFont(imguiFonts[2]);
+							ImGui::TextColored(gImGuiGreyColor, "(Show/Hide press key F1)");
+							ImGui::PopFont();
+						}
+
 						ImGui::PopFont();
+						ImGui::EndTable();
 					}
-
-					ImGui::PopFont();
-					ImGui::EndTable();
 				}
 
 				ImGui::End();

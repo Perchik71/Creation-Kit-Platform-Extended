@@ -1,19 +1,12 @@
 #
 # CREATION KIT PLATFORM EXTENDED SETTINGS
 #
-# LIPGEN NOTICE: In order to enable LIP generation in the 64-bit CK, you must copy FaceFXWrapper.exe, ffmpeg.exe, fuz_extractor.exe, xWMAEncode.exe, and FonixData.cdf
-# to '<FALLOUT4_DIR>\Tools\LipGen\'.
-# Download FaceFXWrapper.exe from https://www.nexusmods.com/skyrimspecialedition/mods/20061?tab=files.
-# Download FonixData.cdf from https://www.nexusmods.com/newvegas/mods/61248/?tab=files or copy from '<FALLOUT4_DIR>\Data\Sound\Voice\Processing\'.
-# Download ffmpeg.exe, fuz_extractor.exe, xWMAEncode.exe from https://github.com/Perchik71/Creation-Kit-Platform-Extended/releases/download/build_734_ver_2/LipGen.zip
-#
 # NOTICE: Experimental options may speed up things. They might do nothing. They might crash the editor.
 #
 [CreationKit]
 bUIHotkeys=false						# [Experimental] Allow rebinding certain window hotkeys. See [Hotkeys] section.
 bVersionControlMergeWorkaround=false	# [Experimental] Workaround for version control not allowing merges with more than 2 masters present. Do NOT use this for anything else.
 bBSPointerHandleExtremly=false			# [Experimental] Increase the maximum number of refs to 67.108.864 (for NG2 8.388.608). Use it at your own risk.
-bFakeMovingLight=false					# [Experimental] Solves the problem of moving the light source with the light box. Use it only when working with light. Has problems with Local Grid, Material Swap.
 
 bINICache=true							# Abandoning outdated "profile" functions, using the cache, for fast reading and saving options.
 bGenerateCrashdumps=true				# Generate a dump in the game folder when the CK crashes.
@@ -73,11 +66,23 @@ fTAAJitter=0.125						# Fake frame offset, creating effect of frame movement, us
 fStepInRender=30.0						# Number of units when moving in the rendering window as in Starfield (value must be [15.0 : 100.0]).
 
 [FaceGen]
-bAutoCompressionDDS=true				# Texture compression during generation
-bDisableExportDDS=false					# Prevent tint export as DDS
-bDisableExportTGA=true					# Prevent tint export as TGA
-bDisableExportNIF=false					# Prevent facegen geometry export
-uTintMaskResolution=2048				# Sets NxN resolution when exporting textures
+bAutoCompressionDDS=true				# Texture compression during generation.
+bDisableExportDDS=false					# Prevent tint export as DDS.
+bDisableExportTGA=true					# Prevent tint export as TGA.
+bDisableExportNIF=false					# Prevent facegen geometry export.
+uTintMaskResolution=2048				# Sets NxN resolution when exporting textures.
+
+[LipGen]
+# Supported languages:
+# USEnglish
+# French
+# German
+# Spanish
+# Italian
+# Korean
+# Japanese
+sLanguage='USEnglish'					# Specifies the language.
+fGestureExaggeration=1.0				# Specifies the gesture exaggeration.
 
 [Log]
 bShowWindow=true						# Initial log window show or hide.

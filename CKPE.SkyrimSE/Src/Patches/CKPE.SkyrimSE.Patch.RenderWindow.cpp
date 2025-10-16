@@ -166,7 +166,6 @@ namespace CKPE
 								local.m_Translate.y += local.m_Rotate.m_pEntry[1][1] * delta;
 								local.m_Translate.z += local.m_Rotate.m_pEntry[2][1] * delta;
 								return 0;
-								break;
 							}
 							case 'S':
 							{
@@ -177,7 +176,7 @@ namespace CKPE
 								local.m_Translate.x += local.m_Rotate.m_pEntry[0][1] * delta;
 								local.m_Translate.y += local.m_Rotate.m_pEntry[1][1] * delta;
 								local.m_Translate.z += local.m_Rotate.m_pEntry[2][1] * delta;
-								break;
+								return 0;
 							}
 							case 'A':
 							{
@@ -189,8 +188,6 @@ namespace CKPE
 								local.m_Translate.y += local.m_Rotate.m_pEntry[1][0] * delta;
 								local.m_Translate.z += local.m_Rotate.m_pEntry[2][0] * delta;
 								return 0;
-								break;
-								break;
 							}
 							case 'D':
 							{
@@ -201,8 +198,7 @@ namespace CKPE
 								local.m_Translate.x += local.m_Rotate.m_pEntry[0][0] * delta;
 								local.m_Translate.y += local.m_Rotate.m_pEntry[1][0] * delta;
 								local.m_Translate.z += local.m_Rotate.m_pEntry[2][0] * delta;
-								break;
-								break;
+								return 0;
 							}
 							default:
 								break;

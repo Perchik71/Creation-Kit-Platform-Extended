@@ -66,6 +66,7 @@
 #include <Patches/CKPE.Fallout4.Patch.RenderWindow60FPS.h>
 #include <Patches/CKPE.Fallout4.Patch.ReplaceBSPointerHandleAndManager.h>
 #include <Patches/CKPE.Fallout4.Patch.ResponseIgnoreMax.h>
+#include <Patches/CKPE.Fallout4.Patch.ResponseWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.RunNetworkDisable.h>
 #include <Patches/CKPE.Fallout4.Patch.SkipTopicInfoValidation.h>
 #include <Patches/CKPE.Fallout4.Patch.SkipUpdateCheck.h>
@@ -143,6 +144,7 @@ namespace CKPE
 			mgr->Register(new Patch::RenderWindow60FPS);
 			mgr->Register(new Patch::ReplaceBSPointerHandleAndManager);
 			mgr->Register(new Patch::ResponseIgnoreMax);
+			mgr->Register(new Patch::ResponseWindow);
 			mgr->Register(new Patch::RunNetworkDisable);
 			mgr->Register(new Patch::SkipTopicInfoValidation);
 			mgr->Register(new Patch::SkipUpdateCheck);
