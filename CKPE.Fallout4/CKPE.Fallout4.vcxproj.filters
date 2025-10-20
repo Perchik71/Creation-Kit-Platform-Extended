@@ -269,6 +269,21 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ResponseWindow.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixQuoteCmdLine.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixSky.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.WrongUpdateActorWnd.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.UIDeffer.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FakeMoveLight.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -294,6 +309,9 @@
     </Filter>
     <Filter Include="EditorAPI\Forms">
       <UniqueIdentifier>{284bc3dd-4390-4324-97f9-8467d3347ebc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Version">
+      <UniqueIdentifier>{86ffceb3-f415-48be-a3e1-6bcf5f0a66d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -777,11 +795,28 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ResponseWindow.h">
       <Filter>Patches</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixQuoteCmdLine.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixSky.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.WrongUpdateActorWnd.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.UIDeffer.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FakeMoveLight.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="resource_version.rc" />
     <ResourceCompile Include="resource.rc">
       <Filter>Resources</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="resource_version.rc">
+      <Filter>Version</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
@@ -794,5 +829,10 @@
     <FxCompile Include="..\Shaders\FXAA_PS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="build_version.txt">
+      <Filter>Version</Filter>
+    </Text>
   </ItemGroup>
 </Project>

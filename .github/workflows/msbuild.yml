@@ -171,10 +171,6 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: Get-ChildItem -Path .\Stuffs\SF -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sf-master-${{env.SHORT_SHA}}" $_.Name) -Force }
       
-    - name: Copy Custom Theme Stuff
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: Get-ChildItem -Path .\Stuffs\CustomTheme -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sf-master-${{env.SHORT_SHA}}" $_.Name) -Force }
-      
     - name: Copy SF Vortex Stuff
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: Get-ChildItem -Path .\Stuffs\Vortex -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sf-master-${{env.SHORT_SHA}}" $_.Name) -Force }
@@ -278,7 +274,15 @@ jobs:
 
     - name: Copy FO4 Stuff
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: Get-ChildItem -Path .\Stuffs\FO4 -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}" $_.Name) -Force }
+      run: Copy-Item -Path .\Stuffs\FO4\*.* -Destination "ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}" -Recurse -Force
+      
+    - name: Copy FO4 Stuff 2
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path .\Stuffs\FO4\Data -Destination "ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}" -Recurse -Force
+      
+    - name: Copy FO4 Tools
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path .\Stuffs\Tools -Destination "ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}" -Recurse -Force
       
     - name: Copy Custom Theme Stuff
       working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -319,10 +323,6 @@ jobs:
     - name: Copy SF Stuff
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: Get-ChildItem -Path .\Stuffs\SF -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sf-master-noavx2-${{env.SHORT_SHA}}" $_.Name) -Force }
-      
-    - name: Copy Custom Theme Stuff
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: Get-ChildItem -Path .\Stuffs\CustomTheme -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sf-master-noavx2-${{env.SHORT_SHA}}" $_.Name) -Force }
       
     - name: Copy SF Vortex Stuff
       working-directory: ${{env.GITHUB_WORKSPACE}}

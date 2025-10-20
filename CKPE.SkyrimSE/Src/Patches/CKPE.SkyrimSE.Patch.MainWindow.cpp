@@ -268,6 +268,9 @@ namespace CKPE
 
 						// How annoying is this window Warnings, delete from the menu.
 						ViewMenu.Remove(0xA043);
+						// Deprecated
+						ViewMenu.Remove(0x122);		// Leaves
+						ViewMenu.Remove(0x9C60);	// Isometric
 
 						// Fix show/hide object window
 						auto MenuItem = ViewMenu.GetItemByPos(2);
@@ -275,9 +278,6 @@ namespace CKPE
 
 						// Fix display text hotkey toggle sound marker
 						ViewMenu.GetItem(40677).SetText("Sound Marker\tCtrl-N");
-						// Deprecated
-						ViewMenu.GetItem(290).Enabled = FALSE;
-						ViewMenu.GetItem(40032).Enabled = FALSE;
 
 						return status;
 					}

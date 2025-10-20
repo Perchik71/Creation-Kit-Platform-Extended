@@ -616,7 +616,8 @@ begin
   if not Assigned(FTOMLStrDataCustomTheme) then
     raise Exception.Create('Out of memory');
   try
-    FTOMLStrDataCustomTheme.LoadFromFile(CKPE_C_FILENAME_CUSTOMTHEME_CONFIG);
+    if FileExists(CKPE_C_FILENAME_CUSTOMTHEME_CONFIG) then
+       FTOMLStrDataCustomTheme.LoadFromFile(CKPE_C_FILENAME_CUSTOMTHEME_CONFIG);
   finally
   end;
   // Clear TabSheets
@@ -1160,8 +1161,8 @@ begin
 
     if not FileExists(CKPE_C_FILENAME_CONFIG) then
       raise Exception.CreateFmt('File "%s" no found', [CKPE_C_FILENAME_CONFIG]);
-    if not FileExists(CKPE_C_FILENAME_CUSTOMTHEME_CONFIG) then
-      raise Exception.CreateFmt('File "%s" no found', [CKPE_C_FILENAME_CUSTOMTHEME_CONFIG]);
+    //if not FileExists(CKPE_C_FILENAME_CUSTOMTHEME_CONFIG) then
+    //  raise Exception.CreateFmt('File "%s" no found', [CKPE_C_FILENAME_CUSTOMTHEME_CONFIG]);
 
     try
       FNoHi := False;
@@ -1561,7 +1562,7 @@ begin
   STemp := Strs[Range._Line];
   System.Delete(STemp, Range._Beg, Range._End - Range._Beg);
   SVal := StringReplace(FloatToStr(_This.Value), ',', '.', []);
-  if (Pos('.', SVal) = 0) SVal := SVal + '.0';
+  if Pos('.', SVal) = 0 then SVal := SVal + '.0';
   System.Insert(SVal, STemp, Range._Beg);
   Strs[Range._Line] := STemp;
 end;
@@ -1625,9 +1626,9 @@ end;
 procedure TFormMainInstaller.PanelApplyBtnClick(Sender: TObject);
 begin
   try
-    if Assigned(FTOMLStrData) then
+    if Assigned(FTOMLStrData) and (FTOMLStrData.Count > 0) then
       FTOMLStrData.SaveToFile(CKPE_C_FILENAME_CONFIG);
-    if Assigned(FTOMLStrDataCustomTheme) then
+    if Assigned(FTOMLStrDataCustomTheme) and (FTOMLStrDataCustomTheme.Count > 0) then
       FTOMLStrDataCustomTheme.SaveToFile(CKPE_C_FILENAME_CUSTOMTHEME_CONFIG);
   finally
     Close;

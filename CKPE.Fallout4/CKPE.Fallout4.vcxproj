@@ -165,6 +165,7 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.EncounterZone.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ESLTip.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.Facegen.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FakeMoveLight.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixBadPictureInRender.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixBNet.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixCrashMapMarkerCmd.cpp" />
@@ -175,7 +176,9 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixLandspaceVNML.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixLoadD3DCompiler.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixPluginTXT.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixQuoteCmdLine.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixRecursiveSorting.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixSky.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixSmoothValue.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixSortPropObjectMod.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixSSAOInIntCell.cpp" />
@@ -210,9 +213,11 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.TESDataHandlerHook.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.TESFormHook.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.TESHook.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.UIDeffer.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.UIHotkeys.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.Unicode.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.VersionControlMergeWorkaround.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.WrongUpdateActorWnd.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Dependencies\DirectXTex\include\ScreenGrab11.h" />
@@ -326,6 +331,7 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.EncounterZone.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ESLTip.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.Facegen.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FakeMoveLight.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixBadPictureInRender.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixBNet.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixCrashMapMarkerCmd.h" />
@@ -336,7 +342,9 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixLandspaceVNML.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixLoadD3DCompiler.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixPluginTXT.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixQuoteCmdLine.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixRecursiveSorting.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixSky.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixSmoothValue.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixSortPropObjectMod.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixSSAOInIntCell.h" />
@@ -371,9 +379,11 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.TESDataHandlerHook.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.TESFormHook.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.TESHook.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.UIDeffer.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.UIHotkeys.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.Unicode.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.VersionControlMergeWorkaround.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.WrongUpdateActorWnd.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -399,6 +409,9 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="build_version.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,7 +6,7 @@
 
 [CreationKit]
 bUIHotkeys=true							# [Experimental] Allow rebinding certain window hotkeys. See [Hotkeys] section.
-bBSPointerHandleExtremly=false			# [Experimental] Increase the maximum number of refs to 8.388.608. This option reduces the allowed number of duplicates of one ref to 255. Use it at your own risk.
+bBSPointerHandleExtremly=false			# [Experimental] Increase the maximum number of refs to 8.388.608. This option reduces the allowed number of internal duplicates of one ref to 255, for synchronization between threads. Use it at your own risk.
 bVersionControlMergeWorkaround=false	# [Experimental] Workaround for version control not allowing merges with more than 2 masters present. Do NOT use this for anything else.
 bRefLinkGeometryHangWorkaround=false	# [Experimental] Workaround for bookshelves or 'Select Enable State Parent' causing the CK to hang. Ref link lines will no longer be visible.
 bEnableStateParentWorkaround=false		# [Experimental] Workaround for 'Select Enable State Parent' selecting objects outside of the current cell or worldspace.

@@ -142,7 +142,7 @@ namespace CKPE
 					EnableWindow(GetDlgItem(Hwnd, 1017), FALSE);
 					
 					/*
-					In the generation of.lip for Fallout 4, you need to consider the following:
+					In the generation of .lip for Fallout 4, you need to consider the following:
 					For high - quality communication with voice and time, the audio file must be in mono
 					format at 16kHz per sample.
 					1. ffmpeg will help convert the audio file to a suitable format. Can't delete the original,

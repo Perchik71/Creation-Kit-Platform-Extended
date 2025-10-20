@@ -29,6 +29,7 @@
 #include <Patches/CKPE.Fallout4.Patch.EncounterZone.h>
 #include <Patches/CKPE.Fallout4.Patch.ESLTip.h>
 #include <Patches/CKPE.Fallout4.Patch.Facegen.h>
+#include <Patches/CKPE.Fallout4.Patch.FakeMoveLight.h>
 #include <Patches/CKPE.Fallout4.Patch.FixBadPictureInRender.h>
 #include <Patches/CKPE.Fallout4.Patch.FixBNet.h>
 #include <Patches/CKPE.Fallout4.Patch.FixCrashMapMarkerCmd.h>
@@ -39,7 +40,9 @@
 #include <Patches/CKPE.Fallout4.Patch.FixLandspaceVNML.h>
 #include <Patches/CKPE.Fallout4.Patch.FixLoadD3DCompiler.h>
 #include <Patches/CKPE.Fallout4.Patch.FixPluginTXT.h>
+#include <Patches/CKPE.Fallout4.Patch.FixQuoteCmdLine.h>
 #include <Patches/CKPE.Fallout4.Patch.FixRecursiveSorting.h>
+#include <Patches/CKPE.Fallout4.Patch.FixSky.h>
 #include <Patches/CKPE.Fallout4.Patch.FixSmoothValue.h>
 #include <Patches/CKPE.Fallout4.Patch.FixSortPropObjectMod.h>
 //#include <Patches/CKPE.Fallout4.Patch.FixSSAOInIntCell.h>
@@ -74,9 +77,11 @@
 #include <Patches/CKPE.Fallout4.Patch.TESDataHandlerHook.h>
 #include <Patches/CKPE.Fallout4.Patch.TESFormHook.h>
 #include <Patches/CKPE.Fallout4.Patch.TESHook.h>
+#include <Patches/CKPE.Fallout4.Patch.UIDeffer.h>
 #include <Patches/CKPE.Fallout4.Patch.UIHotkeys.h>
 #include <Patches/CKPE.Fallout4.Patch.Unicode.h>
 #include <Patches/CKPE.Fallout4.Patch.VersionControlMergeWorkaround.h>
+#include <Patches/CKPE.Fallout4.Patch.WrongUpdateActorWnd.h>
 
 namespace CKPE
 {
@@ -108,6 +113,7 @@ namespace CKPE
 			mgr->Register(new Patch::EncounterZone);
 			mgr->Register(new Patch::ESLTip);
 			mgr->Register(new Patch::Facegen);
+			mgr->Register(new Patch::FakeMoveLight);
 			mgr->Register(new Patch::FixBadPictureInRender);
 			mgr->Register(new Patch::FixBNet);
 			mgr->Register(new Patch::FixCrashMapMarkerCmd);
@@ -118,7 +124,9 @@ namespace CKPE
 			mgr->Register(new Patch::FixLandspaceVNML);
 			mgr->Register(new Patch::FixLoadD3DCompiler);
 			mgr->Register(new Patch::FixPluginTXT);
+			mgr->Register(new Patch::FixQuoteCmdLine);
 			mgr->Register(new Patch::FixRecursiveSorting);
+			mgr->Register(new Patch::FixSky);
 			mgr->Register(new Patch::FixSmoothValue);
 			mgr->Register(new Patch::FixSortPropObjectMod);
 			//mgr->Register(new Patch::FixSSAOInIntCell);
@@ -152,9 +160,11 @@ namespace CKPE
 			mgr->Register(new Patch::TESDataHandlerHook);
 			mgr->Register(new Patch::TESFormHook);
 			mgr->Register(new Patch::TESHook);
+			mgr->Register(new Patch::UIDeffer);
 			mgr->Register(new Patch::UIHotkeys);
 			mgr->Register(new Patch::Unicode);
 			mgr->Register(new Patch::VersionControlMergeWorkaround);
+			mgr->Register(new Patch::WrongUpdateActorWnd);
 
 			auto cmd = Common::Interface::GetSingleton()->GetCommandLineParser();
 			if (cmd->HasCommandRun())

@@ -616,7 +616,8 @@ begin
   if not Assigned(FTOMLStrDataCustomTheme) then
     raise Exception.Create('Out of memory');
   try
-    FTOMLStrDataCustomTheme.LoadFromFile(CKPE_C_FILENAME_CUSTOMTHEME_CONFIG);
+    if FileExists(CKPE_C_FILENAME_CUSTOMTHEME_CONFIG) then
+       FTOMLStrDataCustomTheme.LoadFromFile(CKPE_C_FILENAME_CUSTOMTHEME_CONFIG);
   finally
   end;
   // Clear TabSheets
@@ -747,17 +748,20 @@ begin
           OnClick := @ImageSettingClick;
         end;
 
-        with TPanel.Create(_ScrollBox) do
+        if FTOMLStrDataCustomTheme.Count > 0 then
         begin
-          Parent := _ScrollBox;
-          BevelColor := clBlack;
-          BevelOuter := bvNone;
-          BevelInner := bvLowered;
-          Caption := 'Custom...';
-          OnClick := @PanelCustomThemeBtnClick;
-          SetBounds(240, 412, 192, 160);
-          OnMouseEnter := @PanelBtnMouseEnter;
-          OnMouseLeave := @PanelBtnMouseLeave;
+          with TPanel.Create(_ScrollBox) do
+          begin
+            Parent := _ScrollBox;
+            BevelColor := clBlack;
+            BevelOuter := bvNone;
+            BevelInner := bvLowered;
+            Caption := 'Custom...';
+            OnClick := @PanelCustomThemeBtnClick;
+            SetBounds(240, 412, 192, 160);
+            OnMouseEnter := @PanelBtnMouseEnter;
+            OnMouseLeave := @PanelBtnMouseLeave;
+          end;
         end;
 
         with TLabel.Create(FPanelTheme) do
@@ -1160,8 +1164,8 @@ begin
 
     if not FileExists(CKPE_C_FILENAME_CONFIG) then
       raise Exception.CreateFmt('File "%s" no found', [CKPE_C_FILENAME_CONFIG]);
-    if not FileExists(CKPE_C_FILENAME_CUSTOMTHEME_CONFIG) then
-      raise Exception.CreateFmt('File "%s" no found', [CKPE_C_FILENAME_CUSTOMTHEME_CONFIG]);
+    //if not FileExists(CKPE_C_FILENAME_CUSTOMTHEME_CONFIG) then
+    //  raise Exception.CreateFmt('File "%s" no found', [CKPE_C_FILENAME_CUSTOMTHEME_CONFIG]);
 
     try
       FNoHi := False;
@@ -1625,9 +1629,9 @@ end;
 procedure TFormMainInstaller.PanelApplyBtnClick(Sender: TObject);
 begin
   try
-    if Assigned(FTOMLStrData) then
+    if Assigned(FTOMLStrData) and (FTOMLStrData.Count > 0) then
       FTOMLStrData.SaveToFile(CKPE_C_FILENAME_CONFIG);
-    if Assigned(FTOMLStrDataCustomTheme) then
+    if Assigned(FTOMLStrDataCustomTheme) and (FTOMLStrDataCustomTheme.Count > 0) then
       FTOMLStrDataCustomTheme.SaveToFile(CKPE_C_FILENAME_CUSTOMTHEME_CONFIG);
   finally
     Close;
