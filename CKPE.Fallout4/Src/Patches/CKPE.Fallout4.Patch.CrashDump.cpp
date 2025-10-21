@@ -13,9 +13,9 @@
 #include <CKPE.Fallout4.VersionLists.h>
 //#include <EditorAPI/NiAPI/NiSourceTexture.h>
 #include <EditorAPI/Forms/TESForm.h>
-//#include <EditorAPI/BSResources.h>
+#include <EditorAPI/BSResource.h>
 #include <EditorAPI/BSShaderProperty.h>
-//#include <EditorAPI/BSFile.h>
+#include <EditorAPI/BSFile.h>
 #include <EditorAPI/BGSLocalizedString.h>
 #include <Patches/CKPE.Fallout4.Patch.CrashDump.h>
 #include <resource_version2.h>
@@ -140,14 +140,14 @@ namespace CKPE
 					else
 						Result = "nullptr";
 				}
-			/*	else if (!strcmp(RttiName, "class BSFile"))
+				else if (!strcmp(RttiName, "class BSFile"))
 				{
 					auto fstm = (EditorAPI::BSFile*)Address;
 					if (fstm->GetFileName())
 						Result = StringUtils::FormatString("\"%s\"", fstm->GetFileName());
 					else
 						Result = "nullptr";
-				}*/
+				}
 				else if (!strcmp(RttiName, "class NiTexture") || !strcmp(RttiName, "class NiSourceTexture"))
 				{
 					auto tex = (EditorAPI::NiAPI::NiTexture*)Address;
@@ -156,7 +156,7 @@ namespace CKPE
 					else
 						Result = "nullptr";
 				}
-				/*else if (!strcmp(RttiName, "class BSResourceNiBinaryStream"))
+				else if (!strcmp(RttiName, "class BSResourceNiBinaryStream"))
 				{
 					auto resource = (EditorAPI::BSResourceNiBinaryStream*)Address;
 					auto stream = resource->GetStream();
@@ -168,7 +168,7 @@ namespace CKPE
 					}
 					else
 						Result = "nullptr";
-				}*/
+				}
 				else
 				{
 					auto form = _DYNAMIC_CAST((void*)Address, 0, RttiName, "class TESForm");

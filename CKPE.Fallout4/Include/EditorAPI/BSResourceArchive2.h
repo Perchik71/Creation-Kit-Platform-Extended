@@ -67,14 +67,14 @@ namespace CKPE
 						virtual EResultError DoWrite(const void*, std::uint64_t, std::uint64_t&) const noexcept(true) override;				// return kUnsupported
 						virtual EResultError DoSeek(std::int64_t p, SeekMode m, std::uint64_t& np) const noexcept(true) override;
 						virtual EResultError DoSetEndOfStream() noexcept(true) override;													// return kUnsupported
-						virtual EResultError DoPrefetchAt(uint64_t, uint64_t, uint32_t) const noexcept(true) override;						// return kUnsupported		
+						virtual EResultError DoPrefetchAt(std::uint64_t, std::uint64_t, std::uint32_t) const noexcept(true) override;		// return kUnsupported		
 						virtual EResultError DoStartTaggedPrioritizedRead(void* buffer, std::uint64_t bytes, std::uint64_t offset,
 							std::uint32_t priority, std::uint32_t* completionTagOut, std::uint32_t& completionTagWaitValue,
 							void* unk) const noexcept(true) override;																		// return kUnsupported
 						virtual EResultError DoWaitTags(std::uint32_t* completionTag, std::uint32_t completionTagWaitValue,
 							void* unk) const noexcept(true) override;																		// return kUnsupported
 						virtual EResultError DoPrefetchAll(std::uint32_t a) const noexcept(true) override;
-						virtual bool DoGetName(BSFixedString& result) const noexcept(true) override;
+						virtual bool GetFileName(BSFixedString& result) const noexcept(true) override;
 						virtual EResultError DoCreateAsync(void* unk) const noexcept(true) override;
 						virtual bool DoQTaggedPrioritizedReadSupported() const noexcept(true) override;										// return false
 						virtual EResultError DoCreateOp(void*, const char*) const noexcept(true) override;									// return kUnsupported

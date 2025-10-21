@@ -334,7 +334,7 @@ namespace CKPE
 					return vtbl_call<EResultError>(0x70, (void*)&RTTI, a);
 				}
 				
-				bool Archive2::ReaderStream::DoGetName(BSFixedString& result) const noexcept(true)
+				bool Archive2::ReaderStream::GetFileName(BSFixedString& result) const noexcept(true)
 				{
 					return vtbl_call<bool>(0x78, (void*)&RTTI, &result);
 				}

@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <EditorAPI/BSResourceArchive2.h>
 #include <EditorAPI/BSFixedString.h>
+#include <EditorAPI/NiAPI/NiTypes.h>
 #include <EditorAPI/NiAPI/NiFlags.h>
 #include <EditorAPI/NiAPI/NiPointer.h>
 
@@ -164,7 +164,7 @@ namespace CKPE
 						return EResultError::kUnsupported;
 					}
 
-					virtual bool DoGetName(BSFixedString& result) const noexcept(true)
+					virtual bool GetFileName(BSFixedString& result) const noexcept(true)
 					{
 						return false;
 					}
@@ -180,6 +180,16 @@ namespace CKPE
 				};
 				static_assert(sizeof(Stream) == 0x10);
 			}
+
+			class BSResourceNiBinaryStream : public NiAPI::NiBinaryStream
+			{
+				BSResource::Stream* _Stream;
+				void* _Unk28;
+			public:
+
+				inline const BSResource::Stream* GetStream() const noexcept(true) { return _Stream; }
+			};
+			static_assert(sizeof(BSResourceNiBinaryStream) == 0x20);
 		}
 	}
 }
