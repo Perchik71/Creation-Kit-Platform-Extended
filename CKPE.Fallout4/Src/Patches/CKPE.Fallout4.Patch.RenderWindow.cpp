@@ -15,6 +15,7 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/BGSRenderWindow.h>
+#include <Patches/CKPE.Fallout4.Patch.MainWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.RenderWindow.h>
 
 namespace CKPE
@@ -238,6 +239,25 @@ namespace CKPE
 							if (wParam == VK_F1)
 								HideMainImguiWnd = !HideMainImguiWnd;
 						}
+
+						/*if (Keyboard::IsControlPressed())
+						{
+							if (wParam == 0x35)
+							{
+								auto MenuItem =
+									MainWindow::Singleton->MainMenu.GetItem(Common::EditorUI::UI_EDITOR_TOGGLEFOG);
+								MenuItem.Checked = !MenuItem.Checked;
+
+								if (MenuItem.Checked)
+									EditorAPI::TES::Singleton->GetSky()->SetFog();
+								else
+									EditorAPI::TES::Singleton->GetSky()->UnsetFog();
+
+
+							}
+
+								HideMainImguiWnd = !HideMainImguiWnd;
+						}*/
 					}
 				}
 
