@@ -169,13 +169,13 @@ namespace CKPE
 			auto cmd = Common::Interface::GetSingleton()->GetCommandLineParser();
 			if (cmd->HasCommandRun())
 			{
-				if (!_wcsicmp(cmd->GetCommand().c_str(), L"-GeneratePreCombined"))
+				if (!_wcsnicmp(cmd->GetCommand().c_str(), L"-GeneratePreCombined", 20))
 				{
 					_CONSOLE("The precombining operation has been launched");
 
 					mgr->Register(new Patch::PreCombined);
 				}
-				else if (!_wcsicmp(cmd->GetCommand().c_str(), L"-GeneratePreVisData"))
+				else if (!_wcsnicmp(cmd->GetCommand().c_str(), L"-GeneratePreVisData", 19))
 				{
 					_CONSOLE("The prevising operation has been launched");
 
