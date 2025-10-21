@@ -160,7 +160,7 @@ namespace CKPE
 				if (verPatch == 2)
 				{
 					// Удаление повторной загрузки архивов
-					SafeWrite::Write(__CKPE_OFFSET(11), { 0xEB });
+					//SafeWrite::Write(__CKPE_OFFSET(11), { 0xEB });
 					// Удаление загрузки бреда, который не является активным файлом
 					SafeWrite::Write(__CKPE_OFFSET(12), { 0xEB });
 					// Удаление проверки, что приводит пропуску загрузки архивов
