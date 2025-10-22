@@ -82,30 +82,33 @@ namespace CKPE
 			}
 
 			void FakeMoveLight::SetPosition(EditorAPI::Forms::TESObjectREFR* refr,
-				EditorAPI::NiAPI::NiPoint3& pos, EditorAPI::NiAPI::NiPoint3& dir) noexcept(true)
+				EditorAPI::NiAPI::NiPoint3* pos, EditorAPI::NiAPI::NiPoint3* dir) noexcept(true)
 			{
-				if (!refr) return;
+				if (!refr || !pos) return;
 
-				if (dir == EditorAPI::NiAPI::ZERO_P3)
-					data_FakeMoveLight_coord = EditorAPI::NiAPI::ZERO_P3;
-
-				auto pick = EditorAPI::BGSRenderWindow::Singleton->GetPickHandler();
-				if (pick->Count > 1)
+				if (dir)
 				{
-					if (refr->GetParent()->GetFormType() == EditorAPI::Forms::TESForm::ftLight)
+					if (*dir == EditorAPI::NiAPI::ZERO_P3)
+						data_FakeMoveLight_coord = EditorAPI::NiAPI::ZERO_P3;
+
+					auto pick = EditorAPI::BGSRenderWindow::Singleton->GetPickHandler();
+					if (pick->Count > 1)
 					{
-						auto pos_refr = refr->GetPosition();
-						
-						pos_refr += pos - data_FakeMoveLight_coord;
-						data_FakeMoveLight_coord = pos;
+						if (refr->GetParent()->GetFormType() == EditorAPI::Forms::TESForm::ftLight)
+						{
+							auto pos_refr = refr->GetPosition();
 
-						EditorAPI::Forms::TESObjectREFR::SetPosition(refr, &pos_refr);
+							pos_refr += *pos - data_FakeMoveLight_coord;
+							data_FakeMoveLight_coord = *pos;
 
-						return;
+							EditorAPI::Forms::TESObjectREFR::SetPosition(refr, &pos_refr);
+
+							return;
+						}
 					}
 				}
 				
-				EditorAPI::Forms::TESObjectREFR::SetPosition(refr, &pos);
+				EditorAPI::Forms::TESObjectREFR::SetPosition(refr, pos);
 			}
 		}
 	}

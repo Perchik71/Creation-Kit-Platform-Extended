@@ -17,7 +17,7 @@ namespace CKPE
 			class FakeMoveLight : public Common::Patch
 			{
 				static void SetPosition(EditorAPI::Forms::TESObjectREFR* refr,
-					EditorAPI::NiAPI::NiPoint3& pos, EditorAPI::NiAPI::NiPoint3& dir) noexcept(true);
+					EditorAPI::NiAPI::NiPoint3* pos, EditorAPI::NiAPI::NiPoint3* dir) noexcept(true);
 
 				FakeMoveLight(const FakeMoveLight&) = delete;
 				FakeMoveLight& operator=(const FakeMoveLight&) = delete;
