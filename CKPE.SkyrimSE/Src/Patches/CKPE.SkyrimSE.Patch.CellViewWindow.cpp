@@ -102,7 +102,7 @@ namespace CKPE
 				bool UseImage, std::int32_t ItemIndex) noexcept(true)
 			{
 				bool allowInsert = true;
-				SendMessageA(GetParent(ListViewHandle), UI_CELL_VIEW_ADD_CELL_ITEM, (WPARAM)Form, (LPARAM)&allowInsert);
+				CellViewWindow::Singleton->Perform(UI_CELL_VIEW_ADD_CELL_ITEM, (WPARAM)Form, (LPARAM)&allowInsert);
 
 				if (!allowInsert)
 					return;
@@ -115,7 +115,7 @@ namespace CKPE
 				std::int64_t a3) noexcept(true)
 			{
 				bool allowInsert = true;
-				SendMessageA(GetParent(**ListViewHandle), UI_CELL_VIEW_ADD_CELL_OBJECT_ITEM, (WPARAM)*Form, (LPARAM)&allowInsert);
+				CellViewWindow::Singleton->Perform(UI_CELL_VIEW_ADD_CELL_OBJECT_ITEM, (WPARAM)*Form, (LPARAM)&allowInsert);
 
 				if (!allowInsert)
 					return 1;
