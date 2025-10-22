@@ -131,8 +131,7 @@ namespace CKPE
 				auto SelOnly = static_cast<bool>(GetPropA(Handle, Common::EditorUI::UI_USER_DATA_SELECT_OBJECT_ONLY));
 				auto VisOnly = static_cast<bool>(GetPropA(Handle, Common::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY));
 
-				if (SelOnly || VisOnly)
-					CellViewWindow::Singleton->UpdateObjectList();
+				CellViewWindow::Singleton->UpdateObjectList();
 
 				return Ret;
 			}
@@ -279,9 +278,10 @@ namespace CKPE
 					ListView_SetExtendedListViewStyleEx(__This->m_ObjectListView.Handle,
 						LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
 
-					SendMessage(__This->m_SelectObjectsOnly.Handle, BM_SETCHECK, BST_CHECKED, 0);
+					SendMessage(__This->m_SelectObjectsOnly.Handle, BM_SETCHECK, BST_UNCHECKED, 0);
 					SendMessage(__This->m_VisibleObjectsOnly.Handle, BM_SETCHECK, BST_UNCHECKED, 0);
-					SetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY, reinterpret_cast<HANDLE>(true));
+					SetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY, reinterpret_cast<HANDLE>(false));
+					SetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_SELECT_OBJECT_ONLY, reinterpret_cast<HANDLE>(false));
 				}
 				else if (Message == WM_SIZE)
 				{
