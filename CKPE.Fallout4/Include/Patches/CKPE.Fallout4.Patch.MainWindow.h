@@ -29,6 +29,8 @@ namespace CKPE
 			class MainWindow : public PatchMainWindow
 			{
 				static void DoOpenFormByIdHandler(std::uint32_t id) noexcept(true);
+				static void FogToggling() noexcept(true);
+				static void MarkerToggling() noexcept(true);
 
 				MainWindow(const MainWindow&) = delete;
 				MainWindow& operator=(const MainWindow&) = delete;

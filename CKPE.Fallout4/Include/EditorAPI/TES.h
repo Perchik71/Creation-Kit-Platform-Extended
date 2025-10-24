@@ -82,6 +82,8 @@ namespace CKPE
 			public:
 				virtual ~TES();
 
+				inline static ISingleton<Setting> Setting_ShowMarkers;
+
 				[[nodiscard]] inline bool Empty() const noexcept(true)
 				{
 					return	(gridCell[0].X == 0x7FFFFFFF) &&

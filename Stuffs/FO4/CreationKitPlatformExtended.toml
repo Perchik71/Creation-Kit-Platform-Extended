@@ -4,7 +4,7 @@
 # NOTICE: Experimental options may speed up things. They might do nothing. They might crash the editor.
 #
 [CreationKit]
-bUIHotkeys=false						# [Experimental] Allow rebinding certain window hotkeys. See [Hotkeys] section.
+bUIHotkeys=true							# [Experimental] Allow rebinding certain window hotkeys. See [Hotkeys] section.
 bVersionControlMergeWorkaround=false	# [Experimental] Workaround for version control not allowing merges with more than 2 masters present. Do NOT use this for anything else.
 bBSPointerHandleExtremly=false			# [Experimental] Increase the maximum number of refs to 67.108.864 (for NG2 8.388.608). Use it at your own risk.
 

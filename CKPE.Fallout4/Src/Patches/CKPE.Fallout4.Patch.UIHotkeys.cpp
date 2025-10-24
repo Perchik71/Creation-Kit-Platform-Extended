@@ -140,6 +140,8 @@ namespace CKPE
 					_MESSAGE("Can't find this hotkeys ""%s"" in the mod settings. (%X), %d, %d, %d, %s)",
 						*HotkeyFunction, VirtualKey, (int)Alt, (int)Ctrl, (int)Shift, *DisplayText);
 
+				//_CONSOLE("%s %p", (*HotkeyFunction)->c_str(), Callback);
+
 				UIHotkeysSub(Thisptr, Callback, HotkeyFunction, DisplayText, VirtualKey, Alt, Ctrl, Shift);
 			}
 		}

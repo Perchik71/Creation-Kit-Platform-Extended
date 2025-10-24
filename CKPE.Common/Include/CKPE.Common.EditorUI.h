@@ -36,6 +36,7 @@ namespace CKPE
 			constexpr static std::uint32_t UI_EDITOR_STATUSBAR = 40139;
 			constexpr static std::uint32_t UI_EDITOR_TOGGLEOBJECTWND = 40199;		// Object Window's
 			constexpr static std::uint32_t UI_EDITOR_TOGGLECELLVIEW = 40200;		// Cell View
+			constexpr static std::uint32_t UI_EDITOR_TOGGLEMAKERS = 40030;			// "View" menu
 			constexpr static std::uint32_t UI_EDITOR_TOGGLEFOG = 40937;				// "View" menu
 			constexpr static std::uint32_t UI_EDITOR_TOGGLEGRASS_BUTTON = 40960;	// Main toolbar
 			constexpr static std::uint32_t UI_EDITOR_TOGGLEGRASS = 40963;			// "View" menu

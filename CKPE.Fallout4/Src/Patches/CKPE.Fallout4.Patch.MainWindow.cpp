@@ -4,6 +4,7 @@
 
 #include <windows.h>
 #include <CKPE.Detours.h>
+#include <CKPE.SafeWrite.h>
 #include <CKPE.Utils.h>
 #include <CKPE.FileUtils.h>
 #include <CKPE.StringUtils.h>
@@ -176,6 +177,27 @@ namespace CKPE
 				MainWindow::Singleton->Perform(WM_COMMAND, Common::EditorUI::UI_EDITOR_OPENFORMBYID, id);
 			}
 
+			void MainWindow::FogToggling() noexcept(true)
+			{
+				fast_call<void>(pointer_MainWindow_sub2);
+
+				auto Toggle = EditorAPI::Sky::Setting_FogEnabled->GetBool();
+				auto MenuItem = MainWindow::Singleton->MainMenu.GetItem(Common::EditorUI::UI_EDITOR_TOGGLEFOG);
+
+				MenuItem.Checked = Toggle;
+			}
+
+			void MainWindow::MarkerToggling() noexcept(true)
+			{
+				auto Toggle = EditorAPI::TES::Setting_ShowMarkers->GetBool();
+				EditorAPI::TES::Setting_ShowMarkers->SetBool(!Toggle);
+
+				fast_call<void>(pointer_MainWindow_sub3);
+
+				auto MenuItem = MainWindow::Singleton->MainMenu.GetItem(Common::EditorUI::UI_EDITOR_TOGGLEMAKERS);
+				MenuItem.Checked = !Toggle;
+			}
+
 			MainWindow::MainWindow() : PatchMainWindow()
 			{
 				SetName("Main Window");
@@ -220,8 +242,9 @@ namespace CKPE
 				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
 				
 				pointer_MainWindow_sub1 = __CKPE_OFFSET(1);
-				pointer_MainWindow_sub2 = __CKPE_OFFSET(3);
-				pointer_MainWindow_sub3 = __CKPE_OFFSET(4);
+				pointer_MainWindow_sub2 = Detours::DetourClassJump(__CKPE_OFFSET(2), (std::uintptr_t)&FogToggling);
+				pointer_MainWindow_sub3 = Detours::DetourClassJump(__CKPE_OFFSET(3), (std::uintptr_t)&MarkerToggling);
+				SafeWrite::WriteNop(__CKPE_OFFSET(3) + 0x12, 7);
 
 				Common::LogWindow::GetSingleton()->OnOpenFormById = DoOpenFormByIdHandler;
 
@@ -327,14 +350,12 @@ namespace CKPE
 							{
 							case Common::EditorUI::UI_EDITOR_TOGGLEFOG:
 							{
-								auto MenuItem =
-									MainWindow::Singleton->MainMenu.GetItem(Common::EditorUI::UI_EDITOR_TOGGLEFOG);
-								MenuItem.Checked = !MenuItem.Checked;
-
-								if (MenuItem.Checked)
-									EditorAPI::TES::Singleton->GetSky()->SetFog();
-								else
-									EditorAPI::TES::Singleton->GetSky()->UnsetFog();
+								FogToggling();
+							}
+							return 0;
+							case Common::EditorUI::UI_EDITOR_TOGGLEMAKERS:
+							{
+								MarkerToggling();
 							}
 							return 0;
 							case Common::EditorUI::UI_EDITOR_TOGGLECELLVIEW:

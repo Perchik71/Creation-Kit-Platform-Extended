@@ -53,8 +53,14 @@ namespace CKPE
 				auto base = interface->GetApplication()->GetBase();
 
 				EditorAPI::TES::Singleton = (const EditorAPI::TES**)__CKPE_OFFSET(0);
-				EditorAPI::Sky::Setting_SkyView = (const EditorAPI::Setting*)__CKPE_OFFSET(1);
-				EditorAPI::Sky::Setting_FogEnabled = (const EditorAPI::Setting*)__CKPE_OFFSET(2);
+
+				static const EditorAPI::Setting* sSetting_SkyView = (const EditorAPI::Setting*)__CKPE_OFFSET(1);
+				static const EditorAPI::Setting* sSetting_FogEnabled = (const EditorAPI::Setting*)__CKPE_OFFSET(2);
+				static const EditorAPI::Setting* sSetting_ShowMarkers = (const EditorAPI::Setting*)__CKPE_OFFSET(3);
+
+				EditorAPI::Sky::Setting_SkyView = &sSetting_SkyView;
+				EditorAPI::Sky::Setting_FogEnabled = &sSetting_FogEnabled;
+				EditorAPI::TES::Setting_ShowMarkers = &sSetting_ShowMarkers;
 
 				return true;
 			}
