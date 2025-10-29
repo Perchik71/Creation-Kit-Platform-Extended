@@ -233,6 +233,7 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.MemoryLeakBSString.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.MemoryLeakInPreviewWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.MemoryManager.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.MiscMessages.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ModernThemePatchAdditional.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.NavMeshInfoMap.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.NavMeshPseudoDelete.cpp" />
@@ -431,6 +432,7 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.MemoryLeakBSString.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.MemoryLeakInPreviewWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.MemoryManager.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.MiscMessages.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ModernThemePatchAdditional.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.NavMeshInfoMap.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.NavMeshPseudoDelete.h" />

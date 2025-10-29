@@ -98,6 +98,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.MemoryLeakBSString.h>
 #include <Patches/CKPE.SkyrimSE.Patch.MemoryLeakInPreviewWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.MemoryManager.h>
+#include <Patches/CKPE.SkyrimSE.Patch.MiscMessages.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ModernThemePatchAdditional.h>
 #include <Patches/CKPE.SkyrimSE.Patch.NavMeshInfoMap.h>
 #include <Patches/CKPE.SkyrimSE.Patch.NavMeshPseudoDelete.h>
@@ -228,6 +229,7 @@ namespace CKPE
 			mgr->Register(new Patch::MemoryLeakBSString);
 			mgr->Register(new Patch::MemoryLeakInPreviewWindow);
 			mgr->Register(new Patch::MemoryManager);
+			mgr->Register(new Patch::MiscMessages);
 			mgr->Register(new Patch::ModernThemePatchAdditional);
 			mgr->Register(new Patch::NavMeshInfoMap);
 			mgr->Register(new Patch::NavMeshPseudoDelete);

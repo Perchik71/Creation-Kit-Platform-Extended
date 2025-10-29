@@ -71,6 +71,10 @@ namespace CKPE
 				_version_gamelib = a_version;
 				_version_editor = a_editor_version;
 				std::wstring spath = _interface->application->GetPath();
+
+				// Fixed load preview window assests from
+				SetCurrentDirectoryW(spath.c_str());
+
 				_cmdline = new CommandLineParser;
 				_settings = new TOMLSettingCollection(spath + _ssettings_fname);
 				if (PathUtils::FileExists(spath + _stheme_settings_fname))
