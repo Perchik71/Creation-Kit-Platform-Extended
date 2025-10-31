@@ -20,6 +20,12 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
+			struct CKPE_CoordRefr
+			{
+				EditorAPI::NiAPI::NiPoint3 Pos;
+				EditorAPI::Forms::TESObjectREFR* Refr;
+			};
+
 			class BGSRenderWindowBorder
 			{
 			public:

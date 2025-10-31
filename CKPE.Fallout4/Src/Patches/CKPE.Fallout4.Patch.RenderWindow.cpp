@@ -25,7 +25,7 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			extern EditorAPI::NiAPI::NiPoint3 data_FakeMoveLight_coord;
+			extern std::vector<EditorAPI::CKPE_CoordRefr> data_FakeMoveLight_coord;
 			extern ID3D11DeviceContext* pointer_d3d11DeviceContext;
 			extern ImFont* imguiFonts[3];
 			extern ImVec4 gImGuiGreyColor;
@@ -176,7 +176,8 @@ namespace CKPE
 				{
 					if (Message == WM_LBUTTONUP)
 					{
-						data_FakeMoveLight_coord = EditorAPI::NiAPI::ZERO_P3;
+						data_FakeMoveLight_coord.clear();
+						//data_FakeMoveLight_coord = EditorAPI::NiAPI::ZERO_P3;
 					}
 					else if (Message == WM_KEYDOWN)
 					{

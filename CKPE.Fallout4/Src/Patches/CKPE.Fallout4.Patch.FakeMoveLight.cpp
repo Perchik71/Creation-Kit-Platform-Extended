@@ -16,7 +16,7 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			EditorAPI::NiAPI::NiPoint3 data_FakeMoveLight_coord;
+			std::vector<EditorAPI::CKPE_CoordRefr> data_FakeMoveLight_coord;
 
 			FakeMoveLight::FakeMoveLight() : Common::Patch()
 			{
@@ -101,14 +101,27 @@ namespace CKPE
 								// No move
 								return;
 
-							auto pos_refr = refr->GetPosition();
+							if (pick->Has((EditorAPI::Forms::TESObjectREFR*)LinkedRef->GetRefr()))
+							{
+								auto it = std::find_if(data_FakeMoveLight_coord.begin(), data_FakeMoveLight_coord.end(),
+									[&refr](EditorAPI::CKPE_CoordRefr& rhs) -> bool { return rhs.Refr == refr; });
+								auto pos_refr = refr->GetPosition();
 
-							pos_refr += *pos - data_FakeMoveLight_coord;
-							data_FakeMoveLight_coord = *pos;
+								if (it == data_FakeMoveLight_coord.end())
+								{
+									pos_refr += *pos;
+									data_FakeMoveLight_coord.push_back({ *pos, refr });
+								}
+								else
+								{
+									pos_refr += *pos - it->Pos;
+									it->Pos = *pos;
+								}
 
-							EditorAPI::Forms::TESObjectREFR::SetPosition(refr, &pos_refr);
+								EditorAPI::Forms::TESObjectREFR::SetPosition(refr, &pos_refr);
 
-							return;
+								return;
+							}
 						}
 					}
 				}
