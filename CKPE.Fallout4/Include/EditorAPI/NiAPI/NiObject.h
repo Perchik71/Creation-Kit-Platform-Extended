@@ -34,16 +34,16 @@ namespace CKPE
 					{
 					public:
 						// It's everywhere
-						inline NiRTTI* GetRTTI() const noexcept(true) { return vtbl_call<NiRTTI*>(REL_RTTI, this); }
+						inline NiRTTI* GetRTTI() const noexcept(true) { return CKPE::vtbl_call<NiRTTI*>(REL_RTTI, this); }
 
 						// Creation of a clone object is mentioned in SKSE and F4SE, however, in SKSE it is specified without a refs, I think this is a mistake
-						inline NiObject* CreateClone(NiCloningProcess* Process) const noexcept(true) { return vtbl_call<NiObject*>(REL_CREATECLONE, this, Process); }
+						inline NiObject* CreateClone(NiCloningProcess* Process) const noexcept(true) { return CKPE::vtbl_call<NiObject*>(REL_CREATECLONE, this, Process); }
 
 						// There is a mention of these functions in SKSE and F4SE, actually this is no exception for CK
-						inline void LoadFromStream(NiStream* Stream) const noexcept(true) { vtbl_call<void>(REL_LOADFROMSTREAM, this, Stream); }
-						inline void LinkObject(NiStream* Stream) const noexcept(true) { vtbl_call<void>(REL_LINKOBJECT, this, Stream); }
-						inline bool RegisterStreamables(NiStream* Stream) const noexcept(true) { return vtbl_call<bool>(REL_REGSTREAM, this, Stream); }
-						inline void SaveToStream(NiStream* Stream) const noexcept(true) { vtbl_call<void>(REL_SAVETOSTREAM, this, Stream); }
+						inline void LoadFromStream(NiStream* Stream) const noexcept(true) { CKPE::vtbl_call<void>(REL_LOADFROMSTREAM, this, Stream); }
+						inline void LinkObject(NiStream* Stream) const noexcept(true) { CKPE::vtbl_call<void>(REL_LINKOBJECT, this, Stream); }
+						inline bool RegisterStreamables(NiStream* Stream) const noexcept(true) { return CKPE::vtbl_call<bool>(REL_REGSTREAM, this, Stream); }
+						inline void SaveToStream(NiStream* Stream) const noexcept(true) { CKPE::vtbl_call<void>(REL_SAVETOSTREAM, this, Stream); }
 
 						inline void GetViewerRTTI(void(*Callback)(const char*, ...), bool Fully = false) const noexcept(true)
 						{

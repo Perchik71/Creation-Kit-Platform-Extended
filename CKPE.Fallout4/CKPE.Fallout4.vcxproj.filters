@@ -68,9 +68,6 @@
     <ClCompile Include="Src\EditorAPI\BSSettings.cpp">
       <Filter>EditorAPI</Filter>
     </ClCompile>
-    <ClCompile Include="Src\EditorAPI\BSSimpleLock.cpp">
-      <Filter>EditorAPI</Filter>
-    </ClCompile>
     <ClCompile Include="Src\EditorAPI\BSSpinLock.cpp">
       <Filter>EditorAPI</Filter>
     </ClCompile>
@@ -194,9 +191,6 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ObjectWindow.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
-    <ClCompile Include="Include\EditorAPI\BGSRenderWindowReferenceEditModule.cpp">
-      <Filter>EditorAPI</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.RenderWindow.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -283,6 +277,9 @@
     </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FakeMoveLight.cpp">
       <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\ObjectRefHandle.cpp">
+      <Filter>EditorAPI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -382,9 +379,6 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\BSSettings.h">
-      <Filter>EditorAPI</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSSimpleLock.h">
       <Filter>EditorAPI</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\BSSpinLock.h">
@@ -809,6 +803,42 @@
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FakeMoveLight.h">
       <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSTSmartPointer.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\CRC.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSExtraData.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSLock.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSKeyword.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSPrimitive.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiLight.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiPointLight.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSLight.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\ObjectRefHandle.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSMultiBoundRoom.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSPortalGraph.h">
+      <Filter>EditorAPI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

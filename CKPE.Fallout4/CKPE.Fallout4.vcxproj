@@ -125,7 +125,6 @@
   <ItemGroup>
     <ClCompile Include="..\Dependencies\DirectXTex\src\ScreenGrab11.cpp" />
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="Include\EditorAPI\BGSRenderWindowReferenceEditModule.cpp" />
     <ClCompile Include="Src\CKPE.Fallout4.D3D11ImagespaceAA.cpp" />
     <ClCompile Include="Src\CKPE.Fallout4.D3D11Shaders.cpp" />
     <ClCompile Include="Src\CKPE.Fallout4.Runner.cpp" />
@@ -136,7 +135,6 @@
     <ClCompile Include="Src\EditorAPI\BSResourceEntryDB.cpp" />
     <ClCompile Include="Src\EditorAPI\BSResourceLooseFiles.cpp" />
     <ClCompile Include="Src\EditorAPI\BSSettings.cpp" />
-    <ClCompile Include="Src\EditorAPI\BSSimpleLock.cpp" />
     <ClCompile Include="Src\EditorAPI\BSSpinLock.cpp" />
     <ClCompile Include="Src\EditorAPI\BSString.cpp" />
     <ClCompile Include="Src\EditorAPI\BSStringCache.cpp" />
@@ -144,6 +142,7 @@
     <ClCompile Include="Src\EditorAPI\Forms\TESForm.cpp" />
     <ClCompile Include="Src\EditorAPI\NiAPI\NiMemoryManager.cpp" />
     <ClCompile Include="Src\EditorAPI\NiAPI\NiRefObject.cpp" />
+    <ClCompile Include="Src\EditorAPI\ObjectRefHandle.cpp" />
     <ClCompile Include="Src\EditorAPI\TESFile.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.AddChangeRef.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.AllowMultipleWindowAndMaster.cpp" />
@@ -227,6 +226,7 @@
     <ClInclude Include="Include\CKPE.Fallout4.VersionLists.h" />
     <ClInclude Include="Include\EditorAPI\BGSLocalizedString.h" />
     <ClInclude Include="Include\EditorAPI\BGSPickHandler.h" />
+    <ClInclude Include="Include\EditorAPI\BGSPrimitive.h" />
     <ClInclude Include="Include\EditorAPI\BGSRenderWindow.h" />
     <ClInclude Include="Include\EditorAPI\BGSRenderWindowCamera.h" />
     <ClInclude Include="Include\EditorAPI\BGSRenderWindowEditModuleManager.h" />
@@ -235,12 +235,17 @@
     <ClInclude Include="Include\EditorAPI\BSAtomicValue.h" />
     <ClInclude Include="Include\EditorAPI\BSDynamicTriShape.h" />
     <ClInclude Include="Include\EditorAPI\BSEntryString.h" />
+    <ClInclude Include="Include\EditorAPI\BSExtraData.h" />
     <ClInclude Include="Include\EditorAPI\BSFadeNode.h" />
     <ClInclude Include="Include\EditorAPI\BSFile.h" />
     <ClInclude Include="Include\EditorAPI\BSFixedString.h" />
     <ClInclude Include="Include\EditorAPI\BSGeometry.h" />
     <ClInclude Include="Include\EditorAPI\BSHandleRefObject.h" />
+    <ClInclude Include="Include\EditorAPI\BSLight.h" />
+    <ClInclude Include="Include\EditorAPI\BSLock.h" />
+    <ClInclude Include="Include\EditorAPI\BSMultiBoundRoom.h" />
     <ClInclude Include="Include\EditorAPI\BSPointerHandleManager.h" />
+    <ClInclude Include="Include\EditorAPI\BSPortalGraph.h" />
     <ClInclude Include="Include\EditorAPI\BSReadWriteLock.h" />
     <ClInclude Include="Include\EditorAPI\BSResource.h" />
     <ClInclude Include="Include\EditorAPI\BSResourceArchive2.h" />
@@ -250,7 +255,6 @@
     <ClInclude Include="Include\EditorAPI\BSIStream.h" />
     <ClInclude Include="Include\EditorAPI\BSShaderMaterial.h" />
     <ClInclude Include="Include\EditorAPI\BSShaderProperty.h" />
-    <ClInclude Include="Include\EditorAPI\BSSimpleLock.h" />
     <ClInclude Include="Include\EditorAPI\BSSkin.h" />
     <ClInclude Include="Include\EditorAPI\BSSpinLock.h" />
     <ClInclude Include="Include\EditorAPI\BSString.h" />
@@ -261,8 +265,11 @@
     <ClInclude Include="Include\EditorAPI\BSTextureSet.h" />
     <ClInclude Include="Include\EditorAPI\BSTList.h" />
     <ClInclude Include="Include\EditorAPI\BSTriShape.h" />
+    <ClInclude Include="Include\EditorAPI\BSTSmartPointer.h" />
+    <ClInclude Include="Include\EditorAPI\CRC.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BaseFormComponent.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSColorForm.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\BGSKeyword.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSLayer.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSMaterialSwap.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSMod.h" />
@@ -293,6 +300,7 @@
     <ClInclude Include="Include\EditorAPI\NiAPI\NiCollisionObject.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiColor.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiFlags.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiLight.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiMatrix.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiMemoryManager.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiNode.h" />
@@ -300,6 +308,7 @@
     <ClInclude Include="Include\EditorAPI\NiAPI\NiObjectNET.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiPoint.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiPointer.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiPointLight.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiProperty.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiRefObject.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiRTTI.h" />
@@ -308,6 +317,7 @@
     <ClInclude Include="Include\EditorAPI\NiAPI\NiTransform.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiTSimpleArray.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiTypes.h" />
+    <ClInclude Include="Include\EditorAPI\ObjectRefHandle.h" />
     <ClInclude Include="Include\EditorAPI\TES.h" />
     <ClInclude Include="Include\EditorAPI\TESDataHandler.h" />
     <ClInclude Include="Include\EditorAPI\TESFile.h" />

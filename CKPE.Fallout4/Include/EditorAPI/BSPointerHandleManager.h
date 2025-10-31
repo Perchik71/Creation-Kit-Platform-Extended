@@ -442,7 +442,7 @@ namespace CKPE
 				inline static std::uint8_t PointerHandleManagerCurrentId = 0;
 			};
 
-			static Forms::TESForm* GetRefFormByUniqueId(std::uint32_t UniqueId)
+			static Forms::TESForm* GetRefFormByUniqueId(std::uint32_t UniqueId) noexcept(true)
 			{
 				switch (BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId)
 				{

@@ -175,6 +175,17 @@ namespace CKPE
 				}
 
 				static NiPoint3 ZERO_P3;
+
+				class NiPoint3A : public NiPoint3
+				{
+					float unused;
+				public:
+					inline NiPoint3A() noexcept(true) : NiPoint3() {}
+					inline NiPoint3A(float fX, float fY, float fZ) noexcept(true) : NiPoint3(fX, fY, fZ) {}
+					inline NiPoint3A(const NiPoint3& Src) noexcept(true) : NiPoint3(Src) {}
+					inline NiPoint3A(const NiPoint3A& Src) noexcept(true) : NiPoint3(Src) {}
+				};
+				static_assert(sizeof(NiPoint3A) == 0x10);
 			}
 		}
 	}

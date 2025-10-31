@@ -10,7 +10,7 @@
 
 namespace CKPE
 {
-	namespace Starfield
+	namespace Fallout4
 	{
 		namespace EditorAPI
 		{

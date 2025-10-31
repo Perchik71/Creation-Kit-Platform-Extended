@@ -47,8 +47,8 @@ namespace CKPE
 
 				virtual ~BSShaderMaterial() = default;
 
-				inline BSShaderMaterial* Create() const noexcept(true) { vtbl_call<void>(0x8, this); }
-				inline std::uint32_t GetType() const noexcept(true) { return vtbl_call<std::uint32_t>(0x28, this); }
+				inline BSShaderMaterial* Create() const noexcept(true) { CKPE::vtbl_call<void>(0x8, this); }
+				inline std::uint32_t GetType() const noexcept(true) { return CKPE::vtbl_call<std::uint32_t>(0x28, this); }
 				inline NiAPI::NiPoint2 GetTextCoordOffset() const noexcept(true) { return _TextCoordOffset[0]; }
 				inline NiAPI::NiPoint2 GetTextCoordScale() const noexcept(true) { return _TextCoordScale[0]; }
 
@@ -93,13 +93,13 @@ namespace CKPE
 			public:
 				virtual ~BSLightingShaderMaterialBase() = default;
 
-				inline bool IsLightingShaderMaterialEnvmap() const noexcept(true) { vtbl_call<void>(0x68, this); }
-				inline void ClearTextures() const noexcept(true) { vtbl_call<void>(0x70, this); }
-				inline void GetTextures(NiAPI::NiTexture** Textures, std::uint32_t MaxSize) const noexcept(true) { vtbl_call<void>(0x78, this, Textures, MaxSize); }
-				inline void SaveToStream(void* Stream) const noexcept(true) { vtbl_call<void>(0x80, this, Stream); }
-				inline void LoadFromStream(void* Stream) const noexcept(true) { vtbl_call<void>(0x88, this, Stream); }
-				inline void PrefetchTextures() const noexcept(true) { vtbl_call<void>(0x90, this); }
-				inline void LoadTextureSet(BSShaderTextureSet* TextureSet) const noexcept(true) { vtbl_call<void>(0xA0, this, TextureSet); }
+				inline bool IsLightingShaderMaterialEnvmap() const noexcept(true) { CKPE::vtbl_call<void>(0x68, this); }
+				inline void ClearTextures() const noexcept(true) { CKPE::vtbl_call<void>(0x70, this); }
+				inline void GetTextures(NiAPI::NiTexture** Textures, std::uint32_t MaxSize) const noexcept(true) { CKPE::vtbl_call<void>(0x78, this, Textures, MaxSize); }
+				inline void SaveToStream(void* Stream) const noexcept(true) { CKPE::vtbl_call<void>(0x80, this, Stream); }
+				inline void LoadFromStream(void* Stream) const noexcept(true) { CKPE::vtbl_call<void>(0x88, this, Stream); }
+				inline void PrefetchTextures() const noexcept(true) { CKPE::vtbl_call<void>(0x90, this); }
+				inline void LoadTextureSet(BSShaderTextureSet* TextureSet) const noexcept(true) { CKPE::vtbl_call<void>(0xA0, this, TextureSet); }
 				inline NiAPI::NiColor& SpecularColor() { return _SpecularColor; }
 				inline NiAPI::NiPointer<NiAPI::NiTexture> GetDiffuseTexture() const noexcept(true) { return _DiffuseTexture; }
 				inline NiAPI::NiPointer<NiAPI::NiTexture> GetNormalTexture() const noexcept(true) { return _NormalTexture; }

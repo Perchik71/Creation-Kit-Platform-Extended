@@ -25,22 +25,22 @@ namespace CKPE
 
 			void BSFile::DeleteInstance(bool ReleaseMemory) 
 			{
-				vtbl_call<void>(0x0, this, ReleaseMemory);
+				CKPE::vtbl_call<void>(0x0, this, ReleaseMemory);
 			}
 
 			std::uint64_t BSFile::GetFileSize() const noexcept(true)
 			{
-				return vtbl_call<std::uint64_t>(0x40, this);
+				return CKPE::vtbl_call<std::uint64_t>(0x40, this);
 			}
 
 			std::uint64_t BSFile::Read(void* buffer, std::uint64_t size) noexcept(true)
 			{
-				return vtbl_call<std::uint64_t>(0x28, this, buffer, size);
+				return CKPE::vtbl_call<std::uint64_t>(0x28, this, buffer, size);
 			}
 
 			std::uint64_t BSFile::Write(const void* buffer, std::uint64_t size) noexcept(true)
 			{
-				return vtbl_call<std::uint64_t>(0x30, this, buffer, size);
+				return CKPE::vtbl_call<std::uint64_t>(0x30, this, buffer, size);
 			}
 
 			bool BSFile::HKCreateInstance(BSFile* This, const char* fileName, std::uint32_t mode,

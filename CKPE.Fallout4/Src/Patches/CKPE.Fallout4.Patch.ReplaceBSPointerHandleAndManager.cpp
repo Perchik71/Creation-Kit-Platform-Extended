@@ -234,11 +234,11 @@ namespace CKPE
 					//static std::vector<std::uintptr_t> storage;
 
 					auto __InstallPatchByPatternMask = [&textRange](
-						const char* pattern_mask,	// pattern "? ? 00 E0 03"
+						const char* pattern_mask,		// pattern "? ? 00 E0 03"
 						std::size_t offset,				// offset from find patterns array
 						std::size_t count,				// count need change
-						std::size_t offset_find,			// offset from in once find pattern
-						const void* source,			// buffer
+						std::size_t offset_find,		// offset from in once find pattern
+						const void* source,				// buffer
 						std::size_t ssize				// buffer size
 						) -> std::size_t {
 							auto patterns = Patterns::FindsByMask(textRange.GetAddress(), textRange.GetSize(), pattern_mask);
@@ -306,11 +306,11 @@ namespace CKPE
 						};
 
 					auto __InstallPatchByPatternMaskEx = [&textRange](
-						const char* pattern_mask,				// pattern "? ? 00 E0 03"
+						const char* pattern_mask,					// pattern "? ? 00 E0 03"
 						std::size_t offset,							// offset from find patterns array
 						std::size_t count,							// count need change
-						std::size_t offset_find,						// offset from in once find pattern
-						const void* source,						// buffer
+						std::size_t offset_find,					// offset from in once find pattern
+						const void* source,							// buffer
 						std::size_t ssize,							// buffer size
 						std::initializer_list<std::size_t> excludes	// list exclude indexes
 						) -> std::size_t {

@@ -202,7 +202,7 @@ namespace CKPE
 					NiPoint3 m_kCenter;
 					union {
 						float m_fRadius;
-						int m_iRadiusAsInt;
+						std::int32_t m_iRadiusAsInt;
 					};
 				};
 

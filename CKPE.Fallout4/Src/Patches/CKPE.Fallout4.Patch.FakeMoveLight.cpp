@@ -86,16 +86,21 @@ namespace CKPE
 			{
 				if (!refr || !pos) return;
 
-				if (dir)
+				auto pick = EditorAPI::BGSRenderWindow::Singleton->GetPickHandler();
+				if (pick->Count > 1)
 				{
-					if (*dir == EditorAPI::NiAPI::ZERO_P3)
-						data_FakeMoveLight_coord = EditorAPI::NiAPI::ZERO_P3;
-
-					auto pick = EditorAPI::BGSRenderWindow::Singleton->GetPickHandler();
-					if (pick->Count > 1)
+					if (refr->GetParent()->GetFormType() == EditorAPI::Forms::TESForm::ftLight)
 					{
-						if (refr->GetParent()->GetFormType() == EditorAPI::Forms::TESForm::ftLight)
+						auto Extras = refr->GetExtraData();
+						auto LinkedRef = Extras->GetByType<EditorAPI::ExtraLinkedRef>();
+						// LinkedRefChildren only for lightbox form
+						//auto LinkedRefChildren = Extras->GetByType<EditorAPI::ExtraLinkedRefChildren>();
+						if (LinkedRef)
 						{
+							if (!dir)
+								// No move
+								return;
+
 							auto pos_refr = refr->GetPosition();
 
 							pos_refr += *pos - data_FakeMoveLight_coord;
@@ -107,7 +112,7 @@ namespace CKPE
 						}
 					}
 				}
-				
+
 				EditorAPI::Forms::TESObjectREFR::SetPosition(refr, pos);
 			}
 		}

@@ -258,22 +258,22 @@ namespace CKPE
 				Archive2::ReaderStream::~ReaderStream()
 				{
 					// ctd okay
-					//vtbl_call<void>(0x0, (void*)&RTTI);
+					//CKPE::vtbl_call<void>(0x0, (void*)&RTTI);
 				}
 
 				EResultError Archive2::ReaderStream::DoOpen() noexcept(true)
 				{
-					return vtbl_call<EResultError>(0x8, (void*)&RTTI);
+					return CKPE::vtbl_call<EResultError>(0x8, (void*)&RTTI);
 				}
 
 				void Archive2::ReaderStream::DoClose() noexcept(true)
 				{
-					vtbl_call<void>(0x10, (void*)&RTTI);
+					CKPE::vtbl_call<void>(0x10, (void*)&RTTI);
 				}
 
 				std::uint64_t Archive2::ReaderStream::DoGetKey() const noexcept(true)
 				{
-					return vtbl_call<std::uint64_t >(0x18, (void*)&RTTI);
+					return CKPE::vtbl_call<std::uint64_t >(0x18, (void*)&RTTI);
 				}
 
 				EResultError Archive2::ReaderStream::DoGetInfo(void*) noexcept(true)
@@ -283,12 +283,12 @@ namespace CKPE
 
 				void Archive2::ReaderStream::DoClone(void* p) const noexcept(true)
 				{
-					vtbl_call<void>(0x28, (void*)&RTTI, p);
+					CKPE::vtbl_call<void>(0x28, (void*)&RTTI, p);
 				}
 				
 				EResultError Archive2::ReaderStream::DoRead(void* Buffer, std::uint64_t Bytes, std::uint64_t& Read) const noexcept(true)
 				{
-					return vtbl_call<EResultError>(0x30, (void*)&RTTI, Buffer, Bytes, Read);
+					return CKPE::vtbl_call<EResultError>(0x30, (void*)&RTTI, Buffer, Bytes, Read);
 				}
 				
 				EResultError Archive2::ReaderStream::DoReadAt(void*, std::uint64_t, std::uint64_t, std::uint64_t&) const noexcept(true)
@@ -303,7 +303,7 @@ namespace CKPE
 				
 				EResultError Archive2::ReaderStream::DoSeek(std::int64_t p, SeekMode m, std::uint64_t& np) const noexcept(true)
 				{
-					return vtbl_call<EResultError>(0x48, (void*)&RTTI, p, m, &np);
+					return CKPE::vtbl_call<EResultError>(0x48, (void*)&RTTI, p, m, &np);
 				}
 				
 				EResultError Archive2::ReaderStream::DoSetEndOfStream() noexcept(true)
@@ -331,17 +331,17 @@ namespace CKPE
 				
 				EResultError Archive2::ReaderStream::DoPrefetchAll(std::uint32_t a) const noexcept(true)
 				{
-					return vtbl_call<EResultError>(0x70, (void*)&RTTI, a);
+					return CKPE::vtbl_call<EResultError>(0x70, (void*)&RTTI, a);
 				}
 				
 				bool Archive2::ReaderStream::GetFileName(BSFixedString& result) const noexcept(true)
 				{
-					return vtbl_call<bool>(0x78, (void*)&RTTI, &result);
+					return CKPE::vtbl_call<bool>(0x78, (void*)&RTTI, &result);
 				}
 				
 				EResultError Archive2::ReaderStream::DoCreateAsync(void* unk) const noexcept(true)
 				{
-					return vtbl_call<EResultError>(0x80, (void*)&RTTI, unk);
+					return CKPE::vtbl_call<EResultError>(0x80, (void*)&RTTI, unk);
 				}
 				
 				bool Archive2::ReaderStream::DoQTaggedPrioritizedReadSupported() const noexcept(true)

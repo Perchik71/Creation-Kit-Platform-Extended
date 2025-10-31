@@ -21,15 +21,15 @@ namespace CKPE
 			{
 			public:
 				inline BSFixedString GetTextureFilenameFS(std::uint32_t Index) const noexcept(true)
-				{ return vtbl_call<BSFixedString>(0x150, this, Index); }
+				{ return CKPE::vtbl_call<BSFixedString>(0x150, this, Index); }
 				inline const char* GetTextureFilename(std::uint32_t Index) const noexcept(true) 
-				{ return vtbl_call<const char*>(0x158, this, Index); }
+				{ return CKPE::vtbl_call<const char*>(0x158, this, Index); }
 
 				inline void GetTexture(std::uint32_t Index, NiAPI::NiPointer<NiAPI::NiTexture>& Texture, 
 					bool Unk1 = true) const noexcept(true) 
-				{ return vtbl_call<void>(0x168, this, Index, Texture, Unk1); }
+				{ return CKPE::vtbl_call<void>(0x168, this, Index, Texture, Unk1); }
 				inline void SetTextureFilename(std::uint32_t Index, const char* FileName) const noexcept(true) 
-				{ return vtbl_call<void>(0x170, this, Index, FileName); }
+				{ return CKPE::vtbl_call<void>(0x170, this, Index, FileName); }
 			};
 			static_assert(sizeof(BSTextureSet) == 0x10);
 

@@ -97,7 +97,7 @@ namespace CKPE
 					auto f = (std::uintptr_t)(*(std::uintptr_t*)a1);
 					if (((std::uintptr_t)GetModuleHandleA(nullptr) & 0xffffffff00000000) ==
 						(*((std::uintptr_t*)(f + 0x190)) & 0xffffffff00000000))
-						vtbl_call<void>((std::size_t)0x190, (void*)a1, a2, 0);
+						CKPE::vtbl_call<void>((std::size_t)0x190, (void*)a1, a2, 0);
 				}
 			}
 		}

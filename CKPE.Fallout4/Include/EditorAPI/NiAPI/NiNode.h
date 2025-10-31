@@ -18,9 +18,9 @@ namespace CKPE
 			{
 				class NiNode : public NiAVObject
 				{
-					NiTObjectArray<NiPointer<NiAVObject>> _array_objs;
-					BSTAtomicValue<std::uint32_t> _dirtyState;
-					float _meshLODFadeAmount;
+					NiTObjectArray<NiPointer<NiAVObject>> _array_objs;	// 0x120
+					BSTAtomicValue<std::uint32_t> _dirtyState;			// 0x138
+					float _meshLODFadeAmount;							// 0x13C
 				public:
 					virtual ~NiNode() = default;
 				};

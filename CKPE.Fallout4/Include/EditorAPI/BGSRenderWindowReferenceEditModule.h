@@ -17,13 +17,6 @@ namespace CKPE
 			{
 			public:
 				virtual ~BGSRenderWindowReferenceEditModule() = default;
-
-				void MoveSelectObjects(NiAPI::NiPoint3* NewPosition, std::int32_t Unk = 0);
-				void MoveSelectObjectsExtremly(NiAPI::NiPoint3* NewPosition, std::int32_t Unk = 0);
-				void MoveSelectObjectsExtremlyNG(NiAPI::NiPoint3* NewPosition, std::int32_t Unk = 0);
-
-				bool ComputeGridOrConnectPoint(const NiAPI::NiPoint3& Position, NiAPI::NiPoint3& OffsetInstant,
-					NiAPI::NiPoint3& NewPosition, uint32_t Index, uint32_t Count) const;
 			private:
 				//									00 - vtable
 				BGSRenderWindow* _Renderer;		//	08 - render	

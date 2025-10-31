@@ -42,6 +42,9 @@ namespace CKPE
 			std::uintptr_t pointer_MainWindow_sub2 = 0;
 			std::uintptr_t pointer_MainWindow_sub3 = 0;
 
+			extern std::uint32_t* pointer_ReplaceBSPointerHandleAndManager_data1;
+			extern std::uint32_t* pointer_ReplaceBSPointerHandleAndManager_data2;
+
 			struct VersionControlListItem
 			{
 				char* EditorId;
@@ -449,8 +452,8 @@ namespace CKPE
 								{
 									if (ExtremlyMode == 1)
 									{
-										auto head = EditorAPI::BSPointerHandleManager_Extended_NG::GetHead();
-										auto tail = EditorAPI::BSPointerHandleManager_Extended_NG::GetTail();
+										auto head = *pointer_ReplaceBSPointerHandleAndManager_data2;
+										auto tail = *pointer_ReplaceBSPointerHandleAndManager_data1;
 
 										Console::LogWarning(Console::SYSTEM,
 											"Dump SDM Info:\n\tHead: 0x%08X\n\tTail: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",
@@ -460,8 +463,8 @@ namespace CKPE
 									}
 									else
 									{
-										auto head = EditorAPI::BSPointerHandleManager_Original::GetHead();
-										auto tail = EditorAPI::BSPointerHandleManager_Original::GetTail();
+										auto head = *pointer_ReplaceBSPointerHandleAndManager_data2;
+										auto tail = *pointer_ReplaceBSPointerHandleAndManager_data1;
 
 										Console::LogWarning(Console::SYSTEM,
 											"Dump SDM Info:\n\tHead: 0x%08X\n\tTail: 0x%08X\n\tMax: 0x%08X\n\tCapacity: %.2f%%",

@@ -29,7 +29,7 @@ namespace CKPE
 							kTypeShade = 1
 						};
 
-						inline void GetType() const { vtbl_call<void>(REL_GETTYPE, this); }
+						inline void GetType() const { CKPE::vtbl_call<void>(REL_GETTYPE, this); }
 					};
 
 					template<typename T>
