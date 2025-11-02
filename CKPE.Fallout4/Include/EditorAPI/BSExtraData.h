@@ -5,13 +5,14 @@
 #pragma once
 
 #include <CKPE.Asserts.h>
-#include <CKPE.Common.MemoryManager.h>
+#include <CKPE.Common.RTTI.h>
 #include "NiAPI/NiFlags.h"
 #include "NiAPI/NiPointer.h"
 #include "NiAPI/NiTypes.h"
 #include "NiAPI/NiAVObject.h"
 #include "NiAPI/NiPointLight.h"
 #include "BSLight.h"
+#include "BSLines.h"
 #include "BSTArray.h"
 #include "ObjectRefHandle.h"
 #include "BSLock.h"
@@ -33,6 +34,8 @@ namespace CKPE
 				class BGSKeyword;
 				class BGSMaterialSwap;
 			}
+
+			class BGSPrimitive;
 
 			class BSExtraData
 			{
@@ -502,29 +505,18 @@ namespace CKPE
 			};
 			static_assert(sizeof(ExtraEnableStateParent) == 0x20);
 
-			/*class ExtraPrimitive : public BSExtraData
+			class ExtraPrimitive : public BSExtraData
 			{
-				float _radius;
+				BGSPrimitive* _Primitive{ nullptr };
 			public:
 				static constexpr auto TYPE{ kPrimitive };
 
-				ExtraPrimitive(float Radius) : BSExtraData(TYPE), _radius(Radius) {}
+				ExtraPrimitive(BGSPrimitive* Primitive) : BSExtraData(TYPE), _Primitive(Primitive) {}
 				virtual ~ExtraPrimitive() = default;
 
-				[[nodiscard]] float Get() const noexcept(true) { return _radius; }
-				void Set(float Radius) noexcept(true) { _radius = Radius; }
-
-				CKPE_PROPERTY(Get, Set) float Value;
+				[[nodiscard]] BGSPrimitive* Get() const noexcept(true) { return _Primitive; }
 			};
-			static_assert(sizeof(ExtraPrimitive) == 0x20);*/
-
-
-			//`class BGSPrimitive`: VTable[0x0000000002F8BD68, 0x0000000000000000 offset, 6 functions] `. ? AVBGSPrimitive@@`
-			//	`class BGSPrimitivePlane`: VTable[0x0000000002F8BDB0, 0x0000000000000000 offset, 8 functions] `. ? AVBGSPrimitivePlane@@`
-			//	`class BGSPrimitiveBox`: VTable[0x0000000002F8BE08, 0x0000000000000000 offset, 7 functions] `. ? AVBGSPrimitiveBox@@`
-			//	`class BGSPrimitiveLine`: VTable[0x0000000002F8BE58, 0x0000000000000000 offset, 7 functions] `. ? AVBGSPrimitiveLine@@`
-			//	`class BGSPrimitiveSphere`: VTable[0x0000000002F8BEA8, 0x0000000000000000 offset, 6 functions] `. ? AVBGSPrimitiveSphere@@`
-			//	`class BGSPrimitiveEllipsoid`: VTable[0x0000000002F8BEF0, 0x0000000000000000 offset, 6 functions] `. ? AVBGSPrimitiveEllipsoid@@`
+			static_assert(sizeof(ExtraPrimitive) == 0x20);
 
 			class ExtraReferenceHandles : public BSExtraData
 			{
@@ -673,6 +665,17 @@ namespace CKPE
 					return nullptr;
 				}
 
+				void Dump(void(*Callback)(const char*, ...)) const noexcept(true)
+				{
+					for (auto iter = _head; iter; iter = iter->GetNext())
+					{
+						auto rtti = Common::RTTI::GetSingleton()->Find(*((std::uintptr_t*)iter));
+						if (rtti)
+							Callback("\tExtra: type %X \"%s\" %p", (std::uint32_t)iter->GetType(), rtti->Name, iter);
+						else
+							Callback("\tExtra: type %X \"Unknow\" %p", (std::uint32_t)iter->GetType(), iter);
+					}
+				}
 			private:
 				//static constexpr std::size_t N = (BSExtraData::kTotal / 8) + 1;
 
@@ -728,46 +731,51 @@ namespace CKPE
 			class ExtraDataList : public BSIntrusiveRefCounted
 			{
 			public:
-				void AddExtra(BSExtraData* a_extra)
+				inline void AddExtra(BSExtraData* a_extra)
 				{
 					const BSAutoWriteLock l{ extraRWLock };
 					extraData.AddExtra(a_extra);
 				}
 
-				[[nodiscard]] BSExtraData* GetByType(std::uint8_t Type) const noexcept
+				[[nodiscard]] inline BSExtraData* GetByType(std::uint8_t Type) const noexcept(true)
 				{
 					const BSAutoReadLock l{ extraRWLock };
 					return extraData.GetByType(Type);
 				}
 
 				template <Detail::ExtraDataListConstraint T>
-				[[nodiscard]] T* GetByType() const noexcept
+				[[nodiscard]] inline T* GetByType() const noexcept(true)
 				{
 					return static_cast<T*>(GetByType(T::TYPE));
 				}
 
-				[[nodiscard]] bool HasType(std::uint8_t Type) const noexcept
+				[[nodiscard]] inline bool HasType(std::uint8_t Type) const noexcept(true)
 				{
 					const BSAutoReadLock l{ extraRWLock };
 					return extraData.HasType(Type);
 				}
 
 				template <Detail::ExtraDataListConstraint T>
-				[[nodiscard]] bool HasType() const noexcept
+				[[nodiscard]] inline bool HasType() const noexcept(true)
 				{
 					return HasType(T::TYPE);
 				}
 
-				std::unique_ptr<BSExtraData> RemoveExtra(std::uint8_t Type)
+				inline std::unique_ptr<BSExtraData> RemoveExtra(std::uint8_t Type)
 				{
 					const BSAutoWriteLock l{ extraRWLock };
 					return extraData.RemoveExtra(Type);
 				}
 
 				template <Detail::ExtraDataListConstraint T>
-				std::unique_ptr<T> RemoveExtra()
+				inline std::unique_ptr<T> RemoveExtra()
 				{
 					return std::unique_ptr<T>{ static_cast<T*>(RemoveExtra(T::TYPE).release()) };
+				}
+
+				inline void Dump(void(*Callback)(const char*, ...)) const noexcept(true)
+				{
+					extraData.Dump(Callback);
 				}
 
 				// members

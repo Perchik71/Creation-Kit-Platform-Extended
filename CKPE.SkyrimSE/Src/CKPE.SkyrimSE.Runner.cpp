@@ -90,7 +90,6 @@
 #include <Patches/CKPE.SkyrimSE.Patch.FlowChartX.h>
 #include <Patches/CKPE.SkyrimSE.Patch.IgnoreGroundHeightTest.h>
 #include <Patches/CKPE.SkyrimSE.Patch.IncreaseMaximumNavmesh.h>
-#include <Patches/CKPE.SkyrimSE.Patch.LightRadiusMessage.h>
 #include <Patches/CKPE.SkyrimSE.Patch.LipGen.h>
 #include <Patches/CKPE.SkyrimSE.Patch.LoadDDSFile.h>
 #include <Patches/CKPE.SkyrimSE.Patch.LoadOptimization.h>
@@ -221,7 +220,6 @@ namespace CKPE
 			mgr->Register(new Patch::FlowChartX);
 			mgr->Register(new Patch::IgnoreGroundHeightTest);
 			mgr->Register(new Patch::IncreaseMaximumNavmesh);
-			mgr->Register(new Patch::LightRadiusMessage);
 			mgr->Register(new Patch::LipGen);
 			mgr->Register(new Patch::LoadDDSFile);
 			mgr->Register(new Patch::LoadOptimization);

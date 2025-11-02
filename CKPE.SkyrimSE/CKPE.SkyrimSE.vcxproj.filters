@@ -347,9 +347,6 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.MemoryLeakBSString.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.LightRadiusMessage.cpp">
-      <Filter>Patches</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.NavMeshPseudoDelete.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -961,9 +958,6 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.MemoryLeakBSString.h">
-      <Filter>Patches</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.LightRadiusMessage.h">
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.NavMeshPseudoDelete.h">

@@ -109,7 +109,7 @@ namespace CKPE
 
 			void CrashDump::DoOutputVersion(std::string& Result) noexcept(true)
 			{
-				Result = "SSE CKPE Game Library " VER_FILE_VERSION_STR " " __DATE__ " " __TIME__;
+				Result = "FO4 CKPE Game Library " VER_FILE_VERSION_STR " " __DATE__ " " __TIME__;
 			}
 
 			void CrashDump::DoAnalyzeClassRef(std::uintptr_t Address, const char* RttiName, std::string& Result)

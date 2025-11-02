@@ -585,9 +585,6 @@
     <ClInclude Include="Include\EditorAPI\Forms\TESCondition.h">
       <Filter>EditorAPI\Forms</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\Forms\BGSPrimitive.h">
-      <Filter>EditorAPI\Forms</Filter>
-    </ClInclude>
     <ClInclude Include="Include\EditorAPI\Forms\BGSLayer.h">
       <Filter>EditorAPI\Forms</Filter>
     </ClInclude>
@@ -819,9 +816,6 @@
     <ClInclude Include="Include\EditorAPI\Forms\BGSKeyword.h">
       <Filter>EditorAPI\Forms</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BGSPrimitive.h">
-      <Filter>EditorAPI</Filter>
-    </ClInclude>
     <ClInclude Include="Include\EditorAPI\NiAPI\NiLight.h">
       <Filter>EditorAPI\NiAPI</Filter>
     </ClInclude>
@@ -838,6 +832,15 @@
       <Filter>EditorAPI</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\BSPortalGraph.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSLines.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSPrimitive.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSGraphics.h">
       <Filter>EditorAPI</Filter>
     </ClInclude>
   </ItemGroup>

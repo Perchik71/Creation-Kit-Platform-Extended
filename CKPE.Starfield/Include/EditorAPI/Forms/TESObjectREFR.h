@@ -1,6 +1,6 @@
 // Copyright © 2024 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
-// License: https://www.gnu.org/licenses/gpl-3.0.html
+// License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Utils.h>
 
@@ -32,6 +32,8 @@ namespace CKPE
 					std::uint16_t _Scale;
 					std::uint16_t UnkNum;
 				public:
+					constexpr static uint8_t TYPE_ID = TESForm::FormType::ftReference;
+
 					// The function returns BSFadeNode, it has not been studied, I use parent class
 					[[nodiscard]] inline NiAPI::NiNode* GetFadeNode() const noexcept(true)
 					{

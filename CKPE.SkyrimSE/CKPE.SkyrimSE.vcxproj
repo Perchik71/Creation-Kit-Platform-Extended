@@ -225,7 +225,6 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FlowChartX.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.IgnoreGroundHeightTest.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.IncreaseMaximumNavmesh.cpp" />
-    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.LightRadiusMessage.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.LipGen.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.LoadDDSFile.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.LoadOptimization.cpp" />
@@ -424,7 +423,6 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FlowChartX.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.IgnoreGroundHeightTest.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.IncreaseMaximumNavmesh.h" />
-    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.LightRadiusMessage.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.LipGen.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.LoadDDSFile.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.LoadOptimization.h" />

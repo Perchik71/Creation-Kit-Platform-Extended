@@ -63,6 +63,18 @@ namespace CKPE
 			static HMENU ExtensionMenuHideFunctionsHandle = nullptr;
 			static char newMainWindowClass[250];
 
+			static void OutputRefrAdditionalInfo(EditorAPI::Forms::TESObjectREFR* Refr)
+			{
+				auto Extras = Refr->GetExtraData();
+				if (Extras)
+					Extras->Dump([](const char* fmt, ...) {
+						va_list ap;
+						va_start(ap, fmt);
+						_CONSOLEVA(fmt, ap);
+						va_end(ap);
+						});
+			}
+
 			static void OutputFormInfo(std::uint32_t FormID) noexcept(true)
 			{
 				if (FormID > 0)
@@ -77,6 +89,9 @@ namespace CKPE
 
 							_CONSOLE("DebugInfo -> %s type %02X ptr %p",
 								szBuf, (std::uint16_t)form->Type, form);
+
+							if (form->Type == EditorAPI::Forms::TESObjectREFR::TYPE_ID)
+								OutputRefrAdditionalInfo((EditorAPI::Forms::TESObjectREFR*)form);
 						}
 					}
 					__except (EXCEPTION_EXECUTE_HANDLER)
