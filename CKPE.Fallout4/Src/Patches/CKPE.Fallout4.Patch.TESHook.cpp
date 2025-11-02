@@ -49,8 +49,8 @@ namespace CKPE
 				if (db->GetVersion() != 1)
 					return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				auto _interface = CKPE::Common::Interface::GetSingleton();
+				auto base = _interface->GetApplication()->GetBase();
 
 				EditorAPI::TES::Singleton = (const EditorAPI::TES**)__CKPE_OFFSET(0);
 

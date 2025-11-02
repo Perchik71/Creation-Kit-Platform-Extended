@@ -53,8 +53,8 @@ namespace CKPE
 				if (db->GetVersion() != 1)
 					return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				auto _interface = CKPE::Common::Interface::GetSingleton();
+				auto base = _interface->GetApplication()->GetBase();
 
 				// This function returns Form, for preprocessing visibility, however, 
 				// sometimes this function returns a Form that is not a Cell. This is an error, 

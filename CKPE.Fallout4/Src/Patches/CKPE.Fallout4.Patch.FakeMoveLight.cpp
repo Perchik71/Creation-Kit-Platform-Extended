@@ -53,8 +53,8 @@ namespace CKPE
 				if (db->GetVersion() != 1)
 					return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				auto _interface = CKPE::Common::Interface::GetSingleton();
+				auto base = _interface->GetApplication()->GetBase();
 
 				// When lightbox and light nodes move together, and when lightbox is in the first queue, 
 				// light gets a relative position from the origin, is it caused by the fact that coordinates are not stored 

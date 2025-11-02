@@ -20,6 +20,7 @@
 #include <Patches/CKPE.Fallout4.Patch.Console.h>
 #include <Patches/CKPE.Fallout4.Patch.CrashConditionItemGetCrime.h>
 #include <Patches/CKPE.Fallout4.Patch.CrashDump.h>
+#include <Patches/CKPE.Fallout4.Patch.CrashInvalidStrings.h>
 #include <Patches/CKPE.Fallout4.Patch.CreateDDS.h>
 #include <Patches/CKPE.Fallout4.Patch.D3D11.h>
 #include <Patches/CKPE.Fallout4.Patch.DataWindow.h>
@@ -104,6 +105,7 @@ namespace CKPE
 			mgr->Register(new Patch::Console);
 			mgr->Register(new Patch::CrashConditionItemGetCrime);
 			mgr->Register(new Patch::CrashDump);
+			mgr->Register(new Patch::CrashInvalidStrings);
 			mgr->Register(new Patch::CreateDDS);
 			mgr->Register(new Patch::D3D11);
 			mgr->Register(new Patch::DataWindow);

@@ -114,8 +114,8 @@ namespace CKPE
 
 			bool ReplaceBSPointerHandleAndManager::Install_163(Common::RelocatorDB::PatchDB* db, bool Extremly) noexcept(true)
 			{
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				auto _interface = CKPE::Common::Interface::GetSingleton();
+				auto base = _interface->GetApplication()->GetBase();
 
 				if (Extremly)
 				{
@@ -142,7 +142,7 @@ namespace CKPE
 					pointer_ReplaceBSPointerHandleAndManager_code4 = __CKPE_OFFSET(12);
 
 					// Cutting a lot is faster this way
-					auto stext = interface->GetApplication()->GetSegment(Segment::text);
+					auto stext = _interface->GetApplication()->GetSegment(Segment::text);
 					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
 					// Stub out the rest of the functions which shouldn't ever be called now
@@ -185,8 +185,8 @@ namespace CKPE
 
 			bool ReplaceBSPointerHandleAndManager::Install_980(Common::RelocatorDB::PatchDB* db, bool Extremly) noexcept(true)
 			{
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				auto _interface = CKPE::Common::Interface::GetSingleton();
+				auto base = _interface->GetApplication()->GetBase();
 
 				auto restoring_destroy1 = [](std::uintptr_t rva, std::uint32_t removal_size, std::uintptr_t func)
 					{
@@ -220,7 +220,7 @@ namespace CKPE
 						(std::uintptr_t)&EditorAPI::BSPointerHandleManager_Extended_NG::KillSDM);
 
 					// Cutting a lot is faster this way
-					auto textRange = interface->GetApplication()->GetSegment(Segment::text);
+					auto textRange = _interface->GetApplication()->GetSegment(Segment::text);
 					ScopeSafeWrite text(textRange.GetAddress(), textRange.GetSize());
 
 					auto addr = __CKPE_OFFSET(0);

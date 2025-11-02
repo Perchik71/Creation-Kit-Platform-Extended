@@ -197,6 +197,17 @@ namespace CKPE
 				}
 			}
 
+			auto entry_exist = std::find_if(_entries->begin(), _entries->end(), [&name](const Entry& e) -> bool {
+				return !_stricmp(e.patch->GetName().c_str(), name.c_str());
+				});
+
+			if (entry_exist != _entries->end())
+			{
+				_ERROR("PatchManager::Register found this patch with same name \"%s\" in db class \"%s\" and \"%s\"", name.c_str(),
+					typeid(patch).name(), typeid(entry_exist->patch).name());
+				return;
+			}
+
 			auto db = Relocator::GetSingleton()->GetByName(name);
 			if (!db)
 			{

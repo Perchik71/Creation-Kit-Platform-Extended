@@ -49,8 +49,8 @@ namespace CKPE
 				if (db->GetVersion() != 1)
 					return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				auto _interface = CKPE::Common::Interface::GetSingleton();
+				auto base = _interface->GetApplication()->GetBase();
 
 				static auto data = __CKPE_OFFSET(0);
 				static auto active_data = __CKPE_OFFSET(1);

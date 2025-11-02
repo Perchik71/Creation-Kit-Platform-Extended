@@ -52,8 +52,8 @@ namespace CKPE
 				if (db->GetVersion() != 1)
 					return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				auto _interface = CKPE::Common::Interface::GetSingleton();
+				auto base = _interface->GetApplication()->GetBase();
 
 				// In versions CK 1.10.980+, normalization is incorrect
 				// Do you know this is the second time in a row, previously it was with Skyrim, 

@@ -155,6 +155,7 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.Console.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.CrashConditionItemGetCrime.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.CrashDump.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.CrashInvalidStrings.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.CreateDDS.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.D3D11.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.DataWindow.cpp" />
@@ -333,6 +334,7 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.Console.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.CrashConditionItemGetCrime.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.CrashDump.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.CrashInvalidStrings.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.CreateDDS.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.D3D11.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.DataWindow.h" />

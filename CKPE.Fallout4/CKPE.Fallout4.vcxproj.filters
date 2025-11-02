@@ -281,6 +281,9 @@
     <ClCompile Include="Src\EditorAPI\ObjectRefHandle.cpp">
       <Filter>EditorAPI</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.CrashInvalidStrings.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -842,6 +845,9 @@
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\BSGraphics.h">
       <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.CrashInvalidStrings.h">
+      <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
