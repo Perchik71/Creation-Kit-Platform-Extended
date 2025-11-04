@@ -50,6 +50,7 @@
 #include <Patches/CKPE.Fallout4.Patch.FixTabDeleteCrash.h>
 #include <Patches/CKPE.Fallout4.Patch.FixVC.h>
 #include <Patches/CKPE.Fallout4.Patch.FlowChartX.h>
+#include <Patches/CKPE.Fallout4.Patch.HavokRigidBodyCrash.h>
 #include <Patches/CKPE.Fallout4.Patch.IncreaseChunkSizeForSNAM.h>
 #include <Patches/CKPE.Fallout4.Patch.LayersWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.LoadShaders.h>
@@ -135,6 +136,7 @@ namespace CKPE
 			mgr->Register(new Patch::FixTabDeleteCrash);
 			mgr->Register(new Patch::FixVC);
 			mgr->Register(new Patch::FlowChartX);
+			mgr->Register(new Patch::HavokRigidBodyCrash);
 			mgr->Register(new Patch::IncreaseChunkSizeForSNAM);
 			mgr->Register(new Patch::LayersWindow);
 			mgr->Register(new Patch::LoadShaders);

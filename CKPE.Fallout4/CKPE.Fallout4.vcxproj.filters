@@ -284,6 +284,9 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.CrashInvalidStrings.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.HavokRigidBodyCrash.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -847,6 +850,9 @@
       <Filter>EditorAPI</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.CrashInvalidStrings.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.HavokRigidBodyCrash.h">
       <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>

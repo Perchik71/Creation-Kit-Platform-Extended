@@ -185,6 +185,7 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixTabDeleteCrash.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixVC.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FlowChartX.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.HavokRigidBodyCrash.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.IncreaseChunkSizeForSNAM.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.LayersWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.LoadShaders.cpp" />
@@ -364,6 +365,7 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixTabDeleteCrash.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixVC.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FlowChartX.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.HavokRigidBodyCrash.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.IncreaseChunkSizeForSNAM.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.LayersWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.LoadShaders.h" />
