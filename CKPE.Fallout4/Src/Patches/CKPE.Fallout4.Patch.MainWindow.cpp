@@ -261,8 +261,12 @@ namespace CKPE
 				
 				pointer_MainWindow_sub1 = __CKPE_OFFSET(1);
 				pointer_MainWindow_sub2 = Detours::DetourClassJump(__CKPE_OFFSET(2), (std::uintptr_t)&FogToggling);
-				pointer_MainWindow_sub3 = Detours::DetourClassJump(__CKPE_OFFSET(3), (std::uintptr_t)&MarkerToggling);
-				SafeWrite::WriteNop(__CKPE_OFFSET(3) + 0x12, 7);
+				
+				// only erase it first
+				auto rva = __CKPE_OFFSET(3);
+				SafeWrite::WriteNop(rva + 0x4, 7);
+				pointer_MainWindow_sub3 = Detours::DetourClassJump(rva, (std::uintptr_t)&MarkerToggling);
+				SafeWrite::WriteNop(rva + 0x12, 7);
 
 				Common::LogWindow::GetSingleton()->OnOpenFormById = DoOpenFormByIdHandler;
 
