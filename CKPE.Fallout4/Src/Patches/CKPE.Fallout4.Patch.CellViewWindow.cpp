@@ -344,7 +344,7 @@ namespace CKPE
 
 					// Skip the entry if "Show only active cells" is checked
 					if (static_cast<bool>(GetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_ACTIVE_CELLS_ONLY)))
-						*allowInsert = form->Active;
+						*allowInsert = form->Actived;
 
 					// Skip if a filter is installed and the form does not meet the requirements
 					if (*allowInsert && 
@@ -373,7 +373,7 @@ namespace CKPE
 
 					// Skip the entry if "Show only active objects" is checked
 					if (static_cast<bool>(GetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_ACTIVE_OBJECT_ONLY)))
-						*allowInsert = form->Active;
+						*allowInsert = form->Actived;
 
 					return 1;
 				}
