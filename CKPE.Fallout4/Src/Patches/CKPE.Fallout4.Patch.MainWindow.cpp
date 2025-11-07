@@ -107,7 +107,7 @@ namespace CKPE
 				{
 					auto form = EditorAPI::Forms::TESForm::FindFormByFormID(static_cast<std::uint32_t>(lParam));
 					if (form)
-						form->EditFormToWindow((std::int64_t)Hwnd, 0, 1);
+						form->EditFormToWindow(Hwnd, false, true, 0);
 				}
 				__except (1)
 				{

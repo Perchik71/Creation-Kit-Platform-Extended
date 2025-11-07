@@ -7,6 +7,7 @@
 #include "TESBoundObject.h"
 #include "TESCellUseList.h"
 #include "TESFullName.h"
+#include "BGSKeyword.h"
 #include "BGSModelMaterialSwap.h"
 
 namespace CKPE
@@ -27,7 +28,7 @@ namespace CKPE
 					inline BGSModelMaterialSwap& GetMaleModel() { return _MaleModel; }
 					inline BGSModelMaterialSwap& GetWomanModel() { return _WomanModel; }
 					inline TESForm* GetRace() { return _RaceForm; }
-					inline TESForm** GetKeywords() { return _Keywords; }
+					inline BGSKeyword** GetKeywords() { return _Keywords; }
 					inline std::uint32_t GetKeywordCount() const { return _KeywordCount; }
 				private:
 					char padA8[0x8];
@@ -39,7 +40,7 @@ namespace CKPE
 					char pad1A0[0xB0];
 					// TESModelRDT
 					char pad250[0x80];
-					TESForm** _Keywords;
+					BGSKeyword** _Keywords;
 					std::uint32_t _KeywordCount;
 					char pad2DC[0xE4];
 				};

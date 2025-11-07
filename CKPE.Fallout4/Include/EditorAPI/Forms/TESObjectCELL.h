@@ -8,7 +8,7 @@
 #include <EditorAPI/NiAPI/NiFlags.h>
 #include "TESObjectLAND.h"
 #include "TESObjectREFR.h"
-#include "TESFullName.h"
+#include <EditorAPI/TESFullName.h>
 
 namespace CKPE
 {

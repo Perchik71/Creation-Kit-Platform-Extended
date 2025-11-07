@@ -6,9 +6,13 @@
 
 #include <cstdint>
 #include <CKPE.Common.h>
+#include <EditorAPI/TESFile.h>
 #include <EditorAPI/BSTArray.h>
 #include <EditorAPI/BSFixedString.h>
 #include <EditorAPI/NiAPI/NiFlags.h>
+#include <EditorAPI/BGSMod.h>
+#include <EditorAPI/BGSSoundTagComponent.h>
+#include <EditorAPI/BGSPreviewTransform.h>
 
 namespace CKPE
 {
@@ -24,7 +28,7 @@ namespace CKPE
 					std::uint32_t size;
 				};
 
-				class TESForm
+				class TESForm : public BaseFormComponent
 				{
 				public:
 					enum FormType : std::uint8_t
@@ -204,6 +208,15 @@ namespace CKPE
 						fsTemporary			= /*0E*/ 0x4000,		// not saved in CK
 					};
 
+					enum NavMeshGenerationImportOption : std::uint32_t
+					{
+						nmgiNone = 0,
+						nmgiCollisionGeometry,
+						nmgiBoundingBox,
+						nmgiFilter,
+						nmgiGround,
+					};
+
 					// 06
 					struct BSTrackingData 
 					{
@@ -212,6 +225,13 @@ namespace CKPE
 						std::uint16_t pad02;
 						std::uint8_t lastUser;		// 04 userID that last had this form checked out
 						std::uint8_t currentUser;	// 05 userID that has this form checked out
+					};
+
+					struct ENUM_FORM_ID
+					{
+						std::uint32_t ID;
+						char* StrType;
+						char StrType2[4];
 					};
 
 					using Array = BSTArray<TESForm*>;
@@ -226,30 +246,130 @@ namespace CKPE
 				public:
 					virtual ~TESForm() = default;
 
-					void MarkAsDeleted(bool Value = true) const noexcept(true);
-					void MarkAsChanged(bool Value = true) const noexcept(true);
-					void EditFormToWindow(std::int64_t hParentWnd, std::int64_t a1, std::int64_t a2) noexcept(true);
-					void SetNewFormID(std::uint32_t NewIndex, bool Unk = true) noexcept(true);
-					bool CanPreview() const noexcept(true);
-					void DebugInfo(char* Buffer, std::uint32_t BufferSize) const noexcept(true);
+					/* 0A8 */ virtual void InitializeData();
+					/* 0B0 */ virtual void ClearData();
+					/* 0B8 */ virtual void Load(TESFile* File);
+					/* 0C0 */ virtual void LoadPartial(TESFile* File);
+					/* 0C8 */ virtual void LoadEdit(TESFile* File);
+					/* 0D0 */ virtual void Save(TESFile* File);
+					/* 0D8 */ virtual void SavePlugin(TESFile* File);
+					/* 0E0 */ virtual void LoadPlugin(TESFile* File);
+					/* 0E8 */ virtual void sub_0E8();
+					/* 0F0 */ virtual void sub_0F0();
+					/* 0F8 */ virtual void sub_0F8();
+					/* 100 */ virtual TESForm* CreateDuplicateForm(bool bCreateEditorID, void* Unk);
+					/* 108 */ virtual void sub_108();
+					/* 110 */ virtual void InitItemImpl() noexcept(true);
+					/* 118 */ [[nodiscard]] virtual TESFile* GetDescriptionOwnerFile() const noexcept(true);
+					/* 120 */ [[nodiscard]] virtual FormType GetFormType() const noexcept(true);
+					/* 128 */ virtual void DebugInfo(char* lpBuffer, std::uint32_t nBufferSize) const noexcept(true);
+					/* 130 */ [[nodiscard]] virtual bool HasKnown() const noexcept(true);
+					/* 138 */ [[nodiscard]] virtual bool HasRandomAnim() const noexcept(true);
+					/* 140 */ [[nodiscard]] virtual bool HasPlayable() const noexcept(true);
+					/* 148 */ [[nodiscard]] virtual bool IsHeadingMarker() const noexcept(true);
+					/* 150 */ [[nodiscard]] virtual bool IsHeadtrackMarker() const noexcept(true);
+					/* 158 */ [[nodiscard]] virtual bool HasDangerous() const noexcept(true);
+					/* 160 */ [[nodiscard]] virtual bool HasCurrents() const noexcept(true);
+					/* 168 */ [[nodiscard]] virtual bool HasObstacle() const noexcept(true);
+					/* 170 */ [[nodiscard]] virtual bool IsLODLandObject() const noexcept(true);
+					/* 178 */ [[nodiscard]] virtual bool HasOnLocalMap() const noexcept(true);
+					/* 180 */ [[nodiscard]] virtual bool HasMustUpdate() const noexcept(true);
+					/* 188 */ [[nodiscard]] virtual bool SetOnLocalMap(bool bValue) noexcept(true);
+					/* 190 */ [[nodiscard]] virtual bool HasIgnoredBySandbox() const noexcept(true);
+					/* 198 */ virtual void MarkAsDeleted(bool bValue = true) noexcept(true);
+					/* 1A0 */ virtual void MarkAsChanged(bool bValue = true) noexcept(true);
+					/* 1A8 */ [[nodiscard]] virtual NavMeshGenerationImportOption GetNavMeshGenerationImportOption() const noexcept(true);
+					/* 1B0 */ virtual void SaveObjectBound();
+					/* 1B8 */ virtual void LoadObjectBound(TESFile* pFile);
+					/* 1C0 */ virtual void SavePreviewTransform();
+					/* 1C8 */ virtual void LoadPreviewTransform(TESFile* pFile);
+					/* 1D0 */ [[nodiscard]] virtual bool IsBoundObject() const noexcept(true);
+					/* 1D8 */ [[nodiscard]] virtual bool IsObject() const noexcept(true);
+					/* 1E0 */ [[nodiscard]] virtual bool IsMagicItem() const noexcept(true);
+					/* 1E8 */ [[nodiscard]] virtual bool IsWater() const noexcept(true);
+					/* 1F0 */ [[nodiscard]] virtual TESForm* AsReference() noexcept(true);
+					/* 1F8 */ [[nodiscard]] virtual const TESForm* AsReference() const noexcept(true);
+					/* 200 */ virtual std::uint32_t GetRefCount() const noexcept(true);
+					/* 208 */ virtual const char* GetTextForParsedSubTag(const BSFixedString& sSubTag) const noexcept(true);
+					/* 210 */ virtual void CopyFrom(TESForm* Source) noexcept(true);
+					/* 218 */ [[nodiscard]] virtual std::int32_t Compare(TESForm* Rhs) const noexcept(true);
+					/* 220 */ virtual bool BelongsInGroup(TESForm* Group, bool bAllowParentGroups, bool bCurrentOnly);
+					/* 228 */ virtual void CreateGroupData(TESForm* OutGroupForm, TESForm* ParentGroup);
+					/* 230 */ [[nodiscard]] virtual std::uint32_t GetFormEditorIDLength() const noexcept(true);
+					/* 238 */ [[nodiscard]] virtual const char* GetFormEditorID() const noexcept(true);
+					/* 240 */ virtual void sub_240() { return; }
+					/* 248 */ virtual void sub_248() { return; }
+					/* 250 */ virtual void sub_250() { return; }
+					/* 258 */ virtual void sub_258() { return; }
+					/* 260 */ virtual void sub_260() { return; }
+					/* 268 */ virtual void sub_268() { return; }
+					/* 270 */ virtual void sub_270() { return; }
+					/* 278 */ virtual void sub_278() { return; }
+					/* 280 */ virtual void sub_280() { return; }
+					/* 288 */ virtual void sub_288() { return; }
+					/* 290 */ virtual void sub_290() { return; }
+					/* 298 */ virtual void sub_298() { return; }
+					/* 2A0 */ virtual void sub_2A0() { return; }
+					/* 2A8 */ virtual void sub_2A8() { return; }
+					/* 2B0 */ virtual void sub_2B0() { return; }
+					/* 2B8 */ virtual void sub_2B8() { return; }
+					/* 2C0 */ virtual void sub_2C0() { return; }
+					/* 2C8 */ virtual bool UpdateTrackingData() noexcept(true);
+					/* 2D0 */ virtual void sub_2D0() { return; }
+					/* 2D8 */ virtual void sub_2D8() { return; }
+					/* 2E0 */ virtual void sub_2E0() { return; }
+					/* 2E8 */ virtual void sub_2E8() { return; }
+					/* 2F0 */ virtual void sub_2F0() { return; }
+					/* 2F8 */ [[nodiscard]] virtual bool HasRequiredEditorID() const noexcept(true);
+					/* 300 */ [[nodiscard]] virtual bool DoVerificationEditorID(HWND hDialogBox) const noexcept(true);
+					/* 308 */ virtual void sub_308() { return; }
+					/* 310 */ virtual void sub_310() { return; }
+					/* 318 */ virtual void sub_318() { return; }
+					/* 320 */ virtual void sub_320() { return; }
+					/* 328 */ virtual void sub_328() { return; }
+					/* 330 */ virtual void sub_330() { return; }
+					/* 338 */ virtual void sub_338() { return; }
+					/* 340 */ virtual void EditFormToWindow(HWND hParentWnd, bool bModalWindow,
+						[[maybe_unused]] bool bUnk1, [[maybe_unused]] std::int32_t nUnk2) noexcept(true);
+					/* 348 */ virtual void sub_348() { return; }
+					/* 350 */ virtual void sub_350() { return; }
+					/* 358 */ virtual void sub_358() { return; }
+					/* 360 */ [[nodiscard]] virtual bool HasRequiredUniqueEditorID() const noexcept(true);
+					/* 368 */ virtual void sub_368() { return; }
+					/* 370 */ virtual void sub_370() { return; }
+					/* 378 */ virtual bool WriteWidthTabToSettingFile([[maybe_unused]] std::int64_t nUnk, std::int32_t nWidth) noexcept(true);
+					/* 380 */ virtual std::int32_t ReadWidthTabFromSettingFile() const noexcept(true);
+					/* 388 */ virtual std::int32_t GetSafeFormEditorID(char* lpBuffer, std::uint32_t nBufferSize) noexcept(true);
+					/* 390 */ virtual std::int32_t GetSafeFormEditorID(char* lpBuffer, std::uint32_t nBufferSize) const noexcept(true);
+					/* 398 */ virtual void SetNewFormID(std::uint32_t nNewFormID, bool bUpdateFile = true) noexcept(true);
+					/* 3A0 */ [[nodiscard]] virtual const char* GetObjectTypeName() const noexcept(true);
+					/* 3A8 */ [[nodiscard]] virtual bool HasAvailableInGame() const noexcept(true);
+					/* 3B0 */ [[nodiscard]] virtual BGSMod::Template::Items* GetObjectTemplate() const noexcept(true);
+					/* 3B8 */ [[nodiscard]] virtual BGSPreviewTransform* GetPreviewTransform() const noexcept(true);
+					/* 3C0 */ [[nodiscard]] virtual BGSSoundTagComponent* GetSoundTagComponent() const noexcept(true);
+					/* 3C8 */ [[nodiscard]] virtual std::uint32_t GetFilledSlots() const noexcept(true);
+					/* 3D0 */ [[nodiscard]] virtual std::uint32_t GetFilledSlotsImpl() const noexcept(true);
+					/* 3D8 */ [[nodiscard]] virtual float GetDesirability() const noexcept(true);
 
+					[[nodiscard]] inline std::uint32_t GetFormFlags() const noexcept(true) { return _FormFlags.Flags; }
 					[[nodiscard]] inline std::uint32_t GetFormID() const noexcept(true) { return _FormID; }
-					[[nodiscard]] inline FormType GetFormType() const noexcept(true) { return _FormType; }
-					[[nodiscard]] inline const char* GetEditorID() const noexcept(true) { return _EntryEditID; }
-					[[nodiscard]] const char* GetEditorID_orig() const noexcept(true);
+
 					// Not all forms have a localized name, but I'll add it here to simplify my life,
 					// since not all types of forms are known to me.
 					[[nodiscard]] const char* TryGetFullName() const noexcept(true);
 
-					[[nodiscard]] inline bool IsFromMaster() const noexcept(true) { return _FormFlags.Has(fsMaster); }
-					[[nodiscard]] inline bool IsModified() const noexcept(true) { return _FormFlags.Has(fsModified); }
-					[[nodiscard]] inline bool IsLinked() const noexcept(true) { return _FormFlags.Has(fsLinked); }
-					[[nodiscard]] inline bool IsDeleted() const noexcept(true) { return _FormFlags.Has(fsDeleted); }
-					[[nodiscard]] inline bool IsInitialDisabled() const noexcept(true) { return _FormFlags.Has(fsInitialDisabled); }
-					[[nodiscard]] inline bool IsIgnored() const noexcept(true) { return _FormFlags.Has(fsIgnored); }
-					[[nodiscard]] inline bool IsTemporary() const noexcept(true) { return _FormFlags.Has(fsTemporary); }
-					[[nodiscard]] inline bool IsQuestItem() const noexcept(true) { return _FormFlags.Has(fsQuestItem); }
+					[[nodiscard]] inline bool HasFromMaster() const noexcept(true) { return _FormFlags.Has(fsMaster); }
+					[[nodiscard]] inline bool HasModified() const noexcept(true) { return _FormFlags.Has(fsModified); }
+					[[nodiscard]] inline bool HasLinked() const noexcept(true) { return _FormFlags.Has(fsLinked); }
+					[[nodiscard]] inline bool HasDeleted() const noexcept(true) { return _FormFlags.Has(fsDeleted); }
+					[[nodiscard]] inline bool HasInitialDisabled() const noexcept(true) { return _FormFlags.Has(fsInitialDisabled); }
+					[[nodiscard]] inline bool HasIgnored() const noexcept(true) { return _FormFlags.Has(fsIgnored); }
+					[[nodiscard]] inline bool HasTemporary() const noexcept(true) { return _FormFlags.Has(fsTemporary); }
+					[[nodiscard]] inline bool HasQuestItem() const noexcept(true) { return _FormFlags.Has(fsQuestItem); }
 				
+					[[nodiscard]] bool IsPlayer() const noexcept(true) { return _FormID == 0x00000007; }
+					[[nodiscard]] bool IsPlayerRef() const noexcept(true) { return _FormID == 0x00000014; }
+
 					// Inaccurate, because there is a REFR class for this and it is of its own type (taken from SSE)
 					[[nodiscard]] inline bool IsReference() const noexcept(true)
 					{ 
@@ -258,13 +378,23 @@ namespace CKPE
 							(_FormType == FormType::ftCharacter); 
 					}
 
-					inline static TESForm* (*FindFormByFormID)(std::uint32_t);
+					[[nodiscard]] ENUM_FORM_ID GetSaveFormType() const noexcept(true);
+					bool SetFormEditorID(const char* NewEditorID) noexcept(true);
 
-					CKPE_READ_PROPERTY(IsModified) bool Active;
-					CKPE_READ_PROPERTY(GetFormID) std::uint32_t FormID;
-					CKPE_READ_PROPERTY(GetEditorID) const char* EditorID;
+					inline static TESForm* (*FindFormByFormID)(std::uint32_t);
+					inline static bool (*SetFormEditorIDImpl)(TESForm* _This, const char* NewEditorID);
+					inline static ENUM_FORM_ID* EnumFormIDs = nullptr;
+
+					CKPE_PROPERTY(HasModified, MarkAsChanged) bool Actived;
+					CKPE_PROPERTY(HasDeleted, MarkAsDeleted) bool Deleted;
+					CKPE_PROPERTY(GetFormID, SetNewFormID) std::uint32_t FormID;
+					CKPE_PROPERTY(GetFormEditorID, SetFormEditorID) const char* EditorID;
 					CKPE_READ_PROPERTY(TryGetFullName) const char* FullName;
 					CKPE_READ_PROPERTY(GetFormType) FormType Type;
+
+					CKPE_READ_PROPERTY(GetObjectTemplate) BGSMod::Template::Items* ObjectTemplate;
+					CKPE_READ_PROPERTY(GetPreviewTransform) BGSPreviewTransform* PreviewTransform;
+					CKPE_READ_PROPERTY(GetSoundTagComponent) BGSSoundTagComponent* SoundTagComponent;
 				};	
 				static_assert(sizeof(TESForm) == 0x28);
 

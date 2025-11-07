@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Release-NoAVX2|x64">
@@ -129,6 +129,7 @@
     <ClCompile Include="Src\CKPE.Fallout4.D3D11Shaders.cpp" />
     <ClCompile Include="Src\CKPE.Fallout4.Runner.cpp" />
     <ClCompile Include="Src\CKPE.Fallout4.VersionLists.cpp" />
+    <ClCompile Include="Src\EditorAPI\BaseFormComponent.cpp" />
     <ClCompile Include="Src\EditorAPI\BSFile.cpp" />
     <ClCompile Include="Src\EditorAPI\BSReadWriteLock.cpp" />
     <ClCompile Include="Src\EditorAPI\BSResourceArchive2.cpp" />
@@ -143,7 +144,10 @@
     <ClCompile Include="Src\EditorAPI\NiAPI\NiMemoryManager.cpp" />
     <ClCompile Include="Src\EditorAPI\NiAPI\NiRefObject.cpp" />
     <ClCompile Include="Src\EditorAPI\ObjectRefHandle.cpp" />
+    <ClCompile Include="Src\EditorAPI\TESDescription.cpp" />
     <ClCompile Include="Src\EditorAPI\TESFile.cpp" />
+    <ClCompile Include="Src\EditorAPI\TESFullName.cpp" />
+    <ClCompile Include="Src\EditorAPI\TESTexture.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.AddChangeRef.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.AllowMultipleWindowAndMaster.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.AllowSaveESMandMasterESP.cpp" />
@@ -226,13 +230,17 @@
     <ClInclude Include="Include\CKPE.Fallout4.D3D11Shaders.h" />
     <ClInclude Include="Include\CKPE.Fallout4.Runner.h" />
     <ClInclude Include="Include\CKPE.Fallout4.VersionLists.h" />
+    <ClInclude Include="Include\EditorAPI\BaseFormComponent.h" />
     <ClInclude Include="Include\EditorAPI\BGSLocalizedString.h" />
+    <ClInclude Include="Include\EditorAPI\BGSMod.h" />
     <ClInclude Include="Include\EditorAPI\BGSPickHandler.h" />
+    <ClInclude Include="Include\EditorAPI\BGSPreviewTransform.h" />
     <ClInclude Include="Include\EditorAPI\BGSPrimitive.h" />
     <ClInclude Include="Include\EditorAPI\BGSRenderWindow.h" />
     <ClInclude Include="Include\EditorAPI\BGSRenderWindowCamera.h" />
     <ClInclude Include="Include\EditorAPI\BGSRenderWindowEditModuleManager.h" />
     <ClInclude Include="Include\EditorAPI\BGSRenderWindowReferenceEditModule.h" />
+    <ClInclude Include="Include\EditorAPI\BGSSoundTagComponent.h" />
     <ClInclude Include="Include\EditorAPI\BGSUniqueObjectRef.h" />
     <ClInclude Include="Include\EditorAPI\BSAtomicValue.h" />
     <ClInclude Include="Include\EditorAPI\BSDynamicTriShape.h" />
@@ -271,24 +279,18 @@
     <ClInclude Include="Include\EditorAPI\BSTriShape.h" />
     <ClInclude Include="Include\EditorAPI\BSTSmartPointer.h" />
     <ClInclude Include="Include\EditorAPI\CRC.h" />
-    <ClInclude Include="Include\EditorAPI\Forms\BaseFormComponent.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSColorForm.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSKeyword.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSLayer.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSMaterialSwap.h" />
-    <ClInclude Include="Include\EditorAPI\Forms\BGSMod.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSModelMaterialSwap.h" />
-    <ClInclude Include="Include\EditorAPI\Forms\BGSPreviewTransform.h" />
-    <ClInclude Include="Include\EditorAPI\Forms\BGSSoundTagComponent.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSTransform.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSVoiceType.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESActorValue.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESBoundObject.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESCellUseList.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESCondition.h" />
-    <ClInclude Include="Include\EditorAPI\Forms\TESDescription.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESForm.h" />
-    <ClInclude Include="Include\EditorAPI\Forms\TESFullName.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESLandTexture.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESObject.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESObjectARMO.h" />
@@ -323,7 +325,10 @@
     <ClInclude Include="Include\EditorAPI\ObjectRefHandle.h" />
     <ClInclude Include="Include\EditorAPI\TES.h" />
     <ClInclude Include="Include\EditorAPI\TESDataHandler.h" />
+    <ClInclude Include="Include\EditorAPI\TESDescription.h" />
     <ClInclude Include="Include\EditorAPI\TESFile.h" />
+    <ClInclude Include="Include\EditorAPI\TESFullName.h" />
+    <ClInclude Include="Include\EditorAPI\TESTexture.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AddChangeRef.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AllowMultipleWindowAndMaster.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AllowSaveESMandMasterESP.h" />

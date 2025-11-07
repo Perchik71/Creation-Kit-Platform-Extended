@@ -6,9 +6,7 @@
 
 #include <EditorAPI/Forms/TESObject.h>
 #include <EditorAPI/Forms/TESCellUseList.h>
-#include <EditorAPI/Forms/BGSMod.h>
-#include <EditorAPI/Forms/BGSPreviewTransform.h>
-#include <EditorAPI/Forms/BGSSoundTagComponent.h>
+#include <EditorAPI/BGSMod.h>
 
 namespace CKPE
 {
@@ -35,13 +33,14 @@ namespace CKPE
 				public:
 					[[nodiscard]] inline TESBound GetBoundMin() const noexcept(true) { return _BoundMin; }
 					[[nodiscard]] inline TESBound GetBoundMax() const noexcept(true) { return _BoundMax; }
+
+					/*
+					Declare TESForm 
 					[[nodiscard]] inline const BGSPreviewTransform* GetPreviewTransform() const noexcept(true) { return &_PreviewTransform; }
-					[[nodiscard]] inline const BGSSoundTagComponent* GetSoundTagComponent() const noexcept(true) { return &_SoundTag; }
+					[[nodiscard]] inline const BGSSoundTagComponent* GetSoundTagComponent() const noexcept(true) { return &_SoundTag; }*/
 				public:
 					CKPE_READ_PROPERTY(GetBoundMin) TESBound BoundMin;
 					CKPE_READ_PROPERTY(GetBoundMax) TESBound BoundMax;
-					CKPE_READ_PROPERTY(GetPreviewTransform) const BGSPreviewTransform* PreviewTransform;
-					CKPE_READ_PROPERTY(GetSoundTagComponent) const BGSSoundTagComponent* SoundTagComponent;
 				};
 				static_assert(sizeof(TESBoundObject) == 0x90);
 

@@ -12,25 +12,22 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
-			namespace Forms
+			namespace BGSMod
 			{
-				namespace BGSMod
+				class Container
 				{
-					class Container
+				private:
+					char pad0[0x8];
+				};
+				static_assert(sizeof(Container) == 0x8);
+
+				namespace Template
+				{
+					class Items : public TESFullName, public Container
 					{
 					private:
-						char pad0[0x8];
 					};
-					static_assert(sizeof(Container) == 0x8);
-
-					namespace Template
-					{
-						class Items : public TESFullName, public Container
-						{
-						private:
-						};
-						static_assert(sizeof(Items) == 0x20);
-					}
+					static_assert(sizeof(Items) == 0x20);
 				}
 			}
 		}

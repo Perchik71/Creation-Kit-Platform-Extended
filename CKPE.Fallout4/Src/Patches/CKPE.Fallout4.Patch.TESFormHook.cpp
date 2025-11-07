@@ -54,8 +54,12 @@ namespace CKPE
 				auto interface = CKPE::Common::Interface::GetSingleton();
 				auto base = interface->GetApplication()->GetBase();
 
+				EditorAPI::Forms::TESForm::EnumFormIDs =
+					(EditorAPI::Forms::TESForm::ENUM_FORM_ID*)(__CKPE_OFFSET(0));
 				EditorAPI::Forms::TESForm::FindFormByFormID = 
 					decltype(EditorAPI::Forms::TESForm::FindFormByFormID)(__CKPE_OFFSET(1));
+				EditorAPI::Forms::TESForm::SetFormEditorIDImpl =
+					decltype(EditorAPI::Forms::TESForm::SetFormEditorIDImpl)(__CKPE_OFFSET(3));
 
 				return true;
 			}

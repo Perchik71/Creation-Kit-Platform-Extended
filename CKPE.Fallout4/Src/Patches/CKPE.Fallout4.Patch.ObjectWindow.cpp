@@ -435,7 +435,7 @@ namespace CKPE
 					// Skip the entry if "Show only active forms" is checked
 					if (static_cast<bool>(GetPropA(Hwnd, "ActiveOnly")))
 					{
-						if (form && !form->Active)
+						if (form && !form->Actived)
 							*allowInsert = false;
 					}
 

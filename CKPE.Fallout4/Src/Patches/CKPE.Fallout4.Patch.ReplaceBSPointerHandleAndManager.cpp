@@ -52,7 +52,7 @@ namespace CKPE
 
 			// There are strings in the Cascadia mod that lead to a crash.
 			// This will prevent a crash and return false in this case, hopefully the strings will be deleted when saving.
-			static bool sub_string_crash(void* unk)
+			/*static bool sub_string_crash(void* unk)
 			{
 				__try
 				{
@@ -62,7 +62,7 @@ namespace CKPE
 				{
 					return false;
 				}
-			}
+			}*/
 
 			ReplaceBSPointerHandleAndManager::ReplaceBSPointerHandleAndManager() : Common::Patch()
 			{
@@ -202,8 +202,8 @@ namespace CKPE
 						Detours::DetourCall(rva + 5, func);
 					};
 
-				*(std::uintptr_t*)&pointer_ReplaceBSPointerHandleAndManager_code1 =
-					Detours::DetourClassJump(__CKPE_OFFSET(6), (std::uintptr_t)&sub_string_crash);
+				/**(std::uintptr_t*)&pointer_ReplaceBSPointerHandleAndManager_code1 =
+					Detours::DetourClassJump(__CKPE_OFFSET(6), (std::uintptr_t)&sub_string_crash);*/
 
 				pointer_ReplaceBSPointerHandleAndManager_data1 = (std::uint32_t*)__CKPE_OFFSET(4);
 				pointer_ReplaceBSPointerHandleAndManager_data2 = (std::uint32_t*)__CKPE_OFFSET(5);

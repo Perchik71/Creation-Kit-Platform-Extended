@@ -8,7 +8,6 @@
 #include <EditorAPI/NiAPI/NiTypes.h>
 #include <EditorAPI/BSFixedString.h>
 #include <EditorAPI/Forms/TESForm.h>
-#include <EditorAPI/Forms/TESFullName.h>
 
 namespace CKPE
 {

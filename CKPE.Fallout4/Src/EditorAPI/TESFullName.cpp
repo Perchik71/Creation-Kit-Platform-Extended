@@ -4,21 +4,23 @@
 
 #pragma once
 
+#include <EditorAPI/TESFullName.h>
+
 namespace CKPE
 {
 	namespace Fallout4
 	{
 		namespace EditorAPI
 		{
-			namespace Forms
+			std::uint32_t TESFullName::GetFullNameLength() const noexcept(true)
+			{ 
+				return name.length(); 
+			}
+			
+			const char* TESFullName::GetFullName() const noexcept(true)
 			{
-				// 21 vtbl funcs (more purecall: no implementation)
-				class BaseFormComponent
-				{
-				public:
-					virtual ~BaseFormComponent() = default;
-				};
-				static_assert(sizeof(BaseFormComponent) == 0x8);
+				auto s = name.c_str();
+				return s ? s : "";
 			}
 		}
 	}

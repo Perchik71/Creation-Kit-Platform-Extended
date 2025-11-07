@@ -386,8 +386,10 @@ namespace CKPE
 											auto form = refrs[uId];
 											auto formType = form->Parent->GetFormType();
 
-											if (!form->IsDeleted()) {
-												switch (formType) {
+											if (!form->HasDeleted()) 
+											{
+												switch (formType) 
+												{
 												case EditorAPI::Forms::TESForm::ftActor:
 													npcs++;
 													break;
@@ -412,7 +414,7 @@ namespace CKPE
 									for (auto It = Items->First; i < TotalSel; It = It->Next, i++)
 									{
 										auto form = It->Ref;
-										if (form->IsDeleted()) continue;
+										if (form->HasDeleted()) continue;
 										switch (form->GetParent()->GetFormType())
 										{
 										case EditorAPI::Forms::TESForm::ftActor:
@@ -437,7 +439,7 @@ namespace CKPE
 							}
 
 
-							auto Name = ActiveCell->GetEditorID_orig();
+							auto Name = ActiveCell->EditorID;
 							if (!Name) Name = "";
 
 							ImGui::SameLine(0, 5);
