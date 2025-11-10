@@ -22,12 +22,14 @@ namespace CKPE
 			//{ 0xBAAF1B07ul, VersionLists::EDITOR_FALLOUT_C4_1_10_943_1	},	// No Steam and Redirect Steam
 			{ 0x481CCE95ul, VersionLists::EDITOR_FALLOUT_C4_1_10_982_3		},	// Redirect Steam
 			{ 0x55F7F580ul, VersionLists::EDITOR_FALLOUT_C4_1_10_982_3		},	// No Steam and Redirect Steam
+			{ 0x49E45284ul, VersionLists::EDITOR_FALLOUT_C4_1_11_137_0		},	// Default
 		};
 
 		// Список устаревших версий редакторов
 		static std::vector<VersionLists::EDITOR_EXECUTABLE_TYPE> _soutdatedEditorVersion =
 		{
 			VersionLists::EDITOR_FALLOUT_C4_1_10_943_1,
+			//VersionLists::EDITOR_FALLOUT_C4_1_10_982_3,
 		};
 
 		// Список ключевых смещений в исполняемых файлах, допущенных к запуску (но не точно)
@@ -37,6 +39,7 @@ namespace CKPE
 			{ 0x3896168ul, { "1.10.162.0",	VersionLists::EDITOR_FALLOUT_C4_1_10_162_0		} },
 			//{ 0x2F8D1C8ul, { "1.10.943.1",	VersionLists::EDITOR_FALLOUT_C4_1_10_943_1	} },
 			{ 0x2F8D298ul, { "1.10.982.3",	VersionLists::EDITOR_FALLOUT_C4_1_10_982_3		} },
+			{ 0x3017E68ul, { "1.11.137.0",	VersionLists::EDITOR_FALLOUT_C4_1_11_137_0		} },
 		};
 
 		// Список версий
@@ -46,6 +49,7 @@ namespace CKPE
 			MAKE_EXE_VERSION_EX(1, 10, 162, 0),
 			MAKE_EXE_VERSION_EX(1, 10, 943, 1),
 			MAKE_EXE_VERSION_EX(1, 10, 982, 3),
+			MAKE_EXE_VERSION_EX(1, 11, 137, 0),
 		};
 
 		// Список названий редакторов
@@ -55,6 +59,7 @@ namespace CKPE
 			L"Fallout 4 [v1.10.162.0]",
 			L"Fallout 4 [v1.10.943.1]",
 			L"Fallout 4 [v1.10.982.3]",
+			L"Fallout 4 [v1.11.137.0]",
 		};
 
 		// Список имён файлов базы данных
@@ -63,6 +68,7 @@ namespace CKPE
 			{ VersionLists::EDITOR_FALLOUT_C4_1_10_162_0,	L"CreationKitPlatformExtended_FO4_1_10_162.database"	},
 			//{ VersionLists::EDITOR_FALLOUT_C4_1_10_943_1,	L"CreationKitPlatformExtended_FO4_1_10_943_1.database"	},
 			{ VersionLists::EDITOR_FALLOUT_C4_1_10_982_3,	L"CreationKitPlatformExtended_FO4_1_10_982_3.database"	},
+			{ VersionLists::EDITOR_FALLOUT_C4_1_11_137_0,	L"CreationKitPlatformExtended_FO4_1_11_137_0.database" },
 		};
 
 		void VersionLists::Verify()

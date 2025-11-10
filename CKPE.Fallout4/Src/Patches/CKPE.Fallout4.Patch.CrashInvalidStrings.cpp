@@ -6,7 +6,9 @@
 #include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.RTTI.h>
 #include <CKPE.Fallout4.VersionLists.h>
+#include <EditorAPI/Forms/TESForm.h>
 #include <Patches/CKPE.Fallout4.Patch.CrashInvalidStrings.h>
 
 namespace CKPE
@@ -67,7 +69,22 @@ namespace CKPE
 				auto interface = CKPE::Common::Interface::GetSingleton();
 				auto base = interface->GetApplication()->GetBase();
 
-				pointer_CrashInvalidStrings_sub = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
+				auto rtti = Common::RTTI::GetSingleton()->Find("class TESForm");
+				if (rtti)
+				{
+				//	_CONSOLE("%llX", rtti->VTableAddress);
+
+				/*	*(std::uintptr_t*)&EditorAPI::Forms::TESForm::GetFormEditorIDLengthImpl =
+						Detours::DetourClassJump(*((std::uintptr_t*)(rtti->VTableAddress + 0x230)), 
+							&EditorAPI::Forms::TESForm::GetFormEditorIDLength);
+					*(std::uintptr_t*)&EditorAPI::Forms::TESForm::GetFormEditorIDImpl =
+						Detours::DetourClassJump(*((std::uintptr_t*)(rtti->VTableAddress + 0x238)),
+							&EditorAPI::Forms::TESForm::GetFormEditorID);*/
+
+					return true;
+				}
+
+				//pointer_CrashInvalidStrings_sub = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
 
 				return true;
 			}

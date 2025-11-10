@@ -295,8 +295,8 @@ namespace CKPE
 					/* 218 */ [[nodiscard]] virtual std::int32_t Compare(TESForm* Rhs) const noexcept(true);
 					/* 220 */ virtual bool BelongsInGroup(TESForm* Group, bool bAllowParentGroups, bool bCurrentOnly);
 					/* 228 */ virtual void CreateGroupData(TESForm* OutGroupForm, TESForm* ParentGroup);
-					/* 230 */ [[nodiscard]] virtual std::uint32_t GetFormEditorIDLength() const noexcept(true);
-					/* 238 */ [[nodiscard]] virtual const char* GetFormEditorID() const noexcept(true);
+					/* 230 */ [[nodiscard]] virtual std::uint32_t GetFormEditorIDLength() const;
+					/* 238 */ [[nodiscard]] virtual const char* GetFormEditorID() const;
 					/* 240 */ virtual void sub_240() { return; }
 					/* 248 */ virtual void sub_248() { return; }
 					/* 250 */ virtual void sub_250() { return; }
@@ -381,9 +381,11 @@ namespace CKPE
 					[[nodiscard]] ENUM_FORM_ID GetSaveFormType() const noexcept(true);
 					bool SetFormEditorID(const char* NewEditorID) noexcept(true);
 
-					inline static TESForm* (*FindFormByFormID)(std::uint32_t);
-					inline static bool (*SetFormEditorIDImpl)(TESForm* _This, const char* NewEditorID);
+					inline static TESForm* (*FindFormByFormID)(std::uint32_t) = nullptr;
+					inline static bool (*SetFormEditorIDImpl)(TESForm* _This, const char* NewEditorID) = nullptr;
 					inline static ENUM_FORM_ID* EnumFormIDs = nullptr;
+					inline static std::uint32_t (*GetFormEditorIDLengthImpl)(const TESForm* _This) = nullptr;
+					inline static const char* (*GetFormEditorIDImpl)(const TESForm* _This) = nullptr;
 
 					CKPE_PROPERTY(HasModified, MarkAsChanged) bool Actived;
 					CKPE_PROPERTY(HasDeleted, MarkAsDeleted) bool Deleted;

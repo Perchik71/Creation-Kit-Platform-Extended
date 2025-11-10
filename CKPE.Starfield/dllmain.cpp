@@ -26,13 +26,17 @@ extern "C"
 	{
 		CKPE::Starfield::VersionLists::Verify();
 		version = CKPE::Starfield::VersionLists::GetEditorVersionByString();
-		auto ver = CKPE::FileUtils::GetFileVersion(CKPE::PathUtils::GetApplicationFileName());
-		if (ver != CKPE::Starfield::VersionLists::GetEditorVersionByNum())
-			return CKPE::GameManager::FAKE;
-		if (CKPE::Starfield::VersionLists::HasAllowedEditorVersion())
-			return CKPE::GameManager::SUPPORTED;
-		if (CKPE::Starfield::VersionLists::HasOutdatedEditorVersion())
-			return CKPE::GameManager::DEPRECATED;
+		auto version_num = CKPE::Starfield::VersionLists::GetEditorVersionByNum();
+		if (version_num)
+		{
+			auto ver = CKPE::FileUtils::GetFileVersion(CKPE::PathUtils::GetApplicationFileName());
+			if (ver != version_num)
+				return CKPE::GameManager::FAKE;
+			if (CKPE::Starfield::VersionLists::HasAllowedEditorVersion())
+				return CKPE::GameManager::SUPPORTED;
+			if (CKPE::Starfield::VersionLists::HasOutdatedEditorVersion())
+				return CKPE::GameManager::DEPRECATED;
+		}
 		return CKPE::GameManager::UNSUPPORTED;
 	}
 

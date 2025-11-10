@@ -258,11 +258,14 @@ namespace CKPE
 					CKPE::vtbl_call<void>(0x228, this, OutGroupForm, ParentGroup);
 				}
 
-				std::uint32_t TESForm::GetFormEditorIDLength() const noexcept(true)
+				std::uint32_t TESForm::GetFormEditorIDLength() const
 				{
 					__try
 					{
-						return CKPE::vtbl_call<std::uint32_t>(0x230, this);
+						if (!GetFormEditorIDLengthImpl)
+							return CKPE::vtbl_call<std::uint32_t>(0x230, this);
+						else
+							return GetFormEditorIDLengthImpl(this);
 					}
 					__except (1)
 					{
@@ -273,11 +276,14 @@ namespace CKPE
 					}
 				}
 
-				const char* TESForm::GetFormEditorID() const noexcept(true)
+				const char* TESForm::GetFormEditorID() const
 				{
 					__try
 					{
-						return CKPE::vtbl_call<const char*>(0x238, this);
+						if (!GetFormEditorIDImpl)
+							return CKPE::vtbl_call<const char*>(0x238, this);
+						else
+							return GetFormEditorIDImpl(this);
 					}
 					__except (1)
 					{
