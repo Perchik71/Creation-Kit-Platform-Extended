@@ -1,4 +1,4 @@
-// Copyright © 2025 aka perchik71. All rights reserved.
+// Copyright В© 2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -14,7 +14,7 @@ namespace CKPE
 	{
 		VersionLists::EDITOR_EXECUTABLE_TYPE _seditor_ver{ VersionLists::EDITOR_UNKNOWN };
 
-		// Список проверенных исполняемых файлов, допущенных к запуску
+		// вЂ”РїРёСЃРѕРє РїСЂРѕРІРµСЂРµРЅРЅС‹С… РёСЃРїРѕР»РЅВ¤РµРјС‹С… С„Р°Р№Р»РѕРІ, РґРѕРїСѓС‰РµРЅРЅС‹С… Рє Р·Р°РїСѓСЃРєСѓ
 		static std::unordered_map<uint32_t, VersionLists::EDITOR_EXECUTABLE_TYPE> _sallowedEditorVersion =
 		{
 			//{ 0x6CDE4424ul, VersionLists::EDITOR_STARFIELD_1_13_61_0		},	// Redirect Steam
@@ -25,7 +25,7 @@ namespace CKPE
 			{ 0xAA061EEBul, VersionLists::EDITOR_STARFIELD_1_15_222_0		},	// Redirect Steam
 		};
 
-		// Список устаревших версий редакторов
+		// вЂ”РїРёСЃРѕРє СѓСЃС‚Р°СЂРµРІС€РёС… РІРµСЂСЃРёР№ СЂРµРґР°РєС‚РѕСЂРѕРІ
 		static std::vector<VersionLists::EDITOR_EXECUTABLE_TYPE> _soutdatedEditorVersion =
 		{
 			VersionLists::EDITOR_STARFIELD_1_13_61_0,
@@ -33,7 +33,7 @@ namespace CKPE
 			VersionLists::EDITOR_STARFIELD_1_14_74_0,
 		};
 
-		// Список ключевых смещений в исполняемых файлах, допущенных к запуску (но не точно)
+		// вЂ”РїРёСЃРѕРє РєР»СЋС‡РµРІС‹С… СЃРјРµС‰РµРЅРёР№ РІ РёСЃРїРѕР»РЅВ¤РµРјС‹С… С„Р°Р№Р»Р°С…, РґРѕРїСѓС‰РµРЅРЅС‹С… Рє Р·Р°РїСѓСЃРєСѓ (РЅРѕ РЅРµ С‚РѕС‡РЅРѕ)
 		static std::unordered_map<uint32_t,
 			std::pair<std::string_view, VersionLists::EDITOR_EXECUTABLE_TYPE>> _sallowedEditorVersion2 =
 		{
@@ -45,7 +45,7 @@ namespace CKPE
 			{ 0x84C7B20ul, { "1.15.222.0",	VersionLists::EDITOR_STARFIELD_1_15_222_0		} },
 		};
 
-		// Список названий редакторов
+		// вЂ”РїРёСЃРѕРє РЅР°Р·РІР°РЅРёР№ СЂРµРґР°РєС‚РѕСЂРѕРІ
 		static std::vector<std::wstring_view> _sEditorVersionStr =
 		{
 			L"Unknown version",
@@ -57,7 +57,7 @@ namespace CKPE
 			L"Starfield [v1.15.222.0]",
 		};
 
-		// Список версий
+		// вЂ”РїРёСЃРѕРє РІРµСЂСЃРёР№
 		static std::vector<std::uint64_t> _sEditorVersion =
 		{
 			0,
@@ -69,7 +69,7 @@ namespace CKPE
 			MAKE_EXE_VERSION_EX(1, 15, 222, 0),
 		};
 
-		// Список имён файлов базы данных
+		// вЂ”РїРёСЃРѕРє РёРјР„РЅ С„Р°Р№Р»РѕРІ Р±Р°Р·С‹ РґР°РЅРЅС‹С…
 		static std::unordered_map<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view> _sallowedDatabaseVersion =
 		{
 			//{ VersionLists::EDITOR_STARFIELD_1_13_61_0,	L"CreationKitPlatformExtended_SF_1_13_61_0.database"	},
@@ -88,10 +88,10 @@ namespace CKPE
 				editorVersionIterator2 != _sallowedEditorVersion2.end();
 				editorVersionIterator2++)
 			{
-				// Защита в случаи выхода за пределы при проверке
+				// В«Р°С‰РёС‚Р° РІ СЃР»СѓС‡Р°Рё РІС‹С…РѕРґР° Р·Р° РїСЂРµРґРµР»С‹ РїСЂРё РїСЂРѕРІРµСЂРєРµ
 				__try
 				{
-					// Сравнение по указанному смещению нужной строки
+					// вЂ”СЂР°РІРЅРµРЅРёРµ РїРѕ СѓРєР°Р·Р°РЅРЅРѕРјСѓ СЃРјРµС‰РµРЅРёСЋ РЅСѓР¶РЅРѕР№ СЃС‚СЂРѕРєРё
 					if (!_stricmp((const char*)((std::uintptr_t)GetModuleHandleA(nullptr) + editorVersionIterator2->first),
 						editorVersionIterator2->second.first.data()))
 					{
