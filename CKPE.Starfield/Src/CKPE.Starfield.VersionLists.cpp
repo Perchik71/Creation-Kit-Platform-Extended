@@ -14,7 +14,7 @@ namespace CKPE
 	{
 		VersionLists::EDITOR_EXECUTABLE_TYPE _seditor_ver{ VersionLists::EDITOR_UNKNOWN };
 
-		// —писок проверенных исполн¤емых файлов, допущенных к запуску
+		// Список проверенных исполн¤емых файлов, допущенных к запуску
 		static std::unordered_map<uint32_t, VersionLists::EDITOR_EXECUTABLE_TYPE> _sallowedEditorVersion =
 		{
 			//{ 0x6CDE4424ul, VersionLists::EDITOR_STARFIELD_1_13_61_0		},	// Redirect Steam
@@ -25,7 +25,7 @@ namespace CKPE
 			{ 0xAA061EEBul, VersionLists::EDITOR_STARFIELD_1_15_222_0		},	// Redirect Steam
 		};
 
-		// —писок устаревших версий редакторов
+		// Список устаревших версий редакторов
 		static std::vector<VersionLists::EDITOR_EXECUTABLE_TYPE> _soutdatedEditorVersion =
 		{
 			VersionLists::EDITOR_STARFIELD_1_13_61_0,
@@ -33,7 +33,7 @@ namespace CKPE
 			VersionLists::EDITOR_STARFIELD_1_14_74_0,
 		};
 
-		// —писок ключевых смещений в исполн¤емых файлах, допущенных к запуску (но не точно)
+		// Список ключевых смещений в исполн¤емых файлах, допущенных к запуску (но не точно)
 		static std::unordered_map<uint32_t,
 			std::pair<std::string_view, VersionLists::EDITOR_EXECUTABLE_TYPE>> _sallowedEditorVersion2 =
 		{
@@ -45,7 +45,7 @@ namespace CKPE
 			{ 0x84C7B20ul, { "1.15.222.0",	VersionLists::EDITOR_STARFIELD_1_15_222_0		} },
 		};
 
-		// —писок названий редакторов
+		// Список названий редакторов
 		static std::vector<std::wstring_view> _sEditorVersionStr =
 		{
 			L"Unknown version",
@@ -57,7 +57,7 @@ namespace CKPE
 			L"Starfield [v1.15.222.0]",
 		};
 
-		// —писок версий
+		// Список версий
 		static std::vector<std::uint64_t> _sEditorVersion =
 		{
 			0,
@@ -69,7 +69,7 @@ namespace CKPE
 			MAKE_EXE_VERSION_EX(1, 15, 222, 0),
 		};
 
-		// —писок имЄн файлов базы данных
+		// Список имЄн файлов базы данных
 		static std::unordered_map<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view> _sallowedDatabaseVersion =
 		{
 			//{ VersionLists::EDITOR_STARFIELD_1_13_61_0,	L"CreationKitPlatformExtended_SF_1_13_61_0.database"	},

@@ -14,7 +14,7 @@ namespace CKPE
 	{
 		VersionLists::EDITOR_EXECUTABLE_TYPE _seditor_ver{ VersionLists::EDITOR_UNKNOWN };
 
-		// —писок проверенных исполн¤емых файлов, допущенных к запуску
+		// Список проверенных исполн¤емых файлов, допущенных к запуску
 		static std::unordered_map<uint32_t, VersionLists::EDITOR_EXECUTABLE_TYPE> _sallowedEditorVersion =
 		{
 			{ 0xDF67F346ul, VersionLists::EDITOR_FALLOUT_C4_1_10_162_0		},	// Default
@@ -25,14 +25,14 @@ namespace CKPE
 			{ 0x49E45284ul, VersionLists::EDITOR_FALLOUT_C4_1_11_137_0		},	// Default
 		};
 
-		// —писок устаревших версий редакторов
+		// Список устаревших версий редакторов
 		static std::vector<VersionLists::EDITOR_EXECUTABLE_TYPE> _soutdatedEditorVersion =
 		{
 			VersionLists::EDITOR_FALLOUT_C4_1_10_943_1,
 			//VersionLists::EDITOR_FALLOUT_C4_1_10_982_3,
 		};
 
-		// —писок ключевых смещений в исполн¤емых файлах, допущенных к запуску (но не точно)
+		// Список ключевых смещений в исполн¤емых файлах, допущенных к запуску (но не точно)
 		static std::unordered_map<uint32_t,
 			std::pair<std::string_view, VersionLists::EDITOR_EXECUTABLE_TYPE>> _sallowedEditorVersion2 =
 		{
@@ -42,7 +42,7 @@ namespace CKPE
 			{ 0x3017E68ul, { "1.11.137.0",	VersionLists::EDITOR_FALLOUT_C4_1_11_137_0		} },
 		};
 
-		// —писок версий
+		// Список версий
 		static std::vector<std::uint64_t> _sEditorVersion =
 		{
 			0,
@@ -52,7 +52,7 @@ namespace CKPE
 			MAKE_EXE_VERSION_EX(1, 11, 137, 0),
 		};
 
-		// —писок названий редакторов
+		// Список названий редакторов
 		static std::vector<std::wstring_view> _sEditorVersionStr =
 		{
 			L"Unknown version",
@@ -62,7 +62,7 @@ namespace CKPE
 			L"Fallout 4 [v1.11.137.0]",
 		};
 
-		// —писок имЄн файлов базы данных
+		// Список имЄн файлов базы данных
 		static std::unordered_map<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view> _sallowedDatabaseVersion =
 		{
 			{ VersionLists::EDITOR_FALLOUT_C4_1_10_162_0,	L"CreationKitPlatformExtended_FO4_1_10_162.database"	},
