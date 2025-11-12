@@ -52,7 +52,7 @@ namespace CKPE
 			bool BSResourceLooseFiles::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
+				if ((verPatch != 1) && (verPatch != 2) && (verPatch != 3))
 					return false;
 
 				auto interface = CKPE::Common::Interface::GetSingleton();
@@ -111,7 +111,7 @@ namespace CKPE
 					SafeWrite::Write(__CKPE_OFFSET(6), { 0xC3 });
 					SafeWrite::Write(__CKPE_OFFSET(7), { 0xC3 });
 				}
-				else
+				else if (verPatch == 2)
 				{
 					LooseFileStreamHook::Generate(__CKPE_OFFSET(7));
 					Detours::DetourJump(__CKPE_OFFSET(4), (uintptr_t)&sub);
@@ -127,6 +127,19 @@ namespace CKPE
 					// mov rax, qword ptr ds:[rcx+0x170]
 					// jmp -> cmp rbx, rax
 					SafeWrite::Write(__CKPE_OFFSET(5), { 0x48, 0x8B, 0x81, 0x70, 0x01, 0x00, 0x00, 0xEB, 0x19 });
+
+					// Set new size class 0x168 to 0x180
+					SafeWrite::Write(__CKPE_OFFSET(6), { 0x80 });
+				}
+				else
+				{
+					LooseFileStreamHook::Generate(__CKPE_OFFSET(7));
+					Detours::DetourJump(__CKPE_OFFSET(4), (uintptr_t)&sub);
+
+					// Ignoring the correctness check is not useful
+
+					for (std::uint32_t i = 0; i < 4; i++)
+						SafeWrite::Write(__CKPE_OFFSET(i), { 0xEB });
 
 					// Set new size class 0x168 to 0x180
 					SafeWrite::Write(__CKPE_OFFSET(6), { 0x80 });
