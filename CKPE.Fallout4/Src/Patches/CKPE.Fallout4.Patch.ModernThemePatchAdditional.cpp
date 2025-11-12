@@ -286,7 +286,7 @@ namespace CKPE
 					// Icons
 					Detours::DetourCall(__CKPE_OFFSET(14), (std::uintptr_t)&HkImageListForLayers_LoadImageA);
 				}
-				else if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_982_3)
+				else if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_FALLOUT_C4_1_10_982_3)
 				{
 					// Layers Window
 					Detours::DetourCall(__CKPE_OFFSET(11), (std::uintptr_t)&HkSendMsgChangeColorTextForLayers);
