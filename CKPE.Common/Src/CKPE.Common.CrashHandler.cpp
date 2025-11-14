@@ -388,8 +388,9 @@ namespace CKPE
 					{
 						MODULEINFO Info;
 						GetModuleInformation(hProcess, GlobalModuleList[i], &Info, sizeof(MODULEINFO));
-
+						
 						CKPE::Module smodule(GlobalModuleList[i]);
+						smodule.LoadInfo();
 						auto secCode = smodule.GetSegment(CKPE::Segment::text);
 						Modules.insert(Modules.end(),
 							std::make_pair<std::string, Module>(PathFindFileNameA(szModName),
@@ -545,9 +546,9 @@ namespace CKPE
 			auto Analize = GlobalCrashIntrospection.Analyze((uintptr_t)lpExceptionRecord->ExceptionAddress, 
 				Modules, nullptr);
 			ExceptionInstructionText.append(Analize.Text);
-
+			
 			Stream.WriteLine("\nUnhandled exception ""%s"" at 0x%016llX %s", ExceptionName.c_str(),
-				(uintptr_t)lpExceptionRecord->ExceptionAddress, ExceptionInstructionText.c_str());
+					(std::uintptr_t)lpExceptionRecord->ExceptionAddress, ExceptionInstructionText.c_str());
 
 			// Log exception flags
 			Stream.WriteLine("Exception Flags: 0x%08X", lpExceptionRecord->ExceptionFlags);
