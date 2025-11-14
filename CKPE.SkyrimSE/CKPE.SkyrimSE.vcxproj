@@ -168,6 +168,7 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashFlowChartX.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashFootstepSetRemove.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashHairKS.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashInvalidStrings.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashInventoryIterators.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashMergeForms.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashMHDTMoreThan70.cpp" />
@@ -367,6 +368,7 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashFlowChartX.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashFootstepSetRemove.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashHairKS.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashInvalidStrings.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashInventoryIterators.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashMergeForms.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashMHDTMoreThan70.h" />

@@ -1,4 +1,4 @@
-﻿// Copyright © 2024-2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -6,40 +6,24 @@
 #include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
-#include <CKPE.Common.RTTI.h>
-#include <CKPE.Fallout4.VersionLists.h>
+#include <CKPE.SkyrimSE.VersionLists.h>
 #include <EditorAPI/Forms/TESForm.h>
-#include <Patches/CKPE.Fallout4.Patch.Console.h>
-#include <Patches/CKPE.Fallout4.Patch.CrashInvalidStrings.h>
+#include <Patches/CKPE.SkyrimSE.Patch.Console.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CrashInvalidStrings.h>
 
 namespace CKPE
 {
-	namespace Fallout4
+	namespace SkyrimSE
 	{
 		namespace Patch
 		{
 			std::uintptr_t pointer_CrashInvalidStrings_sub1 = 0;
-			std::uintptr_t pointer_CrashInvalidStrings_sub2 = 0;
-
-			std::uint32_t CrashInvalidStrings::GetLocalizeStringLengthSafe(void* This)
-			{
-				__try
-				{
-					return fast_call<std::uint32_t>(pointer_CrashInvalidStrings_sub1, This);
-				}
-				__except (1)
-				{
-					Console::LogWarning(Console::FORMS, "GetLocalizeStringLength return failed");
-
-					return 0;
-				}
-			}
 
 			const char* CrashInvalidStrings::GetLocalizeStringSafe(void* This)
 			{
 				__try
 				{
-					return fast_call<const char*>(pointer_CrashInvalidStrings_sub2, This);
+					return fast_call<const char*>(pointer_CrashInvalidStrings_sub1, This);
 				}
 				__except (1)
 				{
@@ -76,7 +60,7 @@ namespace CKPE
 
 			bool CrashInvalidStrings::DoQuery() const noexcept(true)
 			{
-				return VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_943_1;
+				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
 			bool CrashInvalidStrings::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
@@ -87,8 +71,7 @@ namespace CKPE
 				auto interface = CKPE::Common::Interface::GetSingleton();
 				auto base = interface->GetApplication()->GetBase();
 
-				pointer_CrashInvalidStrings_sub1 = Detours::DetourClassJump(__CKPE_OFFSET(0), &GetLocalizeStringLengthSafe);
-				pointer_CrashInvalidStrings_sub2 = Detours::DetourClassJump(__CKPE_OFFSET(1), &GetLocalizeStringSafe);
+				pointer_CrashInvalidStrings_sub1 = Detours::DetourClassJump(__CKPE_OFFSET(1), &GetLocalizeStringSafe);
 
 				return true;
 			}

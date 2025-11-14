@@ -33,6 +33,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.CrashFlowChartX.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashFootstepSetRemove.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashHairKS.h>
+#include <Patches/CKPE.SkyrimSE.Patch.CrashInvalidStrings.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashInventoryIterators.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashMergeForms.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashMHDTMoreThan70.h>
@@ -164,6 +165,7 @@ namespace CKPE
 			mgr->Register(new Patch::CrashFlowChartX);
 			mgr->Register(new Patch::CrashFootstepSetRemove);
 			mgr->Register(new Patch::CrashHairKS);
+			mgr->Register(new Patch::CrashInvalidStrings);
 			mgr->Register(new Patch::CrashInventoryIterators);
 			mgr->Register(new Patch::CrashMergeForms);
 			mgr->Register(new Patch::CrashMHDTMoreThan70);
