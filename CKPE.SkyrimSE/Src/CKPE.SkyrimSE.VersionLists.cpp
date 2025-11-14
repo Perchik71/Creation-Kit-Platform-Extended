@@ -14,7 +14,7 @@ namespace CKPE
 	{
 		VersionLists::EDITOR_EXECUTABLE_TYPE _seditor_ver{ VersionLists::EDITOR_UNKNOWN };
 
-		// Список проверенных исполн¤емых файлов, допущенных к запуску
+		// Список проверенных исполняемых файлов, допущенных к запуску
 		static std::unordered_map<uint32_t, VersionLists::EDITOR_EXECUTABLE_TYPE> _sallowedEditorVersion =
 		{
 			//{ 0xA9CD60C7ul, VersionLists::EDITOR_SKYRIM_SE_1_5_3			},	// Default
@@ -37,7 +37,7 @@ namespace CKPE
 			VersionLists::EDITOR_SKYRIM_SE_1_6_438,
 		};
 
-		// Список ключевых смещений в исполн¤емых файлах, допущенных к запуску (но не точно)
+		// Список ключевых смещений в исполняемых файлах, допущенных к запуску (но не точно)
 		static std::unordered_map<uint32_t,
 			std::pair<std::string_view, VersionLists::EDITOR_EXECUTABLE_TYPE>> _sallowedEditorVersion2 =
 		{
@@ -48,7 +48,7 @@ namespace CKPE
 			{ 0x2F7F018ul,		{ "1.6.1378.1",	VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1		} },
 		};
 
-		// —писок версий
+		// Список версий
 		static std::vector<std::uint64_t> _sEditorVersion =
 		{
 			0,
@@ -70,7 +70,7 @@ namespace CKPE
 			L"Skyrim Special Edition [v1.6.1378.1]",
 		};
 
-		// Список имЄн файлов базы данных
+		// Список имён файлов базы данных
 		static std::unordered_map<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view> _sallowedDatabaseVersion =
 		{
 			//{ VersionLists::EDITOR_SKYRIM_SE_1_5_3,		L"CreationKitPlatformExtended_SSE_1_5_3.database"		},
@@ -86,10 +86,10 @@ namespace CKPE
 				editorVersionIterator2 != _sallowedEditorVersion2.end();
 				editorVersionIterator2++)
 			{
-				// «ащита в случаи выхода за пределы при проверке
+				// Защита в случаи выхода за пределы при проверке
 				__try
 				{
-					// —равнение по указанному смещению нужной строки
+					// Сравнение по указанному смещению нужной строки
 					if (!_stricmp((const char*)((std::uintptr_t)GetModuleHandleA(nullptr) + editorVersionIterator2->first),
 						editorVersionIterator2->second.first.data()))
 					{

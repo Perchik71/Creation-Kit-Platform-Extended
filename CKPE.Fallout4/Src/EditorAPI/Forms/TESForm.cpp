@@ -2,7 +2,6 @@
 #include <CKPE.Common.RTTI.h>
 #include <EditorAPI/Forms/TESForm.h>
 #include <EditorAPI/TESFullName.h>
-#include <Patches/CKPE.Fallout4.Patch.Console.h>
 
 namespace CKPE
 {
@@ -260,38 +259,12 @@ namespace CKPE
 
 				std::uint32_t TESForm::GetFormEditorIDLength() const
 				{
-					__try
-					{
-						if (!GetFormEditorIDLengthImpl)
-							return CKPE::vtbl_call<std::uint32_t>(0x230, this);
-						else
-							return GetFormEditorIDLengthImpl(this);
-					}
-					__except (1)
-					{
-						Patch::Console::LogWarning(Patch::Console::FORMS, 
-							"GetFormEditorIDLength return failed");
-
-						return 0;
-					}
+					return CKPE::vtbl_call<std::uint32_t>(0x230, this);
 				}
 
 				const char* TESForm::GetFormEditorID() const
 				{
-					__try
-					{
-						if (!GetFormEditorIDImpl)
-							return CKPE::vtbl_call<const char*>(0x238, this);
-						else
-							return GetFormEditorIDImpl(this);
-					}
-					__except (1)
-					{
-						Patch::Console::LogWarning(Patch::Console::FORMS,
-							"GetFormEditorID return failed");
-
-						return nullptr;
-					}
+					return CKPE::vtbl_call<const char*>(0x238, this);
 				}
 
 				/////////////

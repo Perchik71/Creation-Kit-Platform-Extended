@@ -9,6 +9,7 @@
 #include <CKPE.Common.RTTI.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/Forms/TESForm.h>
+#include <Patches/CKPE.Fallout4.Patch.Console.h>
 #include <Patches/CKPE.Fallout4.Patch.CrashInvalidStrings.h>
 
 namespace CKPE
@@ -17,17 +18,34 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			std::uintptr_t pointer_CrashInvalidStrings_sub = 0;
+			std::uintptr_t pointer_CrashInvalidStrings_sub1 = 0;
+			std::uintptr_t pointer_CrashInvalidStrings_sub2 = 0;
 
-			bool CrashInvalidStrings::sub(void* This)
+			std::uint32_t CrashInvalidStrings::GetLocalizeStringLengthSafe(void* This)
 			{
 				__try
 				{
-					return fast_call<bool>(pointer_CrashInvalidStrings_sub, This);
+					return fast_call<std::uint32_t>(pointer_CrashInvalidStrings_sub1, This);
 				}
-				__except(1)
+				__except (1)
 				{
-					return false;
+					Console::LogWarning(Console::FORMS, "GetFormEditorIDLength return failed");
+
+					return 0;
+				}
+			}
+
+			const char* CrashInvalidStrings::GetLocalizeStringSafe(void* This)
+			{
+				__try
+				{
+					return fast_call<const char*>(pointer_CrashInvalidStrings_sub2, This);
+				}
+				__except (1)
+				{
+					Console::LogWarning(Console::FORMS, "GetFormEditorID return failed");
+
+					return nullptr;
 				}
 			}
 
@@ -48,12 +66,12 @@ namespace CKPE
 
 			bool CrashInvalidStrings::HasDependencies() const noexcept(true)
 			{
-				return false;
+				return true;
 			}
 
 			std::vector<std::string> CrashInvalidStrings::GetDependencies() const noexcept(true)
 			{
-				return {};
+				return { "Console" };
 			}
 
 			bool CrashInvalidStrings::DoQuery() const noexcept(true)
@@ -69,22 +87,8 @@ namespace CKPE
 				auto interface = CKPE::Common::Interface::GetSingleton();
 				auto base = interface->GetApplication()->GetBase();
 
-				auto rtti = Common::RTTI::GetSingleton()->Find("class TESForm");
-				if (rtti)
-				{
-				//	_CONSOLE("%llX", rtti->VTableAddress);
-
-				/*	*(std::uintptr_t*)&EditorAPI::Forms::TESForm::GetFormEditorIDLengthImpl =
-						Detours::DetourClassJump(*((std::uintptr_t*)(rtti->VTableAddress + 0x230)), 
-							&EditorAPI::Forms::TESForm::GetFormEditorIDLength);
-					*(std::uintptr_t*)&EditorAPI::Forms::TESForm::GetFormEditorIDImpl =
-						Detours::DetourClassJump(*((std::uintptr_t*)(rtti->VTableAddress + 0x238)),
-							&EditorAPI::Forms::TESForm::GetFormEditorID);*/
-
-					return true;
-				}
-
-				//pointer_CrashInvalidStrings_sub = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
+				pointer_CrashInvalidStrings_sub1 = Detours::DetourClassJump(__CKPE_OFFSET(0), &GetLocalizeStringLengthSafe);
+				pointer_CrashInvalidStrings_sub2 = Detours::DetourClassJump(__CKPE_OFFSET(1), &GetLocalizeStringSafe);
 
 				return true;
 			}

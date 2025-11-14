@@ -14,7 +14,7 @@ namespace CKPE
 	{
 		VersionLists::EDITOR_EXECUTABLE_TYPE _seditor_ver{ VersionLists::EDITOR_UNKNOWN };
 
-		// Список проверенных исполн¤емых файлов, допущенных к запуску
+		// Список проверенных исполняемых файлов, допущенных к запуску
 		static std::unordered_map<uint32_t, VersionLists::EDITOR_EXECUTABLE_TYPE> _sallowedEditorVersion =
 		{
 			//{ 0x6CDE4424ul, VersionLists::EDITOR_STARFIELD_1_13_61_0		},	// Redirect Steam
@@ -33,7 +33,7 @@ namespace CKPE
 			VersionLists::EDITOR_STARFIELD_1_14_74_0,
 		};
 
-		// Список ключевых смещений в исполн¤емых файлах, допущенных к запуску (но не точно)
+		// Список ключевых смещений в исполняемых файлах, допущенных к запуску (но не точно)
 		static std::unordered_map<uint32_t,
 			std::pair<std::string_view, VersionLists::EDITOR_EXECUTABLE_TYPE>> _sallowedEditorVersion2 =
 		{
@@ -69,7 +69,7 @@ namespace CKPE
 			MAKE_EXE_VERSION_EX(1, 15, 222, 0),
 		};
 
-		// Список имЄн файлов базы данных
+		// Список имён файлов базы данных
 		static std::unordered_map<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view> _sallowedDatabaseVersion =
 		{
 			//{ VersionLists::EDITOR_STARFIELD_1_13_61_0,	L"CreationKitPlatformExtended_SF_1_13_61_0.database"	},
@@ -88,10 +88,10 @@ namespace CKPE
 				editorVersionIterator2 != _sallowedEditorVersion2.end();
 				editorVersionIterator2++)
 			{
-				// «ащита в случаи выхода за пределы при проверке
+				// Защита в случаи выхода за пределы при проверке
 				__try
 				{
-					// —равнение по указанному смещению нужной строки
+					// Сравнение по указанному смещению нужной строки
 					if (!_stricmp((const char*)((std::uintptr_t)GetModuleHandleA(nullptr) + editorVersionIterator2->first),
 						editorVersionIterator2->second.first.data()))
 					{

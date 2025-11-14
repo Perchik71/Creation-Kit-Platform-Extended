@@ -14,7 +14,8 @@ namespace CKPE
 		{
 			class CrashInvalidStrings : public Common::Patch
 			{
-				static bool sub(void* This);
+				static std::uint32_t GetLocalizeStringLengthSafe(void* This);
+				static const char* GetLocalizeStringSafe(void* This);
 
 				CrashInvalidStrings(const CrashInvalidStrings&) = delete;
 				CrashInvalidStrings& operator=(const CrashInvalidStrings&) = delete;

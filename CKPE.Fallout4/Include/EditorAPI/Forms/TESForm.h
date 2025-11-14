@@ -384,8 +384,6 @@ namespace CKPE
 					inline static TESForm* (*FindFormByFormID)(std::uint32_t) = nullptr;
 					inline static bool (*SetFormEditorIDImpl)(TESForm* _This, const char* NewEditorID) = nullptr;
 					inline static ENUM_FORM_ID* EnumFormIDs = nullptr;
-					inline static std::uint32_t (*GetFormEditorIDLengthImpl)(const TESForm* _This) = nullptr;
-					inline static const char* (*GetFormEditorIDImpl)(const TESForm* _This) = nullptr;
 
 					CKPE_PROPERTY(HasModified, MarkAsChanged) bool Actived;
 					CKPE_PROPERTY(HasDeleted, MarkAsDeleted) bool Deleted;
