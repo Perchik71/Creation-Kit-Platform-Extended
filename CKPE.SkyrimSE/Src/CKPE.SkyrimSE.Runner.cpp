@@ -1,4 +1,4 @@
-// Copyright © 2025 aka perchik71. All rights reserved.
+// Copyright Â© 2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -77,6 +77,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.FixParamsATXT.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixParamsVTXT.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixRaceDlg.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixRecordSoundCapture.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixRemoteDesktop.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixRenderPass.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixReverbParameters.h>
@@ -207,6 +208,7 @@ namespace CKPE
 			mgr->Register(new Patch::FixParamsATXT);
 			mgr->Register(new Patch::FixParamsVTXT);
 			mgr->Register(new Patch::FixRaceDlg);
+			mgr->Register(new Patch::FixRecordSoundCapture);
 			mgr->Register(new Patch::FixRemoteDesktop);
 			mgr->Register(new Patch::FixRenderPass);
 			mgr->Register(new Patch::FixReverbParameters);

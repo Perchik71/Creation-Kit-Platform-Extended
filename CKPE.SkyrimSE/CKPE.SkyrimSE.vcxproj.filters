@@ -416,6 +416,9 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.MiscMessages.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixRecordSoundCapture.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -1036,6 +1039,9 @@
       <Filter>EditorAPI</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.MiscMessages.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixRecordSoundCapture.h">
       <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,4 +1,4 @@
-// Copyright © 2025 aka perchik71. All rights reserved.
+// Copyright В© 2025 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -14,7 +14,7 @@ namespace CKPE
 	{
 		VersionLists::EDITOR_EXECUTABLE_TYPE _seditor_ver{ VersionLists::EDITOR_UNKNOWN };
 
-		// Список проверенных исполняемых файлов, допущенных к запуску
+		// РЎРїРёСЃРѕРє РїСЂРѕРІРµСЂРµРЅРЅС‹С… РёСЃРїРѕР»РЅВ¤РµРјС‹С… С„Р°Р№Р»РѕРІ, РґРѕРїСѓС‰РµРЅРЅС‹С… Рє Р·Р°РїСѓСЃРєСѓ
 		static std::unordered_map<uint32_t, VersionLists::EDITOR_EXECUTABLE_TYPE> _sallowedEditorVersion =
 		{
 			//{ 0xA9CD60C7ul, VersionLists::EDITOR_SKYRIM_SE_1_5_3			},	// Default
@@ -30,14 +30,14 @@ namespace CKPE
 			{ 0x0085AA4Cul, VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1		},	// Redirect Steam
 		};
 
-		// Список устаревших версий редакторов
+		// РЎРїРёСЃРѕРє СѓСЃС‚Р°СЂРµРІС€РёС… РІРµСЂСЃРёР№ СЂРµРґР°РєС‚РѕСЂРѕРІ
 		static std::vector<VersionLists::EDITOR_EXECUTABLE_TYPE> _soutdatedEditorVersion =
 		{
 			VersionLists::EDITOR_SKYRIM_SE_1_5_3,
 			VersionLists::EDITOR_SKYRIM_SE_1_6_438,
 		};
 
-		// Список ключевых смещений в исполняемых файлах, допущенных к запуску (но не точно)
+		// РЎРїРёСЃРѕРє РєР»СЋС‡РµРІС‹С… СЃРјРµС‰РµРЅРёР№ РІ РёСЃРїРѕР»РЅВ¤РµРјС‹С… С„Р°Р№Р»Р°С…, РґРѕРїСѓС‰РµРЅРЅС‹С… Рє Р·Р°РїСѓСЃРєСѓ (РЅРѕ РЅРµ С‚РѕС‡РЅРѕ)
 		static std::unordered_map<uint32_t,
 			std::pair<std::string_view, VersionLists::EDITOR_EXECUTABLE_TYPE>> _sallowedEditorVersion2 =
 		{
@@ -48,7 +48,7 @@ namespace CKPE
 			{ 0x2F7F018ul,		{ "1.6.1378.1",	VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1		} },
 		};
 
-		// Список версий
+		// вЂ”РїРёСЃРѕРє РІРµСЂСЃРёР№
 		static std::vector<std::uint64_t> _sEditorVersion =
 		{
 			0,
@@ -59,7 +59,7 @@ namespace CKPE
 			MAKE_EXE_VERSION_EX(1, 6, 1378, 1),
 		};
 
-		// Список названий редакторов
+		// РЎРїРёСЃРѕРє РЅР°Р·РІР°РЅРёР№ СЂРµРґР°РєС‚РѕСЂРѕРІ
 		static std::vector<std::wstring_view> _sEditorVersionStr =
 		{
 			L"Unknown version",
@@ -70,7 +70,7 @@ namespace CKPE
 			L"Skyrim Special Edition [v1.6.1378.1]",
 		};
 
-		// Список имён файлов базы данных
+		// РЎРїРёСЃРѕРє РёРјР„РЅ С„Р°Р№Р»РѕРІ Р±Р°Р·С‹ РґР°РЅРЅС‹С…
 		static std::unordered_map<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view> _sallowedDatabaseVersion =
 		{
 			//{ VersionLists::EDITOR_SKYRIM_SE_1_5_3,		L"CreationKitPlatformExtended_SSE_1_5_3.database"		},
@@ -86,10 +86,10 @@ namespace CKPE
 				editorVersionIterator2 != _sallowedEditorVersion2.end();
 				editorVersionIterator2++)
 			{
-				// Защита в случаи выхода за пределы при проверке
+				// В«Р°С‰РёС‚Р° РІ СЃР»СѓС‡Р°Рё РІС‹С…РѕРґР° Р·Р° РїСЂРµРґРµР»С‹ РїСЂРё РїСЂРѕРІРµСЂРєРµ
 				__try
 				{
-					// Сравнение по указанному смещению нужной строки
+					// вЂ”СЂР°РІРЅРµРЅРёРµ РїРѕ СѓРєР°Р·Р°РЅРЅРѕРјСѓ СЃРјРµС‰РµРЅРёСЋ РЅСѓР¶РЅРѕР№ СЃС‚СЂРѕРєРё
 					if (!_stricmp((const char*)((std::uintptr_t)GetModuleHandleA(nullptr) + editorVersionIterator2->first),
 						editorVersionIterator2->second.first.data()))
 					{

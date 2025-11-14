@@ -212,6 +212,7 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixParamsATXT.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixParamsVTXT.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixRaceDlg.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixRecordSoundCapture.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixRemoteDesktop.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixRenderPass.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixReverbParameters.cpp" />
@@ -410,6 +411,7 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixParamsATXT.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixParamsVTXT.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixRaceDlg.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixRecordSoundCapture.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixRemoteDesktop.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixRenderPass.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixReverbParameters.h" />

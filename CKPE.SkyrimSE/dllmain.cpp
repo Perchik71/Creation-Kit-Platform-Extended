@@ -26,13 +26,17 @@ extern "C"
 	{
 		CKPE::SkyrimSE::VersionLists::Verify();
 		version = CKPE::SkyrimSE::VersionLists::GetEditorVersionByString();
-		auto ver = CKPE::FileUtils::GetFileVersion(CKPE::PathUtils::GetApplicationFileName());
-		if (ver != CKPE::SkyrimSE::VersionLists::GetEditorVersionByNum())
-			return CKPE::GameManager::FAKE;
-		if (CKPE::SkyrimSE::VersionLists::HasAllowedEditorVersion())
-			return CKPE::GameManager::SUPPORTED;
-		if (CKPE::SkyrimSE::VersionLists::HasOutdatedEditorVersion())
-			return CKPE::GameManager::DEPRECATED;
+		auto version_num = CKPE::SkyrimSE::VersionLists::GetEditorVersionByNum();
+		if (version_num)
+		{
+			auto ver = CKPE::FileUtils::GetFileVersion(CKPE::PathUtils::GetApplicationFileName());
+			if (ver != version_num)
+				return CKPE::GameManager::FAKE;
+			if (CKPE::SkyrimSE::VersionLists::HasAllowedEditorVersion())
+				return CKPE::GameManager::SUPPORTED;
+			if (CKPE::SkyrimSE::VersionLists::HasOutdatedEditorVersion())
+				return CKPE::GameManager::DEPRECATED;
+		}
 		return CKPE::GameManager::UNSUPPORTED;
 	}
 

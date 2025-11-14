@@ -69,6 +69,8 @@ namespace CKPE
 
 				// Skip "Queued ref '%s' (%08X) of type %s"
 				SafeWrite::Write(__CKPE_OFFSET(1), { 0x90, 0xE9 });
+				// Skip "%s took %.2f ms to PostProcess.  This may cause a hitch in segment '%s'."
+				SafeWrite::WriteNop(__CKPE_OFFSET(2), 5);
 
 				return true;
 			}
