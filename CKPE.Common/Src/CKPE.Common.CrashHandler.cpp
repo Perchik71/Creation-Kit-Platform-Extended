@@ -85,8 +85,8 @@ namespace CKPE
 			struct AnalyzeInfo
 			{
 				AnalyzeItemType Type{ aitUnknown };
-				std::string Text;
-				std::string Additional;
+				char Text[128];
+				char Additional[128];
 			};
 
 			Introspection();
@@ -189,12 +189,19 @@ namespace CKPE
 			if (ObjRtti)
 			{
 				Info->Type = aitClass;
-				Info->Text = ObjRtti->Name;
-				auto it = Info->Text.find_first_of(' ');
-				if (it != std::string::npos) Info->Text.erase(0, it + 1);
+				strcpy_s(Info->Text, ObjRtti->Name);
+				//auto it = Info->Text.find_first_of(' ');
+				//if (it != std::string::npos) Info->Text.erase(0, it + 1);
+
+				std::string s;
 
 				if (RefAddress && GlobalCrashHandler.OnAnalyzeClassRef)
-					GlobalCrashHandler.OnAnalyzeClassRef(RefAddress, ObjRtti->Name, Info->Additional);
+				{
+					GlobalCrashHandler.OnAnalyzeClassRef(RefAddress, ObjRtti->Name, s);
+					strcpy_s(Info->Additional, s.c_str());
+				}
+				else
+					Info->Additional[0] = '\0';
 
 				return true;
 			}
@@ -210,13 +217,13 @@ namespace CKPE
 
 			if (!Init)
 			{
-				Info.Text = "<NO_INIT>";
+				strcpy_s(Info.Text, "<NO_INIT>");
 				return Info;
 			}
 
 			if (!Modules)
 			{
-				Info.Text = "<INVALID_ARGS>";
+				strcpy_s(Info.Text, "<INVALID_ARGS>");
 				return Info;
 			}
 
@@ -237,8 +244,7 @@ namespace CKPE
 				if ((Address >= itMod->second.SecCode.GetAddress()) && (Address < itMod->second.SecCode.GetEndAddress()))
 				{
 					Info.Type = aitCode;
-					Info.Text = StringUtils::FormatString("%s+%X ", itMod->first.c_str(),
-						(uint32_t)(Address - itMod->second.Start));
+					sprintf_s(Info.Text, "%s+%X ", itMod->first.c_str(), (std::uint32_t)(Address - itMod->second.Start));
 
 					char InstructionText[256];
 					ZydisDecodedInstruction Instruction;
@@ -246,16 +252,16 @@ namespace CKPE
 						Address, &Instruction)))
 					{
 						ZydisFormatterFormatInstruction(&Formatter, &Instruction, InstructionText, ARRAYSIZE(InstructionText));
-						Info.Text.append(InstructionText);
+						strcat_s(Info.Text, InstructionText);
 						GlobalCrashEvent.IntoProbablyCallStack(Address);
 					}
 					else
-						Info.Text.append("<FATAL DECODER INSTRUCTION>");
+						strcat_s(Info.Text, "<FATAL DECODER INSTRUCTION>");
 				}
 				else if (!(Address - itMod->second.Start))
 				{
 					Info.Type = aitInstance;
-					Info.Text = itMod->first.c_str();
+					strcpy_s(Info.Text, itMod->first.c_str());
 				}
 				else
 					goto Analize_Continue;
@@ -278,22 +284,25 @@ namespace CKPE
 						if (Tib && (Tib->StackLimit <= Address) && (Tib->StackBase > Address))
 						{
 							// Stack
-							auto RefInfo = Analyze(*(uintptr_t*)Address, Modules, Memory);
+							auto RefInfo = Analyze(*(std::uintptr_t*)Address, Modules, Memory);
 							if (RefInfo.Type != aitCode)
 							{
 								Info.Type = RefInfo.Type;
 								if ((RefInfo.Type == aitNumber) || (RefInfo.Type == aitClass) || (RefInfo.Type == aitString))
-									Info.Text.append(StringUtils::FormatString("&%s", RefInfo.Text.c_str()));
+								{
+									strcat_s(Info.Text, "&");
+									strcat_s(Info.Text, RefInfo.Text);
+								}
 								else
 								{
-									if (!AnalyzeClass(*(uintptr_t*)Address, &Info, Address))
+									if (!AnalyzeClass(*(std::uintptr_t*)Address, &Info, Address))
 										Info.Type = aitUnknown;
 								}
 							}
 						}
 						else
 						{
-							if (!AnalyzeClass(*(uintptr_t*)Address, &Info, Address))
+							if (!AnalyzeClass(*(std::uintptr_t*)Address, &Info, Address))
 							{
 								// maybe string
 
@@ -303,7 +312,7 @@ namespace CKPE
 									};
 
 								const auto str = (const char*)Address;
-								constexpr std::size_t max = 1000;
+								constexpr std::size_t max = 100;
 								std::size_t len = 0;
 								for (; len < max && str[len]; ++len)
 									if (!printable(str[len]))
@@ -312,7 +321,9 @@ namespace CKPE
 								if ((len > 4) && (len < max))
 								{
 									Info.Type = aitString;
-									Info.Text.append(StringUtils::FormatString("\"%s\"", str));
+									strcat_s(Info.Text, "\"");
+									strcat_s(Info.Text, str);
+									strcat_s(Info.Text, "\"");
 								}
 							}
 						}
@@ -337,9 +348,10 @@ namespace CKPE
 
 							if ((len > 5) && (len <= max))
 							{
-								std::string a(str, len);
 								Info.Type = aitString;
-								Info.Text.append(StringUtils::FormatString("\"%s\"", a.c_str()));
+								strcat_s(Info.Text, "\"");
+								strncat_s(Info.Text, str, len);
+								strcat_s(Info.Text, "\"");
 							}
 							else
 								Info.Type = aitNumber;
@@ -648,16 +660,14 @@ namespace CKPE
 				{
 					Stream.WriteString("\t%s %-*llX ", NameReg, 16, Value);
 
-					std::string AnalizeText;
-					auto Analize = GlobalCrashIntrospection.Analyze(Value, Modules, Memory);
-
-					switch (Analize.Type)
+					auto Info = GlobalCrashIntrospection.Analyze(Value, Modules, Memory);
+					switch (Info.Type)
 					{
 					case Introspection::aitCode:
-						Stream.WriteLine("(void* -> %s)", Analize.Text.c_str());
+						Stream.WriteLine("(void* -> %s)", Info.Text);
 						break;
 					case Introspection::aitInstance:
-						Stream.WriteLine("(HINSTANCE*) %s", Analize.Text.c_str());
+						Stream.WriteLine("(HINSTANCE*) %s", Info.Text);
 						break;
 					case Introspection::aitNumber:
 						if (Value >> 63)
@@ -666,13 +676,13 @@ namespace CKPE
 							Stream.WriteLine("(size_t) [%llu]", Value);
 						break;
 					case Introspection::aitClass:
-						if (!Analize.Additional.length())
-							Stream.WriteLine("(%s*)", Analize.Text.c_str());
+						if (!Info.Additional[0])
+							Stream.WriteLine("(%s*)", Info.Text);
 						else
-							Stream.WriteLine("(%s*) | %s", Analize.Text.c_str(), Analize.Additional.c_str());
+							Stream.WriteLine("(%s*) | %s", Info.Text, Info.Additional);
 						break;
 					case Introspection::aitString:
-						Stream.WriteLine("(char*) %s", Analize.Text.c_str());
+						Stream.WriteLine("(char*) %s", Info.Text);
 						break;
 					default:
 						Stream.WriteLine("(void*)");
@@ -770,7 +780,7 @@ namespace CKPE
 				auto Info = GlobalCrashIntrospection.Analyze(itS, Modules, nullptr);
 				if (Info.Type == Introspection::aitCode)
 				{
-					Stream.WriteLine("\t[%-*u]: 0x%016llX %s", 3, id, itS, Info.Text.c_str());
+					Stream.WriteLine("\t[%-*u]: 0x%016llX %s", 3, id, itS, Info.Text);
 					id++;
 				}
 			}
@@ -822,10 +832,10 @@ namespace CKPE
 					switch (Analize.Type)
 					{
 					case Introspection::aitCode:
-						Stream.WriteLine("(void* -> %s)", Analize.Text.c_str());
+						Stream.WriteLine("(void* -> %s)", Analize.Text);
 						break;
 					case Introspection::aitInstance:
-						Stream.WriteLine("(HINSTANCE*) %s", Analize.Text.c_str());
+						Stream.WriteLine("(HINSTANCE*) %s", Analize.Text);
 						break;
 					case Introspection::aitNumber:
 						if (*(uintptr_t*)stack_iter >> 63)
@@ -834,13 +844,13 @@ namespace CKPE
 							Stream.WriteLine("(size_t) [%llu]", *(uintptr_t*)stack_iter);
 						break;
 					case Introspection::aitClass:
-						if (!Analize.Additional.length())
-							Stream.WriteLine("(%s*)", Analize.Text.c_str());
+						if (!Analize.Additional[0])
+							Stream.WriteLine("(%s*)", Analize.Text);
 						else
-							Stream.WriteLine("(%s*) | %s", Analize.Text.c_str(), Analize.Additional.c_str());
+							Stream.WriteLine("(%s*) | %s", Analize.Text, Analize.Additional);
 						break;
 					case Introspection::aitString:
-						Stream.WriteLine("(char*) %s", Analize.Text.c_str());
+						Stream.WriteLine("(char*) %s", Analize.Text);
 						break;
 					default:
 						Stream.WriteLine("(void*)");
