@@ -129,14 +129,6 @@ namespace CKPE
 			{
 				auto cRect = LayersWindow::Singleton->ClientRect();
 				LayersWindow::Singleton->BodyForData.Visible = false;
-				
-				//_CONSOLE("%X %X", LayersWindow::Singleton->BodyForData.Handle, hWnd);
-
-				auto s = GetWindowLong(hWnd, GWL_STYLE);
-				SetWindowLong(hWnd, GWL_STYLE, WS_VISIBLE | WS_CHILD);
-
-				
-				SetWindowLong(hWnd, GWL_EXSTYLE, 0);
 
 				return MoveWindow(hWnd, 8, Y - 8, cRect.Width - 16, cRect.Height - Y, bRepaint);
 			}
