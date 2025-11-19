@@ -15,7 +15,10 @@ namespace CKPE
 		{
 			class LoadShaders : public Common::Patch
 			{
-				static EditorAPI::BSIStream* CreateStream(EditorAPI::BSIStream* Stream, const char* FileName,
+				static EditorAPI::OG_NG::BSIStream* CreateStream_OG_NG(EditorAPI::OG_NG::BSIStream* Stream, const char* FileName,
+					std::uint32_t unk1 = 0, bool unk2 = true) noexcept(true);
+
+				static EditorAPI::AE::BSIStream* CreateStream_AE(EditorAPI::AE::BSIStream* Stream, const char* FileName,
 					std::uint32_t unk1 = 0, bool unk2 = true) noexcept(true);
 
 				LoadShaders(const LoadShaders&) = delete;

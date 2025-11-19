@@ -158,16 +158,32 @@ namespace CKPE
 				}
 				else if (!strcmp(RttiName, "class BSResourceNiBinaryStream"))
 				{
-					auto resource = (EditorAPI::BSResourceNiBinaryStream*)Address;
-					auto stream = resource->GetStream();
-					if (stream)
+					if (VersionLists::GetEditorVersion() < VersionLists::EDITOR_FALLOUT_C4_1_11_137_0)
 					{
-						EditorAPI::BSFixedString FileName;
-						stream->GetFileName(FileName);
-						Result = StringUtils::FormatString("\"%s\"", FileName.c_str());
+						auto resource = (EditorAPI::OG_NG::BSResourceNiBinaryStream*)Address;
+						auto stream = resource->GetStream();
+						if (stream)
+						{
+							EditorAPI::BSFixedString FileName;
+							stream->GetFileName(FileName);
+							Result = StringUtils::FormatString("\"%s\"", FileName.c_str());
+						}
+						else
+							Result = "nullptr";
 					}
 					else
-						Result = "nullptr";
+					{
+						auto resource = (EditorAPI::AE::BSResourceNiBinaryStream*)Address;
+						auto stream = resource->GetStream();
+						if (stream)
+						{
+							EditorAPI::BSFixedString FileName;
+							stream->GetFileName(FileName);
+							Result = StringUtils::FormatString("\"%s\"", FileName.c_str());
+						}
+						else
+							Result = "nullptr";
+					}
 				}
 				else
 				{

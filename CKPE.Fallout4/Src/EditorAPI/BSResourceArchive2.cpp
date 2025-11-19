@@ -255,106 +255,210 @@ namespace CKPE
 					if (!NoTextureLoad) LoadArchive("CreationKit - Textures.ba2");
 				}
 
-				Archive2::ReaderStream::~ReaderStream()
+				Archive2::OG_NG::ReaderStream::~ReaderStream()
 				{
 					// ctd okay
 					//CKPE::vtbl_call<void>(0x0, (void*)&RTTI);
 				}
 
-				EResultError Archive2::ReaderStream::DoOpen() noexcept(true)
+				EResultError Archive2::OG_NG::ReaderStream::DoOpen() noexcept(true)
 				{
 					return CKPE::vtbl_call<EResultError>(0x8, (void*)&RTTI);
 				}
 
-				void Archive2::ReaderStream::DoClose() noexcept(true)
+				void Archive2::OG_NG::ReaderStream::DoClose() noexcept(true)
 				{
 					CKPE::vtbl_call<void>(0x10, (void*)&RTTI);
 				}
 
-				std::uint64_t Archive2::ReaderStream::DoGetKey() const noexcept(true)
+				std::uint64_t Archive2::OG_NG::ReaderStream::DoGetKey() const noexcept(true)
 				{
 					return CKPE::vtbl_call<std::uint64_t >(0x18, (void*)&RTTI);
 				}
 
-				EResultError Archive2::ReaderStream::DoGetInfo(void*) noexcept(true)
+				EResultError Archive2::OG_NG::ReaderStream::DoGetInfo(void*) noexcept(true)
 				{
 					return EResultError::kUnsupported;
 				}
 
-				void Archive2::ReaderStream::DoClone(void* p) const noexcept(true)
+				void Archive2::OG_NG::ReaderStream::DoClone(void* p) const noexcept(true)
 				{
 					CKPE::vtbl_call<void>(0x28, (void*)&RTTI, p);
 				}
 				
-				EResultError Archive2::ReaderStream::DoRead(void* Buffer, std::uint64_t Bytes, std::uint64_t& Read) const noexcept(true)
+				EResultError Archive2::OG_NG::ReaderStream::DoRead(void* Buffer, std::uint64_t Bytes, std::uint64_t& Read) const noexcept(true)
 				{
 					return CKPE::vtbl_call<EResultError>(0x30, (void*)&RTTI, Buffer, Bytes, Read);
 				}
 				
-				EResultError Archive2::ReaderStream::DoReadAt(void*, std::uint64_t, std::uint64_t, std::uint64_t&) const noexcept(true)
+				EResultError Archive2::OG_NG::ReaderStream::DoReadAt(void*, std::uint64_t, std::uint64_t, std::uint64_t&) const noexcept(true)
 				{
 					return EResultError::kUnsupported;
 				}
 				
-				EResultError Archive2::ReaderStream::DoWrite(const void*, std::uint64_t, std::uint64_t&) const noexcept(true)
+				EResultError Archive2::OG_NG::ReaderStream::DoWrite(const void*, std::uint64_t, std::uint64_t&) const noexcept(true)
 				{
 					return EResultError::kUnsupported;
 				}
 				
-				EResultError Archive2::ReaderStream::DoSeek(std::int64_t p, SeekMode m, std::uint64_t& np) const noexcept(true)
+				EResultError Archive2::OG_NG::ReaderStream::DoSeek(std::int64_t p, SeekMode m, std::uint64_t& np) const noexcept(true)
 				{
 					return CKPE::vtbl_call<EResultError>(0x48, (void*)&RTTI, p, m, &np);
 				}
 				
-				EResultError Archive2::ReaderStream::DoSetEndOfStream() noexcept(true)
+				EResultError Archive2::OG_NG::ReaderStream::DoSetEndOfStream() noexcept(true)
 				{
 					return EResultError::kUnsupported;
 				}
 				
-				EResultError Archive2::ReaderStream::DoPrefetchAt(uint64_t, uint64_t, uint32_t) const noexcept(true)
+				EResultError Archive2::OG_NG::ReaderStream::DoPrefetchAt(uint64_t, uint64_t, uint32_t) const noexcept(true)
 				{
 					return EResultError::kUnsupported;
 				}
 				
-				EResultError Archive2::ReaderStream::DoStartTaggedPrioritizedRead(void* buffer, std::uint64_t bytes, 
+				EResultError Archive2::OG_NG::ReaderStream::DoStartTaggedPrioritizedRead(void* buffer, std::uint64_t bytes,
 					std::uint64_t offset, std::uint32_t priority, std::uint32_t* completionTagOut, 
 					std::uint32_t& completionTagWaitValue, void* unk) const noexcept(true)
 				{
 					return EResultError::kUnsupported;
 				}
 				
-				EResultError Archive2::ReaderStream::DoWaitTags(std::uint32_t* completionTag, 
+				EResultError Archive2::OG_NG::ReaderStream::DoWaitTags(std::uint32_t* completionTag,
 					std::uint32_t completionTagWaitValue, void* unk) const noexcept(true)
 				{
 					return EResultError::kUnsupported;
 				}
 				
-				EResultError Archive2::ReaderStream::DoPrefetchAll(std::uint32_t a) const noexcept(true)
+				EResultError Archive2::OG_NG::ReaderStream::DoPrefetchAll(std::uint32_t a) const noexcept(true)
 				{
 					return CKPE::vtbl_call<EResultError>(0x70, (void*)&RTTI, a);
 				}
 				
-				bool Archive2::ReaderStream::GetFileName(BSFixedString& result) const noexcept(true)
+				bool Archive2::OG_NG::ReaderStream::GetFileName(BSFixedString& result) const noexcept(true)
 				{
 					return CKPE::vtbl_call<bool>(0x78, (void*)&RTTI, &result);
 				}
 				
-				EResultError Archive2::ReaderStream::DoCreateAsync(void* unk) const noexcept(true)
+				EResultError Archive2::OG_NG::ReaderStream::DoCreateAsync(void* unk) const noexcept(true)
 				{
 					return CKPE::vtbl_call<EResultError>(0x80, (void*)&RTTI, unk);
 				}
 				
-				bool Archive2::ReaderStream::DoQTaggedPrioritizedReadSupported() const noexcept(true)
+				bool Archive2::OG_NG::ReaderStream::DoQTaggedPrioritizedReadSupported() const noexcept(true)
 				{
 					return false;
 				}
 				
-				EResultError Archive2::ReaderStream::DoCreateOp(void*, const char*) const noexcept(true)
+				EResultError Archive2::OG_NG::ReaderStream::DoCreateOp(void*, const char*) const noexcept(true)
 				{
 					return EResultError::kUnsupported;
 				}
 				
-				bool Archive2::ReaderStream::DoGetIsFromArchive() const noexcept(true)
+				bool Archive2::OG_NG::ReaderStream::DoGetIsFromArchive() const noexcept(true)
+				{
+					return true;
+				}
+
+				Archive2::AE::ReaderStream::~ReaderStream()
+				{
+					// ctd okay
+					//CKPE::vtbl_call<void>(0x0, (void*)&RTTI);
+				}
+
+				EResultError Archive2::AE::ReaderStream::DoOpen() noexcept(true)
+				{
+					return CKPE::vtbl_call<EResultError>(0x8, (void*)&RTTI);
+				}
+
+				void Archive2::AE::ReaderStream::DoClose() noexcept(true)
+				{
+					CKPE::vtbl_call<void>(0x10, (void*)&RTTI);
+				}
+
+				std::uint64_t Archive2::AE::ReaderStream::DoGetKey() const noexcept(true)
+				{
+					return CKPE::vtbl_call<std::uint64_t >(0x18, (void*)&RTTI);
+				}
+
+				EResultError Archive2::AE::ReaderStream::DoGetInfo(void*) noexcept(true)
+				{
+					return EResultError::kUnsupported;
+				}
+
+				void Archive2::AE::ReaderStream::DoClone(void* p) const noexcept(true)
+				{
+					CKPE::vtbl_call<void>(0x28, (void*)&RTTI, p);
+				}
+
+				EResultError Archive2::AE::ReaderStream::DoRead(void* Buffer, std::uint64_t Bytes, std::uint64_t& Read) const noexcept(true)
+				{
+					return CKPE::vtbl_call<EResultError>(0x30, (void*)&RTTI, Buffer, Bytes, Read);
+				}
+
+				EResultError Archive2::AE::ReaderStream::DoReadAt(void*, std::uint64_t, std::uint64_t, std::uint64_t&) const noexcept(true)
+				{
+					return EResultError::kUnsupported;
+				}
+
+				EResultError Archive2::AE::ReaderStream::DoWrite(const void*, std::uint64_t, std::uint64_t&) const noexcept(true)
+				{
+					return EResultError::kUnsupported;
+				}
+
+				EResultError Archive2::AE::ReaderStream::DoSeek(std::int64_t p, SeekMode m, std::uint64_t& np) const noexcept(true)
+				{
+					return CKPE::vtbl_call<EResultError>(0x48, (void*)&RTTI, p, m, &np);
+				}
+
+				EResultError Archive2::AE::ReaderStream::DoSetEndOfStream() noexcept(true)
+				{
+					return EResultError::kUnsupported;
+				}
+
+				EResultError Archive2::AE::ReaderStream::DoPrefetchAt(uint64_t, uint64_t, uint32_t) const noexcept(true)
+				{
+					return EResultError::kUnsupported;
+				}
+
+				EResultError Archive2::AE::ReaderStream::DoStartTaggedPrioritizedRead(void* buffer, std::uint64_t bytes,
+					std::uint64_t offset, std::uint32_t priority, std::uint32_t* completionTagOut,
+					std::uint32_t& completionTagWaitValue, void* unk) const noexcept(true)
+				{
+					return EResultError::kUnsupported;
+				}
+
+				EResultError Archive2::AE::ReaderStream::DoWaitTags(std::uint32_t* completionTag,
+					std::uint32_t completionTagWaitValue, void* unk) const noexcept(true)
+				{
+					return EResultError::kUnsupported;
+				}
+
+				EResultError Archive2::AE::ReaderStream::DoPrefetchAll(std::uint32_t a) const noexcept(true)
+				{
+					return CKPE::vtbl_call<EResultError>(0x70, (void*)&RTTI, a);
+				}
+
+				bool Archive2::AE::ReaderStream::GetFileName(BSFixedString& result) const noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x78, (void*)&RTTI, &result);
+				}
+
+				EResultError Archive2::AE::ReaderStream::DoCreateAsync(void* unk) const noexcept(true)
+				{
+					return CKPE::vtbl_call<EResultError>(0x80, (void*)&RTTI, unk);
+				}
+
+				bool Archive2::AE::ReaderStream::DoQTaggedPrioritizedReadSupported() const noexcept(true)
+				{
+					return false;
+				}
+
+				EResultError Archive2::AE::ReaderStream::DoCreateOp(void*, const char*) const noexcept(true)
+				{
+					return EResultError::kUnsupported;
+				}
+
+				bool Archive2::AE::ReaderStream::DoGetIsFromArchive() const noexcept(true)
 				{
 					return true;
 				}
