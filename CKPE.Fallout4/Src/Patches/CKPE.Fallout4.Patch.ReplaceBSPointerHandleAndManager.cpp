@@ -97,7 +97,7 @@ namespace CKPE
 			bool ReplaceBSPointerHandleAndManager::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
+				if ((verPatch != 1) && (verPatch != 2) && (verPatch != 3))
 					return false;
 
 				auto Extremly = _READ_OPTION_BOOL("CreationKit", "bBSPointerHandleExtremly", false);
@@ -108,6 +108,8 @@ namespace CKPE
 					return Install_163(db, Extremly);
 				else if (verPatch == 2)
 					return Install_980(db, Extremly);
+				else if(verPatch == 3)
+					return Install_137(db, Extremly);
 
 				return false;
 			}
@@ -224,23 +226,11 @@ namespace CKPE
 					ScopeSafeWrite text(textRange.GetAddress(), textRange.GetSize());
 
 					auto addr = __CKPE_OFFSET(0);
-
-					if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_FALLOUT_C4_1_11_137_0)
-					{
-						// Preparation, removal of all embedded pieces of code
-						SafeWrite::WriteNop(addr + 12, 0x7D);
-						SafeWrite::WriteMovFromRax(addr + 5, __CKPE_OFFSET(1));
-						// Specify the size
-						memcpy((void*)(__CKPE_OFFSET(0) + 0x96), &EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
-					}
-					else
-					{
-						// Preparation, removal of all embedded pieces of code
-						SafeWrite::WriteNop(addr + 12, 0x7A);
-						SafeWrite::WriteMovFromRax(addr + 5, __CKPE_OFFSET(1));
-						// Specify the size
-						memcpy((void*)(addr + 0x93), &EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
-					}
+					// Preparation, removal of all embedded pieces of code
+					SafeWrite::WriteNop(addr + 12, 0x7A);
+					SafeWrite::WriteMovFromRax(addr + 5, __CKPE_OFFSET(1));
+					// Specify the size
+					memcpy((void*)(addr + 0x93), &EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
 
 					// Debug (for check)
 					//static std::vector<std::uintptr_t> storage;
@@ -549,6 +539,364 @@ namespace CKPE
 						SafeWrite::WriteNop(addr + 12, 0x7A);
 						SafeWrite::WriteMovFromRax(addr + 5, __CKPE_OFFSET(1));
 					}
+
+					Detours::DetourCall(__CKPE_OFFSET(0),
+						(std::uintptr_t)&EditorAPI::BSPointerHandleManager_Original::InitSDM);
+					Detours::DetourCall(__CKPE_OFFSET(2),
+						(std::uintptr_t)&EditorAPI::BSPointerHandleManager_Original::KillSDM);
+				}
+
+				return true;
+			}
+
+			bool ReplaceBSPointerHandleAndManager::Install_137(Common::RelocatorDB::PatchDB* db, bool Extremly) noexcept(true)
+			{
+				auto _interface = CKPE::Common::Interface::GetSingleton();
+				auto base = _interface->GetApplication()->GetBase();
+
+				auto restoring_destroy1 = [](std::uintptr_t rva, std::uint32_t removal_size, std::uintptr_t func)
+					{
+						SafeWrite::WriteNop(rva, removal_size);
+						SafeWrite::Write(rva, { 0x48, 0x89, 0xC1 });
+						Detours::DetourCall(rva + 3, func);
+					};
+
+				auto restoring_destroy2 = [](std::uintptr_t rva, std::uint8_t off_rsp, std::uint32_t removal_size, std::uintptr_t func)
+					{
+						SafeWrite::WriteNop(rva, removal_size);
+						SafeWrite::Write(rva, { 0x48, 0x8D, 0x4C, 0x24, off_rsp });
+						Detours::DetourCall(rva + 5, func);
+					};
+
+				/**(std::uintptr_t*)&pointer_ReplaceBSPointerHandleAndManager_code1 =
+					Detours::DetourClassJump(__CKPE_OFFSET(6), (std::uintptr_t)&sub_string_crash);*/
+
+				pointer_ReplaceBSPointerHandleAndManager_data1 = (std::uint32_t*)__CKPE_OFFSET(4);
+				pointer_ReplaceBSPointerHandleAndManager_data2 = (std::uint32_t*)__CKPE_OFFSET(5);
+
+				auto addr = (std::uintptr_t)__CKPE_OFFSET(0);
+				// Preparation, removal of all embedded pieces of code
+				SafeWrite::WriteNop(addr + 12, 0x7D);
+				SafeWrite::WriteMovFromRax(addr + 5, __CKPE_OFFSET(1));
+
+				if (Extremly)
+				{
+					using namespace std::chrono;
+					auto timerStart = high_resolution_clock::now();
+					EditorAPI::BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 2;
+
+					Detours::DetourCall(__CKPE_OFFSET(0),
+						(std::uintptr_t)&EditorAPI::BSPointerHandleManager_Extended_NG::InitSDM);
+					Detours::DetourCall(__CKPE_OFFSET(2),
+						(std::uintptr_t)&EditorAPI::BSPointerHandleManager_Extended_NG::KillSDM);
+
+					// Cutting a lot is faster this way
+					auto textRange = _interface->GetApplication()->GetSegment(Segment::text);
+					ScopeSafeWrite text(textRange.GetAddress(), textRange.GetSize());
+
+					// Specify the size
+					memcpy((void*)(addr + 0x96), &EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+
+					// Debug (for check)
+					//static std::vector<std::uintptr_t> storage;
+
+					auto __InstallPatchByPatternMask = [&textRange](
+						const char* pattern_mask,		// pattern "? ? 00 E0 03"
+						std::size_t offset,				// offset from find patterns array
+						std::size_t count,				// count need change
+						std::size_t offset_find,		// offset from in once find pattern
+						const void* source,				// buffer
+						std::size_t ssize				// buffer size
+						) -> std::size_t {
+							auto patterns = Patterns::FindsByMask(textRange.GetAddress(), textRange.GetSize(), pattern_mask);
+
+							// Debug (for check)
+							//storage.append_range(patterns);
+
+							if (patterns.size() > offset)
+							{
+								std::size_t max = std::min(patterns.size(), count + offset);
+								for (std::size_t index = offset; index < max; index++)
+									memcpy((void*)(patterns[index] + offset_find), source, ssize);
+
+								// Debug
+								//_CONSOLE("__InstallPatchByPatternMask() function was executed successfully. PatternMask: \"%s\", Count: %llu",
+								//	pattern_mask, max - offset);
+
+								return max - offset;
+							}
+							//else
+							//{
+							//	// Debug
+							//	_CONSOLE("__InstallPatchByPatternMask() function return failed. PatternMask: \"%s\", Count: %llu",
+							//		pattern_mask, 0);
+							//}
+
+							return 0;
+						};
+
+					auto __InstallPatchByPatternMaskCustom = [&textRange](
+						const char* pattern_mask,			// pattern "? ? 00 E0 03"
+						std::size_t offset,						// offset from find patterns array
+						std::size_t count,						// count need change
+						bool(callback)(std::uintptr_t addr)		// callback function
+						) -> std::size_t {
+							auto patterns = Patterns::FindsByMask(textRange.GetAddress(), textRange.GetSize(), pattern_mask);
+
+							// Debug (for check)
+							//storage.append_range(patterns);
+
+							if (patterns.size() > offset)
+							{
+								std::size_t max = std::min(patterns.size(), count + offset);
+								std::size_t total = 0;
+								for (std::size_t index = offset; index < max; index++)
+								{
+									if (callback(patterns[index]))
+										total++;
+								}
+
+								// Debug
+								//_CONSOLE("__InstallPatchByPatternMask() function was executed successfully. PatternMask: \"%s\", Count: %llu",
+								//	pattern_mask, max - offset);
+
+								return total;
+							}
+							//else
+							//{
+							//	// Debug
+							//	_CONSOLE("__InstallPatchByPatternMask() function return failed. PatternMask: \"%s\", Count: %llu",
+							//		pattern_mask, 0);
+							//}
+
+							return 0;
+						};
+
+					auto __InstallPatchByPatternMaskEx = [&textRange](
+						const char* pattern_mask,					// pattern "? ? 00 E0 03"
+						std::size_t offset,							// offset from find patterns array
+						std::size_t count,							// count need change
+						std::size_t offset_find,					// offset from in once find pattern
+						const void* source,							// buffer
+						std::size_t ssize,							// buffer size
+						std::initializer_list<std::size_t> excludes	// list exclude indexes
+						) -> std::size_t {
+							auto patterns = Patterns::FindsByMask(textRange.GetAddress(), textRange.GetSize(), pattern_mask);
+
+							// Debug (for check)
+							//storage.append_range(patterns);
+
+							if (patterns.size() > offset)
+							{
+								std::size_t max = std::min(patterns.size(), count + offset);
+								std::size_t total = 0;
+								for (std::size_t index = offset; index < max; index++)
+									if (std::find(excludes.begin(), excludes.end(), index) == std::end(excludes))
+									{
+										memcpy((void*)(patterns[index] + offset_find), source, ssize);
+										total++;
+									}
+
+								// Debug
+								//_CONSOLE("__InstallPatchByPatternMaskEx() function was executed successfully. PatternMask: \"%s\", Count: %llu",
+								//	pattern_mask, total);
+
+								return total;
+							}
+							//else
+							//{
+							//	// Debug
+							//	_CONSOLE("__InstallPatchByPatternMaskEx() function return failed. PatternMask: \"%s\", Count: %llu",
+							//		pattern_mask, 0);
+							//}
+
+							return 0;
+						};
+
+					std::size_t total = 0;
+					std::size_t total_patches = 0;
+					static std::uint8_t buffer_cmd[0x10];
+
+#if CKPE_FO4_ENABLED_REFLIMIT
+					// == REF_COUNT_MASK
+					total += __InstallPatchByPatternMaskCustom("? FF 03 00 00 ? FF 03 00 00", 0, -1, [](std::uintptr_t addr) -> bool
+						{
+							memcpy((std::uint8_t*)(addr + 1), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+							memcpy((std::uint8_t*)(addr + 6), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+							return true;
+						});
+
+					total += __InstallPatchByPatternMaskCustom("F7 ? ? FF 03 00 00", 0, -1, [](std::uintptr_t addr) -> bool
+						{
+							if ((*(std::uint8_t*)(addr + 2) != 0x38) && (*(std::uint8_t*)(addr + 2) != 0x8)) return false;
+							memcpy((std::uint8_t*)(addr + 3), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+							return true;
+						});
+
+					total += __InstallPatchByPatternMaskCustom("81 ? ? FF 03 00 00", 0, -1, [](std::uintptr_t addr) -> bool
+						{
+							if ((*(std::uint8_t*)(addr + 2) != 0x38) && (*(std::uint8_t*)(addr + 2) != 0x8)) return false;
+							memcpy((std::uint8_t*)(addr + 3), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+							return true;
+						});
+
+					total += __InstallPatchByPatternMask("FF C8 A9 FF 03 00 00", 0, -1, 3,
+						&EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					total += __InstallPatchByPatternMask("FF ? F7 ? FF 03 00 00", 0, -1, 4,
+						&EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					total += __InstallPatchByPatternMask("41 F7 ? 24 38 FF 03 00 00", 0, -1, 5,
+						&EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					total += __InstallPatchByPatternMask("41 FF ? 41 F7 ? FF 03 00 00", 0, -1, 6,
+						&EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+
+					total += __InstallPatchByPatternMaskCustom("81 ? FF 03 00 00 81 ? FF 03 00 00", 0, 20, [](std::uintptr_t addr) -> bool
+						{
+							memcpy((std::uint8_t*)(addr + 2), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+							memcpy((std::uint8_t*)(addr + 8), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+							return true;
+						});
+
+					total += __InstallPatchByPatternMaskCustom("? FF 03 00 00 ? ? ? ? ? ? ? ? ? FF 03 00 00", 0, 20, [](std::uintptr_t addr) -> bool
+						{
+							if (*(std::uint8_t*)(addr + 5) != 0x8D)
+							{
+								memcpy((std::uint8_t*)(addr + 1), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+								memcpy((std::uint8_t*)(addr + 14), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+							}
+							return true;
+						});
+
+					memcpy((std::uint8_t*)(base + 0x538ACF), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0x53B0A1), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0x5B64B6), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0x5B64C4), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0xD3A786), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0xD9B4E2), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0xD9B5D1), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0x5AF00D), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0x5AF018), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0x5AF2B0), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0x5AF2C6), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+
+					total_patches += total + 7;
+					total = 0;
+
+					// CreateHandle fix
+					*(std::uint8_t*)(base + 0x526D5D) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
+					*(std::uint8_t*)(base + 0x526DC6) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
+					*(std::uint8_t*)(base + 0x526EAC) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
+					*(std::uint8_t*)(base + 0x526D64) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
+					*(std::uint8_t*)(base + 0x526DCE) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
+					*(std::uint8_t*)(base + 0x526EA8) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
+
+					addr = (std::uintptr_t)__CKPE_OFFSET(3);
+					memcpy((void*)(addr + 0x12F), &EditorAPI::BSUntypedPointerHandle_Extended_NG::MAX_HANDLE_COUNT, 4);
+					std::uint32_t mask = EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_ACTIVE_BIT |
+						EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT;
+					memcpy((void*)(addr + 0x134), &mask, 4);
+
+					// Change HANDLE_BIT_INDEX
+					std::uint8_t bit_byte = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
+					total += __InstallPatchByPatternMask("C1 ? 0B 3B", 0, -1, 2, &bit_byte, 1);
+					total += __InstallPatchByPatternMask("C1 ? 0B 41 3B", 0, -1, 2, &bit_byte, 1);
+
+					total_patches += total;
+					total = 0;
+
+					// Change AGE
+					total += __InstallPatchByPatternMask("A9 00 00 E0 03", 0, -1, 1,
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_AGE_BIT, 4);
+					total += __InstallPatchByPatternMask("F7 ? 00 00 E0 03", 0, -1, 2,
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_AGE_BIT, 4);
+					total += __InstallPatchByPatternMask("25 00 00 E0 03", 0, -1, 1,
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_AGE_BIT, 4);
+					total += __InstallPatchByPatternMask("81 ? 00 00 E0 03", 0, -1, 2,
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_AGE_BIT, 4);
+
+					total_patches += total;
+					total = 0;
+
+					// Change INDEX
+					total += __InstallPatchByPatternMask("41 81 ? FF FF 1F 00", 0, -1, 3,
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 E1 FF FF 1F 00", 3, 25, 2,
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMaskEx("81 E5 FF FF 1F 00", 0, -1, 2,
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4, { 4, 8 });
+					total += __InstallPatchByPatternMaskEx("81 E6 FF FF 1F 00", 3, 24, 2,
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4, { 7, 8 });
+					total += __InstallPatchByPatternMask("81 E7 FF FF 1F 00", 2, 1, 2,
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("8B C7 25 FF FF 1F 00 8B D8", 0, -1, 3,
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? 48 ? ? 04", 0, -1, 2,
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? ? ? ? ? 48 ? ? 04", 0, -1, 2,
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? ? ? ? ? 44 ? ? 41 ? 00 00 00 00 49 ? ? 04", 0, -1, 2,
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 ? FF FF 1F 00 ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? 49 ? ? 04", 0, -1, 2,
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					total += __InstallPatchByPatternMask("81 E2 FF FF 1F 00", 0, 2, 2,
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+
+					memcpy((void*)(base + 0x5279F9),
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+
+					total += 1;
+					total_patches += total;
+					total = 0;
+
+					std::uint32_t not_mask = ~EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT;
+
+					// Change NOT MASK_INDEX_BIT
+					total += __InstallPatchByPatternMask("81 ? 00 00 E0 FF", 0, 56, 2, &not_mask, 4);
+
+					total_patches += total;
+					//_MESSAGE("NOT MASK_INDEX_BIT Total %llu", total);
+
+					total = 0;
+					not_mask = ~EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_ACTIVE_BIT;
+
+					// Change NOT MASK_ACTIVE_BIT
+					total += __InstallPatchByPatternMask("81 ? FF FF FF FB", 0, -1, 2, &not_mask, 4);
+
+					total_patches += total;
+					//_MESSAGE("NOT MASK_INDEX_BIT Total %llu", total);
+
+					total = 0;
+
+					// Change UNUSED_BIT_START
+					total += __InstallPatchByPatternMask("0F BA E0 1A", 0, 317, 3,
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::UNUSED_BIT_START, 1);
+					total += __InstallPatchByPatternMaskEx("0F BA ?? 1A", 0, 72, 3,
+						&EditorAPI::BSUntypedPointerHandle_Extended_NG::UNUSED_BIT_START, 1,
+						{ 18, 19, 23, 24, 30, 38, 39, 47, 48, 63, 64, 65, 66, 67, 68 });
+
+					total_patches += total;
+					total = 0;
+
+					// Change MAX_HANDLE_COUNT
+					total += __InstallPatchByPatternMask("81 ? 00 00 20 00", 0, 1, 2, &EditorAPI::BSUntypedPointerHandle_Extended_NG::MAX_HANDLE_COUNT, 4);
+					total += __InstallPatchByPatternMask("BD 00 00 20 00", 0, -1, 1, &EditorAPI::BSUntypedPointerHandle_Extended_NG::MAX_HANDLE_COUNT, 4);
+
+					total_patches += total;
+					//_MESSAGE("MAX_HANDLE_COUNT Total %llu", total);
+
+					total = 0;
+
+					// Change MASK_ACTIVE_BIT
+					total += __InstallPatchByPatternMask("F7 ? 00 00 00 04", 0, 3, 2, &EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_ACTIVE_BIT, 4);
+#else
+					CKPE_ASSERT_MSG("Refrs extension is disabled by perchik71, it may be in implementation or abandoned.");
+#endif /* CKPE_FO4_ENABLED_REFLIMIT */
+
+					auto duration = duration_cast<milliseconds>(high_resolution_clock::now() - timerStart).count();
+					_CONSOLE("CreationKitPlatformExtended::Experimental::BSPointerHandle: %llu patches applied in %llums", total_patches, duration);
+				}
+				else
+				{
+					EditorAPI::BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 0;
 
 					Detours::DetourCall(__CKPE_OFFSET(0),
 						(std::uintptr_t)&EditorAPI::BSPointerHandleManager_Original::InitSDM);
