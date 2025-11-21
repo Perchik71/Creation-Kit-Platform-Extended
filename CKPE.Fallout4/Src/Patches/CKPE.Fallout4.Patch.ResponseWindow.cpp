@@ -206,7 +206,6 @@ namespace CKPE
 							}
 
 							auto LipFilePath = PathUtils::ChangeFileExt(AudioFilePath, ".lip");
-
 							auto data = *(LPRESPONSE_DATA*)pointer_ResponseWindow_data;
 
 							if (!GenerationLip(AudioFilePath.c_str(), LipFilePath.c_str(), 
@@ -358,26 +357,29 @@ namespace CKPE
 				DeleteFileA(LipPath);
 
 				auto LipGenPath = StringUtils::Utf16ToWinCP(PathUtils::GetApplicationPath()) + V_TOOLPATH;
-				auto TempAudioPath = PathUtils::ChangeFileExt(AudioPath, "") + "_temp.wav";
-
-				DeleteFileA(TempAudioPath.c_str());
-
+				
+				// Interestingly, the utility converts itself .wav to the desired 16khz format.
+				//
+				//auto TempAudioPath = PathUtils::ChangeFileExt(AudioPath, "") + "_temp.wav";
+				//
+				//DeleteFileA(TempAudioPath.c_str());
+				// 
 				// Convert audio to 16KHz
 				// "\"%s\" -i \"%s\" -ac 1 -acodec pcm_s16le -ar 16000 \"%s\"";
-				auto CmdLine = StringUtils::FormatString(V_CMD_FMT2, (LipGenPath + V_FFMPEG).c_str(),
-					AudioPath, TempAudioPath.c_str());
-				ExecuteApplication(CmdLine.c_str());
+				//auto CmdLine = StringUtils::FormatString(V_CMD_FMT2, (LipGenPath + V_FFMPEG).c_str(),
+				//	AudioPath, TempAudioPath.c_str());
+				//ExecuteApplication(CmdLine.c_str());
 
-				if (!PathUtils::FileExists(TempAudioPath))
-					return false;
+				//if (!PathUtils::FileExists(TempAudioPath))
+				//	return false;
 
 				// Generate Lip
-				CmdLine = StringUtils::FormatString(V_CMD_FMT, (LipGenPath + V_WRAPPER).c_str(),
-					TempAudioPath.c_str(), StringUtils::WinCPToUtf8(ResponseText).c_str(), LipPath, 
+				auto CmdLine = StringUtils::FormatString(V_CMD_FMT, (LipGenPath + V_WRAPPER).c_str(),
+					AudioPath, StringUtils::WinCPToUtf8(ResponseText).c_str(), LipPath,
 					V_LANG.c_str(), V_GESTUREEXAGGERATION);
 				ExecuteApplication(CmdLine.c_str());
 
-				DeleteFileA(TempAudioPath.c_str());
+				//DeleteFileA(TempAudioPath.c_str());
 				DeleteFileA((LipGenPath + "tmp16khz.wav").c_str());
 
 				return true;
