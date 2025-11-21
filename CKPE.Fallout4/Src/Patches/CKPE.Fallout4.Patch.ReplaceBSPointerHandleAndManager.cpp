@@ -224,11 +224,23 @@ namespace CKPE
 					ScopeSafeWrite text(textRange.GetAddress(), textRange.GetSize());
 
 					auto addr = __CKPE_OFFSET(0);
-					// Preparation, removal of all embedded pieces of code
-					SafeWrite::WriteNop(addr + 12, 0x7A);
-					SafeWrite::WriteMovFromRax(addr + 5, __CKPE_OFFSET(1));
-					// Specify the size
-					memcpy((void*)(__CKPE_OFFSET(0) + 0x93), &EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+
+					if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_FALLOUT_C4_1_11_137_0)
+					{
+						// Preparation, removal of all embedded pieces of code
+						SafeWrite::WriteNop(addr + 12, 0x7D);
+						SafeWrite::WriteMovFromRax(addr + 5, __CKPE_OFFSET(1));
+						// Specify the size
+						memcpy((void*)(__CKPE_OFFSET(0) + 0x96), &EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					}
+					else
+					{
+						// Preparation, removal of all embedded pieces of code
+						SafeWrite::WriteNop(addr + 12, 0x7A);
+						SafeWrite::WriteMovFromRax(addr + 5, __CKPE_OFFSET(1));
+						// Specify the size
+						memcpy((void*)(addr + 0x93), &EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
+					}
 
 					// Debug (for check)
 					//static std::vector<std::uintptr_t> storage;

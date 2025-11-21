@@ -47,7 +47,6 @@
 #include <Patches/CKPE.Fallout4.Patch.FixSmoothValue.h>
 #include <Patches/CKPE.Fallout4.Patch.FixSortPropObjectMod.h>
 //#include <Patches/CKPE.Fallout4.Patch.FixSSAOInIntCell.h>
-//#include <Patches/CKPE.Fallout4.Patch.FixSteamBaseRefCount.h>
 #include <Patches/CKPE.Fallout4.Patch.FixTabDeleteCrash.h>
 #include <Patches/CKPE.Fallout4.Patch.FixVC.h>
 #include <Patches/CKPE.Fallout4.Patch.FlowChartX.h>
@@ -134,7 +133,6 @@ namespace CKPE
 			mgr->Register(new Patch::FixSmoothValue);
 			mgr->Register(new Patch::FixSortPropObjectMod);
 			//mgr->Register(new Patch::FixSSAOInIntCell);
-			//mgr->Register(new Patch::FixSteamBaseRefCount);
 			mgr->Register(new Patch::FixTabDeleteCrash);
 			mgr->Register(new Patch::FixVC);
 			mgr->Register(new Patch::FlowChartX);

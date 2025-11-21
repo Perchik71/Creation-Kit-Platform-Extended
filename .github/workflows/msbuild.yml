@@ -77,7 +77,11 @@ jobs:
 
     - name: Copy SSE Stuff
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: Get-ChildItem -Path .\Stuffs\SSE -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-${{env.SHORT_SHA}}" $_.Name) -Force }
+      run: Copy-Item -Path .\Stuffs\SSE\*.* -Destination "ckpe-sse-master-${{env.SHORT_SHA}}" -Recurse -Force
+      
+    - name: Copy SSE Tools
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: Copy-Item -Path .\Stuffs\SSE\Tools -Destination "ckpe-sse-master-${{env.SHORT_SHA}}" -Recurse -Force
       
     - name: Copy Custom Theme Stuff
       working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -129,7 +133,7 @@ jobs:
       
     - name: Copy FO4 Tools
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: Copy-Item -Path .\Stuffs\Tools -Destination "ckpe-fo4-master-${{env.SHORT_SHA}}" -Recurse -Force
+      run: Copy-Item -Path .\Stuffs\FO4\Tools -Destination "ckpe-fo4-master-${{env.SHORT_SHA}}" -Recurse -Force
       
     - name: Copy Custom Theme Stuff
       working-directory: ${{env.GITHUB_WORKSPACE}}
