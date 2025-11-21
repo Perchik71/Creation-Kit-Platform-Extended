@@ -766,28 +766,31 @@ namespace CKPE
 							return true;
 						});
 
-					memcpy((std::uint8_t*)(base + 0x538ACF), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(base + 0x53B0A1), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(base + 0x5B64B6), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(base + 0x5B64C4), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(base + 0xD3A786), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(base + 0xD9B4E2), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(base + 0xD9B5D1), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(base + 0x5AF00D), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(base + 0x5AF018), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(base + 0x5AF2B0), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(base + 0x5AF2C6), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0x551E3F), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0x554411), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);			
+					memcpy((std::uint8_t*)(base + 0x5CF826), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0x5CF834), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0xD65436), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0xDC61E2), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0xDC62D1), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0x5C837D), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0x5C8388), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0x5C8620), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0x5C8636), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					// added
+					memcpy((std::uint8_t*)(base + 0x82DCA4), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)(base + 0x82DCAD), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
 
-					total_patches += total + 7;
+					total_patches += total + 9;
 					total = 0;
 
 					// CreateHandle fix
-					*(std::uint8_t*)(base + 0x526D5D) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
-					*(std::uint8_t*)(base + 0x526DC6) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
-					*(std::uint8_t*)(base + 0x526EAC) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
-					*(std::uint8_t*)(base + 0x526D64) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
-					*(std::uint8_t*)(base + 0x526DCE) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
-					*(std::uint8_t*)(base + 0x526EA8) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
+					*(std::uint8_t*)(base + 0x53FDDD) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
+					*(std::uint8_t*)(base + 0x53FE46) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
+					*(std::uint8_t*)(base + 0x53FF2C) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
+					*(std::uint8_t*)(base + 0x53FDE4) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
+					*(std::uint8_t*)(base + 0x53FE4E) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
+					*(std::uint8_t*)(base + 0x53FF28) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
 
 					addr = (std::uintptr_t)__CKPE_OFFSET(3);
 					memcpy((void*)(addr + 0x12F), &EditorAPI::BSUntypedPointerHandle_Extended_NG::MAX_HANDLE_COUNT, 4);
@@ -839,8 +842,8 @@ namespace CKPE
 						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
 					total += __InstallPatchByPatternMask("81 E2 FF FF 1F 00", 0, 2, 2,
 						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
-
-					memcpy((void*)(base + 0x5279F9),
+	
+					memcpy((void*)(base + 0x540A79),
 						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
 
 					total += 1;
