@@ -104,12 +104,15 @@ namespace CKPE
 				if (Extremly)
 					_CONSOLE("[WARNING] An extended set of refs has been included. You use it at your own risk.");
 
-				if (verPatch == 1)
+				switch (verPatch)
+				{
+				case 1:
 					return Install_163(db, Extremly);
-				else if (verPatch == 2)
+				case 2:
 					return Install_980(db, Extremly);
-				else if(verPatch == 3)
+				case 3:
 					return Install_137(db, Extremly);
+				}
 
 				return false;
 			}
