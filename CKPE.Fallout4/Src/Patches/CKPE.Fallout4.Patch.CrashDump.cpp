@@ -58,7 +58,8 @@ namespace CKPE
 
 			bool CrashDump::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 2)
+				auto verPatch = db->GetVersion();
+				if ((verPatch != 2) && (verPatch != 3))
 					return false;
 
 				Common::CrashHandler::GetSingleton()->Install();
@@ -97,7 +98,12 @@ namespace CKPE
 				auto stext = interface->GetApplication()->GetSegment(Segment::text);
 				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
-				for (std::uint32_t i = 0; i < db->GetCount(); i++)
+				// Added AE
+				if (verPatch == 3)
+					// Remove from init function
+					text.WriteNop(__CKPE_OFFSET(0), 6);
+
+				for (std::uint32_t i = 1; i < db->GetCount(); i++)
 					text.Write(__CKPE_OFFSET(i), { 0xC3 });
 
 				Common::CrashHandler::GetSingleton()->OnAnalyzeClassRef = DoAnalyzeClassRef;
