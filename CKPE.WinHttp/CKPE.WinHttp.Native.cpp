@@ -251,6 +251,18 @@ namespace CKPE
                 EnableBreakpoint();
                 _run = true;
             }
+            // Added at the request of Michael, and the author of the mod "xSE Plugin Preloader" took the name of mine .dll
+            // does not want to fix this misunderstanding... bitch.
+            // 
+            // Because CKPE is always loaded... Let's check the game, if it's a game, then I're making dirt!
+            // (At least it's not according to the rules of this project)
+            else if (sname.contains(L"fallout4"))
+            {
+                static constexpr auto PreloaderModName = L"xSEPluginPreloader.dll"; //L"bullshit.dll";
+
+                if (PathUtils::FileExists(PathUtils::GetApplicationPath() + PreloaderModName))
+                    LoadLibraryW((PathUtils::GetApplicationPath() + PreloaderModName).c_str());
+            }
         }
 
         void Runner::Shutdown()
