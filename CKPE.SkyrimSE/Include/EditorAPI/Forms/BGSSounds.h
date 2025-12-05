@@ -5,9 +5,9 @@
 #pragma once
 
 #include <EditorAPI/BSTArray.h>
+#include <EditorAPI/TESFullName.h>
 #include <CKPE.Float16.h>
 #include "TESForm.h"
-#include "TESFullName.h"
 
 namespace CKPE
 {

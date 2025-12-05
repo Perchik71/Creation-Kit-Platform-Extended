@@ -135,6 +135,7 @@
     <ClCompile Include="Src\CKPE.Common.CreatePatterns.cpp" />
     <ClCompile Include="Src\CKPE.Common.D3D11Proxy.cpp" />
     <ClCompile Include="Src\CKPE.Common.DialogManager.cpp" />
+    <ClCompile Include="Src\CKPE.Common.Docking.cpp" />
     <ClCompile Include="Src\CKPE.Common.EditorUI.cpp" />
     <ClCompile Include="Src\CKPE.Common.FormInfoOutputWindow.cpp" />
     <ClCompile Include="Src\CKPE.Common.Interface.cpp" />
@@ -186,6 +187,7 @@
   <ItemGroup>
     <ClInclude Include="..\Dependencies\jDialogs\include\jdialogs.h" />
     <ClInclude Include="Include\CKPE.Common.AboutWindow.h" />
+    <ClInclude Include="Include\CKPE.Common.Docking.h" />
     <ClInclude Include="Include\CKPE.Common.FormInfoOutputWindow.h" />
     <ClInclude Include="Include\CKPE.Common.KillerGuardMalware.h" />
     <ClInclude Include="Include\CKPE.Common.PatchBaseWindow.h" />

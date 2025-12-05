@@ -84,6 +84,9 @@ namespace CKPE
 				_version = FileUtils::GetFileVersion(spath + _dllName);
 				Common::PatchManager::GetSingleton()->OpenBlackList();
 
+				// Init docking
+				_docking = new DockingManager;
+
 				// IMPORTANT SYSTEM
 				RTTI::GetSingleton()->Initialize();
 

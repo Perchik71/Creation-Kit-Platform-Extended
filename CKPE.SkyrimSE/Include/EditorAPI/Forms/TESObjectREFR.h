@@ -7,6 +7,7 @@
 #include <CKPE.Utils.h>
 #include <EditorAPI/NiAPI/NiNode.h>
 #include <EditorAPI/BSHandleRefObject.h>
+#include <EditorAPI/BSExtraData.h>
 #include "TESForm.h"
 #include "TESObjectCELL.h"
 
@@ -57,13 +58,6 @@ namespace CKPE
 						fsFrozen = 1 << 29,
 					};
 				public:
-					class ExtraDataList
-					{
-					public:
-						virtual ~ExtraDataList() = default;
-						char pad08[0x8];
-					};
-				public:
 					virtual ~TESObjectREFR() = default;
 
 					// The function returns BSFadeNode, it has not been studied, I use parent class
@@ -72,22 +66,25 @@ namespace CKPE
 					inline void SetParent(TESForm* NewParentForm) noexcept(true) { vtbl_call<void>(0x4F8, this, NewParentForm); MarkAsChanged(); }
 					inline NiAPI::NiPoint3 GetRotate() const noexcept(true) { return _Rotate; }
 					inline NiAPI::NiPoint3 GetPosition() const noexcept(true) { return _Position; }
-					inline float GetScale() const noexcept(true) { return (float)_Scale / 100; }
-					inline TESObjectCELL* GetParentCell() const noexcept(true) { return _ParentCell; }
-					inline bool HasInvisible() const noexcept(true) { return _FormFlags.Has(fs3DInvisible); }
-					inline bool HasChildrenInvisible() const noexcept(true) { return _FormFlags.Has(fsChildren3DInvisible); }
-					inline bool HasFrozen() const noexcept(true) { return _FormFlags.Has(fsFrozen); }
+					[[nodiscard]] inline float GetScale() const noexcept(true) { return (float)_Scale / 100; }
+								
+					[[nodiscard]] inline ExtraDataList* GetExtraData() noexcept(true) { return &_extraData; }
+					[[nodiscard]] inline const ExtraDataList* GetExtraData() const noexcept(true) { return &_extraData; }
+					[[nodiscard]] inline TESObjectCELL* GetParentCell() const noexcept(true) { return _ParentCell; }
+					[[nodiscard]] inline bool HasInvisible() const noexcept(true) { return _FormFlags.Has(fs3DInvisible); }
+					[[nodiscard]] inline bool HasChildrenInvisible() const noexcept(true) { return _FormFlags.Has(fsChildren3DInvisible); }
+					[[nodiscard]] inline bool HasFrozen() const noexcept(true) { return _FormFlags.Has(fsFrozen); }
 
 					// Added patch "Add Change Ref" (only 1.6 and newer)
 					inline static void (*SetParentWithRedraw)(TESObjectREFR*, TESForm*);
-				private:
+				protected:
 					TESForm* _Parent;
 					NiAPI::NiPoint3 _Rotate;
 					NiAPI::NiPoint3 _Position;
 					TESObjectCELL* _ParentCell;
-					void* UnkPtr;
-					ExtraDataList ExtraData;
-					char pad90[0x10];
+					char pad78[0x8];
+					ExtraDataList _extraData;
+					char pad98[0x8];
 					std::uint16_t _Scale;
 					std::uint16_t UnkNum;
 				};

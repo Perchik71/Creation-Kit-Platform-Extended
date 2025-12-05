@@ -12,6 +12,7 @@
 #include <CKPE.Common.CrashHandler.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
 #include <EditorAPI/NiAPI/NiSourceTexture.h>
+#include <EditorAPI/NiAPI/NiAVObject.h>
 #include <EditorAPI/Forms/TESForm.h>
 #include <EditorAPI/BSResources.h>
 #include <EditorAPI/BSShaderProperty.h>
@@ -175,6 +176,20 @@ namespace CKPE
 						auto buf = std::make_unique<char[]>(256);
 						((EditorAPI::Forms::TESForm*)form)->DebugInfo(buf.get(), 256);
 						Result = buf.get();
+					}
+					else
+					{
+						auto node = _DYNAMIC_CAST((void*)Address, 0, RttiName, "class NiAVObject");
+						if (node)
+						{
+							auto buf = std::make_unique<char[]>(256);
+							auto refr = (EditorAPI::Forms::TESForm*)((EditorAPI::NiAPI::NiAVObject*)node)->GetFormRef();
+							if (refr)
+							{
+								refr->DebugInfo(buf.get(), 256);
+								Result = buf.get();
+							}
+						}
 					}
 				}
 			}

@@ -9,6 +9,7 @@
 #include <CKPE.Common.MemoryManager.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.DialogManager.h>
+#include <CKPE.Common.Docking.h>
 #include <CKPE.CriticalSection.h>
 #include <CKPE.Exception.h>
 #include <CKPE.Detours.h>
@@ -338,8 +339,13 @@ namespace CKPE
 			std::uint32_t dwStyle, std::int32_t nX, std::int32_t nY, std::int32_t nWidth, std::int32_t nHeight,
 			void* hWndParent, void* hMenu, void* hInstance, void* lpParam) noexcept(true)
 		{
-			return CreateWindowExA(dwExStyle, lpClassName, lpWindowName, dwStyle, nX, nY, nWidth, nHeight,
-					(HWND)hWndParent, (HMENU)hMenu, (HINSTANCE)hInstance, lpParam);
+			auto hWnd = CreateWindowExA(dwExStyle, lpClassName, lpWindowName, dwStyle, nX, nY, nWidth, nHeight,
+				(HWND)hWndParent, (HMENU)hMenu, (HINSTANCE)hInstance, lpParam);
+
+			//if (hWnd && !_stricmp(lpClassName, "MDICLIENT"))
+			//	Interface::GetSingleton()->GetDockingManager()->SetWindow((std::uintptr_t)hWnd);
+
+			return hWnd;
 		}
 
 		void* EditorUI::Hook::HKCreateDialogParamA(void* hInstance, const char* lpTemplateName, void* hWndParent,

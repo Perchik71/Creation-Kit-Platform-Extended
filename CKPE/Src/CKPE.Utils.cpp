@@ -11,16 +11,30 @@
 
 namespace CKPE
 {
+	static std::uint8_t LINUX_DETECT = 0xFF;
+
 	CKPE_API bool CKPE_UserUseWine() noexcept(true)
 	{
-		auto hmod = GetModuleHandleA("kernel32.dll");
-		if (hmod && GetProcAddress(hmod, "wine_get_unix_file_name"))
-			return true;
+		if (LINUX_DETECT == 0xFF)
+		{
+			auto hmod = GetModuleHandleA("kernel32.dll");
+			if (hmod && GetProcAddress(hmod, "wine_get_unix_file_name"))
+			{
+				LINUX_DETECT = 1;
+				return true;
+			}
 
-		if (getenv("WINEDATADIR") || getenv("WINEPREFIX") || getenv("WINEHOMEDIR"))
-			return true;
+			if (getenv("WINEDATADIR") || getenv("WINEPREFIX") || getenv("WINEHOMEDIR"))
+			{
+				LINUX_DETECT = 1;
+				return true;
+			}
+
+			LINUX_DETECT = 0;
+			return false;
+		}
 		
-		return false;
+		return (bool)LINUX_DETECT;
 	}
 
 	// https://stackoverflow.com/questions/45125550/check-a-user-is-an-admin-on-local-machine-in-c-in-windows

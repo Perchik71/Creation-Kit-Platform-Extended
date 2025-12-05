@@ -203,9 +203,6 @@
     <ClCompile Include="Src\EditorAPI\Forms\TESForm.cpp">
       <Filter>EditorAPI\Forms</Filter>
     </ClCompile>
-    <ClCompile Include="Src\EditorAPI\BSSimpleLock.cpp">
-      <Filter>EditorAPI</Filter>
-    </ClCompile>
     <ClCompile Include="Src\EditorAPI\BSSpinLock.cpp">
       <Filter>EditorAPI</Filter>
     </ClCompile>
@@ -421,6 +418,12 @@
     </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.CrashInvalidStrings.cpp">
       <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BaseFormComponent.cpp">
+      <Filter>EditorAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSExtraData.cpp">
+      <Filter>EditorAPI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -713,18 +716,6 @@
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\Forms\TESForm.h">
       <Filter>EditorAPI\Forms</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\Forms\BaseFormComponent.h">
-      <Filter>EditorAPI\Forms</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\Forms\TESFullName.h">
-      <Filter>EditorAPI\Forms</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSSimpleLock.h">
-      <Filter>EditorAPI</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSSpinLock.h">
-      <Filter>EditorAPI</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\BSReadWriteLock.h">
       <Filter>EditorAPI</Filter>
@@ -1049,6 +1040,33 @@
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashInvalidStrings.h">
       <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSLock.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BaseFormComponent.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\TESFullName.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSSpinLock.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSExtraData.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSPrimitive.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSLines.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSFadeNode.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSOcclusionPlane.h">
+      <Filter>EditorAPI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

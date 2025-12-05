@@ -8,6 +8,7 @@
 #include <CKPE.Logger.h>
 #include <CKPE.CommandLineParser.h>
 #include <CKPE.Common.SettingCollection.h>
+#include <CKPE.Common.Docking.h>
 #include <CKPE.Common.LogWindow.h>
 #include <string_view>
 #include <string>
@@ -23,6 +24,7 @@ namespace CKPE
 			TOMLSettingCollection* _settings{ nullptr };
 			TOMLSettingCollection* _theme_settings{ nullptr };
 			CommandLineParser* _cmdline{ nullptr };
+			DockingManager* _docking{ nullptr };
 			std::uint64_t _version{ 0 };
 			std::uint64_t _version_editor{ 0 };
 			std::uint64_t _version_gamelib{ 0 };
@@ -56,6 +58,8 @@ namespace CKPE
 			{ return _theme_settings; }
 			[[nodiscard]] inline CommandLineParser* GetCommandLineParser() noexcept(true)
 			{ return _cmdline; }
+			[[nodiscard]] inline DockingManager* GetDockingManager() noexcept(true)
+			{ return _docking; }
 		};
 	}
 

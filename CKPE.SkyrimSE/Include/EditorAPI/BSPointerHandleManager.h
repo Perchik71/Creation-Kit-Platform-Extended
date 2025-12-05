@@ -9,7 +9,7 @@
 #include <EditorAPI/NiAPI/NiPointer.h>
 #include <EditorAPI/Forms/TESObjectREFR.h>
 #include "BSHandleRefObject.h"
-#include "BSReadWriteLock.h"
+#include "BSLock.h"
 
 namespace CKPE
 {
@@ -184,7 +184,7 @@ namespace CKPE
 				}
 				static void KillSDM()
 				{
-					HandleManagerLock.LockForWrite();
+					BSAutoWriteLock lock(HandleManagerLock);
 
 					for (_Ty i = 0; i < HandleType::MAX_HANDLE_COUNT; i++)
 					{
@@ -207,8 +207,6 @@ namespace CKPE
 						arrayHandle.SetNextFreeEntry(i);
 						FreeListTail = i;
 					}
-
-					HandleManagerLock.UnlockWrite();
 				}
 			};
 
@@ -272,7 +270,7 @@ namespace CKPE
 						return untypedHandle;
 
 					// Wasn't present. Acquire lock and add it (unless someone else inserted it in the meantime)
-					Manager::HandleManagerLock.LockForWrite();
+					BSAutoWriteLock lock(Manager::HandleManagerLock);
 					{
 						untypedHandle = GetCurrentHandle(Refr);
 
@@ -311,7 +309,6 @@ namespace CKPE
 							}
 						}
 					}
-					Manager::HandleManagerLock.UnlockWrite();
 
 					return untypedHandle;
 				}
@@ -321,7 +318,7 @@ namespace CKPE
 					if (Handle.IsBitwiseNull())
 						return;
 
-					Manager::HandleManagerLock.LockForWrite();
+					BSAutoWriteLock lock(Manager::HandleManagerLock);
 					{
 						const auto handleIndex = Handle.GetIndex();
 						auto& arrayHandle = Manager::HandleEntries[handleIndex];
@@ -341,7 +338,6 @@ namespace CKPE
 							Manager::FreeListTail = handleIndex;
 						}
 					}
-					Manager::HandleManagerLock.UnlockWrite();
 				}
 
 				static void Destroy2(HandleType& Handle)
@@ -349,7 +345,7 @@ namespace CKPE
 					if (Handle.IsBitwiseNull())
 						return;
 
-					Manager::HandleManagerLock.LockForWrite();
+					BSAutoWriteLock lock(Manager::HandleManagerLock);
 					{
 						const auto handleIndex = Handle.GetIndex();
 						auto& arrayHandle = Manager::HandleEntries[handleIndex];
@@ -372,7 +368,6 @@ namespace CKPE
 						// Identical to Destroy1 except for this Handle.SetBitwiseNull();
 						Handle.SetBitwiseNull();
 					}
-					Manager::HandleManagerLock.UnlockWrite();
 				}
 
 				static bool GetSmartPointer1(const HandleType& Handle, NiPointer<ObjectType>& Out)

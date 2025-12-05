@@ -8,8 +8,8 @@
 #include <EditorAPI/NiAPI/NiFlags.h>
 #include <EditorAPI/NiAPI/NiTypes.h>
 #include <EditorAPI/BGSLocalizedString.h>
+#include <EditorAPI/TESFullName.h>
 #include "TESForm.h"
-#include "TESFullName.h"
 
 namespace CKPE
 {

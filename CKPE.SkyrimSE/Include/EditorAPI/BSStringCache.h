@@ -3,7 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <cstdint>
-#include <EditorAPI/BSSimpleLock.h>
+#include <EditorAPI/BSSpinLock.h>
 
 #pragma once
 
@@ -18,7 +18,7 @@ namespace CKPE
 			public:
 				struct Lock
 				{
-					SimpleLock lock;
+					BSSpinLock lock;
 				};
 
 				struct Entry

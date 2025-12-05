@@ -3,7 +3,9 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <CKPE.Utils.h>
 #include <CKPE.Detours.h>
+#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -51,6 +53,30 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1130;
 			}
 
+			std::uintptr_t pointer_CrashMHDTMoreThan70Patch_sub3 = 0;
+			static void* _aa_sub1(void* a1, void* a2, void* a3, void* a4, void* a5, void* a6) noexcept(true)
+			{
+				__try
+				{
+					return fast_call<void*>(pointer_CrashMHDTMoreThan70Patch_sub3, a1, a2, a3, a4, a5, a6);
+				}
+				__except (1)
+				{
+					return nullptr;
+				}
+			}
+
+			static void _aa_sub2() noexcept(true)
+			{
+				__try
+				{
+					fast_call<void>(0x140FD71ED);
+					Application::GetSingleton()->Terminate();
+				}
+				__except (1)
+				{}
+			}
+
 			bool CrashMHDTMoreThan70::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				if (db->GetVersion() != 1)
@@ -66,6 +92,9 @@ namespace CKPE
 
 				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub1);
 				Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&sub2);
+
+	//			pointer_CrashMHDTMoreThan70Patch_sub3 = Detours::DetourClassJump(base + 0x2259770, (std::uintptr_t)&_aa_sub1);
+		//		Detours::DetourCall(base + 0x13D8D7F, (std::uintptr_t)&_aa_sub2);
 
 				return true;
 			}
