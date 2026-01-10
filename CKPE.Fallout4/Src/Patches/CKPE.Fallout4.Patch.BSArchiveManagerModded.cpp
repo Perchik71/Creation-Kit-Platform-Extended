@@ -164,7 +164,7 @@ namespace CKPE
 					// Удаление загрузки бреда, который не является активным файлом (закоменчено, приводит к установке индекса FF)
 					//SafeWrite::Write(__CKPE_OFFSET(12), { 0xEB });
 					// Удаление проверки, что приводит пропуску загрузки архивов
-					SafeWrite::WriteNop(__CKPE_OFFSET(13), 6);
+				//	SafeWrite::WriteNop(__CKPE_OFFSET(13), 6);
 				}
 
 				return true;
