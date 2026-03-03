@@ -1,4 +1,4 @@
-﻿// Copyright © 2024-2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2024-2026 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -63,7 +63,6 @@ namespace CKPE
 					try
 					{
 						UnZipper zipper(filename);
-						auto entries = zipper.GetEntries();
 
 						if (!zipper.HasOpen())
 							throw RuntimeError(L"Can't opened file \"{}\"", filename);
@@ -128,7 +127,7 @@ namespace CKPE
 				EditorAPI::BSResource::EResultError ResourceArchiveShader::DoSeek(std::int64_t p, EditorAPI::BSResource::SeekMode m,
 					std::uint64_t& np) const noexcept(true)
 				{
-					np = PackageShaders.Offset(p, (CKPE::Stream::OffsetStream)m);
+					np = PackageShaders.Offset(p, (CKPE::Stream::OffsetStream)std::to_underlying(m));
 					return EditorAPI::BSResource::EResultError::kNone;
 				}
 
@@ -176,7 +175,6 @@ namespace CKPE
 					try
 					{
 						UnZipper zipper(filename);
-						auto entries = zipper.GetEntries();
 
 						if (!zipper.HasOpen())
 							throw RuntimeError(L"Can't opened file \"{}\"", filename);
@@ -241,7 +239,7 @@ namespace CKPE
 				EditorAPI::BSResource::EResultError ResourceArchiveShader::DoSeek(std::int64_t p, EditorAPI::BSResource::SeekMode m,
 					std::uint64_t& np) const noexcept(true)
 				{
-					np = PackageShaders.Offset(p, (CKPE::Stream::OffsetStream)m);
+					np = PackageShaders.Offset(p, (CKPE::Stream::OffsetStream)std::to_underlying(m));
 					return EditorAPI::BSResource::EResultError::kNone;
 				}
 

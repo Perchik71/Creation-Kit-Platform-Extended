@@ -1,4 +1,4 @@
-﻿// Copyright © 2024-2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2024-2026 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -35,9 +35,6 @@ namespace CKPE
 			std::uintptr_t pointer_BSArchiveManagerModded_sub = 0;
 			bool IsLoaded;
 			std::uint8_t supportedBA2Version = 8;
-
-			//static constexpr char szArchiveList[] = "Fallout4 - Voices1.ba2, Fallout4 - Voices2.ba2, Fallout4 - Meshes.ba2, Fallout4 - Animations.ba2, Fallout4 - Interface.ba2, Fallout4 - Misc.ba2, Fallout4 - Sounds.ba2";
-			//static constexpr char szArchiveList2[] = "Fallout4 - Voices.ba2, Fallout4 - Interface.ba2, Fallout4 - Meshes.ba2, Fallout4 - MeshesExtra.ba2, Fallout4 - Misc.ba2, Fallout4 - Sounds.ba2, Fallout4 - Materials.ba2";
 
 			static void AttachBA2File(const char* _filename) noexcept(true)
 			{
@@ -139,33 +136,15 @@ namespace CKPE
 					Detours::DetourCall(__CKPE_OFFSET(1),
 						(std::uintptr_t)&EditorAPI::BSResource::Archive2::HKLoadStreamArchiveEx);
 
+				pointer_BSArchiveManagerModded_sub = __CKPE_OFFSET(4);
 				Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&LoadTesFile);
 				Detours::DetourJump(__CKPE_OFFSET(3), (std::uintptr_t)&LoadTesFileFinal);
-
-				pointer_BSArchiveManagerModded_sub = __CKPE_OFFSET(4);
-
-				// Пропуск загрузки архивов, что не имеют отношения к загружаемому моду, но является предыдущей работой
-				SafeWrite::Write(__CKPE_OFFSET(5), { 0xC3 });
-
-				// Исключение из списков архив шейдеров (закоменчено, нельзя этого делать)
-				//SafeWrite::WriteStringRef(__CKPE_OFFSET(8), szArchiveList);
-				//SafeWrite::WriteStringRef(__CKPE_OFFSET(9), szArchiveList2);
 
 				// Так как разница между первой и 8 версией лишь, то что был удалён GNF формат для PlayStation.
 				// То очевидно, 8 версии с GNF форматом просто не будет, то вполне безопасно, открывать любые версии архивы.
 				if (verPatch == 1)
 					// Первая версия патча для 1.10.162.0
 					SafeWrite::Write(__CKPE_OFFSET(7), &supportedBA2Version, 1);
-	
-				if (verPatch == 2)
-				{
-					// Удаление повторной загрузки архивов (закоменчено, нужно для загрузки локализации)
-					//SafeWrite::Write(__CKPE_OFFSET(11), { 0xEB });
-					// Удаление загрузки бреда, который не является активным файлом (закоменчено, приводит к установке индекса FF)
-					//SafeWrite::Write(__CKPE_OFFSET(12), { 0xEB });
-					// Удаление проверки, что приводит пропуску загрузки архивов
-				//	SafeWrite::WriteNop(__CKPE_OFFSET(13), 6);
-				}
 
 				return true;
 			}

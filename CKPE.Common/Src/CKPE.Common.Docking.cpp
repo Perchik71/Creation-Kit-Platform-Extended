@@ -131,7 +131,7 @@ namespace CKPE
 
 		void DockingHoverWindow::Move(std::int32_t x, std::int32_t y, std::int32_t wx, std::int32_t wy) const noexcept(true)
 		{
-			SetWindowPos((HWND)_Wnd, HWND_TOPMOST, x, y, wx - x, wy - y, SWP_NONE);
+			SetWindowPos((HWND)_Wnd, HWND_TOPMOST, x, y, wx - x, wy - y, 0);
 		}
 
 		DockingWindow* DockingHoverWindow::GetLinkWindow() const noexcept(true)
