@@ -356,9 +356,10 @@ namespace CKPE
 				return TRUE;
 			}
 
-			static HFONT WINAPI CreateFontA(INT cHeight, INT cWidth, INT cEscapement, INT cOrientation, INT cWeight,
-				DWORD  bItalic, DWORD  bUnderline, DWORD bStrikeOut, DWORD iCharSet, DWORD iOutPrecision,
-				DWORD  iClipPrecision, DWORD iQuality, DWORD iPitchAndFamily, LPCSTR pszFaceName) noexcept(true)
+			static HFONT WINAPI CreateFontA([[maybe_unused]] INT cHeight, [[maybe_unused]] INT cWidth, INT cEscapement, 
+				INT cOrientation, INT cWeight, DWORD bItalic, DWORD bUnderline, DWORD bStrikeOut, 
+				[[maybe_unused]] DWORD iCharSet, DWORD iOutPrecision, DWORD iClipPrecision, [[maybe_unused]] DWORD iQuality,
+				[[maybe_unused]] DWORD iPitchAndFamily, [[maybe_unused]] LPCSTR pszFaceName) noexcept(true)
 			{
 				auto f = UI::ThemeData::GetSingleton()->ThemeFont;
 
@@ -399,7 +400,7 @@ namespace CKPE
 					RECT rc = { 0, 0, (pRect->right - pRect->left) + 6, pRect->bottom - pRect->top };
 					HDC hdcMem = CreateCompatibleDC(hdc);
 					HBITMAP hbmMem = CreateCompatibleBitmap(hdc, rc.right, rc.bottom);
-					HBITMAP hbmOld = (HBITMAP)SelectObject(hdcMem, hbmMem);
+					auto hbmOld = (HBITMAP)SelectObject(hdcMem, hbmMem);
 
 					Canvas canvas(hdcMem);
 
@@ -482,7 +483,8 @@ namespace CKPE
 			}
 
 			static HRESULT WINAPI Comctl32DrawThemeTextEx(HTHEME hTheme, HDC hdc, INT iPartId, INT iStateId,
-				LPCWSTR pszText, INT cchText, DWORD dwTextFlags, LPRECT pRect, const DTTOPTS* pOptions)
+				LPCWSTR pszText, INT cchText, DWORD dwTextFlags, [[maybe_unused]] LPRECT pRect,
+				[[maybe_unused]] const DTTOPTS* pOptions) noexcept(true)
 			{
 				return Comctl32DrawThemeText(hTheme, hdc, iPartId, iStateId, pszText, cchText, dwTextFlags, 0, pRect);
 			}
@@ -531,8 +533,8 @@ namespace CKPE
 					{
 						// Assume the perspective of the arrow pointing upward ( /\ ) in GDI coordinates. NOTE: (0, 0) is the
 						// top left corner of the screen. Awful code, but it works.
-						const INT arrowWidth = (INT)std::ceil(std::abs(pRect->left - pRect->right) * 0.4f);
-						const INT arrowHeight = (INT)std::ceil(std::abs(pRect->top - pRect->bottom) * 0.35f);
+						const auto arrowWidth = (INT)std::ceil(std::abs(pRect->left - pRect->right) * 0.4f);
+						const auto arrowHeight = (INT)std::ceil(std::abs(pRect->top - pRect->bottom) * 0.35f);
 
 						std::array<DWORD, 6> counts{ 2, 2, 2, 2, 2, 2 };
 						std::array<POINT, 12> verts
@@ -897,17 +899,14 @@ namespace CKPE
 					}
 					return S_OK;
 
-					case BP_GROUPBOX: {
-						switch (iStateId) {
-						case GBS_DISABLED:
+					case BP_GROUPBOX: 
+					{
+						if (iStateId == GBS_DISABLED)
 							UI::GroupBox::Render::DrawGroupBox_Disabled(canvas, pRect);
-							break;
-						default:
+						else
 							UI::GroupBox::Render::DrawGroupBox_Normal(canvas, pRect);
-							break;
-						}
 					}
-									return S_OK;
+					return S_OK;
 
 					case BP_CHECKBOX:
 					{
@@ -1226,7 +1225,7 @@ namespace CKPE
 		}
 
 		static LRESULT CALLBACK WindowSubclassModernTheme(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,
-			UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
+			[[maybe_unused]] UINT_PTR uIdSubclass, [[maybe_unused]] DWORD_PTR dwRefData) noexcept(true)
 		{
 			static HTHEME g_menuTheme = nullptr;
 
@@ -1234,7 +1233,7 @@ namespace CKPE
 			{
 			case WM_UAHDRAWMENU:
 			{
-				UAHMENU* pUDM = (UAHMENU*)lParam;
+				auto pUDM = (UAHMENU*)lParam;
 				RECT rc = { 0 };
 
 				// get the menubar rect
@@ -1255,7 +1254,7 @@ namespace CKPE
 			return 0;
 			case WM_UAHDRAWMENUITEM:
 			{
-				UAHDRAWMENUITEM* pUDMI = (UAHDRAWMENUITEM*)lParam;
+				auto pUDMI = (UAHDRAWMENUITEM*)lParam;
 
 				HBRUSH* pbrBackground = &g_brItemBackground;
 
@@ -1274,19 +1273,19 @@ namespace CKPE
 				DWORD dwFlags = DT_CENTER | DT_SINGLELINE | DT_VCENTER;
 
 				int iTextStateID = 0;
-				int iBackgroundStateID = 0;
+				//int iBackgroundStateID = 0;
 				{
 					if ((pUDMI->dis.itemState & ODS_INACTIVE) || (pUDMI->dis.itemState & ODS_DEFAULT)) 
 					{
 						// normal display
 						iTextStateID = MBI_NORMAL;
-						iBackgroundStateID = MBI_NORMAL;
+						//iBackgroundStateID = MBI_NORMAL;
 					}
 					if (pUDMI->dis.itemState & ODS_HOTLIGHT) 
 					{
 						// hot tracking
 						iTextStateID = MBI_HOT;
-						iBackgroundStateID = MBI_HOT;
+						//iBackgroundStateID = MBI_HOT;
 
 						pbrBackground = &g_brItemBackgroundHot;
 					}
@@ -1294,7 +1293,7 @@ namespace CKPE
 					{
 						// clicked -- MENU_POPUPITEM has no state for this, though MENU_BARITEM does
 						iTextStateID = MBI_HOT;
-						iBackgroundStateID = MBI_HOT;
+						//iBackgroundStateID = MBI_HOT;
 
 						pbrBackground = &g_brItemBackgroundSelected;
 					}
@@ -1302,7 +1301,7 @@ namespace CKPE
 					{
 						// disabled / grey text
 						iTextStateID = MBI_DISABLED;
-						iBackgroundStateID = MBI_DISABLED;
+						//iBackgroundStateID = MBI_DISABLED;
 					}
 					if (pUDMI->dis.itemState & ODS_NOACCEL)
 						dwFlags |= DT_HIDEPREFIX;
@@ -1323,7 +1322,7 @@ namespace CKPE
 			}
 			case WM_UAHMEASUREMENUITEM:
 			{
-				UAHMEASUREMENUITEM* pMmi = (UAHMEASUREMENUITEM*)lParam;
+				auto pMmi = (UAHMEASUREMENUITEM*)lParam;
 
 				// allow the default window procedure to handle the message
 				// since we don't really care about changing the width
@@ -1344,7 +1343,7 @@ namespace CKPE
 
 			case WM_CTLCOLOREDIT:
 			{
-				if (HDC hdc = reinterpret_cast<HDC>(wParam); hdc)
+				if (auto hdc = reinterpret_cast<HDC>(wParam); hdc)
 					return UI::EditText::OnCtlColorEdit(hdc);
 			}
 
@@ -1352,7 +1351,7 @@ namespace CKPE
 			case WM_CTLCOLORBTN:
 			case WM_CTLCOLORDLG:
 			{
-				if (HDC hdc = reinterpret_cast<HDC>(wParam); hdc)
+				if (auto hdc = reinterpret_cast<HDC>(wParam); hdc)
 				{
 					SetTextColor(hdc, UI::GetThemeSysColor(UI::ThemeColor_Text_3));
 					SetBkColor(hdc, UI::GetThemeSysColor(UI::ThemeColor_Default));
@@ -1363,7 +1362,7 @@ namespace CKPE
 
 			case WM_CTLCOLORLISTBOX:
 			{
-				if (HDC hdc = reinterpret_cast<HDC>(wParam); hdc)
+				if (auto hdc = reinterpret_cast<HDC>(wParam); hdc)
 					return UI::ListBox::OnCtlColorListBox(hWnd, hdc);
 			}
 
@@ -1539,7 +1538,7 @@ namespace CKPE
 
 			case WM_MEASUREITEM:
 			{
-				LPMEASUREITEMSTRUCT lpmis = (LPMEASUREITEMSTRUCT)lParam;
+				auto lpmis = (LPMEASUREITEMSTRUCT)lParam;
 
 				if (lpmis->CtlType == ODT_MENU)
 				{
@@ -1555,7 +1554,7 @@ namespace CKPE
 			// Fixed
 			case WM_DRAWITEM:
 			{
-				LPDRAWITEMSTRUCT lpdis = (LPDRAWITEMSTRUCT)lParam;
+				auto lpdis = (LPDRAWITEMSTRUCT)lParam;
 
 				switch (lpdis->CtlType)
 				{
@@ -1565,7 +1564,7 @@ namespace CKPE
 					return TRUE;
 				case ODT_LISTVIEW:
 				{
-					if (lpdis->CtlID == 1056)
+					if ((lpdis->CtlID == 1056) || (lpdis->CtlID == 52005))
 					{
 						// Paint draw item listview
 						UI::ListView::OnCustomDrawItemPlugins(hWnd, lpdis);
@@ -1588,7 +1587,7 @@ namespace CKPE
 
 			case WM_NOTIFY:
 			{
-				LPNMHDR nmhdr = (LPNMHDR)lParam;
+				auto nmhdr = (LPNMHDR)lParam;
 
 				// Custom drawing
 				if (nmhdr->code == NM_CUSTOMDRAW)
@@ -1603,7 +1602,7 @@ namespace CKPE
 					{
 						// To colorize the list of mods, WM_NOTIFY calls prevent me.
 						// It's strange, but to change the color of the text from black to light in standard CK windows with properties, WM_NOTIFY is needed.
-						if (nmhdr->idFrom != 1056)
+						if ((nmhdr->idFrom != 1056) && (nmhdr->idFrom != 52005))
 							return UI::ListView::OnCustomDraw(hWnd, (LPNMLVCUSTOMDRAW)lParam);
 						else
 							return CDRF_DODEFAULT;
@@ -1624,9 +1623,7 @@ namespace CKPE
 		{
 			LRESULT result = WindowSubclassModernTheme(hWnd, uMsg, wParam, lParam, uIdSubclass, dwRefData);
 
-			switch (uMsg)
-			{
-			case WM_PAINT:
+			if (uMsg == WM_PAINT)
 			{
 				// Special override for DialogBoxIndirectParam (MessageBox) since the bottom half doesn't get themed correctly. 
 				// ReactOS says this is MSGBOX_IDTEXT. Standard message boxes will have 3 buttons or less.
@@ -1654,8 +1651,6 @@ namespace CKPE
 						canvas.Fill(windowArea, UI::GetThemeSysColor(UI::ThemeColor_Default));
 					}
 				}
-			}
-			break;
 			}
 
 			return result;
@@ -1700,7 +1695,7 @@ namespace CKPE
 				goto darkcustom;
 		}
 
-		static bool ExcludeSubclassKnownWindowsAndApplyDarkTheme(HWND hWindow, bool bRemoved = false)
+		static bool ExcludeSubclassKnownWindowsAndApplyDarkTheme(HWND hWindow, [[maybe_unused]] bool bRemoved = false)
 		{
 			auto style = GetWindowLongA(hWindow, GWL_STYLE);
 			if ((style & WS_CHILD) == WS_CHILD)
@@ -1722,7 +1717,7 @@ namespace CKPE
 					{
 					case WM_CREATE:
 					{
-						LPCREATESTRUCTA lpCreateStruct = (LPCREATESTRUCTA)messageData->lParam;
+						auto lpCreateStruct = (LPCREATESTRUCTA)messageData->lParam;
 						if (lpCreateStruct)
 						{
 							/*_CONSOLE("cw %p <%s> <%s>", lpCreateStruct->lpszClass,
@@ -1735,7 +1730,7 @@ namespace CKPE
 								if (WindowHandles.find(messageData->hwnd) == WindowHandles.end())
 								{
 									SetWindowSubclass(messageData->hwnd, WindowSubclassModernTheme, 0,
-										reinterpret_cast<DWORD_PTR>(WindowSubclassModernTheme));
+										reinterpret_cast<DWORD_PTR>(&WindowSubclassModernTheme));
 									WindowHandles.insert(std::make_pair(messageData->hwnd, false));
 								}
 							}
@@ -1752,7 +1747,7 @@ namespace CKPE
 							if (ExcludeSubclassKnownWindowsAndApplyDarkTheme(messageData->hwnd))
 							{
 								SetWindowSubclass(messageData->hwnd, DialogSubclassModernTheme, 0,
-									reinterpret_cast<DWORD_PTR>(DialogSubclassModernTheme));
+									reinterpret_cast<DWORD_PTR>(&DialogSubclassModernTheme));
 								WindowHandles.insert(std::make_pair(messageData->hwnd, true));
 							}
 						}
@@ -1762,7 +1757,7 @@ namespace CKPE
 							{
 								RemoveWindowSubclass(messageData->hwnd, WindowSubclassModernTheme, 0);
 								SetWindowSubclass(messageData->hwnd, DialogSubclassModernTheme, 0, 
-									reinterpret_cast<DWORD_PTR>(DialogSubclassModernTheme));
+									reinterpret_cast<DWORD_PTR>(&DialogSubclassModernTheme));
 								wnd->second = true;
 							}
 							else
@@ -1796,7 +1791,7 @@ namespace CKPE
 					fqClearTypeNatural, fpVariable);
 
 			g_hkWndProcModernThemeHandle = SetWindowsHookExA(WH_CALLWNDPROC, CallWndProcCallbackModernTheme, 
-				0, u32ThreadId);
+				nullptr, u32ThreadId);
 		}
 
 		ModernTheme* ModernTheme::GetSingleton() noexcept(true)

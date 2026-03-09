@@ -86,14 +86,30 @@
 #include <Patches/CKPE.Fallout4.Patch.VersionControlMergeWorkaround.h>
 #include <Patches/CKPE.Fallout4.Patch.WrongUpdateActorWnd.h>
 
+#include <CKPE.Common.RTTI.h>
+
+#include <EditorAPI/S/ScrapHeap.h>
+
 namespace CKPE
 {
 	namespace Fallout4
 	{
 		static Runner _srunner;
 
+		static void Update_RTTI_VTABLE() noexcept(true)
+		{
+			auto rtti = Common::RTTI::GetSingleton();
+			CKPE_ASSERT(rtti);
+
+			auto vRTTI = rtti->Find("class ScrapHeap"sv);
+			EditorAPI::ScrapHeap::RTTI = (const std::uintptr_t)vRTTI;
+			EditorAPI::ScrapHeap::VTABLE = (const std::uintptr_t)vRTTI->VTableAddress + vRTTI->VTableOffset;
+		}
+
 		void Runner::RegisterPatches() noexcept(true)
 		{
+			Update_RTTI_VTABLE();
+
 			auto mgr = Common::PatchManager::GetSingleton();
 
 			mgr->Register(new Patch::AddChangeRef);

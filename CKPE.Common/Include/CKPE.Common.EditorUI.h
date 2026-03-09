@@ -49,6 +49,7 @@ namespace CKPE
 
 			[[nodiscard]] static EditorUI* GetSingleton() noexcept(true);
 			[[nodiscard]] static void* ListViewGetSelectedItem(void* ListViewHandle) noexcept(true);
+			[[nodiscard]] static int ListViewGetSelectedItemIndex(void* ListViewHandle) noexcept(true);
 			static bool ListViewSetItemState(void* ListViewHandle, std::ptrdiff_t Index, 
 				std::uint32_t Data, std::uint32_t Mask) noexcept(true);
 			static void ListViewSelectItem(void* ListViewHandle, int ItemIndex, 
@@ -58,6 +59,7 @@ namespace CKPE
 			static void ListViewDeselectItem(void* ListViewHandle, void* Parameter) noexcept(true);
 			static void ListViewInsertItemDeferred(void* ListViewHandle, void* Parameter,
 				bool UseImage, int ItemIndex) noexcept(true);
+			[[nodiscard]] static int ListViewFindItemByString(void* ListViewHandle, const char* str, int start_idx = 0) noexcept(true);
 
 			[[nodiscard]] inline bool HasUseDeferredDialogInsert() const noexcept(true) { return _UseDeferredDialogInsert; }
 			[[nodiscard]] inline void* GetDeferredListView() const noexcept(true) { return _DeferredListView; }

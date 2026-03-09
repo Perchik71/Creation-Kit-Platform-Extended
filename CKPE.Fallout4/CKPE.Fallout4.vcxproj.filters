@@ -257,36 +257,6 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.HavokRigidBodyCrash.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
-    <ClCompile Include="Src\EditorAPI\BaseFormComponent.cpp">
-      <Filter>EditorAPI\B</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\EditorAPI\BSFile.cpp">
-      <Filter>EditorAPI\B</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\EditorAPI\BSReadWriteLock.cpp">
-      <Filter>EditorAPI\B</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\EditorAPI\BSResourceArchive2.cpp">
-      <Filter>EditorAPI\B</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\EditorAPI\BSResourceEntryDB.cpp">
-      <Filter>EditorAPI\B</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\EditorAPI\BSResourceLooseFiles.cpp">
-      <Filter>EditorAPI\B</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\EditorAPI\BSSettings.cpp">
-      <Filter>EditorAPI\B</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\EditorAPI\BSSpinLock.cpp">
-      <Filter>EditorAPI\B</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\EditorAPI\BSString.cpp">
-      <Filter>EditorAPI\B</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\EditorAPI\BSStringCache.cpp">
-      <Filter>EditorAPI\B</Filter>
-    </ClCompile>
     <ClCompile Include="Src\EditorAPI\TESDescription.cpp">
       <Filter>EditorAPI\T</Filter>
     </ClCompile>
@@ -301,6 +271,36 @@
     </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.BSStringRefRE.cpp">
       <Filter>Patches</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BaseFormComponent.cpp">
+      <Filter>EditorAPI\old</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSFile.cpp">
+      <Filter>EditorAPI\old</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSReadWriteLock.cpp">
+      <Filter>EditorAPI\old</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSResourceArchive2.cpp">
+      <Filter>EditorAPI\old</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSResourceEntryDB.cpp">
+      <Filter>EditorAPI\old</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSResourceLooseFiles.cpp">
+      <Filter>EditorAPI\old</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSSettings.cpp">
+      <Filter>EditorAPI\old</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSSpinLock.cpp">
+      <Filter>EditorAPI\old</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSString.cpp">
+      <Filter>EditorAPI\old</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\BSStringCache.cpp">
+      <Filter>EditorAPI\old</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -334,11 +334,20 @@
     <Filter Include="EditorAPI\_API_\Forms">
       <UniqueIdentifier>{284bc3dd-4390-4324-97f9-8467d3347ebc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EditorAPI\B">
-      <UniqueIdentifier>{b36d1fcf-8ba2-42f7-a875-0cdee176b83a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EditorAPI\T">
       <UniqueIdentifier>{d47b2ab3-d210-42c3-abb0-04343f54f744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditorAPI\S">
+      <UniqueIdentifier>{7e4b619a-0e86-4227-a262-d2f441170516}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditorAPI\old">
+      <UniqueIdentifier>{fe50eafa-660e-4c8f-ba72-a26448b75004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditorAPI\M">
+      <UniqueIdentifier>{a35a4b81-ff3c-4c03-ab71-fe2745adb5ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditorAPI\I">
+      <UniqueIdentifier>{5bbd34d0-40ff-4f93-97a4-e4db4327a6a6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -720,147 +729,6 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.HavokRigidBodyCrash.h">
       <Filter>Patches</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BaseFormComponent.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BGSLocalizedString.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BGSMod.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BGSPickHandler.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BGSPrimitive.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BGSRenderWindow.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BGSRenderWindowCamera.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BGSRenderWindowEditModuleManager.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BGSRenderWindowReferenceEditModule.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BGSSoundTagComponent.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BGSUniqueObjectRef.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSAtomicValue.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSDynamicTriShape.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSEntryString.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSExtraData.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSFadeNode.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSFile.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSFixedString.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSGeometry.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSGraphics.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSHandleRefObject.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSIStream.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSLight.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSLines.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSLock.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSMultiBoundRoom.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSPointerHandleManager.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSPortalGraph.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSReadWriteLock.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSResource.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSResourceArchive2.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSResourceEntryDB.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSResourceLooseFiles.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSSettings.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSShaderMaterial.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSShaderProperty.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSSkin.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSSpinLock.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSString.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSStringCache.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSSystemFile.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSTArray.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSTEvents.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSTextureSet.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSTList.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSTriShape.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BSTSmartPointer.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
     <ClInclude Include="Include\EditorAPI\TESTexture.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
@@ -879,11 +747,167 @@
     <ClInclude Include="Include\EditorAPI\TES.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\BGSPreviewTransform.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.BSStringRefRE.h">
       <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BaseFormComponent.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSLocalizedString.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSMod.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSPickHandler.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSPreviewTransform.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSPrimitive.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSRenderWindow.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSRenderWindowCamera.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSRenderWindowEditModuleManager.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSRenderWindowReferenceEditModule.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSSoundTagComponent.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BGSUniqueObjectRef.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSAtomicValue.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSDynamicTriShape.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSEntryString.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSExtraData.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSFadeNode.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSFile.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSFixedString.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSGeometry.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSGraphics.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSHandleRefObject.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSIStream.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSLight.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSLines.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSLock.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSMultiBoundRoom.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSPointerHandleManager.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSPortalGraph.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSReadWriteLock.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSResource.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSResourceArchive2.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSResourceEntryDB.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSResourceLooseFiles.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSSettings.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSShaderMaterial.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSShaderProperty.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSSkin.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSSpinLock.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSString.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSStringCache.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSSystemFile.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSTArray.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSTEvents.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSTextureSet.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSTList.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSTriShape.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSTSmartPointer.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\I\IMemoryStoreBase.h">
+      <Filter>EditorAPI\I</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\I\IMemoryStore.h">
+      <Filter>EditorAPI\I</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\I\IMemoryHeap.h">
+      <Filter>EditorAPI\I</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\S\ScrapHeap.h">
+      <Filter>EditorAPI\S</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\M\MemoryManager.h">
+      <Filter>EditorAPI\M</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

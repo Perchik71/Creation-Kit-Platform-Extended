@@ -96,19 +96,19 @@ namespace CKPE
 	MessageBox::Result MessageBox::Open(const std::string& message, const std::string& title, 
 		Buttons buttons, Icon icon) noexcept(true)
 	{
-		return NativeConvResult(MessageBoxA(0, 
+		return NativeConvResult(MessageBoxA(nullptr, 
 			message.c_str(), 
 			title.c_str(), 
-			NativeConvButtons(buttons) | NativeConvIcons(icon)));
+			NativeConvButtons(buttons) | NativeConvIcons(icon) | MB_TOPMOST));
 	}
 
 	MessageBox::Result MessageBox::Open(const std::wstring& message, const std::wstring& title, 
 		Buttons buttons, Icon icon) noexcept(true)
 	{
-		return NativeConvResult(MessageBoxW(0,
+		return NativeConvResult(MessageBoxW(nullptr,
 			message.c_str(),
 			title.c_str(),
-			NativeConvButtons(buttons) | NativeConvIcons(icon)));
+			NativeConvButtons(buttons) | NativeConvIcons(icon) | MB_TOPMOST));
 	}
 
 	MessageBox::Result MessageBox::OpenInfo(const std::string& message, Buttons buttons) noexcept(true)

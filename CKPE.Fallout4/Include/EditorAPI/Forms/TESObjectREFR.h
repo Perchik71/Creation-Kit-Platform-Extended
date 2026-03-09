@@ -5,13 +5,13 @@
 #pragma once
 
 #include <CKPE.Utils.h>
-#include "..\\BSTEvents.h"
-#include "..\\BSFadeNode.h"
+#include "../BSTEvents.h"
+#include "../BSFadeNode.h"
 #include <EditorAPI/NiAPI/NiTypes.h>
 #include <EditorAPI/NiAPI/NiPointer.h>
-#include "..\\BSHandleRefObject.h"
-#include "..\\BSExtraData.h"
-#include "..\\BSTSmartPointer.h"
+#include "../BSHandleRefObject.h"
+#include "../BSExtraData.h"
+#include "../BSTSmartPointer.h"
 #include "TESForm.h"
 
 namespace CKPE

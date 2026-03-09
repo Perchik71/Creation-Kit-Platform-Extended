@@ -49,6 +49,11 @@ namespace CKPE
 						BufferSize, Directory, nullptr);
 			}
 
+			static bool IsActiveFileBlacklist(const EditorAPI::TESFile* a_file) noexcept(true)
+			{
+				return a_file->IsActiveFileBlacklist(true) || a_file->IsActiveFileWarn();
+			}
+
 			AllowSaveESMandMasterESP::AllowSaveESMandMasterESP() : Common::Patch()
 			{
 				SetName("Allow Save ESM and Master ESP");
@@ -108,7 +113,7 @@ namespace CKPE
 					if (EditorAPI::TESFile::AllowSaveESM)
 					{
 						// Also allow non-game ESMs to be set as "Active File"
-						Detours::DetourClassCall(__CKPE_OFFSET(5), &EditorAPI::TESFile::IsActiveFileBlacklist);
+						Detours::DetourClassCall(__CKPE_OFFSET(5), &IsActiveFileBlacklist);
 						SafeWrite::WriteNop(__CKPE_OFFSET(6), 2);
 
 						// Disable: "File '%s' is a master file or is in use.\n\nPlease select another file to save to."

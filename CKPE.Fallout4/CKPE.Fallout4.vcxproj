@@ -302,6 +302,10 @@
     <ClInclude Include="Include\EditorAPI\Forms\TESQuest.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESTopic.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESTopicInfo.h" />
+    <ClInclude Include="Include\EditorAPI\I\IMemoryHeap.h" />
+    <ClInclude Include="Include\EditorAPI\I\IMemoryStore.h" />
+    <ClInclude Include="Include\EditorAPI\I\IMemoryStoreBase.h" />
+    <ClInclude Include="Include\EditorAPI\M\MemoryManager.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiAVObject.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiCollisionObject.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiColor.h" />
@@ -324,6 +328,7 @@
     <ClInclude Include="Include\EditorAPI\NiAPI\NiTSimpleArray.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiTypes.h" />
     <ClInclude Include="Include\EditorAPI\ObjectRefHandle.h" />
+    <ClInclude Include="Include\EditorAPI\S\ScrapHeap.h" />
     <ClInclude Include="Include\EditorAPI\TES.h" />
     <ClInclude Include="Include\EditorAPI\TESDataHandler.h" />
     <ClInclude Include="Include\EditorAPI\TESDescription.h" />

@@ -20,7 +20,9 @@ namespace CKPE
 				constexpr static std::int32_t FilteredGroupId = 1;
 
 				ImageList m_ImageList;
+				Common::UI::CUIBaseControl m_filer;
 				Common::UI::CUIBaseControl m_pluginList;
+				Common::UI::CUIBaseControl m_pluginResultList;
 
 				DataWindow(const DataWindow&) = delete;
 				DataWindow& operator=(const DataWindow&) = delete;
@@ -34,6 +36,10 @@ namespace CKPE
 				static INT_PTR CALLBACK HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 				static void DoListViewDraw(HWND hWindow, LPDRAWITEMSTRUCT lpDrawItem,
 					const char* lpstrFileName, const char* lpstrTypeName) noexcept(true);
+				static void ListViewResultInitialize(HWND a_handle, std::uint32_t a_column) noexcept(true);
+				static void ToggleListView(const bool a_showResultListView) noexcept(true);
+				static bool AppendToListViewResult(const char* sFileName, const char* sType, const bool bCheck) noexcept(true);
+				static void UpdateListViewResult() noexcept(true);
 
 				virtual bool HasOption() const noexcept(true);
 				virtual const char* GetOptionName() const noexcept(true);

@@ -57,6 +57,17 @@
       "Height": 246
     },
     {
+      "ExStyle": [ "WS_EX_CLIENTEDGE" ],
+      "Type": "LISTVIEW",
+      "Title": "List1",
+      "Id": 52005,
+      "Style": [ "LVS_REPORT", "LVS_SHOWSELALWAYS", "WS_BORDER", "NOT WS_VISIBLE" ],
+      "x": 4,
+      "y": 36,
+      "Width": 280,
+      "Height": 246
+    },
+    {
       "Type": "EDITTEXT",
       "Style": [ "ES_AUTOHSCROLL" ],
       "Id": 1025,

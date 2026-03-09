@@ -104,6 +104,19 @@ namespace CKPE
 				return false;
 			}
 
+			bool TESFile::IsActiveFileWarn() const noexcept(true)
+			{
+				if (IsMaster() && IsSmallMaster())
+				{
+					return MessageBox::OpenWarning("This file is marked as a light master and as regular master, "
+						"such a file may be loaded incorrectly and will necessarily lead to the loss of one of the flags.\n\n"
+						"Make it active anyway?",
+						MessageBox::Buttons::mbOkCancel) != MessageBox::Result::mrOk;
+				}
+
+				return false;
+			}
+
 			bool TESFile::ReadFirstChunk(const char* fileName, TESChunk& chunk) noexcept(true)
 			{
 				ZeroMemory(&chunk, sizeof(TESChunk));

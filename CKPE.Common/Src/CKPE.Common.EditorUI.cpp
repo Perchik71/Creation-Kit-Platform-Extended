@@ -14,6 +14,7 @@
 #include <CKPE.Exception.h>
 #include <CKPE.Detours.h>
 #include <algorithm>
+#include <Shlwapi.h>
 #include <unordered_map>
 #include <array>
 
@@ -43,12 +44,13 @@ namespace CKPE
 		void* EditorUI::ListViewGetSelectedItem(void* ListViewHandle) noexcept(true)
 		{
 			if (!ListViewHandle)
-				return NULL;
+				return nullptr;
 
-			int index = ListView_GetNextItem((HWND)ListViewHandle, -1, LVNI_SELECTED);
+			// Get the first focused item
+			auto index = ListView_GetNextItem((HWND)ListViewHandle, -1, LVNI_FOCUSED);
 
 			if (index == -1)
-				return NULL;
+				return nullptr;
 
 			LVITEMA item = { 0 };
 			item.mask = LVIF_PARAM;
@@ -56,6 +58,12 @@ namespace CKPE
 
 			ListView_GetItem((HWND)ListViewHandle, &item);
 			return (void*)item.lParam;
+		}
+
+		int EditorUI::ListViewGetSelectedItemIndex(void* ListViewHandle) noexcept(true)
+		{
+			// Get the first focused item
+			return ListView_GetNextItem((HWND)ListViewHandle, -1, LVNI_FOCUSED);
 		}
 
 		bool EditorUI::ListViewSetItemState(void* ListViewHandle, std::ptrdiff_t Index,
@@ -149,6 +157,31 @@ namespace CKPE
 			}
 
 			ListView_InsertItem((HWND)ListViewHandle, &item);
+		}
+
+		int EditorUI::ListViewFindItemByString(void* ListViewHandle, const char* str, int start_idx) noexcept(true)
+		{
+			// The standard search engine is too weak. 
+			// Mine allows you to find the first match in the list even if the word is somewhere in the middle. 
+			// Standard will only find if there is a match first.
+
+			if (strlen(str) == 0)
+				return -1;
+
+			CHAR szBuf[1024] = { 0 };
+			auto nRows = ListView_GetItemCount((HWND)ListViewHandle);
+
+			if (nRows > start_idx)
+			{
+				for (int idx = start_idx; idx < nRows; idx++)
+				{
+					ListView_GetItemText((HWND)ListViewHandle, idx, 0, szBuf, sizeof(szBuf));
+					if (StrStrI(szBuf, str))
+						return idx;
+				}
+			}
+
+			return -1;
 		}
 
 		void EditorUI::ResetUIDefer() noexcept(true)

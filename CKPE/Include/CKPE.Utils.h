@@ -9,6 +9,8 @@
 
 namespace CKPE
 {
+	using namespace std::literals;
+
 	// thread-safe template versions of vtbl_call()
 
 	template<typename TR>

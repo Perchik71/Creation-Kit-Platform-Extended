@@ -36,11 +36,11 @@ namespace CKPE
 				}
 
 				CKPE_COMMON_API LRESULT CALLBACK ListViewSubclass(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,
-					UINT_PTR uIdSubclass, DWORD_PTR dwRefData) noexcept(true)
+					[[maybe_unused]] UINT_PTR uIdSubclass, [[maybe_unused]] DWORD_PTR dwRefData) noexcept(true)
 				{
 					if ((uMsg == WM_SETFOCUS) || (uMsg == WM_KILLFOCUS))
 					{
-						InvalidateRect(hWnd, NULL, TRUE);
+						InvalidateRect(hWnd, nullptr, TRUE);
 						UpdateWindow(hWnd);
 					}
 					else if (uMsg == WM_PAINT)
@@ -106,8 +106,7 @@ namespace CKPE
 
 					// CHECKBOX
 
-					int icon_off = 0;
-					HIMAGELIST hImageList = ListView_GetImageList(lpDrawItem->hwndItem, LVSIL_SMALL);
+					auto hImageList = ListView_GetImageList(lpDrawItem->hwndItem, LVSIL_SMALL);
 					if (hImageList)
 					{
 						int cx, cy;
@@ -115,7 +114,6 @@ namespace CKPE
 
 						if ((rc.bottom - rc.top > cy) && (rc.right - rc.left > (cx + 8)))
 						{
-							icon_off = cx;
 							cy = ((rc.bottom - rc.top) - cy) >> 1;
 
 							LVITEMA lvi = { 0 };
@@ -173,9 +171,7 @@ namespace CKPE
 						//Before a subitem is drawn
 					case CDDS_SUBITEM | CDDS_ITEMPREPAINT: 
 					{
-						switch (lpListView->nmcd.hdr.idFrom) 
-						{
-						case UI_CONTROL_CONDITION_ID: 
+						if (lpListView->nmcd.hdr.idFrom == UI_CONTROL_CONDITION_ID)
 						{
 							if (lpListView->iSubItem == 0 || lpListView->iSubItem == 5)
 								lpListView->clrText = GetThemeSysColor(ThemeColor_Text_2);
@@ -184,10 +180,9 @@ namespace CKPE
 
 							return CDRF_NEWFONT;
 						}
-						default:
-							lpListView->clrText = GetThemeSysColor(ThemeColor_Text_4);
-							return CDRF_NEWFONT;
-						}
+
+						lpListView->clrText = GetThemeSysColor(ThemeColor_Text_4);
+						return CDRF_NEWFONT;
 					}
 					default:
 						return CDRF_DODEFAULT;
