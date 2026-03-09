@@ -108,8 +108,8 @@ namespace CKPE
 			{
 				if (IsMaster() && IsSmallMaster())
 				{
-					return MessageBox::OpenWarning("This file is marked as a light master and as regular master, "
-						"such a file may be loaded incorrectly and will necessarily lead to the loss of one of the flags.\n\n"
+					return MessageBox::OpenWarning("This file is marked as light master and as regular master, "
+						"such the file may be loaded incorrectly and will necessarily lead to the loss of one of the flags.\n\n"
 						"Make it active anyway?",
 						MessageBox::Buttons::mbOkCancel) != MessageBox::Result::mrOk;
 				}
