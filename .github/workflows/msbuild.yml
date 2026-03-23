@@ -33,7 +33,7 @@ jobs:
     runs-on: windows-2022
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         submodules: recursive
         
@@ -42,7 +42,7 @@ jobs:
       run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
       
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v2
+      uses: microsoft/setup-msbuild@v3
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -93,7 +93,7 @@ jobs:
       run: Get-ChildItem -Path .\Stuffs\Vortex -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-${{env.SHORT_SHA}}" $_.Name) -Force }
       
     - name: Upload SSE build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: ckpe-sse-master-${{env.SHORT_SHA}}
         path: "ckpe-sse-master-${{env.SHORT_SHA}}"
@@ -145,7 +145,7 @@ jobs:
       run: Get-ChildItem -Path .\Stuffs\Vortex -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-${{env.SHORT_SHA}}" $_.Name) -Force }
       
     - name: Upload FO4 build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: ckpe-fo4-master-${{env.SHORT_SHA}}
         path: "ckpe-fo4-master-${{env.SHORT_SHA}}"
@@ -181,7 +181,7 @@ jobs:
       run: Get-ChildItem -Path .\Stuffs\Vortex -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sf-master-${{env.SHORT_SHA}}" $_.Name) -Force }
       
     - name: Upload SF build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: ckpe-sf-master-${{env.SHORT_SHA}}
         path: "ckpe-sf-master-${{env.SHORT_SHA}}"
@@ -190,7 +190,7 @@ jobs:
     runs-on: windows-2022
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         submodules: recursive
         
@@ -199,7 +199,7 @@ jobs:
       run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
       
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v2
+      uses: microsoft/setup-msbuild@v3
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -250,7 +250,7 @@ jobs:
       run: Get-ChildItem -Path .\Stuffs\Vortex -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-noavx2-${{env.SHORT_SHA}}" $_.Name) -Force }
       
     - name: Upload SSE build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: ckpe-sse-master-noavx2-${{env.SHORT_SHA}}
         path: "ckpe-sse-master-noavx2-${{env.SHORT_SHA}}"
@@ -302,7 +302,7 @@ jobs:
       run: Get-ChildItem -Path .\Stuffs\Vortex -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}" $_.Name) -Force }
       
     - name: Upload FO4 build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}
         path: "ckpe-fo4-master-noavx2-${{env.SHORT_SHA}}"
@@ -338,7 +338,7 @@ jobs:
       run: Get-ChildItem -Path .\Stuffs\Vortex -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sf-master-noavx2-${{env.SHORT_SHA}}" $_.Name) -Force }
       
     - name: Upload SF build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: ckpe-sf-master-noavx2-${{env.SHORT_SHA}}
         path: "ckpe-sf-master-noavx2-${{env.SHORT_SHA}}"
