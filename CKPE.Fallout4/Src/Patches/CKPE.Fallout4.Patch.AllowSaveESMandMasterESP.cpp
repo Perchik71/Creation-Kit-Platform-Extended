@@ -51,7 +51,7 @@ namespace CKPE
 
 			static bool IsActiveFileBlacklist(const EditorAPI::TESFile* a_file) noexcept(true)
 			{
-				return a_file->IsActiveFileBlacklist(true) || a_file->IsActiveFileWarn();
+				return a_file->IsActiveFileBlacklist(true) || (!a_file->IsActive() && a_file->IsActiveFileWarn());
 			}
 
 			AllowSaveESMandMasterESP::AllowSaveESMandMasterESP() : Common::Patch()

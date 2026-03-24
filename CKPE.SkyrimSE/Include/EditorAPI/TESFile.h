@@ -129,8 +129,9 @@ namespace CKPE
 
 				int hk_LoadTESInfo();
 				__int64 hk_WriteTESInfo();
-				bool IsActiveFileBlacklist() const noexcept(true);
-			public:
+				bool IsActiveFileBlacklist(bool showDialog = true) const noexcept(true);
+				bool IsActiveFileWarn() const noexcept(true);
+
 				static bool ReadFirstChunk(const char* fileName, TESChunk& chunk) noexcept(true);
 				static std::uint32_t GetTypeFile(const char* fileName) noexcept(true);
 			};

@@ -23,9 +23,8 @@
 #undef MessageBox
 
 #define UI_DATA_DIALOG_PLUGINLISTVIEW		1056
-#define UI_DATA_DIALOG_FILTERBOX			1003	// See: resource.rc
+#define UI_DATA_DIALOG_FILTERBOX			1003
 #define UI_LISTVIEW_PLUGINS					UI_DATA_DIALOG_PLUGINLISTVIEW
-#define UI_EDIT_SEARCH_PLUGIN_BY_NAME		52004
 #define UI_NEW_LISTVIEW_CONTROL_TO_RESULT	52005
 
 namespace CKPE
@@ -266,7 +265,7 @@ namespace CKPE
 					if (Common::UI::IsDarkTheme())
 					{
 						_This->m_pluginList.SetStyle(_This->m_pluginList.GetStyle() | LVS_OWNERDRAWFIXED);
-						_This->m_pluginResultList.SetStyle(_This->m_pluginList.GetStyle() | LVS_OWNERDRAWFIXED);
+						_This->m_pluginResultList.SetStyle(_This->m_pluginResultList.GetStyle() | LVS_OWNERDRAWFIXED);
 
 						if ((Common::UI::GetTheme() == Common::UI::Theme_Custom) && Common::UI::NeedDarkCheck())
 							goto DarkCheckIcons;
@@ -288,7 +287,7 @@ namespace CKPE
 
 					// fix no checked in list 
 					RedrawWindow(pluginListHandle, nullptr, nullptr, RDW_UPDATENOW | RDW_NOCHILDREN);
-					RedrawWindow(pluginResultListHandle, nullptr, nullptr, RDW_UPDATENOW | RDW_NOCHILDREN);
+					//RedrawWindow(pluginResultListHandle, nullptr, nullptr, RDW_UPDATENOW | RDW_NOCHILDREN);
 
 					return result;
 				}

@@ -16,9 +16,6 @@ namespace CKPE
 		{
 			class DataWindow : public Common::PatchBaseWindow
 			{
-				constexpr static std::int32_t VisibleGroupId = 0;
-				constexpr static std::int32_t FilteredGroupId = 1;
-
 				ImageList m_ImageList;
 				Common::UI::CUIBaseControl m_filer;
 				Common::UI::CUIBaseControl m_pluginList;

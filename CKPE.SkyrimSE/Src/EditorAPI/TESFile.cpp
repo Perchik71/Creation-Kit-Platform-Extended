@@ -83,9 +83,9 @@ namespace CKPE
 				return form;
 			}
 
-			bool TESFile::IsActiveFileBlacklist() const noexcept(true)
+			bool TESFile::IsActiveFileBlacklist(bool showDialog) const noexcept(true)
 			{
-				if ((m_RecordFlags & FILE_RECORD_ESM) == FILE_RECORD_ESM)
+				if (IsMaster())
 				{
 					if (!_stricmp(m_FileName, "Skyrim.esm") ||
 						!_stricmp(m_FileName, "Update.esm") ||
@@ -93,9 +93,23 @@ namespace CKPE
 						!_stricmp(m_FileName, "HearthFires.esm") ||
 						!_stricmp(m_FileName, "Dragonborn.esm"))
 					{
-						MessageBox::OpenWarning("Base game master files cannot be set as the active file.");
+						if (showDialog)
+							MessageBox::OpenWarning("Base game master files cannot be set as the active file.");
 						return true;
 					}
+				}
+
+				return false;
+			}
+
+			bool TESFile::IsActiveFileWarn() const noexcept(true)
+			{
+				if (IsMaster() && IsSmallMaster())
+				{
+					return MessageBox::OpenWarning("This file is marked as light master and as regular master, "
+						"such the file may be loaded incorrectly and will necessarily lead to the loss of one of the flags.\n\n"
+						"Make it active anyway?",
+						MessageBox::Buttons::mbOkCancel) != MessageBox::Result::mrOk;
 				}
 
 				return false;

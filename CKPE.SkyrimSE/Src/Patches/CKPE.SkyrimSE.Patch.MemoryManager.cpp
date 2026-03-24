@@ -26,20 +26,20 @@ namespace CKPE
 				// Не описываем конструкторы и деструкторы
 				// Класс - это просто оболочка
 			public:
-				static void* Allocate(BSMemoryManager* manager, std::size_t size, std::uint32_t alignment, bool aligned)
+				static void* Allocate([[maybe_unused]] BSMemoryManager* manager, std::size_t size, std::uint32_t alignment, bool aligned)
 				{
 					auto ptr = Common::MemoryManager::GetSingleton()->MemAlloc(size, alignment, aligned, true);
 					// _CKPE_TracerPush("MemoryManager", ptr, size);
 					return ptr;
 				}
 
-				static void Deallocate(BSMemoryManager* manager, void* memory, bool aligned)
+				static void Deallocate([[maybe_unused]] BSMemoryManager* manager, void* memory, [[maybe_unused]] bool aligned)
 				{
 					//_CKPE_TracerPop(memory);
 					Common::MemoryManager::GetSingleton()->MemFree(memory);
 				}
 
-				static std::size_t Size(BSMemoryManager* manager, void* memory)
+				static std::size_t Size([[maybe_unused]] BSMemoryManager* manager, void* memory)
 				{
 					return Common::MemoryManager::GetSingleton()->MemSize(memory);
 				}
@@ -50,14 +50,14 @@ namespace CKPE
 				// Не описываем конструкторы и деструкторы
 				// Класс - это просто оболочка
 			public:
-				static void* Allocate(BSScrapHeap* manager, std::size_t size, std::uint32_t alignment)
+				static void* Allocate([[maybe_unused]] BSScrapHeap* manager, std::size_t size, std::uint32_t alignment)
 				{
 					auto ptr = Common::MemoryManager::GetSingleton()->MemAlloc(size, alignment, alignment != 0);
 					//_CKPE_TracerPush("ScrapHeap", ptr, size);
 					return ptr;
 				}
 
-				static void Deallocate(BSScrapHeap* manager, void* memory)
+				static void Deallocate([[maybe_unused]] BSScrapHeap* manager, void* memory)
 				{
 					//_CKPE_TracerPop(memory);
 					Common::MemoryManager::GetSingleton()->MemFree(memory);

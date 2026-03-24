@@ -47,7 +47,7 @@ namespace CKPE
 				return nullptr;
 
 			// Get the first focused item
-			auto index = ListView_GetNextItem((HWND)ListViewHandle, -1, LVNI_FOCUSED);
+			auto index = ListView_GetNextItem((HWND)ListViewHandle, -1, LVIS_FOCUSED);
 
 			if (index == -1)
 				return nullptr;
@@ -63,7 +63,7 @@ namespace CKPE
 		int EditorUI::ListViewGetSelectedItemIndex(void* ListViewHandle) noexcept(true)
 		{
 			// Get the first focused item
-			return ListView_GetNextItem((HWND)ListViewHandle, -1, LVNI_FOCUSED);
+			return ListView_GetNextItem((HWND)ListViewHandle, -1, LVIS_FOCUSED);
 		}
 
 		bool EditorUI::ListViewSetItemState(void* ListViewHandle, std::ptrdiff_t Index,
@@ -84,12 +84,12 @@ namespace CKPE
 		void EditorUI::ListViewSelectItem(void* ListViewHandle, int ItemIndex, bool KeepOtherSelections) noexcept(true)
 		{
 			if (!KeepOtherSelections)
-				ListViewSetItemState(ListViewHandle, -1, 0, LVIS_SELECTED);
+				ListViewSetItemState(ListViewHandle, -1, 0, LVIS_SELECTED | LVIS_FOCUSED);
 
 			if (ItemIndex != -1)
 			{
 				ListView_EnsureVisible((HWND)ListViewHandle, ItemIndex, FALSE);
-				ListViewSetItemState(ListViewHandle, ItemIndex, LVIS_SELECTED, LVIS_SELECTED);
+				ListViewSetItemState(ListViewHandle, ItemIndex, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED);
 			}
 		}
 
@@ -104,7 +104,7 @@ namespace CKPE
 				.lParam = reinterpret_cast<LPARAM>(Parameter)
 			};
 
-			int index = ListView_FindItem((HWND)ListViewHandle, -1, &findInfo);
+			auto index = ListView_FindItem((HWND)ListViewHandle, -1, &findInfo);
 
 			if (index != -1)
 				ListViewSelectItem(ListViewHandle, index, KeepOtherSelections);
@@ -118,7 +118,7 @@ namespace CKPE
 				.lParam = reinterpret_cast<LPARAM>(Parameter)
 			};
 
-			int index = ListView_FindItem((HWND)ListViewHandle, -1, &findInfo);
+			auto index = ListView_FindItem((HWND)ListViewHandle, -1, &findInfo);
 
 			if (index != -1)
 				ListViewSetItemState(ListViewHandle, index, 0, LVIS_SELECTED);
@@ -324,7 +324,7 @@ namespace CKPE
 
 				seditorUI.DeferredComboBox = ComboBoxHandle;
 				seditorUI.DeferredStringLength += strlen(DisplayText) + 1;
-				seditorUI.DeferredAllowResize |= AllowResize;
+				seditorUI.DeferredAllowResize = AllowResize;
 
 				// A copy must be created since lifetime isn't guaranteed after this function returns
 				seditorUI.GetDeferredMenuItems()->emplace_back(strdup(DisplayText), Value);
@@ -385,7 +385,7 @@ namespace CKPE
 			std::uintptr_t lpDialogFunc, std::ptrdiff_t dwInitParam) noexcept(true)
 		{
 			if (reinterpret_cast<uintptr_t>(lpTemplateName) == 0x1D6) // "Warnings"
-				return 0;
+				return nullptr;
 
 			// EndDialog MUST NOT be used
 			ThreadDialogData.DialogFunc = (DLGPROC)lpDialogFunc;
@@ -558,13 +558,13 @@ namespace CKPE
 		{
 			auto base = (std::uintptr_t)GetModuleHandleA(nullptr);
 
-			Detours::DetourIAT(base, "USER32.DLL", "CreateDialogParamA", (std::uintptr_t)HKCreateDialogParamA);
-			Detours::DetourIAT(base, "USER32.DLL", "DialogBoxParamA", (std::uintptr_t)HKDialogBoxParamA);
-			Detours::DetourIAT(base, "USER32.DLL", "EndDialog", (std::uintptr_t)HKEndDialog);
-			Detours::DetourIAT(base, "USER32.DLL", "SendMessageA", (std::uintptr_t)HKSendMessageA);
-			Detours::DetourIAT(base, "USER32.DLL", "CreateWindowA", (std::uintptr_t)HKCreateWindowA);
-			Detours::DetourIAT(base, "USER32.DLL", "CreateWindowExA", (std::uintptr_t)HKCreateWindowExA);
-			Detours::DetourIAT(base, "USER32.DLL", "DestroyWindow", (std::uintptr_t)HKDestroyWindow);
+			Detours::DetourIAT(base, "USER32.DLL", "CreateDialogParamA", (std::uintptr_t)&HKCreateDialogParamA);
+			Detours::DetourIAT(base, "USER32.DLL", "DialogBoxParamA", (std::uintptr_t)&HKDialogBoxParamA);
+			Detours::DetourIAT(base, "USER32.DLL", "EndDialog", (std::uintptr_t)&HKEndDialog);
+			Detours::DetourIAT(base, "USER32.DLL", "SendMessageA", (std::uintptr_t)&HKSendMessageA);
+			Detours::DetourIAT(base, "USER32.DLL", "CreateWindowA", (std::uintptr_t)&HKCreateWindowA);
+			Detours::DetourIAT(base, "USER32.DLL", "CreateWindowExA", (std::uintptr_t)&HKCreateWindowExA);
+			Detours::DetourIAT(base, "USER32.DLL", "DestroyWindow", (std::uintptr_t)&HKDestroyWindow);
 		}
 	}
 }

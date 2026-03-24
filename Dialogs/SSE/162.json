@@ -9,7 +9,8 @@
   "FontWeight": 400,
   "FontItalic": 0,
   "Controls": [
-    { "Type": "LISTVIEW", "Id": 1056, "Style": [ "LVS_REPORT", "LVS_SHOWSELALWAYS" ], "ExStyle": [ "WS_EX_CLIENTEDGE" ], "x": 5, "y": 30, "Width": 250, "Height": 291 },
+    { "Type": "LISTVIEW", "Id": 1056, "Style": [ "LVS_REPORT", "LVS_SHOWSELALWAYS", "WS_BORDER" ], "ExStyle": [ "WS_EX_CLIENTEDGE" ], "x": 5, "y": 30, "Width": 250, "Height": 291 },
+    { "Type": "LISTVIEW", "Id": 52005, "Style": [ "LVS_REPORT", "LVS_SHOWSELALWAYS", "WS_BORDER", "NOT WS_VISIBLE" ], "ExStyle": [ "WS_EX_CLIENTEDGE" ], "x": 5, "y": 30, "Width": 250, "Height": 291 },
 	{ "Type": "PUSHBUTTON", "Title": "Set as Active File", "Id": 1121, "x": 5, "y": 330, "Width": 120, "Height": 14 },
 	{ "Type": "PUSHBUTTON", "Title": "Details...", "Id": 1185, "x": 135, "y": 330, "Width": 55, "Height": 14 },
 	{ "Type": "EDITTEXT", "Style": [ "ES_AUTOHSCROLL" ], "Id": 1025, "Title": "", "x": 260, "y": 15, "Width": 144, "Height": 12 },

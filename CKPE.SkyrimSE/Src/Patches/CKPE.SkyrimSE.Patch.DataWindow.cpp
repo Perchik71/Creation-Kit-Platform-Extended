@@ -3,12 +3,14 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <windowsx.h>
 #include <CKPE.Detours.h>
 #include <CKPE.Graphics.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.UIVarCommon.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.UIListView.h>
+#include <CKPE.Common.EditorUI.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
 #include <EditorAPI/TESFile.h>
 #include <Patches/CKPE.SkyrimSE.Patch.DataWindow.h>
@@ -18,9 +20,8 @@
 #include <commctrl.h>
 
 #define UI_DATA_DIALOG_PLUGINLISTVIEW		1056
-#define UI_DATA_DIALOG_FILTERBOX			1003	// See: resource.rc
+#define UI_DATA_DIALOG_FILTERBOX			1003
 #define UI_LISTVIEW_PLUGINS					UI_DATA_DIALOG_PLUGINLISTVIEW
-#define UI_EDIT_SEARCH_PLUGIN_BY_NAME		52004
 #define UI_NEW_LISTVIEW_CONTROL_TO_RESULT	52005
 
 namespace CKPE
@@ -29,6 +30,137 @@ namespace CKPE
 	{
 		namespace Patch
 		{
+			static const char* GetAuthorPluginName(const EditorAPI::TESFile* file) noexcept(true)
+			{
+				if (file->IsActiveFileBlacklist(false))
+					return "Bethesda Game Studios";
+				return file->GetAuthorName().c_str();
+			}
+
+			void DataWindow::ListViewResultInitialize(HWND a_handle, std::uint32_t a_column) noexcept(true)
+			{
+				// add list columns
+				LVCOLUMN lvc = { 0 };
+				// Initialize the LVCOLUMN structure.
+				// The mask specifies that the format, width, text, and
+				// subitem members of the structure are valid.
+				lvc.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+				lvc.fmt = LVCFMT_LEFT;
+				lvc.cchTextMax = 255;
+				// width of column in pixels
+				lvc.cx = a_column;
+
+				lvc.pszText = (LPSTR)"Filename";
+				ListView_InsertColumn(a_handle, 0, &lvc);
+
+				lvc.iSubItem = 1;
+				lvc.pszText = (LPSTR)"Status";
+				ListView_InsertColumn(a_handle, 1, &lvc);
+
+				ListView_SetExtendedListViewStyle(a_handle, LVS_OWNERDATA | LVS_LIST | LVS_SMALLICON | LVS_SORTDESCENDING);
+
+				// Prevent flickering & adjust width to fit file names
+				ListView_SetExtendedListViewStyleEx(a_handle, LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
+			}
+
+			void DataWindow::ToggleListView(const bool a_showResultListView) noexcept(true)
+			{
+				auto _This = DataWindow::Singleton.GetSingleton();
+
+				auto hWnd = _This->m_pluginList.Handle;
+				auto hWndResult = _This->m_pluginResultList.Handle;
+
+				_This->m_pluginList.Visible = !a_showResultListView;
+				_This->m_pluginResultList.Visible = a_showResultListView;
+
+				if (a_showResultListView)
+				{
+					// The width could be changed, will repeat for list
+					ListView_SetColumnWidth(hWndResult, 0, ListView_GetColumnWidth(hWnd, 0));
+					ListView_SetColumnWidth(hWndResult, 1, ListView_GetColumnWidth(hWnd, 1));
+				}
+			}
+
+			bool DataWindow::AppendToListViewResult(const char* sFileName, const char* sType, const bool bCheck) noexcept(true)
+			{
+				auto _This = DataWindow::Singleton.GetSingleton();
+
+				HWND hWnd = _This->m_pluginResultList.Handle;
+				auto iLastIndex = ListView_GetItemCount(hWnd);
+
+				LVITEMA lvi = { 0 };
+				lvi.mask = LVIF_TEXT | LVIF_IMAGE;
+				lvi.cchTextMax = (INT)(strlen(sFileName) + 1);
+				lvi.iItem = iLastIndex;
+				lvi.pszText = (LPSTR)sFileName;
+				lvi.iSubItem = 0;
+				lvi.iImage = (INT)bCheck;
+
+				if (ListView_InsertItem(hWnd, &lvi) == -1)
+					return false;
+
+				ListView_SetItemText(hWnd, iLastIndex, 1, (LPSTR)sType);
+
+				return true;
+			}
+
+			void DataWindow::UpdateListViewResult() noexcept(true)
+			{
+				constexpr auto SIZEBUF = 1024;
+
+				auto _This = DataWindow::Singleton.GetSingleton();
+
+				INT idx, idx_safe;
+				LVITEMA lvi = { 0 };
+				HWND hSrchEdit, hListView, hListViewResult;
+				CHAR szStrs[2][SIZEBUF]{};
+
+				hSrchEdit = _This->m_filer.Handle;
+				hListView = _This->m_pluginList.Handle;
+				hListViewResult = _This->m_pluginResultList.Handle;
+
+				ListView_DeleteAllItems(hListViewResult);
+
+				if (Edit_GetTextLength(hSrchEdit) < 2)
+				{
+					ToggleListView(false);
+					return;
+				}
+
+				idx_safe = -1;
+				idx = -1;
+
+				while ((idx = Common::EditorUI::ListViewFindItemByString(hListView,
+					_This->m_filer.GetCaption().c_str(), idx + 1)) != -1)
+				{
+					if (idx_safe == -1) idx_safe = idx;
+					ListView_GetItemText(hListView, idx, 0, szStrs[0], SIZEBUF);
+					ListView_GetItemText(hListView, idx, 1, szStrs[1], SIZEBUF);
+
+					lvi.mask = LVIF_IMAGE;
+					lvi.iItem = idx;
+					ListView_GetItem(hListView, &lvi);
+
+					AppendToListViewResult(szStrs[0], szStrs[1], lvi.iImage != 0);
+				}
+
+				InvalidateRect(hListViewResult, nullptr, true);
+				UpdateWindow(hListViewResult);
+
+				if (!ListView_GetItemCount(hListViewResult))
+				{
+					Common::EditorUI::ListViewSetItemState(hListView, 0, LVIS_FOCUSED | LVIS_SELECTED, LVIS_FOCUSED | LVIS_SELECTED);
+					ToggleListView(false);
+					return;
+				}
+
+				Common::EditorUI::ListViewSelectItem(hListView, (idx_safe >= 0) ? idx_safe : 0, false);
+				ToggleListView(true);
+				Common::EditorUI::ListViewSelectItem(hListViewResult, 0, false);
+
+				SendMessageA(hSrchEdit, WM_SETCURSOR, 0, 0);
+			}
+
 			DataWindow::DataWindow() : Common::PatchBaseWindow()
 			{
 				SetName("Data Window");
@@ -82,9 +214,12 @@ namespace CKPE
 
 					INT_PTR result = CallWindowProc(_This->GetOldWndProc(), Hwnd, Message, wParam, lParam);
 					HWND pluginListHandle = GetDlgItem(Hwnd, UI_LISTVIEW_PLUGINS);
+					HWND pluginResultListHandle = GetDlgItem(Hwnd, UI_NEW_LISTVIEW_CONTROL_TO_RESULT);
 
 					_This->m_hWnd = Hwnd;
+					_This->m_filer = GetDlgItem(Hwnd, UI_DATA_DIALOG_FILTERBOX);
 					_This->m_pluginList = pluginListHandle;
+					_This->m_pluginResultList = pluginResultListHandle;
 
 					_This->Style = WS_OVERLAPPED | WS_CAPTION | WS_BORDER | WS_SYSMENU;
 
@@ -93,44 +228,28 @@ namespace CKPE
 
 					// Prevent flickering & adjust width to fit file names
 					ListView_SetExtendedListViewStyleEx(pluginListHandle, LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
-					ListView_SetColumnWidth(pluginListHandle, 0, 250);
-
-					// Create two separate list view groups: one for default items and one for hidden (filtered) items. This has to be run
-					// after WM_INITDIALOG because list views can't have groups with no items present.
-					LVGROUP defaultGroup
-					{
-						.cbSize = sizeof(LVGROUP),
-						.mask = LVGF_GROUPID,
-						.iGroupId = VisibleGroupId,
-					};
-
-					LVGROUP hiddenGroup
-					{
-						.cbSize = sizeof(LVGROUP),
-						.mask = LVGF_GROUPID | LVGF_STATE,
-						.iGroupId = FilteredGroupId,
-						.stateMask = LVGS_HIDDEN,
-						.state = LVGS_HIDDEN,
-					};
-
-					ListView_InsertGroup(pluginListHandle, -1, &defaultGroup);
-					ListView_InsertGroup(pluginListHandle, -1, &hiddenGroup);
-
-					if (Common::UI::IsDarkTheme())
-						_This->m_pluginList.SetStyle(_This->m_pluginList.GetStyle() | LVS_OWNERDRAWFIXED);
+					
+					auto Path = EditorAPI::BSString::Utils::GetApplicationPath();
+					auto Column = GetPrivateProfileIntA("General", "Data Column 0 width", 250, (Path + "CreationKitPrefs.ini").c_str());
+					ListView_SetColumnWidth(pluginListHandle, 0, Column);
+					
+					ListViewResultInitialize(pluginResultListHandle, Column);
 
 					// Bethesda probably doesn't know about the existence of Check. 
 					// They have created icons that mimic pictorially for the user.
 					// I completely take everything from there, although I'm not happy about it, but this is a ready-made mechanism, and I'm just trying to make a search in it.
-					HIMAGELIST hImageList = ListView_GetImageList(pluginListHandle, LVSIL_SMALL);
+					auto hImageList = ListView_GetImageList(pluginListHandle, LVSIL_SMALL);
 					ImageList_Destroy(hImageList);
 
 					_This->m_ImageList.ReCreate(16, 16, true, ilct24Bit);
 
-					HINSTANCE hModule = (HINSTANCE)Common::Interface::GetSingleton()->GetInstanceDLL();
+					auto hModule = (HINSTANCE)Common::Interface::GetSingleton()->GetInstanceDLL();
 
 					if (Common::UI::IsDarkTheme())
 					{
+						_This->m_pluginList.SetStyle(_This->m_pluginList.GetStyle() | LVS_OWNERDRAWFIXED);
+						_This->m_pluginResultList.SetStyle(_This->m_pluginResultList.GetStyle() | LVS_OWNERDRAWFIXED);
+
 						if ((Common::UI::GetTheme() == Common::UI::Theme_Custom) && Common::UI::NeedDarkCheck())
 							goto DarkCheckIcons;
 
@@ -145,89 +264,155 @@ namespace CKPE
 					}
 
 					ListView_SetImageList(pluginListHandle, (HWND)(_This->m_ImageList.Handle), LVSIL_SMALL);
+					ListView_SetImageList(pluginResultListHandle, (HWND)(_This->m_ImageList.Handle), LVSIL_SMALL);
+
+					_This->m_pluginResultList.Visible = false;
 
 					// fix no checked in list 
-					RedrawWindow(pluginListHandle, NULL, NULL, RDW_UPDATENOW | RDW_NOCHILDREN);
+					RedrawWindow(pluginListHandle, nullptr, nullptr, RDW_UPDATENOW | RDW_NOCHILDREN);
+					//RedrawWindow(pluginResultListHandle, nullptr, nullptr, RDW_UPDATENOW | RDW_NOCHILDREN);
 
 					return result;
+				}
+				else if (Message == WM_DESTROY)
+				{
+					auto _This = DataWindow::Singleton.GetSingleton();
+					auto Path = EditorAPI::BSString::Utils::GetApplicationPath();
+					WritePrivateProfileStringA("General", "Data Column 0 width",
+						std::to_string(ListView_GetColumnWidth(_This->m_pluginList.Handle, 0)).c_str(),
+						(Path + "CreationKitPrefs.ini").c_str());
 				}
 				else if (Message == WM_COMMAND)
 				{
 					// Text boxes use WM_COMMAND instead of WM_NOTIFY. Why? Well, who knows.
 					if (HIWORD(wParam) == EN_CHANGE && LOWORD(wParam) == UI_DATA_DIALOG_FILTERBOX)
 					{
-						HWND pluginListHandle = GetDlgItem(Hwnd, UI_LISTVIEW_PLUGINS);
-						char filter[1024] = {};
-
-						GetWindowTextA(reinterpret_cast<HWND>(lParam), filter, static_cast<std::int32_t>(std::ssize(filter)));
-
-						if (strlen(filter) <= 0)
-							// No filtering
-							SendMessageA(pluginListHandle, LVM_ENABLEGROUPVIEW, FALSE, 0);
-						else
+						UpdateListViewResult();
+						return S_OK;
+					}
+					else if (LOWORD(wParam) == 1121)
+					{
+						auto _This = DataWindow::Singleton.GetSingleton();
+						if (_This->m_pluginResultList.Visible)
 						{
-							SendMessageA(pluginListHandle, LVM_ENABLEGROUPVIEW, TRUE, 0);
+							constexpr auto SIZEBUF = 1024;
 
-							// Iterate over each item in the list, compare its file name text, then assign it to the relevant group
-							int itemCount = ListView_GetItemCount(pluginListHandle);
+							CHAR szStrs[SIZEBUF] = { 0 };
+							HWND hListView = _This->m_pluginList.Handle;
+							HWND hListViewResult = _This->m_pluginResultList.Handle;
 
-							for (int i = 0; i < itemCount; i++)
+							auto idx = Common::EditorUI::ListViewGetSelectedItemIndex(hListViewResult);
+							if (idx != -1)
 							{
-								char itemText[MAX_PATH] = {};
+								ListView_GetItemText(hListViewResult, idx, 0, szStrs, SIZEBUF);
+								Common::EditorUI::ListViewSelectItem(hListView,
+									Common::EditorUI::ListViewFindItemByString(hListView, szStrs), false);
 
-								LVITEMA getItem
-								{
-									.mask = LVIF_TEXT,
-									.iItem = i,
-									.iSubItem = 0,
-									.pszText = itemText,
-									.cchTextMax = static_cast<int>(std::ssize(itemText)),
-								};
+								auto nRes = CallWindowProc(_This->GetOldWndProc(), Hwnd, Message, wParam, lParam);
+								UpdateListViewResult();
+								Common::EditorUI::ListViewSelectItem(hListViewResult, idx, false);
 
-								ListView_GetItem(pluginListHandle, &getItem);
-
-								// Case insensitive strstr
-								bool isVisible = [&]()
-									{
-										for (auto c = getItem.pszText; *c != '\0'; c++)
-										{
-											if (_strnicmp(c, filter, strlen(filter)) == 0)
-												return true;
-										}
-
-										return false;
-									}();
-
-								LVITEMA setItem
-								{
-									.mask = LVIF_GROUPID,
-									.iItem = i,
-									.iGroupId = isVisible ? VisibleGroupId : FilteredGroupId,
-								};
-
-								ListView_SetItem(pluginListHandle, &setItem);
+								return nRes;
 							}
 						}
+					}
+				}
+				else if (Message == WM_NOTIFY)
+				{
+					if (LOWORD(wParam) == UI_NEW_LISTVIEW_CONTROL_TO_RESULT)
+					{
+						auto _This = DataWindow::Singleton.GetSingleton();
+						constexpr auto SIZEBUF = 1024;
 
-						return 1;
+						switch (((LPNMHDR)lParam)->code)
+						{
+							// Select
+						case NM_CLICK:
+						{
+							auto lpnmItem = (LPNMITEMACTIVATE)lParam;
+							HWND hWnd = _This->m_pluginResultList.Handle;
+							HWND hWndOld = _This->m_pluginList.Handle;
+							CHAR szStrs[SIZEBUF] = { 0 };
+
+							if (lpnmItem->iItem != -1)
+							{
+								ListView_GetItemText(hWnd, lpnmItem->iItem, 0, szStrs, SIZEBUF);
+								Common::EditorUI::ListViewSelectItem(hWndOld,
+									Common::EditorUI::ListViewFindItemByString(hWndOld, szStrs), false);
+							}
+						}
+						break;
+						// Double-click the mouse, just check the box, do the same
+						case NM_DBLCLK:
+							// By double - clicking the right mouse button, 
+							// I get the active mod installed in the original list of mods.
+							// I model this behavior with a short list.
+						case NM_RDBLCLK:
+						{
+							auto lpnmItem = (LPNMITEMACTIVATE)lParam;
+							HWND hWnd = _This->m_pluginResultList.Handle;
+							HWND hWndOld = _This->m_pluginList.Handle;
+							RECT rRectItem{};
+							CHAR szStrs[SIZEBUF] = { 0 };
+							auto code = ((LPNMHDR)lParam)->code;
+
+							// fix bug (can click in an empty space)
+							if (lpnmItem->iItem != -1)
+							{
+								ListView_GetItemText(hWnd, lpnmItem->iItem, 0, szStrs, SIZEBUF);
+								auto idx = Common::EditorUI::ListViewFindItemByString(hWndOld, szStrs);
+
+								CKPE_ASSERT(idx != -1);
+								CKPE_ASSERT(ListView_GetItemRect(hWndOld, idx, &rRectItem, LVIR_BOUNDS));
+
+								NMITEMACTIVATE nmItemFake{};
+								std::fill_n((std::uint8_t*)&nmItemFake, sizeof(nmItemFake), 0);
+
+								nmItemFake.hdr.code = code;
+								nmItemFake.hdr.hwndFrom = hWndOld;
+								nmItemFake.hdr.idFrom = UI_LISTVIEW_PLUGINS;
+								nmItemFake.iItem = idx;
+								nmItemFake.ptAction.x = rRectItem.left + 5;
+								nmItemFake.ptAction.y = rRectItem.top + 5;
+
+								// fake click
+								SendMessageA(Hwnd, WM_NOTIFY, UI_LISTVIEW_PLUGINS, (LPARAM)&nmItemFake);
+
+								// update short list
+								UpdateListViewResult();
+
+								Common::EditorUI::ListViewSelectItem(hWnd, lpnmItem->iItem, false);
+								Common::EditorUI::ListViewSelectItem(hWndOld, idx, false);
+							}
+						}
+						break;
+						default:
+							break;
+						}
+
+						return S_OK;
 					}
 				}
 
 				return CallWindowProc(DataWindow::Singleton->GetOldWndProc(), Hwnd, Message, wParam, lParam);
 			}
 
-			void DataWindow::DoListViewDraw(HWND hWindow, LPDRAWITEMSTRUCT lpDrawItem,
-				const char* lpstrFileName, const char* lpstrTypeName) noexcept(true)
+			void DataWindow::DoListViewDraw([[maybe_unused]] HWND hWindow, LPDRAWITEMSTRUCT lpDrawItem,
+				const char* lpstrFileName, [[maybe_unused]] const char* lpstrTypeName) noexcept(true)
 			{
 				CRECT rc = lpDrawItem->rcItem;
 				Canvas canvas(lpDrawItem->hDC);
 
 				auto type = EditorAPI::TESFile::GetTypeFile(
 					(EditorAPI::BSString::Utils::GetRelativeDataPath() + lpstrFileName).Get());
-				if ((type & EditorAPI::TESFile::FILE_RECORD_ESM) == EditorAPI::TESFile::FILE_RECORD_ESM)
-					canvas.FillWithTransparent(rc, RGB(255, 0, 0), 10);
+
+				if (((type & EditorAPI::TESFile::FILE_RECORD_ESM) == EditorAPI::TESFile::FILE_RECORD_ESM) &&
+					((type & EditorAPI::TESFile::FILE_RECORD_ESL) == EditorAPI::TESFile::FILE_RECORD_ESL))
+					canvas.FillWithTransparent(rc, RGB(124, 252, 0), 20);
+				else if ((type & EditorAPI::TESFile::FILE_RECORD_ESM) == EditorAPI::TESFile::FILE_RECORD_ESM)
+					canvas.FillWithTransparent(rc, RGB(255, 0, 0), 20);
 				else if ((type & EditorAPI::TESFile::FILE_RECORD_ESL) == EditorAPI::TESFile::FILE_RECORD_ESL)
-					canvas.FillWithTransparent(rc, RGB(0, 255, 0), 10);
+					canvas.FillWithTransparent(rc, RGB(0, 250, 154), 20);
 			}
 		}
 	}
