@@ -22,61 +22,105 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			struct z_stream_s
+			namespace zlibDetail
 			{
-				const void* next_in;
-				std::uint32_t avail_in;
-				std::uint32_t total_in;
-				void* next_out;
-				std::uint32_t avail_out;
-				std::uint32_t total_out;
-				const char* msg;
-				struct internal_state* state;
-			};
+				constexpr static int32_t Z_OK = 0;
+				constexpr static int32_t Z_STREAM_END = 1;
+				constexpr static int32_t Z_NEED_DICT = 2;
+				constexpr static int32_t Z_ERRNO = -1;
+				constexpr static int32_t Z_STREAM_ERROR = -2;
+				constexpr static int32_t Z_DATA_ERROR = -3;
+				constexpr static int32_t Z_MEM_ERROR = -4;
+				constexpr static int32_t Z_BUF_ERROR = -5;
+				constexpr static int32_t Z_VERSION_ERROR = -6;
+
+				typedef struct z_stream_s
+				{
+					uint8_t* next_in;
+					uint32_t avail_in;
+					uint32_t total_in;
+					uint8_t* next_out;
+					uint32_t avail_out;
+					uint32_t total_out;
+					const char* msg;
+					struct internal_state* state;
+				} z_stream, * z_streamp;
+
+				using TInflate = int32_t(*)(z_streamp, int32_t) noexcept;
+				TInflate Inflate;
+
+				namespace Decompression
+				{
+					struct LibDeflate
+					{
+						// libdeflate no supported streaming, so...
+						// In the case when libdeflate failed to work and ended with an error, 
+						// we use the orginal function, as the results show, even if we ignore the registration of the stream as streaming, 
+						// the total number of calls in 1k microseconds is half less when loading the save, unlike the original function, 
+						// registering the stream as streaming is guaranteed to skip constant libdeflate attempts and it will reduce the time even more.
+						// It is assumed that Fallout 4 does not often use block reads, or the size of the block itself is enough for one iteration.
+						static int32_t Inflate(z_streamp a_stream, [[maybe_unused]] int32_t a_flush) noexcept
+						{
+							if (!a_stream) return Z_STREAM_ERROR;
+
+							thread_local static bool streaming = false;
+#if 0
+							Timer profiler;
+#endif
+
+							// If the stream is registered as streaming, we call the original function....
+							if (streaming)
+							{
+								auto ret = zlibDetail::Inflate(a_stream, a_flush);
+								// If this was the last iteration, we are unregistering as streaming.
+								if (ret == Z_STREAM_END) streaming = false;
+								return ret;
+							}
+
+							// Just once is enough for the thread (without free)
+							thread_local libdeflate_decompressor* decompressor = libdeflate_alloc_decompressor();
+							if (!decompressor) return Z_MEM_ERROR;
+
+							size_t inBytes = 0, outBytes = 0;
+							libdeflate_result result = libdeflate_zlib_decompress_ex(decompressor, a_stream->next_in, a_stream->avail_in,
+								a_stream->next_out, a_stream->avail_out, &inBytes, &outBytes);
+
+							if (result == LIBDEFLATE_SUCCESS)
+							{
+								CKPE_ASSERT(outBytes < std::numeric_limits<uint32_t>::max());
+
+								a_stream->next_in += (uint32_t)inBytes;
+								a_stream->next_out += (uint32_t)outBytes;
+								a_stream->avail_in = 0;
+								a_stream->avail_out = 0;
+								a_stream->total_in = (uint32_t)inBytes;
+								a_stream->total_out = (uint32_t)outBytes;
+
+								return Z_STREAM_END;
+							}
+							else
+							{
+								auto ret = zlibDetail::Inflate(a_stream, a_flush);
+								// We register the stream only when there is more data.
+								if (ret == Z_OK) streaming = true;
+								return ret;
+							}
+						}
+					};
+				}
+			}
 
 			thread_local WIN32_FIND_DATAA CachedFileInfo;
 			thread_local char CachedBasePath[MAX_PATH];
 			thread_local bool CachedFileInfoValid;
-			float* pProgress1 = 0;
-			float* pProgress2 = 0;
+			float* pProgress1 = nullptr;
+			float* pProgress2 = nullptr;
 
 			static bool sub_141589150(std::int64_t a1, uint32_t* a2) noexcept(true)
 			{
 				while (a1 && (*(std::uint32_t*)a1 != *a2))
 					a1 = *(std::int64_t*)(a1 + 8);
 				return a1 != 0;
-			}
-
-			static std::int32_t HKInflateInit(z_stream_s* Stream, const char* Version, std::int32_t Mode) noexcept(true)
-			{
-				// Force inflateEnd to error out and skip frees
-				Stream->state = nullptr;
-				return 0;
-			}
-
-			static std::int32_t HKInflate(z_stream_s* Stream, std::int32_t Flush) noexcept(true)
-			{
-				std::size_t outBytes = 0;
-				libdeflate_decompressor* decompressor = libdeflate_alloc_decompressor();
-
-				libdeflate_result result = libdeflate_zlib_decompress(decompressor, Stream->next_in,
-					Stream->avail_in, Stream->next_out, Stream->avail_out, &outBytes);
-				libdeflate_free_decompressor(decompressor);
-
-				if (result == LIBDEFLATE_SUCCESS)
-				{
-					CKPE_ASSERT(outBytes < std::numeric_limits<std::uint32_t>::max());
-
-					Stream->total_in = Stream->avail_in;
-					Stream->total_out = (std::uint32_t)outBytes;
-
-					return 1;
-				}
-
-				if (result == LIBDEFLATE_INSUFFICIENT_SPACE)
-					return -5;
-
-				return -2;
 			}
 
 			inline static void (*UpdateProgressBar)(void);
@@ -228,10 +272,10 @@ namespace CKPE
 			}
 
 			static DWORD SearchArrayItem_SSE41(EditorAPI::BSTArray<void*>& _array, void*& _target,
-				DWORD _start_index, std::int64_t Unused)
+				DWORD _start_index, [[maybe_unused]] std::int64_t Unused)
 			{
-				std::uint32_t index = _start_index;
-				std::int64_t* data = (std::int64_t*)_array.data();
+				auto index = _start_index;
+				auto data = (std::int64_t*)_array.data();
 
 				const std::uint32_t comparesPerIter = 4;
 				const std::uint32_t vectorizedIterations = (_array.size() - index) / comparesPerIter;
@@ -269,13 +313,11 @@ namespace CKPE
 			}
 
 			static DWORD SearchArrayItem(EditorAPI::BSTArray<void*>& _array, void*& _target,
-				DWORD _start_index, std::int64_t Unused)
+				DWORD _start_index, [[maybe_unused]] std::int64_t Unused)
 			{
 				for (std::uint32_t i = _start_index; i < _array.size(); i++)
-				{
 					if (_array[i] == _target)
 						return i;
-				}
 
 				return 0xFFFFFFFF;
 			}
@@ -343,8 +385,8 @@ namespace CKPE
 				Detours::DetourJump(__CKPE_OFFSET(9), (std::uintptr_t)&sub_141589150);
 				SafeWrite::Write(__CKPE_OFFSET(3), { 0xB9, 0x90, 0x01, 0x00, 0x00, 0x90 });
 				Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&UpdateLoadProgressBar);
-				Detours::DetourCall(__CKPE_OFFSET(5), (std::uintptr_t)&HKInflateInit);
-				Detours::DetourCall(__CKPE_OFFSET(6), (std::uintptr_t)&HKInflate);
+				*(std::uintptr_t*)&zlibDetail::Inflate = Detours::DetourJump(__CKPE_OFFSET(6), 
+					(std::uintptr_t)&zlibDetail::Decompression::LibDeflate::Inflate);
 				Detours::DetourJump(__CKPE_OFFSET(7), (std::uintptr_t)&BSSystemDir_NextEntry);
 				
 				if (verPatch == 1)

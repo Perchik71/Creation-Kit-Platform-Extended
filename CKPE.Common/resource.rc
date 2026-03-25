@@ -147,7 +147,7 @@ BEGIN
     CONTROL         "<a href=""https://discord.gg/pF9U5FmD6w"">Collective Modding Discord Server</a>",IDC_SYSLINK2,
                     "SysLink",WS_TABSTOP,354,59,105,9
     LTEXT           "in the",IDC_STATIC,460,59,46,8
-    LTEXT           "🔧-mod-creations-talk, 🔧-perchik71-fierce-nonsense channels.",IDC_STATIC,179,67,185,8
+    LTEXT           "🔧-perchik71-fierce-nonsense channels.",IDC_STATIC,179,67,185,8
 END
 
 
