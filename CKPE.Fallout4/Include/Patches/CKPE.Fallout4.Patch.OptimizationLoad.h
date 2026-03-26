@@ -28,8 +28,6 @@ namespace CKPE
 				};
 
 				static void sub(std::int64_t a1) noexcept(true);
-				static int HKInflateInit(z_stream_s* Stream, const char* Version, std::int32_t Mode) noexcept(true);
-				static int HKInflate(z_stream_s* Stream, std::int32_t Flush) noexcept(true);
 				static HANDLE HKFindFirstFileA(LPCSTR lpFileName, LPWIN32_FIND_DATAA lpFindFileData) noexcept(true);
 
 				static std::uint32_t HKSearchIndexOffset32(EditorAPI::BSTArray<std::uint32_t>& _array,

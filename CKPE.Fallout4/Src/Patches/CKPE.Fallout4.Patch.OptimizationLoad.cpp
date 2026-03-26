@@ -32,6 +32,94 @@ namespace CKPE
 
 		namespace Patch
 		{
+			namespace zlibDetail
+			{
+				constexpr static int32_t Z_OK = 0;
+				constexpr static int32_t Z_STREAM_END = 1;
+				constexpr static int32_t Z_NEED_DICT = 2;
+				constexpr static int32_t Z_ERRNO = -1;
+				constexpr static int32_t Z_STREAM_ERROR = -2;
+				constexpr static int32_t Z_DATA_ERROR = -3;
+				constexpr static int32_t Z_MEM_ERROR = -4;
+				constexpr static int32_t Z_BUF_ERROR = -5;
+				constexpr static int32_t Z_VERSION_ERROR = -6;
+
+				typedef struct z_stream_s
+				{
+					uint8_t* next_in;
+					uint32_t avail_in;
+					uint32_t total_in;
+					uint8_t* next_out;
+					uint32_t avail_out;
+					uint32_t total_out;
+					const char* msg;
+					struct internal_state* state;
+				} z_stream, * z_streamp;
+
+				using TInflate = int32_t(*)(z_streamp, int32_t) noexcept;
+				TInflate Inflate;
+
+				namespace Decompression
+				{
+					struct LibDeflate
+					{
+						// libdeflate no supported streaming, so...
+						// In the case when libdeflate failed to work and ended with an error, 
+						// we use the orginal function, as the results show, even if we ignore the registration of the stream as streaming, 
+						// the total number of calls in 1k microseconds is half less when loading the save, unlike the original function, 
+						// registering the stream as streaming is guaranteed to skip constant libdeflate attempts and it will reduce the time even more.
+						// It is assumed that Fallout 4 does not often use block reads, or the size of the block itself is enough for one iteration.
+						static int32_t Inflate(z_streamp a_stream, [[maybe_unused]] int32_t a_flush) noexcept
+						{
+							if (!a_stream) return Z_STREAM_ERROR;
+
+							thread_local static bool streaming = false;
+#if 0
+							Timer profiler;
+#endif
+
+							// If the stream is registered as streaming, we call the original function....
+							if (streaming)
+							{
+								auto ret = zlibDetail::Inflate(a_stream, a_flush);
+								// If this was the last iteration, we are unregistering as streaming.
+								if (ret == Z_STREAM_END) streaming = false;
+								return ret;
+							}
+
+							// Just once is enough for the thread (without free)
+							thread_local libdeflate_decompressor* decompressor = libdeflate_alloc_decompressor();
+							if (!decompressor) return Z_MEM_ERROR;
+
+							size_t inBytes = 0, outBytes = 0;
+							libdeflate_result result = libdeflate_zlib_decompress_ex(decompressor, a_stream->next_in, a_stream->avail_in,
+								a_stream->next_out, a_stream->avail_out, &inBytes, &outBytes);
+
+							if (result == LIBDEFLATE_SUCCESS)
+							{
+								CKPE_ASSERT(outBytes < std::numeric_limits<uint32_t>::max());
+
+								a_stream->next_in += (uint32_t)inBytes;
+								a_stream->next_out += (uint32_t)outBytes;
+								a_stream->avail_in = 0;
+								a_stream->avail_out = 0;
+								a_stream->total_in = (uint32_t)inBytes;
+								a_stream->total_out = (uint32_t)outBytes;
+
+								return Z_STREAM_END;
+							}
+							else
+							{
+								auto ret = zlibDetail::Inflate(a_stream, a_flush);
+								// We register the stream only when there is more data.
+								if (ret == Z_OK) streaming = true;
+								return ret;
+							}
+						}
+					};
+				}
+			}
+
 			constexpr std::uint32_t INVALID_INDEX = 0xFFFFFFFF;
 
 			std::uintptr_t pointer_OptimizationLoad_sub1 = 0;
@@ -90,10 +178,11 @@ namespace CKPE
 				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
 				pointer_OptimizationLoad_sub1 = __CKPE_OFFSET(1);
 
-				Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&HKInflateInit);
-				Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&HKInflate);
+				//Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&HKInflateInit);
+				*(std::uintptr_t*)&zlibDetail::Inflate = Detours::DetourJump(__CKPE_OFFSET(3),
+					(std::uintptr_t)&zlibDetail::Decompression::LibDeflate::Inflate);
 
-				Detours::DetourIAT(base, "kernel32.dll", "FindFirstFileA", (std::uintptr_t)HKFindFirstFileA);
+				Detours::DetourIAT(base, "kernel32.dll", "FindFirstFileA", (std::uintptr_t)&HKFindFirstFileA);
 
 				// Skip remove failed forms
 				SafeWrite::Write(__CKPE_OFFSET(4), { 0xEB });
@@ -233,54 +322,22 @@ namespace CKPE
 				}
 			}
 
-			int OptimizationLoad::HKInflateInit(z_stream_s* Stream, const char* Version, std::int32_t Mode) noexcept(true)
-			{
-				// Force inflateEnd to error out and skip frees
-				Stream->state = nullptr;
-
-				return 0;
-			}
-
-			int OptimizationLoad::HKInflate(z_stream_s* Stream, std::int32_t Flush) noexcept(true)
-			{
-				std::size_t outBytes = 0;
-				libdeflate_decompressor* decompressor = libdeflate_alloc_decompressor();
-
-				libdeflate_result result = libdeflate_zlib_decompress(decompressor, Stream->next_in, Stream->avail_in, Stream->next_out, Stream->avail_out, &outBytes);
-				libdeflate_free_decompressor(decompressor);
-
-				if (result == LIBDEFLATE_SUCCESS)
-				{
-					CKPE_ASSERT(outBytes < std::numeric_limits<std::uint32_t>::max());
-
-					Stream->total_in = Stream->avail_in;
-					Stream->total_out = (std::uint32_t)outBytes;
-
-					return 1;
-				}
-
-				if (result == LIBDEFLATE_INSUFFICIENT_SPACE)
-					return -5;
-
-				return -2;
-			}
-
 			HANDLE OptimizationLoad::HKFindFirstFileA(LPCSTR lpFileName, LPWIN32_FIND_DATAA lpFindFileData) noexcept(true)
 			{
 				return FindFirstFileExA(lpFileName, FindExInfoStandard, lpFindFileData, FindExSearchNameMatch,
-					NULL, FIND_FIRST_EX_LARGE_FETCH);
+					nullptr, FIND_FIRST_EX_LARGE_FETCH);
 			}
 
 			std::uint32_t OptimizationLoad::HKSearchIndexOffset32(EditorAPI::BSTArray<std::uint32_t>& _array,
 				std::uint32_t& _target, std::uint32_t _start_index) noexcept(true)
 			{
-				std::uint32_t index = _start_index;
-				const std::uint32_t size_array = _array.size();
+				auto index = _start_index;
+				const auto size_array = _array.size();
 
 				if (size_array <= _start_index)
 					return INVALID_INDEX;
 
-				std::uint32_t* data = (std::uint32_t*)_array.data() + index;
+				auto data = (std::uint32_t*)_array.data() + index;
 
 				if ((size_array - _start_index) < 50)
 				{
@@ -293,7 +350,7 @@ namespace CKPE
 					return INVALID_INDEX;
 				}
 
-				std::uint32_t res = INVALID_INDEX;
+				auto res = INVALID_INDEX;
 
 				//
 				// Compare 16 indexes per iteration - use SIMD instructions to generate a bit mask. Set
@@ -301,12 +358,12 @@ namespace CKPE
 				const std::uint32_t comparesPerIter = 16;
 				const std::uint32_t vectorizedIterations = (size_array - index) / comparesPerIter;
 
-				std::uint32_t bsr_v;
+				std::uint32_t bsr_v{};
 				std::uint32_t mask;
 				std::size_t iter = 0;
-				std::uint32_t* array_p = (std::uint32_t*)(data + index);
+				auto array_p = (std::uint32_t*)(data + index);
 
-				__m128i* ebp = (__m128i*)array_p;
+				auto ebp = (__m128i*)array_p;
 				const auto target = _mm_set_epi32(_target, _target, _target, _target);
 
 				for (; iter < vectorizedIterations; ebp += 4, iter++) {
@@ -340,13 +397,13 @@ namespace CKPE
 			std::uint32_t OptimizationLoad::HKSearchIndexOffset64(EditorAPI::BSTArray<std::uint64_t>& _array,
 				std::uint64_t& _target, std::uint32_t _start_index) noexcept(true)
 			{
-				std::uint32_t index = _start_index;
-				const std::uint32_t size_array = _array.size();
+				auto index = _start_index;
+				const auto size_array = _array.size();
 
 				if (size_array <= _start_index)
 					return INVALID_INDEX;
 
-				std::uint64_t* data = (std::uint64_t*)_array.data() + index;
+				auto data = (std::uint64_t*)_array.data() + index;
 				if ((size_array - _start_index) < 50)
 				{
 					for (; index < size_array; index++)
@@ -358,20 +415,20 @@ namespace CKPE
 					return INVALID_INDEX;
 				}
 
-				std::uint32_t res = INVALID_INDEX;
+				auto res = INVALID_INDEX;
 
 				//
 				// Compare 16 pointers per iteration - use SIMD instructions to generate a bit mask. Set
 				// bit 0 if 'array[i + 0]'=='target', set bit 1 if 'array[i + 1]'=='target', set bit X...
 				const std::uint32_t comparesPerIter = 16;
 				const std::uint32_t vectorizedIterations = (size_array - index) / comparesPerIter;
-				std::uint64_t* array_p = (std::uint64_t*)(data + index);
-				std::uint32_t bsr_v;
+				auto array_p = (std::uint64_t*)(data + index);
+				std::uint32_t bsr_v{};
 				std::uint64_t mask;
 				std::size_t iter = 0;
 
-				__m128i* ebp = (__m128i*)array_p;
-				const __m128i target = _mm_set_epi64x(_target, _target);
+				auto ebp = (__m128i*)array_p;
+				const auto target = _mm_set_epi64x(_target, _target);
 
 				for (; iter < vectorizedIterations; ebp += 8, iter++) {
 					if ((mask = ((std::uint64_t)_mm_movemask_pd(_mm_castsi128_pd(_mm_cmpeq_epi64(target, _mm_loadu_si128(ebp))))) |
