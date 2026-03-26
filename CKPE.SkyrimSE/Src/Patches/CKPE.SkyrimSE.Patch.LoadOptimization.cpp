@@ -64,9 +64,6 @@ namespace CKPE
 							if (!a_stream) return Z_STREAM_ERROR;
 
 							thread_local static bool streaming = false;
-#if 0
-							Timer profiler;
-#endif
 
 							// If the stream is registered as streaming, we call the original function....
 							if (streaming)

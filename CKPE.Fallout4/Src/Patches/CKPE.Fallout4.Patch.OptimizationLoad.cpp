@@ -74,9 +74,6 @@ namespace CKPE
 							if (!a_stream) return Z_STREAM_ERROR;
 
 							thread_local static bool streaming = false;
-#if 0
-							Timer profiler;
-#endif
 
 							// If the stream is registered as streaming, we call the original function....
 							if (streaming)
@@ -178,7 +175,6 @@ namespace CKPE
 				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
 				pointer_OptimizationLoad_sub1 = __CKPE_OFFSET(1);
 
-				//Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&HKInflateInit);
 				*(std::uintptr_t*)&zlibDetail::Inflate = Detours::DetourJump(__CKPE_OFFSET(3),
 					(std::uintptr_t)&zlibDetail::Decompression::LibDeflate::Inflate);
 
