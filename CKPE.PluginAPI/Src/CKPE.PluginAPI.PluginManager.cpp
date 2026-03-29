@@ -91,7 +91,7 @@ namespace CKPE
 				if (_plugins->size() == std::numeric_limits<CKPEPluginHandle>::max())
 					break;
 
-				Plugin* plugin = new Plugin;
+				auto plugin = new Plugin;
 
 				auto result = plugin->CanLoad(info.first);
 				if (result == Plugin::ErrorNoCompatibility)

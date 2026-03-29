@@ -15,6 +15,7 @@ namespace CKPE
 
 			void RegisterPatches() noexcept(true);
 			void InstallPatches() noexcept(true);
+			void InstallPlugins() noexcept(true);
 		public:
 			constexpr Runner() noexcept(true) = default;
 

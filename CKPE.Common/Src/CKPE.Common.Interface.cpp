@@ -70,6 +70,7 @@ namespace CKPE
 				_interface = a_interface;
 				_version_gamelib = a_version;
 				_version_editor = a_editor_version;
+
 				std::wstring spath = _interface->application->GetPath();
 
 				// Fixed load preview window assests from
