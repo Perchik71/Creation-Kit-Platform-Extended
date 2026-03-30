@@ -27,19 +27,21 @@ namespace CKPE
 			std::uintptr_t pointer_FaceGen_sub3 = 0;
 			std::uintptr_t pointer_FaceGen_sub4 = 0;
 			std::uintptr_t pointer_FaceGen_sub5 = 0;
-			decltype(&Facegen::CreateDiffuseCompressDDS) pointer_FaceGen_sub6 = 0;
+			decltype(&Facegen::CreateDiffuseCompressDDS) pointer_FaceGen_sub6 = nullptr;
 			std::uintptr_t pointer_FaceGen_data = 0;
+			bool bUseCompresionAsBC7U = false;
 
 			extern ID3D11Device* pointer_d3d11DeviceIntf;
 
-			enum DDS_COMPRESSION
+			enum class DDS_COMPRESSION
 			{
+				BC3_UNORM = 0,
 				BC5_UNORM,
 				BC7_UNORM
 			};
 
 			// I'm pretty tired of crashes when working with texconv.
-		// So I'm embedding compression into the code.
+			// So I'm embedding compression into the code.
 
 			static bool CompressionDDSFile(const char* FileName, DDS_COMPRESSION Flag)
 			{
@@ -61,21 +63,32 @@ namespace CKPE
 				}
 				// Compression to the desired format
 				DirectX::ScratchImage bcImage;
-				if (Flag == BC7_UNORM)
+
+				switch (Flag)
 				{
-					if (pointer_d3d11DeviceIntf)
-						hr = DirectX::Compress(pointer_d3d11DeviceIntf, image->GetImages(), image->GetImageCount(), image->GetMetadata(),
-							DXGI_FORMAT_BC7_UNORM, DirectX::TEX_COMPRESS_DEFAULT, DirectX::TEX_ALPHA_WEIGHT_DEFAULT, bcImage);
-					else
-						hr = DirectX::Compress(image->GetImages(), image->GetImageCount(), image->GetMetadata(),
-							DXGI_FORMAT_BC7_UNORM, DirectX::TEX_COMPRESS_DEFAULT, DirectX::TEX_ALPHA_WEIGHT_DEFAULT, bcImage);
-				}
-				else if (Flag == BC5_UNORM)
-				{
+				case DDS_COMPRESSION::BC3_UNORM:
+					hr = DirectX::Compress(image->GetImages(), image->GetImageCount(), image->GetMetadata(),
+						DXGI_FORMAT_BC3_UNORM, DirectX::TEX_COMPRESS_DEFAULT, DirectX::TEX_ALPHA_WEIGHT_DEFAULT, bcImage);
+					break;
+				case DDS_COMPRESSION::BC5_UNORM:
 					hr = DirectX::Compress(image->GetImages(), image->GetImageCount(), image->GetMetadata(),
 						DXGI_FORMAT_BC5_UNORM, DirectX::TEX_COMPRESS_DEFAULT, DirectX::TEX_ALPHA_WEIGHT_DEFAULT, bcImage);
+					break;
+				case DDS_COMPRESSION::BC7_UNORM:
+					{
+						if (pointer_d3d11DeviceIntf)
+							hr = DirectX::Compress(pointer_d3d11DeviceIntf, image->GetImages(), image->GetImageCount(), image->GetMetadata(),
+								DXGI_FORMAT_BC7_UNORM, DirectX::TEX_COMPRESS_DEFAULT, DirectX::TEX_ALPHA_WEIGHT_DEFAULT, bcImage);
+						else
+							// DXGI_FORMAT_BC7_UNORM on CPU very slower
+							hr = DirectX::Compress(image->GetImages(), image->GetImageCount(), image->GetMetadata(),
+								DXGI_FORMAT_BC3_UNORM, DirectX::TEX_COMPRESS_DEFAULT, DirectX::TEX_ALPHA_WEIGHT_DEFAULT, bcImage);
+					}
+					break;
+				default:
+					return false;
 				}
-				else return false;
+
 				if (FAILED(hr))
 				{
 					Console::LogWarning(Console::FACEGEN, "Can't compression the file \"%s\"", FileName);
@@ -175,6 +188,8 @@ namespace CKPE
 					SafeWrite::Write(__CKPE_OFFSET(5), (std::uint8_t*)&tintResolution, sizeof(std::uint32_t));
 				}
 
+				bUseCompresionAsBC7U = _READ_OPTION_BOOL("FaceGen", "bUseCompressionAsBC7U", false);
+
 				// Prevent internal filesystem reloads when exporting FaceGen for many NPCs
 				Detours::DetourJump(__CKPE_OFFSET(6), (std::uintptr_t)&sub);
 				SafeWrite::WriteNop(__CKPE_OFFSET(7), 5);
@@ -203,7 +218,7 @@ namespace CKPE
 					return;
 
 				HWND listHandle = *(HWND*)(a1 + 16);
-				int itemIndex = ListView_GetNextItem(listHandle, -1, LVNI_SELECTED);
+				auto itemIndex = ListView_GetNextItem(listHandle, -1, LVNI_SELECTED);
 				int itemCount = 0;
 
 				for (bool flag = true; itemIndex >= 0 && flag; itemCount++)
@@ -231,7 +246,9 @@ namespace CKPE
 				std::int32_t Unk1, bool Unk2) noexcept(true)
 			{
 				pointer_FaceGen_sub6(lpThis, TextureId, lpFileName, Unk1, Unk2);
-				if (!CompressionDDSFile(lpFileName, DDS_COMPRESSION::BC7_UNORM))
+				if (!CompressionDDSFile(lpFileName, pointer_d3d11DeviceIntf ? 
+					(bUseCompresionAsBC7U ? DDS_COMPRESSION::BC7_UNORM : DDS_COMPRESSION::BC3_UNORM) : 
+					DDS_COMPRESSION::BC3_UNORM))
 					Console::LogWarning(Console::FACEGEN, "Compression texture \"%s\" error has occurred", lpFileName);
 			}
 		}

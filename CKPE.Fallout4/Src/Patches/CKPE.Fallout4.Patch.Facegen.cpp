@@ -25,11 +25,13 @@ namespace CKPE
 		{
 			std::uintptr_t pointer_FaceGen_sub1 = 0;
 			std::uintptr_t pointer_FaceGen_sub2 = 0;
+			bool bUseCompresionAsBC7U = false;
 
 			extern ID3D11Device* pointer_d3d11DeviceIntf;
 
-			enum DDS_COMPRESSION
+			enum class DDS_COMPRESSION
 			{
+				BC3_UNORM = 0,
 				BC5_UNORM,
 				BC7_UNORM
 			};
@@ -57,21 +59,32 @@ namespace CKPE
 				}
 				// Compression to the desired format
 				DirectX::ScratchImage bcImage;
-				if (Flag == BC7_UNORM)
+
+				switch (Flag)
+				{
+				case DDS_COMPRESSION::BC3_UNORM:
+					hr = DirectX::Compress(image->GetImages(), image->GetImageCount(), image->GetMetadata(),
+						DXGI_FORMAT_BC3_UNORM, DirectX::TEX_COMPRESS_DEFAULT, DirectX::TEX_ALPHA_WEIGHT_DEFAULT, bcImage);
+					break;
+				case DDS_COMPRESSION::BC5_UNORM:
+					hr = DirectX::Compress(image->GetImages(), image->GetImageCount(), image->GetMetadata(),
+						DXGI_FORMAT_BC5_UNORM, DirectX::TEX_COMPRESS_DEFAULT, DirectX::TEX_ALPHA_WEIGHT_DEFAULT, bcImage);
+					break;
+				case DDS_COMPRESSION::BC7_UNORM:
 				{
 					if (pointer_d3d11DeviceIntf)
 						hr = DirectX::Compress(pointer_d3d11DeviceIntf, image->GetImages(), image->GetImageCount(), image->GetMetadata(),
 							DXGI_FORMAT_BC7_UNORM, DirectX::TEX_COMPRESS_DEFAULT, DirectX::TEX_ALPHA_WEIGHT_DEFAULT, bcImage);
 					else
+						// DXGI_FORMAT_BC7_UNORM on CPU very slower
 						hr = DirectX::Compress(image->GetImages(), image->GetImageCount(), image->GetMetadata(),
-							DXGI_FORMAT_BC7_UNORM, DirectX::TEX_COMPRESS_DEFAULT, DirectX::TEX_ALPHA_WEIGHT_DEFAULT, bcImage);
+							DXGI_FORMAT_BC3_UNORM, DirectX::TEX_COMPRESS_DEFAULT, DirectX::TEX_ALPHA_WEIGHT_DEFAULT, bcImage);
 				}
-				else if (Flag == BC5_UNORM)
-				{
-					hr = DirectX::Compress(image->GetImages(), image->GetImageCount(), image->GetMetadata(),
-						DXGI_FORMAT_BC5_UNORM, DirectX::TEX_COMPRESS_DEFAULT, DirectX::TEX_ALPHA_WEIGHT_DEFAULT, bcImage);
+				break;
+				default:
+					return false;
 				}
-				else return false;
+
 				if (FAILED(hr))
 				{
 					Console::LogWarning(Console::FACEGEN, "Can't compression the file \"%s\"", FileName);
@@ -172,6 +185,8 @@ namespace CKPE
 						_MESSAGE("Disabling export FaceGen .NIF files");
 					}
 
+					bUseCompresionAsBC7U = _READ_OPTION_BOOL("FaceGen", "bUseCompressionAsBC7U", false);
+
 					// Allow variable tint mask resolution
 					std::uint32_t tintResolution = _READ_OPTION_UINT("FaceGen", "uTintMaskResolution", 1024);
 					SafeWrite::Write(__CKPE_OFFSET(13), (std::uint8_t*)&tintResolution, sizeof(std::uint32_t));
@@ -188,7 +203,9 @@ namespace CKPE
 				std::int32_t Unk1, bool Unk2) noexcept(true)
 			{
 				fast_call<void>(pointer_FaceGen_sub1, lpThis, TextureId, lpFileName, Unk1, Unk2);
-				if (!CompressionDDSFile(lpFileName, DDS_COMPRESSION::BC7_UNORM))
+				if (!CompressionDDSFile(lpFileName, pointer_d3d11DeviceIntf ?
+					(bUseCompresionAsBC7U ? DDS_COMPRESSION::BC7_UNORM : DDS_COMPRESSION::BC3_UNORM) :
+					DDS_COMPRESSION::BC3_UNORM))
 					_CONSOLE("FACEGEN: Compression texture \"%s\" error has occurred", lpFileName);
 			}
 

@@ -65,6 +65,7 @@ fStepInRender=30.0						# Number of units when moving in the rendering window as
 
 [FaceGen]
 bAutoCompressionDDS=true				# Texture compression during generation
+bUseCompressionAsBC7U=false				# You must have a graphics card and an OS that supports DX11.2. If you have an integrated graphics card, it causes slower performance.
 bDisableAutoFaceGen=true				# Prevent facegen data from being created on plugin save
 bDisableExportDDS=false					# Prevent tint export as DDS
 bDisableExportTGA=true					# Prevent tint export as TGA
