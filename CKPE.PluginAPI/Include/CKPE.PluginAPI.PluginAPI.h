@@ -14,11 +14,7 @@ namespace CKPE
 	namespace PluginAPI
 	{
 		typedef std::uint32_t CKPEPluginHandle;
-
-		enum : CKPEPluginHandle
-		{
-			kPluginHandle_Invalid = (CKPEPluginHandle)-1
-		};
+		constexpr static auto kPluginHandle_Invalid = (CKPEPluginHandle)-1;
 
 		struct CKPE_PLUGINAPI_API CKPEPluginVersionData
 		{
@@ -29,16 +25,16 @@ namespace CKPE
 
 			enum : std::uint32_t
 			{
-				kGameUnknown = 0,
-				kGameSkyrimSE = 1 << 0,
-				kGameFallout4 = 1 << 1,
-				kGameStarfield = 1 << 2,
+				kGameUnknown	= 0,
+				kGameSkyrimSE	= 1 << 0,
+				kGameFallout4	= 1 << 1,
+				kGameStarfield	= 1 << 2,
 			};
 
 			enum : std::uint32_t
 			{
-				kAnyGames = 1 << 0,					// any game
-				kNoLinkedVersionGame = 1 << 1,		// is no linked to the game version
+				kAnyGames				= 1 << 0,	// any game
+				kNoLinkedVersionGame	= 1 << 1,	// is no linked to the game version
 			};
 
 			std::uint32_t	DataVersion;			// set to kVersion
@@ -61,7 +57,7 @@ namespace CKPE
 			std::uint64_t	CKPEGameLibraryVersion;	// CKPE.<GAME> version
 			std::uint64_t	RuntimeVersion;			// CreationKit.exe version
 
-			void* (*QueryInterface)(std::uint32_t id);
+			void* (*QueryInterface)(std::uint32_t);
 
 			CKPEPluginHandle(*GetPluginHandle)();
 		};
@@ -69,7 +65,31 @@ namespace CKPE
 		enum : std::uint32_t
 		{
 			kInterface_Invalid = 0,
-			kInterface_Logger,
+			kInterface_DialogManager,
+		};
+
+		struct CKPEDialogManagerInterface
+		{
+			enum : std::uint32_t
+			{
+				kInterfaceVersion = 1
+			};
+
+			std::uint32_t InterfaceVersion;
+
+			// The function returns TRUE if a dialog with such an identifier (in the uid argument) exists.
+			bool (*HasDialog)(const std::uintptr_t uid);
+			// The function returns TRUE if the dialog is successfully loaded from the file .json is used behind the identifier (in the uid argument).
+			// The identifier must be free, otherwise the function will refuse to enter the dialog.
+			bool (*AddDialog)(const char* json_file, const std::uintptr_t uid);
+			// The function returns TRUE if the dialog is successfully loaded from text in the format .json is used behind the identifier (in the uid argument).
+			// The identifier must be free, otherwise the function will refuse to enter the dialog.
+			bool (*AddDialogByCode)(const char* json_code, const std::uintptr_t uid);
+			// The function returns true if the file exists, but it does not guarantee the success of the entire operation.
+			// The file must have the file extension ".pak" and be opened with a regular zip archiver.
+			// In essence, it is ".zip" renamed to ".pak" (a reference to the game Quake III Arena).
+			// Unlike AddDialog and AddDialogByCode, in case of an error, it will generate a RuntimeError and write the error to the CKPE log itself.
+			bool (*LoadFromFilePackage)(const char* filename);
 		};
 
 		CKPE_PLUGINAPI_API extern Logger UserPluginLogger;

@@ -94,11 +94,11 @@ namespace CKPE
 				CommandLineParser cmd;
 				if (cmd.HasCommandRun())
 				{
-					_MESSAGE("\tAccessing the console...");
+					_MESSAGE("\tAccessing the console..."sv);
 
 					// Detect command
 					auto Command = cmd.GetCommand();
-					_MESSAGE(L"\tCommand: \"%s\"", Command.c_str());
+					_MESSAGE(L"\tCommand: \"%s\""sv, Command.c_str());
 
 					if (!_wcsicmp(Command.c_str(), L"-PECreateDatabase"))
 					{
@@ -116,13 +116,13 @@ namespace CKPE
 				// LOAD DATAS
 				if (!DialogManager::Initialize(a_dialogs_fn))
 					ErrorHandler::Trigger(StringUtils::Utf16ToWinCP(
-						StringUtils::FormatString(L"No found dialogs pak \"%s\"."
-							"\nMore detailed to log.", a_dialogs_fn.c_str())));
+						StringUtils::FormatString(L"No found dialogs pak \"%s\".\nMore detailed to log.", 
+							a_dialogs_fn.c_str())));
 
 				if (!Relocator::GetSingleton()->Open(a_databases_fn, a_database_fn))
 					ErrorHandler::Trigger(StringUtils::Utf16ToWinCP(
-						StringUtils::FormatString(L"Couldn't open the database \"%s\" in \"%s\""
-							"\nMore detailed to log.", a_database_fn.c_str(), a_databases_fn.c_str())));
+						StringUtils::FormatString(L"Couldn't open the database \"%s\" in \"%s\"\nMore detailed to log.", 
+							a_database_fn.c_str(), a_databases_fn.c_str())));
 
 				// CMD LINE HANDLER
 
@@ -133,11 +133,11 @@ namespace CKPE
 					{
 						if (cmd.Count() != 2)
 						{
-							_ERROR("Invalid number of command arguments: %u", cmd.Count());
-							_MESSAGE("Example: CreationKit -PEUpdateDatabase \"test.relb\"");
+							_ERROR("Invalid number of command arguments: %u"sv, cmd.Count());
+							_MESSAGE("Example: CreationKit -PEUpdateDatabase \"test.relb\""sv);
 						}
 						else if (!PathUtils::FileExists(cmd[1].c_str()))
-							_ERROR(L"The file does not exist: \"%s\"", cmd[1].c_str());
+							_ERROR(L"The file does not exist: \"%s\""sv, cmd[1].c_str());
 						else
 						{
 							auto Patch = new RelocatorDB::PatchDB();
@@ -158,18 +158,18 @@ namespace CKPE
 					{
 						if (cmd.Count() != 2)
 						{
-							_ERROR("Invalid number of command arguments: %u", cmd.Count());
-							_MESSAGE("Example: CreationKit -PERemoveFromDatabase \"test\"");
+							_ERROR("Invalid number of command arguments: %u"sv, cmd.Count());
+							_MESSAGE("Example: CreationKit -PERemoveFromDatabase \"test\""sv);
 						}
 						else
 						{
 							if (Relocator::GetSingleton()->Delete(StringUtils::Utf16ToWinCP(cmd[1])))
 							{
 								if (Relocator::GetSingleton()->Save(a_databases_fn, a_database_fn))
-									_ERROR(L"The database can't save: \"%s\"", a_databases_fn.c_str());
+									_ERROR(L"The database can't save: \"%s\""sv, a_databases_fn.c_str());
 							}
 							else
-								_ERROR(L"Couldn't remove the patch from the database: \"%s\"", cmd[1].c_str());
+								_ERROR(L"Couldn't remove the patch from the database: \"%s\""sv, cmd[1].c_str());
 						}
 
 						// Close Creation Kit				
@@ -179,8 +179,8 @@ namespace CKPE
 					{
 						if ((cmd.Count() < 3) || (cmd.Count() > 4))
 						{
-							_ERROR("Invalid number of command arguments: %u", cmd.Count());
-							_MESSAGE("Example: CreationKit -PEExtractFromDatabase \"test\" \"test.relb\" <-regen-sign>");
+							_ERROR("Invalid number of command arguments: %u"sv, cmd.Count());
+							_MESSAGE("Example: CreationKit -PEExtractFromDatabase \"test\" \"test.relb\" <-regen-sign>"sv);
 						}
 						else
 						{
@@ -202,8 +202,8 @@ namespace CKPE
 					{
 						if ((cmd.Count() < 2) || (cmd.Count() > 3))
 						{
-							_ERROR("Invalid number of command arguments: %u", cmd.Count());
-							_MESSAGE("Example: CreationKit -PEExtractAllFromDatabase \"dir\" <-regen-sign>");
+							_ERROR("Invalid number of command arguments: %u"sv, cmd.Count());
+							_MESSAGE("Example: CreationKit -PEExtractAllFromDatabase \"dir\" <-regen-sign>"sv);
 						}
 						else
 						{
@@ -240,8 +240,8 @@ namespace CKPE
 					{
 						if (cmd.Count() != 2)
 						{
-							_ERROR("Invalid number of command arguments: %u", cmd.Count());
-							_MESSAGE("Example: CreationKit -PEExportRTTI \"rtti.txt\"");
+							_ERROR("Invalid number of command arguments: %u"sv, cmd.Count());
+							_MESSAGE("Example: CreationKit -PEExportRTTI \"rtti.txt\""sv);
 						}
 						else
 						{
@@ -251,7 +251,7 @@ namespace CKPE
 							}
 							catch (const std::exception&)
 							{
-								_ERROR("It was not possible to create a file and write data there.");
+								_ERROR("It was not possible to create a file and write data there."sv);
 							}
 						}
 
@@ -264,8 +264,8 @@ namespace CKPE
 					{
 						if (cmd.Count() != 2)
 						{
-							_ERROR("Invalid number of command arguments: %u", cmd.Count());
-							_MESSAGE("Example: CreationKit -PECreateAL \"version-lib.relib\"");
+							_ERROR("Invalid number of command arguments: %u"sv, cmd.Count());
+							_MESSAGE("Example: CreationKit -PECreateAL \"version-lib.relib\""sv);
 						}
 						else
 						{
@@ -277,7 +277,7 @@ namespace CKPE
 							}
 							catch (const std::exception&)
 							{
-								_ERROR("Couldn't create .relib file the current process");
+								_ERROR("Couldn't create .relib file the current process"sv);
 							}
 						}
 
@@ -289,8 +289,8 @@ namespace CKPE
 					{
 						if (cmd.Count() != 2)
 						{
-							_ERROR("Invalid number of command arguments: %u", cmd.Count());
-							_MESSAGE("Example: CreationKit -PEMergeRL \"version-lib.relib\"");
+							_ERROR("Invalid number of command arguments: %u"sv, cmd.Count());
+							_MESSAGE("Example: CreationKit -PEMergeRL \"version-lib.relib\""sv);
 						}
 						else
 						{
@@ -304,7 +304,7 @@ namespace CKPE
 							}
 							catch (const std::exception&)
 							{
-								_ERROR("Couldn't merging .relib file the current process");
+								_ERROR("Couldn't merging .relib file the current process"sv);
 							}
 						}
 
@@ -329,19 +329,23 @@ namespace CKPE
 				{
 				StartInstaller:
 					
-					STARTUPINFOW si = { 0 };
-					PROCESS_INFORMATION pi = { 0 };
+					STARTUPINFOW si = {};
+					PROCESS_INFORMATION pi = {};
+
+					std::fill_n((std::uint8_t*)&si, sizeof(STARTUPINFOW), 0);
+					std::fill_n((std::uint8_t*)&pi, sizeof(PROCESS_INFORMATION), 0);
+
 					si.cb = sizeof(STARTUPINFOW);
 
-					if (!CreateProcessW(NULL, (spath + L"CKPE.Installer.exe").data(), NULL, NULL, FALSE,
-						0, NULL, NULL, &si, &pi))
+					if (!CreateProcessW(nullptr, (spath + L"CKPE.Installer.exe").data(), nullptr, nullptr, FALSE,
+						0, nullptr, nullptr, &si, &pi))
 					{
-						_ERROR("Can't launch CKPE Installer");
+						_ERROR("Can't launch CKPE Installer"sv);
 						goto SkipsInstaller;
 					}
 
 					if (WaitForSingleObject(pi.hProcess, INFINITE) != WAIT_OBJECT_0)
-						_ERROR("Error wait closes CKPE Installer");
+						_ERROR("Error wait closes CKPE Installer"sv);
 					
 					CloseHandle(pi.hThread);
 					CloseHandle(pi.hProcess);
@@ -381,27 +385,27 @@ namespace CKPE
 
 			auto v = _interface->ckpeVersion;
 			
-			_CONSOLE("##########################################################");
-			_CONSOLE("Hi, I'm CKPE! Now: %s", timeBuffer); 
+			_CONSOLE("##########################################################"sv);
+			_CONSOLE("Hi, I'm CKPE! Now: %s"sv, timeBuffer); 
 			// TODO: version CK
-			_CONSOLE("CKPE Runtime: %u.%u build %u rev:%u", GET_EXE_VERSION_EX_MAJOR(v), GET_EXE_VERSION_EX_MINOR(v), 
+			_CONSOLE("CKPE Runtime: %u.%u build %u rev:%u"sv, GET_EXE_VERSION_EX_MAJOR(v), GET_EXE_VERSION_EX_MINOR(v), 
 				GET_EXE_VERSION_EX_BUILD(v), GET_EXE_VERSION_EX_REVISION(v));
-			_CONSOLE("CKPE Common Library: %u.%u build %u rev:%u", GET_EXE_VERSION_EX_MAJOR(_version), 
+			_CONSOLE("CKPE Common Library: %u.%u build %u rev:%u"sv, GET_EXE_VERSION_EX_MAJOR(_version), 
 				GET_EXE_VERSION_EX_MINOR(_version), GET_EXE_VERSION_EX_BUILD(_version), GET_EXE_VERSION_EX_REVISION(_version));
-			_CONSOLE("CKPE Game Library: %u.%u build %u rev:%u", GET_EXE_VERSION_EX_MAJOR(a_version),
+			_CONSOLE("CKPE Game Library: %u.%u build %u rev:%u"sv, GET_EXE_VERSION_EX_MAJOR(a_version),
 				GET_EXE_VERSION_EX_MINOR(a_version), GET_EXE_VERSION_EX_BUILD(a_version), GET_EXE_VERSION_EX_REVISION(a_version));
-			_CONSOLE("I have created a log file: \"%s\"", StringUtils::Utf16ToWinCP(_interface->logger->GetFileName()).c_str());
+			_CONSOLE("I have created a log file: \"%s\""sv, StringUtils::Utf16ToWinCP(_interface->logger->GetFileName()).c_str());
 
 			auto log = LogWindow::GetSingleton();
 			if (log && log->HasOutputFile())
 			{
 				auto fName = _READ_OPTION_USTR("Log", "sOutputFile", L"");
 				if (!fName.empty())
-					_CONSOLE("As you wanted, I will duplicate my entries in a log file: \"%s\"", 
+					_CONSOLE("As you wanted, I will duplicate my entries in a log file: \"%s\""sv, 
 						StringUtils::Utf16ToWinCP(fName).c_str());
 			}
 
-			_CONSOLE("##########################################################");
+			_CONSOLE("##########################################################"sv);
 		}
 
 		void Interface::CmdLineHandler()

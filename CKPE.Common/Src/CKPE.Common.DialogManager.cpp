@@ -21,11 +21,11 @@ namespace CKPE
 			if (HasDialog(uid))
 				return false;
 
-			jDialog* dialog = new jDialog();
+			auto dialog = new jDialog();
 			if (!dialog)
 				return false;
 
-			if (!dialog->LoadFromFile(json_file.c_str()))
+			if (!dialog->LoadFromFile(json_file))
 			{
 				delete dialog;
 				return false;
@@ -40,11 +40,11 @@ namespace CKPE
 			if (HasDialog(uid))
 				return false;
 
-			jDialog* dialog = new jDialog();
+			auto dialog = new jDialog();
 			if (!dialog)
 				return false;
 
-			if (!dialog->ParseJSON(json_code.c_str()))
+			if (!dialog->ParseJSON(json_code))
 			{
 				delete dialog;
 				return false;
@@ -186,11 +186,10 @@ namespace CKPE
 				std::vector<std::string> flist;
 
 				WIN32_FIND_DATA FindFileData;
-				HANDLE hFind;
 				std::string path = dir;
-
-
-				if (hFind = FindFirstFileA((path + "\\*.json").c_str(), &FindFileData); hFind != INVALID_HANDLE_VALUE)
+				HANDLE hFind = FindFirstFileA((path + "\\*.json").c_str(), &FindFileData);
+	
+				if (hFind != INVALID_HANDLE_VALUE)
 				{
 					std::string sName;
 
@@ -220,7 +219,7 @@ namespace CKPE
 						Zipper::ZipFiles(fname, flist);
 				}
 
-				_MESSAGE("DIALOG: New archive created: \"%s\"", fname);
+				_MESSAGE("DIALOG: New archive created: \"%s\"", fname.c_str());
 			}
 			catch (const std::exception& e)
 			{

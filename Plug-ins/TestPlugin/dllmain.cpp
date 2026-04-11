@@ -8,6 +8,7 @@
 #include <CKPE.MessageBox.h>
 #include <CKPE.StringUtils.h>
 #include <CKPE.PathUtils.h>
+#include <CKPE.Common.LogWindow.h>
 #include <CKPE.PluginAPI.PluginAPI.h>
 
 using namespace CKPE;
@@ -55,7 +56,18 @@ extern "C"
             return false;
         }
 
+        CKPE::_ERROR(L"create \"%s\" file", sfname.c_str());
         PluginAPI::_MESSAGE("TEST");
+        _CONSOLE("Hello world");
+
+        auto DialogManager = (PluginAPI::CKPEDialogManagerInterface*)intf->QueryInterface(PluginAPI::kInterface_DialogManager);
+        if (DialogManager && DialogManager->InterfaceVersion == PluginAPI::CKPEDialogManagerInterface::kInterfaceVersion)
+        {
+            PluginAPI::_MESSAGE("Dialog 1000 %s", DialogManager->HasDialog(1000) ? "exist" : "no exist");
+            PluginAPI::_MESSAGE("Dialog 122 %s", DialogManager->HasDialog(122) ? "exist" : "no exist");
+        }
+        else 
+            CKPE::_ERROR("An error occurred when receiving the CKPEDialogManagerInterface or version mismatches");
 
     #if 0
         MessageBox::OpenInfo(StringUtils::FormatString("Good %u.%u.%u.%u", 

@@ -75,7 +75,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.PluginAPI\Include;$(SolutionDir)CKPE.Common\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.PluginAPI\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\jDialogs\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>

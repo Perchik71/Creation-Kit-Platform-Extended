@@ -10,6 +10,7 @@
 #include <CKPE.StringUtils.h>
 #include <CKPE.PathUtils.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.DialogManager.h>
 #include <CKPE.PluginAPI.PluginManager.h>
 
 namespace CKPE
@@ -17,7 +18,30 @@ namespace CKPE
 	namespace PluginAPI
 	{
 		static CKPEPluginHandle _currentHandle = 0;
-		static PluginManager _PluginManager;
+		static PluginManager _PluginManager{};
+
+		static CKPEDialogManagerInterface _DialogManagerInterface
+		{
+			CKPEDialogManagerInterface::kInterfaceVersion,
+			_DialogManagerInterface.HasDialog =
+				[](const std::uintptr_t uid) { return Common::DialogManager::GetSingleton()->HasDialog(uid); },
+			_DialogManagerInterface.AddDialog =
+				[](const char* json_file, const std::uintptr_t uid) { return json_file && json_file[0] ?
+				Common::DialogManager::GetSingleton()->AddDialog(json_file, uid) : false; },
+			_DialogManagerInterface.AddDialogByCode =
+				[](const char* json_code, const std::uintptr_t uid) { return json_code && json_code[0] ?
+				Common::DialogManager::GetSingleton()->AddDialogByCode(json_code, uid) : false; },
+			_DialogManagerInterface.LoadFromFilePackage =
+				[](const char* filename)
+			{
+				if (!filename || !filename[0] || !CKPE::PathUtils::FileExists(filename) || 
+					!_stricmp(CKPE::PathUtils::ExtractFileExt(filename).c_str(), ".pak"))
+					return false;
+
+				Common::DialogManager::GetSingleton()->LoadFromFilePackage(filename);
+				return true;
+			},
+		};
 
 		void PluginManager::ReportPluginErrors(const std::vector<std::wstring>* v) const noexcept(true)
 		{
@@ -47,18 +71,20 @@ namespace CKPE
 			if (!_PluginManager._plugins || !_currentHandle)
 				return nullptr;
 
-			/*switch (id)
+			switch (id)
 			{
+			case kInterface_DialogManager:
+				return (void*)&_DialogManagerInterface;
 			default:
 				return nullptr;
-			}*/
-
-			return nullptr;
+			}
 		}
 
 		PluginManager::PluginManager() noexcept(true) :
 			_plugins(new std::vector<Plugin*>)
-		{}
+		{
+			
+		}
 
 		PluginManager::~PluginManager() noexcept(true)
 		{

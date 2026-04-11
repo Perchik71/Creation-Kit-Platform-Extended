@@ -43,7 +43,5 @@ namespace CKPE
 			static bool Initialize(const std::string& fname) noexcept(true);
 			static bool Initialize(const std::wstring& fname) noexcept(true);
 		};
-
-		extern DialogManager* GlobalDialogManagerPtr;
 	}
 }
