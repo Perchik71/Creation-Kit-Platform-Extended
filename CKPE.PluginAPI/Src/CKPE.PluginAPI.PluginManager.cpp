@@ -35,7 +35,7 @@ namespace CKPE
 				[](const char* filename)
 			{
 				if (!filename || !filename[0] || !CKPE::PathUtils::FileExists(filename) || 
-					!_stricmp(CKPE::PathUtils::ExtractFileExt(filename).c_str(), ".pak"))
+					_stricmp(CKPE::PathUtils::ExtractFileExt(filename).c_str(), ".pak"))
 					return false;
 
 				Common::DialogManager::GetSingleton()->LoadFromFilePackage(filename);
