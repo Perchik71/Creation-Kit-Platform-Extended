@@ -23,7 +23,7 @@ namespace CKPE
 			{ 0x8C475320ul, VersionLists::EDITOR_STARFIELD_1_14_78_0		},	// Redirect Steam
 			{ 0x24C2C928ul, VersionLists::EDITOR_STARFIELD_1_15_216_0		},	// Redirect Steam
 			{ 0xAA061EEBul, VersionLists::EDITOR_STARFIELD_1_15_222_0		},	// Redirect Steam
-			{ 0x79019BB6ul, VersionLists::EDITOR_STARFIELD_1_16_236_0         }, // Redirect Steam
+			{ 0x79019BB6ul, VersionLists::EDITOR_STARFIELD_1_16_236_0        }, // Redirect Steam
 		};
 
 		// Список устаревших версий редакторов
