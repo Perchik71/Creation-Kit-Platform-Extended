@@ -49,3 +49,6 @@ NoSteam Patcher/backup/
 Offsets Transfer/backup/
 /Stuffs/Strings
 /Creation Kit Platform Extended Tools/installer
+
+# JetBrains IDEs
+.idea
