@@ -24,7 +24,7 @@ namespace CKPE
 			{
 				struct BSModInfo 
 				{
-					void* entries;
+					TESFile** entries;
 					std::uint32_t size;
 				};
 
@@ -221,10 +221,14 @@ namespace CKPE
 					struct BSTrackingData 
 					{
 						std::uint16_t date;			// 00 low byte is day of month, high byte is number of months with 1 = Jan. 
-													// 2003 (Decembers are a little weird)
+													// 2000 (Decembers are a little weird)
 						std::uint16_t pad02;
 						std::uint8_t lastUser;		// 04 userID that last had this form checked out
 						std::uint8_t currentUser;	// 05 userID that has this form checked out
+
+						inline std::uint8_t GetDay() const noexcept(true) { return (std::uint8_t)(date & 0x1F); }
+						inline std::uint8_t GetMonth() const noexcept(true) { return (std::uint8_t)((date >> 5) & 0xF); }
+						inline std::uint16_t GetYear() const noexcept(true) { return (date >> 9) + 0x7D0; }
 					};
 
 					struct ENUM_FORM_ID
@@ -369,6 +373,9 @@ namespace CKPE
 				
 					[[nodiscard]] bool IsPlayer() const noexcept(true) { return _FormID == 0x00000007; }
 					[[nodiscard]] bool IsPlayerRef() const noexcept(true) { return _FormID == 0x00000014; }
+
+					[[nodiscard]] inline const BSModInfo* GetModInfo() const noexcept(true) { return _ModInfo; }
+					[[nodiscard]] inline BSTrackingData GetTrackingData() const noexcept(true) { return _TrackingData; }
 
 					// Inaccurate, because there is a REFR class for this and it is of its own type (taken from SSE)
 					[[nodiscard]] inline bool IsReference() const noexcept(true)

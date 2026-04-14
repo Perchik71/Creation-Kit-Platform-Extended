@@ -15,6 +15,9 @@
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/BGSRenderWindow.h>
+#include <EditorAPI/Forms/TESForm.h>
+#include <EditorAPI/TESFile.h>
+#include <EditorAPI/TESDataHandler.h>
 #include <Patches/CKPE.Fallout4.Patch.ObjectWindow.h>
 #include <commctrl.h>
 
@@ -267,7 +270,7 @@ namespace CKPE
 			{
 				if (Message == WM_INITDIALOG)
 				{
-					LPOBJWND lpObjWnd = new OBJWND;
+					auto lpObjWnd = new OBJWND;
 					lpObjWnd->ObjectWindow = Hwnd;
 					lpObjWnd->Controls.TreeList = lpObjWnd->ObjectWindow.GetControl(2093);
 					lpObjWnd->Controls.ItemList = lpObjWnd->ObjectWindow.GetControl(1041);
@@ -296,7 +299,7 @@ namespace CKPE
 				// Don't let us reduce the window too much
 				else if (Message == WM_GETMINMAXINFO)
 				{
-					LPMINMAXINFO lpMMI = (LPMINMAXINFO)lParam;
+					auto lpMMI = (LPMINMAXINFO)lParam;
 					lpMMI->ptMinTrackSize.x = 350;
 					lpMMI->ptMinTrackSize.y = 200;
 
@@ -309,7 +312,7 @@ namespace CKPE
 						LPOBJWND lpObjWnd = (*iterator).second;
 						if (lpObjWnd)
 						{
-							HDC dc = (HDC)wParam;
+							auto dc = (HDC)wParam;
 							auto Rect = lpObjWnd->Controls.ItemList.BoundsRect;
 							ExcludeClipRect(dc, Rect.Left, Rect.Top, Rect.Right, Rect.Bottom);
 							Rect = lpObjWnd->Controls.TreeList.BoundsRect;
@@ -395,8 +398,7 @@ namespace CKPE
 
 							if (ItemCount > 1)
 							{
-								MessageBoxA(0, "You have too many selected forms in the Object Window.\n"
-									"Choose one thing.", "Error", MB_OK | MB_ICONERROR);
+								MessageBox::OpenError("You have too many selected forms in the Object Window.\nChoose one thing.");
 								return S_OK;
 							}
 
@@ -404,12 +406,9 @@ namespace CKPE
 							CKPE_ASSERT(Form);
 
 							if (SelCount != 1)
-							{
-								auto str = std::make_unique<char[]>(120);
-								sprintf_s(str.get(), 120, "Do you really want to replace base form in %u refs?", SelCount);
-								if (MessageBoxA(0, str.get(), "Question", MB_YESNO | MB_ICONQUESTION) != IDYES)
+								if (MessageBox::OpenQuestion(std::format("Do you really want to replace base form in {} refs?"sv, SelCount)) !=
+									MessageBox::mrYes)
 									return S_OK;
-							}
 
 							for (uint32_t i = 0; i < SelCount; i++)
 							{
@@ -458,6 +457,71 @@ namespace CKPE
 
 						delete lpObjWnd;
 						lpObjWnd = nullptr;
+					}
+				}
+				else if (Message == WM_NOTIFY)
+				{
+					// tooltips
+					if (lParam && (((LPNMHDR)lParam)->code == LVN_GETINFOTIP) && (((LPNMHDR)lParam)->idFrom == 1041))
+					{
+						auto pGetInfoTip = (LPNMLVGETINFOTIP)lParam;	
+						if (pGetInfoTip->pszText && pGetInfoTip->cchTextMax)
+						{
+							std::fill_n((std::uint8_t*)pGetInfoTip->pszText, pGetInfoTip->cchTextMax, 0);
+
+							LVITEMA item = { 0 };
+							item.mask = LVIF_PARAM;
+							item.iItem = pGetInfoTip->iItem;
+							if (!ListView_GetItem(pGetInfoTip->hdr.hwndFrom, &item))
+							{
+							failed:
+								strcpy_s(pGetInfoTip->pszText, pGetInfoTip->cchTextMax, "<FAILED>");
+							}
+							else
+							{
+								auto form = (EditorAPI::Forms::TESForm*)item.lParam;
+								if (!form) goto failed;
+								form->DebugInfo(pGetInfoTip->pszText, pGetInfoTip->cchTextMax);
+
+								char szBuf[200]{};
+								auto tracking = form->GetTrackingData();
+					
+								auto mods = form->GetModInfo();
+								if (mods && mods->size)
+								{
+									if (mods->size > 3)
+									{
+										auto mod = form->GetDescriptionOwnerFile();
+										sprintf_s(szBuf, "\n\nLast User:\t%u\nDate:\t\t%u/%u/%u\nFile(s):\t\t%s",
+											tracking.lastUser, tracking.GetDay(), tracking.GetMonth(), tracking.GetYear(), mod->GetFileName().c_str());
+										if (mod->IsActive()) strcat_s(szBuf, "*, ...");
+										else strcat_s(szBuf, ", ...");
+									}
+									else
+									{
+										sprintf_s(szBuf, "\n\nLast User:\t%u\nDate:\t\t%u/%u/%u\nFile(s):\t\t",
+											tracking.lastUser, tracking.GetDay(), tracking.GetMonth(), tracking.GetYear());
+
+										for (std::uint32_t i = 0; i < mods->size; i++)
+										{
+											auto mod = mods->entries[i];
+											strcat_s(szBuf, mod->GetFileName().c_str());
+											if (mod->IsActive()) strcat_s(szBuf, "*");
+											if (i < (mods->size - 1))
+												strcat_s(szBuf, ", ");
+										}
+									}
+								}
+								else
+									sprintf_s(szBuf, "\n\nLast User:\t%u\nDate:\t\t%u/%u/%u\nFile(s):\t\tUNKNOWN",
+										tracking.lastUser, tracking.GetDay(), tracking.GetMonth(), tracking.GetYear());								
+
+								strcat_s(pGetInfoTip->pszText, pGetInfoTip->cchTextMax, szBuf);
+								pGetInfoTip->pszText[pGetInfoTip->cchTextMax - 1] = '\0';
+							}
+						}
+
+						return S_OK;
 					}
 				}
 

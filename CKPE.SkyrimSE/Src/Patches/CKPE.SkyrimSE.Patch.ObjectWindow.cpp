@@ -312,8 +312,7 @@ namespace CKPE
 
 							if (ItemCount > 1)
 							{
-								MessageBoxA(0, "You have too many selected forms in the Object Window.\n"
-									"Choose one thing.", "Error", MB_OK | MB_ICONERROR);
+								MessageBox::OpenError("You have too many selected forms in the Object Window.\nChoose one thing.");
 								return S_OK;
 							}
 
@@ -321,12 +320,9 @@ namespace CKPE
 							CKPE_ASSERT(Form);
 
 							if (SelCount != 1)
-							{
-								auto str = std::make_unique<char[]>(120);
-								sprintf_s(str.get(), 120, "Do you really want to replace base form in %u refs?", SelCount);
-								if (MessageBoxA(0, str.get(), "Question", MB_YESNO | MB_ICONQUESTION) != IDYES)
+								if (MessageBox::OpenQuestion(std::format("Do you really want to replace base form in {} refs?"sv, SelCount)) !=
+									MessageBox::mrYes)
 									return S_OK;
-							}
 
 							for (uint32_t i = 0; i < SelCount; i++)
 							{

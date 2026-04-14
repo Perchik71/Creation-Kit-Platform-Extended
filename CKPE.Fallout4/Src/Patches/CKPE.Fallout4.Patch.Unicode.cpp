@@ -162,6 +162,15 @@ namespace CKPE
 				Detours::DetourCall(__CKPE_OFFSET(12), (std::uintptr_t)&HKSendDlgItemMessageA);
 
 				//
+				// Cut check book characters
+				//
+
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+					SafeWrite::Write(__CKPE_OFFSET(13), { 0xE9, 0x96, 0x00, 0x00, 0x00, 0x90 });
+				else
+					SafeWrite::Write(__CKPE_OFFSET(13), { 0xE9, 0x94, 0x00, 0x00, 0x00, 0x90 });
+
+				//
 				// Cut check spelling window
 				//
 
@@ -169,7 +178,7 @@ namespace CKPE
 				auto stext = interface->GetApplication()->GetSegment(Segment::text);
 				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
-				for (std::uint32_t i = 13; i < db->GetCount(); i++)
+				for (std::uint32_t i = 14; i < db->GetCount(); i++)
 					text.WriteNop(__CKPE_OFFSET(i), 5);
 
 				return true;
