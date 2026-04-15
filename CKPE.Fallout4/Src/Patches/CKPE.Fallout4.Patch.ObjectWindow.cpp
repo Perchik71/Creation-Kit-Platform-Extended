@@ -25,6 +25,11 @@
 #define UI_OBJECT_WINDOW_ADD_ITEM			2579
 #define UI_CMD_CHANGE_SPLITTER_OBJECTWINDOW	(WM_USER + 34400)
 
+#define UI_CMD_DUPLICATE_AND_RENAME			0xA0BF
+
+#define UI_CMD_COPY_EDITOR_ID 				0xA0BE
+#define UI_CMD_COPY_FORM_ID 				0xA0BD
+
 namespace CKPE
 {
 	namespace Fallout4
@@ -424,6 +429,27 @@ namespace CKPE
 
 						return S_OK;
 					}
+					else if (param == UI_CMD_COPY_EDITOR_ID || param == UI_CMD_COPY_FORM_ID)
+					{
+						auto ItemList = GetDlgItem(Hwnd, 1041);
+						CKPE_ASSERT(ItemList);
+
+						auto Form = (EditorAPI::Forms::TESForm*)Common::EditorUI::ListViewGetSelectedItem(ItemList);
+						CKPE_ASSERT(Form);
+
+						if (param == UI_CMD_COPY_EDITOR_ID)
+						{
+							Common::EditorUI::CopyTextToClipboard(Hwnd, Form->EditorID);
+						}
+						else
+						{
+							char szBuf[16]{};
+							sprintf_s(szBuf, "%08X", Form->FormID);
+							Common::EditorUI::CopyTextToClipboard(Hwnd, szBuf);
+						}
+
+						return S_OK;
+					}
 				}
 				else if (Message == UI_OBJECT_WINDOW_ADD_ITEM)
 				{
@@ -522,6 +548,25 @@ namespace CKPE
 						}
 
 						return S_OK;
+					}
+				}
+				else if (Message == WM_INITMENU)
+				{
+					HMENU hMenu = reinterpret_cast<HMENU>(wParam);
+					if (hMenu &&
+						GetMenuState(hMenu, UI_CMD_DUPLICATE_AND_RENAME, MF_BYCOMMAND) != (UINT)-1 &&
+						GetMenuState(hMenu, UI_CMD_COPY_EDITOR_ID, MF_BYCOMMAND) == (UINT)-1)
+					{
+						int count = GetMenuItemCount(hMenu);
+						for (int i = 0; i < count; i++)
+						{
+							if (GetMenuItemID(hMenu, i) == UI_CMD_DUPLICATE_AND_RENAME)
+							{
+								InsertMenuA(hMenu, i + 1, MF_BYPOSITION | MF_STRING,UI_CMD_COPY_EDITOR_ID, "Copy Editor ID");
+								InsertMenuA(hMenu, i + 2, MF_BYPOSITION | MF_STRING,UI_CMD_COPY_FORM_ID, "Copy Form ID");
+								break;
+							}
+						}
 					}
 				}
 
