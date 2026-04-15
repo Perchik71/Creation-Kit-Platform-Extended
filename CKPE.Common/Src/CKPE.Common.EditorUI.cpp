@@ -354,6 +354,25 @@ namespace CKPE
 			}
 		}
 
+		void EditorUI::CopyTextToClipboard(void* Hwnd, const char* Text) noexcept(true)
+		{
+			if (!Text)
+				return;
+			if (OpenClipboard((HWND)Hwnd))
+			{
+				EmptyClipboard();
+				size_t len = strlen(Text) + 1;
+				HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, len);
+				if (hMem)
+				{
+					memcpy(GlobalLock(hMem), Text, len);
+					GlobalUnlock(hMem);
+					SetClipboardData(CF_TEXT, hMem);
+				}
+				CloseClipboard();
+			}
+		}
+
 		/////////////////////////////////////////
 
 		CriticalSection DialogLock;

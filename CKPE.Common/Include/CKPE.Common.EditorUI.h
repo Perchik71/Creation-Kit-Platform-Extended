@@ -87,6 +87,8 @@ namespace CKPE
 			static void SuspendComboBoxUpdates(void* ComboHandle, bool Suspend) noexcept(true);
 			static void ComboBoxInsertItemDeferred(void* ComboBoxHandle, const char* DisplayText,
 				void* Value, bool AllowResize) noexcept(true);
+
+			static void CopyTextToClipboard(void* Hwnd, const char* Text) noexcept(true);
 		public:
 			struct CKPE_COMMON_API Hook
 			{
