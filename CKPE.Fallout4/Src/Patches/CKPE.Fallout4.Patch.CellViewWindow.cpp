@@ -392,12 +392,78 @@ namespace CKPE
 				{
 					if (lParam)
 					{
-						LPMINMAXINFO lpMMI = (LPMINMAXINFO)lParam;
+						auto lpMMI = (LPMINMAXINFO)lParam;
 						lpMMI->ptMinTrackSize.x = 369;
 						lpMMI->ptMinTrackSize.y = 157;
 					}
 
 					return S_OK;
+				}
+				else if (Message == WM_NOTIFY)
+				{
+					// tooltips
+					if (lParam && (((LPNMHDR)lParam)->code == LVN_GETINFOTIP) && 
+						((((LPNMHDR)lParam)->idFrom == 1155) || (((LPNMHDR)lParam)->idFrom == 1156)))
+					{
+						auto pGetInfoTip = (LPNMLVGETINFOTIP)lParam;
+						if (pGetInfoTip->pszText && pGetInfoTip->cchTextMax)
+						{
+							std::fill_n((std::uint8_t*)pGetInfoTip->pszText, pGetInfoTip->cchTextMax, 0);
+
+							LVITEMA item = { 0 };
+							item.mask = LVIF_PARAM;
+							item.iItem = pGetInfoTip->iItem;
+							if (!ListView_GetItem(pGetInfoTip->hdr.hwndFrom, &item))
+							{
+							failed:
+								strcpy_s(pGetInfoTip->pszText, pGetInfoTip->cchTextMax, "<FAILED>");
+							}
+							else
+							{
+								auto form = (EditorAPI::Forms::TESForm*)item.lParam;
+								if (!form) goto failed;
+								form->DebugInfo(pGetInfoTip->pszText, pGetInfoTip->cchTextMax);
+
+								char szBuf[200]{};
+								auto tracking = form->GetTrackingData();
+
+								auto mods = form->GetModInfo();
+								if (mods && mods->size)
+								{
+									if (mods->size > 3)
+									{
+										auto mod = form->GetDescriptionOwnerFile();
+										sprintf_s(szBuf, "\n\nLast User:\t%u\nDate:\t\t%u/%u/%u\nFile(s):\t\t%s",
+											tracking.lastUser, tracking.GetDay(), tracking.GetMonth(), tracking.GetYear(), mod->GetFileName().c_str());
+										if (mod->IsActive()) strcat_s(szBuf, "*, ...");
+										else strcat_s(szBuf, ", ...");
+									}
+									else
+									{
+										sprintf_s(szBuf, "\n\nLast User:\t%u\nDate:\t\t%u/%u/%u\nFile(s):\t\t",
+											tracking.lastUser, tracking.GetDay(), tracking.GetMonth(), tracking.GetYear());
+
+										for (std::uint32_t i = 0; i < mods->size; i++)
+										{
+											auto mod = mods->entries[i];
+											strcat_s(szBuf, mod->GetFileName().c_str());
+											if (mod->IsActive()) strcat_s(szBuf, "*");
+											if (i < (mods->size - 1))
+												strcat_s(szBuf, ", ");
+										}
+									}
+								}
+								else
+									sprintf_s(szBuf, "\n\nLast User:\t%u\nDate:\t\t%u/%u/%u\nFile(s):\t\tUNKNOWN",
+										tracking.lastUser, tracking.GetDay(), tracking.GetMonth(), tracking.GetYear());
+
+								strcat_s(pGetInfoTip->pszText, pGetInfoTip->cchTextMax, szBuf);
+								pGetInfoTip->pszText[pGetInfoTip->cchTextMax - 1] = '\0';
+							}
+						}
+
+						return S_OK;
+					}
 				}
 
 				return CallWindowProc(CellViewWindow::Singleton->GetOldWndProc(), Hwnd, Message, wParam, lParam);

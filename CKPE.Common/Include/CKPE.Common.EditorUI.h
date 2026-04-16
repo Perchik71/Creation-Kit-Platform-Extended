@@ -32,6 +32,11 @@ namespace CKPE
 
 			constexpr static const char* UI_EDITOR_CHANGEBASEFORM_STR = "Replace base for select Ref's";
 
+			constexpr static std::uint32_t UI_EDITOR_DELETEFORM = 251;
+			constexpr static std::uint32_t UI_EDITOR_DUPLICATE_AND_RENAME = 0xA0BF;
+			constexpr static std::uint32_t UI_EDITOR_COPY_EDITOR_ID = 0xA0BE;
+			constexpr static std::uint32_t UI_EDITOR_COPY_FORM_ID = 0xA0BD;
+
 			constexpr static std::uint32_t UI_EDITOR_TOOLBAR = 1;
 			constexpr static std::uint32_t UI_EDITOR_STATUSBAR = 40139;
 			constexpr static std::uint32_t UI_EDITOR_TOGGLEOBJECTWND = 40199;		// Object Window's

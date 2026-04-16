@@ -127,9 +127,9 @@ namespace CKPE
 			std::int64_t CellViewWindow::sub3(std::int64_t a1, std::int64_t a2, std::int64_t a3) noexcept(true)
 			{
 				auto Ret = fast_call<std::int64_t>(pointer_CellViewWindow_sub3, a1, a2, a3);
-				auto Handle = CellViewWindow::Singleton->Handle;
-				auto SelOnly = static_cast<bool>(GetPropA(Handle, Common::EditorUI::UI_USER_DATA_SELECT_OBJECT_ONLY));
-				auto VisOnly = static_cast<bool>(GetPropA(Handle, Common::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY));
+				//auto Handle = CellViewWindow::Singleton->Handle;
+				//auto SelOnly = static_cast<bool>(GetPropA(Handle, Common::EditorUI::UI_USER_DATA_SELECT_OBJECT_ONLY));
+				//auto VisOnly = static_cast<bool>(GetPropA(Handle, Common::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY));
 
 				CellViewWindow::Singleton->UpdateObjectList();
 
@@ -418,7 +418,7 @@ namespace CKPE
 				{
 					if (lParam)
 					{
-						LPMINMAXINFO lpMMI = (LPMINMAXINFO)lParam;
+						auto lpMMI = (LPMINMAXINFO)lParam;
 						lpMMI->ptMinTrackSize.x = 369;
 						lpMMI->ptMinTrackSize.y = 157;
 					}
@@ -433,7 +433,7 @@ namespace CKPE
 						// естественно это приводит к потере ширины столбца всегда при открытии новой ячейки.
 						// Сохраним их в файл параметров, как только будут изменены.
 
-						LPNMHEADERA pNMHeader = (LPNMHEADERA)lParam;
+						auto pNMHeader = (LPNMHEADERA)lParam;
 						auto ListView = GetParent(pNMHeader->hdr.hwndFrom);
 						if (ListView == CellViewWindow::Singleton->m_CellListView.Handle)
 						{
@@ -446,6 +446,66 @@ namespace CKPE
 								EditorAPI::BSString::Transforms::IntToStr(ColWidth).c_str(),
 								(EditorAPI::BSString::Utils::GetApplicationPath() + "CreationKitPrefs.ini").c_str());
 						}
+					}
+					else if (lParam && (((LPNMHDR)lParam)->code == LVN_GETINFOTIP) &&
+						((((LPNMHDR)lParam)->idFrom == 1155) || (((LPNMHDR)lParam)->idFrom == 1156)))
+					{
+						auto pGetInfoTip = (LPNMLVGETINFOTIP)lParam;
+						if (pGetInfoTip->pszText && pGetInfoTip->cchTextMax)
+						{
+							std::fill_n((std::uint8_t*)pGetInfoTip->pszText, pGetInfoTip->cchTextMax, 0);
+
+							LVITEMA item = { 0 };
+							item.mask = LVIF_PARAM;
+							item.iItem = pGetInfoTip->iItem;
+							if (!ListView_GetItem(pGetInfoTip->hdr.hwndFrom, &item))
+							{
+							failed:
+								strcpy_s(pGetInfoTip->pszText, pGetInfoTip->cchTextMax, "<FAILED>");
+							}
+							else
+							{
+								auto form = (EditorAPI::Forms::TESForm*)item.lParam;
+								if (!form) goto failed;
+								form->DebugInfo(pGetInfoTip->pszText, pGetInfoTip->cchTextMax);
+
+								char szBuf[200]{};
+								auto tracking = form->GetTrackingData();
+
+								auto mods = form->GetModInfo();
+								if (mods && mods->size)
+								{
+									if (mods->size > 3)
+									{
+										auto mod = form->GetDescriptionOwnerFile();
+										sprintf_s(szBuf, "\n\nLast User:\t%u\nFile(s):\t\t%s",
+											tracking.lastUser, mod->GetFileName().c_str());
+										if (mod->IsActive()) strcat_s(szBuf, "*, ...");
+										else strcat_s(szBuf, ", ...");
+									}
+									else
+									{
+										sprintf_s(szBuf, "\n\nLast User:\t%u\nFile(s):\t\t", tracking.lastUser);
+
+										for (std::uint32_t i = 0; i < mods->size; i++)
+										{
+											auto mod = mods->entries[i];
+											strcat_s(szBuf, mod->GetFileName().c_str());
+											if (mod->IsActive()) strcat_s(szBuf, "*");
+											if (i < (mods->size - 1))
+												strcat_s(szBuf, ", ");
+										}
+									}
+								}
+								else
+									sprintf_s(szBuf, "\n\nLast User:\t%u\nFile(s):\t\tUNKNOWN", tracking.lastUser);
+
+								strcat_s(pGetInfoTip->pszText, pGetInfoTip->cchTextMax, szBuf);
+								pGetInfoTip->pszText[pGetInfoTip->cchTextMax - 1] = '\0';
+							}
+						}
+
+						return S_OK;
 					}
 				}
 

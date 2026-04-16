@@ -220,8 +220,7 @@ namespace CKPE
 					// 06
 					struct BSTrackingData 
 					{
-						std::uint16_t date;			// 00 low byte is day of month, high byte is number of months with 1 = Jan. 
-													// 2000 (Decembers are a little weird)
+						std::uint16_t date;
 						std::uint16_t pad02;
 						std::uint8_t lastUser;		// 04 userID that last had this form checked out
 						std::uint8_t currentUser;	// 05 userID that has this form checked out
@@ -342,7 +341,7 @@ namespace CKPE
 					/* 368 */ virtual void sub_368() { return; }
 					/* 370 */ virtual void sub_370() { return; }
 					/* 378 */ virtual bool WriteWidthTabToSettingFile([[maybe_unused]] std::int64_t nUnk, std::int32_t nWidth) noexcept(true);
-					/* 380 */ virtual std::int32_t ReadWidthTabFromSettingFile() const noexcept(true);
+					/* 380 */ [[nodiscard]] virtual std::int32_t ReadWidthTabFromSettingFile() const noexcept(true);
 					/* 388 */ virtual std::int32_t GetSafeFormEditorID(char* lpBuffer, std::uint32_t nBufferSize) noexcept(true);
 					/* 390 */ virtual std::int32_t GetSafeFormEditorID(char* lpBuffer, std::uint32_t nBufferSize) const noexcept(true);
 					/* 398 */ virtual void SetNewFormID(std::uint32_t nNewFormID, bool bUpdateFile = true) noexcept(true);

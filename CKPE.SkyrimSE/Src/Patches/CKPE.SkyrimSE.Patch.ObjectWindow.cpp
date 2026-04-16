@@ -190,7 +190,7 @@ namespace CKPE
 			{
 				if (Message == WM_INITDIALOG)
 				{
-					LPOBJWND lpObjWnd = new OBJWND;
+					auto lpObjWnd = new OBJWND;
 					lpObjWnd->ObjectWindow = Hwnd;
 					lpObjWnd->Controls.TreeList = lpObjWnd->ObjectWindow.GetControl(2093);
 					lpObjWnd->Controls.ItemList = lpObjWnd->ObjectWindow.GetControl(1041);
@@ -217,7 +217,7 @@ namespace CKPE
 				// Don't let us reduce the window too much
 				else if (Message == WM_GETMINMAXINFO)
 				{
-					LPMINMAXINFO lpMMI = (LPMINMAXINFO)lParam;
+					auto lpMMI = (LPMINMAXINFO)lParam;
 					lpMMI->ptMinTrackSize.x = 350;
 					lpMMI->ptMinTrackSize.y = 200;
 
@@ -230,7 +230,7 @@ namespace CKPE
 						LPOBJWND lpObjWnd = (*iterator).second;
 						if (lpObjWnd)
 						{
-							HDC dc = (HDC)wParam;
+							auto dc = (HDC)wParam;
 							auto Rect = lpObjWnd->Controls.ItemList.BoundsRect;
 							ExcludeClipRect(dc, Rect.Left, Rect.Top, Rect.Right, Rect.Bottom);
 							Rect = lpObjWnd->Controls.TreeList.BoundsRect;
@@ -338,6 +338,27 @@ namespace CKPE
 
 						return S_OK;
 					}
+					else if ((param == Common::EditorUI::UI_EDITOR_COPY_EDITOR_ID) || (param == Common::EditorUI::UI_EDITOR_COPY_FORM_ID))
+					{
+						auto ItemList = GetDlgItem(Hwnd, 1041);
+						CKPE_ASSERT(ItemList);
+
+						auto Form = (EditorAPI::Forms::TESForm*)Common::EditorUI::ListViewGetSelectedItem(ItemList);
+						CKPE_ASSERT(Form);
+
+						if (param == Common::EditorUI::UI_EDITOR_COPY_EDITOR_ID)
+						{
+							Common::EditorUI::CopyTextToClipboard(Hwnd, Form->EditorID);
+						}
+						else
+						{
+							char szBuf[16]{};
+							sprintf_s(szBuf, "%08X", Form->FormID);
+							Common::EditorUI::CopyTextToClipboard(Hwnd, szBuf);
+						}
+
+						return S_OK;
+					}
 				}
 				else if (Message == UI_OBJECT_WINDOW_ADD_ITEM)
 				{
@@ -371,6 +392,88 @@ namespace CKPE
 
 						delete lpObjWnd;
 						lpObjWnd = nullptr;
+					}
+				}
+				else if (Message == WM_NOTIFY)
+				{
+					// tooltips
+					if (lParam && (((LPNMHDR)lParam)->code == LVN_GETINFOTIP) && (((LPNMHDR)lParam)->idFrom == 1041))
+					{
+						auto pGetInfoTip = (LPNMLVGETINFOTIP)lParam;
+						if (pGetInfoTip->pszText && pGetInfoTip->cchTextMax)
+						{
+							std::fill_n((std::uint8_t*)pGetInfoTip->pszText, pGetInfoTip->cchTextMax, 0);
+
+							LVITEMA item = { 0 };
+							item.mask = LVIF_PARAM;
+							item.iItem = pGetInfoTip->iItem;
+							if (!ListView_GetItem(pGetInfoTip->hdr.hwndFrom, &item))
+							{
+							failed:
+								strcpy_s(pGetInfoTip->pszText, pGetInfoTip->cchTextMax, "<FAILED>");
+							}
+							else
+							{
+								auto form = (EditorAPI::Forms::TESForm*)item.lParam;
+								if (!form) goto failed;
+								form->DebugInfo(pGetInfoTip->pszText, pGetInfoTip->cchTextMax);
+
+								char szBuf[200]{};
+								auto tracking = form->GetTrackingData();
+
+								auto mods = form->GetModInfo();
+								if (mods && mods->size)
+								{
+									if (mods->size > 3)
+									{
+										auto mod = form->GetDescriptionOwnerFile();
+										sprintf_s(szBuf, "\n\nLast User:\t%u\nFile(s):\t\t%s",
+											tracking.lastUser, mod->GetFileName().c_str());
+										if (mod->IsActive()) strcat_s(szBuf, "*, ...");
+										else strcat_s(szBuf, ", ...");
+									}
+									else
+									{
+										sprintf_s(szBuf, "\n\nLast User:\t%u\nFile(s):\t\t", tracking.lastUser);
+
+										for (std::uint32_t i = 0; i < mods->size; i++)
+										{
+											auto mod = mods->entries[i];
+											strcat_s(szBuf, mod->GetFileName().c_str());
+											if (mod->IsActive()) strcat_s(szBuf, "*");
+											if (i < (mods->size - 1))
+												strcat_s(szBuf, ", ");
+										}
+									}
+								}
+								else
+									sprintf_s(szBuf, "\n\nLast User:\t%u\nFile(s):\t\tUNKNOWN", tracking.lastUser);
+
+								strcat_s(pGetInfoTip->pszText, pGetInfoTip->cchTextMax, szBuf);
+								pGetInfoTip->pszText[pGetInfoTip->cchTextMax - 1] = '\0';
+							}
+						}
+
+						return S_OK;
+					}
+				}
+				else if (Message == WM_INITMENU)
+				{
+					auto hMenu = reinterpret_cast<HMENU>(wParam);
+					if (IsMenu(hMenu) &&
+						GetMenuState(hMenu, Common::EditorUI::UI_EDITOR_DELETEFORM, MF_BYCOMMAND) != (UINT)-1 &&
+						GetMenuState(hMenu, Common::EditorUI::UI_EDITOR_COPY_EDITOR_ID, MF_BYCOMMAND) == (UINT)-1)
+					{
+						int count = GetMenuItemCount(hMenu);
+						for (int i = 0; i < count; i++)
+						{
+							if (GetMenuItemID(hMenu, i) == Common::EditorUI::UI_EDITOR_DELETEFORM)
+							{
+								InsertMenuA(hMenu, i + 1, MF_BYPOSITION | MF_STRING, Common::EditorUI::UI_EDITOR_COPY_EDITOR_ID, "Copy Editor ID");
+								InsertMenuA(hMenu, i + 2, MF_BYPOSITION | MF_STRING, Common::EditorUI::UI_EDITOR_COPY_FORM_ID, "Copy Form ID");
+								break;
+							}
+						}
 					}
 				}
 
