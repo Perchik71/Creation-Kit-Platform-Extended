@@ -2,7 +2,8 @@
 # CREATION KIT PLATFORM EXTENDED SETTINGS
 #
 # NOTICE: Experimental options may speed up things. They might do nothing. They might crash the editor.
-#
+# 
+
 [CreationKit]
 bVersionControlMergeWorkaround=false	# [Experimental] Workaround for version control not allowing merges with more than 2 masters present. Do NOT use this for anything else.
 

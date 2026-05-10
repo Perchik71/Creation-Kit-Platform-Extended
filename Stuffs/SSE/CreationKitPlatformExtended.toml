@@ -2,7 +2,7 @@
 # CREATION KIT PLATFORM EXTENDED SETTINGS
 #
 # NOTICE: Experimental options may speed up things. They might do nothing. They might crash the editor.
-#
+# 
 
 [CreationKit]
 bUIHotkeys=true							# [Experimental] Allow rebinding certain window hotkeys. See [Hotkeys] section.
