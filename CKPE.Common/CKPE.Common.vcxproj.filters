@@ -375,15 +375,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resources\about.png">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\aboutf4.png">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\aboutsf.png">
-      <Filter>Resources</Filter>
-    </Image>
     <Image Include="..\Resources\check.bmp">
       <Filter>Resources</Filter>
     </Image>
@@ -421,6 +412,18 @@
       <Filter>Resources</Filter>
     </Image>
     <Image Include="..\Resources\Bitmap_430_w.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\aboutwnd_3.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\aboutwnd_4.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\aboutwnd_1.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Resources\aboutwnd_2.png">
       <Filter>Resources</Filter>
     </Image>
   </ItemGroup>

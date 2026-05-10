@@ -10,7 +10,7 @@
 #include <CKPE.Zipper.h>
 #include <CKPE.Exception.h>
 
-#define CKPE_MZ_OPENARCHIVE_FROM_STREAM 1
+#define CKPE_MZ_OPENARCHIVE_FROM_STREAM 0
 
 namespace CKPE
 {

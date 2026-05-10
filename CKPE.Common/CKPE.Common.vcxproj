@@ -255,9 +255,10 @@
     <None Include="scripts.ps1" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resources\about.png" />
-    <Image Include="..\Resources\aboutf4.png" />
-    <Image Include="..\Resources\aboutsf.png" />
+    <Image Include="..\Resources\aboutwnd_1.png" />
+    <Image Include="..\Resources\aboutwnd_2.png" />
+    <Image Include="..\Resources\aboutwnd_3.png" />
+    <Image Include="..\Resources\aboutwnd_4.png" />
     <Image Include="..\Resources\Bitmap_430_w.bmp" />
     <Image Include="..\Resources\check.bmp" />
     <Image Include="..\Resources\check_darktheme.bmp" />
