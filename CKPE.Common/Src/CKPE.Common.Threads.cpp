@@ -159,8 +159,10 @@ namespace CKPE
 					auto NumCores = HardwareInfo::CPU::GetTotalCores();
 					if (NumCores >= 4)
 					{
+						// max 85% for cpu
+						NumCores /= 0.85f;
 						// max 50% for cpu
-						NumCores >>= 1;
+						//NumCores >>= 1;
 						DWORD dwMask = 0;
 
 						for (uint8_t i = 0; i < NumCores; i++)
