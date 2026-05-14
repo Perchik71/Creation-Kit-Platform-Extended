@@ -160,7 +160,7 @@ namespace CKPE
 					if (NumCores >= 4)
 					{
 						// max 85% for cpu
-						NumCores /= 0.85f;
+						NumCores *= 0.85f;
 						// max 50% for cpu
 						//NumCores >>= 1;
 						DWORD dwMask = 0;
