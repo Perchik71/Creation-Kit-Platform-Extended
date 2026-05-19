@@ -165,9 +165,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\CKPE.Starfield.VersionLists.h">
-      <Filter>API</Filter>
-    </ClInclude>
     <ClInclude Include="Include\CKPE.Starfield.Runner.h">
       <Filter>API</Filter>
     </ClInclude>
@@ -461,6 +458,9 @@
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Starfield.Patch.DeferredDlg.h">
       <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Starfield.VersionLists.h">
+      <Filter>EditorAPI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -331,6 +331,7 @@ namespace CKPE
 
 				return false;
 			}
+
 			zip_entry_close(_class_owner->GetHandle<zip_t>());
 		}
 
@@ -342,6 +343,7 @@ namespace CKPE
 	{
 		if (!fname || !fname[0])
 			return false;
+
 		return AddStream(StringUtils::Utf16ToUtf8(fname), stm);
 	}
 
@@ -828,17 +830,25 @@ namespace CKPE
 			OpenFile(safe_n);
 			return false;
 		}
-
-		auto r = zip_entries_delete(h, (char**)&fname, 1);
-		if (r < 0)
+		
+		auto fn = _strdup(fname);
+		if (fn)
 		{
-			LastError = (std::int32_t)r;
-			
-			zip_close(h);
-			OpenFile(safe_n);
+			auto r = zip_entries_delete(h, (char**)&fn, 1);
+			if (r < 0)
+			{
+				LastError = (std::int32_t)r;
 
-			return false;
+				zip_close(h);
+				OpenFile(safe_n);
+
+				return false;
+			}
+
+			free(fn);
 		}
+		else
+			LastError = ZIP_EOOMEM;
 
 		zip_close(h);
 		OpenFile(safe_n);

@@ -20,10 +20,11 @@ namespace CKPE
 			//{ 0x6CDE4424ul, VersionLists::EDITOR_STARFIELD_1_13_61_0		},	// Redirect Steam
 			//{ 0x8777A522ul, VersionLists::EDITOR_STARFIELD_1_14_70_0		},	// Redirect Steam
 			//{ 0x01BF6FB3ul, VersionLists::EDITOR_STARFIELD_1_14_74_0		},	// Redirect Steam
-			{ 0x8C475320ul, VersionLists::EDITOR_STARFIELD_1_14_78_0		},	// Redirect Steam
+			//{ 0x8C475320ul, VersionLists::EDITOR_STARFIELD_1_14_78_0		},	// Redirect Steam
 			{ 0x24C2C928ul, VersionLists::EDITOR_STARFIELD_1_15_216_0		},	// Redirect Steam
 			{ 0xAA061EEBul, VersionLists::EDITOR_STARFIELD_1_15_222_0		},	// Redirect Steam
 			{ 0x79019BB6ul, VersionLists::EDITOR_STARFIELD_1_16_236_0		},	// Redirect Steam
+			{ 0x13F32F60ul, VersionLists::EDITOR_STARFIELD_1_16_242_0		},	// Redirect Steam
 		};
 
 		// Список устаревших версий редакторов
@@ -32,20 +33,25 @@ namespace CKPE
 			VersionLists::EDITOR_STARFIELD_1_13_61_0,
 			VersionLists::EDITOR_STARFIELD_1_14_70_0,
 			VersionLists::EDITOR_STARFIELD_1_14_74_0,
+			VersionLists::EDITOR_STARFIELD_1_14_78_0,
 		};
 
 		// Список ключевых смещений в исполняемых файлах, допущенных к запуску (но не точно)
-		static std::unordered_map<uint32_t,
-			std::pair<std::string_view, VersionLists::EDITOR_EXECUTABLE_TYPE>> _sallowedEditorVersion2 =
+		
+		struct VersionEditorAllowed
 		{
-			//{ 0x86DD768ul, { "1.13.61.0",	VersionLists::EDITOR_STARFIELD_1_13_61_0		} },
-			//{ 0x873D2B8ul, { "1.14.70.0",	VersionLists::EDITOR_STARFIELD_1_14_70_0		} },
-			//{ 0x875F450ul, { "1.14.74.0",	VersionLists::EDITOR_STARFIELD_1_14_74_0		} },
-			{ 0x875F550ul, { "1.14.78.0",	VersionLists::EDITOR_STARFIELD_1_14_78_0		} },
-			{ 0x84D9B40ul, { "1.15.216.0",	VersionLists::EDITOR_STARFIELD_1_15_216_0		} },
-			{ 0x84C7B20ul, { "1.15.222.0",	VersionLists::EDITOR_STARFIELD_1_15_222_0		} },
-			{ 0x8542c88ul, { "1.16.236.0",  VersionLists::EDITOR_STARFIELD_1_16_236_0		} },
+			uint32_t offset;
+			std::string_view text;
+			VersionLists::EDITOR_EXECUTABLE_TYPE version;
 		};
+		
+		static std::array<VersionEditorAllowed, 4> _sallowedEditorVersion2
+		{ {
+			{ 0x84D9B40ul, "1.15.216.0", VersionLists::EDITOR_STARFIELD_1_15_216_0 },
+			{ 0x84C7B20ul, "1.15.222.0", VersionLists::EDITOR_STARFIELD_1_15_222_0 },
+			{ 0x8542C88ul, "1.16.236.0", VersionLists::EDITOR_STARFIELD_1_16_236_0 },
+			{ 0x8542C88ul, "1.16.242.0", VersionLists::EDITOR_STARFIELD_1_16_242_0 },
+		} };
 
 		// Список названий редакторов
 		static std::vector<std::wstring_view> _sEditorVersionStr =
@@ -58,6 +64,7 @@ namespace CKPE
 			L"Starfield [v1.15.216.0]",
 			L"Starfield [v1.15.222.0]",
 			L"Starfield [v1.16.236.0]",
+			L"Starfield [v1.16.242.0]",
 		};
 
 		// Список версий
@@ -71,6 +78,7 @@ namespace CKPE
 			MAKE_EXE_VERSION_EX(1, 15, 216, 0),
 			MAKE_EXE_VERSION_EX(1, 15, 222, 0),
 			MAKE_EXE_VERSION_EX(1, 16, 236, 0),
+			MAKE_EXE_VERSION_EX(1, 16, 242, 0),
 		};
 
 		// Список имён файлов базы данных
@@ -79,10 +87,11 @@ namespace CKPE
 			//{ VersionLists::EDITOR_STARFIELD_1_13_61_0,	L"CreationKitPlatformExtended_SF_1_13_61_0.database"	},
 			//{ VersionLists::EDITOR_STARFIELD_1_14_70_0,	L"CreationKitPlatformExtended_SF_1_14_70_0.database"	},
 			//{ VersionLists::EDITOR_STARFIELD_1_14_74_0,	L"CreationKitPlatformExtended_SF_1_14_74_0.database"	},
-			{ VersionLists::EDITOR_STARFIELD_1_14_78_0,		L"CreationKitPlatformExtended_SF_1_14_78_0.database"	},
+			//{ VersionLists::EDITOR_STARFIELD_1_14_78_0,	L"CreationKitPlatformExtended_SF_1_14_78_0.database"	},
 			{ VersionLists::EDITOR_STARFIELD_1_15_216_0,	L"CreationKitPlatformExtended_SF_1_15_216_0.database"	},
 			{ VersionLists::EDITOR_STARFIELD_1_15_222_0,	L"CreationKitPlatformExtended_SF_1_15_222_0.database"	},
 			{ VersionLists::EDITOR_STARFIELD_1_16_236_0,	L"CreationKitPlatformExtended_SF_1_16_236_0.database"	},
+			{ VersionLists::EDITOR_STARFIELD_1_16_242_0,	L"CreationKitPlatformExtended_SF_1_16_242_0.database"	},
 		};
 
 		static constexpr auto QT_RESOURCE = L"CreationKitPlatformExtended_SF_QResources.pak";
@@ -97,10 +106,10 @@ namespace CKPE
 				__try
 				{
 					// Сравнение по указанному смещению нужной строки
-					if (!_stricmp((const char*)((std::uintptr_t)GetModuleHandleA(nullptr) + editorVersionIterator2->first),
-						editorVersionIterator2->second.first.data()))
+					if (!_stricmp((const char*)((std::uintptr_t)GetModuleHandleA(nullptr) + editorVersionIterator2->offset),
+						editorVersionIterator2->text.data()))
 					{
-						_seditor_ver = editorVersionIterator2->second.second;
+						_seditor_ver = editorVersionIterator2->version;
 						break;
 					}
 				}
