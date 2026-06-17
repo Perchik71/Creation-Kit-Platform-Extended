@@ -71,6 +71,8 @@ namespace CKPE
 				SafeWrite::Write(__CKPE_OFFSET(1), { 0x90, 0xE9 });
 				// Skip "%s took %.2f ms to PostProcess.  This may cause a hitch in segment '%s'."
 				SafeWrite::WriteNop(__CKPE_OFFSET(2), 5);
+				// Skip "File '%s' is changing ref (%08X):\r\nfrom base '%s' (%08X) to base '%s' (%08X)\r\nfrom cell '%s' (%08X) to cell '%s' (%08X)."
+				SafeWrite::WriteNop(__CKPE_OFFSET(3), 5);
 
 				return true;
 			}

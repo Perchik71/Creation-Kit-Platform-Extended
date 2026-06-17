@@ -6,7 +6,8 @@
 #include <CKPE.Asserts.h>
 #include <CKPE.Common.MemoryManager.h>
 #include <Voltek.MemoryManager.h>
-#include <memory.h>
+#include <Windows.h>
+#include <memory>
 #include <format>
 #include <algorithm>
 
@@ -55,8 +56,37 @@ namespace CKPE
 			if (ptr && zeroed) memset(ptr, 0, size);
 
 			if (!ptr && size <= (128llu * 1024 * 1024))
-				CKPE_ASSERT_MSG_FMT(false, "A memory allocation failed. This is due to memory leaks in the Creation Kit or not"
-					" having enough free RAM.\n\nRequested chunk size: %llu bytes.", size);
+			{
+				// Use to convert bytes to GB
+				constexpr static auto AD_DIV = 1024 * 1024 * 1024;
+
+				static MEMORYSTATUSEX statex = { 0 };
+				statex.dwLength = sizeof(MEMORYSTATUSEX);
+				if (!GlobalMemoryStatusEx(&statex))
+					return ptr;
+
+				//  https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-globalmemorystatusex
+				//  Sample output:
+				//  OUT OF MEMORY. A memory allocation failed.
+				//  
+				//  Requested chunk size: 123456 bytes.
+				//  There is     51 percent of memory in use.
+				//  There are 20.29 total GB of physical memory.
+				//  There are  9.87 free  GB of physical memory.
+				//  There are 38.84 total GB of paging file.
+				//  There are 27.99 free  GB of paging file.
+				CKPE_ASSERT_MSG_FMT(ptr,
+					"OUT OF MEMORY. A memory allocation failed.\n\n"
+					"Requested chunk size: %llu bytes.\n"
+					"There is %ld percent of memory in use.\n"
+					"There are %.2f total GB of physical memory.\n"
+					"There are %.2f free GB of physical memory.\n"
+					"There are %.2f total GB of paging file.\n"
+					"There are %.2f free GB of paging file.\n",
+					size, statex.dwMemoryLoad,
+					(long double)statex.ullTotalPhys / AD_DIV, (long double)statex.ullAvailPhys / AD_DIV,
+					(long double)statex.ullTotalPageFile / AD_DIV, (long double)statex.ullAvailPageFile / AD_DIV);
+			}
 
 			return ptr;
 		}
