@@ -47,7 +47,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\toml11\include;$(SolutionDir)Dependencies\mimalloc\include;$(SolutionDir)Dependencies\jDialogs\include;$(SolutionDir)Dependencies\mzip\src;$(SolutionDir)CKPE.Common;$(SolutionDir)Dependencies\vmm\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Dependencies\DirectXTex\include;$(SolutionDir)CKPE\Include;$(SolutionDir)CKPE.Common\Include;$(SolutionDir)Dependencies\zydis\msvc;$(SolutionDir)Dependencies\zydis\include;$(SolutionDir)Dependencies\toml11\include;$(SolutionDir)Dependencies\jDialogs\include;$(SolutionDir)Dependencies\mzip\src;$(SolutionDir)CKPE.Common;$(SolutionDir)Dependencies\vmm\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">
     <OutDir>$(SolutionDir)$(Platform)\</OutDir>
@@ -82,7 +82,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\DirectXTex\lib;$(SolutionDir)$(Platform);$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CKPE.lib;Shell32.lib;Toml.lib;mimalloc.lib;libzydis.lib;comctl32.lib;msimg32.lib;uxtheme.lib;gdiplus.lib;shlwapi.lib;dwmapi.lib;dbghelp.lib;libzip.lib;dxgi.lib;d3d11.lib;DirectXTex.lib;d3dcompiler.lib;dxguid.lib;vmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CKPE.lib;Shell32.lib;Toml.lib;libzydis.lib;comctl32.lib;msimg32.lib;uxtheme.lib;gdiplus.lib;shlwapi.lib;dwmapi.lib;dbghelp.lib;libzip.lib;dxgi.lib;d3d11.lib;DirectXTex.lib;d3dcompiler.lib;dxguid.lib;vmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <StackCommitSize>
       </StackCommitSize>
     </Link>
