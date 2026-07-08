@@ -21,10 +21,11 @@ namespace CKPE
 			//{ 0x8777A522ul, VersionLists::EDITOR_STARFIELD_1_14_70_0		},	// Redirect Steam
 			//{ 0x01BF6FB3ul, VersionLists::EDITOR_STARFIELD_1_14_74_0		},	// Redirect Steam
 			//{ 0x8C475320ul, VersionLists::EDITOR_STARFIELD_1_14_78_0		},	// Redirect Steam
-			{ 0x24C2C928ul, VersionLists::EDITOR_STARFIELD_1_15_216_0		},	// Redirect Steam
+			//{ 0x24C2C928ul, VersionLists::EDITOR_STARFIELD_1_15_216_0		},	// Redirect Steam
 			{ 0xAA061EEBul, VersionLists::EDITOR_STARFIELD_1_15_222_0		},	// Redirect Steam
 			{ 0x79019BB6ul, VersionLists::EDITOR_STARFIELD_1_16_236_0		},	// Redirect Steam
 			{ 0x13F32F60ul, VersionLists::EDITOR_STARFIELD_1_16_242_0		},	// Redirect Steam
+			{ 0xF4BDC8ACul, VersionLists::EDITOR_STARFIELD_1_16_244_0		},	// Redirect Steam
 		};
 
 		// Список устаревших версий редакторов
@@ -47,10 +48,10 @@ namespace CKPE
 		
 		static std::array<VersionEditorAllowed, 4> _sallowedEditorVersion2
 		{ {
-			{ 0x84D9B40ul, "1.15.216.0", VersionLists::EDITOR_STARFIELD_1_15_216_0 },
 			{ 0x84C7B20ul, "1.15.222.0", VersionLists::EDITOR_STARFIELD_1_15_222_0 },
 			{ 0x8542C88ul, "1.16.236.0", VersionLists::EDITOR_STARFIELD_1_16_236_0 },
 			{ 0x8542C88ul, "1.16.242.0", VersionLists::EDITOR_STARFIELD_1_16_242_0 },
+			{ 0x8542c90ul, "1.16.244.0", VersionLists::EDITOR_STARFIELD_1_16_244_0 },
 		} };
 
 		// Список названий редакторов
@@ -65,6 +66,7 @@ namespace CKPE
 			L"Starfield [v1.15.222.0]",
 			L"Starfield [v1.16.236.0]",
 			L"Starfield [v1.16.242.0]",
+			L"Starfield [v1.16.244.0]",
 		};
 
 		// Список версий
@@ -79,6 +81,7 @@ namespace CKPE
 			MAKE_EXE_VERSION_EX(1, 15, 222, 0),
 			MAKE_EXE_VERSION_EX(1, 16, 236, 0),
 			MAKE_EXE_VERSION_EX(1, 16, 242, 0),
+			MAKE_EXE_VERSION_EX(1, 16, 244, 0),
 		};
 
 		// Список имён файлов базы данных
@@ -92,6 +95,7 @@ namespace CKPE
 			{ VersionLists::EDITOR_STARFIELD_1_15_222_0,	L"CreationKitPlatformExtended_SF_1_15_222_0.database"	},
 			{ VersionLists::EDITOR_STARFIELD_1_16_236_0,	L"CreationKitPlatformExtended_SF_1_16_236_0.database"	},
 			{ VersionLists::EDITOR_STARFIELD_1_16_242_0,	L"CreationKitPlatformExtended_SF_1_16_242_0.database"	},
+			{ VersionLists::EDITOR_STARFIELD_1_16_244_0,	L"CreationKitPlatformExtended_SF_1_16_244_0.database"	},
 		};
 
 		static constexpr auto QT_RESOURCE = L"CreationKitPlatformExtended_SF_QResources.pak";
