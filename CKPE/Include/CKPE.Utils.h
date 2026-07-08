@@ -119,4 +119,7 @@ namespace CKPE
 
 	CKPE_API bool CKPE_UserUseWine() noexcept(true);
 	CKPE_API bool CKPE_UserHasAdminRights() noexcept(true);
+	CKPE_API bool CKPE_UserIsAdminFromSAMTable() noexcept(true);
+	CKPE_API bool CKPE_IsUserInAdminGroup() noexcept(true);
+	CKPE_API bool CKPE_IsProcessElevated() noexcept(true);
 }
