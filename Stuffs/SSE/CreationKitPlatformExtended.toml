@@ -12,6 +12,7 @@ bRefLinkGeometryHangWorkaround=false	# [Experimental] Workaround for bookshelves
 bEnableStateParentWorkaround=false		# [Experimental] Workaround for 'Select Enable State Parent' selecting objects outside of the current cell or worldspace.
 bIgnoreGroundHeightTest=false			# [Experimental] Removes the error message when during navmesh generation in a Worldspace with 'No Landscape' flag. Do NOT use this for anything else.
 
+bThreads=true							# Enables thread management and limits the processor to 85% so as not to cause stuttering for other applications.
 bGenerateCrashdumps=true				# Generate a dump in the game folder when the CK crashes.
 bUnicode=false							# Translates UTF8 to ANSI when opening the plugin and back when saving.
 bRenderWindowVSync=true					# Enabling vertical synchronization.

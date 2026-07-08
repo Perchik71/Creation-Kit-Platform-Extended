@@ -15,6 +15,9 @@ bVersionControlMergeWorkaround = false
 # [Experimental] Increase the maximum number of refs to 67.108.864 (for NG2 8.388.608). Use it at your own risk.
 bBSPointerHandleExtremly = false
 
+# Enables thread management and limits the processor to 85% so as not to cause stuttering for other applications.
+bThreads=true
+
 # Abandoning outdated "profile" functions, using the cache, for fast reading and saving options.
 bINICache = true
 

@@ -359,9 +359,11 @@ namespace CKPE
 #endif
 				
 				// IMPORTANT HOOKS
-				EditorUI::Hook::Initialize();	// Init UI patch (Dialogs)
-				SafeExit::Hook::Initialize();	// Init fast quit
-				Threads::Hook::Initialize();	// Init threads
+				EditorUI::Hook::Initialize();		// Init UI patch (Dialogs)
+				SafeExit::Hook::Initialize();		// Init fast quit
+
+				if (_READ_OPTION_BOOL("CreationKit", "bThreads", true))
+					Threads::Hook::Initialize();	// Init threads
 
 				if (!CKPE_UserUseWine())
 				{
