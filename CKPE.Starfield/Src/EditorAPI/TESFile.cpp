@@ -141,18 +141,17 @@ namespace CKPE
 
 					if (!_stricmp(str, "starfield.esm") ||
 						!_stricmp(str, "constellation.esm") ||
-						!_stricmp(str, "oldmars.esm") ||
 						!_stricmp(str, "sfbgs003.esm") ||
 						!_stricmp(str, "sfbgs004.esm") ||
 						!_stricmp(str, "sfbgs006.esm") ||
 						!_stricmp(str, "sfbgs007.esm") ||
 						!_stricmp(str, "sfbgs008.esm") ||
-						!_stricmp(str, "sfbgs00a_a.esm") ||
-						!_stricmp(str, "sfbgs00e.esm") ||
-						!_stricmp(str, "sfbgs021.esm") ||
-						!_stricmp(str, "sfbgs023.esm") ||
-						!_stricmp(str, "sfta01.esm") ||
-						!_stricmp(str, "blueprintships - starfield.esm"))
+						!_stricmp(str, "SFBGS00D.esm") ||
+						!_stricmp(str, "SFBGS047.esm") ||
+						!_stricmp(str, "SFBGS050.esm") ||
+						!_stricmp(str, "ShatteredSpace.esm") ||
+						!_stricmp(str, "blueprintships - starfield.esm") ||
+						!_stricmp(str, "BlueprintShips - SFBGS050.esm"))
 					{
 						MessageBox::OpenWarning("Base game master files cannot be set as the active file.");
 						return true;
