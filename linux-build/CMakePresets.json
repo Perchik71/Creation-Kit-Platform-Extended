@@ -1,0 +1,29 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": { "major": 3, "minor": 21, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "msvc-wine",
+      "displayName": "CKPE Linux cross-build (msvc-wine)",
+      "description": "Real MSVC under Wine. Run linux-build/bootstrap-msvc-wine.sh first.",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/../build-linux",
+      "toolchainFile": "${sourceDir}/../cmake/msvc-wine-toolchain.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "MSVC_WINE_DIR": "$env{HOME}/.local/share/msvc-wine",
+        "CKPE_ENABLE_AVX2": "ON"
+      }
+    },
+    {
+      "name": "msvc-wine-noavx2",
+      "inherits": "msvc-wine",
+      "displayName": "CKPE Linux cross-build (msvc-wine, NoAVX2 / SSE2)",
+      "cacheVariables": { "CKPE_ENABLE_AVX2": "OFF" }
+    }
+  ],
+  "buildPresets": [
+    { "name": "msvc-wine", "configurePreset": "msvc-wine" },
+    { "name": "msvc-wine-noavx2", "configurePreset": "msvc-wine-noavx2" }
+  ]
+}
