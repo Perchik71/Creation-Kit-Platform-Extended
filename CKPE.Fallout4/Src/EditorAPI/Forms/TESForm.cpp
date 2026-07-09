@@ -295,7 +295,7 @@ namespace CKPE
 
 				bool TESForm::HasRequiredUniqueEditorID() const noexcept(true)
 				{
-					CKPE::vtbl_call<const char*>(0x360, this);
+					return CKPE::vtbl_call<bool>(0x360, this);
 				}
 
 				/////////////
