@@ -325,6 +325,7 @@ namespace CKPE
 					else if ((param == UI_CELL_VIEW_FILTER_CELL) && (HIWORD(wParam) == EN_CHANGE))
 					{
 						SetTimer(Hwnd, UI_CELL_VIEW_FILTER_TIMER, 500, NULL);
+						return 1;
 					}
 					else if (param == UI_CELL_VIEW_GO_BUTTON)
 					{
