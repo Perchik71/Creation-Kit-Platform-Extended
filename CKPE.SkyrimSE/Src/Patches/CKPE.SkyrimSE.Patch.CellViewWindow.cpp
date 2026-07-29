@@ -30,6 +30,8 @@
 
 #define UI_CELL_VIEW_FILTER_CELL_SIZE				1024
 
+#define UI_CELL_VIEW_FILTER_TIMER					0x24000
+
 namespace CKPE
 {
 	namespace SkyrimSE
@@ -230,7 +232,7 @@ namespace CKPE
 			{
 				if (!lock)
 					// Fake the dropdown list being activated
-					SendMessageA(Handle, WM_COMMAND, MAKEWPARAM(2083, 1), 0);
+					SendMessageA(Handle, WM_COMMAND, MAKEWPARAM(2083, CBN_SELCHANGE), 0);
 			}
 
 			void CellViewWindow::UpdateObjectList() noexcept(true)
@@ -322,15 +324,7 @@ namespace CKPE
 					}
 					else if ((param == UI_CELL_VIEW_FILTER_CELL) && (HIWORD(wParam) == EN_CHANGE))
 					{
-						auto hFilter = CellViewWindow::Singleton->m_FilterCellEdit.Handle;
-						auto iLen = std::min(GetWindowTextLengthA(hFilter), UI_CELL_VIEW_FILTER_CELL_SIZE - 1);
-
-						SetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_FILTER_CELLS_LEN, reinterpret_cast<HANDLE>(iLen));
-
-						if (iLen)
-							GetWindowTextA(hFilter, str_CellViewWindow_FilterUser, iLen + 1);
-
-						CellViewWindow::Singleton->UpdateCellList();
+						SetTimer(Hwnd, UI_CELL_VIEW_FILTER_TIMER, 500, NULL);
 						return 1;
 					}
 					else if (param == UI_CELL_VIEW_GO_BUTTON)
@@ -339,6 +333,21 @@ namespace CKPE
 							(CellViewWindow::Singleton->m_YEdit.GetCaption().length() <= 1))
 							return 1;
 					}
+				}
+				else if ((Message == WM_TIMER) && (wParam == UI_CELL_VIEW_FILTER_TIMER))
+				{
+					KillTimer(Hwnd, UI_CELL_VIEW_FILTER_TIMER);
+					auto hFilter = CellViewWindow::Singleton->m_FilterCellEdit.Handle;
+					auto iLen = std::min(GetWindowTextLengthA(hFilter), UI_CELL_VIEW_FILTER_CELL_SIZE - 1);
+					
+					SetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_FILTER_CELLS_LEN, reinterpret_cast<HANDLE>(iLen));
+					
+					if (iLen)
+						GetWindowTextA(hFilter, str_CellViewWindow_FilterUser, iLen + 1);
+					
+					CellViewWindow::Singleton->UpdateCellList();
+					CellViewWindow::Singleton->m_FilterCellEdit.SetFocus();
+					return 1;
 				}
 				else if (Message == UI_CELL_VIEW_ADD_CELL_ITEM)
 				{
