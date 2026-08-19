@@ -73,6 +73,13 @@ namespace CKPE
 			{ VersionLists::EDITOR_FALLOUT_C4_1_11_137_0,	L"CreationKitPlatformExtended_FO4_1_11_137_0.database" },
 		};
 
+		
+		// CK Address Library
+		static std::unordered_map<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view> _sallowedAddressLibraryVersion =
+		{
+			{ VersionLists::EDITOR_FALLOUT_C4_1_11_240_0,	L"version-1-11-240-0.bin" },
+		};
+
 		void VersionLists::Verify()
 		{
 			for (auto editorVersionIterator2 = _sallowedEditorVersion2.begin();
@@ -123,6 +130,17 @@ namespace CKPE
 		{
 			auto it = _sallowedDatabaseVersion.find(_seditor_ver);
 			return (it != _sallowedDatabaseVersion.end()) ? it->second.data() : L"";
+		}
+
+		bool VersionLists::HasAddressLibrarySupport() noexcept(true)
+		{
+			return _sallowedAddressLibraryVersion.find(_seditor_ver) != _sallowedAddressLibraryVersion.end();
+		}
+
+		std::wstring VersionLists::GetAddressLibraryFileName() noexcept(true)
+		{
+			auto it = _sallowedAddressLibraryVersion.find(_seditor_ver);
+			return (it != _sallowedAddressLibraryVersion.end()) ? it->second.data() : L"";
 		}
 
 		std::wstring VersionLists::GetEditorVersionByString() noexcept(true)

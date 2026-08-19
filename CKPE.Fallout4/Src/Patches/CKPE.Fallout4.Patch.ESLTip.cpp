@@ -5,6 +5,7 @@
 #include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/TESDataHandler.h>
 #include <Patches/CKPE.Fallout4.Patch.ESLTip.h>
@@ -50,13 +51,24 @@ namespace CKPE
 
 			bool ESLTip::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
 				auto _interface = CKPE::Common::Interface::GetSingleton();
 				auto base = _interface->GetApplication()->GetBase();
 
-				Detours::DetourCall(__CKPE_OFFSET(0), (uintptr_t)&sub);
+				std::uintptr_t address = 0;
+
+				if (db) {
+					if (db->GetVersion() != 1)
+						return false;
+
+					address = __CKPE_OFFSET(0);
+				}
+				else
+				{
+					address = Common::AddressLibrary::GetSingleton()->Resolve(116050) + 0xE1;
+				}
+				
+
+				Detours::DetourCall(address, (uintptr_t)&sub);
 
 				return true;
 			}

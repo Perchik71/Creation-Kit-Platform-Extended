@@ -13,6 +13,7 @@
 #include <CKPE.Common.DialogManager.h>
 #include <CKPE.Common.PatchManager.h>
 #include <CKPE.Common.Relocator.h>
+#include <CKPE.Common.AddressLibrary.h>
 #if 0
 #include <CKPE.Common.GenerateTableID.h>
 #endif
@@ -58,7 +59,8 @@ namespace CKPE
 
 		void Interface::Initialize(const CKPEGameLibraryInterface* a_interface, std::uint64_t a_editor_version, 
 			std::uint64_t a_version, const std::wstring& a_dialogs_fn, const std::wstring& a_databases_fn, 
-			const std::wstring& a_database_fn, const std::wstring& a_resources_fn, bool support_more_theme) noexcept(true)
+			const std::wstring& a_database_fn, const std::wstring& a_resources_fn, bool support_more_theme,
+			const std::wstring& a_address_library_fn) noexcept(true)
 		{
 			if (_cmdline) return;
 
@@ -119,10 +121,26 @@ namespace CKPE
 						StringUtils::FormatString(L"No found dialogs pak \"%s\".\nMore detailed to log.", 
 							a_dialogs_fn.c_str())));
 
+				// CK Address Library: stable ID -> RVA, replacing the legacy RELB database
+				bool hasAddressLibrary = false;
+				if (!a_address_library_fn.empty())
+				{
+					hasAddressLibrary = AddressLibrary::GetSingleton()->Load(spath + a_address_library_fn);
+					if (!hasAddressLibrary)
+						_WARNING(L"\tAddress Library \"%s\" requested but failed to load, see log above."sv,
+							a_address_library_fn.c_str());
+				}
+
 				if (!Relocator::GetSingleton()->Open(a_databases_fn, a_database_fn))
-					ErrorHandler::Trigger(StringUtils::Utf16ToWinCP(
-						StringUtils::FormatString(L"Couldn't open the database \"%s\" in \"%s\"\nMore detailed to log.", 
-							a_database_fn.c_str(), a_databases_fn.c_str())));
+				{
+					// A version that's covered by the Address Library is not expected to have RELB
+					if (hasAddressLibrary)
+						_WARNING(L"\tNo legacy RELB database for this editor version; running on Address Library only."sv);
+					else
+						ErrorHandler::Trigger(StringUtils::Utf16ToWinCP(
+							StringUtils::FormatString(L"Couldn't open the database \"%s\" in \"%s\"\nMore detailed to log.",
+								a_database_fn.c_str(), a_databases_fn.c_str())));
+				}
 
 				// CMD LINE HANDLER
 

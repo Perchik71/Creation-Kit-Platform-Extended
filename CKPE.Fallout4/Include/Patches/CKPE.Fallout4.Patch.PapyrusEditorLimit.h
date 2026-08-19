@@ -28,6 +28,7 @@ namespace CKPE
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
 
 				static bool sub(std::int64_t RichEditControl, const char* Text) noexcept(true);
+				[[nodiscard]] bool SupportsAddressLibrary() const noexcept(true) override { return true; }
 			};
 		}
 	}
