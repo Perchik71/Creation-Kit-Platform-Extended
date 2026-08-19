@@ -33,13 +33,13 @@ namespace CKPE
 		};
 
 		// Список ключевых смещений в исполняемых файлах, допущенных к запуску (но не точно)
-		static std::unordered_map<uint32_t,
-			std::pair<std::string_view, VersionLists::EDITOR_EXECUTABLE_TYPE>> _sallowedEditorVersion2 =
+		static std::unordered_map<uint32_t, std::pair<std::string_view, VersionLists::EDITOR_EXECUTABLE_TYPE>> _sallowedEditorVersion2 =
 		{
 			{ 0x3896168ul, { "1.10.162.0",	VersionLists::EDITOR_FALLOUT_C4_1_10_162_0		} },
 			//{ 0x2F8D1C8ul, { "1.10.943.1",	VersionLists::EDITOR_FALLOUT_C4_1_10_943_1	} },
 			{ 0x2F8D298ul, { "1.10.982.3",	VersionLists::EDITOR_FALLOUT_C4_1_10_982_3		} },
 			{ 0x3017E68ul, { "1.11.137.0",	VersionLists::EDITOR_FALLOUT_C4_1_11_137_0		} },
+			{ 0x30284D8ul, { "1.11.240.0",  VersionLists::EDITOR_FALLOUT_C4_1_11_240_0		} },
 		};
 
 		// Список версий
@@ -50,6 +50,7 @@ namespace CKPE
 			MAKE_EXE_VERSION_EX(1, 10, 943, 1),
 			MAKE_EXE_VERSION_EX(1, 10, 982, 3),
 			MAKE_EXE_VERSION_EX(1, 11, 137, 0),
+			MAKE_EXE_VERSION_EX(1, 11, 240, 0),
 		};
 
 		// Список названий редакторов
@@ -60,6 +61,7 @@ namespace CKPE
 			L"Fallout 4 [v1.10.943.1]",
 			L"Fallout 4 [v1.10.982.3]",
 			L"Fallout 4 [v1.11.137.0]",
+			L"Fallout 4 [v1.11.240.0]",
 		};
 
 		// Список имён файлов базы данных
