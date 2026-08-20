@@ -13,6 +13,22 @@ namespace CKPE
 {
 	namespace Common
 	{
+		enum class AddressLibraryEpoch : std::uint8_t
+		{
+			OG, // 1.10.162
+			NG	// 1.10.982+
+		};
+
+		struct VariantID
+		{
+			AddressLibrary::AddressID OG;
+			AddressLibrary::AddressID NG;
+
+			constexpr VariantID(AddressLibrary::AddressID shared) noexcept : OG(shared), NG(shared) {}
+
+			constexpr VariantID(AddressLibrary::AddressID og, AddressLibrary::AddressID ng) noexcept : OG(og), NG(ng) {}
+		};
+
 		class CKPE_COMMON_API AddressLibrary
 		{
 		public:
@@ -44,6 +60,12 @@ namespace CKPE
 			[[nodiscard]] virtual std::uint64_t ResolveOffset(AddressID id) const noexcept(true);
 			// Absolute address (CreationKit.exe module base + RVA), or 0 if unknown / not loaded.
 			[[nodiscard]] virtual std::uintptr_t Resolve(AddressID id) const noexcept(true);
+
+			void SetEpoch(AddressLibraryEpoch epoch) noexcept;
+			[[nodiscard]] AddressLibraryEpoch GetEpoch() const noexcept;
+
+			[[nodiscard]] virtual std::uint64_t ResolveOffset(VariantID id) const noexcept(true);
+			[[nodiscard]] virtual std::uintptr_t Resolve(VariantID id) const noexcept(true);
 
 			static AddressLibrary* GetSingleton() noexcept(true);
 		};

@@ -25,14 +25,14 @@ namespace CKPE
 			{ 0x49E45284ul, VersionLists::EDITOR_FALLOUT_C4_1_11_137_0		},	// Default
 		};
 
-		// Список устаревших версий редакторов
+		// Список устаревших версий редакторов - outdated versions
 		static std::vector<VersionLists::EDITOR_EXECUTABLE_TYPE> _soutdatedEditorVersion =
 		{
 			VersionLists::EDITOR_FALLOUT_C4_1_10_943_1,
 			//VersionLists::EDITOR_FALLOUT_C4_1_10_982_3,
 		};
 
-		// Список ключевых смещений в исполняемых файлах, допущенных к запуску (но не точно)
+		// Список ключевых смещений в исполняемых файлах, допущенных к запуску (но не точно) - offsets in exe holding name
 		static std::unordered_map<uint32_t, std::pair<std::string_view, VersionLists::EDITOR_EXECUTABLE_TYPE>> _sallowedEditorVersion2 =
 		{
 			{ 0x3896168ul, { "1.10.162.0",	VersionLists::EDITOR_FALLOUT_C4_1_10_162_0		} },
@@ -42,7 +42,7 @@ namespace CKPE
 			{ 0x30284D8ul, { "1.11.240.0",  VersionLists::EDITOR_FALLOUT_C4_1_11_240_0		} },
 		};
 
-		// Список версий
+		// Список версий - version list
 		static std::vector<std::uint64_t> _sEditorVersion =
 		{
 			0,
@@ -53,7 +53,7 @@ namespace CKPE
 			MAKE_EXE_VERSION_EX(1, 11, 240, 0),
 		};
 
-		// Список названий редакторов
+		// Список названий редакторов - editor names
 		static std::vector<std::wstring_view> _sEditorVersionStr =
 		{
 			L"Unknown version",
@@ -64,7 +64,7 @@ namespace CKPE
 			L"Fallout 4 [v1.11.240.0]",
 		};
 
-		// Список имён файлов базы данных
+		// Список имён файлов базы данных - db list
 		static std::unordered_map<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view> _sallowedDatabaseVersion =
 		{
 			{ VersionLists::EDITOR_FALLOUT_C4_1_10_162_0,	L"CreationKitPlatformExtended_FO4_1_10_162.database"	},
@@ -89,7 +89,7 @@ namespace CKPE
 				// Защита в случаи выхода за пределы при проверке
 				__try
 				{
-					// Сравнение по указанному смещению нужной строки
+					// Сравнение по указанному смещению нужной строки - string comparison at offset
 					if (!_stricmp((const char*)((std::uintptr_t)GetModuleHandleA(nullptr) + editorVersionIterator2->first),
 						editorVersionIterator2->second.first.data()))
 					{
@@ -157,5 +157,22 @@ namespace CKPE
 		{
 			return _seditor_ver;
 		}
+
+		Common::AddressLibraryEpoch VersionLists::GetAddressLibraryEpoch() noexcept
+		{
+    		switch (GetEditorVersion())
+    		{
+    		case EDITOR_FALLOUT_C4_1_10_162_0:
+        		return Common::AddressLibraryEpoch::OG;
+
+    		case EDITOR_FALLOUT_C4_1_10_982_3:
+    		case EDITOR_FALLOUT_C4_1_11_137_0:
+    		case EDITOR_FALLOUT_C4_1_11_240_0:
+        		return Common::AddressLibraryEpoch::NG;
+
+    		default:
+        		return Common::AddressLibraryEpoch::NG;
+    		}
+		}	
 	}
 }
