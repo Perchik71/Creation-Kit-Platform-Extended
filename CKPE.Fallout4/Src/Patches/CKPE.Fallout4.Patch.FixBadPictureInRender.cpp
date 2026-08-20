@@ -48,17 +48,28 @@ namespace CKPE
 
 			bool FixBadPictureInRender::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto ver = db->GetVersion();
-				if ((ver < 1) && (ver > 2))
-					return false;
+				if (db)
+				{
+					auto ver = db->GetVersion();
+					if ((ver < 1) && (ver > 2))
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				// Remove stuff init FXAA or TAA
-				SafeWrite::WriteNop(__CKPE_OFFSET(0), ver == 1 ? 0x55 : 0x50);
+					// Remove stuff init FXAA or TAA
+					SafeWrite::WriteNop(__CKPE_OFFSET(0), ver == 1 ? 0x55 : 0x50);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					// Remove stuff init FXAA or TAA
+					SafeWrite::WriteNop(Common::AddressLibrary::GetSingleton()->Resolve(1548893) + 0x9B5, 0x50);
+
+					return true;
+				}
+				
 			}
 		}
 	}

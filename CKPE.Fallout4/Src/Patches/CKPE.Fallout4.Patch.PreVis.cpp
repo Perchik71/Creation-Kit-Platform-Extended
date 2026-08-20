@@ -50,19 +50,34 @@ namespace CKPE
 
 			bool PreVis::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+					auto _interface = CKPE::Common::Interface::GetSingleton();
+					auto base = _interface->GetApplication()->GetBase();
 
-				// This function returns Form, for preprocessing visibility, however, 
-				// sometimes this function returns a Form that is not a Cell. This is an error, 
-				// because in the body it is further revealedand coordinates in the world space are obtained.
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				pointer_PreVisPatch_sub = __CKPE_OFFSET(1);
+					// This function returns Form, for preprocessing visibility, however, 
+					// sometimes this function returns a Form that is not a Cell. This is an error, 
+					// because in the body it is further revealedand coordinates in the world space are obtained.
+					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
+					pointer_PreVisPatch_sub = __CKPE_OFFSET(1);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					// This function returns Form, for preprocessing visibility, however, 
+					// sometimes this function returns a Form that is not a Cell. This is an error, 
+					// because in the body it is further revealedand coordinates in the world space are obtained.
+					Detours::DetourCall(addressLibrary->Resolve(1942928) + 0x500, (std::uintptr_t)&sub);
+					pointer_PreVisPatch_sub = addressLibrary->Resolve(1498643);
+
+					return true;
+				}
 			}
 
 			void* PreVis::sub(void* a1) noexcept(true)

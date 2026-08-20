@@ -113,9 +113,9 @@ namespace CKPE
 
 			auto mgr = Common::PatchManager::GetSingleton();
 
-			//mgr->Register(new Patch::AddChangeRef);
-			//mgr->Register(new Patch::AllowMultipleWindowAndMaster);
-			mgr->Register(new Patch::AllowSaveESMandMasterESP); // Needs work
+			mgr->Register(new Patch::AddChangeRef);
+			mgr->Register(new Patch::AllowMultipleWindowAndMaster);
+			mgr->Register(new Patch::AllowSaveESMandMasterESP);
 			//mgr->Register(new Patch::AssertD3D11);
 			//mgr->Register(new Patch::BSArchiveManagerModded);
 			//mgr->Register(new Patch::BSResourceLooseFiles);
@@ -130,15 +130,15 @@ namespace CKPE
 			mgr->Register(new Patch::D3D11);
 			mgr->Register(new Patch::DataWindow);
 			//mgr->Register(new Patch::DisableAssertion);
-			//mgr->Register(new Patch::DontMatchForms);
-			//mgr->Register(new Patch::EnableGoInSelGame);
+			mgr->Register(new Patch::DontMatchForms);
+			//mgr->Register(new Patch::EnableGoInSelGame); // Deprecated?
 			//mgr->Register(new Patch::EncounterZone);
 			mgr->Register(new Patch::ESLTip);
 			//mgr->Register(new Patch::Facegen);
 			mgr->Register(new Patch::FakeMoveLight);
-			//mgr->Register(new Patch::FixBadPictureInRender);
+			mgr->Register(new Patch::FixBadPictureInRender);
 			mgr->Register(new Patch::FixBNet);
-			//mgr->Register(new Patch::FixCrashMapMarkerCmd);
+			mgr->Register(new Patch::FixCrashMapMarkerCmd);
 			//mgr->Register(new Patch::FixCrashNoRootMat);
 			//mgr->Register(new Patch::FixCrashSpellEaxDur);
 			//mgr->Register(new Patch::FixDeleteTintToRace);
@@ -151,32 +151,32 @@ namespace CKPE
 			//mgr->Register(new Patch::FixSky);
 			//mgr->Register(new Patch::FixSmoothValue);
 			//mgr->Register(new Patch::FixSortPropObjectMod);
-			//mgr->Register(new Patch::FixSSAOInIntCell);
+			//mgr->Register(new Patch::FixSSAOInIntCell); // Deprecated?
 			mgr->Register(new Patch::FixTabDeleteCrash);
 			//mgr->Register(new Patch::FixVC);
 			//mgr->Register(new Patch::FlowChartX);
 			//mgr->Register(new Patch::HavokRigidBodyCrash);
-			//mgr->Register(new Patch::IncreaseChunkSizeForSNAM);
+			mgr->Register(new Patch::IncreaseChunkSizeForSNAM);
 			mgr->Register(new Patch::LayersWindow);
 			//mgr->Register(new Patch::LoadShaders);
 			mgr->Register(new Patch::MainWindow);
 			//mgr->Register(new Patch::MemoryManager);
 			//mgr->Register(new Patch::Misc);
-			//mgr->Register(new Patch::ModernThemePatchAdditional);
+			mgr->Register(new Patch::ModernThemePatchAdditional);
 			mgr->Register(new Patch::NavMeshWindow);
 			mgr->Register(new Patch::ObjectWindow);
 			//mgr->Register(new Patch::OptimizationLoad);
 			mgr->Register(new Patch::PapyrusEditorLimit);
-			//mgr->Register(new Patch::PreVis);
+			mgr->Register(new Patch::PreVis);
 			//mgr->Register(new Patch::ProgressWindow);
 			//mgr->Register(new Patch::RemoveUselessMessages);
 			mgr->Register(new Patch::RenameCreationKitApp);
 			mgr->Register(new Patch::RenderWindow);
-			//mgr->Register(new Patch::RenderWindow60FPS);
+			mgr->Register(new Patch::RenderWindow60FPS);
 			//mgr->Register(new Patch::ReplaceBSPointerHandleAndManager);
 			//mgr->Register(new Patch::ResponseIgnoreMax);
 			//mgr->Register(new Patch::ResponseWindow);
-			//mgr->Register(new Patch::RunNetworkDisable);
+			mgr->Register(new Patch::RunNetworkDisable);
 			mgr->Register(new Patch::SkipTopicInfoValidation);
 			//mgr->Register(new Patch::SkipUpdateCheck);
 			mgr->Register(new Patch::SortCrashCombined);

@@ -48,16 +48,26 @@ namespace CKPE
 
 			bool RunNetworkDisable::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				// The ability to run CK without access to the Internet and/or a network device.
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0xEB });
+					// The ability to run CK without access to the Internet and/or a network device.
+					SafeWrite::Write(__CKPE_OFFSET(0), { 0xEB });
 
-				return true;
+					return true;
+				}
+				else
+				{
+					// The ability to run CK without access to the Internet and/or a network device.
+					SafeWrite::Write(Common::AddressLibrary::GetSingleton()->Resolve(2054943) + 0x8AC, {0xEB});
+
+					return true;
+				}
 			}
 		}
 	}

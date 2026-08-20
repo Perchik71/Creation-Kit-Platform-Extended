@@ -48,16 +48,26 @@ namespace CKPE
 
 			bool IncreaseChunkSizeForSNAM::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				// Increasing the size for the SNAM chunk from 512 to 2048
-				SafeWrite::Write(__CKPE_OFFSET(0), (std::uint8_t*)&uiMaxChunkSizeSNAM, 4);
+					// Increasing the size for the SNAM chunk from 512 to 2048
+					SafeWrite::Write(__CKPE_OFFSET(0), (std::uint8_t*)&uiMaxChunkSizeSNAM, 4);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					// Increasing the size for the SNAM chunk from 512 to 2048
+					SafeWrite::Write(Common::AddressLibrary::GetSingleton()->Resolve(1493949) + 0x4D1, (std::uint8_t*)&uiMaxChunkSizeSNAM, 4);
+
+					return true;
+				}
 			}
 		}
 	}
