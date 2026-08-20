@@ -115,6 +115,20 @@ namespace CKPE
 			return (std::uintptr_t)base + (std::uintptr_t)offset;
 		}
 
+		std::uint_64t AddressLibrary::ResolveOffset(VariantID id) const noexcept(true)
+		{
+			return ResolveOffset(
+				_epoch == AddressLibraryEpoch::OG ? id.OG : id.NG
+			);
+		}
+
+		std::uintptr_t AddressLibrary::Resolve(VariantID id) const noexcept(true)
+		{
+			return Resolve(
+				_epoch == AddressLibraryEpoch::OG ? id.OG : id.NG
+			);
+		}
+			
 		AddressLibrary* AddressLibrary::GetSingleton() noexcept(true)
 		{
 			return &GlobalAddressLibrary;
