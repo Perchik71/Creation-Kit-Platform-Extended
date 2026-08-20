@@ -64,7 +64,7 @@ namespace CKPE
 				else
 				{
 					// Increasing the size for the SNAM chunk from 512 to 2048
-					SafeWrite::Write(Common::AddressLibrary::GetSingleton()->Resolve(1493949) + 0x4D1, (std::uint8_t*)&uiMaxChunkSizeSNAM, 4);
+					SafeWrite::Write(Common::AddressLibrary::GetSingleton()->Resolve(1493949) + 0x4D3, (std::uint8_t*)&uiMaxChunkSizeSNAM, 4);
 
 					return true;
 				}

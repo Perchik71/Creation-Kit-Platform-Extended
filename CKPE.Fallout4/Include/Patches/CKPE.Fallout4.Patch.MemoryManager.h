@@ -28,6 +28,7 @@ namespace CKPE
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
 
 				static bool LowMemory() noexcept(true);
+				[[nodiscard]] bool SupportsAddressLibrary() const noexcept(true) override { return true; }
 			};
 		}
 	}

@@ -47,6 +47,7 @@ namespace CKPE
 				static void HideOldTimeOfDayComponents() noexcept(true);
 				static void HKInitializeTimeOfDay(HWND hDlg, INT nIDDlgItem, FLOAT value, INT a4) noexcept(true);
 				static void HKSetNewValueTimeOfDay(HWND hDlg, INT nIDDlgItem, FLOAT value, INT a4) noexcept(true);
+				[[nodiscard]] bool SupportsAddressLibrary() const noexcept(true) override { return true; }
 			};
 		}
 	}

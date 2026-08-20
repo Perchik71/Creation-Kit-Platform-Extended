@@ -103,7 +103,7 @@ namespace CKPE
 					// Force render window to draw at 60fps (SetTimer(10ms))
 					// DESC: BufferDesc.RefreshRate.Numerator = 60
 					//
-					text.Write(addressLibrary->Resolve(1459534) + 0x523, {USER_TIMER_MINIMUM});
+					text.Write(addressLibrary->Resolve(1459534) + 0x526, {USER_TIMER_MINIMUM});
 
 					if (!_READ_OPTION_BOOL("CreationKit", "bRenderWindowVSync", true))
 						// no VSync

@@ -232,82 +232,140 @@ namespace CKPE
 
 			bool ModernThemePatchAdditional::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if (!Common::UI::IsDarkTheme() || 
-					_READ_OPTION_BOOL("CreationKit", "bUIClassicTheme", false) || (verPatch != 2))
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				// CinfigureWindow sets now
-				Common::ModernTheme::InitializeCurrentThread();
-
-				pointer_UIThemePatchAdditional_sub = __CKPE_OFFSET(0);
-				// replace main toolbar
-				Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&Comctl32CreateToolbarEx_1);
-				Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&Comctl32CreateToolbarEx_NavMesh);
-				Detours::DetourJump(__CKPE_OFFSET(3), (std::uintptr_t)&HideOldTimeOfDayComponents);
-				// replace ImageList_LoadImage for item type
-				Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&Comctl32ImageList_LoadImageA_1);
-
-				Detours::DetourCall(__CKPE_OFFSET(5), (std::uintptr_t)&HKInitializeTimeOfDay);
-				Detours::DetourCall(__CKPE_OFFSET(6), (std::uintptr_t)&HKSetNewValueTimeOfDay);
-
-				if (VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_943_1)
+				if (db)
 				{
+					auto verPatch = db->GetVersion();
+					if (!Common::UI::IsDarkTheme() ||
+						_READ_OPTION_BOOL("CreationKit", "bUIClassicTheme", false) || (verPatch != 2))
+						return false;
+
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
+
+					// CinfigureWindow sets now
+					Common::ModernTheme::InitializeCurrentThread();
+
+					pointer_UIThemePatchAdditional_sub = __CKPE_OFFSET(0);
+					// replace main toolbar
+					Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&Comctl32CreateToolbarEx_1);
+					Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&Comctl32CreateToolbarEx_NavMesh);
+					Detours::DetourJump(__CKPE_OFFSET(3), (std::uintptr_t)&HideOldTimeOfDayComponents);
+					// replace ImageList_LoadImage for item type
+					Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&Comctl32ImageList_LoadImageA_1);
+
+					Detours::DetourCall(__CKPE_OFFSET(5), (std::uintptr_t)&HKInitializeTimeOfDay);
+					Detours::DetourCall(__CKPE_OFFSET(6), (std::uintptr_t)&HKSetNewValueTimeOfDay);
+
+					if (VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_943_1)
+					{
+						// replace ImageList_LoadImage
+						Detours::DetourCall(__CKPE_OFFSET(7), (std::uintptr_t)&Comctl32ImageList_LoadImageA_2);			// item type Task Manager
+						Detours::DetourCall(__CKPE_OFFSET(8), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);			// Scripts icons
+						Detours::DetourCall(__CKPE_OFFSET(9), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);			// Scripts icons
+
+						if (VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+							Detours::DetourCall(__CKPE_OFFSET(10), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);	// Scripts icons
+					}
+
+					Common::UI::ListView::InstallCustomDrawHandler(&DoCustomDrawListView);
+
+					if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+					{
+						// Layers Window
+						Detours::DetourCall(__CKPE_OFFSET(11), (std::uintptr_t)&HkSendMsgChangeColorTextForLayers);
+						// Rechange color text
+						auto rva = __CKPE_OFFSET(12);
+						Detours::DetourCall(rva, (std::uintptr_t)&HkSetTextColorForLayers);
+						Detours::DetourCall(rva + 0x212, (std::uintptr_t)&HkSetTextColorForLayers);
+						Detours::DetourCall(rva + 0x471, (std::uintptr_t)&HkSetTextColorForLayers);
+						Detours::DetourCall(rva + 0x48B, (std::uintptr_t)&HkSetTextColorForLayers);
+						Detours::DetourCall(rva + 0x547, (std::uintptr_t)&HkSetTextColorForLayers);
+						// Skip edge draw
+						rva = __CKPE_OFFSET(13);
+						Detours::DetourCall(rva, (std::uintptr_t)&HkDrawEdgeForLayers);
+						Detours::DetourCall(rva + 0x2C, (std::uintptr_t)&HkDrawEdgeForLayers);
+						Detours::DetourCall(rva + 0x46C, (std::uintptr_t)&HkDrawEdgeForLayers);
+						// Icons
+						Detours::DetourCall(__CKPE_OFFSET(14), (std::uintptr_t)&HkImageListForLayers_LoadImageA);
+					}
+					else if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_FALLOUT_C4_1_10_982_3)
+					{
+						// Layers Window
+						Detours::DetourCall(__CKPE_OFFSET(11), (std::uintptr_t)&HkSendMsgChangeColorTextForLayers);
+						// Rechange color text
+						auto rva = __CKPE_OFFSET(12);
+						Detours::DetourCall(rva, (std::uintptr_t)&HkSetTextColorForLayers);
+						Detours::DetourCall(rva + 0x214, (std::uintptr_t)&HkSetTextColorForLayers);
+						Detours::DetourCall(rva + 0x457, (std::uintptr_t)&HkSetTextColorForLayers);
+						Detours::DetourCall(rva + 0x471, (std::uintptr_t)&HkSetTextColorForLayers);
+						Detours::DetourCall(rva + 0x530, (std::uintptr_t)&HkSetTextColorForLayers);
+						// Skip edge draw
+						rva = __CKPE_OFFSET(13);
+						Detours::DetourCall(rva, (std::uintptr_t)&HkDrawEdgeForLayers);
+						Detours::DetourCall(rva + 0x2C, (std::uintptr_t)&HkDrawEdgeForLayers);
+						Detours::DetourCall(rva + 0x459, (std::uintptr_t)&HkDrawEdgeForLayers);
+						// Icons
+						Detours::DetourCall(__CKPE_OFFSET(14), (std::uintptr_t)&HkImageListForLayers_LoadImageA);
+						Detours::DetourCall(__CKPE_OFFSET(15), (std::uintptr_t)&HkImageListForLayers_LoadImageA);
+					}
+
+					return true;
+				}
+				else
+				{
+					if (!Common::UI::IsDarkTheme() ||
+						_READ_OPTION_BOOL("CreationKit", "bUIClassicTheme", false))
+						return false;
+
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
+
+					// CinfigureWindow sets now
+					Common::ModernTheme::InitializeCurrentThread();
+
+					pointer_UIThemePatchAdditional_sub = addressLibrary->Resolve(1560813);
+					// replace main toolbar
+					Detours::DetourCall(addressLibrary->Resolve(1622538) + 0x56, (std::uintptr_t)&Comctl32CreateToolbarEx_1);
+					Detours::DetourCall(addressLibrary->Resolve(1739114) + 0x56, (std::uintptr_t)&Comctl32CreateToolbarEx_NavMesh);
+					Detours::DetourJump(addressLibrary->Resolve(1622538) + 0x27C, (std::uintptr_t)&HideOldTimeOfDayComponents);
+					// replace ImageList_LoadImage for item type
+					Detours::DetourCall(addressLibrary->Resolve(2054943) + 0x1332, (std::uintptr_t)&Comctl32ImageList_LoadImageA_1);
+
+					Detours::DetourCall(addressLibrary->Resolve(1937416) + 0xF0, (std::uintptr_t)&HKInitializeTimeOfDay);
+					Detours::DetourCall(addressLibrary->Resolve(1552965) + 0x1CC, (std::uintptr_t)&HKSetNewValueTimeOfDay);
+					
 					// replace ImageList_LoadImage
-					Detours::DetourCall(__CKPE_OFFSET(7), (std::uintptr_t)&Comctl32ImageList_LoadImageA_2);			// item type Task Manager
-					Detours::DetourCall(__CKPE_OFFSET(8), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);			// Scripts icons
-					Detours::DetourCall(__CKPE_OFFSET(9), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);			// Scripts icons
+					Detours::DetourCall(addressLibrary->Resolve(1655514) + 0x4F, (std::uintptr_t)&Comctl32ImageList_LoadImageA_2);			// item type Task Manager
+					Detours::DetourCall(addressLibrary->Resolve(1508707) + 0x1D2, (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);			// Scripts icons
+					Detours::DetourCall(addressLibrary->Resolve(1495189) + 0x18F, (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);			// Scripts icons
 
-					if (VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-						Detours::DetourCall(__CKPE_OFFSET(10), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);	// Scripts icons
-				}
+					
+					Detours::DetourCall(addressLibrary->Resolve(1619236) + 0xFB, (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);	// Scripts icons
 
-				Common::UI::ListView::InstallCustomDrawHandler(&DoCustomDrawListView);
-
-				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-				{
+					Common::UI::ListView::InstallCustomDrawHandler(&DoCustomDrawListView);
+					
 					// Layers Window
-					Detours::DetourCall(__CKPE_OFFSET(11), (std::uintptr_t)&HkSendMsgChangeColorTextForLayers);
+					Detours::DetourCall(addressLibrary->Resolve(1518220) + 0x46D, (std::uintptr_t)&HkSendMsgChangeColorTextForLayers);
 					// Rechange color text
-					auto rva = __CKPE_OFFSET(12);
-					Detours::DetourCall(rva, (std::uintptr_t)&HkSetTextColorForLayers);
-					Detours::DetourCall(rva + 0x212, (std::uintptr_t)&HkSetTextColorForLayers);
-					Detours::DetourCall(rva + 0x471, (std::uintptr_t)&HkSetTextColorForLayers);
-					Detours::DetourCall(rva + 0x48B, (std::uintptr_t)&HkSetTextColorForLayers);
-					Detours::DetourCall(rva + 0x547, (std::uintptr_t)&HkSetTextColorForLayers);
-					// Skip edge draw
-					rva = __CKPE_OFFSET(13);
-					Detours::DetourCall(rva, (std::uintptr_t)&HkDrawEdgeForLayers);
-					Detours::DetourCall(rva + 0x2C, (std::uintptr_t)&HkDrawEdgeForLayers);
-					Detours::DetourCall(rva + 0x46C, (std::uintptr_t)&HkDrawEdgeForLayers);
-					// Icons
-					Detours::DetourCall(__CKPE_OFFSET(14), (std::uintptr_t)&HkImageListForLayers_LoadImageA);
-				}
-				else if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_FALLOUT_C4_1_10_982_3)
-				{
-					// Layers Window
-					Detours::DetourCall(__CKPE_OFFSET(11), (std::uintptr_t)&HkSendMsgChangeColorTextForLayers);
-					// Rechange color text
-					auto rva = __CKPE_OFFSET(12);
+					auto rva = addressLibrary->Resolve(1641235) + 0x645;
 					Detours::DetourCall(rva, (std::uintptr_t)&HkSetTextColorForLayers);
 					Detours::DetourCall(rva + 0x214, (std::uintptr_t)&HkSetTextColorForLayers);
 					Detours::DetourCall(rva + 0x457, (std::uintptr_t)&HkSetTextColorForLayers);
 					Detours::DetourCall(rva + 0x471, (std::uintptr_t)&HkSetTextColorForLayers);
 					Detours::DetourCall(rva + 0x530, (std::uintptr_t)&HkSetTextColorForLayers);
 					// Skip edge draw
-					rva = __CKPE_OFFSET(13);
+					rva = addressLibrary->Resolve(1641235) + 0x74F;
 					Detours::DetourCall(rva, (std::uintptr_t)&HkDrawEdgeForLayers);
 					Detours::DetourCall(rva + 0x2C, (std::uintptr_t)&HkDrawEdgeForLayers);
 					Detours::DetourCall(rva + 0x459, (std::uintptr_t)&HkDrawEdgeForLayers);
 					// Icons
-					Detours::DetourCall(__CKPE_OFFSET(14), (std::uintptr_t)&HkImageListForLayers_LoadImageA);
-					Detours::DetourCall(__CKPE_OFFSET(15), (std::uintptr_t)&HkImageListForLayers_LoadImageA);
-				}
+					Detours::DetourCall(addressLibrary->Resolve(1801847) + 0x3E, (std::uintptr_t)&HkImageListForLayers_LoadImageA);
+					Detours::DetourCall(addressLibrary->Resolve(1437462) + 0xEBF, (std::uintptr_t)&HkImageListForLayers_LoadImageA);
 
-				return true;
+					return true;
+				}
 			}
 
 			HWND ModernThemePatchAdditional::Comctl32CreateToolbarEx_1(HWND hwnd, DWORD ws, UINT wID, INT nBitmaps,

@@ -55,123 +55,218 @@ namespace CKPE
 
 			bool UIDeffer::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				// Deferred dialog loading (batched UI updates)
-
-				class FormIteratorHook : public Xbyak::CodeGenerator 
+				if (db)
 				{
-				public:
-					FormIteratorHook(std::uintptr_t Callback) : Xbyak::CodeGenerator()
+					auto verPatch = db->GetVersion();
+					if ((verPatch != 1) && (verPatch != 2))
+						return false;
+
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
+
+					// Deferred dialog loading (batched UI updates)
+
+					class FormIteratorHook : public Xbyak::CodeGenerator
 					{
-						// Allocate enough space for 8 copied parameters (4 regs)
-						mov(ptr[rsp + 0x8], rbx);
-						mov(ptr[rsp + 0x10], rbp);
-						mov(ptr[rsp + 0x18], rsi);
-						push(rdi);
-						sub(rsp, 0x50);
-
-						mov(rbp, rcx);
-						mov(rsi, rdx);
-						mov(rdi, r8);
-						mov(rbx, r9);
-						mov(rax, (std::uintptr_t)&Common::EditorUI::Hook::HKBeginUIDefer);
-						call(rax);
-						mov(rcx, rbp);
-						mov(rdx, rsi);
-						mov(r8, rdi);
-						mov(r9, rbx);
-
-						for (std::uint32_t i = 0; i < 6; i++)
+					public:
+						FormIteratorHook(std::uintptr_t Callback) : Xbyak::CodeGenerator()
 						{
-							mov(rax, ptr[rsp + (0xA8 - i * 0x8)]);
-							mov(ptr[rsp + (0x48 - i * 0x8)], rax);
+							// Allocate enough space for 8 copied parameters (4 regs)
+							mov(ptr[rsp + 0x8], rbx);
+							mov(ptr[rsp + 0x10], rbp);
+							mov(ptr[rsp + 0x18], rsi);
+							push(rdi);
+							sub(rsp, 0x50);
+
+							mov(rbp, rcx);
+							mov(rsi, rdx);
+							mov(rdi, r8);
+							mov(rbx, r9);
+							mov(rax, (std::uintptr_t)&Common::EditorUI::Hook::HKBeginUIDefer);
+							call(rax);
+							mov(rcx, rbp);
+							mov(rdx, rsi);
+							mov(r8, rdi);
+							mov(r9, rbx);
+
+							for (std::uint32_t i = 0; i < 6; i++)
+							{
+								mov(rax, ptr[rsp + (0xA8 - i * 0x8)]);
+								mov(ptr[rsp + (0x48 - i * 0x8)], rax);
+							}
+
+							mov(rax, Callback); // Callback (X params)
+							call(rax);
+							mov(rbx, rax);
+
+							mov(rax, (std::uintptr_t)&Common::EditorUI::Hook::HKEndUIDefer);
+							call(rax);
+							mov(rax, rbx);
+							add(rsp, 0x50);
+							pop(rdi);
+							mov(rsi, ptr[rsp + 0x18]);
+							mov(rbp, ptr[rsp + 0x10]);
+							mov(rbx, ptr[rsp + 0x8]);
+							ret();
 						}
 
-						mov(rax, Callback); // Callback (X params)
-						call(rax);
-						mov(rbx, rax);
+						static VOID Generate(std::uintptr_t Target)
+						{
+							// Manually resolve the called function address. NOTE: This is leaking memory on purpose. It's a mess.
+							CKPE_ASSERT(*(std::uint8_t*)Target == 0xE9);
 
-						mov(rax, (std::uintptr_t)&Common::EditorUI::Hook::HKEndUIDefer);
-						call(rax);
-						mov(rax, rbx);
-						add(rsp, 0x50);
-						pop(rdi);
-						mov(rsi, ptr[rsp + 0x18]);
-						mov(rbp, ptr[rsp + 0x10]);
-						mov(rbx, ptr[rsp + 0x8]);
-						ret();
-					}
+							auto destination = Target + *(std::int32_t*)(Target + 1) + 5;
+							auto hook = new FormIteratorHook(destination);
 
-					static VOID Generate(std::uintptr_t Target)
+							Detours::DetourJump(Target, (std::uintptr_t)hook->getCode());
+						}
+					};
+
+					if (verPatch == 1)
 					{
-						// Manually resolve the called function address. NOTE: This is leaking memory on purpose. It's a mess.
-						CKPE_ASSERT(*(std::uint8_t*)Target == 0xE9);
+						// List view
+						FormIteratorHook::Generate(__CKPE_OFFSET(0));
+						FormIteratorHook::Generate(__CKPE_OFFSET(1));
+						FormIteratorHook::Generate(__CKPE_OFFSET(2));
+						FormIteratorHook::Generate(__CKPE_OFFSET(3));
+						FormIteratorHook::Generate(__CKPE_OFFSET(4));
+						FormIteratorHook::Generate(__CKPE_OFFSET(5));
 
-						auto destination = Target + *(std::int32_t*)(Target + 1) + 5;
-						auto hook = new FormIteratorHook(destination);
+						// Combo box
+						FormIteratorHook::Generate(__CKPE_OFFSET(6));
+						FormIteratorHook::Generate(__CKPE_OFFSET(7));
+						FormIteratorHook::Generate(__CKPE_OFFSET(8));
+						FormIteratorHook::Generate(__CKPE_OFFSET(9));
+						FormIteratorHook::Generate(__CKPE_OFFSET(10));
 
-						Detours::DetourJump(Target, (std::uintptr_t)hook->getCode());
+						Detours::DetourJump(__CKPE_OFFSET(11),
+							(std::uintptr_t)&Common::EditorUI::ComboBoxInsertItemDeferred);
+						Detours::DetourJump(__CKPE_OFFSET(12),
+							(std::uintptr_t)&Common::EditorUI::ListViewInsertItemDeferred);
+						Detours::DetourCall(__CKPE_OFFSET(13), (std::uintptr_t)&sub1);
+						Detours::DetourCall(__CKPE_OFFSET(14), (std::uintptr_t)&sub2);
+						Detours::DetourCall(__CKPE_OFFSET(15), (std::uintptr_t)&sub3);
+
+						pointer_UIDeffer_sub1 = __CKPE_OFFSET(16);
+						pointer_UIDeffer_sub2 = __CKPE_OFFSET(17);
+						pointer_UIDeffer_sub3 = __CKPE_OFFSET(18);
+
+						return true;
 					}
-				};
+					else if (verPatch == 2)
+					{
+						Detours::DetourJump(__CKPE_OFFSET(0),
+							(std::uintptr_t)&Common::EditorUI::ComboBoxInsertItemDeferred);
+						Detours::DetourJump(__CKPE_OFFSET(1),
+							(std::uintptr_t)&Common::EditorUI::ListViewInsertItemDeferred);
+						Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&sub1);
+						Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&sub2);
+						Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&sub3);
 
-				if (verPatch == 1)
-				{
-					// List view
-					FormIteratorHook::Generate(__CKPE_OFFSET(0));
-					FormIteratorHook::Generate(__CKPE_OFFSET(1));
-					FormIteratorHook::Generate(__CKPE_OFFSET(2));
-					FormIteratorHook::Generate(__CKPE_OFFSET(3));
-					FormIteratorHook::Generate(__CKPE_OFFSET(4));
-					FormIteratorHook::Generate(__CKPE_OFFSET(5));
+						pointer_UIDeffer_sub1 = __CKPE_OFFSET(5);
+						pointer_UIDeffer_sub2 = __CKPE_OFFSET(6);
+						pointer_UIDeffer_sub3 = __CKPE_OFFSET(7);
 
-					// Combo box
-					FormIteratorHook::Generate(__CKPE_OFFSET(6));
-					FormIteratorHook::Generate(__CKPE_OFFSET(7));
-					FormIteratorHook::Generate(__CKPE_OFFSET(8));
-					FormIteratorHook::Generate(__CKPE_OFFSET(9));
-					FormIteratorHook::Generate(__CKPE_OFFSET(10));
+						for (std::uint32_t nId = 8; nId < db->GetCount(); nId++)
+							FormIteratorHook::Generate(__CKPE_OFFSET(nId));
 
-					Detours::DetourJump(__CKPE_OFFSET(11),
-						(std::uintptr_t)&Common::EditorUI::ComboBoxInsertItemDeferred);
-					Detours::DetourJump(__CKPE_OFFSET(12),
-						(std::uintptr_t)&Common::EditorUI::ListViewInsertItemDeferred);
-					Detours::DetourCall(__CKPE_OFFSET(13), (std::uintptr_t)&sub1);
-					Detours::DetourCall(__CKPE_OFFSET(14), (std::uintptr_t)&sub2);
-					Detours::DetourCall(__CKPE_OFFSET(15), (std::uintptr_t)&sub3);
-
-					pointer_UIDeffer_sub1 = __CKPE_OFFSET(16);
-					pointer_UIDeffer_sub2 = __CKPE_OFFSET(17);
-					pointer_UIDeffer_sub3 = __CKPE_OFFSET(18);
+						return true;
+					}
 
 					return true;
 				}
-				else if (verPatch == 2)
+				else
 				{
-					Detours::DetourJump(__CKPE_OFFSET(0),
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
+
+					// Deferred dialog loading (batched UI updates)
+
+					class FormIteratorHook : public Xbyak::CodeGenerator
+					{
+					public:
+						FormIteratorHook(std::uintptr_t Callback) : Xbyak::CodeGenerator()
+						{
+							// Allocate enough space for 8 copied parameters (4 regs)
+							mov(ptr[rsp + 0x8], rbx);
+							mov(ptr[rsp + 0x10], rbp);
+							mov(ptr[rsp + 0x18], rsi);
+							push(rdi);
+							sub(rsp, 0x50);
+
+							mov(rbp, rcx);
+							mov(rsi, rdx);
+							mov(rdi, r8);
+							mov(rbx, r9);
+							mov(rax, (std::uintptr_t)&Common::EditorUI::Hook::HKBeginUIDefer);
+							call(rax);
+							mov(rcx, rbp);
+							mov(rdx, rsi);
+							mov(r8, rdi);
+							mov(r9, rbx);
+
+							for (std::uint32_t i = 0; i < 6; i++)
+							{
+								mov(rax, ptr[rsp + (0xA8 - i * 0x8)]);
+								mov(ptr[rsp + (0x48 - i * 0x8)], rax);
+							}
+
+							mov(rax, Callback); // Callback (X params)
+							call(rax);
+							mov(rbx, rax);
+
+							mov(rax, (std::uintptr_t)&Common::EditorUI::Hook::HKEndUIDefer);
+							call(rax);
+							mov(rax, rbx);
+							add(rsp, 0x50);
+							pop(rdi);
+							mov(rsi, ptr[rsp + 0x18]);
+							mov(rbp, ptr[rsp + 0x10]);
+							mov(rbx, ptr[rsp + 0x8]);
+							ret();
+						}
+
+						static VOID Generate(std::uintptr_t Target)
+						{
+							// Manually resolve the called function address. NOTE: This is leaking memory on purpose. It's a mess.
+							CKPE_ASSERT(*(std::uint8_t*)Target == 0xE9);
+
+							auto destination = Target + *(std::int32_t*)(Target + 1) + 5;
+							auto hook = new FormIteratorHook(destination);
+
+							Detours::DetourJump(Target, (std::uintptr_t)hook->getCode());
+						}
+					};
+
+					
+					Detours::DetourJump(addressLibrary->Resolve(1715689),
 						(std::uintptr_t)&Common::EditorUI::ComboBoxInsertItemDeferred);
-					Detours::DetourJump(__CKPE_OFFSET(1),
+					Detours::DetourJump(addressLibrary->Resolve(1448837),
 						(std::uintptr_t)&Common::EditorUI::ListViewInsertItemDeferred);
-					Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&sub1);
-					Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&sub2);
-					Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&sub3);
+					Detours::DetourCall(addressLibrary->Resolve(1555013) + 0x7A, (std::uintptr_t)&sub1);
+					Detours::DetourCall(addressLibrary->Resolve(1779524) + 0x2FBF, (std::uintptr_t)&sub2);
+					Detours::DetourCall(addressLibrary->Resolve(1437328) + 0xAE, (std::uintptr_t)&sub3);
 
-					pointer_UIDeffer_sub1 = __CKPE_OFFSET(5);
-					pointer_UIDeffer_sub2 = __CKPE_OFFSET(6);
-					pointer_UIDeffer_sub3 = __CKPE_OFFSET(7);
+					pointer_UIDeffer_sub1 = addressLibrary->Resolve(1642685);
+					pointer_UIDeffer_sub2 = addressLibrary->Resolve(1432577);
+					pointer_UIDeffer_sub3 = addressLibrary->Resolve(1923593);
 
-					for (std::uint32_t nId = 8; nId < db->GetCount(); nId++)
-						FormIteratorHook::Generate(__CKPE_OFFSET(nId));
+					static constexpr Common::AddressLibrary::AddressID formIteratorIds[] =
+					{ 1383887, 1806908, 1786444, 291414, 1809325, 1756113, 131318, 121590, 1643127};
+
+					for (auto id : formIteratorIds)
+					{
+						auto addr = addressLibrary->Resolve(id);
+						if (!addr)
+							return false;
+
+						FormIteratorHook::Generate(addr);
+					}
 
 					return true;
 				}
-
-				return true;
 			}
 
 			void UIDeffer::sub1(void* Thisptr, void* ControlHandle, std::int64_t Unknown) noexcept(true)

@@ -119,7 +119,7 @@ namespace CKPE
 			//mgr->Register(new Patch::AssertD3D11);
 			//mgr->Register(new Patch::BSArchiveManagerModded);
 			//mgr->Register(new Patch::BSResourceLooseFiles);
-			mgr->Register(new Patch::BSStringRefRE);
+			//mgr->Register(new Patch::BSStringRefRE);
 			mgr->Register(new Patch::CellViewWindow);
 			//mgr->Register(new Patch::ChooseSoundFile);
 			mgr->Register(new Patch::Console);
@@ -160,7 +160,7 @@ namespace CKPE
 			mgr->Register(new Patch::LayersWindow);
 			//mgr->Register(new Patch::LoadShaders);
 			mgr->Register(new Patch::MainWindow);
-			//mgr->Register(new Patch::MemoryManager);
+			mgr->Register(new Patch::MemoryManager);
 			//mgr->Register(new Patch::Misc);
 			mgr->Register(new Patch::ModernThemePatchAdditional);
 			mgr->Register(new Patch::NavMeshWindow);
@@ -183,8 +183,8 @@ namespace CKPE
 			mgr->Register(new Patch::TESDataHandlerHook);
 			mgr->Register(new Patch::TESFormHook);
 			mgr->Register(new Patch::TESHook);
-			//mgr->Register(new Patch::UIDeffer);
-			//mgr->Register(new Patch::UIHotkeys);
+			mgr->Register(new Patch::UIDeffer);
+			mgr->Register(new Patch::UIHotkeys);
 			//mgr->Register(new Patch::Unicode);
 			//mgr->Register(new Patch::VersionControlMergeWorkaround);
 			//mgr->Register(new Patch::WrongUpdateActorWnd);
