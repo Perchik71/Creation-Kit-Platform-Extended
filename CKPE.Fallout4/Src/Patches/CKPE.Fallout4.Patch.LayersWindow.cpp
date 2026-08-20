@@ -76,13 +76,13 @@ namespace CKPE
 				{
 					auto addressLibrary = Common::AddressLibrary::GetSingleton();
 
-					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(addressLibrary->Resolve(112490), (std::uintptr_t)&HKWndProc);
+					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(addressLibrary->Resolve(1437462), (std::uintptr_t)&HKWndProc);
 
 					// Layers Window enable doublebuffered treeview control
-					Detours::DetourCall(addressLibrary->Resolve(117440) + 0x323, (std::uintptr_t)&sub);
+					Detours::DetourCall(addressLibrary->Resolve(1518220) + 0x323, (std::uintptr_t)&sub);
 					// Layers dialog fix resize
-					Detours::DetourCall(addressLibrary->Resolve(117469) + 0x180, (std::uintptr_t)&MoveWindowBody);
-					Detours::DetourCall(addressLibrary->Resolve(117469) + 0x1B0, (std::uintptr_t)&MoveWindowHeader);
+					Detours::DetourCall(addressLibrary->Resolve(1401491) + 0x180, (std::uintptr_t)&MoveWindowBody);
+					Detours::DetourCall(addressLibrary->Resolve(1401491) + 0x1B0, (std::uintptr_t)&MoveWindowHeader);
 
 					return true;
 				}

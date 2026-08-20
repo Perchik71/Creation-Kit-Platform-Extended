@@ -61,6 +61,7 @@ namespace CKPE
 				inline void UnlockUpdateLists() noexcept(true) { lock = false; }
 				void UpdateCellList() noexcept(true);
 				void UpdateObjectList() noexcept(true);
+				[[nodiscard]] bool SupportsAddressLibrary() const noexcept(true) override { return true; }
 			};
 		}
 	}

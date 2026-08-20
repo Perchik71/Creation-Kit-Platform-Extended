@@ -19,16 +19,6 @@ namespace CKPE
 			NG	// 1.10.982+
 		};
 
-		struct VariantID
-		{
-			AddressLibrary::AddressID OG;
-			AddressLibrary::AddressID NG;
-
-			constexpr VariantID(AddressLibrary::AddressID shared) noexcept : OG(shared), NG(shared) {}
-
-			constexpr VariantID(AddressLibrary::AddressID og, AddressLibrary::AddressID ng) noexcept : OG(og), NG(ng) {}
-		};
-
 		class CKPE_COMMON_API AddressLibrary
 		{
 		public:
@@ -39,9 +29,20 @@ namespace CKPE
 				std::uint64_t Id;
 				std::uint64_t Offset;
 			};
+		public:
+			struct VariantID
+			{
+				AddressLibrary::AddressID OG;
+				AddressLibrary::AddressID NG;
 
+				constexpr VariantID(AddressLibrary::AddressID shared) noexcept : OG(shared), NG(shared) {}
+
+				constexpr VariantID(AddressLibrary::AddressID og, AddressLibrary::AddressID ng) noexcept : OG(og), NG(ng) {}
+			};
+		private:
 			std::vector<Entry>* _entries{ nullptr };
 			bool _loaded{ false };
+			AddressLibraryEpoch _epoch{ AddressLibraryEpoch::NG };
 
 			AddressLibrary(const AddressLibrary&) = delete;
 			AddressLibrary& operator=(const AddressLibrary&) = delete;

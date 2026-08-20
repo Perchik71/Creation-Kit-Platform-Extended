@@ -10,6 +10,7 @@
 #include <CKPE.Common.SettingCollection.h>
 #include <CKPE.Common.Docking.h>
 #include <CKPE.Common.LogWindow.h>
+#include <CKPE.Common.AddressLibrary.h>
 #include <string_view>
 #include <string>
 #include <format>
@@ -39,7 +40,8 @@ namespace CKPE
 			void Initialize(const CKPEGameLibraryInterface* a_interface, std::uint64_t a_editor_version,
 				std::uint64_t a_version, const std::wstring& a_dialogs_fn, const std::wstring& a_databases_fn,
 				const std::wstring& a_database_fn, const std::wstring& a_resources_fn,
-				bool support_more_theme = true, const std::wstring& a_address_library_fn = L"") noexcept(true);
+				bool support_more_theme = true, const std::wstring& a_address_library_fn = L"",
+				AddressLibraryEpoch a_address_library_epoch = AddressLibraryEpoch::NG) noexcept(true);
 			void CmdLineHandler();
 
 			[[nodiscard]] bool HasCustomThemeSetting() const noexcept(true);

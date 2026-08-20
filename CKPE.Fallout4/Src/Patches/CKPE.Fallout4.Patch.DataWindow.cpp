@@ -225,13 +225,13 @@ namespace CKPE
 				{
 					auto addressLibrary = Common::AddressLibrary::GetSingleton();
 
-					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(addressLibrary->Resolve(115621) - 0x7B0, (std::uintptr_t)&HKWndProc);
+					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(addressLibrary->Resolve(1940837), (std::uintptr_t)&HKWndProc);
 
-					auto off = addressLibrary->Resolve(122036) - 0x21; 
+					auto off = addressLibrary->Resolve(1631958) + 0xAF;
 
 					SafeWrite::WriteNop(off, 0x1C);
 					SafeWrite::Write(off, { 0x48, 0x89, 0xF9 });
-					Detours::DetourCall(off + 3, (std::uintptr_t) & "GetAuthorPluginName");
+					Detours::DetourCall(off + 3, (std::uintptr_t) &GetAuthorPluginName);
 					SafeWrite::Write(off + 8, { 0x48, 0x89, 0xD9, 0xBA, 0x01, 0x04, 0x00, 0x00 });
 
 					return true;

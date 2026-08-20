@@ -47,6 +47,17 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_FALLOUT_C4_LAST;
 			}
 
+			bool RenameCreationKitApp::SupportsAddressLibrary() const noexcept(true)
+			{
+				switch (VersionLists::GetEditorVersion())
+				{
+				case VersionLists::EDITOR_FALLOUT_C4_1_11_240_0:
+					return true;
+				default:
+					return false;
+				}
+			}
+
 			bool RenameCreationKitApp::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				auto interface = CKPE::Common::Interface::GetSingleton();
@@ -63,7 +74,7 @@ namespace CKPE
 				}
 				else
 				{
-					address = Common::AddressLibrary::GetSingleton()->Resolve(854440);
+					address = Common::AddressLibrary::GetSingleton()->Resolve(457726);
 				}
 
 				if (!address)

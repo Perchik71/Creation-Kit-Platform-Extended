@@ -46,23 +46,43 @@ namespace CKPE
 
 			bool TESHook::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+					auto _interface = CKPE::Common::Interface::GetSingleton();
+					auto base = _interface->GetApplication()->GetBase();
 
-				EditorAPI::TES::Singleton = (const EditorAPI::TES**)__CKPE_OFFSET(0);
+					EditorAPI::TES::Singleton = (const EditorAPI::TES**)__CKPE_OFFSET(0);
 
-				static const EditorAPI::Setting* sSetting_SkyView = (const EditorAPI::Setting*)__CKPE_OFFSET(1);
-				static const EditorAPI::Setting* sSetting_FogEnabled = (const EditorAPI::Setting*)__CKPE_OFFSET(2);
-				static const EditorAPI::Setting* sSetting_ShowMarkers = (const EditorAPI::Setting*)__CKPE_OFFSET(3);
+					static const EditorAPI::Setting* sSetting_SkyView = (const EditorAPI::Setting*)__CKPE_OFFSET(1);
+					static const EditorAPI::Setting* sSetting_FogEnabled = (const EditorAPI::Setting*)__CKPE_OFFSET(2);
+					static const EditorAPI::Setting* sSetting_ShowMarkers = (const EditorAPI::Setting*)__CKPE_OFFSET(3);
 
-				EditorAPI::Sky::Setting_SkyView = &sSetting_SkyView;
-				EditorAPI::Sky::Setting_FogEnabled = &sSetting_FogEnabled;
-				EditorAPI::TES::Setting_ShowMarkers = &sSetting_ShowMarkers;
+					EditorAPI::Sky::Setting_SkyView = &sSetting_SkyView;
+					EditorAPI::Sky::Setting_FogEnabled = &sSetting_FogEnabled;
+					EditorAPI::TES::Setting_ShowMarkers = &sSetting_ShowMarkers;
 
-				return true;
+					return true;
+				}
+				else
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					EditorAPI::TES::Singleton = (const EditorAPI::TES**)addressLibrary->Resolve(268398);
+
+					static const EditorAPI::Setting* sSetting_SkyView = (const EditorAPI::Setting*)addressLibrary->Resolve(431704);
+					static const EditorAPI::Setting* sSetting_FogEnabled = (const EditorAPI::Setting*)addressLibrary->Resolve(376399);
+					static const EditorAPI::Setting* sSetting_ShowMarkers = (const EditorAPI::Setting*)addressLibrary->Resolve(434076);
+
+					EditorAPI::Sky::Setting_SkyView = &sSetting_SkyView;
+					EditorAPI::Sky::Setting_FogEnabled = &sSetting_FogEnabled;
+					EditorAPI::TES::Setting_ShowMarkers = &sSetting_ShowMarkers;
+
+					return true;
+				}
+				
 			}
 		}
 	}

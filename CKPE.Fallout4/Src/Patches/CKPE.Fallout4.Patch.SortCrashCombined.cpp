@@ -49,16 +49,26 @@ namespace CKPE
 
 			bool SortCrashCombined::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				*(std::uintptr_t*)&pointer_SortCrashCombinedPatch_sub =
-					Detours::DetourClassJump(__CKPE_OFFSET(0), &sub);
+					*(std::uintptr_t*)&pointer_SortCrashCombinedPatch_sub =
+						Detours::DetourClassJump(__CKPE_OFFSET(0), &sub);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					*(std::uintptr_t*)&pointer_SortCrashCombinedPatch_sub =
+						Detours::DetourClassJump(Common::AddressLibrary::GetSingleton()->Resolve(1592219), &sub);
+
+					return true;
+				}
 			}
 
 			std::int32_t SortCrashCombined::sub(const void* lsb, const void* rsb, std::size_t size) noexcept(true)

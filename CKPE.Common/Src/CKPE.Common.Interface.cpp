@@ -60,7 +60,7 @@ namespace CKPE
 		void Interface::Initialize(const CKPEGameLibraryInterface* a_interface, std::uint64_t a_editor_version, 
 			std::uint64_t a_version, const std::wstring& a_dialogs_fn, const std::wstring& a_databases_fn, 
 			const std::wstring& a_database_fn, const std::wstring& a_resources_fn, bool support_more_theme,
-			const std::wstring& a_address_library_fn) noexcept(true)
+			const std::wstring& a_address_library_fn, AddressLibraryEpoch a_address_library_epoch) noexcept(true)
 		{
 			if (_cmdline) return;
 
@@ -125,6 +125,7 @@ namespace CKPE
 				bool hasAddressLibrary = false;
 				if (!a_address_library_fn.empty())
 				{
+					AddressLibrary::GetSingleton()->SetEpoch(a_address_library_epoch);
 					hasAddressLibrary = AddressLibrary::GetSingleton()->Load(spath + a_address_library_fn);
 					if (!hasAddressLibrary)
 						_WARNING(L"\tAddress Library \"%s\" requested but failed to load, see log above."sv,

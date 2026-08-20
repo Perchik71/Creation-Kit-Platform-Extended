@@ -64,7 +64,7 @@ namespace CKPE
 				}
 				else
 				{
-					address = Common::AddressLibrary::GetSingleton()->Resolve(116050) + 0xE1;
+					address = Common::AddressLibrary::GetSingleton()->Resolve(1955075) + 0xE1;
 				}
 				
 

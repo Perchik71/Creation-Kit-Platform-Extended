@@ -47,17 +47,30 @@ namespace CKPE
 
 			bool FixRecursiveSorting::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				// Fix for crash (recursive sorting function stack overflow) when saving certain ESP files (i.e SimSettlements.esp)
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub<class TESForm*>);
-				SafeWrite::Write(__CKPE_OFFSET(1), { 0xC3 });
+					// Fix for crash (recursive sorting function stack overflow) when saving certain ESP files (i.e SimSettlements.esp)
+					Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub<class TESForm*>);
+					SafeWrite::Write(__CKPE_OFFSET(1), { 0xC3 });
 
-				return true;
+					return true;
+				}
+				else
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					// Fix for crash (recursive sorting function stack overflow) when saving certain ESP files (i.e SimSettlements.esp)
+					Detours::DetourJump(addressLibrary->Resolve(1939544), (std::uintptr_t)&sub<class TESForm*>);
+					SafeWrite::Write(addressLibrary->Resolve(1507375), {0xC3});
+
+					return true;
+				}
 			}
 		}
 	}

@@ -6,6 +6,7 @@
 
 #include <string>
 #include <cstdint>
+#include <CKPE.Common.AddressLibrary.h>
 
 namespace CKPE
 {

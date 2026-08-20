@@ -72,34 +72,53 @@ namespace CKPE
 
 			bool CellViewWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
+				if (db) {
+					auto verPatch = db->GetVersion();
+					if ((verPatch != 1) && (verPatch != 2))
+						return false;
 
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+					auto _interface = CKPE::Common::Interface::GetSingleton();
+					auto base = _interface->GetApplication()->GetBase();
 
-				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
+					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
 
-				// Allow forms to be filtered in CellViewProc
-				Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&CellViewWindow::sub1);
-				Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&CellViewWindow::sub1);
-				pointer_CellViewWindow_sub1 = __CKPE_OFFSET(4);
+					// Allow forms to be filtered in CellViewProc
+					Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&CellViewWindow::sub1);
+					Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&CellViewWindow::sub1);
+					pointer_CellViewWindow_sub1 = __CKPE_OFFSET(4);
 
-				if ((verPatch == 2))
-				{
-					// Allow objects to be filtered in CellViewProc
-					Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&CellViewWindow::sub2_ver2);
-					pointer_CellViewWindow_sub2 = __CKPE_OFFSET(5);
+					if ((verPatch == 2))
+					{
+						// Allow objects to be filtered in CellViewProc
+						Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&CellViewWindow::sub2_ver2);
+						pointer_CellViewWindow_sub2 = __CKPE_OFFSET(5);
+					}
+					else
+					{
+						// Allow objects to be filtered in CellViewProc
+						Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&CellViewWindow::sub2);
+						pointer_CellViewWindow_sub2 = __CKPE_OFFSET(5);
+					}
+
+					return true;
 				}
 				else
 				{
-					// Allow objects to be filtered in CellViewProc
-					Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&CellViewWindow::sub2);
-					pointer_CellViewWindow_sub2 = __CKPE_OFFSET(5);
-				}
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
 
-				return true;
+					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(addressLibrary->Resolve(1779524), (std::uintptr_t)&HKWndProc);
+
+					// Allow forms to be filtered in CellViewProc
+					Detours::DetourCall(addressLibrary->Resolve(1432577) + 0xFF, (std::uintptr_t)&CellViewWindow::sub1);
+					Detours::DetourCall(addressLibrary->Resolve(477436) + 0x1D1, (std::uintptr_t)&CellViewWindow::sub1);
+					pointer_CellViewWindow_sub1 = addressLibrary->Resolve(1448837);
+				
+					// Allow objects to be filtered in CellViewProc
+					Detours::DetourCall(addressLibrary->Resolve(1923593) + 0x1D3, (std::uintptr_t)&CellViewWindow::sub2_ver2);
+					pointer_CellViewWindow_sub2 = addressLibrary->Resolve(1443863);
+
+					return true;
+				}
 			}
 
 			void CellViewWindow::sub1(HWND ListViewHandle, EditorAPI::Forms::TESForm* Form, 

@@ -46,16 +46,26 @@ namespace CKPE
 
 			bool FixInfiniteLoopPapyrusCompile::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				// Fixed infinite loop by Compile Papyrus Scripts...
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0xC3 });
+					// Fixed infinite loop by Compile Papyrus Scripts...
+					SafeWrite::Write(__CKPE_OFFSET(0), { 0xC3 });
 
-				return true;
+					return true;
+				}
+				else
+				{
+					// Fixed infinite loop by Compile Papyrus Scripts...
+					SafeWrite::Write(Common::AddressLibrary::GetSingleton()->Resolve(422469), {0xC3});
+
+					return true;
+				}
 			}
 		}
 	}

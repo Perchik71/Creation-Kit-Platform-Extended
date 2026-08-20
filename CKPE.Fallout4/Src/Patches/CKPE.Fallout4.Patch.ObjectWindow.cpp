@@ -167,41 +167,63 @@ namespace CKPE
 
 			bool ObjectWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
+				if (db) {
+					auto verPatch = db->GetVersion();
+					if ((verPatch != 1) && (verPatch != 2))
+						return false;
 
-				auto _interface = Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+					auto _interface = Common::Interface::GetSingleton();
+					auto base = _interface->GetApplication()->GetBase();
 
-				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
+					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
 
-				if (verPatch == 1)
-				{
-					// Allow forms to be filtered in ObjectWindowProc
-					pointer_ObjectWindow_sub = __CKPE_OFFSET(3);
-					Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&sub);
+					if (verPatch == 1)
+					{
+						// Allow forms to be filtered in ObjectWindowProc
+						pointer_ObjectWindow_sub = __CKPE_OFFSET(3);
+						Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&sub);
 
-					// Fix resize ObjectWindowProc
-					Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&HKMoveWindow);
-					SafeWrite::WriteNop(__CKPE_OFFSET(2), 0x46);
+						// Fix resize ObjectWindowProc
+						Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&HKMoveWindow);
+						SafeWrite::WriteNop(__CKPE_OFFSET(2), 0x46);
+					}
+					else
+					{
+						pointer_ObjectWindow_sub = __CKPE_OFFSET(4);
+						// Restore function
+						auto rva = __CKPE_OFFSET(3);
+						SafeWrite::WriteNop(rva + 0x10, 0x33);
+						SafeWrite::Write(rva, { 0x48, 0x8B, 0x4C, 0x24, 0x40, 0x48, 0x89, 0xFA, 0x49, 0x89, 0xF0 });
+						Detours::DetourCall(rva + 0xB, (std::uintptr_t)&sub2);
+
+						// Fix resize ObjectWindowProc
+						rva = __CKPE_OFFSET(1);
+						SafeWrite::WriteNop(rva, 0x4B);
+						Detours::DetourCall(rva, (std::uintptr_t)&HKMoveWindow);
+					}
+
+					return true;
 				}
-				else
+				else 
 				{
-					pointer_ObjectWindow_sub = __CKPE_OFFSET(4);
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(addressLibrary->Resolve(1939247), (std::uintptr_t)&HKWndProc);
+
+					pointer_ObjectWindow_sub = addressLibrary->Resolve(1584121);
 					// Restore function
-					auto rva = __CKPE_OFFSET(3);
+					auto rva = addressLibrary->Resolve(1506144) + 0x1F3;
 					SafeWrite::WriteNop(rva + 0x10, 0x33);
 					SafeWrite::Write(rva, { 0x48, 0x8B, 0x4C, 0x24, 0x40, 0x48, 0x89, 0xFA, 0x49, 0x89, 0xF0 });
 					Detours::DetourCall(rva + 0xB, (std::uintptr_t)&sub2);
 
 					// Fix resize ObjectWindowProc
-					rva = __CKPE_OFFSET(1);
+					rva = addressLibrary->Resolve(1713721) + 0x207;
 					SafeWrite::WriteNop(rva, 0x4B);
 					Detours::DetourCall(rva, (std::uintptr_t)&HKMoveWindow);
-				}
 
-				return true;
+					return true;
+				}
 			}
 
 			BOOL WINAPI ObjectWindow::HKMoveWindow(HWND hWindow, INT32 X, INT32 Y, INT32 nWidth, INT32 nHeight, BOOL bRepaint)

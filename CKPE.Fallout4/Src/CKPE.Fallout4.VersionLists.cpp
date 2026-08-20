@@ -5,6 +5,7 @@
 #include <vector>
 #include <unordered_map>
 #include <windows.h>
+#include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.Module.h>
 #include <CKPE.Fallout4.VersionLists.h>
 

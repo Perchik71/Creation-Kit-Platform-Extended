@@ -50,35 +50,51 @@ namespace CKPE
 
 			bool FakeMoveLight::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db) {
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+					auto _interface = CKPE::Common::Interface::GetSingleton();
+					auto base = _interface->GetApplication()->GetBase();
 
-				// When lightbox and light nodes move together, and when lightbox is in the first queue, 
-				// light gets a relative position from the origin, is it caused by the fact that coordinates are not stored 
-				// for it in the cache ???
+					// When lightbox and light nodes move together, and when lightbox is in the first queue, 
+					// light gets a relative position from the origin, is it caused by the fact that coordinates are not stored 
+					// for it in the cache ???
 
-				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetPosition =
-					Detours::DetourJump(__CKPE_OFFSET(1), (std::uintptr_t)&SetPosition);
+					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetPosition =
+						Detours::DetourJump(__CKPE_OFFSET(1), (std::uintptr_t)&SetPosition);
 
-				auto offset = __CKPE_OFFSET(0);
+					auto offset = __CKPE_OFFSET(0);
 
-				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-				{
-					SafeWrite::WriteNop(offset + 0x37A, 0x2D);
-					SafeWrite::Write(offset + 0x37A, { 0x48, 0x8D, 0x55, 0x9F, 0x48, 0x89, 0xD9, 0x4C, 0x8D, 0x46, 0x70 });
-					Detours::DetourCall(offset + 0x385, (std::uintptr_t)&SetPosition);
+					if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+					{
+						SafeWrite::WriteNop(offset + 0x37A, 0x2D);
+						SafeWrite::Write(offset + 0x37A, { 0x48, 0x8D, 0x55, 0x9F, 0x48, 0x89, 0xD9, 0x4C, 0x8D, 0x46, 0x70 });
+						Detours::DetourCall(offset + 0x385, (std::uintptr_t)&SetPosition);
+					}
+					else
+					{
+						SafeWrite::WriteNop(offset + 0x422, 0x2D);
+						SafeWrite::Write(offset + 0x422, { 0x48, 0x8D, 0x55, 0xB7, 0x4C, 0x89, 0xE1, 0x4D, 0x8D, 0x46, 0x70 });
+						Detours::DetourCall(offset + 0x42D, (std::uintptr_t)&SetPosition);
+					}
+
+					return true;
 				}
 				else
 				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetPosition = Detours::DetourJump(addressLibrary->Resolve(1639222), (std::uintptr_t)&SetPosition);
+
+					auto offset = addressLibrary->Resolve(1939125);
+
 					SafeWrite::WriteNop(offset + 0x422, 0x2D);
 					SafeWrite::Write(offset + 0x422, { 0x48, 0x8D, 0x55, 0xB7, 0x4C, 0x89, 0xE1, 0x4D, 0x8D, 0x46, 0x70 });
 					Detours::DetourCall(offset + 0x42D, (std::uintptr_t)&SetPosition);
-				}
 
-				return true;
+					return true;
+				}
 			}
 
 			void FakeMoveLight::SetPosition(EditorAPI::Forms::TESObjectREFR* refr,
