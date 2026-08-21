@@ -4,6 +4,7 @@
 
 #include <windows.h>
 #include <CKPE.Module.h>
+#include <CKPE.FileUtils.h>
 #include <CKPE.PathUtils.h>
 #include <stdexcept>
 
@@ -80,6 +81,16 @@ namespace CKPE
 		auto* ntHeader = (const IMAGE_NT_HEADERS*)(base + dosHeader->e_lfanew);
 		// FileHeader is PE32/64 independent
 		return ntHeader->FileHeader.Machine == IMAGE_FILE_MACHINE_AMD64;
+	}
+
+	std::wstring Module::GetFilePath() const noexcept(true)
+	{
+		return _fname ? PathUtils::ExtractFilePath(*_fname) : std::wstring();
+	}
+
+	std::optional<Version> Module::GetFileVersion() const noexcept
+	{
+		return _fname ? FileUtils::GetFileVersion(*_fname) : std::nullopt;
 	}
 
 	const void* Module::Resource::GetProcAddress(const char* exportName) const noexcept(true)

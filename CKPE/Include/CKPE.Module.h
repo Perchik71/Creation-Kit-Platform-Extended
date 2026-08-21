@@ -38,11 +38,12 @@ namespace CKPE
 {
 	class CKPE_API Module
 	{
+	protected:
 		const void* _handle{ nullptr };
 		std::wstring* _fname{ nullptr };
 		std::array<Segment, Segment::total> _segments;
 		std::array<PEDirectory, PEDirectory::total> _directories;
-
+	private:
 		Module() noexcept(true) = default;
 		Module(const Module&) = delete;
 		Module(Module&&) = delete;
@@ -58,6 +59,8 @@ namespace CKPE
 
 		[[nodiscard]] bool Is64() const noexcept(true);
 		[[nodiscard]] inline std::wstring GetFileName() const noexcept(true) { return _fname ? *_fname : L""; }
+		[[nodiscard]] virtual std::wstring GetFilePath() const noexcept(true);
+		[[nodiscard]] std::optional<Version> GetFileVersion() const noexcept(true);
 		[[nodiscard]] constexpr virtual std::uintptr_t GetBase() const noexcept(true) { return (std::uintptr_t)_handle; }
 		[[nodiscard]] constexpr Segment GetSegment(Segment::Name a_segment) const noexcept(true) { return _segments[a_segment]; }
 		[[nodiscard]] constexpr PEDirectory GetPEDirectory(PEDirectory::Name a_segment) const noexcept(true) { return _directories[a_segment]; }

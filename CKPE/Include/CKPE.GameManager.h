@@ -68,7 +68,7 @@ namespace CKPE
 	
 		[[nodiscard]] bool Initialize(Game game) noexcept(true);
 		[[nodiscard]] static const GameManager* GetSingleton() noexcept(true);
-		[[nodiscard]] inline constexpr virtual Game GetType() const noexcept(true) { return _game_type; }
+		[[nodiscard]] constexpr virtual Game GetType() const noexcept(true) { return _game_type; }
 		[[nodiscard]] virtual std::uint32_t QueryLib(std::wstring& version);
 		[[nodiscard]] virtual bool LoadLib();
 

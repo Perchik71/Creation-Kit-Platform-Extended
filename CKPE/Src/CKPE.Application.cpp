@@ -16,13 +16,9 @@ namespace CKPE
 		Process()
 	{
 		_fname = new std::wstring;
-		_fpath = new std::wstring;
 
 		if (_fname)
 			*_fname = PathUtils::GetApplicationFileName();
-
-		if (_fpath)
-			*_fpath = PathUtils::GetApplicationPath();
 	}
 
 	Application::~Application() noexcept(true)
@@ -31,12 +27,6 @@ namespace CKPE
 		{
 			delete _fname;
 			_fname = nullptr;
-		}
-
-		if (_fpath)
-		{
-			delete _fpath;
-			_fpath = nullptr;
 		}
 
 		auto slog = const_cast<Logger*>(Logger::GetSingleton());

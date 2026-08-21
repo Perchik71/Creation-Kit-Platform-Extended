@@ -143,7 +143,7 @@ namespace CKPE
 
                 _moduleBase = app->GetBase();
 
-                auto ckpe_ver = FileUtils::GetFileVersion(std::wstring(app->GetPath()) + L"CKPE.dll");
+                auto ckpe_ver = FileUtils::GetFileVersion(std::wstring(app->GetFilePath()) + L"CKPE.dll");
                 if (ckpe_ver.has_value())
                 {
                     auto& v = ckpe_ver.value();

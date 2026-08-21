@@ -34,7 +34,7 @@ namespace CKPE
 
 		_game_type = game;
 		auto _app = Application::GetSingleton();
-		auto _path = std::wstring(_app->GetPath()) + GAME_LIBRARIES_FILENAME[_game_type];
+		auto _path = std::wstring(_app->GetFilePath()) + GAME_LIBRARIES_FILENAME[_game_type];
 
 		_MESSAGE(L"Load game library: \"%s\"", GAME_LIBRARIES_FILENAME[_game_type]);
 
@@ -102,7 +102,7 @@ namespace CKPE
 		_query = (_CKPEGameLibrary_Query)lib.GetProcAddress("CKPEGameLibrary_Query");	
 		_interface.interfaceVersion = CKPEGameLibraryInterface::kInterfaceVersion;
 		
-		auto ver = FileUtils::GetFileVersion(std::wstring(_app->GetPath()) + L"CKPE.dll");
+		auto ver = FileUtils::GetFileVersion(std::wstring(_app->GetFilePath()) + L"CKPE.dll");
 		if (ver.has_value())
 			_interface.ckpeVersion = ver.value();
 

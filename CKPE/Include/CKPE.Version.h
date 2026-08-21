@@ -69,8 +69,8 @@ namespace CKPE
 
 		[[nodiscard]] constexpr value_type major() const noexcept(true) { return _impl[0]; }
 		[[nodiscard]] constexpr value_type minor() const noexcept(true) { return _impl[1]; }
-		[[nodiscard]] constexpr value_type patch() const noexcept(true) { return _impl[2]; }
-		[[nodiscard]] constexpr value_type build() const noexcept(true) { return _impl[3]; }
+		[[nodiscard]] constexpr value_type patch() const noexcept(true) { return _impl[3]; }
+		[[nodiscard]] constexpr value_type build() const noexcept(true) { return _impl[2]; }
 
 		[[nodiscard]] constexpr std::string string(const std::string_view a_separator = "."sv) const
 		{

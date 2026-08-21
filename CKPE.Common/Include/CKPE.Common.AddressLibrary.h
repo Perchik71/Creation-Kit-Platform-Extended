@@ -89,7 +89,7 @@ namespace CKPE
 			virtual ~AddressLibrary() noexcept(true);
 
 			// Returns false (and logs the reason) on any missing/malformed/unsorted file - never throws
-			virtual bool Load(const std::wstring& fname) noexcept(true);
+			virtual bool Load(const std::wstring& fname_pak) noexcept(true);
 			virtual void Clear() noexcept(true);
 
 			[[nodiscard]] constexpr bool IsLoaded() const noexcept(true) { return _loaded; }

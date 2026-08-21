@@ -360,7 +360,7 @@ namespace CKPE
 		void LogWindow::LoadWarningBlacklist() noexcept(true)
 		{
 			auto app = Interface::GetSingleton()->GetApplication();
-			auto spath = std::wstring(app->GetPath());
+			auto spath = std::wstring(app->GetFilePath());
 			
 			if (!PathUtils::FileExists(spath + FILE_BLACKLIST))
 				return;

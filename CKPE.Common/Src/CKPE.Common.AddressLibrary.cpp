@@ -6,9 +6,11 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Application.h>
 #include <CKPE.PathUtils.h>
+#include <CKPE.Zipper.h>
 #include <CKPE.Stream.h>
 #include <CKPE.Exception.h>
 #include <algorithm>
+#include <format>
 
 using namespace std::literals;
 
@@ -38,44 +40,73 @@ namespace CKPE
 			_loaded = false;
 		}
 
-		bool AddressLibrary::Load(const std::wstring& fname) noexcept(true)
+		bool AddressLibrary::Load(const std::wstring& fname_pak) noexcept(true)
 		{
 			Clear();
 
 			try
 			{
-				if (!PathUtils::FileExists(fname))
-					throw RuntimeError(L"AddressLibrary::Load file \"{}\" no found", fname);
+				if (!PathUtils::FileExists(fname_pak))
+					throw RuntimeError(L"AddressLibrary::Load file \"{}\" no found", fname_pak);
 
-				FileStream stm(fname, FileStream::fmOpenRead);
+				auto ver = Application::GetSingleton()->GetFileVersion();
+				if (!ver.has_value())
+					throw RuntimeError(L"AddressLibrary::Load get version game failed");
 
-				std::uint64_t count = 0;
-				if (stm.Read(&count, sizeof(count)) != sizeof(count))
-					throw RuntimeError(L"AddressLibrary::Load file \"{}\" is broken (couldn't read header)", fname);
+				_version = ver.value();
+				const auto db_name = std::format("version-{}.bin", _version.string("-"));
 
-				auto expected_size = static_cast<std::uint64_t>(sizeof(count) + count * sizeof(Entry));
-				if (stm.GetSize() != expected_size)
-					throw RuntimeError(L"AddressLibrary::Load file \"{}\" has an unexpected size", fname);
+				UnZipper zip(fname_pak);
+				if (!zip.HasOpen())
+					throw RuntimeError(L"AddressLibrary::Load file \"{}\" can't opened", fname_pak);
 
-				_entries->resize((std::size_t)count);
-
-				if (count)
+				for (std::uint32_t i = 0; i < zip.GetEntries()->Count(); i++)
 				{
-					auto bytes_to_read = static_cast<std::uint32_t>(count * sizeof(Entry));
-					if (stm.Read(_entries->data(), bytes_to_read) != bytes_to_read)
-						throw RuntimeError(L"AddressLibrary::Load file \"{}\" is broken (short read)", fname);
+					auto entry = zip.GetEntries()->At(i);
+					if (entry.Empty() || !entry->Get()) continue;
+
+					auto sname = entry->Get()->GetName();
+					if (!_stricmp(sname.c_str(), db_name.c_str()))
+					{
+						MemoryStream mstm;
+						if (!entry->Get()->ReadToStream(mstm))
+							throw RuntimeError(L"Relocator::Open file \"{}\" in \"{}\" is broken", StringUtils::WinCPToUtf16(db_name), fname_pak);
+							
+						// sets begin
+						mstm.SetPosition(0);
+
+						std::uint64_t count = 0;
+						if (mstm.Read(&count, sizeof(count)) != sizeof(count))
+							throw RuntimeError("AddressLibrary::Load file \"{}\" is broken (couldn't read header)", sname);
+
+						auto expected_size = static_cast<std::uint64_t>(sizeof(count) + count * sizeof(Entry));
+						// 0 bytes end so -1
+						if ((mstm.GetSize() - 1) != expected_size)
+							throw RuntimeError("AddressLibrary::Load file \"{}\" has an unexpected size ({}/{})", sname, mstm.GetSize(), expected_size);
+
+						_entries->resize((std::size_t)count);
+
+						if (count)
+						{
+							auto bytes_to_read = static_cast<std::uint32_t>(count * sizeof(Entry));
+							if (mstm.Read(_entries->data(), bytes_to_read) != bytes_to_read)
+								throw RuntimeError("AddressLibrary::Load file \"{}\" is broken (short read)", sname);
+						}
+
+						for (std::size_t i = 1; i < _entries->size(); i++)
+							if ((*_entries)[i].Id <= (*_entries)[i - 1].Id)
+								throw RuntimeError("AddressLibrary::Load file \"{}\" entries aren't sorted/unique by id", sname);
+
+						_loaded = true;
+					}
 				}
+				
+				if (_loaded)
+					_MESSAGE("Address Library \"%s\" loaded (%u entries)"sv, db_name.c_str(), static_cast<std::uint32_t>(_entries->size()));
+				else
+					_ERROR("Address Library \"%s\" file no found."sv, db_name.c_str());
 
-				for (std::size_t i = 1; i < _entries->size(); i++)
-				{
-					if ((*_entries)[i].Id <= (*_entries)[i - 1].Id)
-						throw RuntimeError(L"AddressLibrary::Load file \"{}\" entries aren't sorted/unique by id", fname);
-				}
-
-				_loaded = true;
-				_MESSAGE(L"\tAddress Library \"%s\" loaded (%u entries)"sv, fname.c_str(), static_cast<std::uint32_t>(_entries->size()));
-
-				return true;
+				return _loaded;
 			}
 			catch (const std::exception& e)
 			{
