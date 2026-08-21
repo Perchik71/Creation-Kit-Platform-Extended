@@ -10,6 +10,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.UIVarCommon.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.Common.UIListView.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -198,26 +199,43 @@ namespace CKPE
 
 			bool DataWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
+				if (db) {
+					auto verPatch = db->GetVersion();
+					if ((verPatch != 1) && (verPatch != 2))
+						return false;
 
-				auto _interface = Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+					auto _interface = Common::Interface::GetSingleton();
+					auto base = _interface->GetApplication()->GetBase();
 
-				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
+					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
 
-				if (verPatch == 2)
+					if (verPatch == 2)
+					{
+						auto off = __CKPE_OFFSET(1) + 7;
+
+						SafeWrite::WriteNop(off, 0x1C);
+						SafeWrite::Write(off, { 0x48, 0x89, 0xF9 });
+						Detours::DetourCall(off + 3, (std::uintptr_t)&GetAuthorPluginName);
+						SafeWrite::Write(off + 8, { 0x48, 0x89, 0xD9, 0xBA, 0x01, 0x04, 0x00, 0x00 });
+					}
+
+					return true;
+				}
+				else
 				{
-					auto off = __CKPE_OFFSET(1) + 7;
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(addressLibrary->Resolve(1940837), (std::uintptr_t)&HKWndProc);
+
+					auto off = addressLibrary->Resolve(1631958) + 0xAF;
 
 					SafeWrite::WriteNop(off, 0x1C);
 					SafeWrite::Write(off, { 0x48, 0x89, 0xF9 });
-					Detours::DetourCall(off + 3, (std::uintptr_t)&GetAuthorPluginName);
+					Detours::DetourCall(off + 3, (std::uintptr_t) &GetAuthorPluginName);
 					SafeWrite::Write(off + 8, { 0x48, 0x89, 0xD9, 0xBA, 0x01, 0x04, 0x00, 0x00 });
-				}
 
-				return true;
+					return true;
+				}
 			}
 
 			INT_PTR CALLBACK DataWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)

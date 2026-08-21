@@ -46,21 +46,34 @@ namespace CKPE
 
 			bool AllowMultipleWindowAndMaster::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 2) && (verPatch != 3))
-					return false;
+				if (db) {
+					auto verPatch = db->GetVersion();
+					if ((verPatch != 2) && (verPatch != 3))
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				if (verPatch == 2)
-					SafeWrite::Write(__CKPE_OFFSET(0), { 0xE9, 0xDE, 0x00, 0x00, 0x00, 0x90 });
+					if (verPatch == 2)
+						SafeWrite::Write(__CKPE_OFFSET(0), { 0xE9, 0xDE, 0x00, 0x00, 0x00, 0x90 });
+					else
+						SafeWrite::Write(__CKPE_OFFSET(0), { 0xE9, 0xD4, 0x00, 0x00, 0x00, 0x90 });
+
+					SafeWrite::Write(__CKPE_OFFSET(1), { 0xEB });
+
+					return true;
+				}
 				else
-					SafeWrite::Write(__CKPE_OFFSET(0), { 0xE9, 0xD4, 0x00, 0x00, 0x00, 0x90 });
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
 
-				SafeWrite::Write(__CKPE_OFFSET(1), { 0xEB });
+					SafeWrite::Write(addressLibrary->Resolve(1942406) + 0x1EA, {0xE9, 0xD4, 0x00, 0x00, 0x00, 0x90});
 
-				return true;
+					SafeWrite::Write(addressLibrary->Resolve(2054943) + 0x703, {0xEB});
+
+					return true;
+				}
+				
 			}
 		}
 	}

@@ -9,6 +9,7 @@
 #include <CKPE.Graphics.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.LayersWindow.h>
@@ -54,21 +55,39 @@ namespace CKPE
 
 			bool LayersWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db) {
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto _interface = Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+					auto _interface = Common::Interface::GetSingleton();
+					auto base = _interface->GetApplication()->GetBase();
 
-				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
+					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
 
-				// Layers Window enable doublebuffered treeview control
-				Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&sub);
-				// Layers dialog fix resize
-				Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&MoveWindowBody);
-				Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&MoveWindowHeader);
+					// Layers Window enable doublebuffered treeview control
+					Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&sub);
+					// Layers dialog fix resize
+					Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&MoveWindowBody);
+					Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&MoveWindowHeader);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(addressLibrary->Resolve(1437462), (std::uintptr_t)&HKWndProc);
+
+					// Layers Window enable doublebuffered treeview control
+					Detours::DetourCall(addressLibrary->Resolve(1518220) + 0x323, (std::uintptr_t)&sub);
+					// Layers dialog fix resize
+					Detours::DetourCall(addressLibrary->Resolve(1401491) + 0x180, (std::uintptr_t)&MoveWindowBody);
+					Detours::DetourCall(addressLibrary->Resolve(1401491) + 0x1B0, (std::uintptr_t)&MoveWindowHeader);
+
+					return true;
+				}
+
+				
 			}
 
 			INT_PTR CALLBACK LayersWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)

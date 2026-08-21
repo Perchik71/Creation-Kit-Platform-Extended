@@ -46,15 +46,24 @@ namespace CKPE
 
 			bool DontMatchForms::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db) {
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0xEB });
+					SafeWrite::Write(__CKPE_OFFSET(0), { 0xEB });
 
-				return true;
+					return true;
+				}
+				else
+				{
+					SafeWrite::Write(Common::AddressLibrary::GetSingleton()->Resolve(1477228) + 0x313, {0xEB});
+
+					return true;
+				}
+				
 			}
 		}
 	}

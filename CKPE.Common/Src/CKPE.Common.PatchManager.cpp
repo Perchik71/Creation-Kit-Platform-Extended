@@ -5,6 +5,7 @@
 #include <memory>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.PatchManager.h>
+#include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.PathUtils.h>
 #include <CKPE.StringUtils.h>
 #include <CKPE.Exception.h>
@@ -55,7 +56,8 @@ namespace CKPE
 			if (entry.patch->IsActive())
 				return true;
 
-			if (!entry.db)
+			bool viaAddressLibrary = entry.patch->SupportsAddressLibrary() && AddressLibrary::GetSingleton()->IsLoaded();
+			if (!entry.db && !viaAddressLibrary)
 			{
 				_WARNING("The \"%s\" patch can't be installed, there is no data in the database",
 					entry.patch->GetName().c_str());
@@ -209,12 +211,15 @@ namespace CKPE
 			}
 
 			auto db = Relocator::GetSingleton()->GetByName(name);
-			if (!db)
+			bool viaAddressLibrary = patch->SupportsAddressLibrary() && AddressLibrary::GetSingleton()->IsLoaded();
+			if (!db && !viaAddressLibrary)
 			{
 				_ERROR("PatchManager::Register no found this patch name \"%s\" in db", name.c_str());
 				return;
 			}
 
+			// db may be nullptr here 
+			// only for a patch that opted in via SupportsAddressLibrary() 
 			_entries->push_back({ db, patch });
 		}
 

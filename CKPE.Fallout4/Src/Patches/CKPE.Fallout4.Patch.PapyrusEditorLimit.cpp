@@ -6,6 +6,7 @@
 #include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.PapyrusEditorLimit.h>
 
@@ -47,16 +48,26 @@ namespace CKPE
 
 			bool PapyrusEditorLimit::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
 				auto interface = CKPE::Common::Interface::GetSingleton();
 				auto base = interface->GetApplication()->GetBase();
+
+				std::uintptr_t address = 0;
+
+				if (db) {
+					if (db->GetVersion() != 1)
+						return false;
+
+					address = __CKPE_OFFSET(0);
+				}
+				else
+				{
+					address = Common::AddressLibrary::GetSingleton()->Resolve(1342298) + 0x12C;
+				}
 
 				//
 				// Raise the papyrus script editor text limit to 500k characters from 64k
 				//
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
+				Detours::DetourCall(address, (std::uintptr_t)&sub);
 
 				return true;
 			}

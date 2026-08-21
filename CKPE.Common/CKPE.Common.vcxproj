@@ -130,6 +130,7 @@
     <ClCompile Include="..\Dependencies\jDialogs\include\jdialogs.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Src\CKPE.Common.AboutWindow.cpp" />
+    <ClCompile Include="Src\CKPE.Common.AddressLibrary.cpp" />
     <ClCompile Include="Src\CKPE.Common.ClassicTheme.cpp" />
     <ClCompile Include="Src\CKPE.Common.CrashHandler.cpp" />
     <ClCompile Include="Src\CKPE.Common.CreatePatterns.cpp" />
@@ -187,6 +188,7 @@
   <ItemGroup>
     <ClInclude Include="..\Dependencies\jDialogs\include\jdialogs.h" />
     <ClInclude Include="Include\CKPE.Common.AboutWindow.h" />
+    <ClInclude Include="Include\CKPE.Common.AddressLibrary.h" />
     <ClInclude Include="Include\CKPE.Common.Docking.h" />
     <ClInclude Include="Include\CKPE.Common.FormInfoOutputWindow.h" />
     <ClInclude Include="Include\CKPE.Common.KillerGuardMalware.h" />

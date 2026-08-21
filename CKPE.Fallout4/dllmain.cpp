@@ -50,7 +50,9 @@ extern "C"
 		auto interface = CKPE::Common::Interface::GetSingleton();
 		interface->Initialize(ckpe, CKPE::Fallout4::VersionLists::GetEditorVersionByNum(), CKPEGameLibrary_Data.dataVersion,
 			dialog_pakfn, database_pakfn, CKPE::Fallout4::VersionLists::GetDatabaseFileName(),
-			CKPE::Fallout4::VersionLists::GetExternalResourcePackageFileName());
+			CKPE::Fallout4::VersionLists::GetExternalResourcePackageFileName(), true,
+			CKPE::Fallout4::VersionLists::GetAddressLibraryRelativePath()
+		);
 		interface->CmdLineHandler();
 		auto runner = CKPE::Fallout4::Runner::GetSingleton();
 		return runner->Install();

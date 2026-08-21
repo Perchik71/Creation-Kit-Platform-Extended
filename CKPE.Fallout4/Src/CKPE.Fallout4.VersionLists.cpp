@@ -25,24 +25,24 @@ namespace CKPE
 			{ 0x49E45284ul, VersionLists::EDITOR_FALLOUT_C4_1_11_137_0		},	// Default
 		};
 
-		// Список устаревших версий редакторов
+		// Список устаревших версий редакторов - outdated versions
 		static std::vector<VersionLists::EDITOR_EXECUTABLE_TYPE> _soutdatedEditorVersion =
 		{
 			VersionLists::EDITOR_FALLOUT_C4_1_10_943_1,
 			//VersionLists::EDITOR_FALLOUT_C4_1_10_982_3,
 		};
 
-		// Список ключевых смещений в исполняемых файлах, допущенных к запуску (но не точно)
-		static std::unordered_map<uint32_t,
-			std::pair<std::string_view, VersionLists::EDITOR_EXECUTABLE_TYPE>> _sallowedEditorVersion2 =
+		// Список ключевых смещений в исполняемых файлах, допущенных к запуску (но не точно) - offsets in exe holding name
+		static std::unordered_map<uint32_t, std::pair<std::string_view, VersionLists::EDITOR_EXECUTABLE_TYPE>> _sallowedEditorVersion2 =
 		{
 			{ 0x3896168ul, { "1.10.162.0",	VersionLists::EDITOR_FALLOUT_C4_1_10_162_0		} },
 			//{ 0x2F8D1C8ul, { "1.10.943.1",	VersionLists::EDITOR_FALLOUT_C4_1_10_943_1	} },
 			{ 0x2F8D298ul, { "1.10.982.3",	VersionLists::EDITOR_FALLOUT_C4_1_10_982_3		} },
 			{ 0x3017E68ul, { "1.11.137.0",	VersionLists::EDITOR_FALLOUT_C4_1_11_137_0		} },
+			{ 0x30284D8ul, { "1.11.240.0",  VersionLists::EDITOR_FALLOUT_C4_1_11_240_0		} },
 		};
 
-		// Список версий
+		// Список версий - version list
 		static std::vector<std::uint64_t> _sEditorVersion =
 		{
 			0,
@@ -50,9 +50,10 @@ namespace CKPE
 			MAKE_EXE_VERSION_EX(1, 10, 943, 1),
 			MAKE_EXE_VERSION_EX(1, 10, 982, 3),
 			MAKE_EXE_VERSION_EX(1, 11, 137, 0),
+			MAKE_EXE_VERSION_EX(1, 11, 240, 0),
 		};
 
-		// Список названий редакторов
+		// Список названий редакторов - editor names
 		static std::vector<std::wstring_view> _sEditorVersionStr =
 		{
 			L"Unknown version",
@@ -60,15 +61,23 @@ namespace CKPE
 			L"Fallout 4 [v1.10.943.1]",
 			L"Fallout 4 [v1.10.982.3]",
 			L"Fallout 4 [v1.11.137.0]",
+			L"Fallout 4 [v1.11.240.0]",
 		};
 
-		// Список имён файлов базы данных
+		// Список имён файлов базы данных - db list
 		static std::unordered_map<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view> _sallowedDatabaseVersion =
 		{
 			{ VersionLists::EDITOR_FALLOUT_C4_1_10_162_0,	L"CreationKitPlatformExtended_FO4_1_10_162.database"	},
 			//{ VersionLists::EDITOR_FALLOUT_C4_1_10_943_1,	L"CreationKitPlatformExtended_FO4_1_10_943_1.database"	},
 			{ VersionLists::EDITOR_FALLOUT_C4_1_10_982_3,	L"CreationKitPlatformExtended_FO4_1_10_982_3.database"	},
 			{ VersionLists::EDITOR_FALLOUT_C4_1_11_137_0,	L"CreationKitPlatformExtended_FO4_1_11_137_0.database" },
+		};
+
+		
+		// CK Address Library
+		static std::unordered_map<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view> _sallowedAddressLibraryVersion =
+		{
+			{ VersionLists::EDITOR_FALLOUT_C4_1_11_240_0,	L"version-1-11-240-0.bin" },
 		};
 
 		void VersionLists::Verify()
@@ -80,7 +89,7 @@ namespace CKPE
 				// Защита в случаи выхода за пределы при проверке
 				__try
 				{
-					// Сравнение по указанному смещению нужной строки
+					// Сравнение по указанному смещению нужной строки - string comparison at offset
 					if (!_stricmp((const char*)((std::uintptr_t)GetModuleHandleA(nullptr) + editorVersionIterator2->first),
 						editorVersionIterator2->second.first.data()))
 					{
@@ -123,6 +132,17 @@ namespace CKPE
 			return (it != _sallowedDatabaseVersion.end()) ? it->second.data() : L"";
 		}
 
+		bool VersionLists::HasAddressLibrarySupport() noexcept(true)
+		{
+			return _sallowedAddressLibraryVersion.find(_seditor_ver) != _sallowedAddressLibraryVersion.end();
+		}
+
+		std::wstring VersionLists::GetAddressLibraryFileName() noexcept(true)
+		{
+			auto it = _sallowedAddressLibraryVersion.find(_seditor_ver);
+			return (it != _sallowedAddressLibraryVersion.end()) ? it->second.data() : L"";
+		}
+
 		std::wstring VersionLists::GetEditorVersionByString() noexcept(true)
 		{
 			return (_sEditorVersionStr.size() > _seditor_ver) ? _sEditorVersionStr[_seditor_ver].data() : _sEditorVersionStr[0].data();
@@ -136,6 +156,16 @@ namespace CKPE
 		VersionLists::EDITOR_EXECUTABLE_TYPE VersionLists::GetEditorVersion() noexcept(true)
 		{
 			return _seditor_ver;
+		}
+
+		std::wstring VersionLists::GetAddressLibraryRelativePath() noexcept(true)
+		{
+			std::wstring path = L"CKPEBins\\";
+			path += GetGameName();
+			path += L"\\";
+			path += GetAddressLibraryFileName();
+
+			return path;
 		}
 	}
 }

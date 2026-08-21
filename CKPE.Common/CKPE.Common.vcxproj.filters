@@ -122,6 +122,9 @@
     <ClCompile Include="Src\CKPE.Common.AboutWindow.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.AddressLibrary.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
     <ClCompile Include="Src\CKPE.Common.Registry.cpp">
       <Filter>API</Filter>
     </ClCompile>
@@ -310,6 +313,9 @@
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.Common.AboutWindow.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.AddressLibrary.h">
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.Common.Registry.h">

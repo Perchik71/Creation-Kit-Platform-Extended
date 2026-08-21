@@ -89,50 +89,91 @@ namespace CKPE
 
 			bool RenderWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
+				if (db) {
+					auto verPatch = db->GetVersion();
+					if ((verPatch != 1) && (verPatch != 2))
+						return false;
 
-				auto _interface = Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+					auto _interface = Common::Interface::GetSingleton();
+					auto base = _interface->GetApplication()->GetBase();
 
-				StepInRender = _READ_OPTION_FLOAT("Graphics", "fStepInRender", 15.f);
-				StepInRender = std::min(std::max(StepInRender, 15.f), 100.f);
+					StepInRender = _READ_OPTION_FLOAT("Graphics", "fStepInRender", 15.f);
+					StepInRender = std::min(std::max(StepInRender, 15.f), 100.f);
 
-				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
-				_TempDrawArea = (Area*)__CKPE_OFFSET(1);
+					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
+					_TempDrawArea = (Area*)__CKPE_OFFSET(1);
 
-				EditorAPI::BGSRenderWindow::Singleton = __CKPE_OFFSET(3);
+					EditorAPI::BGSRenderWindow::Singleton = __CKPE_OFFSET(3);
 
-				EditorAPI::BGSRenderWindow::Settings::Movement::FlagsSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(4);
-				EditorAPI::BGSRenderWindow::Settings::Movement::SnapGridValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(5);
-				EditorAPI::BGSRenderWindow::Settings::Movement::SnapAngleValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(6);
-				EditorAPI::BGSRenderWindow::Settings::Movement::ArrowSnapValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(7);
-				EditorAPI::BGSRenderWindow::Settings::Movement::ObjectRotateValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(8);
-				EditorAPI::BGSRenderWindow::Settings::Movement::ObjectMoveValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(9);
-				EditorAPI::BGSRenderWindow::Settings::Movement::CameraRotateValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(10);
-				EditorAPI::BGSRenderWindow::Settings::Movement::CameraZoomValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(11);
-				EditorAPI::BGSRenderWindow::Settings::Movement::CameraZoomOrthoValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(12);
-				EditorAPI::BGSRenderWindow::Settings::Movement::CameraPanValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(13);
-				EditorAPI::BGSRenderWindow::Settings::Movement::LandspaceMultValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(14);
+					EditorAPI::BGSRenderWindow::Settings::Movement::FlagsSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(4);
+					EditorAPI::BGSRenderWindow::Settings::Movement::SnapGridValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(5);
+					EditorAPI::BGSRenderWindow::Settings::Movement::SnapAngleValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(6);
+					EditorAPI::BGSRenderWindow::Settings::Movement::ArrowSnapValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(7);
+					EditorAPI::BGSRenderWindow::Settings::Movement::ObjectRotateValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(8);
+					EditorAPI::BGSRenderWindow::Settings::Movement::ObjectMoveValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(9);
+					EditorAPI::BGSRenderWindow::Settings::Movement::CameraRotateValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(10);
+					EditorAPI::BGSRenderWindow::Settings::Movement::CameraZoomValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(11);
+					EditorAPI::BGSRenderWindow::Settings::Movement::CameraZoomOrthoValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(12);
+					EditorAPI::BGSRenderWindow::Settings::Movement::CameraPanValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(13);
+					EditorAPI::BGSRenderWindow::Settings::Movement::LandspaceMultValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(14);
 
-				auto rel = __CKPE_OFFSET(15);
+					auto rel = __CKPE_OFFSET(15);
 
-				if (verPatch == 1)
-					SafeWrite::WriteNop(rel, 0x4B);
+					if (verPatch == 1)
+						SafeWrite::WriteNop(rel, 0x4B);
+					else
+						SafeWrite::WriteNop(rel, 0x44);
+
+					Detours::DetourCall(rel, (std::uintptr_t)&DrawFrameEx);
+
+					rel = __CKPE_OFFSET(16);
+					SafeWrite::WriteNop(rel, 0x14);
+					Detours::DetourCall(rel, (std::uintptr_t)&UpdateDrawInfo);
+
+					*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromNiNode =
+						Detours::DetourClassJump(__CKPE_OFFSET(17), (uintptr_t)&EditorAPI::BGSRenderWindow::Pick::HKGetRefFromNiNode);
+
+					return true;
+				}
+			
 				else
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					StepInRender = _READ_OPTION_FLOAT("Graphics", "fStepInRender", 15.f);
+					StepInRender = std::min(std::max(StepInRender, 15.f), 100.f);
+
+					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(addressLibrary->Resolve(1885140), (std::uintptr_t)&HKWndProc);
+					_TempDrawArea = (Area*)addressLibrary->Resolve(171553);
+
+					EditorAPI::BGSRenderWindow::Singleton = addressLibrary->Resolve(383337);
+
+					EditorAPI::BGSRenderWindow::Settings::Movement::FlagsSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(381092);
+					EditorAPI::BGSRenderWindow::Settings::Movement::SnapGridValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384553);
+					EditorAPI::BGSRenderWindow::Settings::Movement::SnapAngleValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384587);
+					EditorAPI::BGSRenderWindow::Settings::Movement::ArrowSnapValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384565);
+					EditorAPI::BGSRenderWindow::Settings::Movement::ObjectRotateValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384591);
+					EditorAPI::BGSRenderWindow::Settings::Movement::ObjectMoveValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384559);
+					EditorAPI::BGSRenderWindow::Settings::Movement::CameraRotateValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384592);
+					EditorAPI::BGSRenderWindow::Settings::Movement::CameraZoomValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384595);
+					EditorAPI::BGSRenderWindow::Settings::Movement::CameraZoomOrthoValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384599);
+					EditorAPI::BGSRenderWindow::Settings::Movement::CameraPanValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384600);
+					EditorAPI::BGSRenderWindow::Settings::Movement::LandspaceMultValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384603);
+
+					auto rel = addressLibrary->Resolve(1938434) + 0x1E2;
 					SafeWrite::WriteNop(rel, 0x44);
 
-				Detours::DetourCall(rel, (std::uintptr_t)&DrawFrameEx);
+					Detours::DetourCall(rel, (std::uintptr_t)&DrawFrameEx);
 
-				rel = __CKPE_OFFSET(16);
-				SafeWrite::WriteNop(rel, 0x14);
-				Detours::DetourCall(rel, (std::uintptr_t)&UpdateDrawInfo);
+					rel = addressLibrary->Resolve(1638356) + 0x211;
+					SafeWrite::WriteNop(rel, 0x14);
+					Detours::DetourCall(rel, (std::uintptr_t)&UpdateDrawInfo);
 
-				*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromNiNode =
-					Detours::DetourClassJump(__CKPE_OFFSET(17), (uintptr_t)&EditorAPI::BGSRenderWindow::Pick::HKGetRefFromNiNode);
+					*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromNiNode =
+						Detours::DetourClassJump(addressLibrary->Resolve(411210), (uintptr_t)&EditorAPI::BGSRenderWindow::Pick::HKGetRefFromNiNode);
 
-				return true;
+					return true;
+				}
 			}
 
 			INT_PTR CALLBACK RenderWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)

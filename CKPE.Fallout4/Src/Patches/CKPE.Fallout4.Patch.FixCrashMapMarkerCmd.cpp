@@ -49,18 +49,32 @@ namespace CKPE
 
 			bool FixCrashMapMarkerCmd::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				// Fix for crash when using the -MapMaker command line option. Nullptr camera passed to 
-				// BSGraphics::State::SetCameraData.
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				pointer_FixCrashMapMarkerCmd_sub = __CKPE_OFFSET(1);
+					// Fix for crash when using the -MapMaker command line option. Nullptr camera passed to 
+					// BSGraphics::State::SetCameraData.
+					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
+					pointer_FixCrashMapMarkerCmd_sub = __CKPE_OFFSET(1);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					// Fix for crash when using the -MapMaker command line option. Nullptr camera passed to 
+					// BSGraphics::State::SetCameraData.
+					Detours::DetourCall(addressLibrary->Resolve(475615) + 0x92C, (std::uintptr_t)&sub);
+					pointer_FixCrashMapMarkerCmd_sub = addressLibrary->Resolve(1617023);
+
+					return true;
+				}
 			}
 
 			void FixCrashMapMarkerCmd::sub(std::int64_t a1, std::int64_t a2, std::int64_t a3) noexcept(true)

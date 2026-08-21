@@ -289,8 +289,8 @@ namespace CKPE
 
 			bool D3D11::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				//if (db->GetVersion() != 1)
+				//	return false;
 
 				auto _interface = CKPE::Common::Interface::GetSingleton();
 				auto base = _interface->GetApplication()->GetBase();

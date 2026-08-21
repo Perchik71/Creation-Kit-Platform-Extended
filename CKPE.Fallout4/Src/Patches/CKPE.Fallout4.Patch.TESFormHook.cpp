@@ -48,20 +48,32 @@ namespace CKPE
 
 			bool TESFormHook::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db) {
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				EditorAPI::Forms::TESForm::EnumFormIDs =
-					(EditorAPI::Forms::TESForm::ENUM_FORM_ID*)(__CKPE_OFFSET(0));
-				EditorAPI::Forms::TESForm::FindFormByFormID = 
-					decltype(EditorAPI::Forms::TESForm::FindFormByFormID)(__CKPE_OFFSET(1));
-				EditorAPI::Forms::TESForm::SetFormEditorIDImpl =
-					decltype(EditorAPI::Forms::TESForm::SetFormEditorIDImpl)(__CKPE_OFFSET(3));
+					EditorAPI::Forms::TESForm::EnumFormIDs =
+						(EditorAPI::Forms::TESForm::ENUM_FORM_ID*)(__CKPE_OFFSET(0));
+					EditorAPI::Forms::TESForm::FindFormByFormID =
+						decltype(EditorAPI::Forms::TESForm::FindFormByFormID)(__CKPE_OFFSET(1));
+					EditorAPI::Forms::TESForm::SetFormEditorIDImpl =
+						decltype(EditorAPI::Forms::TESForm::SetFormEditorIDImpl)(__CKPE_OFFSET(3));
 
-				return true;
+					return true;
+				}
+				else
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					EditorAPI::Forms::TESForm::EnumFormIDs = (EditorAPI::Forms::TESForm::ENUM_FORM_ID*)(addressLibrary->Resolve(1588864));
+					EditorAPI::Forms::TESForm::FindFormByFormID = decltype(EditorAPI::Forms::TESForm::FindFormByFormID)(addressLibrary->Resolve(1498643));
+					EditorAPI::Forms::TESForm::SetFormEditorIDImpl = decltype(EditorAPI::Forms::TESForm::SetFormEditorIDImpl)(addressLibrary->Resolve(1589125));
+
+					return true;
+				}
 			}
 		}
 	}

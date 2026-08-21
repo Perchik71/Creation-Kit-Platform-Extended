@@ -48,17 +48,30 @@ namespace CKPE
 
 			bool BSStringRefRE::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+					auto _interface = CKPE::Common::Interface::GetSingleton();
+					auto base = _interface->GetApplication()->GetBase();
 
-				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::ctor = __CKPE_OFFSET(0);
-				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::set = __CKPE_OFFSET(1);
-				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::release = __CKPE_OFFSET(2);
+					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::ctor = __CKPE_OFFSET(0);
+					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::set = __CKPE_OFFSET(1);
+					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::release = __CKPE_OFFSET(2);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::ctor = addressLibrary->Resolve(1339190);
+					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::set = addressLibrary->Resolve(1663882);
+					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::release = addressLibrary->Resolve(1594894);
+
+					return true;
+				}
 			}
 		}
 	}

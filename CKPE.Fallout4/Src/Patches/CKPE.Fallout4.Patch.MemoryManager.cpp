@@ -196,61 +196,119 @@ namespace CKPE
 
 			bool MemoryManager::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 2)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 2)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				auto Physical = HardwareInfo::OS::GetPhysicalMemory();
-				auto Shared = HardwareInfo::OS::GetSharedMemory();
-				_MESSAGE("\t\tPhysical Memory (Total: %.1f Gb, Available: %.1f Gb)", Physical.Total, Physical.Free);
-				_MESSAGE("\t\tMemory (Total: %.1f Gb, Available: %.1f Gb)", Shared.Total, Shared.Free);
+					auto Physical = HardwareInfo::OS::GetPhysicalMemory();
+					auto Shared = HardwareInfo::OS::GetSharedMemory();
+					_MESSAGE("\t\tPhysical Memory (Total: %.1f Gb, Available: %.1f Gb)", Physical.Total, Physical.Free);
+					_MESSAGE("\t\tMemory (Total: %.1f Gb, Available: %.1f Gb)", Shared.Total, Shared.Free);
 
-				// Программа очень любит думать, а винде это не нравиться, скажем винде, чтоб не обращала внимание.
-				DisableProcessWindowsGhosting();
+					// Программа очень любит думать, а винде это не нравиться, скажем винде, чтоб не обращала внимание.
+					DisableProcessWindowsGhosting();
 
-				auto patchIAT = [&base](const char* module)
-					{
-						Detours::DetourIAT(base, module, "malloc", (std::uintptr_t)malloc);
-						Detours::DetourIAT(base, module, "calloc", (std::uintptr_t)calloc);
-						Detours::DetourIAT(base, module, "realloc", (std::uintptr_t)realloc);
-						Detours::DetourIAT(base, module, "_recalloc", (std::uintptr_t)recalloc);
-						Detours::DetourIAT(base, module, "free", (std::uintptr_t)free);
-						Detours::DetourIAT(base, module, "_msize", (std::uintptr_t)msize);
-						Detours::DetourIAT(base, module, "_strdup", (std::uintptr_t)strdup);
-						Detours::DetourIAT(base, module, "memcpy_s", (std::uintptr_t)memcpy_s);
-						Detours::DetourIAT(base, module, "memmove_s", (std::uintptr_t)memmove_s);
-						Detours::DetourIAT(base, module, "memcmp", (std::uintptr_t)memcmp);
-						Detours::DetourIAT(base, module, "memcpy", (std::uintptr_t)memcpy);
-						Detours::DetourIAT(base, module, "memmove", (std::uintptr_t)memmove);
-						Detours::DetourIAT(base, module, "memset", (std::uintptr_t)memset);
-					};
+					auto patchIAT = [&base](const char* module)
+						{
+							Detours::DetourIAT(base, module, "malloc", (std::uintptr_t)malloc);
+							Detours::DetourIAT(base, module, "calloc", (std::uintptr_t)calloc);
+							Detours::DetourIAT(base, module, "realloc", (std::uintptr_t)realloc);
+							Detours::DetourIAT(base, module, "_recalloc", (std::uintptr_t)recalloc);
+							Detours::DetourIAT(base, module, "free", (std::uintptr_t)free);
+							Detours::DetourIAT(base, module, "_msize", (std::uintptr_t)msize);
+							Detours::DetourIAT(base, module, "_strdup", (std::uintptr_t)strdup);
+							Detours::DetourIAT(base, module, "memcpy_s", (std::uintptr_t)memcpy_s);
+							Detours::DetourIAT(base, module, "memmove_s", (std::uintptr_t)memmove_s);
+							Detours::DetourIAT(base, module, "memcmp", (std::uintptr_t)memcmp);
+							Detours::DetourIAT(base, module, "memcpy", (std::uintptr_t)memcpy);
+							Detours::DetourIAT(base, module, "memmove", (std::uintptr_t)memmove);
+							Detours::DetourIAT(base, module, "memset", (std::uintptr_t)memset);
+						};
 
-				patchIAT("API-MS-WIN-CRT-HEAP-L1-1-0.DLL");
-				patchIAT("MSVCR110.DLL");
+					patchIAT("API-MS-WIN-CRT-HEAP-L1-1-0.DLL");
+					patchIAT("MSVCR110.DLL");
 
-				// Принудительный вылет с сообщением для пользователя.
-				CKPE_ASSERT_MSG(LowMemory(), "Not enough memory to run the program");
+					// Принудительный вылет с сообщением для пользователя.
+					CKPE_ASSERT_MSG(LowMemory(), "Not enough memory to run the program");
 
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&BSMemoryManager::Allocate);
-				Detours::DetourJump(__CKPE_OFFSET(1), (std::uintptr_t)&BSMemoryManager::Deallocate);
-				Detours::DetourJump(__CKPE_OFFSET(2), (std::uintptr_t)&BSMemoryManager::Size);
-				Detours::DetourJump(__CKPE_OFFSET(3), (std::uintptr_t)&BSScrapHeap::Allocate);
-				Detours::DetourJump(__CKPE_OFFSET(4), (std::uintptr_t)&BSScrapHeap::Deallocate);
-				Detours::DetourJump(__CKPE_OFFSET(5), (std::uintptr_t)&bhkThreadMemorySource::__ctor__);
+					Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&BSMemoryManager::Allocate);
+					Detours::DetourJump(__CKPE_OFFSET(1), (std::uintptr_t)&BSMemoryManager::Deallocate);
+					Detours::DetourJump(__CKPE_OFFSET(2), (std::uintptr_t)&BSMemoryManager::Size);
+					Detours::DetourJump(__CKPE_OFFSET(3), (std::uintptr_t)&BSScrapHeap::Allocate);
+					Detours::DetourJump(__CKPE_OFFSET(4), (std::uintptr_t)&BSScrapHeap::Deallocate);
+					Detours::DetourJump(__CKPE_OFFSET(5), (std::uintptr_t)&bhkThreadMemorySource::__ctor__);
 
-				// Only support for 1.11.137.0 - resolves null memory access when dealing with SCOLs.
-				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_LAST) {
-					Detours::DetourJump(__CKPE_OFFSET(10), (std::uintptr_t)&NiBSScrapAdapter_AllocateFromBSScrap);
+					// Only support for 1.11.137.0 - resolves null memory access when dealing with SCOLs.
+					if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_LAST) {
+						Detours::DetourJump(__CKPE_OFFSET(10), (std::uintptr_t)&NiBSScrapAdapter_AllocateFromBSScrap);
+					}
+
+					SafeWrite::Write(__CKPE_OFFSET(6), { 0xC3 });
+					SafeWrite::Write(__CKPE_OFFSET(7), { 0xC3 });
+					SafeWrite::Write(__CKPE_OFFSET(8), { 0xC3 });
+					SafeWrite::Write(__CKPE_OFFSET(9), { 0xC3 });
+
+					return true;
+				}
+				else
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
+
+					auto Physical = HardwareInfo::OS::GetPhysicalMemory();
+					auto Shared = HardwareInfo::OS::GetSharedMemory();
+					_MESSAGE("\t\tPhysical Memory (Total: %.1f Gb, Available: %.1f Gb)", Physical.Total, Physical.Free);
+					_MESSAGE("\t\tMemory (Total: %.1f Gb, Available: %.1f Gb)", Shared.Total, Shared.Free);
+
+					// Программа очень любит думать, а винде это не нравиться, скажем винде, чтоб не обращала внимание.
+					DisableProcessWindowsGhosting();
+
+					auto patchIAT = [&base](const char* module)
+						{
+							Detours::DetourIAT(base, module, "malloc", (std::uintptr_t)malloc);
+							Detours::DetourIAT(base, module, "calloc", (std::uintptr_t)calloc);
+							Detours::DetourIAT(base, module, "realloc", (std::uintptr_t)realloc);
+							Detours::DetourIAT(base, module, "_recalloc", (std::uintptr_t)recalloc);
+							Detours::DetourIAT(base, module, "free", (std::uintptr_t)free);
+							Detours::DetourIAT(base, module, "_msize", (std::uintptr_t)msize);
+							Detours::DetourIAT(base, module, "_strdup", (std::uintptr_t)strdup);
+							Detours::DetourIAT(base, module, "memcpy_s", (std::uintptr_t)memcpy_s);
+							Detours::DetourIAT(base, module, "memmove_s", (std::uintptr_t)memmove_s);
+							Detours::DetourIAT(base, module, "memcmp", (std::uintptr_t)memcmp);
+							Detours::DetourIAT(base, module, "memcpy", (std::uintptr_t)memcpy);
+							Detours::DetourIAT(base, module, "memmove", (std::uintptr_t)memmove);
+							Detours::DetourIAT(base, module, "memset", (std::uintptr_t)memset);
+						};
+
+					patchIAT("API-MS-WIN-CRT-HEAP-L1-1-0.DLL");
+					patchIAT("MSVCR110.DLL");
+
+					// Принудительный вылет с сообщением для пользователя.
+					CKPE_ASSERT_MSG(LowMemory(), "Not enough memory to run the program");
+
+					Detours::DetourJump(addressLibrary->Resolve(1637571), (std::uintptr_t)&BSMemoryManager::Allocate);
+					Detours::DetourJump(addressLibrary->Resolve(1367679), (std::uintptr_t)&BSMemoryManager::Deallocate);
+					Detours::DetourJump(addressLibrary->Resolve(1670330), (std::uintptr_t)&BSMemoryManager::Size);
+					Detours::DetourJump(addressLibrary->Resolve(1942940), (std::uintptr_t)&BSScrapHeap::Allocate);
+					Detours::DetourJump(addressLibrary->Resolve(1942869), (std::uintptr_t)&BSScrapHeap::Deallocate);
+					Detours::DetourJump(addressLibrary->Resolve(1345110), (std::uintptr_t)&bhkThreadMemorySource::__ctor__);
+
+					Detours::DetourJump(addressLibrary->Resolve(1591996), (std::uintptr_t)&NiBSScrapAdapter_AllocateFromBSScrap);
+
+					SafeWrite::Write(addressLibrary->Resolve(445076), {0xC3});
+					SafeWrite::Write(addressLibrary->Resolve(1353858), {0xC3});
+					SafeWrite::Write(addressLibrary->Resolve(1940388), {0xC3});
+					SafeWrite::Write(addressLibrary->Resolve(1480275), {0xC3});
+
+					return true;
 				}
 				
-				SafeWrite::Write(__CKPE_OFFSET(6), { 0xC3 });
-				SafeWrite::Write(__CKPE_OFFSET(7), { 0xC3 });
-				SafeWrite::Write(__CKPE_OFFSET(8), { 0xC3 });
-				SafeWrite::Write(__CKPE_OFFSET(9), { 0xC3 });
-
-				return true;
 			}
 
 			bool MemoryManager::LowMemory() noexcept(true)

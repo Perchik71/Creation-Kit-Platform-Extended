@@ -7,6 +7,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.ModernTheme.h>
+#include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.RenameCreationKitApp.h>
 
@@ -46,21 +47,46 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_FALLOUT_C4_LAST;
 			}
 
+			bool RenameCreationKitApp::SupportsAddressLibrary() const noexcept(true)
+			{
+				switch (VersionLists::GetEditorVersion())
+				{
+				case VersionLists::EDITOR_FALLOUT_C4_1_11_240_0:
+					return true;
+				default:
+					return false;
+				}
+			}
+
 			bool RenameCreationKitApp::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
 				auto interface = CKPE::Common::Interface::GetSingleton();
 				auto base = interface->GetApplication()->GetBase();
+
+				std::uintptr_t address = 0;
+
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
+
+					address = __CKPE_OFFSET(0);
+				}
+				else
+				{
+					address = Common::AddressLibrary::GetSingleton()->Resolve(457726);
+				}
+
+				if (!address)
+					return false;
 
 				//
 				// Change the default window class name so legacy editors can be opened without using bAllowMultipleEditors
 				//
 				char* newWindowClass = new char[250];
-				sprintf_s(newWindowClass, 250, "Creation Kit %s", 
+				sprintf_s(newWindowClass, 250, "Creation Kit %s",
 					StringUtils::Utf16ToWinCP(VersionLists::GetEditorVersionByString()).c_str());
-				SafeWrite::WriteStringRef(__CKPE_OFFSET(0), newWindowClass);
+				SafeWrite::WriteStringRef(address, newWindowClass);
 				Common::ModernTheme::AddSpermanentWindowSubclass(newWindowClass);
 
 				return true;

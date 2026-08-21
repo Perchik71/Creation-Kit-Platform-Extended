@@ -51,19 +51,34 @@ namespace CKPE
 
 			bool CrashConditionItemGetCrime::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				// Strangely, there are 6 elements in the array in memory, when Beth is forced to pass exactly 7
-				// 7 element is always nullptr
+					// Strangely, there are 6 elements in the array in memory, when Beth is forced to pass exactly 7
+					// 7 element is always nullptr
 
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				pointer_CrashConditionItemGetCrimePatch_data = (EditorAPI::Setting**)__CKPE_OFFSET(1);
+					Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
+					pointer_CrashConditionItemGetCrimePatch_data = (EditorAPI::Setting**)__CKPE_OFFSET(1);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					// Strangely, there are 6 elements in the array in memory, when Beth is forced to pass exactly 7
+					// 7 element is always nullptr
+
+					Detours::DetourJump(addressLibrary->Resolve(1785857), (std::uintptr_t)&sub);
+					pointer_CrashConditionItemGetCrimePatch_data = (EditorAPI::Setting**)addressLibrary->Resolve(480194);
+
+					return true;
+				}
 			}
 
 			void CrashConditionItemGetCrime::sub(std::uintptr_t hCombobox) noexcept(true)

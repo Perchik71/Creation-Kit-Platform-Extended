@@ -61,30 +61,60 @@ namespace CKPE
 
 			bool RenderWindow60FPS::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 2)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 2)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				// Cutting a lot is faster this way
-				auto stext = interface->GetApplication()->GetSegment(Segment::text);
-				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+					// Cutting a lot is faster this way
+					auto stext = interface->GetApplication()->GetSegment(Segment::text);
+					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
-				//
-				// Force render window to draw at 60fps (SetTimer(10ms))
-				// DESC: BufferDesc.RefreshRate.Numerator = 60
-				//
-				text.Write(__CKPE_OFFSET(0), { USER_TIMER_MINIMUM });
+					//
+					// Force render window to draw at 60fps (SetTimer(10ms))
+					// DESC: BufferDesc.RefreshRate.Numerator = 60
+					//
+					text.Write(__CKPE_OFFSET(0), { USER_TIMER_MINIMUM });
 
-				if (!_READ_OPTION_BOOL("CreationKit", "bRenderWindowVSync", true))
-					// no VSync
-					text.Write(__CKPE_OFFSET(1), { 0x33, 0xD2, 0x90 });
+					if (!_READ_OPTION_BOOL("CreationKit", "bRenderWindowVSync", true))
+						// no VSync
+						text.Write(__CKPE_OFFSET(1), { 0x33, 0xD2, 0x90 });
 #if 0
-				ptrINIReadSetting = (decltype(&Hook_INIReadSetting))Detours::DetourClassJump(0x14259AB50, Hook_INIReadSetting);
+					ptrINIReadSetting = (decltype(&Hook_INIReadSetting))Detours::DetourClassJump(0x14259AB50, Hook_INIReadSetting);
 #endif
 
-				return true;
+					return true;
+				}
+				else
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
+
+					// Cutting a lot is faster this way
+					auto stext = interface->GetApplication()->GetSegment(Segment::text);
+					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+
+					//
+					// Force render window to draw at 60fps (SetTimer(10ms))
+					// DESC: BufferDesc.RefreshRate.Numerator = 60
+					//
+					text.Write(addressLibrary->Resolve(1459534) + 0x526, {USER_TIMER_MINIMUM});
+
+					if (!_READ_OPTION_BOOL("CreationKit", "bRenderWindowVSync", true))
+						// no VSync
+						text.Write(addressLibrary->Resolve(1938434) + 0x1DF, {0x33, 0xD2, 0x90});
+#if 0
+					ptrINIReadSetting = (decltype(&Hook_INIReadSetting))Detours::DetourClassJump(0x14259AB50, Hook_INIReadSetting);
+#endif
+
+					return true;
+				}
+
 			}
 		}
 	}

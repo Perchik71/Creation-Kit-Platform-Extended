@@ -81,16 +81,29 @@ namespace CKPE
 
 			bool CrashInvalidStrings::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				pointer_CrashInvalidStrings_sub1 = Detours::DetourClassJump(__CKPE_OFFSET(0), &GetLocalizeStringLengthSafe);
-				pointer_CrashInvalidStrings_sub2 = Detours::DetourClassJump(__CKPE_OFFSET(1), &GetLocalizeStringSafe);
+					pointer_CrashInvalidStrings_sub1 = Detours::DetourClassJump(__CKPE_OFFSET(0), &GetLocalizeStringLengthSafe);
+					pointer_CrashInvalidStrings_sub2 = Detours::DetourClassJump(__CKPE_OFFSET(1), &GetLocalizeStringSafe);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					pointer_CrashInvalidStrings_sub1 = Detours::DetourClassJump(addressLibrary->Resolve(1376340), &GetLocalizeStringLengthSafe);
+					pointer_CrashInvalidStrings_sub2 = Detours::DetourClassJump(addressLibrary->Resolve(336314), &GetLocalizeStringSafe);
+
+					return true;
+				}
+				
 			}
 		}
 	}

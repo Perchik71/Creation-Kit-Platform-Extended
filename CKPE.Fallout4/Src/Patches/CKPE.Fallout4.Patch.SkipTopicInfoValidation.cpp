@@ -46,18 +46,30 @@ namespace CKPE
 
 			bool SkipTopicInfoValidation::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				//
-				// Skip 'Topic Info' validation during load
-				//
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0xC3 });
+					//
+					// Skip 'Topic Info' validation during load
+					//
+					SafeWrite::Write(__CKPE_OFFSET(0), { 0xC3 });
 
-				return true;
+					return true;
+				}
+				else
+				{
+					//
+					// Skip 'Topic Info' validation during load
+					//
+					SafeWrite::Write(Common::AddressLibrary::GetSingleton()->Resolve(1942355), {0xC3});
+
+					return true;
+				}
 			}
 		}
 	}

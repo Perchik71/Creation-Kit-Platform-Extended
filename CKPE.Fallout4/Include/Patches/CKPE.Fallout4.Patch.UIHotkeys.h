@@ -31,6 +31,7 @@ namespace CKPE
 				static void sub(void* Thisptr, void(*Callback)(), const EditorAPI::BSEntryString** HotkeyFunction,
 					const EditorAPI::BSEntryString** DisplayText, char VirtualKey, bool Alt, bool Ctrl, 
 					bool Shift) noexcept(true);
+				[[nodiscard]] bool SupportsAddressLibrary() const noexcept(true) override { return true; }
 			};
 		}
 	}

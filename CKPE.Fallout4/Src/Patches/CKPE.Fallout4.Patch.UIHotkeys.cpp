@@ -119,17 +119,30 @@ namespace CKPE
 
 			bool UIHotkeys::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 2)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 2)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				SafeWrite::WriteNop(__CKPE_OFFSET(0), 0x19);
-				Detours::DetourClassJump(__CKPE_OFFSET(1), &sub);
-				UIHotkeysSub = (decltype(&sub))__CKPE_OFFSET(2);
+					SafeWrite::WriteNop(__CKPE_OFFSET(0), 0x19);
+					Detours::DetourClassJump(__CKPE_OFFSET(1), &sub);
+					UIHotkeysSub = (decltype(&sub))__CKPE_OFFSET(2);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					SafeWrite::WriteNop(addressLibrary->Resolve(1589493) + 0x1AC, 0x19);
+					Detours::DetourClassJump(addressLibrary->Resolve(390524), &sub);
+					UIHotkeysSub = (decltype(&sub))addressLibrary->Resolve(1589493);
+
+					return true;
+				}
 			}
 
 			void UIHotkeys::sub(void* Thisptr, void(*Callback)(), const EditorAPI::BSEntryString** HotkeyFunction,

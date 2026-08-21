@@ -14,6 +14,7 @@
 #include <CKPE.Common.FormInfoOutputWindow.h>
 #include <CKPE.Common.UIVarCommon.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.UIMenus.h>
 #include <CKPE.Common.RTTI.h>
@@ -251,26 +252,55 @@ namespace CKPE
 
 			bool MainWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db) {
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto _interface = Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+					auto _interface = Common::Interface::GetSingleton();
+					auto base = _interface->GetApplication()->GetBase();
 
-				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
-				
-				pointer_MainWindow_sub1 = __CKPE_OFFSET(1);
-				pointer_MainWindow_sub2 = Detours::DetourClassJump(__CKPE_OFFSET(2), (std::uintptr_t)&FogToggling);
-				
-				// only erase it first
-				auto rva = __CKPE_OFFSET(3);
-				SafeWrite::WriteNop(rva + 0x4, 7);
-				pointer_MainWindow_sub3 = Detours::DetourClassJump(rva, (std::uintptr_t)&MarkerToggling);
-				SafeWrite::WriteNop(rva + 0x12, 7);
+					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
 
-				Common::LogWindow::GetSingleton()->OnOpenFormById = DoOpenFormByIdHandler;
+					pointer_MainWindow_sub1 = __CKPE_OFFSET(1);
+					pointer_MainWindow_sub2 = Detours::DetourClassJump(__CKPE_OFFSET(2), (std::uintptr_t)&FogToggling);
 
-				return true;
+					// only erase it first
+					auto rva = __CKPE_OFFSET(3);
+					SafeWrite::WriteNop(rva + 0x4, 7);
+					pointer_MainWindow_sub3 = Detours::DetourClassJump(rva, (std::uintptr_t)&MarkerToggling);
+					SafeWrite::WriteNop(rva + 0x12, 7);
+
+					Common::LogWindow::GetSingleton()->OnOpenFormById = DoOpenFormByIdHandler;
+
+					return true;
+				}
+				else
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					auto wndProcAddr = addressLibrary->Resolve(1603858);
+					auto sub1Addr = addressLibrary->Resolve(384552);
+					auto sub2Addr = addressLibrary->Resolve(415416);
+					auto sub3Addr = addressLibrary->Resolve(415464);
+
+					if (!wndProcAddr || !sub1Addr || !sub2Addr || !sub3Addr)
+						return false;
+
+					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(wndProcAddr, (std::uintptr_t)&HKWndProc);
+
+					pointer_MainWindow_sub1 = sub1Addr;
+					pointer_MainWindow_sub2 = Detours::DetourClassJump(sub2Addr, (std::uintptr_t)&FogToggling);
+
+					// only erase it first
+					auto rva = sub3Addr;
+					SafeWrite::WriteNop(rva + 0x4, 7);
+					pointer_MainWindow_sub3 = Detours::DetourClassJump(rva, (std::uintptr_t)&MarkerToggling);
+					SafeWrite::WriteNop(rva + 0x12, 7);
+
+					Common::LogWindow::GetSingleton()->OnOpenFormById = DoOpenFormByIdHandler;
+
+					return true;
+				}
 			}
 
 			INT_PTR CALLBACK MainWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)

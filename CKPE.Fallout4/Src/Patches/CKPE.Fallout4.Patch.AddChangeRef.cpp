@@ -56,19 +56,34 @@ namespace CKPE
 
 			bool AddChangeRef::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+					auto _interface = CKPE::Common::Interface::GetSingleton();
+					auto base = _interface->GetApplication()->GetBase();
 
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&HKInsertMenuA);
+					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&HKInsertMenuA);
 
-				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetParentWithRedraw = __CKPE_OFFSET(1);
-				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly_NG::SetParentWithRedraw = __CKPE_OFFSET(1);
-				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly::SetParentWithRedraw = __CKPE_OFFSET(1);
+					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetParentWithRedraw = __CKPE_OFFSET(1);
+					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly_NG::SetParentWithRedraw = __CKPE_OFFSET(1);
+					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly::SetParentWithRedraw = __CKPE_OFFSET(1);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					Detours::DetourCall(addressLibrary->Resolve(1939247) + 0x9C8, (std::uintptr_t)&HKInsertMenuA);
+
+					auto rel = addressLibrary->Resolve(458423);
+
+					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetParentWithRedraw = rel;
+					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly_NG::SetParentWithRedraw = rel;
+					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly::SetParentWithRedraw = rel;
+				}
 			}
 		}
 	}
