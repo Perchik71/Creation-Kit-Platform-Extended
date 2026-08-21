@@ -5,7 +5,6 @@
 #include <vector>
 #include <unordered_map>
 #include <windows.h>
-#include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.Module.h>
 #include <CKPE.Fallout4.VersionLists.h>
 
@@ -157,23 +156,6 @@ namespace CKPE
 		VersionLists::EDITOR_EXECUTABLE_TYPE VersionLists::GetEditorVersion() noexcept(true)
 		{
 			return _seditor_ver;
-		}
-
-		Common::AddressLibraryEpoch VersionLists::GetAddressLibraryEpoch() noexcept
-		{
-    		switch (GetEditorVersion())
-    		{
-    		case EDITOR_FALLOUT_C4_1_10_162_0:
-        		return Common::AddressLibraryEpoch::OG;
-
-    		case EDITOR_FALLOUT_C4_1_10_982_3:
-    		case EDITOR_FALLOUT_C4_1_11_137_0:
-    		case EDITOR_FALLOUT_C4_1_11_240_0:
-        		return Common::AddressLibraryEpoch::NG;
-
-    		default:
-        		return Common::AddressLibraryEpoch::NG;
-    		}
 		}	
 	}
 }
