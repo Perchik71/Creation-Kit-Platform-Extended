@@ -131,7 +131,7 @@ namespace CKPE
 			mgr->Register(new Patch::DataWindow);
 			//mgr->Register(new Patch::DisableAssertion);
 			mgr->Register(new Patch::DontMatchForms);
-			//mgr->Register(new Patch::EnableGoInSelGame); // Deprecated?
+			//mgr->Register(new Patch::EnableGoInSelGame);
 			//mgr->Register(new Patch::EncounterZone);
 			mgr->Register(new Patch::ESLTip);
 			//mgr->Register(new Patch::Facegen);
@@ -173,7 +173,7 @@ namespace CKPE
 			mgr->Register(new Patch::RenameCreationKitApp);
 			mgr->Register(new Patch::RenderWindow);
 			mgr->Register(new Patch::RenderWindow60FPS);
-			//mgr->Register(new Patch::ReplaceBSPointerHandleAndManager);
+			mgr->Register(new Patch::ReplaceBSPointerHandleAndManager);
 			//mgr->Register(new Patch::ResponseIgnoreMax);
 			//mgr->Register(new Patch::ResponseWindow);
 			mgr->Register(new Patch::RunNetworkDisable);

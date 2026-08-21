@@ -159,20 +159,20 @@ namespace CKPE
 						if (EditorAPI::TESFile::AllowSaveESM)
 						{
 							// Also allow non-game ESMs to be set as "Active File"
-							Detours::DetourClassCall(addressLibrary->Resolve(VariantID{ 534861 }) + 0x6B, &IsActiveFileBlacklist);
-							SafeWrite::WriteNop(addressLibrary->Resolve(VariantID{ 1716794, 0x48 }), 2);
+							Detours::DetourClassCall(addressLibrary->Resolve(VariantID{ 534861 }) + 0x5F, &IsActiveFileBlacklist);
+							SafeWrite::WriteNop(addressLibrary->Resolve(VariantID{ 1716794 }) + 0x4F, 2);
 
 							// Disable: "File '%s' is a master file or is in use.\n\nPlease select another file to save to."
 							const char* newFormat = "File '%s' is in use.\n\nPlease select another file to save to.";
 
-							SafeWrite::WriteNop(addressLibrary->Resolve(VariantID{ 1380402, 0x55A }), 13);
+							SafeWrite::WriteNop(addressLibrary->Resolve(VariantID{ 1380402 }) + 0x55A, 13);
 							SafeWrite::Write(addressLibrary->Resolve(VariantID{ 180829 }), (std::uint8_t*)newFormat, strlen(newFormat) + 1);
 							Detours::DetourJump(addressLibrary->Resolve(VariantID{ 1631676 }), (std::uintptr_t)&OpenPluginSaveDialog);
 						}
 
 						if (EditorAPI::TESFile::AllowMasterESP)
 							// Remove the check for IsMaster()
-							SafeWrite::WriteNop(addressLibrary->Resolve(VariantID{ 1436783, 0x5C }), 9);
+							SafeWrite::WriteNop(addressLibrary->Resolve(VariantID{ 1436783 }) + 0x5C, 9);
 
 						return true;
 					}
