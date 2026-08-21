@@ -76,7 +76,7 @@ namespace CKPE
 		private:
 			std::vector<Entry>* _entries{ nullptr };
 			bool _loaded{ false };
-			AddressLibraryEpoch _epoch{ AddressLibraryEpoch::NG };
+			VersionID _version{ 0 };
 
 			AddressLibrary(const AddressLibrary&) = delete;
 			AddressLibrary& operator=(const AddressLibrary&) = delete;
@@ -96,11 +96,11 @@ namespace CKPE
 			// Absolute address (CreationKit.exe module base + RVA), or 0 if unknown / not loaded.
 			[[nodiscard]] virtual std::uintptr_t Resolve(AddressID id) const noexcept(true);
 
-			void SetEpoch(AddressLibraryEpoch epoch) noexcept;
-			[[nodiscard]] AddressLibraryEpoch GetEpoch() const noexcept;
+			void SetVersion(VersionID version) noexcept(true);
+			[[nodiscard]] VersionID GetVersion() const noexcept(true);
 
-			[[nodiscard]] virtual std::uint64_t ResolveOffset(VariantID id) const noexcept(true);
-			[[nodiscard]] virtual std::uintptr_t Resolve(VariantID id) const noexcept(true);
+			[[nodiscard]] virtual std::uint64_t ResolveOffset(const VariantID& id) const noexcept(true);
+			[[nodiscard]] virtual std::uintptr_t Resolve(const VariantID& id) const noexcept(true);
 
 			static AddressLibrary* GetSingleton() noexcept(true);
 		};
