@@ -39,6 +39,7 @@ namespace CKPE
 			[[nodiscard]] static std::wstring GetEditorVersionByString() noexcept(true);
 			[[nodiscard]] static std::wstring GetExternalResourcePackageFileName() noexcept(true);
 			[[nodiscard]] static EDITOR_EXECUTABLE_TYPE GetEditorVersion() noexcept(true);
+			[[nodiscard]] static std::wstring GetAddressLibraryRelativePath() noexcept(true);
 		};
 	}
 }
