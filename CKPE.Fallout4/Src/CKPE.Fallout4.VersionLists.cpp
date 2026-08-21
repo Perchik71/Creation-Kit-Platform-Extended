@@ -5,7 +5,6 @@
 #include <vector>
 #include <unordered_map>
 #include <windows.h>
-#include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.Module.h>
 #include <CKPE.Fallout4.VersionLists.h>
 
@@ -159,21 +158,14 @@ namespace CKPE
 			return _seditor_ver;
 		}
 
-		Common::AddressLibraryEpoch VersionLists::GetAddressLibraryEpoch() noexcept
+		std::wstring VersionLists::GetAddressLibraryRelativePath() noexcept(true)
 		{
-    		switch (GetEditorVersion())
-    		{
-    		case EDITOR_FALLOUT_C4_1_10_162_0:
-        		return Common::AddressLibraryEpoch::OG;
+			std::wstring path = L"CKPEBins\\";
+			path += GetGameName();
+			path += L"\\";
+			path += GetAddressLibraryFileName();
 
-    		case EDITOR_FALLOUT_C4_1_10_982_3:
-    		case EDITOR_FALLOUT_C4_1_11_137_0:
-    		case EDITOR_FALLOUT_C4_1_11_240_0:
-        		return Common::AddressLibraryEpoch::NG;
-
-    		default:
-        		return Common::AddressLibraryEpoch::NG;
-    		}
-		}	
+			return path;
+		}
 	}
 }

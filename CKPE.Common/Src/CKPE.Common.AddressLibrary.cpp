@@ -115,28 +115,36 @@ namespace CKPE
 			return (std::uintptr_t)base + (std::uintptr_t)offset;
 		}
 
-		void AddressLibrary::SetEpoch(AddressLibraryEpoch epoch) noexcept
+		void AddressLibrary::SetVersion(VersionID version) noexcept(true)
 		{
-			_epoch = epoch;
+			_version = version;
 		}
 
-		AddressLibraryEpoch AddressLibrary::GetEpoch() const noexcept
+		AddressLibrary::VersionID AddressLibrary::GetVersion() const noexcept(true)
 		{
-			return _epoch;
+			return _version;
 		}
 
-		std::uint64_t AddressLibrary::ResolveOffset(VariantID id) const noexcept(true)
+		std::uint64_t AddressLibrary::ResolveOffset(const VariantID& id) const noexcept(true)
 		{
-			return ResolveOffset(
-				_epoch == AddressLibraryEpoch::OG ? id.OG : id.NG
-			);
+			const auto variant = id.Get(_version);
+
+			const auto offset = ResolveOffset(variant.ID)
+			if (!offset)
+				return 0;
+
+			return offset + variant.Offset;
 		}
 
-		std::uintptr_t AddressLibrary::Resolve(VariantID id) const noexcept(true)
+		std::uintptr_t AddressLibrary::Resolve(const VariantID& id) const noexcept(true)
 		{
-			return Resolve(
-				_epoch == AddressLibraryEpoch::OG ? id.OG : id.NG
-			);
+			const auto offset = ResolveOffset(id)
+			if (!offset)
+				return 0;
+
+			auto base = Interface::GetSingleton()->GetApplication()->GetBase();
+
+			return (std::uintptr_t)base + (std::uintptr_t)offset;
 		}
 			
 		AddressLibrary* AddressLibrary::GetSingleton() noexcept(true)

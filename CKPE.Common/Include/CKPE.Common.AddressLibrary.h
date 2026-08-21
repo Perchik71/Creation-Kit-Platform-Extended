@@ -5,6 +5,7 @@
 #pragma once
 
 #include <CKPE.Common.Common.h>
+#include <array>
 #include <string>
 #include <vector>
 #include <cstdint>
@@ -13,16 +14,12 @@ namespace CKPE
 {
 	namespace Common
 	{
-		enum class AddressLibraryEpoch : std::uint8_t
-		{
-			OG, // 1.10.162
-			NG	// 1.10.982+
-		};
-
 		class CKPE_COMMON_API AddressLibrary
 		{
 		public:
 			using AddressID = std::uint64_t;
+			using VersionID = std::uint64_t;
+			using AddressOffset = std::ptrdiff_t;
 		private:
 			struct Entry
 			{
@@ -32,17 +29,54 @@ namespace CKPE
 		public:
 			struct VariantID
 			{
-				AddressLibrary::AddressID OG;
-				AddressLibrary::AddressID NG;
+				struct Variant
+				{
+					VersionID Version{ 0 };
+					AddressID ID{ 0 };
+					AddressOffset Offset{ 0 };
+				}
 
-				constexpr VariantID(AddressLibrary::AddressID shared) noexcept : OG(shared), NG(shared) {}
+				static constexpr std::size_t MaxVariants = 16;
 
-				constexpr VariantID(AddressLibrary::AddressID og, AddressLibrary::AddressID ng) noexcept : OG(og), NG(ng) {}
+			private:
+				AddressID _defaultID{ 0 };
+				AddressOffset _defaultOffset{ 0 };
+
+				std:array<Variant, MaxVariants> _variants{};
+				std::size_t _variantCount{ 0 };
+
+			public:
+				const VariantID(AddressID id, AddressOffset offset = 0) noexcept :
+					_defaultID(id),
+					_defaultOffset(offset)
+				{}
+
+				[[nodiscard]] const VariantID For(VersionID version, AddressID id, AddressOffset offset = 0) noexcept
+				{
+					VariantID result = *this;
+
+					if (result._variantCount < MaxVariants)
+						result._variants[result._variantCount++] = { version, id, offset };
+					}
+
+					return result;
+				}
+
+				[[nodiscard]] const Variant Get(VersionID version) const noexcept
+				{
+					for (std::size_t i = 0; i < _variantCount; i++)
+					{
+						if (_variants[i].Version == version)
+							return _variants[i];
+					}
+
+					return { version, _defaultID, _defaultOffset };
+				}				
 			};
 		private:
 			std::vector<Entry>* _entries{ nullptr };
 			bool _loaded{ false };
-			AddressLibraryEpoch _epoch{ AddressLibraryEpoch::NG };
+			VersionID _version{ 0 };
 
 			AddressLibrary(const AddressLibrary&) = delete;
 			AddressLibrary& operator=(const AddressLibrary&) = delete;
@@ -62,11 +96,11 @@ namespace CKPE
 			// Absolute address (CreationKit.exe module base + RVA), or 0 if unknown / not loaded.
 			[[nodiscard]] virtual std::uintptr_t Resolve(AddressID id) const noexcept(true);
 
-			void SetEpoch(AddressLibraryEpoch epoch) noexcept;
-			[[nodiscard]] AddressLibraryEpoch GetEpoch() const noexcept;
+			void SetVersion(VersionID version) noexcept(true);
+			[[nodiscard]] VersionID GetVersion() const noexcept(true);
 
-			[[nodiscard]] virtual std::uint64_t ResolveOffset(VariantID id) const noexcept(true);
-			[[nodiscard]] virtual std::uintptr_t Resolve(VariantID id) const noexcept(true);
+			[[nodiscard]] virtual std::uint64_t ResolveOffset(const VariantID& id) const noexcept(true);
+			[[nodiscard]] virtual std::uintptr_t Resolve(const VariantID& id) const noexcept(true);
 
 			static AddressLibrary* GetSingleton() noexcept(true);
 		};
