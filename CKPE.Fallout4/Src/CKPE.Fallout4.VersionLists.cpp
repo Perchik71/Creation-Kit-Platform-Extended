@@ -156,6 +156,16 @@ namespace CKPE
 		VersionLists::EDITOR_EXECUTABLE_TYPE VersionLists::GetEditorVersion() noexcept(true)
 		{
 			return _seditor_ver;
-		}	
+		}
+
+		std::wstring VersionLists::GetAddressLibraryRelativePath() noexcept(true)
+		{
+			std::wstring path = L"CKPEBins\\";
+			path += GetGameName();
+			path += L"\\";
+			path += GetAddressLibraryFileName();
+
+			return path;
+		}
 	}
 }
