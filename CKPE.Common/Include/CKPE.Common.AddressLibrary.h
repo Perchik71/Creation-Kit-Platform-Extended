@@ -67,7 +67,7 @@ namespace CKPE
 					for (std::size_t i = 0; i < _variantCount; i++)
 					{
 						if (_variants[i].Version == version)
-							return _variants[i]
+							return _variants[i];
 					}
 
 					return { version, _defaultID, _defaultOffset };
