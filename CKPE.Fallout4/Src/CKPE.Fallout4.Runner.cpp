@@ -143,7 +143,7 @@ namespace CKPE
 			//mgr->Register(new Patch::FixCrashSpellEaxDur);
 			//mgr->Register(new Patch::FixDeleteTintToRace);
 			mgr->Register(new Patch::FixInfiniteLoopPapyrusCompile);
-			//mgr->Register(new Patch::FixLandspaceVNML); // Deprecated?
+			mgr->Register(new Patch::FixLandspaceVNML); // Deprecated? lmaooo no
 			//mgr->Register(new Patch::FixLoadD3DCompiler);
 			//mgr->Register(new Patch::FixPluginTXT);
 			//mgr->Register(new Patch::FixQuoteCmdLine);
