@@ -52,7 +52,6 @@ extern "C"
 			dialog_pakfn, database_pakfn, CKPE::Fallout4::VersionLists::GetDatabaseFileName(),
 			CKPE::Fallout4::VersionLists::GetExternalResourcePackageFileName(), true,
 			CKPE::Fallout4::VersionLists::GetAddressLibraryFileName(),
-			CKPE::Fallout4::VersionLists::GetAddressLibraryEpoch());
 		interface->CmdLineHandler();
 		auto runner = CKPE::Fallout4::Runner::GetSingleton();
 		return runner->Install();
