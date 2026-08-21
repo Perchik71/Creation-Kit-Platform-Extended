@@ -27,52 +27,60 @@ namespace CKPE
 				std::uint64_t Offset;
 			};
 		public:
-			struct VariantID
-			{
-				struct Variant
-				{
-					VersionID Version{ 0 };
-					AddressID ID{ 0 };
-					AddressOffset Offset{ 0 };
-				}
+            struct VariantID
+            {
+                struct Variant
+                {
+                    VersionID Version;
+                    AddressID ID;
+                    AddressOffset Offset;
 
-				static constexpr std::size_t MaxVariants = 16;
+                    constexpr Variant() noexcept: Version(0), ID(0), Offset(0)
+                    {}
 
-			private:
-				AddressID _defaultID{ 0 };
-				AddressOffset _defaultOffset{ 0 };
+                    constexpr Variant(VersionID version, AddressID id, AddressOffset offset = 0) noexcept : Version(version), ID(id), Offset(offset)
+                    {}
+                };
 
-				std:array<Variant, MaxVariants> _variants{};
-				std::size_t _variantCount{ 0 };
+                static constexpr std::size_t MaxVariants = 16;
 
-			public:
-				const VariantID(AddressID id, AddressOffset offset = 0) noexcept :
-					_defaultID(id),
-					_defaultOffset(offset)
-				{}
+            private:
+                AddressID _defaultID{ 0 };
+                AddressOffset _defaultOffset{ 0 };
 
-				[[nodiscard]] const VariantID For(VersionID version, AddressID id, AddressOffset offset = 0) noexcept
-				{
-					VariantID result = *this;
+                std::array<Variant, MaxVariants> _variants{};
+                std::size_t _variantCount{ 0 };
 
-					if (result._variantCount < MaxVariants)
-						result._variants[result._variantCount++] = { version, id, offset };
-					}
+            public:
+                constexpr VariantID(AddressID id, AddressOffset offset = 0) noexcept : _defaultID(id), _defaultOffset(offset)
+                {}
 
-					return result;
-				}
+                [[nodiscard]]
+                constexpr VariantID For(VersionID version, AddressID id, AddressOffset offset = 0) const noexcept
+                {
+                    VariantID result = *this;
 
-				[[nodiscard]] const Variant Get(VersionID version) const noexcept
-				{
-					for (std::size_t i = 0; i < _variantCount; i++)
-					{
-						if (_variants[i].Version == version)
-							return _variants[i];
-					}
+                    if (result._variantCount < MaxVariants)
+                    {
+                        result._variants[result._variantCount++] =
+                            Variant{ version, id, offset };
+                    }
 
-					return { version, _defaultID, _defaultOffset };
-				}				
-			};
+                    return result;
+                }
+
+                [[nodiscard]]
+                constexpr Variant Get(VersionID version) const noexcept
+                {
+                    for (std::size_t i = 0; i < _variantCount; i++)
+                    {
+                        if (_variants[i].Version == version)
+                            return _variants[i];
+                    }
+
+                    return Variant{ version, _defaultID, _defaultOffset };
+                }
+            };
 		private:
 			std::vector<Entry>* _entries{ nullptr };
 			bool _loaded{ false };

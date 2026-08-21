@@ -129,7 +129,7 @@ namespace CKPE
 		{
 			const auto variant = id.Get(_version);
 
-			const auto offset = ResolveOffset(variant.ID)
+			const auto offset = ResolveOffset(variant.ID);
 			if (!offset)
 				return 0;
 
@@ -138,7 +138,7 @@ namespace CKPE
 
 		std::uintptr_t AddressLibrary::Resolve(const VariantID& id) const noexcept(true)
 		{
-			const auto offset = ResolveOffset(id)
+			const auto offset = ResolveOffset(id);
 			if (!offset)
 				return 0;
 
