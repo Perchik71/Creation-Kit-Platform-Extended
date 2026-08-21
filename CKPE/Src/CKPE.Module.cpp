@@ -26,15 +26,14 @@ namespace CKPE
 		if (!_handle)
 			throw std::invalid_argument("_base is null");
 
-		PIMAGE_NT_HEADERS ntHeader = (PIMAGE_NT_HEADERS)(GetBase() + ((PIMAGE_DOS_HEADER)GetBase())->e_lfanew);
-		PIMAGE_SECTION_HEADER cur_section = IMAGE_FIRST_SECTION(ntHeader);
+		auto ntHeader = (PIMAGE_NT_HEADERS)(GetBase() + ((PIMAGE_DOS_HEADER)GetBase())->e_lfanew);
+		auto cur_section = IMAGE_FIRST_SECTION(ntHeader);
 		const std::uint32_t size = std::min<std::uint32_t>(ntHeader->FileHeader.NumberOfSections, (std::uint32_t)_segments.size());
-		char sectionName[sizeof(IMAGE_SECTION_HEADER::Name) + 1]{};
 		constexpr auto sectionNameMaxLen = sizeof(IMAGE_SECTION_HEADER::Name);
 
 		for (std::uint32_t i = 0; i < size; i++, cur_section++)
 		{
-			const auto it = std::find_if(SEGMENTS.begin(), SEGMENTS.end(), [&](auto&& a_elem)
+			const auto it = std::find_if(SEGMENTS.begin(), SEGMENTS.end(), [&](const auto& a_elem)
 				{
 					return std::memcmp(a_elem.data(), cur_section->Name, std::min(a_elem.size(), sectionNameMaxLen)) == 0;
 				});
@@ -49,7 +48,7 @@ namespace CKPE
 
 	void Module::LoadDirectories()
 	{
-		PIMAGE_NT_HEADERS ntHeaders = (PIMAGE_NT_HEADERS)(GetBase() + ((PIMAGE_DOS_HEADER)GetBase())->e_lfanew);
+		auto ntHeaders = (PIMAGE_NT_HEADERS)(GetBase() + ((PIMAGE_DOS_HEADER)GetBase())->e_lfanew);
 		auto data = ntHeaders->OptionalHeader.DataDirectory;
 
 		for (std::uint32_t idx = 0; idx < PEDirectory::total; idx++)

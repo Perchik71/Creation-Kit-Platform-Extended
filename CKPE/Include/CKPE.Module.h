@@ -47,7 +47,9 @@ namespace CKPE
 
 		Module() noexcept(true) = default;
 		Module(const Module&) = delete;
+		Module(Module&&) = delete;
 		Module& operator=(const Module&) = delete;
+		Module& operator=(Module&&) = delete;
 	protected:
 		void LoadSegments();
 		void LoadDirectories();
@@ -58,9 +60,9 @@ namespace CKPE
 
 		[[nodiscard]] bool Is64() const noexcept(true);
 		[[nodiscard]] inline std::wstring GetFileName() const noexcept(true) { return _fname ? *_fname : L""; }
-		[[nodiscard]] inline constexpr virtual std::uintptr_t GetBase() const noexcept(true) { return (std::uintptr_t)_handle; }
-		[[nodiscard]] inline constexpr Segment GetSegment(Segment::Name a_segment) const noexcept(true) { return _segments[a_segment]; }
-		[[nodiscard]] inline constexpr PEDirectory GetPEDirectory(PEDirectory::Name a_segment) const noexcept(true) { return _directories[a_segment]; }
+		[[nodiscard]] constexpr virtual std::uintptr_t GetBase() const noexcept(true) { return (std::uintptr_t)_handle; }
+		[[nodiscard]] constexpr Segment GetSegment(Segment::Name a_segment) const noexcept(true) { return _segments[a_segment]; }
+		[[nodiscard]] constexpr PEDirectory GetPEDirectory(PEDirectory::Name a_segment) const noexcept(true) { return _directories[a_segment]; }
 		[[nodiscard]] inline void* GetPointer() const noexcept(true) { return reinterpret_cast<void*>(GetBase()); }
 		template <class T> [[nodiscard]] inline T* GetPointer() const noexcept(true) { return static_cast<T*>(GetPointer()); }
 
@@ -71,7 +73,7 @@ namespace CKPE
 			Resource(const Resource&) = delete;
 			Resource& operator=(const Resource&) = delete;
 		public:
-			inline constexpr Resource(const Module* m) noexcept(true) : _module(m) {};
+			constexpr Resource(const Module* m) noexcept(true) : _module(m) {};
 			[[nodiscard]] const void* GetProcAddress(const char* name) const noexcept(true);
 		} Resources{ this };
 

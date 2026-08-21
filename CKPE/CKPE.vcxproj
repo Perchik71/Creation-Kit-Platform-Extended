@@ -152,6 +152,7 @@
     <ClCompile Include="Src\CKPE.Timer.cpp" />
     <ClCompile Include="Src\CKPE.FileUtils.cpp" />
     <ClCompile Include="Src\CKPE.Utils.cpp" />
+    <ClCompile Include="Src\CKPE.Version.cpp" />
     <ClCompile Include="Src\CKPE.Zipper.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +198,7 @@
     <ClInclude Include="Include\CKPE.StringUtils.h" />
     <ClInclude Include="Include\CKPE.Timer.h" />
     <ClInclude Include="Include\CKPE.Utils.h" />
+    <ClInclude Include="Include\CKPE.Version.h" />
     <ClInclude Include="Include\CKPE.Zipper.h" />
     <ClInclude Include="resource_version.h" />
   </ItemGroup>

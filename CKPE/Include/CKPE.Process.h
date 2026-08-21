@@ -14,12 +14,14 @@ namespace CKPE
 		std::uint32_t _processid{ (std::uint32_t)-1 };
 
 		Process(const Process&) = delete;
+		Process(Process&&) = delete;
 		Process& operator=(const Process&) = delete;
+		Process& operator=(Process&&) = delete;
 	public:
 		Process() noexcept(true);
 
-		[[nodiscard]] inline constexpr virtual const void* GetHandle() const noexcept(true) { return _process; }
-		[[nodiscard]] inline constexpr virtual std::uint32_t GetID() const noexcept(true) { return _processid; }
+		[[nodiscard]] constexpr virtual const void* GetHandle() const noexcept(true) { return _process; }
+		[[nodiscard]] constexpr virtual std::uint32_t GetID() const noexcept(true) { return _processid; }
 
 		virtual void Terminate() const noexcept(true);
 	};
