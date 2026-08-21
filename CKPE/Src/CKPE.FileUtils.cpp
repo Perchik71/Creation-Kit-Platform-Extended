@@ -8,63 +8,65 @@
 #include <CKPE.StringUtils.h>
 #include <CKPE.Module.h>
 #include <memory>
+#include <sstream>
+#include <vector>
 
 namespace CKPE
 {
-	std::uint64_t FileUtils::GetFileVersion(const std::string& fname) noexcept(true)
+	std::optional<Version> FileUtils::GetFileVersion(const std::string& fname) noexcept(true)
 	{
 		return GetFileVersion(fname.c_str());
 	}
 
-	std::uint64_t FileUtils::GetFileVersion(const std::wstring& fname) noexcept(true)
+	std::optional<Version> FileUtils::GetFileVersion(const std::wstring& fname) noexcept(true)
 	{
 		return GetFileVersion(fname.c_str());
 	}
 
-	std::uint64_t FileUtils::GetFileVersion(const char* fname) noexcept(true)
+	std::optional<Version> FileUtils::GetFileVersion(const char* a_filename) noexcept(true)
 	{
-		if (!PathUtils::FileExists(fname))
-			return (std::uint64_t)-1;
+		DWORD dummy{};
+		std::vector<char> buf(GetFileVersionInfoSizeA(a_filename, std::addressof(dummy)));
+		if (buf.empty()) return std::nullopt;
 
-		const auto ver_info_len = GetFileVersionInfoSizeA(fname, nullptr);
-		auto ver_info = std::make_unique<std::uint8_t[]>(ver_info_len);
-		if (!GetFileVersionInfoA(fname, 0, ver_info_len, ver_info.get()))
-			return (std::uint64_t)-1;
+		if (!GetFileVersionInfoA(a_filename, 0, static_cast<DWORD>(buf.size()), buf.data()))
+			return std::nullopt;
 
-		VS_FIXEDFILEINFO* file_version = nullptr;
-		unsigned int file_version_len = 0;
-		if (!VerQueryValueW(ver_info.get(), L"\\",
-			reinterpret_cast<void**>(&file_version), &file_version_len))
-			return (std::uint64_t)-1;
+		void* verBuf{ nullptr };
+		std::uint32_t verLen{ 0 };
+		if (!VerQueryValueA(buf.data(), "\\StringFileInfo\\040904B0\\ProductVersion",
+			std::addressof(verBuf), std::addressof(verLen)))
+			return std::nullopt;
 
-		return MAKE_EXE_VERSION_EX(
-			HIWORD(file_version->dwProductVersionMS),
-			LOWORD(file_version->dwProductVersionMS),
-			HIWORD(file_version->dwProductVersionLS),
-			LOWORD(file_version->dwProductVersionLS));
+		Version            version;
+		std::istringstream ss(std::string(static_cast<const char*>(verBuf), verLen));
+		std::string        token;
+		for (std::size_t i = 0; i < 4 && std::getline(ss, token, '.'); ++i)
+			version[i] = static_cast<std::uint16_t>(std::stoi(token));
+		return version;
 	}
 
-	std::uint64_t FileUtils::GetFileVersion(const wchar_t* fname) noexcept(true)
+	std::optional<Version> FileUtils::GetFileVersion(const wchar_t* a_filename) noexcept(true)
 	{
-		if (!PathUtils::FileExists(fname))
-			return (std::uint64_t)-1;
+		DWORD dummy{};
+		std::vector<char> buf(GetFileVersionInfoSizeW(a_filename, std::addressof(dummy)));
+		if (buf.empty()) return std::nullopt;
 
-		const auto ver_info_len = GetFileVersionInfoSizeW(fname, nullptr);
-		auto ver_info = std::make_unique<std::uint8_t[]>(ver_info_len);
-		if (!GetFileVersionInfoW(fname, 0, ver_info_len, ver_info.get()))
-			return (std::uint64_t)-1;
+		if (!GetFileVersionInfoW(a_filename, 0, static_cast<DWORD>(buf.size()), buf.data()))
+			return std::nullopt;
 
-		VS_FIXEDFILEINFO* file_version = nullptr;
-		unsigned int file_version_len = 0;
-		if (!VerQueryValueW(ver_info.get(), L"\\",
-			reinterpret_cast<void**>(&file_version), &file_version_len))
-			return (std::uint64_t)-1;
+		void* verBuf{ nullptr };
+		std::uint32_t verLen{ 0 };
+		if (!VerQueryValueW(buf.data(), L"\\StringFileInfo\\040904B0\\ProductVersion",
+			std::addressof(verBuf), std::addressof(verLen)))
+			return std::nullopt;
 
-		return MAKE_EXE_VERSION_EX(
-			HIWORD(file_version->dwProductVersionMS),
-			LOWORD(file_version->dwProductVersionMS),
-			HIWORD(file_version->dwProductVersionLS),
-			LOWORD(file_version->dwProductVersionLS));
+		Version             version;
+		std::wistringstream ss(std::wstring(static_cast<const wchar_t*>(verBuf), verLen));
+		std::wstring        token;
+		for (std::size_t i = 0; i < 4 && std::getline(ss, token, L'.'); ++i)
+			version[i] = static_cast<std::uint16_t>(std::stoi(token));
+		return version;
 	}
 
 	std::uint64_t FileUtils::GetFileSize(const std::string& fname) noexcept(true)

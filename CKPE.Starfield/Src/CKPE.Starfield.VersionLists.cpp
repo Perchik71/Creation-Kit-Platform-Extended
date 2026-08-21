@@ -1,4 +1,4 @@
-// Copyright © 2025 aka perchik71. All rights reserved.
+// Copyright © 2025-2026 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -70,18 +70,18 @@ namespace CKPE
 		};
 
 		// Список версий
-		static std::vector<std::uint64_t> _sEditorVersion =
+		static std::vector<CKPE::Version> _sEditorVersion =
 		{
-			0,
-			MAKE_EXE_VERSION_EX(1, 13, 61, 0),
-			MAKE_EXE_VERSION_EX(1, 14, 70, 0),
-			MAKE_EXE_VERSION_EX(1, 14, 74, 0),
-			MAKE_EXE_VERSION_EX(1, 14, 78, 0),
-			MAKE_EXE_VERSION_EX(1, 15, 216, 0),
-			MAKE_EXE_VERSION_EX(1, 15, 222, 0),
-			MAKE_EXE_VERSION_EX(1, 16, 236, 0),
-			MAKE_EXE_VERSION_EX(1, 16, 242, 0),
-			MAKE_EXE_VERSION_EX(1, 16, 244, 0),
+			{},
+			{ 1, 13, 61, 0 },
+			{ 1, 14, 70, 0 },
+			{ 1, 14, 74, 0 },
+			{ 1, 14, 78, 0 },
+			{ 1, 15, 216, 0 },
+			{ 1, 15, 222, 0 },
+			{ 1, 16, 236, 0 },
+			{ 1, 16, 242, 0 },
+			{ 1, 16, 244, 0 },
 		};
 
 		// Список имён файлов базы данных
@@ -147,7 +147,7 @@ namespace CKPE
 			return (it != _sallowedDatabaseVersion.end()) ? it->second.data() : L"";
 		}
 
-		std::uint64_t VersionLists::GetEditorVersionByNum() noexcept(true)
+		CKPE::Version VersionLists::GetEditorVersionByNum() noexcept(true)
 		{
 			return _sEditorVersion[_seditor_ver];
 		}

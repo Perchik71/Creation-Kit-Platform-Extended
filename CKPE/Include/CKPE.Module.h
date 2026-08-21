@@ -4,11 +4,9 @@
 
 #pragma once
 
-#include <cstdint>
-#include <string>
-#include <array>
 #include <CKPE.Segment.h>
 #include <CKPE.PEDirectory.h>
+#include <CKPE.Version.h>
 
 //	x-------	major
 //	-xxx----	minor

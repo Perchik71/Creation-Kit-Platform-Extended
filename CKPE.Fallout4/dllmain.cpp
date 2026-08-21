@@ -18,7 +18,7 @@ extern "C"
 	__declspec(dllexport) CKPEGameLibraryData CKPEGameLibrary_Data =
 	{
 		CKPEGameLibraryData::kVersion,
-		MAKE_EXE_VERSION_EX(VERSION_MAJOR, VERSION_MINOR, VERSION_BUILD, VERSION_REVISION),
+		{ VERSION_MAJOR, VERSION_MINOR, VERSION_BUILD, VERSION_REVISION },
 		"Fallout4",
 		"Perchik71",
 	};
@@ -28,10 +28,10 @@ extern "C"
 		CKPE::Fallout4::VersionLists::Verify();
 		version = CKPE::Fallout4::VersionLists::GetEditorVersionByString();
 		auto version_num = CKPE::Fallout4::VersionLists::GetEditorVersionByNum();
-		if (version_num)
+		auto ver = CKPE::FileUtils::GetFileVersion(CKPE::PathUtils::GetApplicationFileName());
+		if (ver.has_value())
 		{
-			auto ver = CKPE::FileUtils::GetFileVersion(CKPE::PathUtils::GetApplicationFileName());
-			if (ver != version_num)
+			if (ver.value() != version_num)
 				return CKPE::GameManager::FAKE;
 			if (CKPE::Fallout4::VersionLists::HasAllowedEditorVersion())
 				return CKPE::GameManager::SUPPORTED;

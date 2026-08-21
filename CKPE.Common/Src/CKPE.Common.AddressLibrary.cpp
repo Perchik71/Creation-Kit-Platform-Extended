@@ -53,7 +53,7 @@ namespace CKPE
 				if (stm.Read(&count, sizeof(count)) != sizeof(count))
 					throw RuntimeError(L"AddressLibrary::Load file \"{}\" is broken (couldn't read header)", fname);
 
-				auto expected_size = (std::uint64_t)sizeof(count) + count * (std::uint64_t)sizeof(Entry);
+				auto expected_size = static_cast<std::uint64_t>(sizeof(count) + count * sizeof(Entry));
 				if (stm.GetSize() != expected_size)
 					throw RuntimeError(L"AddressLibrary::Load file \"{}\" has an unexpected size", fname);
 
@@ -61,7 +61,7 @@ namespace CKPE
 
 				if (count)
 				{
-					auto bytes_to_read = (std::uint32_t)(count * (std::uint64_t)sizeof(Entry));
+					auto bytes_to_read = static_cast<std::uint32_t>(count * sizeof(Entry));
 					if (stm.Read(_entries->data(), bytes_to_read) != bytes_to_read)
 						throw RuntimeError(L"AddressLibrary::Load file \"{}\" is broken (short read)", fname);
 				}
@@ -73,7 +73,7 @@ namespace CKPE
 				}
 
 				_loaded = true;
-				_MESSAGE(L"\tAddress Library \"%s\" loaded (%u entries)"sv, fname.c_str(), (std::uint32_t)_entries->size());
+				_MESSAGE(L"\tAddress Library \"%s\" loaded (%u entries)"sv, fname.c_str(), static_cast<std::uint32_t>(_entries->size()));
 
 				return true;
 			}
@@ -97,7 +97,7 @@ namespace CKPE
 				return 0;
 
 			auto it = std::lower_bound(_entries->begin(), _entries->end(), id,
-				[](const Entry& e, AddressID value) noexcept(true) -> bool { return e.Id < value; });
+				[](const Entry& e, AddressID value) noexcept(true) { return e.Id < value; });
 
 			if (it == _entries->end() || it->Id != id)
 				return 0;
@@ -115,12 +115,12 @@ namespace CKPE
 			return (std::uintptr_t)base + (std::uintptr_t)offset;
 		}
 
-		void AddressLibrary::SetVersion(VersionID version) noexcept(true)
+		void AddressLibrary::SetVersion(const CKPE::Version& version) noexcept(true)
 		{
 			_version = version;
 		}
 
-		AddressLibrary::VersionID AddressLibrary::GetVersion() const noexcept(true)
+		CKPE::Version AddressLibrary::GetVersion() const noexcept(true)
 		{
 			return _version;
 		}
@@ -144,7 +144,7 @@ namespace CKPE
 
 			auto base = Interface::GetSingleton()->GetApplication()->GetBase();
 
-			return (std::uintptr_t)base + (std::uintptr_t)offset;
+			return static_cast<std::uintptr_t>(base) + static_cast<std::uintptr_t>(offset);
 		}
 			
 		AddressLibrary* AddressLibrary::GetSingleton() noexcept(true)

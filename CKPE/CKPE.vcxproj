@@ -74,6 +74,7 @@
       <DisableSpecificWarnings>26444;6386;28619;28183;28182;26495</DisableSpecificWarnings>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
       <UseFullPaths>false</UseFullPaths>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -108,6 +109,7 @@
       <DisableSpecificWarnings>26444;6386;28619;28183;28182;26495;</DisableSpecificWarnings>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <UseFullPaths>false</UseFullPaths>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -152,7 +154,6 @@
     <ClCompile Include="Src\CKPE.Timer.cpp" />
     <ClCompile Include="Src\CKPE.FileUtils.cpp" />
     <ClCompile Include="Src\CKPE.Utils.cpp" />
-    <ClCompile Include="Src\CKPE.Version.cpp" />
     <ClCompile Include="Src\CKPE.Zipper.cpp" />
   </ItemGroup>
   <ItemGroup>

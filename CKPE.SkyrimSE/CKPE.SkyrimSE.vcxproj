@@ -75,6 +75,7 @@
       <DisableSpecificWarnings>6031;6387;26495;4244;26813;4312;4302;4311</DisableSpecificWarnings>
       <StructMemberAlignment>Default</StructMemberAlignment>
       <UseFullPaths>false</UseFullPaths>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -110,6 +111,7 @@
       <DisableSpecificWarnings>6031;6387;26495;4244;26813;4312;4302;4311</DisableSpecificWarnings>
       <StructMemberAlignment>Default</StructMemberAlignment>
       <UseFullPaths>false</UseFullPaths>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

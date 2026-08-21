@@ -6,6 +6,7 @@
 
 #include <cstdint>
 #include <CKPE.Logger.h>
+#include <CKPE.Version.h>
 #include <CKPE.Common.Patch.h>
 #include <CKPE.PluginAPI.Common.h>
 

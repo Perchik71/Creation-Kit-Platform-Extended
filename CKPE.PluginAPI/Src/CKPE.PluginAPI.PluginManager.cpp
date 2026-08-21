@@ -150,10 +150,10 @@ namespace CKPE
 
 			for (auto plug : *_plugins)
 			{
-				_interface.CKPEVersion = s->GetCKPEInterface()->ckpeVersion;
-				_interface.CKPECommonVersion = s->GetVersionDLL();
-				_interface.CKPEGameLibraryVersion = s->GetGameLibraryVersionDLL();
-				_interface.RuntimeVersion = s->GetEditorVersion();
+				_interface.CKPEVersion = s->GetCKPEInterface()->ckpeVersion.pack();
+				_interface.CKPECommonVersion = s->GetVersionDLL().pack();
+				_interface.CKPEGameLibraryVersion = s->GetGameLibraryVersionDLL().pack();
+				_interface.RuntimeVersion = s->GetEditorVersion().pack();
 				_interface.GetPluginHandle = GetPluginHandle;
 				_interface.QueryInterface = QueryInterface;
 

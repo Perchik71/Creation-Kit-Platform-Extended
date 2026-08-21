@@ -4,10 +4,8 @@
 
 #pragma once
 
-#include <string>
-#include <cstdint>
+#include <CKPE.Version.h>
 #include <map>
-#include <CKPE.Common.h>
 
 namespace CKPE
 {
@@ -17,24 +15,24 @@ namespace CKPE
 
 struct CKPEGameLibraryData
 {
-	enum { kVersion = 1, };
+	enum { kVersion = 2, };
 
-	std::uint32_t cbVersion;		// set to kVersion
-	std::uint64_t dataVersion;		// version number of game library
-	char name[256];					// null-terminated ASCII game library name
-	char author[256];				// null-terminated ASCII game library author name
+	std::uint32_t cbVersion{ kVersion };	// set to kVersion
+	CKPE::Version dataVersion{};			// version number of game library
+	char name[256]{};						// null-terminated ASCII game library name
+	char author[256]{};						// null-terminated ASCII game library author name
 };
 
 typedef std::uint32_t GameLibraryHandle;
 
 struct CKPEGameLibraryInterface
 {
-	enum { kInterfaceVersion = 1, };
+	enum { kInterfaceVersion = 2, };
 
-	std::uint32_t interfaceVersion;
-	std::uint64_t ckpeVersion;
-	CKPE::Application* application;
-	CKPE::Logger* logger;
+	std::uint32_t interfaceVersion{ kInterfaceVersion };
+	CKPE::Version ckpeVersion{};
+	CKPE::Application* application{ nullptr };
+	CKPE::Logger* logger{ nullptr };
 	void* (*QueryInterface)(std::uint32_t id);
 };
 

@@ -4,11 +4,9 @@
 
 #pragma once
 
+#include <CKPE.Version.h>
 #include <CKPE.Common.Common.h>
-#include <array>
-#include <string>
 #include <vector>
-#include <cstdint>
 
 namespace CKPE
 {
@@ -31,14 +29,12 @@ namespace CKPE
             {
                 struct Variant
                 {
-                    VersionID Version;
-                    AddressID ID;
-                    AddressOffset Offset;
+                    CKPE::Version Version{};
+                    AddressID ID{ 0 };
+                    AddressOffset Offset{ 0 };
 
-                    constexpr Variant() noexcept: Version(0), ID(0), Offset(0)
-                    {}
-
-                    constexpr Variant(VersionID version, AddressID id, AddressOffset offset = 0) noexcept : Version(version), ID(id), Offset(offset)
+                    constexpr Variant() noexcept = default;
+                    constexpr Variant(CKPE::Version version, AddressID id, AddressOffset offset = 0) noexcept : Version(version), ID(id), Offset(offset)
                     {}
                 };
 
@@ -56,7 +52,7 @@ namespace CKPE
                 {}
 
                 [[nodiscard]]
-                constexpr VariantID For(VersionID version, AddressID id, AddressOffset offset = 0) const noexcept
+                constexpr VariantID For(CKPE::Version version, AddressID id, AddressOffset offset = 0) const noexcept
                 {
                     VariantID result = *this;
 
@@ -70,7 +66,7 @@ namespace CKPE
                 }
 
                 [[nodiscard]]
-                constexpr Variant Get(VersionID version) const noexcept
+                constexpr Variant Get(CKPE::Version version) const noexcept
                 {
                     for (std::size_t i = 0; i < _variantCount; i++)
                     {
@@ -84,7 +80,7 @@ namespace CKPE
 		private:
 			std::vector<Entry>* _entries{ nullptr };
 			bool _loaded{ false };
-			VersionID _version{ 0 };
+			CKPE::Version _version{};
 
 			AddressLibrary(const AddressLibrary&) = delete;
 			AddressLibrary& operator=(const AddressLibrary&) = delete;
@@ -96,7 +92,7 @@ namespace CKPE
 			virtual bool Load(const std::wstring& fname) noexcept(true);
 			virtual void Clear() noexcept(true);
 
-			[[nodiscard]] constexpr inline bool IsLoaded() const noexcept(true) { return _loaded; }
+			[[nodiscard]] constexpr bool IsLoaded() const noexcept(true) { return _loaded; }
 			[[nodiscard]] virtual std::uint32_t GetCount() const noexcept(true);
 
 			// Raw RVA for the given stable id, or 0 if unknown / not loaded.
@@ -104,8 +100,8 @@ namespace CKPE
 			// Absolute address (CreationKit.exe module base + RVA), or 0 if unknown / not loaded.
 			[[nodiscard]] virtual std::uintptr_t Resolve(AddressID id) const noexcept(true);
 
-			void SetVersion(VersionID version) noexcept(true);
-			[[nodiscard]] VersionID GetVersion() const noexcept(true);
+			void SetVersion(const CKPE::Version& version) noexcept(true);
+			[[nodiscard]] CKPE::Version GetVersion() const noexcept(true);
 
 			[[nodiscard]] virtual std::uint64_t ResolveOffset(const VariantID& id) const noexcept(true);
 			[[nodiscard]] virtual std::uintptr_t Resolve(const VariantID& id) const noexcept(true);

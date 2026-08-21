@@ -28,7 +28,7 @@
 #include <Patches/CKPE.Fallout4.Patch.RenderWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.CellViewWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.MainWindow.h>
-#include "..\CKPE.Common\resource.h"
+#include "../CKPE.Common/resource.h"
 
 #include <commdlg.h>
 #include <commctrl.h>
@@ -89,7 +89,7 @@ namespace CKPE
 							form->DebugInfo(szBuf, 140);
 
 							_CONSOLE("DebugInfo -> %s type %02X ptr %p",
-								szBuf, (std::uint16_t)form->Type, form);
+								szBuf, std::to_underlying(form->Type), form);
 
 							if (form->Type == EditorAPI::Forms::TESObjectREFR::TYPE_ID)
 								OutputRefrAdditionalInfo((EditorAPI::Forms::TESObjectREFR*)form);
@@ -116,7 +116,7 @@ namespace CKPE
 				}
 			}
 
-			static void CreateExtensionMenu(HWND _MainWindow, HMENU _MainMenu) noexcept(true)
+			static void CreateExtensionMenu([[maybe_unused]] HWND _MainWindow, HMENU _MainMenu) noexcept(true)
 			{
 				// Creating a submenu to open the hidden functions of the Creation Kit
 				ExtensionMenuHideFunctionsHandle = CreateMenu();
@@ -169,7 +169,7 @@ namespace CKPE
 					.wID = MainWindow::UI_EXTMENU_ID,
 					.hSubMenu = ExtensionMenuHandle,
 					.dwTypeData = const_cast<LPSTR>("Extensions"),
-					.cch = static_cast<std::uint32_t>(strlen(menuInfo.dwTypeData))
+					.cch = 10
 				};
 
 				CKPE_ASSERT_MSG(InsertMenuItem(_MainMenu, -1, TRUE, &menuInfo), "Failed to create extension submenu");
@@ -179,16 +179,20 @@ namespace CKPE
 				//Plugins->CreatePluginsMenu(MainMenu, UI_EXTMENU_ID + 1);
 
 				auto ver = FileUtils::GetFileVersion("CKPE.Fallout4.dll");
-				auto customTitle = std::make_unique<char[]>(100);
-				sprintf(customTitle.get(), "[CKPE: v%u.%u build %u]",
-					GET_EXE_VERSION_EX_MAJOR(ver), GET_EXE_VERSION_EX_MINOR(ver), GET_EXE_VERSION_EX_BUILD(ver));		
-				ZeroMemory(&menuInfo, sizeof(MENUITEMINFO));
-				menuInfo.cbSize = sizeof(MENUITEMINFO),
+				if (ver.has_value())
+				{
+					auto& v = ver.value();
+
+					auto customTitle = std::make_unique<char[]>(100);
+					sprintf_s(customTitle.get(), 100, "[CKPE: v%u.%u build %u]", v.major(), v.minor(), v.build());
+					ZeroMemory(&menuInfo, sizeof(MENUITEMINFO));
+					menuInfo.cbSize = sizeof(MENUITEMINFO);
 					menuInfo.fMask = MIIM_STRING | MIIM_ID;
-				menuInfo.wID = 40016;
-				menuInfo.dwTypeData = LPSTR(customTitle.get());
-				menuInfo.cch = static_cast<std::uint32_t>(strlen(menuInfo.dwTypeData));
-				CKPE_ASSERT_MSG(InsertMenuItem(_MainMenu, -1, TRUE, &menuInfo), "Failed to create version menuitem");
+					menuInfo.wID = 40016;
+					menuInfo.dwTypeData = LPSTR(customTitle.get());
+					menuInfo.cch = static_cast<std::uint32_t>(strlen(menuInfo.dwTypeData));
+					CKPE_ASSERT_MSG(InsertMenuItem(_MainMenu, -1, TRUE, &menuInfo), "Failed to create version menuitem");
+				}
 			}
 
 			void MainWindow::DoOpenFormByIdHandler(std::uint32_t id) noexcept(true)

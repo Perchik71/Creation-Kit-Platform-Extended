@@ -69,8 +69,6 @@ namespace CKPE
 					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetParentWithRedraw = __CKPE_OFFSET(1);
 					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly_NG::SetParentWithRedraw = __CKPE_OFFSET(1);
 					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly::SetParentWithRedraw = __CKPE_OFFSET(1);
-
-					return true;
 				}
 				else
 				{
@@ -84,6 +82,8 @@ namespace CKPE
 					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly_NG::SetParentWithRedraw = rel;
 					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly::SetParentWithRedraw = rel;
 				}
+
+				return true;
 			}
 		}
 	}

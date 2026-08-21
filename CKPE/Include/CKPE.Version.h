@@ -11,33 +11,44 @@
 
 namespace CKPE
 {
-	template <typename T>
-	class VersionBase
+	struct VersionPackInfo
+	{
+		static constexpr auto AND_MAJOR{ 0xFFFF };
+		static constexpr auto AND_MINOR{ 0xFFFF };
+		static constexpr auto AND_PATCH{ 0xFFFF };
+		static constexpr auto AND_BUILD{ 0xFFFF };
+		static constexpr auto SHL_MAJOR{ 8 * 6 };
+		static constexpr auto SHL_MINOR{ 8 * 4 };
+		static constexpr auto SHL_PATCH{ 8 * 2 };
+		static constexpr auto SHL_BUILD{ 8 * 0 };
+	};
+
+	class CKPE_API VersionBase
 	{
 	public:
 		using value_type = std::uint16_t;
 		using reference = value_type&;
 		using const_reference = const value_type&;
 
-		constexpr VersionBase() noexcept = default;
+		constexpr VersionBase() noexcept(true) = default;
 
-		explicit constexpr VersionBase(std::array<value_type, 4> a_version) noexcept :
+		explicit constexpr VersionBase(std::array<value_type, 4> a_version) noexcept(true) :
 			_impl(a_version)
 		{}
 
-		constexpr VersionBase(value_type a_v1, value_type a_v2 = 0, value_type a_v3 = 0, value_type a_v4 = 0) noexcept :
+		constexpr VersionBase(value_type a_v1, value_type a_v2 = 0, value_type a_v3 = 0, value_type a_v4 = 0) noexcept(true) :
 			_impl{ a_v1, a_v2, a_v3, a_v4 }
 		{}
 
-		[[nodiscard]] constexpr reference       operator[](std::size_t a_idx) noexcept { return _impl[a_idx]; }
-		[[nodiscard]] constexpr const_reference operator[](std::size_t a_idx) const noexcept { return _impl[a_idx]; }
+		[[nodiscard]] constexpr reference       operator[](std::size_t a_idx) noexcept(true) { return _impl[a_idx]; }
+		[[nodiscard]] constexpr const_reference operator[](std::size_t a_idx) const noexcept(true) { return _impl[a_idx]; }
 
-		[[nodiscard]] constexpr decltype(auto) begin() const noexcept { return _impl.begin(); }
-		[[nodiscard]] constexpr decltype(auto) cbegin() const noexcept { return _impl.cbegin(); }
-		[[nodiscard]] constexpr decltype(auto) end() const noexcept { return _impl.end(); }
-		[[nodiscard]] constexpr decltype(auto) cend() const noexcept { return _impl.cend(); }
+		[[nodiscard]] constexpr decltype(auto) begin() const noexcept(true) { return _impl.begin(); }
+		[[nodiscard]] constexpr decltype(auto) cbegin() const noexcept(true) { return _impl.cbegin(); }
+		[[nodiscard]] constexpr decltype(auto) end() const noexcept(true) { return _impl.end(); }
+		[[nodiscard]] constexpr decltype(auto) cend() const noexcept(true) { return _impl.cend(); }
 
-		[[nodiscard]] std::strong_ordering constexpr compare(const VersionBase& a_rhs) const noexcept
+		[[nodiscard]] std::strong_ordering constexpr compare(const VersionBase& a_rhs) const noexcept(true)
 		{
 			for (std::size_t i = 0; i < _impl.size(); ++i) {
 				if ((*this)[i] != a_rhs[i]) {
@@ -47,19 +58,19 @@ namespace CKPE
 			return std::strong_ordering::equal;
 		}
 
-		[[nodiscard]] constexpr std::uint32_t pack() const noexcept
+		[[nodiscard]] constexpr std::uint64_t pack() const noexcept(true)
 		{
-			return static_cast<std::uint32_t>(
-				(_impl[0] & T::AND_MAJOR) << T::SHL_MAJOR |
-				(_impl[1] & T::AND_MINOR) << T::SHL_MINOR |
-				(_impl[2] & T::AND_PATCH) << T::SHL_PATCH |
-				(_impl[3] & T::AND_BUILD) << T::SHL_BUILD);
+			return 
+				static_cast<std::uint64_t>(_impl[0]) << VersionPackInfo::SHL_MAJOR |
+				static_cast<std::uint64_t>(_impl[1]) << VersionPackInfo::SHL_MINOR |
+				static_cast<std::uint64_t>(_impl[2]) << VersionPackInfo::SHL_PATCH |
+				static_cast<std::uint64_t>(_impl[3]) << VersionPackInfo::SHL_BUILD;
 		}
 
-		[[nodiscard]] constexpr value_type major() const noexcept { return _impl[0]; }
-		[[nodiscard]] constexpr value_type minor() const noexcept { return _impl[1]; }
-		[[nodiscard]] constexpr value_type patch() const noexcept { return _impl[2]; }
-		[[nodiscard]] constexpr value_type build() const noexcept { return _impl[3]; }
+		[[nodiscard]] constexpr value_type major() const noexcept(true) { return _impl[0]; }
+		[[nodiscard]] constexpr value_type minor() const noexcept(true) { return _impl[1]; }
+		[[nodiscard]] constexpr value_type patch() const noexcept(true) { return _impl[2]; }
+		[[nodiscard]] constexpr value_type build() const noexcept(true) { return _impl[3]; }
 
 		[[nodiscard]] constexpr std::string string(const std::string_view a_separator = "."sv) const
 		{
@@ -83,22 +94,22 @@ namespace CKPE
 			return result;
 		}
 
-		[[nodiscard]] static constexpr VersionBase unpack(const std::uint32_t a_packedVersion) noexcept
+		[[nodiscard]] static constexpr VersionBase unpack(const std::uint64_t a_packedVersion) noexcept(true)
 		{
 			return VersionBase{
-				static_cast<value_type>((a_packedVersion >> T::SHL_MAJOR) & T::AND_MAJOR),
-				static_cast<value_type>((a_packedVersion >> T::SHL_MINOR) & T::AND_MINOR),
-				static_cast<value_type>((a_packedVersion >> T::SHL_PATCH) & T::AND_PATCH),
-				static_cast<value_type>((a_packedVersion >> T::SHL_BUILD) & T::AND_BUILD)
+				static_cast<value_type>((a_packedVersion >> VersionPackInfo::SHL_MAJOR) & VersionPackInfo::AND_MAJOR),
+				static_cast<value_type>((a_packedVersion >> VersionPackInfo::SHL_MINOR) & VersionPackInfo::AND_MINOR),
+				static_cast<value_type>((a_packedVersion >> VersionPackInfo::SHL_PATCH) & VersionPackInfo::AND_PATCH),
+				static_cast<value_type>((a_packedVersion >> VersionPackInfo::SHL_BUILD) & VersionPackInfo::AND_BUILD)
 			};
 		}
 
-		[[nodiscard]] friend constexpr bool operator==(const VersionBase& a_lhs, const VersionBase& a_rhs) noexcept
+		[[nodiscard]] friend constexpr bool operator==(const VersionBase& a_lhs, const VersionBase& a_rhs) noexcept(true)
 		{
 			return a_lhs.compare(a_rhs) == 0;
 		}
 
-		[[nodiscard]] friend constexpr std::strong_ordering operator<=>(const VersionBase& a_lhs, const VersionBase& a_rhs) noexcept
+		[[nodiscard]] friend constexpr std::strong_ordering operator<=>(const VersionBase& a_lhs, const VersionBase& a_rhs) noexcept(true)
 		{
 			return a_lhs.compare(a_rhs);
 		}
@@ -107,29 +118,14 @@ namespace CKPE
 		std::array<value_type, 4> _impl{ 0, 0, 0, 0 };
 	};
 
-	struct VersionPackInfo
-	{
-		static constexpr auto AND_MAJOR{ 0x0FF };
-		static constexpr auto AND_MINOR{ 0x0FF };
-		static constexpr auto AND_PATCH{ 0xFFF };
-		static constexpr auto AND_BUILD{ 0x00F };
-		static constexpr auto SHL_MAJOR{ 8 * 3 };
-		static constexpr auto SHL_MINOR{ 8 * 2 };
-		static constexpr auto SHL_PATCH{ 8 / 2 };
-		static constexpr auto SHL_BUILD{ 8 * 0 };
-	};
-
-	using Version = VersionBase<VersionPackInfo>;
-
-	[[nodiscard]] CKPE_API std::optional<Version> GetFileVersion(const char* a_filename) noexcept;
-	[[nodiscard]] CKPE_API std::optional<Version> GetFileVersion(const wchar_t* a_filename) noexcept;
+	using Version = VersionBase;
 }
 
-template <typename T, class CharT>
-struct std::formatter<CKPE::VersionBase<T>, CharT> : formatter<std::string, CharT>
+template <class CharT>
+struct std::formatter<CKPE::VersionBase, CharT> : formatter<std::string, CharT>
 {
 	template <class FormatContext>
-	constexpr auto format(const CKPE::VersionBase<T>& a_version, FormatContext& a_ctx) const
+	constexpr auto format(const CKPE::VersionBase& a_version, FormatContext& a_ctx) const
 	{
 		return formatter<std::string, CharT>::format(a_version.string(), a_ctx);
 	}

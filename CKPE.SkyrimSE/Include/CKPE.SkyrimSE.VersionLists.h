@@ -4,8 +4,7 @@
 
 #pragma once
 
-#include <string>
-#include <cstdint>
+#include <CKPE.Version.h>
 
 namespace CKPE
 {
@@ -25,7 +24,8 @@ namespace CKPE
 				EDITOR_SKYRIM_SE_1_6_438,
 				EDITOR_SKYRIM_SE_1_6_1130,
 				EDITOR_SKYRIM_SE_1_6_1378_1,
-				EDITOR_SKYRIM_SE_LAST = EDITOR_SKYRIM_SE_1_6_1378_1,
+				EDITOR_SKYRIM_SE_1_7_99_0,
+				EDITOR_SKYRIM_SE_LAST = EDITOR_SKYRIM_SE_1_7_99_0,
 			};
 
 			static void Verify();
@@ -33,7 +33,7 @@ namespace CKPE
 			[[nodiscard]] static bool HasOutdatedEditorVersion() noexcept(true);
 			[[nodiscard]] static std::wstring GetGameName() noexcept(true);
 			[[nodiscard]] static std::wstring GetDatabaseFileName() noexcept(true);
-			[[nodiscard]] static std::uint64_t GetEditorVersionByNum() noexcept(true);
+			[[nodiscard]] static CKPE::Version GetEditorVersionByNum() noexcept(true);
 			[[nodiscard]] static std::wstring GetEditorVersionByString() noexcept(true);
 			[[nodiscard]] static std::wstring GetExternalResourcePackageFileName() noexcept(true);
 			[[nodiscard]] static EDITOR_EXECUTABLE_TYPE GetEditorVersion() noexcept(true);

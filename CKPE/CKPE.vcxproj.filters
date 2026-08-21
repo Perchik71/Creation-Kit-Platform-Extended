@@ -95,9 +95,6 @@
     <ClCompile Include="Src\CKPE.Keyboard.cpp">
       <Filter>API</Filter>
     </ClCompile>
-    <ClCompile Include="Src\CKPE.Version.cpp">
-      <Filter>API</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">

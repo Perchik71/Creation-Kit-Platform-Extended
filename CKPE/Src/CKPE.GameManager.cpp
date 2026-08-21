@@ -38,7 +38,7 @@ namespace CKPE
 
 		_MESSAGE(L"Load game library: \"%s\"", GAME_LIBRARIES_FILENAME[_game_type]);
 
-		HMODULE resourceHandle = (HMODULE)LoadLibraryExW(_path.c_str(),
+		auto resourceHandle = (HMODULE)LoadLibraryExW(_path.c_str(),
 			nullptr, LOAD_LIBRARY_AS_IMAGE_RESOURCE);
 		if (!resourceHandle)
 		{
@@ -79,9 +79,9 @@ namespace CKPE
 			{
 				_MESSAGE("\tName: %s", _data->name);
 				_MESSAGE("\tAuthor: %s", _data->author);
-				_MESSAGE("\tVersion: %llX (%u.%u.%u.%u)", _data->dataVersion,
-					GET_EXE_VERSION_EX_MAJOR(_data->dataVersion), GET_EXE_VERSION_EX_MINOR(_data->dataVersion),
-					GET_EXE_VERSION_EX_BUILD(_data->dataVersion), GET_EXE_VERSION_EX_REVISION(_data->dataVersion));
+				_MESSAGE("\tVersion: %X (%u.%u.%u.%u)", _data->dataVersion.pack(),
+					_data->dataVersion.major(), _data->dataVersion.minor(),
+					_data->dataVersion.build(), _data->dataVersion.patch());
 			}
 			else
 			{
@@ -101,7 +101,11 @@ namespace CKPE
 		_load = (_CKPEGameLibrary_Load)lib.GetProcAddress("CKPEGameLibrary_Load");
 		_query = (_CKPEGameLibrary_Query)lib.GetProcAddress("CKPEGameLibrary_Query");	
 		_interface.interfaceVersion = CKPEGameLibraryInterface::kInterfaceVersion;
-		_interface.ckpeVersion = FileUtils::GetFileVersion(std::wstring(_app->GetPath()) + L"CKPE.dll");
+		
+		auto ver = FileUtils::GetFileVersion(std::wstring(_app->GetPath()) + L"CKPE.dll");
+		if (ver.has_value())
+			_interface.ckpeVersion = ver.value();
+
 		_interface.application = const_cast<Application*>(_app);
 		_interface.logger = Logger::GetSingleton();
 		_interface.QueryInterface = QueryInterface;
