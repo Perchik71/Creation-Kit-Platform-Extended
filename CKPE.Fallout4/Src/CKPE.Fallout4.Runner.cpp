@@ -119,12 +119,12 @@ namespace CKPE
 			//mgr->Register(new Patch::AssertD3D11);
 			//mgr->Register(new Patch::BSArchiveManagerModded);
 			//mgr->Register(new Patch::BSResourceLooseFiles);
-			//mgr->Register(new Patch::BSStringRefRE);
+			mgr->Register(new Patch::BSStringRefRE);
 			mgr->Register(new Patch::CellViewWindow);
 			//mgr->Register(new Patch::ChooseSoundFile);
 			mgr->Register(new Patch::Console);
 			mgr->Register(new Patch::CrashConditionItemGetCrime);
-			//mgr->Register(new Patch::CrashDump);
+			mgr->Register(new Patch::CrashDump);
 			mgr->Register(new Patch::CrashInvalidStrings);
 			//mgr->Register(new Patch::CreateDDS);
 			mgr->Register(new Patch::D3D11);

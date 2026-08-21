@@ -30,6 +30,7 @@ namespace CKPE
 				static void DoOutputVersion(std::string& Result) noexcept(true);
 				static void DoAnalyzeClassRef(std::uintptr_t Address, const char* RttiName, std::string& Result);
 				static void DoOutputCKVersion(std::string& Result) noexcept(true);
+				[[nodiscard]] bool SupportsAddressLibrary() const noexcept(true) override { return true; }
 			};
 		}
 	}
