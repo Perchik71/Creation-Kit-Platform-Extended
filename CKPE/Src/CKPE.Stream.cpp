@@ -295,6 +295,94 @@ namespace CKPE
 		FileStream(fname, _open, FileMode::fmText)
 	{}
 
+	std::uint32_t FileStream2::Read(void* buf, std::uint32_t size) const noexcept(true)
+	{
+		ScopeCriticalSection guard{ _section };
+		if (_handle == INVALID_HANDLE_VALUE) return 0;
+		DWORD dwReadBytes;
+		if (!ReadFile(_handle, buf, static_cast<DWORD>(size), &dwReadBytes, nullptr))
+			return 0;
+		return static_cast<std::uint32_t>(dwReadBytes);
+	}
+
+	std::uint32_t FileStream2::Write(const void* buf, std::uint32_t size) noexcept(true)
+	{
+		ScopeCriticalSection guard{ _section };
+		if (_handle == INVALID_HANDLE_VALUE) return 0;
+		DWORD dwWriteBytes;
+		if (!WriteFile(_handle, buf, static_cast<DWORD>(size), &dwWriteBytes, nullptr))
+			return 0;
+		return static_cast<std::uint32_t>(dwWriteBytes);
+	}
+
+	std::uint64_t FileStream2::Offset(std::int64_t offset, OffsetStream flag) noexcept(true)
+	{
+		ScopeCriticalSection guard{ _section };
+		if (_handle == INVALID_HANDLE_VALUE) return 0;
+		LARGE_INTEGER li1{ .QuadPart = offset };
+		LARGE_INTEGER li2;
+
+		if (SetFilePointerEx(_handle, li1, &li2, std::to_underlying(flag)))
+			return li2.QuadPart;
+		return 0;
+	}
+
+	std::uint64_t FileStream2::GetSize() const noexcept(true)
+	{
+		ScopeCriticalSection guard{ _section };
+		LARGE_INTEGER size;
+		if (!GetFileSizeEx(_handle, &size))
+			return 0;
+		return size.QuadPart;
+	}
+
+	std::wstring FileStream2::GetFileName() const noexcept(true)
+	{
+		return _FileName ? *_FileName : std::wstring();
+	}
+
+	void FileStream2::Flush() const noexcept(true)
+	{
+		if (_handle != INVALID_HANDLE_VALUE)
+			FlushFileBuffers(_handle);
+	}
+
+	FileStream2::FileStream2(const std::string& fname, FileStream::FileOpen _open, bool UseCache) :
+		FileStream2(StringUtils::Utf8ToUtf16(fname), _open, UseCache)
+	{}
+
+	FileStream2::FileStream2(const std::wstring& fname, FileStream::FileOpen _open, bool UseCache)
+	{
+		_handle = CreateFileW(
+			fname.c_str(),
+			(_open == FileStream::FileOpen::fmOpenRead) ? GENERIC_READ : (GENERIC_READ | GENERIC_WRITE),
+			(_open == FileStream::FileOpen::fmOpenRead) ? FILE_SHARE_WRITE : 0,
+			nullptr,
+			(_open == FileStream::FileOpen::fmCreate) ? CREATE_NEW : OPEN_EXISTING,
+			UseCache ? FILE_FLAG_SEQUENTIAL_SCAN : 0,
+			nullptr);
+		if (_handle == INVALID_HANDLE_VALUE)
+			throw SystemError(GetLastError(), "MapFileStream_CreateFileW \"{}\"",
+				StringUtils::Utf16ToWinCP(fname));
+
+		_FileName = new std::wstring(fname);
+	}
+
+	FileStream2::~FileStream2() noexcept(true)
+	{
+		if (_handle != INVALID_HANDLE_VALUE)
+		{
+			CloseHandle(_handle);
+			_handle = nullptr;
+		}
+
+		if (_FileName)
+		{
+			delete _FileName;
+			_FileName = nullptr;
+		}
+	}
+
 	std::uint32_t MapFileStream::Read(void* buf, std::uint32_t size) const noexcept(true)
 	{
 		ScopeCriticalSection guard{ _section };
@@ -374,7 +462,7 @@ namespace CKPE
 	}
 
 	MapFileStream::MapFileStream(const std::string& fname, FileStream::FileOpen _open, bool UseCache) :
-		MapFileStream(StringUtils::Utf8ToUtf16(fname), _open)
+		MapFileStream(StringUtils::Utf8ToUtf16(fname), _open, UseCache)
 	{}
 
 	MapFileStream::MapFileStream(const std::wstring& fname, FileStream::FileOpen _open, bool UseCache) : Stream()
@@ -469,6 +557,8 @@ namespace CKPE
 
 	bool MemoryStream::Allocate(std::uint64_t newsize) noexcept(true)
 	{
+		if (!newsize) return false;
+
 		ScopeCriticalSection guard{ _section };
 
 		if (!_data)

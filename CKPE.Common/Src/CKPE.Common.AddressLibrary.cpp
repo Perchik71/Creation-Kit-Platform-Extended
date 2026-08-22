@@ -118,7 +118,7 @@ namespace CKPE
 				if (!PathUtils::FileExists(db_name))
 					throw RuntimeError(L"AddressLibrary::Load file \"{}\" no found", db_name);
 
-				FileStream fstm(db_name, FileStream::fmOpenRead);
+				FileStream2 fstm(db_name, FileStream::fmOpenRead);
 
 				std::uint64_t count = 0;
 				if (fstm.Read(&count, sizeof(count)) != sizeof(count))

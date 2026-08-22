@@ -35,7 +35,7 @@ namespace CKPE
 
 		[[nodiscard]] inline std::uint64_t GetPosition() noexcept(true) { return Offset(0, ofCurrent); }
 		inline std::uint64_t SetPosition(std::uint64_t pos) noexcept(true) { return Offset(pos, ofBegin); }
-	public:
+
 		Stream() = default;
 	};
 
@@ -65,7 +65,7 @@ namespace CKPE
 		[[nodiscard]] virtual std::wstring GetFileName() const noexcept(true);
 		virtual void Flush() const noexcept(true);
 		[[nodiscard]] virtual bool Eof() const noexcept(true);
-	public:
+
 		FileStream(const std::string& fname, FileOpen _open, FileMode _mode = FileMode::fmBinary);
 		FileStream(const std::wstring& fname, FileOpen _open, FileMode _mode = FileMode::fmBinary);
 		virtual ~FileStream() noexcept(true);
@@ -86,9 +86,27 @@ namespace CKPE
 		virtual void WriteLine(const std::wstring_view& formatted_string, ...) const noexcept(true);
 		virtual void WriteLine(const char* formatted_string, ...) const noexcept(true);
 		virtual void WriteLine(const wchar_t* formatted_string, ...) const noexcept(true);
-	public:
+
 		TextFileStream(const std::string& fname, FileOpen _open);
 		TextFileStream(const std::wstring& fname, FileOpen _open);
+	};
+
+	class CKPE_API FileStream2 : public Stream
+	{
+	protected:
+		void* _handle{ nullptr };
+		std::wstring* _FileName{ nullptr };
+	public:
+		virtual std::uint32_t Read(void* buf, std::uint32_t size) const noexcept(true);
+		virtual std::uint32_t Write(const void* buf, std::uint32_t size) noexcept(true);
+		virtual std::uint64_t Offset(std::int64_t offset, OffsetStream flag = ofCurrent) noexcept(true);
+		[[nodiscard]] virtual std::uint64_t GetSize() const noexcept(true);
+		[[nodiscard]] virtual std::wstring GetFileName() const noexcept(true);
+		virtual void Flush() const noexcept(true);
+
+		FileStream2(const std::string& fname, FileStream::FileOpen _open, bool UseCache = true);
+		FileStream2(const std::wstring& fname, FileStream::FileOpen _open, bool UseCache = true);
+		virtual ~FileStream2() noexcept(true);
 	};
 
 	class CKPE_API MapFileStream : public Stream
@@ -105,7 +123,7 @@ namespace CKPE
 		[[nodiscard]] virtual std::uint64_t GetSize() const noexcept(true);
 		[[nodiscard]] virtual std::wstring GetFileName() const noexcept(true);
 		[[nodiscard]] virtual bool Eof() const noexcept(true);
-	public:
+
 		MapFileStream(const std::string& fname, FileStream::FileOpen _open, bool UseCache = true);
 		MapFileStream(const std::wstring& fname, FileStream::FileOpen _open, bool UseCache = true);
 		virtual ~MapFileStream() noexcept(true);
@@ -136,16 +154,16 @@ namespace CKPE
 		virtual std::uint32_t Write(const void* buf, std::uint32_t size) noexcept(true);
 		[[nodiscard]] virtual std::uint64_t GetSize() const noexcept(true);
 		virtual std::uint64_t Offset(std::int64_t offset, OffsetStream flag = ofCurrent) noexcept(true);
-	public:
+
 		void Set(void* mem, std::uint64_t size) noexcept(true);
 		void SetSize(std::uint64_t newsize);
 		void Clear() noexcept(true);
-		[[nodiscard]] constexpr inline bool Empty() const noexcept(true) { return _data == nullptr; }
-		[[nodiscard]] constexpr inline std::uint8_t* Data() const noexcept(true) { return _data; }
-	public:
+		[[nodiscard]] constexpr bool Empty() const noexcept(true) { return _data == nullptr; }
+		[[nodiscard]] constexpr std::uint8_t* Data() const noexcept(true) { return _data; }
+
 		virtual bool LoadFromStream(Stream& stream) noexcept(true);
 		virtual bool SaveToStream(Stream& stream) const noexcept(true);
-	public:
+
 		MemoryStream() noexcept(true) = default;
 		MemoryStream(void* mem, std::uint64_t size) noexcept(true);
 		MemoryStream(Stream& Stream) noexcept(true);
