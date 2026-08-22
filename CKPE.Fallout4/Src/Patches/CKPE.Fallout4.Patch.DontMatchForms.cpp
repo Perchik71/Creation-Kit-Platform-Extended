@@ -5,6 +5,7 @@
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.DontMatchForms.h>
 
@@ -59,7 +60,9 @@ namespace CKPE
 				}
 				else
 				{
-					SafeWrite::Write(Common::AddressLibrary::GetSingleton()->Resolve(1477228) + 0x313, {0xEB});
+					using namespace Common;
+
+					Relocation(ID{ 1477228 }, Offset{ 0x313 }).Write({ 0xEB });
 
 					return true;
 				}

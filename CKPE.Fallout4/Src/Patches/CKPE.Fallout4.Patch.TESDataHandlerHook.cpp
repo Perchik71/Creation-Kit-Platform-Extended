@@ -4,6 +4,7 @@
 
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/TESDataHandler.h>
 #include <Patches/CKPE.Fallout4.Patch.TESDataHandlerHook.h>
@@ -63,10 +64,10 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
-					static auto data = addressLibrary->Resolve(1515478);
-					static auto active_data = addressLibrary->Resolve(403286);
+					static auto data = Relocation(ID{ 1515478 }).Address();
+					static auto active_data = Relocation(ID{ 403286 }).Address();
 
 					EditorAPI::TESDataHandler::Singleton = (std::uintptr_t)&data;
 					EditorAPI::TESDataHandler::UserModdedSingleton = (std::uintptr_t)&active_data;

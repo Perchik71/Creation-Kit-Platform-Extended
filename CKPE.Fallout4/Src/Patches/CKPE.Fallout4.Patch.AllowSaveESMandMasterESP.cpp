@@ -142,9 +142,9 @@ namespace CKPE
 
 					auto addressLibrary = Common::AddressLibrary::GetSingleton();
 
-					EditorAPI::pointer_TESFile_sub1 = Relocation(ID{ 1942584 });
-					EditorAPI::pointer_TESFile_sub2 = Relocation(ID{ 1777850 });
-					pointer_AllowSaveESMandMasterESP_sub1 = Relocation(ID{ 1353832 });
+					EditorAPI::pointer_TESFile_sub1 = Relocation(ID{ 1942584 }).Address();
+					EditorAPI::pointer_TESFile_sub2 = Relocation(ID{ 1777850 }).Address();
+					pointer_AllowSaveESMandMasterESP_sub1 = Relocation(ID{ 1353832 }).Address();
 
 					EditorAPI::TESFile::AllowSaveESM = _READ_OPTION_BOOL("CreationKit", "bAllowSaveESM", false);
 					EditorAPI::TESFile::AllowMasterESP = _READ_OPTION_BOOL("CreationKit", "bAllowMasterESP", false);

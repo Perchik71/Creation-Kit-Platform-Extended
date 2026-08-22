@@ -244,20 +244,20 @@ namespace CKPE
 					Relocation(ID{ 1779524 }, Offset{ 0x2FBF }).WriteCall(sub2);
 					Relocation(ID{ 1437328 }, Offset{ 0xAE }).WriteCall(sub3);
 
-					pointer_UIDeffer_sub1 = Relocation(ID{ 1642685 });
-					pointer_UIDeffer_sub2 = Relocation(ID{ 1432577 });
-					pointer_UIDeffer_sub3 = Relocation(ID{ 1923593 });
+					pointer_UIDeffer_sub1 = Relocation(ID{ 1642685 }).Address();
+					pointer_UIDeffer_sub2 = Relocation(ID{ 1432577 }).Address();
+					pointer_UIDeffer_sub3 = Relocation(ID{ 1923593 }).Address();
 
 					static constexpr std::uint32_t formIteratorIds[] =
 					{ 1383887, 1806908, 1786444, 291414, 1809325, 1756113, 131318, 121590, 1643127};
 
 					for (auto id : formIteratorIds)
 					{
-						auto addr = Relocation(id);
+						auto addr = Relocation(ID{ id });
 						if (!addr)
 							return false;
 
-						FormIteratorHook::Generate(addr);
+						FormIteratorHook::Generate(addr.Address());
 					}
 
 					return true;

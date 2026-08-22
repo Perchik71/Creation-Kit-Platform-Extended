@@ -321,7 +321,7 @@ namespace CKPE
 					EditorAPI::BSResource::Archive2::AE::ReaderStream::RTTI = Common::RTTI::GetSingleton()->Find("class BSResource::Archive2::ReaderStream")->VTableAddress;
 
 					Relocation(ID{ 1548893 }, Offset{ 0x8C }).WriteCall(CreateStream_AE);
-					pointer_LoadShaders_sub = Relocation(ID{ 1542526 });
+					pointer_LoadShaders_sub = Relocation(ID{ 1542526 }).Address();
 
 					return true;
 				}

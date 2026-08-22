@@ -71,7 +71,7 @@ namespace CKPE
 					// Fix for crash when using the -MapMaker command line option. Nullptr camera passed to 
 					// BSGraphics::State::SetCameraData.
 					Relocation(ID{ 475615 }, Offset{ 0x92C }).WriteCall(sub);
-					pointer_FixCrashMapMarkerCmd_sub = Relocation(ID{ 1617023 });
+					pointer_FixCrashMapMarkerCmd_sub = Relocation(ID{ 1617023 }).Address();
 
 					return true;
 				}

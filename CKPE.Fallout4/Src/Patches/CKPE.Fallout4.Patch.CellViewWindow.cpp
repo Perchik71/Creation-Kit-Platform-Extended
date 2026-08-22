@@ -113,11 +113,11 @@ namespace CKPE
 					Relocation(ID{ 1432577 }, Offset{ 0xFF }).WriteCall(CellViewWindow::sub1);
 					
 					Relocation(ID{ 477436 }, Offset{ 0x1D1 }).WriteCall(CellViewWindow::sub1);
-					pointer_CellViewWindow_sub1 = Relocation(ID{ 1448837 });
-				
+					pointer_CellViewWindow_sub1 = Relocation(ID{ 1448837 }).Address();
+
 					// Allow objects to be filtered in CellViewProc
 					Relocation(ID{ 1923593 }, Offset{ 0x1D3 }).WriteCall(CellViewWindow::sub2_ver2);
-					pointer_CellViewWindow_sub2 = Relocation(ID{ 1443863 });
+					pointer_CellViewWindow_sub2 = Relocation(ID{ 1443863 }).Address();
 
 					return true;
 				}

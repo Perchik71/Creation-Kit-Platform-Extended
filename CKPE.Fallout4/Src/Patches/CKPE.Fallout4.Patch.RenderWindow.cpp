@@ -147,7 +147,7 @@ namespace CKPE
 					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(addressLibrary->Resolve(1885140), (std::uintptr_t)&HKWndProc);
 					_TempDrawArea = (Area*)addressLibrary->Resolve(171553);
 
-					EditorAPI::BGSRenderWindow::Singleton = Relocation(ID{ 383337 });
+					EditorAPI::BGSRenderWindow::Singleton = (EditorAPI::BGSRenderWindow*)Relocation(ID{ 383337 }).Address();
 
 					EditorAPI::BGSRenderWindow::Settings::Movement::FlagsSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(381092);
 					EditorAPI::BGSRenderWindow::Settings::Movement::SnapGridValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384553);
@@ -162,14 +162,14 @@ namespace CKPE
 					EditorAPI::BGSRenderWindow::Settings::Movement::LandspaceMultValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384603);
 
 					auto rel = Relocation(ID{ 1938434 }, Offset{ 0x1E2 });
-					rel.WriteFill(0x90, 58);
+					rel.WriteFill(0x90, 0x44);
 					rel.WriteCall(DrawFrameEx);
 
 					rel = Relocation(ID{ 1638356 }, Offset{ 0x211 });
 					rel.WriteFill(0x90, 20);
 					rel.WriteCall(UpdateDrawInfo);
 
-					*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromNiNode = Relocation(ID{ 411210 }).WriteCall(EditorAPI::BGSRenderWindow::Pick::HKGetRefFromNiNode);
+					*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromNiNode = Relocation(ID{ 411210 }).WriteJump(EditorAPI::BGSRenderWindow::Pick::HKGetRefFromNiNode);
 
 					return true;
 				}

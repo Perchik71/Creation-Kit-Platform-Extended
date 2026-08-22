@@ -74,7 +74,7 @@ namespace CKPE
 					// sometimes this function returns a Form that is not a Cell. This is an error, 
 					// because in the body it is further revealedand coordinates in the world space are obtained.
 					Relocation(ID{ 1942928 }, Offset{ 0x500 }).WriteCall(sub);
-					pointer_PreVisPatch_sub = Relocation(ID{ 1498643 });
+					pointer_PreVisPatch_sub = Relocation(ID{ 1498643 }).Address();
 
 					return true;
 				}
