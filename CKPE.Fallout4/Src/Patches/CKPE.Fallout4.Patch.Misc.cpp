@@ -8,6 +8,7 @@
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.Misc.h>
 
@@ -49,43 +50,78 @@ namespace CKPE
 
 			bool Misc::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
+				if (db)
+				{
+					auto verPatch = db->GetVersion();
+					if ((verPatch != 1) && (verPatch != 2))
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				// Send text to 4 part StatusBar (Game cam: .....)
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0x02 });				
-				// CheckMenuItem is called, however, it always gets zero, but eight is written on top, 
-				// which is equal to MFS_CHECKED.
-				SafeWrite::WriteNop(__CKPE_OFFSET(1), 6);
-				// CheckMenuItem is called, however, it always gets MFS_CHECKED.
-				SafeWrite::WriteNop(__CKPE_OFFSET(2), 6);
-				// Fix repeat CheckMenuItem is called
-				if (verPatch == 1)
-					SafeWrite::Write(__CKPE_OFFSET(3), { 0x20, 0x63 });
+					// Send text to 4 part StatusBar (Game cam: .....)
+					SafeWrite::Write(__CKPE_OFFSET(0), { 0x02 });
+					// CheckMenuItem is called, however, it always gets zero, but eight is written on top,
+					// which is equal to MFS_CHECKED.
+					SafeWrite::WriteNop(__CKPE_OFFSET(1), 6);
+					// CheckMenuItem is called, however, it always gets MFS_CHECKED.
+					SafeWrite::WriteNop(__CKPE_OFFSET(2), 6);
+					// Fix repeat CheckMenuItem is called
+					if (verPatch == 1)
+						SafeWrite::Write(__CKPE_OFFSET(3), { 0x20, 0x63 });
+					else
+						SafeWrite::Write(__CKPE_OFFSET(3), { 0xE9, 0x8B, 0x66, 0x00, 0x00, 0x90 });
+					// ret skip Warnings window
+					SafeWrite::Write(__CKPE_OFFSET(4), { 0xC3, 0xCC, 0xCC, 0xCC, 0xCC });
+
+					// Fixed crash when closing the window, occurs extremely rarely
+					// CONTEXT:  (.ecxr)
+					//  rax = 000002db7f90f850 rbx = 000000f780cfea40 rcx = 000002db7f90ed10
+					//	rdx = 000000f780cfea40 rsi = 000002db299aa800 rdi = 000002db7f90ed10
+					//	rip = 00007ff77f381176 rsp = 000000f780cfe9f0 rbp = 000000f780cfeb80
+					//	r8 = 0000000000000000  r9 = 0000000000000016 r10 = 000000000000000b
+					//	r11 = 000000f780cfea18 r12 = 0000000000000001 r13 = 00000000001506ec
+					//	r14 = 0000000000000000 r15 = 0000000000000000
+					//	iopl = 0         nv up ei pl zr na po nc
+					//	cs = 0033  ss = 002b  ds = 002b  es = 002b  fs = 0053  gs = 002b             efl = 00010246
+					//	CreationKit + 0x2511176:
+					//  00007ff7`7f381176 ff9090010000    call    qword ptr[rax + 190h] ds:000002db`7f90f9e0=bd8a591342b6b52e
+					Detours::DetourCall(__CKPE_OFFSET(5), (std::uintptr_t)&sub);
+
+					return true;
+				}
 				else
-					SafeWrite::Write(__CKPE_OFFSET(3), { 0xE9, 0x8B, 0x66, 0x00, 0x00, 0x90 });
-				// ret skip Warnings window
-				SafeWrite::Write(__CKPE_OFFSET(4), { 0xC3, 0xCC, 0xCC, 0xCC, 0xCC });
-				
-				// Fixed crash when closing the window, occurs extremely rarely
-				// CONTEXT:  (.ecxr)
-				//  rax = 000002db7f90f850 rbx = 000000f780cfea40 rcx = 000002db7f90ed10
-				//	rdx = 000000f780cfea40 rsi = 000002db299aa800 rdi = 000002db7f90ed10
-				//	rip = 00007ff77f381176 rsp = 000000f780cfe9f0 rbp = 000000f780cfeb80
-				//	r8 = 0000000000000000  r9 = 0000000000000016 r10 = 000000000000000b
-				//	r11 = 000000f780cfea18 r12 = 0000000000000001 r13 = 00000000001506ec
-				//	r14 = 0000000000000000 r15 = 0000000000000000
-				//	iopl = 0         nv up ei pl zr na po nc
-				//	cs = 0033  ss = 002b  ds = 002b  es = 002b  fs = 0053  gs = 002b             efl = 00010246
-				//	CreationKit + 0x2511176:
-				//  00007ff7`7f381176 ff9090010000    call    qword ptr[rax + 190h] ds:000002db`7f90f9e0=bd8a591342b6b52e
-				Detours::DetourCall(__CKPE_OFFSET(5), (std::uintptr_t)&sub);
+				{
+					using namespace Common;
 
-				return true;
+					// Send text to 4 part StatusBar (Game cam: .....)
+					Relocation(ID{ 395436 }, Offset{ 0x22F }).Write({ 0x02 });
+					// CheckMenuItem is called, however, it always gets zero, but eight is written on top,
+					// which is equal to MFS_CHECKED.
+					Relocation(ID{ 1603858 }, Offset{ 0xFC3 }).WriteFill(0x90, 6);
+					// CheckMenuItem is called, however, it always gets MFS_CHECKED.
+					Relocation(ID{ 1663984 }, Offset{ 0x51 }).WriteFill(0x90, 6);
+					// Fix repeat CheckMenuItem is called
+					Relocation(ID{ 1603858 }, Offset{ 0x1281 }).Write({ 0xE9, 0xAE, 0x66, 0x00, 0x00, 0x90 });
+					// ret skip Warnings window
+					Relocation(ID{ 1801080 }).Write({ 0xC3, 0xCC, 0xCC, 0xCC, 0xCC });
+
+					// Fixed crash when closing the window, occurs extremely rarely
+					// CONTEXT:  (.ecxr)
+					//  rax = 000002db7f90f850 rbx = 000000f780cfea40 rcx = 000002db7f90ed10
+					//	rdx = 000000f780cfea40 rsi = 000002db299aa800 rdi = 000002db7f90ed10
+					//	rip = 00007ff77f381176 rsp = 000000f780cfe9f0 rbp = 000000f780cfeb80
+					//	r8 = 0000000000000000  r9 = 0000000000000016 r10 = 000000000000000b
+					//	r11 = 000000f780cfea18 r12 = 0000000000000001 r13 = 00000000001506ec
+					//	r14 = 0000000000000000 r15 = 0000000000000000
+					//	iopl = 0         nv up ei pl zr na po nc
+					//	cs = 0033  ss = 002b  ds = 002b  es = 002b  fs = 0053  gs = 002b             efl = 00010246
+					//	CreationKit + 0x2511176:
+					//  00007ff7`7f381176 ff9090010000    call    qword ptr[rax + 190h] ds:000002db`7f90f9e0=bd8a591342b6b52e
+					Relocation(ID{ 1484210 }, Offset{ 0x56 }).WriteCall((std::uintptr_t)&sub);
+
+					return true;
+				}
 			}
 
 			void Misc::sub(std::uint64_t a1, std::uint64_t a2, std::uint64_t a3) noexcept(true)

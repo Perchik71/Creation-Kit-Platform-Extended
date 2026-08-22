@@ -161,7 +161,7 @@ namespace CKPE
 			mgr->Register(new Patch::LoadShaders);
 			mgr->Register(new Patch::MainWindow);
 			mgr->Register(new Patch::MemoryManager);
-			//mgr->Register(new Patch::Misc);
+			mgr->Register(new Patch::Misc);
 			mgr->Register(new Patch::ModernThemePatchAdditional);
 			mgr->Register(new Patch::NavMeshWindow);
 			mgr->Register(new Patch::ObjectWindow);
