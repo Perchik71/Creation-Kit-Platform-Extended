@@ -46,18 +46,26 @@ namespace CKPE
 
 			bool HavokRigidBodyCrash::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-					SafeWrite::Write(__CKPE_OFFSET(0), { 0x61 });
+					if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+						SafeWrite::Write(__CKPE_OFFSET(0), { 0x61 });
+					else
+						SafeWrite::Write(__CKPE_OFFSET(0), { 0x60 });
+
+					return true;
+				}
 				else
-					SafeWrite::Write(__CKPE_OFFSET(0), { 0x60 });
-
-				return true;
+				{
+					SafeWrite::Write(Common::AddressLibrary::GetSingleton()->Resolve(1939007) + 0x7F1, {0x60});
+					return true;
+				}
 			}
 		}
 	}

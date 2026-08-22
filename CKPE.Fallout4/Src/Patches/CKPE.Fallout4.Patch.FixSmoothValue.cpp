@@ -47,17 +47,31 @@ namespace CKPE
 
 			bool FixSmoothValue::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				// Fixed when the value is different from 0.0 to 1.0. Smoothness value to material (nif)
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				SafeWrite::Write(__CKPE_OFFSET(1), { 0x66, 0x0F, 0x7E, 0x85, 0x88, 0x00, 0x00, 0x00, 0xEB, 0x18 });
+					// Fixed when the value is different from 0.0 to 1.0. Smoothness value to material (nif)
+					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
+					SafeWrite::Write(__CKPE_OFFSET(1), { 0x66, 0x0F, 0x7E, 0x85, 0x88, 0x00, 0x00, 0x00, 0xEB, 0x18 });
 
-				return true;
+					return true;
+				}
+				else
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					// Fixed when the value is different from 0.0 to 1.0. Smoothness value to material (nif)
+					Detours::DetourCall(addressLibrary->Resolve(1573394) + 0xB7, (std::uintptr_t)&sub);
+					SafeWrite::Write(addressLibrary->Resolve(1573394) + 0xBC, { 0x66, 0x0F, 0x7E, 0x85, 0x88, 0x00, 0x00, 0x00, 0xEB, 0x18 });
+
+					return true;
+				}
+				
 			}
 
 			float FixSmoothValue::sub(float a1, float a2) noexcept(true)

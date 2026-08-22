@@ -49,16 +49,30 @@ namespace CKPE
 
 			bool FlowChartX::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+				if (db)
+				{
+					auto _interface = CKPE::Common::Interface::GetSingleton();
+					auto base = _interface->GetApplication()->GetBase();
 
-				if (db->GetVersion() != 1)
-					return false;
+					if (db->GetVersion() != 1)
+						return false;
 
-				for (std::uint32_t i = 0; i < db->GetCount(); i++)
-					Detours::DetourCall(__CKPE_OFFSET(i), (std::uintptr_t)&sub);
+					for (std::uint32_t i = 0; i < db->GetCount(); i++)
+						Detours::DetourCall(__CKPE_OFFSET(i), (std::uintptr_t)&sub);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					Detours::DetourCall(addressLibrary->Resolve(1533874) + 0x79B, (std::uintptr_t)&sub);
+					Detours::DetourCall(addressLibrary->Resolve(1940104) + 0x939, (std::uintptr_t)&sub);
+					Detours::DetourCall(addressLibrary->Resolve(1452963) + 0x90C, (std::uintptr_t)&sub);
+
+					return true;
+				}
+				
 			}
 
 			void FlowChartX::sub() noexcept(true)

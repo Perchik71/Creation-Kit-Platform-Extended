@@ -131,8 +131,8 @@ namespace CKPE
 			mgr->Register(new Patch::DataWindow);
 			//mgr->Register(new Patch::DisableAssertion);
 			mgr->Register(new Patch::DontMatchForms);
-			//mgr->Register(new Patch::EnableGoInSelGame);
-			//mgr->Register(new Patch::EncounterZone);
+			mgr->Register(new Patch::EnableGoInSelGame);
+			mgr->Register(new Patch::EncounterZone);
 			mgr->Register(new Patch::ESLTip);
 			//mgr->Register(new Patch::Facegen);
 			mgr->Register(new Patch::FakeMoveLight);
@@ -140,25 +140,25 @@ namespace CKPE
 			mgr->Register(new Patch::FixBNet);
 			mgr->Register(new Patch::FixCrashMapMarkerCmd);
 			//mgr->Register(new Patch::FixCrashNoRootMat);
-			//mgr->Register(new Patch::FixCrashSpellEaxDur);
-			//mgr->Register(new Patch::FixDeleteTintToRace);
+			mgr->Register(new Patch::FixCrashSpellEaxDur);
+			mgr->Register(new Patch::FixDeleteTintToRace);
 			mgr->Register(new Patch::FixInfiniteLoopPapyrusCompile);
 			mgr->Register(new Patch::FixLandspaceVNML); // Deprecated? lmaooo no
 			//mgr->Register(new Patch::FixLoadD3DCompiler);
-			//mgr->Register(new Patch::FixPluginTXT);
+			mgr->Register(new Patch::FixPluginTXT);
 			//mgr->Register(new Patch::FixQuoteCmdLine);
 			mgr->Register(new Patch::FixRecursiveSorting);
-			//mgr->Register(new Patch::FixSky);
-			//mgr->Register(new Patch::FixSmoothValue);
+			mgr->Register(new Patch::FixSky);
+			mgr->Register(new Patch::FixSmoothValue);
 			//mgr->Register(new Patch::FixSortPropObjectMod);
 			//mgr->Register(new Patch::FixSSAOInIntCell); // Deprecated?
 			mgr->Register(new Patch::FixTabDeleteCrash);
 			//mgr->Register(new Patch::FixVC);
-			//mgr->Register(new Patch::FlowChartX);
-			//mgr->Register(new Patch::HavokRigidBodyCrash);
+			mgr->Register(new Patch::FlowChartX);
+			mgr->Register(new Patch::HavokRigidBodyCrash);
 			mgr->Register(new Patch::IncreaseChunkSizeForSNAM);
 			mgr->Register(new Patch::LayersWindow);
-			//mgr->Register(new Patch::LoadShaders);
+			mgr->Register(new Patch::LoadShaders);
 			mgr->Register(new Patch::MainWindow);
 			mgr->Register(new Patch::MemoryManager);
 			//mgr->Register(new Patch::Misc);
@@ -178,7 +178,7 @@ namespace CKPE
 			//mgr->Register(new Patch::ResponseWindow);
 			mgr->Register(new Patch::RunNetworkDisable);
 			mgr->Register(new Patch::SkipTopicInfoValidation);
-			//mgr->Register(new Patch::SkipUpdateCheck);
+			mgr->Register(new Patch::SkipUpdateCheck);
 			mgr->Register(new Patch::SortCrashCombined);
 			mgr->Register(new Patch::TESDataHandlerHook);
 			mgr->Register(new Patch::TESFormHook);
@@ -186,7 +186,7 @@ namespace CKPE
 			mgr->Register(new Patch::UIDeffer);
 			mgr->Register(new Patch::UIHotkeys);
 			//mgr->Register(new Patch::Unicode);
-			//mgr->Register(new Patch::VersionControlMergeWorkaround);
+			mgr->Register(new Patch::VersionControlMergeWorkaround);
 			//mgr->Register(new Patch::WrongUpdateActorWnd);
 
 			auto cmd = Common::Interface::GetSingleton()->GetCommandLineParser();

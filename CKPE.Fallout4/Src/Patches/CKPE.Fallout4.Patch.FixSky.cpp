@@ -46,27 +46,39 @@ namespace CKPE
 
 			bool FixSky::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				if (verPatch == 1)
+				if (db)
 				{
-					SafeWrite::Write(__CKPE_OFFSET(0), { 0xEB, 0x4D, 0x90 });
-					SafeWrite::Write(__CKPE_OFFSET(1), { 0x48, 0x85, 0xC9, 0x74, 0xB5,
-						0x48, 0x8B, 0x01, 0xEB, 0xAA });
+					auto verPatch = db->GetVersion();
+					if ((verPatch != 1) && (verPatch != 2))
+						return false;
+
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
+
+					if (verPatch == 1)
+					{
+						SafeWrite::Write(__CKPE_OFFSET(0), { 0xEB, 0x4D, 0x90 });
+						SafeWrite::Write(__CKPE_OFFSET(1), { 0x48, 0x85, 0xC9, 0x74, 0xB5,
+							0x48, 0x8B, 0x01, 0xEB, 0xAA });
+					}
+					else
+					{
+						SafeWrite::Write(__CKPE_OFFSET(0), { 0xEB, 0x54, 0x90 });
+						SafeWrite::Write(__CKPE_OFFSET(1), { 0x48, 0x85, 0xC9, 0x74, 0xAE,
+							0x48, 0x8B, 0x01, 0xEB, 0xA3 });
+					}
+
+					return true;
 				}
 				else
 				{
-					SafeWrite::Write(__CKPE_OFFSET(0), { 0xEB, 0x54, 0x90 });
-					SafeWrite::Write(__CKPE_OFFSET(1), { 0x48, 0x85, 0xC9, 0x74, 0xAE,
-						0x48, 0x8B, 0x01, 0xEB, 0xA3 });
-				}
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					
+					SafeWrite::Write(addressLibrary->Resolve(421739) + 0x1EF, {0xEB, 0x54, 0x90});
+					SafeWrite::Write(addressLibrary->Resolve(421739) + 0x245, { 0x48, 0x85, 0xC9, 0x74, 0xAE, 0x48, 0x8B, 0x01, 0xEB, 0xA3 });
 
-				return true;
+					return true;
+				}
 			}
 		}
 	}

@@ -46,27 +46,52 @@ namespace CKPE
 
 			bool VersionControlMergeWorkaround::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
+				if (db)
+				{
+					auto verPatch = db->GetVersion();
+					if ((verPatch != 1) && (verPatch != 2))
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				//
-				// Workaround for version control not allowing merges when a plugin index is above 02.
-				// Bethesda's VC bitmap files determine heck-in status along with user IDs for each specific form in the game. 
-				// They're also hardcoded for 2 masters only. Using this hack for anything EXCEPT merging will break the bitmaps.
-				//
+					//
+					// Workaround for version control not allowing merges when a plugin index is above 02.
+					// Bethesda's VC bitmap files determine heck-in status along with user IDs for each specific form in the game. 
+					// They're also hardcoded for 2 masters only. Using this hack for anything EXCEPT merging will break the bitmaps.
+					//
 
-				// Cutting a lot is faster this way
-				auto stext = interface->GetApplication()->GetSegment(Segment::text);
-				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+					// Cutting a lot is faster this way
+					auto stext = interface->GetApplication()->GetSegment(Segment::text);
+					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
-				for (std::uint32_t i = 0; i < db->GetCount(); i++)
-					text.Write(__CKPE_OFFSET(i), { 0xEB });
+					for (std::uint32_t i = 0; i < db->GetCount(); i++)
+						text.Write(__CKPE_OFFSET(i), { 0xEB });
 
-				return true;
+					return true;
+
+				}
+				else
+				{
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
+
+					//
+					// Workaround for version control not allowing merges when a plugin index is above 02.
+					// Bethesda's VC bitmap files determine heck-in status along with user IDs for each specific form in the game. 
+					// They're also hardcoded for 2 masters only. Using this hack for anything EXCEPT merging will break the bitmaps.
+					//
+
+					// Cutting a lot is faster this way
+					auto stext = interface->GetApplication()->GetSegment(Segment::text);
+					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+
+					for (std::uint32_t i = 0; i < db->GetCount(); i++)
+						text.Write(__CKPE_OFFSET(i), { 0xEB });
+
+					return true;
+				}
+				
 			}
 		}
 	}

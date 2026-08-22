@@ -66,38 +66,79 @@ namespace CKPE
 
 			bool ProgressWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
-
-				auto _interface = Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
-
-				SafeWrite::WriteNop(__CKPE_OFFSET(5), 2);
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub1);
-
-				// Hook Loading Files...Initializing...
-				Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&sub2);
-				// Hook Loading Files...Initializing References...
-				Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&sub2);
-				// Hook Validating forms...
-				Detours::DetourCall(__CKPE_OFFSET(6), (std::uintptr_t)&sub2);
-
-				// Eliminate millions of calls to update the progress dialog, instead only updating 400 times (0% -> 100%)
-				//
-				dwProgressLoadCurrent = (LPDWORD)__CKPE_OFFSET(7);
-				dwProgressLoadMax = (LPDWORD)__CKPE_OFFSET(8);
-				auto rva = __CKPE_OFFSET(9);
-				SafeWrite::Write(rva, { 0x48, 0x8D, 0x4D, 0x78 });
-
-				if (verPatch == 1)
+				if (db)
 				{
-					SafeWrite::WriteNop(rva + 0x4, 0x30);
-					Detours::DetourCall(rva + 0x4, (std::uintptr_t)&update_progressbar);
-					SafeWrite::Write(rva + 0x34, { 0xEB });
+					auto verPatch = db->GetVersion();
+					if ((verPatch != 1) && (verPatch != 2))
+						return false;
+
+					auto _interface = Common::Interface::GetSingleton();
+					auto base = _interface->GetApplication()->GetBase();
+
+					SafeWrite::WriteNop(__CKPE_OFFSET(5), 2);
+					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub1);
+
+					// Hook Loading Files...Initializing...
+					Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&sub2);
+					// Hook Loading Files...Initializing References...
+					Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&sub2);
+					// Hook Validating forms...
+					Detours::DetourCall(__CKPE_OFFSET(6), (std::uintptr_t)&sub2);
+
+					// Eliminate millions of calls to update the progress dialog, instead only updating 400 times (0% -> 100%)
+					//
+					dwProgressLoadCurrent = (LPDWORD)__CKPE_OFFSET(7);
+					dwProgressLoadMax = (LPDWORD)__CKPE_OFFSET(8);
+					auto rva = __CKPE_OFFSET(9);
+					SafeWrite::Write(rva, { 0x48, 0x8D, 0x4D, 0x78 });
+
+					if (verPatch == 1)
+					{
+						SafeWrite::WriteNop(rva + 0x4, 0x30);
+						Detours::DetourCall(rva + 0x4, (std::uintptr_t)&update_progressbar);
+						SafeWrite::Write(rva + 0x34, { 0xEB });
+					}
+					else
+					{
+						SafeWrite::WriteNop(rva + 0x4, 0x34);
+						Detours::DetourCall(rva + 0x4, (std::uintptr_t)&update_progressbar);
+						SafeWrite::Write(rva + 0x38, { 0xEB });
+
+						// Idk what kind of gifted UI/UX specialist is sitting at Bethesda, 
+						// but this is the most shitty solution.
+						// 
+						// bUseVersionControl=0 by the way...
+						// 
+						// The output of a message to the user, every time you load something, 
+						// should only be in the form of an error, and postpone the load of something.
+						SafeWrite::Write(__CKPE_OFFSET(10), { 0xE9, 0xFC, 0x01, 0x00, 0x00, 0x90 });
+					}
+
+					pointer_ProgressWindow_sub = __CKPE_OFFSET(2);
+
+					return true;
 				}
 				else
 				{
+					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+
+					SafeWrite::WriteNop(addressLibrary->Resolve(1690170) + 0x1C, 2);
+					Detours::DetourCall(addressLibrary->Resolve(1690170) + 0x3E, (std::uintptr_t)&sub1);
+
+					// Hook Loading Files...Initializing...
+					Detours::DetourCall(addressLibrary->Resolve(1418651) + 0x3EE, (std::uintptr_t)&sub2);
+					// Hook Loading Files...Initializing References...
+					Detours::DetourCall(addressLibrary->Resolve(1943496) + 0x12, (std::uintptr_t)&sub2);
+					// Hook Validating forms...
+					Detours::DetourCall(addressLibrary->Resolve(1467546) + 0x27, (std::uintptr_t)&sub2);
+
+					// Eliminate millions of calls to update the progress dialog, instead only updating 400 times (0% -> 100%)
+					//
+					dwProgressLoadCurrent = (LPDWORD)addressLibrary->Resolve(1475255);
+					dwProgressLoadMax = (LPDWORD)addressLibrary->Resolve(1938721);
+					auto rva = addressLibrary->Resolve(1477228) + 0x264;
+					SafeWrite::Write(rva, { 0x48, 0x8D, 0x4D, 0x78 });
+					
 					SafeWrite::WriteNop(rva + 0x4, 0x34);
 					Detours::DetourCall(rva + 0x4, (std::uintptr_t)&update_progressbar);
 					SafeWrite::Write(rva + 0x38, { 0xEB });
@@ -109,12 +150,12 @@ namespace CKPE
 					// 
 					// The output of a message to the user, every time you load something, 
 					// should only be in the form of an error, and postpone the load of something.
-					SafeWrite::Write(__CKPE_OFFSET(10), { 0xE9, 0xFC, 0x01, 0x00, 0x00, 0x90 });
+					SafeWrite::Write(addressLibrary->Resolve(1942406) + 0x2EE, {0xE9, 0xFC, 0x01, 0x00, 0x00, 0x90});
+
+					pointer_ProgressWindow_sub = addressLibrary->Resolve(192751);
+
+					return true;
 				}
-
-				pointer_ProgressWindow_sub = __CKPE_OFFSET(2);
-
-				return true;
 			}
 
 			INT_PTR CALLBACK ProgressWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
