@@ -60,15 +60,15 @@ namespace CKPE
 				OldAlteredFormList_RemoveEntry(Array, Index, Unknown);
 			}
 
-			static bool AlteredFormList_ElementExists(EditorAPI::Forms::TESForm::Array* Array, 
+			static bool AlteredFormList_ElementExists([[maybe_unused]] EditorAPI::Forms::TESForm::Array* Array, 
 				EditorAPI::Forms::TESForm*& Entry) noexcept(true)
 			{
-				return AlteredFormListShadow.count(Entry) > 0;
+				return AlteredFormListShadow.contains(Entry);
 			}
 
 			static void FormReferenceMap_RemoveAllEntries() noexcept(true)
 			{
-				for (auto [k, v] : FormReferenceMap)
+				for (auto& [k, v] : FormReferenceMap)
 				{
 					if (v)
 						OldFormReferenceMap_RemoveEntry(v, 1);
@@ -110,7 +110,7 @@ namespace CKPE
 				}
 			}
 
-			static bool FormReferenceMap_Get(std::uint64_t Unused, std::uint64_t Key,
+			static bool FormReferenceMap_Get([[maybe_unused]] std::uint64_t Unused, std::uint64_t Key,
 				EditorAPI::Forms::TESForm::Array** Value) noexcept(true)
 			{
 				// Function doesn't care if entry is nullptr, only if it exists
@@ -149,6 +149,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool AlteredFormList::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool AlteredFormList::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -156,37 +161,31 @@ namespace CKPE
 
 			bool AlteredFormList::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				EditorAPI::Forms::TESForm::FindFormByFormID = 
-					decltype(EditorAPI::Forms::TESForm::FindFormByFormID)(__CKPE_OFFSET(0));
+					decltype(EditorAPI::Forms::TESForm::FindFormByFormID)(ID(76804).Address());
+				
+				OldAlteredFormList_Create = decltype(&AlteredFormList_Create)(ID(569171).Address());
+				OldAlteredFormList_RemoveAllEntries = decltype(&AlteredFormList_RemoveAllEntries)(ID(600108).Address());
+				OldAlteredFormList_Insert = decltype(&AlteredFormList_Insert)(ID(261367).Address());
+				OldAlteredFormList_RemoveEntry = decltype(&AlteredFormList_RemoveEntry)(ID(297636).Address());
+				OldFormReferenceMap_RemoveEntry = decltype(OldFormReferenceMap_RemoveEntry)(ID(607945).Address());
+				OldFormReferenceMap_Find = decltype(OldFormReferenceMap_Find)(ID(654236).Address());
+				OldFormReferenceMap_Create = decltype(OldFormReferenceMap_Create)(ID(374023).Address());
+				
+				Relocation(ID(561071)).WriteJump(FormReferenceMap_RemoveAllEntries);
+				Relocation(ID(561075)).WriteJump(FormReferenceMap_FindOrCreate);
+				Relocation(ID(147864)).WriteJump(FormReferenceMap_RemoveEntry);
+				Relocation(ID(344361)).WriteJump(FormReferenceMap_Get);
 
-				OldAlteredFormList_Create = decltype(&AlteredFormList_Create)(__CKPE_OFFSET(1));
-				OldAlteredFormList_RemoveAllEntries = decltype(&AlteredFormList_RemoveAllEntries)(__CKPE_OFFSET(2));
-				OldAlteredFormList_Insert = decltype(&AlteredFormList_Insert)(__CKPE_OFFSET(3));
-				OldAlteredFormList_RemoveEntry = decltype(&AlteredFormList_RemoveEntry)(__CKPE_OFFSET(4));
-
-				OldFormReferenceMap_RemoveEntry = (void (*)(EditorAPI::Forms::TESForm::Array*, int))(__CKPE_OFFSET(5));
-				OldFormReferenceMap_Find = (EditorAPI::Forms::TESForm::Array* (*)(std::uint64_t Key))(__CKPE_OFFSET(6));
-				OldFormReferenceMap_Create = 
-					(EditorAPI::Forms::TESForm::Array* (*)(EditorAPI::Forms::TESForm::Array*))(__CKPE_OFFSET(7));
-
-				Detours::DetourJump(__CKPE_OFFSET(8), (uintptr_t)&FormReferenceMap_RemoveAllEntries);
-				Detours::DetourJump(__CKPE_OFFSET(9), (uintptr_t)&FormReferenceMap_FindOrCreate);
-				Detours::DetourJump(__CKPE_OFFSET(10), (uintptr_t)&FormReferenceMap_RemoveEntry);
-				Detours::DetourJump(__CKPE_OFFSET(11), (uintptr_t)&FormReferenceMap_Get);
-
-				SafeWrite::Write(__CKPE_OFFSET(12), { 0xCC });
-				Detours::DetourCall(__CKPE_OFFSET(13), (uintptr_t)&AlteredFormList_Create);
-				Detours::DetourCall(__CKPE_OFFSET(14), (uintptr_t)&AlteredFormList_RemoveAllEntries);
-				Detours::DetourCall(__CKPE_OFFSET(15), (uintptr_t)&AlteredFormList_Insert);
-				Detours::DetourCall(__CKPE_OFFSET(16), (uintptr_t)&AlteredFormList_RemoveEntry);
-				Detours::DetourCall(__CKPE_OFFSET(17), (uintptr_t)&AlteredFormList_RemoveEntry);
-				Detours::DetourCall(__CKPE_OFFSET(18), (uintptr_t)&AlteredFormList_ElementExists);
+				Relocation(ID(30046), 0x10E).WriteFill(INT3, 5);
+				Relocation(ID(459525), 0x10F).WriteCall(AlteredFormList_Create);
+				Relocation(ID(551175), 0xE8).WriteCall(AlteredFormList_RemoveAllEntries);
+				Relocation(ID(555428), 0x122).WriteCall(AlteredFormList_Insert);
+				Relocation(ID(555951), 0x166).WriteCall(AlteredFormList_RemoveEntry);
+				Relocation(ID(555428), 0x1D3).WriteCall(AlteredFormList_RemoveEntry);
+				Relocation(ID(555428), 0xFD).WriteCall(AlteredFormList_ElementExists);
 
 				return true;
 			}

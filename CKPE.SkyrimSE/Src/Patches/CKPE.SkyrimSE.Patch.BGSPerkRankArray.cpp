@@ -16,15 +16,15 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			typedef std::int64_t(*TBGSPerkRankArraySub1)(std::int64_t, std::int64_t);
-			typedef std::int64_t(*TBGSPerkRankArraySub2)(std::uint32_t*, std::int64_t);
-			typedef std::int64_t(*TBGSPerkRankArraySub3)(void*, std::uint32_t*);
-			typedef std::int64_t(*TBGSPerkRankArraySub4)(std::int64_t, BGSPerkRankArray::Entry*&);
+			using TBGSPerkRankArraySub1 = std::int64_t(std::int64_t, std::int64_t);
+			using TBGSPerkRankArraySub2 = std::int64_t(std::uint32_t*, std::int64_t);
+			using TBGSPerkRankArraySub3 = std::int64_t(void*, std::uint32_t*);
+			using TBGSPerkRankArraySub4 = std::int64_t(std::int64_t, BGSPerkRankArray::Entry*&);
 
-			static TBGSPerkRankArraySub1 BGSPerkRankArraySub1;
-			static TBGSPerkRankArraySub2 BGSPerkRankArraySub2;
-			static TBGSPerkRankArraySub3 BGSPerkRankArraySub3;
-			static TBGSPerkRankArraySub4 BGSPerkRankArraySub4;
+			static std::function<TBGSPerkRankArraySub1> BGSPerkRankArraySub1;
+			static std::function<TBGSPerkRankArraySub2> BGSPerkRankArraySub2;
+			static std::function<TBGSPerkRankArraySub3> BGSPerkRankArraySub3;
+			static std::function<TBGSPerkRankArraySub4> BGSPerkRankArraySub4;
 
 			BGSPerkRankArray::BGSPerkRankArray() : Common::Patch()
 			{
@@ -51,6 +51,11 @@ namespace CKPE
 				return { "Console" };
 			}
 
+			bool BGSPerkRankArray::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool BGSPerkRankArray::DoQuery() const noexcept(true)
 			{
 				// In later versions, the patch causes crashes, despite the fact that at first glance the code has not changed
@@ -59,23 +64,19 @@ namespace CKPE
 
 			bool BGSPerkRankArray::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for crash on null BGSPerkRankArray form ids and perk ranks being reset to 1 on save 
 				// (i.e DianaVampire2017Asherz.esp)
 				//
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub1);
-				Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&sub2);
+				Relocation(ID(328514)).WriteJump(&sub1);
+				Relocation(ID(337215), 0x1FA).WriteCall(&sub2);
 
-				BGSPerkRankArraySub1 = (TBGSPerkRankArraySub1)__CKPE_OFFSET(2);
-				BGSPerkRankArraySub2 = (TBGSPerkRankArraySub2)__CKPE_OFFSET(3);
-				BGSPerkRankArraySub3 = (TBGSPerkRankArraySub3)__CKPE_OFFSET(4);
-				BGSPerkRankArraySub4 = (TBGSPerkRankArraySub4)__CKPE_OFFSET(5);
+				BGSPerkRankArraySub1 = Relocation<TBGSPerkRankArraySub1>(569205).Get();
+				BGSPerkRankArraySub2 = Relocation<TBGSPerkRankArraySub2>(60999).Get();
+				BGSPerkRankArraySub3 = Relocation<TBGSPerkRankArraySub3>(192263).Get();
+				BGSPerkRankArraySub4 = Relocation<TBGSPerkRankArraySub4>(465906).Get();
 
 				return true;
 			}

@@ -41,6 +41,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool BNetConvertUnicodeString::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool BNetConvertUnicodeString::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -48,13 +53,9 @@ namespace CKPE
 
 			bool BNetConvertUnicodeString::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&Convert);
+				Relocation(ID{ 739874, 930661 }).WriteJump(&Convert);
 
 				return true;
 			}
