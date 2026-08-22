@@ -73,10 +73,10 @@ namespace CKPE
 				Relocation(ID(328514)).WriteJump(&sub1);
 				Relocation(ID(337215), 0x1FA).WriteCall(&sub2);
 
-				BGSPerkRankArraySub1 = Relocation<TBGSPerkRankArraySub1>(569205).Get();
-				BGSPerkRankArraySub2 = Relocation<TBGSPerkRankArraySub2>(60999).Get();
-				BGSPerkRankArraySub3 = Relocation<TBGSPerkRankArraySub3>(192263).Get();
-				BGSPerkRankArraySub4 = Relocation<TBGSPerkRankArraySub4>(465906).Get();
+				BGSPerkRankArraySub1 = Relocation<TBGSPerkRankArraySub1>(ID(569205)).Get();
+				BGSPerkRankArraySub2 = Relocation<TBGSPerkRankArraySub2>(ID(60999)).Get();
+				BGSPerkRankArraySub3 = Relocation<TBGSPerkRankArraySub3>(ID(192263)).Get();
+				BGSPerkRankArraySub4 = Relocation<TBGSPerkRankArraySub4>(ID(465906)).Get();
 
 				return true;
 			}
