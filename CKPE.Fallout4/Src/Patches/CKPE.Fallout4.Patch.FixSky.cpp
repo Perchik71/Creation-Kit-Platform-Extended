@@ -72,11 +72,11 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 					
-					SafeWrite::Write(addressLibrary->Resolve(421739) + 0x1EF, {0xEB, 0x54, 0x90});
-					SafeWrite::Write(addressLibrary->Resolve(421739) + 0x245, { 0x48, 0x85, 0xC9, 0x74, 0xAE, 0x48, 0x8B, 0x01, 0xEB, 0xA3 });
-
+					Relocation(ID{ 421739 }, Offset{ 0x1EF }).Write({ 0xEB, 0x54, 0x90 });
+					Relocation(ID{ 421739 }, Offset{ 0x245 }).Write({ 0x48, 0x85, 0xC9, 0x74, 0xAE, 0x48, 0x8B, 0x01, 0xEB, 0xA3 });
+					
 					return true;
 				}
 			}

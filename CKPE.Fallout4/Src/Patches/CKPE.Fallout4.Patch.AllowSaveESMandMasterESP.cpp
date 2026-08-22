@@ -138,13 +138,13 @@ namespace CKPE
 				}
 				else 
 				{
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+					using namespace Common;
+
 					auto addressLibrary = Common::AddressLibrary::GetSingleton();
 
-					EditorAPI::pointer_TESFile_sub1 = addressLibrary->Resolve(VariantID{ 1942584 });
-					EditorAPI::pointer_TESFile_sub2 = addressLibrary->Resolve(VariantID{ 1777850 });
-					pointer_AllowSaveESMandMasterESP_sub1 = addressLibrary->Resolve(VariantID{ 1353832 });
+					EditorAPI::pointer_TESFile_sub1 = Relocation(ID{ 1942584 });
+					EditorAPI::pointer_TESFile_sub2 = Relocation(ID{ 1777850 });
+					pointer_AllowSaveESMandMasterESP_sub1 = Relocation(ID{ 1353832 });
 
 					EditorAPI::TESFile::AllowSaveESM = _READ_OPTION_BOOL("CreationKit", "bAllowSaveESM", false);
 					EditorAPI::TESFile::AllowMasterESP = _READ_OPTION_BOOL("CreationKit", "bAllowMasterESP", false);
@@ -160,22 +160,22 @@ namespace CKPE
 						{
 							// Also allow non-game ESMs to be set as "Active File"
 							Detours::DetourClassCall(addressLibrary->Resolve(VariantID{ 534861 }) + 0x5F, &IsActiveFileBlacklist);
-							SafeWrite::WriteNop(addressLibrary->Resolve(VariantID{ 1716794 }) + 0x4F, 2);
+							Relocation(ID{ 1716794 }, Offset{ 0x4F }).WriteFill(0x90, 2);
 
 							// Disable: "File '%s' is a master file or is in use.\n\nPlease select another file to save to."
 							const char* newFormat = "File '%s' is in use.\n\nPlease select another file to save to.";
 
-							SafeWrite::WriteNop(addressLibrary->Resolve(VariantID{ 1380402 }) + 0x55A, 13);
+							Relocation(ID{ 1380402 }, Offset { 0x55A }).WriteFill(0x90, 13);
 							SafeWrite::Write(addressLibrary->Resolve(VariantID{ 180829 }), (std::uint8_t*)newFormat, strlen(newFormat) + 1);
-							Detours::DetourJump(addressLibrary->Resolve(VariantID{ 1631676 }), (std::uintptr_t)&OpenPluginSaveDialog);
+							Relocation(ID{ 1631676 }).WriteJump(OpenPluginSaveDialog);
 						}
 
 						if (EditorAPI::TESFile::AllowMasterESP)
 							// Remove the check for IsMaster()
-							SafeWrite::WriteNop(addressLibrary->Resolve(VariantID{ 1436783 }) + 0x5C, 9);
-
-						return true;
+							Relocation(ID{ 1436783 }, Offset{ 0x5C }).WriteFill(0x90, 9);
 					}
+
+					return true;
 				}
 
 			}

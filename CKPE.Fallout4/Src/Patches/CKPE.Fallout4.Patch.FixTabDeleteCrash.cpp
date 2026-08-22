@@ -64,8 +64,9 @@ namespace CKPE
 				}
 				else
 				{
+					using namespace Common;
 					// Fix for crash when tab control buttons are deleted. Uninitialized TCITEMA structure variables.
-					Detours::DetourJump(Common::AddressLibrary::GetSingleton()->Resolve(1524100), (std::uintptr_t)&sub);
+					Relocation(ID{ 1524100 }).WriteJump(sub);
 					return true;
 				}
 			}

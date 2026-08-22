@@ -177,10 +177,7 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
-
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+					using namespace Common;
 
 					// Deferred dialog loading (batched UI updates)
 
@@ -236,29 +233,27 @@ namespace CKPE
 							auto destination = Target + *(std::int32_t*)(Target + 1) + 5;
 							auto hook = new FormIteratorHook(destination);
 
-							Detours::DetourJump(Target, (std::uintptr_t)hook->getCode());
+							Relocation(Target).WriteJump(hook->getCode());
 						}
 					};
 
-					
-					Detours::DetourJump(addressLibrary->Resolve(1715689),
-						(std::uintptr_t)&Common::EditorUI::ComboBoxInsertItemDeferred);
-					Detours::DetourJump(addressLibrary->Resolve(1448837),
-						(std::uintptr_t)&Common::EditorUI::ListViewInsertItemDeferred);
-					Detours::DetourCall(addressLibrary->Resolve(1555013) + 0x7A, (std::uintptr_t)&sub1);
-					Detours::DetourCall(addressLibrary->Resolve(1779524) + 0x2FBF, (std::uintptr_t)&sub2);
-					Detours::DetourCall(addressLibrary->Resolve(1437328) + 0xAE, (std::uintptr_t)&sub3);
+					Relocation(ID{ 1715689 }).WriteJump(Common::EditorUI::ComboBoxInsertItemDeferred);
+					Relocation(ID{ 1448837 }).WriteJump(Common::EditorUI::ListViewInsertItemDeferred);
 
-					pointer_UIDeffer_sub1 = addressLibrary->Resolve(1642685);
-					pointer_UIDeffer_sub2 = addressLibrary->Resolve(1432577);
-					pointer_UIDeffer_sub3 = addressLibrary->Resolve(1923593);
+					Relocation(ID{ 1555013 }, Offset{ 0x7A }).WriteCall(sub1);
+					Relocation(ID{ 1779524 }, Offset{ 0x2FBF }).WriteCall(sub2);
+					Relocation(ID{ 1437328 }, Offset{ 0xAE }).WriteCall(sub3);
 
-					static constexpr Common::AddressLibrary::AddressID formIteratorIds[] =
+					pointer_UIDeffer_sub1 = Relocation(ID{ 1642685 });
+					pointer_UIDeffer_sub2 = Relocation(ID{ 1432577 });
+					pointer_UIDeffer_sub3 = Relocation(ID{ 1923593 });
+
+					static constexpr std::uint32_t formIteratorIds[] =
 					{ 1383887, 1806908, 1786444, 291414, 1809325, 1756113, 131318, 121590, 1643127};
 
 					for (auto id : formIteratorIds)
 					{
-						auto addr = addressLibrary->Resolve(id);
+						auto addr = Relocation(id);
 						if (!addr)
 							return false;
 

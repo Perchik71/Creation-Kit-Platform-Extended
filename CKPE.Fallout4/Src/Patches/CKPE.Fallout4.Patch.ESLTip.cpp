@@ -64,7 +64,9 @@ namespace CKPE
 				}
 				else
 				{
-					address = Common::AddressLibrary::GetSingleton()->Resolve(1955075) + 0xE1;
+					using namespace Common;
+
+					address = Relocation(ID{ 1955075 }, Offset{ 0xE1 });
 				}
 				
 

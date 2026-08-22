@@ -65,14 +65,14 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
 					//
 					// Fix for crash when editing a spell effect with a large (>= 1'000'000'000) duration.
 					// WARNING: Stack padding allows the buffer to be up to 12 bytes, 10 are originally reserved.
 					//
-					SafeWrite::Write(addressLibrary->Resolve(1636980) + 0x1A3, {0xBA, 0x0C, 0x00, 0x00, 0x00});
-					SafeWrite::Write(addressLibrary->Resolve(1636980) + 0x2B6, { 0xBA, 0x0C, 0x00, 0x00, 0x00 });
+					Relocation(ID{ 1636980 }, Offset{ 0x1A3 }).Write({ 0xBA, 0x0C, 0x00, 0x00, 0x00 });
+					Relocation(ID{ 1636980 }, Offset{ 0x2B6 }).Write({ 0xBA, 0x0C, 0x00, 0x00, 0x00 });
 
 					return true;
 				}

@@ -133,7 +133,7 @@ namespace CKPE
 			mgr->Register(new Patch::DontMatchForms);
 			mgr->Register(new Patch::EnableGoInSelGame);
 			mgr->Register(new Patch::EncounterZone);
-			mgr->Register(new Patch::ESLTip);
+			//mgr->Register(new Patch::ESLTip);
 			//mgr->Register(new Patch::Facegen);
 			mgr->Register(new Patch::FakeMoveLight);
 			mgr->Register(new Patch::FixBadPictureInRender);

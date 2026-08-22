@@ -316,13 +316,12 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
 					EditorAPI::BSResource::Archive2::AE::ReaderStream::RTTI = Common::RTTI::GetSingleton()->Find("class BSResource::Archive2::ReaderStream")->VTableAddress;
 
-					Detours::DetourCall(addressLibrary->Resolve(1548893) + 0x8C, (std::uintptr_t)&CreateStream_AE);
-					pointer_LoadShaders_sub = addressLibrary->Resolve(1542526);
-					
+					Relocation(ID{ 1548893 }, Offset{ 0x8C }).WriteCall(CreateStream_AE);
+					pointer_LoadShaders_sub = Relocation(ID{ 1542526 });
 
 					return true;
 				}

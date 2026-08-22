@@ -64,11 +64,11 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
-					Detours::DetourCall(addressLibrary->Resolve(1533874) + 0x79B, (std::uintptr_t)&sub);
-					Detours::DetourCall(addressLibrary->Resolve(1940104) + 0x939, (std::uintptr_t)&sub);
-					Detours::DetourCall(addressLibrary->Resolve(1452963) + 0x90C, (std::uintptr_t)&sub);
+					Relocation(ID{ 1533874 }, Offset{ 0x79B }).WriteCall(sub);
+					Relocation(ID{ 1940104 }, Offset{ 0x939 }).WriteCall(sub);
+					Relocation(ID{ 1452963 }, Offset{ 0x90C }).WriteCall(sub);
 
 					return true;
 				}

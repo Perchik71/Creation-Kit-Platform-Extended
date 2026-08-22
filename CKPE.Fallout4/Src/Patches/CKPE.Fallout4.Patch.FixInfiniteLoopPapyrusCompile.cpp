@@ -61,8 +61,10 @@ namespace CKPE
 				}
 				else
 				{
+					using namespace Common;
+
 					// Fixed infinite loop by Compile Papyrus Scripts...
-					SafeWrite::Write(Common::AddressLibrary::GetSingleton()->Resolve(422469), {0xC3});
+					Relocation(ID{ 422469 }).Write({ 0xC3 });
 
 					return true;
 				}

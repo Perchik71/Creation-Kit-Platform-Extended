@@ -68,13 +68,13 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
 					// This function returns Form, for preprocessing visibility, however, 
 					// sometimes this function returns a Form that is not a Cell. This is an error, 
 					// because in the body it is further revealedand coordinates in the world space are obtained.
-					Detours::DetourCall(addressLibrary->Resolve(1942928) + 0x500, (std::uintptr_t)&sub);
-					pointer_PreVisPatch_sub = addressLibrary->Resolve(1498643);
+					Relocation(ID{ 1942928 }, Offset{ 0x500 }).WriteCall(sub);
+					pointer_PreVisPatch_sub = Relocation(ID{ 1498643 });
 
 					return true;
 				}

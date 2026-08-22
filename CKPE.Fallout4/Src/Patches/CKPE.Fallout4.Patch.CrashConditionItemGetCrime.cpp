@@ -69,12 +69,13 @@ namespace CKPE
 				}
 				else
 				{
+					using namespace Common;
 					auto addressLibrary = Common::AddressLibrary::GetSingleton();
 
 					// Strangely, there are 6 elements in the array in memory, when Beth is forced to pass exactly 7
 					// 7 element is always nullptr
 
-					Detours::DetourJump(addressLibrary->Resolve(1785857), (std::uintptr_t)&sub);
+					Relocation(ID{ 1785857 }).WriteJump(sub);
 					pointer_CrashConditionItemGetCrimePatch_data = (EditorAPI::Setting**)addressLibrary->Resolve(480194);
 
 					return true;

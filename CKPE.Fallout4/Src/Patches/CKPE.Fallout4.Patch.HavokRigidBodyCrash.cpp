@@ -63,7 +63,9 @@ namespace CKPE
 				}
 				else
 				{
-					SafeWrite::Write(Common::AddressLibrary::GetSingleton()->Resolve(1939007) + 0x7F1, {0x60});
+					using namespace Common;
+
+					Relocation(ID{ 1939007 }, Offset{ 0x7F1 }).Write({ 0x60 });
 					return true;
 				}
 			}

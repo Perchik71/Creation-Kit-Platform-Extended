@@ -66,12 +66,12 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
 					// Fix for crash when using the -MapMaker command line option. Nullptr camera passed to 
 					// BSGraphics::State::SetCameraData.
-					Detours::DetourCall(addressLibrary->Resolve(475615) + 0x92C, (std::uintptr_t)&sub);
-					pointer_FixCrashMapMarkerCmd_sub = addressLibrary->Resolve(1617023);
+					Relocation(ID{ 475615 }, Offset{ 0x92C }).WriteCall(sub);
+					pointer_FixCrashMapMarkerCmd_sub = Relocation(ID{ 1617023 });
 
 					return true;
 				}

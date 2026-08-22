@@ -104,15 +104,15 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
-					Detours::DetourJump(addressLibrary->Resolve(1494590), (std::uintptr_t)&LogWarningVa);
-					Detours::DetourJump(addressLibrary->Resolve(1636009), (std::uintptr_t)&LogWarningUnknown1);
-					Detours::DetourJump(addressLibrary->Resolve(1956945), (std::uintptr_t)&LogWarningUnknown1);
-					Detours::DetourJump(addressLibrary->Resolve(1589438), (std::uintptr_t)&LogWarningUnknown1);
-					Detours::DetourJump(addressLibrary->Resolve(1589059), (std::uintptr_t)&LogWarningUnknown1);
-					Detours::DetourCall(addressLibrary->Resolve(1942406) + 0x744, (std::uintptr_t)&LogWarningUnknown2);
-					Detours::DetourJump(addressLibrary->Resolve(1653769), (std::uintptr_t)&LogAssert);
+					Relocation(ID{ 1494590 }).WriteJump(LogWarningVa);
+					Relocation(ID{ 1636009 }).WriteJump(LogWarningUnknown1);
+					Relocation(ID{ 1956945 }).WriteJump(LogWarningUnknown1);
+					Relocation(ID{ 1589438 }).WriteJump(LogWarningUnknown1);
+					Relocation(ID{ 1589059 }).WriteJump(LogWarningUnknown1);
+					Relocation(ID{ 1942406 }, Offset{ 0x744 }).WriteCall(LogWarningUnknown2);
+					Relocation(ID{ 1653769 }).WriteJump(LogAssert);
 
 					return true;
 				}

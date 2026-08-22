@@ -60,36 +60,41 @@ namespace CKPE
 
 			bool RenameCreationKitApp::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				std::uintptr_t address = 0;
+				
 
 				if (db)
 				{
 					if (db->GetVersion() != 1)
 						return false;
 
-					address = __CKPE_OFFSET(0);
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
+
+					//
+					// Change the default window class name so legacy editors can be opened without using bAllowMultipleEditors
+					//
+					char* newWindowClass = new char[250];
+					sprintf_s(newWindowClass, 250, "Creation Kit %s",
+						StringUtils::Utf16ToWinCP(VersionLists::GetEditorVersionByString()).c_str());
+					SafeWrite::WriteStringRef(__CKPE_OFFSET(0), newWindowClass);
+					Common::ModernTheme::AddSpermanentWindowSubclass(newWindowClass);
+
+					return true;
 				}
 				else
 				{
-					address = Common::AddressLibrary::GetSingleton()->Resolve(457726);
+					using namespace Common;
+
+					//
+					// Change the default window class name so legacy editors can be opened without using bAllowMultipleEditors
+					//
+					char* newWindowClass = new char[250];
+					sprintf_s(newWindowClass, 250, "Creation Kit %s", StringUtils::Utf16ToWinCP(VersionLists::GetEditorVersionByString()).c_str());
+					Relocation(ID{ 457726 }).Write((std::uint8_t*)&newWindowClass, (std::uint32_t)sizeof(newWindowClass));
+					Common::ModernTheme::AddSpermanentWindowSubclass(newWindowClass);
+
+					return true;
 				}
-
-				if (!address)
-					return false;
-
-				//
-				// Change the default window class name so legacy editors can be opened without using bAllowMultipleEditors
-				//
-				char* newWindowClass = new char[250];
-				sprintf_s(newWindowClass, 250, "Creation Kit %s",
-					StringUtils::Utf16ToWinCP(VersionLists::GetEditorVersionByString()).c_str());
-				SafeWrite::WriteStringRef(address, newWindowClass);
-				Common::ModernTheme::AddSpermanentWindowSubclass(newWindowClass);
-
-				return true;
 			}
 		}
 	}

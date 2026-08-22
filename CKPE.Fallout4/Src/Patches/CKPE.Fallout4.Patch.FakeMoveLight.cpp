@@ -83,15 +83,15 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
-					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetPosition = Detours::DetourJump(addressLibrary->Resolve(1639222), (std::uintptr_t)&SetPosition);
+					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetPosition = Relocation(ID{ 1639222 }).WriteJump(SetPosition);
 
-					auto offset = addressLibrary->Resolve(1939125);
+					auto offset = ID{ 1939125 };
 
-					SafeWrite::WriteNop(offset + 0x422, 0x2D);
-					SafeWrite::Write(offset + 0x422, { 0x48, 0x8D, 0x55, 0xB7, 0x4C, 0x89, 0xE1, 0x4D, 0x8D, 0x46, 0x70 });
-					Detours::DetourCall(offset + 0x42D, (std::uintptr_t)&SetPosition);
+					Relocation(offset, Offset{ 0x422 }).WriteFill(0x90, 45);
+					Relocation(offset, Offset{ 0x422 }).Write({ 0x48, 0x8D, 0x55, 0xB7, 0x4C, 0x89, 0xE1, 0x4D, 0x8D, 0x46, 0x70 });
+					Relocation(offset, Offset{ 0x42D }).WriteCall(SetPosition);
 
 					return true;
 				}
