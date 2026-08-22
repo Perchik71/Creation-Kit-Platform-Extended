@@ -81,26 +81,27 @@ namespace CKPE
 
 			bool Console::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-				
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&LogWarning);
-				Detours::DetourJump(__CKPE_OFFSET(1), (std::uintptr_t)&LogWarning);
-				Detours::DetourJump(__CKPE_OFFSET(2), (std::uintptr_t)&LogWarning);
-				Detours::DetourJump(__CKPE_OFFSET(3), (std::uintptr_t)&LogWarningUnknown1);
-				Detours::DetourJump(__CKPE_OFFSET(4), (std::uintptr_t)&LogWarningUnknown1);
-				Detours::DetourJump(__CKPE_OFFSET(5), (std::uintptr_t)&LogWarningUnknown1);
-				Detours::DetourJump(__CKPE_OFFSET(6), (std::uintptr_t)&LogWarningUnknown1);
-				Detours::DetourJump(__CKPE_OFFSET(7), (std::uintptr_t)&LogWarningUnknown1);
-				Detours::DetourJump(__CKPE_OFFSET(8), (std::uintptr_t)&LogWarningUnknown1);
-				Detours::DetourJump(__CKPE_OFFSET(9), (std::uintptr_t)&LogWarningUnknown2);
-				Detours::DetourJump(__CKPE_OFFSET(10), (std::uintptr_t)&LogWarningUnknown2);
-				Detours::DetourCall(__CKPE_OFFSET(11), (std::uintptr_t)&LogWarningUnknown2);
-				Detours::DetourJump(__CKPE_OFFSET(12), (std::uintptr_t)&LogAssert);
+				Relocation(ID{ 7266 }).WriteJump(LogWarning);
+				Relocation(ID{ 378042 }).WriteJump(LogWarning);
+				Relocation(ID{ 600510 }).WriteJump(LogWarning);
+				Relocation(ID{ 645002 }).WriteJump(LogWarningUnknown1);
+				Relocation(ID{ 475501 }).WriteJump(LogWarningUnknown1);
+				Relocation(ID{ 1815, 932064 }).WriteJump(LogWarningUnknown1);
+				Relocation(ID{ 654477 }).WriteJump(LogWarningUnknown1);
+				Relocation(ID{ 541630 }).WriteJump(LogWarningUnknown1);
+				Relocation(ID{ 53741 }).WriteJump(LogWarningUnknown1);
+				Relocation(ID{ 343440 }).WriteJump(LogWarningUnknown2);
+				Relocation(ID{ 457686 }).WriteJump(LogWarningUnknown2);
+				Relocation(ID{ 277090 }, Offset{ 0x931, 0x931, 0x96F }).WriteCall(LogWarningUnknown2);
+				Relocation(ID{ 606662 }).WriteJump(LogAssert);
 
+				return true;
+			}
+
+			bool Console::SupportsAddressLibrary() const noexcept(true)
+			{
 				return true;
 			}
 

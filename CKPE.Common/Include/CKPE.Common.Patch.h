@@ -5,6 +5,7 @@
 #pragma once
 
 #include <CKPE.Common.RelocatorDB.h>
+#include <CKPE.Common.Relocation.h>
 
 namespace CKPE
 {

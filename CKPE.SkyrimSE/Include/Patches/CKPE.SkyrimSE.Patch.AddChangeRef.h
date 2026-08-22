@@ -26,6 +26,7 @@ namespace CKPE
 				virtual const char* GetOptionName() const noexcept(true);
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
+				bool SupportsAddressLibrary() const noexcept(true) override;
 
 				static bool HKInsertMenuA(void* hMenu, std::uint32_t uPosition, std::uint32_t uFlags,
 					std::uintptr_t uIDNewItem, const char* lpNewItem);

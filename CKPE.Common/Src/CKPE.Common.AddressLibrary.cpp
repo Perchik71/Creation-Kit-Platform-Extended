@@ -106,7 +106,8 @@ namespace CKPE
 				}
 				
 				if (_loaded)
-					_MESSAGE("Address Library \"%s\" loaded (%u entries)"sv, db_name.c_str(), static_cast<std::uint32_t>(_entries->size()));
+					_MESSAGE("Address Library \"%s\" loaded (%u entries) (%u runtime index)"sv, db_name.c_str(), 
+						static_cast<std::uint32_t>(_entries->size()), _runtime);
 				else
 					_ERROR("Address Library \"%s\" file no found."sv, db_name.c_str());
 
