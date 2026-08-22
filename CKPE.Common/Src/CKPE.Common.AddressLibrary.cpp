@@ -13,6 +13,8 @@
 #include <algorithm>
 #include <format>
 
+#define CKPE_ADDRESS_LIBRARY_INTO_PACK 0
+
 using namespace std::literals;
 
 namespace CKPE
@@ -43,18 +45,19 @@ namespace CKPE
 			_loaded = false;
 		}
 
-		bool AddressLibrary::Load(const std::wstring& fname_pak, const std::uint8_t a_runtime_index) noexcept(true)
+		bool AddressLibrary::Load([[maybe_unused]] const std::wstring& fname_pak, const std::uint8_t a_runtime_index) noexcept(true)
 		{
 			Clear();
 
 			try
 			{
+#if CKPE_ADDRESS_LIBRARY_INTO_PACK
 				if (!PathUtils::FileExists(fname_pak))
 					throw RuntimeError(L"AddressLibrary::Load file \"{}\" no found", fname_pak);
 
 				auto ver = Application::GetSingleton()->GetFileVersion();
 				if (!ver.has_value())
-					throw RuntimeError(L"AddressLibrary::Load get version game failed");
+					throw RuntimeError("AddressLibrary::Load get version game failed");
 
 				_version = ver.value();
 				const auto db_name = std::format("version-{}.bin", _version.string("-"));
@@ -104,6 +107,43 @@ namespace CKPE
 						_runtime = a_runtime_index;
 					}
 				}
+#else
+				auto app = Application::GetSingleton();
+				auto ver = app->GetFileVersion();
+				if (!ver.has_value())
+					throw RuntimeError("AddressLibrary::Load get version game failed");
+
+				_version = ver.value();
+				const auto db_name = std::format(L"{}CKPEBins\\version-{}.bin", PathUtils::GetApplicationPath(), _version.wstring(L"-"));
+				if (!PathUtils::FileExists(db_name))
+					throw RuntimeError(L"AddressLibrary::Load file \"{}\" no found", db_name);
+
+				FileStream fstm(db_name, FileStream::fmOpenRead);
+
+				std::uint64_t count = 0;
+				if (fstm.Read(&count, sizeof(count)) != sizeof(count))
+					throw RuntimeError(L"AddressLibrary::Load file \"{}\" is broken (couldn't read header)", db_name);
+
+				auto expected_size = static_cast<std::uint64_t>(sizeof(count) + count * sizeof(Entry));
+				if ((fstm.GetSize()) != expected_size)
+					throw RuntimeError(L"AddressLibrary::Load file \"{}\" has an unexpected size ({}/{})", db_name, fstm.GetSize(), expected_size);
+
+				_entries->resize((std::size_t)count);
+
+				if (count)
+				{
+					auto bytes_to_read = static_cast<std::uint32_t>(count * sizeof(Entry));
+					if (fstm.Read(_entries->data(), bytes_to_read) != bytes_to_read)
+						throw RuntimeError(L"AddressLibrary::Load file \"{}\" is broken (short read)", db_name);
+				}
+
+				for (std::size_t i = 1; i < _entries->size(); i++)
+					if ((*_entries)[i].Id <= (*_entries)[i - 1].Id)
+						throw RuntimeError(L"AddressLibrary::Load file \"{}\" entries aren't sorted/unique by id", db_name);
+
+				_loaded = true;
+				_runtime = a_runtime_index;
+#endif
 				
 				if (_loaded)
 					_MESSAGE("Address Library \"%s\" loaded (%u entries) (%u runtime index)"sv, db_name.c_str(), 
