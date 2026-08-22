@@ -39,6 +39,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool AllowMultipleWindowAndMaster::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool AllowMultipleWindowAndMaster::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -46,14 +51,10 @@ namespace CKPE
 
 			bool AllowMultipleWindowAndMaster::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0xE9, 0xBA, 0x00, 0x00, 0x00, 0x90 });
-				SafeWrite::Write(__CKPE_OFFSET(1), { 0xEB });
+				Relocation(ID(277090), 0x2DA).Write({ 0xE9, 0xBA, 0x00, 0x00, 0x00, 0x90 });
+				Relocation(ID(326873), 0x7FB).Write({ 0xEB });
 
 				return true;
 			}

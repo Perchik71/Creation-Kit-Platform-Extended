@@ -11,7 +11,7 @@ namespace CKPE
 {
 	namespace Common
 	{
-		class CKPE_COMMON_API ID
+		class ID
 		{
 			std::uint64_t m_ids[SUPPORT_RUNTIMECOUNT]{ 0 };
 		public:
