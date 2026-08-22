@@ -9,6 +9,7 @@
 #include <CKPE.Utils.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Common.ProgressTaskBar.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -120,39 +121,41 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
-					SafeWrite::WriteNop(addressLibrary->Resolve(1690170) + 0x1C, 2);
-					Detours::DetourCall(addressLibrary->Resolve(1690170) + 0x3E, (std::uintptr_t)&sub1);
+					auto rel = Relocation(ID{ 1690170 });
+					rel.WriteFill<0x1C>(0x90, 2);
+					rel.WriteCall<0x3E>(sub1);
 
 					// Hook Loading Files...Initializing...
-					Detours::DetourCall(addressLibrary->Resolve(1418651) + 0x3EE, (std::uintptr_t)&sub2);
+					Relocation(ID{ 1418651 }, Offset{ 0x3EE }).WriteCall(sub2);
 					// Hook Loading Files...Initializing References...
-					Detours::DetourCall(addressLibrary->Resolve(1943496) + 0x12, (std::uintptr_t)&sub2);
+					Relocation(ID{ 1943496 }, Offset{ 0x12 }).WriteCall(sub2);
 					// Hook Validating forms...
-					Detours::DetourCall(addressLibrary->Resolve(1467546) + 0x27, (std::uintptr_t)&sub2);
+					Relocation(ID{ 1467546 }, Offset{ 0x27 }).WriteCall(sub2);
 
 					// Eliminate millions of calls to update the progress dialog, instead only updating 400 times (0% -> 100%)
 					//
-					dwProgressLoadCurrent = (LPDWORD)addressLibrary->Resolve(1475255);
-					dwProgressLoadMax = (LPDWORD)addressLibrary->Resolve(1938721);
-					auto rva = addressLibrary->Resolve(1477228) + 0x264;
-					SafeWrite::Write(rva, { 0x48, 0x8D, 0x4D, 0x78 });
-					
-					SafeWrite::WriteNop(rva + 0x4, 0x34);
-					Detours::DetourCall(rva + 0x4, (std::uintptr_t)&update_progressbar);
-					SafeWrite::Write(rva + 0x38, { 0xEB });
+					dwProgressLoadCurrent = (LPDWORD)Relocation(ID{ 1475255 }).Address();
+					dwProgressLoadMax = (LPDWORD)Relocation(ID{ 1938721 }).Address();
 
-					// Idk what kind of gifted UI/UX specialist is sitting at Bethesda, 
+					auto rel2 = Relocation(ID{ 1477228 }, Offset{ 0x264 });
+					rel2.Write({ 0x48, 0x8D, 0x4D, 0x78 });
+
+					rel2.WriteFill<0x4>(0x90, 0x34);
+					rel2.WriteCall<0x4>(update_progressbar);
+					rel2.Write<0x38>({ 0xEB });
+
+					// Idk what kind of gifted UI/UX specialist is sitting at Bethesda,
 					// but this is the most shitty solution.
-					// 
+					//
 					// bUseVersionControl=0 by the way...
-					// 
-					// The output of a message to the user, every time you load something, 
+					//
+					// The output of a message to the user, every time you load something,
 					// should only be in the form of an error, and postpone the load of something.
-					SafeWrite::Write(addressLibrary->Resolve(1942406) + 0x2EE, {0xE9, 0xFC, 0x01, 0x00, 0x00, 0x90});
+					Relocation(ID{ 1942406 }, Offset{ 0x2EE }).Write({ 0xE9, 0xFC, 0x01, 0x00, 0x00, 0x90 });
 
-					pointer_ProgressWindow_sub = addressLibrary->Resolve(192751);
+					pointer_ProgressWindow_sub = Relocation(ID{ 192751 }).Address();
 
 					return true;
 				}

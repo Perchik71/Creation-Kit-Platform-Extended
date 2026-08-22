@@ -9,6 +9,7 @@
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/Forms/TESObjectREFR.h>
 #include <EditorAPI/NiAPI/NiPointer.h>
@@ -926,8 +927,9 @@ namespace CKPE
 
 			bool ReplaceBSPointerHandleAndManager::Install_240(bool Extremly) noexcept(true)
 			{
+				using namespace Common;
+
 				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto addressLibrary = Common::AddressLibrary::GetSingleton();
 
 				auto restoring_destroy1 = [](std::uintptr_t rva, std::uint32_t removal_size, std::uintptr_t func)
 					{
@@ -943,18 +945,25 @@ namespace CKPE
 						Detours::DetourCall(rva + 5, func);
 					};
 
-				auto winMainAddr = addressLibrary->Resolve(2054943);
-				auto handleTableAddr = addressLibrary->Resolve(1563654);
-				auto createHandleAddr = addressLibrary->Resolve(1589458);
+				auto winMain = Relocation(ID{ 2054943 });
+				auto handleTable = Relocation(ID{ 1563654 });
+				auto createHandle = Relocation(ID{ 1589458 });
 
-				if (!winMainAddr || !handleTableAddr || !createHandleAddr)
+				if (!winMain || !handleTable || !createHandle)
 					return false;
 
-				pointer_ReplaceBSPointerHandleAndManager_data1 = (std::uint32_t*)addressLibrary->Resolve(1424128);
-				pointer_ReplaceBSPointerHandleAndManager_data2 = (std::uint32_t*)addressLibrary->Resolve(1829071);
+				auto winMainAddr = winMain.Address();
+				auto handleTableAddr = handleTable.Address();
+				auto createHandleAddr = createHandle.Address();
 
-				if (!pointer_ReplaceBSPointerHandleAndManager_data1 || !pointer_ReplaceBSPointerHandleAndManager_data2)
+				auto data1 = Relocation(ID{ 1424128 });
+				auto data2 = Relocation(ID{ 1829071 });
+
+				if (!data1 || !data2)
 					return false;
+
+				pointer_ReplaceBSPointerHandleAndManager_data1 = (std::uint32_t*)data1.Address();
+				pointer_ReplaceBSPointerHandleAndManager_data2 = (std::uint32_t*)data2.Address();
 
 				auto addr = winMainAddr + 0x7A0;
 
@@ -1149,20 +1158,20 @@ namespace CKPE
 							return true;
 						});
 
-					memcpy((std::uint8_t*)(addressLibrary->Resolve(1938176) + 0x5AF), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(addressLibrary->Resolve(1494596) + 0x1F1), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(addressLibrary->Resolve(1471705) + 0x26), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(addressLibrary->Resolve(1471705) + 0x34), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(addressLibrary->Resolve(381758) + 0x46), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(addressLibrary->Resolve(1654203) + 0xB32), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(addressLibrary->Resolve(1654203) + 0xC21), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(addressLibrary->Resolve(1340134) + 0x8D), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(addressLibrary->Resolve(1340134) + 0x98), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(addressLibrary->Resolve(1570700) + 0xB0), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(addressLibrary->Resolve(1570700) + 0xC6), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)Relocation(ID{ 1938176 }, Offset{ 0x5AF }).Address(), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)Relocation(ID{ 1494596 }, Offset{ 0x1F1 }).Address(), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)Relocation(ID{ 1471705 }, Offset{ 0x26 }).Address(), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)Relocation(ID{ 1471705 }, Offset{ 0x34 }).Address(), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)Relocation(ID{ 381758 }, Offset{ 0x46 }).Address(), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)Relocation(ID{ 1654203 }, Offset{ 0xB32 }).Address(), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)Relocation(ID{ 1654203 }, Offset{ 0xC21 }).Address(), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)Relocation(ID{ 1340134 }, Offset{ 0x8D }).Address(), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)Relocation(ID{ 1340134 }, Offset{ 0x98 }).Address(), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)Relocation(ID{ 1570700 }, Offset{ 0xB0 }).Address(), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)Relocation(ID{ 1570700 }, Offset{ 0xC6 }).Address(), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
 					// added
-					memcpy((std::uint8_t*)(addressLibrary->Resolve(1502719) + 0x304), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
-					memcpy((std::uint8_t*)(addressLibrary->Resolve(1502719) + 0x30D), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)Relocation(ID{ 1502719 }, Offset{ 0x304 }).Address(), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
+					memcpy((std::uint8_t*)Relocation(ID{ 1502719 }, Offset{ 0x30D }).Address(), &EditorAPI::BSHandleRefObject_Extremly::REF_COUNT_MASK, 4);
 
 					total_patches += total + 9;
 					total = 0;
@@ -1170,7 +1179,7 @@ namespace CKPE
 					// CreateHandle fix
 					*(std::uint8_t*)(createHandleAddr + 0x2D) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
 					*(std::uint8_t*)(createHandleAddr + 0x96) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
-					*(std::uint8_t*)(addressLibrary->Resolve(1589458) + 0x17C) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
+					*(std::uint8_t*)(createHandleAddr + 0x17C) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
 					*(std::uint8_t*)(createHandleAddr + 0x34) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
 					*(std::uint8_t*)(createHandleAddr + 0x9E) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
 					*(std::uint8_t*)(createHandleAddr + 0x178) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
@@ -1225,7 +1234,7 @@ namespace CKPE
 					total += __InstallPatchByPatternMask("81 E2 FF FF 1F 00", 0, 2, 2,
 						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
 
-					memcpy((void*)(addressLibrary->Resolve(162822) + 0x19),
+					memcpy((void*)Relocation(ID{ 162822 }, Offset{ 0x19 }).Address(),
 						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
 
 					total += 1;

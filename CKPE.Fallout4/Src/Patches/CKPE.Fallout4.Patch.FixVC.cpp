@@ -7,6 +7,7 @@
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.FixVC.h>
 
@@ -54,25 +55,40 @@ namespace CKPE
 
 			bool FixVC::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
+				if (db)
+				{
+					auto verPatch = db->GetVersion();
+					if ((verPatch != 1) && (verPatch != 2))
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&FixVCPatch_sub);
+					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&FixVCPatch_sub);
 
-				// By disabling version control, allow the start
+					// By disabling version control, allow the start
 
-				if (verPatch == 1)
-					SafeWrite::Write(__CKPE_OFFSET(1), { 0xEB, 0x81 });	// skip msgbox 
+					if (verPatch == 1)
+						SafeWrite::Write(__CKPE_OFFSET(1), { 0xEB, 0x81 });	// skip msgbox
+					else
+						SafeWrite::Write(__CKPE_OFFSET(1), { 0xEB, 0x82 });	// skip msgbox
+
+					SafeWrite::Write(__CKPE_OFFSET(2), { 0xEB, 0xD9 });	// skip msgbox
+
+					return true;
+				}
 				else
-					SafeWrite::Write(__CKPE_OFFSET(1), { 0xEB, 0x82 });	// skip msgbox 
+				{
+					using namespace Common;
 
-				SafeWrite::Write(__CKPE_OFFSET(2), { 0xEB, 0xD9 });	// skip msgbox
+					Relocation(ID{ 339854 }, Offset{ 0x315 }).WriteCall(FixVCPatch_sub);
 
-				return true;
+					// By disabling version control, allow the start
+					Relocation(ID{ 1348563 }, Offset{ 0x2BD }).Write({ 0xEB, 0x82 });	// skip msgbox
+					Relocation(ID{ 1348563 }, Offset{ 0x2E2 }).Write({ 0xEB, 0xD9 });	// skip msgbox
+
+					return true;
+				}
 			}
 		}
 	}

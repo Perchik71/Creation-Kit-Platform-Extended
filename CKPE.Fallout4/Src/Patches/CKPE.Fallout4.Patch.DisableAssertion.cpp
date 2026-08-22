@@ -5,6 +5,7 @@
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.DisableAssertion.h>
 
@@ -46,30 +47,53 @@ namespace CKPE
 
 			bool DisableAssertion::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				// Cutting a lot is faster this way
-				auto stext = interface->GetApplication()->GetSegment(Segment::text);
-				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
-
-				//
-				// Remove assertion message boxes
-				//
-				switch (db->GetVersion())
+				if (db)
 				{
-				case 1:
-					SafeWrite::WriteNop(__CKPE_OFFSET(0), 5);
-					return true;
-				case 2:
-					for (uint32_t i = 0; i < db->GetCount(); i++)
-						SafeWrite::WriteNop(__CKPE_OFFSET(i), 5);
-					return true;
-				default:
-					return false;
-				}
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				return true;
+					// Cutting a lot is faster this way
+					auto stext = interface->GetApplication()->GetSegment(Segment::text);
+					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+
+					//
+					// Remove assertion message boxes
+					//
+					switch (db->GetVersion())
+					{
+					case 1:
+						SafeWrite::WriteNop(__CKPE_OFFSET(0), 5);
+						return true;
+					case 2:
+						for (uint32_t i = 0; i < db->GetCount(); i++)
+							SafeWrite::WriteNop(__CKPE_OFFSET(i), 5);
+						return true;
+					default:
+						return false;
+					}
+
+					return true;
+				}
+				else
+				{
+					using namespace Common;
+
+					auto interface = CKPE::Common::Interface::GetSingleton();
+
+					// Cutting a lot is faster this way
+					auto stext = interface->GetApplication()->GetSegment(Segment::text);
+					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+
+					//
+					// Remove assertion message boxes
+					//
+					text.WriteNop(Relocation(ID{ 1518843 }, Offset{ 0x50 }).Address(), 5);
+					text.WriteNop(Relocation(ID{ 1653769 }, Offset{ 0x46 }).Address(), 5);
+					text.WriteNop(Relocation(ID{ 1683566 }, Offset{ 0x37 }).Address(), 5);
+					text.WriteNop(Relocation(ID{ 1956945 }, Offset{ 0x44 }).Address(), 5);
+
+					return true;
+				}
 			}
 		}
 	}

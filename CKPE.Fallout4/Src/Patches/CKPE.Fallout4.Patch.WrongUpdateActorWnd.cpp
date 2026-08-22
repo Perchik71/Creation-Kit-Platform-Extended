@@ -5,6 +5,7 @@
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.WrongUpdateActorWnd.h>
 
@@ -46,19 +47,33 @@ namespace CKPE
 
 			bool WrongUpdateActorWnd::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				// ACTOR: Wrong InvalidateRect
-				SafeWrite::WriteNop(__CKPE_OFFSET(0), 6);
-				SafeWrite::WriteNop(__CKPE_OFFSET(1), 6);
-				SafeWrite::WriteNop(__CKPE_OFFSET(2), 0xF);
-				//SafeWrite::WriteNop(__CKPE_OFFSET(3), 0x1D);
+					// ACTOR: Wrong InvalidateRect
+					SafeWrite::WriteNop(__CKPE_OFFSET(0), 6);
+					SafeWrite::WriteNop(__CKPE_OFFSET(1), 6);
+					SafeWrite::WriteNop(__CKPE_OFFSET(2), 0xF);
+					//SafeWrite::WriteNop(__CKPE_OFFSET(3), 0x1D);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					using namespace Common;
+
+					// ACTOR: Wrong InvalidateRect
+					Relocation(ID{ 1336973 }, Offset{ 0x197 }).WriteFill(0x90, 6);
+					Relocation(ID{ 1443229 }, Offset{ 0x15A }).WriteFill(0x90, 6);
+					Relocation(ID{ 1937909 }, Offset{ 0x2C19 }).WriteFill(0x90, 0xF);
+
+					return true;
+				}
 			}
 		}
 	}
