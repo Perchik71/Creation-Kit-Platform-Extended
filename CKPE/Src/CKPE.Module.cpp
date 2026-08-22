@@ -1,9 +1,10 @@
-﻿// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
 #include <CKPE.Module.h>
+#include <CKPE.HashUtils.h>
 #include <CKPE.FileUtils.h>
 #include <CKPE.PathUtils.h>
 #include <stdexcept>
@@ -87,10 +88,15 @@ namespace CKPE
 	{
 		return _fname ? PathUtils::ExtractFilePath(*_fname) : std::wstring();
 	}
-
-	std::optional<Version> Module::GetFileVersion() const noexcept
+	
+	std::optional<Version> Module::GetFileVersion() const noexcept(true)
 	{
 		return _fname ? FileUtils::GetFileVersion(*_fname) : std::nullopt;
+	}
+
+	std::uint32_t Module::GetFileCRC32() const noexcept(true)
+	{
+		return _fname ? HashUtils::CRC32File(*_fname) : 0xFFFFFFFFul;
 	}
 
 	const void* Module::Resource::GetProcAddress(const char* exportName) const noexcept(true)

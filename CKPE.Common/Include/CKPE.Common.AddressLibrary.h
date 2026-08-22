@@ -1,4 +1,4 @@
-// Copyright © 2025 aka perchik71. All rights reserved.
+// Copyright © 2026 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -12,6 +12,8 @@ namespace CKPE
 {
 	namespace Common
 	{
+        inline constexpr static auto SUPPORT_RUNTIMECOUNT = 4;
+
 		class CKPE_COMMON_API AddressLibrary
 		{
 		public:
@@ -80,6 +82,7 @@ namespace CKPE
 		private:
 			std::vector<Entry>* _entries{ nullptr };
 			bool _loaded{ false };
+            std::uint8_t _runtime{ 0xFF };
 			CKPE::Version _version{};
 
 			AddressLibrary(const AddressLibrary&) = delete;
@@ -89,10 +92,12 @@ namespace CKPE
 			virtual ~AddressLibrary() noexcept(true);
 
 			// Returns false (and logs the reason) on any missing/malformed/unsorted file - never throws
-			virtual bool Load(const std::wstring& fname_pak) noexcept(true);
+			virtual bool Load(const std::wstring& fname_pak, const std::uint8_t a_runtime_index) noexcept(true);
 			virtual void Clear() noexcept(true);
 
 			[[nodiscard]] constexpr bool IsLoaded() const noexcept(true) { return _loaded; }
+            [[nodiscard]] constexpr uint8_t GetRuntimeIndex() const noexcept(true) { return _runtime; }
+
 			[[nodiscard]] virtual std::uint32_t GetCount() const noexcept(true);
 
 			// Raw RVA for the given stable id, or 0 if unknown / not loaded.
@@ -100,13 +105,14 @@ namespace CKPE
 			// Absolute address (CreationKit.exe module base + RVA), or 0 if unknown / not loaded.
 			[[nodiscard]] virtual std::uintptr_t Resolve(AddressID id) const noexcept(true);
 
-			void SetVersion(const CKPE::Version& version) noexcept(true);
-			[[nodiscard]] CKPE::Version GetVersion() const noexcept(true);
+			[[nodiscard]] virtual CKPE::Version GetVersion() const noexcept(true);
 
 			[[nodiscard]] virtual std::uint64_t ResolveOffset(const VariantID& id) const noexcept(true);
 			[[nodiscard]] virtual std::uintptr_t Resolve(const VariantID& id) const noexcept(true);
 
 			static AddressLibrary* GetSingleton() noexcept(true);
 		};
+        
+        using IDDB = AddressLibrary;
 	}
 }

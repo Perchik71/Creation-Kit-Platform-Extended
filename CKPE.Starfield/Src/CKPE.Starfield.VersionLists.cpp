@@ -1,11 +1,13 @@
-// Copyright © 2025-2026 aka perchik71. All rights reserved.
+// Copyright © 2025-2026 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <vector>
+#include <array>
 #include <unordered_map>
 #include <windows.h>
-#include <CKPE.Module.h>
+#include <CKPE.Application.h>
+#include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.Starfield.VersionLists.h>
 
 namespace CKPE
@@ -17,11 +19,6 @@ namespace CKPE
 		// Список проверенных исполняемых файлов, допущенных к запуску
 		static std::unordered_map<uint32_t, VersionLists::EDITOR_EXECUTABLE_TYPE> _sallowedEditorVersion =
 		{
-			//{ 0x6CDE4424ul, VersionLists::EDITOR_STARFIELD_1_13_61_0		},	// Redirect Steam
-			//{ 0x8777A522ul, VersionLists::EDITOR_STARFIELD_1_14_70_0		},	// Redirect Steam
-			//{ 0x01BF6FB3ul, VersionLists::EDITOR_STARFIELD_1_14_74_0		},	// Redirect Steam
-			//{ 0x8C475320ul, VersionLists::EDITOR_STARFIELD_1_14_78_0		},	// Redirect Steam
-			//{ 0x24C2C928ul, VersionLists::EDITOR_STARFIELD_1_15_216_0		},	// Redirect Steam
 			{ 0xAA061EEBul, VersionLists::EDITOR_STARFIELD_1_15_222_0		},	// Redirect Steam
 			{ 0x79019BB6ul, VersionLists::EDITOR_STARFIELD_1_16_236_0		},	// Redirect Steam
 			{ 0x13F32F60ul, VersionLists::EDITOR_STARFIELD_1_16_242_0		},	// Redirect Steam
@@ -46,13 +43,14 @@ namespace CKPE
 			VersionLists::EDITOR_EXECUTABLE_TYPE version;
 		};
 		
-		static std::array<VersionEditorAllowed, 4> _sallowedEditorVersion2
+		static std::array<VersionEditorAllowed, Common::SUPPORT_RUNTIMECOUNT> _sallowedEditorVersion2
 		{ {
 			{ 0x84C7B20ul, "1.15.222.0", VersionLists::EDITOR_STARFIELD_1_15_222_0 },
 			{ 0x8542C88ul, "1.16.236.0", VersionLists::EDITOR_STARFIELD_1_16_236_0 },
 			{ 0x8542C88ul, "1.16.242.0", VersionLists::EDITOR_STARFIELD_1_16_242_0 },
 			{ 0x8542c90ul, "1.16.244.0", VersionLists::EDITOR_STARFIELD_1_16_244_0 },
 		} };
+		static_assert(_sallowedEditorVersion2.size() == Common::SUPPORT_RUNTIMECOUNT);
 
 		// Список названий редакторов
 		static std::vector<std::wstring_view> _sEditorVersionStr =
@@ -85,35 +83,37 @@ namespace CKPE
 		};
 
 		// Список имён файлов базы данных
-		static std::unordered_map<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view> _sallowedDatabaseVersion =
-		{
-			//{ VersionLists::EDITOR_STARFIELD_1_13_61_0,	L"CreationKitPlatformExtended_SF_1_13_61_0.database"	},
-			//{ VersionLists::EDITOR_STARFIELD_1_14_70_0,	L"CreationKitPlatformExtended_SF_1_14_70_0.database"	},
-			//{ VersionLists::EDITOR_STARFIELD_1_14_74_0,	L"CreationKitPlatformExtended_SF_1_14_74_0.database"	},
-			//{ VersionLists::EDITOR_STARFIELD_1_14_78_0,	L"CreationKitPlatformExtended_SF_1_14_78_0.database"	},
-			{ VersionLists::EDITOR_STARFIELD_1_15_216_0,	L"CreationKitPlatformExtended_SF_1_15_216_0.database"	},
+		// Обязательно ограничено Common::SUPPORT_RUNTIMECOUNT
+		static std::array<std::pair<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view>, Common::SUPPORT_RUNTIMECOUNT> _sallowedDatabaseVersion =
+		{ {
 			{ VersionLists::EDITOR_STARFIELD_1_15_222_0,	L"CreationKitPlatformExtended_SF_1_15_222_0.database"	},
 			{ VersionLists::EDITOR_STARFIELD_1_16_236_0,	L"CreationKitPlatformExtended_SF_1_16_236_0.database"	},
 			{ VersionLists::EDITOR_STARFIELD_1_16_242_0,	L"CreationKitPlatformExtended_SF_1_16_242_0.database"	},
 			{ VersionLists::EDITOR_STARFIELD_1_16_244_0,	L"CreationKitPlatformExtended_SF_1_16_244_0.database"	},
-		};
+		} };
+		static_assert(_sallowedDatabaseVersion.size() == Common::SUPPORT_RUNTIMECOUNT);
 
 		static constexpr auto QT_RESOURCE = L"CreationKitPlatformExtended_SF_QResources.pak";
 
 		void VersionLists::Verify()
 		{
-			for (auto editorVersionIterator2 = _sallowedEditorVersion2.begin();
-				editorVersionIterator2 != _sallowedEditorVersion2.end();
-				editorVersionIterator2++)
+			auto it = _sallowedEditorVersion.find(Application::GetSingleton()->GetFileCRC32());
+			if (it != _sallowedEditorVersion.end())
+			{
+				_seditor_ver = it->second;
+				return;
+			}
+
+			for (auto& it2 : _sallowedEditorVersion2)
 			{
 				// Защита в случаи выхода за пределы при проверке
 				__try
 				{
 					// Сравнение по указанному смещению нужной строки
-					if (!_stricmp((const char*)((std::uintptr_t)GetModuleHandleA(nullptr) + editorVersionIterator2->offset),
-						editorVersionIterator2->text.data()))
+					if (!_stricmp((const char*)((std::uintptr_t)GetModuleHandleA(nullptr) + it2.offset),
+						it2.text.data()))
 					{
-						_seditor_ver = editorVersionIterator2->version;
+						_seditor_ver = it2.version;
 						break;
 					}
 				}
@@ -141,9 +141,27 @@ namespace CKPE
 			return L"SF";
 		}
 
+		std::uint8_t VersionLists::GetRuntimeIndex() noexcept(true)
+		{
+			static std::uint8_t cache = 0xFF;
+			if (cache != 0xFF) return cache;
+
+			std::uint8_t id{ 0 };
+			for (auto& p : _sallowedDatabaseVersion)
+			{
+				if (p.first == _seditor_ver)
+					return cache = id;
+				id++;
+			}
+
+			return 0xFF;
+		}
+
 		std::wstring VersionLists::GetDatabaseFileName() noexcept(true)
 		{
-			auto it = _sallowedDatabaseVersion.find(_seditor_ver);
+			auto it = std::find_if(_sallowedDatabaseVersion.begin(), _sallowedDatabaseVersion.end(), [](auto& it) {
+				return it.first == _seditor_ver;
+				});
 			return (it != _sallowedDatabaseVersion.end()) ? it->second.data() : L"";
 		}
 

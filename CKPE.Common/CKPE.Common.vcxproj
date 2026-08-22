@@ -193,7 +193,9 @@
     <ClInclude Include="Include\CKPE.Common.AddressLibrary.h" />
     <ClInclude Include="Include\CKPE.Common.Docking.h" />
     <ClInclude Include="Include\CKPE.Common.FormInfoOutputWindow.h" />
+    <ClInclude Include="Include\CKPE.Common.ID.h" />
     <ClInclude Include="Include\CKPE.Common.KillerGuardMalware.h" />
+    <ClInclude Include="Include\CKPE.Common.Offset.h" />
     <ClInclude Include="Include\CKPE.Common.PatchBaseWindow.h" />
     <ClInclude Include="Include\CKPE.Common.ClassicTheme.h" />
     <ClInclude Include="Include\CKPE.Common.Common.h" />
@@ -210,6 +212,7 @@
     <ClInclude Include="Include\CKPE.Common.PatchManager.h" />
     <ClInclude Include="Include\CKPE.Common.ProgressTaskBar.h" />
     <ClInclude Include="Include\CKPE.Common.Registry.h" />
+    <ClInclude Include="Include\CKPE.Common.Relocation.h" />
     <ClInclude Include="Include\CKPE.Common.Relocator.h" />
     <ClInclude Include="Include\CKPE.Common.RelocatorDB.h" />
     <ClInclude Include="Include\CKPE.Common.RTTI.h" />

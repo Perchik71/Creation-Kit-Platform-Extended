@@ -1,4 +1,4 @@
-// Copyright © 2025 aka perchik71. All rights reserved.
+// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -32,6 +32,7 @@ namespace CKPE
 			[[nodiscard]] static bool HasAllowedEditorVersion() noexcept(true);
 			[[nodiscard]] static bool HasOutdatedEditorVersion() noexcept(true);
 			[[nodiscard]] static std::wstring GetGameName() noexcept(true);
+			[[nodiscard]] static std::uint8_t GetRuntimeIndex() noexcept(true);
 			[[nodiscard]] static std::wstring GetDatabaseFileName() noexcept(true);
 			[[nodiscard]] static CKPE::Version GetEditorVersionByNum() noexcept(true);
 			[[nodiscard]] static std::wstring GetEditorVersionByString() noexcept(true);

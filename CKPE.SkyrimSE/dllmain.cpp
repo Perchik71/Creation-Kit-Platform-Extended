@@ -1,4 +1,4 @@
-﻿// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -49,7 +49,8 @@ extern "C"
 		auto interface = CKPE::Common::Interface::GetSingleton();
 		interface->Initialize(ckpe, CKPE::SkyrimSE::VersionLists::GetEditorVersionByNum(), CKPEGameLibrary_Data.dataVersion,
 			dialog_pakfn, database_pakfn, CKPE::SkyrimSE::VersionLists::GetDatabaseFileName(), 
-			CKPE::SkyrimSE::VersionLists::GetExternalResourcePackageFileName());
+			CKPE::SkyrimSE::VersionLists::GetExternalResourcePackageFileName(),
+			CKPE::SkyrimSE::VersionLists::GetRuntimeIndex());
 		interface->CmdLineHandler();
 		auto runner = CKPE::SkyrimSE::Runner::GetSingleton();
 		return runner->Install();

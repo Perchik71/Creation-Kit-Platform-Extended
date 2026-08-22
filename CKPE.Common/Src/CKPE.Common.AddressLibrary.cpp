@@ -1,4 +1,4 @@
-// Copyright © 2025 aka perchik71. All rights reserved.
+// Copyright © 2026 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -7,6 +7,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.PathUtils.h>
 #include <CKPE.Zipper.h>
+#include <CKPE.MessageBox.h>
 #include <CKPE.Stream.h>
 #include <CKPE.Exception.h>
 #include <algorithm>
@@ -37,10 +38,12 @@ namespace CKPE
 		{
 			if (_entries)
 				_entries->clear();
+
+			_runtime = 0xFF;
 			_loaded = false;
 		}
 
-		bool AddressLibrary::Load(const std::wstring& fname_pak) noexcept(true)
+		bool AddressLibrary::Load(const std::wstring& fname_pak, const std::uint8_t a_runtime_index) noexcept(true)
 		{
 			Clear();
 
@@ -98,6 +101,7 @@ namespace CKPE
 								throw RuntimeError("AddressLibrary::Load file \"{}\" entries aren't sorted/unique by id", sname);
 
 						_loaded = true;
+						_runtime = a_runtime_index;
 					}
 				}
 				
@@ -131,7 +135,16 @@ namespace CKPE
 				[](const Entry& e, AddressID value) noexcept(true) { return e.Id < value; });
 
 			if (it == _entries->end() || it->Id != id)
-				return 0;
+			{
+				auto app = Application::GetSingleton();
+				auto msg = std::format(
+					"Failed to find offset for Address Library ID!\n"
+					"Invalid ID: {}\n"
+					"Game Version: {}",
+					id, app->GetFileVersion().value().string());
+				CKPE::MessageBox::OpenError(msg);
+				app->Terminate();
+			}
 
 			return it->Offset;
 		}
@@ -144,11 +157,6 @@ namespace CKPE
 
 			auto base = Interface::GetSingleton()->GetApplication()->GetBase();
 			return (std::uintptr_t)base + (std::uintptr_t)offset;
-		}
-
-		void AddressLibrary::SetVersion(const CKPE::Version& version) noexcept(true)
-		{
-			_version = version;
 		}
 
 		CKPE::Version AddressLibrary::GetVersion() const noexcept(true)

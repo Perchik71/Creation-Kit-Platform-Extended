@@ -1,4 +1,4 @@
-﻿// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -60,7 +60,7 @@ namespace CKPE
 		void Interface::Initialize(const CKPEGameLibraryInterface* a_interface, const CKPE::Version& a_editor_version, 
 			const CKPE::Version& a_version, const std::wstring& a_dialogs_fn, const std::wstring& a_databases_fn,
 			const std::wstring& a_database_fn, const std::wstring& a_resources_fn, bool support_more_theme,
-			const std::wstring& a_address_library_fn) noexcept(true)
+			const std::uint8_t a_runtime_index) noexcept(true)
 		{
 			if (_cmdline) return;
 
@@ -125,7 +125,7 @@ namespace CKPE
 
 				// CK Address Library: stable ID -> RVA, replacing the legacy RELB database
 				auto addressLibrary = AddressLibrary::GetSingleton();
-				bool hasAddressLibrary = addressLibrary->Load(a_databases_fn);
+				bool hasAddressLibrary = addressLibrary->Load(a_databases_fn, a_runtime_index);
 				if (!hasAddressLibrary)
 					_ERROR("Address Library requested but failed to load, see log above."sv);
 

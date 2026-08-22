@@ -1,4 +1,4 @@
-﻿// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -61,6 +61,7 @@ namespace CKPE
 		[[nodiscard]] inline std::wstring GetFileName() const noexcept(true) { return _fname ? *_fname : L""; }
 		[[nodiscard]] virtual std::wstring GetFilePath() const noexcept(true);
 		[[nodiscard]] std::optional<Version> GetFileVersion() const noexcept(true);
+		[[nodiscard]] std::uint32_t GetFileCRC32() const noexcept(true);
 		[[nodiscard]] constexpr virtual std::uintptr_t GetBase() const noexcept(true) { return (std::uintptr_t)_handle; }
 		[[nodiscard]] constexpr Segment GetSegment(Segment::Name a_segment) const noexcept(true) { return _segments[a_segment]; }
 		[[nodiscard]] constexpr PEDirectory GetPEDirectory(PEDirectory::Name a_segment) const noexcept(true) { return _directories[a_segment]; }

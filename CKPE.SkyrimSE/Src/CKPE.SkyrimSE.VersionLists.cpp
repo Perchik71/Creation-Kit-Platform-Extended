@@ -1,11 +1,13 @@
-// Copyright © 2025-2026 aka perchik71. All rights reserved.
+// Copyright © 2025-2026 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <vector>
+#include <array>
 #include <unordered_map>
 #include <windows.h>
-#include <CKPE.Module.h>
+#include <CKPE.Application.h>
+#include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
 
 namespace CKPE
@@ -70,28 +72,35 @@ namespace CKPE
 		};
 
 		// Список имён файлов базы данных
-		static std::unordered_map<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view> _sallowedDatabaseVersion =
-		{
+		// Обязательно ограничено Common::SUPPORT_RUNTIMECOUNT
+		static std::array<std::pair<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view>, Common::SUPPORT_RUNTIMECOUNT> _sallowedDatabaseVersion =
+		{{
 			{ VersionLists::EDITOR_SKYRIM_SE_1_5_73,		L"CreationKitPlatformExtended_SSE_1_5_73.database"		},
 			{ VersionLists::EDITOR_SKYRIM_SE_1_6_1130,		L"CreationKitPlatformExtended_SSE_1_6_1130.database"	},
 			{ VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1,	L"CreationKitPlatformExtended_SSE_1_6_1378_1.database"	},
-			{ VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1,	L"CreationKitPlatformExtended_SSE_1_6_1378_1.database"	},
-		};
+			{ VersionLists::EDITOR_SKYRIM_SE_1_7_99_0,		L"CreationKitPlatformExtended_SSE_1_7_99.database"		},
+		}};
+		static_assert(_sallowedDatabaseVersion.size() == Common::SUPPORT_RUNTIMECOUNT);
 
 		void VersionLists::Verify()
 		{
-			for (auto editorVersionIterator2 = _sallowedEditorVersion2.begin();
-				editorVersionIterator2 != _sallowedEditorVersion2.end();
-				editorVersionIterator2++)
+			auto it = _sallowedEditorVersion.find(Application::GetSingleton()->GetFileCRC32());
+			if (it != _sallowedEditorVersion.end())
+			{
+				_seditor_ver = it->second;
+				return;
+			}
+
+			for (auto& it2 : _sallowedEditorVersion2)
 			{
 				// Защита в случаи выхода за пределы при проверке
 				__try
 				{
 					// Сравнение по указанному смещению нужной строки
-					if (!_stricmp((const char*)((std::uintptr_t)GetModuleHandleA(nullptr) + editorVersionIterator2->first),
-						editorVersionIterator2->second.first.data()))
+					if (!_stricmp((const char*)((std::uintptr_t)GetModuleHandleA(nullptr) + it2.first),
+						it2.second.first.data()))
 					{
-						_seditor_ver = editorVersionIterator2->second.second;
+						_seditor_ver = it2.second.second;
 						break;
 					}
 				}
@@ -119,6 +128,22 @@ namespace CKPE
 			return L"SSE";
 		}
 
+		std::uint8_t VersionLists::GetRuntimeIndex() noexcept(true)
+		{
+			static std::uint8_t cache = 0xFF;
+			if (cache != 0xFF) return cache;
+
+			std::uint8_t id{ 0 };
+			for (auto& p : _sallowedDatabaseVersion)
+			{
+				if (p.first == _seditor_ver)
+					return cache = id;
+				id++;
+			}
+
+			return 0xFF;
+		}
+
 		CKPE::Version VersionLists::GetEditorVersionByNum() noexcept(true)
 		{
 			return _sEditorVersion[_seditor_ver];
@@ -126,7 +151,9 @@ namespace CKPE
 
 		std::wstring VersionLists::GetDatabaseFileName() noexcept(true)
 		{
-			auto it = _sallowedDatabaseVersion.find(_seditor_ver);
+			auto it = std::find_if(_sallowedDatabaseVersion.begin(), _sallowedDatabaseVersion.end(), [](auto& it) {
+				return it.first == _seditor_ver;
+				});
 			return (it != _sallowedDatabaseVersion.end()) ? it->second.data() : L"";
 		}
 

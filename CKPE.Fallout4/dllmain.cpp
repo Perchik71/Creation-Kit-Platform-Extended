@@ -1,4 +1,4 @@
-﻿// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -51,7 +51,7 @@ extern "C"
 		interface->Initialize(ckpe, CKPE::Fallout4::VersionLists::GetEditorVersionByNum(), CKPEGameLibrary_Data.dataVersion,
 			dialog_pakfn, database_pakfn, CKPE::Fallout4::VersionLists::GetDatabaseFileName(),
 			CKPE::Fallout4::VersionLists::GetExternalResourcePackageFileName(), true,
-			CKPE::Fallout4::VersionLists::GetAddressLibraryRelativePath()
+			CKPE::Fallout4::VersionLists::GetRuntimeIndex()
 		);
 		interface->CmdLineHandler();
 		auto runner = CKPE::Fallout4::Runner::GetSingleton();
