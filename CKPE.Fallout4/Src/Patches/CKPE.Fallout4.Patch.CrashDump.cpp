@@ -10,6 +10,7 @@
 #include <CKPE.Common.RTTI.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.CrashHandler.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 //#include <EditorAPI/NiAPI/NiSourceTexture.h>
 #include <EditorAPI/Forms/TESForm.h>
@@ -116,7 +117,7 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
 					Common::CrashHandler::GetSingleton()->Install();
 
@@ -155,17 +156,17 @@ namespace CKPE
 					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 					
 					// Remove from init function
-					text.WriteNop(addressLibrary->Resolve(2054943) + 0x59, 6);
+					text.WriteNop(Relocation(ID{ 2054943 }, Offset{ 0x59 }).Address(), 6);
 
-					static constexpr Common::AddressLibrary::AddressID kStubIds[] = { 1547411, 1354760, 1359224, 1534613, 1602321, 1741461 };
+					static constexpr AddressLibrary::AddressID kStubIds[] = { 1547411, 1354760, 1359224, 1534613, 1602321, 1741461 };
 
 					for (auto id : kStubIds)
 					{
-						auto addr = addressLibrary->Resolve(id);
-						if (!addr)
+						auto rel = Relocation(ID{ id });
+						if (!rel)
 							return false;
 
-						text.Write(addr, { 0xC3 });
+						text.Write(rel.Address(), { 0xC3 });
 					}
 
 					Common::CrashHandler::GetSingleton()->OnAnalyzeClassRef = DoAnalyzeClassRef;

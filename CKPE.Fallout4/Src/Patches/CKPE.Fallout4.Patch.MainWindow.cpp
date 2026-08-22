@@ -15,6 +15,7 @@
 #include <CKPE.Common.UIVarCommon.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.AddressLibrary.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.UIMenus.h>
 #include <CKPE.Common.RTTI.h>
@@ -280,26 +281,25 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
-					auto wndProcAddr = addressLibrary->Resolve(1603858);
-					auto sub1Addr = addressLibrary->Resolve(384552);
-					auto sub2Addr = addressLibrary->Resolve(415416);
-					auto sub3Addr = addressLibrary->Resolve(415464);
+					auto wndProc = Relocation(ID{ 1603858 });
+					auto sub1 = Relocation(ID{ 384552 });
+					auto sub2 = Relocation(ID{ 415416 });
+					auto sub3 = Relocation(ID{ 415464 });
 
-					if (!wndProcAddr || !sub1Addr || !sub2Addr || !sub3Addr)
+					if (!wndProc || !sub1 || !sub2 || !sub3)
 						return false;
 
-					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(wndProcAddr, (std::uintptr_t)&HKWndProc);
+					*(std::uintptr_t*)&_oldWndProc = wndProc.WriteJump(HKWndProc);
 
-					pointer_MainWindow_sub1 = sub1Addr;
-					pointer_MainWindow_sub2 = Detours::DetourClassJump(sub2Addr, (std::uintptr_t)&FogToggling);
+					pointer_MainWindow_sub1 = sub1.Address();
+					pointer_MainWindow_sub2 = sub2.WriteJump(FogToggling);
 
 					// only erase it first
-					auto rva = sub3Addr;
-					SafeWrite::WriteNop(rva + 0x4, 7);
-					pointer_MainWindow_sub3 = Detours::DetourClassJump(rva, (std::uintptr_t)&MarkerToggling);
-					SafeWrite::WriteNop(rva + 0x12, 7);
+					sub3.WriteFill<0x4>(0x90, 7);
+					pointer_MainWindow_sub3 = sub3.WriteJump(MarkerToggling);
+					sub3.WriteFill<0x12>(0x90, 7);
 
 					Common::LogWindow::GetSingleton()->OnOpenFormById = DoOpenFormByIdHandler;
 

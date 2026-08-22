@@ -9,6 +9,7 @@
 #include <CKPE.PathUtils.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Common.UIVarCommon.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.UITimeOfDay.h>
@@ -317,7 +318,7 @@ namespace CKPE
 						_READ_OPTION_BOOL("CreationKit", "bUIClassicTheme", false))
 						return false;
 
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
 					auto interface = CKPE::Common::Interface::GetSingleton();
 					auto base = interface->GetApplication()->GetBase();
@@ -325,44 +326,43 @@ namespace CKPE
 					// CinfigureWindow sets now
 					Common::ModernTheme::InitializeCurrentThread();
 
-					pointer_UIThemePatchAdditional_sub = addressLibrary->Resolve(1560813);
+					pointer_UIThemePatchAdditional_sub = Relocation(ID{ 1560813 }).Address();
 					// replace main toolbar
-					Detours::DetourCall(addressLibrary->Resolve(1622538) + 0x56, (std::uintptr_t)&Comctl32CreateToolbarEx_1);
-					Detours::DetourCall(addressLibrary->Resolve(1739114) + 0x56, (std::uintptr_t)&Comctl32CreateToolbarEx_NavMesh);
-					Detours::DetourJump(addressLibrary->Resolve(1622538) + 0x27C, (std::uintptr_t)&HideOldTimeOfDayComponents);
+					Relocation(ID{ 1622538 }, Offset{ 0x56 }).WriteCall(Comctl32CreateToolbarEx_1);
+					Relocation(ID{ 1739114 }, Offset{ 0x56 }).WriteCall(Comctl32CreateToolbarEx_NavMesh);
+					Relocation(ID{ 1622538 }, Offset{ 0x27C }).WriteJump(HideOldTimeOfDayComponents);
 					// replace ImageList_LoadImage for item type
-					Detours::DetourCall(addressLibrary->Resolve(2054943) + 0x1332, (std::uintptr_t)&Comctl32ImageList_LoadImageA_1);
+					Relocation(ID{ 2054943 }, Offset{ 0x1332 }).WriteCall(Comctl32ImageList_LoadImageA_1);
 
-					Detours::DetourCall(addressLibrary->Resolve(1937416) + 0xF0, (std::uintptr_t)&HKInitializeTimeOfDay);
-					Detours::DetourCall(addressLibrary->Resolve(1552965) + 0x1CC, (std::uintptr_t)&HKSetNewValueTimeOfDay);
-					
+					Relocation(ID{ 1937416 }, Offset{ 0xF0 }).WriteCall(HKInitializeTimeOfDay);
+					Relocation(ID{ 1552965 }, Offset{ 0x1CC }).WriteCall(HKSetNewValueTimeOfDay);
+
 					// replace ImageList_LoadImage
-					Detours::DetourCall(addressLibrary->Resolve(1655514) + 0x4F, (std::uintptr_t)&Comctl32ImageList_LoadImageA_2);			// item type Task Manager
-					Detours::DetourCall(addressLibrary->Resolve(1508707) + 0x1D2, (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);			// Scripts icons
-					Detours::DetourCall(addressLibrary->Resolve(1495189) + 0x18F, (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);			// Scripts icons
+					Relocation(ID{ 1655514 }, Offset{ 0x4F }).WriteCall(Comctl32ImageList_LoadImageA_2);			// item type Task Manager
+					Relocation(ID{ 1508707 }, Offset{ 0x1D2 }).WriteCall(Comctl32ImageList_LoadImageA_3);			// Scripts icons
+					Relocation(ID{ 1495189 }, Offset{ 0x18F }).WriteCall(Comctl32ImageList_LoadImageA_3);			// Scripts icons
 
-					
-					Detours::DetourCall(addressLibrary->Resolve(1619236) + 0xFB, (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);	// Scripts icons
+					Relocation(ID{ 1619236 }, Offset{ 0xFB }).WriteCall(Comctl32ImageList_LoadImageA_3);	// Scripts icons
 
 					Common::UI::ListView::InstallCustomDrawHandler(&DoCustomDrawListView);
-					
+
 					// Layers Window
-					Detours::DetourCall(addressLibrary->Resolve(1518220) + 0x46D, (std::uintptr_t)&HkSendMsgChangeColorTextForLayers);
+					Relocation(ID{ 1518220 }, Offset{ 0x46D }).WriteCall(HkSendMsgChangeColorTextForLayers);
 					// Rechange color text
-					auto rva = addressLibrary->Resolve(1641235) + 0x645;
-					Detours::DetourCall(rva, (std::uintptr_t)&HkSetTextColorForLayers);
-					Detours::DetourCall(rva + 0x214, (std::uintptr_t)&HkSetTextColorForLayers);
-					Detours::DetourCall(rva + 0x457, (std::uintptr_t)&HkSetTextColorForLayers);
-					Detours::DetourCall(rva + 0x471, (std::uintptr_t)&HkSetTextColorForLayers);
-					Detours::DetourCall(rva + 0x530, (std::uintptr_t)&HkSetTextColorForLayers);
+					auto rel = Relocation(ID{ 1641235 }, Offset{ 0x645 });
+					rel.WriteCall(HkSetTextColorForLayers);
+					rel.WriteCall<0x214>(HkSetTextColorForLayers);
+					rel.WriteCall<0x457>(HkSetTextColorForLayers);
+					rel.WriteCall<0x471>(HkSetTextColorForLayers);
+					rel.WriteCall<0x530>(HkSetTextColorForLayers);
 					// Skip edge draw
-					rva = addressLibrary->Resolve(1641235) + 0x74F;
-					Detours::DetourCall(rva, (std::uintptr_t)&HkDrawEdgeForLayers);
-					Detours::DetourCall(rva + 0x2C, (std::uintptr_t)&HkDrawEdgeForLayers);
-					Detours::DetourCall(rva + 0x459, (std::uintptr_t)&HkDrawEdgeForLayers);
+					rel = Relocation(ID{ 1641235 }, Offset{ 0x74F });
+					rel.WriteCall(HkDrawEdgeForLayers);
+					rel.WriteCall<0x2C>(HkDrawEdgeForLayers);
+					rel.WriteCall<0x459>(HkDrawEdgeForLayers);
 					// Icons
-					Detours::DetourCall(addressLibrary->Resolve(1801847) + 0x3E, (std::uintptr_t)&HkImageListForLayers_LoadImageA);
-					Detours::DetourCall(addressLibrary->Resolve(1437462) + 0xEBF, (std::uintptr_t)&HkImageListForLayers_LoadImageA);
+					Relocation(ID{ 1801847 }, Offset{ 0x3E }).WriteCall(HkImageListForLayers_LoadImageA);
+					Relocation(ID{ 1437462 }, Offset{ 0xEBF }).WriteCall(HkImageListForLayers_LoadImageA);
 
 					return true;
 				}

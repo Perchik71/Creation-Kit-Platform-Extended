@@ -7,6 +7,7 @@
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/Forms/TESObjectLAND.h>
 #include <Patches/CKPE.Fallout4.Patch.FixLandspaceVNML.h>
@@ -124,20 +125,21 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
 					auto _interface = CKPE::Common::Interface::GetSingleton();
 					auto base = _interface->GetApplication()->GetBase();
 
 					// In versions CK 1.10.980+, normalization is incorrect
-					// Do you know this is the second time in a row, previously it was with Skyrim, 
+					// Do you know this is the second time in a row, previously it was with Skyrim,
 					// has the quality of programmers dropped so much that they cannot count the reverse root?
 					// -- THIS BASE FOR MATH ---
 					// Besides, everything worked fine for you, why spoil the working code?
 
 					// Remove useless stuff
-					auto Rva1 = addressLibrary->Resolve(122903) + 0x1B0;
-					SafeWrite::WriteNop(Rva1, 0x12B);
+					auto rel = Relocation(ID{ 122903 }, Offset{ 0x1B0 });
+					rel.WriteFill(0x90, 0x12B);
+					auto Rva1 = rel.Address();
 
 					class xNormalize_Hook : public Xbyak::CodeGenerator
 					{
@@ -189,8 +191,7 @@ namespace CKPE
 
 					xNormalize_Hook::Generate(Rva1);
 
-					Detours::DetourJump(addressLibrary->Resolve(1592120),
-						(std::uintptr_t)&EditorAPI::Forms::TESObjectLAND::Layers::HKNormalize);
+					Relocation(ID{ 1592120 }).WriteJump(EditorAPI::Forms::TESObjectLAND::Layers::HKNormalize);
 
 					return true;
 				}
