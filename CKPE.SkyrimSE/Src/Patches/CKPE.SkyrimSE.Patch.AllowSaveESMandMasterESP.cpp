@@ -56,6 +56,11 @@ namespace CKPE
 				return { "Console" };
 			}
 
+			bool AllowSaveESMandMasterESP::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool AllowSaveESMandMasterESP::DoQuery() const noexcept(true)
 			{
 				auto Path = EditorAPI::BSString::Utils::GetApplicationPath();

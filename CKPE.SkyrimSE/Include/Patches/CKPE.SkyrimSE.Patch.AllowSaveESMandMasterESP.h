@@ -26,6 +26,7 @@ namespace CKPE
 				virtual const char* GetOptionName() const noexcept(true);
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
+				bool SupportsAddressLibrary() const noexcept(true) override;
 
 				static bool OpenPluginSaveDialog(std::uintptr_t ParentWindow, const char* BasePath, bool IsESM,
 					char* Buffer, std::uint32_t BufferSize, const char* Directory);

@@ -190,7 +190,7 @@ namespace CKPE
 			}
 
 		private:
-			[[nodiscard]] static std::uintptr_t Base()
+			[[nodiscard]] static std::uintptr_t Base() noexcept(true)
 			{
 				return Application::GetSingleton()->GetBase();
 			}

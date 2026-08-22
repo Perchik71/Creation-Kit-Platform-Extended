@@ -39,6 +39,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool AllowCreateBitArray::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool AllowCreateBitArray::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -46,18 +51,13 @@ namespace CKPE
 
 			bool AllowCreateBitArray::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-				
-				// Cutting a lot is faster this way
-				auto stext = interface->GetApplication()->GetSegment(Segment::text);
-				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
-
-				for (std::uint32_t i = 0; i < db->GetCount(); i++)
-					text.WriteNop(__CKPE_OFFSET(i), 2);
+				auto target = ID(236297);
+				Relocation(target, Offset{ 0x551, 0x512 }).WriteFill(NOP, 2);
+				Relocation(target, Offset{ 0x55A, 0x51B }).WriteFill(NOP, 2);
+				Relocation(target, Offset{ 0x565, 0x526 }).WriteFill(NOP, 2);
+				Relocation(target, Offset{ 0x578, 0x539 }).WriteFill(NOP, 2);
 
 				return true;
 			}

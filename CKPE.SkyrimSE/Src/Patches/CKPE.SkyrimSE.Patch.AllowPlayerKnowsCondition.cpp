@@ -14,9 +14,9 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			typedef void(*TAllowPlayerKnowsCondition_Add)(std::int64_t, uint8_t, bool, std::int64_t, std::int64_t,
+			using TAllowPlayerKnowsCondition_Add = void(std::int64_t, uint8_t, bool, std::int64_t, std::int64_t,
 				std::int64_t, std::int64_t, std::int64_t);
-			static TAllowPlayerKnowsCondition_Add AllowPlayerKnowsCondition_Add;
+			static std::function<TAllowPlayerKnowsCondition_Add> AllowPlayerKnowsCondition_Add;
 
 			AllowPlayerKnowsCondition::AllowPlayerKnowsCondition() : Common::Patch()
 			{
@@ -43,6 +43,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool AllowPlayerKnowsCondition::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool AllowPlayerKnowsCondition::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -50,18 +55,14 @@ namespace CKPE
 
 			bool AllowPlayerKnowsCondition::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-				
 				//
 				// Allow the "PlayerKnows" conditional function to accept enchantments as a function parameter
 				//
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				AllowPlayerKnowsCondition_Add = (TAllowPlayerKnowsCondition_Add)__CKPE_OFFSET(1);
-
+				Relocation(ID(232474)).WriteJump(sub);
+				AllowPlayerKnowsCondition_Add = Relocation<TAllowPlayerKnowsCondition_Add>(ID(242709));
+					
 				return true;
 			}
 
