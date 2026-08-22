@@ -113,11 +113,11 @@ BEGIN
     BEGIN
         BLOCK "041904b0"
         BEGIN
-            VALUE "CompanyName", "aka perchik71"
+            VALUE "CompanyName", "aka CKPE team"
             VALUE "FileDescription", "Creation Kit Platform Extended Loader"
             VALUE "FileVersion", "0.4.0.0"
             VALUE "InternalName", "ckpe_loader"
-            VALUE "LegalCopyright", "Copyright (C) aka perchik71 2023-2024"
+            VALUE "LegalCopyright", "Copyright (C) aka CKPE team 2023-2024"
             VALUE "OriginalFilename", "ckpe_loader.exe"
             VALUE "ProductName", "Creation Kit Platform Extended Project"
             VALUE "ProductVersion", "0.4.0.0"

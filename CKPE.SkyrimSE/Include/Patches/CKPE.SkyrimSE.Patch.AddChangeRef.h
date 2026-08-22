@@ -1,4 +1,4 @@
-﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -26,6 +26,7 @@ namespace CKPE
 				virtual const char* GetOptionName() const noexcept(true);
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
+				bool SupportsAddressLibrary() const noexcept(true) override;
 
 				static bool HKInsertMenuA(void* hMenu, std::uint32_t uPosition, std::uint32_t uFlags,
 					std::uintptr_t uIDNewItem, const char* lpNewItem);

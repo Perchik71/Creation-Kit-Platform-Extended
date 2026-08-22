@@ -1,4 +1,4 @@
-﻿// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -70,9 +70,9 @@ namespace CKPE
 					auto ver_minor = GET_EXE_VERSION_EX_MINOR(version->CommLibVersionRequired);
 					auto ver_build = GET_EXE_VERSION_EX_BUILD(version->CommLibVersionRequired);
 
-					auto ver_commlib_major = GET_EXE_VERSION_EX_MAJOR(ver);
-					auto ver_commlib_minor = GET_EXE_VERSION_EX_MINOR(ver);
-					auto ver_commlib_build = GET_EXE_VERSION_EX_BUILD(ver);
+					auto ver_commlib_major = ver.major();
+					auto ver_commlib_minor = ver.minor();
+					auto ver_commlib_build = ver.build();
 
 					if (ver_commlib_major < ver_major)
 						return L"disabled, commlib needs a newer one";
@@ -114,7 +114,7 @@ namespace CKPE
 					for (std::uint32_t i = 0; i < _countof(version->CompatibleVersions); i++)
 					{
 						auto compatibleVersion = version->CompatibleVersions[i];
-						if (compatibleVersion == editor_ver)
+						if (compatibleVersion == editor_ver.pack())
 						{
 							found = true;
 							break;
@@ -187,7 +187,7 @@ namespace CKPE
 			std::vector<std::string> result;
 			auto count = fast_call<std::uint32_t>((*_funcs)[1]);
 			for (std::uint32_t i = 0; i < count; i++)
-				result.push_back(fast_call<const char*>((*_funcs)[2], i));
+				result.emplace_back(fast_call<const char*>((*_funcs)[2], i));
 			return result;
 		}
 

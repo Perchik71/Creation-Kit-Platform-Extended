@@ -1,4 +1,4 @@
-﻿// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -52,12 +52,11 @@ namespace CKPE
 			return false;
 
 		USER_INFO_1* info{};
-
-		if (NetUserGetInfo(NULL, user_name, 1, (LPBYTE*)&info))
+		if (NetUserGetInfo(nullptr, user_name, 1, (LPBYTE*)&info))
 			return false;
 
 		auto result = info->usri1_priv == USER_PRIV_ADMIN;
-
+		
 		NetApiBufferFree(info);
 		return result;
 	}
@@ -65,17 +64,16 @@ namespace CKPE
 	CKPE_API bool CKPE_IsUserInAdminGroup() noexcept(true)
 	{
 		BOOL isAdmin = false;
-		PSID administratorsGroup = NULL;
+		PSID administratorsGroup = nullptr;
 
 		// Allocate and initialize a SID for the built-in Administrators group
 		SID_IDENTIFIER_AUTHORITY ntAuthority = SECURITY_NT_AUTHORITY;
 		if (AllocateAndInitializeSid(&ntAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID,
 			DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &administratorsGroup)) 
 		{
-
 			// Check if the SID is active in the current process token
 			// Passing NULL for the first parameter checks the current thread/process token
-			if (!CheckTokenMembership(NULL, administratorsGroup, &isAdmin))
+			if (!CheckTokenMembership(nullptr, administratorsGroup, &isAdmin))
 				isAdmin = false;
 
 			// Free the allocated SID memory
@@ -88,7 +86,7 @@ namespace CKPE
 	CKPE_API bool CKPE_IsProcessElevated() noexcept(true)
 	{
 		bool isElevated = false;
-		HANDLE hToken = NULL;
+		HANDLE hToken = nullptr;
 
 		// Open the access token of the current process
 		if (OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken))

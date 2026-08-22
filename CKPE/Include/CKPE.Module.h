@@ -1,14 +1,12 @@
-﻿// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #pragma once
 
-#include <cstdint>
-#include <string>
-#include <array>
 #include <CKPE.Segment.h>
 #include <CKPE.PEDirectory.h>
+#include <CKPE.Version.h>
 
 //	x-------	major
 //	-xxx----	minor
@@ -40,14 +38,17 @@ namespace CKPE
 {
 	class CKPE_API Module
 	{
+	protected:
 		const void* _handle{ nullptr };
 		std::wstring* _fname{ nullptr };
 		std::array<Segment, Segment::total> _segments;
 		std::array<PEDirectory, PEDirectory::total> _directories;
-
+	private:
 		Module() noexcept(true) = default;
 		Module(const Module&) = delete;
+		Module(Module&&) = delete;
 		Module& operator=(const Module&) = delete;
+		Module& operator=(Module&&) = delete;
 	protected:
 		void LoadSegments();
 		void LoadDirectories();
@@ -58,9 +59,12 @@ namespace CKPE
 
 		[[nodiscard]] bool Is64() const noexcept(true);
 		[[nodiscard]] inline std::wstring GetFileName() const noexcept(true) { return _fname ? *_fname : L""; }
-		[[nodiscard]] inline constexpr virtual std::uintptr_t GetBase() const noexcept(true) { return (std::uintptr_t)_handle; }
-		[[nodiscard]] inline constexpr Segment GetSegment(Segment::Name a_segment) const noexcept(true) { return _segments[a_segment]; }
-		[[nodiscard]] inline constexpr PEDirectory GetPEDirectory(PEDirectory::Name a_segment) const noexcept(true) { return _directories[a_segment]; }
+		[[nodiscard]] virtual std::wstring GetFilePath() const noexcept(true);
+		[[nodiscard]] std::optional<Version> GetFileVersion() const noexcept(true);
+		[[nodiscard]] std::uint32_t GetFileCRC32() const noexcept(true);
+		[[nodiscard]] constexpr virtual std::uintptr_t GetBase() const noexcept(true) { return (std::uintptr_t)_handle; }
+		[[nodiscard]] constexpr Segment GetSegment(Segment::Name a_segment) const noexcept(true) { return _segments[a_segment]; }
+		[[nodiscard]] constexpr PEDirectory GetPEDirectory(PEDirectory::Name a_segment) const noexcept(true) { return _directories[a_segment]; }
 		[[nodiscard]] inline void* GetPointer() const noexcept(true) { return reinterpret_cast<void*>(GetBase()); }
 		template <class T> [[nodiscard]] inline T* GetPointer() const noexcept(true) { return static_cast<T*>(GetPointer()); }
 
@@ -71,7 +75,7 @@ namespace CKPE
 			Resource(const Resource&) = delete;
 			Resource& operator=(const Resource&) = delete;
 		public:
-			inline constexpr Resource(const Module* m) noexcept(true) : _module(m) {};
+			constexpr Resource(const Module* m) noexcept(true) : _module(m) {};
 			[[nodiscard]] const void* GetProcAddress(const char* name) const noexcept(true);
 		} Resources{ this };
 

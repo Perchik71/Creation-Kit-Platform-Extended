@@ -1,4 +1,4 @@
-﻿// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -34,3 +34,4 @@
 #include <CKPE.Float16.h>
 #include <CKPE.Singleton.h>
 #include <CKPE.Keyboard.h>
+#include <CKPE.Version.h>

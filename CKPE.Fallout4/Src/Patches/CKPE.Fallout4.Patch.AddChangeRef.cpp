@@ -1,4 +1,4 @@
-﻿// Copyright © 2024-2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2024-2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -69,8 +69,6 @@ namespace CKPE
 					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetParentWithRedraw = __CKPE_OFFSET(1);
 					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly_NG::SetParentWithRedraw = __CKPE_OFFSET(1);
 					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly::SetParentWithRedraw = __CKPE_OFFSET(1);
-
-					return true;
 				}
 				else
 				{
@@ -84,6 +82,8 @@ namespace CKPE
 					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly_NG::SetParentWithRedraw = rel;
 					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly::SetParentWithRedraw = rel;
 				}
+
+				return true;
 			}
 		}
 	}

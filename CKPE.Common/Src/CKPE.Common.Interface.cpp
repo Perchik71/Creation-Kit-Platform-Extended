@@ -1,4 +1,4 @@
-﻿// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -57,10 +57,10 @@ namespace CKPE
 			}
 		}
 
-		void Interface::Initialize(const CKPEGameLibraryInterface* a_interface, std::uint64_t a_editor_version, 
-			std::uint64_t a_version, const std::wstring& a_dialogs_fn, const std::wstring& a_databases_fn, 
+		void Interface::Initialize(const CKPEGameLibraryInterface* a_interface, const CKPE::Version& a_editor_version, 
+			const CKPE::Version& a_version, const std::wstring& a_dialogs_fn, const std::wstring& a_databases_fn,
 			const std::wstring& a_database_fn, const std::wstring& a_resources_fn, bool support_more_theme,
-			const std::wstring& a_address_library_fn) noexcept(true)
+			const std::uint8_t a_runtime_index) noexcept(true)
 		{
 			if (_cmdline) return;
 
@@ -73,7 +73,7 @@ namespace CKPE
 				_version_gamelib = a_version;
 				_version_editor = a_editor_version;
 
-				std::wstring spath = _interface->application->GetPath();
+				std::wstring spath = _interface->application->GetFilePath();
 
 				// Fixed load preview window assests from
 				SetCurrentDirectoryW(spath.c_str());
@@ -84,7 +84,9 @@ namespace CKPE
 					_theme_settings = new TOMLSettingCollection(spath + _stheme_settings_fname);
 				else
 					_theme_settings = nullptr;
-				_version = FileUtils::GetFileVersion(spath + _dllName);
+
+				auto ver = FileUtils::GetFileVersion(spath + _dllName);
+				if (ver.has_value()) _version = ver.value();
 				Common::PatchManager::GetSingleton()->OpenBlackList();
 
 				// Init docking
@@ -122,19 +124,10 @@ namespace CKPE
 							a_dialogs_fn.c_str())));
 
 				// CK Address Library: stable ID -> RVA, replacing the legacy RELB database
-				bool hasAddressLibrary = false;
-				if (!a_address_library_fn.empty())
-				{
-    				auto addressLibrary = AddressLibrary::GetSingleton();
-
-    				addressLibrary->SetVersion(a_editor_version);
-    				hasAddressLibrary =addressLibrary->Load(spath + a_address_library_fn);
-
-    				if (!hasAddressLibrary)
-       					 _WARNING(
-            				L"\tAddress Library \"%s\" requested but failed to load, see log above."sv,
-            				a_address_library_fn.c_str());
-				}
+				auto addressLibrary = AddressLibrary::GetSingleton();
+				bool hasAddressLibrary = addressLibrary->Load(a_databases_fn, a_runtime_index);
+				if (!hasAddressLibrary)
+					_ERROR("Address Library requested but failed to load, see log above."sv);
 
 				if (!Relocator::GetSingleton()->Open(a_databases_fn, a_database_fn))
 				{
@@ -401,24 +394,26 @@ namespace CKPE
 				/* call constructor */ new LogWindow();		
 			}
 
-			char timeBuffer[80];
+			char timeBuffer[80]{};
 			struct tm* timeInfo;
 			time_t rawtime;
 			time(&rawtime);
 			timeInfo = localtime(std::addressof(rawtime));
 			strftime(timeBuffer, sizeof(timeBuffer), "%A %d %b %Y %r %Z", timeInfo);
 
-			auto v = _interface->ckpeVersion;
-			
 			_CONSOLE("##########################################################"sv);
 			_CONSOLE("Hi, I'm CKPE! Now: %s"sv, timeBuffer); 
-			// TODO: version CK
-			_CONSOLE("CKPE Runtime: %u.%u build %u rev:%u"sv, GET_EXE_VERSION_EX_MAJOR(v), GET_EXE_VERSION_EX_MINOR(v), 
-				GET_EXE_VERSION_EX_BUILD(v), GET_EXE_VERSION_EX_REVISION(v));
-			_CONSOLE("CKPE Common Library: %u.%u build %u rev:%u"sv, GET_EXE_VERSION_EX_MAJOR(_version), 
-				GET_EXE_VERSION_EX_MINOR(_version), GET_EXE_VERSION_EX_BUILD(_version), GET_EXE_VERSION_EX_REVISION(_version));
-			_CONSOLE("CKPE Game Library: %u.%u build %u rev:%u"sv, GET_EXE_VERSION_EX_MAJOR(a_version),
-				GET_EXE_VERSION_EX_MINOR(a_version), GET_EXE_VERSION_EX_BUILD(a_version), GET_EXE_VERSION_EX_REVISION(a_version));
+			auto vo = Application::GetSingleton()->GetFileVersion();
+			if (vo.has_value())
+			{
+				auto& v = vo.value();
+				_CONSOLE("CK: %u.%u build %u rev:%u"sv, v.major(), v.minor(), v.build(), v.patch());
+			}
+
+			auto v = _interface->ckpeVersion;
+			_CONSOLE("CKPE Runtime: %u.%u build %u rev:%u"sv, v.major(), v.minor(), v.build(), v.patch());
+			_CONSOLE("CKPE Common Library: %u.%u build %u rev:%u"sv, _version.major(), _version.minor(), _version.build(), _version.patch());
+			_CONSOLE("CKPE Game Library: %u.%u build %u rev:%u"sv, a_version.major(), a_version.minor(), a_version.build(), a_version.patch());
 			_CONSOLE("I have created a log file: \"%s\""sv, StringUtils::Utf16ToWinCP(_interface->logger->GetFileName()).c_str());
 
 			auto log = LogWindow::GetSingleton();

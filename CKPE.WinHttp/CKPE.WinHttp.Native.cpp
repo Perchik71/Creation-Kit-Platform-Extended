@@ -1,4 +1,4 @@
-﻿// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -25,12 +25,12 @@ namespace CKPE
             Runner(const Runner&) = delete;
             Runner operator=(const Runner&) = delete;
 
-            [[nodiscard]] constexpr inline bool HasRun() const noexcept(true) { return _run; }
+            [[nodiscard]] constexpr bool HasRun() const noexcept(true) { return _run; }
 
             void Run();
             void Shutdown();
 
-            void ContinueInitialize();
+            void ContinueInitialize() const;
             void EnableBreakpoint() noexcept(true);
             void DisableBreakpoint() const noexcept(true);
         } static Runner;
@@ -63,7 +63,7 @@ namespace CKPE
                 ThreadInformation, ThreadInformationLength);
         }
 
-        void Runner::ContinueInitialize()
+        void Runner::ContinueInitialize() const
         {
             try
             {
@@ -87,7 +87,7 @@ namespace CKPE
             // Установить магическое значение, которое запускает ранний вызов QueryPerformanceCounter
             auto lc = app->GetPEDirectory(PEDirectory::e_load_config);
             *(std::uint64_t*)lc.GetPointer<IMAGE_LOAD_CONFIG_DIRECTORY>()->SecurityCookie = 0x2B992DDFA232;
-            Detours::DetourIAT(_moduleBase, "kernel32.dll", "QueryPerformanceCounter", (std::uintptr_t)hk_QueryPerformanceCounter);
+            Detours::DetourIAT(_moduleBase, "kernel32.dll", "QueryPerformanceCounter", reinterpret_cast<std::uintptr_t>(&hk_QueryPerformanceCounter));
 
             // Отключить вызов распаковщика steam для NtSetInformationThread(ThreadHideFromDebugger)
             TempNTSITAddress = (std::uintptr_t)GetProcAddress(GetModuleHandle("ntdll.dll"), "NtSetInformationThread");
@@ -101,11 +101,11 @@ namespace CKPE
         void Runner::DisableBreakpoint() const noexcept(true)
         {
             // Восстановить оригинал указатель на QPC
-            Detours::DetourIAT(_moduleBase, "kernel32.dll", "QueryPerformanceCounter", (std::uintptr_t)QueryPerformanceCounter);
+            Detours::DetourIAT(_moduleBase, "kernel32.dll", "QueryPerformanceCounter", reinterpret_cast<std::uintptr_t>(&QueryPerformanceCounter));
 
             if (TempNTSITAddress)
                 // Восстановить исходный код NtSetInformationThread
-                SafeWrite::Write((std::uintptr_t)TempNTSITAddress, (std::uint8_t*)&TempNTSIT, sizeof(TempNTSIT));
+                SafeWrite::Write(static_cast<std::uintptr_t>(TempNTSITAddress), (std::uint8_t*)&TempNTSIT, sizeof(TempNTSIT));
         }
 
         void Runner::Run()
@@ -143,11 +143,12 @@ namespace CKPE
 
                 _moduleBase = app->GetBase();
 
-                auto ckpe_ver = FileUtils::GetFileVersion(std::wstring(app->GetPath()) + L"CKPE.dll");
-                _MESSAGE("CKPE Runtime:\n\t%u.%u build %u\n", 
-                    GET_EXE_VERSION_EX_MAJOR(ckpe_ver),
-                    GET_EXE_VERSION_EX_MINOR(ckpe_ver),
-                    GET_EXE_VERSION_EX_BUILD(ckpe_ver));
+                auto ckpe_ver = FileUtils::GetFileVersion(std::wstring(app->GetFilePath()) + L"CKPE.dll");
+                if (ckpe_ver.has_value())
+                {
+                    auto& v = ckpe_ver.value();
+                    _MESSAGE("CKPE Runtime:\n\t%u.%u build %u\n", v.major(), v.minor(), v.build());
+                }
 
                 _MESSAGE(L"OS:\n\t%s\n\t%u.%u build %u\n", 
                     // Without COM interface (Important in this stage application)

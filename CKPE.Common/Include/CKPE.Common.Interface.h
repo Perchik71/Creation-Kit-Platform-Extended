@@ -1,4 +1,4 @@
-﻿// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -26,9 +26,9 @@ namespace CKPE
 			TOMLSettingCollection* _theme_settings{ nullptr };
 			CommandLineParser* _cmdline{ nullptr };
 			DockingManager* _docking{ nullptr };
-			std::uint64_t _version{ 0 };
-			std::uint64_t _version_editor{ 0 };
-			std::uint64_t _version_gamelib{ 0 };
+			CKPE::Version _version{ 0 };
+			CKPE::Version _version_editor{ 0 };
+			CKPE::Version _version_gamelib{ 0 };
 			std::uintptr_t _instDll{ 0 };
 
 			Interface(const Interface&) = delete;
@@ -37,20 +37,20 @@ namespace CKPE
 			Interface() noexcept(true) = default;
 			virtual ~Interface() noexcept(true);
 
-			void Initialize(const CKPEGameLibraryInterface* a_interface, std::uint64_t a_editor_version,
-				std::uint64_t a_version, const std::wstring& a_dialogs_fn, const std::wstring& a_databases_fn,
+			void Initialize(const CKPEGameLibraryInterface* a_interface, const CKPE::Version& a_editor_version,
+				const CKPE::Version& a_version, const std::wstring& a_dialogs_fn, const std::wstring& a_databases_fn,
 				const std::wstring& a_database_fn, const std::wstring& a_resources_fn,
-				bool support_more_theme = true, const std::wstring& a_address_library_fn = L"") noexcept(true);
+				bool support_more_theme = true, const std::uint8_t a_runtime_index = 0xFF) noexcept(true);
 			void CmdLineHandler();
 
 			[[nodiscard]] bool HasCustomThemeSetting() const noexcept(true);
 
 			[[nodiscard]] static Interface* GetSingleton() noexcept(true);
-			[[nodiscard]] constexpr inline std::uintptr_t GetInstanceDLL() const noexcept(true) { return _instDll; }
-			[[nodiscard]] constexpr inline std::uint64_t GetVersionDLL() const noexcept(true) { return _version; }
-			[[nodiscard]] constexpr inline std::uint64_t GetGameLibraryVersionDLL() const noexcept(true) { return _version_gamelib; }
-			[[nodiscard]] constexpr inline std::uint64_t GetEditorVersion() const noexcept(true) { return _version_editor; }
-			[[nodiscard]] constexpr inline const CKPEGameLibraryInterface* GetCKPEInterface() const noexcept(true) { return _interface; }
+			[[nodiscard]] constexpr std::uintptr_t GetInstanceDLL() const noexcept(true) { return _instDll; }
+			[[nodiscard]] constexpr CKPE::Version GetVersionDLL() const noexcept(true) { return _version; }
+			[[nodiscard]] constexpr CKPE::Version GetGameLibraryVersionDLL() const noexcept(true) { return _version_gamelib; }
+			[[nodiscard]] constexpr CKPE::Version GetEditorVersion() const noexcept(true) { return _version_editor; }
+			[[nodiscard]] constexpr const CKPEGameLibraryInterface* GetCKPEInterface() const noexcept(true) { return _interface; }
 			[[nodiscard]] inline Logger* GetLogger() noexcept(true) { return _interface->logger; }
 			[[nodiscard]] inline Application* GetApplication() noexcept(true) { return _interface->application; }
 			[[nodiscard]] inline TOMLSettingCollection* GetSettings() noexcept(true)

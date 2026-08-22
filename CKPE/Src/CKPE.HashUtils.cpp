@@ -1,4 +1,4 @@
-﻿// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -8,7 +8,7 @@
 
 namespace CKPE
 {
-	static constexpr size_t BUFFER_SIZE = 16 * 1024;
+	static constexpr size_t BUFFER_SIZE = 64 * 1024;
 
 	static constexpr uint32_t crc_table[256] = {
 		0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f,

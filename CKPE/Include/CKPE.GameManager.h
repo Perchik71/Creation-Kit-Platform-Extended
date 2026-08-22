@@ -1,13 +1,11 @@
-﻿// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #pragma once
 
-#include <string>
-#include <cstdint>
+#include <CKPE.Version.h>
 #include <map>
-#include <CKPE.Common.h>
 
 namespace CKPE
 {
@@ -17,24 +15,24 @@ namespace CKPE
 
 struct CKPEGameLibraryData
 {
-	enum { kVersion = 1, };
+	enum { kVersion = 2, };
 
-	std::uint32_t cbVersion;		// set to kVersion
-	std::uint64_t dataVersion;		// version number of game library
-	char name[256];					// null-terminated ASCII game library name
-	char author[256];				// null-terminated ASCII game library author name
+	std::uint32_t cbVersion{ kVersion };	// set to kVersion
+	CKPE::Version dataVersion{};			// version number of game library
+	char name[256]{};						// null-terminated ASCII game library name
+	char author[256]{};						// null-terminated ASCII game library author name
 };
 
 typedef std::uint32_t GameLibraryHandle;
 
 struct CKPEGameLibraryInterface
 {
-	enum { kInterfaceVersion = 1, };
+	enum { kInterfaceVersion = 2, };
 
-	std::uint32_t interfaceVersion;
-	std::uint64_t ckpeVersion;
-	CKPE::Application* application;
-	CKPE::Logger* logger;
+	std::uint32_t interfaceVersion{ kInterfaceVersion };
+	CKPE::Version ckpeVersion{};
+	CKPE::Application* application{ nullptr };
+	CKPE::Logger* logger{ nullptr };
 	void* (*QueryInterface)(std::uint32_t id);
 };
 
@@ -70,7 +68,7 @@ namespace CKPE
 	
 		[[nodiscard]] bool Initialize(Game game) noexcept(true);
 		[[nodiscard]] static const GameManager* GetSingleton() noexcept(true);
-		[[nodiscard]] inline constexpr virtual Game GetType() const noexcept(true) { return _game_type; }
+		[[nodiscard]] constexpr virtual Game GetType() const noexcept(true) { return _game_type; }
 		[[nodiscard]] virtual std::uint32_t QueryLib(std::wstring& version);
 		[[nodiscard]] virtual bool LoadLib();
 

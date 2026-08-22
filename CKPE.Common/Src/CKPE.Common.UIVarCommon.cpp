@@ -1,4 +1,4 @@
-﻿// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -189,9 +189,9 @@ namespace CKPE
 				needDarkCheckbox = ThemeToml->ReadBool("Assets", "bNeedDarkCheckboxInData", false);
 				
 				if (PathIsRelativeW(CustomTheme_FileName_Toolbar.c_str()))
-					CustomTheme_FileName_Toolbar = Interface->GetApplication()->GetPath() + CustomTheme_FileName_Toolbar;
+					CustomTheme_FileName_Toolbar = Interface->GetApplication()->GetFilePath() + CustomTheme_FileName_Toolbar;
 				if (PathIsRelativeW(CustomTheme_FileName_Icons.c_str()))
-					CustomTheme_FileName_Icons = Interface->GetApplication()->GetPath() + CustomTheme_FileName_Icons;
+					CustomTheme_FileName_Icons = Interface->GetApplication()->GetFilePath() + CustomTheme_FileName_Icons;
 
 				SetTheme(Theme_Custom);
 				return true;

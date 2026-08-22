@@ -1,11 +1,13 @@
-// Copyright © 2025 aka perchik71. All rights reserved.
+// Copyright © 2025-2026 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <vector>
+#include <array>
 #include <unordered_map>
 #include <windows.h>
-#include <CKPE.Module.h>
+#include <CKPE.Application.h>
+#include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
 
 namespace CKPE
@@ -17,17 +19,13 @@ namespace CKPE
 		// Список проверенных исполняемых файлов, допущенных к запуску
 		static std::unordered_map<uint32_t, VersionLists::EDITOR_EXECUTABLE_TYPE> _sallowedEditorVersion =
 		{
-			//{ 0xA9CD60C7ul, VersionLists::EDITOR_SKYRIM_SE_1_5_3			},	// Default
-			//{ 0xED7DB054ul, VersionLists::EDITOR_SKYRIM_SE_1_5_3			},	// Redirect Steam
 			{ 0x624E8C84ul, VersionLists::EDITOR_SKYRIM_SE_1_5_73			},	// Default
 			{ 0xF7E929A4ul, VersionLists::EDITOR_SKYRIM_SE_1_5_73			},	// Redirect Steam
 			{ 0x668F3CB3ul, VersionLists::EDITOR_SKYRIM_SE_1_5_73			},	// Unoffical patch 6.3
-			//{ 0x748A3CC4ul, VersionLists::EDITOR_SKYRIM_SE_1_6_438		},	// No Steam
-			//{ 0x3FDB3994ul, VersionLists::EDITOR_SKYRIM_SE_1_6_438		},	// With Steam
-			//{ 0xFDCAEE10ul, VersionLists::EDITOR_SKYRIM_SE_1_6_438		},	// No Steam and Redirect Steam
 			{ 0x2EF668CEul, VersionLists::EDITOR_SKYRIM_SE_1_6_1130			},	// Redirect Steam
 			{ 0x0085AA4Cul, VersionLists::EDITOR_SKYRIM_SE_1_6_1130			},	// Default
 			{ 0x0085AA4Cul, VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1		},	// Redirect Steam
+			{ 0x4C73C37Bul, VersionLists::EDITOR_SKYRIM_SE_1_7_99_0			},	// Redirect Steam
 		};
 
 		// Список устаревших версий редакторов
@@ -41,22 +39,24 @@ namespace CKPE
 		static std::unordered_map<uint32_t,
 			std::pair<std::string_view, VersionLists::EDITOR_EXECUTABLE_TYPE>> _sallowedEditorVersion2 =
 		{
-			//{ 0x3078988ul,	{ "1.5.3.0",	VersionLists::EDITOR_SKYRIM_SE_1_5_3			} },
+			{ 0x3078988ul,		{ "1.5.3.0",	VersionLists::EDITOR_SKYRIM_SE_1_5_3			} },
 			{ 0x3062CC8ul,		{ "1.5.73.0",	VersionLists::EDITOR_SKYRIM_SE_1_5_73			} },
-			//{ 0x2E835D8ul,	{ "1.6.438.0",	VersionLists::EDITOR_SKYRIM_SE_1_6_438			} },
+			{ 0x2E835D8ul,		{ "1.6.438.0",	VersionLists::EDITOR_SKYRIM_SE_1_6_438			} },
 			{ 0x2F3E698ul,		{ "1.6.1130.0",	VersionLists::EDITOR_SKYRIM_SE_1_6_1130			} },
 			{ 0x2F7F018ul,		{ "1.6.1378.1",	VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1		} },
+			{ 0x3031590ul,		{ "1.7.99.0",	VersionLists::EDITOR_SKYRIM_SE_1_7_99_0			} },
 		};
 
 		// Список версий
-		static std::vector<std::uint64_t> _sEditorVersion =
+		static std::vector<CKPE::Version> _sEditorVersion =
 		{
-			0,
-			MAKE_EXE_VERSION_EX(1, 5, 3, 0),
-			MAKE_EXE_VERSION_EX(1, 5, 73, 0),
-			MAKE_EXE_VERSION_EX(1, 6, 438, 0),
-			MAKE_EXE_VERSION_EX(1, 6, 1130, 0),
-			MAKE_EXE_VERSION_EX(1, 6, 1378, 1),
+			{},
+			{ 1,	5,	3,		0 },
+			{ 1,	5,	73,		0 },
+			{ 1,	6,	438,	0 },
+			{ 1,	6,	1130,	0 },
+			{ 1,	6,	1378,	1 },
+			{ 1,	7,	99,		0 },
 		};
 
 		// Список названий редакторов
@@ -68,32 +68,39 @@ namespace CKPE
 			L"Skyrim Special Edition [v1.6.438]",
 			L"Skyrim Special Edition [v1.6.1130]",
 			L"Skyrim Special Edition [v1.6.1378.1]",
+			L"Skyrim Special Edition [v1.7.99.0]",
 		};
 
 		// Список имён файлов базы данных
-		static std::unordered_map<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view> _sallowedDatabaseVersion =
-		{
-			//{ VersionLists::EDITOR_SKYRIM_SE_1_5_3,		L"CreationKitPlatformExtended_SSE_1_5_3.database"		},
+		// Обязательно ограничено Common::SUPPORT_RUNTIMECOUNT
+		static std::array<std::pair<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view>, Common::SUPPORT_RUNTIMECOUNT> _sallowedDatabaseVersion =
+		{{
 			{ VersionLists::EDITOR_SKYRIM_SE_1_5_73,		L"CreationKitPlatformExtended_SSE_1_5_73.database"		},
-			//{ VersionLists::EDITOR_SKYRIM_SE_1_6_438,		L"CreationKitPlatformExtended_SSE_1_6_438.database"		},
 			{ VersionLists::EDITOR_SKYRIM_SE_1_6_1130,		L"CreationKitPlatformExtended_SSE_1_6_1130.database"	},
 			{ VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1,	L"CreationKitPlatformExtended_SSE_1_6_1378_1.database"	},
-		};
+			{ VersionLists::EDITOR_SKYRIM_SE_1_7_99_0,		L"CreationKitPlatformExtended_SSE_1_7_99.database"		},
+		}};
+		static_assert(_sallowedDatabaseVersion.size() == Common::SUPPORT_RUNTIMECOUNT);
 
 		void VersionLists::Verify()
 		{
-			for (auto editorVersionIterator2 = _sallowedEditorVersion2.begin();
-				editorVersionIterator2 != _sallowedEditorVersion2.end();
-				editorVersionIterator2++)
+			auto it = _sallowedEditorVersion.find(Application::GetSingleton()->GetFileCRC32());
+			if (it != _sallowedEditorVersion.end())
+			{
+				_seditor_ver = it->second;
+				return;
+			}
+
+			for (auto& it2 : _sallowedEditorVersion2)
 			{
 				// Защита в случаи выхода за пределы при проверке
 				__try
 				{
 					// Сравнение по указанному смещению нужной строки
-					if (!_stricmp((const char*)((std::uintptr_t)GetModuleHandleA(nullptr) + editorVersionIterator2->first),
-						editorVersionIterator2->second.first.data()))
+					if (!_stricmp((const char*)((std::uintptr_t)GetModuleHandleA(nullptr) + it2.first),
+						it2.second.first.data()))
 					{
-						_seditor_ver = editorVersionIterator2->second.second;
+						_seditor_ver = it2.second.second;
 						break;
 					}
 				}
@@ -121,14 +128,32 @@ namespace CKPE
 			return L"SSE";
 		}
 
-		std::uint64_t VersionLists::GetEditorVersionByNum() noexcept(true)
+		std::uint8_t VersionLists::GetRuntimeIndex() noexcept(true)
+		{
+			static std::uint8_t cache = 0xFF;
+			if (cache != 0xFF) return cache;
+
+			std::uint8_t id{ 0 };
+			for (auto& p : _sallowedDatabaseVersion)
+			{
+				if (p.first == _seditor_ver)
+					return cache = id;
+				id++;
+			}
+
+			return 0xFF;
+		}
+
+		CKPE::Version VersionLists::GetEditorVersionByNum() noexcept(true)
 		{
 			return _sEditorVersion[_seditor_ver];
 		}
 
 		std::wstring VersionLists::GetDatabaseFileName() noexcept(true)
 		{
-			auto it = _sallowedDatabaseVersion.find(_seditor_ver);
+			auto it = std::find_if(_sallowedDatabaseVersion.begin(), _sallowedDatabaseVersion.end(), [](auto& it) {
+				return it.first == _seditor_ver;
+				});
 			return (it != _sallowedDatabaseVersion.end()) ? it->second.data() : L"";
 		}
 

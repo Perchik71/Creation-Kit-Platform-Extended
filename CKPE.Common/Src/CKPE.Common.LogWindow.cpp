@@ -1,4 +1,4 @@
-﻿// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -360,7 +360,7 @@ namespace CKPE
 		void LogWindow::LoadWarningBlacklist() noexcept(true)
 		{
 			auto app = Interface::GetSingleton()->GetApplication();
-			auto spath = std::wstring(app->GetPath());
+			auto spath = std::wstring(app->GetFilePath());
 			
 			if (!PathUtils::FileExists(spath + FILE_BLACKLIST))
 				return;

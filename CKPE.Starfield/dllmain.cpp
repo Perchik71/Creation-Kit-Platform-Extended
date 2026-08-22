@@ -1,4 +1,4 @@
-﻿// Copyright © 2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -17,7 +17,7 @@ extern "C"
 	__declspec(dllexport) CKPEGameLibraryData CKPEGameLibrary_Data =
 	{
 		CKPEGameLibraryData::kVersion,
-		MAKE_EXE_VERSION_EX(VERSION_MAJOR, VERSION_MINOR, VERSION_BUILD, VERSION_REVISION),
+		{ VERSION_MAJOR, VERSION_MINOR, VERSION_BUILD, VERSION_REVISION },
 		"Starfield",
 		"Perchik71",
 	};
@@ -27,10 +27,10 @@ extern "C"
 		CKPE::Starfield::VersionLists::Verify();
 		version = CKPE::Starfield::VersionLists::GetEditorVersionByString();
 		auto version_num = CKPE::Starfield::VersionLists::GetEditorVersionByNum();
-		if (version_num)
+		auto ver = CKPE::FileUtils::GetFileVersion(CKPE::PathUtils::GetApplicationFileName());
+		if (ver.has_value())
 		{
-			auto ver = CKPE::FileUtils::GetFileVersion(CKPE::PathUtils::GetApplicationFileName());
-			if (ver != version_num)
+			if (ver.value() != version_num)
 				return CKPE::GameManager::FAKE;
 			if (CKPE::Starfield::VersionLists::HasAllowedEditorVersion())
 				return CKPE::GameManager::SUPPORTED;
@@ -49,7 +49,8 @@ extern "C"
 		auto interface = CKPE::Common::Interface::GetSingleton();
 		interface->Initialize(ckpe, CKPE::Starfield::VersionLists::GetEditorVersionByNum(), CKPEGameLibrary_Data.dataVersion,
 			dialog_pakfn, database_pakfn, CKPE::Starfield::VersionLists::GetDatabaseFileName(),
-			CKPE::Starfield::VersionLists::GetExternalResourcePackageFileName(), false);
+			CKPE::Starfield::VersionLists::GetExternalResourcePackageFileName(), false,
+			CKPE::Starfield::VersionLists::GetRuntimeIndex());
 		interface->CmdLineHandler();
 		auto runner = CKPE::Starfield::Runner::GetSingleton();
 		return runner->Install();

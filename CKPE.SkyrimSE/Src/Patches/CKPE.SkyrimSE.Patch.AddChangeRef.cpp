@@ -1,4 +1,4 @@
-﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -10,6 +10,8 @@
 #include <CKPE.SkyrimSE.VersionLists.h>
 #include <EditorAPI/Forms/TESObjectREFR.h>
 #include <Patches/CKPE.SkyrimSE.Patch.AddChangeRef.h>
+
+#include <format>
 
 namespace CKPE
 {
@@ -49,19 +51,15 @@ namespace CKPE
 
 			bool AddChangeRef::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				Common::Relocation(Common::ID(278484), 0x9A5).WriteCall(HKInsertMenuA);
+				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetParentWithRedraw = Common::ID(284410).Address();
+				Common::Relocation(Common::ID(278484), 0xD9D).WriteCall(HKDeleteMenu);
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				return true;
+			}
 
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&HKInsertMenuA);
-
-				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetParentWithRedraw =
-					__CKPE_OFFSET(1);
-
-				Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&HKDeleteMenu);
-
+			bool AddChangeRef::SupportsAddressLibrary() const noexcept(true)
+			{
 				return true;
 			}
 

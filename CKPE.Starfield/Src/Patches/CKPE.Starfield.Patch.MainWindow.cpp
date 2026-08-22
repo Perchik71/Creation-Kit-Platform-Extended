@@ -1,4 +1,4 @@
-﻿// Copyright © 2023-2025 aka perchik71. All rights reserved.
+﻿// Copyright © 2023-2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -78,7 +78,7 @@ namespace CKPE
 							form->DebugInfo(szBuf, 140);
 
 							_CONSOLE("DebugInfo -> %s type %02X ptr %p",
-								szBuf, (std::uint16_t)form->Type, form);
+								szBuf, std::to_underlying(form->Type), form);
 						}
 					}
 					__except (EXCEPTION_EXECUTE_HANDLER)
@@ -86,69 +86,6 @@ namespace CKPE
 						_CONSOLE("DebugInfo -> Incorrect FormID");
 					}
 				}
-			}
-
-			static void CreateExtensionMenu(HWND _MainWindow, HMENU _MainMenu) noexcept(true)
-			{
-				// Creating a submenu to open the hidden functions of the Creation Kit
-				ExtensionMenuHideFunctionsHandle = CreateMenu();
-				Common::UI::CUIMenu ExtMenuHideFunctions = ExtensionMenuHideFunctionsHandle;
-				ExtMenuHideFunctions.Append("Dialogue", MainWindow::UI_EXTMENU_IMPORT_DIALOGUE);
-				ExtMenuHideFunctions.Append("Quest Stages", MainWindow::UI_EXTMENU_IMPORT_QUESTSTAGES);
-				ExtMenuHideFunctions.Append("Quest Objectives", MainWindow::UI_EXTMENU_IMPORT_QUESTOBJECTIVES);
-				ExtMenuHideFunctions.Append("Names", MainWindow::UI_EXTMENU_IMPORT_NAMES);
-				ExtMenuHideFunctions.Append("Topics", MainWindow::UI_EXTMENU_IMPORT_TOPICS);
-				ExtMenuHideFunctions.Append("Script Messageboxes", MainWindow::UI_EXTMENU_IMPORT_SCRIPTSMSGBOX);
-				ExtMenuHideFunctions.Append("Game Settings", MainWindow::UI_EXTMENU_IMPORT_GAMESETTINGS);
-				ExtMenuHideFunctions.Append("Descriptions", MainWindow::UI_EXTMENU_IMPORT_DESCRIPTIONS);
-				ExtMenuHideFunctions.Append("Faction Rank Names", MainWindow::UI_EXTMENU_IMPORT_FACTIONRANKNAMES);
-				ExtMenuHideFunctions.Append("Ammo", MainWindow::UI_EXTMENU_IMPORT_AMMO);
-				ExtMenuHideFunctions.Append("Body Part Data", MainWindow::UI_EXTMENU_IMPORT_BODYPARTDATA);
-
-				// Create extended menu options
-				ExtensionMenuHandle = CreateMenu();
-
-				Common::UI::CUIMenu ExtMenu = ExtensionMenuHandle;
-				ExtMenu.Append("Show Log", MainWindow::UI_EXTMENU_SHOWLOG);
-				ExtMenu.Append("Clear Log", MainWindow::UI_EXTMENU_CLEARLOG);
-				ExtMenu.Append("Autoscroll Log", MainWindow::UI_EXTMENU_AUTOSCROLL, true, true);
-				ExtMenu.AppendSeparator();
-				ExtMenu.Append("Import", MainWindow::UI_EXTMENU_IMPORT, ExtMenuHideFunctions);
-				ExtMenu.AppendSeparator();
-				ExtMenu.Append("Dump RTTI Data", MainWindow::UI_EXTMENU_DUMPRTTI);
-				ExtMenu.Append("Dump SDM Info", MainWindow::UI_EXTMENU_SDM);
-				ExtMenu.Append("Form Info Output", MainWindow::UI_EXTMENU_FORMINFOOUTPUT);
-				ExtMenu.Append("Toggle Anti-aliasing", MainWindow::UI_EXTMENU_TOGGLE_ANTIALIASING, true, true);
-				ExtMenu.AppendSeparator();
-				ExtMenu.Append("Save Hardcoded Forms", MainWindow::UI_EXTMENU_HARDCODEDFORMS);
-
-				MENUITEMINFO menuInfo
-				{
-					.cbSize = sizeof(MENUITEMINFO),
-					.fMask = MIIM_SUBMENU | MIIM_ID | MIIM_STRING,
-					.wID = MainWindow::UI_EXTMENU_ID,
-					.hSubMenu = ExtensionMenuHandle,
-					.dwTypeData = const_cast<LPSTR>("Extensions"),
-					.cch = static_cast<std::uint32_t>(strlen(menuInfo.dwTypeData))
-				};
-
-				CKPE_ASSERT_MSG(InsertMenuItem(_MainMenu, -1, TRUE, &menuInfo), "Failed to create extension submenu");
-
-				//// Create plug-ins menu options
-				//auto Plugins = GlobalEnginePtr->GetUserPluginsManager();
-				//Plugins->CreatePluginsMenu(MainMenu, UI_EXTMENU_ID + 1);
-
-				auto ver = FileUtils::GetFileVersion("CKPE.SkyrimSE.dll");
-				auto customTitle = std::make_unique<char[]>(100);
-				sprintf(customTitle.get(), "[CKPE: v%u.%u build %u]",
-					GET_EXE_VERSION_EX_MAJOR(ver), GET_EXE_VERSION_EX_MINOR(ver), GET_EXE_VERSION_EX_BUILD(ver));		
-				ZeroMemory(&menuInfo, sizeof(MENUITEMINFO));
-				menuInfo.cbSize = sizeof(MENUITEMINFO),
-					menuInfo.fMask = MIIM_STRING | MIIM_ID;
-				menuInfo.wID = 40016;
-				menuInfo.dwTypeData = LPSTR(customTitle.get());
-				menuInfo.cch = static_cast<uint32_t>(strlen(menuInfo.dwTypeData));
-				CKPE_ASSERT_MSG(InsertMenuItem(_MainMenu, -1, TRUE, &menuInfo), "Failed to create version menuitem");
 			}
 
 			MainWindow::MainWindow() : Common::PatchBaseWindow()
@@ -557,12 +494,15 @@ namespace CKPE
 				}
 
 				auto ver = FileUtils::GetFileVersion("CKPE.Starfield.dll");
-				auto versionApp = EditorAPI::BSString::FormatString("[CKPE: v%u.%u build %u]", 
-					GET_EXE_VERSION_EX_MAJOR(ver), GET_EXE_VERSION_EX_MINOR(ver), GET_EXE_VERSION_EX_BUILD(ver));
+				if (ver.has_value())
+				{
+					auto& v = ver.value();
 
-				auto menuCKPEVersion = menuBar->addAction(QString::asprintf(versionApp.c_str()));
-				if (menuCKPEVersion)
-					mwnd->connect(menuCKPEVersion, &QAction::triggered, mwnd, &AboutWindow::QT5Show);
+					auto versionApp = EditorAPI::BSString::FormatString("[CKPE: v%u.%u build %u]", v.major(), v.minor(), v.build());
+					auto menuCKPEVersion = menuBar->addAction(QString::asprintf(versionApp.c_str()));
+					if (menuCKPEVersion)
+						mwnd->connect(menuCKPEVersion, &QAction::triggered, mwnd, &AboutWindow::QT5Show);
+				}
 
 				auto toolbars = mwnd->findChildren<QToolBar*>();
 				if (toolbars.size() > 0)
