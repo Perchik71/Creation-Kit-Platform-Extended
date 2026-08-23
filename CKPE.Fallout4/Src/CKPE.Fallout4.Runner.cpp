@@ -117,7 +117,7 @@ namespace CKPE
 			mgr->Register(new Patch::AllowMultipleWindowAndMaster);
 			mgr->Register(new Patch::AllowSaveESMandMasterESP);
 			mgr->Register(new Patch::AssertD3D11);
-			//mgr->Register(new Patch::BSArchiveManagerModded);
+			mgr->Register(new Patch::BSArchiveManagerModded);
 			mgr->Register(new Patch::BSResourceLooseFiles);
 			mgr->Register(new Patch::BSStringRefRE);
 			mgr->Register(new Patch::CellViewWindow);
@@ -134,7 +134,7 @@ namespace CKPE
 			mgr->Register(new Patch::EnableGoInSelGame);
 			mgr->Register(new Patch::EncounterZone);
 			mgr->Register(new Patch::ESLTip);
-			//mgr->Register(new Patch::Facegen);
+			mgr->Register(new Patch::Facegen);
 			mgr->Register(new Patch::FakeMoveLight);
 			mgr->Register(new Patch::FixBadPictureInRender);
 			mgr->Register(new Patch::FixBNet);
@@ -146,7 +146,7 @@ namespace CKPE
 			mgr->Register(new Patch::FixLandspaceVNML);
 			mgr->Register(new Patch::FixLoadD3DCompiler);
 			mgr->Register(new Patch::FixPluginTXT);
-			//mgr->Register(new Patch::FixQuoteCmdLine);
+			mgr->Register(new Patch::FixQuoteCmdLine);
 			mgr->Register(new Patch::FixRecursiveSorting);
 			mgr->Register(new Patch::FixSky);
 			mgr->Register(new Patch::FixSmoothValue);
@@ -165,7 +165,7 @@ namespace CKPE
 			mgr->Register(new Patch::ModernThemePatchAdditional);
 			mgr->Register(new Patch::NavMeshWindow);
 			mgr->Register(new Patch::ObjectWindow);
-			//mgr->Register(new Patch::OptimizationLoad);
+			mgr->Register(new Patch::OptimizationLoad);
 			mgr->Register(new Patch::PapyrusEditorLimit);
 			mgr->Register(new Patch::PreVis);
 			mgr->Register(new Patch::ProgressWindow);
@@ -185,7 +185,7 @@ namespace CKPE
 			mgr->Register(new Patch::TESHook);
 			mgr->Register(new Patch::UIDeffer);
 			mgr->Register(new Patch::UIHotkeys);
-			//mgr->Register(new Patch::Unicode);
+			mgr->Register(new Patch::Unicode);
 			mgr->Register(new Patch::VersionControlMergeWorkaround);
 			mgr->Register(new Patch::WrongUpdateActorWnd);
 

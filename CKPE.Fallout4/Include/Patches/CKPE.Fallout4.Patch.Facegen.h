@@ -26,6 +26,7 @@ namespace CKPE
 				virtual const char* GetOptionName() const noexcept(true);
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
+				[[nodiscard]] bool SupportsAddressLibrary() const noexcept(true) override { return true; }
 
 				static void CreateDiffuseCompressDDS(std::int64_t lpThis, std::uint32_t TextureId, const char* lpFileName,
 					std::int32_t Unk1, bool Unk2) noexcept(true);
