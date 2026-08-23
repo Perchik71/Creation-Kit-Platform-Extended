@@ -154,9 +154,6 @@ namespace CKPE
 				{
 					using namespace Common;
 
-					// Ignoring the correctness check is not useful (byte-identical in both builds;
-					// entry 3 is already 0xEB at rest here even though the stored relb mask claims 76 -
-					// harmless either way since we're writing the same byte back)
 					Relocation(ID{ 2076234 }, Offset{ 0x159 }).Write({ 0xEB });
 					Relocation(ID{ 2009896 }, Offset{ 0x162 }).Write({ 0xEB });
 					Relocation(ID{ 2076235 }, Offset{ 0x19B }).Write({ 0xEB });
