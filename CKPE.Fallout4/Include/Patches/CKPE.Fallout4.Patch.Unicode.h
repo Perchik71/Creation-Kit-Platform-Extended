@@ -65,6 +65,7 @@ namespace CKPE
 				virtual const char* GetOptionName() const noexcept(true);
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
+				[[nodiscard]] bool SupportsAddressLibrary() const noexcept(true) override { return true; }
 
 				static bool BeginPluginSave() noexcept(true);
 				static void EndPluginSave(std::int64_t hCursor) noexcept(true);

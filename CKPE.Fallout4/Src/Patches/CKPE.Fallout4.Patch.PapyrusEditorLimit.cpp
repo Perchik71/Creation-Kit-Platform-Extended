@@ -51,25 +51,28 @@ namespace CKPE
 				auto interface = CKPE::Common::Interface::GetSingleton();
 				auto base = interface->GetApplication()->GetBase();
 
-				std::uintptr_t address = 0;
+				
 
 				if (db) {
 					if (db->GetVersion() != 1)
 						return false;
 
-					address = __CKPE_OFFSET(0);
+					//
+					// Raise the papyrus script editor text limit to 500k characters from 64k
+					//
+					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
+
+					return true;
 				}
 				else
 				{
-					address = Common::AddressLibrary::GetSingleton()->Resolve(1342298) + 0x12C;
+					using namespace Common;
+
+					Relocation(ID{ 1342298 }, Offset{ 0x12C }).WriteCall(sub);
+
+					return true;
+					
 				}
-
-				//
-				// Raise the papyrus script editor text limit to 500k characters from 64k
-				//
-				Detours::DetourCall(address, (std::uintptr_t)&sub);
-
-				return true;
 			}
 
 			bool PapyrusEditorLimit::sub(std::int64_t RichEditControl, const char* Text) noexcept(true)

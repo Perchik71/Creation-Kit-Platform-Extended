@@ -6,6 +6,7 @@
 #include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.AssertD3D11.h>
 
@@ -47,15 +48,26 @@ namespace CKPE
 
 			bool AssertD3D11::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
+					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					using namespace Common;
+
+					Relocation(ID{ 527025 }, Offset{ 0x4CE }).WriteCall(sub);
+
+					return true;
+				}
 			}
 
 			void AssertD3D11::sub() noexcept(true)

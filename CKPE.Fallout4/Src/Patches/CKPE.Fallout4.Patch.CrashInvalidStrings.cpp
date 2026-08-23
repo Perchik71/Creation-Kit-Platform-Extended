@@ -7,6 +7,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.RTTI.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/Forms/TESForm.h>
 #include <Patches/CKPE.Fallout4.Patch.Console.h>
@@ -96,10 +97,10 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
-					pointer_CrashInvalidStrings_sub1 = Detours::DetourClassJump(addressLibrary->Resolve(1376340), &GetLocalizeStringLengthSafe);
-					pointer_CrashInvalidStrings_sub2 = Detours::DetourClassJump(addressLibrary->Resolve(336314), &GetLocalizeStringSafe);
+					pointer_CrashInvalidStrings_sub1 = Relocation(ID{ 1376340 }).WriteJump(&GetLocalizeStringLengthSafe);
+					pointer_CrashInvalidStrings_sub2 = Relocation(ID{ 336314 }).WriteJump(&GetLocalizeStringSafe);
 
 					return true;
 				}

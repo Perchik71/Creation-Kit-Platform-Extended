@@ -104,18 +104,20 @@ namespace CKPE
 				}
 				else
 				{
+					using namespace Common;
 					auto addressLibrary = Common::AddressLibrary::GetSingleton();
 
 					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(addressLibrary->Resolve(1779524), (std::uintptr_t)&HKWndProc);
 
 					// Allow forms to be filtered in CellViewProc
-					Detours::DetourCall(addressLibrary->Resolve(1432577) + 0xFF, (std::uintptr_t)&CellViewWindow::sub1);
-					Detours::DetourCall(addressLibrary->Resolve(477436) + 0x1D1, (std::uintptr_t)&CellViewWindow::sub1);
-					pointer_CellViewWindow_sub1 = addressLibrary->Resolve(1448837);
-				
+					Relocation(ID{ 1432577 }, Offset{ 0xFF }).WriteCall(CellViewWindow::sub1);
+					
+					Relocation(ID{ 477436 }, Offset{ 0x1D1 }).WriteCall(CellViewWindow::sub1);
+					pointer_CellViewWindow_sub1 = Relocation(ID{ 1448837 }).Address();
+
 					// Allow objects to be filtered in CellViewProc
-					Detours::DetourCall(addressLibrary->Resolve(1923593) + 0x1D3, (std::uintptr_t)&CellViewWindow::sub2_ver2);
-					pointer_CellViewWindow_sub2 = addressLibrary->Resolve(1443863);
+					Relocation(ID{ 1923593 }, Offset{ 0x1D3 }).WriteCall(CellViewWindow::sub2_ver2);
+					pointer_CellViewWindow_sub2 = Relocation(ID{ 1443863 }).Address();
 
 					return true;
 				}

@@ -10,6 +10,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.MemoryManager.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.MemoryManager.h>
 
@@ -256,7 +257,7 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
 					auto interface = CKPE::Common::Interface::GetSingleton();
 					auto base = interface->GetApplication()->GetBase();
@@ -292,19 +293,19 @@ namespace CKPE
 					// Принудительный вылет с сообщением для пользователя.
 					CKPE_ASSERT_MSG(LowMemory(), "Not enough memory to run the program");
 
-					Detours::DetourJump(addressLibrary->Resolve(1637571), (std::uintptr_t)&BSMemoryManager::Allocate);
-					Detours::DetourJump(addressLibrary->Resolve(1367679), (std::uintptr_t)&BSMemoryManager::Deallocate);
-					Detours::DetourJump(addressLibrary->Resolve(1670330), (std::uintptr_t)&BSMemoryManager::Size);
-					Detours::DetourJump(addressLibrary->Resolve(1942940), (std::uintptr_t)&BSScrapHeap::Allocate);
-					Detours::DetourJump(addressLibrary->Resolve(1942869), (std::uintptr_t)&BSScrapHeap::Deallocate);
-					Detours::DetourJump(addressLibrary->Resolve(1345110), (std::uintptr_t)&bhkThreadMemorySource::__ctor__);
+					Relocation(ID{ 1637571 }).WriteJump(BSMemoryManager::Allocate);
+					Relocation(ID{ 1367679 }).WriteJump(BSMemoryManager::Deallocate);
+					Relocation(ID{ 1670330 }).WriteJump(BSMemoryManager::Size);
+					Relocation(ID{ 1942940 }).WriteJump(BSScrapHeap::Allocate);
+					Relocation(ID{ 1942869 }).WriteJump(BSScrapHeap::Deallocate);
+					Relocation(ID{ 1345110 }).WriteJump(bhkThreadMemorySource::__ctor__);
 
-					Detours::DetourJump(addressLibrary->Resolve(1591996), (std::uintptr_t)&NiBSScrapAdapter_AllocateFromBSScrap);
+					Relocation(ID{ 1591996 }).WriteJump(NiBSScrapAdapter_AllocateFromBSScrap);
 
-					SafeWrite::Write(addressLibrary->Resolve(445076), {0xC3});
-					SafeWrite::Write(addressLibrary->Resolve(1353858), {0xC3});
-					SafeWrite::Write(addressLibrary->Resolve(1940388), {0xC3});
-					SafeWrite::Write(addressLibrary->Resolve(1480275), {0xC3});
+					Relocation(ID{ 445076 }).Write({ 0xC3 });
+					Relocation(ID{ 1353858 }).Write({ 0xC3 });
+					Relocation(ID{ 1940388 }).Write({ 0xC3 });
+					Relocation(ID{ 1480275 }).Write({ 0xC3 });
 
 					return true;
 				}

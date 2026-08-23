@@ -13,6 +13,7 @@
 #include <CKPE.PathUtils.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.Console.h>
 #include <Patches/CKPE.Fallout4.Patch.Facegen.h>
@@ -134,54 +135,122 @@ namespace CKPE
 
 			bool Facegen::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 2)
-					return false;
-
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
-
+				if (db)
 				{
+					if (db->GetVersion() != 2)
+						return false;
+
+					auto _interface = CKPE::Common::Interface::GetSingleton();
+					auto base = _interface->GetApplication()->GetBase();
+
+					{
+						// Cutting a lot is faster this way
+						auto stext = _interface->GetApplication()->GetSegment(Segment::text);
+						ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+
+						pointer_FaceGen_sub1 = __CKPE_OFFSET(16);
+						pointer_FaceGen_sub2 = __CKPE_OFFSET(19);
+
+						// Don't produce DDS files
+						if (_READ_OPTION_BOOL("FaceGen", "bDisableExportDDS", false))
+						{
+							SafeWrite::WriteNop(__CKPE_OFFSET(0), 5);
+							SafeWrite::WriteNop(__CKPE_OFFSET(1), 5);
+							SafeWrite::WriteNop(__CKPE_OFFSET(2), 5);
+							SafeWrite::WriteNop(__CKPE_OFFSET(3), 5);
+							SafeWrite::WriteNop(__CKPE_OFFSET(4), 5);
+							SafeWrite::WriteNop(__CKPE_OFFSET(5), 5);
+							_MESSAGE("Disabling export FaceGen .DDS files");
+						}
+						else if (_READ_OPTION_BOOL("FaceGen", "bAutoCompressionDDS", false))
+						{
+							Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&CreateDiffuseCompressDDS);
+							Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&CreateNormalsCompressDDS);
+							Detours::DetourCall(__CKPE_OFFSET(5), (std::uintptr_t)&CreateSpecularCompressDDS);
+						}
+
+						// Don't produce TGA files
+						if (_READ_OPTION_BOOL("FaceGen", "bDisableExportTGA", false))
+						{
+							SafeWrite::WriteNop(__CKPE_OFFSET(6), 5);
+							SafeWrite::WriteNop(__CKPE_OFFSET(7), 5);
+							SafeWrite::WriteNop(__CKPE_OFFSET(8), 5);
+							SafeWrite::WriteNop(__CKPE_OFFSET(9), 5);
+							SafeWrite::WriteNop(__CKPE_OFFSET(10), 5);
+							SafeWrite::WriteNop(__CKPE_OFFSET(11), 5);
+							_MESSAGE("Disabling export FaceGen .TGA files");
+						}
+
+						// Don't produce NIF files
+						if (_READ_OPTION_BOOL("FaceGen", "bDisableExportNIF", false))
+						{
+							SafeWrite::Write(__CKPE_OFFSET(12), { 0xC3 });
+							_MESSAGE("Disabling export FaceGen .NIF files");
+						}
+
+						bUseCompresionAsBC7U = _READ_OPTION_BOOL("FaceGen", "bUseCompressionAsBC7U", false);
+
+						// Allow variable tint mask resolution
+						std::uint32_t tintResolution = _READ_OPTION_UINT("FaceGen", "uTintMaskResolution", 1024);
+						SafeWrite::Write(__CKPE_OFFSET(13), (std::uint8_t*)&tintResolution, sizeof(std::uint32_t));
+						SafeWrite::Write(__CKPE_OFFSET(14), (std::uint8_t*)&tintResolution, sizeof(std::uint32_t));
+
+						// remove check format
+						SafeWrite::WriteNop(__CKPE_OFFSET(15), 6);
+					}
+
+					return true;
+				}
+				else
+				{
+					using namespace Common;
+
+					auto _interface = CKPE::Common::Interface::GetSingleton();
+
 					// Cutting a lot is faster this way
 					auto stext = _interface->GetApplication()->GetSegment(Segment::text);
 					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
-					pointer_FaceGen_sub1 = __CKPE_OFFSET(16);
-					pointer_FaceGen_sub2 = __CKPE_OFFSET(19);
+					pointer_FaceGen_sub1 = Relocation(ID{ 1561435 }).Address();
+					pointer_FaceGen_sub2 = Relocation(ID{ 1381809 }).Address();
 
 					// Don't produce DDS files
 					if (_READ_OPTION_BOOL("FaceGen", "bDisableExportDDS", false))
 					{
-						SafeWrite::WriteNop(__CKPE_OFFSET(0), 5);
-						SafeWrite::WriteNop(__CKPE_OFFSET(1), 5);
-						SafeWrite::WriteNop(__CKPE_OFFSET(2), 5);
-						SafeWrite::WriteNop(__CKPE_OFFSET(3), 5);
-						SafeWrite::WriteNop(__CKPE_OFFSET(4), 5);
-						SafeWrite::WriteNop(__CKPE_OFFSET(5), 5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x163 }).Address(), 5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x183 }).Address(), 5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x1A8 }).Address(), 5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x1C8 }).Address(), 5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x1ED }).Address(), 5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x20D }).Address(), 5);
 						_MESSAGE("Disabling export FaceGen .DDS files");
 					}
 					else if (_READ_OPTION_BOOL("FaceGen", "bAutoCompressionDDS", false))
 					{
-						Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&CreateDiffuseCompressDDS);
-						Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&CreateNormalsCompressDDS);
-						Detours::DetourCall(__CKPE_OFFSET(5), (std::uintptr_t)&CreateSpecularCompressDDS);
+						Detours::DetourCall(Relocation(ID{ 1938869 }, Offset{ 0x183 }).Address(),
+							(std::uintptr_t)&CreateDiffuseCompressDDS);
+						Detours::DetourCall(Relocation(ID{ 1938869 }, Offset{ 0x1C8 }).Address(),
+							(std::uintptr_t)&CreateNormalsCompressDDS);
+						Detours::DetourCall(Relocation(ID{ 1938869 }, Offset{ 0x20D }).Address(),
+							(std::uintptr_t)&CreateSpecularCompressDDS);
 					}
 
 					// Don't produce TGA files
 					if (_READ_OPTION_BOOL("FaceGen", "bDisableExportTGA", false))
 					{
-						SafeWrite::WriteNop(__CKPE_OFFSET(6), 5);
-						SafeWrite::WriteNop(__CKPE_OFFSET(7), 5);
-						SafeWrite::WriteNop(__CKPE_OFFSET(8), 5);
-						SafeWrite::WriteNop(__CKPE_OFFSET(9), 5);
-						SafeWrite::WriteNop(__CKPE_OFFSET(10), 5);
-						SafeWrite::WriteNop(__CKPE_OFFSET(11), 5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x231 }).Address(), 5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x250 }).Address(), 5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x274 }).Address(), 5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x293 }).Address(), 5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x2B7 }).Address(), 5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x2D6 }).Address(), 5);
 						_MESSAGE("Disabling export FaceGen .TGA files");
 					}
 
 					// Don't produce NIF files
 					if (_READ_OPTION_BOOL("FaceGen", "bDisableExportNIF", false))
 					{
-						SafeWrite::Write(__CKPE_OFFSET(12), { 0xC3 });
+						text.Write(Relocation(ID{ 1938871 }).Address(), { 0xC3 });
 						_MESSAGE("Disabling export FaceGen .NIF files");
 					}
 
@@ -189,14 +258,16 @@ namespace CKPE
 
 					// Allow variable tint mask resolution
 					std::uint32_t tintResolution = _READ_OPTION_UINT("FaceGen", "uTintMaskResolution", 1024);
-					SafeWrite::Write(__CKPE_OFFSET(13), (std::uint8_t*)&tintResolution, sizeof(std::uint32_t));
-					SafeWrite::Write(__CKPE_OFFSET(14), (std::uint8_t*)&tintResolution, sizeof(std::uint32_t));
+					text.Write(Relocation(ID{ 1656884 }, Offset{ 0xBDD }).Address(),
+						(std::uint8_t*)&tintResolution, sizeof(std::uint32_t));
+					text.Write(Relocation(ID{ 1656884 }, Offset{ 0xBE8 }).Address(),
+						(std::uint8_t*)&tintResolution, sizeof(std::uint32_t));
 
 					// remove check format
-					SafeWrite::WriteNop(__CKPE_OFFSET(15), 6);
-				}
+					text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x13D }).Address(), 6);
 
-				return true;
+					return true;
+				}
 			}
 
 			void Facegen::CreateDiffuseCompressDDS(std::int64_t lpThis, std::uint32_t TextureId, const char* lpFileName,

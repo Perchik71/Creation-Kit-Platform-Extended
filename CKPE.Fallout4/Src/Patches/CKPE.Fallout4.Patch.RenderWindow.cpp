@@ -138,6 +138,7 @@ namespace CKPE
 			
 				else
 				{
+					using namespace Common;
 					auto addressLibrary = Common::AddressLibrary::GetSingleton();
 
 					StepInRender = _READ_OPTION_FLOAT("Graphics", "fStepInRender", 15.f);
@@ -146,7 +147,7 @@ namespace CKPE
 					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(addressLibrary->Resolve(1885140), (std::uintptr_t)&HKWndProc);
 					_TempDrawArea = (Area*)addressLibrary->Resolve(171553);
 
-					EditorAPI::BGSRenderWindow::Singleton = addressLibrary->Resolve(383337);
+					EditorAPI::BGSRenderWindow::Singleton = (EditorAPI::BGSRenderWindow*)Relocation(ID{ 383337 }).Address();
 
 					EditorAPI::BGSRenderWindow::Settings::Movement::FlagsSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(381092);
 					EditorAPI::BGSRenderWindow::Settings::Movement::SnapGridValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384553);
@@ -160,17 +161,15 @@ namespace CKPE
 					EditorAPI::BGSRenderWindow::Settings::Movement::CameraPanValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384600);
 					EditorAPI::BGSRenderWindow::Settings::Movement::LandspaceMultValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384603);
 
-					auto rel = addressLibrary->Resolve(1938434) + 0x1E2;
-					SafeWrite::WriteNop(rel, 0x44);
+					auto rel = Relocation(ID{ 1938434 }, Offset{ 0x1E2 });
+					rel.WriteFill(0x90, 0x44);
+					rel.WriteCall(DrawFrameEx);
 
-					Detours::DetourCall(rel, (std::uintptr_t)&DrawFrameEx);
+					rel = Relocation(ID{ 1638356 }, Offset{ 0x211 });
+					rel.WriteFill(0x90, 20);
+					rel.WriteCall(UpdateDrawInfo);
 
-					rel = addressLibrary->Resolve(1638356) + 0x211;
-					SafeWrite::WriteNop(rel, 0x14);
-					Detours::DetourCall(rel, (std::uintptr_t)&UpdateDrawInfo);
-
-					*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromNiNode =
-						Detours::DetourClassJump(addressLibrary->Resolve(411210), (uintptr_t)&EditorAPI::BGSRenderWindow::Pick::HKGetRefFromNiNode);
+					*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromNiNode = Relocation(ID{ 411210 }).WriteJump(EditorAPI::BGSRenderWindow::Pick::HKGetRefFromNiNode);
 
 					return true;
 				}

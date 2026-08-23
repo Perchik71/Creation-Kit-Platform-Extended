@@ -64,8 +64,9 @@ namespace CKPE
 				}
 				else
 				{
-					*(std::uintptr_t*)&pointer_SortCrashCombinedPatch_sub =
-						Detours::DetourClassJump(Common::AddressLibrary::GetSingleton()->Resolve(1592219), &sub);
+					using namespace Common;
+
+					*(std::uintptr_t*)&pointer_SortCrashCombinedPatch_sub = Relocation(ID{ 1592219 }).WriteCall(sub);
 
 					return true;
 				}

@@ -6,6 +6,7 @@
 #include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.NavMeshWindow.h>
 
@@ -62,7 +63,9 @@ namespace CKPE
 				}
 				else
 				{
-					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(Common::AddressLibrary::GetSingleton()->Resolve(1480027), (std::uintptr_t)&HKWndProc);
+					using namespace Common;
+
+					*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 1480027 }).WriteJump(HKWndProc);
 
 					return true;
 				}

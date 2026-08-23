@@ -63,8 +63,10 @@ namespace CKPE
 				}
 				else
 				{
+					using namespace Common;
+
 					// The ability to run CK without access to the Internet and/or a network device.
-					SafeWrite::Write(Common::AddressLibrary::GetSingleton()->Resolve(2054943) + 0x8AC, {0xEB});
+					Relocation(ID{ 2054943 }, Offset{ 0x8AC }).Write({0xEB});
 
 					return true;
 				}

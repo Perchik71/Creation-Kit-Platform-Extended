@@ -64,11 +64,11 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
-					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::ctor = addressLibrary->Resolve(1339190);
-					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::set = addressLibrary->Resolve(1663882);
-					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::release = addressLibrary->Resolve(1594894);
+					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::ctor = Relocation(ID{ 1339190 }).Address();
+					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::set = Relocation(ID{ 1663882 }).Address();
+					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::release = Relocation(ID{ 1594894 }).Address();
 
 					return true;
 				}

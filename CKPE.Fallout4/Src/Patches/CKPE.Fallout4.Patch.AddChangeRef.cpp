@@ -69,21 +69,23 @@ namespace CKPE
 					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetParentWithRedraw = __CKPE_OFFSET(1);
 					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly_NG::SetParentWithRedraw = __CKPE_OFFSET(1);
 					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly::SetParentWithRedraw = __CKPE_OFFSET(1);
+
+					return true;
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
-					Detours::DetourCall(addressLibrary->Resolve(1939247) + 0x9C8, (std::uintptr_t)&HKInsertMenuA);
+					Relocation(ID{ 1939247 }, Offset{ 0x9C8 }).WriteCall(HKInsertMenuA);
 
-					auto rel = addressLibrary->Resolve(458423);
+					auto rel = Relocation(ID{ 458423 });
 
 					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetParentWithRedraw = rel;
 					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly_NG::SetParentWithRedraw = rel;
 					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly::SetParentWithRedraw = rel;
-				}
 
-				return true;
+					return true;
+				}
 			}
 		}
 	}

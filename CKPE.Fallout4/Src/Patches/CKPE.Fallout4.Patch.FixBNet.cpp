@@ -62,8 +62,11 @@ namespace CKPE
 				}
 				else
 				{
+					using namespace Common;
+
 					// Fix crash when Unicode string conversion fails with bethesda.net http responses
-					Detours::DetourJump(Common::AddressLibrary::GetSingleton()->Resolve(1411566), (std::uintptr_t)&sub);
+					Relocation(ID{ 1411566 }).WriteJump(sub);
+
 					return true;
 				}
 				

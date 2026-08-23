@@ -18,6 +18,7 @@ namespace CKPE
 				bool Install_163(Common::RelocatorDB::PatchDB* db, bool Extremly) noexcept(true);
 				bool Install_980(Common::RelocatorDB::PatchDB* db, bool Extremly) noexcept(true);
 				bool Install_137(Common::RelocatorDB::PatchDB* db, bool Extremly) noexcept(true);
+				bool Install_240(bool Extremly) noexcept(true);
 
 				static std::uint32_t CheckEx(std::uintptr_t unused, std::uintptr_t refr) noexcept(true);
 				static std::uint32_t Check(std::uintptr_t unused, std::uintptr_t refr) noexcept(true);
@@ -37,6 +38,7 @@ namespace CKPE
 				virtual const char* GetOptionName() const noexcept(true);
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
+				[[nodiscard]] bool SupportsAddressLibrary() const noexcept(true) override { return true; }
 			};
 		}
 	}

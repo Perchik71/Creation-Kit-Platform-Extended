@@ -68,13 +68,13 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
-					EditorAPI::TES::Singleton = (const EditorAPI::TES**)addressLibrary->Resolve(268398);
+					EditorAPI::TES::Singleton = (const EditorAPI::TES**)Relocation(ID{ 268398 }).Get();
 
-					static const EditorAPI::Setting* sSetting_SkyView = (const EditorAPI::Setting*)addressLibrary->Resolve(431704);
-					static const EditorAPI::Setting* sSetting_FogEnabled = (const EditorAPI::Setting*)addressLibrary->Resolve(376399);
-					static const EditorAPI::Setting* sSetting_ShowMarkers = (const EditorAPI::Setting*)addressLibrary->Resolve(434076);
+					static const EditorAPI::Setting* sSetting_SkyView = (const EditorAPI::Setting*)Relocation(ID{ 431704 }).Get();
+					static const EditorAPI::Setting* sSetting_FogEnabled = (const EditorAPI::Setting*)Relocation(ID{ 376399 }).Get();
+					static const EditorAPI::Setting* sSetting_ShowMarkers = (const EditorAPI::Setting*)Relocation(ID{ 434076 }).Get();
 
 					EditorAPI::Sky::Setting_SkyView = &sSetting_SkyView;
 					EditorAPI::Sky::Setting_FogEnabled = &sSetting_FogEnabled;

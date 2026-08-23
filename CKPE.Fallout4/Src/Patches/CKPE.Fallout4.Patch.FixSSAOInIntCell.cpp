@@ -7,6 +7,7 @@
 #include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/TES.h>
 #include <Patches/CKPE.Fallout4.Patch.FixSSAOInIntCell.h>
@@ -51,16 +52,28 @@ namespace CKPE
 
 			bool FixSSAOInIntCell::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+					auto _interface = CKPE::Common::Interface::GetSingleton();
+					auto base = _interface->GetApplication()->GetBase();
 
-				// Fix crash when Unicode string conversion fails with bethesda.net http responses
-				pointer_FixSSAOInIntCell_sub = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
+					// Fix crash caused by toggling SSAO while in an interior cell (no worldspace)
+					pointer_FixSSAOInIntCell_sub = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					using namespace Common;
+
+					// Fix crash caused by toggling SSAO while in an interior cell (no worldspace)
+					pointer_FixSSAOInIntCell_sub = Relocation(ID{ 1941469 }).WriteJump(sub);
+
+					return true;
+				}
 			}
 
 			void FixSSAOInIntCell::sub(void* Unk, std::uint32_t SkyFlag) noexcept(true)

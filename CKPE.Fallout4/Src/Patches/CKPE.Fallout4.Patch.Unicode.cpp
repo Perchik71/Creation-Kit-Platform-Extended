@@ -9,6 +9,7 @@
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.Unicode.h>
 
@@ -126,62 +127,131 @@ namespace CKPE
 
 			bool Unicode::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 2)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 2)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				// Initial mode
-				// Initially, the original state must be set
-				UnicodeConvertorString.SetMode(ConvertorString::MODE_ANSI);
+					// Initial mode
+					// Initially, the original state must be set
+					UnicodeConvertorString.SetMode(ConvertorString::MODE_ANSI);
 
-				// Also delete it message "You must close all Dialoge Boxes",
-				// which has problems with programs that work with multiple monitors.
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&BeginPluginSave);
-				// I don't quite understand the meaning of calling SetCursor in this function, which deals with saving
-				// But we'll make the call in hook.
-				Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&EndPluginSave);
+					// Also delete it message "You must close all Dialoge Boxes",
+					// which has problems with programs that work with multiple monitors.
+					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&BeginPluginSave);
+					// I don't quite understand the meaning of calling SetCursor in this function, which deals with saving
+					// But we'll make the call in hook.
+					Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&EndPluginSave);
 
-				// Introduction of string processing.
-				auto lOff = (std::uintptr_t)__CKPE_OFFSET(3);
+					// Introduction of string processing.
+					auto lOff = (std::uintptr_t)__CKPE_OFFSET(3);
 
-				SafeWrite::Write(__CKPE_OFFSET(2), { 0x22 });
-				SafeWrite::Write(lOff, { 0x51, 0x48, 0x89, 0xC1 });
-				Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&BGSLocalizedString::GetStr);
-				SafeWrite::Write(__CKPE_OFFSET(5), { 0x59, 0xC3, 0x31, 0xC0, 0xC3 });
-				SafeWrite::WriteJump(__CKPE_OFFSET(6), lOff);
+					SafeWrite::Write(__CKPE_OFFSET(2), { 0x22 });
+					SafeWrite::Write(lOff, { 0x51, 0x48, 0x89, 0xC1 });
+					Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&BGSLocalizedString::GetStr);
+					SafeWrite::Write(__CKPE_OFFSET(5), { 0x59, 0xC3, 0x31, 0xC0, 0xC3 });
+					SafeWrite::WriteJump(__CKPE_OFFSET(6), lOff);
 
-				// In the "Data" dialog box, the "author" and "description" controls are independent, 
-				// and I'm forced to make a trap for WinAPI calls
-				Detours::DetourCall(__CKPE_OFFSET(7), (std::uintptr_t)&HKSetDlgItemTextA);
-				Detours::DetourCall(__CKPE_OFFSET(8), (std::uintptr_t)&HKSetDlgItemTextA);
-				Detours::DetourCall(__CKPE_OFFSET(9), (std::uintptr_t)&HKSendDlgItemMessageA);
-				Detours::DetourCall(__CKPE_OFFSET(10), (std::uintptr_t)&HKSendDlgItemMessageA);
-				Detours::DetourCall(__CKPE_OFFSET(11), (std::uintptr_t)&HKSendDlgItemMessageA);
-				Detours::DetourCall(__CKPE_OFFSET(12), (std::uintptr_t)&HKSendDlgItemMessageA);
+					// In the "Data" dialog box, the "author" and "description" controls are independent,
+					// and I'm forced to make a trap for WinAPI calls
+					Detours::DetourCall(__CKPE_OFFSET(7), (std::uintptr_t)&HKSetDlgItemTextA);
+					Detours::DetourCall(__CKPE_OFFSET(8), (std::uintptr_t)&HKSetDlgItemTextA);
+					Detours::DetourCall(__CKPE_OFFSET(9), (std::uintptr_t)&HKSendDlgItemMessageA);
+					Detours::DetourCall(__CKPE_OFFSET(10), (std::uintptr_t)&HKSendDlgItemMessageA);
+					Detours::DetourCall(__CKPE_OFFSET(11), (std::uintptr_t)&HKSendDlgItemMessageA);
+					Detours::DetourCall(__CKPE_OFFSET(12), (std::uintptr_t)&HKSendDlgItemMessageA);
 
-				//
-				// Cut check book characters
-				//
+					//
+					// Cut check book characters
+					//
 
-				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-					SafeWrite::Write(__CKPE_OFFSET(13), { 0xE9, 0x96, 0x00, 0x00, 0x00, 0x90 });
+					if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+						SafeWrite::Write(__CKPE_OFFSET(13), { 0xE9, 0x96, 0x00, 0x00, 0x00, 0x90 });
+					else
+						SafeWrite::Write(__CKPE_OFFSET(13), { 0xE9, 0x94, 0x00, 0x00, 0x00, 0x90 });
+
+					//
+					// Cut check spelling window
+					//
+
+					// Cutting a lot is faster this way
+					auto stext = interface->GetApplication()->GetSegment(Segment::text);
+					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+
+					for (std::uint32_t i = 14; i < db->GetCount(); i++)
+						text.WriteNop(__CKPE_OFFSET(i), 5);
+
+					return true;
+				}
 				else
-					SafeWrite::Write(__CKPE_OFFSET(13), { 0xE9, 0x94, 0x00, 0x00, 0x00, 0x90 });
+				{
+					using namespace Common;
 
-				//
-				// Cut check spelling window
-				//
+					auto interface = CKPE::Common::Interface::GetSingleton();
 
-				// Cutting a lot is faster this way
-				auto stext = interface->GetApplication()->GetSegment(Segment::text);
-				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+					// Initial mode
+					// Initially, the original state must be set
+					UnicodeConvertorString.SetMode(ConvertorString::MODE_ANSI);
 
-				for (std::uint32_t i = 14; i < db->GetCount(); i++)
-					text.WriteNop(__CKPE_OFFSET(i), 5);
+					// Also delete it message "You must close all Dialoge Boxes",
+					// which has problems with programs that work with multiple monitors.
+					Detours::DetourCall(Relocation(ID{ 1944032 }, Offset{ 0x10 }).Address(), (std::uintptr_t)&BeginPluginSave);
+					// I don't quite understand the meaning of calling SetCursor in this function, which deals with saving
+					// But we'll make the call in hook.
+					Detours::DetourCall(Relocation(ID{ 1944032 }, Offset{ 0xB1 }).Address(), (std::uintptr_t)&EndPluginSave);
 
-				return true;
+					// Introduction of string processing. This trampoline is hand-spliced into the tail
+					// padding of a small, unrelated function (id 1809106) right after its own epilogue,
+					// then BSStringPool::Entry::GetStringC (id 1597058) gets its final "ret" replaced with
+					// a jump into it. Verified byte-for-byte identical padding layout between 137/240.
+					auto lOff = Relocation(ID{ 1809106 }, Offset{ 0x1F }).Address();
+
+					SafeWrite::Write(Relocation(ID{ 1809106 }, Offset{ 0x7 }).Address(), { 0x22 });
+					SafeWrite::Write(lOff, { 0x51, 0x48, 0x89, 0xC1 });
+					Detours::DetourCall(Relocation(ID{ 1809106 }, Offset{ 0x23 }).Address(),
+						(std::uintptr_t)&BGSLocalizedString::GetStr);
+					SafeWrite::Write(Relocation(ID{ 1809106 }, Offset{ 0x28 }).Address(),
+						{ 0x59, 0xC3, 0x31, 0xC0, 0xC3 });
+					SafeWrite::WriteJump(Relocation(ID{ 1597058 }, Offset{ 0x17 }).Address(), lOff);
+
+					// In the "Data" dialog box, the "author" and "description" controls are independent,
+					// and I'm forced to make a trap for WinAPI calls
+					Detours::DetourCall(Relocation(ID{ 1631958 }, Offset{ 0xD5 }).Address(), (std::uintptr_t)&HKSetDlgItemTextA);
+					Detours::DetourCall(Relocation(ID{ 1631958 }, Offset{ 0xF4 }).Address(), (std::uintptr_t)&HKSetDlgItemTextA);
+					Detours::DetourCall(Relocation(ID{ 1716109 }, Offset{ 0x45 }).Address(), (std::uintptr_t)&HKSendDlgItemMessageA);
+					Detours::DetourCall(Relocation(ID{ 1716109 }, Offset{ 0x7D }).Address(), (std::uintptr_t)&HKSendDlgItemMessageA);
+					Detours::DetourCall(Relocation(ID{ 1716109 }, Offset{ 0xB7 }).Address(), (std::uintptr_t)&HKSendDlgItemMessageA);
+					Detours::DetourCall(Relocation(ID{ 1716109 }, Offset{ 0xEF }).Address(), (std::uintptr_t)&HKSendDlgItemMessageA);
+
+					//
+					// Cut check book characters
+					//
+
+					SafeWrite::Write(Relocation(ID{ 1764289 }, Offset{ 0xD5 }).Address(),
+						{ 0xE9, 0x94, 0x00, 0x00, 0x00, 0x90 });
+
+					//
+					// Cut check spelling window
+					//
+
+					// Cutting a lot is faster this way
+					auto stext = interface->GetApplication()->GetSegment(Segment::text);
+					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+
+					text.WriteNop(Relocation(ID{ 1568604 }, Offset{ 0x1EA }).Address(), 5);
+					text.WriteNop(Relocation(ID{ 1937656 }, Offset{ 0x63A }).Address(), 5);
+					text.WriteNop(Relocation(ID{ 1849058 }, Offset{ 0x165 }).Address(), 5);
+					text.WriteNop(Relocation(ID{ 1614673 }, Offset{ 0xBBA }).Address(), 5);
+					text.WriteNop(Relocation(ID{ 1614673 }, Offset{ 0x157B }).Address(), 5);
+					text.WriteNop(Relocation(ID{ 1614673 }, Offset{ 0x190E }).Address(), 5);
+					text.WriteNop(Relocation(ID{ 1825308 }, Offset{ 0x3C3 }).Address(), 5);
+					text.WriteNop(Relocation(ID{ 1736436 }, Offset{ 0x547 }).Address(), 5);
+
+					return true;
+				}
 			}
 
 			bool Unicode::BeginPluginSave() noexcept(true)

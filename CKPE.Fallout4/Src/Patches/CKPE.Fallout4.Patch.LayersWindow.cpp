@@ -10,6 +10,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.AddressLibrary.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.LayersWindow.h>
@@ -74,15 +75,15 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
-					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(addressLibrary->Resolve(1437462), (std::uintptr_t)&HKWndProc);
+					*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 1437462 }).WriteJump(HKWndProc);
 
 					// Layers Window enable doublebuffered treeview control
-					Detours::DetourCall(addressLibrary->Resolve(1518220) + 0x323, (std::uintptr_t)&sub);
+					Relocation(ID{ 1518220 }, Offset{ 0x323 }).WriteCall(sub);
 					// Layers dialog fix resize
-					Detours::DetourCall(addressLibrary->Resolve(1401491) + 0x180, (std::uintptr_t)&MoveWindowBody);
-					Detours::DetourCall(addressLibrary->Resolve(1401491) + 0x1B0, (std::uintptr_t)&MoveWindowHeader);
+					Relocation(ID{ 1401491 }, Offset{ 0x180 }).WriteCall(MoveWindowBody);
+					Relocation(ID{ 1401491 }, Offset{ 0x1B0 }).WriteCall(MoveWindowHeader);
 
 					return true;
 				}

@@ -64,8 +64,10 @@ namespace CKPE
 				}
 				else
 				{
+					using namespace Common;
+
 					// Remove stuff init FXAA or TAA
-					SafeWrite::WriteNop(Common::AddressLibrary::GetSingleton()->Resolve(1548893) + 0x9B5, 0x50);
+					Relocation(ID{ 1548893 }, Offset{ 0x9B5 }).WriteFill(0x90, 80);
 
 					return true;
 				}
