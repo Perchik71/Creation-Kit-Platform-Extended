@@ -63,10 +63,11 @@ namespace CKPE
 				}
 				else
 				{
+					using namespace Common;
 					//
 					// Skip 'Topic Info' validation during load
 					//
-					SafeWrite::Write(Common::AddressLibrary::GetSingleton()->Resolve(1942355), {0xC3});
+					Relocation(ID{ 1942355 }).Write(0xC3);
 
 					return true;
 				}

@@ -11,6 +11,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.EditorUI.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/Forms/TESTopic.h>
 #include <EditorAPI/Forms/BGSVoiceType.h>
@@ -98,31 +99,57 @@ namespace CKPE
 
 			bool ResponseWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
+				if (db)
+				{
+					auto verPatch = db->GetVersion();
+					if ((verPatch != 1) && (verPatch != 2))
+						return false;
 
-				auto _interface = Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+					auto _interface = Common::Interface::GetSingleton();
+					auto base = _interface->GetApplication()->GetBase();
 
-				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
+					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
 
-				pointer_ResponseWindow_data = __CKPE_OFFSET(1);
-				pointer_ResponseWindow_sub1 = __CKPE_OFFSET(2);
-				pointer_ResponseWindow_sub2 = __CKPE_OFFSET(3);
-				pointer_ResponseWindow_sub3 = __CKPE_OFFSET(4);
+					pointer_ResponseWindow_data = __CKPE_OFFSET(1);
+					pointer_ResponseWindow_sub1 = __CKPE_OFFSET(2);
+					pointer_ResponseWindow_sub2 = __CKPE_OFFSET(3);
+					pointer_ResponseWindow_sub3 = __CKPE_OFFSET(4);
 
-				// Hooking the jump. I don't allow the deny button.
-				if (verPatch == 1)
-					Detours::DetourJump(__CKPE_OFFSET(5), (std::uintptr_t)&sub);
+					// Hooking the jump. I don't allow the deny button.
+					if (verPatch == 1)
+						Detours::DetourJump(__CKPE_OFFSET(5), (std::uintptr_t)&sub);
+					else
+						Detours::DetourCall(__CKPE_OFFSET(5), (std::uintptr_t)&sub);
+					// Then continue in the same spirit, remove the button.... skip it
+					SafeWrite::WriteNop(__CKPE_OFFSET(6), 25);
+					// In case of cancellation .wav triggers and closes the button, we will remove everything
+					Detours::DetourCall(__CKPE_OFFSET(7), (std::uintptr_t)&sub);
+					// Hook generate via LipGenerator (By the way, Bethesda does not post it)
+					Detours::DetourJump(__CKPE_OFFSET(8), (std::uintptr_t)&sub2);
+				}
 				else
-					Detours::DetourCall(__CKPE_OFFSET(5), (std::uintptr_t)&sub);
-				// Then continue in the same spirit, remove the button.... skip it
-				SafeWrite::WriteNop(__CKPE_OFFSET(6), 25);
-				// In case of cancellation .wav triggers and closes the button, we will remove everything
-				Detours::DetourCall(__CKPE_OFFSET(7), (std::uintptr_t)&sub);
-				// Hook generate via LipGenerator (By the way, Bethesda does not post it)
-				Detours::DetourJump(__CKPE_OFFSET(8), (std::uintptr_t)&sub2);
+				{
+					using namespace Common;
+
+					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(
+						Relocation(ID{ 1614673 }).Address(), (std::uintptr_t)&HKWndProc);
+
+					pointer_ResponseWindow_data = Relocation(ID{ 444797 }).Address();
+					pointer_ResponseWindow_sub1 = Relocation(ID{ 1812657 }).Address();
+					pointer_ResponseWindow_sub2 = Relocation(ID{ 74429 }).Address();
+					// pointer_ResponseWindow_sub3 is dead - it's assigned in the legacy code (offset(4) is
+					// an unused dummy <nope> entry in the relb) but never actually read anywhere, so it's
+					// deliberately left unset here.
+
+					// Hooking the jump. I don't allow the deny button.
+					Relocation(ID{ 1941100 }, Offset{ 0x2B5 }).WriteCall((std::uintptr_t)&sub);
+					// Then continue in the same spirit, remove the button.... skip it
+					Relocation(ID{ 1614673 }, Offset{ 0x39C }).WriteFill(0x90, 25);
+					// In case of cancellation .wav triggers and closes the button, we will remove everything
+					Relocation(ID{ 1614673 }, Offset{ 0x652 }).WriteCall((std::uintptr_t)&sub);
+					// Hook generate via LipGenerator (By the way, Bethesda does not post it)
+					Relocation(ID{ 1625774 }).WriteJump((std::uintptr_t)&sub2);
+				}
 
 				V_LANG = _READ_OPTION_STR("LipGen", "sLanguage", "USEnglish");
 				V_GESTUREEXAGGERATION = _READ_OPTION_FLOAT("LipGen", "fGestureExaggeration", 1.f);

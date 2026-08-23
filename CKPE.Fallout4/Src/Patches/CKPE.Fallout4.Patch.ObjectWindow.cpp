@@ -11,6 +11,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.UIVarCommon.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Common.UIListView.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -204,23 +205,24 @@ namespace CKPE
 
 					return true;
 				}
-				else 
+				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
-					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(addressLibrary->Resolve(1939247), (std::uintptr_t)&HKWndProc);
+					*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 1939247 }).WriteJump(HKWndProc);
 
-					pointer_ObjectWindow_sub = addressLibrary->Resolve(1584121);
+					pointer_ObjectWindow_sub = Relocation(ID{ 1584121 }).Address();
+
 					// Restore function
-					auto rva = addressLibrary->Resolve(1506144) + 0x1F3;
-					SafeWrite::WriteNop(rva + 0x10, 0x33);
-					SafeWrite::Write(rva, { 0x48, 0x8B, 0x4C, 0x24, 0x40, 0x48, 0x89, 0xFA, 0x49, 0x89, 0xF0 });
-					Detours::DetourCall(rva + 0xB, (std::uintptr_t)&sub2);
+					auto rel = Relocation(ID{ 1506144 }, Offset{ 0x1F3 });
+					rel.WriteFill<0x10>(0x90, 0x33);
+					rel.Write({ 0x48, 0x8B, 0x4C, 0x24, 0x40, 0x48, 0x89, 0xFA, 0x49, 0x89, 0xF0 });
+					rel.WriteCall<0xB>(sub2);
 
 					// Fix resize ObjectWindowProc
-					rva = addressLibrary->Resolve(1713721) + 0x207;
-					SafeWrite::WriteNop(rva, 0x4B);
-					Detours::DetourCall(rva, (std::uintptr_t)&HKMoveWindow);
+					rel = Relocation(ID{ 1713721 }, Offset{ 0x207 });
+					rel.WriteFill(0x90, 0x4B);
+					rel.WriteCall(HKMoveWindow);
 
 					return true;
 				}

@@ -49,16 +49,30 @@ namespace CKPE
 
 			bool FlowChartX::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+				if (db)
+				{
+					auto _interface = CKPE::Common::Interface::GetSingleton();
+					auto base = _interface->GetApplication()->GetBase();
 
-				if (db->GetVersion() != 1)
-					return false;
+					if (db->GetVersion() != 1)
+						return false;
 
-				for (std::uint32_t i = 0; i < db->GetCount(); i++)
-					Detours::DetourCall(__CKPE_OFFSET(i), (std::uintptr_t)&sub);
+					for (std::uint32_t i = 0; i < db->GetCount(); i++)
+						Detours::DetourCall(__CKPE_OFFSET(i), (std::uintptr_t)&sub);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					using namespace Common;
+
+					Relocation(ID{ 1533874 }, Offset{ 0x79B }).WriteCall(sub);
+					Relocation(ID{ 1940104 }, Offset{ 0x939 }).WriteCall(sub);
+					Relocation(ID{ 1452963 }, Offset{ 0x90C }).WriteCall(sub);
+
+					return true;
+				}
+				
 			}
 
 			void FlowChartX::sub() noexcept(true)

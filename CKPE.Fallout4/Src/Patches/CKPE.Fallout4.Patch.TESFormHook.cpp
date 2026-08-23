@@ -66,11 +66,11 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
-					EditorAPI::Forms::TESForm::EnumFormIDs = (EditorAPI::Forms::TESForm::ENUM_FORM_ID*)(addressLibrary->Resolve(1588864));
-					EditorAPI::Forms::TESForm::FindFormByFormID = decltype(EditorAPI::Forms::TESForm::FindFormByFormID)(addressLibrary->Resolve(1498643));
-					EditorAPI::Forms::TESForm::SetFormEditorIDImpl = decltype(EditorAPI::Forms::TESForm::SetFormEditorIDImpl)(addressLibrary->Resolve(1589125));
+					EditorAPI::Forms::TESForm::EnumFormIDs = (EditorAPI::Forms::TESForm::ENUM_FORM_ID*)Relocation(ID{ 1588864 }).Get();
+					EditorAPI::Forms::TESForm::FindFormByFormID = decltype(EditorAPI::Forms::TESForm::FindFormByFormID)(Relocation(ID{ 1498643 }).Get());
+					EditorAPI::Forms::TESForm::SetFormEditorIDImpl = decltype(EditorAPI::Forms::TESForm::SetFormEditorIDImpl)(Relocation(ID{ 1589125 }).Get());
 
 					return true;
 				}

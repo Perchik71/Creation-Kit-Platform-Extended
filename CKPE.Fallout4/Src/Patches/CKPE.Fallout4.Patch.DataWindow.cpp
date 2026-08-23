@@ -11,6 +11,7 @@
 #include <CKPE.Common.UIVarCommon.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.AddressLibrary.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Common.UIListView.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -223,16 +224,16 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
-					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(addressLibrary->Resolve(1940837), (std::uintptr_t)&HKWndProc);
+					*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 1940837 }).WriteJump(HKWndProc);
 
-					auto off = addressLibrary->Resolve(1631958) + 0xAF;
+					auto rel = Relocation(ID{ 1631958 }, Offset{ 0xAF });
 
-					SafeWrite::WriteNop(off, 0x1C);
-					SafeWrite::Write(off, { 0x48, 0x89, 0xF9 });
-					Detours::DetourCall(off + 3, (std::uintptr_t) &GetAuthorPluginName);
-					SafeWrite::Write(off + 8, { 0x48, 0x89, 0xD9, 0xBA, 0x01, 0x04, 0x00, 0x00 });
+					rel.WriteFill(0x90, 0x1C);
+					rel.Write({ 0x48, 0x89, 0xF9 });
+					rel.WriteCall<3>(&GetAuthorPluginName);
+					rel.Write<8>({ 0x48, 0x89, 0xD9, 0xBA, 0x01, 0x04, 0x00, 0x00 });
 
 					return true;
 				}

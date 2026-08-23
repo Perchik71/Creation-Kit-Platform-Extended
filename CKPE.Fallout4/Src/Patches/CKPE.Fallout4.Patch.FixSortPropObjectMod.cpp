@@ -7,6 +7,7 @@
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.FixSortPropObjectMod.h>
@@ -68,22 +69,40 @@ namespace CKPE
 
 			bool FixSortPropObjectMod::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				// Removing stuff that messes up the index selected item.
-				SafeWrite::WriteNop(__CKPE_OFFSET(0), 0xF);
+					// Removing stuff that messes up the index selected item.
+					SafeWrite::WriteNop(__CKPE_OFFSET(0), 0xF);
 
-				// Flickering is visible as the list is being re-elected and rebuilt. Let's turn on redrawing tracking.
-				auto Rva = __CKPE_OFFSET(1);
-				SafeWrite::Write(Rva, { 0x4C, 0x89, 0xF9 });
-				Detours::DetourCall(Rva + 3, (std::uintptr_t)&FixSortPropObjectMod_sub1);
-				Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&FixSortPropObjectMod_sub2);
+					// Flickering is visible as the list is being re-elected and rebuilt. Let's turn on redrawing tracking.
+					auto Rva = __CKPE_OFFSET(1);
+					SafeWrite::Write(Rva, { 0x4C, 0x89, 0xF9 });
+					Detours::DetourCall(Rva + 3, (std::uintptr_t)&FixSortPropObjectMod_sub1);
+					Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&FixSortPropObjectMod_sub2);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					using namespace Common;
+
+					// Removing stuff that messes up the index selected item.
+					Relocation(ID{ 1938150 }, Offset{ 0x993 }).WriteFill(0x90, 0xF);
+
+					// Flickering is visible as the list is being re-elected and rebuilt. Let's turn on redrawing tracking.
+					auto rel = Relocation(ID{ 1938150 }, Offset{ 0x915 });
+					rel.Write({ 0x4C, 0x89, 0xF9 });
+					rel.WriteCall<3>(FixSortPropObjectMod_sub1);
+					Relocation(ID{ 1938150 }, Offset{ 0x854 }).WriteCall(FixSortPropObjectMod_sub2);
+
+					return true;
+				}
 			}
 		}
 	}

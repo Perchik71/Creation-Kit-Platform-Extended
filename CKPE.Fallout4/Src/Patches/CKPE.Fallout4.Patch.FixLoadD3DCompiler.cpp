@@ -5,6 +5,7 @@
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.FixLoadD3DCompiler.h>
 
@@ -46,21 +47,41 @@ namespace CKPE
 
 			bool FixLoadD3DCompiler::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				// Cutting a lot is faster this way
-				auto stext = interface->GetApplication()->GetSegment(Segment::text);
-				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+					// Cutting a lot is faster this way
+					auto stext = interface->GetApplication()->GetSegment(Segment::text);
+					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
-				// Fixed failed load d3dcompiler.dll
-				for (std::uint32_t nId = 0; nId < db->GetCount(); nId++)
-					text.WriteNop(__CKPE_OFFSET(nId), 6);
+					// Fixed failed load d3dcompiler.dll
+					for (std::uint32_t nId = 0; nId < db->GetCount(); nId++)
+						text.WriteNop(__CKPE_OFFSET(nId), 6);
 
-				return true;
+					return true;
+				}
+				else
+				{
+					using namespace Common;
+
+					auto interface = CKPE::Common::Interface::GetSingleton();
+
+					// Cutting a lot is faster this way
+					auto stext = interface->GetApplication()->GetSegment(Segment::text);
+					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+
+					// Fixed failed load d3dcompiler.dll
+					text.WriteNop(Relocation(ID{ 1956848 }, Offset{ 0x12A }).Address(), 6);
+					text.WriteNop(Relocation(ID{ 1542902 }, Offset{ 0x132 }).Address(), 6);
+					text.WriteNop(Relocation(ID{ 1956874 }, Offset{ 0x2C }).Address(), 6);
+
+					return true;
+				}
 			}
 		}
 	}

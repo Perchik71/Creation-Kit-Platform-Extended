@@ -53,22 +53,11 @@ namespace CKPE
 			{
 				auto _interface = CKPE::Common::Interface::GetSingleton();
 				auto base = _interface->GetApplication()->GetBase();
-
-				std::uintptr_t address = 0;
-
-				if (db) {
-					if (db->GetVersion() != 1)
-						return false;
-
-					address = __CKPE_OFFSET(0);
-				}
-				else
-				{
-					address = Common::AddressLibrary::GetSingleton()->Resolve(1955075) + 0xE1;
-				}
 				
+				if (db->GetVersion() != 1)
+					return false;
 
-				Detours::DetourCall(address, (uintptr_t)&sub);
+				Detours::DetourCall(__CKPE_OFFSET(0), (uintptr_t)&sub);
 
 				return true;
 			}

@@ -46,20 +46,36 @@ namespace CKPE
 
 			bool FixCrashSpellEaxDur::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				//
-				// Fix for crash when editing a spell effect with a large (>= 1'000'000'000) duration.
-				// WARNING: Stack padding allows the buffer to be up to 12 bytes, 10 are originally reserved.
-				//
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0xBA, 0x0C, 0x00, 0x00, 0x00 });
-				SafeWrite::Write(__CKPE_OFFSET(1), { 0xBA, 0x0C, 0x00, 0x00, 0x00 });
+					//
+					// Fix for crash when editing a spell effect with a large (>= 1'000'000'000) duration.
+					// WARNING: Stack padding allows the buffer to be up to 12 bytes, 10 are originally reserved.
+					//
+					SafeWrite::Write(__CKPE_OFFSET(0), { 0xBA, 0x0C, 0x00, 0x00, 0x00 });
+					SafeWrite::Write(__CKPE_OFFSET(1), { 0xBA, 0x0C, 0x00, 0x00, 0x00 });
 
-				return true;
+					return true;
+				}
+				else
+				{
+					using namespace Common;
+
+					//
+					// Fix for crash when editing a spell effect with a large (>= 1'000'000'000) duration.
+					// WARNING: Stack padding allows the buffer to be up to 12 bytes, 10 are originally reserved.
+					//
+					Relocation(ID{ 1636980 }, Offset{ 0x1A3 }).Write({ 0xBA, 0x0C, 0x00, 0x00, 0x00 });
+					Relocation(ID{ 1636980 }, Offset{ 0x2B6 }).Write({ 0xBA, 0x0C, 0x00, 0x00, 0x00 });
+
+					return true;
+				}
 			}
 		}
 	}

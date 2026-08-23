@@ -13,6 +13,7 @@
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/BSFile.h>
 #include <EditorAPI/BSTArray.h>
@@ -153,6 +154,50 @@ namespace CKPE
 
 			bool OptimizationLoad::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
+				if (!db)
+				{
+					using namespace Common;
+
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
+
+					// Spam in the status bar no more than 250ms
+					Detours::DetourCall(Relocation(ID{ 1366573 }, Offset{ 0x848 }).Address(), (std::uintptr_t)&sub);
+					pointer_OptimizationLoad_sub1 = Relocation(ID{ 1638356 }).Address();
+
+					*(std::uintptr_t*)&zlibDetail::Inflate = Detours::DetourJump(Relocation(ID{ 1624409 }).Address(),
+						(std::uintptr_t)&zlibDetail::Decompression::LibDeflate::Inflate);
+
+					Detours::DetourIAT(base, "kernel32.dll", "FindFirstFileA", (std::uintptr_t)&HKFindFirstFileA);
+
+					// Skip remove failed forms
+					Relocation(ID{ 1418651 }, Offset{ 0x185E }).Write({ 0xEB });
+
+					EditorAPI::pointer_BSFile_sub = Relocation(ID{ 1498273 }).Address();
+					// 2 kb -> x kb >= 256 kb
+					*(std::uintptr_t*)&EditorAPI::BSFile::ICreateInstance =
+						Detours::DetourClassJump(EditorAPI::pointer_BSFile_sub,
+							(std::uintptr_t)&EditorAPI::BSFile::HKCreateInstance);
+					// 2 kb -> 256 kb
+					Relocation(ID{ 332841 }, Offset{ 0x1A7 }).Write({ 0x41, 0x89, 0xC6, 0x90 });
+					Relocation(ID{ 332841 }, Offset{ 0x184 }).Write({ 0x04 });
+
+					if (_READ_OPTION_BOOL("Animation", "bSkipAnimationBuildData", false))
+					{
+						// Skipping Export Anim
+						Relocation(ID{ 1943589 }).Write({ 0xC3 });
+						// Remove temporary files
+						DeleteFileA("TemporaryBehaviorEventInfoOutput.txt");
+						DeleteFileA("TemporaryClipDataOutput.txt");
+						DeleteFileA("TemporarySyncAnimDataOutput.txt");
+					}
+
+					// The v1-only SIMD search hot-patch block (relb entries 2, 5-11, 15) is dead for
+					// this relb (pinned to version 2) and doesn't apply to the AL path either.
+
+					return true;
+				}
+
 				auto verPatch = db->GetVersion();
 				if ((verPatch != 1) && (verPatch != 2))
 					return false;

@@ -10,6 +10,7 @@
 #include <CKPE.Common.RTTI.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.CrashHandler.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 //#include <EditorAPI/NiAPI/NiSourceTexture.h>
 #include <EditorAPI/Forms/TESForm.h>
@@ -58,59 +59,122 @@ namespace CKPE
 
 			bool CrashDump::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 2) && (verPatch != 3))
-					return false;
+				if (db)
+				{
+					auto verPatch = db->GetVersion();
+					if ((verPatch != 2) && (verPatch != 3))
+						return false;
 
-				Common::CrashHandler::GetSingleton()->Install();
+					Common::CrashHandler::GetSingleton()->Install();
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				auto purecallHandler = []()
-					{
-						RaiseException('PURE', EXCEPTION_NONCONTINUABLE, 0, NULL);
-					};
+					auto purecallHandler = []()
+						{
+							RaiseException('PURE', EXCEPTION_NONCONTINUABLE, 0, NULL);
+						};
 
-				auto terminateHandler = []()
-					{
-						RaiseException('TERM', EXCEPTION_NONCONTINUABLE, 0, NULL);
-					};
+					auto terminateHandler = []()
+						{
+							RaiseException('TERM', EXCEPTION_NONCONTINUABLE, 0, NULL);
+						};
 
-				auto patchIAT = [&terminateHandler, &purecallHandler, &base](const char* module)
-					{
-						Detours::DetourIAT(base, module, "_cexit", (std::uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "_exit", (std::uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "_Exit", (std::uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "_c_exit", (std::uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "exit", (std::uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "abort", (std::uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "terminate", (std::uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "_purecall", (std::uintptr_t)(void(*)())purecallHandler);
-					};
+					auto patchIAT = [&terminateHandler, &purecallHandler, &base](const char* module)
+						{
+							Detours::DetourIAT(base, module, "_cexit", (std::uintptr_t)(void(*)())terminateHandler);
+							Detours::DetourIAT(base, module, "_exit", (std::uintptr_t)(void(*)())terminateHandler);
+							Detours::DetourIAT(base, module, "_Exit", (std::uintptr_t)(void(*)())terminateHandler);
+							Detours::DetourIAT(base, module, "_c_exit", (std::uintptr_t)(void(*)())terminateHandler);
+							Detours::DetourIAT(base, module, "exit", (std::uintptr_t)(void(*)())terminateHandler);
+							Detours::DetourIAT(base, module, "abort", (std::uintptr_t)(void(*)())terminateHandler);
+							Detours::DetourIAT(base, module, "terminate", (std::uintptr_t)(void(*)())terminateHandler);
+							Detours::DetourIAT(base, module, "_purecall", (std::uintptr_t)(void(*)())purecallHandler);
+						};
 
-				// Патчим все известные библы используемые в CK
+					// Патчим все известные библы используемые в CK
 
-				patchIAT("API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL");
-				patchIAT("MSVCR110.DLL");
+					patchIAT("API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL");
+					patchIAT("MSVCR110.DLL");
 
-				// Cutting a lot is faster this way
-				auto stext = interface->GetApplication()->GetSegment(Segment::text);
-				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+					// Cutting a lot is faster this way
+					auto stext = interface->GetApplication()->GetSegment(Segment::text);
+					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
-				// Added AE
-				if (verPatch == 3)
+					// Added AE
+					if (verPatch == 3)
+						// Remove from init function
+						text.WriteNop(__CKPE_OFFSET(0), 6);
+
+					for (std::uint32_t i = 1; i < db->GetCount(); i++)
+						text.Write(__CKPE_OFFSET(i), { 0xC3 });
+
+					Common::CrashHandler::GetSingleton()->OnAnalyzeClassRef = DoAnalyzeClassRef;
+					Common::CrashHandler::GetSingleton()->OnOutputVersion = DoOutputVersion;
+					Common::CrashHandler::GetSingleton()->OnOutputCKVersion = DoOutputCKVersion;
+
+					return true;
+				}
+				else
+				{
+					using namespace Common;
+
+					Common::CrashHandler::GetSingleton()->Install();
+
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
+
+					auto purecallHandler = []()
+						{
+							RaiseException('PURE', EXCEPTION_NONCONTINUABLE, 0, NULL);
+						};
+
+					auto terminateHandler = []()
+						{
+							RaiseException('TERM', EXCEPTION_NONCONTINUABLE, 0, NULL);
+						};
+
+					auto patchIAT = [&terminateHandler, &purecallHandler, &base](const char* module)
+						{
+							Detours::DetourIAT(base, module, "_cexit", (std::uintptr_t)(void(*)())terminateHandler);
+							Detours::DetourIAT(base, module, "_exit", (std::uintptr_t)(void(*)())terminateHandler);
+							Detours::DetourIAT(base, module, "_Exit", (std::uintptr_t)(void(*)())terminateHandler);
+							Detours::DetourIAT(base, module, "_c_exit", (std::uintptr_t)(void(*)())terminateHandler);
+							Detours::DetourIAT(base, module, "exit", (std::uintptr_t)(void(*)())terminateHandler);
+							Detours::DetourIAT(base, module, "abort", (std::uintptr_t)(void(*)())terminateHandler);
+							Detours::DetourIAT(base, module, "terminate", (std::uintptr_t)(void(*)())terminateHandler);
+							Detours::DetourIAT(base, module, "_purecall", (std::uintptr_t)(void(*)())purecallHandler);
+						};
+
+					// Патчим все известные библы используемые в CK
+
+					patchIAT("API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL");
+					patchIAT("MSVCR110.DLL");
+
+					// Cutting a lot is faster this way
+					auto stext = interface->GetApplication()->GetSegment(Segment::text);
+					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+					
 					// Remove from init function
-					text.WriteNop(__CKPE_OFFSET(0), 6);
+					text.WriteNop(Relocation(ID{ 2054943 }, Offset{ 0x59 }).Address(), 6);
 
-				for (std::uint32_t i = 1; i < db->GetCount(); i++)
-					text.Write(__CKPE_OFFSET(i), { 0xC3 });
+					static constexpr AddressLibrary::AddressID kStubIds[] = { 1547411, 1354760, 1359224, 1534613, 1602321, 1741461 };
 
-				Common::CrashHandler::GetSingleton()->OnAnalyzeClassRef = DoAnalyzeClassRef;
-				Common::CrashHandler::GetSingleton()->OnOutputVersion = DoOutputVersion;
-				Common::CrashHandler::GetSingleton()->OnOutputCKVersion = DoOutputCKVersion;
+					for (auto id : kStubIds)
+					{
+						auto rel = Relocation(ID{ id });
+						if (!rel)
+							return false;
 
-				return true;
+						text.Write(rel.Address(), { 0xC3 });
+					}
+
+					Common::CrashHandler::GetSingleton()->OnAnalyzeClassRef = DoAnalyzeClassRef;
+					Common::CrashHandler::GetSingleton()->OnOutputVersion = DoOutputVersion;
+					Common::CrashHandler::GetSingleton()->OnOutputCKVersion = DoOutputCKVersion;
+
+					return true;
+				}
 			}
 
 			void CrashDump::DoOutputVersion(std::string& Result) noexcept(true)

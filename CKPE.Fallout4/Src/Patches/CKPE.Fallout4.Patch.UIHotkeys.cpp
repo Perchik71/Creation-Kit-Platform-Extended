@@ -135,11 +135,13 @@ namespace CKPE
 				}
 				else
 				{
+					using namespace Common;
 					auto addressLibrary = Common::AddressLibrary::GetSingleton();
 
-					SafeWrite::WriteNop(addressLibrary->Resolve(1589493) + 0x1AC, 0x19);
-					Detours::DetourClassJump(addressLibrary->Resolve(390524), &sub);
-					UIHotkeysSub = (decltype(&sub))addressLibrary->Resolve(1589493);
+					Relocation(ID{ 1589493 }, Offset{ 0x1AC }).WriteFill(0x90, 25);
+					Relocation(ID{ 390524 }).WriteJump(sub);
+
+					UIHotkeysSub = (decltype(&sub))Relocation(ID{ 1589493 }).Get();
 
 					return true;
 				}

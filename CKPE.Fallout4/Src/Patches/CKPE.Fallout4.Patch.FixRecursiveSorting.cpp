@@ -63,11 +63,11 @@ namespace CKPE
 				}
 				else
 				{
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					using namespace Common;
 
 					// Fix for crash (recursive sorting function stack overflow) when saving certain ESP files (i.e SimSettlements.esp)
-					Detours::DetourJump(addressLibrary->Resolve(1939544), (std::uintptr_t)&sub<class TESForm*>);
-					SafeWrite::Write(addressLibrary->Resolve(1507375), {0xC3});
+					Relocation(ID{ 1939544 }).WriteJump(sub<class TESForm*>);
+					Relocation(ID{ 1507375 }).Write({ 0xC3 });
 
 					return true;
 				}

@@ -5,6 +5,7 @@
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.SkipUpdateCheck.h>
 
@@ -46,15 +47,26 @@ namespace CKPE
 
 			bool SkipUpdateCheck::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				if (db)
+				{
+					if (db->GetVersion() != 1)
+						return false;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+					auto interface = CKPE::Common::Interface::GetSingleton();
+					auto base = interface->GetApplication()->GetBase();
 
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0xEB, 0x10 });
+					SafeWrite::Write(__CKPE_OFFSET(0), { 0xEB, 0x10 });
 
-				return true;
+					return true;
+				}
+				else
+				{
+					using namespace Common;
+
+					Relocation(ID{ 1955075 }, Offset{ 0x21F }).Write({ 0xEB, 0x10 });
+
+					return true;
+				}
 			}
 		}
 	}
