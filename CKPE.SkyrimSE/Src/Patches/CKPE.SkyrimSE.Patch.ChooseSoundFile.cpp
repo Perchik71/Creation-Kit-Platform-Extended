@@ -14,11 +14,11 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			typedef bool(*TChooseSoundFileSub)(std::int64_t, const char*, const char*,
+			using TChooseSoundFileSub = bool(std::int64_t, const char*, const char*,
 				const char*, char*, void*, std::int32_t, bool, const char*, std::uint32_t, 
 				const char*, void*);
 
-			static TChooseSoundFileSub ChooseSoundFileSub;
+			static std::function<TChooseSoundFileSub> ChooseSoundFileSub;
 
 			ChooseSoundFile::ChooseSoundFile() : Common::Patch()
 			{
@@ -45,6 +45,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool ChooseSoundFile::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool ChooseSoundFile::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -52,23 +57,19 @@ namespace CKPE
 
 			bool ChooseSoundFile::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// The fixed is to select an audio file, also *.xwm.
 				//
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&sub);
-				ChooseSoundFileSub = (TChooseSoundFileSub)__CKPE_OFFSET(2);
+				Relocation(ID(196444), 0x777).WriteCall(&sub);
+				Relocation(ID(57286), 0x8C).WriteCall(&sub);
+				ChooseSoundFileSub = Relocation<TChooseSoundFileSub>(ID(555288));
 
 				return true;
 			}
 
-			bool ChooseSoundFile::sub(std::int64_t iHandle, const char* lpPath, const char* lpFormat,
+			bool ChooseSoundFile::sub(std::int64_t iHandle, const char* lpPath, [[maybe_unused]] const char* lpFormat,
 				const char* lpCaption, char* lpFileName, void* pHandler, std::int32_t iUnknown,
 				bool bSaveDlg, const char* lpUnknownStr, std::uint32_t uUnknown, const char* lpBuffer, 
 				void* _CrtBuffer) noexcept(true)

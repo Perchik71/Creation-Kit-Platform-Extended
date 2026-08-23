@@ -47,6 +47,7 @@ namespace CKPE
 				virtual const char* GetOptionName() const noexcept(true);
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
+				bool SupportsAddressLibrary() const noexcept(true) override;
 
 				inline static ISingleton<CellViewWindow> Singleton;
 				static LRESULT CALLBACK HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam) noexcept(true);
@@ -57,8 +58,8 @@ namespace CKPE
 				void ResizeWnd(std::uint32_t width, std::uint32_t height) noexcept(true);
 				inline void LockUpdateLists() noexcept(true) { lock = true; }
 				inline void UnlockUpdateLists() noexcept(true) { lock = false; }
-				void UpdateCellList() noexcept(true);
-				void UpdateObjectList() noexcept(true);
+				void UpdateCellList() const noexcept(true);
+				void UpdateObjectList() const noexcept(true);
 			};
 		}
 	}

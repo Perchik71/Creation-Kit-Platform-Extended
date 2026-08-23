@@ -14,9 +14,8 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			typedef void(*TCheckTextureInMaterialSub)(void*, void*);
-			
-			static TCheckTextureInMaterialSub CheckTextureInMaterialSub[2];
+			using TCheckTextureInMaterialSub = void(void*, void*);
+			static std::function<TCheckTextureInMaterialSub> CheckTextureInMaterialSub[2];
 
 			CheckTextureInMaterial::CheckTextureInMaterial() : Common::Patch()
 			{
@@ -43,6 +42,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool CheckTextureInMaterial::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool CheckTextureInMaterial::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -50,16 +54,10 @@ namespace CKPE
 
 			bool CheckTextureInMaterial::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				CheckTextureInMaterialSub[0] = (TCheckTextureInMaterialSub)Detours::DetourJump(__CKPE_OFFSET(0),
-					(std::uintptr_t)&sub1);
-				CheckTextureInMaterialSub[1] = (TCheckTextureInMaterialSub)Detours::DetourJump(__CKPE_OFFSET(1), 
-					(std::uintptr_t)&sub2);
+				CheckTextureInMaterialSub[0] = reinterpret_cast<TCheckTextureInMaterialSub*>(Relocation(ID(212952)).WriteJump(&sub1));
+				CheckTextureInMaterialSub[1] = reinterpret_cast<TCheckTextureInMaterialSub*>(Relocation(ID(659133)).WriteJump(&sub2));
 
 				return true;
 			}

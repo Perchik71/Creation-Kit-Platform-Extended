@@ -40,6 +40,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool CheckD3D11::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool CheckD3D11::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -47,16 +52,12 @@ namespace CKPE
 
 			bool CheckD3D11::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Assert if D3D11 FL11 features are not supported
 				//
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
+				Relocation(ID(548492), Offset{ 0x396, 0x364 }).WriteCall(&sub);
 
 				return true;
 			}

@@ -232,6 +232,11 @@ namespace CKPE
 				return { "Fix Load Archive Active Plugin" };
 			}
 
+			bool BSArchiveManager::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool BSArchiveManager::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -239,38 +244,25 @@ namespace CKPE
 
 			bool BSArchiveManager::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				BSResourceArchive::OldLoadArchive = __CKPE_OFFSET(0);
+				BSResourceArchive::OldLoadArchive = ID(605428).Address();
 				*(std::uintptr_t*)&BSResourceArchive::OldLooseLoadArchive =
-					Detours::DetourClassJump(__CKPE_OFFSET(1), &BSResourceArchive::HKLooseLoadArchive);
+					Relocation(ID{ 149362, 1106694 }).WriteJump(&BSResourceArchive::HKLooseLoadArchive);
 
-				if (verPatch == 1)
-				{
-					// Data File Loaded skips
-					for (std::uint32_t i = 5; i < db->GetCount() - 1; i++)
-						SafeWrite::Write(__CKPE_OFFSET(i), { 0x31, 0xC0, 0x90, 0x90, 0x90 });
+				Relocation(ID(170067), 0x15).WriteCall(&LoadTesFile);
+				Relocation(ID(165679), 0x126).WriteJump(&LoadTesFileFinal);
 
-					SafeWrite::WriteNop(__CKPE_OFFSET(db->GetCount() - 1), 0xC);
-				}
-				else if (verPatch == 2)
-				{
-					// Data File Loaded skips
-					for (std::uint32_t i = 5; i < db->GetCount(); i++)
-						SafeWrite::Write(__CKPE_OFFSET(i), { 0x31, 0xC0, 0x90, 0x90, 0x90 });
-				}
+				pointer_BSArchiveManagerModded_sub = ID(363414).Address();
+				auto target = ID(277090);
+				auto dest = std::initializer_list<std::uint8_t>{ 0x31, 0xC0, 0x90, 0x90, 0x90 };	// xor eax, eax
+
+				Relocation(target, 0x85C).Write(dest);
+				Relocation(target, 0x8AF).Write(dest);
+				Relocation(target, Offset{ 0x931, 0x931, 0x96F }).WriteFill(NOP, 5);	// Skips DataLoaded
+				Relocation(target, Offset{ 0xA23, 0xA23, 0xA61 }).WriteFill(NOP, 12);
 
 				BSResourceArchive::Initialize();
-
-				Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&LoadTesFile);
-				Detours::DetourJump(__CKPE_OFFSET(3), (std::uintptr_t)&LoadTesFileFinal);
-
-				pointer_BSArchiveManagerModded_sub = __CKPE_OFFSET(4);
 
 				return true;
 			}
