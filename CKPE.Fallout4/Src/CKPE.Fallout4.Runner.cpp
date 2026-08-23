@@ -169,7 +169,7 @@ namespace CKPE
 			mgr->Register(new Patch::PapyrusEditorLimit);
 			mgr->Register(new Patch::PreVis);
 			mgr->Register(new Patch::ProgressWindow);
-			//mgr->Register(new Patch::RemoveUselessMessages);
+			mgr->Register(new Patch::RemoveUselessMessages);
 			mgr->Register(new Patch::RenameCreationKitApp);
 			mgr->Register(new Patch::RenderWindow);
 			mgr->Register(new Patch::RenderWindow60FPS);
