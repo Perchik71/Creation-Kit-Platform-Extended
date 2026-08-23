@@ -117,39 +117,41 @@ namespace CKPE
 				const auto db_name = std::format(L"{}CKPEBins\\version-{}.bin", PathUtils::GetApplicationPath(), _version.wstring(L"-"));
 				if (!PathUtils::FileExists(db_name))
 					throw RuntimeError(L"AddressLibrary::Load file \"{}\" no found", db_name);
-
-				FileStream2 fstm(db_name, FileStream::fmOpenRead);
-
-				std::uint64_t count = 0;
-				if (fstm.Read(&count, sizeof(count)) != sizeof(count))
-					throw RuntimeError(L"AddressLibrary::Load file \"{}\" is broken (couldn't read header)", db_name);
-
-				auto expected_size = static_cast<std::uint64_t>(sizeof(count) + count * sizeof(Entry));
-				if ((fstm.GetSize()) != expected_size)
-					throw RuntimeError(L"AddressLibrary::Load file \"{}\" has an unexpected size ({}/{})", db_name, fstm.GetSize(), expected_size);
-
-				_entries->resize((std::size_t)count);
-
-				if (count)
+				else
 				{
-					auto bytes_to_read = static_cast<std::uint32_t>(count * sizeof(Entry));
-					if (fstm.Read(_entries->data(), bytes_to_read) != bytes_to_read)
-						throw RuntimeError(L"AddressLibrary::Load file \"{}\" is broken (short read)", db_name);
+					FileStream2 fstm(db_name, FileStream::fmOpenRead);
+
+					std::uint64_t count = 0;
+					if (fstm.Read(&count, sizeof(count)) != sizeof(count))
+						throw RuntimeError(L"AddressLibrary::Load file \"{}\" is broken (couldn't read header)", db_name);
+
+					auto expected_size = static_cast<std::uint64_t>(sizeof(count) + count * sizeof(Entry));
+					if ((fstm.GetSize()) != expected_size)
+						throw RuntimeError(L"AddressLibrary::Load file \"{}\" has an unexpected size ({}/{})", db_name, fstm.GetSize(), expected_size);
+
+					_entries->resize((std::size_t)count);
+
+					if (count)
+					{
+						auto bytes_to_read = static_cast<std::uint32_t>(count * sizeof(Entry));
+						if (fstm.Read(_entries->data(), bytes_to_read) != bytes_to_read)
+							throw RuntimeError(L"AddressLibrary::Load file \"{}\" is broken (short read)", db_name);
+					}
+
+					for (std::size_t i = 1; i < _entries->size(); i++)
+						if ((*_entries)[i].Id <= (*_entries)[i - 1].Id)
+							throw RuntimeError(L"AddressLibrary::Load file \"{}\" entries aren't sorted/unique by id", db_name);
+
+					_loaded = true;
+					_runtime = a_runtime_index;
 				}
-
-				for (std::size_t i = 1; i < _entries->size(); i++)
-					if ((*_entries)[i].Id <= (*_entries)[i - 1].Id)
-						throw RuntimeError(L"AddressLibrary::Load file \"{}\" entries aren't sorted/unique by id", db_name);
-
-				_loaded = true;
-				_runtime = a_runtime_index;
 #endif
 				
 				if (_loaded)
-					_MESSAGE("Address Library \"%s\" loaded (%u entries) (%u runtime index)"sv, db_name.c_str(), 
+					_MESSAGE(L"Address Library \"%s\" loaded (%u entries) (%u runtime index)"sv, db_name.c_str(), 
 						static_cast<std::uint32_t>(_entries->size()), _runtime);
 				else
-					_ERROR("Address Library \"%s\" file no found."sv, db_name.c_str());
+					_ERROR(L"Address Library \"%s\" file no found."sv, db_name.c_str());
 
 				return _loaded;
 			}
@@ -196,7 +198,7 @@ namespace CKPE
 			if (!offset)
 				return 0;
 
-			auto base = Interface::GetSingleton()->GetApplication()->GetBase();
+			auto base = Application::GetSingleton()->GetBase();
 			return (std::uintptr_t)base + (std::uintptr_t)offset;
 		}
 
@@ -222,7 +224,7 @@ namespace CKPE
 			if (!offset)
 				return 0;
 
-			auto base = Interface::GetSingleton()->GetApplication()->GetBase();
+			auto base = Application::GetSingleton()->GetBase();
 
 			return static_cast<std::uintptr_t>(base) + static_cast<std::uintptr_t>(offset);
 		}

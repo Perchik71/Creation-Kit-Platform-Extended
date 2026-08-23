@@ -41,6 +41,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool BSPointerHandleManager::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool BSPointerHandleManager::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -48,37 +53,23 @@ namespace CKPE
 
 			bool BSPointerHandleManager::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				bool ExtremlyMode = _READ_OPTION_BOOL("CreationKit", "bBSPointerHandleExtremly", false);
 				if (ExtremlyMode)
 				{
 					_CONSOLE("[WARNING] An extended set of refs has been included. You use it at your own risk.");
 
-					Detours::DetourJump(__CKPE_OFFSET(17),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManager_Extended_Extremly::InitSDM);
-					Detours::DetourJump(__CKPE_OFFSET(18),
-						(std::uintptr_t)&EditorAPI::HandleManager_Extended_Extremly::KillSDM);
-					Detours::DetourJump(__CKPE_OFFSET(19),
-						(std::uintptr_t)&EditorAPI::HandleManager_Extended_Extremly::WarnForUndestroyedHandles);
-					Detours::DetourJump(__CKPE_OFFSET(20),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManagerInterface_Extended_Extremly::GetCurrentHandle);
-					Detours::DetourJump(__CKPE_OFFSET(21),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManagerInterface_Extended_Extremly::CreateHandle);
-					Detours::DetourJump(__CKPE_OFFSET(22),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManagerInterface_Extended_Extremly::Destroy1);
-					Detours::DetourJump(__CKPE_OFFSET(23),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManagerInterface_Extended_Extremly::Destroy2);
-					Detours::DetourJump(__CKPE_OFFSET(24),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManagerInterface_Extended_Extremly::GetSmartPointer1);
-					Detours::DetourJump(__CKPE_OFFSET(25),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManagerInterface_Extended_Extremly::GetSmartPointer2);
-					Detours::DetourJump(__CKPE_OFFSET(26),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManagerInterface_Extended_Extremly::IsValid);
+					Relocation(ID(433096)).WriteJump(&EditorAPI::BSPointerHandleManager_Extended_Extremly::InitSDM);
+					Relocation(ID(214413)).WriteJump(&EditorAPI::HandleManager_Extended_Extremly::KillSDM);
+					Relocation(ID(237124)).WriteJump(&EditorAPI::HandleManager_Extended_Extremly::WarnForUndestroyedHandles);
+					Relocation(ID(237233)).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended_Extremly::GetCurrentHandle);
+					Relocation(ID(90425)).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended_Extremly::CreateHandle);
+					Relocation(ID(118309)).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended_Extremly::Destroy1);
+					Relocation(ID(19091)).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended_Extremly::Destroy2);
+					Relocation(ID(277012)).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended_Extremly::GetSmartPointer1);
+					Relocation(ID(12732)).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended_Extremly::GetSmartPointer2);
+					Relocation(ID(155378)).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended_Extremly::IsValid);
 
 					EditorAPI::BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 2;
 				}
@@ -86,52 +77,42 @@ namespace CKPE
 				{
 					_CONSOLE("An slightly expanded set of refs has been included.");
 
-					Detours::DetourJump(__CKPE_OFFSET(17),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManager_Extended::InitSDM);
-					Detours::DetourJump(__CKPE_OFFSET(18),
-						(std::uintptr_t)&EditorAPI::HandleManager_Extended::KillSDM);
-					Detours::DetourJump(__CKPE_OFFSET(19),
-						(std::uintptr_t)&EditorAPI::HandleManager_Extended::WarnForUndestroyedHandles);
-					Detours::DetourJump(__CKPE_OFFSET(20),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManagerInterface_Extended::GetCurrentHandle);
-					Detours::DetourJump(__CKPE_OFFSET(21),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManagerInterface_Extended::CreateHandle);
-					Detours::DetourJump(__CKPE_OFFSET(22),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManagerInterface_Extended::Destroy1);
-					Detours::DetourJump(__CKPE_OFFSET(23),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManagerInterface_Extended::Destroy2);
-					Detours::DetourJump(__CKPE_OFFSET(24),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManagerInterface_Extended::GetSmartPointer1);
-					Detours::DetourJump(__CKPE_OFFSET(25),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManagerInterface_Extended::GetSmartPointer2);
-					Detours::DetourJump(__CKPE_OFFSET(26),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManagerInterface_Extended::IsValid);
+					Relocation(ID(433096)).WriteJump(&EditorAPI::BSPointerHandleManager_Extended::InitSDM);
+					Relocation(ID(214413)).WriteJump(&EditorAPI::HandleManager_Extended::KillSDM);
+					Relocation(ID(237124)).WriteJump(&EditorAPI::HandleManager_Extended::WarnForUndestroyedHandles);
+					Relocation(ID(237233)).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended::GetCurrentHandle);
+					Relocation(ID(90425)).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended::CreateHandle);
+					Relocation(ID(118309)).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended::Destroy1);
+					Relocation(ID(19091)).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended::Destroy2);
+					Relocation(ID(277012)).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended::GetSmartPointer1);
+					Relocation(ID(12732)).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended::GetSmartPointer2);
+					Relocation(ID(155378)).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended::IsValid);
 
 					EditorAPI::BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 1;
 				}
 
 				// Cutting a lot is faster this way
-				auto stext = interface->GetApplication()->GetSegment(Segment::text);
+				auto stext = Application::GetSingleton()->GetSegment(Segment::text);
 				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
-
+				
 				// Stub out the rest of the functions which shouldn't ever be called now
-				text.Write(__CKPE_OFFSET(0), { 0xCC });		// BSUntypedPointerHandle::Clear
-				text.Write(__CKPE_OFFSET(1), { 0xCC });		// BSUntypedPointerHandle::SetAge
-				text.Write(__CKPE_OFFSET(2), { 0xCC });		// BSUntypedPointerHandle::SetActive
-				text.Write(__CKPE_OFFSET(3), { 0xCC });		// BSUntypedPointerHandle::GetAge_0
-				text.Write(__CKPE_OFFSET(4), { 0xCC });		// BSUntypedPointerHandle::Set
-				text.Write(__CKPE_OFFSET(5), { 0xCC });		// BSUntypedPointerHandle::GetIndex_0
-				text.Write(__CKPE_OFFSET(6), { 0xCC });		// BSUntypedPointerHandle::GetIndex
-				text.Write(__CKPE_OFFSET(7), { 0xCC });		// BSUntypedPointerHandle::GetAge
-				text.Write(__CKPE_OFFSET(8), { 0xCC });		// BSUntypedPointerHandle::ClearActive
-				text.Write(__CKPE_OFFSET(9), { 0xCC });		// BSUntypedPointerHandle::SetIndex
-				text.Write(__CKPE_OFFSET(10), { 0xCC });	// BSUntypedPointerHandle::IsBitwiseNull
-				text.Write(__CKPE_OFFSET(11), { 0xCC });	// BSPointerHandle::AgeMatches
-				text.Write(__CKPE_OFFSET(12), { 0xCC });	// BSPointerHandle::GetPtr
-				text.Write(__CKPE_OFFSET(13), { 0xCC });	// BSPointerHandle::AssignPtr
-				text.Write(__CKPE_OFFSET(14), { 0xCC });	// BSPointerHandle::IsActive
-				text.Write(__CKPE_OFFSET(15), { 0xCC });	// BSHandleRefObject::AssignHandleIndex
-				text.Write(__CKPE_OFFSET(16), { 0xCC });	// BSHandleRefObject::GetIndex
+				text.Write(ID(393023).Address(), { 0xCC });	// BSUntypedPointerHandle::Clear
+				text.Write(ID(94244).Address(),  { 0xCC });	// BSUntypedPointerHandle::SetAge
+				text.Write(ID(354023).Address(), { 0xCC });	// BSUntypedPointerHandle::SetActive
+				text.Write(ID(392950).Address(), { 0xCC });	// BSUntypedPointerHandle::GetAge_0
+				text.Write(ID(236407).Address(), { 0xCC });	// BSUntypedPointerHandle::Set
+				text.Write(ID(279861).Address(), { 0xCC });	// BSUntypedPointerHandle::GetIndex_0
+				text.Write(ID(491034).Address(), { 0xCC });	// BSUntypedPointerHandle::GetIndex
+				text.Write(ID(392949).Address(), { 0xCC });	// BSUntypedPointerHandle::GetAge
+				text.Write(ID(49295).Address(),  { 0xCC });	// BSUntypedPointerHandle::ClearActive
+				text.Write(ID(117969).Address(), { 0xCC });	// BSUntypedPointerHandle::SetIndex
+				text.Write(ID(278892).Address(), { 0xCC });	// BSUntypedPointerHandle::IsBitwiseNull
+				text.Write(ID(392888).Address(), { 0xCC });	// BSPointerHandle::AgeMatches
+				text.Write(ID(571752).Address(), { 0xCC });	// BSPointerHandle::GetPtr
+				text.Write(ID(571728).Address(), { 0xCC });	// BSPointerHandle::AssignPtr
+				text.Write(ID(254056).Address(), { 0xCC });	// BSPointerHandle::IsActive
+				text.Write(ID(393028).Address(), { 0xCC });	// BSHandleRefObject::AssignHandleIndex
+				text.Write(ID(491031).Address(), { 0xCC });	// BSHandleRefObject::GetIndex
 
 				return true;
 			}
