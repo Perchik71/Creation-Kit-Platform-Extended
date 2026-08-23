@@ -2,8 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -17,8 +15,11 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			std::uintptr_t pointer_CrashTestRadius_sub1 = 0;
-			std::uintptr_t pointer_CrashTestRadius_sub2 = 0;
+			using TCrashTestRadius_sub1 = void(EditorAPI::BSShaderProperty*, EditorAPI::BSEffectShaderMaterial*, bool);
+			using TCrashTestRadius_sub2 = void(std::int64_t, void*);
+
+			static std::function<TCrashTestRadius_sub1> CrashTestRadius_sub1;
+			static std::function<TCrashTestRadius_sub2> CrashTestRadius_sub2;
 
 			CrashTestRadius::CrashTestRadius() : Common::Patch()
 			{
@@ -45,6 +46,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool CrashTestRadius::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool CrashTestRadius::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -52,24 +58,20 @@ namespace CKPE
 
 			bool CrashTestRadius::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for crash when trying to use "Test Radius" on a reference's "3D Data" dialog tab. 
 				// This code wasn't correctly ported to BSGeometry from NiGeometry during the LE->SSE transition. 
 				// Flags & materials need to be fixed as a result.
 				//
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&sub);
-				SafeWrite::Write(__CKPE_OFFSET(2), { 0x48, 0x8B, 0xC1, 0x90, 0x90 });
-				SafeWrite::Write(__CKPE_OFFSET(3), { 0x48, 0x8B, 0xC1, 0x90, 0x90 });
-
-				pointer_CrashTestRadius_sub1 = __CKPE_OFFSET(4);
-				pointer_CrashTestRadius_sub2 = __CKPE_OFFSET(5);
+				auto target = ID(294671);
+				Relocation(target, 0x251).WriteCall(&sub);
+				Relocation(target, 0x2D2).WriteCall(&sub);
+				Relocation(target, 0x244).Write({ 0x48, 0x8B, 0xC1, 0x90, 0x90 });
+				Relocation(target, 0x2C5).Write({ 0x48, 0x8B, 0xC1, 0x90, 0x90 });
+				CrashTestRadius_sub1 = Relocation<TCrashTestRadius_sub1>(ID(654399)).Get();
+				CrashTestRadius_sub2 = Relocation<TCrashTestRadius_sub2>(ID(397691)).Get();
 
 				return true;
 			}
@@ -89,11 +91,10 @@ namespace CKPE
 					newShaderMaterial->CopyMembers(oldShaderMaterial);
 					newShaderMaterial->kBaseColor.a = 0.5f;
 
-					((void(__fastcall*)(EditorAPI::BSShaderProperty*, EditorAPI::BSEffectShaderMaterial*, bool))pointer_CrashTestRadius_sub1)
-						(p, newShaderMaterial, false);
+					CrashTestRadius_sub1(p, newShaderMaterial, false);
 				}
 
-				((void(__fastcall*)(std::int64_t, void*))pointer_CrashTestRadius_sub2)(a1 + 0x128, Property);
+				CrashTestRadius_sub2(a1 + 0x128, Property);
 			}
 		}
 	}

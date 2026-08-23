@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Utils.h>
 #include <CKPE.CriticalSection.h>
 #include <CKPE.Application.h>
@@ -57,32 +56,33 @@ namespace CKPE
 				return {};
 			}
 
+			bool CrashMergeForms::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool CrashMergeForms::DoQuery() const noexcept(true)
 			{
-				return VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1130;
+				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
 			bool CrashMergeForms::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				Relocation(ID(539487)).WriteJump(&sub);
 
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-
-				pointer_CrashMergeForms_data = __CKPE_OFFSET(1);
-				pointer_CrashMergeForms_sub1 = __CKPE_OFFSET(2);
-				pointer_CrashMergeForms_sub2 = __CKPE_OFFSET(3);
-				pointer_CrashMergeForms_sub3 = __CKPE_OFFSET(4);
-				pointer_CrashMergeForms_sub4 = __CKPE_OFFSET(5);
-				pointer_CrashMergeForms_sub5 = __CKPE_OFFSET(6);
-				pointer_CrashMergeForms_sub6 = __CKPE_OFFSET(7);
-				pointer_CrashMergeForms_sub7 = __CKPE_OFFSET(8);
-				pointer_CrashMergeForms_sub8 = __CKPE_OFFSET(9);
-				pointer_CrashMergeForms_sub9 = __CKPE_OFFSET(10);
-				pointer_CrashMergeForms_subA = __CKPE_OFFSET(11);
+				pointer_CrashMergeForms_data = ID(191036).Address();
+				pointer_CrashMergeForms_sub1 = ID(569310).Address();
+				pointer_CrashMergeForms_sub2 = ID(65013).Address() ;
+				pointer_CrashMergeForms_sub3 = ID(346842).Address();
+				pointer_CrashMergeForms_sub4 = ID(218849).Address();
+				pointer_CrashMergeForms_sub5 = ID(1420).Address();
+				pointer_CrashMergeForms_sub6 = ID(283793).Address();
+				pointer_CrashMergeForms_sub7 = ID(351541).Address();
+				pointer_CrashMergeForms_sub8 = ID(569205).Address();
+				pointer_CrashMergeForms_sub9 = ID(196467).Address();
+				pointer_CrashMergeForms_subA = ID(363840).Address();
 
 				return true;
 			}

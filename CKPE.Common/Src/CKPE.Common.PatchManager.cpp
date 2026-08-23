@@ -56,12 +56,14 @@ namespace CKPE
 			if (entry.patch->IsActive())
 				return true;
 
-			bool viaAddressLibrary = entry.patch->SupportsAddressLibrary() && AddressLibrary::GetSingleton()->IsLoaded();
-			if (!entry.db && !viaAddressLibrary)
+			if (entry.patch->GetMethods() == Patch::Method::kUseAddressLibraryOrDatabased)
 			{
-				_WARNING("The \"%s\" patch can't be installed, there is no data in the database",
-					entry.patch->GetName().c_str());
-				return false;
+				if (!entry.db && !(entry.patch->SupportsAddressLibrary() && AddressLibrary::GetSingleton()->IsLoaded()))
+				{
+					_WARNING_EX("The \"{}\" patch can't be installed, there is no data in the database"sv,
+						entry.patch->GetName());
+					return false;
+				}
 			}
 
 			if (entry.patch->HasOption())
@@ -69,8 +71,8 @@ namespace CKPE
 				auto option_name = entry.patch->GetOptionName();
 				if (!option_name)
 				{
-					_ERROR("The \"%s\" patch is a requirement for an option, but the option itself is specified as nullptr, skips",
-						entry.patch->GetName().c_str());
+					_ERROR_EX("The \"{}\" patch is a requirement for an option, but the option itself is specified as nullptr, skips"sv,
+						entry.patch->GetName());
 					return false;
 				}
 
@@ -78,22 +80,22 @@ namespace CKPE
 				std::string name;
 				if (!gsettings->SplitOptionName(option_name, section, name) || !section.length() || !name.length())
 				{
-					_ERROR("The \"%s\" patch couldn't identify the section and the name of the option, skips",
-						entry.patch->GetName().c_str());
+					_ERROR_EX("The \"{}\" patch couldn't identify the section and the name of the option, skips"sv,
+						entry.patch->GetName());
 					return false;
 				}
 
 				if (gsettings->GetOptionTypeByName(name) != SettingOptionType::sotBool)
 				{
-					_ERROR("The \"%s\" patch only logical option names are allowed, skips",
-						entry.patch->GetName().c_str());
+					_ERROR_EX("The \"{}\" patch only logical option names are allowed, skips"sv,
+						entry.patch->GetName());
 					return false;
 				}
 
 				if (!gsettings->ReadBool(section, name, false))
 				{
-					_MESSAGE("[%s]\tThe \"%s\" patch can't be installed, it is disabled by the option",
-						game_short.c_str(), entry.patch->GetName().c_str());
+					_MESSAGE_EX("[{}]\tThe \"{}\" patch can't be installed, it is disabled by the option"sv,
+						game_short, entry.patch->GetName());
 					return false;
 				}
 			}
@@ -102,8 +104,8 @@ namespace CKPE
 			{
 				auto depends = entry.patch->GetDependencies();
 				if (!depends.size())
-					_WARNING("The \"%s\" patch says that there are dependencies that for some reason don't exist",
-						entry.patch->GetName().c_str());
+					_WARNING_EX("The \"{}\" patch says that there are dependencies that for some reason don't exist"sv,
+						entry.patch->GetName());
 				else
 				{
 					for (auto& depend : depends)
@@ -115,8 +117,8 @@ namespace CKPE
 
 						if (it == _entries->end())
 						{
-							_ERROR("The \"%s\" patch has a dependency \"%s\" that is not in the database or is not registered, skips",
-								entry.patch->GetName().c_str(), depend.c_str());
+							_ERROR_EX("The \"{}\" patch has a dependency \"{}\" that is not in the database or is not registered, skips"sv,
+								entry.patch->GetName(), depend);
 							return false;
 						}
 						
@@ -125,8 +127,8 @@ namespace CKPE
 
 						if (!ActivePatch(*it, game_short))
 						{
-							_ERROR("The \"%s\" patch has a dependency \"%s\" that has not been initialized, skips",
-								entry.patch->GetName().c_str(), depend.c_str());
+							_ERROR_EX("The \"{}\" patch has a dependency \"{}\" that has not been initialized, skips"sv,
+								entry.patch->GetName(), depend);
 							return false;
 						}
 					}
@@ -136,16 +138,13 @@ namespace CKPE
 			switch (ActivePatchSafe(entry))
 			{
 			case 0:
-				_MESSAGE("[%s]\tThe \"%s\" patch has been initialized",
-					game_short.c_str(), entry.patch->GetName().c_str());
+				_MESSAGE_EX("[{}]\tThe \"{}\" patch has been initialized"sv, game_short, entry.patch->GetName());
 				return true;
 			case -1:
-				_FATALERROR("The \"%s\" patch has not been fully installed, there may be errors",
-					entry.patch->GetName().c_str());
+				_FATALERROR_EX("The \"{}\" patch has not been fully installed, there may be errors"sv, entry.patch->GetName());
 				break;
 			case -2:
-				_FATALERROR("An internal error occurred while installing the \"%s\" patch",
-					entry.patch->GetName().c_str());
+				_FATALERROR_EX("An internal error occurred while installing the \"{}\" patch"sv, entry.patch->GetName());
 				break;
 			}
 
@@ -179,14 +178,14 @@ namespace CKPE
 
 			if (!patch)
 			{
-				_ERROR("PatchManager::Register patch is nullptr");
+				_ERROR("PatchManager::Register patch is nullptr"sv);
 				return;
 			}
 			
 			auto name = patch->GetName();
 			if (!name.length())
 			{
-				_ERROR("PatchManager::Register patch haven't name");
+				_ERROR("PatchManager::Register patch haven't name"sv);
 				return;
 			}
 
@@ -194,7 +193,7 @@ namespace CKPE
 			{
 				if (!_stricmp(s.c_str(), name.c_str()))
 				{
-					_WARNING("PatchManager::Register \"%s\" is blacklisted", name.c_str());
+					_WARNING_EX("PatchManager::Register \"%s\" is blacklisted"sv, name);
 					return;
 				}
 			}
@@ -205,16 +204,16 @@ namespace CKPE
 
 			if (entry_exist != _entries->end())
 			{
-				_ERROR("PatchManager::Register found this patch with same name \"%s\" in db class \"%s\" and \"%s\"", name.c_str(),
-					typeid(patch).name(), typeid(entry_exist->patch).name());
+				_ERROR_EX("PatchManager::Register found this patch with same name \"{}\" in db class \"{}\" and \"{}\""sv,
+					name, typeid(patch).name(), typeid(entry_exist->patch).name());
 				return;
 			}
 
 			auto db = Relocator::GetSingleton()->GetByName(name);
 			bool viaAddressLibrary = patch->SupportsAddressLibrary() && AddressLibrary::GetSingleton()->IsLoaded();
-			if (!db && !viaAddressLibrary)
+			if ((patch->GetMethods() == Patch::Method::kUseAddressLibraryOrDatabased) && (!db && !viaAddressLibrary))
 			{
-				_ERROR("PatchManager::Register no found this patch name \"%s\" in db", name.c_str());
+				_ERROR_EX("PatchManager::Register no found this patch name \"{}\" in db"sv, name);
 				return;
 			}
 
@@ -294,12 +293,12 @@ namespace CKPE
 				switch (result)
 				{
 				case -1:
-					_WARNING("[%s]\tThe \"%s\" patch can't be installed for this version of the editor",
-						gshort.c_str(), it->patch->GetName().c_str());
+					_WARNING_EX("[{}]\tThe \"{}\" patch can't be installed for this version of the editor"sv,
+						gshort, it->patch->GetName());
 					break;
 				case -2:
-					_ERROR("[%s]\tAn internal error occurred while checking the \"%s\" patch",
-						gshort.c_str(), it->patch->GetName().c_str());
+					_ERROR_EX("[{}]\tAn internal error occurred while checking the \"{}\" patch"sv,
+						gshort, it->patch->GetName());
 					break;
 				}
 
@@ -341,7 +340,7 @@ namespace CKPE
 						{
 							if (!_stricmp(s.c_str(), str_line.c_str()))
 							{
-								_WARNING("PatchManager::OpenBlackList \"%s\" duplicate", str_line.c_str());
+								_WARNING_EX("PatchManager::OpenBlackList \"{}\" duplicate"sv, str_line);
 								append = false;
 								break;
 							}
@@ -353,7 +352,7 @@ namespace CKPE
 				}
 				catch (const std::exception& e)
 				{
-					_ERROR("PatchManager::OpenBlackList %s", e.what());
+					_ERROR("PatchManager::OpenBlackList %s"sv, e.what());
 				}
 			}
 		}

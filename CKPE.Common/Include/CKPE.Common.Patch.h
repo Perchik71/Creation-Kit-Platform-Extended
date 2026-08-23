@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <CKPE.Enum.h>
 #include <CKPE.Common.RelocatorDB.h>
 #include <CKPE.Common.Relocation.h>
 
@@ -24,6 +25,13 @@ namespace CKPE
 			virtual void SetName(const char* name) noexcept(true);
 			virtual void SetName(const std::string& name) noexcept(true);
 		public:
+			enum class Method : std::uint8_t
+			{
+				kUseAddressLibraryOrDatabased = 0,
+				kUseSignature,
+				kNoUseAnything
+			};
+
 			Patch() noexcept(true);
 			virtual ~Patch() noexcept(true);
 
@@ -39,6 +47,7 @@ namespace CKPE
 			virtual std::vector<std::string> GetDependencies() const noexcept(true) = 0;
 
 			[[nodiscard]] virtual bool SupportsAddressLibrary() const noexcept(true) { return false; }
+			[[nodiscard]] virtual TEnum<Method> GetMethods() const noexcept(true) { return Method::kUseAddressLibraryOrDatabased; }
 		};
 	}
 }

@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <xbyak.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -40,18 +39,21 @@ namespace CKPE
 				return {};
 			}
 
+			bool CrashNullptrDXGISurface::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool CrashNullptrDXGISurface::DoQuery() const noexcept(true)
 			{
-				return VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1;
+				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
 			bool CrashNullptrDXGISurface::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				auto target = Relocation(ID(269371), Offset{ 0x28, 0x2A }).Address();
 
 				class changeDXGISurfaceHook : public Xbyak::CodeGenerator
 				{
@@ -68,9 +70,9 @@ namespace CKPE
 						jmp(ptr[rip]);
 						dq(addr);
 					}
-				} static DXGISurfaceHookInstance(__CKPE_OFFSET(0) + 6);
+				} static DXGISurfaceHookInstance(target + 6);
 
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)DXGISurfaceHookInstance.getCode());
+				Detours::DetourJump(target, (std::uintptr_t)DXGISurfaceHookInstance.getCode());
 
 				return true;
 			}

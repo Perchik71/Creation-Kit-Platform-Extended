@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <algorithm>
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -55,6 +54,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool CrashSortFunc::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool CrashSortFunc::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -62,16 +66,12 @@ namespace CKPE
 
 			bool CrashSortFunc::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for crash (recursive sorting function stack overflow) when saving certain ESP files (i.e 3DNPC.esp)
 				//
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&CrashSortFuncSub<EditorAPI::Forms::TESForm*>);
+				Relocation(ID(52794)).WriteJump(&CrashSortFuncSub<EditorAPI::Forms::TESForm*>);
 
 				return true;
 			}

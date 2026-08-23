@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -40,6 +39,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool CrashUploadBNetModWithArchive::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool CrashUploadBNetModWithArchive::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -47,17 +51,13 @@ namespace CKPE
 
 			bool CrashUploadBNetModWithArchive::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix crash while trying to upload BNet mods with existing archives
 				//
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&IsBSAVersionCurrent);
-
+				Relocation(ID{ 378676, 1191728 }).WriteJump(&IsBSAVersionCurrent);
+				
 				return true;
 			}
 
@@ -67,7 +67,7 @@ namespace CKPE
 				GetCurrentDirectory(ARRAYSIZE(fullPath), fullPath);
 
 				strcat_s(fullPath, "\\");
-				strcat_s(fullPath, (const char*)((__int64)File + 0x64));
+				strcat_s(fullPath, (const char*)((std::uintptr_t)File + 0x64));
 
 				HANDLE file = CreateFileA(fullPath, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE,
 					nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);

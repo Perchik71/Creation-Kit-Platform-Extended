@@ -36,7 +36,8 @@ namespace CKPE
 
 		bool Patch::Active(RelocatorDB::PatchDB* db) noexcept(true)
 		{
-			if (!db && !SupportsAddressLibrary()) return false;
+			if ((GetMethods() == Method::kUseAddressLibraryOrDatabased) && (!db && !SupportsAddressLibrary()))
+				return false;
 			_active = DoActive(db);
 			return _active;
 		}

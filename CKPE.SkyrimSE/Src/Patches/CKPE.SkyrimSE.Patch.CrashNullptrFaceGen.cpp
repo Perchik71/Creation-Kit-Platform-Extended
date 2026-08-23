@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -14,9 +13,9 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			typedef bool(*TCrashNullptrFaceGenSub)(const char*, std::uintptr_t*, std::uintptr_t*);
+			using TCrashNullptrFaceGenSub = bool(const char*, std::uintptr_t*, std::uintptr_t*);
 
-			static TCrashNullptrFaceGenSub CrashNullptrFaceGenSub;
+			static std::function<TCrashNullptrFaceGenSub> CrashNullptrFaceGenSub;
 
 			CrashNullptrFaceGen::CrashNullptrFaceGen() : Common::Patch()
 			{
@@ -43,6 +42,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool CrashNullptrFaceGen::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool CrashNullptrFaceGen::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -50,11 +54,7 @@ namespace CKPE
 
 			bool CrashNullptrFaceGen::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				// In the iterator, that second argument of the function should be a pointer, 
 				// if it is null ptr in the log window you will get an ASSERT with an error on nullptr and an immediate CTD.
@@ -63,9 +63,8 @@ namespace CKPE
 				//
 				// I'll try to skip the code, if you have problems with the display (no eyebrows), 
 				// then you have problems with the NPC's faces.
-
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				CrashNullptrFaceGenSub = (TCrashNullptrFaceGenSub)__CKPE_OFFSET(1);
+				
+				CrashNullptrFaceGenSub = reinterpret_cast<TCrashNullptrFaceGenSub*>(Relocation(ID(107031), 0x7C).WriteCall(&sub));
 
 				return true;
 			}
