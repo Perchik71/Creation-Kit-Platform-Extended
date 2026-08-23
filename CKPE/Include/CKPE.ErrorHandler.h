@@ -16,8 +16,9 @@ namespace CKPE
 		ErrorHandler(const ErrorHandler&) = delete;
 		ErrorHandler& operator=(const ErrorHandler&) = delete;
 	public:
-		static void Trigger(const std::string& message) noexcept(true);
-		static void Trigger(const std::string& message, std::ptrdiff_t error_code) noexcept(true);
-		static std::string GetSystemMessage(std::ptrdiff_t error_code) noexcept(true);
+		[[noreturn]] static void Trigger(const std::string& message) noexcept(true);
+		[[noreturn]] static void Trigger(const std::string& message, std::ptrdiff_t error_code) noexcept(true);
+		[[nodiscard]] static std::string GetSystemMessage(std::ptrdiff_t error_code) noexcept(true);
+		[[nodiscard]] static std::string GetSystemMessageUTF8(std::ptrdiff_t error_code) noexcept(true);
 	};
 }

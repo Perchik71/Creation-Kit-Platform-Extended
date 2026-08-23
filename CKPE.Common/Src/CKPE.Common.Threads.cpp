@@ -67,13 +67,15 @@ namespace CKPE
 			return SetThreadPriority((HANDLE)thread, std::max(CurrentPriority, priority));
 		}
 
-		std::uintptr_t Threads::Hook::HKSetThreadAffinityMask(void* thread, std::uintptr_t affinity_mask) noexcept(true)
+		std::uintptr_t Threads::Hook::HKSetThreadAffinityMask([[maybe_unused]] void* thread, 
+			[[maybe_unused]] std::uintptr_t affinity_mask) noexcept(true)
 		{
 			// Don't change anything
 			return (std::uintptr_t)-1;
 		}
 
-		std::uint32_t Threads::Hook::HKSetThreadIdealProcessor(void* thread, std::uint32_t mask) noexcept(true)
+		std::uint32_t Threads::Hook::HKSetThreadIdealProcessor([[maybe_unused]] void* thread,
+			[[maybe_unused]] std::uint32_t mask) noexcept(true)
 		{
 			// Don't change anything
 			return S_FALSE;
@@ -113,14 +115,14 @@ namespace CKPE
 			auto base = (std::uintptr_t)GetModuleHandleA(nullptr);
 			sbase_kernel32 = (std::uintptr_t)GetModuleHandleA("kernel32.dll");
 
-			Detours::DetourIAT(base, "kernel32.dll", "CreateThread", (std::uintptr_t)HKCreateThread);
-			Detours::DetourIAT(base, "kernel32.dll", "SetThreadPriority", (std::uintptr_t)HKSetThreadPriority);
-			Detours::DetourIAT(base, "kernel32.dll", "SetThreadAffinityMask", (std::uintptr_t)HKSetThreadAffinityMask);
-			Detours::DetourIAT(base, "kernel32.dll", "SetThreadIdealProcessor", (std::uintptr_t)HKSetThreadIdealProcessor);
+			Detours::DetourIAT(base, "kernel32.dll", "CreateThread", (std::uintptr_t)&HKCreateThread);
+			Detours::DetourIAT(base, "kernel32.dll", "SetThreadPriority", (std::uintptr_t)&HKSetThreadPriority);
+			Detours::DetourIAT(base, "kernel32.dll", "SetThreadAffinityMask", (std::uintptr_t)&HKSetThreadAffinityMask);
+			Detours::DetourIAT(base, "kernel32.dll", "SetThreadIdealProcessor", (std::uintptr_t)&HKSetThreadIdealProcessor);
 			
 #if 0
-			Detours::DetourIAT(base, "kernel32.dll", "Sleep", (std::uintptr_t)HKSleep);
-			Detours::DetourIAT(base, "kernel32.dll", "SleepEx", (std::uintptr_t)HKSleepEx);
+			Detours::DetourIAT(base, "kernel32.dll", "Sleep", (std::uintptr_t)&HKSleep);
+			Detours::DetourIAT(base, "kernel32.dll", "SleepEx", (std::uintptr_t)&HKSleepEx);
 #endif
 
 			auto hCurrentProcess = GetCurrentProcess();
@@ -129,32 +131,32 @@ namespace CKPE
 				if (!SetPriorityClass(hCurrentProcess, HIGH_PRIORITY_CLASS))
 				{
 					auto ErrorLast = GetLastError();
-					_ERROR("SetPriorityClass returned failed (0x%x): %s", ErrorLast, 
-						ErrorHandler::GetSystemMessage(ErrorLast).c_str());
+					_ERROR_EX("SetPriorityClass returned failed (0x{:X}): {}"sv, ErrorLast, 
+						ErrorHandler::GetSystemMessageUTF8(ErrorLast));
 				}
 				else
-					_MESSAGE("Set high priority has been set for process");
+					_MESSAGE("Set high priority has been set for process"sv);
 
 				if (!SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST))
 				{
 					auto ErrorLast = GetLastError();
-					_ERROR("SetThreadPriority returned failed (0x%x): %s", ErrorLast, 
-						ErrorHandler::GetSystemMessage(ErrorLast).c_str());
+					_ERROR_EX("SetThreadPriority returned failed (0x{:X}): {}"sv, ErrorLast, 
+						ErrorHandler::GetSystemMessageUTF8(ErrorLast));
 				}
 				else
-					_MESSAGE("Set high priority has been set for main thread");
+					_MESSAGE("Set high priority has been set for main thread"sv);
 
 				DWORD_PTR ProcessMask, SystemMask;
 				if (!GetProcessAffinityMask(hCurrentProcess, &ProcessMask, &SystemMask))
 				{
 					auto ErrorLast = GetLastError();
-					_ERROR("GetProcessAffinityMask returned failed (0x%x): %s", ErrorLast,
-						ErrorHandler::GetSystemMessage(ErrorLast).c_str());
+					_ERROR_EX("GetProcessAffinityMask returned failed (0x{:X}): {}"sv, ErrorLast,
+						ErrorHandler::GetSystemMessageUTF8(ErrorLast));
 				}
 				else
 				{
-					_MESSAGE("ProcessMask: 0x%X", ProcessMask);
-					_MESSAGE("SystemMask: 0x%X", SystemMask);
+					_MESSAGE_EX("ProcessMask: 0x{:X}"sv, ProcessMask);
+					_MESSAGE_EX("SystemMask: 0x{:X}"sv, SystemMask);
 
 					auto NumCores = HardwareInfo::CPU::GetTotalCores();
 					if (NumCores >= 4)
@@ -169,12 +171,12 @@ namespace CKPE
 							dwMask |= 1 << i;
 
 						if (SetProcessAffinityMask(hCurrentProcess, dwMask))
-							_MESSAGE("InstallMask: 0x%X", dwMask);
+							_MESSAGE_EX("InstallMask: 0x{:X}"sv, dwMask);
 					}
 					else
 					{
 						if (SetProcessAffinityMask(hCurrentProcess, SystemMask))
-							_MESSAGE("InstallMask: 0x%X", SystemMask);
+							_MESSAGE_EX("InstallMask: 0x{:X}"sv, SystemMask);
 					}
 				}
 			}
@@ -183,7 +185,7 @@ namespace CKPE
 			if (hCurrentThread)
 			{
 				auto ThreadID = GetThreadId(hCurrentThread);
-				_MESSAGE("CKPE_ThreadMain %u", ThreadID);
+				_MESSAGE_EX("CKPE_ThreadMain {}"sv, ThreadID);
 
 				SetThreadPriority(hCurrentThread, THREAD_PRIORITY_HIGHEST);
 				SetThreadName(ThreadID, "CKPE_ThreadMain");

@@ -57,6 +57,11 @@ namespace CKPE
 		return GetApplicationPath() + L"CKPEPlugins\\";
 	}
 
+	std::wstring PathUtils::GetCKPEAddressLibraryPath() noexcept(true)
+	{
+		return GetApplicationPath() + L"CKPEBins\\";
+	}
+
 	std::wstring PathUtils::GetCKPELogsPluginPath() noexcept(true)
 	{
 		return GetApplicationPath() + L"Logs\\CKPE\\Plug-ins\\";
@@ -67,7 +72,7 @@ namespace CKPE
 		std::string spath = path;
 		if (IsRelative(spath))
 			spath = StringUtils::Utf16ToWinCP(GetApplicationPath()) + path;
-		return SHCreateDirectoryExA(NULL, spath.c_str(), NULL) == ERROR_SUCCESS;
+		return SHCreateDirectoryExA(nullptr, spath.c_str(), nullptr) == ERROR_SUCCESS;
 	}
 
 	bool PathUtils::CreateFolder(const std::wstring& path) noexcept(true)
@@ -75,7 +80,7 @@ namespace CKPE
 		std::wstring spath = path;
 		if (IsRelative(spath))
 			spath = GetApplicationPath() + path;
-		return SHCreateDirectoryExW(NULL, spath.c_str(), NULL) == ERROR_SUCCESS;
+		return SHCreateDirectoryExW(nullptr, spath.c_str(), nullptr) == ERROR_SUCCESS;
 	}
 
 	bool PathUtils::IsPrefix(const std::string& subpath, const std::string& path) noexcept(true)
@@ -257,8 +262,8 @@ namespace CKPE
 			FindExInfoBasic, &FindFileData, FindExSearchNameMatch, nullptr, FIND_FIRST_EX_LARGE_FETCH);
 		if (hFind == INVALID_HANDLE_VALUE)
 		{
-			_ERROR("FindFirstFileW returned failed: \"%s\" \n\t%s", StringUtils::Utf16ToUtf8(path).c_str(),
-				ErrorHandler::GetSystemMessage(GetLastError()).c_str());
+			_ERROR_EX("FindFirstFileW returned failed: \"{}\" \n\t{}", StringUtils::Utf16ToUtf8(path),
+				ErrorHandler::GetSystemMessageUTF8(GetLastError()));
 			return {};
 		}
 

@@ -114,7 +114,7 @@ namespace CKPE
 					throw RuntimeError("AddressLibrary::Load get version game failed");
 
 				_version = ver.value();
-				const auto db_name = std::format(L"{}CKPEBins\\version-{}.bin", PathUtils::GetApplicationPath(), _version.wstring(L"-"));
+				const auto db_name = std::format(L"{}version-{}.bin", PathUtils::GetCKPEAddressLibraryPath(), _version.wstring(L"-"));
 				if (!PathUtils::FileExists(db_name))
 					throw RuntimeError(L"AddressLibrary::Load file \"{}\" no found", db_name);
 				else

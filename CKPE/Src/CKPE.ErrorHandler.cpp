@@ -6,6 +6,7 @@
 #include <comdef.h>
 #include <CKPE.ErrorHandler.h>
 #include <CKPE.MessageBox.h>
+#include <CKPE.StringUtils.h>
 #include <format>
 
 namespace CKPE
@@ -30,5 +31,9 @@ namespace CKPE
 	std::string ErrorHandler::GetSystemMessage(std::ptrdiff_t error_code) noexcept(true)
 	{
 		return _com_error((HRESULT)error_code).ErrorMessage();
+	}
+	std::string ErrorHandler::GetSystemMessageUTF8(std::ptrdiff_t error_code) noexcept(true)
+	{
+		return StringUtils::WinCPToUtf8(GetSystemMessage(error_code));
 	}
 }

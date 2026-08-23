@@ -182,10 +182,10 @@ namespace CKPE
 							if (Relocator::GetSingleton()->Delete(StringUtils::Utf16ToWinCP(cmd[1])))
 							{
 								if (Relocator::GetSingleton()->Save(a_databases_fn, a_database_fn))
-									_ERROR(L"The database can't save: \"%s\""sv, a_databases_fn.c_str());
+									_ERROR_EX(L"The database can't save: \"{}\""sv, a_databases_fn);
 							}
 							else
-								_ERROR(L"Couldn't remove the patch from the database: \"%s\""sv, cmd[1].c_str());
+								_ERROR_EX(L"Couldn't remove the patch from the database: \"{}\""sv, cmd[1]);
 						}
 
 						// Close Creation Kit				
