@@ -39,6 +39,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool BrokenTerrainEditDlg::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool BrokenTerrainEditDlg::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -46,30 +51,22 @@ namespace CKPE
 
 			bool BrokenTerrainEditDlg::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for broken terrain edit dialog undo functionality (Incorrectly removing elements from a linked list,
 				// still contains a memory leak)
 				//
 
-				switch (db->GetVersion())
-				{
-				case 1:
-					SafeWrite::WriteNop(__CKPE_OFFSET(0), 4);
-					SafeWrite::WriteNop(__CKPE_OFFSET(1), 4);
-					SafeWrite::WriteNop(__CKPE_OFFSET(2), 4);
-					break;
-				case 2:
-					SafeWrite::WriteNop(__CKPE_OFFSET(0), 4);
-					SafeWrite::WriteNop(__CKPE_OFFSET(1), 4);
-					break;
-				default:
-					return false;
-				}
+				auto target = ID(187657);
 
-				return true;				
+				Relocation(target, Offset{ 0x11F, 0x153 }).WriteFill(NOP, 4);
+				Relocation(target, Offset{ 0x16B, 0x1C8 }).WriteFill(NOP, 4);
+
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_SKYRIM_SE_1_5_73)
+					Relocation(target, 0x6D1).WriteFill(NOP, 4);
+
+				return true;
 			}
 		}
 	}

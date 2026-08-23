@@ -26,8 +26,8 @@ namespace CKPE
 			std::vector<std::string>* _blacklist{ nullptr };
 			CriticalSection _locker;
 
-			[[nodiscard]] std::int32_t ActivePatchSafe(Entry& entry);
-			[[nodiscard]] std::int32_t QueryPatchSafe(Entry& entry);
+			[[nodiscard]] std::int32_t ActivePatchSafe(Entry& entry) const;
+			[[nodiscard]] std::int32_t QueryPatchSafe(Entry& entry) const;
 			bool ActivePatch(Entry& entry, const std::string& game_short) noexcept(true);
 
 			PatchManager(const PatchManager&) = delete;

@@ -26,6 +26,7 @@ namespace CKPE
 				virtual const char* GetOptionName() const noexcept(true);
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
+				bool SupportsAddressLibrary() const noexcept(true) override;
 
 				static bool sub(std::int64_t iHandle, const char* lpPath, const char* lpFormat,
 					const char* lpCaption, char* lpFileName, void* pHandler, std::int32_t iUnknown,

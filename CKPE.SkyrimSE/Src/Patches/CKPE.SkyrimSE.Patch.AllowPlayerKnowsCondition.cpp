@@ -14,7 +14,7 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			using TAllowPlayerKnowsCondition_Add = void(std::int64_t, uint8_t, bool, std::int64_t, std::int64_t,
+			using TAllowPlayerKnowsCondition_Add = void(std::int64_t, std::uint8_t, bool, std::int64_t, std::int64_t,
 				std::int64_t, std::int64_t, std::int64_t);
 			static std::function<TAllowPlayerKnowsCondition_Add> AllowPlayerKnowsCondition_Add;
 
@@ -60,8 +60,8 @@ namespace CKPE
 				//
 				// Allow the "PlayerKnows" conditional function to accept enchantments as a function parameter
 				//
-				Relocation(ID(232474)).WriteJump(sub);
-				AllowPlayerKnowsCondition_Add = Relocation<TAllowPlayerKnowsCondition_Add>(ID(242709));
+				Relocation(ID(232474)).WriteJump(&sub);
+				AllowPlayerKnowsCondition_Add = Relocation<TAllowPlayerKnowsCondition_Add>(ID(242709)).Get();
 					
 				return true;
 			}

@@ -51,9 +51,9 @@ namespace CKPE
 
 			bool AddChangeRef::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				Common::Relocation(Common::ID(278484), 0x9A5).WriteCall(HKInsertMenuA);
+				Common::Relocation(Common::ID(278484), 0x9A5).WriteCall(&HKInsertMenuA);
 				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetParentWithRedraw = Common::ID(284410).Address();
-				Common::Relocation(Common::ID(278484), 0xD9D).WriteCall(HKDeleteMenu);
+				Common::Relocation(Common::ID(278484), 0xD9D).WriteCall(&HKDeleteMenu);
 
 				return true;
 			}

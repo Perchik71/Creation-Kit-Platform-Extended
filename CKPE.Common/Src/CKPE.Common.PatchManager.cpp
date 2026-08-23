@@ -16,7 +16,7 @@ namespace CKPE
 	{
 		static PatchManager GlobalPatchManager;
 
-		std::int32_t PatchManager::ActivePatchSafe(Entry& entry)
+		std::int32_t PatchManager::ActivePatchSafe(Entry& entry) const
 		{
 			__try
 			{
@@ -31,7 +31,7 @@ namespace CKPE
 			}
 		}
 
-		std::int32_t PatchManager::QueryPatchSafe(Entry& entry)
+		std::int32_t PatchManager::QueryPatchSafe(Entry& entry) const
 		{
 			__try
 			{
@@ -108,7 +108,7 @@ namespace CKPE
 				{
 					for (auto& depend : depends)
 					{
-						auto it = std::find_if(_entries->begin(), _entries->end(), [&depend](Entry& entry) -> bool
+						auto it = std::find_if(_entries->begin(), _entries->end(), [&depend](Entry& entry)
 							{
 								return !_stricmp(entry.patch->GetName().c_str(), depend.c_str());
 							});
@@ -199,7 +199,7 @@ namespace CKPE
 				}
 			}
 
-			auto entry_exist = std::find_if(_entries->begin(), _entries->end(), [&name](const Entry& e) -> bool {
+			auto entry_exist = std::find_if(_entries->begin(), _entries->end(), [&name](const Entry& e) {
 				return !_stricmp(e.patch->GetName().c_str(), name.c_str());
 				});
 
@@ -307,12 +307,14 @@ namespace CKPE
 					skips.push_back(it);
 			}
 
-			for (auto& it : skips)
+			while(!skips.empty())
 			{
+				auto& it = skips[skips.size() - 1];
 				if (it->patch)
 					delete it->patch;
 
 				_entries->erase(it);
+				skips.pop_back();
 			}
 		}
 

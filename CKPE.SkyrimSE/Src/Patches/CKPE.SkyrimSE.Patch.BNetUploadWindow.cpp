@@ -45,24 +45,25 @@ namespace CKPE
 				return {};
 			}
 
+			bool BNetUploadWindow::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool BNetUploadWindow::DoQuery() const noexcept(true)
 			{
 				// Upload for the editor only version CK 1.6.1130 or newer
-				return VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1130;
+				return (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1130) &&
+					(VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1);
 			}
 
 			bool BNetUploadWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto _interface = Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
-
-				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
-
-				Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&sub);
-				pointer_BNetUploadWindow_sub = __CKPE_OFFSET(2);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(ID(1170337)).WriteJump(&HKWndProc);
+				Relocation(ID(97505), 0x5A).WriteCall(&sub);
+				pointer_BNetUploadWindow_sub = ID(347314).Address();
 
 				return true;
 			}

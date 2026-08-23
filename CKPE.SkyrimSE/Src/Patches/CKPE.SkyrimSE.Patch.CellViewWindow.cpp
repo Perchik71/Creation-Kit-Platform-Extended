@@ -38,9 +38,13 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			std::uintptr_t pointer_CellViewWindow_sub1 = 0;
-			std::uintptr_t pointer_CellViewWindow_sub2 = 0;
-			std::uintptr_t pointer_CellViewWindow_sub3 = 0;
+			using TCellViewWindow_sub1 = void(HWND, EditorAPI::Forms::TESForm*, bool, std::int32_t);
+			using TCellViewWindow_sub2 = std::int32_t(HWND*, EditorAPI::Forms::TESForm**);
+			using TCellViewWindow_sub3 = std::int64_t(std::int64_t a1, std::int64_t a2, std::int64_t a3);
+
+			static std::function<TCellViewWindow_sub1> CellViewWindow_sub1;
+			static std::function<TCellViewWindow_sub2> CellViewWindow_sub2;
+			static std::function<TCellViewWindow_sub3> CellViewWindow_sub3;
 			char* str_CellViewWindow_Filter = nullptr;
 			char* str_CellViewWindow_FilterUser = nullptr;
 
@@ -70,6 +74,11 @@ namespace CKPE
 				return { "Main Window", "Render Window" };
 			}
 
+			bool CellViewWindow::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool CellViewWindow::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -77,26 +86,23 @@ namespace CKPE
 
 			bool CellViewWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+				*(std::uintptr_t*)&_oldWndProc = Relocation(ID(196690)).WriteJump(&HKWndProc);
 
-				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
+				Relocation(ID(66544), 0xE7).WriteCall(&sub1);				// Allow forms to be filtered in EditorUI_CellViewProc
+				Relocation(ID(402093), 0x2C).WriteCall(&sub1);				// ^
+				Relocation(ID{ 211613, 993555 }, 0x8E).WriteCall(&sub2);	// ^
 
-				Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&sub1); // Allow forms to be filtered in EditorUI_CellViewProc
-				Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&sub1); // ^
-				Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&sub2); // ^
-
-				pointer_CellViewWindow_sub1 = __CKPE_OFFSET(5);
-				pointer_CellViewWindow_sub2 = __CKPE_OFFSET(6);
+				CellViewWindow_sub1 = Relocation<TCellViewWindow_sub1>(ID(314185)).Get();
+				CellViewWindow_sub2 = Relocation<TCellViewWindow_sub2>(ID(299406)).Get();
+				CellViewWindow_sub3 = Relocation<TCellViewWindow_sub3>(ID(336753)).Get();
 
 				// Hook event add/rem from pick
-				Detours::DetourCall(__CKPE_OFFSET(7), (std::uintptr_t)&sub3);
-				Detours::DetourCall(__CKPE_OFFSET(9), (std::uintptr_t)&sub3);
-				pointer_CellViewWindow_sub3 = __CKPE_OFFSET(8);
-
+				auto target = ID(321163);
+				Relocation(target, 0x50F).WriteCall(&sub3);
+				Relocation(target, 0x52E).WriteCall(&sub3);
+				
 				return true;
 			}
 
@@ -109,12 +115,11 @@ namespace CKPE
 				if (!allowInsert)
 					return;
 
-				((void(__fastcall*)(HWND, EditorAPI::Forms::TESForm*, bool, std::int32_t))pointer_CellViewWindow_sub1)
-					(ListViewHandle, Form, UseImage, ItemIndex);
+				CellViewWindow_sub1(ListViewHandle, Form, UseImage, ItemIndex);
 			}
 
 			std::int32_t CellViewWindow::sub2(HWND** ListViewHandle, EditorAPI::Forms::TESForm** Form, 
-				std::int64_t a3) noexcept(true)
+				[[maybe_unused]] std::int64_t a3) noexcept(true)
 			{
 				bool allowInsert = true;
 				CellViewWindow::Singleton->Perform(UI_CELL_VIEW_ADD_CELL_OBJECT_ITEM, (WPARAM)*Form, (LPARAM)&allowInsert);
@@ -122,13 +127,12 @@ namespace CKPE
 				if (!allowInsert)
 					return 1;
 
-				return ((std::int32_t(__fastcall*)(HWND*, EditorAPI::Forms::TESForm**))pointer_CellViewWindow_sub2)
-					(*ListViewHandle, Form);
+				return CellViewWindow_sub2(*ListViewHandle, Form);
 			}
 
 			std::int64_t CellViewWindow::sub3(std::int64_t a1, std::int64_t a2, std::int64_t a3) noexcept(true)
 			{
-				auto Ret = fast_call<std::int64_t>(pointer_CellViewWindow_sub3, a1, a2, a3);
+				auto Ret = CellViewWindow_sub3(a1, a2, a3);
 				//auto Handle = CellViewWindow::Singleton->Handle;
 				//auto SelOnly = static_cast<bool>(GetPropA(Handle, Common::EditorUI::UI_USER_DATA_SELECT_OBJECT_ONLY));
 				//auto VisOnly = static_cast<bool>(GetPropA(Handle, Common::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY));
@@ -228,14 +232,14 @@ namespace CKPE
 				m_ActiveObjectsOnly.BoundsRect = Bounds;
 			}
 
-			void CellViewWindow::UpdateCellList() noexcept(true)
+			void CellViewWindow::UpdateCellList() const noexcept(true)
 			{
 				if (!lock)
 					// Fake the dropdown list being activated
 					SendMessageA(Handle, WM_COMMAND, MAKEWPARAM(2083, CBN_SELCHANGE), 0);
 			}
 
-			void CellViewWindow::UpdateObjectList() noexcept(true)
+			void CellViewWindow::UpdateObjectList() const noexcept(true)
 			{
 				if (!lock)
 					// Fake a filter text box change
@@ -324,7 +328,7 @@ namespace CKPE
 					}
 					else if ((param == UI_CELL_VIEW_FILTER_CELL) && (HIWORD(wParam) == EN_CHANGE))
 					{
-						SetTimer(Hwnd, UI_CELL_VIEW_FILTER_TIMER, 500, NULL);
+						SetTimer(Hwnd, UI_CELL_VIEW_FILTER_TIMER, 500, nullptr);
 						return 1;
 					}
 					else if (param == UI_CELL_VIEW_GO_BUTTON)
@@ -364,7 +368,7 @@ namespace CKPE
 
 					// Skip if a filter is installed and the form does not meet the requirements
 					if (*allowInsert && 
-						reinterpret_cast<std::int32_t>(GetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_FILTER_CELLS_LEN)) > 2)
+						(reinterpret_cast<std::int32_t>(GetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_FILTER_CELLS_LEN)) > 2))
 					{
 						auto editorID = form->EditorID;
 						if (editorID)

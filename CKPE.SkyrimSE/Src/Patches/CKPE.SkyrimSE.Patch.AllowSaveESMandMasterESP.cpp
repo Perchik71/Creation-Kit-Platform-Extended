@@ -24,7 +24,9 @@ namespace CKPE
 
 		namespace Patch
 		{
-			uintptr_t pointer_AllowSaveESMandMasterESP_sub1 = 0;
+			using TOpenPluginSaveDialog = bool(std::uintptr_t, const char*, const char*, const char*,
+				const char*, void*, bool, bool, char*, std::uint32_t, const char*, void*);
+			static std::function<TOpenPluginSaveDialog> AllowSaveESMandMasterESP_sub;
 
 			static bool IsActiveFileBlacklist(const EditorAPI::TESFile* a_file) noexcept(true)
 			{
@@ -72,43 +74,37 @@ namespace CKPE
 
 			bool AllowSaveESMandMasterESP::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				EditorAPI::pointer_TESFile_sub1 = ID(569310).Address();
+				EditorAPI::pointer_TESFile_sub2 = ID(539487).Address();
 
-				EditorAPI::pointer_TESFile_sub1 = __CKPE_OFFSET(0);
-				EditorAPI::pointer_TESFile_sub2 = __CKPE_OFFSET(1);
-				pointer_AllowSaveESMandMasterESP_sub1 = __CKPE_OFFSET(11);
+				AllowSaveESMandMasterESP_sub = Relocation<TOpenPluginSaveDialog>(ID(555288)).Get();
 
 				EditorAPI::TESFile::AllowSaveESM = _READ_OPTION_BOOL("CreationKit", "bAllowSaveESM", false);
 				EditorAPI::TESFile::AllowMasterESP = _READ_OPTION_BOOL("CreationKit", "bAllowMasterESP", false);
-
 				if (EditorAPI::TESFile::AllowSaveESM || EditorAPI::TESFile::AllowMasterESP)
 				{
-					*(std::uintptr_t*)&EditorAPI::TESFile::LoadTESInfo =
-						Detours::DetourClassJump(__CKPE_OFFSET(3), &EditorAPI::TESFile::hk_LoadTESInfo);
-					*(std::uintptr_t*)&EditorAPI::TESFile::WriteTESInfo =
-						Detours::DetourClassJump(__CKPE_OFFSET(4), &EditorAPI::TESFile::hk_WriteTESInfo);
-
+					*(std::uintptr_t*)&EditorAPI::TESFile::LoadTESInfo = Relocation(ID(363414)).WriteJump(&EditorAPI::TESFile::hk_LoadTESInfo);
+					*(std::uintptr_t*)&EditorAPI::TESFile::WriteTESInfo = Relocation(ID(549393)).WriteJump(&EditorAPI::TESFile::hk_WriteTESInfo);
+					
 					if (EditorAPI::TESFile::AllowSaveESM)
 					{
 						// Also allow non-game ESMs to be set as "Active File"
-						Detours::DetourClassCall(__CKPE_OFFSET(5), &IsActiveFileBlacklist);
-						SafeWrite::WriteNop(__CKPE_OFFSET(6), 2);
+						Relocation(ID(600608), Offset{ 0x47, 0x54 }).WriteCall(&IsActiveFileBlacklist);
+						Relocation(ID(341913), 0x10E).WriteFill(NOP, 2);
 
 						// Disable: "File '%s' is a master file or is in use.\n\nPlease select another file to save to."
 						const char* newFormat = "File '%s' is in use.\n\nPlease select another file to save to.";
 
-						SafeWrite::WriteNop(__CKPE_OFFSET(7), 12);
-						SafeWrite::Write(__CKPE_OFFSET(8), (std::uint8_t*)newFormat, strlen(newFormat) + 1);
-						Detours::DetourJump(__CKPE_OFFSET(9), (std::uintptr_t)&OpenPluginSaveDialog);
+						Relocation(ID(551174), 0x96A).WriteFill(NOP, 12);
+						Relocation(ID(106374)).Write(newFormat, strlen(newFormat) + 1);
+						Relocation(ID(205873)).WriteJump(&OpenPluginSaveDialog);
 					}
 
 					if (EditorAPI::TESFile::AllowMasterESP)
 						// Remove the check for IsMaster()
-						SafeWrite::WriteNop(__CKPE_OFFSET(10), 12);
+						Relocation(ID(1578), 0x29).WriteFill(NOP, 12);
 				}
 
 				return true;
@@ -131,10 +127,8 @@ namespace CKPE
 					extension = "esm";
 				}
 
-				return ((bool(__fastcall*)(std::uintptr_t, const char*, const char*, const char*,
-					const char*, void*, bool, bool, char*, std::uint32_t, const char*, void*))
-					pointer_AllowSaveESMandMasterESP_sub1)(ParentWindow, BasePath, filter, title, extension, nullptr,
-						false, true, Buffer, BufferSize, Directory, nullptr);
+				return AllowSaveESMandMasterESP_sub(ParentWindow, BasePath, filter, title, extension, nullptr,
+					false, true, Buffer, BufferSize, Directory, nullptr);
 			}
 		}
 	}
