@@ -118,7 +118,7 @@ namespace CKPE
 			mgr->Register(new Patch::AllowSaveESMandMasterESP);
 			mgr->Register(new Patch::AssertD3D11);
 			//mgr->Register(new Patch::BSArchiveManagerModded);
-			//mgr->Register(new Patch::BSResourceLooseFiles);
+			mgr->Register(new Patch::BSResourceLooseFiles);
 			mgr->Register(new Patch::BSStringRefRE);
 			mgr->Register(new Patch::CellViewWindow);
 			mgr->Register(new Patch::ChooseSoundFile);
@@ -175,7 +175,7 @@ namespace CKPE
 			mgr->Register(new Patch::RenderWindow60FPS);
 			mgr->Register(new Patch::ReplaceBSPointerHandleAndManager);
 			mgr->Register(new Patch::ResponseIgnoreMax);
-			//mgr->Register(new Patch::ResponseWindow);
+			mgr->Register(new Patch::ResponseWindow);
 			mgr->Register(new Patch::RunNetworkDisable);
 			mgr->Register(new Patch::SkipTopicInfoValidation);
 			mgr->Register(new Patch::SkipUpdateCheck);
