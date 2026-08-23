@@ -4,7 +4,6 @@
 
 #include <windows.h>
 #include <CKPE.Utils.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.EditorUI.h>

@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.LogWindow.h>
 #include <CKPE.Common.Interface.h>
@@ -142,7 +141,7 @@ namespace CKPE
 				va_end(va);
 			}
 
-			void Console::LogWarningUnknown2(__int64 Unused, const char* Format, ...) noexcept(true)
+			void Console::LogWarningUnknown2([[maybe_unused]]__int64 Unused, const char* Format, ...) noexcept(true)
 			{
 				va_list va;
 				va_start(va, Format);

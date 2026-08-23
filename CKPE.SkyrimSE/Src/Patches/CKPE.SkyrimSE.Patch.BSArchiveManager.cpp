@@ -3,8 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
 #include <CKPE.FileUtils.h>
@@ -72,8 +70,8 @@ namespace CKPE
 					auto pathData = EditorAPI::BSString::Utils::GetDataPath();
 
 					WIN32_FIND_DATA	FileFindData{};
-					HANDLE hFindFile = FindFirstFileExA(*(pathData + "*.bsa"), FindExInfoStandard, &FileFindData,
-						FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH);
+					auto hFindFile = FindFirstFileExA(*(pathData + "*.bsa"), FindExInfoStandard, &FileFindData,
+						FindExSearchNameMatch, nullptr, FIND_FIRST_EX_LARGE_FETCH);
 					if (hFindFile != INVALID_HANDLE_VALUE) 
 					{
 						do
@@ -88,10 +86,10 @@ namespace CKPE
 
 						if (svalue.length() > 0) 
 						{
-							LPSTR s_c = new CHAR[svalue.length() + 1];
+							auto s_c = new CHAR[svalue.length() + 1];
 							strcpy(s_c, svalue.c_str());
 
-							LPSTR stoken = strtok(s_c, ",");
+							auto stoken = strtok(s_c, ",");
 							if (stoken)
 							{
 								do 
@@ -111,7 +109,7 @@ namespace CKPE
 										g_arrayArchivesAvailable.erase(index);
 									}
 
-									stoken = strtok(NULL, ",");
+									stoken = strtok(nullptr, ",");
 								} while (stoken);
 							}
 

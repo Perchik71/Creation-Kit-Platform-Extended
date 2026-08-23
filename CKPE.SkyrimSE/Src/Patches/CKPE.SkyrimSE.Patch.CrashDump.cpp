@@ -3,8 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.StringUtils.h>
 #include <CKPE.Common.RTTI.h>
@@ -52,6 +50,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool CrashDump::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool CrashDump::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -59,45 +62,42 @@ namespace CKPE
 
 			bool CrashDump::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				Common::CrashHandler::GetSingleton()->Install();
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				CrashHandler::GetSingleton()->Install();
+				auto base = Application::GetSingleton()->GetBase();
 
 				auto purecallHandler = []()
 					{
-						RaiseException('PURE', EXCEPTION_NONCONTINUABLE, 0, NULL);
+						RaiseException('PURE', EXCEPTION_NONCONTINUABLE, 0, nullptr);
 					};
 
 				auto terminateHandler = []()
 					{
-						RaiseException('TERM', EXCEPTION_NONCONTINUABLE, 0, NULL);
+						RaiseException('TERM', EXCEPTION_NONCONTINUABLE, 0, nullptr);
 					};
 
-				auto patchIAT = [&terminateHandler, &purecallHandler, &base](const char* module)
+				auto patchIAT = [&terminateHandler, &purecallHandler, &base](const char* hmodule)
 					{
-						Detours::DetourIAT(base, module, "_cexit", (std::uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "_exit", (std::uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "_Exit", (std::uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "_c_exit", (std::uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "exit", (std::uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "abort", (std::uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "terminate", (std::uintptr_t)(void(*)())terminateHandler);
-						Detours::DetourIAT(base, module, "_purecall", (std::uintptr_t)(void(*)())purecallHandler);
+						Detours::DetourIAT(base, hmodule, "_cexit", (std::uintptr_t)(void(*)())terminateHandler);
+						Detours::DetourIAT(base, hmodule, "_exit", (std::uintptr_t)(void(*)())terminateHandler);
+						Detours::DetourIAT(base, hmodule, "_Exit", (std::uintptr_t)(void(*)())terminateHandler);
+						Detours::DetourIAT(base, hmodule, "_c_exit", (std::uintptr_t)(void(*)())terminateHandler);
+						Detours::DetourIAT(base, hmodule, "exit", (std::uintptr_t)(void(*)())terminateHandler);
+						Detours::DetourIAT(base, hmodule, "abort", (std::uintptr_t)(void(*)())terminateHandler);
+						Detours::DetourIAT(base, hmodule, "terminate", (std::uintptr_t)(void(*)())terminateHandler);
+						Detours::DetourIAT(base, hmodule, "_purecall", (std::uintptr_t)(void(*)())purecallHandler);
 					};
 
 				// Патчим все известные библы используемые в CK
 
 				patchIAT("API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL");
 				patchIAT("MSVCR110.DLL");
-
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0xC3 });	// StackTrace::MemoryTraceWrite
-				SafeWrite::Write(__CKPE_OFFSET(1), { 0xC3 });	// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
-				SafeWrite::Write(__CKPE_OFFSET(2), { 0xC3 });	// SetUnhandledExceptionFilter, Unknown
-				SafeWrite::WriteNop(__CKPE_OFFSET(3), 6);		// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
+				
+				Relocation(ID{ 694424, 998237 }).Write(RET);	// StackTrace::MemoryTraceWrite
+				Relocation(ID(593935), 0x2F).Write(RET);		// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
+				Relocation(ID(133680), 7).Write(RET);			// SetUnhandledExceptionFilter, Unknown
+				Relocation(ID(218884), 0xB).WriteFill(NOP, 6);	// SetUnhandledExceptionFilter, BSWin32ExceptionHandler
 
 				Common::CrashHandler::GetSingleton()->OnAnalyzeClassRef = DoAnalyzeClassRef;
 				Common::CrashHandler::GetSingleton()->OnOutputVersion = DoOutputVersion;
