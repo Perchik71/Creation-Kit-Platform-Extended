@@ -11,9 +11,6 @@
 
 // Header-only convenience wrapper around CKPEAddressLibraryInterface, mirroring the
 // CKPE::Common::Relocation / ID / Offset syntax used internally by CKPE's own patches.
-// It never crosses the DLL boundary as a C++ object - it's compiled straight into your
-// plugin and just calls through the function pointers you already got via QueryInterface,
-// so there's no ABI risk regardless of what compiler/STL your plugin uses.
 //
 // One-time setup, once you have your CKPEPluginInterface*:
 //
@@ -55,9 +52,6 @@ namespace CKPE
 
 			static inline CKPEAddressLibraryInterface* s_iface{ nullptr };
 		public:
-			// Call once, right after you receive your CKPEPluginInterface*. `a_iface` is whatever
-			// QueryInterface(kInterface_AddressLibrary) returned (may be nullptr on an old CKPE
-			// build that predates this interface - Relocation just resolves to 0/no-ops in that case).
 			static void Init(void* a_iface) noexcept { s_iface = reinterpret_cast<CKPEAddressLibraryInterface*>(a_iface); }
 			[[nodiscard]] static bool IsInitialized() noexcept { return s_iface != nullptr; }
 			[[nodiscard]] static bool IsAddressLibraryLoaded() noexcept { return s_iface && s_iface->IsLoaded(); }
