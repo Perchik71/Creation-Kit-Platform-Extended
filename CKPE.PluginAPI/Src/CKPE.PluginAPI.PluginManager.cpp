@@ -9,8 +9,11 @@
 #include <CKPE.ErrorHandler.h>
 #include <CKPE.StringUtils.h>
 #include <CKPE.PathUtils.h>
+#include <CKPE.SafeWrite.h>
+#include <CKPE.Detours.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.DialogManager.h>
+#include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.PluginAPI.PluginManager.h>
 
 namespace CKPE
@@ -41,6 +44,34 @@ namespace CKPE
 				Common::DialogManager::GetSingleton()->LoadFromFilePackage(filename);
 				return true;
 			},
+		};
+
+		static CKPEAddressLibraryInterface _AddressLibraryInterface
+		{
+			CKPEAddressLibraryInterface::kInterfaceVersion,
+			_AddressLibraryInterface.IsLoaded =
+				[]() { return Common::AddressLibrary::GetSingleton()->IsLoaded(); },
+			_AddressLibraryInterface.Resolve =
+				[](const std::uint64_t id, const std::ptrdiff_t offset) -> std::uintptr_t
+			{
+				auto base = Common::AddressLibrary::GetSingleton()->Resolve(id);
+				return base ? (std::uintptr_t)((std::intptr_t)base + offset) : 0;
+			},
+			_AddressLibraryInterface.Write =
+				[](std::uintptr_t address, const std::uint8_t* data, std::size_t size)
+				{ SafeWrite::Write(address, data, size); },
+			_AddressLibraryInterface.WriteSet =
+				[](std::uintptr_t address, std::uint8_t value, std::size_t size)
+				{ SafeWrite::WriteSet(address, value, size); },
+			_AddressLibraryInterface.WriteNop =
+				[](std::uintptr_t address, std::size_t size)
+				{ SafeWrite::WriteNop(address, size); },
+			_AddressLibraryInterface.DetourJump =
+				[](std::uintptr_t target, std::uintptr_t destination) -> std::uintptr_t
+				{ return Detours::DetourJump(target, destination); },
+			_AddressLibraryInterface.DetourCall =
+				[](std::uintptr_t target, std::uintptr_t destination) -> std::uintptr_t
+				{ return Detours::DetourCall(target, destination); },
 		};
 
 		void PluginManager::ReportPluginErrors(const std::vector<std::wstring>* v) const noexcept(true)
@@ -75,6 +106,8 @@ namespace CKPE
 			{
 			case kInterface_DialogManager:
 				return (void*)&_DialogManagerInterface;
+			case kInterface_AddressLibrary:
+				return (void*)&_AddressLibraryInterface;
 			default:
 				return nullptr;
 			}
