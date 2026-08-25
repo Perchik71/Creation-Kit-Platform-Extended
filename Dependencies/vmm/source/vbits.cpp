@@ -1,4 +1,4 @@
-﻿// Copyright © 2023 aka CKPE team. All rights reserved.
+﻿// Copyright © 2023 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -241,8 +241,7 @@ namespace voltek
 		bool bits::find_first_set_bit_avx2(size_t& index) const
 		{
 			uint64_t* u64p = (uint64_t*)_mem;
-			size_t cnt = (_count >> 6) << 6;
-			size_t end_cnt = cnt >> 6;
+			size_t end_cnt = _internal::complete_simd_word_count(_count, 2048);
 
 			int mask = 0;
 
@@ -292,24 +291,15 @@ namespace voltek
 				return true;
 			}
 
-			for (size_t i = cnt; i < _count; i++)
-			{
-				if (is_set(i))
-				{
-					index = i;
-					return true;
-				}
-			}
-
-			return false;
+			_mm256_zeroupper();
+			return find_first_set_bit_none(index, end_cnt);
 		}
 
 		// Поиск первого установленного бита SSE4.1 инструкциями
 		bool bits::find_first_set_bit_sse41(size_t& index) const
 		{
 			uint64_t* u64p = (uint64_t*)_mem;
-			size_t cnt = (_count >> 6) << 6;
-			size_t end_cnt = cnt >> 6;
+			size_t end_cnt = _internal::complete_simd_word_count(_count, 1024);
 			int mask = 0;
 
 			__m128i zero = { 0 };	// Всратая студия хочет инициализации локальной переменной, окей
@@ -354,16 +344,7 @@ namespace voltek
 				return true;
 			}
 
-			for (size_t i = cnt; i < _count; i++)
-			{
-				if (is_set(i))
-				{
-					index = i;
-					return true;
-				}
-			}
-
-			return false;
+			return find_first_set_bit_none(index, end_cnt);
 		}
 
 		bool bits::find_first_set_bit_none(size_t& index, size_t start) const
@@ -382,22 +363,31 @@ namespace voltek
 				}
 			}
 
+			for (size_t i = cnt; i < _count; i++)
+			{
+				if (is_set(i))
+				{
+					index = i;
+					return true;
+				}
+			}
+
 			return false;
 		}
 
 		/////////////////////////////////////
 
 		// Конструктор по умолчанию.
-		bits_regions::bits_regions() : base(), _region_map(0), _count(0), _sets(0), _distance(0)
+		bits_regions::bits_regions() : base(), _region_map(0), _count(0), _sets(0), _distance(0), _distance_shift(SIZE_MAX)
 		{}
 		// Конструктор.
 		// В качестве параметра указывается кол-во желаемых битов.
-		bits_regions::bits_regions(size_t count) : base(), _region_map(0), _count(0), _sets(0), _distance(0)
+		bits_regions::bits_regions(size_t count) : base(), _region_map(0), _count(0), _sets(0), _distance(0), _distance_shift(SIZE_MAX)
 		{
 			resize(count);
 		}
 		// Конструктор копий.
-		bits_regions::bits_regions(const bits_regions& ob) : base(), _region_map(0), _count(0), _sets(0), _distance(0)
+		bits_regions::bits_regions(const bits_regions& ob) : base(), _region_map(0), _count(0), _sets(0), _distance(0), _distance_shift(SIZE_MAX)
 		{
 			*this = ob;
 		}
@@ -417,6 +407,7 @@ namespace voltek
 			_count = ob._count;
 			_sets = ob._sets;
 			_distance = ob._distance;
+			_distance_shift = ob._distance_shift;
 
 			return *this;
 		}
@@ -427,12 +418,6 @@ namespace voltek
 		// Меньше 65536 нельзя.
 		void bits_regions::resize(size_t count)
 		{
-			if (count < 65536)
-			{
-				_vassert(count < 65536);
-				return;
-			}
-
 			if (!count)
 			{
 				for (size_t i = 0; i < 16; i++)
@@ -440,9 +425,16 @@ namespace voltek
 
 				memset(_regions, 0, sizeof(region) << 4);
 				_distance = 0;
+				_distance_shift = SIZE_MAX;
 				_region_map = 0;
 				_count = 0;
 				_sets = 0;
+				return;
+			}
+
+			if (count < 65536)
+			{
+				_vassert(count >= 65536);
 				return;
 			}
 
@@ -454,6 +446,7 @@ namespace voltek
 
 			// Делим на 16 масок
 			_distance = count >> 4;
+			_distance_shift = std::has_single_bit(_distance) ? std::countr_zero(_distance) : SIZE_MAX;
 			// Настроим кол-во регионов (фактически делим огромное на 16 секций)
 			for (size_t i = 0; i < 16; i++)
 			{
@@ -498,7 +491,8 @@ namespace voltek
 		bool bits_regions::is_set(size_t bit_index) const
 		{
 			_vassert(_count > bit_index);
-			size_t region_id = bit_index / _distance;
+			size_t region_id = _distance_shift != SIZE_MAX ? bit_index >> _distance_shift : bit_index / _distance;
+			if (region_id > 15) region_id = 15;
 			return _region_bits[region_id].is_set(bit_index - _regions[region_id].start);
 		}
 		// Устанавливает бит за заданным индексом "bit_index" в 0, если он был равен 1.
@@ -508,7 +502,8 @@ namespace voltek
 		bool bits_regions::unset(size_t bit_index)
 		{
 			_vassert(_count > bit_index);
-			size_t region_id = bit_index / _distance;
+			size_t region_id = _distance_shift != SIZE_MAX ? bit_index >> _distance_shift : bit_index / _distance;
+			if (region_id > 15) region_id = 15;
 			bool ret = _region_bits[region_id].unset(bit_index - _regions[region_id].start);
 			if (ret)
 			{
@@ -526,7 +521,8 @@ namespace voltek
 		bool bits_regions::set(size_t bit_index)
 		{
 			_vassert(_count > bit_index);
-			size_t region_id = bit_index / _distance;
+			size_t region_id = _distance_shift != SIZE_MAX ? bit_index >> _distance_shift : bit_index / _distance;
+			if (region_id > 15) region_id = 15;
 			bool ret = _region_bits[region_id].set(bit_index - _regions[region_id].start);
 			if (ret)
 			{

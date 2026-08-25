@@ -1,4 +1,4 @@
-﻿// Copyright © 2023-2024 aka CKPE team. All rights reserved.
+﻿// Copyright © 2023-2024 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -72,11 +72,11 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "CompanyName", "aka CKPE team"
+            VALUE "CompanyName", "aka perchik71"
             VALUE "FileDescription", "Scalable Allocator library"
             VALUE "FileVersion", VER_FILE_VERSION_STR
             VALUE "InternalName", "Voltek.MemoryManager"
-            VALUE "LegalCopyright", "Copyright (C) aka CKPE team 2023-2024"
+            VALUE "LegalCopyright", "Copyright (C) aka perchik71 2023-2024"
             VALUE "OriginalFilename", "Voltek.MemoryManager.dll"
             VALUE "ProductName", "Memory manager"
             VALUE "ProductVersion", VER_PRODUCT_VERSION_STR

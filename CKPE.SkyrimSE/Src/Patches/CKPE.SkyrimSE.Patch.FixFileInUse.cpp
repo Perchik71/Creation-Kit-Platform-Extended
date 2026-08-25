@@ -39,6 +39,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixFileInUse::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixFileInUse::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -46,18 +51,14 @@ namespace CKPE
 
 			bool FixFileInUse::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for "File in use" UI hang after hitting cancel. 
 				// It tries to use the main window handle as a parent, but it's suspended during the initial data load, 
 				// resulting in a deadlock. The new BGSThreadedProgressDlg causes this.
 				//
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0x4D, 0x33, 0xC0, 0x90, 0x90, 0x90, 0x90 });
+				Relocation(ID(186959), 0x711).Write({ 0x4D, 0x33, 0xC0, 0x90, 0x90, 0x90, 0x90 });
 
 				return true;
 			}

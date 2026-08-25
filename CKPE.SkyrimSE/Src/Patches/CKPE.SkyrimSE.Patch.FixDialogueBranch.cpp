@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -39,6 +38,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixDialogueBranch::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixDialogueBranch::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -46,18 +50,14 @@ namespace CKPE
 
 			bool FixDialogueBranch::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for the "Dialogue Branch" dialog showing corrupted starting topic strings. 
 				// The address of a variable is provided instead of a string pointer. 
 				// Change LEA to MOV.
 				//
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0x4C, 0x8B });
+				Relocation(ID(197121), 0x23C).Write({ 0x4C, 0x8B });
 
 				return true;
 			}

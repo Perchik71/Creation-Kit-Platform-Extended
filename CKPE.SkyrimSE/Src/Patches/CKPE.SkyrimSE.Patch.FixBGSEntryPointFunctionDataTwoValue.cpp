@@ -60,7 +60,6 @@ namespace CKPE
 				// Use the editor id instead of perk name for the Perk Entry dialog selection.
 				//
 				
-				
 				Relocation(ID(215259), 0x134).WriteCall(&sub);
 				FixBGSEntryPointFunctionDataTwoValueSub = 
 					Relocation<TFixBGSEntryPointFunctionDataTwoValueSub>(ID(370178)).Get();

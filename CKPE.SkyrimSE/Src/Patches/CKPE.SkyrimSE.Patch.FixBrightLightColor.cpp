@@ -61,8 +61,8 @@ namespace CKPE
 				// The blue and green channels are swapped.
 				//
 
-				FixBrightLightColorSub = (TFixBrightLightColorSub*)
-					Relocation(ID(554127), Offset{ 0xAA8, 0xAA5 }).WriteCall(&sub);
+				FixBrightLightColorSub = reinterpret_cast<TFixBrightLightColorSub*>
+					(Relocation(ID(554127), Offset{ 0xAA8, 0xAA5 }).WriteCall(&sub));
 
 				return true;
 			}

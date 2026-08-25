@@ -1,4 +1,4 @@
-﻿// Copyright © 2023 aka CKPE team. All rights reserved.
+﻿// Copyright © 2023 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -12,6 +12,17 @@ namespace voltek
 {
 	namespace core
 	{
+		namespace _internal
+		{
+			// SIMD scans may read only complete chunks.
+			[[nodiscard]] constexpr size_t complete_simd_word_count(
+				size_t bit_count,
+				size_t chunk_bit_count) noexcept
+			{
+				return (bit_count / chunk_bit_count) * (chunk_bit_count >> 6);
+			}
+		}
+
 		// Класс для битовых манипуляций.
 		// Битовая карта, всё взаимодействие в битах.
 		//
@@ -200,6 +211,7 @@ namespace voltek
 			size_t _sets;
 			// Дистанция между регионами в битах.
 			size_t _distance;
+			size_t _distance_shift;
 			// Маска регионов
 			// Данное число используется для определения региона,
 			// где был установлен бит как 1.

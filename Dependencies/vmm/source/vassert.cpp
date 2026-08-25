@@ -1,10 +1,10 @@
-﻿// Copyright © 2023 aka CKPE team. All rights reserved.
+// Copyright © 2023 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include "vassert.h"
 
-#ifdef _DEBUG
+#if !defined(NDEBUG)
 
 #if !defined(_CONSOLE) && (defined(_WIN32) || defined(_WIN64))
 #	include <windows.h>
@@ -81,4 +81,4 @@ namespace voltek
 	}
 }
 
-#endif // _DEBUG
+#endif // !NDEBUG

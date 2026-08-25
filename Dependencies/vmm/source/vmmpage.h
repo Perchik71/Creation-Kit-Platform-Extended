@@ -1,4 +1,4 @@
-﻿// Copyright © 2023 aka CKPE team. All rights reserved.
+﻿// Copyright © 2023 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -6,13 +6,10 @@
 
 #include "valloc.h"
 #include "vassert.h"
+#include "vmmgeometry.h"
 #include "vmapper.h"
 #include "vio.h"
 #include "vstack.h"
-
-#define __VMM_PAGE_CONFIG_NORMAL_SIZE voltek::core::bits_regions
-#define __VMM_PAGE_CONFIG_SMALL_SIZE voltek::core::bits
-#define __VMM_PAGE_CONFIG_LOW_SIZE __VMM_PAGE_CONFIG_SMALL_SIZE
 
 namespace voltek
 {
@@ -22,7 +19,7 @@ namespace voltek
 		// Является хранилищем блоков, но при этом нет жёсткой зависимости от каких блоков.
 		// Служит только в качестве помечания свободный или занятый блок, а также быстрого
 		// нахождения свободного блока, при помощи битовой карты.
-		template<typename _type, typename _map = __VMM_PAGE_CONFIG_NORMAL_SIZE>
+		template<typename _type, typename _map = page_map<_type>>
 		class page_t : public voltek::core::base
 		{
 		public:
@@ -47,9 +44,9 @@ namespace voltek
 				{
 #ifdef MAPPER_USE
 					if (!_mapper->block_free(_blocks))
-						voltek::core::_internal::aligned_free(_blocks);
+						voltek::core::_internal::page_free(_blocks);
 #else
-					voltek::core::_internal::aligned_free(_blocks);
+					voltek::core::_internal::page_free(_blocks);
 #endif
 
 					_blocks = nullptr;
@@ -65,16 +62,28 @@ namespace voltek
 				// Это необходимо, учитывая, что bits_regions размер минимум от 65536.
 				// Использование SIMD инструкций является приоритетом, а "хвоста" должно 
 				// быть немного, а лучше небыло вовсе.
-				new_size = (new_size << 8) >> 8;
+				new_size = (new_size >> 8) << 8;
 
 				map.clear();
+				if (new_size && new_size > SIZE_MAX / sizeof(_type))
+				{
+					_vassert(!_blocks);
+					return;
+				}
+
 				map.resize(new_size);
+				if (map.count() != new_size)
+				{
+					_vassert(map.count() == new_size);
+					return;
+				}
+				size_t alloc_size = new_size * sizeof(_type);
 
 #ifdef MAPPER_USE
 				_blocks = (_type*)_mapper->block_alloc();
-				if (!_blocks) _blocks = voltek::core::_internal::aligned_talloc<_type>(new_size, 0x10);
+				if (!_blocks) _blocks = (_type*)voltek::core::_internal::page_alloc(alloc_size);
 #else
-				_blocks = voltek::core::_internal::aligned_talloc<_type>(new_size, 0x10);
+				_blocks = (_type*)voltek::core::_internal::page_alloc(alloc_size);
 #endif
 
 				if (!_blocks)
@@ -133,7 +142,7 @@ namespace voltek
 			{ 
 #ifndef VMMDLL_EXPORTS
 				voltek::core::_internal::memory_to_file(filename, (void*)_blocks, 
-					voltek::core::_internal::aligned_msize(_blocks), _size >> 3);
+					_size * sizeof(_type), _size >> 3);
 #endif // !VMMDLL_EXPORTS
 			}
 		private:
@@ -165,7 +174,7 @@ namespace voltek
 		// Является хранилищем блоков, но при этом нет жёсткой зависимости от каких блоков.
 		// Служит только в качестве помечания свободный или занятый блок, а также быстрого
 		// нахождения свободного блока, при помощи битовой карты.
-		template<typename _type, typename _map = __VMM_PAGE_CONFIG_NORMAL_SIZE>
+		template<typename _type, typename _map = page_map<_type>>
 		class page2_t : public voltek::core::base
 		{
 		public:
@@ -198,7 +207,7 @@ namespace voltek
 				// Это необходимо, учитывая, что bits_regions размер минимум от 65536.
 				// Использование SIMD инструкций является приоритетом, а "хвоста" должно 
 				// быть немного, а лучше небыло вовсе.
-				new_size = (new_size << 8) >> 8;
+				new_size = (new_size >> 8) << 8;
 
 				_stack.clear();
 				_stack.resize(new_size);

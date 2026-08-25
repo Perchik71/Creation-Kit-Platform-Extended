@@ -3,8 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -16,11 +14,11 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			typedef void(*TFixCrashInArmorAddonSub1)(std::int64_t, std::int64_t);
-			typedef void(*TFixCrashInArmorAddonSub2)(std::int64_t, std::int64_t*);
+			using TFixCrashInArmorAddonSub1 = void(std::int64_t, std::int64_t);
+			using TFixCrashInArmorAddonSub2 = void(std::int64_t, std::int64_t*);
 		
-			static TFixCrashInArmorAddonSub1 FixCrashInArmorAddonSub1;
-			static TFixCrashInArmorAddonSub2 FixCrashInArmorAddonSub2;
+			static std::function<TFixCrashInArmorAddonSub1> FixCrashInArmorAddonSub1;
+			static std::function<TFixCrashInArmorAddonSub2> FixCrashInArmorAddonSub2;
 
 			FixCrashInArmorAddon::FixCrashInArmorAddon() : Common::Patch()
 			{
@@ -47,6 +45,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixCrashInArmorAddon::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixCrashInArmorAddon::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -54,20 +57,18 @@ namespace CKPE
 
 			bool FixCrashInArmorAddon::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for crash when selecting more than 64 races in the armor addon dialog.
 				// A for loop reads past the end of a stack-allocated buffer.
 				//
-				SafeWrite::WriteNop(__CKPE_OFFSET(0), 231);
-				Detours::DetourJump(__CKPE_OFFSET(1), (std::uintptr_t)&sub);
-				FixCrashInArmorAddonSub1 = (TFixCrashInArmorAddonSub1)__CKPE_OFFSET(2);
-				FixCrashInArmorAddonSub2 = (TFixCrashInArmorAddonSub2)__CKPE_OFFSET(3);
+				
+				Relocation(ID(338178), 0x288).WriteFill(NOP, 231);
+				Relocation(ID(498780)).WriteJump(&sub);
+
+				FixCrashInArmorAddonSub1 = Relocation<TFixCrashInArmorAddonSub1>(ID(338178)).Get();
+				FixCrashInArmorAddonSub2 = Relocation<TFixCrashInArmorAddonSub2>(ID(279783)).Get();
 
 				return true;
 			}
