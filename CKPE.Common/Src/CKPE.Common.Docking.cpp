@@ -95,14 +95,14 @@ namespace CKPE
 			wc.lpfnWndProc = &CKPE_CDockingHoverProc;
 
 			if (!RegisterClassA(&wc))
-				_FATALERROR("DockingHoverWindow::RegisterClassA() return failed \"%s\"", 
-					ErrorHandler::GetSystemMessage(GetLastError()).c_str());
+				_FATALERROR_EX("DockingHoverWindow::RegisterClassA() return failed \"{}\""sv, 
+					ErrorHandler::GetSystemMessageUTF8(GetLastError()));
 
 			HWND _Wnd = CreateWindowExA(WS_EX_LAYERED | WS_EX_APPWINDOW | WS_EX_TOPMOST | WS_EX_TRANSPARENT,
 				DOCKING_HOVER_CLASSNAME, "", WS_POPUP, 200, 150, 100, 110, NULL, NULL, wc.hInstance, this);
 			if (!_Wnd)
-				_FATALERROR("DockingHoverWindow::CreateWindowExA() return failed \"%s\"",
-					ErrorHandler::GetSystemMessage(GetLastError()).c_str());
+				_FATALERROR_EX("DockingHoverWindow::CreateWindowExA() return failed \"{}\""sv,
+					ErrorHandler::GetSystemMessageUTF8(GetLastError()));
 		
 			SetLayeredWindowAttributes(_Wnd, cColor, 128, LWA_ALPHA);
 		}

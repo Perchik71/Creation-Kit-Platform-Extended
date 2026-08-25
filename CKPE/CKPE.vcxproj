@@ -171,6 +171,8 @@
     <ClInclude Include="Include\CKPE.CriticalSection.h" />
     <ClInclude Include="Include\CKPE.Detours.h" />
     <ClInclude Include="Include\CKPE.DirUtils.h" />
+    <ClInclude Include="Include\CKPE.Enum.h" />
+    <ClInclude Include="Include\CKPE.EnumSet.h" />
     <ClInclude Include="Include\CKPE.ErrorHandler.h" />
     <ClInclude Include="Include\CKPE.Float16.h" />
     <ClInclude Include="Include\CKPE.GDIPlus.h" />

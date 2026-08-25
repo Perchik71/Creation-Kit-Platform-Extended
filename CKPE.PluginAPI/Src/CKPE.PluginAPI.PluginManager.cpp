@@ -140,7 +140,7 @@ namespace CKPE
 				return 0;
 
 			auto path = PathUtils::GetCKPEPluginPath();
-			CKPE::_MESSAGE(L"Scanning plugin directory: \"%s\"", path.c_str());
+			CKPE::_MESSAGE_EX(L"Scanning plugin directory: \"{}\"", path);
 
 			std::vector<std::wstring> pluginInv;
 

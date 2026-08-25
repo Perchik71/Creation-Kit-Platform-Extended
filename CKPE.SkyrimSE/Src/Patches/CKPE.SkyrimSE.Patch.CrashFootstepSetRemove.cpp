@@ -49,6 +49,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool CrashFootstepSetRemove::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool CrashFootstepSetRemove::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -56,22 +61,18 @@ namespace CKPE
 
 			bool CrashFootstepSetRemove::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				// With multiple deletions, CTD occurs. 
 				// Reason is the deletion of array elements from beginning, 
 				// while element is actually deleted from array.
 				// Deleting goes beyond the boundaries or removes necessary elements.
 				// Detailed: https://github.com/Perchik71/Creation-Kit-Platform-Extended/issues/114
-
-				auto off = __CKPE_OFFSET(0);
-				pointer_sub19BD6E0 = __CKPE_OFFSET(1);
-				pointer_sub19BE490 = __CKPE_OFFSET(2);
-
+				
+				auto off = Relocation(ID(148303), 0x474).Address();
+				pointer_sub19BD6E0 = ID(2987).Address();
+				pointer_sub19BE490 = ID(308217).Address();
+				
 				// Remove erroneous code
 				SafeWrite::WriteNop(off, 0x95);
 				// mov rcx, qword ptr ss:[rsp+0xF0]
@@ -94,7 +95,7 @@ namespace CKPE
 				if (!Items)
 					return;
 
-				std::int32_t index = ListView_GetNextItem(hwnd, -1, LVNI_SELECTED);
+				auto index = ListView_GetNextItem(hwnd, -1, LVNI_SELECTED);
 				std::vector<std::int32_t> indexes;
 
 				// I get a list of indexes for remove items 

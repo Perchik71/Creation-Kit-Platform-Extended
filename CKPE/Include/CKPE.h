@@ -35,3 +35,5 @@
 #include <CKPE.Singleton.h>
 #include <CKPE.Keyboard.h>
 #include <CKPE.Version.h>
+#include <CKPE.Enum.h>
+#include <CKPE.EnumSet.h>

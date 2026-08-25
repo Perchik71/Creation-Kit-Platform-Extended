@@ -3,8 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.SafeWrite.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -46,6 +44,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool CrashFlowChartX::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool CrashFlowChartX::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -53,12 +56,9 @@ namespace CKPE
 
 			bool CrashFlowChartX::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
-				switch (db->GetVersion())
-				{
-				case 1:
+				if (VersionLists::GetEditorVersion() < VersionLists::EDITOR_SKYRIM_SE_1_6_1130)
 					//
 					// Fix for crash when using FlowChartX functionality to grab current topic info id in a dialogue view. 
 					// The broken code path returns a VARIANT of type VT_UI8 (21) with an invalid 8-byte pointer in the buffer. 
@@ -66,24 +66,18 @@ namespace CKPE
 					//
 					// This hook also fixes broken graph layout where every topic would draw on top of the other.
 					//
-					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-					break;
-				case 2:
+					Relocation(ID(347454), 0x1F).WriteCall(&sub);
+				else
 					// Bethesda has changed the code, let's make a jump and omit the entire code
-					Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-					break;
-				default:
-					return false;
-				}
+					Relocation(ID(347454)).WriteJump(&sub);
 
 				return true;
 			}
 
-			void* CrashFlowChartX::sub(void* a1) noexcept(true)
+			void* CrashFlowChartX::sub([[maybe_unused]] void* a1) noexcept(true)
 			{
 				// Patch flowchartx64.dll every time - it's a COM dll and I have no idea if it gets reloaded
-				std::uintptr_t flowchartBase = (std::uintptr_t)GetModuleHandleA("flowchartx64.dll");
-
+				auto flowchartBase = reinterpret_cast<std::uintptr_t>(GetModuleHandleA("flowchartx64.dll"));
 				if (flowchartBase)
 				{
 					CKPE_ASSERT_MSG(*(std::uint8_t*)(flowchartBase + 0x5FF89) == 0x48 && *(std::uint8_t*)(flowchartBase + 0x5FF8A) == 0x8B,

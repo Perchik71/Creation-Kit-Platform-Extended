@@ -75,7 +75,7 @@ namespace CKPE
 			time(&rawtime);
 			timeInfo = localtime(&rawtime);
 			strftime(timeBuffer, sizeof(timeBuffer), "%A %d %b %Y %r %Z", timeInfo);
-			Write("### Create time: %s\n", timeBuffer);
+			Write("### Create time: %s\n", StringUtils::WinCPToUtf8(timeBuffer).c_str());
 
 			return true;
 		}

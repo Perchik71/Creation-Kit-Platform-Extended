@@ -18,8 +18,8 @@ namespace CKPE
 		{
 			bool Result = SUCCEEDED(hr);
 			if (!Result)
-				_ERROR("An error has occurred in the \"%s\" class. Message: \"%s\"", ClassName, 
-					ErrorHandler::GetSystemMessage(hr).c_str());
+				_ERROR_EX("An error has occurred in the \"{}\" class. Message: \"{}\""sv, ClassName, 
+					ErrorHandler::GetSystemMessageUTF8(hr));
 			return Result;
 		}
 
@@ -148,15 +148,16 @@ namespace CKPE
 
 		void D3D11ShaderTexture::DebugInfo() const noexcept(true)
 		{
-			_MESSAGE("[DBG] Texture \"%s\" info: Size(%ux%u) Format(%X) Usage(%X) BindFlags(%X)",
-				Name().c_str(), _Desc.Width, _Desc.Height, _Desc.Format, _Desc.Usage, _Desc.BindFlags);
+			_MESSAGE_EX("[DBG] Texture \"{}\" info: Size({}x{}) Format({:X}) Usage({:X}) BindFlags({:X})"sv,
+				Name(), _Desc.Width, _Desc.Height, static_cast<std::uint32_t>(_Desc.Format), 
+				static_cast<std::uint32_t>(_Desc.Usage), _Desc.BindFlags);
 		}
 
 		bool D3D11ShaderTexture::Create(const D3D11_TEXTURE2D_DESC* Desc) noexcept(true)
 		{
 			if (!Desc)
 			{
-				_ERROR("D3D11ShaderTexture: \"%s\" description nullptr", Name().c_str());
+				_ERROR_EX("D3D11ShaderTexture: \"{}\" description nullptr"sv, Name());
 				return false;
 			}
 
@@ -168,7 +169,7 @@ namespace CKPE
 		{
 			if (!Texture)
 			{
-				_ERROR("TextureShader: \"%s\" texture nullptr", Name().c_str());
+				_ERROR_EX("TextureShader: \"{}\" texture nullptr"sv, Name());
 				return false;
 			}
 
@@ -189,7 +190,7 @@ namespace CKPE
 		{
 			if (!Resource)
 			{
-				_ERROR("TextureShader: \"%s\" resource nullptr", Name().c_str());
+				_ERROR_EX("TextureShader: \"{}\" resource nullptr"sv, Name());
 				return false;
 			}
 
@@ -259,9 +260,9 @@ namespace CKPE
 
 		void D3D11RenderTargetView::DebugInfo() const noexcept(true)
 		{
-			_MESSAGE("[DBG] Render target \"%s\" info: Format(%X) Buffer([%u:%u] Off:%u Width:%u) ViewDimension(%X)", Name().c_str(),
-				_Desc.Format, _Desc.Buffer.FirstElement, _Desc.Buffer.NumElements, _Desc.Buffer.ElementOffset, _Desc.Buffer.ElementWidth,
-				_Desc.ViewDimension);
+			_MESSAGE_EX("[DBG] Render target \"{}\" info: Format({:X}) Buffer([{}:{}] Off:{} Width:{}) ViewDimension({:X})"sv, Name(),
+				static_cast<std::uint32_t>(_Desc.Format), _Desc.Buffer.FirstElement, _Desc.Buffer.NumElements,
+				_Desc.Buffer.ElementOffset, _Desc.Buffer.ElementWidth, static_cast<std::uint32_t>(_Desc.ViewDimension));
 		}
 
 		bool D3D11RenderTargetView::Create(const ID3D11Resource* Resource, const D3D11_RENDER_TARGET_VIEW_DESC* Desc) noexcept(true)
@@ -307,8 +308,8 @@ namespace CKPE
 
 		void D3D11DepthStencilView::DebugInfo() const noexcept(true)
 		{
-			_MESSAGE("[DBG] Depth and stencil \"%s\" info: Format(%X) Flags(%X) ViewDimension(%X)",
-				Name().c_str(), _Desc.Format, _Desc.Flags, _Desc.ViewDimension);
+			_MESSAGE_EX("[DBG] Depth and stencil \"{}\" info: Format({:X}) Flags({:X}) ViewDimension({:X})"sv,
+				Name(), static_cast<std::uint32_t>(_Desc.Format), _Desc.Flags, static_cast<std::uint32_t>(_Desc.ViewDimension));
 		}
 
 		bool D3D11DepthStencilView::Create(const ID3D11Resource* Resource, const D3D11_DEPTH_STENCIL_VIEW_DESC* Desc) noexcept(true)
@@ -417,8 +418,9 @@ namespace CKPE
 
 		void D3D11UnorderedAccessView::DebugInfo() const noexcept(true)
 		{
-			_MESSAGE("[DBG] Unordered access \"%s\" info: Format(%X) Buffer([%u:%u] Flags:%X) ViewDimension(%X)",
-				Name().c_str(), _Desc.Format, _Desc.Buffer.FirstElement, _Desc.Buffer.NumElements, _Desc.Buffer.Flags, _Desc.ViewDimension);
+			_MESSAGE_EX("[DBG] Unordered access \"{}\" info: Format({:X}) Buffer([{}:{}] Flags:{:X}) ViewDimension({:X})"sv,
+				Name(), static_cast<std::uint32_t>(_Desc.Format), _Desc.Buffer.FirstElement, _Desc.Buffer.NumElements,
+				_Desc.Buffer.Flags, static_cast<std::uint32_t>(_Desc.ViewDimension));
 		}
 
 		bool D3D11UnorderedAccessView::Create(const ID3D11Resource* Resource, const D3D11_UNORDERED_ACCESS_VIEW_DESC* Desc) noexcept(true)
@@ -563,7 +565,7 @@ namespace CKPE
 		void D3D11SamplerState::DebugInfo() const noexcept(true)
 		{
 			_MESSAGE("[DBG] Sampler \"%s\" info: Address(%Xx%Xx%X) BorderColor(%.3f,%.3f,%.3f,%.3f) ComparisonFunc(%X)"
-				" Filter(%X) MaxAnisotropy(%u) LOD(%.3f:%.3f) MipLODBias(%.3f)", Name().c_str(),
+				" Filter(%X) MaxAnisotropy(%u) LOD(%.3f:%.3f) MipLODBias(%.3f)"sv, Name().c_str(),
 				_Desc.AddressU, _Desc.AddressV, _Desc.AddressW, _Desc.BorderColor[0], _Desc.BorderColor[1],
 				_Desc.BorderColor[2], _Desc.BorderColor[3], _Desc.ComparisonFunc, _Desc.Filter, _Desc.MaxAnisotropy,
 				_Desc.MinLOD, _Desc.MaxLOD, _Desc.MipLODBias);
@@ -631,21 +633,21 @@ namespace CKPE
 			HRSRC hResource = FindResourceA(Module, ResourceName, "SHADER");
 			if (!hResource)
 			{
-				_WARNING("Resource no found");
+				_WARNING("Resource no found"sv);
 				return false;
 			}
 
 			std::uint32_t Size = SizeofResource(Module, hResource);
 			if (Size >= (std::uint32_t)std::numeric_limits<std::int32_t>::max())
 			{
-				_WARNING("Size of resource exceeds 2 gigs");
+				_WARNING("Size of resource exceeds 2 gigs"sv);
 				return false;
 			}
 
 			auto hResourceMemory = LoadResource(Module, hResource);
 			if (!hResourceMemory)
 			{
-				_ERROR("hResourceMemory == nullptr");
+				_ERROR("hResourceMemory == nullptr"sv);
 				return false;
 			}
 
@@ -656,10 +658,10 @@ namespace CKPE
 			if (!Successed)
 			{
 				StreamBinary.Clear();
-				_ERROR("An error occurred while reading the resource");
+				_ERROR("An error occurred while reading the resource"sv);
 			}
 			else
-				_MESSAGE("Resource was loaded successfully");
+				_MESSAGE("Resource was loaded successfully"sv);
 
 			FreeResource(hResourceMemory);
 			return Successed;
@@ -716,19 +718,19 @@ namespace CKPE
 
 			ComPtr<ID3DBlob> shaderBlob = nullptr;
 			ComPtr<ID3DBlob> errorBlob = nullptr;
-			HRESULT hr = D3DCompileFromFile(FileName, NULL, NULL, EntryPoint, TypeShader,
+			HRESULT hr = D3DCompileFromFile(FileName, nullptr, nullptr, EntryPoint, TypeShader,
 				D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_OPTIMIZATION_LEVEL2, 0, shaderBlob.GetAddressOf(), 
 				errorBlob.GetAddressOf());
 
 			if (FAILED(hr))
 			{
 				if (errorBlob)
-					_ERROR("Compiler shader returned error: %s", (char*)errorBlob->GetBufferPointer());
+					_ERROR("Compiler shader returned error: %s"sv, (char*)errorBlob->GetBufferPointer());
 
 				return false;
 			}
 
-			_MESSAGE("Compiler shader: %s (%p:%u)", Name().c_str(), shaderBlob->GetBufferPointer(), shaderBlob->GetBufferSize());
+			_MESSAGE("Compiler shader: %s (%p:%u)"sv, Name().c_str(), shaderBlob->GetBufferPointer(), shaderBlob->GetBufferSize());
 
 			return LoadFromMemory(shaderBlob->GetBufferPointer(), shaderBlob->GetBufferSize());
 		}
@@ -757,12 +759,12 @@ namespace CKPE
 				nullptr, _PixelShader.ReleaseAndGetAddressOf());
 			if (FAILED(hr))
 			{
-				_ERROR("CreatePixelShader: \"%s\" error has occurred: \"%s\"", Name().c_str(),
-					ErrorHandler::GetSystemMessage(hr).c_str());
+				_ERROR_EX("CreatePixelShader: \"{}\" error has occurred: \"{}\""sv, Name(),
+					ErrorHandler::GetSystemMessageUTF8(hr));
 				return false;
 			}
 
-			_MESSAGE("PixelShader \"%s\" initialization was successful", Name().c_str());
+			_MESSAGE_EX("PixelShader \"{}\" initialization was successful"sv, Name());
 
 			return true;
 		}
@@ -806,8 +808,8 @@ namespace CKPE
 				nullptr, _VertexShader.GetAddressOf());
 			if (FAILED(hr))
 			{
-				_ERROR("CreateVertexShader: \"%s\" error has occurred: \"%s\"", Name().c_str(),
-					ErrorHandler::GetSystemMessage(hr).c_str());
+				_ERROR_EX("CreateVertexShader: \"{}\" error has occurred: \"{}\""sv, Name(),
+					ErrorHandler::GetSystemMessageUTF8(hr));
 				return false;
 			}
 
@@ -821,12 +823,12 @@ namespace CKPE
 				StreamBinary.GetSize(), _InputLayout.GetAddressOf());
 			if (FAILED(hr))
 			{
-				_ERROR("CreateInputLayout: \"%s\" error has occurred: \"%s\"", Name().c_str(),
-					ErrorHandler::GetSystemMessage(hr).c_str());
+				_ERROR_EX("CreateInputLayout: \"{}\" error has occurred: \"{}\""sv, Name(),
+					ErrorHandler::GetSystemMessageUTF8(hr));
 				return false;
 			}
 
-			_MESSAGE("VertexShader \"%s\" initialization was successful", Name().c_str());
+			_MESSAGE_EX("VertexShader \"{}\" initialization was successful"sv, Name());
 
 			return true;
 		}
@@ -850,7 +852,7 @@ namespace CKPE
 				_StrideBuffer * _SizeBuffer, D3D11_BIND_VERTEX_BUFFER))
 				return false;
 
-			_MESSAGE("VertexShader \"%s\" initialization data was successful", Name().c_str());
+			_MESSAGE_EX("VertexShader \"{}\" initialization data was successful"sv, Name());
 
 			return true;
 		}
@@ -884,12 +886,12 @@ namespace CKPE
 				nullptr, _ComputeShader.GetAddressOf());
 			if (FAILED(hr))
 			{
-				_ERROR("CreateComputeShader: \"%s\" error has occurred: \"%s\"", Name().c_str(),
-					ErrorHandler::GetSystemMessage(hr).c_str());
+				_ERROR_EX("CreateComputeShader: \"{}\" error has occurred: \"{}\""sv, Name(),
+					ErrorHandler::GetSystemMessageUTF8(hr));
 				return false;
 			}
 
-			_MESSAGE("ComputeShader \"%s\" initialization was successful", Name().c_str());
+			_MESSAGE_EX("ComputeShader \"{}\" initialization was successful"sv, Name());
 
 			return true;
 		}

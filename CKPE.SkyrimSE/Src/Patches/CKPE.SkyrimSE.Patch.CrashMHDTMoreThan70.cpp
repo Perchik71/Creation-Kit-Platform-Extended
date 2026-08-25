@@ -5,8 +5,7 @@
 #include <windows.h>
 #include <mmsystem.h>
 #include <CKPE.Utils.h>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
+#include <CKPE.MessageBox.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -50,36 +49,32 @@ namespace CKPE
 				return { "Console" };
 			}
 
+			bool CrashMHDTMoreThan70::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool CrashMHDTMoreThan70::DoQuery() const noexcept(true)
 			{
-				return VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1130;
+				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
 			bool CrashMHDTMoreThan70::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				// This patch adds additional information to the log, nothing more.
 
-				pointer_CrashMHDTMoreThan70Patch_sub1 = __CKPE_OFFSET(1);
-				pointer_CrashMHDTMoreThan70Patch_sub2 = __CKPE_OFFSET(3);
+				pointer_CrashMHDTMoreThan70Patch_sub1 = ID(571009).Address();
+				pointer_CrashMHDTMoreThan70Patch_sub2 = ID(347773).Address();
 
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub1);
-				Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&sub2);
+				Relocation(ID(236902), 0x476).WriteCall(&sub1);
+				Relocation(ID(402801), 0x57E).WriteCall(&sub2);
 
-				if (verPatch == 2)
-				{
-					// Added save and terminate process to end gen MHDT
+				// Added save and terminate process to end gen MHDT
 					
-					pointer_CrashMHDTMoreThan70Patch_sub3 = __CKPE_OFFSET(5);
-
-					Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&sub3_additional);
-				}
+				pointer_CrashMHDTMoreThan70Patch_sub3 = ID(197933).Address();
+				Relocation(ID(465745), Offset{ 0x1E57, 0x1E2F }).WriteCall(&sub3_additional);
 				
 				return true;
 			}
@@ -115,8 +110,8 @@ namespace CKPE
 				// It is necessary to get the stack of the calling function.
 				auto rsp = (std::uintptr_t)_AddressOfReturnAddress() + 8;
 
-				float coord_x = *(float*)(rsp + 0x64);
-				float coord_y = *(float*)(rsp + 0x60);
+				auto coord_x = *(float*)(rsp + 0x64);
+				auto coord_y = *(float*)(rsp + 0x60);
 
 				__try
 				{
@@ -125,7 +120,8 @@ namespace CKPE
 				}
 				__except (EXCEPTION_EXECUTE_HANDLER)
 				{
-					_CONSOLE("ASSERTION: Fatal calculating the height for the point (%.0f, %.0f) of (%.3f, %.3f)", coord_x, coord_y, pp->x, pp->y);
+					_CONSOLE("ASSERTION: Fatal calculating the height for the point (%.0f, %.0f) of (%.3f, %.3f)", 
+						coord_x, coord_y, pp->x, pp->y);
 				}
 			}
 
@@ -133,14 +129,18 @@ namespace CKPE
 			{
 				ReleaseCapture();
 
-				__try
-				{
-					fast_call<void>(pointer_CrashMHDTMoreThan70Patch_sub3);		
-				}
-				__except (1)
-				{}
+				auto sub = []() {
+					__try
+					{
+						fast_call<void>(pointer_CrashMHDTMoreThan70Patch_sub3);
+					}
+					__except (1)
+					{
+					}
+					};
+				sub();
 				
-				MessageBoxA(0, "Done", "Done", MB_OK);
+				MessageBox::OpenInfo("Done");
 			}
 		}
 	}

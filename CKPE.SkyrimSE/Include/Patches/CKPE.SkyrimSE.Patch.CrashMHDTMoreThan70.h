@@ -26,6 +26,7 @@ namespace CKPE
 				virtual const char* GetOptionName() const noexcept(true);
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
+				bool SupportsAddressLibrary() const noexcept(true) override;
 
 				static void* sub1(void* world, int x, int y) noexcept(true);
 				static void sub2(void* shape, void* vec, void* point, void* unk1, int unk2) noexcept(true);

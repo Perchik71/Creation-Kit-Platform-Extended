@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -14,9 +13,9 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			typedef void(*TCrashAfterMultipleMastersWarningSub)(std::int64_t);
+			using TCrashAfterMultipleMastersWarningSub = void(std::int64_t);
 
-			static TCrashAfterMultipleMastersWarningSub CrashAfterMultipleMastersWarningSub;
+			static std::function<TCrashAfterMultipleMastersWarningSub> CrashAfterMultipleMastersWarningSub;
 
 			CrashAfterMultipleMastersWarning::CrashAfterMultipleMastersWarning() : Common::Patch()
 			{
@@ -43,6 +42,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool CrashAfterMultipleMastersWarning::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool CrashAfterMultipleMastersWarning::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -50,18 +54,14 @@ namespace CKPE
 
 			bool CrashAfterMultipleMastersWarning::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for crash after the "Multiple masters selected for load" dialog is shown.
 				// Missing null pointer check in Sky::UpdateAurora.
 				//
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				CrashAfterMultipleMastersWarningSub = (TCrashAfterMultipleMastersWarningSub)__CKPE_OFFSET(1);
+				Relocation(ID(555984), 0xC9).WriteCall(&sub);
+				CrashAfterMultipleMastersWarningSub = Relocation<TCrashAfterMultipleMastersWarningSub>(ID(555729)).Get();
 
 				return true;
 			}

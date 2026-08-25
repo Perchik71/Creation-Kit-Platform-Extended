@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -14,9 +13,9 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			typedef void*(*TCrashDuplicateWorldspaceSub)(void*);
+			using TCrashDuplicateWorldspaceSub = void*(void*);
 
-			static TCrashDuplicateWorldspaceSub CrashDuplicateWorldspaceSub;
+			static std::function<TCrashDuplicateWorldspaceSub> CrashDuplicateWorldspaceSub;
 
 			CrashDuplicateWorldspace::CrashDuplicateWorldspace() : Common::Patch()
 			{
@@ -43,6 +42,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool CrashDuplicateWorldspace::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool CrashDuplicateWorldspace::DoQuery() const noexcept(true)
 			{
 				// In 1.6.1130 this fixed.
@@ -51,17 +55,13 @@ namespace CKPE
 
 			bool CrashDuplicateWorldspace::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for crash when duplicating worldspaces
 				//
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				CrashDuplicateWorldspaceSub = (TCrashDuplicateWorldspaceSub)__CKPE_OFFSET(1);
+				CrashDuplicateWorldspaceSub = reinterpret_cast<TCrashDuplicateWorldspaceSub*>(
+					Relocation(ID(443063), 0x73A).WriteCall(&sub));
 
 				return true;
 			}

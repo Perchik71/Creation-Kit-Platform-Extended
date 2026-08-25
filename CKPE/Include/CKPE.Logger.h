@@ -13,6 +13,8 @@
 
 namespace CKPE
 {
+	using namespace std::literals;
+
 	class CKPE_API Logger
 	{
 		void* _handle{ nullptr };
@@ -39,9 +41,9 @@ namespace CKPE
 		Logger& operator=(const Logger&) = delete;
 		~Logger();
 
-		[[nodiscard]] inline constexpr virtual bool HasOpen() const noexcept(true) { return _handle != nullptr; }
-		[[nodiscard]] inline constexpr virtual bool GetHandle() const noexcept(true) { return _handle; }
-		[[nodiscard]] inline constexpr virtual const wchar_t* GetFileName() const noexcept(true) 
+		[[nodiscard]] constexpr virtual bool HasOpen() const noexcept(true) { return _handle != nullptr; }
+		[[nodiscard]] constexpr virtual bool GetHandle() const noexcept(true) { return _handle; }
+		[[nodiscard]] constexpr virtual const wchar_t* GetFileName() const noexcept(true) 
 		{ return _fname ? _fname->c_str() : nullptr; }
 
 		bool Open(const std::string& fname) noexcept(true);
@@ -85,10 +87,10 @@ namespace CKPE
 		virtual void NewLine() const noexcept(true);
 
 		inline virtual void SetSettings(std::uint32_t new_settings) noexcept(true) { _settings = new_settings; };
-		[[nodiscard]] inline constexpr virtual bool HasAutoFlush() const noexcept(true) { return _settings & sAutoFlush; }
-		[[nodiscard]] inline constexpr virtual bool HasAlwaysNewLine() const noexcept(true) { return _settings & sAlwaysNewLine; }
-		[[nodiscard]] inline constexpr virtual bool HasIfFatalErrorTriggerErrorHandler() const noexcept(true) { return _settings & sIfFatalErrorTriggerErrorHandler; }
-		[[nodiscard]] inline constexpr virtual bool HasOutputDebugger() const noexcept(true) { return _settings & sOutputDebugger; }
+		[[nodiscard]] constexpr virtual bool HasAutoFlush() const noexcept(true) { return _settings & sAutoFlush; }
+		[[nodiscard]] constexpr virtual bool HasAlwaysNewLine() const noexcept(true) { return _settings & sAlwaysNewLine; }
+		[[nodiscard]] constexpr virtual bool HasIfFatalErrorTriggerErrorHandler() const noexcept(true) { return _settings & sIfFatalErrorTriggerErrorHandler; }
+		[[nodiscard]] constexpr virtual bool HasOutputDebugger() const noexcept(true) { return _settings & sOutputDebugger; }
 	private:
 		std::uint32_t _settings{ sAutoFlush | sAlwaysNewLine | sIfFatalErrorTriggerErrorHandler };
 	};

@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Utils.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -58,6 +57,11 @@ namespace CKPE
 				return { "Console" };
 			}
 
+			bool CrashInvalidStrings::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool CrashInvalidStrings::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -65,13 +69,9 @@ namespace CKPE
 
 			bool CrashInvalidStrings::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				pointer_CrashInvalidStrings_sub1 = Detours::DetourClassJump(__CKPE_OFFSET(1), &GetLocalizeStringSafe);
+				pointer_CrashInvalidStrings_sub1 = Relocation(ID(192607)).WriteJump(&GetLocalizeStringSafe);
 
 				return true;
 			}
