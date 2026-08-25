@@ -136,7 +136,7 @@ namespace CKPE
 						_WARNING(L"\tNo legacy RELB database for this editor version; running on Address Library only."sv);
 					else
 						ErrorHandler::Trigger(StringUtils::Utf16ToWinCP(
-							StringUtils::FormatString(L"Couldn't open the database \"%s\" in \"%s\"\nMore detailed to log.",
+							StringUtils::FormatString(L"Couldn't open the database \"%s\" in \"%s\" or Address Library.\nMore detailed to log.",
 								a_database_fn.c_str(), a_databases_fn.c_str())));
 				}
 

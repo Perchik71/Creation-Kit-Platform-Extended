@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -14,9 +13,9 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			typedef void(*TFixBrightLightColorSub)(std::int64_t a1, std::uint32_t);
+			using TFixBrightLightColorSub = void(std::int64_t a1, std::uint32_t);
 
-			static TFixBrightLightColorSub FixBrightLightColorSub;
+			static std::function<TFixBrightLightColorSub> FixBrightLightColorSub;
 
 			FixBrightLightColor::FixBrightLightColor() : Common::Patch()
 			{
@@ -43,6 +42,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixBrightLightColor::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixBrightLightColor::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -50,18 +54,15 @@ namespace CKPE
 
 			bool FixBrightLightColor::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for the "Bright Light Color" option having incorrect colors in the preferences window. 
 				// The blue and green channels are swapped.
 				//
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				FixBrightLightColorSub = (TFixBrightLightColorSub)__CKPE_OFFSET(1);
+
+				FixBrightLightColorSub = (TFixBrightLightColorSub*)
+					Relocation(ID(554127), Offset{ 0xAA8, 0xAA5 }).WriteCall(&sub);
 
 				return true;
 			}

@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -14,8 +13,8 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			typedef std::int64_t (*TFixBGSEntryPointFunctionDataTwoValueSub)(std::int32_t);
-			TFixBGSEntryPointFunctionDataTwoValueSub FixBGSEntryPointFunctionDataTwoValueSub;
+			using TFixBGSEntryPointFunctionDataTwoValueSub = std::int64_t(std::int32_t);
+			static std::function<TFixBGSEntryPointFunctionDataTwoValueSub> FixBGSEntryPointFunctionDataTwoValueSub;
 
 			FixBGSEntryPointFunctionDataTwoValue::FixBGSEntryPointFunctionDataTwoValue() : Common::Patch()
 			{
@@ -42,6 +41,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixBGSEntryPointFunctionDataTwoValue::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixBGSEntryPointFunctionDataTwoValue::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -49,19 +53,17 @@ namespace CKPE
 
 			bool FixBGSEntryPointFunctionDataTwoValue::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for "Could not select actor value X in LoadDialog for BGSEntryPointFunctionDataTwoValue." 
 				// Use the editor id instead of perk name for the Perk Entry dialog selection.
 				//
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				FixBGSEntryPointFunctionDataTwoValueSub = (TFixBGSEntryPointFunctionDataTwoValueSub)
-					__CKPE_OFFSET(1);
+				
+				
+				Relocation(ID(215259), 0x134).WriteCall(&sub);
+				FixBGSEntryPointFunctionDataTwoValueSub = 
+					Relocation<TFixBGSEntryPointFunctionDataTwoValueSub>(ID(370178)).Get();
 
 				return true;
 			}

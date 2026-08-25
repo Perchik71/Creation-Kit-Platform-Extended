@@ -6,8 +6,6 @@
 #include <DirectXTex.h>
 #include <commctrl.h>
 
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.StringUtils.h>
 #include <CKPE.PathUtils.h>
 #include <CKPE.Application.h>
@@ -22,12 +20,19 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			std::uintptr_t pointer_FaceGen_sub1 = 0;
-			std::uintptr_t pointer_FaceGen_sub2 = 0;
-			std::uintptr_t pointer_FaceGen_sub3 = 0;
-			std::uintptr_t pointer_FaceGen_sub4 = 0;
-			std::uintptr_t pointer_FaceGen_sub5 = 0;
-			decltype(&Facegen::CreateDiffuseCompressDDS) pointer_FaceGen_sub6 = nullptr;
+			using TFaceGen_sub1 = bool();
+			using TFaceGen_sub2 = void();
+			using TFaceGen_sub3 = std::int64_t(HWND, std::int64_t);
+			using TFaceGen_sub4 = bool(std::int64_t, std::int64_t);
+			using TFaceGen_sub5 = void(std::int64_t);
+
+			static std::function<TFaceGen_sub1> FaceGen_sub1;
+			static std::function<TFaceGen_sub2> FaceGen_sub2;
+			static std::function<TFaceGen_sub3> FaceGen_sub3;
+			static std::function<TFaceGen_sub4> FaceGen_sub4;
+			static std::function<TFaceGen_sub5> FaceGen_sub5;
+
+			decltype(&Facegen::CreateDiffuseCompressDDS) FaceGen_sub6 = nullptr;
 			std::uintptr_t pointer_FaceGen_data = 0;
 			bool bUseCompresionAsBC7U = false;
 
@@ -131,6 +136,11 @@ namespace CKPE
 				return { "Console", "D3D11 Patch" };
 			}
 
+			bool Facegen::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool Facegen::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -138,83 +148,71 @@ namespace CKPE
 
 			bool Facegen::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
-
+				//
+				// FaceGen
+				//
+				
+				// Disable automatic FaceGen on save
+				if (_READ_OPTION_BOOL("FaceGen", "bDisableAutoFaceGen", false))
 				{
-					// Cutting a lot is faster this way
-					auto stext = _interface->GetApplication()->GetSegment(Segment::text);
-					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
-
-					//
-					// FaceGen
-					//
-					// Disable automatic FaceGen on save
-					if (_READ_OPTION_BOOL("FaceGen", "bDisableAutoFaceGen", false))
-					{
-						SafeWrite::Write(__CKPE_OFFSET(0), { 0xC3 });
-						_MESSAGE("Disabling automatic calling FaceGen");
-					}
-
-					// Don't produce DDS files
-					if (_READ_OPTION_BOOL("FaceGen", "bDisableExportDDS", false))
-					{
-						SafeWrite::WriteNop(__CKPE_OFFSET(1), 5);
-						_MESSAGE("Disabling export FaceGen .DDS files");
-					}
-					else if (_READ_OPTION_BOOL("FaceGen", "bAutoCompressionDDS", false))
-						Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&CreateDiffuseCompressDDS);
-
-					// Don't produce TGA files
-					if (_READ_OPTION_BOOL("FaceGen", "bDisableExportTGA", false))
-					{
-						SafeWrite::WriteNop(__CKPE_OFFSET(2), 5);
-						_MESSAGE("Disabling export FaceGen .TGA files");
-					}
-
-					// Don't produce NIF files
-					if (_READ_OPTION_BOOL("FaceGen", "bDisableExportNIF", false))
-					{
-						SafeWrite::Write(__CKPE_OFFSET(3), { 0xC3 });
-						_MESSAGE("Disabling export FaceGen .NIF files");
-					}
-
-					// Allow variable tint mask resolution
-					std::uint32_t tintResolution = _READ_OPTION_UINT("FaceGen", "uTintMaskResolution", 512);
-					SafeWrite::Write(__CKPE_OFFSET(4), (std::uint8_t*)&tintResolution, sizeof(std::uint32_t));
-					SafeWrite::Write(__CKPE_OFFSET(5), (std::uint8_t*)&tintResolution, sizeof(std::uint32_t));
+					Relocation(ID(70976)).Write(RET);
+					_MESSAGE("Disabling automatic calling FaceGen");
 				}
 
+				auto target1 = ID(553555);
+
+				// Don't produce DDS files
+				if (_READ_OPTION_BOOL("FaceGen", "bDisableExportDDS", false))
+				{
+					Relocation(target1, 0x248).WriteFill(NOP, 5);
+					_MESSAGE("Disabling export FaceGen .DDS files");
+				}
+				else if (_READ_OPTION_BOOL("FaceGen", "bAutoCompressionDDS", false))
+					Relocation(target1, 0x248).WriteCall(&CreateDiffuseCompressDDS);
+
+				// Don't produce TGA files
+				if (_READ_OPTION_BOOL("FaceGen", "bDisableExportTGA", false))
+				{
+					Relocation(target1, 0x29B).WriteFill(NOP, 5);
+					_MESSAGE("Disabling export FaceGen .TGA files");
+				}
+				
+				// Don't produce NIF files
+				if (_READ_OPTION_BOOL("FaceGen", "bDisableExportNIF", false))
+				{
+					Relocation(ID(553557)).Write(RET);
+					_MESSAGE("Disabling export FaceGen .NIF files");
+				}
+
+				// Allow variable tint mask resolution
+				auto target2 = ID(647183);
+				auto tintResolution = _READ_OPTION_UINT("FaceGen", "uTintMaskResolution", 512);
+				Relocation(target2, 0x5CB).Write(&tintResolution, sizeof(std::uint32_t));
+				Relocation(target2, 0x5D8).Write(&tintResolution, sizeof(std::uint32_t));
+				
 				bUseCompresionAsBC7U = _READ_OPTION_BOOL("FaceGen", "bUseCompressionAsBC7U", false);
 
 				// Prevent internal filesystem reloads when exporting FaceGen for many NPCs
-				Detours::DetourJump(__CKPE_OFFSET(6), (std::uintptr_t)&sub);
-				SafeWrite::WriteNop(__CKPE_OFFSET(7), 5);
-
-				pointer_FaceGen_data = __CKPE_OFFSET(8);
-				pointer_FaceGen_sub1 = __CKPE_OFFSET(9);
-				pointer_FaceGen_sub2 = __CKPE_OFFSET(10);
-				pointer_FaceGen_sub3 = __CKPE_OFFSET(11);
-				pointer_FaceGen_sub4 = __CKPE_OFFSET(12);
-				pointer_FaceGen_sub5 = __CKPE_OFFSET(13);
-				pointer_FaceGen_sub6 = (decltype(&CreateDiffuseCompressDDS))__CKPE_OFFSET(14);
+				Relocation(ID(439682)).WriteJump(&sub);
+				Relocation(ID(295619), 0x11A).WriteFill(NOP, 5);
+				
+				pointer_FaceGen_data = ID(43514).Address();
+				FaceGen_sub1 = Relocation<TFaceGen_sub1>(ID(181472)).Get();
+				FaceGen_sub2 = Relocation<TFaceGen_sub2>(ID(293309)).Get();
+				FaceGen_sub3 = Relocation<TFaceGen_sub3>(ID(58196)).Get();
+				FaceGen_sub4 = Relocation<TFaceGen_sub4>(ID(39410)).Get();
+				FaceGen_sub5 = Relocation<TFaceGen_sub5>(ID(199017)).Get();
+				FaceGen_sub6 = (decltype(&CreateDiffuseCompressDDS))ID(557372).Address();
 
 				return true;
 			}
 
 			void Facegen::sub(std::int64_t a1, std::int64_t a2) noexcept(true)
 			{
-				auto sub_1418F5210 = (bool(*)())pointer_FaceGen_sub1;
-				auto sub_1418F5320 = (void(*)())pointer_FaceGen_sub2;
-				auto sub_1413BAAC0 = (__int64(*)(HWND, __int64))pointer_FaceGen_sub3;
-				auto sub_1418F5260 = (bool(*)(__int64, __int64))pointer_FaceGen_sub4;
-				auto sub_141617680 = (void(*)(__int64))pointer_FaceGen_sub5;
-
 				// Display confirmation message box first
-				if (!sub_1418F5210())
+				if (!FaceGen_sub1())
 					return;
 
 				HWND listHandle = *(HWND*)(a1 + 16);
@@ -223,8 +221,7 @@ namespace CKPE
 
 				for (bool flag = true; itemIndex >= 0 && flag; itemCount++)
 				{
-					flag = sub_1418F5260(a2, sub_1413BAAC0(listHandle, itemIndex));
-
+					flag = FaceGen_sub4(a2, FaceGen_sub3(listHandle, itemIndex));
 					if (flag)
 					{
 						int oldIndex = itemIndex;
@@ -237,15 +234,15 @@ namespace CKPE
 
 				// Reload loose file paths manually since it's patched out
 				Console::Log("Exported FaceGen for %d NPCs. Reloading loose file paths...", itemCount);
-				sub_141617680(*(__int64*)pointer_FaceGen_data);
+				FaceGen_sub5(*(std::int64_t*)pointer_FaceGen_data);
 
-				sub_1418F5320();
+				FaceGen_sub2();
 			}
 
 			void Facegen::CreateDiffuseCompressDDS(std::int64_t lpThis, std::uint32_t TextureId, const char* lpFileName,
 				std::int32_t Unk1, bool Unk2) noexcept(true)
 			{
-				pointer_FaceGen_sub6(lpThis, TextureId, lpFileName, Unk1, Unk2);
+				FaceGen_sub6(lpThis, TextureId, lpFileName, Unk1, Unk2);
 				if (!CompressionDDSFile(lpFileName, pointer_d3d11DeviceIntf ? 
 					(bUseCompresionAsBC7U ? DDS_COMPRESSION::BC7_UNORM : DDS_COMPRESSION::BC3_UNORM) : 
 					DDS_COMPRESSION::BC3_UNORM))

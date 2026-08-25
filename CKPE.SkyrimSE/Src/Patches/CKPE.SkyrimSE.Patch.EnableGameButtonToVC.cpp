@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -39,6 +38,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool EnableGameButtonToVC::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool EnableGameButtonToVC::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -46,14 +50,11 @@ namespace CKPE
 
 			bool EnableGameButtonToVC::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				SafeWrite::WriteNop(__CKPE_OFFSET(0), 2);		// Enable push to game button even if version control is disabled
-				SafeWrite::Write(__CKPE_OFFSET(1), { 0xEB });	// ^
+				auto target = ID(175922);
+				Relocation(target, 0x479).WriteFill(NOP, 2);	// Enable push to game button even if version control is disabled
+				Relocation(target, 0x48C).Write(JMP);			// ^
 
 				return true;
 			}

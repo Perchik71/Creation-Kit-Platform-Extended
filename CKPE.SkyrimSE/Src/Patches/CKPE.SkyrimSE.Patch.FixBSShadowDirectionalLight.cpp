@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -39,6 +38,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixBSShadowDirectionalLight::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixBSShadowDirectionalLight::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -46,16 +50,13 @@ namespace CKPE
 
 			bool FixBSShadowDirectionalLight::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Memory bug fix during BSShadowDirectionalLight calculations (see game patch for more information)
 				//
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0x4D, 0x89, 0xE1, 0x90, 0x90, 0x90, 0x90 });
+				Relocation(ID(522853), Offset{ 0x20DD, 0x2080, 0x2080, 0x2096 }).Write
+					({ 0x4D, 0x89, 0xE1, 0x90, 0x90, 0x90, 0x90 });
 
 				return true;
 			}

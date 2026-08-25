@@ -39,6 +39,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixActorDlg::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixActorDlg::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -46,17 +51,13 @@ namespace CKPE
 
 			bool FixActorDlg::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for the "Actor Flags" or "Actor Behavior" dialogs not showing their column headers. 
 				// wParam was swapped to lParam for an unknown reason in SE only. Undo that change.
 				//
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0x80, 0x12, 0x00, 0x00 });
+				Relocation(ID(108017), Offset{ 0x1FB1, 0x1FA1 }).Write({ 0x80, 0x12, 0x00, 0x00 });
 
 				return true;
 			}
