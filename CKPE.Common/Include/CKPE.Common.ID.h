@@ -13,7 +13,7 @@ namespace CKPE
 	{
 		class ID
 		{
-			std::uint64_t m_ids[SUPPORT_RUNTIMECOUNT]{ 0 };
+			IDDatabase::AddressID m_ids[SUPPORT_RUNTIMECOUNT]{ 0 };
 		public:
 			static_assert(SUPPORT_RUNTIMECOUNT > 0, "SUPPORT_RUNTIMECOUNT must be at least 1.");
 
@@ -22,7 +22,7 @@ namespace CKPE
 			explicit constexpr ID(std::uint64_t a_id) noexcept(true)
 			{
 				for (auto& id : m_ids)
-					id = a_id;
+					id = static_cast<IDDatabase::AddressID>(a_id);
 			}
 
 			explicit constexpr ID(std::initializer_list<std::uint64_t> a_list) noexcept(true)
@@ -31,15 +31,15 @@ namespace CKPE
 					return;
 
 				std::size_t i = 0;
-				std::uint64_t lastValue = 0;
+				IDDatabase::AddressID lastValue = 0;
 
 				for (auto val : a_list)
 				{
 					if (i >= SUPPORT_RUNTIMECOUNT)
 						break;
 
-					m_ids[i++] = val;
-					lastValue = val;
+					m_ids[i++] = static_cast<IDDatabase::AddressID>(val);
+					lastValue = static_cast<IDDatabase::AddressID>(val);
 				}
 
 				while (i < SUPPORT_RUNTIMECOUNT)
@@ -49,7 +49,7 @@ namespace CKPE
 			constexpr ID& operator=(std::uint64_t a_id) noexcept(true)
 			{
 				for (auto& id : m_ids)
-					id = a_id;
+					id = static_cast<IDDatabase::AddressID>(a_id);
 				return *this;
 			}
 
@@ -58,7 +58,7 @@ namespace CKPE
 				return Application::GetSingleton()->GetBase() + Offset();
 			}
 
-			[[nodiscard]] std::uint64_t Id() const noexcept(true)
+			[[nodiscard]] IDDatabase::AddressID Id() const noexcept(true)
 			{
 				auto index = IDDB::GetSingleton()->GetRuntimeIndex();
 				if (index >= SUPPORT_RUNTIMECOUNT)

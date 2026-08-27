@@ -80,7 +80,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)..\.Lib\</OutDir>
     <IntDir>$(SolutionDir)..\.LinkConf\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <TargetName>VoltekLib.$(ProjectName)</TargetName>
+    <TargetName>vmm</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

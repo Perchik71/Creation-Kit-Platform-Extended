@@ -125,9 +125,11 @@ namespace CKPE
 
 				// CK Address Library: stable ID -> RVA, replacing the legacy RELB database
 				auto addressLibrary = AddressLibrary::GetSingleton();
-				bool hasAddressLibrary = addressLibrary->Load(a_databases_fn, a_runtime_index);
+				bool hasAddressLibrary = addressLibrary->Load(a_runtime_index);
 				if (!hasAddressLibrary)
 					_ERROR("Address Library requested but failed to load, see log above."sv);
+				//else
+				//	addressLibrary->Save(L"version---.bin");
 
 				if (!Relocator::GetSingleton()->Open(a_databases_fn, a_database_fn))
 				{
