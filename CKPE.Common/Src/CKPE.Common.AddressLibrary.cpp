@@ -242,12 +242,8 @@ namespace CKPE
 
 		IDDatabase::AddressOffset IDDatabase::ResolveOffset(AddressID id) const noexcept(true)
 		{
-			_MESSAGE_EX("{}", id);
-
 			if (!_loaded || !_entries || _entries->empty())
 				return 0;
-
-			_MESSAGE_EX("{}", id);
 
 			auto it = std::lower_bound(_entries->begin(), _entries->end(), id,
 				[](const Entry_v1& e, AddressID value) noexcept(true) { return e.Id < value; });
