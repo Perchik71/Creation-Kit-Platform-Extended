@@ -159,7 +159,7 @@ namespace CKPE
 						throw RuntimeError(L"IDDatabase::Load unexpected end of file \"{}\""sv, db_name);
 
 					IDVersionDatabase dbVer = IDVersionDatabase::kVersionDatabase_0;
-					if (header.magick == Header::MAGICK)
+					if ((header.magick == Header::MAGICK) && (header.version == Header::CURRENT_VERSION))
 						dbVer = IDVersionDatabase::kVersionDatabase_1;
 					
 					switch (dbVer)
