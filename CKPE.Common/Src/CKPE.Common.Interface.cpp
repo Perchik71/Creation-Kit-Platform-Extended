@@ -59,8 +59,8 @@ namespace CKPE
 
 		void Interface::Initialize(const CKPEGameLibraryInterface* a_interface, const CKPE::Version& a_editor_version, 
 			const CKPE::Version& a_version, const std::wstring& a_dialogs_fn, const std::wstring& a_databases_fn,
-			const std::wstring& a_database_fn, const std::wstring& a_resources_fn, bool support_more_theme,
-			const std::uint8_t a_runtime_index) noexcept(true)
+			const std::wstring& a_database_fn, [[maybe_unused]] const std::wstring& a_resources_fn,
+			[[maybe_unused]] bool support_more_theme, const std::uint8_t a_runtime_index) noexcept(true)
 		{
 			if (_cmdline) return;
 
@@ -102,7 +102,7 @@ namespace CKPE
 
 					// Detect command
 					auto Command = cmd.GetCommand();
-					_MESSAGE(L"\tCommand: \"%s\""sv, Command.c_str());
+					_MESSAGE_EX(L"\tCommand: \"{}\""sv, Command);
 
 					if (!_wcsicmp(Command.c_str(), L"-PECreateDatabase"))
 					{
@@ -125,9 +125,11 @@ namespace CKPE
 
 				// CK Address Library: stable ID -> RVA, replacing the legacy RELB database
 				auto addressLibrary = AddressLibrary::GetSingleton();
-				bool hasAddressLibrary = addressLibrary->Load(a_databases_fn, a_runtime_index);
+				bool hasAddressLibrary = addressLibrary->Load(a_runtime_index);
 				if (!hasAddressLibrary)
 					_ERROR("Address Library requested but failed to load, see log above."sv);
+				//else
+				//	addressLibrary->Save(L"version---.bin");
 
 				if (!Relocator::GetSingleton()->Open(a_databases_fn, a_database_fn))
 				{
@@ -136,7 +138,7 @@ namespace CKPE
 						_WARNING(L"\tNo legacy RELB database for this editor version; running on Address Library only."sv);
 					else
 						ErrorHandler::Trigger(StringUtils::Utf16ToWinCP(
-							StringUtils::FormatString(L"Couldn't open the database \"%s\" in \"%s\"\nMore detailed to log.",
+							StringUtils::FormatString(L"Couldn't open the database \"%s\" in \"%s\" or Address Library.\nMore detailed to log.",
 								a_database_fn.c_str(), a_databases_fn.c_str())));
 				}
 
@@ -149,11 +151,11 @@ namespace CKPE
 					{
 						if (cmd.Count() != 2)
 						{
-							_ERROR("Invalid number of command arguments: %u"sv, cmd.Count());
+							_ERROR_EX("Invalid number of command arguments: {}"sv, cmd.Count());
 							_MESSAGE("Example: CreationKit -PEUpdateDatabase \"test.relb\""sv);
 						}
 						else if (!PathUtils::FileExists(cmd[1].c_str()))
-							_ERROR(L"The file does not exist: \"%s\""sv, cmd[1].c_str());
+							_ERROR_EX(L"The file does not exist: \"{}\""sv, cmd[1]);
 						else
 						{
 							auto Patch = new RelocatorDB::PatchDB();
@@ -174,7 +176,7 @@ namespace CKPE
 					{
 						if (cmd.Count() != 2)
 						{
-							_ERROR("Invalid number of command arguments: %u"sv, cmd.Count());
+							_ERROR_EX("Invalid number of command arguments: {}"sv, cmd.Count());
 							_MESSAGE("Example: CreationKit -PERemoveFromDatabase \"test\""sv);
 						}
 						else
@@ -195,7 +197,7 @@ namespace CKPE
 					{
 						if ((cmd.Count() < 3) || (cmd.Count() > 4))
 						{
-							_ERROR("Invalid number of command arguments: %u"sv, cmd.Count());
+							_ERROR_EX("Invalid number of command arguments: {}"sv, cmd.Count());
 							_MESSAGE("Example: CreationKit -PEExtractFromDatabase \"test\" \"test.relb\" <-regen-sign>"sv);
 						}
 						else
@@ -218,7 +220,7 @@ namespace CKPE
 					{
 						if ((cmd.Count() < 2) || (cmd.Count() > 3))
 						{
-							_ERROR("Invalid number of command arguments: %u"sv, cmd.Count());
+							_ERROR_EX("Invalid number of command arguments: {}"sv, cmd.Count());
 							_MESSAGE("Example: CreationKit -PEExtractAllFromDatabase \"dir\" <-regen-sign>"sv);
 						}
 						else
@@ -256,7 +258,7 @@ namespace CKPE
 					{
 						if (cmd.Count() != 2)
 						{
-							_ERROR("Invalid number of command arguments: %u"sv, cmd.Count());
+							_ERROR_EX("Invalid number of command arguments: {}"sv, cmd.Count());
 							_MESSAGE("Example: CreationKit -PEExportRTTI \"rtti.txt\""sv);
 						}
 						else
@@ -438,7 +440,7 @@ namespace CKPE
 				{
 					if (cmd.Count() != 2)
 					{
-						_ERROR("Invalid number of command arguments: %u", cmd.Count());
+						_ERROR_EX("Invalid number of command arguments: {}", cmd.Count());
 						_MESSAGE("Example: CreationKit -PEExportRTTI \"rtti.txt\"");
 					}
 					else

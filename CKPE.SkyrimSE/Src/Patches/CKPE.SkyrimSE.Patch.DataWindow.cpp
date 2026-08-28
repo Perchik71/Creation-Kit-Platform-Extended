@@ -4,7 +4,6 @@
 
 #include <windows.h>
 #include <windowsx.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Graphics.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.UIVarCommon.h>
@@ -188,6 +187,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool DataWindow::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool DataWindow::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -195,13 +199,9 @@ namespace CKPE
 
 			bool DataWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto _interface = Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
-
-				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(ID(96447)).WriteJump(&HKWndProc);
 
 				return true;
 			}

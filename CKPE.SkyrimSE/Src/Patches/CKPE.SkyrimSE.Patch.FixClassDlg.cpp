@@ -15,9 +15,9 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			typedef void(*TFixClassDlgSub)(std::int64_t, std::int64_t);
+			using TFixClassDlgSub = void(std::int64_t, std::int64_t);
 
-			static TFixClassDlgSub FixClassDlgSub;
+			static std::function<TFixClassDlgSub> FixClassDlgSub;
 
 			FixClassDlg::FixClassDlg() : Common::Patch()
 			{
@@ -44,6 +44,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixClassDlg::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixClassDlg::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -51,19 +56,15 @@ namespace CKPE
 
 			bool FixClassDlg::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for the "Class" edit dialog not filling in the "Training" checkbox.
 				// Also hide the unused "Recharge" option.
 				//
-				Detours::DetourClassVTable(__CKPE_OFFSET(0), &sub, 86);
-				FixClassDlgSub = (TFixClassDlgSub)(__CKPE_OFFSET(1));
 
+				FixClassDlgSub = (TFixClassDlgSub*)Relocation(ID(163067)).WriteVFunc(86, &sub);
+				
 				return true;
 			}
 

@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -39,6 +38,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixCrashPluginTXT::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixCrashPluginTXT::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -46,18 +50,14 @@ namespace CKPE
 
 			bool FixCrashPluginTXT::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for crash when plugins.txt is present in the game root folder. 
 				// Buffer overflow in ArchiveManager::OpenMasterArchives when appending to a string.
 				// Skip the parsing code completely.
 				//
-				SafeWrite::WriteNop(__CKPE_OFFSET(0), 6);
+				Relocation(ID(319725), Offset{ 0x16A, 0x186 }).WriteFill(NOP, 6);
 
 				return true;
 			}

@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -100,6 +99,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixRenderPass::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixRenderPass::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -107,21 +111,17 @@ namespace CKPE
 
 			bool FixRenderPass::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for crash when too much geometry is present in the scene (usually with navmesh). 
 				// The CK runs out of render pass cache entries.
 				// Dynamically allocate them instead.
 				//
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&InitSDM);
-				Detours::DetourJump(__CKPE_OFFSET(1), (std::uintptr_t)&KillSDM);
-				Detours::DetourJump(__CKPE_OFFSET(2), (std::uintptr_t)&AllocatePass);
-				Detours::DetourJump(__CKPE_OFFSET(3), (std::uintptr_t)&DeallocatePass);
+				Relocation(ID(729523)).WriteJump(&InitSDM);
+				Relocation(ID(249775)).WriteJump(&KillSDM);
+				Relocation(ID{ 506060, 972572 }).WriteJump(&AllocatePass);
+				Relocation(ID{ 771548, 922930 }).WriteJump(&DeallocatePass);
 
 				return true;
 			}

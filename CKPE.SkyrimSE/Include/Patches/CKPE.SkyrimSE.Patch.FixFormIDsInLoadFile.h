@@ -26,6 +26,7 @@ namespace CKPE
 				virtual const char* GetOptionName() const noexcept(true);
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
+				bool SupportsAddressLibrary() const noexcept(true) override;
 
 				static bool sub(void* World, std::uint32_t* ParentFormIDs, std::uint32_t* FormIDs) noexcept(true);
 				static std::uint32_t sub2(void* World, std::uint32_t* FormIDs) noexcept(true);

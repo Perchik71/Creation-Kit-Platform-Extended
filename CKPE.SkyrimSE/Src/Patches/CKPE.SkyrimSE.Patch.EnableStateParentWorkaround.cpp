@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -16,10 +15,15 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			std::uintptr_t pointer_EnableStateParentWorkaround_sub1 = 0;
-			std::uintptr_t pointer_EnableStateParentWorkaround_sub2 = 0;
-			std::uintptr_t pointer_EnableStateParentWorkaround_sub3 = 0;
-			std::uintptr_t pointer_EnableStateParentWorkaround_sub4 = 0;
+			using TEnableStateParentWorkaround_sub1 = std::int64_t(std::int64_t);
+			using TEnableStateParentWorkaround_sub2 = void(std::int64_t*, uint32_t*);
+			using TEnableStateParentWorkaround_sub3 = void(std::int64_t, uint32_t*, bool);
+			using TEnableStateParentWorkaround_sub4 = void(std::int64_t*);
+
+			static std::function<TEnableStateParentWorkaround_sub1> EnableStateParentWorkaround_sub1;
+			static std::function<TEnableStateParentWorkaround_sub2> EnableStateParentWorkaround_sub2;
+			static std::function<TEnableStateParentWorkaround_sub3> EnableStateParentWorkaround_sub3;
+			static std::function<TEnableStateParentWorkaround_sub4> EnableStateParentWorkaround_sub4;
 
 			EnableStateParentWorkaround::EnableStateParentWorkaround() : Common::Patch()
 			{
@@ -46,6 +50,11 @@ namespace CKPE
 				return { "Console" };
 			}
 
+			bool EnableStateParentWorkaround::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool EnableStateParentWorkaround::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -53,21 +62,17 @@ namespace CKPE
 
 			bool EnableStateParentWorkaround::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Workaround for "Select Enable State Parent" selecting objects outside of the current cell or worldspace
 				//
-				Detours::DetourCall(__CKPE_OFFSET(0), (uintptr_t)&sub);
+				Relocation(ID(336790), 0x203).WriteCall(&sub);
 
-				pointer_EnableStateParentWorkaround_sub1 = __CKPE_OFFSET(1);
-				pointer_EnableStateParentWorkaround_sub2 = __CKPE_OFFSET(2);
-				pointer_EnableStateParentWorkaround_sub3 = __CKPE_OFFSET(3);
-				pointer_EnableStateParentWorkaround_sub4 = __CKPE_OFFSET(4);
+				EnableStateParentWorkaround_sub1 = Relocation<TEnableStateParentWorkaround_sub1>(ID(111020)).Get();
+				EnableStateParentWorkaround_sub2 = Relocation<TEnableStateParentWorkaround_sub2>(ID(597218)).Get();
+				EnableStateParentWorkaround_sub3 = Relocation<TEnableStateParentWorkaround_sub3>(ID(355147)).Get();
+				EnableStateParentWorkaround_sub4 = Relocation<TEnableStateParentWorkaround_sub4>(ID(356605)).Get();
 
 				return true;
 			}
@@ -76,19 +81,16 @@ namespace CKPE
 				std::uint32_t* UntypedPointerHandle, bool Select) noexcept(true)
 			{
 				// The caller of this function already holds a reference to the pointer
-				std::int64_t parentRefr = ((std::int64_t(__fastcall*)(std::int64_t))
-					pointer_EnableStateParentWorkaround_sub1)(*(std::int64_t*)(RenderWindowInstance + 0xB8));
+				std::int64_t parentRefr = EnableStateParentWorkaround_sub1(*(std::int64_t*)(RenderWindowInstance + 0xB8));
 
 				std::int64_t childRefr;
-				((void(__fastcall*)(std::int64_t*, uint32_t*))pointer_EnableStateParentWorkaround_sub2)
-					(&childRefr, UntypedPointerHandle);
+				EnableStateParentWorkaround_sub2(&childRefr, UntypedPointerHandle);
 
 				if (childRefr)
 				{
 					// Only select child forms if they are in the same parent cell
 					if (*(std::int64_t*)(childRefr + 0x70) == *(std::int64_t*)(parentRefr + 0x70))
-						((void(__fastcall*)(std::int64_t, uint32_t*, bool))pointer_EnableStateParentWorkaround_sub3)
-						(RenderWindowInstance, UntypedPointerHandle, Select);
+						EnableStateParentWorkaround_sub3(RenderWindowInstance, UntypedPointerHandle, Select);
 					else
 						Console::LogWarning(Console::SYSTEM, 
 							"Not selecting child refr (%08X) because parent cells don't match (%p != %p)\n",
@@ -96,7 +98,7 @@ namespace CKPE
 							*(std::int64_t*)(parentRefr + 0x70));
 				}
 
-				((void(__fastcall*)(std::int64_t*))pointer_EnableStateParentWorkaround_sub4)(&childRefr);
+				EnableStateParentWorkaround_sub4(&childRefr);
 			}
 		}
 	}

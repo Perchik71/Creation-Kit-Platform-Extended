@@ -369,10 +369,10 @@
     <ClInclude Include="Include\CKPE.Common.ID.h">
       <Filter>API</Filter>
     </ClInclude>
-    <ClInclude Include="Include\CKPE.Common.Offset.h">
+    <ClInclude Include="Include\CKPE.Common.Relocation.h">
       <Filter>API</Filter>
     </ClInclude>
-    <ClInclude Include="Include\CKPE.Common.Relocation.h">
+    <ClInclude Include="Include\CKPE.Common.Offset.h">
       <Filter>API</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -45,6 +44,11 @@ namespace CKPE
 				return { "Replace BSPointerHandle And Manager" };
 			}
 
+			bool FixIntersectionTriangle::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixIntersectionTriangle::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -52,13 +56,7 @@ namespace CKPE
 
 			bool FixIntersectionTriangle::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				// Rewrite their ray->triangle intersection function. This fixes 3 things:
 				//
@@ -69,14 +67,12 @@ namespace CKPE
 				// 
 				// modify in 1.6.438:
 				//
-				EditorAPI::pointer_PickGetRecord_sub = __CKPE_OFFSET(0);
-
-				if (verPatch == 2)
-					Detours::DetourClassVTable(__CKPE_OFFSET(1),
-						&EditorAPI::BSShaderResourceManager::FindIntersectionsTriShapeFastPathEx, 34);
+				if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_438)
+					Relocation(ID(132528)).WriteVFunc(34, &EditorAPI::BSShaderResourceManager::FindIntersectionsTriShapeFastPathEx);
 				else
-					Detours::DetourClassVTable(__CKPE_OFFSET(1),
-						&EditorAPI::BSShaderResourceManager::FindIntersectionsTriShapeFastPath, 34);
+					Relocation(ID(132528)).WriteVFunc(34, &EditorAPI::BSShaderResourceManager::FindIntersectionsTriShapeFastPath);
+
+				EditorAPI::pointer_PickGetRecord_sub = ID{ 551353, 1014796 }.Address();
 
 				return true;
 			}

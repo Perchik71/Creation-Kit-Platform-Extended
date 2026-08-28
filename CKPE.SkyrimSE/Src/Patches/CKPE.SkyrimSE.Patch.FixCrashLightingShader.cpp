@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -39,6 +38,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixCrashLightingShader::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixCrashLightingShader::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -46,18 +50,14 @@ namespace CKPE
 
 			bool FixCrashLightingShader::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for crash when BSLightingShader::SetupMaterial(MULTIINDEXTRISHAPESNOW) incorrectly casts a 
 				// BSLightingShaderMaterial to BSLightingShaderMaterialSnow. 
 				// Force the shader sparkle params to zero instead (xor xmm0, xmm1, xmm2, eax).
 				//
-				auto addr = __CKPE_OFFSET(0);
+				auto addr = Relocation(ID(200136), Offset{ 0x4E0, 0x4E5 }).Address();
 				SafeWrite::WriteNop(addr, 24);
 				SafeWrite::Write(addr, { 0x0F, 0x57, 0xC0, 0x0F, 0x57, 0xC9, 0x0F, 0x57, 0xD2, 0x33, 0xC0 });
 

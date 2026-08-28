@@ -2,8 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -17,7 +15,9 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			std::uintptr_t pointer_FixWaterType_sub = 0;
+			using TFixWaterType_sub = void(EditorAPI::Forms::TESForm*, EditorAPI::BSShaderMaterial*);
+
+			static std::function<TFixWaterType_sub> FixWaterType_sub;
 
 			FixWaterType::FixWaterType() : Common::Patch()
 			{
@@ -44,6 +44,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixWaterType::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixWaterType::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -51,34 +56,29 @@ namespace CKPE
 
 			bool FixWaterType::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for "Water Type" window options not updating water in the "Render Window" preview
 				//
-				EditorAPI::TESWaterRoot::SingletonFunc = (EditorAPI::TESWaterRoot* (*)())(__CKPE_OFFSET(0));
-				pointer_FixWaterType_sub = __CKPE_OFFSET(1);
-				Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&sub);
-				SafeWrite::WriteNop(__CKPE_OFFSET(3), 2);
-				SafeWrite::Write(__CKPE_OFFSET(4), { 0xEB });
-
+				EditorAPI::TESWaterRoot::SingletonFunc = (EditorAPI::TESWaterRoot* (*)())(ID(571218).Address());
+				FixWaterType_sub = Relocation<TFixWaterType_sub>(ID(296818)).Get();
+				auto target = ID(256456);
+				Relocation(target, 0xE3).WriteFill(NOP, 2);
+				Relocation(target, 0xF6).WriteCall(&sub);
+				Relocation(ID(296818), 0x38).Write(JMP);
+				
 				return true;
 			}
 
-			void FixWaterType::sub(void* DialogForm, std::int64_t Unused) noexcept(true)
+			void FixWaterType::sub(void* DialogForm, [[maybe_unused]] std::int64_t Unused) noexcept(true)
 			{
 				auto waterRoot = EditorAPI::TESWaterRoot::Singleton();
 				for (std::uint32_t i = 0; i < waterRoot->m_WaterObjects.size(); i++)
 				{
 					auto dlg = (EditorAPI::Forms::TESForm*)DialogForm;
 					if (dlg->GetFormID() == waterRoot->m_WaterObjects[i]->m_BaseWaterForm->GetFormID())
-						((void(__fastcall*)(EditorAPI::Forms::TESForm*, EditorAPI::BSShaderMaterial*))
-							pointer_FixWaterType_sub)(dlg, 
-								waterRoot->m_WaterObjects[i]->m_TriShape->QShaderProperty()->pMaterial);
+						FixWaterType_sub(dlg, waterRoot->m_WaterObjects[i]->m_TriShape->QShaderProperty()->pMaterial);
 				}
 			}
 		}

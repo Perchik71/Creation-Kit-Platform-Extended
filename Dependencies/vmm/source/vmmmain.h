@@ -1,9 +1,10 @@
-﻿// Copyright © 2023 aka CKPE team. All rights reserved.
+﻿// Copyright © 2023 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #pragma once
 
+#include "Voltek.MemoryManager.h"
 #include "vbase.h"
 #include "vmmblock.h"
 #include "vsimplelock.h"
@@ -14,21 +15,24 @@ namespace voltek
 {
 	namespace memory_manager
 	{
-		constexpr static size_t POOL_8 = 0;
-		constexpr static size_t POOL_16 = 1;
-		constexpr static size_t POOL_32 = 2;
-		constexpr static size_t POOL_64 = 3;
-		constexpr static size_t POOL_128 = 4;
-		constexpr static size_t POOL_256 = 5;
-		constexpr static size_t POOL_512 = 6;
-		constexpr static size_t POOL_1024 = 7;
-		constexpr static size_t POOL_4096 = 8;
-		constexpr static size_t POOL_8192 = 9;
-		constexpr static size_t POOL_16384 = 10;
-		constexpr static size_t POOL_32768 = 11;
-		constexpr static size_t POOL_65536 = 12;
-		constexpr static size_t POOL_131072 = 13;
-		constexpr static size_t POOL_MAX = POOL_131072 + 1;
+		enum class pool_type : uint8_t
+		{
+			pool_8 = 0,
+			pool_16,
+			pool_32,
+			pool_64,
+			pool_128,
+			pool_256,
+			pool_512,
+			pool_1024,
+			pool_4096,
+			pool_8192,
+			pool_16384,
+			pool_32768,
+			pool_65536,
+			pool_131072,
+			MAX
+		};
 
 		// Менеджер памяти.
 		class memory_manager : public voltek::core::base
@@ -42,42 +46,41 @@ namespace voltek
 			// Память всегда выровнена.
 			// Вернёт nullptr, если память физически закончилась.
 			// Также если размер требуемый объявлен как 0.
-			void* alloc(size_t size);
+			[[nodiscard]] void* alloc(size_t size) noexcept;
 			// Выделяет память требуемого размера из предыдущего указателя на память.
 			// Память всегда выровнена.
 			// Вернёт nullptr, если память физически закончилась.
 			// Также если размер требуемый объявлен как 0.
 			// Адрес памяти может быть изменён.
-			void* realloc(const void* ptr, size_t size);
+			[[nodiscard]] void* realloc(const void* ptr, size_t size) noexcept;
 			// Освобождает память.
 			// Вернёт ложь, если указатель не пренадлежит менеджеру.
-			bool free(const void* ptr);
+			bool free(const void* ptr) noexcept;
 			// Возвращает размер выделенной памяти под указатель.
 			// Вернёт 0, что значит ошибка.
-			size_t msize(const void* ptr) const;
+			[[nodiscard]] size_t msize(const void* ptr) const noexcept;
 			// Вывод дампа битовой карты указанного пула
-			void dump_map(size_t pool_id, const char* filename) const;
+			void dump_map(size_t pool_id, const char* filename) const noexcept;
 			// Вывод дампа памяти указанного пула
-			void dump(size_t pool_id, const char* filename) const;
+			void dump(size_t pool_id, const char* filename) const noexcept;
 		private:
-			// Конструктор копий - НЕДОСТУПЕН.
-			// Менеджер один и уникален.
-			memory_manager(const memory_manager& ob);
-			// Оператор присвоения - НЕДОСТУПЕН.
-			// Менеджер один и уникален.
-			memory_manager& operator=(const memory_manager& ob);
+			memory_manager(const memory_manager&) = delete;
+			memory_manager(memory_manager&&) = delete;
+			memory_manager& operator=(memory_manager&&) = delete;
+			memory_manager& operator=(const memory_manager&) = delete;
 		private:
 			// Блок памяти, если запрашивают 0 размер.
-			block8_t zero_size_request_block;
+			block8_t zero_size_request_block{ 0 };
 			// Массив пулов.
-			void** pools;
+			void** pools{ nullptr };
+			friend void ::voltek::scalable_get_pool_stats(::voltek::scalable_pool_stats* out);
 			// Блокировщик для работы с множеством потоков.
-			voltek::core::_internal::simple_lock lock;
+			//voltek::core::_internal::simple_lock lock;
 			// События для потока кеширования, чтобы можно выйти
-			void* event_close;
-			void* event_close_w;
+			void* event_close{ nullptr };
+			void* event_close_w{ nullptr };
 			// Поток для кеширования
-			std::thread* thread;
+			std::thread* thread{ nullptr };
 		};
 
 		// Глобальный менеджер памяти, который требует инициализации.

@@ -193,7 +193,7 @@ namespace CKPE
 			{
 				if (!_stricmp(s.c_str(), name.c_str()))
 				{
-					_WARNING_EX("PatchManager::Register \"%s\" is blacklisted"sv, name);
+					_WARNING_EX("PatchManager::Register \"{}\" is blacklisted"sv, name);
 					return;
 				}
 			}

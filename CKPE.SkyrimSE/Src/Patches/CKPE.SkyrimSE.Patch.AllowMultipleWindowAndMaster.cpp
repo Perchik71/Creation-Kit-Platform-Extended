@@ -53,7 +53,7 @@ namespace CKPE
 				using namespace Common;
 
 				Relocation(ID(277090), 0x2DA).Write({ 0xE9, 0xBA, 0x00, 0x00, 0x00, 0x90 });
-				Relocation(ID(326873), 0x7FB).Write({ 0xEB });
+				Relocation(ID(326873), 0x7FB).Write(JMP);
 
 				return true;
 			}

@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -41,6 +40,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool MemoryLeakBSString::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool MemoryLeakBSString::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -48,16 +52,12 @@ namespace CKPE
 
 			bool MemoryLeakBSString::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				// According to the indications of trace...
 				// Bethesda does not free up memory when adding to the end of a string.
 				// A stupid mistake, it seems to have been done on purpose, out of inexperience.
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&Append);
+				Relocation(ID(551397)).WriteJump(&Append);
 
 				return true;
 			}

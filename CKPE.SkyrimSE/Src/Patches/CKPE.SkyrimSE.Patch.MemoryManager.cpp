@@ -3,8 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.HardwareInfo.h>
 #include <CKPE.Application.h>
@@ -178,6 +176,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool MemoryManager::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool MemoryManager::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -185,35 +188,32 @@ namespace CKPE
 
 			bool MemoryManager::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
+				auto base = Application::GetSingleton()->GetBase();
 				auto Physical = HardwareInfo::OS::GetPhysicalMemory();
 				auto Shared = HardwareInfo::OS::GetSharedMemory();
-				_MESSAGE("\t\tPhysical Memory (Total: %.1f Gb, Available: %.1f Gb)", Physical.Total, Physical.Free);
-				_MESSAGE("\t\tMemory (Total: %.1f Gb, Available: %.1f Gb)", Shared.Total, Shared.Free);
+				_MESSAGE("\t\tPhysical Memory (Total: %.1f Gb, Available: %.1f Gb)"sv, Physical.Total, Physical.Free);
+				_MESSAGE("\t\tMemory (Total: %.1f Gb, Available: %.1f Gb)"sv, Shared.Total, Shared.Free);
 
 				// Программа очень любит думать, а винде это не нравиться, скажем винде, чтоб не обращала внимание.
 				DisableProcessWindowsGhosting();
 
-				auto patchIAT = [&base](const char* module)
+				auto patchIAT = [&base](const char* hmodule)
 					{
-						Detours::DetourIAT(base, module, "malloc", (std::uintptr_t)malloc);
-						Detours::DetourIAT(base, module, "calloc", (std::uintptr_t)calloc);
-						Detours::DetourIAT(base, module, "realloc", (std::uintptr_t)realloc);
-						Detours::DetourIAT(base, module, "_recalloc", (std::uintptr_t)recalloc);
-						Detours::DetourIAT(base, module, "free", (std::uintptr_t)free);
-						Detours::DetourIAT(base, module, "_msize", (std::uintptr_t)msize);
-						Detours::DetourIAT(base, module, "_strdup", (std::uintptr_t)strdup);
-						Detours::DetourIAT(base, module, "memcpy_s", (std::uintptr_t)memcpy_s);
-						Detours::DetourIAT(base, module, "memmove_s", (std::uintptr_t)memmove_s);
-						Detours::DetourIAT(base, module, "memcmp", (std::uintptr_t)memcmp);
-						Detours::DetourIAT(base, module, "memcpy", (std::uintptr_t)memcpy);
-						Detours::DetourIAT(base, module, "memmove", (std::uintptr_t)memmove);
-						Detours::DetourIAT(base, module, "memset", (std::uintptr_t)memset);
+						Detours::DetourIAT(base, hmodule, "malloc", (std::uintptr_t)malloc);
+						Detours::DetourIAT(base, hmodule, "calloc", (std::uintptr_t)calloc);
+						Detours::DetourIAT(base, hmodule, "realloc", (std::uintptr_t)realloc);
+						Detours::DetourIAT(base, hmodule, "_recalloc", (std::uintptr_t)recalloc);
+						Detours::DetourIAT(base, hmodule, "free", (std::uintptr_t)free);
+						Detours::DetourIAT(base, hmodule, "_msize", (std::uintptr_t)msize);
+						Detours::DetourIAT(base, hmodule, "_strdup", (std::uintptr_t)strdup);
+						Detours::DetourIAT(base, hmodule, "memcpy_s", (std::uintptr_t)memcpy_s);
+						Detours::DetourIAT(base, hmodule, "memmove_s", (std::uintptr_t)memmove_s);
+						Detours::DetourIAT(base, hmodule, "memcmp", (std::uintptr_t)memcmp);
+						Detours::DetourIAT(base, hmodule, "memcpy", (std::uintptr_t)memcpy);
+						Detours::DetourIAT(base, hmodule, "memmove", (std::uintptr_t)memmove);
+						Detours::DetourIAT(base, hmodule, "memset", (std::uintptr_t)memset);
 					};
 
 				patchIAT("API-MS-WIN-CRT-HEAP-L1-1-0.DLL");
@@ -222,17 +222,16 @@ namespace CKPE
 				// Принудительный вылет с сообщением для пользователя.
 				CKPE_ASSERT_MSG(LowMemory(), "Not enough memory to run the program");
 
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&BSMemoryManager::Allocate);
-				Detours::DetourJump(__CKPE_OFFSET(1), (std::uintptr_t)&BSMemoryManager::Deallocate);
-				Detours::DetourJump(__CKPE_OFFSET(2), (std::uintptr_t)&BSMemoryManager::Size);
-				Detours::DetourJump(__CKPE_OFFSET(3), (std::uintptr_t)&BSScrapHeap::Allocate);
-				Detours::DetourJump(__CKPE_OFFSET(4), (std::uintptr_t)&BSScrapHeap::Deallocate);
-				Detours::DetourJump(__CKPE_OFFSET(5), (std::uintptr_t)&bhkThreadMemorySource::__ctor__);
-				
-				SafeWrite::Write(__CKPE_OFFSET(6), { 0xC3 });
-				SafeWrite::Write(__CKPE_OFFSET(7), { 0xC3 });
-				SafeWrite::Write(__CKPE_OFFSET(8), { 0xC3 });
-				SafeWrite::Write(__CKPE_OFFSET(9), { 0xC3 });
+				Relocation(ID(105314)).WriteJump(&BSMemoryManager::Allocate);
+				Relocation(ID(253947)).WriteJump(&BSMemoryManager::Deallocate);
+				Relocation(ID(657554)).WriteJump(&BSMemoryManager::Size);
+				Relocation(ID(317676)).WriteJump(&BSScrapHeap::Allocate);
+				Relocation(ID{ 757576, 974040 }).WriteJump(&BSScrapHeap::Deallocate);
+				Relocation(ID{ 758593, 948874 }).WriteJump(&bhkThreadMemorySource::__ctor__);	
+				Relocation(ID(28172)).Write(RET);
+				Relocation(ID{ 599362, 1025020 }).Write(RET);
+				Relocation(ID{ 757575, 1016911 }).Write(RET);
+				Relocation(ID(605622)).Write(RET);
 
 				return true;
 			}

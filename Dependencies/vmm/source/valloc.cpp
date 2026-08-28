@@ -1,4 +1,4 @@
-﻿// Copyright © 2023 aka CKPE team. All rights reserved.
+﻿// Copyright © 2023 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -215,6 +215,17 @@ namespace voltek
 #else
 				free(ptr);
 #endif
+			}
+
+			void* page_alloc(size_t size)
+			{
+				return VirtualAlloc(nullptr, size, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+			}
+
+			void page_free(void* ptr)
+			{
+				if (ptr)
+					VirtualFree(ptr, 0, MEM_RELEASE);
 			}
 
 			void* aligned_malloc(size_t size, size_t alignment)

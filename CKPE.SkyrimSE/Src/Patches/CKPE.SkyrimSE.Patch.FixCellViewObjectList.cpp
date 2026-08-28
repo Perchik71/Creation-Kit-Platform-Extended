@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Utils.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -58,6 +57,11 @@ namespace CKPE
 				return { "Cell View Window" };
 			}
 
+			bool FixCellViewObjectList::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixCellViewObjectList::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -65,20 +69,17 @@ namespace CKPE
 
 			bool FixCellViewObjectList::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix the "Cell View" object list current selection not being synced with the render window
 				//
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&ListViewSelectItem);
-				Detours::DetourJump(__CKPE_OFFSET(1), (std::uintptr_t)&ListViewFindAndSelectItem);
-				Detours::DetourJump(__CKPE_OFFSET(2), (std::uintptr_t)&ListViewDeselectItem);
+				
+				Relocation(ID(108079)).WriteJump(&ListViewSelectItem);
+				Relocation(ID(400656)).WriteJump(&ListViewFindAndSelectItem);
+				Relocation(ID(400662)).WriteJump(&ListViewDeselectItem);
 
-				pointer_FixCellViewObjectListPatch_sub = Detours::DetourClassJump(__CKPE_OFFSET(3), &sub1);
+				pointer_FixCellViewObjectListPatch_sub = Relocation(ID(321163)).WriteJump(&sub1);
 
 				return true;
 			}

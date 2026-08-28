@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -39,6 +38,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool IgnoreGroundHeightTest::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool IgnoreGroundHeightTest::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -46,17 +50,13 @@ namespace CKPE
 
 			bool IgnoreGroundHeightTest::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// At this point, the obtained height is compared with an incorrect value. 
 				// Skip all this if the user requested it in the settings.
 				//
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0xE9, 0xB1, 0x02, 0x00, 0x00, 0x90 });
+				Relocation(ID(216277), 0x3C9).Write({ 0xE9, 0xB1, 0x02, 0x00, 0x00, 0x90 });
 
 				return true;
 			}

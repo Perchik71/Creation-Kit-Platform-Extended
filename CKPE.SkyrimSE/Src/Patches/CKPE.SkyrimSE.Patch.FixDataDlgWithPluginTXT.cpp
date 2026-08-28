@@ -4,7 +4,6 @@
 
 #include <windows.h>
 #include <shlobj_core.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -44,6 +43,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixDataDlgWithPluginTXT::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixDataDlgWithPluginTXT::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -51,23 +55,20 @@ namespace CKPE
 
 			bool FixDataDlgWithPluginTXT::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto cc_interface = CKPE::Common::Interface::GetSingleton();
-				auto base = cc_interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for the "Data" window not listing plugins according to the user's load order. 
 				// The CK tries to find plugins.txt in the executable directory instead of %localappdata%.
 				//
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				FixDataDlgWithPluginTXTData = (char*)__CKPE_OFFSET(1);
+				
+				Relocation(ID(564008)).WriteJump(&sub);
+				FixDataDlgWithPluginTXTData = reinterpret_cast<char*>(ID(291941).Address());
 
 				return true;
 			}
 
-			void FixDataDlgWithPluginTXT::sub(const char* Path) noexcept(true)
+			void FixDataDlgWithPluginTXT::sub([[maybe_unused]] const char* Path) noexcept(true)
 			{
 				char appDataPath[MAX_PATH];
 				HRESULT hr = SHGetFolderPathA(nullptr, CSIDL_LOCAL_APPDATA, nullptr, 0, appDataPath);

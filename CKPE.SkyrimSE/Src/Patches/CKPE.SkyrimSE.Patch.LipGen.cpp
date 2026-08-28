@@ -5,7 +5,6 @@
 #include <windows.h>
 #include <commctrl.h>
 #include <CKPE.ErrorHandler.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -51,6 +50,11 @@ namespace CKPE
 				return { "Console" };
 			}
 
+			bool LipGen::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool LipGen::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_6_438;
@@ -58,24 +62,22 @@ namespace CKPE
 
 			bool LipGen::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// LipGen
 				//
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&CreateLipGenProcess);
-				Detours::DetourJump(__CKPE_OFFSET(1), (std::uintptr_t)&IsLipDataPresent);
-				Detours::DetourJump(__CKPE_OFFSET(2), (std::uintptr_t)&WriteLipData);
-				Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&IsWavDataPresent);
-				Detours::DetourJump(__CKPE_OFFSET(4), (std::uintptr_t)&LipRecordDialogProc);
 
-				pointer_LipGen_sub1 = __CKPE_OFFSET(5);
-				pointer_LipGen_sub2 = __CKPE_OFFSET(6);
-				pointer_LipGen_data = __CKPE_OFFSET(7);
+				Relocation(ID(219769)).WriteJump(&CreateLipGenProcess);
+				Relocation(ID(112434)).WriteJump(&IsLipDataPresent);
+				Relocation(ID(91692)).WriteJump(&WriteLipData);
+				auto target = ID(207929);
+				Relocation(target, 0x133).WriteCall(&IsWavDataPresent);
+				Relocation(ID(342981)).WriteJump(&LipRecordDialogProc);
+
+				pointer_LipGen_sub1 = ID(668361).Address();
+				pointer_LipGen_sub2 = target.Address();
+				pointer_LipGen_data = ID(52729).Address();
 
 				return true;
 			}
@@ -116,7 +118,7 @@ namespace CKPE
 					Console::LogWarning(Console::DIALOGUE, "FaceFXWrapper background process started.");
 			}
 
-			bool LipGen::IsLipDataPresent(void* Thisptr) noexcept(true)
+			bool LipGen::IsLipDataPresent([[maybe_unused]] void* Thisptr) noexcept(true)
 			{
 				char currentDir[MAX_PATH];
 				GetCurrentDirectory(MAX_PATH, currentDir);
@@ -125,8 +127,9 @@ namespace CKPE
 				return GetFileAttributesA(currentDir) != INVALID_FILE_ATTRIBUTES;
 			}
 
-			bool LipGen::WriteLipData(void* Thisptr, const char* Path, std::int32_t Unkown1, bool Unknown2,
-				bool Unknown3) noexcept(true)
+			bool LipGen::WriteLipData([[maybe_unused]] void* Thisptr, const char* Path,
+				[[maybe_unused]] std::int32_t Unkown1, [[maybe_unused]] bool Unknown2,
+				[[maybe_unused]] bool Unknown3) noexcept(true)
 			{
 				char srcDir[MAX_PATH];
 				GetCurrentDirectory(MAX_PATH, srcDir);
@@ -145,15 +148,15 @@ namespace CKPE
 				return status;
 			}
 
-			std::int32_t LipGen::IsWavDataPresent(const char* Path, std::int64_t a2, std::int64_t a3,
-				std::int64_t a4) noexcept(true)
+			std::int32_t LipGen::IsWavDataPresent([[maybe_unused]] const char* Path, std::int64_t a2,
+				std::int64_t a3, std::int64_t a4) noexcept(true)
 			{
 				return ((std::int32_t(__fastcall*)(const char*, std::int64_t, std::int64_t, 
 					std::int64_t))pointer_LipGen_sub1)("Sound\\Voice\\Temp.wav", a2, a3, a4);
 			}
 
 			INT_PTR CALLBACK LipGen::LipRecordDialogProc(HWND DialogHwnd, UINT Message, WPARAM wParam, 
-				LPARAM lParam) noexcept(true)
+				[[maybe_unused]] LPARAM lParam) noexcept(true)
 			{
 				// Id's for "Recording..." dialog window
 				switch (Message)

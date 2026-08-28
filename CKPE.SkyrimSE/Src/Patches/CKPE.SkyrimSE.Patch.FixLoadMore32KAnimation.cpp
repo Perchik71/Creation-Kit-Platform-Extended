@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -39,6 +38,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixLoadMore32KAnimation::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixLoadMore32KAnimation::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -46,13 +50,9 @@ namespace CKPE
 
 			bool FixLoadMore32KAnimation::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0xB7 });
+				Relocation(ID{ 747080, 989312 }, Offset{ 0xBE, 0xE3 }).Write({ 0xB7 });
 
 				return true;
 			}

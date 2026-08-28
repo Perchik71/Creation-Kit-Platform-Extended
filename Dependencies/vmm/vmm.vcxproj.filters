@@ -19,6 +19,7 @@
     <ClInclude Include="source\vintrin.h" />
     <ClInclude Include="source\vio.h" />
     <ClInclude Include="source\vmmblock.h" />
+    <ClInclude Include="source\vmmgeometry.h" />
     <ClInclude Include="source\vmmmain.h" />
     <ClInclude Include="source\vmmpage.h" />
     <ClInclude Include="source\vmmpool.h" />

@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Common.Interface.h>
@@ -15,9 +14,9 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			typedef void(*TFixNiSkinInstanceSub)(std::int64_t SkinInstance, std::int64_t Stream);
+			using TFixNiSkinInstanceSub = void(std::int64_t, std::int64_t);
 
-			static TFixNiSkinInstanceSub FixNiSkinInstanceSub;
+			static std::function<TFixNiSkinInstanceSub> FixNiSkinInstanceSub;
 
 			FixNiSkinInstance::FixNiSkinInstance() : Common::Patch()
 			{
@@ -44,6 +43,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixNiSkinInstance::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixNiSkinInstance::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -51,15 +55,11 @@ namespace CKPE
 
 			bool FixNiSkinInstance::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				Detours::DetourClassVTable(__CKPE_OFFSET(0), &NiSkinInstance_LinkObject, 25);
-				Detours::DetourClassVTable(__CKPE_OFFSET(1), &NiSkinInstance_LinkObject, 25);
-				FixNiSkinInstanceSub = (TFixNiSkinInstanceSub)__CKPE_OFFSET(2);
+				Relocation(ID(599092)).WriteVFunc(25, &NiSkinInstance_LinkObject);
+				Relocation(ID(40269)).WriteVFunc(25, &NiSkinInstance_LinkObject);
+				FixNiSkinInstanceSub = Relocation<TFixNiSkinInstanceSub>(ID(657313)).Get();
 
 				return true;
 			}
@@ -70,7 +70,7 @@ namespace CKPE
 
 				// SkinInstance->RootParent can't be null
 				std::int64_t rootParent = *(std::int64_t*)(SkinInstance + 0x20);
-				const char* nifPath = (const char*)(Stream + 0x108);
+				auto nifPath = (const char*)(Stream + 0x108);
 
 				CKPE_ASSERT_MSG_FMT(rootParent, "A mesh's NiSkinInstance is missing a skeleton root node. This is a fatal error. NIF path is \"%s\".", nifPath);
 			}

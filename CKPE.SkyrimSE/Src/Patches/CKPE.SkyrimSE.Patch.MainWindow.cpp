@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Utils.h>
 #include <CKPE.FileUtils.h>
 #include <CKPE.StringUtils.h>
@@ -38,8 +37,8 @@ namespace CKPE
 		namespace Patch
 		{
 			std::uintptr_t pointer_MainWindow_sub1 = 0;
-			std::uintptr_t pointer_MainWindow_sub2 = 0;
-			std::uintptr_t pointer_MainWindow_sub3 = 0;
+			//std::uintptr_t pointer_MainWindow_sub2 = 0;
+			//td::uintptr_t pointer_MainWindow_sub3 = 0;
 
 			struct VersionControlListItem
 			{
@@ -223,6 +222,11 @@ namespace CKPE
 				return { "Re-enable fog rendering", "Console", "Object Window" };
 			}
 
+			bool MainWindow::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool MainWindow::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -230,17 +234,13 @@ namespace CKPE
 
 			bool MainWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto _interface = Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
-
-				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(ID(465745)).WriteJump(&HKWndProc);
 				
-				pointer_MainWindow_sub1 = __CKPE_OFFSET(1);
-				pointer_MainWindow_sub2 = __CKPE_OFFSET(3);
-				pointer_MainWindow_sub3 = __CKPE_OFFSET(4);
+				pointer_MainWindow_sub1 = ID(376638).Address();
+				//pointer_MainWindow_sub2 = ID(96447).Address();
+				//pointer_MainWindow_sub3 = ID(656290).Address();
 
 				Common::LogWindow::GetSingleton()->OnOpenFormById = DoOpenFormByIdHandler;
 

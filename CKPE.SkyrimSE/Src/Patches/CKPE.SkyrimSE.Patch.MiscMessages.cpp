@@ -2,8 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -43,6 +41,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool MiscMessages::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool MiscMessages::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -50,29 +53,25 @@ namespace CKPE
 
 			bool MiscMessages::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				if (VersionLists::GetEditorVersion() > VersionLists::EDITOR_SKYRIM_SE_1_6_438)
 				{
 					//
 					// Add additional information to the error
 					//
-					auto rva = (std::uintptr_t)__CKPE_OFFSET(0);
+					auto rva = Relocation(ID(171828), 0xC54).Address();
 					Detours::DetourCall(rva, (std::uintptr_t)&sub);
 					SafeWrite::WriteNop(rva - 0x18, 7);
 					SafeWrite::Write(rva - 0xD, { 0xC0 });
 				}
 
 				// Skip "Queued ref '%s' (%08X) of type %s"
-				SafeWrite::Write(__CKPE_OFFSET(1), { 0x90, 0xE9 });
+				Relocation(ID(229599), 0x66).Write({ 0x90, 0xE9 });
 				// Skip "%s took %.2f ms to PostProcess.  This may cause a hitch in segment '%s'."
-				SafeWrite::WriteNop(__CKPE_OFFSET(2), 5);
+				Relocation(ID{ 743240, 959457 }, Offset{ 0x1E8, 0x284 }).WriteFill(NOP, 5);
 				// Skip "File '%s' is changing ref (%08X):\r\nfrom base '%s' (%08X) to base '%s' (%08X)\r\nfrom cell '%s' (%08X) to cell '%s' (%08X)."
-				SafeWrite::WriteNop(__CKPE_OFFSET(3), 5);
+				Relocation(ID(551172), Offset{ 0x19BA, 0x19DE }).WriteFill(NOP, 5);
 
 				return true;
 			}

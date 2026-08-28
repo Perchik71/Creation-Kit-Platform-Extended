@@ -6,7 +6,6 @@
 #include <commctrl.h>
 #include <algorithm>
 #include <unordered_map>
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.EditorUI.h>
@@ -27,17 +26,23 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			std::uintptr_t pointer_DeferredDlg_sub1 = 0;
-			std::uintptr_t pointer_DeferredDlg_sub2 = 0;
-			std::uintptr_t pointer_DeferredDlg_sub3 = 0;
-			std::uintptr_t pointer_DeferredDlg_sub4 = 0;
-			std::uintptr_t pointer_DeferredDlg_sub5 = 0;
-			std::uintptr_t pointer_DeferredDlg_sub6 = 0;
-			std::uintptr_t pointer_DeferredDlg_sub7 = 0;
-			std::uintptr_t pointer_DeferredDlg_sub8 = 0;
-			std::uintptr_t pointer_DeferredDlg_sub9 = 0;
-			std::uintptr_t pointer_DeferredDlg_subA = 0;
-			std::uintptr_t pointer_DeferredDlg_subB = 0;
+			using TDeferredDlg_sub1 = void(void*, HWND);
+			using TDeferredDlg_sub2 = void(void*, HWND, std::int64_t);
+			using TDeferredDlg_sub3 = void(void*, HWND*);
+			using TDeferredDlg_sub4 = void(void*);
+			using TDeferredDlg_sub5 = LRESULT(void*, UINT, WPARAM, LPARAM);
+
+			static std::function<TDeferredDlg_sub1> DeferredDlg_sub1;
+			static std::function<TDeferredDlg_sub2> DeferredDlg_sub2;
+			static std::function<TDeferredDlg_sub3> DeferredDlg_sub3;
+			static std::function<TDeferredDlg_sub4> DeferredDlg_sub4;
+			static std::function<TDeferredDlg_sub4> DeferredDlg_sub5;
+			static std::function<TDeferredDlg_sub4> DeferredDlg_sub6;
+			static std::function<TDeferredDlg_sub4> DeferredDlg_sub7;
+			static std::function<TDeferredDlg_sub4> DeferredDlg_sub8;
+			static std::function<TDeferredDlg_sub4> DeferredDlg_sub9;
+			static std::function<TDeferredDlg_sub4> DeferredDlg_subA;
+			static std::function<TDeferredDlg_sub5> DeferredDlg_subB;
 
 			template<typename T, bool Stable = false>
 			static void DeferredDlg_ArrayQuickSortRecursive(EditorAPI::BSTArray<T>& Array,
@@ -75,7 +80,7 @@ namespace CKPE
 			static void DeferredDlg_UpdateTreeView(void* Thisptr, HWND ControlHandle) noexcept(true)
 			{
 				SendMessage(ControlHandle, WM_SETREDRAW, FALSE, 0);
-				((void(__fastcall*)(void*, HWND))pointer_DeferredDlg_sub1)(Thisptr, ControlHandle);
+				DeferredDlg_sub1(Thisptr, ControlHandle);
 				SendMessage(ControlHandle, WM_SETREDRAW, TRUE, 0);
 				RedrawWindow(ControlHandle, nullptr, nullptr, RDW_ERASE | RDW_INVALIDATE | RDW_NOCHILDREN);
 			}
@@ -83,7 +88,7 @@ namespace CKPE
 			static void DeferredDlg_UpdateCellList(void* Thisptr, HWND ControlHandle, std::int64_t Unknown) noexcept(true)
 			{
 				SendMessage(ControlHandle, WM_SETREDRAW, FALSE, 0);
-				((void(__fastcall*)(void*, HWND, __int64))pointer_DeferredDlg_sub2)(Thisptr, ControlHandle, Unknown);
+				DeferredDlg_sub2(Thisptr, ControlHandle, Unknown);
 				SendMessage(ControlHandle, WM_SETREDRAW, TRUE, 0);
 				RedrawWindow(ControlHandle, nullptr, nullptr, RDW_ERASE | RDW_INVALIDATE | RDW_NOCHILDREN);
 			}
@@ -91,7 +96,7 @@ namespace CKPE
 			static void DeferredDlg_UpdateObjectList(void* Thisptr, HWND* ControlHandle)
 			{
 				SendMessage(*ControlHandle, WM_SETREDRAW, FALSE, 0);
-				((void(__fastcall*)(void*, HWND*))pointer_DeferredDlg_sub3)(Thisptr, ControlHandle);
+				DeferredDlg_sub3(Thisptr, ControlHandle);
 				SendMessage(*ControlHandle, WM_SETREDRAW, TRUE, 0);
 				RedrawWindow(*ControlHandle, nullptr, nullptr, RDW_ERASE | RDW_INVALIDATE | RDW_NOCHILDREN);
 			}
@@ -104,13 +109,13 @@ namespace CKPE
 				auto updateListViewItems = [This]
 					{
 						if (!disableListViewUpdates)
-							((void(__fastcall*)(void*))pointer_DeferredDlg_sub4)(This);
+							DeferredDlg_sub4(This);
 					};
 
 				switch (Message)
 				{
 				case WM_SIZE:
-					((void(__fastcall*)(void*))pointer_DeferredDlg_sub5)(This);
+					DeferredDlg_sub5(This);
 					break;
 
 				case WM_NOTIFY:
@@ -128,7 +133,7 @@ namespace CKPE
 
 				case WM_INITDIALOG:
 					disableListViewUpdates = true;
-					((void(__fastcall*)(void*))pointer_DeferredDlg_sub6)(This);
+					DeferredDlg_sub6(This);
 					disableListViewUpdates = false;
 
 					// Update it ONCE after everything is inserted
@@ -144,11 +149,11 @@ namespace CKPE
 					{
 						disableListViewUpdates = true;
 						if (param == UI_COMIPLESCRIPT_DIALOG_CHECKALL)
-							((void(__fastcall*)(void*))pointer_DeferredDlg_sub7)(This);
+							DeferredDlg_sub7(This);
 						else if (param == UI_COMIPLESCRIPT_DIALOG_UNCHECKALL)
-							((void(__fastcall*)(void*))pointer_DeferredDlg_sub8)(This);
+							DeferredDlg_sub8(This);
 						else if (param == UI_COMIPLESCRIPT_DIALOG_CHECKALLCHECKEDOUT)
-							((void(__fastcall*)(void*))pointer_DeferredDlg_sub9)(This);
+							DeferredDlg_sub9(This);
 						disableListViewUpdates = false;
 
 						updateListViewItems();
@@ -156,13 +161,12 @@ namespace CKPE
 					}
 					else if (param == UI_COMIPLESCRIPT_DIALOG_COMPILE)
 						// "Compile" button
-						((void(__fastcall*)(void*))pointer_DeferredDlg_subA)(This);
+						DeferredDlg_subA(This);
 				}
 				break;
 				}
 
-				return ((LRESULT(__fastcall*)(void*, UINT, WPARAM, LPARAM))pointer_DeferredDlg_subB)
-					(This, Message, wParam, lParam);
+				return DeferredDlg_subB(This, Message, wParam, lParam);
 			}
 
 			DeferredDlg::DeferredDlg() : Common::Patch()
@@ -190,6 +194,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool DeferredDlg::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool DeferredDlg::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -197,33 +206,29 @@ namespace CKPE
 
 			bool DeferredDlg::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				pointer_DeferredDlg_sub1 = __CKPE_OFFSET(0);
-				pointer_DeferredDlg_sub2 = __CKPE_OFFSET(1);
-				pointer_DeferredDlg_sub3 = __CKPE_OFFSET(2);
-				pointer_DeferredDlg_sub4 = __CKPE_OFFSET(3);
-				pointer_DeferredDlg_sub5 = __CKPE_OFFSET(4);
-				pointer_DeferredDlg_sub6 = __CKPE_OFFSET(5);
-				pointer_DeferredDlg_sub7 = __CKPE_OFFSET(6);
-				pointer_DeferredDlg_sub8 = __CKPE_OFFSET(7);
-				pointer_DeferredDlg_sub9 = __CKPE_OFFSET(8);
-				pointer_DeferredDlg_subA = __CKPE_OFFSET(9);
-				pointer_DeferredDlg_subB = __CKPE_OFFSET(10);
+				DeferredDlg_sub1 = Relocation<TDeferredDlg_sub1>(ID(559670)).Get();
+				DeferredDlg_sub2 = Relocation<TDeferredDlg_sub2>(ID(66544)).Get();
+				DeferredDlg_sub3 = Relocation<TDeferredDlg_sub3>(ID{ 754119, 1018099 }).Get();
+				DeferredDlg_sub4 = Relocation<TDeferredDlg_sub4>(ID(309367)).Get();
+				DeferredDlg_sub5 = Relocation<TDeferredDlg_sub4>(ID(339341)).Get();
+				DeferredDlg_sub6 = Relocation<TDeferredDlg_sub4>(ID(134769)).Get();
+				DeferredDlg_sub7 = Relocation<TDeferredDlg_sub4>(ID(277731)).Get();
+				DeferredDlg_sub8 = Relocation<TDeferredDlg_sub4>(ID(357191)).Get();
+				DeferredDlg_sub9 = Relocation<TDeferredDlg_sub4>(ID(344535)).Get();
+				DeferredDlg_subA = Relocation<TDeferredDlg_sub4>(ID(32469)).Get();
+				DeferredDlg_subB = Relocation<TDeferredDlg_sub5>(ID(346632)).Get();
 
 				// Deferred dialog loading (batched UI updates)
-				Detours::DetourJump(__CKPE_OFFSET(11), (std::uintptr_t)&DeferredDlg_SortDialogueInfo);
-				Detours::DetourJump(__CKPE_OFFSET(12), (std::uintptr_t)&Common::EditorUI::ComboBoxInsertItemDeferred);
-				Detours::DetourJump(__CKPE_OFFSET(13), (std::uintptr_t)&Common::EditorUI::ListViewInsertItemDeferred);
-				Detours::DetourCall(__CKPE_OFFSET(14), (std::uintptr_t)&DeferredDlg_UpdateTreeView);
-				Detours::DetourCall(__CKPE_OFFSET(15), (std::uintptr_t)&DeferredDlg_UpdateCellList);
-				Detours::DetourCall(__CKPE_OFFSET(16), (std::uintptr_t)&DeferredDlg_UpdateObjectList);
-				Detours::DetourJump(__CKPE_OFFSET(17), (std::uintptr_t)&DeferredDlg_PickScriptsToCompileDlgProc);
-
+				Relocation(ID(361131)).WriteJump(&DeferredDlg_SortDialogueInfo);
+				Relocation(ID(264130)).WriteJump(&EditorUI::ComboBoxInsertItemDeferred);
+				Relocation(ID(314185)).WriteJump(&EditorUI::ListViewInsertItemDeferred);
+				Relocation(ID(362342), 0x73).WriteCall(&DeferredDlg_UpdateTreeView);
+				Relocation(ID(196690), 0x1BC4).WriteCall(&DeferredDlg_UpdateCellList);
+				Relocation(ID{ 19166, 1018098 }, 0x3C).WriteCall(&DeferredDlg_UpdateObjectList);
+				Relocation(ID(343097)).WriteJump(&DeferredDlg_PickScriptsToCompileDlgProc);
+				
 				return true;
 			}
 		}

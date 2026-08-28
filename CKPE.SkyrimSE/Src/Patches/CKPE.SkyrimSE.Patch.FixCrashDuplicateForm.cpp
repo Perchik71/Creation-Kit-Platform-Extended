@@ -2,8 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -40,6 +38,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixCrashDuplicateForm::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixCrashDuplicateForm::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -47,17 +50,13 @@ namespace CKPE
 
 			bool FixCrashDuplicateForm::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for crash when duplicating a form with an empty editor id. 
 				// Integer underflow when string length is 0. TESForm::MakeUniqueEditorID.
 				//
-				uintptr_t addr = __CKPE_OFFSET(0);
+				auto addr = Relocation(ID(241315), 0x2E).Address();
 				Detours::DetourCall(addr, (std::uintptr_t)&sub);
 				SafeWrite::WriteNop(addr + 5, 1);
 

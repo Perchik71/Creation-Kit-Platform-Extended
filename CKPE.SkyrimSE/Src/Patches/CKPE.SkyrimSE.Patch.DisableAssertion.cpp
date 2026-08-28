@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -39,6 +38,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool DisableAssertion::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool DisableAssertion::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -46,28 +50,13 @@ namespace CKPE
 
 			bool DisableAssertion::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				// Cutting a lot is faster this way
-				auto stext = interface->GetApplication()->GetSegment(Segment::text);
-				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+				using namespace Common;
 
 				//
 				// Remove assertion message boxes
 				//
-				switch (db->GetVersion())
-				{
-				case 1:
-					SafeWrite::WriteNop(__CKPE_OFFSET(0), 5);
-					return true;
-				case 2:
-					for (uint32_t i = 0; i < db->GetCount(); i++)
-						SafeWrite::WriteNop(__CKPE_OFFSET(i), 5);
-					return true;
-				default:
-					return false;
-				}
+				Relocation(ID(347247), 0x59).WriteFill(NOP, 5);
+				Relocation(ID(346760), 0x4E).WriteFill(NOP, 5);
 
 				return true;
 			}

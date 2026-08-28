@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -39,6 +38,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixSelectedPackageData::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixSelectedPackageData::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -46,17 +50,13 @@ namespace CKPE
 
 			bool FixSelectedPackageData::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for a package's "Selected Package Data" combo box not having a selected value when using a Topic type. 
 				// Pointer<->Form ID truncation.
 				//
-				SafeWrite::WriteNop(__CKPE_OFFSET(0), 7);
+				Relocation(ID(155359), 0x104).WriteFill(NOP, 7);
 
 				return true;
 			}

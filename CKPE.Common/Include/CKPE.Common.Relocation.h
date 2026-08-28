@@ -21,6 +21,7 @@ namespace CKPE
 		inline constexpr std::uint8_t NOP = 0x90;
 		inline constexpr std::uint8_t RET = 0xC3;
 		inline constexpr std::uint8_t INT3 = 0xCC;
+		inline constexpr std::uint8_t JMP = 0xEB;
 
 		template <class T = std::uintptr_t>
 		class Relocation
@@ -179,7 +180,7 @@ namespace CKPE
 			std::uintptr_t WriteVFunc(std::size_t a_idx, std::uintptr_t a_newFunc)
 				requires(std::same_as<U, std::uintptr_t>)
 			{
-				return Detours::DetourVTable(Address(), a_newFunc, a_idx * sizeof(std::uintptr_t));
+				return Detours::DetourVTable(Address(), a_newFunc, a_idx);
 			}
 
 			template <class F>

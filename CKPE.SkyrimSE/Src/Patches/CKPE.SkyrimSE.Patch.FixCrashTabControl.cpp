@@ -4,7 +4,6 @@
 
 #include <Windows.h>
 #include <CommCtrl.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -41,6 +40,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixCrashTabControl::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixCrashTabControl::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -48,17 +52,13 @@ namespace CKPE
 
 			bool FixCrashTabControl::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for crash when tab control buttons are deleted.
 				// Uninitialized TCITEMA structure variables.
 				//
-				Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
+				Relocation(ID(138684)).WriteJump(&sub);
 
 				return true;
 			}

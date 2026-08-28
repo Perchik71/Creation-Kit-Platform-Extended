@@ -5,8 +5,6 @@
 #include <windows.h>
 #include <libdeflate.h>
 #include <intrin.h>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.HardwareInfo.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
@@ -344,6 +342,11 @@ namespace CKPE
 				return { "Progress Window" };
 			}
 
+			bool LoadOptimization::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool LoadOptimization::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -351,13 +354,7 @@ namespace CKPE
 
 			bool LoadOptimization::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Plugin loading optimizations:
@@ -372,24 +369,24 @@ namespace CKPE
 
 				// Utilize SSE4.1 instructions if available
 				if (HardwareInfo::CPU::HasSupportSSE41())
-					Detours::DetourJump(__CKPE_OFFSET(10), (std::uintptr_t)&SearchArrayItem_SSE41);
+					Relocation(ID(659271)).WriteJump(&SearchArrayItem_SSE41);
 				else
-					Detours::DetourJump(__CKPE_OFFSET(10), (std::uintptr_t)&SearchArrayItem);
+					Relocation(ID(659271)).WriteJump(&SearchArrayItem);
 
-				pProgress1 = (float*)__CKPE_OFFSET(0);
-				pProgress2 = (float*)__CKPE_OFFSET(1);
-				UpdateProgressBar = (void(*)())__CKPE_OFFSET(2);
-				Detours::DetourJump(__CKPE_OFFSET(9), (std::uintptr_t)&sub_141589150);
-				SafeWrite::Write(__CKPE_OFFSET(3), { 0xB9, 0x90, 0x01, 0x00, 0x00, 0x90 });
-				Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&UpdateLoadProgressBar);
-				*(std::uintptr_t*)&zlibDetail::Inflate = Detours::DetourJump(__CKPE_OFFSET(6), 
-					(std::uintptr_t)&zlibDetail::Decompression::LibDeflate::Inflate);
-				Detours::DetourJump(__CKPE_OFFSET(7), (std::uintptr_t)&BSSystemDir_NextEntry);
+				pProgress1 = Relocation<float*>(ID(576989)).Get();
+				pProgress2 = Relocation<float*>(ID(434988)).Get();
+				UpdateProgressBar = (void(*)())ID(348345).Address();
+				Relocation(ID(569755)).WriteJump(&sub_141589150);
+				Relocation(ID(277090), Offset{ 0xACE, 0xACE, 0xB4A }).Write({ 0xB9, 0x90, 0x01, 0x00, 0x00, 0x90 });
+				Relocation(ID(212311), 0x323).WriteCall(&UpdateLoadProgressBar);
+				*(std::uintptr_t*)&zlibDetail::Inflate = 
+					Relocation(ID(201371)).WriteJump(&zlibDetail::Decompression::LibDeflate::Inflate);
+				Relocation(ID(594351)).WriteJump(&BSSystemDir_NextEntry);
 				
-				if (verPatch == 1)
-					Detours::DetourJump(__CKPE_OFFSET(8), (std::uintptr_t)&BSResource_LooseFileLocation_FileExists);
+				if (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_6_438)
+					Relocation(ID(555396)).WriteJump(&BSResource_LooseFileLocation_FileExists);
 				else
-					Detours::DetourJump(__CKPE_OFFSET(8), (std::uintptr_t)&BSResource_LooseFileLocation_FileExistsEx);
+					Relocation(ID(555396)).WriteJump(&BSResource_LooseFileLocation_FileExistsEx);
 
 				return true;
 			}

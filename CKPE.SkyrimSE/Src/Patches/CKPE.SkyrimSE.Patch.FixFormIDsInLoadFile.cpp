@@ -3,8 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Utils.h>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -96,6 +94,11 @@ namespace CKPE
 				return { "Console" };
 			}
 
+			bool FixFormIDsInLoadFile::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixFormIDsInLoadFile::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -103,22 +106,17 @@ namespace CKPE
 
 			bool FixFormIDsInLoadFile::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				// Numerous changes in the load. Changing the order of indexes, fixing bugs, where forms not found.
 
-				auto Rva = __CKPE_OFFSET(0);
-				auto Rva2 = __CKPE_OFFSET(6);
-				auto Rva3 = __CKPE_OFFSET(7);
-
+				auto Rva = Relocation(ID(554411), Offset{ 0x28F5, 0x2946 }).Address();
+				auto Rva2 = Relocation(ID(235267), 0x39E).Address();
+				auto Rva3 = Relocation(ID(236153), 0x673).Address();
+				
 				{
 					// Cutting a lot is faster this way
-					auto stext = interface->GetApplication()->GetSegment(Segment::text);
+					auto stext = Application::GetSingleton()->GetSegment(Segment::text);
 					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
 					// get stack for sub2 function
@@ -132,7 +130,7 @@ namespace CKPE
 					text.Write(Rva3, { 0x48, 0x8D, 0x0C, 0x24, 0x90 });
 				}
 
-				if (verPatch == 2)
+				if (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73)
 					Detours::DetourCall(Rva + 8, (std::uintptr_t)&FindLocFormIDs<0x688, 0xE8>);
 				else
 					Detours::DetourCall(Rva + 8, (std::uintptr_t)&FindLocFormIDs<0x698, 0xF0>);
@@ -140,12 +138,12 @@ namespace CKPE
 				Detours::DetourCall(Rva2 + 0xD, (std::uintptr_t)&sub2);
 				Detours::DetourCall(Rva3 + 5, (std::uintptr_t)&FindLocFormIDs<0x150, 0x54>);
 
-				pointer_FixFormIDsInLoadFile_sub1 = __CKPE_OFFSET(2);
-				pointer_FixFormIDsInLoadFile_sub2 = __CKPE_OFFSET(3);
+				pointer_FixFormIDsInLoadFile_sub1 = ID(76804).Address();
+				pointer_FixFormIDsInLoadFile_sub2 = ID(33992).Address();
 
 				// Let's edit the function so that it finds the form correctly
-				Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&sub);
-
+				Relocation(ID(235267), 0x4CF).WriteCall(&sub);
+				
 				return true;
 			}
 

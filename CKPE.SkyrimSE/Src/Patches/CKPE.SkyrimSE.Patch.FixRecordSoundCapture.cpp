@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -40,23 +39,24 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixRecordSoundCapture::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixRecordSoundCapture::DoQuery() const noexcept(true)
 			{
-				return VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1;
+				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
 			bool FixRecordSoundCapture::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				// No terminate process for CKPE, if calling this quit message
-
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&PostQuitMessage);
-				Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&PostQuitMessage);
+				auto target = ID(342981);
+				Relocation(target, 0x8A).WriteCall(&PostQuitMessage);
+				Relocation(target, 0x10B).WriteCall(&PostQuitMessage);
 
 				return true;
 			}

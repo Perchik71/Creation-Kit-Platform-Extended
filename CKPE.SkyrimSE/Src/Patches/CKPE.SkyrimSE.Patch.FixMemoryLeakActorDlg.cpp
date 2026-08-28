@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -39,6 +38,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixMemoryLeakActorDlg::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixMemoryLeakActorDlg::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -46,18 +50,14 @@ namespace CKPE
 
 			bool FixMemoryLeakActorDlg::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for a memory leak in BSShadowLight::ClearShadowMapData after opening "Actor" dialogs (~500kb per instance). 
 				// The code loops over a ShadowMapData array and checks if ShadowMapIndex is NOT -1, freeing the data if true. 
 				// When opening a dialog this is always -1 and it never gets deallocated. Hacky fix: remove the check.
 				//
-				SafeWrite::WriteNop(__CKPE_OFFSET(0), 6);
+				Relocation(ID{ 425693, 921622 }, Offset{ 0x89, 0x8C }).WriteFill(NOP, 6);
 
 				return true;
 			}
