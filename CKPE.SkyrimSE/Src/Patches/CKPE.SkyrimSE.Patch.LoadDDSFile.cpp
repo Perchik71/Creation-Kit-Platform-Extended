@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.ErrorHandler.h>
 #include <CKPE.Application.h>
@@ -46,6 +45,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool LoadDDSFile::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool LoadDDSFile::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -53,19 +57,15 @@ namespace CKPE
 
 			bool LoadDDSFile::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				// PS: for 1.6.1130 added check, but no assert message.
 
 				//
 				// Replace direct crash with an assertion when an incompatible texture format is used in the renderer
 				//
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				pointer_LoadDDSFile_sub = __CKPE_OFFSET(1);
+				Relocation(ID(557376), Offset{ 0x5F, 0x59 }).WriteCall(&sub);
+				pointer_LoadDDSFile_sub = ID(211408).Address();
 
 				return true;
 			}

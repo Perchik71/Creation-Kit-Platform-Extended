@@ -27,6 +27,7 @@ namespace CKPE
 				virtual const char* GetOptionName() const noexcept(true);
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
+				bool SupportsAddressLibrary() const noexcept(true) override;
 
 				static void CreateLipGenProcess(std::int64_t a1) noexcept(true);
 				static bool IsLipDataPresent(void* Thisptr) noexcept(true);

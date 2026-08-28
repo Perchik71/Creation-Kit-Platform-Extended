@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -14,11 +13,11 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			typedef std::int64_t(*TFixObjectPaletteSub1)(std::int64_t, std::uint32_t*);
-			typedef void(*TFixObjectPaletteSub2)(std::int64_t);
+			using TFixObjectPaletteSub1 = std::int64_t(std::int64_t, std::uint32_t*);
+			using TFixObjectPaletteSub2 = void(std::int64_t);
 
-			static TFixObjectPaletteSub1 FixObjectPaletteSub1;
-			static TFixObjectPaletteSub2 FixObjectPaletteSub2;
+			static std::function<TFixObjectPaletteSub1> FixObjectPaletteSub1;
+			static std::function<TFixObjectPaletteSub2> FixObjectPaletteSub2;
 
 			FixObjectPalette::FixObjectPalette() : Common::Patch()
 			{
@@ -45,6 +44,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixObjectPalette::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixObjectPalette::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -52,18 +56,14 @@ namespace CKPE
 
 			bool FixObjectPalette::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for the "Object Palette" preview window not working. Window render state has to be set to '2'.
 				//
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				FixObjectPaletteSub1 = (TFixObjectPaletteSub1)__CKPE_OFFSET(1);
-				FixObjectPaletteSub2 = (TFixObjectPaletteSub2)__CKPE_OFFSET(2);
+				Relocation(ID(177563), Offset{ 0x2F6, 0x2FE }).WriteCall(&sub);
+				FixObjectPaletteSub1 = Relocation<TFixObjectPaletteSub1>(ID(127281)).Get();
+				FixObjectPaletteSub2 = Relocation<TFixObjectPaletteSub2>(ID(79119)).Get();
 
 				return true;
 			}

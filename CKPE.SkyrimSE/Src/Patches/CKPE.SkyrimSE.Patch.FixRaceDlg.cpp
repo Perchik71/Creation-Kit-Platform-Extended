@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -39,6 +38,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixRaceDlg::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixRaceDlg::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -46,17 +50,13 @@ namespace CKPE
 
 			bool FixRaceDlg::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for the "Race" dialog not saving "Specials" if the list box was empty and a new spell was added. 
 				// Inverted comparison logic.
 				//
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0x74 });
+				Relocation(ID(229883), 0x223).Write({ 0x74 });
 
 				return true;
 			}

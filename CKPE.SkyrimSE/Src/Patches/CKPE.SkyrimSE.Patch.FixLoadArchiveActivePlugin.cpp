@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -15,7 +14,9 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			std::uintptr_t pointer_FixLoadArchiveActivePlugin_sub = 0;
+			using TFixLoadArchiveActivePlugin_sub = std::uint32_t(const EditorAPI::TESFile*);
+
+			static std::function<TFixLoadArchiveActivePlugin_sub> FixLoadArchiveActivePlugin_sub;
 
 			FixLoadArchiveActivePlugin::FixLoadArchiveActivePlugin() : Common::Patch()
 			{
@@ -42,6 +43,11 @@ namespace CKPE
 				return { "TESDataHandler" };
 			}
 
+			bool FixLoadArchiveActivePlugin::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixLoadArchiveActivePlugin::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -49,31 +55,23 @@ namespace CKPE
 
 			bool FixLoadArchiveActivePlugin::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fixing the loading of archives of the active plugin
 				// return filename active plugin without latest send to loaded
 				//
 
-				if (verPatch == 1)
+				auto target = ID(277090);
+				Relocation(target, Offset{ 0xA1B, 0xA59 }).WriteCall(&sub);
+				Relocation(target, Offset{ 0xA34, 0xA72 }).WriteCall(&sub);
+				
+				if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1)
 				{
-					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-					Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&sub);
-				}
-				else if (verPatch == 2)
-				{
-					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-					Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&sub);
-					Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&sub);
-					Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&sub2);
+					Relocation(target, 0xA99).WriteCall(&sub);
+					Relocation(target, 0xAAA).WriteCall(&sub2);
 
-					pointer_FixLoadArchiveActivePlugin_sub = __CKPE_OFFSET(4);
+					FixLoadArchiveActivePlugin_sub = Relocation<TFixLoadArchiveActivePlugin_sub>(ID(205782)).Get();
 				}
 
 				return true;
@@ -86,8 +84,7 @@ namespace CKPE
 
 			std::uint32_t FixLoadArchiveActivePlugin::sub2() noexcept(true)
 			{
-				return ((std::uint32_t(__fastcall*)(const EditorAPI::TESFile*))pointer_FixLoadArchiveActivePlugin_sub)
-					(EditorAPI::TESDataHandler::Singleton->ActiveMod);
+				return FixLoadArchiveActivePlugin_sub(EditorAPI::TESDataHandler::Singleton->ActiveMod);
 			}
 		}
 	}

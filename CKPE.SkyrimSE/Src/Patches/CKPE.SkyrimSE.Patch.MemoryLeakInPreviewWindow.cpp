@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -41,6 +40,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool MemoryLeakInPreviewWindow::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool MemoryLeakInPreviewWindow::DoQuery() const noexcept(true)
 			{
 				// In 1.6.1130 class changed and functions too
@@ -55,40 +59,25 @@ namespace CKPE
 				// D3D11 render targets are recreated each time, but the old ones were never released.
 				//
 
-				auto verPatch = db->GetVersion();
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+				using namespace Common;
 
-				if (verPatch == 1)
+				EditorAPI::pointer_Renderer = ID(549085).Address();
+				EditorAPI::pointer_D3D11Device = ID(121032).Address();
+
+				if (VersionLists::GetEditorVersion() < VersionLists::EDITOR_SKYRIM_SE_1_6_1130)
 				{
-					EditorAPI::pointer_Renderer = __CKPE_OFFSET(0);
-					EditorAPI::pointer_D3D11Device = __CKPE_OFFSET(1);
-
-					Detours::DetourClassJump(__CKPE_OFFSET(2),
-						&EditorAPI::BSGraphicsRenderTargetManager_CK::CreateRenderTarget);
-					Detours::DetourClassJump(__CKPE_OFFSET(3),
-						&EditorAPI::BSGraphicsRenderTargetManager_CK::CreateDepthStencil);
-					Detours::DetourClassJump(__CKPE_OFFSET(4),
-						&EditorAPI::BSGraphicsRenderTargetManager_CK::CreateCubemapRenderTarget);
-
-					return true;
+					Relocation(ID(85000)).WriteJump(&EditorAPI::BSGraphicsRenderTargetManager_CK::CreateRenderTarget);
+					Relocation(ID(556748)).WriteJump(&EditorAPI::BSGraphicsRenderTargetManager_CK::CreateDepthStencil);
+					Relocation(ID(556750)).WriteJump(&EditorAPI::BSGraphicsRenderTargetManager_CK::CreateCubemapRenderTarget);
 				}
-				else if (verPatch == 2)
+				else
 				{
-					EditorAPI::pointer_Renderer = __CKPE_OFFSET(0);
-					EditorAPI::pointer_D3D11Device = __CKPE_OFFSET(1);
-
-					Detours::DetourClassJump(__CKPE_OFFSET(2),
-						&EditorAPI::BSGraphicsRenderTargetManager_CK1130::CreateRenderTarget);
-					Detours::DetourClassJump(__CKPE_OFFSET(3),
-						&EditorAPI::BSGraphicsRenderTargetManager_CK1130::CreateDepthStencil);
-					Detours::DetourClassJump(__CKPE_OFFSET(4),
-						&EditorAPI::BSGraphicsRenderTargetManager_CK1130::CreateCubemapRenderTarget);
-
-					return true;
+					Relocation(ID(85000)).WriteJump(&EditorAPI::BSGraphicsRenderTargetManager_CK1130::CreateRenderTarget);
+					Relocation(ID(556748)).WriteJump(&EditorAPI::BSGraphicsRenderTargetManager_CK1130::CreateDepthStencil);
+					Relocation(ID(556750)).WriteJump(&EditorAPI::BSGraphicsRenderTargetManager_CK1130::CreateCubemapRenderTarget);
 				}
 
-				return false;
+				return true;
 			}
 		}
 	}

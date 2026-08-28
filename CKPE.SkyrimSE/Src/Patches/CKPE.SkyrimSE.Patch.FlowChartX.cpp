@@ -4,7 +4,6 @@
 
 #include <windows.h>
 #include <combaseapi.h>
-#include <CKPE.Detours.h>
 #include <CKPE.MessageBox.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -42,6 +41,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FlowChartX::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FlowChartX::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -49,15 +53,16 @@ namespace CKPE
 
 			bool FlowChartX::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+				using namespace Common;
 
-				if (db->GetVersion() != 1)
-					return false;
-
-				for (std::uint32_t i = 0; i < db->GetCount(); i++)
-					Detours::DetourCall(__CKPE_OFFSET(i), (std::uintptr_t)&sub);
-
+				if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1130)
+				{
+					Relocation(ID(238521), 0x851).WriteCall(&sub);
+					Relocation(ID(95666), 0x7ED).WriteCall(&sub);
+				}
+				else
+					Relocation(ID(233736), 0xA5).WriteCall(&sub);
+				
 				return true;
 			}
 

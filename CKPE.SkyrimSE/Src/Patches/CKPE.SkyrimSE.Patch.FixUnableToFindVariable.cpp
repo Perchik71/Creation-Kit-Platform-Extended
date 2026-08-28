@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -39,6 +38,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool FixUnableToFindVariable::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool FixUnableToFindVariable::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
@@ -46,19 +50,15 @@ namespace CKPE
 
 			bool FixUnableToFindVariable::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for crash (invalid parameter termination) when the "Unable to find variable" warning would exceed 
 				// the buffer size
 				//
 				static const auto str = ", Text \"%.240s\"";
-				SafeWrite::Write(__CKPE_OFFSET(0), (std::uint8_t*)str, strlen(str) + 1);
-
+				Relocation(ID(164745)).Write(str, strlen(str) + 1);
+				
 				return true;
 			}
 		}
