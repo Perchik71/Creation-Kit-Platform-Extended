@@ -67,28 +67,6 @@ namespace CKPE
 		{
 			kInterface_Invalid = 0,
 			kInterface_DialogManager,
-			kInterface_AddressLibrary,
-		};
-
-		struct CKPEAddressLibraryInterface
-		{
-			enum : std::uint32_t
-			{
-				kInterfaceVersion = 2
-			};
-
-			std::uint32_t InterfaceVersion;
-			
-			bool (*IsLoaded)();
-			
-			std::uintptr_t (*Resolve)(const std::uint64_t id, const std::ptrdiff_t offset);
-
-			void (*Write)(std::uintptr_t address, const std::uint8_t* data, std::size_t size);
-			void (*WriteSet)(std::uintptr_t address, std::uint8_t value, std::size_t size);
-			void (*WriteNop)(std::uintptr_t address, std::size_t size);
-			
-			std::uintptr_t (*DetourJump)(std::uintptr_t target, std::uintptr_t destination);
-			std::uintptr_t (*DetourCall)(std::uintptr_t target, std::uintptr_t destination);
 		};
 
 		struct CKPEDialogManagerInterface
