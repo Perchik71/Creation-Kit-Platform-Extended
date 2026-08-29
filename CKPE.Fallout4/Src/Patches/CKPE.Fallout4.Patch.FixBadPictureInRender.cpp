@@ -67,7 +67,7 @@ namespace CKPE
 					using namespace Common;
 
 					// Remove stuff init FXAA or TAA
-					Relocation(ID{ 1548893 }, Offset{ 0x9B5 }).WriteFill(0x90, 80);
+					Relocation(ID{ 1548893 }, Offset{ 0x9B5 }).WriteFill(0x90, 0x50);
 
 					return true;
 				}

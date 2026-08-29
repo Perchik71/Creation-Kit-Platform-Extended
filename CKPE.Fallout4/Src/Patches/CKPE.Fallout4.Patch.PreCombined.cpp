@@ -47,6 +47,12 @@ namespace CKPE
 
 			bool PreCombined::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
+				// This of option control the output of the havok collision information generated during the precombine process, which is stuck at mode 1 unpatched.
+				// This will not magically make your plugin the same format. - BenRierimanu
+				// 0 - 64bit havok little endian[PC or XB1, default setting with CKPE and recommended for PRP and related patches]
+				// 1 - 64bit havok big endian[PS4, default setting unpatched.Untested and not recommended unless you can somehow get the files on that platform]
+				// 2 - 32bit havok little endian[PC or XB1, default setting when using the user interface generation commands as the XB1 was originally a 32bit platform at one point, will still work, but obsolete]
+
 				if (db)
 				{
 					auto verPatch = db->GetVersion();
@@ -57,12 +63,6 @@ namespace CKPE
 					auto base = interface->GetApplication()->GetBase();
 
 					std::int32_t precomb_flag = (std::int32_t)_READ_OPTION_INT("PreCombined", "nGenerationVersion", 0);
-
-					// This of option control the output of the havok collision information generated during the precombine process, which is stuck at mode 1 unpatched.
-					// This will not magically make your plugin the same format. - BenRierimanu
-					// 0 - 64bit havok little endian[PC or XB1, default setting with CKPE and recommended for PRP and related patches]
-					// 1 - 64bit havok big endian[PS4, default setting unpatched.Untested and not recommended unless you can somehow get the files on that platform]
-					// 2 - 32bit havok little endian[PC or XB1, default setting when using the user interface generation commands as the XB1 was originally a 32bit platform at one point, will still work, but obsolete]
 
 					SafeWrite::Write(__CKPE_OFFSET(0), (std::uint8_t*)&precomb_flag, 4);
 
@@ -82,12 +82,6 @@ namespace CKPE
 					using namespace Common;
 
 					std::int32_t precomb_flag = (std::int32_t)_READ_OPTION_INT("PreCombined", "nGenerationVersion", 0);
-
-					// This of option control the output of the havok collision information generated during the precombine process, which is stuck at mode 1 unpatched.
-					// This will not magically make your plugin the same format. - BenRierimanu
-					// 0 - 64bit havok little endian[PC or XB1, default setting with CKPE and recommended for PRP and related patches]
-					// 1 - 64bit havok big endian[PS4, default setting unpatched.Untested and not recommended unless you can somehow get the files on that platform]
-					// 2 - 32bit havok little endian[PC or XB1, default setting when using the user interface generation commands as the XB1 was originally a 32bit platform at one point, will still work, but obsolete]
 
 					Relocation(ID{ 1372227 }, Offset{ 0x13B }).Write((std::uint8_t*)&precomb_flag, 4);
 

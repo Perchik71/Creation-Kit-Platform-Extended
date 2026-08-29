@@ -65,7 +65,7 @@ namespace CKPE
 				{
 					using namespace Common;
 					// Increasing the size for the SNAM chunk from 512 to 2048
-					Relocation(ID{ 1493949 }, Offset{ 0x4D3 }).WriteFill(uiMaxChunkSizeSNAM, 4);
+					Relocation(ID{ 1493949 }, Offset{ 0x4D3 }).WriteFill(uiMaxChunkSizeSNAM, 0x4);
 
 					return true;
 				}

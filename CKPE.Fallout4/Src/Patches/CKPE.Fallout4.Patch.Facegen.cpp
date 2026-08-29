@@ -217,12 +217,12 @@ namespace CKPE
 					// Don't produce DDS files
 					if (_READ_OPTION_BOOL("FaceGen", "bDisableExportDDS", false))
 					{
-						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x163 }).Address(), 5);
-						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x183 }).Address(), 5);
-						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x1A8 }).Address(), 5);
-						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x1C8 }).Address(), 5);
-						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x1ED }).Address(), 5);
-						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x20D }).Address(), 5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x163 }).Address(), 0x5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x183 }).Address(), 0x5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x1A8 }).Address(), 0x5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x1C8 }).Address(), 0x5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x1ED }).Address(), 0x5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x20D }).Address(), 0x5);
 						_MESSAGE("Disabling export FaceGen .DDS files");
 					}
 					else if (_READ_OPTION_BOOL("FaceGen", "bAutoCompressionDDS", false))
@@ -238,12 +238,12 @@ namespace CKPE
 					// Don't produce TGA files
 					if (_READ_OPTION_BOOL("FaceGen", "bDisableExportTGA", false))
 					{
-						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x231 }).Address(), 5);
-						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x250 }).Address(), 5);
-						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x274 }).Address(), 5);
-						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x293 }).Address(), 5);
-						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x2B7 }).Address(), 5);
-						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x2D6 }).Address(), 5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x231 }).Address(), 0x5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x250 }).Address(), 0x5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x274 }).Address(), 0x5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x293 }).Address(), 0x5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x2B7 }).Address(), 0x5);
+						text.WriteNop(Relocation(ID{ 1938869 }, Offset{ 0x2D6 }).Address(), 0x5);
 						_MESSAGE("Disabling export FaceGen .TGA files");
 					}
 
