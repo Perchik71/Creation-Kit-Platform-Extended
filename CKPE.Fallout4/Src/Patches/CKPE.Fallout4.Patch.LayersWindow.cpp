@@ -103,6 +103,15 @@ namespace CKPE
 						LayersWindow::Singleton->EdittextFilter = GetDlgItem(Hwnd, 2581);
 						LayersWindow::Singleton->PushbuttonPlus = GetDlgItem(Hwnd, 5593);
 						LayersWindow::Singleton->BodyForData = GetDlgItem(Hwnd, 6086);
+
+						Common::Interface::GetSingleton()->GetDockingManager()->AddWindow((std::uintptr_t)Hwnd);
+						SetWindowPos(Hwnd, nullptr, 0, 0, 0, 0,
+							SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
+					}
+					break;
+					case WM_NCDESTROY:
+					{
+						Common::Interface::GetSingleton()->GetDockingManager()->RemoveWindow((std::uintptr_t)Hwnd);
 					}
 					break;
 					case WM_GETMINMAXINFO:
