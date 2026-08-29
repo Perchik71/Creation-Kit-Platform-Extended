@@ -154,6 +154,17 @@ namespace CKPE
 
 			bool OptimizationLoad::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
+				//
+				// Plugin loading optimizations:
+				//
+				// - Eliminate millions of calls to update the statusbar, instead only updating to 250ms 
+				// - Replace old zlib decompression code with optimized libdeflate
+				// - Skip remove failed forms (This function is more likely to result in CTD)
+				// - Increasing the read memory buffer to reduce disk access
+				// - (Optional) Removing animation export when loading the mod, it will cause CTD if animation is needed
+				// - Replacing all unoptimized functions related to searching in index arrays, and maybe not only	
+				// - Replacing FindFirstNextA with a more optimized function FindFirstFileExA
+
 				if (!db)
 				{
 					using namespace Common;
@@ -192,9 +203,6 @@ namespace CKPE
 						DeleteFileA("TemporarySyncAnimDataOutput.txt");
 					}
 
-					// The v1-only SIMD search hot-patch block (relb entries 2, 5-11, 15) is dead for
-					// this relb (pinned to version 2) and doesn't apply to the AL path either.
-
 					return true;
 				}
 
@@ -204,17 +212,6 @@ namespace CKPE
 
 				auto interface = CKPE::Common::Interface::GetSingleton();
 				auto base = interface->GetApplication()->GetBase();
-
-				//
-				// Plugin loading optimizations:
-				//
-				// - Eliminate millions of calls to update the statusbar, instead only updating to 250ms 
-				// - Replace old zlib decompression code with optimized libdeflate
-				// - Skip remove failed forms (This function is more likely to result in CTD)
-				// - Increasing the read memory buffer to reduce disk access
-				// - (Optional) Removing animation export when loading the mod, it will cause CTD if animation is needed
-				// - Replacing all unoptimized functions related to searching in index arrays, and maybe not only	
-				// - Replacing FindFirstNextA with a more optimized function FindFirstFileExA
 
 				// Spam in the status bar no more than 250ms
 				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);

@@ -101,7 +101,7 @@ namespace CKPE
 					Relocation(ID{ 1413124 }, Offset{ 0x3CB }).WriteCall((std::uintptr_t)&sub);
 					Relocation(ID{ 356112 }, Offset{ 0x57B }).WriteCall((std::uintptr_t)&sub);
 					ChooseSoundFileSub = (TChooseSoundFileSub)Relocation(ID{ 1353832 }).Address();
-					Relocation(ID{ 1623270 }, Offset{ 0x194 }).WriteFill(0x90, 6);
+					Relocation(ID{ 1623270 }, Offset{ 0x194 }).WriteFill(0x90, 0x6);
 
 					return true;
 				}

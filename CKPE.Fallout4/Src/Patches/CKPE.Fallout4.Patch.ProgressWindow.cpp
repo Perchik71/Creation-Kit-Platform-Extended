@@ -124,7 +124,7 @@ namespace CKPE
 					using namespace Common;
 
 					auto rel = Relocation(ID{ 1690170 });
-					rel.WriteFill<0x1C>(0x90, 2);
+					rel.WriteFill<0x1C>(0x90, 0x2);
 					rel.WriteCall<0x3E>(sub1);
 
 					// Hook Loading Files...Initializing...

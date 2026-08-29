@@ -89,7 +89,7 @@ namespace CKPE
 
 					auto offset = ID{ 1939125 };
 
-					Relocation(offset, Offset{ 0x422 }).WriteFill(0x90, 45);
+					Relocation(offset, Offset{ 0x422 }).WriteFill(0x90, 0x2D);
 					Relocation(offset, Offset{ 0x422 }).Write({ 0x48, 0x8D, 0x55, 0xB7, 0x4C, 0x89, 0xE1, 0x4D, 0x8D, 0x46, 0x70 });
 					Relocation(offset, Offset{ 0x42D }).WriteCall(SetPosition);
 
@@ -103,7 +103,7 @@ namespace CKPE
 				if (!refr || !pos) return;
 
 				auto pick = EditorAPI::BGSRenderWindow::Singleton->GetPickHandler();
-				if (pick->Count > 1)
+				if (pick && pick->Count > 1)
 				{
 					if (refr->GetParent()->GetFormType() == EditorAPI::Forms::TESForm::ftLight)
 					{
