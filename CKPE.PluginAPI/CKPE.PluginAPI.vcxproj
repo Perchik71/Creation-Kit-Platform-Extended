@@ -200,7 +200,6 @@
     <ClInclude Include="Include\CKPE.PluginAPI.Plugin.h" />
     <ClInclude Include="Include\CKPE.PluginAPI.PluginAPI.h" />
     <ClInclude Include="Include\CKPE.PluginAPI.PluginManager.h" />
-    <ClInclude Include="Include\CKPE.PluginAPI.Relocation.h" />
     <ClInclude Include="resource_version.h" />
   </ItemGroup>
   <ItemGroup>
