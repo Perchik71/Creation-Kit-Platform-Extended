@@ -150,7 +150,7 @@ namespace CKPE
 			mgr->Register(new Patch::AlteredFormList);
 			mgr->Register(new Patch::BGSPerkRankArray);
 			mgr->Register(new Patch::BNetConvertUnicodeString);
-			mgr->Register(new Patch::BNetUploadWindow);
+			//mgr->Register(new Patch::BNetUploadWindow);			unused
 			mgr->Register(new Patch::BrokenTerrainEditDlg);
 			mgr->Register(new Patch::BSArchiveManager);
 			mgr->Register(new Patch::BSPointerHandleManager);

@@ -64,10 +64,6 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: Get-ChildItem -Path .\Others -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-sse-master-${{env.SHORT_SHA}}" $_.Name) -Force }
 
-    - name: Copy SSE Database
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: Copy-Item -Path Database\SSE\*.pak "ckpe-sse-master-${{env.SHORT_SHA}}"
-
     - name: Copy SSE Dialog
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: Copy-Item -Path Dialogs\SSE\*.pak "ckpe-sse-master-${{env.SHORT_SHA}}"

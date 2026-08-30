@@ -1,0 +1,33 @@
+# THIS AI CODE! BUT FOR ME DON'T CARE!
+
+name: Cleanup Old Runs
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Runs weekly on Sundays
+  workflow_dispatch:
+
+jobs:
+  del_runs:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+    steps:
+      - name: Delete old workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          retain_days: 14 # Keeps only the last 14 days of runs
+          keep_minimum_runs: 6 # Ensures you don't delete everything
+      - name: Delete old beta releases
+        uses: ophub/delete-releases-workflows@main
+        with:
+          delete_releases: true
+          prerelease_option: true
+          releases_keep_keyword: none
+          releases_keep_latest: 14
+          delete_tags: true
+          delete_workflows: false
+          workflows_keep_day: 14
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
