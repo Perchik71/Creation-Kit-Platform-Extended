@@ -287,6 +287,12 @@ namespace CKPE
 					SendMessage(__This->m_VisibleObjectsOnly.Handle, BM_SETCHECK, BST_UNCHECKED, 0);
 					SetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY, reinterpret_cast<HANDLE>(false));
 					SetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_SELECT_OBJECT_ONLY, reinterpret_cast<HANDLE>(false));
+
+#if 0
+					Common::Interface::GetSingleton()->GetDockingManager()->AddWindow((std::uintptr_t)Hwnd);
+					SetWindowPos(Hwnd, nullptr, 0, 0, 0, 0,
+						SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
+#endif
 				}
 				else if (Message == WM_SIZE)
 				{

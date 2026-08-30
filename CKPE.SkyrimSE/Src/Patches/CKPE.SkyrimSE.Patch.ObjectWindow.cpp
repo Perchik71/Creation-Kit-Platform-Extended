@@ -207,6 +207,15 @@ namespace CKPE
 						lpObjWnd->ObjectWindow.Style = WS_OVERLAPPED | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_SYSMENU;
 
 					ObjectWindows.emplace(Hwnd, lpObjWnd);
+
+#if 0
+					Common::Interface::GetSingleton()->GetDockingManager()->AddWindow((std::uintptr_t)Hwnd);
+					SetWindowPos(Hwnd, nullptr, 0, 0, 0, 0,
+						SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
+
+					// Fixed bugs if Docking mode
+					SplitterResizeObjectWndChildControls(lpObjWnd);
+#endif
 				}
 				// Don't let us reduce the window too much
 				else if (Message == WM_GETMINMAXINFO)
@@ -383,6 +392,9 @@ namespace CKPE
 					if (lpObjWnd)
 					{
 						ObjectWindows.erase(Hwnd);
+#if 0
+						Common::Interface::GetSingleton()->GetDockingManager()->RemoveWindow((std::uintptr_t)Hwnd);
+#endif
 
 						delete lpObjWnd;
 						lpObjWnd = nullptr;

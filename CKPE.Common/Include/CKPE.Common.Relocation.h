@@ -180,7 +180,7 @@ namespace CKPE
 			std::uintptr_t WriteVFunc(std::size_t a_idx, std::uintptr_t a_newFunc)
 				requires(std::same_as<U, std::uintptr_t>)
 			{
-				return Detours::DetourVTable(Address(), a_newFunc, a_idx);
+				return Detours::DetourVTable(Address(), a_newFunc, static_cast<uint32_t>(a_idx));
 			}
 
 			template <class F>

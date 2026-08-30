@@ -99,14 +99,11 @@ namespace CKPE
 				{
 					RenderWindow::Singleton->m_hWnd = Hwnd;
 					RenderWindow::Singleton->_BlockInputMessage = true;
-
-					/*auto p = Common::Interface::GetSingleton()->GetDockingManager();
-
-					if (p->AddWindow((std::uintptr_t)Hwnd))
-					{
-						auto gg = (CKPE::Common::DockingFrameWindow*)p->At((std::uintptr_t)Hwnd);
-						gg->Dock(p->GetWindow());
-					}*/
+#if 0
+					Common::Interface::GetSingleton()->GetDockingManager()->AddWindow((std::uintptr_t)Hwnd);
+					SetWindowPos(Hwnd, nullptr, 0, 0, 0, 0,
+						SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
+#endif
 
 					return CallWindowProc(RenderWindow::Singleton->GetOldWndProc(),
 						Hwnd, Message, wParam, lParam);
