@@ -178,7 +178,7 @@ namespace CKPE
 
 					if (_loaded)
 						_MESSAGE_EX(L"IDDatabase::Load \"{}\" loaded ({} entries) ({} runtime index)"sv, db_name,
-							static_cast<std::uint32_t>(_entries->size()), _runtime);
+							static_cast<std::uint32_t>(_entries->size()), a_runtime_index);
 					else
 						_ERROR_EX(L"IDDatabase::Load \"{}\" file no found."sv, db_name);
 				}
