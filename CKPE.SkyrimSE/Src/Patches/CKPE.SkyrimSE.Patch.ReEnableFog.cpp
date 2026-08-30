@@ -64,9 +64,9 @@ namespace CKPE
 				//
 				auto target1 = ID(532405);			
 				pointer_ReEnableFog_sub1 = Relocation(target1, 0x1562).WriteCall(&sub);
-				Relocation(target1, Offset{ 0x180F, 0x1842 }).WriteCall(&sub);
-				Relocation(target1, Offset{ 0x1A94, 0x1AC7 }).WriteCall(&sub);
-				Relocation(target1, Offset{ 0x1C9D, 0x1CE5 }).WriteCall(&sub);
+				Relocation(target1, Offset{ 0x180F, 0x180F, 0x1842 }).WriteCall(&sub);
+				Relocation(target1, Offset{ 0x1A94, 0x1A94, 0x1AC7 }).WriteCall(&sub);
+				Relocation(target1, Offset{ 0x1C9D, 0x1CB2, 0x1CE5 }).WriteCall(&sub);
 				pointer_ReEnableFog_data = Relocation(ID(149232), 0x8).Address();
 				pointer_ReEnableFog_sub2 = ID(608732).Address();
 				pointer_ReEnableFog_sub3 = ID(608733).Address();
