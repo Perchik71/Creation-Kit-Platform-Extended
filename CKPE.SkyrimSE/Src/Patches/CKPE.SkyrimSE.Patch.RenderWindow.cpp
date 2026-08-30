@@ -82,7 +82,7 @@ namespace CKPE
 				Detours::DetourCall(rel, (std::uintptr_t)&DrawFrameEx);
 
 				*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::Update = 
-					Relocation(ID(205873)).WriteJump(&EditorAPI::BGSRenderWindow::Pick::HKUpdate);
+					Relocation(ID(266618)).WriteJump(&EditorAPI::BGSRenderWindow::Pick::HKUpdate);
 				*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromTriShape = ID(111020).Address();
 				Relocation(ID(554077), 0xBD).WriteCall(&EditorAPI::BGSRenderWindow::Pick::HKGetRefFromTriShape);
 
