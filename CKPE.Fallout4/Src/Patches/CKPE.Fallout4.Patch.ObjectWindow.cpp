@@ -319,6 +319,10 @@ namespace CKPE
 						lpObjWnd->ObjectWindow.Style = WS_OVERLAPPED | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_SYSMENU;
 
 					ObjectWindows.emplace(Hwnd, lpObjWnd);
+
+					Common::Interface::GetSingleton()->GetDockingManager()->AddWindow((std::uintptr_t)Hwnd);
+					SetWindowPos(Hwnd, nullptr, 0, 0, 0, 0,
+						SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
 				}
 				// Don't let us reduce the window too much
 				else if (Message == WM_GETMINMAXINFO)
@@ -495,6 +499,8 @@ namespace CKPE
 				}
 				else if (Message == WM_DESTROY)
 				{
+					Common::Interface::GetSingleton()->GetDockingManager()->RemoveWindow((std::uintptr_t)Hwnd);
+
 					LPOBJWND lpObjWnd = ObjectWindows.at(Hwnd);
 					if (lpObjWnd)
 					{

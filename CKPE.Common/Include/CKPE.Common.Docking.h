@@ -58,8 +58,6 @@ namespace CKPE
 
 			void RestoreWindowStyles() noexcept(true);
 			void ApplyDockingWindowStyles() noexcept(true);
-			void SetFlag(std::uint32_t f) noexcept(true);
-			void UnsetFlag(std::uint32_t f) noexcept(true);
 		public:
 			enum : std::uint32_t
 			{
@@ -67,7 +65,12 @@ namespace CKPE
 				EF_DOCKSTYLES = 1 << 0,
 				EF_FLOATING = 1 << 1,
 				EF_MOVING = 1 << 2,
+				EF_ANCHOR = 1 << 3, // Used for CK main/root window.
+				EF_LAYOUT_SWEPT = 1 << 4,
 			};
+
+			void SetFlag(std::uint32_t f) noexcept(true);
+			void UnsetFlag(std::uint32_t f) noexcept(true);
 
 			enum : std::uint32_t
 			{
@@ -111,7 +114,9 @@ namespace CKPE
 		public:
 			enum : std::uint32_t
 			{
-				E_FRAME = 0
+				E_FRAME = 0,
+				// A fixed "grid master" - see DockingFrameWindow::EF_ANCHOR.
+				E_ANCHOR = 1,
 			};
 
 			DockingManager();

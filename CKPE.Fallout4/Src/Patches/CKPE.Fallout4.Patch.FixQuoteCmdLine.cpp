@@ -56,11 +56,6 @@ namespace CKPE
 				{
 					using namespace Common;
 
-					// All 39 sites live inside one function (id 1941407); positions were matched by
-					// call order against the strtok_s IAT slot (and, for entry 27, against its callee
-					// sub_1404930E0) rather than by naive offset transfer, since this function's byte
-					// layout drifts from 137 to 240 (net +0x40 bytes) even though the call order matches.
-
 					//	Add support quote to command line with -GeneratePreCombined
 					//	Should be: -GeneratePreCombined:"<ESMFilename>" [clean, filtered] [all, other, main, ints]
 

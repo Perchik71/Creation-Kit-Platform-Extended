@@ -284,6 +284,11 @@ namespace CKPE
 
 					__This->m_hWnd = Hwnd;
 
+					
+					Common::Interface::GetSingleton()->GetDockingManager()->AddWindow((std::uintptr_t)Hwnd);
+					SetWindowPos(Hwnd, nullptr, 0, 0, 0, 0,
+						SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
+
 					__This->m_WorldSpaceLabel = GetDlgItem(Hwnd, 1164);
 					__This->m_WorldSpaceComboBox = GetDlgItem(Hwnd, 2083);
 					__This->m_XEdit = GetDlgItem(Hwnd, 5283);
