@@ -252,13 +252,23 @@ namespace CKPE
 				Relocation(ID(165679), 0x126).WriteJump(&LoadTesFileFinal);
 
 				pointer_BSArchiveManagerModded_sub = ID(363414).Address();
-				auto target = ID(277090);
+				auto target1 = ID(277090);
 				auto dest = std::initializer_list<std::uint8_t>{ 0x31, 0xC0, 0x90, 0x90, 0x90 };	// xor eax, eax
 
-				Relocation(target, 0x85C).Write(dest);
-				Relocation(target, 0x8AF).Write(dest);
-				Relocation(target, Offset{ 0x931, 0x931, 0x96F }).WriteFill(NOP, 5);	// Skips DataLoaded
-				Relocation(target, Offset{ 0xA23, 0xA23, 0xA61 }).WriteFill(NOP, 12);
+				if (VersionLists::GetEditorVersion() < VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1)
+				{
+					Relocation(target1, 0x8AF).Write(dest);
+					Relocation(target1, 0x931).Write(dest);
+					Relocation(target1, 0xA23).WriteFill(NOP, 12);
+					Relocation(ID(271946), 0xC3).Write(dest);
+				}
+				else
+				{
+					Relocation(target1, 0x8AF).Write(dest);
+					Relocation(target1, 0x8D6).Write(dest);
+					Relocation(target1, 0x96F).Write(dest);
+					Relocation(ID(1270401), 0xC1).Write(dest);
+				}
 
 				BSResourceArchive::Initialize();
 
