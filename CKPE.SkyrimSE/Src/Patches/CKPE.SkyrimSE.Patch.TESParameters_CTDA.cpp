@@ -43,6 +43,11 @@ namespace CKPE
 				return {};
 			}
 
+			bool TESParameters_CTDA::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool TESParameters_CTDA::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
