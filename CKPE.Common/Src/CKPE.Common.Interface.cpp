@@ -60,7 +60,7 @@ namespace CKPE
 		void Interface::Initialize(const CKPEGameLibraryInterface* a_interface, const CKPE::Version& a_editor_version, 
 			const CKPE::Version& a_version, const std::wstring& a_dialogs_fn, const std::wstring& a_databases_fn,
 			const std::wstring& a_database_fn, [[maybe_unused]] const std::wstring& a_resources_fn,
-			[[maybe_unused]] bool support_more_theme, const std::uint8_t a_runtime_index) noexcept(true)
+			[[maybe_unused]] bool support_only_al, const std::uint8_t a_runtime_index) noexcept(true)
 		{
 			if (_cmdline) return;
 
@@ -131,16 +131,21 @@ namespace CKPE
 				//else
 				//	addressLibrary->Save(L"version---.bin");
 
-				if (!Relocator::GetSingleton()->Open(a_databases_fn, a_database_fn))
+				if (!support_only_al)
 				{
-					// A version that's covered by the Address Library is not expected to have RELB
-					if (hasAddressLibrary)
-						_WARNING(L"\tNo legacy RELB database for this editor version; running on Address Library only."sv);
-					else
-						ErrorHandler::Trigger(StringUtils::Utf16ToWinCP(
-							StringUtils::FormatString(L"Couldn't open the database \"%s\" in \"%s\" or Address Library.\nMore detailed to log.",
-								a_database_fn.c_str(), a_databases_fn.c_str())));
+					if (!Relocator::GetSingleton()->Open(a_databases_fn, a_database_fn))
+					{
+						// A version that's covered by the Address Library is not expected to have RELB
+						if (hasAddressLibrary)
+							_WARNING(L"\tNo legacy RELB database for this editor version; running on Address Library only."sv);
+						else
+							ErrorHandler::Trigger(StringUtils::Utf16ToWinCP(
+								StringUtils::FormatString(L"Couldn't open the database \"%s\" in \"%s\" or Address Library.\nMore detailed to log.",
+									a_database_fn.c_str(), a_databases_fn.c_str())));
+					}
 				}
+				else if (!hasAddressLibrary)
+					_FATALERROR_EX("CKPE requires the presence of an Address Library, but it was not found."sv);
 
 				// CMD LINE HANDLER
 
