@@ -263,9 +263,11 @@ namespace CKPE
 							Hwnd, Message, wParam, lParam);
 						MainWindow::Singleton->m_hWnd = Hwnd;
 
+#if 0
 						// Register the main window as docking grid master
 						Common::Interface::GetSingleton()->GetDockingManager()->AddWindow(
 							(std::uintptr_t)Hwnd, Common::DockingManager::E_ANCHOR);
+#endif
 
 						// Grass is always enabled by default, make the UI buttons match
 						CheckMenuItem(GetMenu(Hwnd), Common::EditorUI::UI_EDITOR_TOGGLEGRASS, MF_CHECKED);
