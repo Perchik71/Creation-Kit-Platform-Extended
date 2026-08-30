@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -15,9 +14,9 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			typedef void(*TTESParameters_CTDASub)(std::int64_t, std::int64_t*);
+			using TTESParameters_CTDASub = void(std::int64_t, std::int64_t*);
 
-			static TTESParameters_CTDASub TESParameters_CTDASub;
+			static std::function<TTESParameters_CTDASub> TESParameters_CTDASub;
 
 			TESParameters_CTDA::TESParameters_CTDA() : Common::Patch()
 			{
@@ -49,19 +48,15 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool TESParameters_CTDA::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool TESParameters_CTDA::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for incorrect pointer truncate assertion while saving certain conditions (i.e 3DNPC.esp). TESParameters/CTDA.
 				//
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				TESParameters_CTDASub = (TTESParameters_CTDASub)__CKPE_OFFSET(1);
+				TESParameters_CTDASub = reinterpret_cast<TTESParameters_CTDASub*>
+					(Relocation(ID(44443), Offset{ 0x29F, 0x2B4 }).WriteCall(&sub));
 
 				return true;
 			}

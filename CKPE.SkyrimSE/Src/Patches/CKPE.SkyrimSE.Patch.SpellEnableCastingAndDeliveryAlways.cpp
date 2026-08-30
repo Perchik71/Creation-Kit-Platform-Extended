@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -16,7 +15,7 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			static bool HKEnableWindow(HWND hwndDlg, BOOL bEnable) noexcept(true)
+			static bool HKEnableWindow(HWND hwndDlg, [[maybe_unused]] BOOL bEnable) noexcept(true)
 			{
 				return EnableWindow(hwndDlg, TRUE);
 			}
@@ -46,21 +45,23 @@ namespace CKPE
 				return {};
 			}
 
+			bool SpellEnableCastingAndDeliveryAlways::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool SpellEnableCastingAndDeliveryAlways::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool SpellEnableCastingAndDeliveryAlways::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool SpellEnableCastingAndDeliveryAlways::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&HKEnableWindow);	// Spell fix disable Casting and Delivery
-				Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&HKEnableWindow);	// ^
+				auto target = ID(233123);
+				Relocation(target, 0xD0).WriteCall(&HKEnableWindow);	// Spell fix disable Casting and Delivery
+				Relocation(target, 0xF8).WriteCall(&HKEnableWindow);	// ^
 
 				return true;
 			}

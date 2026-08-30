@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -39,24 +38,25 @@ namespace CKPE
 				return {};
 			}
 
+			bool NavMeshInfoMap::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool NavMeshInfoMap::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool NavMeshInfoMap::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool NavMeshInfoMap::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix use-after-free with a NavMeshInfoMap inserted in the altered forms list during a virtual destructor call. 
 				// NavMeshInfoMap::Clear.
 				//
-				SafeWrite::WriteNop(__CKPE_OFFSET(0), 6);
+				Relocation(ID(338739), 0x2A8).WriteFill(NOP, 6);
 
 				return true;
 			}

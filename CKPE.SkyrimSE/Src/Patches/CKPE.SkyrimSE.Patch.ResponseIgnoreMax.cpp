@@ -39,23 +39,24 @@ namespace CKPE
 				return {};
 			}
 
+			bool ResponseIgnoreMax::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool ResponseIgnoreMax::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool ResponseIgnoreMax::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool ResponseIgnoreMax::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Skip message setting blocking text input after 149 characters.
 				//
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0xEB });
+				Relocation(ID{ 195071, 1191152 }, 0x171).Write(JMP);
 
 				return true;
 			}

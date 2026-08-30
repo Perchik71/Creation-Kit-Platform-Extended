@@ -66,7 +66,7 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool CrashMergeForms::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool CrashMergeForms::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				using namespace Common;
 

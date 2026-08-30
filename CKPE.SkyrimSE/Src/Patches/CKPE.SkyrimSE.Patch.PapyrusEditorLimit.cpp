@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -40,23 +39,24 @@ namespace CKPE
 				return {};
 			}
 
+			bool PapyrusEditorLimit::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool PapyrusEditorLimit::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool PapyrusEditorLimit::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool PapyrusEditorLimit::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Raise the papyrus script editor text limit to 500k characters from 64k
 				//
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
+				Relocation(ID(179987), 0x1A9).WriteCall(&sub);
 
 				return true;
 			}

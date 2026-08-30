@@ -17,7 +17,7 @@ namespace CKPE
 				FixRecordSoundCapture(const FixRecordSoundCapture&) = delete;
 				FixRecordSoundCapture& operator=(const FixRecordSoundCapture&) = delete;
 			protected:
-				virtual bool DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true);
+				virtual bool DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true);
 				virtual bool DoQuery() const noexcept(true);
 			public:
 				FixRecordSoundCapture();

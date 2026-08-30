@@ -17,7 +17,7 @@ namespace CKPE
 				CrashUsingMore16NPCForFaceGen(const CrashUsingMore16NPCForFaceGen&) = delete;
 				CrashUsingMore16NPCForFaceGen& operator=(const CrashUsingMore16NPCForFaceGen&) = delete;
 			protected:
-				virtual bool DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true);
+				virtual bool DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true);
 				virtual bool DoQuery() const noexcept(true);
 			public:
 				CrashUsingMore16NPCForFaceGen();

@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -16,9 +15,9 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			typedef void(*TNiCollisionObjectClonedWarningSub)(std::int64_t, std::int64_t, std::int64_t);
+			using TNiCollisionObjectClonedWarningSub = void(std::int64_t, std::int64_t, std::int64_t);
 
-			static TNiCollisionObjectClonedWarningSub NiCollisionObjectClonedWarningSub;
+			static std::function<TNiCollisionObjectClonedWarningSub> NiCollisionObjectClonedWarningSub;
 
 			NiCollisionObjectClonedWarning::NiCollisionObjectClonedWarning() : Common::Patch()
 			{
@@ -45,25 +44,26 @@ namespace CKPE
 				return { "Console" };
 			}
 
+			bool NiCollisionObjectClonedWarning::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool NiCollisionObjectClonedWarning::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool NiCollisionObjectClonedWarning::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool NiCollisionObjectClonedWarning::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Print a warning when a cloned NiCollisionObject has no name specified in its NIF file. 
 				// This comes from malformed/ported game assets.
-				//
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				NiCollisionObjectClonedWarningSub = (TNiCollisionObjectClonedWarningSub)__CKPE_OFFSET(1);
+				//		
+				NiCollisionObjectClonedWarningSub = reinterpret_cast<TNiCollisionObjectClonedWarningSub*>(
+					Relocation(ID{ 759144, 1017004 }, 0xC9).WriteCall(&sub));
 
 				return true;
 			}
@@ -71,8 +71,8 @@ namespace CKPE
 			void NiCollisionObjectClonedWarning::sub(std::int64_t SourceNode, std::int64_t DestNode, 
 				std::int64_t CloningProcess) noexcept(true)
 			{
-				const char* sourceNodeName = *(const char**)(SourceNode + 0x10);
-				std::int64_t sourceNodeParent = *(std::int64_t*)(SourceNode + 0x30);
+				auto sourceNodeName = *(const char**)(SourceNode + 0x10);
+				auto sourceNodeParent = *(std::int64_t*)(SourceNode + 0x30);
 
 				if (*(const char**)(SourceNode + 0x40) && !sourceNodeName && sourceNodeParent)
 					Console::LogWarning(Console::MODELS, "Cloning a child node with collision and no name present. Parent is \"%s\".",

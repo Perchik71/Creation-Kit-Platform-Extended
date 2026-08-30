@@ -17,7 +17,7 @@ namespace CKPE
 				TESParameters_CTDA(const TESParameters_CTDA&) = delete;
 				TESParameters_CTDA& operator=(const TESParameters_CTDA&) = delete;
 			protected:
-				virtual bool DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true);
+				virtual bool DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true);
 				virtual bool DoQuery() const noexcept(true);
 			public:
 				TESParameters_CTDA();

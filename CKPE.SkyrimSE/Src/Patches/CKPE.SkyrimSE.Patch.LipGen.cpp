@@ -60,7 +60,7 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_6_438;
 			}
 
-			bool LipGen::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool LipGen::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				using namespace Common;
 

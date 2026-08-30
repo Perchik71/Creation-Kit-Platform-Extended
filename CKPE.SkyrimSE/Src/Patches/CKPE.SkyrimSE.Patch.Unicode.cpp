@@ -5,8 +5,6 @@
 #include <windows.h>
 #include <commctrl.h>
 #include <CKPE.StringUtils.h>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -122,44 +120,48 @@ namespace CKPE
 				return {};
 			}
 
+			bool Unicode::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool Unicode::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool Unicode::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool Unicode::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				// Initial mode
 				// Initially, the original state must be set
 				UnicodeConvertorString.SetMode(ConvertorString::MODE_ANSI);
 
 				// Intercepting the receipt of a string
-				*(std::uintptr_t*)&UnicodeSub = Detours::DetourClassJump(__CKPE_OFFSET(0), &BGSLocalizedString::GetStr);
+				*(std::uintptr_t*)&UnicodeSub = Relocation(ID(564087)).WriteJump(&BGSLocalizedString::GetStr);
 
+				auto target1 = ID(235867);
 				// Also delete it message "You must close all Dialoge Boxes",
 				// which has problems with programs that work with multiple monitors.
-				Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&BeginPluginSave);
+				Relocation(target1, 0x21).WriteCall(&BeginPluginSave);
 				// I don't quite understand the meaning of calling SetCursor in this function, which deals with saving
 				// But we'll make the call in hook.
-				Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&EndPluginSave);
+				Relocation(target1, 0xC2).WriteCall(&EndPluginSave);
 				// Deleting book checks, spam in the log is excessive
-				SafeWrite::WriteNop(__CKPE_OFFSET(3), 5);
+				Relocation(ID(115236), 0x175).WriteFill(NOP, 5);
 
+				auto target2 = ID(13323);
+				auto target3 = ID(94785);
 				// In the "Data" dialog box, the "author" and "description" controls are independent, 
 				// and I'm forced to make a trap for WinAPI calls
-				Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&HKSetDlgItemTextA);
-				Detours::DetourCall(__CKPE_OFFSET(5), (std::uintptr_t)&HKSetDlgItemTextA);
-				Detours::DetourCall(__CKPE_OFFSET(6), (std::uintptr_t)&HKSetDlgItemTextA);
-				Detours::DetourCall(__CKPE_OFFSET(7), (std::uintptr_t)&HKSendDlgItemMessageA);
-				Detours::DetourCall(__CKPE_OFFSET(8), (std::uintptr_t)&HKSendDlgItemMessageA);
-				Detours::DetourCall(__CKPE_OFFSET(9), (std::uintptr_t)&HKSendDlgItemMessageA);
-				Detours::DetourCall(__CKPE_OFFSET(10), (std::uintptr_t)&HKSendDlgItemMessageA);
+				Relocation(target2, 0xEB).WriteCall(&HKSetDlgItemTextA);
+				Relocation(target2, 0x118).WriteCall(&HKSetDlgItemTextA);
+				Relocation(target2, 0x143).WriteCall(&HKSetDlgItemTextA);
+				Relocation(target3, 0x49).WriteCall(&HKSendDlgItemMessageA);
+				Relocation(target3, 0xAA).WriteCall(&HKSendDlgItemMessageA);
+				Relocation(target3, 0xE3).WriteCall(&HKSendDlgItemMessageA);
+				Relocation(target3, 0x144).WriteCall(&HKSendDlgItemMessageA);
 
 				return true;
 			}

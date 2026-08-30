@@ -3,9 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.HardwareInfo.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Patterns.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.EditorUI.h>
@@ -18,7 +16,7 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			std::uint64_t RuntimeOptimization::PatchLinkedList(std::uintptr_t beg, std::uintptr_t end) noexcept(true)
+			std::uint64_t RuntimeOptimization::PatchLinkedList(std::uintptr_t beg, std::uintptr_t end) const noexcept(true)
 			{
 				//
 				// Optimize a linked list HasValue<T>() hot-code-path function. Checks if the 16-byte structure
@@ -41,9 +39,10 @@ namespace CKPE
 				return matches.size();
 			}
 
-			std::uint64_t RuntimeOptimization::PatchTemplatedFormIterator(std::uintptr_t _beg, std::uintptr_t _end,
-				std::uintptr_t base, Common::RelocatorDB::PatchDB* db) noexcept(true)
+			std::uint64_t RuntimeOptimization::PatchTemplatedFormIterator(std::uintptr_t _beg, std::uintptr_t _end) const noexcept(true)
 			{
+				using namespace Common;
+
 				//
 				// Add a callback that sets a global variable indicating UI dropdown menu entries can be
 				// deferred to prevent a redraw after every new item insert. This reduces dialog initialization time.
@@ -55,6 +54,10 @@ namespace CKPE
 				std::uint64_t patchCount = 0;
 				const char* pattern = "E8 ? ? ? ? 48 89 44 24 30 48 8B 44 24 30 48 89 44 24 38 48 8B 54 24 38 48 8D 4C 24 28";
 
+				auto skips_1 = ID(173291).Address();
+				auto skips_2 = Relocation(ID(346051), 0x4F).Address();
+				auto skips_3 = Relocation(ID(78235), 0x6D).Address();
+
 				auto matches = Patterns::FindsByMask(_beg, _end, pattern);
 				for (std::uintptr_t addr : matches)
 				{
@@ -62,7 +65,7 @@ namespace CKPE
 					addr += 30ull /* strlen(maskStr) */ + 11;
 					std::uintptr_t destination = addr + (std::uintptr_t)(*(std::int32_t*)(addr + 1)) + 5;
 
-					if (destination != __CKPE_OFFSET(2))
+					if (destination != skips_1)
 						continue;
 
 					// Now look for the matching destructor call
@@ -78,7 +81,7 @@ namespace CKPE
 
 					// Blacklisted (000000014148C1FF): The "Use Info" dialog has more than one list view and causes problems
 					// Blacklisted (000000014169DFAD): Adding a new faction to an NPC has more than one list view
-					if ((addr == __CKPE_OFFSET(3)) || (addr == __CKPE_OFFSET(4)))
+					if ((addr == skips_2) || (addr == skips_3))
 						continue;
 
 					Detours::DetourCall(addr, (std::uintptr_t)&Common::EditorUI::Hook::HKBeginUIDefer);
@@ -115,25 +118,24 @@ namespace CKPE
 				return {};
 			}
 
+			bool RuntimeOptimization::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool RuntimeOptimization::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool RuntimeOptimization::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool RuntimeOptimization::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
 				// Cutting a lot is faster this way
-				auto stext = interface->GetApplication()->GetSegment(Segment::text);
+				auto stext = Application::GetSingleton()->GetSegment(Segment::text);
 				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 				
 				PatchLinkedList(stext.GetAddress(), stext.GetSize());
-				PatchTemplatedFormIterator(stext.GetAddress(), stext.GetSize(), base, db);
+				PatchTemplatedFormIterator(stext.GetAddress(), stext.GetSize());
 
 				return true;
 			}

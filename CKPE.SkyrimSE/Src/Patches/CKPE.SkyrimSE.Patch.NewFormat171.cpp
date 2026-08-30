@@ -2,8 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -48,33 +46,35 @@ namespace CKPE
 				return { "Console", "TESDataHandler" };
 			}
 
+			bool NewFormat171::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool NewFormat171::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_6_438;
 			}
 
-			bool NewFormat171::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool NewFormat171::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				// change version
 				// skip "File %s is a higher version than this EXE can load."
-				SafeWrite::Write(__CKPE_OFFSET(0), (std::uint8_t*)&fPluginVersion, 4);
+				Relocation(ID(155940)).Write(&fPluginVersion, 4);
 
 				// make the window title the same as in 1.6.1130
-				Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&sub);
-				pointer_NewFormat171_data = __CKPE_OFFSET(3);
+				Relocation(ID(55337), 0x133).WriteCall(&sub);
+				pointer_NewFormat171_data = ID(143755).Address();
 
 				// Making changes, from 1.6.1130, it's amazing that Bethesda fixed where I used to rule, 
 				// I didn't have to look for a long time
-				SafeWrite::Write(__CKPE_OFFSET(4), { 0x83, 0xC8, 0x01, 0x90 });
-				SafeWrite::Write(__CKPE_OFFSET(5), { 0x83, 0xC8, 0x01, 0x90, 0x90 });
+				auto target = ID(176354);
+				Relocation(target, 0x62).Write({ 0x83, 0xC8, 0x01, 0x90 });
+				Relocation(target, 0x84).Write({ 0x83, 0xC8, 0x01, 0x90, 0x90 });
 
-				auto addr = __CKPE_OFFSET(6);
+				auto addr = Relocation(ID(216062), 0x15C).Address();
 				SafeWrite::WriteNop(addr, 0x34);
 				SafeWrite::Write(addr - 3, { 0x4C });
 				Detours::DetourCall(addr, (std::uintptr_t)&sub2);

@@ -61,7 +61,7 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73;
 			}
 
-			bool BGSPerkRankArray::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool BGSPerkRankArray::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				using namespace Common;
 

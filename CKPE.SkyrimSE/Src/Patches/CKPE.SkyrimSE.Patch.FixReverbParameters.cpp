@@ -49,7 +49,7 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_6_438;
 			}
 
-			bool FixReverbParameters::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool FixReverbParameters::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				// Bethesda pointed to a function that is not WndProc
 				// According to RTTI readings, this object has one less function compared to CK 1.6.1130

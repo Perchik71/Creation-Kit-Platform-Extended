@@ -17,7 +17,7 @@ namespace CKPE
 				ReEnableFog(const ReEnableFog&) = delete;
 				ReEnableFog& operator=(const ReEnableFog&) = delete;
 			protected:
-				virtual bool DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true);
+				virtual bool DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true);
 				virtual bool DoQuery() const noexcept(true);
 			public:
 				ReEnableFog();
@@ -26,6 +26,7 @@ namespace CKPE
 				virtual const char* GetOptionName() const noexcept(true);
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
+				bool SupportsAddressLibrary() const noexcept(true) override;
 
 				static void sub(std::int64_t a1, std::int64_t a2, std::int64_t a3) noexcept(true);
 				static bool IsFogEnabled();

@@ -48,7 +48,7 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool FixLoadMore32KAnimation::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool FixLoadMore32KAnimation::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				using namespace Common;
 

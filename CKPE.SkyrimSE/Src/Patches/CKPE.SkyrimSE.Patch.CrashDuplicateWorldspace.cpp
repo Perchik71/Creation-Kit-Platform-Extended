@@ -53,7 +53,7 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_6_438;
 			}
 
-			bool CrashDuplicateWorldspace::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool CrashDuplicateWorldspace::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				using namespace Common;
 

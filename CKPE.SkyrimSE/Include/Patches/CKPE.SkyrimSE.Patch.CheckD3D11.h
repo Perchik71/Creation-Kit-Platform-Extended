@@ -17,7 +17,7 @@ namespace CKPE
 				CheckD3D11(const CheckD3D11&) = delete;
 				CheckD3D11& operator=(const CheckD3D11&) = delete;
 			protected:
-				virtual bool DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true);
+				virtual bool DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true);
 				virtual bool DoQuery() const noexcept(true);
 			public:
 				CheckD3D11();

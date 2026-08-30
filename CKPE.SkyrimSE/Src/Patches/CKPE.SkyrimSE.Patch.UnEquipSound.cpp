@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -39,25 +38,26 @@ namespace CKPE
 				return {};
 			}
 
+			bool UnEquipSound::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool UnEquipSound::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool UnEquipSound::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool UnEquipSound::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Correct the "Push-to-game not supported" error when clicking the "UnEquip Sound" button on the weapon editor
 				// dialog or "Add" button on the music track dialog. 3682 is reserved exclusively for the PTG functionality, so
 				// the button ids must be changed. Disable PTG code instead.
 				//
-				SafeWrite::WriteNop(__CKPE_OFFSET(0), 6);
+				Relocation(ID(175922), Offset{ 0xA99, 0xAA1 }).WriteFill(NOP, 6);
 
 				return true;
 			}

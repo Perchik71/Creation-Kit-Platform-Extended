@@ -4,7 +4,6 @@
 
 #include <algorithm>
 #include <windows.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -19,7 +18,7 @@ namespace CKPE
 		{
 			decltype(&UIHotkeys::sub) UIHotkeysSub;
 
-			static bool ReplaceHotkeys(const char* HotkeyFunction, const char* DisplayText, char* VirtualKey,
+			static bool ReplaceHotkeys(const char* HotkeyFunction, [[maybe_unused]] const char* DisplayText, char* VirtualKey,
 				bool* Alt, bool* Ctrl, bool* Shift) noexcept(true)
 			{
 				// Read the setting, strip spaces/quotes, then split by each '+' modifier
@@ -41,7 +40,7 @@ namespace CKPE
 				*Ctrl = false;
 				*Shift = false;
 
-				char* context = NULL;
+				char* context = nullptr;
 				const char* t = strtok_s(newKeybind.data(), "+", &context);
 
 				do
@@ -81,7 +80,7 @@ namespace CKPE
 						// This should be translated with VkKeyScan but virtual keys make things difficult...
 						*VirtualKey = t[0];
 					}
-				} while (t = strtok_s(NULL, "+", &context));
+				} while (t = strtok_s(nullptr, "+", &context));
 
 				return true;
 			}
@@ -111,21 +110,21 @@ namespace CKPE
 				return {};
 			}
 
+			bool UIHotkeys::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool UIHotkeys::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool UIHotkeys::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool UIHotkeys::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				Detours::DetourClassJump(__CKPE_OFFSET(0), &sub);
-				UIHotkeysSub = (decltype(&sub))__CKPE_OFFSET(1);
+				UIHotkeysSub = (decltype(&sub))Relocation(ID(618847)).WriteJump(&sub);
 
 				return true;
 			}
@@ -134,7 +133,7 @@ namespace CKPE
 				const char** DisplayText, char VirtualKey, bool Alt, bool Ctrl, bool Shift) noexcept(true)
 			{
 				if (!ReplaceHotkeys(*HotkeyFunction, *DisplayText, &VirtualKey, &Alt, &Ctrl, &Shift))
-					_MESSAGE("Can't find this hotkeys ""%s"" in the mod settings. (%X), %d, %d, %d, %s)",
+					_MESSAGE("Can't find this hotkeys ""%s"" in the mod settings. (%X), %d, %d, %d, %s)"sv,
 						*HotkeyFunction, VirtualKey, (int)Alt, (int)Ctrl, (int)Shift, *DisplayText);
 
 				//_CONSOLE("%s %p", *HotkeyFunction, Callback);

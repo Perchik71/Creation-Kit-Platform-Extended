@@ -186,7 +186,7 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool MemoryManager::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool MemoryManager::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				using namespace Common;
 

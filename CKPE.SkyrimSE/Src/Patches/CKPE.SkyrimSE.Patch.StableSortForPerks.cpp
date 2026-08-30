@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -40,22 +39,22 @@ namespace CKPE
 				return {};
 			}
 
+			bool StableSortForPerks::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool StableSortForPerks::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool StableSortForPerks::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool StableSortForPerks::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				// Stable sort for perk entry window
-				Detours::DetourCall(__CKPE_OFFSET(0),
-					(std::uintptr_t)&ArrayQuickSortRecursive<class BGSEntryPointPerkEntry*, true>);
+				Relocation(ID(389022), 0x39).WriteCall(&ArrayQuickSortRecursive<class BGSEntryPointPerkEntry*, true>);
 
 				return true;
 			}

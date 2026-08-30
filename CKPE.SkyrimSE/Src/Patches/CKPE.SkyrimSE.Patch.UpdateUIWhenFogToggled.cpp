@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.EditorUI.h>
@@ -16,7 +15,9 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			std::uintptr_t pointer_UpdateUIWhenFogToggled_sub = 0;
+			using TUpdateUIWhenFogToggled_sub = void(std::int64_t, bool);
+			
+			static std::function<TUpdateUIWhenFogToggled_sub> UpdateUIWhenFogToggled_sub;
 
 			UpdateUIWhenFogToggled::UpdateUIWhenFogToggled() : Common::Patch()
 			{
@@ -43,22 +44,23 @@ namespace CKPE
 				return { "Main Window" };
 			}
 
+			bool UpdateUIWhenFogToggled::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool UpdateUIWhenFogToggled::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool UpdateUIWhenFogToggled::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool UpdateUIWhenFogToggled::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				// Update the UI options when fog is toggled
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				pointer_UpdateUIWhenFogToggled_sub = __CKPE_OFFSET(1);
+				UpdateUIWhenFogToggled_sub = reinterpret_cast<TUpdateUIWhenFogToggled_sub*>
+					(Relocation(ID(235802), 0x19).WriteCall(&sub));
 
 				return true;
 			}
@@ -66,7 +68,7 @@ namespace CKPE
 			void UpdateUIWhenFogToggled::sub(std::int64_t a1, bool Enable) noexcept(true)
 			{
 				// Modify the global setting itself then update UI to match
-				((void(__fastcall*)(std::int64_t, bool))pointer_UpdateUIWhenFogToggled_sub)(a1, Enable);
+				UpdateUIWhenFogToggled_sub(a1, Enable);
 
 				CheckMenuItem(GetMenu(MainWindow::Singleton->Handle), Common::EditorUI::UI_EDITOR_TOGGLEFOG,
 					Enable ? MF_CHECKED : MF_UNCHECKED);

@@ -2,8 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -47,62 +45,55 @@ namespace CKPE
 				return {};
 			}
 
+			bool ReEnableFog::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool ReEnableFog::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool ReEnableFog::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool ReEnableFog::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Re-enable fog rendering in the Render Window by forcing post-process effects (SAO/SAOComposite/SAOFog)
 				//
-				Detours::DetourCall(__CKPE_OFFSET(9), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(10), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(11), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(12), (std::uintptr_t)&sub);
+				auto target1 = ID(532405);			
+				pointer_ReEnableFog_sub1 = Relocation(target1, 0x1562).WriteCall(&sub);
+				Relocation(target1, Offset{ 0x180F, 0x1842 }).WriteCall(&sub);
+				Relocation(target1, Offset{ 0x1A94, 0x1AC7 }).WriteCall(&sub);
+				Relocation(target1, Offset{ 0x1C9D, 0x1CE5 }).WriteCall(&sub);
+				pointer_ReEnableFog_data = Relocation(ID(149232), 0x8).Address();
+				pointer_ReEnableFog_sub2 = ID(608732).Address();
+				pointer_ReEnableFog_sub3 = ID(608733).Address();
+				pointer_ReEnableFog_sub4 = ID{ 771949, 995239 }.Address();
 
-				pointer_ReEnableFog_sub1 = __CKPE_OFFSET(13);
-				pointer_ReEnableFog_data = __CKPE_OFFSET(14);
-				pointer_ReEnableFog_sub2 = __CKPE_OFFSET(15);
-				pointer_ReEnableFog_sub3 = __CKPE_OFFSET(16);
-				pointer_ReEnableFog_sub4 = __CKPE_OFFSET(17);
+				auto target2 = ID{ 771949, 995239 };
+				Relocation(target2, Offset{ 0xFF, 0x11D }).WriteFill(NOP, 4);		// Pointer always null
+				Relocation(target2, Offset{ 0x153, 0x171 }).WriteFill(NOP, 0x63);	// Pointer always null
+				Relocation(target2, Offset{ 0x1FE, 0x216 }).WriteFill(NOP, 5);		// Pointer always null (second parameter)
+				Relocation(target2, Offset{ 0x3C0, 0x3D6 }).WriteFill(NOP, 5);		// Pointer always null (second parameter)
 
-				//
-				// And send this code to the abyss of hell
-				//
-				// To speed up, a lot of patches
-				auto stext = interface->GetApplication()->GetSegment(Segment::text);
-				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());											
-
-				text.WriteNop(__CKPE_OFFSET(0), 4);			// Pointer always null
-				text.WriteNop(__CKPE_OFFSET(1), 0x63);		// Pointer always null
-				text.WriteNop(__CKPE_OFFSET(2), 5);			// Pointer always null (second parameter)
-				text.WriteNop(__CKPE_OFFSET(3), 5);			// Pointer always null (second parameter)
-
-				if (verPatch == 2)
+				if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1130)
 				{
-					text.WriteNop(__CKPE_OFFSET(4), 0x5B);	// Assert always triggers and multiple null pointers in call
-					text.WriteNop(__CKPE_OFFSET(5), 0x213);	// Remove most of the useless stuff in the function
+					Relocation(target2, 0x3DB).WriteFill(NOP, 0x5B);	// Assert always triggers and multiple null pointers in call
+					Relocation(target2, 0x440).WriteFill(NOP, 0x213);	// Remove most of the useless stuff in the function
 				}
 				else
 				{
-					text.WriteNop(__CKPE_OFFSET(4), 0x65);	// Assert always triggers and multiple null pointers in call
-					text.WriteNop(__CKPE_OFFSET(5), 0x222);	// Remove most of the useless stuff in the function
+					Relocation(target2, 0x3C5).WriteFill(NOP, 0x65);	// Assert always triggers and multiple null pointers in call
+					Relocation(target2, 0x434).WriteFill(NOP, 0x222);	// Remove most of the useless stuff in the function
 				}
 
-				text.Write(__CKPE_OFFSET(6), { 0xC3 });		// Pointer always null (BSGraphics::State::UpdateTemporalData)
-				text.Write(__CKPE_OFFSET(7), { 0xC3 });		// Pointer always null (BSGraphics::State::UpdateTemporalData)
+				Relocation(ID(661367)).Write(RET);		// Pointer always null (BSGraphics::State::UpdateTemporalData)
+				Relocation(ID(661365)).Write(RET);		// Pointer always null (BSGraphics::State::UpdateTemporalData)
 
-				text.WriteNop(__CKPE_OFFSET(8), 2);			// Force DEPTH_STENCIL_POST_ZPREPASS_COPY RT to be copied every frame
+				// Force DEPTH_STENCIL_POST_ZPREPASS_COPY RT to be copied every frame
+				Relocation(ID(729089), Offset { 0x4E5, 0x4C5 }).WriteFill(NOP, 2);
 
 				return true;
 			}

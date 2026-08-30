@@ -48,7 +48,7 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool FixVertexNormals::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool FixVertexNormals::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				using namespace Common;
 
@@ -62,7 +62,7 @@ namespace CKPE
 				// Fix for TESObjectLAND vertex normals becoming corrupted when saving worldspaces with a parent worldspace. 
 				// Invalid memcpy() size supplied.
 				//
-				Relocation(ID(91943), 0xF6).Write({ 0x41, 0xB8, 0x63, 0x03, 0x00, 0x00 });
+				Relocation(ID(60495), 0x146).Write({ 0x41, 0xB8, 0x63, 0x03, 0x00, 0x00 });
 
 				return true;
 			}

@@ -70,7 +70,7 @@ namespace CKPE
 				return !vc_enabled && (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST);
 			}
 
-			bool AllowSaveESMandMasterESP::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool AllowSaveESMandMasterESP::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				using namespace Common;
 
@@ -93,7 +93,7 @@ namespace CKPE
 						Relocation(ID(341913), 0x10E).WriteFill(NOP, 2);
 
 						// Disable: "File '%s' is a master file or is in use.\n\nPlease select another file to save to."
-						const char* newFormat = "File '%s' is in use.\n\nPlease select another file to save to.";
+						auto newFormat = "File '%s' is in use.\n\nPlease select another file to save to.";
 
 						Relocation(ID(551174), 0x96A).WriteFill(NOP, 12);
 						Relocation(ID(106374)).Write(newFormat, strlen(newFormat) + 1);
@@ -114,9 +114,9 @@ namespace CKPE
 				if (!BasePath)
 					BasePath = "\\Data";
 
-				const char* filter = "TES Plugin Files (*.esp)\0*.esp\0TES Light Master Files (*.esl)\0*.esl\0TES Master Files (*.esm)\0*.esm\0\0";
-				const char* title = "Select Target Plugin";
-				const char* extension = "esp";
+				auto filter = "TES Plugin Files (*.esp)\0*.esp\0TES Light Master Files (*.esl)\0*.esl\0TES Master Files (*.esm)\0*.esm\0\0";
+				auto title = "Select Target Plugin";
+				auto extension = "esp";
 
 				if (IsESM)
 				{

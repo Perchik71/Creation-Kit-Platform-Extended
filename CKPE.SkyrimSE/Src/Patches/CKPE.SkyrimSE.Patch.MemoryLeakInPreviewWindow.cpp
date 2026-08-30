@@ -52,7 +52,7 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool MemoryLeakInPreviewWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool MemoryLeakInPreviewWindow::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				//
 				// Fix for memory leak when opening many preview windows or resizing them. 

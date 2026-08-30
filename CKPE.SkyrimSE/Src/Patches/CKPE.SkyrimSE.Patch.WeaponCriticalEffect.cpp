@@ -47,18 +47,19 @@ namespace CKPE
 				return {};
 			}
 
+			bool WeaponCriticalEffect::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool WeaponCriticalEffect::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool WeaponCriticalEffect::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool WeaponCriticalEffect::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix for weapon critical effect data (CRDT) being destroyed when upgrading from form 
@@ -66,14 +67,15 @@ namespace CKPE
 				// and is incompatible with old versions.
 				//
 
-				SafeWrite::WriteNop(__CKPE_OFFSET(0), 98);
-				SafeWrite::WriteNop(__CKPE_OFFSET(1), 7);
+				auto target = ID(321466);
+				Relocation(target, 0x6E1).WriteFill(NOP, 98);
+				Relocation(target, 0x7A1).WriteFill(NOP, 7);
 
-				Detours::DetourJump(__CKPE_OFFSET(2), (std::uintptr_t)&sub1);
-				Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&sub2);
+				Relocation(ID(309335)).WriteJump(&sub1);
+				Relocation(ID(234858), Offset{ 0x1382, 0x136D }).WriteCall(&sub2);
 
-				WeaponCriticalEffectSub1 = (TWeaponCriticalEffectSub1)__CKPE_OFFSET(4);
-				WeaponCriticalEffectSub2 = (TWeaponCriticalEffectSub2)__CKPE_OFFSET(5);
+				WeaponCriticalEffectSub1 = (TWeaponCriticalEffectSub1)ID(107812).Address();
+				WeaponCriticalEffectSub2 = (TWeaponCriticalEffectSub2)ID(559689).Address();
 
 				return true;
 			}

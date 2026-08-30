@@ -17,7 +17,7 @@ namespace CKPE
 				AddChangeRef(const AddChangeRef&) = delete;
 				AddChangeRef& operator=(const AddChangeRef&) = delete;
 			protected:
-				virtual bool DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true);
+				virtual bool DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true);
 				virtual bool DoQuery() const noexcept(true);
 			public:
 				AddChangeRef();

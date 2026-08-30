@@ -3,8 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <unordered_map>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -55,7 +53,7 @@ namespace CKPE
 
 					std::uint16_t GetEdgeLinkIndex(std::uint32_t Edge) const noexcept(true)
 					{
-						if (HasExtraInfo(Edge))
+						if (HasExtraInfo(Edge) && (Edge < 3))
 							return m_Edges[Edge];
 
 						CKPE_ASSERT(false);
@@ -75,7 +73,7 @@ namespace CKPE
 						m_Edges[Edge] = BAD_NAVMESH_TRIANGLE;
 					}
 
-					std::uint16_t HKGetVertexIndex_DegenerateCheck(std::uint32_t Vertex) noexcept(true)
+					std::uint16_t HKGetVertexIndex_DegenerateCheck(std::uint32_t Vertex) const noexcept(true)
 					{
 						// If special flag is set: return an invalid value to make the == comparison fail
 						if (m_ExtraInfo & CUSTOM_NAVMESH_PSEUDODELTE_FLAG)
@@ -84,7 +82,7 @@ namespace CKPE
 						return GetVertexIndex(Vertex);
 					}
 
-					std::uint16_t HKGetVertexIndex_VertexCheck(std::uint32_t Vertex) noexcept(true)
+					std::uint16_t HKGetVertexIndex_VertexCheck(std::uint32_t Vertex) const noexcept(true)
 					{
 						// Same as degenerate check, but can't return 2 identical values
 						static std::uint16_t fakeCounter = 0;
@@ -157,7 +155,7 @@ namespace CKPE
 						tri.m_ExtraInfo |= BSNavmesh::CUSTOM_NAVMESH_PSEUDODELTE_FLAG;
 
 						// Kill all edges referencing this triangle & kill edges this triangle references
-						auto removeEdgeReferences = [this, TriangleIndex](BSNavmesh::BSNavmeshTriangle& Triangle)
+						auto removeEdgeReferences = [TriangleIndex](BSNavmesh::BSNavmeshTriangle& Triangle)
 							{
 								for (std::uint32_t i = 0; i < 3; i++)
 								{
@@ -214,7 +212,7 @@ namespace CKPE
 
 						std::uint16_t vert = tri.GetVertexIndex(0);
 
-						for (auto [orphanVert, orphaned] : orphans)
+						for (auto& [orphanVert, orphaned] : orphans)
 						{
 							if (!orphaned)
 								continue;
@@ -257,33 +255,34 @@ namespace CKPE
 				return {};
 			}
 
+			bool NavMeshPseudoDelete::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool NavMeshPseudoDelete::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool NavMeshPseudoDelete::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool NavMeshPseudoDelete::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				pointer_NavMeshPseudoDelete_sub1 = ID(294893).Address();
+				pointer_NavMeshPseudoDelete_sub2 = ID(335210).Address();
+				
+				*(uintptr_t*)&NavMesh::DeleteTriangle = Relocation(ID(235356)).WriteJump(&NavMesh::HKDeleteTriangle);
 
-				pointer_NavMeshPseudoDelete_sub1 = __CKPE_OFFSET(0);
-				pointer_NavMeshPseudoDelete_sub2 = __CKPE_OFFSET(1);
-
-				*(uintptr_t*)&NavMesh::DeleteTriangle =
-					Detours::DetourClassJump(__CKPE_OFFSET(2), &NavMesh::HKDeleteTriangle);
-
-				Detours::DetourClassCall(__CKPE_OFFSET(3), &BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_DegenerateCheck);
-				Detours::DetourClassCall(__CKPE_OFFSET(4), &BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_DegenerateCheck);
-				Detours::DetourClassCall(__CKPE_OFFSET(5), &BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_DegenerateCheck);
-				Detours::DetourClassCall(__CKPE_OFFSET(6), &BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_VertexCheck);
-				Detours::DetourClassCall(__CKPE_OFFSET(7), &BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_VertexCheck);
+				auto target = ID(39430);
+				Relocation(target, 0x13FF).WriteCall(&BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_DegenerateCheck);
+				Relocation(target, 0x1596).WriteCall(&BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_DegenerateCheck);
+				Relocation(target, 0x1730).WriteCall(&BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_DegenerateCheck);
+				Relocation(target, 0x1FDB).WriteCall(&BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_VertexCheck);
+				Relocation(target, 0x2130).WriteCall(&BSNavmesh::BSNavmeshTriangle::HKGetVertexIndex_VertexCheck);
 
 				// Prevent vertices from being deleted separately
-				SafeWrite::Write(__CKPE_OFFSET(8), { 0xE9, 0xA1, 0x01, 0x00, 0x00 });
+				Relocation(ID(287357), 0x30C).Write({ 0xE9, 0xA1, 0x01, 0x00, 0x00 });
 
 				return true;
 			}

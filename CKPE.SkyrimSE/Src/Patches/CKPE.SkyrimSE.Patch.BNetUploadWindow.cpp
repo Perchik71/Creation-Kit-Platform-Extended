@@ -56,7 +56,7 @@ namespace CKPE
 					(VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1);
 			}
 
-			bool BNetUploadWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool BNetUploadWindow::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				using namespace Common;
 

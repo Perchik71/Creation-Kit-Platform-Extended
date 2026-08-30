@@ -17,7 +17,7 @@ namespace CKPE
 				WeaponCriticalEffect(const WeaponCriticalEffect&) = delete;
 				WeaponCriticalEffect& operator=(const WeaponCriticalEffect&) = delete;
 			protected:
-				virtual bool DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true);
+				virtual bool DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true);
 				virtual bool DoQuery() const noexcept(true);
 			public:
 				WeaponCriticalEffect();
@@ -26,6 +26,7 @@ namespace CKPE
 				virtual const char* GetOptionName() const noexcept(true);
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
+				bool SupportsAddressLibrary() const noexcept(true) override;
 
 				static void sub1(std::int64_t DiskCRDT, std::int64_t SourceCRDT) noexcept(true);
 				static void sub2(std::int64_t TESFile, std::int64_t SourceCRDT) noexcept(true);

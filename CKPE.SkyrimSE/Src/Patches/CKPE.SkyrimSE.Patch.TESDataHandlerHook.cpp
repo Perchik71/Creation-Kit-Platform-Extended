@@ -39,21 +39,23 @@ namespace CKPE
 				return {};
 			}
 
+			bool TESDataHandlerHook::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool TESDataHandlerHook::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool TESDataHandlerHook::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool TESDataHandlerHook::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-				static auto active_data = __CKPE_OFFSET(1);
+				static auto active_data = ID(223341).Address();
 
-				EditorAPI::TESDataHandler::Singleton = __CKPE_OFFSET(0);
+				EditorAPI::TESDataHandler::Singleton = ID(476691).Address();
 				EditorAPI::TESDataHandler::UserModdedSingleton = (std::uintptr_t)&active_data;
 
 				return true;

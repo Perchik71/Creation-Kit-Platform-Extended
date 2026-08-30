@@ -19,7 +19,7 @@ namespace CKPE
 			public:
 				StringCache() = default;
 				~StringCache() = default;
-			public:
+			
 				inline std::size_t Size() const noexcept(true) { return cache.size(); }
 				inline void Clear() noexcept(true) { cache.clear(); }
 				inline void Push(const std::string& s) noexcept(true) { cache.push_back(s); }
@@ -47,7 +47,7 @@ namespace CKPE
 				[[nodiscard]] const char* WinCPToUtf8(const char* src) noexcept(true);
 			public:
 				[[nodiscard]] Mode GetMode() const noexcept(true) { return mode; }
-				inline void SetMode(Mode m) noexcept(true);
+				void SetMode(Mode m) noexcept(true);
 				[[nodiscard]] const char* Convert(const char* s) noexcept(true);
 			};
 
@@ -56,7 +56,7 @@ namespace CKPE
 				Unicode(const Unicode&) = delete;
 				Unicode& operator=(const Unicode&) = delete;
 			protected:
-				virtual bool DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true);
+				virtual bool DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true);
 				virtual bool DoQuery() const noexcept(true);
 			public:
 				Unicode();
@@ -65,6 +65,7 @@ namespace CKPE
 				virtual const char* GetOptionName() const noexcept(true);
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
+				bool SupportsAddressLibrary() const noexcept(true) override;
 
 				static bool BeginPluginSave() noexcept(true);
 				static void EndPluginSave(std::int64_t hCursor) noexcept(true);

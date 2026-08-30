@@ -48,7 +48,7 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_438;
 			}
 
-			bool AddChangeRef::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool AddChangeRef::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				Common::Relocation(Common::ID(278484), 0x9A5).WriteCall(&HKInsertMenuA);
 				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetParentWithRedraw = Common::ID(284410).Address();

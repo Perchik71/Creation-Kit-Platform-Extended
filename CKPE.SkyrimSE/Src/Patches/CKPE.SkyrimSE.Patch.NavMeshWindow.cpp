@@ -3,7 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.Detours.h>
+#include <CKPE.MessageBox.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -41,20 +41,21 @@ namespace CKPE
 				return {};
 			}
 
+			bool NavMeshWindow::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool NavMeshWindow::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool NavMeshWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool NavMeshWindow::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto _interface = Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
-
-				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(ID(4516)).WriteJump(&HKWndProc);
 
 				return true;
 			}
@@ -68,8 +69,8 @@ namespace CKPE
 				}
 				else if ((Message == WM_COMMAND) && (LOWORD(wParam) == 40770))
 				{
-					if (MessageBoxA(0, "Do you really want to produce a balance to optimize navmesh?", "Confirmation",
-						MB_YESNO | MB_ICONQUESTION) != IDYES)
+					if (MessageBox::OpenQuestion("Do you really want to produce a balance to optimize navmesh?") != 
+						MessageBox::Result::mrYes)
 						return S_OK;
 				}
 

@@ -39,18 +39,19 @@ namespace CKPE
 				return {};
 			}
 
+			bool VersionControlMergeWorkaround::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool VersionControlMergeWorkaround::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool VersionControlMergeWorkaround::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool VersionControlMergeWorkaround::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Workaround for version control not allowing merges when a plugin index is above 02.
@@ -58,12 +59,9 @@ namespace CKPE
 				// They're also hardcoded for 2 masters only. Using this hack for anything EXCEPT merging will break the bitmaps.
 				//
 
-				// Cutting a lot is faster this way
-				auto stext = interface->GetApplication()->GetSegment(Segment::text);
-				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
-
-				for (std::uint32_t i = 0; i < db->GetCount(); i++)
-					text.Write(__CKPE_OFFSET(i), { 0xEB });
+				auto target = ID(555486);
+				Relocation(target, 0x29).Write(JMP);
+				Relocation(target, 0x95).Write(JMP);
 
 				return true;
 			}

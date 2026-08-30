@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Utils.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -52,24 +51,25 @@ namespace CKPE
 				return { "Main Window" };
 			}
 
+			bool ProgressWindow::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool ProgressWindow::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool ProgressWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool ProgressWindow::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				auto _interface = Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
-
-				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
-				pointer_ProgressWindow_sub = __CKPE_OFFSET(1);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(ID(336571)).WriteJump(&HKWndProc);
+				pointer_ProgressWindow_sub = ID(420139).Address();
 
 				// Hook Loading Files...Initializing...
-				Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&sub1);
+				Relocation(ID(206036), 0x9C).WriteCall(&sub1);
 
 				return true;
 			}

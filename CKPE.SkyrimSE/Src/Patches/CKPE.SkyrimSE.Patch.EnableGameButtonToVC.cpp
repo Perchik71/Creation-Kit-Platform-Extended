@@ -48,7 +48,7 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool EnableGameButtonToVC::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool EnableGameButtonToVC::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				using namespace Common;
 

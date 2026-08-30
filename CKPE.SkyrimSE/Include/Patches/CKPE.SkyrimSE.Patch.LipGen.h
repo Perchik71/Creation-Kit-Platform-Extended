@@ -18,7 +18,7 @@ namespace CKPE
 				LipGen(const LipGen&) = delete;
 				LipGen& operator=(const LipGen&) = delete;
 			protected:
-				virtual bool DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true);
+				virtual bool DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true);
 				virtual bool DoQuery() const noexcept(true);
 			public:
 				LipGen();

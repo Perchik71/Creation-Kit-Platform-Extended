@@ -17,7 +17,7 @@ namespace CKPE
 				NewFormat171(const NewFormat171&) = delete;
 				NewFormat171& operator=(const NewFormat171&) = delete;
 			protected:
-				virtual bool DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true);
+				virtual bool DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true);
 				virtual bool DoQuery() const noexcept(true);
 			public:
 				NewFormat171();
@@ -26,6 +26,7 @@ namespace CKPE
 				virtual const char* GetOptionName() const noexcept(true);
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
+				bool SupportsAddressLibrary() const noexcept(true) override;
 
 				static void sub(char* dst, std::size_t max_size, char* src);
 				static void sub2(const void* load_file);

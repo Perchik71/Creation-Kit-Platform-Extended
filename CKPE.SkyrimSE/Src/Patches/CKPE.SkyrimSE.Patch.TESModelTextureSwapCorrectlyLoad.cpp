@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -39,23 +38,24 @@ namespace CKPE
 				return {};
 			}
 
+			bool TESModelTextureSwapCorrectlyLoad::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool TESModelTextureSwapCorrectlyLoad::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool TESModelTextureSwapCorrectlyLoad::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool TESModelTextureSwapCorrectlyLoad::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				//
 				// Fix TESModelTextureSwap being incorrectly loaded (Record typo: 'MODS' -> 'MO5S')
 				//
-				SafeWrite::Write(__CKPE_OFFSET(0), { 0x4D, 0x4F, 0x35, 0x53 });
+				Relocation(ID(143362), 0x89).Write({ 0x4D, 0x4F, 0x35, 0x53 });
 
 				return true;
 			}

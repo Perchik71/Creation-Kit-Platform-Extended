@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
@@ -40,36 +39,34 @@ namespace CKPE
 				return {};
 			}
 
+			bool RenderWindow60FPS::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool RenderWindow60FPS::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool RenderWindow60FPS::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool RenderWindow60FPS::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
-
-				// Cutting a lot is faster this way
-				auto stext = interface->GetApplication()->GetSegment(Segment::text);
-				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+				using namespace Common;
 
 				//
 				// Force render window to draw at 60fps (SetTimer(10ms))
 				// DESC: BufferDesc.RefreshRate.Numerator = 60
 				//
-				text.Write(__CKPE_OFFSET(0), { USER_TIMER_MINIMUM });
+				Relocation(ID(203773), 0x6E8).Write({ USER_TIMER_MINIMUM });
 
+				auto target = ID{ 488551, 1016974 };
 				if (!_READ_OPTION_BOOL("CreationKit", "bRenderWindowVSync", true))
 					// no VSync
-					text.Write(__CKPE_OFFSET(1), { 0x33, 0xD2, 0x90 });
+					Relocation(target, Offset{ 0xEE, 0x1AF }).Write({ 0x33, 0xD2, 0x90 });
 
 				// Remove lock framerate
-				text.Write(__CKPE_OFFSET(2), { 0xEB });
-				text.WriteNop(__CKPE_OFFSET(3), 2);
+				Relocation(target, Offset{ 0xCF, 0x124 }).Write(JMP);
+				Relocation(target, Offset{ 0xFC, 0x1BD }).WriteFill(NOP, 2);
 
 				return true;
 			}

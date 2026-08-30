@@ -3,9 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Utils.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Graphics.h>
 #include <CKPE.Application.h>
@@ -126,35 +124,31 @@ namespace CKPE
 				return { "Render Window" };
 			}
 
+			bool ObjectWindow::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool ObjectWindow::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool ObjectWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool ObjectWindow::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
+				using namespace Common;
 
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
-
-				auto _interface = Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
-
-				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(ID(278484)).WriteJump(&HKWndProc);
 
 				// Fix resize ObjectWindowProc
-				auto OffsetTotal = __CKPE_OFFSET(1);
+				auto OffsetTotal = Relocation(ID(336881), 0x371).Address();
 				SafeWrite::WriteNop(OffsetTotal, 0x70);
 				Detours::DetourCall(OffsetTotal, (std::uintptr_t)&HKMoveWindow);
 
 				// In 1.6.1130 the filter is no longer needed
-				if (verPatch == 1)
-				{
-					pointer_ObjectWindow_sub = __CKPE_OFFSET(3);
+				if (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_6_438)
 					// Allow forms to be filtered in EditorUI_ObjectWindowProc
-					Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&sub);
-				}
+					 pointer_ObjectWindow_sub = Relocation(ID(753873), 0x121).WriteCall(&sub);
 
 				return true;
 			}

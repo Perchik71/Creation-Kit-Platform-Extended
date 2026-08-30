@@ -57,39 +57,38 @@ namespace CKPE
 				return { "D3D11 Patch" };
 			}
 
+			bool RenderWindow::SupportsAddressLibrary() const noexcept(true)
+			{
+				return true;
+			}
+
 			bool RenderWindow::DoQuery() const noexcept(true)
 			{
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool RenderWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool RenderWindow::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto _interface = Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				StepInRender = _READ_OPTION_FLOAT("Graphics", "fStepInRender", 15.f);
 				StepInRender = std::min(std::max(StepInRender, 15.f), 100.f);
 
-				*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
-				Detours::DetourJump(__CKPE_OFFSET(1), (std::uintptr_t)&RenderWindow::setFlagLoadCell);
-				EditorAPI::BGSRenderWindow::Singleton = __CKPE_OFFSET(2);
-
-				auto rel = __CKPE_OFFSET(3);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(ID(287695)).WriteJump(&HKWndProc);
+				Relocation(ID(28820), Offset{ 0xD1, 0xE8 }).WriteJump(&RenderWindow::setFlagLoadCell);
+				EditorAPI::BGSRenderWindow::Singleton = Offset{ 0x3ADDA38, 0x398ED28, 0x39D7F38, 0x3ABAE78 }.Address();
+				auto rel = Relocation(ID{ 488551, 1016974 }, Offset{ 0xF1, 0x1B2 }).Address();
 				SafeWrite::WriteNop(rel, 0xB);
 				Detours::DetourCall(rel, (std::uintptr_t)&DrawFrameEx);
 
-				*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::Update =
-					Detours::DetourClassJump(__CKPE_OFFSET(6), (std::uintptr_t)&EditorAPI::BGSRenderWindow::Pick::HKUpdate);
-				*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromTriShape = __CKPE_OFFSET(5);
-				Detours::DetourCall(__CKPE_OFFSET(4), 
-					(std::uintptr_t)&EditorAPI::BGSRenderWindow::Pick::HKGetRefFromTriShape);
+				*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::Update = 
+					Relocation(ID(205873)).WriteJump(&EditorAPI::BGSRenderWindow::Pick::HKUpdate);
+				*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromTriShape = ID(111020).Address();
+				Relocation(ID(554077), 0xBD).WriteCall(&EditorAPI::BGSRenderWindow::Pick::HKGetRefFromTriShape);
 
 				// Enable drawing always
-				if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1130)
-					SafeWrite::WriteNop(__CKPE_OFFSET(7), 0x69);
+				if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1130)			
+					Relocation(ID(165761), 0x2E).WriteFill(NOP, 0x69);
 
 				return true;
 			}
@@ -123,7 +122,7 @@ namespace CKPE
 				{
 					if (lParam)
 					{
-						LPMINMAXINFO lpMMI = (LPMINMAXINFO)lParam;
+						auto lpMMI = (LPMINMAXINFO)lParam;
 						lpMMI->ptMinTrackSize.x = 96;	// 96 min tex size
 						lpMMI->ptMinTrackSize.y = 96;
 					}

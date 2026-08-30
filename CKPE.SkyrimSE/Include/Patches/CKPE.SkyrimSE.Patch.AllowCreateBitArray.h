@@ -17,7 +17,7 @@ namespace CKPE
 				AllowCreateBitArray(const AllowCreateBitArray&) = delete;
 				AllowCreateBitArray& operator=(const AllowCreateBitArray&) = delete;
 			protected:
-				virtual bool DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true);
+				virtual bool DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true);
 				virtual bool DoQuery() const noexcept(true);
 			public:
 				AllowCreateBitArray();

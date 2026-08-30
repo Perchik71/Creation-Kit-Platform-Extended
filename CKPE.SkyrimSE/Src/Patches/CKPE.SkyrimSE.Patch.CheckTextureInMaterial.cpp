@@ -51,7 +51,7 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
-			bool CheckTextureInMaterial::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool CheckTextureInMaterial::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				using namespace Common;
 

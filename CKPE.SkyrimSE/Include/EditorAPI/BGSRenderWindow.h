@@ -66,21 +66,21 @@ namespace CKPE
 					}
 				};
 
-				[[nodiscard]] constexpr inline HWND GetWindowHandle() const noexcept(true) { return _WindowHandle; }
+				[[nodiscard]] constexpr HWND GetWindowHandle() const noexcept(true) { return _WindowHandle; }
 				
-				[[nodiscard]] constexpr inline SIZE GetWindowSize() const noexcept(true) 
+				[[nodiscard]] constexpr SIZE GetWindowSize() const noexcept(true) 
 				{ 
 					return (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ?
 						difference.v1_5._WindowSize : difference.v1_6._WindowSize;
 				}
 
-				[[nodiscard]] constexpr inline POINT GetMousePos() const noexcept(true) 
+				[[nodiscard]] constexpr POINT GetMousePos() const noexcept(true) 
 				{
 					return (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ?
 						difference.v1_5._MousePos[0] : difference.v1_6._MousePos[0];
 				}
 
-				[[nodiscard]] constexpr inline POINT GetMousePosBefore() const noexcept(true)
+				[[nodiscard]] constexpr POINT GetMousePosBefore() const noexcept(true)
 				{ 
 					return (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_5_73) ?
 						difference.v1_5._MousePos[1] : difference.v1_6._MousePos[1];

@@ -290,7 +290,7 @@ namespace CKPE
 					((GET_EXE_VERSION_EX_MAJOR(verOs) == 6) && (GET_EXE_VERSION_EX_MINOR(verOs) == 3)));
 			}
 
-			bool D3D11::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
+			bool D3D11::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				auto _app = Application::GetSingleton();
 				auto base = _app->GetBase();

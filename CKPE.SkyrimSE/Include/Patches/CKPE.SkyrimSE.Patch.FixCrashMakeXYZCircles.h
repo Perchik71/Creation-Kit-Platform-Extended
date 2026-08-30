@@ -17,7 +17,7 @@ namespace CKPE
 				FixCrashMakeXYZCircles(const FixCrashMakeXYZCircles&) = delete;
 				FixCrashMakeXYZCircles& operator=(const FixCrashMakeXYZCircles&) = delete;
 			protected:
-				virtual bool DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true);
+				virtual bool DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true);
 				virtual bool DoQuery() const noexcept(true);
 			public:
 				FixCrashMakeXYZCircles();
