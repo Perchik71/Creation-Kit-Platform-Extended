@@ -68,8 +68,8 @@ namespace CKPE
 				
 				if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1378_1)
 				{
-					Relocation(target, 0xA99).WriteCall(&sub);
-					Relocation(target, 0xAAA).WriteCall(&sub2);
+					Relocation(target, 0xAAA).WriteCall(&sub);
+					Relocation(target, 0xA99).WriteCall(&sub2);
 
 					FixLoadArchiveActivePlugin_sub = Relocation<TFixLoadArchiveActivePlugin_sub>(ID(205782)).Get();
 				}
