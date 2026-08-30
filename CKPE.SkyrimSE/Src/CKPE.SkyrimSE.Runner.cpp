@@ -18,7 +18,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.AlteredFormList.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BGSPerkRankArray.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BNetConvertUnicodeString.h>
-#include <Patches/CKPE.SkyrimSE.Patch.BNetUploadWindow.h>
+//#include <Patches/CKPE.SkyrimSE.Patch.BNetUploadWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BrokenTerrainEditDlg.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BSArchiveManager.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BSPointerHandleManager.h>
@@ -138,7 +138,7 @@ namespace CKPE
 	{
 		static Runner _srunner;
 
-		void Runner::RegisterPatches() noexcept(true)
+		void Runner::RegisterPatches() const noexcept(true)
 		{
 			auto mgr = Common::PatchManager::GetSingleton();
 
@@ -267,11 +267,11 @@ namespace CKPE
 			mgr->Register(new Patch::RuntimeOptimization);
 		}
 
-		void Runner::InstallPatches() noexcept(true)
+		void Runner::InstallPatches() const noexcept(true)
 		{
 			auto mgr = Common::PatchManager::GetSingleton();
 
-			_MESSAGE("[SSE]\tTotal patches: %u", mgr->GetCount());
+			_MESSAGE_EX("[SSE]\tTotal patches: {}"sv, mgr->GetCount());
 
 			// Query all patches
 			mgr->QueryAll(VersionLists::GetGameName());
@@ -279,7 +279,7 @@ namespace CKPE
 			mgr->ActiveAll(VersionLists::GetGameName());
 		}
 
-		void Runner::InstallPlugins() noexcept(true)
+		void Runner::InstallPlugins() const noexcept(true)
 		{
 			auto mgr_plug = PluginAPI::PluginManager::GetSingleton();
 
@@ -292,16 +292,16 @@ namespace CKPE
 			return &_srunner;
 		}
 
-		bool Runner::Install() noexcept(true)
+		bool Runner::Install() const noexcept(true)
 		{
 			__try
 			{
-				_MESSAGE("[SSE] Register patches...");
+				_MESSAGE("[SSE] Register patches..."sv);
 				RegisterPatches();
-				_MESSAGE("[SSE] Install patches...");
+				_MESSAGE("[SSE] Install patches..."sv);
 				InstallPatches();
 				InstallPlugins();
-				_MESSAGE("[SSE] Important optimization patch...");
+				_MESSAGE("[SSE] Important optimization patch..."sv);
 				// Important: this end operation
 				Common::RuntimeOptimization ro;
 				ro.Apply();

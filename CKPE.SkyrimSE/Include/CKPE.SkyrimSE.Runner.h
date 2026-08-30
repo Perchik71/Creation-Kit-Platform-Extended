@@ -13,14 +13,14 @@ namespace CKPE
 			Runner(const Runner&) = delete;
 			Runner& operator=(const Runner&) = delete;
 
-			void RegisterPatches() noexcept(true);
-			void InstallPatches() noexcept(true);
-			void InstallPlugins() noexcept(true);
+			void RegisterPatches() const noexcept(true);
+			void InstallPatches() const noexcept(true);
+			void InstallPlugins() const noexcept(true);
 		public:
 			constexpr Runner() noexcept(true) = default;
 
 			[[nodiscard]] static Runner* GetSingleton() noexcept(true);
-			[[nodiscard]] bool Install() noexcept(true);
+			[[nodiscard]] bool Install() const noexcept(true);
 		};
 	}
 }
