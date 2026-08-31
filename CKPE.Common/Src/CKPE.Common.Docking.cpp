@@ -10,6 +10,7 @@
 #include <memory>
 #include <algorithm>
 #include <cstdlib>
+#include <cmath>
 #include <limits>
 #include <vector>
 #include <map>
@@ -47,6 +48,9 @@ namespace CKPE
 		} CKPE_DockInfo{ 0 };
 		
 		static bool s_InSplitterSync = false;
+
+		// Last known screen position of each anchor window
+		static std::map<HWND, RECT> s_AnchorLastRect;
 
 		// Tracks which regions of each anchor are already claimed by a docked panel
 		struct AnchorPanel
@@ -700,6 +704,58 @@ namespace CKPE
 							if (wnd && !wnd->HasFlag(DockingFrameWindow::EF_ANCHOR))
 								CKPE_CDockingTryRestoreSavedZone(hWnd, (HWND)wnd->GetWindow());
 						}
+					}
+				}
+
+				// Anchor moved and/or resized
+				if (pFrame->HasFlag(DockingFrameWindow::EF_ANCHOR) && !s_InSplitterSync && !IsIconic(hWnd))
+				{
+					auto pos = (LPWINDOWPOS)lParam;
+					if (pos && !((pos->flags & SWP_NOMOVE) && (pos->flags & SWP_NOSIZE)))
+					{
+						auto newRect = CKPE_CDockingFrameGetRawAnchorRect(hWnd);
+
+						auto lastIt = s_AnchorLastRect.find(hWnd);
+						if (lastIt != s_AnchorLastRect.end())
+						{
+							auto& last = lastIt->second;
+							auto oldWidth = last.right - last.left;
+							auto oldHeight = last.bottom - last.top;
+
+							if (oldWidth > 0 && oldHeight > 0 &&
+								((newRect.left != last.left) || (newRect.top != last.top) ||
+								 (newRect.right != last.right) || (newRect.bottom != last.bottom)))
+							{
+								auto scaleX = (double)(newRect.right - newRect.left) / (double)oldWidth;
+								auto scaleY = (double)(newRect.bottom - newRect.top) / (double)oldHeight;
+
+								auto panelsIt = CKPE_AnchorDockedPanels.find(hWnd);
+								if (panelsIt != CKPE_AnchorDockedPanels.end())
+								{
+									s_InSplitterSync = true;
+
+									for (auto& panel : panelsIt->second)
+									{
+										if (!IsWindow(panel.Wnd))
+											continue;
+
+										RECT moved;
+										moved.left = newRect.left + (LONG)std::lround((panel.Rect.left - last.left) * scaleX);
+										moved.right = newRect.left + (LONG)std::lround((panel.Rect.right - last.left) * scaleX);
+										moved.top = newRect.top + (LONG)std::lround((panel.Rect.top - last.top) * scaleY);
+										moved.bottom = newRect.top + (LONG)std::lround((panel.Rect.bottom - last.top) * scaleY);
+
+										CKPE_CDockingFrameClampToMinSize(panel.Wnd, moved, panel.Zone);
+										CKPE_CDockingFrameSetVisibleRect(panel.Wnd, moved);
+										panel.Rect = moved;
+									}
+
+									s_InSplitterSync = false;
+								}
+							}
+						}
+
+						s_AnchorLastRect[hWnd] = newRect;
 					}
 				}
 
