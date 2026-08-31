@@ -15,6 +15,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <thread>
 #include <fstream>
 
 #include <CKPE.Utils.h>
@@ -1145,6 +1146,11 @@ namespace CKPE
 			{
 				DockWnd = new DockingFrameWindow(hWnd);
 				DockWnd->SetFlag(DockingFrameWindow::EF_ANCHOR);
+
+				std::thread([](HWND hWnd){
+					std::this_thread::sleep_for(500ms);
+					s_AnchorLastRect[hWnd] = CKPE_CDockingFrameGetRawAnchorRect(hWnd);
+					}, reinterpret_cast<HWND>(hWnd)).detach();
 				break;
 			}
 			default:
