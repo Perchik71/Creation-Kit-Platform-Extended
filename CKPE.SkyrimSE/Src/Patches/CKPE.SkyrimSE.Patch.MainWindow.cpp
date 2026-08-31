@@ -263,7 +263,7 @@ namespace CKPE
 							Hwnd, Message, wParam, lParam);
 						MainWindow::Singleton->m_hWnd = Hwnd;
 
-#if 0
+#if 1
 						// Register the main window as docking grid master
 						Common::Interface::GetSingleton()->GetDockingManager()->AddWindow(
 							(std::uintptr_t)Hwnd, Common::DockingManager::E_ANCHOR);
