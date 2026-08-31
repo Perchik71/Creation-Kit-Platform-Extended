@@ -305,12 +305,21 @@ namespace CKPE
 							if (idx != -1)
 							{
 								ListView_GetItemText(hListViewResult, idx, 0, szStrs, SIZEBUF);
-								Common::EditorUI::ListViewSelectItem(hListView,
-									Common::EditorUI::ListViewFindItemByString(hListView, szStrs), false);
-
+								auto idx_src = Common::EditorUI::ListViewFindItemByString(hListView, szStrs);
+								Common::EditorUI::ListViewSelectItem(hListView, idx_src, false);
 								auto nRes = CallWindowProc(_This->GetOldWndProc(), Hwnd, Message, wParam, lParam);
-								UpdateListViewResult();
-								Common::EditorUI::ListViewSelectItem(hListViewResult, idx, false);
+
+								// update
+
+								ListView_GetItemText(hListView, idx_src, 1, szStrs, SIZEBUF);
+								ListView_SetItemText(hListViewResult, idx, 1, szStrs);
+
+								LVITEMA lvi = { 0 };
+								lvi.mask = LVIF_IMAGE;
+								lvi.iItem = idx_src;
+								ListView_GetItem(hListView, &lvi);
+								lvi.iItem = idx;
+								ListView_SetItem(hListViewResult, &lvi);
 
 								return nRes;
 							}
