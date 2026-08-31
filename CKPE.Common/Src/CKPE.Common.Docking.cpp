@@ -15,7 +15,6 @@
 #include <vector>
 #include <map>
 #include <string>
-#include <thread>
 #include <fstream>
 
 #include <CKPE.Utils.h>
@@ -249,15 +248,16 @@ namespace CKPE
 		static RECT CKPE_CDockingFrameGetRawAnchorRect(HWND anchorHwnd) noexcept(true)
 		{
 			RECT client{};
-			GetClientRect(anchorHwnd, &client);
+			GetClientRect(anchorHwnd, std::addressof(client));
 
 			POINT topLeft{ client.left, client.top };
 			POINT bottomRight{ client.right, client.bottom };
-			ClientToScreen(anchorHwnd, &topLeft);
-			ClientToScreen(anchorHwnd, &bottomRight);
+			ClientToScreen(anchorHwnd, std::addressof(topLeft));
+			ClientToScreen(anchorHwnd, std::addressof(bottomRight));
 
 			RECT usable{ topLeft.x, topLeft.y, bottomRight.x, bottomRight.y };
 
+#if 0
 			for (auto child = GetWindow(anchorHwnd, GW_CHILD); child; child = GetWindow(child, GW_HWNDNEXT))
 			{
 				if (!IsWindowVisible(child))
@@ -279,6 +279,29 @@ namespace CKPE
 					usable.bottom = std::min(usable.bottom, childRect.top);
 				}
 			}
+#else
+			EnumChildWindows(anchorHwnd, [](HWND hwnd, LPARAM lParam) -> BOOL {
+				auto usable = reinterpret_cast<LPRECT>(lParam);
+				
+				char className[64]{};
+				GetClassNameA(hwnd, className, sizeof(className));	
+
+				RECT childRect{};
+
+				if (!_stricmp(className, TOOLBARCLASSNAMEA) || !_stricmp(className, REBARCLASSNAMEA))
+				{
+					GetWindowRect(hwnd, std::addressof(childRect));
+					usable->top = std::max(usable->top, childRect.bottom);
+				}
+				else if (!_stricmp(className, STATUSCLASSNAMEA))
+				{
+					GetWindowRect(hwnd, std::addressof(childRect));
+					usable->bottom = std::min(usable->bottom, childRect.top);
+				}
+
+				return true;
+				}, (LPARAM)std::addressof(usable));
+#endif
 
 			return usable;
 		}
@@ -1146,11 +1169,6 @@ namespace CKPE
 			{
 				DockWnd = new DockingFrameWindow(hWnd);
 				DockWnd->SetFlag(DockingFrameWindow::EF_ANCHOR);
-
-				std::thread([](HWND hWnd){
-					std::this_thread::sleep_for(500ms);
-					s_AnchorLastRect[hWnd] = CKPE_CDockingFrameGetRawAnchorRect(hWnd);
-					}, reinterpret_cast<HWND>(hWnd)).detach();
 				break;
 			}
 			default:
@@ -1196,6 +1214,37 @@ namespace CKPE
 			_Container->erase(it);
 
 			return true;
+		}
+
+		bool DockingManager::UpdateSizeWindowIfAnchor(std::uintptr_t hWnd) const noexcept(true)
+		{
+			ScopeCriticalSection lock(_Guard);
+
+			auto it = _Container->find(hWnd);
+			if (it == _Container->end())
+				return false;
+
+			if (!it->second || !it->second->HasFlag(DockingFrameWindow::EF_ANCHOR))
+				return false;
+
+			auto w = reinterpret_cast<HWND>(it->first);
+			s_AnchorLastRect[w] = CKPE_CDockingFrameGetRawAnchorRect(w);
+
+			return true;
+		}
+
+		void DockingManager::UpdateSizeAnchors() const noexcept(true)
+		{
+			ScopeCriticalSection lock(_Guard);
+
+			for (auto& entry : *_Container)
+			{
+				if (entry.second && entry.second->HasFlag(DockingFrameWindow::EF_ANCHOR))
+				{
+					auto w = reinterpret_cast<HWND>(entry.first);
+					s_AnchorLastRect[w] = CKPE_CDockingFrameGetRawAnchorRect(w);
+				}
+			}
 		}
 
 		std::size_t DockingManager::Count() const noexcept(true)

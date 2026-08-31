@@ -125,6 +125,8 @@ namespace CKPE
 			virtual void FreeAll() noexcept(true);
 			virtual bool AddWindow(std::uintptr_t hWnd, std::uint32_t style = E_FRAME) noexcept(true);
 			virtual bool RemoveWindow(std::uintptr_t hWnd) noexcept(true);
+			virtual bool UpdateSizeWindowIfAnchor(std::uintptr_t hWnd) const noexcept(true);
+			virtual void UpdateSizeAnchors() const noexcept(true);
 
 			[[nodiscard]] virtual std::size_t Count() const noexcept(true);
 			[[nodiscard]] virtual DockingWindow* At(std::uintptr_t hWnd) const noexcept(true);

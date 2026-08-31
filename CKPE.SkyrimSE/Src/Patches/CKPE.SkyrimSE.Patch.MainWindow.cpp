@@ -27,6 +27,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.MainWindow.h>
 #include "../CKPE.Common/resource.h"
 
+#include <thread>
 #include <commdlg.h>
 #include <commctrl.h>
 
@@ -304,6 +305,15 @@ namespace CKPE
 						// Fix display text hotkey toggle sound marker
 						ViewMenu.GetItem(40677).SetText("Sound Marker\tCtrl-N");
 
+						std::thread([](HWND hWnd) {
+							std::this_thread::sleep_for(250ms);
+							// Getting additional child Windows		
+							MainWindow::Singleton->FindToolWindow();
+							// Update sizes
+							Common::Interface::GetSingleton()->GetDockingManager()->UpdateSizeWindowIfAnchor(
+								reinterpret_cast<std::uintptr_t>(hWnd));
+							}, Hwnd).detach();
+
 						return status;
 					}
 				}
@@ -525,12 +535,6 @@ namespace CKPE
 								return CallWindowProc(MainWindow::Singleton->GetOldWndProc(), Hwnd, Message, wParam, lParam);
 							}*/
 							}
-						}
-						break;
-						case WM_SHOWWINDOW:
-						{
-							// Getting additional child Windows		
-							MainWindow::Singleton->FindToolWindow();
 						}
 						break;
 						case WM_GETMINMAXINFO:
