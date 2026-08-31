@@ -45,7 +45,7 @@ namespace CKPE
 			std::uint32_t State;
 			DockingHoverWindow* HoverWnd;
 			POINT MousePos;
-		} CKPE_DockInfo{ 0 };
+		} CKPE_DockInfo{};
 		
 		static bool s_InSplitterSync = false;
 
@@ -149,8 +149,8 @@ namespace CKPE
 			WNDCLASSA wc{ 0 };
 
 			wc.hbrBackground = ::CreateSolidBrush(kDockingHoverFillColor);
-			wc.hCursor = LoadCursorA(NULL, MAKEINTRESOURCEA(32654));
-			wc.hInstance = GetModuleHandleA(NULL);
+			wc.hCursor = LoadCursorA(nullptr, MAKEINTRESOURCEA(32654));
+			wc.hInstance = GetModuleHandleA(nullptr);
 			wc.lpszClassName = DOCKING_HOVER_CLASSNAME;
 			wc.style = CS_VREDRAW | CS_HREDRAW;
 			wc.lpfnWndProc = &CKPE_CDockingHoverProc;
@@ -161,7 +161,7 @@ namespace CKPE
 
 			_Wnd = (std::uintptr_t)CreateWindowExA(WS_EX_LAYERED | WS_EX_APPWINDOW | WS_EX_TOPMOST |
 				WS_EX_TRANSPARENT | WS_EX_NOACTIVATE,
-				DOCKING_HOVER_CLASSNAME, "", WS_POPUP, 200, 150, 100, 110, NULL, NULL, wc.hInstance, this);
+				DOCKING_HOVER_CLASSNAME, "", WS_POPUP, 200, 150, 100, 110, nullptr, nullptr, wc.hInstance, this);
 			if (!_Wnd)
 				_FATALERROR_EX("DockingHoverWindow::CreateWindowExA() return failed \"{}\""sv,
 					ErrorHandler::GetSystemMessageUTF8(GetLastError()));
@@ -172,7 +172,7 @@ namespace CKPE
 		DockingHoverWindow::~DockingHoverWindow()
 		{
 			DestroyWindow((HWND)_Wnd);
-			UnregisterClassA(DOCKING_HOVER_CLASSNAME, GetModuleHandleA(NULL));
+			UnregisterClassA(DOCKING_HOVER_CLASSNAME, GetModuleHandleA(nullptr));
 		}
 
 		void DockingHoverWindow::Show() const noexcept(true)
@@ -239,7 +239,7 @@ namespace CKPE
 				visibleRect.bottom + (rawRect.bottom - visibleNow.bottom),
 			};
 
-			SetWindowPos(hWnd, NULL, target.left, target.top,
+			SetWindowPos(hWnd, nullptr, target.left, target.top,
 				target.right - target.left, target.bottom - target.top,
 				SWP_NOZORDER | SWP_NOACTIVATE);
 		}
@@ -368,7 +368,7 @@ namespace CKPE
 			constexpr LONG kQuadrantPercent = 35;
 			constexpr LONG kColumnDeadZonePercent = 50;
 
-			CKPE_CDockingPruneAnchorPanels(anchorHwnd, NULL);
+			CKPE_CDockingPruneAnchorPanels(anchorHwnd, nullptr);
 
 			auto raw = CKPE_CDockingFrameGetRawAnchorRect(anchorHwnd);
 
@@ -456,8 +456,8 @@ namespace CKPE
 			if (!CKPE_DockInfo.DraggingDockWnd)
 				return;
 
-			CKPE_DockInfo.DraggingDockWnd = NULL;
-			CKPE_DockInfo.ContainerWnd = NULL;
+			CKPE_DockInfo.DraggingDockWnd = nullptr;
+			CKPE_DockInfo.ContainerWnd = nullptr;
 			CKPE_DockInfo.State &= ~DS_MOUSEMOVED;
 
 			if (CKPE_DockInfo.HoverWnd)
@@ -526,7 +526,7 @@ namespace CKPE
 			CKPE_CDockingFrameClampToMinSize(hWnd, zoneRect, zone);
 			CKPE_CDockingFrameSetVisibleRect(hWnd, zoneRect);
 			CKPE_CDockingPruneAnchorPanels(anchorHwnd, hWnd);
-			CKPE_AnchorDockedPanels[anchorHwnd].push_back({ hWnd, zoneRect, zone });
+			CKPE_AnchorDockedPanels[anchorHwnd].emplace_back(hWnd, zoneRect, zone);
 		}
 
 		static std::wstring CKPE_CDockingGetLayoutFilePath() noexcept(true)
@@ -662,7 +662,7 @@ namespace CKPE
 		}
 
 		static LRESULT CKPE_CDockingFrameProc(HWND hWnd, UINT uMsg, WPARAM wParam,
-			LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData) noexcept(true)
+			LPARAM lParam, [[maybe_unused]] UINT_PTR uIdSubclass, DWORD_PTR dwRefData) noexcept(true)
 		{
 			auto pFrame = (DockingFrameWindow*)dwRefData;
 			if (!pFrame)
@@ -685,7 +685,7 @@ namespace CKPE
 			}
 			case WM_SETTEXT:
 			{
-				RedrawWindow((HWND)hWnd, NULL, NULL, RDW_FRAME | RDW_INVALIDATE);
+				RedrawWindow((HWND)hWnd, nullptr, nullptr, RDW_FRAME | RDW_INVALIDATE);
 				break;
 			}
 			case WM_WINDOWPOSCHANGED:
@@ -739,12 +739,13 @@ namespace CKPE
 										if (!IsWindow(panel.Wnd))
 											continue;
 
-										RECT moved;
-										moved.left = newRect.left + (LONG)std::lround((panel.Rect.left - last.left) * scaleX);
-										moved.right = newRect.left + (LONG)std::lround((panel.Rect.right - last.left) * scaleX);
-										moved.top = newRect.top + (LONG)std::lround((panel.Rect.top - last.top) * scaleY);
-										moved.bottom = newRect.top + (LONG)std::lround((panel.Rect.bottom - last.top) * scaleY);
-
+										RECT moved {
+											.left	= newRect.left + (LONG)std::lround((panel.Rect.left - last.left) * scaleX),
+											.top	= newRect.top + (LONG)std::lround((panel.Rect.top - last.top) * scaleY),
+											.right	= newRect.left + (LONG)std::lround((panel.Rect.right - last.left) * scaleX),	
+											.bottom	= newRect.top + (LONG)std::lround((panel.Rect.bottom - last.top) * scaleY),
+										};
+										
 										CKPE_CDockingFrameClampToMinSize(panel.Wnd, moved, panel.Zone);
 										CKPE_CDockingFrameSetVisibleRect(panel.Wnd, moved);
 										panel.Rect = moved;
@@ -936,7 +937,7 @@ namespace CKPE
 					{
 						CKPE_DockInfo.HoverWnd->Hide();
 						CKPE_DockInfo.State &= ~DS_MOUSEMOVED;
-						CKPE_DockInfo.ContainerWnd = NULL;
+						CKPE_DockInfo.ContainerWnd = nullptr;
 					}
 				}
 
@@ -955,7 +956,7 @@ namespace CKPE
 			{
 				SetWindowLongA((HWND)_Wnd, GWL_EXSTYLE, _OldExStyles);
 				SetWindowLongA((HWND)_Wnd, GWL_STYLE, _OldStyles);
-				RedrawWindow((HWND)_Wnd, NULL, NULL, RDW_FRAME | RDW_INVALIDATE);
+				RedrawWindow((HWND)_Wnd, nullptr, nullptr, RDW_FRAME | RDW_INVALIDATE);
 				ShowWindow((HWND)_Wnd, SW_SHOWNORMAL);
 				SetForegroundWindow((HWND)_Wnd);
 				UnsetFlag(EF_DOCKSTYLES);
@@ -968,7 +969,7 @@ namespace CKPE
 			{
 				SetWindowLongA((HWND)_Wnd, GWL_EXSTYLE, WS_EX_TOOLWINDOW);
 				SetWindowLongA((HWND)_Wnd, GWL_STYLE, (_OldStyles & ~WS_POPUP) | WS_CHILD);
-				RedrawWindow((HWND)_Wnd, NULL, NULL, RDW_FRAME | RDW_INVALIDATE);
+				RedrawWindow((HWND)_Wnd, nullptr, nullptr, RDW_FRAME | RDW_INVALIDATE);
 				SetFlag(EF_DOCKSTYLES);
 			}
 		}
@@ -985,34 +986,36 @@ namespace CKPE
 
 		DockingFrameWindow::DockingFrameWindow(std::uintptr_t hWnd) : DockingWindow(hWnd)
 		{
-			if (hWnd && IsWindow((HWND)_Wnd))
+			auto w = reinterpret_cast<HWND>(_Wnd);
+			if (hWnd && IsWindow(w))
 			{
-				auto Result = SetWindowSubclass((HWND)_Wnd, CKPE_CDockingFrameProc, (DWORD_PTR)CKPE_CDockingFrameProc,
-					(DWORD_PTR)this);
+				auto Result = SetWindowSubclass(w, CKPE_CDockingFrameProc,
+					reinterpret_cast<DWORD_PTR>(&CKPE_CDockingFrameProc), reinterpret_cast<DWORD_PTR>(this));
 				
 				char szBuf[200];
-				GetWindowTextA((HWND)_Wnd, szBuf, 200);
+				GetWindowTextA(w, szBuf, 200);
 
 				if (Result)
 				{
-					_OldStyles = GetWindowLongA((HWND)_Wnd, GWL_STYLE);
-					_OldExStyles = GetWindowLongA((HWND)_Wnd, GWL_EXSTYLE);
+					_OldStyles = GetWindowLongA(w, GWL_STYLE);
+					_OldExStyles = GetWindowLongA(w, GWL_EXSTYLE);
 
-					SetPropA((HWND)_Wnd, DOCKING_FRAME, this);
+					SetPropA(w, DOCKING_FRAME, this);
 
-					_MESSAGE("Docking \"%s\" Window created", szBuf);
+					_MESSAGE_EX("Docking \"{}\" Window created"sv, szBuf);
 				}
 				else
-					_ERROR("Docking \"%s\" Window failed", szBuf);
+					_ERROR_EX("Docking \"{}\" Window failed"sv, szBuf);
 			}
 		}
 
 		DockingFrameWindow::~DockingFrameWindow()
 		{
-			if (IsWindow((HWND)_Wnd))
+			auto w = reinterpret_cast<HWND>(_Wnd);
+			if (IsWindow(w))
 			{
-				RemovePropA((HWND)_Wnd, DOCKING_FRAME);
-				RemoveWindowSubclass((HWND)_Wnd, CKPE_CDockingFrameProc, (DWORD_PTR)CKPE_CDockingFrameProc);
+				RemovePropA(w, DOCKING_FRAME);
+				RemoveWindowSubclass(w, CKPE_CDockingFrameProc, reinterpret_cast<DWORD_PTR>(&CKPE_CDockingFrameProc));
 				RestoreWindowStyles();
 			}
 		}
@@ -1024,7 +1027,7 @@ namespace CKPE
 			_Container = nullptr;
 
 			RestoreWindowStyles();
-			SetParent((HWND)_Wnd, NULL);
+			SetParent(reinterpret_cast<HWND>(_Wnd), nullptr);
 
 			return true;
 		}
@@ -1067,24 +1070,25 @@ namespace CKPE
 
 		bool DockingRootWindow::SetWindow(std::uintptr_t hWnd) noexcept(true)
 		{
-			if (IsWindow((HWND)hWnd))
+			auto w = reinterpret_cast<HWND>(_Wnd);
+			if (IsWindow(w))
 			{
 				_Wnd = hWnd;
 
-				auto Result = SetWindowSubclass((HWND)_Wnd, CKPE_CDockingFrameProc, (DWORD_PTR)CKPE_CDockingFrameProc,
-					(DWORD_PTR)this);
+				auto Result = SetWindowSubclass(w, CKPE_CDockingFrameProc,
+					reinterpret_cast<DWORD_PTR>(&CKPE_CDockingFrameProc), reinterpret_cast<DWORD_PTR>(this));
 
 				if (Result)
 				{
-					_OldStyles = GetWindowLongA((HWND)_Wnd, GWL_STYLE);
-					_OldExStyles = GetWindowLongA((HWND)_Wnd, GWL_EXSTYLE);
+					_OldStyles = GetWindowLongA(w, GWL_STYLE);
+					_OldExStyles = GetWindowLongA(w, GWL_EXSTYLE);
 
-					SetPropA((HWND)_Wnd, DOCKING_FRAME, this);
+					SetPropA(w, DOCKING_FRAME, this);
 
-					_MESSAGE("Docking Root Window created");
+					_MESSAGE("Docking Root Window created"sv);
 				}
 				else
-					_ERROR("Docking Root Window failed");
+					_ERROR("Docking Root Window failed"sv);
 
 				return Result;
 			}
@@ -1124,7 +1128,7 @@ namespace CKPE
 		{
 			ScopeCriticalSection lock(_Guard);
 
-			if (!_Container || !IsWindow((HWND)hWnd) || (_Container->find(hWnd) != _Container->end()))
+			if (!_Container || !IsWindow((HWND)hWnd) || _Container->contains(hWnd))
 				return false;
 
 			DockingFrameWindow* DockWnd = nullptr;
