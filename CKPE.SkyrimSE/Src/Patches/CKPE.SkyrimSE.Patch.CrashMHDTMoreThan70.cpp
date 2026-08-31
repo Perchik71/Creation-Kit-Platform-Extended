@@ -74,8 +74,8 @@ namespace CKPE
 				// Added save and terminate process to end gen MHDT
 					
 				pointer_CrashMHDTMoreThan70Patch_sub3 = ID(197933).Address();
-				Relocation(ID(465745), Offset{ 0x1E57, 0x1E2F }).WriteCall(&sub3_additional);
-				
+				Relocation(ID(465745), Offset{ 0x1E57, 0x1E2F, 0x1E2F, 0x1E90 }).WriteCall(&sub3_additional);
+
 				return true;
 			}
 
