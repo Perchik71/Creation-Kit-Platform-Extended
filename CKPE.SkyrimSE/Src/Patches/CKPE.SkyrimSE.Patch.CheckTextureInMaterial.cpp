@@ -13,8 +13,11 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			using TCheckTextureInMaterialSub = void(void*, void*);
-			static std::function<TCheckTextureInMaterialSub> CheckTextureInMaterialSub[2];
+			using TCheckTextureInMaterialSub_1 = void(void*, void*);
+			using TCheckTextureInMaterialSub_2 = void(std::uint64_t, void*, void*);
+
+			static std::function<TCheckTextureInMaterialSub_1> CheckTextureInMaterialSub_1;
+			static std::function<TCheckTextureInMaterialSub_2> CheckTextureInMaterialSub_2;
 
 			CheckTextureInMaterial::CheckTextureInMaterial() : Common::Patch()
 			{
@@ -55,8 +58,8 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				CheckTextureInMaterialSub[0] = reinterpret_cast<TCheckTextureInMaterialSub*>(Relocation(ID(212952)).WriteJump(&sub1));
-				CheckTextureInMaterialSub[1] = reinterpret_cast<TCheckTextureInMaterialSub*>(Relocation(ID(659133)).WriteJump(&sub2));
+				CheckTextureInMaterialSub_1 = reinterpret_cast<TCheckTextureInMaterialSub_1*>(Relocation(ID(212952)).WriteJump(&sub1));
+				CheckTextureInMaterialSub_2 = reinterpret_cast<TCheckTextureInMaterialSub_2*>(Relocation(ID(659133)).WriteJump(&sub2));
 
 				return true;
 			}
@@ -64,13 +67,13 @@ namespace CKPE
 			void CheckTextureInMaterial::sub1(void* pSourceTexture, void* Material) noexcept(true)
 			{
 				if (pSourceTexture && Material)
-					CheckTextureInMaterialSub[0](pSourceTexture, Material);
+					CheckTextureInMaterialSub_1(pSourceTexture, Material);
 			}
 
-			void CheckTextureInMaterial::sub2(void* pSourceTexture, void* Material) noexcept(true)
+			void CheckTextureInMaterial::sub2(std::uint64_t uNums, void* pSourceTexture, void* Material) noexcept(true)
 			{
 				if (pSourceTexture && Material)
-					CheckTextureInMaterialSub[1](pSourceTexture, Material);
+					CheckTextureInMaterialSub_2(uNums, pSourceTexture, Material);
 			}
 		}
 	}

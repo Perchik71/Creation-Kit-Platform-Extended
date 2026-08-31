@@ -29,7 +29,7 @@ namespace CKPE
 				bool SupportsAddressLibrary() const noexcept(true) override;
 
 				static void sub1(void* pSourceTexture, void* Material) noexcept(true);
-				static void sub2(void* pSourceTexture, void* Material) noexcept(true);
+				static void sub2(std::uint64_t uNums, void* pSourceTexture, void* Material) noexcept(true);
 			};
 		}
 	}
