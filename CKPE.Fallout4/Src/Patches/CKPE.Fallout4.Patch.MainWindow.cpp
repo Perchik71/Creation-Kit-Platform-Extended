@@ -31,6 +31,7 @@
 #include <Patches/CKPE.Fallout4.Patch.MainWindow.h>
 #include "../CKPE.Common/resource.h"
 
+#include <chrono>
 #include <thread>
 #include <commdlg.h>
 #include <commctrl.h>
@@ -41,6 +42,8 @@ namespace CKPE
 	{
 		namespace Patch
 		{
+			using namespace std::literals;
+
 			std::uintptr_t pointer_MainWindow_sub1 = 0;
 			std::uintptr_t pointer_MainWindow_sub2 = 0;
 			std::uintptr_t pointer_MainWindow_sub3 = 0;
