@@ -147,7 +147,7 @@ namespace CKPE
 				Detours::DetourCall(OffsetTotal, (std::uintptr_t)&HKMoveWindow);
 				OffsetTotal = Relocation(ID(312297), 0x11A).Address();
 				SafeWrite::WriteNop(OffsetTotal, 0x62);
-				Detours::DetourCall(OffsetTotal, (std::uintptr_t)&HKMoveWindow);			
+				Detours::DetourCall(OffsetTotal, (std::uintptr_t)&HKMoveWindow);
 				
 				// In 1.6.1130 the filter is no longer needed
 				if (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_6_438)
