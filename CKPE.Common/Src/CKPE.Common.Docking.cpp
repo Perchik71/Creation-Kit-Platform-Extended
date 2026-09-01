@@ -749,7 +749,7 @@ namespace CKPE
 
 							if (oldWidth > 0 && oldHeight > 0 &&
 								((newRect.left != last.left) || (newRect.top != last.top) ||
-								 (newRect.right != last.right) || (newRect.bottom != last.bottom)))
+									(newRect.right != last.right) || (newRect.bottom != last.bottom)))
 							{
 								auto scaleX = (double)(newRect.right - newRect.left) / (double)oldWidth;
 								auto scaleY = (double)(newRect.bottom - newRect.top) / (double)oldHeight;
@@ -764,13 +764,13 @@ namespace CKPE
 										if (!IsWindow(panel.Wnd))
 											continue;
 
-										RECT moved {
-											.left	= newRect.left	+ std::lround((panel.Rect.left		- last.left)	* scaleX),
-											.top	= newRect.top	+ std::lround((panel.Rect.top		- last.top)		* scaleY),
-											.right	= newRect.left	+ std::lround((panel.Rect.right		- last.left)	* scaleX),
-											.bottom	= newRect.top	+ std::lround((panel.Rect.bottom	- last.top)		* scaleY),
+										RECT moved{
+											.left = newRect.left + std::lround((panel.Rect.left - last.left) * scaleX),
+											.top = newRect.top + std::lround((panel.Rect.top - last.top) * scaleY),
+											.right = newRect.left + std::lround((panel.Rect.right - last.left) * scaleX),
+											.bottom = newRect.top + std::lround((panel.Rect.bottom - last.top) * scaleY),
 										};
-										
+
 										CKPE_CDockingFrameClampToMinSize(panel.Wnd, moved, panel.Zone);
 										CKPE_CDockingFrameSetVisibleRect(panel.Wnd, moved);
 										panel.Rect = moved;
@@ -900,9 +900,9 @@ namespace CKPE
 						CKPE_CDockingPruneAnchorPanels(entry.first, hWnd);
 						CKPE_CDockingSaveLayout(entry.first);
 					}
-					
+
 					GetWindowRect(hWnd, std::addressof(CKPE_DockInfo.DragRecPlacement));
-					
+
 					if (pFrame->HasDocking())
 						return S_OK;
 				}

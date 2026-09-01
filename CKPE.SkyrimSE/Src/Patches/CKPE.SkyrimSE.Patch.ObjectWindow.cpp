@@ -50,7 +50,7 @@ namespace CKPE
 
 				lpObjWnd->Controls.ItemList.Left = w_tree + 5;
 				lpObjWnd->Controls.ItemList.Width = WndRect.Width - (w_tree + 5);
-				lpObjWnd->Controls.ItemList.Height = WndRect.Height - 3;
+				lpObjWnd->Controls.ItemList.Height = WndRect.Height - lpObjWnd->Controls.ItemList.Top;
 				lpObjWnd->Controls.TreeList.Height = WndRect.Height - TopT;
 				lpObjWnd->Controls.Spliter.Height = WndRect.Height - TopT;
 
@@ -84,6 +84,7 @@ namespace CKPE
 
 				lpObjWnd->Controls.ItemList.Left = w_tree + 5;
 				lpObjWnd->Controls.ItemList.Width = WndRect.Width - (w_tree + 5);
+				lpObjWnd->Controls.ItemList.Height = WndRect.Height - lpObjWnd->Controls.ItemList.Top;
 
 				// fix bad pic
 				auto handle = lpObjWnd->ObjectWindow.Handle;
@@ -144,7 +145,10 @@ namespace CKPE
 				auto OffsetTotal = Relocation(ID(336881), 0x371).Address();
 				SafeWrite::WriteNop(OffsetTotal, 0x70);
 				Detours::DetourCall(OffsetTotal, (std::uintptr_t)&HKMoveWindow);
-
+				OffsetTotal = Relocation(ID(312297), 0x11A).Address();
+				SafeWrite::WriteNop(OffsetTotal, 0x62);
+				Detours::DetourCall(OffsetTotal, (std::uintptr_t)&HKMoveWindow);			
+				
 				// In 1.6.1130 the filter is no longer needed
 				if (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_1_6_438)
 					// Allow forms to be filtered in EditorUI_ObjectWindowProc
@@ -159,8 +163,8 @@ namespace CKPE
 
 				if (auto iterator = ObjectWindows.find(GetParent(hWindow)); iterator != ObjectWindows.end())
 				{
-					LPOBJWND lpObjWnd = (*iterator).second;
-					if (lpObjWnd) lpObjWnd->ObjectWindow.Perform(WM_COMMAND, UI_CMD_CHANGE_SPLITTER_OBJECTWINDOW, 0);
+					auto lpObjWnd = (*iterator).second;
+					if (lpObjWnd) SplitterResizeObjectWndChildControls(lpObjWnd);
 				}
 
 				return bResult;
@@ -212,9 +216,6 @@ namespace CKPE
 					Common::Interface::GetSingleton()->GetDockingManager()->AddWindow((std::uintptr_t)Hwnd);
 					SetWindowPos(Hwnd, nullptr, 0, 0, 0, 0,
 						SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
-
-					// Fixed bugs if Docking mode
-					SplitterResizeObjectWndChildControls(lpObjWnd);
 #endif
 				}
 				// Don't let us reduce the window too much
@@ -260,7 +261,7 @@ namespace CKPE
 				}
 				else if (Message == WM_SIZE)
 				{
-					if (auto iterator = ObjectWindows.find(Hwnd);  iterator != ObjectWindows.end())
+					if (auto iterator = ObjectWindows.find(Hwnd); iterator != ObjectWindows.end())
 					{
 						LPOBJWND lpObjWnd = (*iterator).second;
 						if (lpObjWnd) {
