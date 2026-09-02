@@ -33,9 +33,9 @@ namespace CKPE
 				std::decay_t<T>,
 				T>;
 
-			constexpr Relocation() noexcept = default;
+			constexpr Relocation() noexcept(true) = default;
 
-			explicit constexpr Relocation(std::uintptr_t a_address) noexcept :
+			explicit constexpr Relocation(std::uintptr_t a_address) noexcept(true) :
 				_impl{ a_address }
 			{}
 
@@ -55,7 +55,7 @@ namespace CKPE
 				_impl{ a_id.Address() + a_offset.Value() }
 			{}
 
-			constexpr Relocation& operator=(std::uintptr_t a_address) noexcept
+			constexpr Relocation& operator=(std::uintptr_t a_address) noexcept(true)
 			{
 				_impl = a_address;
 				return *this;
@@ -74,20 +74,20 @@ namespace CKPE
 			}
 
 			template <class U = value_type>
-			[[nodiscard]] decltype(auto) operator*() const noexcept
+			[[nodiscard]] decltype(auto) operator*() const noexcept(true)
 				requires(std::is_pointer_v<U>)
 			{
 				return *Get();
 			}
 
 			template <class U = value_type>
-			[[nodiscard]] auto operator->() const noexcept
+			[[nodiscard]] auto operator->() const noexcept(true)
 				requires(std::is_pointer_v<U>)
 			{
 				return Get();
 			}
 
-			[[nodiscard]] operator bool() const noexcept
+			[[nodiscard]] operator bool() const noexcept(true)
 			{
 				return _impl != 0;
 			}
@@ -111,7 +111,7 @@ namespace CKPE
 			}
 
 			template <std::ptrdiff_t O = 0>
-			void Write(const void* a_src, std::size_t a_count)
+			void Write(const void* a_src, std::size_t a_count) const
 				requires(std::same_as<value_type, std::uintptr_t>)
 			{
 				SafeWrite::Write(Address() + O, 
@@ -119,7 +119,7 @@ namespace CKPE
 			}
 
 			template <std::ptrdiff_t O = 0, std::integral U>
-			void Write(const U& a_data)
+			void Write(const U& a_data) const
 				requires(std::same_as<value_type, std::uintptr_t>)
 			{
 				SafeWrite::Write(Address() + O, 
@@ -127,14 +127,14 @@ namespace CKPE
 			}
 
 			template <std::ptrdiff_t O = 0>
-			void Write(const std::initializer_list<std::uint8_t> a_data)
+			void Write(const std::initializer_list<std::uint8_t> a_data) const
 				requires(std::same_as<value_type, std::uintptr_t>)
 			{
 				SafeWrite::Write(Address() + O, a_data.begin(), a_data.size());
 			}
 
 			template <std::ptrdiff_t O = 0, class U>
-			void Write(const std::span<U> a_data)
+			void Write(const std::span<U> a_data) const
 				requires(std::same_as<value_type, std::uintptr_t>)
 			{
 				SafeWrite::Write(Address() + O,
@@ -142,7 +142,7 @@ namespace CKPE
 			}
 
 			template <std::ptrdiff_t O = 0>
-			std::uintptr_t WriteJump(const std::uintptr_t a_dst)
+			std::uintptr_t WriteJump(const std::uintptr_t a_dst) const
 				requires(std::same_as<value_type, std::uintptr_t>)
 			{
 				return Detours::DetourJump(Address() + O, a_dst);
@@ -156,35 +156,35 @@ namespace CKPE
 			}
 
 			template <std::ptrdiff_t O = 0>
-			std::uintptr_t WriteCall(const std::uintptr_t a_dst)
+			std::uintptr_t WriteCall(const std::uintptr_t a_dst) const
 				requires(std::same_as<value_type, std::uintptr_t>)
 			{
 				return Detours::DetourCall(Address() + O, a_dst);
 			}
 
 			template <std::ptrdiff_t O = 0, class F>
-			std::uintptr_t WriteCall(const F a_dst)
+			std::uintptr_t WriteCall(const F a_dst) const
 				requires(std::same_as<value_type, std::uintptr_t>)
 			{
 				return Detours::DetourCall(Address() + O, *(uintptr_t*)&a_dst);
 			}
 
 			template <std::ptrdiff_t O = 0>
-			void WriteFill(const std::uint8_t a_value, const std::size_t a_count)
+			void WriteFill(const std::uint8_t a_value, const std::size_t a_count) const
 				requires(std::same_as<value_type, std::uintptr_t>)
 			{
 				SafeWrite::WriteSet(Address() + O, a_value, a_count);
 			}
 
 			template <class U = value_type>
-			std::uintptr_t WriteVFunc(std::size_t a_idx, std::uintptr_t a_newFunc)
+			std::uintptr_t WriteVFunc(std::size_t a_idx, std::uintptr_t a_newFunc) const
 				requires(std::same_as<U, std::uintptr_t>)
 			{
 				return Detours::DetourVTable(Address(), a_newFunc, static_cast<uint32_t>(a_idx));
 			}
 
 			template <class F>
-			std::uintptr_t WriteVFunc(std::size_t a_idx, F a_newFunc)
+			std::uintptr_t WriteVFunc(std::size_t a_idx, F a_newFunc) const
 				requires(std::same_as<value_type, std::uintptr_t>)
 			{
 				return WriteVFunc(a_idx, *(uintptr_t*)&a_newFunc);
