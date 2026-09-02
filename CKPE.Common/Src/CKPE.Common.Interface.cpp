@@ -128,8 +128,6 @@ namespace CKPE
 				bool hasAddressLibrary = addressLibrary->Load(a_runtime_index);
 				if (!hasAddressLibrary)
 					_ERROR("Address Library requested but failed to load, see log above."sv);
-				//else
-				//	addressLibrary->Save(L"version---.bin");
 
 				if (!support_only_al)
 				{
@@ -280,7 +278,38 @@ namespace CKPE
 
 						// Close Creation Kit				
 						_interface->application->Terminate();
-					} 
+					}
+					else if (!_wcsicmp(Command.c_str(), L"-PEResaveAL"))
+					{
+						if (cmd.Count() != 1)
+						{
+							_ERROR_EX("Invalid number of command arguments: {}"sv, cmd.Count());
+							_MESSAGE("Example: CreationKit -PEResaveAL"sv);
+						}
+						else
+						{
+							try
+							{
+								auto ver = _interface->application->GetFileVersion();
+								if (!ver.has_value())
+									_ERROR("Get version game failed"sv);
+								else
+								{
+									_version = ver.value();
+									const auto db_name = std::format(L"{}version-{}.bin"sv,
+										PathUtils::GetCKPEAddressLibraryPath(), _version.wstring(L"-"sv));
+									addressLibrary->Save(db_name);
+								}
+							}
+							catch (const std::exception&)
+							{
+								_ERROR("It was not possible to create a file and write data there."sv);
+							}
+						}
+
+						// Close Creation Kit				
+						_interface->application->Terminate();
+						}
 #if 0
 					// Create RELIB for the current process
 					else if (!_wcsicmp(Command.c_str(), L"-PECreateRL"))
