@@ -77,7 +77,7 @@ namespace CKPE
 			}
 			catch (const std::exception& e)
 			{
-				_ERROR(e.what());
+				_ERROR(StringUtils::WinCPToUtf8(e.what()));
 				Clear();
 			}
 
@@ -118,7 +118,7 @@ namespace CKPE
 			}
 			catch (const std::exception& e)
 			{
-				_ERROR(e.what());
+				_ERROR(StringUtils::WinCPToUtf8(e.what()));
 				Clear();
 			}
 
@@ -185,7 +185,7 @@ namespace CKPE
 			}
 			catch (const std::exception& e)
 			{
-				_ERROR(e.what());
+				_ERROR(StringUtils::WinCPToUtf8(e.what()));
 			}
 
 			if (_loaded)
@@ -219,7 +219,7 @@ namespace CKPE
 			}
 			catch (const std::exception& e)
 			{
-				_ERROR(e.what());
+				_ERROR(StringUtils::WinCPToUtf8(e.what()));
 			}
 
 			return false;
