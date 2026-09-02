@@ -358,11 +358,11 @@ namespace CKPE
 			(_open == FileStream::FileOpen::fmOpenRead) ? GENERIC_READ : (GENERIC_READ | GENERIC_WRITE),
 			(_open == FileStream::FileOpen::fmOpenRead) ? FILE_SHARE_WRITE : 0,
 			nullptr,
-			(_open == FileStream::FileOpen::fmCreate) ? CREATE_NEW : OPEN_EXISTING,
+			(_open == FileStream::FileOpen::fmCreate) ? CREATE_ALWAYS : OPEN_EXISTING,
 			UseCache ? FILE_FLAG_SEQUENTIAL_SCAN : 0,
 			nullptr);
 		if (_handle == INVALID_HANDLE_VALUE)
-			throw SystemError(GetLastError(), "MapFileStream_CreateFileW \"{}\"",
+			throw SystemError(GetLastError(), "FileStream2_CreateFileW \"{}\"",
 				StringUtils::Utf16ToWinCP(fname));
 
 		_FileName = new std::wstring(fname);
@@ -472,7 +472,7 @@ namespace CKPE
 			(_open == FileStream::FileOpen::fmOpenRead) ? GENERIC_READ : (GENERIC_READ | GENERIC_WRITE),
 			(_open == FileStream::FileOpen::fmOpenRead) ? FILE_SHARE_WRITE : 0,
 			nullptr,
-			(_open == FileStream::FileOpen::fmCreate) ? CREATE_NEW : OPEN_EXISTING,
+			(_open == FileStream::FileOpen::fmCreate) ? CREATE_ALWAYS : OPEN_EXISTING,
 			UseCache ? FILE_FLAG_SEQUENTIAL_SCAN : 0,
 			nullptr);
 		if (_handle == INVALID_HANDLE_VALUE)
