@@ -57,7 +57,7 @@ namespace CKPE
 				[[nodiscard]] inline ViewModeT GetViewMode() const noexcept(true) { return _ViewMode; }
 				[[nodiscard]] inline const char* GetViewModeByStr() const noexcept(true) { return _ViewMode == Perspective ? "perspective" : "orthographic"; }
 				[[nodiscard]] inline CameraModeT GetCameraMode() const noexcept(true) { return _CameraMode; }
-				[[nodiscard]] inline const char* GetCameraModeByStr() const noexcept(true) { return CameraModeS[(int)_CameraMode]; }
+				[[nodiscard]] inline const char* GetCameraModeByStr() const noexcept(true) { return CameraModeS[std::to_underlying(_CameraMode)]; }
 
 				CKPE_READ_PROPERTY(GetNode) NiNode* Node;
 				CKPE_READ_PROPERTY(GetRotate) NiMatrix43 Rotate;

@@ -45,7 +45,7 @@ namespace CKPE
 				0,
 			};
 
-			static HRESULT WINAPI HKCreateDXGIFactory(REFIID riid, void** ppFactory) noexcept(true)
+			static HRESULT WINAPI HKCreateDXGIFactory([[maybe_unused]] REFIID riid, void** ppFactory) noexcept(true)
 			{
 				if (SUCCEEDED(ptrCreateDXGIFactory(__uuidof(IDXGIFactory3), ppFactory)))
 					return S_OK;
@@ -123,8 +123,8 @@ namespace CKPE
 				D3D_DRIVER_TYPE DriverType,
 				HMODULE Software,
 				UINT Flags,
-				const D3D_FEATURE_LEVEL* pFeatureLevels,
-				UINT FeatureLevels,
+				[[maybe_unused]] const D3D_FEATURE_LEVEL* pFeatureLevels,
+				[[maybe_unused]] UINT FeatureLevels,
 				UINT SDKVersion,
 				const DXGI_SWAP_CHAIN_DESC* pSwapChainDesc,
 				IDXGISwapChain** ppSwapChain,
@@ -218,7 +218,7 @@ namespace CKPE
 				io.Fonts->AddFontDefault();
 
 				char path[MAX_PATH];
-				if (FAILED(SHGetFolderPath(NULL, CSIDL_FONTS, NULL, SHGFP_TYPE_CURRENT, path)))
+				if (FAILED(SHGetFolderPath(nullptr, CSIDL_FONTS, nullptr, SHGFP_TYPE_CURRENT, path)))
 					return E_FAIL;
 				std::string ps(path);
 
@@ -279,6 +279,11 @@ namespace CKPE
 				return {};
 			}
 
+			TEnum<Common::Patch::Method> D3D11::GetMethods() const noexcept(true)
+			{
+				return Common::Patch::Method::kUseSignature;
+			}
+
 			bool D3D11::DoQuery() const noexcept(true)
 			{
 				// Win 8.1 and newer
@@ -289,9 +294,6 @@ namespace CKPE
 
 			bool D3D11::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				//if (db->GetVersion() != 1)
-				//	return false;
-
 				auto _interface = CKPE::Common::Interface::GetSingleton();
 				auto base = _interface->GetApplication()->GetBase();
 
@@ -313,9 +315,9 @@ namespace CKPE
 				SafeWrite::Write(addr + 10, { 0xEB });
 
 				// Grab the original function pointers
-				auto moduleDXGI = LoadLibraryExA("dxgi.dll", NULL, LOAD_LIBRARY_SEARCH_SYSTEM32);
+				auto moduleDXGI = LoadLibraryExA("dxgi.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
 				CKPE_ASSERT(moduleDXGI);
-				auto moduleD3D11 = LoadLibraryExA("d3d11.dll", NULL, LOAD_LIBRARY_SEARCH_SYSTEM32);
+				auto moduleD3D11 = LoadLibraryExA("d3d11.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
 				CKPE_ASSERT(moduleD3D11);
 
 				*(FARPROC*)&ptrCreateDXGIFactory = GetProcAddress(moduleDXGI, "CreateDXGIFactory1");
@@ -326,8 +328,8 @@ namespace CKPE
 				CKPE_ASSERT_MSG(ptrCreateDXGIFactory, "CreateDXGIFactory import not found");
 				CKPE_ASSERT_MSG(ptrD3D11CreateDeviceAndSwapChain, "D3D11CreateDeviceAndSwapChain import not found");
 				
-				Detours::DetourIAT(base, "dxgi.dll", "CreateDXGIFactory", (std::uintptr_t)HKCreateDXGIFactory);
-				Detours::DetourIAT(base, "d3d11.dll", "D3D11CreateDeviceAndSwapChain", (std::uintptr_t)HKD3D11CreateDeviceAndSwapChain);
+				Detours::DetourIAT(base, "dxgi.dll", "CreateDXGIFactory", (std::uintptr_t)&HKCreateDXGIFactory);
+				Detours::DetourIAT(base, "d3d11.dll", "D3D11CreateDeviceAndSwapChain", (std::uintptr_t)&HKD3D11CreateDeviceAndSwapChain);
 				
 				return true;
 			}

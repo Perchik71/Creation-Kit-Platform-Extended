@@ -8,8 +8,6 @@
 #include <backends/imgui_impl_win32.h>
 #include <backends/imgui_impl_dx11.h>
 #include <CKPE.Keyboard.h>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Graphics.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -89,90 +87,43 @@ namespace CKPE
 
 			bool RenderWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db) {
-					auto verPatch = db->GetVersion();
-					if ((verPatch != 1) && (verPatch != 2))
-						return false;
+				StepInRender = _READ_OPTION_FLOAT("Graphics", "fStepInRender", 15.f);
+				StepInRender = std::min(std::max(StepInRender, 15.f), 100.f);
 
-					auto _interface = Common::Interface::GetSingleton();
-					auto base = _interface->GetApplication()->GetBase();
-
-					StepInRender = _READ_OPTION_FLOAT("Graphics", "fStepInRender", 15.f);
-					StepInRender = std::min(std::max(StepInRender, 15.f), 100.f);
-
-					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
-					_TempDrawArea = (Area*)__CKPE_OFFSET(1);
-
-					EditorAPI::BGSRenderWindow::Singleton = __CKPE_OFFSET(3);
-
-					EditorAPI::BGSRenderWindow::Settings::Movement::FlagsSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(4);
-					EditorAPI::BGSRenderWindow::Settings::Movement::SnapGridValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(5);
-					EditorAPI::BGSRenderWindow::Settings::Movement::SnapAngleValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(6);
-					EditorAPI::BGSRenderWindow::Settings::Movement::ArrowSnapValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(7);
-					EditorAPI::BGSRenderWindow::Settings::Movement::ObjectRotateValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(8);
-					EditorAPI::BGSRenderWindow::Settings::Movement::ObjectMoveValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(9);
-					EditorAPI::BGSRenderWindow::Settings::Movement::CameraRotateValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(10);
-					EditorAPI::BGSRenderWindow::Settings::Movement::CameraZoomValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(11);
-					EditorAPI::BGSRenderWindow::Settings::Movement::CameraZoomOrthoValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(12);
-					EditorAPI::BGSRenderWindow::Settings::Movement::CameraPanValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(13);
-					EditorAPI::BGSRenderWindow::Settings::Movement::LandspaceMultValueSingleton = (EditorAPI::Setting*)__CKPE_OFFSET(14);
-
-					auto rel = __CKPE_OFFSET(15);
-
-					if (verPatch == 1)
-						SafeWrite::WriteNop(rel, 0x4B);
-					else
-						SafeWrite::WriteNop(rel, 0x44);
-
-					Detours::DetourCall(rel, (std::uintptr_t)&DrawFrameEx);
-
-					rel = __CKPE_OFFSET(16);
-					SafeWrite::WriteNop(rel, 0x14);
-					Detours::DetourCall(rel, (std::uintptr_t)&UpdateDrawInfo);
-
-					*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromNiNode =
-						Detours::DetourClassJump(__CKPE_OFFSET(17), (uintptr_t)&EditorAPI::BGSRenderWindow::Pick::HKGetRefFromNiNode);
-
-					return true;
-				}
+				*(std::uintptr_t*)&_oldWndProc = Common::Relocation(Common::ID{ 234564, 1885140 }).WriteJump(&HKWndProc);
+				_TempDrawArea = Common::Relocation<Area*>(Common::ID(171553)).Get();
 			
+				EditorAPI::BGSRenderWindow::Singleton = Common::ID(383337).Address();
+				
+				EditorAPI::BGSRenderWindow::Settings::Movement::FlagsSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(381092)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::SnapGridValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384553)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::SnapAngleValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384587)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::ArrowSnapValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384565)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::ObjectRotateValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384591)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::ObjectMoveValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384559)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::CameraRotateValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384592)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::CameraZoomValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384595)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::CameraZoomOrthoValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384599)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::CameraPanValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384600)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::LandspaceMultValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384603)).Get();
+
+				const auto rel1 = Common::Relocation(Common::ID{ 408886, 1938434 }, Common::Offset{ 0xC5, 0x1E2 });
+
+				if (VersionLists::GetEditorVersion() < VersionLists::EDITOR_FALLOUT_C4_1_10_943_1)
+					rel1.WriteFill(Common::NOP, 0x4B);
 				else
-				{
-					using namespace Common;
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+					rel1.WriteFill(Common::NOP, 0x44);
 
-					StepInRender = _READ_OPTION_FLOAT("Graphics", "fStepInRender", 15.f);
-					StepInRender = std::min(std::max(StepInRender, 15.f), 100.f);
+				rel1.WriteCall(&DrawFrameEx);
 
-					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(addressLibrary->Resolve(1885140), (std::uintptr_t)&HKWndProc);
-					_TempDrawArea = (Area*)addressLibrary->Resolve(171553);
+				const auto rel2 = Common::Relocation(Common::ID{ 467263, 1638356 }, Common::Offset{ 0x1DC, 0x211 });
+				rel2.WriteFill(Common::NOP, 0x14);
+				rel2.WriteCall(&UpdateDrawInfo);
 
-					EditorAPI::BGSRenderWindow::Singleton = (EditorAPI::BGSRenderWindow*)Relocation(ID{ 383337 }).Address();
+				*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromNiNode = Common::Relocation(Common::ID(411210)).WriteJump
+					(&EditorAPI::BGSRenderWindow::Pick::HKGetRefFromNiNode);
 
-					EditorAPI::BGSRenderWindow::Settings::Movement::FlagsSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(381092);
-					EditorAPI::BGSRenderWindow::Settings::Movement::SnapGridValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384553);
-					EditorAPI::BGSRenderWindow::Settings::Movement::SnapAngleValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384587);
-					EditorAPI::BGSRenderWindow::Settings::Movement::ArrowSnapValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384565);
-					EditorAPI::BGSRenderWindow::Settings::Movement::ObjectRotateValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384591);
-					EditorAPI::BGSRenderWindow::Settings::Movement::ObjectMoveValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384559);
-					EditorAPI::BGSRenderWindow::Settings::Movement::CameraRotateValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384592);
-					EditorAPI::BGSRenderWindow::Settings::Movement::CameraZoomValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384595);
-					EditorAPI::BGSRenderWindow::Settings::Movement::CameraZoomOrthoValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384599);
-					EditorAPI::BGSRenderWindow::Settings::Movement::CameraPanValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384600);
-					EditorAPI::BGSRenderWindow::Settings::Movement::LandspaceMultValueSingleton = (EditorAPI::Setting*)addressLibrary->Resolve(384603);
-
-					auto rel = Relocation(ID{ 1938434 }, Offset{ 0x1E2 });
-					rel.WriteFill(0x90, 0x44);
-					rel.WriteCall(DrawFrameEx);
-
-					rel = Relocation(ID{ 1638356 }, Offset{ 0x211 });
-					rel.WriteFill(0x90, 20);
-					rel.WriteCall(UpdateDrawInfo);
-
-					*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromNiNode = Relocation(ID{ 411210 }).WriteJump(EditorAPI::BGSRenderWindow::Pick::HKGetRefFromNiNode);
-
-					return true;
-				}
+				return true;
 			}
 
 			INT_PTR CALLBACK RenderWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
@@ -199,7 +150,7 @@ namespace CKPE
 				{
 					if (lParam)
 					{
-						LPMINMAXINFO lpMMI = (LPMINMAXINFO)lParam;
+						auto lpMMI = (LPMINMAXINFO)lParam;
 						lpMMI->ptMinTrackSize.x = 96;	// 96 min tex size
 						lpMMI->ptMinTrackSize.y = 96;
 					}
@@ -207,7 +158,7 @@ namespace CKPE
 					return S_OK;
 				}
 				// Fix bug loss of window size
-				else if (Message == WM_GETMINMAXINFO)
+				else if (Message == WM_ACTIVATE)
 				{
 					if (LOWORD(wParam) == WA_INACTIVE)
 						rcSafeDrawArea = *_TempDrawArea;
@@ -420,12 +371,11 @@ namespace CKPE
 								auto Counter = [](EditorAPI::Forms::TESObjectREFR** refrs, std::uint32_t count,
 									std::uint32_t& npcs, std::uint32_t& lights, std::uint32_t& objs)
 									{
-										std::uint32_t uId = 0;
 										npcs = 0;
 										lights = 0;
 										objs = 0;
 
-										for (uId = 0; uId < count; uId++)
+										for (std::uint32_t uId = 0; uId < count; uId++)
 										{
 											auto form = refrs[uId];
 											auto formType = form->Parent->GetFormType();
