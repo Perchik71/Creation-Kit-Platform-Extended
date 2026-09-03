@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.Interface.h>
@@ -56,36 +55,16 @@ namespace CKPE
 
 			bool AddChangeRef::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto _interface = CKPE::Common::Interface::GetSingleton();
-					auto base = _interface->GetApplication()->GetBase();
+				Relocation(ID{ 470821, 1939247 }, Offset{ 0x5A2, 0x9C8 }).WriteCall(&HKInsertMenuA);
+				
+				auto rel = ID(458423).Address();
+				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetParentWithRedraw = rel;
+				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly_NG::SetParentWithRedraw = rel;
+				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly::SetParentWithRedraw = rel;
 
-					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&HKInsertMenuA);
-
-					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetParentWithRedraw = __CKPE_OFFSET(1);
-					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly_NG::SetParentWithRedraw = __CKPE_OFFSET(1);
-					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly::SetParentWithRedraw = __CKPE_OFFSET(1);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					Relocation(ID{ 1939247 }, Offset{ 0x9C8 }).WriteCall(HKInsertMenuA);
-
-					auto rel = Relocation(ID{ 458423 });
-
-					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetParentWithRedraw = rel;
-					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly_NG::SetParentWithRedraw = rel;
-					*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly::SetParentWithRedraw = rel;
-
-					return true;
-				}
+				return true;
 			}
 		}
 	}

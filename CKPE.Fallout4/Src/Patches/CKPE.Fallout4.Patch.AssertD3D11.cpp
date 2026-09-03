@@ -48,26 +48,11 @@ namespace CKPE
 
 			bool AssertD3D11::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				Relocation(ID(527025), Offset{ 0x4EE, 0x4CF, 0x4CE }).WriteCall(&sub);
 
-					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					Relocation(ID{ 527025 }, Offset{ 0x4CE }).WriteCall(sub);
-
-					return true;
-				}
+				return true;
 			}
 
 			void AssertD3D11::sub() noexcept(true)

@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -46,34 +45,17 @@ namespace CKPE
 
 			bool AllowMultipleWindowAndMaster::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db) {
-					auto verPatch = db->GetVersion();
-					if ((verPatch != 2) && (verPatch != 3))
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
-
-					if (verPatch == 2)
-						SafeWrite::Write(__CKPE_OFFSET(0), { 0xE9, 0xDE, 0x00, 0x00, 0x00, 0x90 });
-					else
-						SafeWrite::Write(__CKPE_OFFSET(0), { 0xE9, 0xD4, 0x00, 0x00, 0x00, 0x90 });
-
-					SafeWrite::Write(__CKPE_OFFSET(1), { 0xEB });
-
-					return true;
-				}
+				const auto rel = Relocation(ID{ 501160, 1942406 }, Offset{ 0x1E3, 0x1EA });
+				if (VersionLists::GetEditorVersion() > VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+					rel.Write({ 0xE9, 0xDE, 0x00, 0x00, 0x00, 0x90 });
 				else
-				{
-					using namespace Common;
+					rel.Write({ 0xE9, 0xD4, 0x00, 0x00, 0x00, 0x90 });
 
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
+				Relocation(ID{ 495791, 2054943 }, Offset{ 0x6F7, 0x6F7, 0x703 }).Write(JMP);
 
-					Relocation(ID{ 1942406 }, Offset{ 0x1EA }).Write({ 0xE9, 0xD4, 0x00, 0x00, 0x00, 0x90 });
-					Relocation(ID{ 2054943 }, Offset{ 0x703 }).Write({ 0xEB });
-					
-					return true;
-				}
+				return true;
 			}
 		}
 	}

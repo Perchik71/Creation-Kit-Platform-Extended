@@ -3,12 +3,9 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.AddressLibrary.h>
-#include <CKPE.Fallout4.AddressLibrary.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/BSString.h>
 #include <EditorAPI/TESFile.h>
@@ -26,8 +23,6 @@ namespace CKPE
 
 		namespace Patch
 		{
-			using namespace CKPE::Fallout4::AddressVersions;
-
 			std::uintptr_t pointer_AllowSaveESMandMasterESP_sub1 = 0;
 
 			static BOOL OpenPluginSaveDialog(HWND ParentWindow, LPCSTR BasePath, BOOL IsESM, LPSTR Buffer,
@@ -94,90 +89,42 @@ namespace CKPE
 
 			bool AllowSaveESMandMasterESP::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db) {
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				EditorAPI::pointer_TESFile_sub1 = ID{ 465268, 1942584 }.Address();
+				EditorAPI::pointer_TESFile_sub2 = ID{ 445270, 1777850 }.Address();
+				pointer_AllowSaveESMandMasterESP_sub1 = ID{ 411272, 1353832 }.Address();
 
-					EditorAPI::pointer_TESFile_sub1 = __CKPE_OFFSET(0);
-					EditorAPI::pointer_TESFile_sub2 = __CKPE_OFFSET(1);
-					pointer_AllowSaveESMandMasterESP_sub1 = __CKPE_OFFSET(11);
+				EditorAPI::TESFile::AllowSaveESM = _READ_OPTION_BOOL("CreationKit", "bAllowSaveESM", false);
+				EditorAPI::TESFile::AllowMasterESP = _READ_OPTION_BOOL("CreationKit", "bAllowMasterESP", false);
 
-					EditorAPI::TESFile::AllowSaveESM = _READ_OPTION_BOOL("CreationKit", "bAllowSaveESM", false);
-					EditorAPI::TESFile::AllowMasterESP = _READ_OPTION_BOOL("CreationKit", "bAllowMasterESP", false);
-
-					if (EditorAPI::TESFile::AllowSaveESM || EditorAPI::TESFile::AllowMasterESP)
-					{
-						*(std::uintptr_t*)&EditorAPI::TESFile::LoadTESInfo =
-							Detours::DetourClassJump(__CKPE_OFFSET(3), &EditorAPI::TESFile::hk_LoadTESInfo);
-						*(std::uintptr_t*)&EditorAPI::TESFile::WriteTESInfo =
-							Detours::DetourClassJump(__CKPE_OFFSET(4), &EditorAPI::TESFile::hk_WriteTESInfo);
-
-						if (EditorAPI::TESFile::AllowSaveESM)
-						{
-							// Also allow non-game ESMs to be set as "Active File"
-							Detours::DetourClassCall(__CKPE_OFFSET(5), &IsActiveFileBlacklist);
-							SafeWrite::WriteNop(__CKPE_OFFSET(6), 2);
-
-							// Disable: "File '%s' is a master file or is in use.\n\nPlease select another file to save to."
-							const char* newFormat = "File '%s' is in use.\n\nPlease select another file to save to.";
-
-							SafeWrite::WriteNop(__CKPE_OFFSET(7), 13);
-							SafeWrite::Write(__CKPE_OFFSET(8), (std::uint8_t*)newFormat, strlen(newFormat) + 1);
-							Detours::DetourJump(__CKPE_OFFSET(9), (std::uintptr_t)&OpenPluginSaveDialog);
-						}
-
-						if (EditorAPI::TESFile::AllowMasterESP)
-							// Remove the check for IsMaster()
-							SafeWrite::WriteNop(__CKPE_OFFSET(10), 9);
-					}
-
-					return true;
-				}
-				else 
+				if (EditorAPI::TESFile::AllowSaveESM || EditorAPI::TESFile::AllowMasterESP)
 				{
-					using namespace Common;
+					*(std::uintptr_t*)&EditorAPI::TESFile::LoadTESInfo =
+						Common::Relocation(Common::ID{ 289312, 1493949 }).WriteJump(&EditorAPI::TESFile::hk_LoadTESInfo);
+					*(std::uintptr_t*)&EditorAPI::TESFile::WriteTESInfo =
+						Common::Relocation(Common::ID(445271)).WriteJump(&EditorAPI::TESFile::hk_WriteTESInfo);
 
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
-
-					EditorAPI::pointer_TESFile_sub1 = Relocation(ID{ 1942584 }).Address();
-					EditorAPI::pointer_TESFile_sub2 = Relocation(ID{ 1777850 }).Address();
-					pointer_AllowSaveESMandMasterESP_sub1 = Relocation(ID{ 1353832 }).Address();
-
-					EditorAPI::TESFile::AllowSaveESM = _READ_OPTION_BOOL("CreationKit", "bAllowSaveESM", false);
-					EditorAPI::TESFile::AllowMasterESP = _READ_OPTION_BOOL("CreationKit", "bAllowMasterESP", false);
-
-					if (EditorAPI::TESFile::AllowSaveESM || EditorAPI::TESFile::AllowMasterESP)
+					if (EditorAPI::TESFile::AllowSaveESM)
 					{
-						*(std::uintptr_t*)&EditorAPI::TESFile::LoadTESInfo =
-							Detours::DetourClassJump(addressLibrary->Resolve(VariantID{ 1493949 }), &EditorAPI::TESFile::hk_LoadTESInfo);
-						*(std::uintptr_t*)&EditorAPI::TESFile::WriteTESInfo =
-							Detours::DetourClassJump(addressLibrary->Resolve(VariantID{ 445271 }), &EditorAPI::TESFile::hk_WriteTESInfo);
+						// Also allow non-game ESMs to be set as "Active File"
+						Relocation(ID(534861), 0x5F).WriteCall(&IsActiveFileBlacklist);
+						Relocation(ID{ 23248, 1716794 }, Offset{ 0x48, 0x4F }).WriteFill(NOP, 2);
 
-						if (EditorAPI::TESFile::AllowSaveESM)
-						{
-							// Also allow non-game ESMs to be set as "Active File"
-							Detours::DetourClassCall(addressLibrary->Resolve(VariantID{ 534861 }) + 0x5F, &IsActiveFileBlacklist);
-							Relocation(ID{ 1716794 }, Offset{ 0x4F }).WriteFill(0x90, 2);
+						// Disable: "File '%s' is a master file or is in use.\n\nPlease select another file to save to."
+						auto newFormat = "File '%s' is in use.\n\nPlease select another file to save to.";
 
-							// Disable: "File '%s' is a master file or is in use.\n\nPlease select another file to save to."
-							const char* newFormat = "File '%s' is in use.\n\nPlease select another file to save to.";
-
-							Relocation(ID{ 1380402 }, Offset { 0x55A }).WriteFill(0x90, 13);
-							SafeWrite::Write(addressLibrary->Resolve(VariantID{ 180829 }), (std::uint8_t*)newFormat, strlen(newFormat) + 1);
-							Relocation(ID{ 1631676 }).WriteJump(OpenPluginSaveDialog);
-						}
-
-						if (EditorAPI::TESFile::AllowMasterESP)
-							// Remove the check for IsMaster()
-							Relocation(ID{ 1436783 }, Offset{ 0x5C }).WriteFill(0x90, 9);
+						Relocation(ID{ 148381, 1380402 }, Offset{ 0x489, 0x55A }).WriteFill(NOP, 0xD);
+						Relocation(ID(180829)).Write(newFormat, strlen(newFormat) + 1);
+						Relocation(ID{ 273721, 1631676 }).WriteJump(&OpenPluginSaveDialog);
 					}
 
-					return true;
+					if (EditorAPI::TESFile::AllowMasterESP)
+						// Remove the check for IsMaster()
+						Relocation(ID{ 445380, 1436783 }, 0x5C).WriteFill(NOP, 9);
 				}
 
+				return true;
 			}
 		}
 	}
