@@ -39,7 +39,7 @@ namespace CKPE
 					WIN32_FIND_DATA	FileFindData;
 					ZeroMemory(&FileFindData, sizeof(WIN32_FIND_DATA));
 					HANDLE hFindFile = FindFirstFileExA(*(pathData + "*.ba2"), FindExInfoStandard, &FileFindData,
-						FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH);
+						FindExSearchNameMatch, nullptr, FIND_FIRST_EX_LARGE_FETCH);
 					if (hFindFile != INVALID_HANDLE_VALUE)
 					{
 						do
@@ -52,7 +52,7 @@ namespace CKPE
 						BSString strName;
 
 						if (svalue.length() > 0) {
-							char* s_c = new char[svalue.length() + 1];
+							auto s_c = new char[svalue.length() + 1];
 							strcpy(s_c, svalue.c_str());
 
 							char* stoken = strtok(s_c, ",");
@@ -72,7 +72,7 @@ namespace CKPE
 										g_arrayArchivesAvailable.erase(index);
 									}
 
-									stoken = strtok(NULL, ",");
+									stoken = strtok(nullptr, ",");
 								} while (stoken);
 							}
 
@@ -193,7 +193,51 @@ namespace CKPE
 				EResultError Archive2::HKLoadStreamArchiveEx(void* arrayDataList, InfoEx* infoRes,
 					void* Unk1, std::uint32_t Unk2) noexcept(true)
 				{
-					auto fileName = infoRes->fileName->c_str();
+					auto resultNo = EResultError::kNone;
+
+					if (infoRes->fileName->is_wide())
+					{
+						auto fileName = infoRes->fileName->c_wstr();
+						CKPE_ASSERT_MSG(fileName, "There is no name of the load archive");
+
+						auto fname = BSString::Converts::WideToAnsi(fileName);
+						BSString filePath, fileSizeStr;
+						filePath.Format("%s%s%s", BSString::Utils::GetApplicationPath().c_str(), "Data\\", fname.c_str());
+						CKPE_ASSERT_MSG_FMT(BSString::Utils::FileExists(filePath), "Can't found file %s", *filePath);
+
+						auto fileSize = FileUtils::GetFileSize(*filePath);
+						GetFileSizeStr(fileSize, fileSizeStr);
+						_CONSOLE("Load an archive file \"%s\" (%s)...", fname.c_str(), *fileSizeStr);
+
+						resultNo = fast_call<EResultError, void*, InfoEx*, void*, std::uint32_t>
+							(pointer_Archive2_sub1, arrayDataList, infoRes, Unk1, Unk2);
+						CKPE_ASSERT_MSG_FMT(resultNo == EResultError::kNone, "Failed load an archive file %s", fname.c_str());
+					}
+					else
+					{
+						auto fileName = infoRes->fileName->c_str();
+						CKPE_ASSERT_MSG(fileName, "There is no name of the load archive");
+
+						BSString filePath, fileSizeStr;
+						filePath.Format("%s%s%s", BSString::Utils::GetApplicationPath().c_str(), "Data\\", fileName);
+						CKPE_ASSERT_MSG_FMT(BSString::Utils::FileExists(filePath), "Can't found file %s", *filePath);
+
+						auto fileSize = FileUtils::GetFileSize(*filePath);
+						GetFileSizeStr(fileSize, fileSizeStr);
+						_CONSOLE("Load an archive file \"%s\" (%s)...", fileName, *fileSizeStr);
+
+						resultNo = fast_call<EResultError, void*, InfoEx*, void*, std::uint32_t>
+							(pointer_Archive2_sub1, arrayDataList, infoRes, Unk1, Unk2);
+						CKPE_ASSERT_MSG_FMT(resultNo == EResultError::kNone, "Failed load an archive file %s", fileName);
+					}
+
+					LoadPrimaryArchive();
+
+					return resultNo;
+				}
+
+				EResultError Archive2::HKLoadStreamArchiveEx2(void* arrayDataList, void* Unk1, void* Unk2, std::uint32_t Unk3, const char* fileName) noexcept(true)
+				{
 					CKPE_ASSERT_MSG(fileName, "There is no name of the load archive");
 
 					BSString filePath, fileSizeStr;
@@ -201,13 +245,11 @@ namespace CKPE
 					CKPE_ASSERT_MSG_FMT(BSString::Utils::FileExists(filePath), "Can't found file %s", *filePath);
 
 					auto fileSize = FileUtils::GetFileSize(*filePath);
-					auto resultNo = EResultError::kNone;
-
 					GetFileSizeStr(fileSize, fileSizeStr);
 					_CONSOLE("Load an archive file \"%s\" (%s)...", fileName, *fileSizeStr);
 
-					resultNo = fast_call<EResultError, void*, InfoEx*, void*, std::uint32_t>
-						(pointer_Archive2_sub1, arrayDataList, infoRes, Unk1, Unk2);
+					auto resultNo = fast_call<EResultError, void*, void*, void*, std::uint32_t>
+						(pointer_Archive2_sub1, arrayDataList, Unk1, Unk2, Unk3);
 					CKPE_ASSERT_MSG_FMT(resultNo == EResultError::kNone, "Failed load an archive file %s", fileName);
 
 					LoadPrimaryArchive();

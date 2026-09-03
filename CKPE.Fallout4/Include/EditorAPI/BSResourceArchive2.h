@@ -36,6 +36,7 @@ namespace CKPE
 					static void GetFileSizeStr(std::uint64_t fileSize, BSString& fileSizeStr) noexcept(true);
 					static EResultError HKLoadStreamArchive(void* arrayDataList, LooseFileStream*& resFile, void* Unk1, std::uint32_t Unk2) noexcept(true);
 					static EResultError HKLoadStreamArchiveEx(void* arrayDataList, InfoEx* infoRes, void* Unk1, std::uint32_t Unk2) noexcept(true);
+					static EResultError HKLoadStreamArchiveEx2(void* arrayDataList, void* Unk1, void* Unk2, std::uint32_t Unk3, const char* fileName) noexcept(true);
 					static void HKLoadArchive(const char* fileName, void* Unk1, void* Unk2, std::uint32_t Unk3) noexcept(true);
 					static void LoadArchive(const char* fileName) noexcept(true);
 					static bool IsAvailableForLoad(const char* fileName) noexcept(true);

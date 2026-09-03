@@ -4,8 +4,6 @@
 
 #include <windows.h>
 #include <CKPE.Utils.h>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.EditorUI.h>
@@ -13,6 +11,7 @@
 #include <EditorAPI/TESFile.h>
 #include <EditorAPI/BSResourceArchive2.h>
 #include <Patches/CKPE.Fallout4.Patch.BSArchiveManagerModded.h>
+#include <xbyak.h>
 
 namespace CKPE
 {
@@ -115,36 +114,50 @@ namespace CKPE
 
 			bool BSArchiveManagerModded::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
+				using namespace Common;
 
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				EditorAPI::BSResource::pointer_Archive2_sub1 = ID{ 399667, 1624099 }.Address();
+				EditorAPI::BSResource::pointer_Archive2_sub2 = ID{ 20873, 1940294 }.Address();
+				EditorAPI::BSResource::pointer_Archive2_sub3 = Relocation(ID(44564)).WriteJump
+					(&EditorAPI::BSResource::Archive2::HKLoadArchive);
+				EditorAPI::BSResource::Archive2::Initialize(); 
 
-				EditorAPI::BSResource::pointer_Archive2_sub1 = __CKPE_OFFSET(6);
-				EditorAPI::BSResource::pointer_Archive2_sub2 = __CKPE_OFFSET(0);
-				EditorAPI::BSResource::pointer_Archive2_sub3 =
-					Detours::DetourClassJump(__CKPE_OFFSET(10), EditorAPI::BSResource::Archive2::HKLoadArchive);
-				EditorAPI::BSResource::Archive2::Initialize();
+				const auto target = ID(44564);
+				const auto rel1 = Relocation(target, Offset{ 0x557, 0x4C3, 0x4D9, 0x434 });
 
-				if (verPatch == 1)
-					// Первая версия патча для 1.10.162.0
-					Detours::DetourCall(__CKPE_OFFSET(1),
-						(std::uintptr_t)&EditorAPI::BSResource::Archive2::HKLoadStreamArchive);
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+					rel1.WriteCall(&EditorAPI::BSResource::Archive2::HKLoadStreamArchive);
+				else if (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_FALLOUT_C4_1_11_137_0)
+					rel1.WriteCall(&EditorAPI::BSResource::Archive2::HKLoadStreamArchiveEx);
 				else
-					Detours::DetourCall(__CKPE_OFFSET(1),
-						(std::uintptr_t)&EditorAPI::BSResource::Archive2::HKLoadStreamArchiveEx);
+				{
+					class HookLoadA : public Xbyak::CodeGenerator
+					{
+					public:
+						HookLoadA() : Xbyak::CodeGenerator()
+						{
+							sub(rsp, 0x38);
+							mov(ptr[rsp + 0x20], rdi);
+							mov(rax, (uintptr_t)&EditorAPI::BSResource::Archive2::HKLoadStreamArchiveEx2);
+							call(rax);
+							add(rsp, 0x38);
+							ret();
+						}
+					};
 
-				pointer_BSArchiveManagerModded_sub = __CKPE_OFFSET(4);
-				Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&LoadTesFile);
-				Detours::DetourJump(__CKPE_OFFSET(3), (std::uintptr_t)&LoadTesFileFinal);
+					auto hook = new HookLoadA();
+					rel1.WriteCall((uintptr_t)hook->getCode());
+				}
+
+				pointer_BSArchiveManagerModded_sub = ID{ 289312, 1493949 }.Address();
+				Relocation(ID{ 261467, 1943828 }, Offset{ 0x17, 0x1C }).WriteCall(&LoadTesFile);
+				Relocation(ID(192751)).WriteJump(&LoadTesFileFinal);
 
 				// Так как разница между первой и 8 версией лишь, то что был удалён GNF формат для PlayStation.
 				// То очевидно, 8 версии с GNF форматом просто не будет, то вполне безопасно, открывать любые версии архивы.
-				if (verPatch == 1)
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 					// Первая версия патча для 1.10.162.0
-					SafeWrite::Write(__CKPE_OFFSET(7), &supportedBA2Version, 1);
+					Relocation(target, 0x45E).Write(&supportedBA2Version, 1);
 
 				return true;
 			}
