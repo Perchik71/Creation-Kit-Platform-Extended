@@ -59,8 +59,8 @@ namespace CKPE
 				void ResizeWnd(std::uint32_t width, std::uint32_t height) noexcept(true);
 				inline void LockUpdateLists() noexcept(true) { lock = true; }
 				inline void UnlockUpdateLists() noexcept(true) { lock = false; }
-				void UpdateCellList() noexcept(true);
-				void UpdateObjectList() noexcept(true);
+				void UpdateCellList() const noexcept(true);
+				void UpdateObjectList() const noexcept(true);
 				[[nodiscard]] bool SupportsAddressLibrary() const noexcept(true) override { return true; }
 			};
 		}

@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Utils.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Graphics.h>
 #include <CKPE.Application.h>
@@ -72,55 +71,28 @@ namespace CKPE
 
 			bool CellViewWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db) {
-					auto verPatch = db->GetVersion();
-					if ((verPatch != 1) && (verPatch != 2))
-						return false;
+				using namespace Common;
 
-					auto _interface = CKPE::Common::Interface::GetSingleton();
-					auto base = _interface->GetApplication()->GetBase();
+				*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 531125, 1779524 }).WriteJump(&HKWndProc);
 
-					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
+				// Allow forms to be filtered in CellViewProc
+				Relocation(ID{ 467644, 1432577 }, 0xFF).WriteCall(&CellViewWindow::sub1);
+				Relocation(ID(477436), Offset{ 0x1C1, 0x1D1 }).WriteCall(&CellViewWindow::sub1);
+				pointer_CellViewWindow_sub1 = ID{ 410416, 1448837 }.Address();
 
-					// Allow forms to be filtered in CellViewProc
-					Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&CellViewWindow::sub1);
-					Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&CellViewWindow::sub1);
-					pointer_CellViewWindow_sub1 = __CKPE_OFFSET(4);
-
-					if ((verPatch == 2))
-					{
-						// Allow objects to be filtered in CellViewProc
-						Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&CellViewWindow::sub2_ver2);
-						pointer_CellViewWindow_sub2 = __CKPE_OFFSET(5);
-					}
-					else
-					{
-						// Allow objects to be filtered in CellViewProc
-						Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&CellViewWindow::sub2);
-						pointer_CellViewWindow_sub2 = __CKPE_OFFSET(5);
-					}
-
-					return true;
+				// Allow objects to be filtered in CellViewProc
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+				{
+					Relocation(ID(445225), 0x95).WriteCall(&CellViewWindow::sub2);
+					pointer_CellViewWindow_sub2 = ID(198832).Address();
 				}
 				else
 				{
-					using namespace Common;
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
-
-					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(addressLibrary->Resolve(1779524), (std::uintptr_t)&HKWndProc);
-
-					// Allow forms to be filtered in CellViewProc
-					Relocation(ID{ 1432577 }, Offset{ 0xFF }).WriteCall(CellViewWindow::sub1);
-					
-					Relocation(ID{ 477436 }, Offset{ 0x1D1 }).WriteCall(CellViewWindow::sub1);
-					pointer_CellViewWindow_sub1 = Relocation(ID{ 1448837 }).Address();
-
-					// Allow objects to be filtered in CellViewProc
-					Relocation(ID{ 1923593 }, Offset{ 0x1D3 }).WriteCall(CellViewWindow::sub2_ver2);
-					pointer_CellViewWindow_sub2 = Relocation(ID{ 1443863 }).Address();
-
-					return true;
+					Relocation(ID(1923593), 0x1D3).WriteCall(&CellViewWindow::sub2_ver2);
+					pointer_CellViewWindow_sub2 = ID(1443863).Address();
 				}
+
+				return true;
 			}
 
 			void CellViewWindow::sub1(HWND ListViewHandle, EditorAPI::Forms::TESForm* Form, 
@@ -136,7 +108,7 @@ namespace CKPE
 			}
 
 			std::int32_t CellViewWindow::sub2(HWND** ListViewHandle, EditorAPI::Forms::TESForm** Form, 
-				std::int64_t a3) noexcept(true)
+				[[maybe_unused]] std::int64_t a3) noexcept(true)
 			{
 				bool allowInsert = true;
 				CellViewWindow::Singleton->Perform(UI_CELL_VIEW_ADD_CELL_OBJECT_ITEM, (WPARAM)*Form, (LPARAM)&allowInsert);
@@ -257,14 +229,14 @@ namespace CKPE
 				m_ActiveObjectsOnly.BoundsRect = Bounds;
 			}
 
-			void CellViewWindow::UpdateCellList() noexcept(true)
+			void CellViewWindow::UpdateCellList() const noexcept(true)
 			{
 				if (!lock)
 					// Fake the dropdown list being activated
 					SendMessageA(Handle, WM_COMMAND, MAKEWPARAM(2083, 1), 0);
 			}
 
-			void CellViewWindow::UpdateObjectList() noexcept(true)
+			void CellViewWindow::UpdateObjectList() const noexcept(true)
 			{
 				if (!lock)
 					// Fake a filter text box change
@@ -284,7 +256,6 @@ namespace CKPE
 
 					__This->m_hWnd = Hwnd;
 
-					
 					Common::Interface::GetSingleton()->GetDockingManager()->AddWindow((std::uintptr_t)Hwnd);
 					SetWindowPos(Hwnd, nullptr, 0, 0, 0, 0,
 						SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
@@ -315,6 +286,10 @@ namespace CKPE
 						LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
 					ListView_SetExtendedListViewStyleEx(__This->m_ObjectListView.Handle,
 						LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
+
+					::RECT rc{};
+					if (GetClientRect(Hwnd, std::addressof(rc)))
+						CellViewWindow::Singleton->ResizeWnd(rc.right, rc.bottom);
 				}
 				else if (Message == WM_SIZE)
 				{
@@ -382,7 +357,7 @@ namespace CKPE
 							sprintf_s(str_CellViewWindow_Filter, UI_CELL_VIEW_FILTER_CELL, "%s %08X %s",
 								editorID, form->FormID, form->FullName);
 
-							*allowInsert = StrStrIA(str_CellViewWindow_Filter, str_CellViewWindow_FilterUser) != 0;
+							*allowInsert = StrStrIA(str_CellViewWindow_Filter, str_CellViewWindow_FilterUser) != nullptr;
 						}
 					}
 

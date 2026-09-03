@@ -85,37 +85,17 @@ namespace CKPE
 
 			bool Console::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db) {
-					if (db->GetVersion() != 2)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				Relocation(ID{ 105048, 1494590 }).WriteJump(LogWarningVa);
+				Relocation(ID{ 429701, 1636009 }).WriteJump(LogWarningUnknown1);
+				Relocation(ID{ 185107, 1956945 }).WriteJump(LogWarningUnknown1);
+				Relocation(ID{ 378705, 1589438 }).WriteJump(LogWarningUnknown1);
+				Relocation(ID{ 323410, 1589059 }).WriteJump(LogWarningUnknown1);
+				Relocation(ID{ 501160, 1942406 }, Offset{ 0x7B3, 0x744 }).WriteCall(LogWarningUnknown2);
+				Relocation(ID{ 334052, 1653769 }).WriteJump(LogAssert);
 
-					Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&LogWarningVa);
-					Detours::DetourJump(__CKPE_OFFSET(1), (std::uintptr_t)&LogWarningUnknown1);
-					Detours::DetourJump(__CKPE_OFFSET(2), (std::uintptr_t)&LogWarningUnknown1);
-					Detours::DetourJump(__CKPE_OFFSET(3), (std::uintptr_t)&LogWarningUnknown1);
-					Detours::DetourJump(__CKPE_OFFSET(4), (std::uintptr_t)&LogWarningUnknown1);
-					Detours::DetourCall(__CKPE_OFFSET(5), (std::uintptr_t)&LogWarningUnknown2);
-					Detours::DetourJump(__CKPE_OFFSET(6), (std::uintptr_t)&LogAssert);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					Relocation(ID{ 1494590 }).WriteJump(LogWarningVa);
-					Relocation(ID{ 1636009 }).WriteJump(LogWarningUnknown1);
-					Relocation(ID{ 1956945 }).WriteJump(LogWarningUnknown1);
-					Relocation(ID{ 1589438 }).WriteJump(LogWarningUnknown1);
-					Relocation(ID{ 1589059 }).WriteJump(LogWarningUnknown1);
-					Relocation(ID{ 1942406 }, Offset{ 0x744 }).WriteCall(LogWarningUnknown2);
-					Relocation(ID{ 1653769 }).WriteJump(LogAssert);
-
-					return true;
-				}
+				return true;
 			}
 
 			void Console::Log(const char* Format, ...) noexcept(true)

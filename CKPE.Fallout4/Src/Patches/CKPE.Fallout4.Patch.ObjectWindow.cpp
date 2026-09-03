@@ -168,64 +168,41 @@ namespace CKPE
 
 			bool ObjectWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db) {
-					auto verPatch = db->GetVersion();
-					if ((verPatch != 1) && (verPatch != 2))
-						return false;
+				using namespace Common;
 
-					auto _interface = Common::Interface::GetSingleton();
-					auto base = _interface->GetApplication()->GetBase();
+				*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 470821, 1939247 }).WriteJump(&HKWndProc);
+				pointer_ObjectWindow_sub = ID{ 465450, 1584121 }.Address();
 
-					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
-
-					if (verPatch == 1)
-					{
-						// Allow forms to be filtered in ObjectWindowProc
-						pointer_ObjectWindow_sub = __CKPE_OFFSET(3);
-						Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&sub);
-
-						// Fix resize ObjectWindowProc
-						Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&HKMoveWindow);
-						SafeWrite::WriteNop(__CKPE_OFFSET(2), 0x46);
-					}
-					else
-					{
-						pointer_ObjectWindow_sub = __CKPE_OFFSET(4);
-						// Restore function
-						auto rva = __CKPE_OFFSET(3);
-						SafeWrite::WriteNop(rva + 0x10, 0x33);
-						SafeWrite::Write(rva, { 0x48, 0x8B, 0x4C, 0x24, 0x40, 0x48, 0x89, 0xFA, 0x49, 0x89, 0xF0 });
-						Detours::DetourCall(rva + 0xB, (std::uintptr_t)&sub2);
-
-						// Fix resize ObjectWindowProc
-						rva = __CKPE_OFFSET(1);
-						SafeWrite::WriteNop(rva, 0x4B);
-						Detours::DetourCall(rva, (std::uintptr_t)&HKMoveWindow);
-					}
-
-					return true;
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+				{
+					// Allow forms to be filtered in ObjectWindowProc
+					Relocation(ID(400459), 0x18A).WriteCall(&sub);
+					
+					// Fix resize ObjectWindowProc
+					const auto rel1 = Relocation(ID(645521), 0x202);
+					rel1.WriteCall(&HKMoveWindow);
+					rel1.WriteFill<5>(NOP, 0x46);
 				}
 				else
 				{
-					using namespace Common;
-
-					*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 1939247 }).WriteJump(HKWndProc);
-
-					pointer_ObjectWindow_sub = Relocation(ID{ 1584121 }).Address();
-
 					// Restore function
-					auto rel = Relocation(ID{ 1506144 }, Offset{ 0x1F3 });
-					rel.WriteFill<0x10>(0x90, 0x33);
-					rel.Write({ 0x48, 0x8B, 0x4C, 0x24, 0x40, 0x48, 0x89, 0xFA, 0x49, 0x89, 0xF0 });
-					rel.WriteCall<0xB>(sub2);
+					const auto rel1 = Relocation(ID(1506144), 0x1F3);
+					rel1.WriteFill<0x10>(NOP, 0x33);
+					rel1.Write({ 0x48, 0x8B, 0x4C, 0x24, 0x40, 0x48, 0x89, 0xFA, 0x49, 0x89, 0xF0 });
+					rel1.WriteCall<0xB>(&sub2);
 
 					// Fix resize ObjectWindowProc
-					rel = Relocation(ID{ 1713721 }, Offset{ 0x207 });
-					rel.WriteFill(0x90, 0x4B);
-					rel.WriteCall(HKMoveWindow);
-
-					return true;
+					const auto rel2 = Relocation(ID(1713721), 0x207);
+					rel2.WriteFill(NOP, 0x4B);
+					rel2.WriteCall(&HKMoveWindow);
 				}
+
+				// Fix resize ObjectWindowProc WM_INITDIALOG
+				const auto rel3 = Relocation(ID{ 520258, 1620197 }, 0xF4);
+				rel3.WriteFill(NOP, 0x62);
+				rel3.WriteCall(&HKMoveWindow);
+
+				return true;
 			}
 
 			BOOL WINAPI ObjectWindow::HKMoveWindow(HWND hWindow, INT32 X, INT32 Y, INT32 nWidth, INT32 nHeight, BOOL bRepaint)
@@ -235,7 +212,7 @@ namespace CKPE
 				if (auto iterator = ObjectWindows.find(GetParent(hWindow)); iterator != ObjectWindows.end())
 				{
 					LPOBJWND lpObjWnd = (*iterator).second;
-					if (lpObjWnd) lpObjWnd->ObjectWindow.Perform(WM_COMMAND, UI_CMD_CHANGE_SPLITTER_OBJECTWINDOW, 0);
+					if (lpObjWnd) SplitterResizeObjectWndChildControls(lpObjWnd);
 				}
 
 				return bResult;
@@ -278,7 +255,7 @@ namespace CKPE
 			}
 
 			void ObjectWindow::SetObjectWindowFilter(LPOBJWND lpObjWnd, const char* name,
-				const bool SkipText, const bool actived) noexcept(true)
+				const bool SkipText, [[maybe_unused]] const bool actived) noexcept(true)
 			{
 				if (!SkipText)
 					lpObjWnd->Controls.EditFilter.SetCaption(name);
