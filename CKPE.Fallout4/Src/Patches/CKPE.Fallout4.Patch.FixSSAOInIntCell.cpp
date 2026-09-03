@@ -18,7 +18,9 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			std::uintptr_t pointer_FixSSAOInIntCell_sub = 0;
+			using TFixSSAOInIntCell_sub = void(void*, std::uint32_t);
+
+			static std::function<TFixSSAOInIntCell_sub> FixSSAOInIntCell_sub;
 
 			FixSSAOInIntCell::FixSSAOInIntCell() : Common::Patch()
 			{
@@ -52,28 +54,12 @@ namespace CKPE
 
 			bool FixSSAOInIntCell::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto _interface = CKPE::Common::Interface::GetSingleton();
-					auto base = _interface->GetApplication()->GetBase();
+				// Fix crash caused by toggling SSAO while in an interior cell (no worldspace)
+				FixSSAOInIntCell_sub = reinterpret_cast<TFixSSAOInIntCell_sub*>(Relocation(ID{ 86141, 1941469 }).WriteJump(&sub));
 
-					// Fix crash caused by toggling SSAO while in an interior cell (no worldspace)
-					pointer_FixSSAOInIntCell_sub = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					// Fix crash caused by toggling SSAO while in an interior cell (no worldspace)
-					pointer_FixSSAOInIntCell_sub = Relocation(ID{ 1941469 }).WriteJump(sub);
-
-					return true;
-				}
+				return true;
 			}
 
 			void FixSSAOInIntCell::sub(void* Unk, std::uint32_t SkyFlag) noexcept(true)
@@ -87,8 +73,6 @@ namespace CKPE
 				auto TES = EditorAPI::TES::Singleton.GetSingleton();
 				if (!TES) return;
 
-				auto unkData = (UnkData*)Unk;
-
 				if (TES->Empty())
 				{
 					bool Safe = EditorAPI::Sky::Setting_SkyView->GetBool();
@@ -97,13 +81,13 @@ namespace CKPE
 					TES->GetSky()->UnsetFog();
 					TES->GetSky()->UnsetWeather();
 
-					fast_call<void>(pointer_FixSSAOInIntCell_sub, Unk, 0);
+					FixSSAOInIntCell_sub(Unk, 0);
 					EditorAPI::Sky::Setting_SkyView->SetBool(Safe);
 
 					return;
 				}
 
-				fast_call<void>(pointer_FixSSAOInIntCell_sub, Unk, SkyFlag);
+				FixSSAOInIntCell_sub(Unk, SkyFlag);
 			}
 		}
 	}
