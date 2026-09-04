@@ -385,13 +385,32 @@ namespace CKPE
 			}
 		}
 
+		struct DockingSnapSettings
+		{
+			LONG EdgeSlop;
+			LONG QuadrantPercent;
+			LONG ColumnDeadZonePercent;	
+		};
+
+		static const DockingSnapSettings& CKPE_CDockingGetSnapSettings() noexcept(true)
+		{
+			static DockingSnapSettings s_Settings
+			{
+				std::clamp((LONG)_READ_OPTION_INT("Docking", "nSnapEdgeSlop", 16), 0L, 512L),
+				std::clamp((LONG)_READ_OPTION_INT("Docking", "nSnapQuadrantPercent", 35), 1L, 49L),
+				std::clamp((LONG)_READ_OPTION_INT("Docking", "nSnapColumnDeadZonePercent", 50), 0L, 99L),
+			};
+
+			return s_Settings;
+		}
 
 		static bool CKPE_CDockingFrameTestAnchorEdge(HWND anchorHwnd, const POINT& cursor,
 			RECT& outZoneRect, std::uint32_t& outZone) noexcept(true)
 		{
-			constexpr LONG kEdgeSlop = 16;
-			constexpr LONG kQuadrantPercent = 35;
-			constexpr LONG kColumnDeadZonePercent = 50;
+			auto& snapSettings = CKPE_CDockingGetSnapSettings();
+			auto kEdgeSlop = snapSettings.EdgeSlop;
+			auto kQuadrantPercent = snapSettings.QuadrantPercent;
+			auto kColumnDeadZonePercent = snapSettings.ColumnDeadZonePercent;
 
 			CKPE_CDockingPruneAnchorPanels(anchorHwnd, nullptr);
 

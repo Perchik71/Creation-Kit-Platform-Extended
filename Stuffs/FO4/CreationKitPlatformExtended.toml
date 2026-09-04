@@ -181,6 +181,12 @@ sFont = 'Consolas'
 sOutputFile = 'ckpe.log'
 
 
+[Docking]
+nSnapEdgeSlop=16						# Pixels outside a docking window's outer edge the cursor may still be while dragging for that edge to count as "in range" at all.
+nSnapQuadrantPercent=35					# % (1-49) of a docked column's height that counts as its top/bottom quadrant, letting a drag split that column instead of taking the whole side.
+nSnapColumnDeadZonePercent=50			# Dead zone % (0-99) straddling the left/right column boundary the cursor must clear before a left/right dock zone activates.
+
+
 #
 # Bind custom keys for the Render Window & Navmesh Edit Window. bUIHotkeys must be enabled under [CreationKit].
 #
