@@ -16,11 +16,11 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			typedef bool(*TChooseSoundFileSub)(std::int64_t, const char*, const char*,
+			using TChooseSoundFileSub = bool(std::int64_t, const char*, const char*,
 				const char*, char*, void*, std::int32_t, bool, const char*, std::uint32_t,
 				const char*, void*, std::int64_t, std::int64_t, std::int64_t, std::int64_t);
 
-			static TChooseSoundFileSub ChooseSoundFileSub;
+			static std::function<TChooseSoundFileSub> ChooseSoundFileSub;
 
 			ChooseSoundFile::ChooseSoundFile() : Common::Patch()
 			{
@@ -54,57 +54,38 @@ namespace CKPE
 
 			bool ChooseSoundFile::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
+				using namespace Common;
+
+				//
+				// The fixed is to select an audio file, also *.xwm.
+				//
+
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
-					auto verPatch = db->GetVersion();
-					if ((db->GetVersion() != 1) && (db->GetVersion() != 2))
-						return false;
+					Relocation(ID(417165), 0xD0).WriteFill(NOP, 0x6);
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+					auto target = ID(138153);
+					Relocation(target, 0x67).WriteCall(&sub);
+					Relocation(target, 0xF9).WriteFill(NOP, 0x2);
 
-					//
-					// The fixed is to select an audio file, also *.xwm.
-					//
-					if (verPatch == 1)
-					{
-						SafeWrite::WriteNop(__CKPE_OFFSET(0), 6);
-						Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&sub);
-						SafeWrite::WriteNop(__CKPE_OFFSET(2), 2);
-						SafeWrite::WriteNop(__CKPE_OFFSET(3), 2);
-						Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&sub);
-						Detours::DetourCall(__CKPE_OFFSET(5), (std::uintptr_t)&sub);
-						ChooseSoundFileSub = (TChooseSoundFileSub)__CKPE_OFFSET(6);
-						SafeWrite::WriteNop(__CKPE_OFFSET(7), 2);
-					}
-					else
-					{
-						Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-						Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&sub);
-						Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&sub);
-						Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&sub);
-						ChooseSoundFileSub = (TChooseSoundFileSub)__CKPE_OFFSET(4);
-						SafeWrite::WriteNop(__CKPE_OFFSET(5), 6);
-					}
+					Relocation(ID(284852), 0x5D).WriteFill(NOP, 0x2);
+					Relocation(ID(330881), 0xAE).WriteCall(&sub);
+					Relocation(ID(356112), 0x4CE).WriteCall(&sub);
 
-					return true;
+					ChooseSoundFileSub = reinterpret_cast<TChooseSoundFileSub*>(ID(411272).Address());
+					Relocation(ID(440489), 0x32).WriteFill(NOP, 0x2);
 				}
 				else
 				{
-					using namespace Common;
-
-					//
-					// The fixed is to select an audio file, also *.xwm.
-					//
-					Relocation(ID{ 1578071 }, Offset{ 0x63 }).WriteCall((std::uintptr_t)&sub);
-					Relocation(ID{ 1623267 }, Offset{ 0x87 }).WriteCall((std::uintptr_t)&sub);
-					Relocation(ID{ 1413124 }, Offset{ 0x3CB }).WriteCall((std::uintptr_t)&sub);
-					Relocation(ID{ 356112 }, Offset{ 0x57B }).WriteCall((std::uintptr_t)&sub);
-					ChooseSoundFileSub = (TChooseSoundFileSub)Relocation(ID{ 1353832 }).Address();
-					Relocation(ID{ 1623270 }, Offset{ 0x194 }).WriteFill(0x90, 0x6);
-
-					return true;
+					Relocation(ID(1578071), 0x63).WriteCall(&sub);
+					Relocation(ID(1623267), 0x87).WriteCall(&sub);
+					Relocation(ID(1413124), 0x3CB).WriteCall(&sub);
+					Relocation(ID(356112), 0x57B).WriteCall(&sub);
+					ChooseSoundFileSub = reinterpret_cast<TChooseSoundFileSub*>(ID(1353832).Address());
+					Relocation(ID(1623270), 0x194).WriteFill(NOP, 0x6);
 				}
+
+				return true;
 			}
 
 			bool ChooseSoundFile::sub(std::int64_t unk01, const char* lpPath, const char* lpFormat, const char* lpCaption,

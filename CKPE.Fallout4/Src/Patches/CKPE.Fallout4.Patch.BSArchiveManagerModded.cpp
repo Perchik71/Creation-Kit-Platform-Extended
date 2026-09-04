@@ -138,7 +138,7 @@ namespace CKPE
 						{
 							sub(rsp, 0x38);
 							mov(ptr[rsp + 0x20], rdi);
-							mov(rax, (uintptr_t)&EditorAPI::BSResource::Archive2::HKLoadStreamArchiveEx2);
+							mov(rax, (std::uintptr_t)&EditorAPI::BSResource::Archive2::HKLoadStreamArchiveEx2);
 							call(rax);
 							add(rsp, 0x38);
 							ret();
@@ -146,7 +146,7 @@ namespace CKPE
 					};
 
 					auto hook = new HookLoadA();
-					rel1.WriteCall((uintptr_t)hook->getCode());
+					rel1.WriteCall((std::uintptr_t)hook->getCode());
 				}
 
 				pointer_BSArchiveManagerModded_sub = ID{ 289312, 1493949 }.Address();

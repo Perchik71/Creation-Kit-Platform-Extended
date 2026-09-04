@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.Interface.h>
@@ -48,30 +47,13 @@ namespace CKPE
 
 			bool BSStringRefRE::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto _interface = CKPE::Common::Interface::GetSingleton();
-					auto base = _interface->GetApplication()->GetBase();
+				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::ctor = Relocation(ID{ 351555, 1339190 }).Address();
+				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::set = Relocation(ID{ 363822, 1663882 }).Address();
+				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::release = Relocation(ID{ 211833, 1594894 }).Address();
 
-					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::ctor = __CKPE_OFFSET(0);
-					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::set = __CKPE_OFFSET(1);
-					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::release = __CKPE_OFFSET(2);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::ctor = Relocation(ID{ 1339190 }).Address();
-					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::set = Relocation(ID{ 1663882 }).Address();
-					*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::release = Relocation(ID{ 1594894 }).Address();
-
-					return true;
-				}
+				return true;
 			}
 		}
 	}
