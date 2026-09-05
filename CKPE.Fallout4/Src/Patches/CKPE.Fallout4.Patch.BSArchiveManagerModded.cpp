@@ -116,13 +116,14 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				EditorAPI::BSResource::pointer_Archive2_sub1 = ID{ 399667, 1624099 }.Address();
-				EditorAPI::BSResource::pointer_Archive2_sub2 = ID{ 20873, 1940294 }.Address();
-				EditorAPI::BSResource::pointer_Archive2_sub3 = Relocation(ID(44564)).WriteJump
+				const auto target = ID(552578);
+
+				EditorAPI::BSResource::pointer_Archive2_sub1 = ID{ 767509, 1655730 }.Address();
+				EditorAPI::BSResource::pointer_Archive2_sub2 = ID{ 767637, 1991833 }.Address();
+				EditorAPI::BSResource::pointer_Archive2_sub3 = Relocation(target).WriteJump
 					(&EditorAPI::BSResource::Archive2::HKLoadArchive);
 				EditorAPI::BSResource::Archive2::Initialize(); 
 
-				const auto target = ID(44564);
 				const auto rel1 = Relocation(target, Offset{ 0x557, 0x4C3, 0x4D9, 0x434 });
 
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
@@ -149,9 +150,9 @@ namespace CKPE
 					rel1.WriteCall((std::uintptr_t)hook->getCode());
 				}
 
-				pointer_BSArchiveManagerModded_sub = ID{ 289312, 1493949 }.Address();
-				Relocation(ID{ 261467, 1943828 }, Offset{ 0x17, 0x1C }).WriteCall(&LoadTesFile);
-				Relocation(ID(192751)).WriteJump(&LoadTesFileFinal);
+				pointer_BSArchiveManagerModded_sub = ID{ 654208, 1514423 }.Address();
+				Relocation(ID{ 304833, 1995710 }, Offset{ 0x17, 0x1C }).WriteCall(&LoadTesFile);
+				Relocation(ID(142976), 0x12).WriteJump(&LoadTesFileFinal);
 
 				// Так как разница между первой и 8 версией лишь, то что был удалён GNF формат для PlayStation.
 				// То очевидно, 8 версии с GNF форматом просто не будет, то вполне безопасно, открывать любые версии архивы.

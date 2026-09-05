@@ -62,27 +62,27 @@ namespace CKPE
 
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
-					Relocation(ID(417165), 0xD0).WriteFill(NOP, 0x6);
+					Relocation(ID(581209), 0xD0).WriteFill(NOP, 0x6);
 
-					auto target = ID(138153);
+					auto target = ID(429186);
 					Relocation(target, 0x67).WriteCall(&sub);
 					Relocation(target, 0xF9).WriteFill(NOP, 0x2);
 
-					Relocation(ID(284852), 0x5D).WriteFill(NOP, 0x2);
-					Relocation(ID(330881), 0xAE).WriteCall(&sub);
-					Relocation(ID(356112), 0x4CE).WriteCall(&sub);
+					Relocation(ID(216529), 0x5D).WriteFill(NOP, 0x2);
+					Relocation(ID(419916), 0xAE).WriteCall(&sub);
+					Relocation(ID(580601), 0x47E).WriteCall(&sub);
 
-					ChooseSoundFileSub = reinterpret_cast<TChooseSoundFileSub*>(ID(411272).Address());
-					Relocation(ID(440489), 0x32).WriteFill(NOP, 0x2);
+					ChooseSoundFileSub = reinterpret_cast<TChooseSoundFileSub*>(ID(645762).Address());
+					Relocation(ID(119311), 0x32).WriteFill(NOP, 0x2);
 				}
 				else
 				{
-					Relocation(ID(1578071), 0x63).WriteCall(&sub);
-					Relocation(ID(1623267), 0x87).WriteCall(&sub);
-					Relocation(ID(1413124), 0x3CB).WriteCall(&sub);
-					Relocation(ID(356112), 0x57B).WriteCall(&sub);
-					ChooseSoundFileSub = reinterpret_cast<TChooseSoundFileSub*>(ID(1353832).Address());
-					Relocation(ID(1623270), 0x194).WriteFill(NOP, 0x6);
+					Relocation(ID(1606845), 0x63).WriteCall(&sub);
+					Relocation(ID(1654850), 0x87).WriteCall(&sub);
+					Relocation(ID(1423625), 0x3CB).WriteCall(&sub);
+					Relocation(ID(580601), 0x57B).WriteCall(&sub);
+					ChooseSoundFileSub = reinterpret_cast<TChooseSoundFileSub*>(ID(1356949).Address());
+					Relocation(ID(1654852), 0x194).WriteFill(NOP, 0x6);
 				}
 
 				return true;

@@ -50,49 +50,44 @@ namespace CKPE
 				// This of option control the output of the havok collision information generated during the precombine process, which is stuck at mode 1 unpatched.
 				// This will not magically make your plugin the same format. - BenRierimanu
 				// 0 - 64bit havok little endian[PC or XB1, default setting with CKPE and recommended for PRP and related patches]
-				// 1 - 64bit havok big endian[PS4, default setting unpatched.Untested and not recommended unless you can somehow get the files on that platform]
+				// 1 - 64bit havok big endian[PS4, default setting unpatched. Untested and not recommended unless you can somehow get the files on that platform]
 				// 2 - 32bit havok little endian[PC or XB1, default setting when using the user interface generation commands as the XB1 was originally a 32bit platform at one point, will still work, but obsolete]
 
-				if (db)
+				using namespace Common;
+
+				auto precomb_flag_1i = static_cast<std::int32_t>(_READ_OPTION_INT("PreCombined", "nGenerationVersion", 2));
+				auto precomb_flag_2i = static_cast<std::int32_t>(_READ_OPTION_INT("PreCombined", "nGenerationVersionSCOL", 1));
+				auto precomb_flag_3i = static_cast<std::int32_t>(_READ_OPTION_INT("PreCombined", "nGenerationVersionMesh32bit", 1));
+				auto precomb_flag_1b = static_cast<std::int8_t>(precomb_flag_1i);
+				auto precomb_flag_2b = static_cast<std::int8_t>(precomb_flag_2i);
+				auto precomb_flag_3b = static_cast<std::int8_t>(precomb_flag_3i);
+
+				Relocation(ID{ 677726, 1377514 }, 0x13B).Write(std::addressof(precomb_flag_1i), 4);
+
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
-					auto verPatch = db->GetVersion();
-					if ((verPatch != 1) && (verPatch != 2))
-						return false;
+					auto rel1 = Relocation(ID(632758));
+					rel1.Write<0x38>(std::addressof(precomb_flag_2b), 1);
+					rel1.Write<0x44>(std::addressof(precomb_flag_2b), 1);
+					rel1.Write<0x54>(std::addressof(precomb_flag_2b), 1);
+					rel1.Write<0x67>(std::addressof(precomb_flag_2b), 1);
+					rel1.Write<0x6E>(std::addressof(precomb_flag_2i), 4);
+					rel1.Write<0x7D>(std::addressof(precomb_flag_2b), 1);
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
-
-					std::int32_t precomb_flag = (std::int32_t)_READ_OPTION_INT("PreCombined", "nGenerationVersion", 0);
-
-					SafeWrite::Write(__CKPE_OFFSET(0), (std::uint8_t*)&precomb_flag, 4);
-
-					if (verPatch == 2)
-						// push <precomb_flag>
-						// pop rcx
-						SafeWrite::Write(__CKPE_OFFSET(1), { 0x6A, (std::uint8_t)precomb_flag, 0x59 });
-					else
-						SafeWrite::Write(__CKPE_OFFSET(1), (std::uint8_t*)&precomb_flag, 4);
-
-					SafeWrite::Write(__CKPE_OFFSET(2), (std::uint8_t*)&precomb_flag, 4);
-
-					return true;
+					auto rel2 = Relocation(ID(415101));
+					rel2.Write<0xC7>(std::addressof(precomb_flag_3i), 4);
+					rel2.Write<0xD6>(std::addressof(precomb_flag_3b), 1);
 				}
 				else
 				{
-					using namespace Common;
+					Relocation(ID(1462644), 0x29).Write(std::addressof(precomb_flag_2i), 4);
 
-					std::int32_t precomb_flag = (std::int32_t)_READ_OPTION_INT("PreCombined", "nGenerationVersion", 0);
-
-					Relocation(ID{ 1372227 }, Offset{ 0x13B }).Write((std::uint8_t*)&precomb_flag, 4);
-
-					// push <precomb_flag>
-					// pop rcx
-					Relocation(ID{ 1447864 }, Offset{ 0x29 }).Write({ 0x6A, (std::uint8_t)precomb_flag, 0x59 });
-
-					Relocation(ID{ 1939088 }, Offset{ 0x116 }).Write((std::uint8_t*)&precomb_flag, 4);
-
-					return true;
+					auto rel1 = Relocation(ID(1990514));
+					rel1.Write<0x116>(std::addressof(precomb_flag_3i), 4);
+					rel1.Write<0x125>(std::addressof(precomb_flag_3b), 1);
 				}
+
+				return true;
 			}
 		}
 	}

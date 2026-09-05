@@ -149,7 +149,7 @@ namespace CKPE
 			}
 
 			template <std::ptrdiff_t O = 0, class F>
-			std::uintptr_t WriteJump(const F a_dst)
+			std::uintptr_t WriteJump(const F a_dst) const
 				requires(std::same_as<value_type, std::uintptr_t>)
 			{
 				return Detours::DetourJump(Address() + O, *(uintptr_t*)&a_dst);

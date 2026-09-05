@@ -3,8 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.FileUtils.h>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.Relocation.h>
@@ -83,90 +81,56 @@ namespace CKPE
 
 			bool BSResourceLooseFiles::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
+				using namespace Common;
+
+				// Set new size class 0x1XX to 0x180
+				Relocation(ID{ 193501, 1992729 }, Offset{ 0x101, 0x101, 0x102 }).Write({ 0x80 });
+
+				LooseFileStreamHook::Generate(Relocation(ID{ 767841, 1456433 }, 0x107).Address());
+				Relocation(ID{ 712081, 2009874 }).WriteJump(&sub);
+
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
-					auto verPatch = db->GetVersion();
-					if ((verPatch != 1) && (verPatch != 2) && (verPatch != 3))
-						return false;
+					// As I understand it, CK evaluates the amount of useful data with the file size,
+					// since I will now adjust the 64-bit size, sacrificing checking for NullPtr.
+					//
+					// mov rax, qword ptr ds:[rcx+0x170]
+					// jmp -> cmp rsi, rax
+					Relocation(ID(552578), 0x484).Write({ 0x48, 0x8B, 0x81, 0x70, 0x01, 0x00, 0x00, 0xEB, 0x1D });
+					
+					// Ignoring the correctness check is not useful
+					Relocation(ID(255793), 0x160).Write(JMP);
+					Relocation(ID(647276), 0x14D).Write(JMP);
+					Relocation(ID(530259), 0x176).Write(JMP);
+					Relocation(ID(530994), 0xD2).Write(JMP);
+					Relocation(ID(648213)).Write(RET);
+					Relocation(ID(745724)).Write(RET);
+				}
+				else if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_982_3)
+				{
+					// As I understand it, CK evaluates the amount of useful data with the file size,
+					// since I will now adjust the 64-bit size, sacrificing checking for NullPtr.
+					//
+					// mov rax, qword ptr ds:[rcx+0x170]
+					// jmp -> cmp rbx, rax
+					Relocation(ID(552578), 0x3F2).Write({ 0x48, 0x8B, 0x81, 0x70, 0x01, 0x00, 0x00, 0xEB, 0x19 });
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
-
-					if (verPatch == 1)
-					{
-						// Set new size class 0x160 to 0x180
-						SafeWrite::Write(__CKPE_OFFSET(0), { 0x80 });
-
-						LooseFileStreamHook::Generate(__CKPE_OFFSET(1));
-						Detours::DetourJump(__CKPE_OFFSET(8), (uintptr_t)&sub);
-
-						// As I understand it, CK evaluates the amount of useful data with the file size,
-						// since I will now adjust the 64-bit size, sacrificing checking for NullPtr.
-						//
-						// mov rax, qword ptr ds:[rcx+0x170]
-						// jmp -> cmp rsi, rax
-						SafeWrite::Write(__CKPE_OFFSET(2), { 0x48, 0x8B, 0x81, 0x70, 0x01, 0x00, 0x00, 0xEB, 0x1D });
-
-						// Ignoring the correctness check is not useful
-						SafeWrite::Write(__CKPE_OFFSET(3), { 0xEB });
-						SafeWrite::Write(__CKPE_OFFSET(4), { 0xEB });
-						SafeWrite::Write(__CKPE_OFFSET(5), { 0xEB });
-						SafeWrite::Write(__CKPE_OFFSET(6), { 0xC3 });
-						SafeWrite::Write(__CKPE_OFFSET(7), { 0xC3 });
-					}
-					else if (verPatch == 2)
-					{
-						LooseFileStreamHook::Generate(__CKPE_OFFSET(7));
-						Detours::DetourJump(__CKPE_OFFSET(4), (uintptr_t)&sub);
-
-						// Ignoring the correctness check is not useful
-
-						for (std::uint32_t i = 0; i < 4; i++)
-							SafeWrite::Write(__CKPE_OFFSET(i), { 0xEB });
-
-						// As I understand it, CK evaluates the amount of useful data with the file size,
-						// since I will now adjust the 64-bit size, sacrificing checking for NullPtr.
-						//
-						// mov rax, qword ptr ds:[rcx+0x170]
-						// jmp -> cmp rbx, rax
-						SafeWrite::Write(__CKPE_OFFSET(5), { 0x48, 0x8B, 0x81, 0x70, 0x01, 0x00, 0x00, 0xEB, 0x19 });
-
-						// Set new size class 0x168 to 0x180
-						SafeWrite::Write(__CKPE_OFFSET(6), { 0x80 });
-					}
-					else
-					{
-						LooseFileStreamHook::Generate(__CKPE_OFFSET(7));
-						Detours::DetourJump(__CKPE_OFFSET(4), (uintptr_t)&sub);
-
-						// Ignoring the correctness check is not useful
-
-						for (std::uint32_t i = 0; i < 4; i++)
-							SafeWrite::Write(__CKPE_OFFSET(i), { 0xEB });
-
-						// Set new size class 0x168 to 0x180
-						SafeWrite::Write(__CKPE_OFFSET(6), { 0x80 });
-					}
-
-					return true;
+					// Ignoring the correctness check is not useful
+					Relocation(ID(255793), 0x15A).Write(JMP);
+					Relocation(ID(1501752), 0x15E).Write(JMP);
+					Relocation(ID(530259), 0x180).Write(JMP);
+					Relocation(ID(530994), 0xD2).Write(JMP);
 				}
 				else
 				{
-					using namespace Common;
-
-					Relocation(ID{ 2076234 }, Offset{ 0x159 }).Write({ 0xEB });
-					Relocation(ID{ 2009896 }, Offset{ 0x162 }).Write({ 0xEB });
-					Relocation(ID{ 2076235 }, Offset{ 0x19B }).Write({ 0xEB });
-					Relocation(ID{ 2025648 }, Offset{ 0x5D }).Write({ 0xEB });
-
-					LooseFileStreamHook::Generate(Relocation(ID{ 1442369 }, Offset{ 0x107 }).Address());
-					Detours::DetourJump(Relocation(ID{ 1956941 }).Address(), (uintptr_t)&sub);
-
-					// Set new size class 0x168 to 0x180
-					Relocation(ID{ 1941102 }, Offset{ 0x102 }).Write({ 0x80 });
-
-					return true;
+					// Ignoring the correctness check is not useful
+					Relocation(ID(2203563), 0x159).Write(JMP);
+					Relocation(ID(2129124), 0x162).Write(JMP);
+					Relocation(ID(2203564), 0x19B).Write(JMP);
+					Relocation(ID(2147855), 0x5D).Write(JMP);
 				}
+
+				return true;
 			}
 
 			bool BSResourceLooseFiles::sub(const char* fileName, std::uint64_t& fileSize) noexcept(true)

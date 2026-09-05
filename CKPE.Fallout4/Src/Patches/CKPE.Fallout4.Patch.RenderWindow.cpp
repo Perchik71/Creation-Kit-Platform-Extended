@@ -90,24 +90,24 @@ namespace CKPE
 				StepInRender = _READ_OPTION_FLOAT("Graphics", "fStepInRender", 15.f);
 				StepInRender = std::min(std::max(StepInRender, 15.f), 100.f);
 
-				*(std::uintptr_t*)&_oldWndProc = Common::Relocation(Common::ID{ 234564, 1885140 }).WriteJump(&HKWndProc);
-				_TempDrawArea = Common::Relocation<Area*>(Common::ID(171553)).Get();
+				*(std::uintptr_t*)&_oldWndProc = Common::Relocation(Common::ID{ 177103, 1933064 }).WriteJump(&HKWndProc);
+				_TempDrawArea = Common::Relocation<Area*>(Common::ID(583093)).Get();
 			
-				EditorAPI::BGSRenderWindow::Singleton = Common::ID(383337).Address();
+				EditorAPI::BGSRenderWindow::Singleton = Common::ID(494701).Address();
 				
-				EditorAPI::BGSRenderWindow::Settings::Movement::FlagsSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(381092)).Get();
-				EditorAPI::BGSRenderWindow::Settings::Movement::SnapGridValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384553)).Get();
-				EditorAPI::BGSRenderWindow::Settings::Movement::SnapAngleValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384587)).Get();
-				EditorAPI::BGSRenderWindow::Settings::Movement::ArrowSnapValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384565)).Get();
-				EditorAPI::BGSRenderWindow::Settings::Movement::ObjectRotateValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384591)).Get();
-				EditorAPI::BGSRenderWindow::Settings::Movement::ObjectMoveValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384559)).Get();
-				EditorAPI::BGSRenderWindow::Settings::Movement::CameraRotateValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384592)).Get();
-				EditorAPI::BGSRenderWindow::Settings::Movement::CameraZoomValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384595)).Get();
-				EditorAPI::BGSRenderWindow::Settings::Movement::CameraZoomOrthoValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384599)).Get();
-				EditorAPI::BGSRenderWindow::Settings::Movement::CameraPanValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384600)).Get();
-				EditorAPI::BGSRenderWindow::Settings::Movement::LandspaceMultValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(384603)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::FlagsSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(493984)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::SnapGridValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(506980)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::SnapAngleValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(502295)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::ArrowSnapValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(383762)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::ObjectRotateValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(401851)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::ObjectMoveValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(463613)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::CameraRotateValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(526097)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::CameraZoomValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(443228)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::CameraZoomOrthoValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(526100)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::CameraPanValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(526106)).Get();
+				EditorAPI::BGSRenderWindow::Settings::Movement::LandspaceMultValueSingleton = Common::Relocation<EditorAPI::Setting*>(Common::ID(526107)).Get();
 
-				const auto rel1 = Common::Relocation(Common::ID{ 408886, 1938434 }, Common::Offset{ 0xC5, 0x1E2 });
+				const auto rel1 = Common::Relocation(Common::ID{ 570159, 1989813 }, Common::Offset{ 0xC5, 0x1E2 });
 
 				if (VersionLists::GetEditorVersion() < VersionLists::EDITOR_FALLOUT_C4_1_10_943_1)
 					rel1.WriteFill(Common::NOP, 0x4B);
@@ -116,11 +116,11 @@ namespace CKPE
 
 				rel1.WriteCall(&DrawFrameEx);
 
-				const auto rel2 = Common::Relocation(Common::ID{ 467263, 1638356 }, Common::Offset{ 0x1DC, 0x211 });
+				const auto rel2 = Common::Relocation(Common::ID{ 638107, 1670900 }, Common::Offset{ 0x1DC, 0x211 });
 				rel2.WriteFill(Common::NOP, 0x14);
 				rel2.WriteCall(&UpdateDrawInfo);
 
-				*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromNiNode = Common::Relocation(Common::ID(411210)).WriteJump
+				*(std::uintptr_t*)&EditorAPI::BGSRenderWindow::Pick::GetRefFromNiNode = Common::Relocation(Common::ID(495117)).WriteJump
 					(&EditorAPI::BGSRenderWindow::Pick::HKGetRefFromNiNode);
 
 				return true;

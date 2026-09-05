@@ -91,9 +91,9 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				EditorAPI::pointer_TESFile_sub1 = ID{ 465268, 1942584 }.Address();
-				EditorAPI::pointer_TESFile_sub2 = ID{ 445270, 1777850 }.Address();
-				pointer_AllowSaveESMandMasterESP_sub1 = ID{ 411272, 1353832 }.Address();
+				EditorAPI::pointer_TESFile_sub1 = ID{ 654263, 1994346 }.Address();
+				EditorAPI::pointer_TESFile_sub2 = ID{ 300396, 1818942 }.Address();
+				pointer_AllowSaveESMandMasterESP_sub1 = ID{ 645762, 1356949 }.Address();
 
 				EditorAPI::TESFile::AllowSaveESM = _READ_OPTION_BOOL("CreationKit", "bAllowSaveESM", false);
 				EditorAPI::TESFile::AllowMasterESP = _READ_OPTION_BOOL("CreationKit", "bAllowMasterESP", false);
@@ -101,27 +101,27 @@ namespace CKPE
 				if (EditorAPI::TESFile::AllowSaveESM || EditorAPI::TESFile::AllowMasterESP)
 				{
 					*(std::uintptr_t*)&EditorAPI::TESFile::LoadTESInfo =
-						Common::Relocation(Common::ID{ 289312, 1493949 }).WriteJump(&EditorAPI::TESFile::hk_LoadTESInfo);
+						Common::Relocation(Common::ID{ 654208, 1514423 }).WriteJump(&EditorAPI::TESFile::hk_LoadTESInfo);
 					*(std::uintptr_t*)&EditorAPI::TESFile::WriteTESInfo =
-						Common::Relocation(Common::ID(445271)).WriteJump(&EditorAPI::TESFile::hk_WriteTESInfo);
+						Common::Relocation(Common::ID(532384)).WriteJump(&EditorAPI::TESFile::hk_WriteTESInfo);
 
 					if (EditorAPI::TESFile::AllowSaveESM)
 					{
 						// Also allow non-game ESMs to be set as "Active File"
-						Relocation(ID(534861), 0x5F).WriteCall(&IsActiveFileBlacklist);
-						Relocation(ID{ 23248, 1716794 }, Offset{ 0x48, 0x4F }).WriteFill(NOP, 2);
+						Relocation(ID(535497), 0x5F).WriteCall(&IsActiveFileBlacklist);
+						Relocation(ID{ 653585, 1754118 }, Offset{ 0x48, 0x4F }).WriteFill(NOP, 2);
 
 						// Disable: "File '%s' is a master file or is in use.\n\nPlease select another file to save to."
 						auto newFormat = "File '%s' is in use.\n\nPlease select another file to save to.";
 
-						Relocation(ID{ 148381, 1380402 }, Offset{ 0x489, 0x55A }).WriteFill(NOP, 0xD);
-						Relocation(ID(180829)).Write(newFormat, strlen(newFormat) + 1);
-						Relocation(ID{ 273721, 1631676 }).WriteJump(&OpenPluginSaveDialog);
+						Relocation(ID{ 68391, 1386733 }, Offset{ 0x489, 0x55A }).WriteFill(NOP, 0xD);
+						Relocation(ID(41293)).Write(newFormat, strlen(newFormat) + 1);
+						Relocation(ID{ 462857, 1663801 }).WriteJump(&OpenPluginSaveDialog);
 					}
 
 					if (EditorAPI::TESFile::AllowMasterESP)
 						// Remove the check for IsMaster()
-						Relocation(ID{ 445380, 1436783 }, 0x5C).WriteFill(NOP, 9);
+						Relocation(ID{ 24274, 1450164 }, 0x5C).WriteFill(NOP, 9);
 				}
 
 				return true;

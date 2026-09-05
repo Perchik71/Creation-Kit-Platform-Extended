@@ -54,29 +54,12 @@ namespace CKPE
 				// sometimes this function returns a Form that is not a Cell. This is an error, 
 				// because in the body it is further revealedand coordinates in the world space are obtained.
 
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto _interface = CKPE::Common::Interface::GetSingleton();
-					auto base = _interface->GetApplication()->GetBase();
+				Relocation(ID{ 632497, 1994724 }, Offset{ 0x2A1, 0x500 }).WriteCall(sub);
+				pointer_PreVisPatch_sub = Relocation(ID{ 611970, 1519646 }).Address();
 
-					
-					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-					pointer_PreVisPatch_sub = __CKPE_OFFSET(1);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					Relocation(ID{ 1942928 }, Offset{ 0x500 }).WriteCall(sub);
-					pointer_PreVisPatch_sub = Relocation(ID{ 1498643 }).Address();
-
-					return true;
-				}
+				return true;
 			}
 
 			void* PreVis::sub(void* a1) noexcept(true)

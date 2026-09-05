@@ -233,139 +233,79 @@ namespace CKPE
 
 			bool ModernThemePatchAdditional::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
+				if (!Common::UI::IsDarkTheme() ||
+					_READ_OPTION_BOOL("CreationKit", "bUIClassicTheme", false))
+					return false;
+
+				using namespace Common;
+
+				// CinfigureWindow sets now
+				Common::ModernTheme::InitializeCurrentThread();
+
+				pointer_UIThemePatchAdditional_sub = Relocation(ID{ 577351, 1588570 }).Address();
+				// replace main toolbar
+				const auto target = ID{ 88741, 1654076 };
+				Relocation(target, Offset{ 0x56 }).WriteCall(&Comctl32CreateToolbarEx_1);
+				Relocation(ID{ 644735, 1777801 }, Offset{ 0x56 }).WriteCall(&Comctl32CreateToolbarEx_NavMesh);
+				Relocation(target, Offset{ 0x2F1, 0x27C }).WriteJump(&HideOldTimeOfDayComponents);
+				// replace ImageList_LoadImage for item type
+				Relocation(ID{ 297712, 1477214, 2181936 }, Offset{ 0x1077, 0x131A, 0x1332 }).WriteCall(&Comctl32ImageList_LoadImageA_1);
+
+				Relocation(ID{ 466561, 1988708 }, Offset{ 0xF0 }).WriteCall(&HKInitializeTimeOfDay);
+				Relocation(ID{ 637699, 1580232 }, Offset{ 0x1CA, 0x1CC }).WriteCall(&HKSetNewValueTimeOfDay);
+
+				// replace ImageList_LoadImage
+				Relocation(ID{ 691706, 1689193 }, Offset{ 0x53, 0x4F }).WriteCall(&Comctl32ImageList_LoadImageA_2);		// item type Task Manager
+				Relocation(ID{ 697171, 1531107 }, Offset{ 0x1B2, 0x1D2 }).WriteCall(&Comctl32ImageList_LoadImageA_3);	// Scripts icons
+				Relocation(ID{ 70844, 1650572 }, Offset{ 0xFB }).WriteCall(&Comctl32ImageList_LoadImageA_3);			// Scripts icons
+
+				if (VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+					Relocation(ID(1515787), 0x18F).WriteCall(&Comctl32ImageList_LoadImageA_3);							// Scripts icons
+
+				Common::UI::ListView::InstallCustomDrawHandler(&DoCustomDrawListView);
+				
+				// Layers Window
+				Relocation(ID{ 646694, 1541828 }, Offset{ 0x465, 0x46D }).WriteCall(&HkSendMsgChangeColorTextForLayers);
+
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
-					auto verPatch = db->GetVersion();
-					if (!Common::UI::IsDarkTheme() ||
-						_READ_OPTION_BOOL("CreationKit", "bUIClassicTheme", false) || (verPatch != 2))
-						return false;
-
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
-
-					// CinfigureWindow sets now
-					Common::ModernTheme::InitializeCurrentThread();
-
-					pointer_UIThemePatchAdditional_sub = __CKPE_OFFSET(0);
-					// replace main toolbar
-					Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&Comctl32CreateToolbarEx_1);
-					Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&Comctl32CreateToolbarEx_NavMesh);
-					Detours::DetourJump(__CKPE_OFFSET(3), (std::uintptr_t)&HideOldTimeOfDayComponents);
-					// replace ImageList_LoadImage for item type
-					Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&Comctl32ImageList_LoadImageA_1);
-
-					Detours::DetourCall(__CKPE_OFFSET(5), (std::uintptr_t)&HKInitializeTimeOfDay);
-					Detours::DetourCall(__CKPE_OFFSET(6), (std::uintptr_t)&HKSetNewValueTimeOfDay);
-
-					if (VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_943_1)
-					{
-						// replace ImageList_LoadImage
-						Detours::DetourCall(__CKPE_OFFSET(7), (std::uintptr_t)&Comctl32ImageList_LoadImageA_2);			// item type Task Manager
-						Detours::DetourCall(__CKPE_OFFSET(8), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);			// Scripts icons
-						Detours::DetourCall(__CKPE_OFFSET(9), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);			// Scripts icons
-
-						if (VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-							Detours::DetourCall(__CKPE_OFFSET(10), (std::uintptr_t)&Comctl32ImageList_LoadImageA_3);	// Scripts icons
-					}
-
-					Common::UI::ListView::InstallCustomDrawHandler(&DoCustomDrawListView);
-
-					if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-					{
-						// Layers Window
-						Detours::DetourCall(__CKPE_OFFSET(11), (std::uintptr_t)&HkSendMsgChangeColorTextForLayers);
-						// Rechange color text
-						auto rva = __CKPE_OFFSET(12);
-						Detours::DetourCall(rva, (std::uintptr_t)&HkSetTextColorForLayers);
-						Detours::DetourCall(rva + 0x212, (std::uintptr_t)&HkSetTextColorForLayers);
-						Detours::DetourCall(rva + 0x471, (std::uintptr_t)&HkSetTextColorForLayers);
-						Detours::DetourCall(rva + 0x48B, (std::uintptr_t)&HkSetTextColorForLayers);
-						Detours::DetourCall(rva + 0x547, (std::uintptr_t)&HkSetTextColorForLayers);
-						// Skip edge draw
-						rva = __CKPE_OFFSET(13);
-						Detours::DetourCall(rva, (std::uintptr_t)&HkDrawEdgeForLayers);
-						Detours::DetourCall(rva + 0x2C, (std::uintptr_t)&HkDrawEdgeForLayers);
-						Detours::DetourCall(rva + 0x46C, (std::uintptr_t)&HkDrawEdgeForLayers);
-						// Icons
-						Detours::DetourCall(__CKPE_OFFSET(14), (std::uintptr_t)&HkImageListForLayers_LoadImageA);
-					}
-					else if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_FALLOUT_C4_1_10_982_3)
-					{
-						// Layers Window
-						Detours::DetourCall(__CKPE_OFFSET(11), (std::uintptr_t)&HkSendMsgChangeColorTextForLayers);
-						// Rechange color text
-						auto rva = __CKPE_OFFSET(12);
-						Detours::DetourCall(rva, (std::uintptr_t)&HkSetTextColorForLayers);
-						Detours::DetourCall(rva + 0x214, (std::uintptr_t)&HkSetTextColorForLayers);
-						Detours::DetourCall(rva + 0x457, (std::uintptr_t)&HkSetTextColorForLayers);
-						Detours::DetourCall(rva + 0x471, (std::uintptr_t)&HkSetTextColorForLayers);
-						Detours::DetourCall(rva + 0x530, (std::uintptr_t)&HkSetTextColorForLayers);
-						// Skip edge draw
-						rva = __CKPE_OFFSET(13);
-						Detours::DetourCall(rva, (std::uintptr_t)&HkDrawEdgeForLayers);
-						Detours::DetourCall(rva + 0x2C, (std::uintptr_t)&HkDrawEdgeForLayers);
-						Detours::DetourCall(rva + 0x459, (std::uintptr_t)&HkDrawEdgeForLayers);
-						// Icons
-						Detours::DetourCall(__CKPE_OFFSET(14), (std::uintptr_t)&HkImageListForLayers_LoadImageA);
-						Detours::DetourCall(__CKPE_OFFSET(15), (std::uintptr_t)&HkImageListForLayers_LoadImageA);
-					}
-
-					return true;
+					// Rechange color text
+					const auto target = ID(646715);
+					const auto rel1 = Relocation(target, 0x653);
+					rel1.WriteCall(&HkSetTextColorForLayers);
+					rel1.WriteCall<0x212>(&HkSetTextColorForLayers);
+					rel1.WriteCall<0x471>(&HkSetTextColorForLayers);
+					rel1.WriteCall<0x48B>(&HkSetTextColorForLayers);
+					rel1.WriteCall<0x547>(&HkSetTextColorForLayers);
+					// Skip edge draw
+					const auto rel2 = Relocation(target, 0x761);
+					rel2.WriteCall(&HkDrawEdgeForLayers);
+					rel2.WriteCall<0x2C>(&HkDrawEdgeForLayers);
+					rel2.WriteCall<0x46C>(&HkDrawEdgeForLayers);
+					// Icons
+					Relocation(ID(635134), 0x3E).WriteCall(&HkImageListForLayers_LoadImageA);
 				}
 				else
 				{
-					if (!Common::UI::IsDarkTheme() ||
-						_READ_OPTION_BOOL("CreationKit", "bUIClassicTheme", false))
-						return false;
-
-					using namespace Common;
-
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
-
-					// CinfigureWindow sets now
-					Common::ModernTheme::InitializeCurrentThread();
-
-					pointer_UIThemePatchAdditional_sub = Relocation(ID{ 1560813 }).Address();
-					// replace main toolbar
-					Relocation(ID{ 1622538 }, Offset{ 0x56 }).WriteCall(Comctl32CreateToolbarEx_1);
-					Relocation(ID{ 1739114 }, Offset{ 0x56 }).WriteCall(Comctl32CreateToolbarEx_NavMesh);
-					Relocation(ID{ 1622538 }, Offset{ 0x27C }).WriteJump(HideOldTimeOfDayComponents);
-					// replace ImageList_LoadImage for item type
-					Relocation(ID{ 2054943 }, Offset{ 0x1332 }).WriteCall(Comctl32ImageList_LoadImageA_1);
-
-					Relocation(ID{ 1937416 }, Offset{ 0xF0 }).WriteCall(HKInitializeTimeOfDay);
-					Relocation(ID{ 1552965 }, Offset{ 0x1CC }).WriteCall(HKSetNewValueTimeOfDay);
-
-					// replace ImageList_LoadImage
-					Relocation(ID{ 1655514 }, Offset{ 0x4F }).WriteCall(Comctl32ImageList_LoadImageA_2);			// item type Task Manager
-					Relocation(ID{ 1508707 }, Offset{ 0x1D2 }).WriteCall(Comctl32ImageList_LoadImageA_3);			// Scripts icons
-					Relocation(ID{ 1495189 }, Offset{ 0x18F }).WriteCall(Comctl32ImageList_LoadImageA_3);			// Scripts icons
-
-					Relocation(ID{ 1619236 }, Offset{ 0xFB }).WriteCall(Comctl32ImageList_LoadImageA_3);	// Scripts icons
-
-					Common::UI::ListView::InstallCustomDrawHandler(&DoCustomDrawListView);
-
-					// Layers Window
-					Relocation(ID{ 1518220 }, Offset{ 0x46D }).WriteCall(HkSendMsgChangeColorTextForLayers);
 					// Rechange color text
-					auto rel = Relocation(ID{ 1641235 }, Offset{ 0x645 });
-					rel.WriteCall(HkSetTextColorForLayers);
-					rel.WriteCall<0x214>(HkSetTextColorForLayers);
-					rel.WriteCall<0x457>(HkSetTextColorForLayers);
-					rel.WriteCall<0x471>(HkSetTextColorForLayers);
-					rel.WriteCall<0x530>(HkSetTextColorForLayers);
+					const auto target = ID(1673982);
+					const auto rel1 = Relocation(target, 0x645);
+					rel1.WriteCall(&HkSetTextColorForLayers);
+					rel1.WriteCall<0x214>(&HkSetTextColorForLayers);
+					rel1.WriteCall<0x457>(&HkSetTextColorForLayers);
+					rel1.WriteCall<0x471>(&HkSetTextColorForLayers);
+					rel1.WriteCall<0x530>(&HkSetTextColorForLayers);
 					// Skip edge draw
-					rel = Relocation(ID{ 1641235 }, Offset{ 0x74F });
-					rel.WriteCall(HkDrawEdgeForLayers);
-					rel.WriteCall<0x2C>(HkDrawEdgeForLayers);
-					rel.WriteCall<0x459>(HkDrawEdgeForLayers);
+					const auto rel2 = Relocation(target, 0x74F);
+					rel2.WriteCall(&HkDrawEdgeForLayers);
+					rel2.WriteCall<0x2C>(&HkDrawEdgeForLayers);
+					rel2.WriteCall<0x459>(&HkDrawEdgeForLayers);
 					// Icons
-					Relocation(ID{ 1801847 }, Offset{ 0x3E }).WriteCall(HkImageListForLayers_LoadImageA);
-					Relocation(ID{ 1437462 }, Offset{ 0xEBF }).WriteCall(HkImageListForLayers_LoadImageA);
-
-					return true;
+					Relocation(ID(1844613), 0x3E).WriteCall(&HkImageListForLayers_LoadImageA);
+					Relocation(ID(1450938), 0xEBF).WriteCall(&HkImageListForLayers_LoadImageA);
 				}
+
+				return true;
 			}
 
 			HWND ModernThemePatchAdditional::Comctl32CreateToolbarEx_1(HWND hwnd, DWORD ws, UINT wID, INT nBitmaps,

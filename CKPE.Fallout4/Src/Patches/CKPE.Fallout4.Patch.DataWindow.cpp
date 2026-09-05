@@ -4,8 +4,6 @@
 
 #include <windows.h>
 #include <windowsx.h>
-#include <CKPE.SafeWrite.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Graphics.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.UIVarCommon.h>
@@ -200,43 +198,18 @@ namespace CKPE
 
 			bool DataWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db) {
-					auto verPatch = db->GetVersion();
-					if ((verPatch != 1) && (verPatch != 2))
-						return false;
+				using namespace Common;
 
-					auto _interface = Common::Interface::GetSingleton();
-					auto base = _interface->GetApplication()->GetBase();
+				*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 643283, 1992435 }).WriteJump(&HKWndProc);
 
-					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
+				auto rel = Relocation(ID{ 643293, 1664109 }, Offset{ 0xAB, 0xAF });
 
-					if (verPatch == 2)
-					{
-						auto off = __CKPE_OFFSET(1) + 7;
+				rel.WriteFill(NOP, 0x1C);
+				rel.Write({ 0x48, 0x89, 0xF9 });
+				rel.WriteCall<3>(&GetAuthorPluginName);
+				rel.Write<8>({ 0x48, 0x89, 0xD9, 0xBA, 0x01, 0x04, 0x00, 0x00 });
 
-						SafeWrite::WriteNop(off, 0x1C);
-						SafeWrite::Write(off, { 0x48, 0x89, 0xF9 });
-						Detours::DetourCall(off + 3, (std::uintptr_t)&GetAuthorPluginName);
-						SafeWrite::Write(off + 8, { 0x48, 0x89, 0xD9, 0xBA, 0x01, 0x04, 0x00, 0x00 });
-					}
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 1940837 }).WriteJump(HKWndProc);
-
-					auto rel = Relocation(ID{ 1631958 }, Offset{ 0xAF });
-
-					rel.WriteFill(0x90, 0x1C);
-					rel.Write({ 0x48, 0x89, 0xF9 });
-					rel.WriteCall<3>(&GetAuthorPluginName);
-					rel.Write<8>({ 0x48, 0x89, 0xD9, 0xBA, 0x01, 0x04, 0x00, 0x00 });
-
-					return true;
-				}
+				return true;
 			}
 
 			INT_PTR CALLBACK DataWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)

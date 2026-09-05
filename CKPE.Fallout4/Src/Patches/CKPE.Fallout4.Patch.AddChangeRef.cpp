@@ -57,9 +57,9 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(ID{ 470821, 1939247 }, Offset{ 0x5A2, 0x9C8 }).WriteCall(&HKInsertMenuA);
+				Relocation(ID{ 636042, 1990688 }, Offset{ 0x5A2, 0x9C8 }).WriteCall(&HKInsertMenuA);
 				
-				auto rel = ID(458423).Address();
+				auto rel = ID(407591).Address();
 				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetParentWithRedraw = rel;
 				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly_NG::SetParentWithRedraw = rel;
 				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly::SetParentWithRedraw = rel;

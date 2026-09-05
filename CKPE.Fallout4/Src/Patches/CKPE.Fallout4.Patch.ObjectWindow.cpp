@@ -3,9 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Utils.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Graphics.h>
 #include <CKPE.Application.h>
@@ -170,35 +168,35 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 470821, 1939247 }).WriteJump(&HKWndProc);
-				pointer_ObjectWindow_sub = ID{ 465450, 1584121 }.Address();
+				*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 636042, 1990688 }).WriteJump(&HKWndProc);
+				pointer_ObjectWindow_sub = ID{ 636375, 1613291 }.Address();
 
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
 					// Allow forms to be filtered in ObjectWindowProc
-					Relocation(ID(400459), 0x18A).WriteCall(&sub);
+					Relocation(ID(636059), 0x18A).WriteCall(&sub);
 					
 					// Fix resize ObjectWindowProc
-					const auto rel1 = Relocation(ID(645521), 0x202);
+					const auto rel1 = Relocation(ID(642052), 0x202);
 					rel1.WriteCall(&HKMoveWindow);
 					rel1.WriteFill<5>(NOP, 0x46);
 				}
 				else
 				{
 					// Restore function
-					const auto rel1 = Relocation(ID(1506144), 0x1F3);
+					const auto rel1 = Relocation(ID(1528186), 0x1F3);
 					rel1.WriteFill<0x10>(NOP, 0x33);
 					rel1.Write({ 0x48, 0x8B, 0x4C, 0x24, 0x40, 0x48, 0x89, 0xFA, 0x49, 0x89, 0xF0 });
 					rel1.WriteCall<0xB>(&sub2);
 
 					// Fix resize ObjectWindowProc
-					const auto rel2 = Relocation(ID(1713721), 0x207);
+					const auto rel2 = Relocation(ID(1750857), 0x207);
 					rel2.WriteFill(NOP, 0x4B);
 					rel2.WriteCall(&HKMoveWindow);
 				}
 
 				// Fix resize ObjectWindowProc WM_INITDIALOG
-				const auto rel3 = Relocation(ID{ 520258, 1620197 }, 0xF4);
+				const auto rel3 = Relocation(ID{ 642044, 1651586 }, 0xF4);
 				rel3.WriteFill(NOP, 0x62);
 				rel3.WriteCall(&HKMoveWindow);
 

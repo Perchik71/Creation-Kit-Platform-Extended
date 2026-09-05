@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.AddressLibrary.h>
@@ -51,13 +50,9 @@ namespace CKPE
 
 			bool ESLTip::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
-				
-				if (db->GetVersion() != 1)
-					return false;
+				using namespace Common;
 
-				Detours::DetourCall(__CKPE_OFFSET(0), (uintptr_t)&sub);
+				Relocation(ID{ 643506, 2007835 }, Offset{ 0xE1 }).WriteCall(&sub);
 
 				return true;
 			}

@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.LogWindow.h>
@@ -48,32 +47,13 @@ namespace CKPE
 
 			bool TESFormHook::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db) {
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				EditorAPI::Forms::TESForm::EnumFormIDs = (EditorAPI::Forms::TESForm::ENUM_FORM_ID*)Relocation(ID{ 1106870, 1618347 }).Get();
+				EditorAPI::Forms::TESForm::FindFormByFormID = Relocation<decltype(EditorAPI::Forms::TESForm::FindFormByFormID)>(ID{ 611970, 1519646 }).Get();
+				EditorAPI::Forms::TESForm::SetFormEditorIDImpl = Relocation<decltype(EditorAPI::Forms::TESForm::SetFormEditorIDImpl)>(ID{ 655843, 1618628 }).Get();
 
-					EditorAPI::Forms::TESForm::EnumFormIDs =
-						(EditorAPI::Forms::TESForm::ENUM_FORM_ID*)(__CKPE_OFFSET(0));
-					EditorAPI::Forms::TESForm::FindFormByFormID =
-						decltype(EditorAPI::Forms::TESForm::FindFormByFormID)(__CKPE_OFFSET(1));
-					EditorAPI::Forms::TESForm::SetFormEditorIDImpl =
-						decltype(EditorAPI::Forms::TESForm::SetFormEditorIDImpl)(__CKPE_OFFSET(3));
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					EditorAPI::Forms::TESForm::EnumFormIDs = (EditorAPI::Forms::TESForm::ENUM_FORM_ID*)Relocation(ID{ 1588864 }).Get();
-					EditorAPI::Forms::TESForm::FindFormByFormID = decltype(EditorAPI::Forms::TESForm::FindFormByFormID)(Relocation(ID{ 1498643 }).Get());
-					EditorAPI::Forms::TESForm::SetFormEditorIDImpl = decltype(EditorAPI::Forms::TESForm::SetFormEditorIDImpl)(Relocation(ID{ 1589125 }).Get());
-
-					return true;
-				}
+				return true;
 			}
 		}
 	}

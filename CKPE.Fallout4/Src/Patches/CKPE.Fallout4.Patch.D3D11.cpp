@@ -12,9 +12,7 @@
 #include <backends/imgui_impl_dx11.h>
 #include <CKPE.Utils.h>
 #include <CKPE.Asserts.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Patterns.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.HardwareInfo.h>
 #include <CKPE.Common.Interface.h>

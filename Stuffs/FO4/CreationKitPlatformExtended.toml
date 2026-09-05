@@ -86,7 +86,13 @@ nCharset = 1
 # 0 - 64bit havok little endian [PC or XB1, default setting with CKPE and recommended for PRP and related patches]
 # 1 - 64bit havok big endian [PS4, default setting unpatched. Untested and not recommended unless you can somehow get the files on that platform]
 # 2 - 32bit havok little endian [PC or XB1, default setting when using the user interface generation commands as the XB1 was originally a 32bit platform at one point, will still work, but obsolete]
-nGenerationVersion = 0
+nGenerationVersion = 2
+# Affects the result works of the option bCombineStaticCollectionArtOnClone:General (Default as 1)
+nGenerationVersionSCOL = 1
+# Works if bForcePreCombinedObject32bitExport:General=1 (Default as 0)
+nGenerationVersionMesh32bit = 1
+# The patch is installed only if run CK through the CLI with command -GeneratePreCombined
+bInstallOnlyModeCLI = true
 
 
 [Animation]

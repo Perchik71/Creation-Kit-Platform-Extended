@@ -47,33 +47,15 @@ namespace CKPE
 
 			bool TESDataHandlerHook::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db) {
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto _interface = CKPE::Common::Interface::GetSingleton();
-					auto base = _interface->GetApplication()->GetBase();
+				static auto data = Relocation(ID{ 314871, 1538742 }).Address();
+				static auto active_data = Relocation(ID(583335)).Address();
 
-					static auto data = __CKPE_OFFSET(0);
-					static auto active_data = __CKPE_OFFSET(1);
+				EditorAPI::TESDataHandler::Singleton = reinterpret_cast<std::uintptr_t>(std::addressof(data));
+				EditorAPI::TESDataHandler::UserModdedSingleton = reinterpret_cast<std::uintptr_t>(std::addressof(active_data));
 
-					EditorAPI::TESDataHandler::Singleton = (std::uintptr_t)&data;
-					EditorAPI::TESDataHandler::UserModdedSingleton = (std::uintptr_t)&active_data;
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					static auto data = Relocation(ID{ 1515478 }).Address();
-					static auto active_data = Relocation(ID{ 403286 }).Address();
-
-					EditorAPI::TESDataHandler::Singleton = (std::uintptr_t)&data;
-					EditorAPI::TESDataHandler::UserModdedSingleton = (std::uintptr_t)&active_data;
-
-					return true;
-				}
+				return true;
 			}
 		}
 	}

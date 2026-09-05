@@ -49,9 +49,9 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::ctor = Relocation(ID{ 351555, 1339190 }).Address();
-				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::set = Relocation(ID{ 363822, 1663882 }).Address();
-				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::release = Relocation(ID{ 211833, 1594894 }).Address();
+				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::ctor = Relocation(ID{ 766110, 1340478 }).Address();
+				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::set = Relocation(ID{ 766111, 1698047 }).Address();
+				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::release = Relocation(ID{ 766148, 1624720 }).Address();
 
 				return true;
 			}

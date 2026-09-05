@@ -4,8 +4,6 @@
 
 #include <algorithm>
 #include <windows.h>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -119,32 +117,15 @@ namespace CKPE
 
 			bool UIHotkeys::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 2)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				const auto target = ID{ 55199, 1619017 };
+				Relocation(target, Offset{ 0x1C3, 0x1AC }).WriteFill(NOP, 0x19);
+				Relocation(ID(584687)).WriteJump(&sub);
 
-					SafeWrite::WriteNop(__CKPE_OFFSET(0), 0x19);
-					Detours::DetourClassJump(__CKPE_OFFSET(1), &sub);
-					UIHotkeysSub = (decltype(&sub))__CKPE_OFFSET(2);
+				UIHotkeysSub = Relocation<decltype(&sub)>(target).Get();
 
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-					auto addressLibrary = Common::AddressLibrary::GetSingleton();
-
-					Relocation(ID{ 1589493 }, Offset{ 0x1AC }).WriteFill(0x90, 25);
-					Relocation(ID{ 390524 }).WriteJump(sub);
-
-					UIHotkeysSub = (decltype(&sub))Relocation(ID{ 1589493 }).Get();
-
-					return true;
-				}
+				return true;
 			}
 
 			void UIHotkeys::sub(void* Thisptr, void(*Callback)(), const EditorAPI::BSEntryString** HotkeyFunction,

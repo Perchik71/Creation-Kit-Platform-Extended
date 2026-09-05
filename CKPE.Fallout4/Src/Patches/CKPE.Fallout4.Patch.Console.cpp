@@ -87,13 +87,13 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(ID{ 105048, 1494590 }).WriteJump(LogWarningVa);
-				Relocation(ID{ 429701, 1636009 }).WriteJump(LogWarningUnknown1);
-				Relocation(ID{ 185107, 1956945 }).WriteJump(LogWarningUnknown1);
-				Relocation(ID{ 378705, 1589438 }).WriteJump(LogWarningUnknown1);
-				Relocation(ID{ 323410, 1589059 }).WriteJump(LogWarningUnknown1);
-				Relocation(ID{ 501160, 1942406 }, Offset{ 0x7B3, 0x744 }).WriteCall(LogWarningUnknown2);
-				Relocation(ID{ 334052, 1653769 }).WriteJump(LogAssert);
+				Relocation(ID{ 440122, 1515122 }).WriteJump(LogWarningVa);
+				Relocation(ID{ 635645, 1668403 }).WriteJump(LogWarningUnknown1);
+				Relocation(ID{ 433174, 2009876 }).WriteJump(LogWarningUnknown1);
+				Relocation(ID{ 751443, 1618957 }).WriteJump(LogWarningUnknown1);
+				Relocation(ID{ 714644, 1618560 }).WriteJump(LogWarningUnknown1);
+				Relocation(ID{ 653593, 1994158 }, Offset{ 0x7B3, 0x744 }).WriteCall(LogWarningUnknown2);
+				Relocation(ID{ 509260, 1687367 }).WriteJump(LogAssert);
 
 				return true;
 			}

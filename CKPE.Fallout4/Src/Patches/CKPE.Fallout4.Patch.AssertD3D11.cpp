@@ -50,7 +50,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(ID(527025), Offset{ 0x4EE, 0x4CF, 0x4CE }).WriteCall(&sub);
+				Relocation(ID(530343), Offset{ 0x4EE, 0x4CF, 0x4CE }).WriteCall(&sub);
 
 				return true;
 			}

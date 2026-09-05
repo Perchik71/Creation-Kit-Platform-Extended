@@ -189,6 +189,9 @@ namespace CKPE
 			mgr->Register(new Patch::VersionControlMergeWorkaround);
 			mgr->Register(new Patch::WrongUpdateActorWnd);
 
+			auto precomb_init = _READ_OPTION_BOOL("PreCombined", "bInstallOnlyModeCLI", true);
+			if (!precomb_init) mgr->Register(new Patch::PreCombined);
+
 			auto cmd = Common::Interface::GetSingleton()->GetCommandLineParser();
 			if (cmd->HasCommandRun())
 			{
@@ -196,7 +199,7 @@ namespace CKPE
 				{
 					_CONSOLE("The precombining operation has been launched");
 
-					mgr->Register(new Patch::PreCombined);
+					if (precomb_init) mgr->Register(new Patch::PreCombined);
 				}
 				else if (!_wcsnicmp(cmd->GetCommand().c_str(), L"-GeneratePreVisData", 19))
 				{

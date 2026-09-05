@@ -3,8 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Utils.h>
 #include <CKPE.FileUtils.h>
 #include <CKPE.StringUtils.h>
@@ -261,54 +259,22 @@ namespace CKPE
 
 			bool MainWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db) {
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto _interface = Common::Interface::GetSingleton();
-					auto base = _interface->GetApplication()->GetBase();
+				*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 643475, 1634204 }).WriteJump(&HKWndProc);
 
-					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
+				pointer_MainWindow_sub1 = ID(451607).Address();
+				pointer_MainWindow_sub2 = Relocation(ID(506991)).WriteJump(&FogToggling);
 
-					pointer_MainWindow_sub1 = __CKPE_OFFSET(1);
-					pointer_MainWindow_sub2 = Detours::DetourClassJump(__CKPE_OFFSET(2), (std::uintptr_t)&FogToggling);
+				// only erase it first
+				const auto target = Relocation(ID(359818));
+				target.WriteFill<0x4>(NOP, 0x7);
+				pointer_MainWindow_sub3 = target.WriteJump(&MarkerToggling);
+				target.WriteFill<0x12>(NOP, 0x7);
 
-					// only erase it first
-					auto rva = __CKPE_OFFSET(3);
-					SafeWrite::WriteNop(rva + 0x4, 7);
-					pointer_MainWindow_sub3 = Detours::DetourClassJump(rva, (std::uintptr_t)&MarkerToggling);
-					SafeWrite::WriteNop(rva + 0x12, 7);
+				Common::LogWindow::GetSingleton()->OnOpenFormById = &DoOpenFormByIdHandler;
 
-					Common::LogWindow::GetSingleton()->OnOpenFormById = DoOpenFormByIdHandler;
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					auto wndProc = Relocation(ID{ 1603858 });
-					auto sub1 = Relocation(ID{ 384552 });
-					auto sub2 = Relocation(ID{ 415416 });
-					auto sub3 = Relocation(ID{ 415464 });
-
-					if (!wndProc || !sub1 || !sub2 || !sub3)
-						return false;
-
-					*(std::uintptr_t*)&_oldWndProc = wndProc.WriteJump(HKWndProc);
-
-					pointer_MainWindow_sub1 = sub1.Address();
-					pointer_MainWindow_sub2 = sub2.WriteJump(FogToggling);
-
-					// only erase it first
-					sub3.WriteFill<0x4>(0x90, 0x7);
-					pointer_MainWindow_sub3 = sub3.WriteJump(MarkerToggling);
-					sub3.WriteFill<0x12>(0x90, 0x7);
-
-					Common::LogWindow::GetSingleton()->OnOpenFormById = DoOpenFormByIdHandler;
-
-					return true;
-				}
+				return true;
 			}
 
 			INT_PTR CALLBACK MainWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
