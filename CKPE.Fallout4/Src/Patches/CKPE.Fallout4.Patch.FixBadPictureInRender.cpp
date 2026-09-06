@@ -48,30 +48,12 @@ namespace CKPE
 
 			bool FixBadPictureInRender::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					auto ver = db->GetVersion();
-					if ((ver < 1) && (ver > 2))
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				// Remove stuff init FXAA or TAA
+				Relocation(ID{ 122998, 1575961 }, Offset{ 0x7D9, 0x9B5 }).WriteFill(NOP, 0x50);
 
-					// Remove stuff init FXAA or TAA
-					SafeWrite::WriteNop(__CKPE_OFFSET(0), ver == 1 ? 0x55 : 0x50);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					// Remove stuff init FXAA or TAA
-					Relocation(ID{ 1548893 }, Offset{ 0x9B5 }).WriteFill(0x90, 0x50);
-
-					return true;
-				}
-				
+				return true;
 			}
 		}
 	}

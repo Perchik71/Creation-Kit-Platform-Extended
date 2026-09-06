@@ -249,7 +249,7 @@ namespace CKPE
 
 			std::vector<std::string> MainWindow::GetDependencies() const noexcept(true)
 			{
-				return { "TES", "Console", "Object Window", "TESForm" };
+				return { "TES", "Console", "Object Window", "TESForm", "Rename Creation Kit App" };
 			}
 
 			bool MainWindow::DoQuery() const noexcept(true)

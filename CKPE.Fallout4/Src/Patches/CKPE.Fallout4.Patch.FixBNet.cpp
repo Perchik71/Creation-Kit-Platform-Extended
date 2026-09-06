@@ -48,28 +48,12 @@ namespace CKPE
 
 			bool FixBNet::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db) {
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				// Fix crash when Unicode string conversion fails with bethesda.net http responses
+				Relocation(ID{ 103156, 1421864 }).WriteJump(sub);
 
-					// Fix crash when Unicode string conversion fails with bethesda.net http responses
-					Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					// Fix crash when Unicode string conversion fails with bethesda.net http responses
-					Relocation(ID{ 1411566 }).WriteJump(sub);
-
-					return true;
-				}
-				
+				return true;
 			}
 
 			std::size_t FixBNet::sub(char* Destination, std::size_t DestSize, const wchar_t* Source, 

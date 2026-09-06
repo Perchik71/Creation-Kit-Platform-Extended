@@ -49,32 +49,14 @@ namespace CKPE
 
 			bool FixCrashMapMarkerCmd::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				// Fix for crash when using the -MapMaker command line option. Nullptr camera passed to 
+				// BSGraphics::State::SetCameraData.
+				Relocation(ID(531868), Offset{ 0x917, 0x92C }).WriteCall(sub);
+				pointer_FixCrashMapMarkerCmd_sub = Relocation(ID{ 795781, 1648232 }).Address();
 
-					// Fix for crash when using the -MapMaker command line option. Nullptr camera passed to 
-					// BSGraphics::State::SetCameraData.
-					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-					pointer_FixCrashMapMarkerCmd_sub = __CKPE_OFFSET(1);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					// Fix for crash when using the -MapMaker command line option. Nullptr camera passed to 
-					// BSGraphics::State::SetCameraData.
-					Relocation(ID{ 475615 }, Offset{ 0x92C }).WriteCall(sub);
-					pointer_FixCrashMapMarkerCmd_sub = Relocation(ID{ 1617023 }).Address();
-
-					return true;
-				}
+				return true;
 			}
 
 			void FixCrashMapMarkerCmd::sub(std::int64_t a1, std::int64_t a2, std::int64_t a3) noexcept(true)

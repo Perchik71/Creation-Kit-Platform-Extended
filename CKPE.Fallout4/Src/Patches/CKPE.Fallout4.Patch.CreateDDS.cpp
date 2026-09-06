@@ -6,8 +6,6 @@
 #include <comdef.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Utils.h>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.Relocation.h>
@@ -221,44 +219,22 @@ namespace CKPE
 
 			bool CreateDDS::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					auto verPatch = db->GetVersion();
-					if ((verPatch != 1) && (verPatch != 2))
-						return false;
+                using namespace Common;
 
-					auto _interface = CKPE::Common::Interface::GetSingleton();
-					auto base = _interface->GetApplication()->GetBase();
+                if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+                {
+                    auto rel = Relocation(ID(795948), 0x14B);
+                    rel.WriteFill(NOP, 0xC);
+                    rel.WriteCall(&CreateDDSPatch_sub2);
+                    pointer_CreateDDS_sub = ID(795841).Address();
+                }
+                else
+                {
+                    // Bethesda has finally added a check. Let's make it so that it causes a crash.
+                    Relocation(ID(1355670), 0x474).WriteCall(&CreateDDSPatch_sub2);
+                }
 
-					if (verPatch == 1)
-					{
-						auto rva = __CKPE_OFFSET(0);
-
-						SafeWrite::WriteNop(rva, 0xC);
-						Detours::DetourCall(rva, (std::uintptr_t)&CreateDDSPatch_sub);
-						pointer_CreateDDS_sub = __CKPE_OFFSET(1);
-
-						return true;
-					}
-					else if (verPatch == 2)
-					{
-						// Bethesda has finally added a check. Let's make it so that it causes a crash.
-						Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&CreateDDSPatch_sub2);
-
-						return true;
-					}
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					// Bethesda has finally added a check. Let's make it so that it causes a crash.
-					Relocation(ID{ 1352708 }, Offset{ 0x474 }).WriteCall(CreateDDSPatch_sub2);
-
-					return true;
-				}
+                return true;
 			}
 		}
 	}

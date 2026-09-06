@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Utils.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.RTTI.h>
@@ -19,14 +18,17 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			std::uintptr_t pointer_CrashInvalidStrings_sub1 = 0;
-			std::uintptr_t pointer_CrashInvalidStrings_sub2 = 0;
+			using TCrashInvalidStringsLength	= std::uint32_t (void*);
+			using TCrashInvalidStringsGet		= const char* (void*);
+
+			static std::function<TCrashInvalidStringsLength> CrashInvalidStringsLength;
+			static std::function<TCrashInvalidStringsGet>  CrashInvalidStringsGet;
 
 			std::uint32_t CrashInvalidStrings::GetLocalizeStringLengthSafe(void* This)
 			{
 				__try
 				{
-					return fast_call<std::uint32_t>(pointer_CrashInvalidStrings_sub1, This);
+					return CrashInvalidStringsLength(This);
 				}
 				__except (1)
 				{
@@ -40,7 +42,7 @@ namespace CKPE
 			{
 				__try
 				{
-					return fast_call<const char*>(pointer_CrashInvalidStrings_sub2, This);
+					return CrashInvalidStringsGet(This);
 				}
 				__except (1)
 				{
@@ -77,34 +79,17 @@ namespace CKPE
 
 			bool CrashInvalidStrings::DoQuery() const noexcept(true)
 			{
-				return VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_943_1;
+				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_FALLOUT_C4_LAST;
 			}
 
 			bool CrashInvalidStrings::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				CrashInvalidStringsLength	= reinterpret_cast<TCrashInvalidStringsLength*>(Relocation(ID{ 409166, 1382155 }).WriteJump(&GetLocalizeStringLengthSafe));
+				CrashInvalidStringsGet		= reinterpret_cast<TCrashInvalidStringsGet*>(Relocation(ID{ 381562 }).WriteJump(&GetLocalizeStringSafe));
 
-					pointer_CrashInvalidStrings_sub1 = Detours::DetourClassJump(__CKPE_OFFSET(0), &GetLocalizeStringLengthSafe);
-					pointer_CrashInvalidStrings_sub2 = Detours::DetourClassJump(__CKPE_OFFSET(1), &GetLocalizeStringSafe);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					pointer_CrashInvalidStrings_sub1 = Relocation(ID{ 1376340 }).WriteJump(&GetLocalizeStringLengthSafe);
-					pointer_CrashInvalidStrings_sub2 = Relocation(ID{ 336314 }).WriteJump(&GetLocalizeStringSafe);
-
-					return true;
-				}
-				
+				return true;
 			}
 		}
 	}

@@ -46,28 +46,12 @@ namespace CKPE
 
 			bool FixInfiniteLoopPapyrusCompile::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				// Fixed infinite loop by Compile Papyrus Scripts...
+				Relocation(ID(522253)).Write(RET);
 
-					// Fixed infinite loop by Compile Papyrus Scripts...
-					SafeWrite::Write(__CKPE_OFFSET(0), { 0xC3 });
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					// Fixed infinite loop by Compile Papyrus Scripts...
-					Relocation(ID{ 422469 }).Write({ 0xC3 });
-
-					return true;
-				}
+				return true;
 			}
 		}
 	}

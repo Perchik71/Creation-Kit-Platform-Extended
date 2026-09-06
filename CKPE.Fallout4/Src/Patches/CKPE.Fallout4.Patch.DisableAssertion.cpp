@@ -47,53 +47,21 @@ namespace CKPE
 
 			bool DisableAssertion::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
-					// Cutting a lot is faster this way
-					auto stext = interface->GetApplication()->GetSegment(Segment::text);
-					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+				// Cutting a lot is faster this way
+				auto stext = Application::GetSingleton()->GetSegment(Segment::text);
+				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
-					//
-					// Remove assertion message boxes
-					//
-					switch (db->GetVersion())
-					{
-					case 1:
-						SafeWrite::WriteNop(__CKPE_OFFSET(0), 5);
-						return true;
-					case 2:
-						for (uint32_t i = 0; i < db->GetCount(); i++)
-							SafeWrite::WriteNop(__CKPE_OFFSET(i), 5);
-						return true;
-					default:
-						return false;
-					}
+				//
+				// Remove assertion message boxes
+				//
+				text.WriteNop(Relocation(ID{ 724238, 1542517 }, 0x50).Address(), 5);
+				text.WriteNop(Relocation(ID{ 509260, 1687367 }, 0x46).Address(), 5);
+				text.WriteNop(Relocation(ID{ 705489, 1718922 }, 0x37).Address(), 5);
+				text.WriteNop(Relocation(ID{ 433174, 2009876 }, 0x44).Address(), 5);
 
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					auto interface = CKPE::Common::Interface::GetSingleton();
-
-					// Cutting a lot is faster this way
-					auto stext = interface->GetApplication()->GetSegment(Segment::text);
-					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
-
-					//
-					// Remove assertion message boxes
-					//
-					text.WriteNop(Relocation(ID{ 1518843 }, Offset{ 0x50 }).Address(), 5);
-					text.WriteNop(Relocation(ID{ 1653769 }, Offset{ 0x46 }).Address(), 5);
-					text.WriteNop(Relocation(ID{ 1683566 }, Offset{ 0x37 }).Address(), 5);
-					text.WriteNop(Relocation(ID{ 1956945 }, Offset{ 0x44 }).Address(), 5);
-
-					return true;
-				}
+				return true;
 			}
 		}
 	}

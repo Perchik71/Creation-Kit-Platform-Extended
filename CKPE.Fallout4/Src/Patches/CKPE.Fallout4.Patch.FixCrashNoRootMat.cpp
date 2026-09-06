@@ -47,66 +47,24 @@ namespace CKPE
 
 			bool FixCrashNoRootMat::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
+				using namespace Common;
+
+				// Cutting a lot is faster this way
+				auto stext = Application::GetSingleton()->GetSegment(Segment::text);
+				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
-					auto ver = db->GetVersion();
-					if ((ver < 1) && (ver > 2))
-						return false;
-
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
-
-					// Cutting a lot is faster this way
-					auto stext = interface->GetApplication()->GetSegment(Segment::text);
-					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
-
-					// Fixed crash when by load plugin in which there is no root parent to materials
-
-					if (ver == 1)
-					{
-						text.Write(__CKPE_OFFSET(0), { 0x0F, 0xC6, 0x1D, 0x1C, 0xC0, 0x30, 0x01, 0xEE,
-							0x0F, 0xC6, 0x05, 0x14, 0xC0, 0x30, 0x01, 0x44, 0x31, 0xC0, 0xEB, 0x4B });
-						text.Write(__CKPE_OFFSET(1), { 0xEB, 0x6F });
-						text.Write(__CKPE_OFFSET(2), { 0xEB });
-
-						return true;
-					}
-					else if (ver == 2)
-					{
-						auto rva = __CKPE_OFFSET(0);
-						auto rva_data = __CKPE_OFFSET(3);
-						text.Write(rva, { 0x0F, 0xC6, 0x1D });
-						auto RelOff = (std::uint32_t)(rva_data - (rva + 8));
-						text.Write(rva + 3, (std::uint8_t*)&RelOff, 4);
-						text.Write(rva + 7, { 0xEE });
-						rva += 8;
-						text.Write(rva, { 0x0F, 0xC6, 0x05 });
-						RelOff = (std::uint32_t)(rva_data - (rva + 8));
-						text.Write(rva + 3, (std::uint8_t*)&RelOff, 4);
-						text.Write(rva + 7, { 0x44, 0x31, 0xC0, 0xEB, 0x4D });
-						text.Write(__CKPE_OFFSET(1), { 0xEB, 0x74 });
-						text.Write(__CKPE_OFFSET(2), { 0xEB });
-
-						return true;
-					}
-
-					return true;
+					text.Write(Relocation(ID(649982), 0x1C).Address(), { 0x0F, 0xC6, 0x1D, 0x1C, 0xC0, 0x30, 0x01, 0xEE,
+							0x0F, 0xC6, 0x05, 0x14, 0xC0, 0x30, 0x01, 0x44, 0x31, 0xC0, JMP, 0x4B });
+					text.Write(Relocation(ID(54722), 0x39F).Address(), { JMP, 0x6F });
+					text.Write(Relocation(ID(797136), 0x317).Address(), { JMP });
 				}
 				else
 				{
-					using namespace Common;
-
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
-
-					// Cutting a lot is faster this way
-					auto stext = interface->GetApplication()->GetSegment(Segment::text);
-					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
-
 					// Fixed crash when by load plugin in which there is no root parent to materials
-
-					auto rva = Relocation(ID{ 1455796 }, Offset{ 0x1E }).Address();
-					auto rva_data = Relocation(ID{ 297714 }).Address();
+					auto rva = Relocation(ID(1471571), 0x1E).Address();
+					auto rva_data = Relocation(ID(351273)).Address();
 
 					text.Write(rva, { 0x0F, 0xC6, 0x1D });
 					auto RelOff = (std::uint32_t)(rva_data - (rva + 8));
@@ -116,12 +74,12 @@ namespace CKPE
 					text.Write(rva, { 0x0F, 0xC6, 0x05 });
 					RelOff = (std::uint32_t)(rva_data - (rva + 8));
 					text.Write(rva + 3, (std::uint8_t*)&RelOff, 4);
-					text.Write(rva + 7, { 0x44, 0x31, 0xC0, 0xEB, 0x4D });
-					text.Write(Relocation(ID{ 1376768 }, Offset{ 0x3A2 }).Address(), { 0xEB, 0x74 });
-					text.Write(Relocation(ID{ 1590050 }, Offset{ 0x348 }).Address(), { 0xEB });
-
-					return true;
+					text.Write(rva + 7, { 0x44, 0x31, 0xC0, JMP, 0x4D });
+					text.Write(Relocation(ID(1382630), 0x3A2).Address(), { JMP, 0x74 });
+					text.Write(Relocation(ID(1619614), 0x348).Address(), { JMP });
 				}
+
+				return true;
 			}
 		}
 	}

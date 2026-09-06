@@ -47,26 +47,11 @@ namespace CKPE
 
 			bool DontMatchForms::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db) {
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				Relocation(ID{ 264710, 1495600 }, Offset{ 0x30C, 0x313 }).Write(JMP);
 
-					SafeWrite::Write(__CKPE_OFFSET(0), { 0xEB });
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					Relocation(ID{ 1477228 }, Offset{ 0x313 }).Write({ 0xEB });
-
-					return true;
-				}
-				
+				return true;
 			}
 		}
 	}

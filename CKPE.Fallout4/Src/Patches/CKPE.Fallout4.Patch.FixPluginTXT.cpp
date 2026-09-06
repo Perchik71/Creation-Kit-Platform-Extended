@@ -47,32 +47,14 @@ namespace CKPE
 
 			bool FixPluginTXT::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				// Fix for crash when plugins.txt is present in the game root folder.
+				// Buffer overflow in ArchiveManager::OpenMasterArchives when appending to a string.
+				// Skip the parsing code completely.
+				Relocation(ID{ 84817, 1356072 }, Offset{ 0x157, 0x167 }).WriteFill(NOP, 0x6);
 
-					// Fix for crash when plugins.txt is present in the game root folder.
-					// Buffer overflow in ArchiveManager::OpenMasterArchives when appending to a string.
-					// Skip the parsing code completely.
-					SafeWrite::WriteNop(__CKPE_OFFSET(0), 6);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					// Fix for crash when plugins.txt is present in the game root folder.
-					// Buffer overflow in ArchiveManager::OpenMasterArchives when appending to a string.
-					// Skip the parsing code completely.
-					Relocation(ID{ 1353054 }, Offset{ 0x167 }).WriteFill(0x90, 0x6);
-
-					return true;
-				}
+				return true;
 			}
 		}
 	}

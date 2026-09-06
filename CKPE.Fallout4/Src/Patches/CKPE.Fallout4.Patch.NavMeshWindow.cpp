@@ -49,26 +49,11 @@ namespace CKPE
 
 			bool NavMeshWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto _interface = Common::Interface::GetSingleton();
-					auto base = _interface->GetApplication()->GetBase();
+				*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 636009, 1498789 }).WriteJump(&HKWndProc);
 
-					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 1480027 }).WriteJump(HKWndProc);
-
-					return true;
-				}
+				return true;
 			}
 
 			INT_PTR CALLBACK NavMeshWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)

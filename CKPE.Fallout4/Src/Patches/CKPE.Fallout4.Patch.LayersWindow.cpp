@@ -56,39 +56,18 @@ namespace CKPE
 
 			bool LayersWindow::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db) {
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto _interface = Common::Interface::GetSingleton();
-					auto base = _interface->GetApplication()->GetBase();
+				*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 84440, 1450938 }).WriteJump(&HKWndProc);
 
-					*(std::uintptr_t*)&_oldWndProc = Detours::DetourClassJump(__CKPE_OFFSET(0), (std::uintptr_t)&HKWndProc);
+				// Layers Window enable doublebuffered treeview control
+				Relocation(ID{ 646694, 1541828 }, Offset{ 0x315, 0x323 }).WriteCall(&sub);
+				// Layers dialog fix resize
+				const auto target = ID{ 646714, 1410439 };
+				Relocation(target, Offset{ 0x195, 0x180 }).WriteCall(&MoveWindowBody);
+				Relocation(target, Offset{ 0x1C5, 0x1B0 }).WriteCall(&MoveWindowHeader);
 
-					// Layers Window enable doublebuffered treeview control
-					Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&sub);
-					// Layers dialog fix resize
-					Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&MoveWindowBody);
-					Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&MoveWindowHeader);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 1437462 }).WriteJump(HKWndProc);
-
-					// Layers Window enable doublebuffered treeview control
-					Relocation(ID{ 1518220 }, Offset{ 0x323 }).WriteCall(sub);
-					// Layers dialog fix resize
-					Relocation(ID{ 1401491 }, Offset{ 0x180 }).WriteCall(MoveWindowBody);
-					Relocation(ID{ 1401491 }, Offset{ 0x1B0 }).WriteCall(MoveWindowHeader);
-
-					return true;
-				}
-
-				
+				return true;
 			}
 
 			INT_PTR CALLBACK LayersWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)

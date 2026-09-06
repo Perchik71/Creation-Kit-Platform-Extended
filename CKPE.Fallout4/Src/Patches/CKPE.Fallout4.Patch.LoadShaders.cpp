@@ -286,45 +286,22 @@ namespace CKPE
 
 			bool LoadShaders::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
+				using namespace Common;
+
+				EditorAPI::BSResource::Archive2::AE::ReaderStream::RTTI = Common::RTTI::GetSingleton()->Find("class BSResource::Archive2::ReaderStream")->VTableAddress;
+				
+				if (VersionLists::GetEditorVersion() < VersionLists::EDITOR_FALLOUT_C4_1_11_137_0)
 				{
-					auto verPatch = db->GetVersion();
-					if ((verPatch != 1) && (verPatch != 2))
-						return false;
-
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
-
-					if (VersionLists::GetEditorVersion() < VersionLists::EDITOR_FALLOUT_C4_1_11_137_0)
-					{
-						EditorAPI::BSResource::Archive2::OG_NG::ReaderStream::RTTI =
-							Common::RTTI::GetSingleton()->Find("class BSResource::Archive2::ReaderStream")->VTableAddress;
-
-						Detours::DetourCall(__CKPE_OFFSET(0) + ((verPatch == 1) ? 0x88 : 0x8C), (std::uintptr_t)&CreateStream_OG_NG);
-						pointer_LoadShaders_sub = __CKPE_OFFSET(1);
-					}
-					else
-					{
-						EditorAPI::BSResource::Archive2::AE::ReaderStream::RTTI =
-							Common::RTTI::GetSingleton()->Find("class BSResource::Archive2::ReaderStream")->VTableAddress;
-
-						Detours::DetourCall(__CKPE_OFFSET(0) + 0x8C, (std::uintptr_t)&CreateStream_AE);
-						pointer_LoadShaders_sub = __CKPE_OFFSET(1);
-					}
-
-					return true;
+					Relocation(ID{ 122998, 1575961 }, Offset{ 0x88, 0x8C }).WriteCall(&CreateStream_OG_NG);
+					pointer_LoadShaders_sub = Relocation(ID{ 774104, 1569121 }).Address();
 				}
 				else
 				{
-					using namespace Common;
-
-					EditorAPI::BSResource::Archive2::AE::ReaderStream::RTTI = Common::RTTI::GetSingleton()->Find("class BSResource::Archive2::ReaderStream")->VTableAddress;
-
-					Relocation(ID{ 1548893 }, Offset{ 0x8C }).WriteCall(CreateStream_AE);
-					pointer_LoadShaders_sub = Relocation(ID{ 1542526 }).Address();
-
-					return true;
+					Relocation(ID(1575961), 0x8C).WriteCall(&CreateStream_AE);
+					pointer_LoadShaders_sub = Relocation(ID(1569121)).Address();
 				}
+
+				return true;
 			}
 
 			EditorAPI::OG_NG::BSIStream* LoadShaders::CreateStream_OG_NG(EditorAPI::OG_NG::BSIStream* Stream, const char* FileName,

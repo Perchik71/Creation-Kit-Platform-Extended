@@ -47,30 +47,13 @@ namespace CKPE
 
 			bool FixRecursiveSorting::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				// Fix for crash (recursive sorting function stack overflow) when saving certain ESP files (i.e SimSettlements.esp)
+				Relocation(ID{ 636467, 1991005 }).WriteJump(&sub<class TESForm*>);
+				Relocation(ID{ 384548, 1529588 }).Write(RET);
 
-					// Fix for crash (recursive sorting function stack overflow) when saving certain ESP files (i.e SimSettlements.esp)
-					Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub<class TESForm*>);
-					SafeWrite::Write(__CKPE_OFFSET(1), { 0xC3 });
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					// Fix for crash (recursive sorting function stack overflow) when saving certain ESP files (i.e SimSettlements.esp)
-					Relocation(ID{ 1939544 }).WriteJump(sub<class TESForm*>);
-					Relocation(ID{ 1507375 }).Write({ 0xC3 });
-
-					return true;
-				}
+				return true;
 			}
 		}
 	}

@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.Relocation.h>
@@ -47,26 +46,11 @@ namespace CKPE
 
 			bool SkipUpdateCheck::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				Relocation(ID{ 643506, 2007835 }, Offset{ 0x1CB, 0x1CB, 0x21F }).Write({ 0xEB, 0x10 });
 
-					SafeWrite::Write(__CKPE_OFFSET(0), { 0xEB, 0x10 });
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					Relocation(ID{ 1955075 }, Offset{ 0x21F }).Write({ 0xEB, 0x10 });
-
-					return true;
-				}
+				return true;
 			}
 		}
 	}

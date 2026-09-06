@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -41,20 +40,15 @@ namespace CKPE
 
 			bool EnableGoInSelGame::DoQuery() const noexcept(true)
 			{
-				// remove 1.10.943.1
-				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_FALLOUT_C4_1_10_162_0;
+				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_FALLOUT_C4_LAST;
 			}
 
 			bool EnableGoInSelGame::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
 				// Enable the render window "Go to selection in game" hotkey even if version control is off
-				SafeWrite::WriteNop(__CKPE_OFFSET(0), 2);
+				Relocation(ID(111996), 0x473).WriteFill(NOP, 2);
 
 				return true;
 			}

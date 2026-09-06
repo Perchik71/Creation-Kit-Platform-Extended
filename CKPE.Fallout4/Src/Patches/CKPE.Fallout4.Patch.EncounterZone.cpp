@@ -52,36 +52,17 @@ namespace CKPE
 
 			bool EncounterZone::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				// Fix Encounter Zone
+				// TBM_GETPOS = wParam must be zero.
+				const auto target = ID(553619);
+				Relocation(target, Offset{ 0x15A, 0x156 }).Write({ 0x00 });
+				// Fix Encounter Zone
+				Relocation(target, 0x17E).WriteCall(&sub);
+				pointer_FixEncounterZone_sub = Relocation(ID(501084)).Address();
 
-					// Fix Encounter Zone
-					// TBM_GETPOS = wParam must be zero.
-					SafeWrite::Write(__CKPE_OFFSET(0), { 0x00 });
-					// Fix Encounter Zone
-					Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&sub);
-					pointer_FixEncounterZone_sub = __CKPE_OFFSET(2);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					// Fix Encounter Zone
-					// TBM_GETPOS = wParam must be zero.
-					Relocation(ID{ 334642 }, Offset{ 0x156 }).Write({ 0x00 });
-					// Fix Encounter Zone
-					Relocation(ID{ 334642 }, Offset{ 0x17E }).WriteCall(sub);
-					pointer_FixEncounterZone_sub = Relocation(ID{ 413464 }).Address();
-
-					return true;
-				}
+				return true;
 			}
 
 			void EncounterZone::sub(void* Class, void* Dialog, std::uint8_t Level) noexcept(true)

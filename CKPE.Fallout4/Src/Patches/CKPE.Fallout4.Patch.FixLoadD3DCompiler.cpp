@@ -47,41 +47,25 @@ namespace CKPE
 
 			bool FixLoadD3DCompiler::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
+				using namespace Common;
+
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
-					if (db->GetVersion() != 1)
-						return false;
-
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
-
-					// Cutting a lot is faster this way
-					auto stext = interface->GetApplication()->GetSegment(Segment::text);
-					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
-
-					// Fixed failed load d3dcompiler.dll
-					for (std::uint32_t nId = 0; nId < db->GetCount(); nId++)
-						text.WriteNop(__CKPE_OFFSET(nId), 6);
-
-					return true;
+					Relocation(ID(795140), 0x40).WriteFill(NOP, 6);
 				}
 				else
 				{
-					using namespace Common;
-
-					auto interface = CKPE::Common::Interface::GetSingleton();
-
 					// Cutting a lot is faster this way
-					auto stext = interface->GetApplication()->GetSegment(Segment::text);
+					auto stext = Application::GetSingleton()->GetSegment(Segment::text);
 					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
 					// Fixed failed load d3dcompiler.dll
-					text.WriteNop(Relocation(ID{ 1956848 }, Offset{ 0x12A }).Address(), 6);
-					text.WriteNop(Relocation(ID{ 1542902 }, Offset{ 0x132 }).Address(), 6);
-					text.WriteNop(Relocation(ID{ 1956874 }, Offset{ 0x2C }).Address(), 6);
-
-					return true;
+					text.WriteNop(Relocation(ID(2009774), Offset{ 0x115, 0x115, 0x12A }).Address(), 6);
+					text.WriteNop(Relocation(ID(1569538), Offset{ 0x123, 0x123, 0x132 }).Address(), 6);
+					text.WriteNop(Relocation(ID(2009800), Offset{ 0x3B, 0x3B, 0x2C }).Address(), 6);
 				}
+
+				return true;
 			}
 		}
 	}

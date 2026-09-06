@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.StringUtils.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -47,54 +46,19 @@ namespace CKPE
 				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_FALLOUT_C4_LAST;
 			}
 
-			bool RenameCreationKitApp::SupportsAddressLibrary() const noexcept(true)
-			{
-				switch (VersionLists::GetEditorVersion())
-				{
-				case VersionLists::EDITOR_FALLOUT_C4_1_11_240_0:
-					return true;
-				default:
-					return false;
-				}
-			}
-
 			bool RenameCreationKitApp::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				
+				using namespace Common;
 
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				//
+				// Change the default window class name so legacy editors can be opened without using bAllowMultipleEditors
+				//
+				char* newWindowClass = new char[250];
+				sprintf_s(newWindowClass, 250, "Creation Kit %s", StringUtils::Utf16ToWinCP(VersionLists::GetEditorVersionByString()).c_str());
+				Relocation(ID{ 42440 }).Write(&newWindowClass, sizeof(newWindowClass));
+				Common::ModernTheme::AddSpermanentWindowSubclass(newWindowClass);
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
-
-					//
-					// Change the default window class name so legacy editors can be opened without using bAllowMultipleEditors
-					//
-					char* newWindowClass = new char[250];
-					sprintf_s(newWindowClass, 250, "Creation Kit %s",
-						StringUtils::Utf16ToWinCP(VersionLists::GetEditorVersionByString()).c_str());
-					SafeWrite::WriteStringRef(__CKPE_OFFSET(0), newWindowClass);
-					Common::ModernTheme::AddSpermanentWindowSubclass(newWindowClass);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					//
-					// Change the default window class name so legacy editors can be opened without using bAllowMultipleEditors
-					//
-					char* newWindowClass = new char[250];
-					sprintf_s(newWindowClass, 250, "Creation Kit %s", StringUtils::Utf16ToWinCP(VersionLists::GetEditorVersionByString()).c_str());
-					Relocation(ID{ 457726 }).Write((std::uint8_t*)&newWindowClass, (std::uint32_t)sizeof(newWindowClass));
-					Common::ModernTheme::AddSpermanentWindowSubclass(newWindowClass);
-
-					return true;
-				}
+				return true;
 			}
 		}
 	}
