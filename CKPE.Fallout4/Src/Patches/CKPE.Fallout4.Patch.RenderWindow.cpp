@@ -37,8 +37,6 @@ namespace CKPE
 			static float StepInRender = 15.f;
 			static bool HideMainImguiWnd = true;
 
-			//static std::uintptr_t pointer_RenderWindow_Mov_data[11];
-
 			struct Area
 			{
 				SIZE WindowSize;
@@ -128,7 +126,9 @@ namespace CKPE
 
 			INT_PTR CALLBACK RenderWindow::HKWndProc(HWND Hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 			{
-				if (Message == WM_INITDIALOG)
+				switch (Message)
+				{
+				case WM_INITDIALOG:
 				{
 					RenderWindow::Singleton->m_hWnd = Hwnd;
 
@@ -136,18 +136,14 @@ namespace CKPE
 					SetWindowPos(Hwnd, nullptr, 0, 0, 0, 0,
 						SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
 
-					return CallWindowProc(RenderWindow::Singleton->GetOldWndProc(),
-						Hwnd, Message, wParam, lParam);
+					break;
 				}
-				else if (Message == WM_ERASEBKGND)
-				{
+				case WM_ERASEBKGND:
 					// An application should return nonzero if it erases the background; otherwise, it should return zero.
 					return S_FALSE;
-				}
-				///////
-				// Don't let us reduce the window too much
-				else if (Message == WM_GETMINMAXINFO)
+				case WM_GETMINMAXINFO:
 				{
+					// Don't let us reduce the window too much
 					if (lParam)
 					{
 						auto lpMMI = (LPMINMAXINFO)lParam;
@@ -157,86 +153,84 @@ namespace CKPE
 
 					return S_OK;
 				}
-				// Fix bug loss of window size
-				else if (Message == WM_ACTIVATE)
+				case WM_KEYDOWN:
 				{
+					if (!Keyboard::IsAltPressed() && !Keyboard::IsControlPressed() && Keyboard::IsShiftPressed())
+					{
+						switch (wParam)
+						{
+						case 'W':
+						{
+							auto delta = StepInRender;
+							auto& local = const_cast<EditorAPI::NiAPI::NiTransform&>(
+								EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform());
+
+							local.m_Translate.x += local.m_Rotate.m_pEntry[1][0] * delta;
+							local.m_Translate.y += local.m_Rotate.m_pEntry[1][1] * delta;
+							local.m_Translate.z += local.m_Rotate.m_pEntry[1][2] * delta;
+							return S_OK;
+						}
+						case 'S':
+						{
+							auto delta = -StepInRender;
+							auto& local = const_cast<EditorAPI::NiAPI::NiTransform&>(
+								EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform());
+
+							local.m_Translate.x += local.m_Rotate.m_pEntry[1][0] * delta;
+							local.m_Translate.y += local.m_Rotate.m_pEntry[1][1] * delta;
+							local.m_Translate.z += local.m_Rotate.m_pEntry[1][2] * delta;
+							return S_OK;
+						}
+						case 'A':
+						{
+							auto delta = -StepInRender;
+							auto& local = const_cast<EditorAPI::NiAPI::NiTransform&>(
+								EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform());
+
+							local.m_Translate.x += local.m_Rotate.m_pEntry[0][0] * delta;
+							local.m_Translate.y += local.m_Rotate.m_pEntry[0][1] * delta;
+							local.m_Translate.z += local.m_Rotate.m_pEntry[0][2] * delta;
+							return S_OK;
+						}
+						case 'D':
+						{
+							auto delta = StepInRender;
+							auto& local = const_cast<EditorAPI::NiAPI::NiTransform&>(
+								EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform());
+
+							local.m_Translate.x += local.m_Rotate.m_pEntry[0][0] * delta;
+							local.m_Translate.y += local.m_Rotate.m_pEntry[0][1] * delta;
+							local.m_Translate.z += local.m_Rotate.m_pEntry[0][2] * delta;
+							return S_OK;
+						}
+						}
+					}
+					break;
+				}
+				case WM_KEYUP:
+				{
+					if (!Keyboard::IsAltPressed() && !Keyboard::IsControlPressed() && !Keyboard::IsShiftPressed())
+					{
+						if (wParam == VK_F1)
+						{
+							HideMainImguiWnd = !HideMainImguiWnd;
+							return S_OK;
+						}
+					}
+					break;
+				}
+				case WM_LBUTTONUP:
+					data_FakeMoveLight_coord.clear();
+					break;
+				case WM_ACTIVATE:
+					// Fix bug loss of window size
 					if (LOWORD(wParam) == WA_INACTIVE)
 						rcSafeDrawArea = *_TempDrawArea;
 					else
 						*_TempDrawArea = rcSafeDrawArea;
-
-					return S_OK;
-				}
-				else
-				{
-					if (Message == WM_LBUTTONUP)
-					{
-						data_FakeMoveLight_coord.clear();
-						//data_FakeMoveLight_coord = EditorAPI::NiAPI::ZERO_P3;
-					}
-					else if (Message == WM_KEYDOWN)
-					{
-						if (!Keyboard::IsAltPressed() && !Keyboard::IsControlPressed() && Keyboard::IsShiftPressed())
-						{
-							switch (wParam)
-							{
-							case 'W':
-							{
-								auto delta = StepInRender;
-								auto& local = const_cast<EditorAPI::NiAPI::NiTransform&>(
-									EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform());
-
-								local.m_Translate.x += local.m_Rotate.m_pEntry[1][0] * delta;
-								local.m_Translate.y += local.m_Rotate.m_pEntry[1][1] * delta;
-								local.m_Translate.z += local.m_Rotate.m_pEntry[1][2] * delta;
-								return 0;
-							}
-							case 'S':
-							{
-								auto delta = -StepInRender;
-								auto& local = const_cast<EditorAPI::NiAPI::NiTransform&>(
-									EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform());
-
-								local.m_Translate.x += local.m_Rotate.m_pEntry[1][0] * delta;
-								local.m_Translate.y += local.m_Rotate.m_pEntry[1][1] * delta;
-								local.m_Translate.z += local.m_Rotate.m_pEntry[1][2] * delta;
-								return 0;
-							}
-							case 'A':
-							{
-								auto delta = -StepInRender;
-								auto& local = const_cast<EditorAPI::NiAPI::NiTransform&>(
-									EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform());
-
-								local.m_Translate.x += local.m_Rotate.m_pEntry[0][0] * delta;
-								local.m_Translate.y += local.m_Rotate.m_pEntry[0][1] * delta;
-								local.m_Translate.z += local.m_Rotate.m_pEntry[0][2] * delta;
-								return 0;
-							}
-							case 'D':
-							{
-								auto delta = StepInRender;
-								auto& local = const_cast<EditorAPI::NiAPI::NiTransform&>(
-									EditorAPI::BGSRenderWindow::Singleton->Camera->Node->GetLocalTransform());
-
-								local.m_Translate.x += local.m_Rotate.m_pEntry[0][0] * delta;
-								local.m_Translate.y += local.m_Rotate.m_pEntry[0][1] * delta;
-								local.m_Translate.z += local.m_Rotate.m_pEntry[0][2] * delta;
-								return 0;
-							}
-							default:
-								break;
-							}
-						}
-					}
-					else if (Message == WM_KEYUP)
-					{
-						if (!Keyboard::IsAltPressed() && !Keyboard::IsControlPressed() && !Keyboard::IsShiftPressed())
-						{
-							if (wParam == VK_F1)
-								HideMainImguiWnd = !HideMainImguiWnd;
-						}
-					}
+					break;
+				default:
+					break;
 				}
 
 				return CallWindowProc(RenderWindow::Singleton->GetOldWndProc(), Hwnd, Message, wParam, lParam);

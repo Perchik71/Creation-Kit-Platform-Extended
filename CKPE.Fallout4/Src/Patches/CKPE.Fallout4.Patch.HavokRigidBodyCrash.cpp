@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -46,28 +45,14 @@ namespace CKPE
 
 			bool HavokRigidBodyCrash::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
-
-					if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-						SafeWrite::Write(__CKPE_OFFSET(0), { 0x61 });
-					else
-						SafeWrite::Write(__CKPE_OFFSET(0), { 0x60 });
-
-					return true;
-				}
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+					Relocation(ID(720180), 0x610).Write({ 0x61 });
 				else
-				{
-					using namespace Common;
-
-					Relocation(ID{ 1939007 }, Offset{ 0x7F1 }).Write({ 0x60 });
-					return true;
-				}
+					Relocation(ID(1990426), 0x7F1).Write({ 0x60 });
+				
+				return true;
 			}
 		}
 	}

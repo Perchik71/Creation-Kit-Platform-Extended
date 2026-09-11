@@ -2,10 +2,8 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
-#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.ResponseIgnoreMax.h>
 
@@ -47,32 +45,14 @@ namespace CKPE
 
 			bool ResponseIgnoreMax::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				//
+				// Skip message setting blocking text input after 149 characters.
+				//
+				Relocation(ID{ 492810, 1647136 }, Offset{ 0xC6, 0xC9 }).WriteFill(NOP, 6);
 
-					//
-					// Skip message setting blocking text input after 149 characters.
-					//
-					SafeWrite::WriteNop(__CKPE_OFFSET(0), 6);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					//
-					// Skip message setting blocking text input after 149 characters.
-					//
-					Relocation(ID{ 1616003 }, Offset{ 0xC9 }).WriteFill(0x90, 6);
-
-					return true;
-				}
+				return true;
 			}
 		}
 	}

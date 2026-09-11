@@ -4,8 +4,6 @@
 
 #include <windows.h>
 #include <CKPE.Utils.h>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -51,19 +49,21 @@ namespace CKPE
 
 			bool FixDeleteTintToRace::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
+				using namespace Common;
+
+				// Fixed when you delete a group tinting to race window
+				const auto target = ID{ 286613, 1992272 };
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
-					auto ver = db->GetVersion();
-					if ((ver < 2) && (ver > 3))
-						return false;
-
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
-
-					// Fixed when you delete a group tinting to race window
-					SafeWrite::Write(__CKPE_OFFSET(0), { 0x4D, 0x8B, 0x47, 0x8, 0x4C, 0x89, 0xE2 });
-					Detours::DetourCall(__CKPE_OFFSET(1), (uintptr_t)&sub);
-					SafeWrite::Write(__CKPE_OFFSET(2), { 0xEB, 0x18 });
+					Relocation(target, 0x19E).Write({ 0x4D, 0x8B, 0x47, 0x8, 0x4C, 0x89, 0xE2 });
+					Relocation(target, 0x1A5).WriteCall(&sub);
+					Relocation(target, 0x1AA).Write({ 0xEB, 0x18 });
+				}
+				else
+				{
+					Relocation(target, 0x2C2).Write({ 0x4C, 0x8B, 0x46, 0x8, 0x89, 0xC1, 0x4C, 0x89, 0xF2 });
+					Relocation(target, 0x2CB).WriteCall(&sub);
+					Relocation(target, 0x2D0).Write({ 0xEB, 0x22 });
 				}
 
 				return true;

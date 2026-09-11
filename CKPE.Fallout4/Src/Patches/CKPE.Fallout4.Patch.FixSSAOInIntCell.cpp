@@ -4,10 +4,8 @@
 
 #include <windows.h>
 #include <CKPE.Utils.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
-#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/TES.h>
 #include <Patches/CKPE.Fallout4.Patch.FixSSAOInIntCell.h>
@@ -57,7 +55,7 @@ namespace CKPE
 				using namespace Common;
 
 				// Fix crash caused by toggling SSAO while in an interior cell (no worldspace)
-				FixSSAOInIntCell_sub = reinterpret_cast<TFixSSAOInIntCell_sub*>(Relocation(ID{ 86141, 1941469 }).WriteJump(&sub));
+				FixSSAOInIntCell_sub = reinterpret_cast<TFixSSAOInIntCell_sub*>(Relocation(ID{ 405154, 1993129 }).WriteJump(&sub));
 
 				return true;
 			}

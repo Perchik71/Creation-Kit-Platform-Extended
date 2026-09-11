@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -48,28 +47,12 @@ namespace CKPE
 
 			bool RunNetworkDisable::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				// The ability to run CK without access to the Internet and/or a network device.
+				Relocation(ID{ 297712, 1477214, 2181936 }, Offset{ 0x7E1, 0x89D, 0x8AC }).Write(JMP);
 
-					// The ability to run CK without access to the Internet and/or a network device.
-					SafeWrite::Write(__CKPE_OFFSET(0), { 0xEB });
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					// The ability to run CK without access to the Internet and/or a network device.
-					Relocation(ID{ 2054943 }, Offset{ 0x8AC }).Write({0xEB});
-
-					return true;
-				}
+				return true;
 			}
 		}
 	}

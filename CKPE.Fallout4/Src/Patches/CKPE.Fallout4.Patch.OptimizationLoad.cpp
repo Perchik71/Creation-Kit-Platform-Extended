@@ -9,11 +9,8 @@
 #include <CKPE.HardwareInfo.h>
 #include <CKPE.Patterns.h>
 #include <CKPE.Utils.h>
-#include <CKPE.Detours.h>
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
-#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/BSFile.h>
 #include <EditorAPI/BSTArray.h>
@@ -165,180 +162,137 @@ namespace CKPE
 				// - Replacing all unoptimized functions related to searching in index arrays, and maybe not only	
 				// - Replacing FindFirstNextA with a more optimized function FindFirstFileExA
 
-				if (!db)
-				{
-					using namespace Common;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
-
-					// Spam in the status bar no more than 250ms
-					Detours::DetourCall(Relocation(ID{ 1366573 }, Offset{ 0x848 }).Address(), (std::uintptr_t)&sub);
-					pointer_OptimizationLoad_sub1 = Relocation(ID{ 1638356 }).Address();
-
-					*(std::uintptr_t*)&zlibDetail::Inflate = Detours::DetourJump(Relocation(ID{ 1624409 }).Address(),
-						(std::uintptr_t)&zlibDetail::Decompression::LibDeflate::Inflate);
-
-					Detours::DetourIAT(base, "kernel32.dll", "FindFirstFileA", (std::uintptr_t)&HKFindFirstFileA);
-
-					// Skip remove failed forms
-					Relocation(ID{ 1418651 }, Offset{ 0x185E }).Write({ 0xEB });
-
-					EditorAPI::pointer_BSFile_sub = Relocation(ID{ 1498273 }).Address();
-					// 2 kb -> x kb >= 256 kb
-					*(std::uintptr_t*)&EditorAPI::BSFile::ICreateInstance =
-						Detours::DetourClassJump(EditorAPI::pointer_BSFile_sub,
-							(std::uintptr_t)&EditorAPI::BSFile::HKCreateInstance);
-					// 2 kb -> 256 kb
-					Relocation(ID{ 332841 }, Offset{ 0x1A7 }).Write({ 0x41, 0x89, 0xC6, 0x90 });
-					Relocation(ID{ 332841 }, Offset{ 0x184 }).Write({ 0x04 });
-
-					if (_READ_OPTION_BOOL("Animation", "bSkipAnimationBuildData", false))
-					{
-						// Skipping Export Anim
-						Relocation(ID{ 1943589 }).Write({ 0xC3 });
-						// Remove temporary files
-						DeleteFileA("TemporaryBehaviorEventInfoOutput.txt");
-						DeleteFileA("TemporaryClipDataOutput.txt");
-						DeleteFileA("TemporarySyncAnimDataOutput.txt");
-					}
-
-					return true;
-				}
-
-				auto verPatch = db->GetVersion();
-				if ((verPatch != 1) && (verPatch != 2))
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				auto base = Application::GetSingleton()->GetBase();
 
 				// Spam in the status bar no more than 250ms
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				pointer_OptimizationLoad_sub1 = __CKPE_OFFSET(1);
+				pointer_OptimizationLoad_sub1 = Relocation(ID{ 177897, 1371227 }, Offset{ 0x5E7, 0x848 }).WriteCall(&sub);
 
-				*(std::uintptr_t*)&zlibDetail::Inflate = Detours::DetourJump(__CKPE_OFFSET(3),
-					(std::uintptr_t)&zlibDetail::Decompression::LibDeflate::Inflate);
+				*(std::uintptr_t*)&zlibDetail::Inflate = Relocation(ID{ 531888, 1656061 }).WriteJump(&zlibDetail::Decompression::LibDeflate::Inflate);
 
 				Detours::DetourIAT(base, "kernel32.dll", "FindFirstFileA", (std::uintptr_t)&HKFindFirstFileA);
 
 				// Skip remove failed forms
-				SafeWrite::Write(__CKPE_OFFSET(4), { 0xEB });
+				Relocation(ID{ 452879, 1429824 }, Offset{ 0x14F4, 0x185E }).Write({ JMP });
 
-				EditorAPI::pointer_BSFile_sub = __CKPE_OFFSET(12);
+				EditorAPI::pointer_BSFile_sub = Relocation(ID{ 481720, 1519241 }).Address();
 				// 2 kb -> x kb >= 256 kb
 				*(std::uintptr_t*)&EditorAPI::BSFile::ICreateInstance =
 					Detours::DetourClassJump(EditorAPI::pointer_BSFile_sub,
 						(std::uintptr_t)&EditorAPI::BSFile::HKCreateInstance);
 				// 2 kb -> 256 kb
-				if (verPatch == 1)
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
-					SafeWrite::Write(__CKPE_OFFSET(13), { 0x41, 0xB9, 0x00, 0x00, 0x04, 0x00, 0x90 });
-					SafeWrite::WriteNop(__CKPE_OFFSET(15), 4);
+					Relocation(ID(528149), 0x292).Write({0x41, 0xB9, 0x00, 0x00, 0x04, 0x00, 0x90});
+					Relocation(ID(531000), 0x1CF).WriteFill(NOP, 4);
 				}
 				else
-					SafeWrite::Write(__CKPE_OFFSET(13), { 0x41, 0x89, 0xC6, 0x90 });
+					Relocation(ID(531000), 0x1A7).Write({0x41, 0x89, 0xC6, 0x90});
 
-				SafeWrite::Write(__CKPE_OFFSET(14), { 0x04 });
+				Relocation(ID(531000), Offset{ 0x1CA, 0x184 }).Write({ 0x04 });
 
 				if (_READ_OPTION_BOOL("Animation", "bSkipAnimationBuildData", false))
 				{
 					// Skipping Export Anim
-					SafeWrite::Write(__CKPE_OFFSET(16), { 0xC3 });
+					Relocation(ID{ 116296, 1995445 }).Write(RET);
 					// Remove temporary files
 					DeleteFileA("TemporaryBehaviorEventInfoOutput.txt");
 					DeleteFileA("TemporaryClipDataOutput.txt");
 					DeleteFileA("TemporarySyncAnimDataOutput.txt");
 				}
 
-				// Without SIMD support, there is no pointand
-				if ((verPatch == 1) && HardwareInfo::CPU::HasSupportSSE41())
-				{
-					std::size_t count = 0;
+				return true;
 
-					// Cutting a lot is faster this way
-					auto stext = interface->GetApplication()->GetSegment(Segment::text);
+				
+				//// Without SIMD support, there is no pointand
+				//if ((verPatch == 1) && HardwareInfo::CPU::HasSupportSSE41())
+				//{
+				//	std::size_t count = 0;
 
-					std::vector<std::uintptr_t>::iterator match;
-					auto matches = Patterns::FindsByMask(stext.GetAddress(), stext.GetSize(),
-						"48 83 C5 08 41 3B FE 72 9F 48 8B 6C 24 50 8B C3 48 8B 5C 24 58 48 8B 74"
-						" 24 60 48 83 C4 30 41 5F 41 5E 5F C3 8B C3 EB E8");
+				//	// Cutting a lot is faster this way
+				//	auto stext = interface->GetApplication()->GetSegment(Segment::text);
 
-					std::for_each(match = matches.begin(), matches.end(), [&count](auto it)
-						{ Detours::DetourJump(it - 0x8A, (std::uintptr_t)&HKSearchIndex64); count++; });
+				//	std::vector<std::uintptr_t>::iterator match;
+				//	auto matches = Patterns::FindsByMask(stext.GetAddress(), stext.GetSize(),
+				//		"48 83 C5 08 41 3B FE 72 9F 48 8B 6C 24 50 8B C3 48 8B 5C 24 58 48 8B 74"
+				//		" 24 60 48 83 C4 30 41 5F 41 5E 5F C3 8B C3 EB E8");
 
-					matches = Patterns::FindsByMask(stext.GetAddress(), stext.GetSize(),
-						"48 83 C5 08 41 3B FE 72 9F 48 8B 6C 24 58 48 8B 74 24 60 8B C3 48 8B 5C"
-						" 24 50 48 83 C4 30 41 5F 41 5E 5F C3");
+				//	std::for_each(match = matches.begin(), matches.end(), [&count](auto it)
+				//		{ Detours::DetourJump(it - 0x8A, (std::uintptr_t)&HKSearchIndex64); count++; });
 
-					std::for_each(match = matches.begin(), matches.end(), [&count](auto it)
-						{ Detours::DetourJump(it - 0x8D, (std::uintptr_t)&HKSearchIndexOffset64); count++; });
+				//	matches = Patterns::FindsByMask(stext.GetAddress(), stext.GetSize(),
+				//		"48 83 C5 08 41 3B FE 72 9F 48 8B 6C 24 58 48 8B 74 24 60 8B C3 48 8B 5C"
+				//		" 24 50 48 83 C4 30 41 5F 41 5E 5F C3");
 
-					Detours::DetourJump(__CKPE_OFFSET(5), (std::uintptr_t)&HKSearchIndex32);
-					Detours::DetourJump(__CKPE_OFFSET(6), (std::uintptr_t)&HKSearchIndex32);
-					Detours::DetourJump(__CKPE_OFFSET(7), (std::uintptr_t)&HKSearchIndex32);
+				//	std::for_each(match = matches.begin(), matches.end(), [&count](auto it)
+				//		{ Detours::DetourJump(it - 0x8D, (std::uintptr_t)&HKSearchIndexOffset64); count++; });
 
-					class Search_IA128 : public Xbyak::CodeGenerator 
-					{
-					public:
-						Search_IA128(VOID) : Xbyak::CodeGenerator() 
-						{
-							mov(ptr[rsp + 0x10], rbx);
-							mov(ptr[rsp + 0x18], rsi);
-							push(rdi);
-							push(r14);
-							push(r15);
-							sub(rsp, 0x30);
-							mov(r14d, dword[rcx + 0x10]);
-							or_(ebx, 0xFFFFFFFF);
-							xor_(edi, edi);
-							mov(r15, rdx);
-							mov(rsi, rcx);
-							test(r14d, r14d);
-							je(".quit_no");
-							push(rbp);
-							mov(ebp, edi);
-							mov(rcx, qword[r15]);
-							mov(rdx, qword[rsi]);
-							L(".c1");
-							cmp(ebx, -1);
-							jne(".quit_yes");
-							cmp(qword[rdx + rbp], rcx);
-							cmove(ebx, edi);
-							inc(edi);
-							lea(rbp, qword[rbp + 0x10]);
-							cmp(edi, r14d);
-							jb(".c1");
-							L(".quit_yes");
-							pop(rbp);
-							L(".quit_no");
-							mov(eax, ebx);
-							mov(rbx, qword[rsp + 0x58]);
-							mov(rsi, qword[rsp + 0x60]);
-							add(rsp, 0x30);
-							pop(r15);
-							pop(r14);
-							pop(rdi);
-							ret();
-						}
+				//	Detours::DetourJump(__CKPE_OFFSET(5), (std::uintptr_t)&HKSearchIndex32);
+				//	Detours::DetourJump(__CKPE_OFFSET(6), (std::uintptr_t)&HKSearchIndex32);
+				//	Detours::DetourJump(__CKPE_OFFSET(7), (std::uintptr_t)&HKSearchIndex32);
 
-						static VOID Generate(std::uintptr_t Target)
-						{
-							auto hook = new Search_IA128();
-							Detours::DetourJump(Target, (std::uintptr_t)hook->getCode());
-						}
+				//	class Search_IA128 : public Xbyak::CodeGenerator 
+				//	{
+				//	public:
+				//		Search_IA128(VOID) : Xbyak::CodeGenerator() 
+				//		{
+				//			mov(ptr[rsp + 0x10], rbx);
+				//			mov(ptr[rsp + 0x18], rsi);
+				//			push(rdi);
+				//			push(r14);
+				//			push(r15);
+				//			sub(rsp, 0x30);
+				//			mov(r14d, dword[rcx + 0x10]);
+				//			or_(ebx, 0xFFFFFFFF);
+				//			xor_(edi, edi);
+				//			mov(r15, rdx);
+				//			mov(rsi, rcx);
+				//			test(r14d, r14d);
+				//			je(".quit_no");
+				//			push(rbp);
+				//			mov(ebp, edi);
+				//			mov(rcx, qword[r15]);
+				//			mov(rdx, qword[rsi]);
+				//			L(".c1");
+				//			cmp(ebx, -1);
+				//			jne(".quit_yes");
+				//			cmp(qword[rdx + rbp], rcx);
+				//			cmove(ebx, edi);
+				//			inc(edi);
+				//			lea(rbp, qword[rbp + 0x10]);
+				//			cmp(edi, r14d);
+				//			jb(".c1");
+				//			L(".quit_yes");
+				//			pop(rbp);
+				//			L(".quit_no");
+				//			mov(eax, ebx);
+				//			mov(rbx, qword[rsp + 0x58]);
+				//			mov(rsi, qword[rsp + 0x60]);
+				//			add(rsp, 0x30);
+				//			pop(r15);
+				//			pop(r14);
+				//			pop(rdi);
+				//			ret();
+				//		}
 
-					};
+				//		static VOID Generate(std::uintptr_t Target)
+				//		{
+				//			auto hook = new Search_IA128();
+				//			Detours::DetourJump(Target, (std::uintptr_t)hook->getCode());
+				//		}
 
-					Search_IA128::Generate(__CKPE_OFFSET(8));
-					Search_IA128::Generate(__CKPE_OFFSET(9));
-					Search_IA128::Generate(__CKPE_OFFSET(10));
-					Search_IA128::Generate(__CKPE_OFFSET(11));
+				//	};
 
-					count += 3;
+				//	Search_IA128::Generate(__CKPE_OFFSET(8));
+				//	Search_IA128::Generate(__CKPE_OFFSET(9));
+				//	Search_IA128::Generate(__CKPE_OFFSET(10));
+				//	Search_IA128::Generate(__CKPE_OFFSET(11));
 
-					_MESSAGE("Replaced function with SIMD function: %d.", count);
-				}
+				//	count += 3;
+
+				//	_MESSAGE("Replaced function with SIMD function: %d.", count);
+				//}
 
 				return true;
 			}

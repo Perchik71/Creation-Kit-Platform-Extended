@@ -47,31 +47,15 @@ namespace CKPE
 
 			bool FixSmoothValue::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				const auto target = ID{ 718656, 1601882 };
 
-					// Fixed when the value is different from 0.0 to 1.0. Smoothness value to material (nif)
-					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-					SafeWrite::Write(__CKPE_OFFSET(1), { 0x66, 0x0F, 0x7E, 0x85, 0x88, 0x00, 0x00, 0x00, 0xEB, 0x18 });
+				// Fixed when the value is different from 0.0 to 1.0. Smoothness value to material (nif)
+				Relocation(target, 0xB7).WriteCall(&sub);
+				Relocation(target, 0xBC).Write({ 0x66, 0x0F, 0x7E, 0x85, 0x88, 0x00, 0x00, 0x00, 0xEB, 0x18 });
 
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					// Fixed when the value is different from 0.0 to 1.0. Smoothness value to material (nif)
-					Relocation(ID{ 1573394 }, Offset{ 0xB7 }).WriteCall(sub);
-					Relocation(ID{ 1573394 }, Offset{ 0xBC }).Write({ 0x66, 0x0F, 0x7E, 0x85, 0x88, 0x00, 0x00, 0x00, 0xEB, 0x18 });
-
-					return true;
-				}
-				
+				return true;
 			}
 
 			float FixSmoothValue::sub(float a1, float a2) noexcept(true)

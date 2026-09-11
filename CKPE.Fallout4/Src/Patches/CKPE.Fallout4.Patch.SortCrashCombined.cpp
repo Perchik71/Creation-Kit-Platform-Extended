@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Utils.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -49,27 +48,11 @@ namespace CKPE
 
 			bool SortCrashCombined::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				*(std::uintptr_t*)&pointer_SortCrashCombinedPatch_sub = Relocation(ID{ 643144, 1621905 }).WriteJump(&sub);
 
-					*(std::uintptr_t*)&pointer_SortCrashCombinedPatch_sub =
-						Detours::DetourClassJump(__CKPE_OFFSET(0), &sub);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					*(std::uintptr_t*)&pointer_SortCrashCombinedPatch_sub = Relocation(ID{ 1592219 }).WriteCall(sub);
-
-					return true;
-				}
+				return true;
 			}
 
 			std::int32_t SortCrashCombined::sub(const void* lsb, const void* rsb, std::size_t size) noexcept(true)

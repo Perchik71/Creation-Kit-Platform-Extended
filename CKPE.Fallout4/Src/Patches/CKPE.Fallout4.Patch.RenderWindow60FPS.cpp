@@ -3,8 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.SafeWrite.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -61,59 +59,22 @@ namespace CKPE
 
 			bool RenderWindow60FPS::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 2)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				//
+				// Force render window to draw at 60fps (SetTimer(10ms))
+				// DESC: BufferDesc.RefreshRate.Numerator = 60
+				//
+				Relocation(ID{ 638120, 1475768 }, Offset{ 0x523, 0x526 }).Write({ USER_TIMER_MINIMUM });
 
-					// Cutting a lot is faster this way
-					auto stext = interface->GetApplication()->GetSegment(Segment::text);
-					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
-
-					//
-					// Force render window to draw at 60fps (SetTimer(10ms))
-					// DESC: BufferDesc.RefreshRate.Numerator = 60
-					//
-					text.Write(__CKPE_OFFSET(0), { USER_TIMER_MINIMUM });
-
-					if (!_READ_OPTION_BOOL("CreationKit", "bRenderWindowVSync", true))
-						// no VSync
-						text.Write(__CKPE_OFFSET(1), { 0x33, 0xD2, 0x90 });
+				if (!_READ_OPTION_BOOL("CreationKit", "bRenderWindowVSync", true))
+					// no VSync
+					Relocation(ID{ 570159, 1989813 }, Offset{ 0xC2, 0x1DF }).Write({ 0x33, 0xD2, 0x90 });
 #if 0
-					ptrINIReadSetting = (decltype(&Hook_INIReadSetting))Detours::DetourClassJump(0x14259AB50, Hook_INIReadSetting);
+				ptrINIReadSetting = (decltype(&Hook_INIReadSetting))Detours::DetourClassJump(0x14259AB50, Hook_INIReadSetting);
 #endif
 
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					auto interface = CKPE::Common::Interface::GetSingleton();
-
-					// Cutting a lot is faster this way
-					auto stext = interface->GetApplication()->GetSegment(Segment::text);
-					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
-
-					//
-					// Force render window to draw at 60fps (SetTimer(10ms))
-					// DESC: BufferDesc.RefreshRate.Numerator = 60
-					//
-					Relocation(ID{ 1459534 }, Offset{ 0x526 }).Write({ USER_TIMER_MINIMUM });
-
-					if (!_READ_OPTION_BOOL("CreationKit", "bRenderWindowVSync", true))
-						// no VSync
-						Relocation(ID{ 1938434 }, Offset{ 0x1DF }).Write({ 0x33, 0xD2, 0x90 });
-#if 0
-					ptrINIReadSetting = (decltype(&Hook_INIReadSetting))Detours::DetourClassJump(0x14259AB50, Hook_INIReadSetting);
-#endif
-
-					return true;
-				}
-
+				return true;
 			}
 		}
 	}

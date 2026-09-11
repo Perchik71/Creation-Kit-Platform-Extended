@@ -2,10 +2,8 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
-#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.WrongUpdateActorWnd.h>
 
@@ -47,33 +45,14 @@ namespace CKPE
 
 			bool WrongUpdateActorWnd::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				// ACTOR: Wrong InvalidateRect
+				Relocation(ID{ 650645, 1337975 }, Offset{ 0x131, 0x197 }).WriteFill(NOP, 6);
+				Relocation(ID{ 642042, 1457407 }, 0x15A).WriteFill(NOP, 6);
+				Relocation(ID{ 666248, 1989246 }, Offset{ 0x2835, 0x2C19 }).WriteFill(NOP, 0xF);
 
-					// ACTOR: Wrong InvalidateRect
-					SafeWrite::WriteNop(__CKPE_OFFSET(0), 6);
-					SafeWrite::WriteNop(__CKPE_OFFSET(1), 6);
-					SafeWrite::WriteNop(__CKPE_OFFSET(2), 0xF);
-					//SafeWrite::WriteNop(__CKPE_OFFSET(3), 0x1D);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					// ACTOR: Wrong InvalidateRect
-					Relocation(ID{ 1336973 }, Offset{ 0x197 }).WriteFill(0x90, 6);
-					Relocation(ID{ 1443229 }, Offset{ 0x15A }).WriteFill(0x90, 6);
-					Relocation(ID{ 1937909 }, Offset{ 0x2C19 }).WriteFill(0x90, 0xF);
-
-					return true;
-				}
+				return true;
 			}
 		}
 	}

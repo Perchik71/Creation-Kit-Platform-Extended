@@ -49,26 +49,12 @@ namespace CKPE
 
 			bool FixTabDeleteCrash::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				// Fix for crash when tab control buttons are deleted. Uninitialized TCITEMA structure variables.
+				Relocation(ID{ 642003, 1548425 }).WriteJump(&sub);
 
-					// Fix for crash when tab control buttons are deleted. Uninitialized TCITEMA structure variables.
-					Detours::DetourJump(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-					// Fix for crash when tab control buttons are deleted. Uninitialized TCITEMA structure variables.
-					Relocation(ID{ 1524100 }).WriteJump(sub);
-					return true;
-				}
+				return true;
 			}
 
 			void FixTabDeleteCrash::sub(void* TabControlHandle, std::uint32_t TabIndex) noexcept(true)

@@ -2,10 +2,8 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
-#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.VersionControlMergeWorkaround.h>
 
@@ -47,62 +45,38 @@ namespace CKPE
 
 			bool VersionControlMergeWorkaround::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					auto verPatch = db->GetVersion();
-					if ((verPatch != 1) && (verPatch != 2))
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				auto interface = CKPE::Common::Interface::GetSingleton();
 
-					//
-					// Workaround for version control not allowing merges when a plugin index is above 02.
-					// Bethesda's VC bitmap files determine heck-in status along with user IDs for each specific form in the game. 
-					// They're also hardcoded for 2 masters only. Using this hack for anything EXCEPT merging will break the bitmaps.
-					//
+				//
+				// Workaround for version control not allowing merges when a plugin index is above 02.
+				// Bethesda's VC bitmap files determine heck-in status along with user IDs for each specific form in the game.
+				// They're also hardcoded for 2 masters only. Using this hack for anything EXCEPT merging will break the bitmaps.
+				//
 
-					// Cutting a lot is faster this way
-					auto stext = interface->GetApplication()->GetSegment(Segment::text);
-					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
+				// Cutting a lot is faster this way
+				auto stext = Application::GetSingleton()->GetSegment(Segment::text);
+				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
-					for (std::uint32_t i = 0; i < db->GetCount(); i++)
-						text.Write(__CKPE_OFFSET(i), { 0xEB });
+				const auto target1 = ID{ 76508, 1361378 };
+				const auto target2 = ID(49336);
+				const auto target3 = ID(581077);
+				const auto target4 = ID(581078);
+				const auto target5 = ID(438785);
 
-					return true;
+				text.Write(Relocation(target1, Offset{ 0x21f, 0x123 }).Address(), { JMP });
+				text.Write(Relocation(target1, Offset{ 0x242, 0x3AF }).Address(), { JMP });
+				text.Write(Relocation(target2, 0x17).Address(), { JMP });
+				text.Write(Relocation(target2, 0x3A).Address(), { JMP });
+				text.Write(Relocation(target3, Offset{ 0x497, 0x41E }).Address(), { JMP });
+				text.Write(Relocation(target3, Offset{ 0x4BA, 0x441 }).Address(), { JMP });
+				text.Write(Relocation(target4, Offset{ 0x218, 0x238 }).Address(), { JMP });
+				text.Write(Relocation(target4, Offset{ 0x23B, 0x25B }).Address(), { JMP });
+				text.Write(Relocation(target5, 0x4E).Address(), { JMP });
+				text.Write(Relocation(target5, 0x6F).Address(), { JMP });
 
-				}
-				else
-				{
-					using namespace Common;
-
-					auto interface = CKPE::Common::Interface::GetSingleton();
-
-					//
-					// Workaround for version control not allowing merges when a plugin index is above 02.
-					// Bethesda's VC bitmap files determine heck-in status along with user IDs for each specific form in the game.
-					// They're also hardcoded for 2 masters only. Using this hack for anything EXCEPT merging will break the bitmaps.
-					//
-
-					// Cutting a lot is faster this way
-					auto stext = interface->GetApplication()->GetSegment(Segment::text);
-					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
-
-					text.Write(Relocation(ID{ 1357827 }, Offset{ 0x123 }).Address(), { 0xEB });
-					text.Write(Relocation(ID{ 1357827 }, Offset{ 0x3AF }).Address(), { 0xEB });
-					text.Write(Relocation(ID{ 139328 }, Offset{ 0x17 }).Address(), { 0xEB });
-					text.Write(Relocation(ID{ 429235 }, Offset{ 0x41E }).Address(), { 0xEB });
-					text.Write(Relocation(ID{ 5160 }, Offset{ 0x238 }).Address(), { 0xEB });
-					text.Write(Relocation(ID{ 1357827 }, Offset{ 0x146 }).Address(), { 0xEB });
-					text.Write(Relocation(ID{ 1357827 }, Offset{ 0x3D2 }).Address(), { 0xEB });
-					text.Write(Relocation(ID{ 139328 }, Offset{ 0x3A }).Address(), { 0xEB });
-					text.Write(Relocation(ID{ 429235 }, Offset{ 0x441 }).Address(), { 0xEB });
-					text.Write(Relocation(ID{ 5160 }, Offset{ 0x25B }).Address(), { 0xEB });
-					text.Write(Relocation(ID{ 509473 }, Offset{ 0x4E }).Address(), { 0xEB });
-					text.Write(Relocation(ID{ 509473 }, Offset{ 0x6F }).Address(), { 0xEB });
-
-					return true;
-				}
+				return true;
 			}
 		}
 	}

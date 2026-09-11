@@ -4,7 +4,6 @@
 
 #include <windows.h>
 #include <combaseapi.h>
-#include <CKPE.Detours.h>
 #include <CKPE.MessageBox.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -49,30 +48,13 @@ namespace CKPE
 
 			bool FlowChartX::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					auto _interface = CKPE::Common::Interface::GetSingleton();
-					auto base = _interface->GetApplication()->GetBase();
+				using namespace Common;
 
-					if (db->GetVersion() != 1)
-						return false;
+				Relocation(ID{ 250004, 1559469 }, Offset{ 0x66D, 0x79B }).WriteCall(&sub);
+				Relocation(ID{ 661598, 1991629 }, Offset{ 0x831, 0x939 }).WriteCall(&sub);
+				Relocation(ID{ 663691, 1468392 }, Offset{ 0x7DD, 0x90C }).WriteCall(&sub);
 
-					for (std::uint32_t i = 0; i < db->GetCount(); i++)
-						Detours::DetourCall(__CKPE_OFFSET(i), (std::uintptr_t)&sub);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					Relocation(ID{ 1533874 }, Offset{ 0x79B }).WriteCall(sub);
-					Relocation(ID{ 1940104 }, Offset{ 0x939 }).WriteCall(sub);
-					Relocation(ID{ 1452963 }, Offset{ 0x90C }).WriteCall(sub);
-
-					return true;
-				}
-				
+				return true;
 			}
 
 			void FlowChartX::sub() noexcept(true)

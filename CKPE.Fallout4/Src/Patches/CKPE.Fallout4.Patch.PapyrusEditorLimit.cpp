@@ -3,10 +3,8 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
-#include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.PapyrusEditorLimit.h>
 
@@ -48,31 +46,11 @@ namespace CKPE
 
 			bool PapyrusEditorLimit::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				using namespace Common;
 
-				
+				Relocation(ID{ 69589, 1343977 }, 0x12C).WriteCall(&sub);
 
-				if (db) {
-					if (db->GetVersion() != 1)
-						return false;
-
-					//
-					// Raise the papyrus script editor text limit to 500k characters from 64k
-					//
-					Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-
-					Relocation(ID{ 1342298 }, Offset{ 0x12C }).WriteCall(sub);
-
-					return true;
-					
-				}
+				return true;
 			}
 
 			bool PapyrusEditorLimit::sub(std::int64_t RichEditControl, const char* Text) noexcept(true)

@@ -52,260 +52,115 @@ namespace CKPE
 
 			bool FixQuoteCmdLine::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (!db)
-				{
-					using namespace Common;
+				using namespace Common;
 
-					//	Add support quote to command line with -GeneratePreCombined
-					//	Should be: -GeneratePreCombined:"<ESMFilename>" [clean, filtered] [all, other, main, ints]
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x10C8 }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x10E6 }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x10FF }).Address(), (std::uintptr_t)&sub);
-
-					//	-GeneratePreVisData
-					//	This command into the code section -GeneratePreVisData.
-					//	Should be: -GeneratePreVisData:"<ESMFilename>" [clean, filtered] [all, other, main, ints]
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x120F }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x122D }).Address(), (std::uintptr_t)&sub);
-
-					//	Add support quote to command line with -CheckInPlugin
-					//	Should be: -CheckInPlugin:"<PluginFilename>" "<ESMFilename>"
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x856 }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x878 }).Address(), (std::uintptr_t)&sub);
-
-					//	Add support quote to command line with -ConvertToESL
-					//	Should be: -ConvertToESL:"<PluginFilename>"
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x1BDB }).Address(), (std::uintptr_t)&sub);
-
-					//	Add support quote to command line with -DumpNeededFiles
-					//	Should be: -DumpNeededFiles:"<ESMFilename>" "<OutputFilepath>"
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0xB18 }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0xB36 }).Address(), (std::uintptr_t)&sub);
-
-					//	Add support quote to command line with -SaveDefaultPlugin
-					//	Should be: -SaveDefaultPlugin:"<PluginFilename>" "<ESMFilename>"
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x7C3 }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x7E1 }).Address(), (std::uintptr_t)&sub);
-
-					//	Add support quote to command line with -SaveDefaultPlugin
-					//	Should be: -ExportDismemberData:"<ESMFilename>" <XB1|X64|PS4|W32>
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x6EF }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x70D }).Address(), (std::uintptr_t)&sub);
-
-					//	Add support quote to command line with -UpdateModelData
-					//	Should be: -UpdateModelData:"<ESMFilename>"
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x684 }).Address(), (std::uintptr_t)&sub);
-
-					//	Add support quote to command line with -OutputAreaArt
-					//	Should be: -OutputAreaArt:"<ESMFilename>" "<AreasFilename>" "<OutputFilename>"
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x5CA }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x5E8 }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x606 }).Address(), (std::uintptr_t)&sub);
-
-					//	Add support quote to command line with -CompileTextExport
-					//	Should be: -CompileTextExport:"<ESMFilename>" "<language>" "<PathToTextExport>" ["<PathBackupToTextExport>"]
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x47D }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x49B }).Address(), (std::uintptr_t)&sub);
-
-					//	Add support quote to command line with -ExportFaceGenData
-					//	Should be: -ExportFaceGenData:"<ESMFilename>" <XB1|X64|PS4|W32>
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x235 }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x253 }).Address(), (std::uintptr_t)&sub);
-
-					//	Add support quote to command line with -GenerateAnimInfo
-					//	Should be: -GenerateAnimInfo:"<ESMFilename>" "<DataFilepath>" "<OutputFilepath>" [%s] [%s] [%s]
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0xBB5 }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0xBD3 }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0xBF1 }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0xC0F }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0xD76 }).Address(), (std::uintptr_t)&sub);
-
-					//	Add support quote to command line with -GenerateSingleLip
-					//	Should be: -GenerateSingleLip:"<WavFilename>" "<Text>"
-					//	Warning: The .lip file will be created next to the audio file.
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0xF29 }).Address(), (std::uintptr_t)&sub2);
-
-					//	Add support quote to command line with -GenerateStaticCollections
-					//	Should be: -GenerateStaticCollections:"<ESMFilename>" <XB1|X64|PS4|W32>
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x1003 }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x1021 }).Address(), (std::uintptr_t)&sub);
-
-					//	Add support quote to command line with -DepersistRefs
-					//	Should be: -DepersistRefs:"<ESMFilename>"
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x1578 }).Address(), (std::uintptr_t)&sub);
-
-					//	Add support quote to command line with -MapMarker
-					//	Should be: -MapMarker:"<ESMFilename>" "<Worldspace|Interior>"
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x15F4 }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x1612 }).Address(), (std::uintptr_t)&sub);
-
-					//	Add support quote to command line with -MapInfo
-					//	Should be: -MapInfo:"<ESMFilename>" "<Worldspace|Interior>" ["<%s>"]
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x167D }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x169B }).Address(), (std::uintptr_t)&sub);
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x16B9 }).Address(), (std::uintptr_t)&sub);
-
-					//	Add support quote to command line with -ImportScalingData
-					//	Should be: -ImportScalingData:"<ESMFilename>"
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x17FD }).Address(), (std::uintptr_t)&sub);
-
-					//	Add support quote to command line with -CompressPSG
-					//	Should be: -CompressPSG:"<ESMFilename>"
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x1868 }).Address(), (std::uintptr_t)&sub);
-
-					//	Add support quote to command line with -BuildCDX
-					//	Should be: -BuildCDX:"<ESMFilename>"
-
-					Detours::DetourCall(Relocation(ID{ 1941407 }, Offset{ 0x1A00 }).Address(), (std::uintptr_t)&sub);
-
-					return true;
-				}
-
-				if (db->GetVersion() != 1)
-					return false;
-
-				auto interface = CKPE::Common::Interface::GetSingleton();
-				auto base = interface->GetApplication()->GetBase();
+				const auto target = ID{ 632480, 1993061 };
 
 				//	Add support quote to command line with -GeneratePreCombined
 				//	Should be: -GeneratePreCombined:"<ESMFilename>" [clean, filtered] [all, other, main, ints]
 
-				Detours::DetourCall(__CKPE_OFFSET(0), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(1), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(2), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0xE33, 0x1085, 0x1085, 0x10C8 }).WriteCall(&sub);
+				Relocation(target, Offset{ 0xE53, 0x10A3, 0x10A3, 0x10E6 }).WriteCall(&sub);
+				Relocation(target, Offset{ 0xE6C, 0x10BC, 0x10BC, 0x10FF }).WriteCall(&sub);
 
 				//	-GeneratePreVisData
 				//	This command into the code section -GeneratePreVisData.
 				//	Should be: -GeneratePreVisData:"<ESMFilename>" [clean, filtered] [all, other, main, ints]
 
-				Detours::DetourCall(__CKPE_OFFSET(3), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(4), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0xF6E, 0x11CC, 0x11CC, 0x120F }).WriteCall(&sub);
+				Relocation(target, Offset{ 0xF8C, 0x11EA, 0x11EA, 0x122D }).WriteCall(&sub);
 
 				//	Add support quote to command line with -CheckInPlugin
 				//	Should be: -CheckInPlugin:"<PluginFilename>" "<ESMFilename>"
-
-				Detours::DetourCall(__CKPE_OFFSET(5), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(6), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0x76B, 0x819, 0x819, 0x856 }).WriteCall(&sub);
+				Relocation(target, Offset{ 0x78D, 0x83B, 0x83B, 0x878 }).WriteCall(&sub);
 
 				//	Add support quote to command line with -ConvertToESL
 				//	Should be: -ConvertToESL:"<PluginFilename>"
-
-				Detours::DetourCall(__CKPE_OFFSET(7), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0x1954, 0x1B9B, 0x1B9B, 0x1BDB }).WriteCall(&sub);
 
 				//	Add support quote to command line with -DumpNeededFiles
 				//	Should be: -DumpNeededFiles:"<ESMFilename>" "<OutputFilepath>"
-
-				Detours::DetourCall(__CKPE_OFFSET(8), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(9), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0x89E, 0xADB, 0xADB, 0xB18 }).WriteCall(&sub);
+				Relocation(target, Offset{ 0x8BC, 0xAF9, 0xAF9, 0xB36 }).WriteCall(&sub);
 
 				//	Add support quote to command line with -SaveDefaultPlugin
 				//	Should be: -SaveDefaultPlugin:"<PluginFilename>" "<ESMFilename>"
-
-				Detours::DetourCall(__CKPE_OFFSET(10), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(11), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0x6D8, 0x786, 0x786, 0x7C3 }).WriteCall(&sub);
+				Relocation(target, Offset{ 0x6F6, 0x7A4, 0x7A4, 0x7E1 }).WriteCall(&sub);
 
 				//	Add support quote to command line with -SaveDefaultPlugin
 				//	Should be: -ExportDismemberData:"<ESMFilename>" <XB1|X64|PS4|W32>
-
-				Detours::DetourCall(__CKPE_OFFSET(12), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(13), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0x604, 0x6B2, 0x6B2, 0x6EF }).WriteCall(&sub);
+				Relocation(target, Offset{ 0x622, 0x6D0, 0x6D0, 0x70D }).WriteCall(&sub);
 
 				//	Add support quote to command line with -UpdateModelData
 				//	Should be: -UpdateModelData:"<ESMFilename>"
-
-				Detours::DetourCall(__CKPE_OFFSET(14), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0x599, 0x647, 0x647, 0x684 }).WriteCall(&sub);
 
 				//	Add support quote to command line with -OutputAreaArt
 				//	Should be: -OutputAreaArt:"<ESMFilename>" "<AreasFilename>" "<OutputFilename>"
-
-				Detours::DetourCall(__CKPE_OFFSET(15), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(16), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(17), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0x4DF, 0x58D, 0x58D, 0x5CA }).WriteCall(&sub);
+				Relocation(target, Offset{ 0x4FD, 0x5AB, 0x5AB, 0x5E8 }).WriteCall(&sub);
+				Relocation(target, Offset{ 0x51B, 0x5C9, 0x5C9, 0x606 }).WriteCall(&sub);
 
 				//	Add support quote to command line with -CompileTextExport
 				//	Should be: -CompileTextExport:"<ESMFilename>" "<language>" "<PathToTextExport>" ["<PathBackupToTextExport>"]
-
-				Detours::DetourCall(__CKPE_OFFSET(18), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(19), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0x397, 0x443, 0x443, 0x47D }).WriteCall(&sub);
+				Relocation(target, Offset{ 0x3B5, 0x461, 0x461, 0x49B }).WriteCall(&sub);
 
 				//	Add support quote to command line with -ExportFaceGenData
 				//	Should be: -ExportFaceGenData:"<ESMFilename>" <XB1|X64|PS4|W32>
-
-				Detours::DetourCall(__CKPE_OFFSET(20), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(21), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0x231, 0x234, 0x234, 0x235 }).WriteCall(&sub);
+				Relocation(target, Offset{ 0x24F, 0x252, 0x252, 0x253 }).WriteCall(&sub);
 
 				//	Add support quote to command line with -GenerateAnimInfo
 				//	Should be: -GenerateAnimInfo:"<ESMFilename>" "<DataFilepath>" "<OutputFilepath>" [%s] [%s] [%s]
+				Relocation(target, Offset{ 0x93A, 0xB78, 0xB78, 0xBB5 }).WriteCall(&sub);
+				Relocation(target, Offset{ 0x958, 0xB96, 0xB96, 0xBD3 }).WriteCall(&sub);
+				Relocation(target, Offset{ 0x976, 0xBB4, 0xBB4, 0xBF1 }).WriteCall(&sub);
+				Relocation(target, Offset{ 0x994, 0xBD2, 0xBD2, 0xC0F }).WriteCall(&sub);
+				Relocation(target, Offset{ 0xAF4, 0xD36, 0xD36, 0xD76 }).WriteCall(&sub);
 
-				Detours::DetourCall(__CKPE_OFFSET(22), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(23), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(24), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(25), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(26), (std::uintptr_t)&sub);
-
-				//	Add support quote to command line with -GenerateSingleLip
-				//	Should be: -GenerateSingleLip:"<WavFilename>" "<Text>"
-				//	Warning: The .lip file will be created next to the audio file.
-
-				Detours::DetourCall(__CKPE_OFFSET(27), (std::uintptr_t)&sub2);
+				//if (VersionLists::GetEditorVersion() > VersionLists::EDITOR_FALLOUT_C4_1_10_982_3)
+				//{
+				//	//	Add support quote to command line with -GenerateSingleLip
+				//	//	Should be: -GenerateSingleLip:"<WavFilename>" "<Text>"
+				//	//	Warning: The .lip file will be created next to the audio file.
+				//	Relocation(target, Offset{ 0xF29 }).WriteCall(&sub2);
+				//}
 
 				//	Add support quote to command line with -GenerateStaticCollections
 				//	Should be: -GenerateStaticCollections:"<ESMFilename>" <XB1|X64|PS4|W32>
-
-				Detours::DetourCall(__CKPE_OFFSET(28), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(29), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0xD6E, 0xFC0, 0xFC0, 0x1003 }).WriteCall(&sub);
+				Relocation(target, Offset{ 0xD8C, 0xFDE, 0xFDE, 0x1021 }).WriteCall(&sub);
 
 				//	Add support quote to command line with -DepersistRefs
 				//	Should be: -DepersistRefs:"<ESMFilename>"
-
-				Detours::DetourCall(__CKPE_OFFSET(30), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0x12E2, 0x1535, 0x1535, 0x1578 }).WriteCall(&sub);
 
 				//	Add support quote to command line with -MapMarker
 				//	Should be: -MapMarker:"<ESMFilename>" "<Worldspace|Interior>"
-
-				Detours::DetourCall(__CKPE_OFFSET(31), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(32), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0x135E, 0x15B1, 0x15B1, 0x15F4 }).WriteCall(&sub);
+				Relocation(target, Offset{ 0x137C, 0x15CF, 0x15CF, 0x1612 }).WriteCall(&sub);
 
 				//	Add support quote to command line with -MapInfo
 				//	Should be: -MapInfo:"<ESMFilename>" "<Worldspace|Interior>" ["<%s>"]
-
-				Detours::DetourCall(__CKPE_OFFSET(33), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(34), (std::uintptr_t)&sub);
-				Detours::DetourCall(__CKPE_OFFSET(35), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0x13E7, 0x163A, 0x163A, 0x167D }).WriteCall(&sub);
+				Relocation(target, Offset{ 0x1405, 0x1658, 0x1658, 0x169B }).WriteCall(&sub);
+				Relocation(target, Offset{ 0x1423, 0x1676, 0x1676, 0x16B9 }).WriteCall(&sub);
 
 				//	Add support quote to command line with -ImportScalingData
 				//	Should be: -ImportScalingData:"<ESMFilename>"
-
-				Detours::DetourCall(__CKPE_OFFSET(36), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0x156D, 0x17BD, 0x17BD, 0x17FD }).WriteCall(&sub);
 
 				//	Add support quote to command line with -CompressPSG
 				//	Should be: -CompressPSG:"<ESMFilename>"
-
-				Detours::DetourCall(__CKPE_OFFSET(37), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0x15D8, 0x1828, 0x1828, 0x1868 }).WriteCall(&sub);
 
 				//	Add support quote to command line with -BuildCDX
 				//	Should be: -BuildCDX:"<ESMFilename>"
-
-				Detours::DetourCall(__CKPE_OFFSET(38), (std::uintptr_t)&sub);
+				Relocation(target, Offset{ 0x1764, 0x19C0, 0x19C0, 0x1A00 }).WriteCall(&sub);
 
 				return true;
 			}

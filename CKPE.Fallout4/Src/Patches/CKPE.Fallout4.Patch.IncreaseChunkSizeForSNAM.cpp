@@ -2,7 +2,6 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -48,27 +47,12 @@ namespace CKPE
 
 			bool IncreaseChunkSizeForSNAM::DoActive(Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
-				if (db)
-				{
-					if (db->GetVersion() != 1)
-						return false;
+				using namespace Common;
 
-					auto interface = CKPE::Common::Interface::GetSingleton();
-					auto base = interface->GetApplication()->GetBase();
+				// Increasing the size for the SNAM chunk from 512 to 2048
+				Relocation(ID{ 654208, 1514423 }, Offset{ 0x35D, 0x4D3 }).Write(std::addressof(uiMaxChunkSizeSNAM), 0x4);
 
-					// Increasing the size for the SNAM chunk from 512 to 2048
-					SafeWrite::Write(__CKPE_OFFSET(0), (std::uint8_t*)&uiMaxChunkSizeSNAM, 4);
-
-					return true;
-				}
-				else
-				{
-					using namespace Common;
-					// Increasing the size for the SNAM chunk from 512 to 2048
-					Relocation(ID{ 1493949 }, Offset{ 0x4D3 }).WriteFill(uiMaxChunkSizeSNAM, 0x4);
-
-					return true;
-				}
+				return true;
 			}
 		}
 	}
