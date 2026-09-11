@@ -33,6 +33,7 @@ namespace CKPE
 				Common::UI::CUIBaseControl m_CellListView;
 				Common::UI::CUIBaseControl m_ObjectListView;
 				Common::UI::CUIBaseControl m_FilterCellEdit;
+				Common::UI::CUIBaseControl m_FilterCellLabel;
 				bool lock{ false };
 
 				CellViewWindow(const CellViewWindow&) = delete;
