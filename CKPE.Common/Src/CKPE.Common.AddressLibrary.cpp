@@ -256,7 +256,7 @@ namespace CKPE
 				auto msg = std::format(
 					"Failed to find offset for Address Library ID!\n"
 					"Invalid ID: {}\n"
-					"Game Version: {}",
+					"CK Version: {}",
 					id, app->GetFileVersion().value().string());
 				
 				if (!IsDebuggerPresent())
