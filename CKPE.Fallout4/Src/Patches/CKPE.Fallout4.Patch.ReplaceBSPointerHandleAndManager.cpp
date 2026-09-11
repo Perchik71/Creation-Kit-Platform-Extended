@@ -89,8 +89,8 @@ namespace CKPE
 
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 					return Install_163(Extremly);
-				else if (VersionLists::GetEditorVersion() <= VersionLists::EDITOR_FALLOUT_C4_1_10_982_3)
-					return Install_980(db, Extremly);
+				else if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_982_3)
+					return Install_980(Extremly);
 				else
 					return Install_137(Extremly);
 			}
@@ -152,10 +152,11 @@ namespace CKPE
 				return true;
 			}
 
-			bool ReplaceBSPointerHandleAndManager::Install_980(Common::RelocatorDB::PatchDB* db, bool Extremly) noexcept(true)
+			bool ReplaceBSPointerHandleAndManager::Install_980( bool Extremly) noexcept(true)
 			{
-				auto _interface = CKPE::Common::Interface::GetSingleton();
-				auto base = _interface->GetApplication()->GetBase();
+				using namespace Common;
+
+				auto base = Application::GetSingleton()->GetBase();
 
 				auto restoring_destroy1 = [](std::uintptr_t rva, std::uint32_t removal_size, std::uintptr_t func)
 					{
@@ -171,11 +172,31 @@ namespace CKPE
 						Detours::DetourCall(rva + 5, func);
 					};
 
-				/**(std::uintptr_t*)&pointer_ReplaceBSPointerHandleAndManager_code1 =
-					Detours::DetourClassJump(__CKPE_OFFSET(6), (std::uintptr_t)&sub_string_crash);*/
+				auto winMain = Relocation(ID(1477214));
+				auto handleTable = Relocation(ID(1591587));
+				auto createHandle = Relocation(ID(1618981));
 
-				pointer_ReplaceBSPointerHandleAndManager_data1 = (std::uint32_t*)__CKPE_OFFSET(4);
-				pointer_ReplaceBSPointerHandleAndManager_data2 = (std::uint32_t*)__CKPE_OFFSET(5);
+				if (!winMain || !handleTable || !createHandle)
+					return false;
+
+				auto winMainAddr = winMain.Address();
+				auto handleTableAddr = handleTable.Address();
+				auto createHandleAddr = createHandle.Address();
+
+				auto data1 = Relocation(ID(1435996));
+				auto data2 = Relocation(ID(1873557));
+
+				if (!data1 || !data2)
+					return false;
+
+				pointer_ReplaceBSPointerHandleAndManager_data1 = (std::uint32_t*)data1.Address();
+				pointer_ReplaceBSPointerHandleAndManager_data2 = (std::uint32_t*)data2.Address();
+
+				auto addr = winMainAddr + 0x794;
+
+				// Preparation, removal of all embedded pieces of code
+				SafeWrite::WriteNop(addr + 12, 0x7A);
+				SafeWrite::WriteMovFromRax(addr + 5, handleTableAddr);
 
 				if (Extremly)
 				{
@@ -183,19 +204,13 @@ namespace CKPE
 					auto timerStart = high_resolution_clock::now();
 					EditorAPI::BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 2;
 
-					Detours::DetourCall(__CKPE_OFFSET(0),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManager_Extended_NG::InitSDM);
-					Detours::DetourCall(__CKPE_OFFSET(2),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManager_Extended_NG::KillSDM);
+					Detours::DetourCall(addr, (std::uintptr_t)&EditorAPI::BSPointerHandleManager_Extended_NG::InitSDM);
+					Detours::DetourCall(winMainAddr + 0x23D9, (std::uintptr_t)&EditorAPI::BSPointerHandleManager_Extended_NG::KillSDM);
 
 					// Cutting a lot is faster this way
-					auto textRange = _interface->GetApplication()->GetSegment(Segment::text);
+					auto textRange = Application::GetSingleton()->GetSegment(Segment::text);
 					ScopeSafeWrite text(textRange.GetAddress(), textRange.GetSize());
 
-					auto addr = __CKPE_OFFSET(0);
-					// Preparation, removal of all embedded pieces of code
-					SafeWrite::WriteNop(addr + 12, 0x7A);
-					SafeWrite::WriteMovFromRax(addr + 5, __CKPE_OFFSET(1));
 					// Specify the size
 					memcpy((void*)(addr + 0x93), &EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
 
@@ -384,18 +399,17 @@ namespace CKPE
 					total = 0;
 
 					// CreateHandle fix
-					*(std::uint8_t*)(base + 0x526D5D) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
-					*(std::uint8_t*)(base + 0x526DC6) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
-					*(std::uint8_t*)(base + 0x526EAC) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
-					*(std::uint8_t*)(base + 0x526D64) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
-					*(std::uint8_t*)(base + 0x526DCE) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
-					*(std::uint8_t*)(base + 0x526EA8) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
+					*(std::uint8_t*)(createHandleAddr + 0x2D) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
+					*(std::uint8_t*)(createHandleAddr + 0x96) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
+					*(std::uint8_t*)(createHandleAddr + 0x17C) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::ACTIVE_BIT_INDEX;
+					*(std::uint8_t*)(createHandleAddr + 0x34) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
+					*(std::uint8_t*)(createHandleAddr + 0x9E) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
+					*(std::uint8_t*)(createHandleAddr + 0x178) = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
 
-					addr = (std::uintptr_t)__CKPE_OFFSET(3);
-					memcpy((void*)(addr + 0x12F), &EditorAPI::BSUntypedPointerHandle_Extended_NG::MAX_HANDLE_COUNT, 4);
+					memcpy((void*)(createHandleAddr + 0x12F), &EditorAPI::BSUntypedPointerHandle_Extended_NG::MAX_HANDLE_COUNT, 4);
 					std::uint32_t mask = EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_ACTIVE_BIT |
 						EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT;
-					memcpy((void*)(addr + 0x134), &mask, 4);
+					memcpy((void*)(createHandleAddr + 0x134), &mask, 4);
 
 					// Change HANDLE_BIT_INDEX
 					std::uint8_t bit_byte = (std::uint8_t)EditorAPI::BSHandleRefObject_Extremly::HANDLE_BIT_INDEX;
@@ -442,7 +456,7 @@ namespace CKPE
 					total += __InstallPatchByPatternMask("81 E2 FF FF 1F 00", 0, 2, 2,
 						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
 
-					memcpy((void*)(base + 0x5279F9),
+					memcpy((void*)Relocation(ID(505510), 0x19).Address(),
 						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
 
 					total += 1;
@@ -500,17 +514,8 @@ namespace CKPE
 				{
 					EditorAPI::BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 0;
 
-					{
-						auto addr = (std::uintptr_t)__CKPE_OFFSET(0);
-						// Preparation, removal of all embedded pieces of code
-						SafeWrite::WriteNop(addr + 12, 0x7A);
-						SafeWrite::WriteMovFromRax(addr + 5, __CKPE_OFFSET(1));
-					}
-
-					Detours::DetourCall(__CKPE_OFFSET(0),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManager_Original::InitSDM);
-					Detours::DetourCall(__CKPE_OFFSET(2),
-						(std::uintptr_t)&EditorAPI::BSPointerHandleManager_Original::KillSDM);
+					Detours::DetourCall(addr, (std::uintptr_t)&EditorAPI::BSPointerHandleManager_Original::InitSDM);
+					Detours::DetourCall(winMainAddr + 0x23D9, (std::uintptr_t)&EditorAPI::BSPointerHandleManager_Original::KillSDM);
 				}
 
 				return true;

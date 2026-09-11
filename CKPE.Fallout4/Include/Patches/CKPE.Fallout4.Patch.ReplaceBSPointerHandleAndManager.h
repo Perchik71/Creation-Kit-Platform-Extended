@@ -16,7 +16,7 @@ namespace CKPE
 			class ReplaceBSPointerHandleAndManager : public Common::Patch
 			{
 				bool Install_163(bool Extremly) noexcept(true);
-				bool Install_980(Common::RelocatorDB::PatchDB* db, bool Extremly) noexcept(true);
+				bool Install_980(bool Extremly) noexcept(true);
 				bool Install_137(bool Extremly) noexcept(true);
 
 				static std::uint32_t CheckEx(std::uintptr_t unused, std::uintptr_t refr) noexcept(true);
