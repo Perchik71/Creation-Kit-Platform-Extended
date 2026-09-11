@@ -108,10 +108,6 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: Get-ChildItem -Path .\Others -Recurse | ForEach-Object { Copy-Item -Path $_.FullName -Destination (Join-Path "ckpe-fo4-master-${{env.SHORT_SHA}}" $_.Name) -Force }
 
-    - name: Copy FO4 Database
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: Copy-Item -Path Database\FO4\*.pak "ckpe-fo4-master-${{env.SHORT_SHA}}"
-
     - name: Copy FO4 Dialog
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: Copy-Item -Path Dialogs\FO4\*.pak "ckpe-fo4-master-${{env.SHORT_SHA}}"
