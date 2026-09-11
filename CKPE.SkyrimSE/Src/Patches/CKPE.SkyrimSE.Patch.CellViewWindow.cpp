@@ -20,11 +20,12 @@
 
 #define UI_CELL_VIEW_ADD_CELL_ITEM					2579
 #define UI_CELL_VIEW_ADD_CELL_OBJECT_ITEM			2583
-#define UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX			2580	
-#define UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX	2582	
-#define UI_CELL_VIEW_SELECT_CELL_OBJECTS_CHECKBOX	5665	
-#define UI_CELL_VIEW_VISIBLE_CELL_OBJECTS_CHECKBOX	5666	
-#define UI_CELL_VIEW_FILTER_CELL					2584	
+#define UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX			2580
+#define UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX	2582
+#define UI_CELL_VIEW_SELECT_CELL_OBJECTS_CHECKBOX	5665
+#define UI_CELL_VIEW_VISIBLE_CELL_OBJECTS_CHECKBOX	5666
+#define UI_CELL_VIEW_FILTER_CELL					2584
+#define UI_CELL_VIEW_FILTER_CELL_LABEL				2585
 #define UI_CELL_VIEW_GO_BUTTON						3681
 
 #define UI_CELL_VIEW_FILTER_CELL_SIZE				1024
@@ -153,22 +154,26 @@ namespace CKPE
 				m_CellListView.BoundsRect = Bounds;
 
 				Bounds.Left = 4;
-				Bounds.Top = 4;
-				Bounds.Height = 18;
-				m_WorldSpaceLabel.BoundsRect = Bounds;
-				m_WorldSpaceLabel.Refresh();
-
-				Bounds.Left = 4;
 				Bounds.Top = 22;
 				Bounds.Height = 95;
 				Bounds.Width = 148;
 				m_WorldSpaceComboBox.BoundsRect = Bounds;
+				
+				Bounds.Top = 4;
+				Bounds.Height = 18;
+				m_WorldSpaceLabel.BoundsRect = Bounds;
+				m_WorldSpaceLabel.Refresh();
 
 				Bounds.Left = 156;
 				Bounds.Top = 22;
 				Bounds.Height = 21;
 				Bounds.Right = uHalf + 4;
 				m_FilterCellEdit.BoundsRect = Bounds;
+				
+				Bounds.Top = 4;
+				Bounds.Height = 18;
+				m_FilterCellLabel.BoundsRect = Bounds;
+				m_FilterCellLabel.Refresh();
 
 				Bounds.Left = 6;
 				Bounds.Top = 60;
@@ -196,7 +201,7 @@ namespace CKPE
 
 				Bounds.Left = 156;
 				Bounds.Height = 16;
-				Bounds.Width = 85;
+				Bounds.Width = 90;
 				m_LoadedAtTop.BoundsRect = Bounds;
 
 				Bounds.Top += 17;
@@ -274,8 +279,10 @@ namespace CKPE
 					__This->m_CellListView = GetDlgItem(Hwnd, 1155);
 					__This->m_ObjectListView = GetDlgItem(Hwnd, 1156);
 					__This->m_FilterCellEdit = GetDlgItem(Hwnd, UI_CELL_VIEW_FILTER_CELL);
+					__This->m_FilterCellLabel = GetDlgItem(Hwnd, UI_CELL_VIEW_FILTER_CELL_LABEL);
 
 					__This->m_WorldSpaceLabel.Style |= SS_CENTER;
+					__This->m_FilterCellLabel.Style |= SS_CENTER;
 
 					// Eliminate the flicker when changing cells
 					ListView_SetExtendedListViewStyleEx(__This->m_CellListView.Handle,
@@ -382,6 +389,10 @@ namespace CKPE
 								editorID, form->FormID, form->FullName);
 
 							*allowInsert = StrStrIA(str_CellViewWindow_Filter, str_CellViewWindow_FilterUser) != 0;
+						}
+						else // For cells with no EditorID ("Wilderness")
+						{
+							*allowInsert = false;
 						}
 					}
 

@@ -25,6 +25,7 @@
 	{ "Type": "AUTOCHECKBUTTON", "Id": 2582, "Title": "Show only active (*) objects", "x": 204, "y": 39, "Width": 100, "Height": 10 },
 	{ "Type": "AUTOCHECKBUTTON", "Id": 5665, "Title": "Selected Only", "x": 110, "y": 39, "Width": 70, "Height": 10 },
 	{ "Type": "AUTOCHECKBUTTON", "Id": 5666, "Title": "Visible Only", "x": 110, "y": 27, "Width": 75, "Height": 10 },
-	{ "Type": "EDITTEXT", "Style": [ "ES_AUTOHSCROLL" ], "Id": 2584, "Title": "", "x": 55, "y": 14, "Width": 96, "Height": 12 }
+	{ "Type": "EDITTEXT", "Style": [ "ES_AUTOHSCROLL" ], "Id": 2584, "Title": "", "x": 55, "y": 14, "Width": 96, "Height": 12 },
+	{ "Type": "CTEXT", "Style": [ "NOT WS_GROUP" ], "Title": "Cell Filter", "Id": 2585, "x": 55, "y": 4, "Width": 96, "Height": 18 }
   ]
 }
