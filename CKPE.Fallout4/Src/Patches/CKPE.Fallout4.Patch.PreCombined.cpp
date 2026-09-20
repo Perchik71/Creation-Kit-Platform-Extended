@@ -24,13 +24,6 @@ namespace CKPE
 				};
 
 				static Mode GenerateMode = Mode::kGenerateForPC;
-				static std::uint32_t* PreGenCombinedMode_orig = nullptr;
-
-				static void SetPreGenCombinedMode() noexcept(true)
-				{
-					if (PreGenCombinedMode_orig)
-						*PreGenCombinedMode_orig = std::to_underlying(GenerateMode);
-				}
 			};
 
 			PreCombined::PreCombined() : Common::Patch()
@@ -80,32 +73,17 @@ namespace CKPE
 					// For PS4 no needs patch
 					return true;
 
-				Relocation(ID{ 63416, 1696443 }).WriteJump(&PreGenCombined::SetPreGenCombinedMode);
-				PreGenCombined::PreGenCombinedMode_orig = Relocation<std::uint32_t*>(ID{ 975208, 1623094 }).Get();
-
 				Relocation(ID{ 677726, 1377514 }, 0x13B).Write(std::addressof(precomb_flag), 4);
 
 				if (VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
-					Relocation(ID(1462644), 0x29).Write(std::addressof(precomb_flag), 4);
-
-					auto rel1 = Relocation(ID(1990514));
-					rel1.Write<0x116>(std::addressof(precomb_flag), 4);
-					rel1.Write<0x125>(std::addressof(precomb_flag_b), 1);
+					Relocation(ID(1462644), 0x7D).Write({ 0x6A, (std::uint8_t)precomb_flag, 0x59 });
+					Relocation(ID(1990514)).Write<0x116>(std::addressof(precomb_flag), 4);
 				}
 				else
 				{
-					auto rel1 = Relocation(ID(632758));
-					rel1.Write<0x38>(std::addressof(precomb_flag_b), 1);
-					rel1.Write<0x44>(std::addressof(precomb_flag_b), 1);
-					rel1.Write<0x54>(std::addressof(precomb_flag_b), 1);
-					rel1.Write<0x67>(std::addressof(precomb_flag_b), 1);
-					rel1.Write<0x6E>(std::addressof(precomb_flag), 4);
-					rel1.Write<0x7D>(std::addressof(precomb_flag_b), 1);
-
-					auto rel2 = Relocation(ID(415101));
-					rel2.Write<0xC7>(std::addressof(precomb_flag), 4);
-					rel2.Write<0xD6>(std::addressof(precomb_flag_b), 1);
+					Relocation(ID(1462644)).Write<0x6E>(precomb_flag);
+					Relocation(ID(415101)).Write<0xC7>(std::addressof(precomb_flag), 4);
 				}
 
 				return true;
