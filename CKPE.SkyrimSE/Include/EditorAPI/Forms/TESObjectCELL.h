@@ -4,11 +4,13 @@
 
 #pragma once
 
+#include <CKPE.Enum.h>
+#include <CKPE.EnumSet.h>
 #include <CKPE.Common.h>
-#include <EditorAPI/NiAPI/NiFlags.h>
 #include <EditorAPI/NiAPI/NiTypes.h>
 #include <EditorAPI/BGSLocalizedString.h>
 #include <EditorAPI/TESFullName.h>
+#include <EditorAPI/BSSpinLock.h> 
 #include "TESForm.h"
 
 namespace CKPE
@@ -90,15 +92,22 @@ namespace CKPE
 						/*00*/ LightingData* Lighting;					// if interior
 					};
 				private:
-					enum CellFlags : std::uint16_t
+					enum class CellFlags : std::uint16_t
 					{
-						cfInterior = 0x1,
-						cfWater = 0x2,
-						cfInvertFastTravel = 0x4,						// interiors: can travel, exteriors: cannot travel
-						cfFragment = 0x40,								// (exteriors only) Exists Ext01, ... ExtXX
+						kNone = 0,
+						kIsInteriorCell = 1 << 0,
+						kHasWater = 1 << 1,
+						kInvertCanTravelFromHere = 1 << 2,
+						kNoLODWater = 1 << 3,
+						kHasTempData = 1 << 4,
+						kPublicArea = 1 << 5,
+						kHandChanged = 1 << 6,
+						kShowSky = 1 << 7,
+						kUseSkyLighting = 1 << 8,
+						kWarnToLeave = 1 << 9
 					};
 
-					enum CellProcessLevels : std::uint16_t
+					enum class CellProcessLevels : std::uint8_t
 					{
 						cplNotLoaded,									// default value
 						cplUnloading,
@@ -111,17 +120,30 @@ namespace CKPE
 						cplAttached										// current interior cell, or exterior cells within fixed radius of current exterior cell						
 					};
 				public:
+					struct RecordFlags
+					{
+						enum RecordFlag : std::uint32_t
+						{
+							kDeleted = 1 << 5,
+							kPersistent = 1 << 10,
+							kIgnored = 1 << 12,
+							kOffLimits = 1 << 17,
+							kCompressed = 1 << 18,
+							kCantWait = 1 << 19
+						};
+					};
+
 					virtual ~TESObjectCELL() = default;
 
-					[[nodiscard]] inline bool IsAttached() const noexcept(true) { return _cell_process_level == CellProcessLevels::cplAttached; }
-					[[nodiscard]] inline bool IsLoaded() const noexcept(true) { return _cell_process_level == CellProcessLevels::cplLoaded; }
+					[[nodiscard]] inline bool IsAttached() const noexcept(true) { return cellProcessLevels == CellProcessLevels::cplAttached; }
+					[[nodiscard]] inline bool IsLoaded() const noexcept(true) { return cellProcessLevels == CellProcessLevels::cplLoaded; }
 					[[nodiscard]] inline bool HasFastTravel() const noexcept(true)
 					{
-						return HasInterior() ? _cell_flags.Has(cfInvertFastTravel) : (!_cell_flags.Has(cfInvertFastTravel));
+						return HasInterior() ? cellFlags.any(CellFlags::kInvertCanTravelFromHere) : cellFlags.none(CellFlags::kInvertCanTravelFromHere);
 					}
-					[[nodiscard]] inline bool HasInterior() const noexcept(true) { return _cell_flags.Has(cfInterior); }
-					[[nodiscard]] inline bool HasWater() const noexcept(true) { return _cell_flags.Has(cfWater); }
-					[[nodiscard]] inline bool HasFragment() const noexcept(true) { return _cell_flags.Has(cfFragment); }
+					[[nodiscard]] inline bool HasInterior() const noexcept(true) { return cellFlags.any(CellFlags::kIsInteriorCell); }
+					[[nodiscard]] inline bool HasWater() const noexcept(true) { return cellFlags.any(CellFlags::kHasWater); }
+					[[nodiscard]] inline bool HasHandChanged() const noexcept(true) { return cellFlags.any(CellFlags::kHandChanged); }
 					[[nodiscard]] inline std::int32_t GetGridX() const noexcept(true)
 					{
 						if (HasInterior()) return 0;
@@ -175,51 +197,45 @@ namespace CKPE
 					CKPE_READ_PROPERTY(GetGridY) std::int32_t GridY;
 					CKPE_READ_PROPERTY(GetLighting) LightingData* Lighting;
 				private:
-					char pad40[0x10];
-					NiAPI::NiTFlags<CellFlags, TESObjectCELL> _cell_flags;
-					CellProcessLevels _cell_process_level;
+					// members
+					mutable BSSpinLock grassCreateLock;
+					mutable BSSpinLock grassTaskLock;
+					TEnumSet<CellFlags, std::uint16_t> cellFlags;
+					TEnum<CellProcessLevels, std::uint8_t> cellProcessLevels;
+					bool autoWaterLoaded;
+					std::uint8_t pad054;
+					bool cellDetached;
+					std::uint8_t pad056[2];
+#define RUNTIME_DATA_CONTENT	\
+					void* _ExtraData;					\
+					TESForm* Imagespace;				\
+					CellData _CellData;					\
+					TESObjectLAND* _Landspace;			\
+					float waterHeight;					\
+					TESFormArray* _NavMeshes;			\
+					char _pad90[0xC];					\
+					std::uint32_t _SizeRefrs;			\
+					char _padA0[0x4];					\
+					std::uint32_t _TotalRefrs;			\
+					char _padA8[0x8];					\
+					std::uint32_t _AllocateSizeRefrs;	\
+					char _padB4[0xC];					\
+					Item* _AddrRefrs;					\
 
-#pragma pack(push, 1)
 					union
 					{
 						struct _v1_5
 						{
-							char _pad54[0x4];
-							void* _ExtraData;
-							TESForm* Imagespace;
-							CellData _CellData;
-							TESObjectLAND* _Landspace;
-							char _pad78[0x8];
-							TESFormArray* _NavMeshes;
-							char _pad90[0xC];
-							std::uint32_t _SizeRefrs;
-							char _padA0[0x4];
-							std::uint32_t _TotalRefrs;
-							char _padA8[0x8];
-							std::uint32_t _AllocateSizeRefrs;
-							char _padB4[0xC];
-							Item* _AddrRefrs;
+							RUNTIME_DATA_CONTENT
 						} v1_5;
 						struct _v1_6
 						{
-							char _pad54[0xC];	// 0x8 added with 1.6.1130 (maybe ExtraData without ref)
-							void* _ExtraData;
-							TESForm* Imagespace;
-							CellData _CellData;
-							TESObjectLAND* _Landspace;
-							char _pad78[0x8];
-							TESFormArray* _NavMeshes;
-							char _pad90[0xC];
-							std::uint32_t _SizeRefrs;
-							char _padA0[0x4];
-							std::uint32_t _TotalRefrs;
-							char _padA8[0x8];
-							std::uint32_t _AllocateSizeRefrs;
-							char _padB4[0xC];
-							Item* _AddrRefrs;
+							char _pad58[0x8];	// 0x8 added with 1.6.1130 (maybe ExtraData without ref)
+							RUNTIME_DATA_CONTENT
 						} v1_6;
 					} difference;
-#pragma pack(pop)
+
+#undef RUNTIME_DATA_CONTENT
 				};
 				static_assert(sizeof(TESObjectCELL) == 0xC8);
 			}

@@ -1074,6 +1074,15 @@
     <ClInclude Include="Include\EditorAPI\Forms\BGSKeyword.h">
       <Filter>EditorAPI</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESObject.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESBoundObject.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\TESChildCell.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">

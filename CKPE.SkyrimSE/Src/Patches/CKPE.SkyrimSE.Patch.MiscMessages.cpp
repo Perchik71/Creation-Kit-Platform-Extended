@@ -16,6 +16,12 @@ namespace CKPE
 	{
 		namespace Patch
 		{
+			static void WriteToConsoleAndAssertion(const std::string& a_message) noexcept(true)
+			{
+				Console::Log("[ASSERTION] %s", a_message.c_str());
+				CKPE_ASSERT_MSG_FMT(0, "%s", a_message.c_str());
+			}
+
 			MiscMessages::MiscMessages() : Common::Patch()
 			{
 				SetName("Misc Messages");
@@ -72,6 +78,8 @@ namespace CKPE
 				Relocation(ID{ 743240, 959457 }, Offset{ 0x1E8, 0x284 }).WriteFill(NOP, 5);
 				// Skip "File '%s' is changing ref (%08X):\r\nfrom base '%s' (%08X) to base '%s' (%08X)\r\nfrom cell '%s' (%08X) to cell '%s' (%08X)."
 				Relocation(ID(551172), Offset{ 0x19BA, 0x19DE }).WriteFill(NOP, 5);
+				// Check parent form
+				Relocation(ID(559672)).WriteJump(std::addressof(getParentForm));
 
 				return true;
 			}
@@ -107,6 +115,18 @@ namespace CKPE
 							"Ref UNKNOWN light radius %.2f is less than minimum of 20.", va_arg(ap, float));
 				}
 				va_end(ap);
+			}
+
+			void* MiscMessages::getParentForm(void* form) noexcept(true)
+			{
+				using namespace EditorAPI::Forms;
+
+				auto refr = reinterpret_cast<TESObjectREFR*>(form);
+				if (!refr) WriteToConsoleAndAssertion("Refr is nullptr");
+				if (!refr->IsReference()) WriteToConsoleAndAssertion("A form with the Reference type is expected");
+				auto parentForm = refr->GetParent();
+				if (!parentForm && !refr->IsDeleted()) WriteToConsoleAndAssertion(std::format("The Reference 0x{:08X} not contain the parent form", refr->FormID));
+				return parentForm;
 			}
 		}
 	}

@@ -15,6 +15,7 @@ namespace CKPE
 			class MiscMessages : public Common::Patch
 			{
 				static void sub(std::int64_t type_error, const char* format_message, ...) noexcept(true);
+				static void* getParentForm(void* form) noexcept(true);
 
 				MiscMessages(const MiscMessages&) = delete;
 				MiscMessages& operator=(const MiscMessages&) = delete;

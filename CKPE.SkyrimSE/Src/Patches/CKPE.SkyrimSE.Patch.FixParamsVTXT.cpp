@@ -53,7 +53,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(ID(1027934)).WriteJump(&EditorAPI::Forms::TESObjectLAND::Layers::HKNormalize);
+				Relocation(ID(1027934)).WriteJump(&EditorAPI::Forms::TESObjectLAND::LoadedLandData::HKNormalize);
 
 				return true;
 			}

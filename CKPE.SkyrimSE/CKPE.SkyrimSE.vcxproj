@@ -318,8 +318,11 @@
     <ClInclude Include="Include\EditorAPI\Forms\BGSMaterialType.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSSounds.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSVoiceType.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\TESBoundObject.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\TESChildCell.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESForm.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESLandTexture.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\TESObject.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESObjectCELL.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESObjectLAND.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESObjectLIGH.h" />

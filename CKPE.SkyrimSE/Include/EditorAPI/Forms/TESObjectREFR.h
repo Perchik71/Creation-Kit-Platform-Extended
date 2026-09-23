@@ -10,6 +10,8 @@
 #include <EditorAPI/BSExtraData.h>
 #include "TESForm.h"
 #include "TESObjectCELL.h"
+#include "TESChildCell.h"
+#include "TESBoundObject.h"
 
 namespace CKPE
 {
@@ -19,14 +21,6 @@ namespace CKPE
 		{
 			namespace Forms
 			{
-				class TESChildCell
-				{
-				public:
-					virtual ~TESChildCell() = default;
-					virtual void* GetSaveParentCell();
-				};
-				static_assert(sizeof(TESChildCell) == 0x8);
-
 				class TESObjectREFR_Original : public TESForm, public TESChildCell, public BSHandleRefObject_Original
 				{
 				public:
@@ -49,6 +43,16 @@ namespace CKPE
 				// Because CKPE replaces with many different BSPointerHandle. Depending on how many valid refs are needed.
 				class TESObjectREFR : public TESObjectREFR_Original
 				{
+				protected:
+					TESBoundObject* _Parent;
+					NiAPI::NiPoint3 _Rotate;
+					NiAPI::NiPoint3 _Position;
+					TESObjectCELL* _ParentCell;
+					char pad78[0x8];
+					ExtraDataList _extraData;
+					char pad98[0x8];
+					std::uint16_t _Scale;
+					std::uint16_t UnkNum;
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftReference;
 					enum SpecialFlagsForm
@@ -77,16 +81,6 @@ namespace CKPE
 
 					// Added patch "Add Change Ref" (only 1.6 and newer)
 					inline static void (*SetParentWithRedraw)(TESObjectREFR*, TESForm*);
-				protected:
-					TESForm* _Parent;
-					NiAPI::NiPoint3 _Rotate;
-					NiAPI::NiPoint3 _Position;
-					TESObjectCELL* _ParentCell;
-					char pad78[0x8];
-					ExtraDataList _extraData;
-					char pad98[0x8];
-					std::uint16_t _Scale;
-					std::uint16_t UnkNum;
 				};
 				static_assert(sizeof(TESObjectREFR) == 0xA8);
 			}
