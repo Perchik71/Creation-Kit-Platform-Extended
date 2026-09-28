@@ -82,7 +82,7 @@ namespace CKPE
 				}
 				else
 				{
-					Relocation(ID(1462644)).Write<0x6E>(precomb_flag);
+					Relocation(ID(632758)).Write<0x6E>(precomb_flag);
 					Relocation(ID(415101)).Write<0xC7>(std::addressof(precomb_flag), 4);
 				}
 
