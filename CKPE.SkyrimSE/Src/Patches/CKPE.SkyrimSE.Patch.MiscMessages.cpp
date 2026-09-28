@@ -79,7 +79,7 @@ namespace CKPE
 				// Skip "File '%s' is changing ref (%08X):\r\nfrom base '%s' (%08X) to base '%s' (%08X)\r\nfrom cell '%s' (%08X) to cell '%s' (%08X)."
 				Relocation(ID(551172), Offset{ 0x19BA, 0x19DE }).WriteFill(NOP, 5);
 				// Check parent form
-				Relocation(ID(559672)).WriteJump(std::addressof(getParentForm));
+				//Relocation(ID(559672)).WriteJump(std::addressof(getParentForm));
 
 				return true;
 			}
