@@ -17,6 +17,30 @@ namespace CKPE
 		{
 			namespace BSResource
 			{
+				struct FileID
+				{
+				public:
+					// members
+					std::uint32_t file;
+					char ext[4];
+				};
+				static_assert(sizeof(FileID) == 0x8);
+
+				struct ID : public FileID
+				{
+				public:
+					//void GenerateFromPath(const char* a_path)
+					//{
+					////	using func_t = decltype(&ID::GenerateFromPath);
+					////	REL::Relocation<func_t> func{ RELOCATION_ID(68635, 69979) };
+					////	return func(this, a_path);
+					//}
+
+					// members
+					std::uint32_t dir{ 0 };  // 0
+				};
+				static_assert(sizeof(ID) == 0xC);
+
 				// https://github.com/CharmedBaryon/CommonLibSSE-NG/blob/main/include/RE/E/ErrorCodes.h
 				enum class ErrorCode
 				{

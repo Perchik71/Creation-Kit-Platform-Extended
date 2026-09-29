@@ -51,7 +51,7 @@ namespace CKPE
 				public:
 					virtual ~TESBoundObject() = default;
 	
-					inline BOUND_DATA GetBoundData() const noexcept(true) { return boundData; }
+					[[nodiscard]] inline BOUND_DATA GetBoundData() const noexcept(true) { return boundData; }
 
 					// override (TESObject)
 					void LoadObjectBound(TESFile* pFile) override;

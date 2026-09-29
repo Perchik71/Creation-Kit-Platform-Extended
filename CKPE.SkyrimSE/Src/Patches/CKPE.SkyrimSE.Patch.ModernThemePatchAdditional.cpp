@@ -55,7 +55,7 @@ namespace CKPE
 						if (((lvItem.state & 0xFF) & LVIS_SELECTED) == LVIS_SELECTED)
 							goto def_color;
 
-						auto color = ((EditorAPI::Forms::TESObjectLIGH*)form)->GetSpecularColor();
+						const auto& color = ((EditorAPI::Forms::TESObjectLIGH*)form)->GetColor();
 						lpListView->clrText = RGB(color.r, color.g, color.b);
 					}
 					else
