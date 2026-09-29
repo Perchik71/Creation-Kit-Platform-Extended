@@ -84,27 +84,6 @@ namespace CKPE
 				};
 				static_assert(sizeof(NiFile) == 0x48);
 
-				// 3
-				struct NiRGB
-				{
-					union
-					{
-						struct { std::uint8_t r, g, b; };
-						struct { std::uint8_t v[3]; };
-					};
-				};
-
-				// 4
-				struct NiRGBA
-				{
-					union
-					{
-						struct { std::uint8_t r, g, b, a; };
-						struct { std::uint8_t v[4]; };
-						std::uint32_t c;
-					};
-				};
-
 				// 10
 				template <class T>
 				class NiRect 

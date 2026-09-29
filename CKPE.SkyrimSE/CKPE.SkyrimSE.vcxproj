@@ -127,6 +127,7 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\CKPE.Fallout4\Src\EditorAPI\NiAPI\NiColor.cpp" />
     <ClCompile Include="..\Dependencies\DirectXTex\src\ScreenGrab11.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Src\CKPE.SkyrimSE.D3D11ImagespaceAA.cpp" />

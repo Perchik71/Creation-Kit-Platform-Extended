@@ -425,6 +425,9 @@
     <ClCompile Include="Src\EditorAPI\BSExtraData.cpp">
       <Filter>EditorAPI</Filter>
     </ClCompile>
+    <ClCompile Include="..\CKPE.Fallout4\Src\EditorAPI\NiAPI\NiColor.cpp">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">

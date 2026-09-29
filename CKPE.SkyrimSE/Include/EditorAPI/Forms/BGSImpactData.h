@@ -146,7 +146,7 @@ namespace CKPE
 					std::uint8_t _DecalFlags;
 					char padB6[0x2];
 					NiAPI::NiRGB _DecalColor;
-					char padBB[0x5];
+					char padBB[0x3];
 				};
 				static_assert(sizeof(BGSImpactData) == 0xC0);
 			}
