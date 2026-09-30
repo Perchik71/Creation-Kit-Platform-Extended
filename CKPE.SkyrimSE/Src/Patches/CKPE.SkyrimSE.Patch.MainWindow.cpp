@@ -72,6 +72,28 @@ namespace CKPE
 					_CONSOLEVA(fmt, ap);
 					va_end(ap);
 						});
+
+				auto node = Refr->GetFadeNode();
+				if (node)
+				{
+					node->GetViewerRTTI([](const char* fmt, ...) {
+						va_list ap;
+						va_start(ap, fmt);
+						_CONSOLEVA(fmt, ap);
+						va_end(ap);
+						}, true);
+
+					//_CONSOLE("Flags: %X", *(uint32_t*)(&node->_Flags));
+
+					auto parent = node->GetParent();
+					if (parent)
+						parent->GetViewerRTTI([](const char* fmt, ...) {
+						va_list ap;
+						va_start(ap, fmt);
+						_CONSOLEVA(fmt, ap);
+						va_end(ap);
+							}, true);
+				}
 			}
 
 			static void OutputFormInfo(std::uint32_t FormID) noexcept(true)

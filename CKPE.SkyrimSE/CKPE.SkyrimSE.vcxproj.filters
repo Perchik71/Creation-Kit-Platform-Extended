@@ -428,6 +428,7 @@
     <ClCompile Include="..\CKPE.Fallout4\Src\EditorAPI\NiAPI\NiColor.cpp">
       <Filter>EditorAPI\NiAPI</Filter>
     </ClCompile>
+    <ClCompile Include="Src\EditorAPI\NiAPI\NiObjectNET.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -1118,6 +1119,27 @@
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\Forms\BGSEquipSlot.h">
       <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTimeController.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTArray.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiCollisionObject.h">
+      <Filter>EditorAPI\NiAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\IDs.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSTextureSet.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Forms\BGSTextureSet.h">
+      <Filter>EditorAPI\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\DecalData.h">
+      <Filter>EditorAPI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

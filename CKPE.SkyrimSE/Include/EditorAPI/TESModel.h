@@ -18,7 +18,7 @@ namespace CKPE
 			{
 				// members
 				BSFixedString model;
-				std::uint32_t model_unk10[10];
+				std::uint32_t model_unk10[8];
 			public:
 				virtual ~TESModel() = default;
 
@@ -30,7 +30,7 @@ namespace CKPE
 				virtual void sub90();
 				virtual void sub98();
 			};
-			static_assert(sizeof(TESModel) == 0x38);
+			static_assert(sizeof(TESModel) == 0x30);
 		}
 	}
 }

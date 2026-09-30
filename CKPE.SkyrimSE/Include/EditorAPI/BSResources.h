@@ -4,10 +4,12 @@
 
 #pragma once
 
-#include "BSTArray.h"
-#include "BSFixedString.h"
-#include "NiAPI/NiTypes.h"
-#include "NiAPI/NiTSimpleArray.h"
+#include <CKPE.Common.Relocation.h>
+#include <EditorAPI/BSTArray.h>
+#include <EditorAPI/BSFixedString.h>
+#include <EditorAPI/NiAPI/NiTypes.h>
+#include <EditorAPI/NiAPI/NiTSimpleArray.h>
+#include <EditorAPI/IDs.h>
 
 namespace CKPE
 {
@@ -28,13 +30,17 @@ namespace CKPE
 
 				struct ID : public FileID
 				{
+					inline static void GenerateFromPathImpl(ID* a_id, const char* a_path)
+					{
+						using func_t = decltype(&ID::GenerateFromPathImpl);
+						Common::Relocation<func_t> func{ ID_GenerateFromPath };
+						func(a_id, a_path);
+					}
 				public:
-					//void GenerateFromPath(const char* a_path)
-					//{
-					////	using func_t = decltype(&ID::GenerateFromPath);
-					////	REL::Relocation<func_t> func{ RELOCATION_ID(68635, 69979) };
-					////	return func(this, a_path);
-					//}
+					void GenerateFromPath(const char* a_path)
+					{
+						GenerateFromPathImpl(this, a_path);
+					}
 
 					// members
 					std::uint32_t dir{ 0 };  // 0

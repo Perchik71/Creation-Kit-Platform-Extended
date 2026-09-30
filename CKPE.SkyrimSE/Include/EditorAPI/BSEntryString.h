@@ -12,7 +12,7 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
-			typedef BSStringCache::Entry BSEntryString;
+			typedef BSStringPool::Entry BSEntryString;
 		}
 	}
 }

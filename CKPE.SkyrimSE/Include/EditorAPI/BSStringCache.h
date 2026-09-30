@@ -1,9 +1,13 @@
-// Copyright © 2023-2025 aka CKPE team. All rights reserved.
+// Copyright © 2026 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <cstdint>
+#include <atomic>
+#include <type_traits>
+#include <CKPE.Common.Relocation.h>
 #include <EditorAPI/BSSpinLock.h>
+#include <EditorAPI/IDs.h>
 
 #pragma once
 
@@ -13,66 +17,115 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
-			class BSStringCache
+			struct BSStringPool
 			{
-			public:
-				struct Lock
+				class Entry
 				{
-					BSSpinLock lock;
-				};
+				public:
+					enum
+					{
+						kWide = 1 << 15,
+						kRefCountMask = 0x7FFF,
+						kLengthMask = 0xFFFFFF
+					};
 
-				struct Entry
-				{
-					Entry* next;		// 00
+					static inline void release(const char*& a_entry) { release8(a_entry); }
+					static inline void release(const wchar_t*& a_entry) { release16(a_entry); }
+
+					static inline void release8(const char*& a_entry)
+					{
+						using func_t = decltype(Entry::release8);
+						Common::Relocation<func_t> func{ StringCache::StringPool_AnsiRelease };
+						func(a_entry);
+					}
+
+					static inline void release16(const wchar_t*& a_entry)
+					{
+						using func_t = decltype(Entry::release16);
+						Common::Relocation<func_t> func{ StringCache::StringPool_WideRelease };
+						func(a_entry);
+					}
+
+					inline void acquire()
+					{
+						std::atomic_ref flags{ _flags };
+						std::uint16_t   expected{ 0 };
+						do {
+							expected = flags;
+							if ((expected & kRefCountMask) >= kRefCountMask)
+								break;
+						} while (!flags.compare_exchange_weak(expected, static_cast<std::uint16_t>(expected + 1)));
+					}
+
+					[[nodiscard]] constexpr std::uint16_t crc() const noexcept(true) { return _crc; }
+
+					template <class T>
+					[[nodiscard]] const T* data() const noexcept(true);
+
+					template <>
+					[[nodiscard]] inline const char* data<char>() const noexcept(true)
+					{
+						return u8();
+					}
+
+					template <>
+					[[nodiscard]] inline const wchar_t* data<wchar_t>() const noexcept(true)
+					{
+						return u16();
+					}
+
+					[[nodiscard]] constexpr std::uint32_t length() const noexcept(true) { return _length & kLengthMask; }
+					[[nodiscard]] constexpr std::uint32_t size() const noexcept(true) { return length(); }
+
+					[[nodiscard]] inline const char* u8() const noexcept(true)
+					{
+						assert(!wide());
+						return reinterpret_cast<const char*>(this + 1);
+					}
+
+					[[nodiscard]] inline const wchar_t* u16() const noexcept(true)
+					{
+						assert(wide());
+						return reinterpret_cast<const wchar_t*>(this + 1);
+					}
+
+					[[nodiscard]] constexpr bool wide() const noexcept(true) { return static_cast<bool>(_flags & kWide); }
+
+					// members
+					Entry* _left;
+					std::uint16_t _flags;
+					volatile std::uint16_t _crc;
 					union
 					{
-						struct
-						{
-							std::uint16_t refCount;	// invalid if 0x8000 is set
-							std::uint16_t hash;
-						};
-						std::uint32_t refCountAndHash;
-					} state;				// 08 - refcount, hash
-					std::uint64_t length;	// 10
-					char* data;				// 18
-
-					inline const char* c_str() const noexcept(true) { return data; }
-					inline operator const char*() const { return data ? data : ""; }
+						std::uint32_t _length;
+						Entry* _right;
+					};
 				};
-
-				struct Ref
-				{
-					char* data{ nullptr };
-
-					// For 1.6.378.1
-					//260BC00 (ctor, Ref*, 0x00CEC5D0, const char* buf);
-					//260BC70 (ctor_ref, Ref*, 0x00CEC680, const Ref& rhs);
-					//260BD50 (Set, Ref*, 0x00CEC760, const char* buf);
-					//260BDD0 (Set_ref, Ref*, 0x00CEC820, const Ref& rhs);
-					//260E040 (Release, void, 0x00CED9A0);
-
-					constexpr Ref() noexcept(true) = default;
-
-					inline bool operator==(const Ref& lhs) const noexcept(true) { return data == lhs.data; }
-					inline bool operator<(const Ref& lhs) const noexcept(true) { return data < lhs.data; }
-
-					inline const char* c_str() const { return data; }
-					inline operator const char*() const { return data ? data : ""; }
-				};
-
-				BSStringCache() = default;
-				~BSStringCache() = default;
-
-				inline Lock* GetLock(std::uint32_t crc16) { return &locks[crc16 & 0x1F]; }
-			private:
-				Entry* lut[0x10000];
-				Lock locks[0x20];
-				std::uint8_t isInit;
+				static_assert(sizeof(Entry) == 0x18);
 			};
+			static_assert(std::is_empty_v<BSStringPool>);
 
-			static_assert(sizeof(BSStringCache::Lock) == 0x8);
-			static_assert(sizeof(BSStringCache::Ref) == 0x8);
-			static_assert(sizeof(BSStringCache::Entry) == 0x20);
+			struct BucketTable
+			{
+				enum HashMask
+				{
+					kEntryIndexMask = 0xFFFF,
+					kLockIndexMask = 0x7F
+				};
+
+				static BucketTable* GetSingleton() noexcept(true)
+				{
+					using func_t = decltype(&BucketTable::GetSingleton);
+					Common::Relocation<func_t> func{ StringCache::BucketTable_Singleton };
+					return func();
+				}
+
+				// members
+				BSStringPool::Entry* buckets[0x10000];			// 00000 - index using hash & kEntryIndexMask
+				mutable BSSpinLock   locks[0x10000 / 0x800];	// 80000 - index using hash & kLockIndexMask
+				bool				 initialized;				// 80100
+			};
+			static_assert(sizeof(BucketTable) == 0x80108);
 		}
 	}
 }

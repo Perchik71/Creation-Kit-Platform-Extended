@@ -4,8 +4,10 @@
 
 #pragma once
 
+#include <CKPE.EnumSet.h>
 #include <EditorAPI/NiAPI/NiTypes.h>
-#include "BGSSounds.h"
+#include <EditorAPI/Forms/BGSSounds.h>
+#include <EditorAPI/TESModel.h>
 
 namespace CKPE
 {
@@ -18,11 +20,9 @@ namespace CKPE
 				class BGSHazard;
 				class BGSTextureSet;
 
-				// BGSPreloadable ddd added
-
-				// size 0xC0
-				// func 101
-				class BGSImpactData : public TESForm
+				class BGSImpactData :
+					public TESForm,
+					public TESModel
 				{
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftImpactData;
@@ -61,67 +61,79 @@ namespace CKPE
 				public:
 					virtual ~BGSImpactData() = default;
 
-					inline const char* GetEffectImpactNifPath() const { return _EffectImpactNifPath; }
-					inline float GetEffectDuration() const { return _EffectDuration; }
-					inline void SetEffectDuration(float v) { _EffectDuration = v; }
-					inline float GetAngleThreshold() const { return _AngleThreshold; }
-					inline void SetAngleThreshold(float v) { _AngleThreshold = v; }
-					inline float GetPlacementRadius() const { return _PlacementRadius; }
-					inline void SetPlacementRadius(float v) { _PlacementRadius = v; }
-					inline float GetDecalMinWidth() const { return _DecalMinWidth; }
-					inline void SetDecalMinWidth(float v) { _DecalMinWidth = v; }
-					inline float GetDecalMaxWidth() const { return _DecalMaxWidth; }
-					inline void SetDecalMaxWidth(float v) { _DecalMaxWidth = v; }
-					inline float GetDecalMinHeight() const { return _DecalMinHeight; }
-					inline void SetDecalMinHeight(float v) { _DecalMinHeight = v; }
-					inline float GetDecalMaxHeight() const { return _DecalMaxHeight; }
-					inline void SetDecalMaxHeight(float v) { _DecalMaxHeight = v; }
-					inline float GetDecalDepth() const { return _DecalDepth; }
-					inline void SetDecalDepth(float v) { _DecalDepth = v; }
-					inline float GetDecalShininess() const { return _DecalShininess; }
-					inline void SetDecalShininess(float v) { _DecalShininess = v; }
-					inline float GetDecalParallaxScale() const { return _DecalParallaxScale; }
-					inline void SetDecalParallaxScale(float v) { _DecalParallaxScale = v; }
-					inline OrientationT GetEffectOrientation() const { return _EffectOrientation; }
-					inline void SetEffectOrientation(OrientationT v) { _EffectOrientation = v; }
-					inline SoundLevelT GetEffectSoundLevel() const { return _EffectSoundLevel; }
-					inline void SetEffectSoundLevel(SoundLevelT v) { _EffectSoundLevel = v; }
-					inline ImpactResultT GetEffectImpactResult() const { return _EffectImpactResult; }
-					inline void SetEffectImpactResult(ImpactResultT v) { _EffectImpactResult = v; }
-					inline std::uint8_t GetDecalParallaxPasses() const { return _DecalParallaxPasses; }
-					inline void SetDecalParallaxPasses(std::uint8_t v) { _DecalParallaxPasses = v; }
-					inline BGSTextureSet* GetTextureSet() const { return _TextureSet; }
-					inline void SetTextureSet(BGSTextureSet* v) { _TextureSet = v; }
-					inline void CleanTextureSet() { _TextureSet = nullptr; }
-					inline BGSTextureSet* GetSecondaryTextureSet() const { return _SecondaryTextureSet; }
-					inline void SetSecondaryTextureSet(BGSTextureSet* v) { _SecondaryTextureSet = v; }
-					inline void CleanSecondaryTextureSet() { _SecondaryTextureSet = nullptr; }
-					inline BGSSoundDescriptorForm* GetImpactSound1() const { return _ImpactSound1; }
-					inline void SetImpactSound1(BGSSoundDescriptorForm* v) { _ImpactSound1 = v; }
-					inline void CleanImpactSound1() { _ImpactSound1 = nullptr; }
-					inline BGSSoundDescriptorForm* GetImpactSound2() const { return _ImpactSound2; }
-					inline void SetImpactSound2(BGSSoundDescriptorForm* v) { _ImpactSound2 = v; }
-					inline void CleanImpactSound2() { _ImpactSound2 = nullptr; }
-					inline BGSHazard* GetEffectHazard() const { return _EffectHazard; }
-					inline void SetEffectHazard(BGSHazard* v) { _EffectHazard = v; }
-					inline void CleanEffectHazard() { _EffectHazard = nullptr; }
-					inline bool HasOwnDecalData() const { return !_HasOwnDecalData; }
-					inline void SetOwnDecalData(bool v) { _HasOwnDecalData = (std::uint8_t)(!v); }
-					inline bool HasParallax() const { return (_DecalFlags & dfParallax) == dfParallax; }
-					inline bool HasBlending() const { return (_DecalFlags & dfBlending) == dfBlending; }
-					inline bool HasTesting() const { return (_DecalFlags & dfTesting) == dfTesting; }
-					inline bool HasNo4Subtextures() const { return (_DecalFlags & dfNo4Subtextures) == dfNo4Subtextures; }
-					inline void SetParallax(bool v) { (_DecalFlags &= ~dfParallax); if (v) _DecalFlags |= dfParallax; }
-					inline void SetBlending(bool v) { (_DecalFlags &= ~dfBlending); if (v) _DecalFlags |= dfBlending; }
-					inline void SetTesting(bool v) { (_DecalFlags &= ~dfTesting); if (v) _DecalFlags |= dfTesting; }
-					inline void SetNo4Subtextures(bool v) { (_DecalFlags &= ~dfNo4Subtextures); if (v) _DecalFlags |= dfNo4Subtextures; }
-					inline NiAPI::NiRGB GetDecalColor() const { return _DecalColor; }
-					inline void SetDecalColor(const NiAPI::NiRGB& v) { _DecalColor = v; }
-					inline void SetDecalColorRGB(std::uint8_t r, std::uint8_t g, std::uint8_t b) { _DecalColor = { r, g, b }; }
+					[[nodiscard]] inline float GetEffectDuration() const noexcept(true) { return _EffectDuration; }
+					inline void SetEffectDuration(float v) noexcept(true) { _EffectDuration = v; }
+					[[nodiscard]] inline float GetAngleThreshold() const noexcept(true) { return _AngleThreshold; }
+					inline void SetAngleThreshold(float v) noexcept(true) { _AngleThreshold = v; }
+					[[nodiscard]] inline float GetPlacementRadius() const noexcept(true) { return _PlacementRadius; }
+					inline void SetPlacementRadius(float v) noexcept(true) { _PlacementRadius = v; }
+					[[nodiscard]] inline float GetDecalMinWidth() const noexcept(true) { return _DecalMinWidth; }
+					inline void SetDecalMinWidth(float v) noexcept(true) { _DecalMinWidth = v; }
+					[[nodiscard]] inline float GetDecalMaxWidth() const noexcept(true) { return _DecalMaxWidth; }
+					inline void SetDecalMaxWidth(float v) noexcept(true) { _DecalMaxWidth = v; }
+					[[nodiscard]] inline float GetDecalMinHeight() const noexcept(true) { return _DecalMinHeight; }
+					inline void SetDecalMinHeight(float v) noexcept(true) { _DecalMinHeight = v; }
+					[[nodiscard]] inline float GetDecalMaxHeight() const noexcept(true) { return _DecalMaxHeight; }
+					inline void SetDecalMaxHeight(float v) noexcept(true) { _DecalMaxHeight = v; }
+					[[nodiscard]] inline float GetDecalDepth() const noexcept(true) { return _DecalDepth; }
+					inline void SetDecalDepth(float v) noexcept(true) { _DecalDepth = v; }
+					[[nodiscard]] inline float GetDecalShininess() const noexcept(true) { return _DecalShininess; }
+					inline void SetDecalShininess(float v) noexcept(true) { _DecalShininess = v; }
+					[[nodiscard]] inline float GetDecalParallaxScale() const noexcept(true) { return _DecalParallaxScale; }
+					inline void SetDecalParallaxScale(float v) noexcept(true) { _DecalParallaxScale = v; }
+					[[nodiscard]] inline OrientationT GetEffectOrientation() const noexcept(true) { return _EffectOrientation; }
+					inline void SetEffectOrientation(OrientationT v) noexcept(true) { _EffectOrientation = v; }
+					[[nodiscard]] inline SoundLevelT GetEffectSoundLevel() const noexcept(true) { return _EffectSoundLevel; }
+					inline void SetEffectSoundLevel(SoundLevelT v) noexcept(true) { _EffectSoundLevel = v; }
+					[[nodiscard]] inline ImpactResultT GetEffectImpactResult() const noexcept(true) { return _EffectImpactResult; }
+					inline void SetEffectImpactResult(ImpactResultT v) noexcept(true) { _EffectImpactResult = v; }
+					[[nodiscard]] inline std::uint8_t GetDecalParallaxPasses() const noexcept(true) { return _DecalParallaxPasses; }
+					inline void SetDecalParallaxPasses(std::uint8_t v) noexcept(true) { _DecalParallaxPasses = v; }
+					[[nodiscard]] inline BGSTextureSet* GetTextureSet() const noexcept(true) { return _TextureSet; }
+					inline void SetTextureSet(BGSTextureSet* v) noexcept(true) { _TextureSet = v; }
+					inline void CleanTextureSet() noexcept(true) { _TextureSet = nullptr; }
+					[[nodiscard]] inline BGSTextureSet* GetSecondaryTextureSet() const noexcept(true) { return _SecondaryTextureSet; }
+					inline void SetSecondaryTextureSet(BGSTextureSet* v) noexcept(true) { _SecondaryTextureSet = v; }
+					inline void CleanSecondaryTextureSet() noexcept(true) { _SecondaryTextureSet = nullptr; }
+					[[nodiscard]] inline BGSSoundDescriptorForm* GetImpactSound1() const noexcept(true) { return _ImpactSound1; }
+					inline void SetImpactSound1(BGSSoundDescriptorForm* v) noexcept(true) { _ImpactSound1 = v; }
+					inline void CleanImpactSound1() noexcept(true) { _ImpactSound1 = nullptr; }
+					[[nodiscard]] inline BGSSoundDescriptorForm* GetImpactSound2() const noexcept(true) { return _ImpactSound2; }
+					inline void SetImpactSound2(BGSSoundDescriptorForm* v) noexcept(true) { _ImpactSound2 = v; }
+					inline void CleanImpactSound2() noexcept(true) { _ImpactSound2 = nullptr; }
+					[[nodiscard]] inline BGSHazard* GetEffectHazard() const noexcept(true) { return _EffectHazard; }
+					inline void SetEffectHazard(BGSHazard* v) noexcept(true) { _EffectHazard = v; }
+					inline void CleanEffectHazard() noexcept(true) { _EffectHazard = nullptr; }
+					[[nodiscard]] inline bool HasOwnDecalData() const noexcept(true) { return !_HasOwnDecalData; }
+					inline void SetOwnDecalData(bool v) noexcept(true) { _HasOwnDecalData = (std::uint8_t)(!v); }
+					[[nodiscard]] inline bool HasParallax() const noexcept(true) { return _DecalFlags.all(dfParallax); }
+					[[nodiscard]] inline bool HasBlending() const noexcept(true) { return _DecalFlags.all(dfBlending); }
+					[[nodiscard]] inline bool HasTesting() const noexcept(true) { return _DecalFlags.all(dfTesting); }
+					[[nodiscard]] inline bool HasNo4Subtextures() const noexcept(true) { return _DecalFlags.all(dfNo4Subtextures); }
+					inline void SetParallax(bool v) noexcept(true) { if (v) _DecalFlags.set(dfParallax); }
+					inline void SetBlending(bool v) noexcept(true) { if (v) _DecalFlags.set(dfBlending); }
+					inline void SetTesting(bool v) noexcept(true) { if (v) _DecalFlags.set(dfTesting); }
+					inline void SetNo4Subtextures(bool v) noexcept(true) { if (v) _DecalFlags.set(dfNo4Subtextures); }
+					[[nodiscard]] inline NiAPI::NiRGB GetDecalColor() const noexcept(true) { return _DecalColor; }
+					inline void SetDecalColor(const NiAPI::NiRGB& v) noexcept(true) { _DecalColor = v; }
+					inline void SetDecalColorRGB(std::uint8_t r, std::uint8_t g, std::uint8_t b) noexcept(true) { _DecalColor = { r, g, b }; }
+
+					CKPE_PROPERTY(GetEffectDuration, SetEffectDuration) float EffectDuration;
+					CKPE_PROPERTY(GetAngleThreshold, SetAngleThreshold) float AngleThreshold;
+					CKPE_PROPERTY(GetPlacementRadius, SetPlacementRadius) float PlacementRadius;
+					CKPE_PROPERTY(GetDecalMinWidth, SetDecalMinWidth) float DecalMinWidth;
+					CKPE_PROPERTY(GetDecalMaxWidth, SetDecalMaxWidth) float DecalMaxWidth;
+					CKPE_PROPERTY(GetDecalMinHeight, SetDecalMinHeight) float DecalMinHeight;
+					CKPE_PROPERTY(GetDecalMaxHeight, SetDecalMaxHeight) float DecalMaxHeight;
+					CKPE_PROPERTY(GetDecalDepth, SetDecalDepth) float DecalDepth;
+					CKPE_PROPERTY(GetDecalShininess, SetDecalShininess) float DecalShininess;
+					CKPE_PROPERTY(GetDecalParallaxScale, SetDecalParallaxScale) float DecalParallaxScale;
+					CKPE_PROPERTY(GetEffectOrientation, SetEffectOrientation) OrientationT EffectOrientation;
+					CKPE_PROPERTY(GetEffectSoundLevel, SetEffectSoundLevel) SoundLevelT EffectSoundLevel;
+					CKPE_PROPERTY(GetEffectImpactResult, SetEffectImpactResult) ImpactResultT EffectImpactResult;
+					CKPE_PROPERTY(GetDecalParallaxPasses, SetDecalParallaxPasses) std::uint8_t DecalParallaxPasses;
+					CKPE_PROPERTY(GetTextureSet, SetTextureSet) BGSTextureSet* TextureSet;
 				private:
-					char pad28[0x8];
-					const char* _EffectImpactNifPath;
-					char pad38[0x20];
 					float _EffectDuration;
 					OrientationT _EffectOrientation;
 					float _AngleThreshold;
@@ -143,7 +155,7 @@ namespace CKPE
 					float _DecalShininess;
 					float _DecalParallaxScale;
 					std::uint8_t _DecalParallaxPasses;
-					std::uint8_t _DecalFlags;
+					TEnumSet<DecalFlagsT, std::uint8_t> _DecalFlags;
 					char padB6[0x2];
 					NiAPI::NiRGB _DecalColor;
 					char padBB[0x3];

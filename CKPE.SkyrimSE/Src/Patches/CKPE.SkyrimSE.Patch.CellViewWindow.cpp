@@ -415,7 +415,7 @@ namespace CKPE
 					if (*allowInsert && static_cast<bool>(GetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY)))
 					{
 						auto Node = ((EditorAPI::Forms::TESObjectREFR*)(form))->GetFadeNode();
-						if (Node && (Node->QAppCulled() || Node->QNotVisible()))
+						if (Node && (Node->HasHidden() || Node->HasNoDismember()))
 							*allowInsert = false;
 					}
 

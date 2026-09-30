@@ -20,18 +20,18 @@ namespace CKPE
 			class TESModelTextureSwap : public TESModel
 			{
 			public:
-				struct AlternateTexture  // MODS
+				struct AlternateTexture
 				{
-					Forms::BGSTextureSet*	textureSet;  // 00
-					std::uint32_t			index3D;     // 08
-					BSFixedString			name3D;      // 10
+					Forms::BGSTextureSet*	textureSet;
+					std::uint32_t			index3D;
+					BSFixedString			name3D;
 				};
 				static_assert(sizeof(AlternateTexture) == 0x18);
 			private:
 				// members
-				AlternateTexture* alternateTextures;     // 28 - MODS
-				std::uint32_t     numAlternateTextures;  // 30
-				std::uint32_t     pad34;                 // 34
+				std::uint32_t unk00[2];
+				AlternateTexture* alternateTextures;
+				std::uint32_t numAlternateTextures;
 			public:
 				virtual ~TESModelTextureSwap() = default;
 

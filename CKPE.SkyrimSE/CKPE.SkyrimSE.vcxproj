@@ -145,6 +145,7 @@
     <ClCompile Include="Src\EditorAPI\Forms\TESForm.cpp" />
     <ClCompile Include="Src\EditorAPI\NiAPI\NiCollisionUtils.cpp" />
     <ClCompile Include="Src\EditorAPI\NiAPI\NiMemoryManager.cpp" />
+    <ClCompile Include="Src\EditorAPI\NiAPI\NiObjectNET.cpp" />
     <ClCompile Include="Src\EditorAPI\NiAPI\NiRefObject.cpp" />
     <ClCompile Include="Src\EditorAPI\NiAPI\NiRTTI.cpp" />
     <ClCompile Include="Src\EditorAPI\TESDialogSpell.cpp" />
@@ -312,8 +313,10 @@
     <ClInclude Include="Include\EditorAPI\BSStringCache.h" />
     <ClInclude Include="Include\EditorAPI\BSSystemFile.h" />
     <ClInclude Include="Include\EditorAPI\BSTArray.h" />
+    <ClInclude Include="Include\EditorAPI\BSTextureSet.h" />
     <ClInclude Include="Include\EditorAPI\BSTList.h" />
     <ClInclude Include="Include\EditorAPI\BSTriShape.h" />
+    <ClInclude Include="Include\EditorAPI\DecalData.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSEquipSlot.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSFootstepSet.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSImpactData.h" />
@@ -322,6 +325,7 @@
     <ClInclude Include="Include\EditorAPI\Forms\BGSLocationRefType.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSMaterialType.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSSounds.h" />
+    <ClInclude Include="Include\EditorAPI\Forms\BGSTextureSet.h" />
     <ClInclude Include="Include\EditorAPI\Forms\BGSVoiceType.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESBoundAnimObject.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESBoundObject.h" />
@@ -336,7 +340,11 @@
     <ClInclude Include="Include\EditorAPI\Forms\TESTopic.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESTopicInfo.h" />
     <ClInclude Include="Include\EditorAPI\Forms\TESWaterForm.h" />
+    <ClInclude Include="Include\EditorAPI\IDs.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiCollisionObject.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiFlags.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTArray.h" />
+    <ClInclude Include="Include\EditorAPI\NiAPI\NiTimeController.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiTObjectArray.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiAVObject.h" />
     <ClInclude Include="Include\EditorAPI\NiAPI\NiCollisionUtils.h" />
