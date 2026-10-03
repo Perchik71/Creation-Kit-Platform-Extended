@@ -1,7 +1,7 @@
 // Special thanks to Nukem: https://github.com/Nukem9/SkyrimSETest/blob/master/skyrim64_test/src/patches/TES/BSShader/BSShaderRenderTargets.cpp
 
 #include <CKPE.Asserts.h>
-#include <EditorAPI/BSGraphicsTypes.h>
+#include <EditorAPI/B/BSGraphicsTypes.h>
 
 namespace CKPE
 {

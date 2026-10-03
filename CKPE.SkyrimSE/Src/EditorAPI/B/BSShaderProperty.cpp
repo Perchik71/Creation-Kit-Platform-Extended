@@ -1,6 +1,6 @@
 // Special thanks to Nukem: https://github.com/Nukem9/SkyrimSETest/blob/master/skyrim64_test/src/patches/TES/BSShader/BSShaderProperty.cpp
 
-#include <EditorAPI/BSShaderProperty.h>
+#include <EditorAPI/B/BSShaderProperty.h>
 
 namespace CKPE
 {

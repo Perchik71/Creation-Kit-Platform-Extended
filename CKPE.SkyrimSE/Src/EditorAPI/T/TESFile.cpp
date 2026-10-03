@@ -3,7 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Stream.h>
-#include <EditorAPI/TESFile.h>
+#include <EditorAPI/T/TESFile.h>
 #include <CKPE.MessageBox.h>
 #include <CKPE.Common.Interface.h>
 

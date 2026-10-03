@@ -1,5 +1,5 @@
 #include <CKPE.Asserts.h>
-#include <EditorAPI/NiAPI/NiObjectNET.h>
+#include <EditorAPI/N/NiObjectNET.h>
 
 namespace CKPE
 {

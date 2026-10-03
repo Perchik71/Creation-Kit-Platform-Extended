@@ -1,6 +1,6 @@
 #include <cstring>
-#include <EditorAPI/NiAPI/NiRTTI.h>
-#include <EditorAPI/NiAPI/NiObject.h>
+#include <EditorAPI/N/NiRTTI.h>
+#include <EditorAPI/N/NiObject.h>
 
 namespace CKPE
 {

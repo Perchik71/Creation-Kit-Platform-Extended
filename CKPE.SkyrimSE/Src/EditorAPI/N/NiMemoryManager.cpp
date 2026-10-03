@@ -4,7 +4,7 @@
 
 #include <CKPE.Asserts.h>
 #include <CKPE.Common.MemoryManager.h>
-#include <EditorAPI/NiAPI/NiMemoryManager.h>
+#include <EditorAPI/N/NiMemoryManager.h>
 
 namespace CKPE
 {

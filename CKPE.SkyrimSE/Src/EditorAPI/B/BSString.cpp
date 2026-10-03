@@ -6,8 +6,8 @@
 #include <CKPE.PathUtils.h>
 #include <CKPE.StringUtils.h>
 
-#include <EditorAPI/BSString.h>
-#include <EditorAPI/NiAPI/NiMemoryManager.h>
+#include <EditorAPI/B/BSString.h>
+#include <EditorAPI/N/NiMemoryManager.h>
 
 #include <cstdarg>
 #include <sstream>

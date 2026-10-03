@@ -4,7 +4,7 @@
 
 // Special thanks to Nukem: https://github.com/Nukem9/SkyrimSETest/blob/master/skyrim64_test/src/patches/TES/NiMain/NiCollisionUtils.cpp
 
-#include <EditorAPI/NiAPI/NiCollisionUtils.h>
+#include <EditorAPI/N/NiCollisionUtils.h>
 
 namespace CKPE
 {

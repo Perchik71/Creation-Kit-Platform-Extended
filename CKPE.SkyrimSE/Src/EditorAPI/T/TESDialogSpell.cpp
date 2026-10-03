@@ -2,7 +2,7 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include <EditorAPI/TESDialogSpell.h>
+#include <EditorAPI/T/TESDialogSpell.h>
 
 namespace CKPE
 {

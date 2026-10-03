@@ -1,7 +1,7 @@
 #include <CKPE.Utils.h>
 #include <CKPE.Common.RTTI.h>
-#include <EditorAPI/Forms/TESForm.h>
-#include <EditorAPI/TESFullName.h>
+#include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/T/TESFullName.h>
 
 namespace CKPE
 {

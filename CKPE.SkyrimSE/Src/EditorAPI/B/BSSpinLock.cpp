@@ -6,7 +6,7 @@
 
 #include <windows.h>
 #include <CKPE.Asserts.h>
-#include <EditorAPI/BSSpinLock.h>
+#include <EditorAPI/B/BSSpinLock.h>
 
 namespace CKPE
 {

@@ -1,10 +1,10 @@
 // Special thanks to Nukem: https://github.com/Nukem9/SkyrimSETest/blob/master/skyrim64_test/src/patches/CKSSE/BSShaderResourceManager_CK.cpp
 
 #include <CKPE.Asserts.h>
-#include <EditorAPI/BSTriShape.h>
-#include <EditorAPI/BSDynamicTriShape.h>
-#include <EditorAPI/BSShaderResourceManager.h>
-#include <EditorAPI/NiAPI/NiCollisionUtils.h>
+#include <EditorAPI/B/BSTriShape.h>
+#include <EditorAPI/B/BSDynamicTriShape.h>
+#include <EditorAPI/B/BSShaderResourceManager.h>
+#include <EditorAPI/N/NiCollisionUtils.h>
 
 namespace CKPE
 {

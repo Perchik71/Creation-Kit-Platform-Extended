@@ -48,11 +48,12 @@ namespace CKPE
 				alignment++;
 			}
 
-			// Размер должен быть кратен выравниванию с округлением до ближайшего
-			if ((size % alignment) != 0)
-				size = ((size + alignment - 1) / alignment) * alignment;
+			void* ptr = nullptr;
+			if (aligned)
+				ptr = voltek::scalable_aligned_alloc(size, alignment);
+			else
+				ptr = voltek::scalable_alloc(size);
 
-			void* ptr = voltek::scalable_alloc(size);
 			if (ptr && zeroed) memset(ptr, 0, size);
 
 			if (!ptr && size <= (128llu * 1024 * 1024))

@@ -2,7 +2,7 @@
 
 #include <windows.h>
 #include <CKPE.Asserts.h>
-#include <EditorAPI/BSReadWriteLock.h>
+#include <EditorAPI/B/BSReadWriteLock.h>
 
 namespace CKPE
 {

@@ -5,7 +5,7 @@
 // Special thanks to Nukem: https://github.com/Nukem9/SkyrimSETest/blob/master/skyrim64_test/src/patches/TES/NiMain/NiRefObject.h
 
 #include <windows.h>
-#include <EditorAPI/NiAPI/NiRefObject.h>
+#include <EditorAPI/N/NiRefObject.h>
 
 namespace CKPE
 {
