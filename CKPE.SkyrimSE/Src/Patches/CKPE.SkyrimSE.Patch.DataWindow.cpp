@@ -11,7 +11,7 @@
 #include <CKPE.Common.UIListView.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/TESFile.h>
+#include <EditorAPI/T/TESFile.h>
 #include <Patches/CKPE.SkyrimSE.Patch.DataWindow.h>
 #include "../CKPE.Common/resource.h"
 

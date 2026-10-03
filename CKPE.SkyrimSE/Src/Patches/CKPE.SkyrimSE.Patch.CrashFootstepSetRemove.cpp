@@ -11,7 +11,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/Forms/BGSFootstepSet.h>
+#include <EditorAPI/B/BGSFootstepSet.h>
 #include <Patches/CKPE.SkyrimSE.Patch.Console.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashFootstepSetRemove.h>
 

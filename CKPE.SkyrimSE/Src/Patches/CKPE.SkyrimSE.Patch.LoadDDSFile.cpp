@@ -9,7 +9,7 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.RTTI.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/BSResources.h>
+#include <EditorAPI/B/BSResources.h>
 #include <Patches/CKPE.SkyrimSE.Patch.LoadDDSFile.h>
 
 namespace CKPE

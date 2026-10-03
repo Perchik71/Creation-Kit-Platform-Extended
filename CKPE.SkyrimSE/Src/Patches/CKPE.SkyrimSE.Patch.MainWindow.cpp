@@ -16,9 +16,9 @@
 #include <CKPE.Common.UIMenus.h>
 #include <CKPE.Common.RTTI.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/BSString.h>
-#include <EditorAPI/Forms/TESObjectREFR.h>
-#include <EditorAPI/BSPointerHandleManager.h>
+#include <EditorAPI/B/BSString.h>
+#include <EditorAPI/T/TESObjectREFR.h>
+#include <EditorAPI/B/BSPointerHandleManager.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ObjectWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.Console.h>
 #include <Patches/CKPE.SkyrimSE.Patch.RenderWindow.h>

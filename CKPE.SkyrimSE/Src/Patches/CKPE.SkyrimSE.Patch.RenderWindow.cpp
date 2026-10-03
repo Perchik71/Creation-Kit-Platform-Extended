@@ -14,7 +14,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/BGSRenderWindow.h>
+#include <EditorAPI/B/BGSRenderWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.RenderWindow.h>
 
 namespace CKPE

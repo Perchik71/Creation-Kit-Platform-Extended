@@ -7,9 +7,9 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/Forms/TESForm.h>
-#include <EditorAPI/TESFile.h>
-#include <EditorAPI/BSTArray.h>
+#include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/T/TESFile.h>
+#include <EditorAPI/B/BSTArray.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashMergeForms.h>
 
 namespace CKPE

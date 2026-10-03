@@ -5,7 +5,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/Forms/TESObjectLAND.h>
+#include <EditorAPI/T/TESObjectLAND.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixParamsVTXT.h>
 
 namespace CKPE

@@ -10,8 +10,8 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.SettingCollection.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/BSString.h>
-#include <EditorAPI/TESFile.h>
+#include <EditorAPI/B/BSString.h>
+#include <EditorAPI/T/TESFile.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BSArchiveManager.h>
 
 namespace CKPE

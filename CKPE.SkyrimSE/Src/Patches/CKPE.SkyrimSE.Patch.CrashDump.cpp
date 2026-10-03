@@ -9,13 +9,13 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.CrashHandler.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/NiAPI/NiSourceTexture.h>
-#include <EditorAPI/NiAPI/NiAVObject.h>
-#include <EditorAPI/Forms/TESForm.h>
-#include <EditorAPI/BSResources.h>
-#include <EditorAPI/BSShaderProperty.h>
-#include <EditorAPI/BSFile.h>
-#include <EditorAPI/BGSLocalizedString.h>
+#include <EditorAPI/N/NiSourceTexture.h>
+#include <EditorAPI/N/NiAVObject.h>
+#include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/B/BSResources.h>
+#include <EditorAPI/B/BSShaderProperty.h>
+#include <EditorAPI/B/BSFile.h>
+#include <EditorAPI/B/BGSLocalizedString.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashDump.h>
 #include <resource_version2.h>
 

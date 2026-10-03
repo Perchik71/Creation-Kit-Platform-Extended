@@ -7,7 +7,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/Forms/TESObjectREFR.h>
+#include <EditorAPI/T/TESObjectREFR.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashInventoryIterators.h>
 
 namespace CKPE

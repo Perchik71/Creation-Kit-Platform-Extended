@@ -9,9 +9,9 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/BSString.h>
-#include <EditorAPI/NiAPI/NiMemoryManager.h>
-#include <EditorAPI/BGSRenderWindow.h>
+#include <EditorAPI/B/BSString.h>
+#include <EditorAPI/N/NiMemoryManager.h>
+#include <EditorAPI/B/BGSRenderWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.MainWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CellViewWindow.h>
 

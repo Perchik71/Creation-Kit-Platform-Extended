@@ -5,7 +5,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/BSShaderResourceManager.h>
+#include <EditorAPI/B/BSShaderResourceManager.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixIntersectionTriangle.h>
 
 namespace CKPE

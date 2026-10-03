@@ -6,7 +6,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/NiAPI/NiMemoryManager.h>
+#include <EditorAPI/N/NiMemoryManager.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixRenderPass.h>
 
 namespace CKPE

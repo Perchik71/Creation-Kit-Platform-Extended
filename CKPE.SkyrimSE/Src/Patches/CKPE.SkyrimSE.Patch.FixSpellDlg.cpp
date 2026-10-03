@@ -5,7 +5,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/TESDialogSpell.h>
+#include <EditorAPI/T/TESDialogSpell.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixSpellDlg.h>
 
 namespace CKPE

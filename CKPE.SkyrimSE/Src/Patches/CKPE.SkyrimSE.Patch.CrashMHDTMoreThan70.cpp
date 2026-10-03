@@ -9,8 +9,8 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/Forms/TESObjectCELL.h>
-#include <EditorAPI/NiAPI/NiTypes.h>
+#include <EditorAPI/T/TESObjectCELL.h>
+#include <EditorAPI/N/NiTypes.h>
 #include <Patches/CKPE.SkyrimSE.Patch.Console.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashMHDTMoreThan70.h>
 

@@ -10,8 +10,8 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/BSTArray.h>
-#include <EditorAPI/Forms/TESForm.h>
+#include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/T/TESForm.h>
 #include <Patches/CKPE.SkyrimSE.Patch.DeferredDlg.h>
 
 #define UI_COMIPLESCRIPT_DIALOG_COMPILE				1		// "Compile"

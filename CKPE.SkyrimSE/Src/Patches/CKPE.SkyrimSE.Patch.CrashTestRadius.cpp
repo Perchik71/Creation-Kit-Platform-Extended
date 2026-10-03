@@ -5,8 +5,8 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/BSEffectShaderMaterial.h>
-#include <EditorAPI/BSShaderProperty.h>
+#include <EditorAPI/B/BSEffectShaderMaterial.h>
+#include <EditorAPI/B/BSShaderProperty.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CrashTestRadius.h>
 
 namespace CKPE

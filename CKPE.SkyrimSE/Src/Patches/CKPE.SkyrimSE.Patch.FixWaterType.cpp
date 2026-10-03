@@ -5,8 +5,8 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/TESWater.h>
-#include <EditorAPI/BSShaderProperty.h>
+#include <EditorAPI/T/TESWater.h>
+#include <EditorAPI/B/BSShaderProperty.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixWaterType.h>
 
 namespace CKPE

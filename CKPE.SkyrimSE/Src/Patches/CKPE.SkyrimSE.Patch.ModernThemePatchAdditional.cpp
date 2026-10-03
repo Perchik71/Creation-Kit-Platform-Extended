@@ -12,7 +12,7 @@
 #include <CKPE.Common.UIListView.h>
 #include <CKPE.Common.ModernTheme.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/Forms/TESObjectLIGH.h>
+#include <EditorAPI/T/TESObjectLIGH.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ModernThemePatchAdditional.h>
 #include "../CKPE.Common/resource.h"
 

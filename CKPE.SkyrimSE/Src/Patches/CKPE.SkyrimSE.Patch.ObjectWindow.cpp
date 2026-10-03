@@ -12,7 +12,7 @@
 #include <CKPE.Common.UIListView.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/BGSRenderWindow.h>
+#include <EditorAPI/B/BGSRenderWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ObjectWindow.h>
 #include <commctrl.h>
 
