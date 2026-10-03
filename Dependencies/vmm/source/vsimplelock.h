@@ -4,6 +4,9 @@
 
 #pragma once
 
+#include <atomic>
+#include <stdint.h>
+
 namespace voltek
 {
 	namespace core
@@ -86,6 +89,26 @@ namespace voltek
 				// Указатель на простой блокировщик
 				simple_lock* _handle{ nullptr };
 				bool _locked{ false };
+			};
+			// Contention on one lock; only the owner writes, telemetry reads without the lock.
+			struct lock_counters
+			{
+				std::atomic<uint64_t> contended{ 0 };
+				std::atomic<uint64_t> wait_ticks{ 0 };
+			};
+
+			// Scope lock that records how often and how long acquiring had to wait.
+			class measured_scope_lock
+			{
+			public:
+				// Counters may be null to lock without measuring.
+				measured_scope_lock(const simple_lock& ob, lock_counters* counters) noexcept;
+				~measured_scope_lock() noexcept;
+			private:
+				measured_scope_lock(const measured_scope_lock&) = delete;
+				measured_scope_lock& operator=(const measured_scope_lock&) = delete;
+			private:
+				const simple_lock& _handle;
 			};
 		}
 	}

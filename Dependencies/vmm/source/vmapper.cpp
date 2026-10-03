@@ -1,128 +1,115 @@
-﻿// Copyright © 2024 aka perchik71. All rights reserved.
+﻿// Copyright © 2023 aka perchik71. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include "vmapper.h"
 #include "vassert.h"
 
-#if (defined(_WIN32) || defined(_WIN64))	
-#	pragma warning (disable : 6250)
-#	pragma warning (disable : 6333)
-#	pragma warning (disable : 28160)
+#if (defined(_WIN32) || defined(_WIN64))
 #	include <windows.h>
 #endif
-
-#include <iostream>
 
 namespace voltek
 {
 	namespace core
 	{
-		mapper::mapper() : _mem(nullptr), _size(0), _freesize(0), _blocksize(0), _mask(nullptr)
+		char* region::reserve(size_t size) noexcept
 		{
-			resize(DEFAULT_SIZE, DEFAULT_BLOCKSIZE);
+			if (_size)
+				return nullptr;
+			auto* base = static_cast<char*>(VirtualAlloc(nullptr, size, MEM_RESERVE, PAGE_READWRITE));
+			if (!base)
+				return nullptr;
+			_base = reinterpret_cast<uintptr_t>(base);
+			_size = size;
+			return base;
 		}
 
-		mapper::mapper(size_t size, size_t blocksize) : _mem(nullptr), _size(0), _freesize(0), _blocksize(0), _mask(nullptr)
+		bool region::commit(void* ptr, size_t size) noexcept
 		{
-			resize(size * 1024 * 1024, blocksize);
+			return VirtualAlloc(ptr, size, MEM_COMMIT, PAGE_READWRITE) != nullptr;
 		}
 
-		mapper::mapper(const bits& ob) : _mem(nullptr), _size(0), _freesize(0), _blocksize(0), _mask(nullptr)
+		void region::decommit(void* ptr, size_t size) noexcept
 		{
-			*this = ob;
+			VirtualFree(ptr, size, MEM_DECOMMIT);
 		}
 
-		mapper::~mapper()
+		void mapper::assign(char* base, size_t slot_size, size_t slot_count, retention_budget* retention)
 		{
-			clear();
+			_internal::simple_scope_lock scope_lock(_lock);
+			_base = base;
+			_slot_size = slot_size;
+			_slot_count = slot_count;
+			_retention = retention;
+			_available.resize((slot_count + 2047) & ~size_t{ 2047 });
+			_available.all_unset();
+			// Padding stays unavailable so SIMD scans cannot hand out a nonexistent slot.
+			for (size_t index = 0; index < slot_count; ++index)
+				_available.set(index);
+			_committed_pages.assign(slot_count, 0);
 		}
 
-		mapper& mapper::operator=(const mapper& ob)
+		void* mapper::allocate(size_t commit_size) noexcept
 		{
-			clear();
-			resize(ob._size, ob._blocksize);
-			if (!empty())
-			{
-				memcpy(_mem, ob._mem, ob._size);
-				memcpy(_mask->data(), ob._mask->c_data(), ob._mask->size());
-				_freesize = ob._freesize;
-			}
-			return *this;
-		}
-
-		void mapper::resize(size_t size, size_t blocksize)
-		{
-			if (_mem && (size > 0)) return;
-
-			if (size)
-			{
-				_mem = (char*)VirtualAlloc(NULL, (SIZE_T)size, MEM_RESERVE, PAGE_READWRITE);
-				if (_mem)
-				{
-					_size = size;
-					_freesize = _size;
-					_blocksize = blocksize;
-					_mask = new bits(count_blocks());
-					_vassert(_mask);
-					_mask->all_set();
-				}
-			}
-			else if (_mem)
-			{
-				// MEM_RELEASE требует dwSize == 0.
-				VirtualFree(_mem, 0, MEM_RELEASE);
-				_mem = nullptr;
-				_size = 0;
-				_freesize = 0;
-				_blocksize = 0;
-				if (_mask)
-				{
-					delete _mask;
-					_mask = nullptr;
-				}
-			}
-		}
-
-		void* mapper::block_alloc()
-		{
-			if (!_freesize) 
+			if (!commit_size || commit_size > _slot_size || _slot_size - commit_size < region::readable_tail)
 				return nullptr;
 
-			size_t id = 0;
-			if (!_mask->find_first_set_bit(id))
+			size_t index = 0;
+			_internal::simple_scope_lock scope_lock(_lock);
+			const bool retained = _retained_count != 0;
+			if (retained)
+				index = _retained_indices[_retained_count - 1];
+			else if (!_available.find_first_set_bit(index))
 				return nullptr;
 
-			auto ret = VirtualAlloc(_mem + (id * _blocksize), _blocksize, MEM_COMMIT, PAGE_READWRITE);
-			if (ret)
+			auto* slot = _base + index * _slot_size;
+			const auto pages = (commit_size + region::readable_tail + region::commit_granularity - 1) / region::commit_granularity;
+			const auto previous_pages = _committed_pages[index];
+			if (pages > previous_pages)
 			{
-				_mask->unset(id);
-				_freesize -= _blocksize;
-				return ret;
+				const auto extra = (pages - previous_pages) * region::commit_granularity;
+				if (!region::commit(slot + previous_pages * region::commit_granularity, extra))
+					return nullptr;
+				_committed_pages[index] = static_cast<uint32_t>(pages);
+				_committed.fetch_add(extra, std::memory_order_relaxed);
 			}
-
-			return nullptr;
+			else if (pages < previous_pages)
+			{
+				const auto excess = (previous_pages - pages) * region::commit_granularity;
+				region::decommit(slot + pages * region::commit_granularity, excess);
+				_committed_pages[index] = static_cast<uint32_t>(pages);
+				_committed.fetch_sub(excess, std::memory_order_relaxed);
+			}
+			if (retained)
+			{
+				--_retained_count;
+				_retention->release(previous_pages * region::commit_granularity);
+			}
+			else
+				_available.unset(index);
+			++_used_count;
+			return slot;
 		}
 
-		bool mapper::block_free(const void* ptr)
+		void mapper::release(const void* slot) noexcept
 		{
-			if (!is_valid_ptr(ptr))
-				return false;
-			
-			auto id = (size_t)((char*)ptr - _mem) / _blocksize;
-			if (VirtualFree(const_cast<void*>(ptr), _blocksize, MEM_DECOMMIT))
+			_internal::simple_scope_lock scope_lock(_lock);
+			const auto index = static_cast<size_t>(static_cast<const char*>(slot) - _base) / _slot_size;
+			const auto bytes = static_cast<size_t>(_committed_pages[index]) * region::commit_granularity;
+			if (_retention && _retained_count < _retained_indices.size() && _retention->try_acquire(bytes))
 			{
-				_mask->set(id);
-				_freesize += _blocksize;
-				return true;
+				_retained_indices[_retained_count++] = index;
+				--_used_count;
+				return;
 			}
+			// Decommit before the slot becomes reusable, or a new owner's commit could be undone.
+			region::decommit(_base + index * _slot_size, _slot_size);
+			_committed.fetch_sub(bytes, std::memory_order_relaxed);
+			_committed_pages[index] = 0;
 
-			return false;
-		}
-
-		bool mapper::is_valid_ptr(const void* ptr) const
-		{
-			return (((char*)ptr >= _mem) && ((char*)ptr < (_mem + _size)));
+			_available.set(index);
+			--_used_count;
 		}
 	}
 }

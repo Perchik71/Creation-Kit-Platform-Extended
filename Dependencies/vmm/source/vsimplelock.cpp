@@ -145,7 +145,33 @@ namespace voltek
 			{
 				return const_cast<simple_scope_try_lock*>(this)->_locked = _handle->try_lock();
 			}
-}
+
+			measured_scope_lock::measured_scope_lock(const simple_lock& ob, lock_counters* counters) noexcept :
+				_handle(ob)
+			{
+				if (!counters)
+				{
+					_handle.lock();
+					return;
+				}
+				if (_handle.try_lock())
+					return;
+				LARGE_INTEGER start{};
+				QueryPerformanceCounter(&start);
+				_handle.lock();
+				LARGE_INTEGER end{};
+				QueryPerformanceCounter(&end);
+				// Written only while holding the lock, so plain load and store cannot lose updates.
+				counters->contended.store(counters->contended.load(std::memory_order_relaxed) + 1, std::memory_order_relaxed);
+				counters->wait_ticks.store(counters->wait_ticks.load(std::memory_order_relaxed) +
+					static_cast<uint64_t>(end.QuadPart - start.QuadPart), std::memory_order_relaxed);
+			}
+
+			measured_scope_lock::~measured_scope_lock() noexcept
+			{
+				_handle.unlock();
+			}
+		}
 	}
 }
 

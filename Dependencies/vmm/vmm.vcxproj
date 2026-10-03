@@ -28,6 +28,7 @@
     <ClInclude Include="source\vbase.h" />
     <ClInclude Include="source\vbits.h" />
     <ClInclude Include="source\vmmgeometry.h" />
+    <ClInclude Include="source\vmmclasses.h" />
     <ClInclude Include="source\vintrin.h" />
     <ClInclude Include="source\vio.h" />
     <ClInclude Include="source\vmmblock.h" />
@@ -54,7 +55,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{19FF1140-3B0A-495C-8FF2-67BABDF60A43}</ProjectGuid>
+    <ProjectGuid>{1a04d2b1-ebb3-4569-bd03-915631b4bfb1}</ProjectGuid>
     <RootNamespace>vmm</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>MemoryManager</ProjectName>
@@ -80,7 +81,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
-    <TargetName>vmm</TargetName>
+    <TargetName>VoltekLib.$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

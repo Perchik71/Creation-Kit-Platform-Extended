@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <atomic>
 
 #define VOLTEK_MM_BLOCK_VERSION 1
 
@@ -77,76 +78,14 @@ namespace voltek
 		static_assert(sizeof(block_base) == 0x20, "sizeof(block_base) == 0x20");
 #endif
 
-		// Шаблонный фиксируемый блок
-		template<int _size> 
-		struct block_base_t : public block_base
+		struct aligned_block
 		{
-			// Полезные данные
-			char data[_size];
+			void* base;
+			size_t alignment;
+			block_base header;
 		};
 
-		// Фиксируемый блок на 8 байт.
-		// На самом деле его размер равен 16 байт,
-		// Это нужно для выравненной памяти.
-		typedef block_base_t<16> block8_t;
-		// Фиксируемый блок на 16 байт.
-		typedef block_base_t<16> block16_t;
-		// Фиксируемый блок на 32 байт.
-		typedef block_base_t<32> block32_t;
-		// Фиксируемый блок на 64 байт.
-		typedef block_base_t<64> block64_t;
-		// Фиксируемый блок на 128 байт.
-		typedef block_base_t<128> block128_t;
-		// Фиксируемый блок на 256 байт.
-		typedef block_base_t<256> block256_t;
-		// Фиксируемый блок на 512 байт.
-		typedef block_base_t<512> block512_t;
-		// Фиксируемый блок на 1024 байт.
-		typedef block_base_t<1024> block1024_t;
-		// Фиксируемый блок на 4096 байт.
-		typedef block_base_t<4096> block4096_t;
-		// Фиксируемый блок на 8192 байт.
-		typedef block_base_t<8192> block8192_t;
-		// Фиксируемый блок на 16384 байт.
-		typedef block_base_t<16384> block16384_t;
-		// Фиксируемый блок на 32768 байт.
-		typedef block_base_t<32768> block32768_t;
-		// Фиксируемый блок на 65536 байт.
-		typedef block_base_t<65536> block65536_t;
-		// Фиксируемый блок на 131072 байт.
-		typedef block_base_t<131072> block131072_t;
-
-#if VOLTEK_MM_BLOCK_VERSION == 1
-		static_assert(sizeof(block8_t) == 0x20, "sizeof(block8_t) == 0x20");
-		static_assert(sizeof(block16_t) == 0x20, "sizeof(block16_t) == 0x20");
-		static_assert(sizeof(block32_t) == 0x30, "sizeof(block32_t) == 0x30");
-		static_assert(sizeof(block64_t) == 0x50, "sizeof(block64_t) == 0x50");
-		static_assert(sizeof(block128_t) == 0x90, "sizeof(block128_t) == 0x90");
-		static_assert(sizeof(block256_t) == 0x110, "sizeof(block256_t) == 0x110");
-		static_assert(sizeof(block512_t) == 0x210, "sizeof(block512_t) == 0x210");
-		static_assert(sizeof(block1024_t) == 0x410, "sizeof(block1024_t) == 0x410");
-		static_assert(sizeof(block4096_t) == 0x1010, "sizeof(block4096_t) == 0x1010");
-		static_assert(sizeof(block8192_t) == 0x2010, "sizeof(block8192_t) == 0x2010");
-		static_assert(sizeof(block16384_t) == 0x4010, "sizeof(block16384_t) == 0x4010");
-		static_assert(sizeof(block32768_t) == 0x8010, "sizeof(block32768_t) == 0x8010");
-		static_assert(sizeof(block65536_t) == 0x10010, "sizeof(block65536_t) == 0x10010");
-		static_assert(sizeof(block131072_t) == 0x20010, "sizeof(block131072_t) == 0x20010");
-#elif VOLTEK_MM_BLOCK_VERSION == 2
-		static_assert(sizeof(block8_t) == 0x30, "sizeof(block8_t) == 0x30");
-		static_assert(sizeof(block16_t) == 0x30, "sizeof(block16_t) == 0x30");
-		static_assert(sizeof(block32_t) == 0x40, "sizeof(block32_t) == 0x40");
-		static_assert(sizeof(block64_t) == 0x60, "sizeof(block64_t) == 0x60");
-		static_assert(sizeof(block128_t) == 0xA0, "sizeof(block128_t) == 0xA0");
-		static_assert(sizeof(block256_t) == 0x120, "sizeof(block256_t) == 0x120");
-		static_assert(sizeof(block512_t) == 0x220, "sizeof(block512_t) == 0x220");
-		static_assert(sizeof(block1024_t) == 0x420, "sizeof(block1024_t) == 0x420");
-		static_assert(sizeof(block4096_t) == 0x1020, "sizeof(block4096_t) == 0x1020");
-		static_assert(sizeof(block8192_t) == 0x2020, "sizeof(block8192_t) == 0x2020");
-		static_assert(sizeof(block16384_t) == 0x4020, "sizeof(block16384_t) == 0x4020");
-		static_assert(sizeof(block32768_t) == 0x8020, "sizeof(block32768_t) == 0x8020");
-		static_assert(sizeof(block65536_t) == 0x10020, "sizeof(block65536_t) == 0x10020");
-		static_assert(sizeof(block131072_t) == 0x20020, "sizeof(block131072_t) == 0x20020");
-#endif
+		static_assert(offsetof(aligned_block, header) + sizeof(block_base) == sizeof(aligned_block));
 
 		// Для проверки на валидность блока, от иной памяти выделенной, чем-то иным.
 		static constexpr uint32_t prologue_block = 0xdadafead;
@@ -162,6 +101,88 @@ namespace voltek
 		static constexpr uint16_t flag_block_default_used = 0x2;
 #endif
 
+		static constexpr uint8_t flag_block_aligned = 0x4;
+		// Allocated while statistics were on, so its release is counted too.
+		static constexpr uint8_t flag_block_counted = 0x8;
+		// Released to its page's free list; a second free is ignored.
+		static constexpr uint8_t flag_block_free = 0x10;
+		static constexpr uint8_t flag_block_cached = 0x20;
+
+		static_assert(std::atomic_ref<uint8_t>::required_alignment == 1);
+		static_assert(offsetof(block_base, flags) == 14);
+
+		struct block_lifecycle
+		{
+			static uint8_t load(const block_base* block) noexcept
+			{
+				return std::atomic_ref<uint8_t>(const_cast<uint8_t&>(block->flags)).load(std::memory_order_acquire);
+			}
+
+			static void store(block_base* block, uint8_t flags) noexcept
+			{
+				std::atomic_ref<uint8_t>(block->flags).store(flags, std::memory_order_release);
+			}
+
+			static bool live(const block_base* block) noexcept
+			{
+				return !(load(block) & (flag_block_free | flag_block_cached));
+			}
+
+			static uint8_t try_cache(block_base* block) noexcept
+			{
+				auto flags = load(block);
+				if (!(flags & flag_block_pool_used) || (flags & (flag_block_free | flag_block_cached)))
+					return 0;
+				const auto old = flags;
+				return std::atomic_ref<uint8_t>(block->flags).compare_exchange_strong(flags,
+					static_cast<uint8_t>((flags & ~flag_block_counted) | flag_block_cached),
+					std::memory_order_acq_rel, std::memory_order_acquire) ? old : 0;
+			}
+
+			static void uncache(block_base* block, bool counted) noexcept
+			{
+				store(block, flag_block_pool_used | (counted ? flag_block_counted : 0));
+			}
+
+			static bool try_free(block_base* block) noexcept
+			{
+				auto flags = load(block);
+				if (!(flags & flag_block_pool_used) || (flags & flag_block_free) || (flags & flag_block_cached))
+					return false;
+				// An allocated block can still race a lock-free cache admission.
+				return std::atomic_ref<uint8_t>(block->flags).compare_exchange_strong(flags,
+					flag_block_pool_used | flag_block_free, std::memory_order_acq_rel, std::memory_order_acquire);
+			}
+
+			static bool free_cached_under_lock(block_base* block) noexcept
+			{
+				const auto flags = load(block);
+				if (!(flags & flag_block_pool_used) || !(flags & flag_block_cached) || (flags & flag_block_free))
+					return false;
+				// Only the owning bin can return a cached block, under the pool lock.
+				store(block, flag_block_pool_used | flag_block_free);
+				return true;
+			}
+
+			static bool pop_under_lock(block_base* block, uint32_t requested, uint8_t target_flags) noexcept
+			{
+				auto flags = load(block);
+				if (!(flags & flag_block_free))
+					return false;
+				block->size = requested;
+				// Free blocks cannot be cached until the pool-lock holder publishes their final state.
+				store(block, target_flags);
+				return true;
+			}
+
+			static bool try_free_default(block_base* block) noexcept
+			{
+				uint8_t flags = flag_block_default_used;
+				return std::atomic_ref<uint8_t>(block->flags).compare_exchange_strong(flags,
+					flag_block_default_used | flag_block_free, std::memory_order_acq_rel, std::memory_order_acquire);
+			}
+		};
+
 		// Возвращает истину, если блок правильный и пренадлежит менеджеру.
 		inline static bool is_valid_block(const block_base* block)
 		{
@@ -171,26 +192,38 @@ namespace voltek
 		// Возвращает истину, если блок используется каким-то пулом.
 		inline static bool is_used_pool_block(const block_base* block)
 		{
-			return (block->flags & flag_block_pool_used) == flag_block_pool_used;
+			return (block_lifecycle::load(block) & flag_block_pool_used) == flag_block_pool_used;
 		}
 
 		// Возвращает истину, если блок выделен просто, его нет в пулах.
 		inline static bool is_used_default_block(const block_base* block)
 		{
-			return (block->flags & flag_block_default_used) == flag_block_default_used;
+			return (block_lifecycle::load(block) & flag_block_default_used) == flag_block_default_used;
+		}
+
+		inline static bool is_used_aligned_block(const block_base* block)
+		{
+			return (block_lifecycle::load(block) & flag_block_aligned) != 0;
+		}
+
+		inline static aligned_block* get_aligned_block(block_base* block)
+		{
+			return reinterpret_cast<aligned_block*>(
+				reinterpret_cast<char*>(block) - offsetof(aligned_block, header));
 		}
 
 #if VOLTEK_MM_BLOCK_VERSION == 1
 		// Возвращает размер памяти указанный в блоке или 0, если он неправильный.
 		inline static size_t get_size_from_block(const block_base* block)
 		{
-			return is_valid_block(block) ? (is_used_default_block(block) ? block->default_block.size : block->size) : 0;
+			return is_valid_block(block) && block_lifecycle::live(block) ?
+				(is_used_default_block(block) ? block->default_block.size : block->size) : 0;
 		}
 
 		// Изменяет размер памяти указанном в блоке.
 		inline static bool set_size_from_block(block_base* block, size_t new_size)
 		{
-			bool ret = is_valid_block(block);
+			bool ret = is_valid_block(block) && block_lifecycle::live(block);
 			if (ret)
 			{
 				if (is_used_default_block(block))
@@ -350,7 +383,6 @@ namespace voltek
 			dst->page_id = page_id;
 			dst->block_id = block_id;
 			dst->size = size;
-			dst->flags = flag_block_pool_used;
 			return dst;
 		}
 
@@ -359,7 +391,7 @@ namespace voltek
 		{
 			dst->prologue = prologue_block;
 			dst->default_block.size = size;
-			dst->flags = flag_block_default_used;
+			block_lifecycle::store(dst, flag_block_default_used);
 			return dst;
 		}
 	}

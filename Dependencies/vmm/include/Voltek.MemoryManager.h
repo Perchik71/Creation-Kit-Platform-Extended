@@ -6,6 +6,7 @@
 
 #include "vmmconfig.h"
 #include <stddef.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -22,7 +23,8 @@ namespace voltek
 	};
 
 	// Инициализация менеджера памяти.
-	VOLTEK_MM_API void scalable_memory_manager_initialize();
+	// Returns false when the address reservation failed; no allocation can succeed then.
+	VOLTEK_MM_API bool scalable_memory_manager_initialize();
 	// Освобождение менеджера памяти.
 	// Чисто символически, использовать её не рекомендуется.
 	// Но если очень хочется, почему бы и нет.
@@ -33,6 +35,10 @@ namespace voltek
 	// Вернёт постоянный адрес при затребовании памяти равной 0.
 	// Память всегда выровнена.
 	VOLTEK_MM_API void* scalable_alloc(size_t size);
+	// Power-of-two alignment; zero uses the ordinary 16-byte alignment.
+	VOLTEK_MM_API void* scalable_aligned_alloc(size_t size, size_t alignment);
+	// Shares scalable_free/scalable_msize; failure preserves the original block.
+	VOLTEK_MM_API void* scalable_aligned_realloc(const void* ptr, size_t size, size_t alignment);
 	// Выделение памяти нужного размера.
 	// При ошибке вернёт nullptr, это если size равен более 4 гб.
 	// Также вернёт nullptr если память физически кончилась.
@@ -43,6 +49,7 @@ namespace voltek
 	// При ошибке вернёт nullptr, это если size равен 0 или более 4 гб.
 	// Также вернёт nullptr если память физически кончилась.
 	// Память всегда выровнена. Адрес памяти может быть изменён.
+	// Preserves the alignment of blocks returned by scalable_aligned_alloc.
 	VOLTEK_MM_API void* scalable_realloc(const void* ptr, size_t size);
 	// Выделение памяти нужного размера из прошлого указателя на память.
 	// При ошибке вернёт nullptr, это если size равен 0 или более 4 гб.
@@ -57,6 +64,37 @@ namespace voltek
 	// Вернёт 0 при ошибке, что значит, указатель на память не пренадлежит менеджеру.
 	VOLTEK_MM_API size_t scalable_msize(const void* ptr);
 	VOLTEK_MM_API void scalable_get_pool_stats(scalable_pool_stats* out);
+
+	// Per size class; cumulative counters only grow, the rest are current values.
+	struct scalable_class_stats
+	{
+		size_t request_limit;		// largest request served; 0 for the large-block entry
+		size_t block_stride;		// bytes per block including its header; 0 when not pooled
+		uint64_t live_blocks;
+		uint64_t requested_bytes;
+		uint64_t committed_bytes;
+		uint64_t allocations;		// cumulative
+		uint64_t allocated_bytes;	// cumulative
+		uint64_t pages_created;		// cumulative
+		uint64_t pages_released;	// cumulative
+		uint64_t lock_contended;	// cumulative acquisitions that had to wait
+		uint64_t lock_wait_ticks;	// cumulative QPC ticks spent waiting
+		uint64_t held_blocks;		// includes thread caches, even before statistics are enabled
+	};
+
+	struct scalable_memory_stats
+	{
+		size_t reserved_bytes;
+		uint64_t committed_bytes;
+		uint64_t live_blocks;
+		uint64_t requested_bytes;
+	};
+
+	// Per-class counters and lock timing start with blocks allocated after this call.
+	VOLTEK_MM_API void scalable_enable_statistics();
+	// Writes one entry per pool class and a final large-block entry; returns the count written.
+	VOLTEK_MM_API size_t scalable_get_class_stats(scalable_class_stats* out, size_t capacity);
+	VOLTEK_MM_API void scalable_get_memory_stats(scalable_memory_stats* out);
 }
 
 #ifdef __cplusplus
