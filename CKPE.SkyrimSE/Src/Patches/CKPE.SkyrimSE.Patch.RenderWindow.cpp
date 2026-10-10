@@ -30,6 +30,12 @@ namespace CKPE
 
 			static float StepInRender = 15.f;
 			static bool HideMainImguiWnd = true;
+			
+			std::uintptr_t ToggleDebugShader = 0;
+			std::uintptr_t DebugShaderType = 0;
+			// 1 = Number of Lights
+			// 4 = Number of Passes
+			// 6 = Texture Usage
 
 			RenderWindow::RenderWindow() : Common::PatchBaseWindow()
 			{
@@ -89,6 +95,9 @@ namespace CKPE
 				// Enable drawing always
 				if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_SKYRIM_SE_1_6_1130)			
 					Relocation(ID(165761), 0x2E).WriteFill(NOP, 0x69);
+				
+				ToggleDebugShader = ID(486220).Address();
+				DebugShaderType = ID(340720).Address();
 
 				return true;
 			}
@@ -215,6 +224,19 @@ namespace CKPE
 						{
 							if (wParam == VK_F1)
 								HideMainImguiWnd = !HideMainImguiWnd;
+							else if (wParam == VK_F3)
+							{
+								if (*(std::uintptr_t*)ToggleDebugShader == 0)
+								{
+									*(std::uintptr_t*)ToggleDebugShader = 1;
+									*(std::uintptr_t*)DebugShaderType = 1;
+								}
+								else
+								{
+									*(std::uintptr_t*)ToggleDebugShader = 0;
+									*(std::uintptr_t*)DebugShaderType = 0;
+								}
+							}
 						}
 					}
 				}
