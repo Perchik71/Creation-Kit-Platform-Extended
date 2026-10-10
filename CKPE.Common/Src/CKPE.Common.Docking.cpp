@@ -245,46 +245,32 @@ namespace CKPE
 				SWP_NOZORDER | SWP_NOACTIVATE);
 		}
 
-		static RECT CKPE_CDockingFrameGetRawAnchorRect(HWND anchorHwnd) noexcept(true)
+		[[nodiscard]] static int32_t CKPE_CDockingGetToolBarHeight(HWND hWnd) noexcept(true)
 		{
-			RECT client{};
-			GetClientRect(anchorHwnd, std::addressof(client));
+			HWND hToolbar = FindWindowEx(hWnd, NULL, TOOLBARCLASSNAME, NULL);
+			if (hToolbar)
+			{
+				RECT rc;
+				GetWindowRect(hToolbar, &rc);
+				return rc.bottom - rc.top;
+			}
+			return 0;
+		}
 
-			POINT topLeft{ client.left, client.top };
-			POINT bottomRight{ client.right, client.bottom };
+		static void CKPE_CDockingFrameGetRawAnchorRect(HWND anchorHwnd, RECT& anchorRect) noexcept(true)
+		{
+			POINT topLeft{ anchorRect.left, anchorRect.top };
+			POINT bottomRight{ anchorRect.right, anchorRect.bottom };
 			ClientToScreen(anchorHwnd, std::addressof(topLeft));
 			ClientToScreen(anchorHwnd, std::addressof(bottomRight));
 
 			RECT usable{ topLeft.x, topLeft.y, bottomRight.x, bottomRight.y };
 
-#if 0
-			for (auto child = GetWindow(anchorHwnd, GW_CHILD); child; child = GetWindow(child, GW_HWNDNEXT))
-			{
-				if (!IsWindowVisible(child))
-					continue;
-
-				char className[64]{ 0 };
-				GetClassNameA(child, className, sizeof(className));
-
-				RECT childRect{};
-
-				if (!_stricmp(className, TOOLBARCLASSNAME) || !_stricmp(className, REBARCLASSNAMEA))
-				{
-					GetWindowRect(child, std::addressof(childRect));
-					usable.top = std::max(usable.top, childRect.bottom);
-				}
-				else if (!_stricmp(className, STATUSCLASSNAMEA))
-				{
-					GetWindowRect(child, std::addressof(childRect));
-					usable.bottom = std::min(usable.bottom, childRect.top);
-				}
-			}
-#else
 			EnumChildWindows(anchorHwnd, [](HWND hwnd, LPARAM lParam) -> BOOL {
 				auto usable = reinterpret_cast<LPRECT>(lParam);
-				
+
 				char className[64]{};
-				GetClassNameA(hwnd, className, sizeof(className));	
+				GetClassNameA(hwnd, className, sizeof(className));
 
 				RECT childRect{};
 
@@ -296,14 +282,21 @@ namespace CKPE
 				else if (!_stricmp(className, STATUSCLASSNAMEA))
 				{
 					GetWindowRect(hwnd, std::addressof(childRect));
-					usable->bottom = std::min(usable->bottom, childRect.top);
+					usable->bottom -= childRect.bottom - childRect.top;
 				}
 
 				return true;
 				}, (LPARAM)std::addressof(usable));
-#endif
 
-			return usable;
+			anchorRect = usable;
+		}
+
+		static RECT CKPE_CDockingFrameGetRawAnchorRect(HWND anchorHwnd) noexcept(true)
+		{
+			RECT client{};
+			GetClientRect(anchorHwnd, std::addressof(client));
+			CKPE_CDockingFrameGetRawAnchorRect(anchorHwnd, client);
+			return client;
 		}
 
 		static AnchorPanel* CKPE_CDockingFrameFindOverlappingClaim(const RECT& rect, HWND anchorHwnd) noexcept(true)
