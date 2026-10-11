@@ -17,6 +17,9 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixDeleteTintToRace.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixPreviewHairColor.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.Console.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -364,6 +367,9 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixDeleteTintToRace.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixPreviewHairColor.h">
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.Console.h">
@@ -808,6 +814,12 @@
       <Filter>EditorAPI\old</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\BSGeometry.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSFaceGenUtils.h">
+      <Filter>EditorAPI\old</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\BSShaderData.h">
       <Filter>EditorAPI\old</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\BSGraphics.h">

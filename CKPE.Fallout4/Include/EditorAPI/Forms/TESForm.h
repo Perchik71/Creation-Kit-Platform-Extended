@@ -356,6 +356,8 @@ namespace CKPE
 
 					[[nodiscard]] inline std::uint32_t GetFormFlags() const noexcept(true) { return _FormFlags.Flags; }
 					[[nodiscard]] inline std::uint32_t GetFormID() const noexcept(true) { return _FormID; }
+					// CommonLibF4: TESForm::formEditorID-like name entry (BSFixedString at +0x18); for BGSHeadPart it is the name used to find the head part geometry.
+					[[nodiscard]] inline const BSFixedString& GetEntryEditID() const noexcept(true) { return _EntryEditID; }
 
 					// Not all forms have a localized name, but I'll add it here to simplify my life,
 					// since not all types of forms are known to me.
