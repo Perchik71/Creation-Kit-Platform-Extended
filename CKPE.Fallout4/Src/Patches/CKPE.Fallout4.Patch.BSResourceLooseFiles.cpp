@@ -83,8 +83,19 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				// Set new size class 0x1XX to 0x180
-				Relocation(ID{ 193501, 1992729 }, Offset{ 0x101, 0x101, 0x102 }).Write({ 0x80 });
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+				{
+					// Set new size class 0x1XX to 0x180
+					Relocation(ID{ 193501, 1992729 }, Offset{ 0x101, 0x101, 0x102 }).Write({ 0x80 });
+				}
+				else
+				{
+					// Since 1.10.982.3 the stream is created with a second base: the pointer handed out (and the `this` of every
+					// consumer, which reads the 32-bit size at +8) is the interface at +0x138 of the allocation, so the new 64-bit
+					// fields at interface+0x170/+0x178 lie at allocation+0x2A8/+0x2B0. Allocate 0x2C0 (was 0x168/0x160) or the
+					// writes corrupt the neighbouring heap block (e.g. BSSystemFileStreamer's path table: "Scatter table has been trashed").
+					Relocation(ID{ 193501, 1992729 }, Offset{ 0x101, 0x101, 0x102 }).Write({ 0xC0, 0x02 });
+				}
 
 				LooseFileStreamHook::Generate(Relocation(ID{ 767841, 1456433 }, 0x107).Address());
 				Relocation(ID{ 712081, 2009874 }).WriteJump(&sub);
