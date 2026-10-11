@@ -43,8 +43,8 @@ namespace CKPE
 					virtual ~BGSFootstepSet() = default;
 
 					[[nodiscard]] inline std::uint32_t GetCurrentIndex() const noexcept(true) { return _CurrentIndex; }
-					[[nodiscard]] inline BSTArray<BGSFootstep*>* GetArrayItemByIndex(std::uint32_t index) noexcept(true) { return _Item + (index * sizeof(BSTArray<BGSFootstep*>)); }
-					[[nodiscard]] inline BSTArray<BGSFootstep*>* GetCurrentArrayItem() noexcept(true) { return _Item + (_CurrentIndex * sizeof(BSTArray<BGSFootstep*>)); }
+					[[nodiscard]] inline BSTArray<BGSFootstep*>* GetArrayItemByIndex(std::uint32_t index) noexcept(true) { return _Item + index; }
+					[[nodiscard]] inline BSTArray<BGSFootstep*>* GetCurrentArrayItem() noexcept(true) { return _Item + _CurrentIndex; }
 
 					CKPE_READ_PROPERTY(GetCurrentIndex) std::uint32_t CurrentIndex;
 					CKPE_READ_PROPERTY(GetCurrentArrayItem) BSTArray<BGSFootstep*>* CurrentArrayItem;
