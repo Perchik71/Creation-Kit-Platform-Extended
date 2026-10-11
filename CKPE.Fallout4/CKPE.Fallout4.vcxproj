@@ -183,6 +183,7 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixLandspaceVNML.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixLoadD3DCompiler.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixPluginTXT.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixPreviewHairColor.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixQuoteCmdLine.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixRecursiveSorting.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixSky.cpp" />
@@ -252,7 +253,9 @@
     <ClInclude Include="Include\EditorAPI\BSFadeNode.h" />
     <ClInclude Include="Include\EditorAPI\BSFile.h" />
     <ClInclude Include="Include\EditorAPI\BSFixedString.h" />
+    <ClInclude Include="Include\EditorAPI\BSFaceGenUtils.h" />
     <ClInclude Include="Include\EditorAPI\BSGeometry.h" />
+    <ClInclude Include="Include\EditorAPI\BSShaderData.h" />
     <ClInclude Include="Include\EditorAPI\BSGraphics.h" />
     <ClInclude Include="Include\EditorAPI\BSHandleRefObject.h" />
     <ClInclude Include="Include\EditorAPI\BSLight.h" />
@@ -370,6 +373,7 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixLandspaceVNML.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixLoadD3DCompiler.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixPluginTXT.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixPreviewHairColor.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixQuoteCmdLine.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixRecursiveSorting.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixSky.h" />

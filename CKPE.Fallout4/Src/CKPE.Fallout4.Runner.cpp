@@ -43,6 +43,7 @@
 #include <Patches/CKPE.Fallout4.Patch.FixLandspaceVNML.h>
 #include <Patches/CKPE.Fallout4.Patch.FixLoadD3DCompiler.h>
 #include <Patches/CKPE.Fallout4.Patch.FixPluginTXT.h>
+#include <Patches/CKPE.Fallout4.Patch.FixPreviewHairColor.h>
 #include <Patches/CKPE.Fallout4.Patch.FixQuoteCmdLine.h>
 #include <Patches/CKPE.Fallout4.Patch.FixRecursiveSorting.h>
 #include <Patches/CKPE.Fallout4.Patch.FixSky.h>
@@ -146,6 +147,7 @@ namespace CKPE
 			mgr->Register(new Patch::FixLandspaceVNML);
 			mgr->Register(new Patch::FixLoadD3DCompiler);
 			mgr->Register(new Patch::FixPluginTXT);
+			mgr->Register(new Patch::FixPreviewHairColor);
 			mgr->Register(new Patch::FixQuoteCmdLine);
 			mgr->Register(new Patch::FixRecursiveSorting);
 			mgr->Register(new Patch::FixSky);

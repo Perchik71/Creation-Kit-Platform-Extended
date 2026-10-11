@@ -20,6 +20,8 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
+			class BSGeometry;
+
 			namespace NiAPI
 			{
 				class NiAVObject : public NiObjectNET
@@ -32,6 +34,12 @@ namespace CKPE
 					};
 				public:
 					virtual ~NiAVObject() = default;
+
+					// CommonLibF4: NiObject::IsGeometry (vfunc 08 in the game, +0x50 in the Creation Kit 1.10.162.0 - 1.11.240.0),
+					// verified in BSFaceGenUtils::SetupHeadPartTexture (CK 1.11.240.0 0x140ED9A90).
+					[[nodiscard]] inline BSGeometry* IsGeometry() noexcept(true) { return CKPE::vtbl_call<BSGeometry*>(0x50, this); }
+					// CommonLibF4: NiAVObject::GetObjectByName (+0x180 in the Creation Kit 1.10.162.0 - 1.11.240.0), same function as above.
+					[[nodiscard]] inline NiAVObject* GetObjectByName(const BSFixedString& Name) noexcept(true) { return CKPE::vtbl_call<NiAVObject*>(0x180, this, &Name); }
 
 					[[nodiscard]] inline NiAVObject* GetParent() const noexcept(true) { return _Parent; }
 					[[nodiscard]] inline const NiTransform& GetLocalTransform() const noexcept(true) { return _Local; }

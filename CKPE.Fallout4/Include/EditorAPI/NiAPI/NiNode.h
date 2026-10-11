@@ -23,6 +23,9 @@ namespace CKPE
 					float _meshLODFadeAmount;							// 0x13C
 				public:
 					virtual ~NiNode() = default;
+
+					// CommonLibF4: NiNode::children
+					[[nodiscard]] inline const NiTObjectArray<NiPointer<NiAVObject>>& GetChildren() const noexcept(true) { return _array_objs; }
 				};
 				static_assert(sizeof(NiNode) == 0x140);
 			}
