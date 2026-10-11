@@ -27,9 +27,14 @@ namespace CKPE
 				virtual bool HasDependencies() const noexcept(true);
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
 				bool SupportsAddressLibrary() const noexcept(true) override;
-
+				
 				static void sub(void* Thisptr, void(*Callback)(), const char** HotkeyFunction,
 					const char** DisplayText, char VirtualKey, bool Alt, bool Ctrl, bool Shift) noexcept(true);
+				
+				static void CKPEHotkeys(void* Callback);
+				
+				static void ToggleDebugShader();
+				static void ToggleOverlay();
 			};
 		}
 	}
