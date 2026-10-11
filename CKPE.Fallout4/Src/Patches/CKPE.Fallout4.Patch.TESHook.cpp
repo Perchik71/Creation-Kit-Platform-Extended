@@ -5,7 +5,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/TES.h>
+#include <EditorAPI/T/TES.h>
 #include <Patches/CKPE.Fallout4.Patch.TESHook.h>
 
 namespace CKPE

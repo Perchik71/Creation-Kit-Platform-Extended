@@ -11,9 +11,9 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/Forms/TESObjectREFR.h>
-#include <EditorAPI/NiAPI/NiPointer.h>
-#include <EditorAPI/BSPointerHandleManager.h>
+#include <EditorAPI/T/TESObjectREFR.h>
+#include <EditorAPI/N/NiPointer.h>
+#include <EditorAPI/B/BSPointerHandleManager.h>
 #include <Patches/CKPE.Fallout4.Patch.ReplaceBSPointerHandleAndManager.h>
 
 #include <chrono>

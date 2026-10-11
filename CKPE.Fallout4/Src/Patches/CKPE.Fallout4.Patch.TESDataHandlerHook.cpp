@@ -6,7 +6,7 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/TESDataHandler.h>
+#include <EditorAPI/T/TESDataHandler.h>
 #include <Patches/CKPE.Fallout4.Patch.TESDataHandlerHook.h>
 
 namespace CKPE

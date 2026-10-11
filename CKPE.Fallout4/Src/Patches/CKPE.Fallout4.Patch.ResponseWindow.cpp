@@ -10,8 +10,8 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/Forms/TESTopic.h>
-#include <EditorAPI/Forms/BGSVoiceType.h>
+#include <EditorAPI/T/TESTopic.h>
+#include <EditorAPI/B/BGSVoiceType.h>
 #include <Patches/CKPE.Fallout4.Patch.Console.h>
 #include <Patches/CKPE.Fallout4.Patch.ResponseWindow.h>
 

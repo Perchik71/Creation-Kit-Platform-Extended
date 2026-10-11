@@ -16,7 +16,7 @@
 #include <CKPE.Common.UIListView.h>
 #include <CKPE.Common.ModernTheme.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/Forms/TESObjectLIGH.h>
+#include <EditorAPI/T/TESObjectLIGH.h>
 #include <Patches/CKPE.Fallout4.Patch.ModernThemePatchAdditional.h>
 #include "..\CKPE.Common\resource.h"
 
