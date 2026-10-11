@@ -86,10 +86,10 @@ namespace CKPE
 
 					// Fix material alpha. A copy must be made because it uses a global pointer by default.
 					auto oldShaderMaterial = static_cast<EditorAPI::BSEffectShaderMaterial*>(p->pMaterial);
-					auto newShaderMaterial = static_cast<EditorAPI::BSEffectShaderMaterial*>(oldShaderMaterial->CreateNew());
+					auto newShaderMaterial = static_cast<EditorAPI::BSEffectShaderMaterial*>(oldShaderMaterial->Create());
 
 					newShaderMaterial->CopyMembers(oldShaderMaterial);
-					newShaderMaterial->kBaseColor.a = 0.5f;
+					newShaderMaterial->SetBaseColorAlpha(0.5f);
 
 					CrashTestRadius_sub1(p, newShaderMaterial, false);
 				}

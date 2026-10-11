@@ -428,6 +428,9 @@
     <ClCompile Include="Src\EditorAPI\T\TESForm.cpp">
       <Filter>EditorAPI\T</Filter>
     </ClCompile>
+    <ClCompile Include="Src\EditorAPI\N\NiColor.cpp">
+      <Filter>EditorAPI\N</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="API">
@@ -1208,6 +1211,15 @@
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\Skyrim.h">
       <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSIntrusiveRefCounted.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSTSmartPointer.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TextureAddressModes.h">
+      <Filter>EditorAPI\T</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

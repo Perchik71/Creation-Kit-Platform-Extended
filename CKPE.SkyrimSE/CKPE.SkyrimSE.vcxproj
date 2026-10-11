@@ -108,7 +108,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <CallingConvention>StdCall</CallingConvention>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-      <DisableSpecificWarnings>6031;6387;26495;4244;26813;4312;4302;4311</DisableSpecificWarnings>
+      <DisableSpecificWarnings>6031;6387;26495;4244;26813;4312;4302;4311;4197</DisableSpecificWarnings>
       <StructMemberAlignment>Default</StructMemberAlignment>
       <UseFullPaths>false</UseFullPaths>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -142,6 +142,7 @@
     <ClCompile Include="Src\EditorAPI\B\BSSpinLock.cpp" />
     <ClCompile Include="Src\EditorAPI\B\BSString.cpp" />
     <ClCompile Include="Src\EditorAPI\N\NiCollisionUtils.cpp" />
+    <ClCompile Include="Src\EditorAPI\N\NiColor.cpp" />
     <ClCompile Include="Src\EditorAPI\N\NiMemoryManager.cpp" />
     <ClCompile Include="Src\EditorAPI\N\NiObjectNET.cpp" />
     <ClCompile Include="Src\EditorAPI\N\NiRefObject.cpp" />
@@ -308,6 +309,7 @@
     <ClInclude Include="Include\EditorAPI\B\BSGraphicsRenderTargetManager.h" />
     <ClInclude Include="Include\EditorAPI\B\BSGraphicsTypes.h" />
     <ClInclude Include="Include\EditorAPI\B\BSHandleRefObject.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSIntrusiveRefCounted.h" />
     <ClInclude Include="Include\EditorAPI\B\BSLines.h" />
     <ClInclude Include="Include\EditorAPI\B\BSLock.h" />
     <ClInclude Include="Include\EditorAPI\B\BSOcclusionPlane.h" />
@@ -325,6 +327,7 @@
     <ClInclude Include="Include\EditorAPI\B\BSTextureSet.h" />
     <ClInclude Include="Include\EditorAPI\B\BSTList.h" />
     <ClInclude Include="Include\EditorAPI\B\BSTriShape.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSTSmartPointer.h" />
     <ClInclude Include="Include\EditorAPI\D\DecalData.h" />
     <ClInclude Include="Include\EditorAPI\IDs.h" />
     <ClInclude Include="Include\EditorAPI\N\NiAVObject.h" />
@@ -378,6 +381,7 @@
     <ClInclude Include="Include\EditorAPI\T\TESWater.h" />
     <ClInclude Include="Include\EditorAPI\T\TESWaterForm.h" />
     <ClInclude Include="Include\EditorAPI\T\TESWeightForm.h" />
+    <ClInclude Include="Include\EditorAPI\T\TextureAddressModes.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AddChangeRef.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AllowCreateBitArray.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AllowMultipleWindowAndMaster.h" />
