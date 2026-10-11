@@ -140,6 +140,9 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixSelectedPackageData.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixAcousticSpaceMarker.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixReverbParameters.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -670,6 +673,9 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixSelectedPackageData.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixAcousticSpaceMarker.h">
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixReverbParameters.h">

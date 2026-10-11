@@ -82,6 +82,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.FixRecordSoundCapture.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixRemoteDesktop.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixRenderPass.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixAcousticSpaceMarker.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixReverbParameters.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixSelectedPackageData.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixSpellDlg.h>
@@ -216,6 +217,7 @@ namespace CKPE
 			mgr->Register(new Patch::FixRecordSoundCapture);
 			mgr->Register(new Patch::FixRemoteDesktop);
 			mgr->Register(new Patch::FixRenderPass);
+			mgr->Register(new Patch::FixAcousticSpaceMarker);
 			mgr->Register(new Patch::FixReverbParameters);
 			mgr->Register(new Patch::FixSelectedPackageData);
 			mgr->Register(new Patch::FixSpellDlg);
