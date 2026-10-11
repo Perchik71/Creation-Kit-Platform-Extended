@@ -9,6 +9,7 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
 #include <Patches/CKPE.SkyrimSE.Patch.UIHotkeys.h>
+#include <Patches/CKPE.SkyrimSE.Patch.RenderWindow.h>
 
 namespace CKPE
 {
@@ -16,7 +17,19 @@ namespace CKPE
 	{
 		namespace Patch
 		{
+			decltype(&UIHotkeys::CKPEHotkeys) UIHotkeysGeneral;
 			decltype(&UIHotkeys::sub) UIHotkeysSub;
+		
+			using TUIHotkeysSub2 = std::uintptr_t(void*, const char*);
+			using TUIHotkeysSub3 = std::uintptr_t(void*);
+			static std::function<TUIHotkeysSub2> UIHotkeysSub2;
+			static std::function<TUIHotkeysSub3> UIHotkeysSub3;
+		
+			byte* ToggleDebugShaderSetting = 0;
+			uint32_t* DebugShaderTypeSetting = 0;
+			// 1 = Number of Lights
+			// 4 = Number of Passes
+			// 6 = Texture Usage
 
 			static bool ReplaceHotkeys(const char* HotkeyFunction, [[maybe_unused]] const char* DisplayText, char* VirtualKey,
 				bool* Alt, bool* Ctrl, bool* Shift) noexcept(true)
@@ -123,8 +136,14 @@ namespace CKPE
 			bool UIHotkeys::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				using namespace Common;
-
+				
+				UIHotkeysGeneral = (decltype(&CKPEHotkeys))Relocation(ID(191407)).WriteJump(&CKPEHotkeys);
 				UIHotkeysSub = (decltype(&sub))Relocation(ID(618847)).WriteJump(&sub);
+				UIHotkeysSub2 = Relocation<TUIHotkeysSub2>(ID(604959)).Get();
+				UIHotkeysSub3 = Relocation<TUIHotkeysSub3>(ID(974159)).Get();
+				
+				ToggleDebugShaderSetting = (byte*)ID(486220).Address();
+				DebugShaderTypeSetting = (uint32_t*)ID(340720).Address();
 
 				return true;
 			}
@@ -139,6 +158,52 @@ namespace CKPE
 				//_CONSOLE("%s %p", *HotkeyFunction, Callback);
 
 				UIHotkeysSub(Thisptr, Callback, HotkeyFunction, DisplayText, VirtualKey, Alt, Ctrl, Shift);
+			}
+			
+			void UIHotkeys::CKPEHotkeys(void* Thisptr)
+			{
+				const char** ToggleDebugShader_text;
+				const char** ToggleDebugShader_func;
+				void* unk_var1[8];
+				void* unk_var2[8];
+				const char** ToggleOverlay_text;
+				const char** ToggleOverlay_func;
+				void* unk_var3[8];
+				void* unk_var4[8];
+				
+				ToggleDebugShader_text = (const char**)UIHotkeysSub2(unk_var1,"Toggle debug shader");
+				ToggleDebugShader_func = (const char**)UIHotkeysSub2(unk_var2,"HKFunc_ToggleDebugShader");
+				sub(Thisptr,ToggleDebugShader,ToggleDebugShader_func,ToggleDebugShader_text,VK_F3,false,false,false);
+				UIHotkeysSub3(unk_var1);
+				UIHotkeysSub3(unk_var2);
+				
+				ToggleOverlay_text = (const char**)UIHotkeysSub2(unk_var3,"Toggle overlay");
+				ToggleOverlay_func = (const char**)UIHotkeysSub2(unk_var4,"HKFunc_ToggleOverlay");
+				sub(Thisptr,ToggleOverlay,ToggleOverlay_func,ToggleOverlay_text,VK_F1,false,false,false);
+				UIHotkeysSub3(unk_var3);
+				UIHotkeysSub3(unk_var4);
+				
+				UIHotkeysGeneral(Thisptr);
+				return;
+			}
+			
+			void UIHotkeys::ToggleDebugShader()
+			{
+				if (*ToggleDebugShaderSetting == 0)
+				{
+					*ToggleDebugShaderSetting = 1;
+					*DebugShaderTypeSetting = 1;
+				}
+				else
+				{
+					*ToggleDebugShaderSetting = 0;
+					*DebugShaderTypeSetting = 0;
+				}
+			}
+			
+			void UIHotkeys::ToggleOverlay()
+			{
+				RenderWindow::Singleton->HideMainImguiWnd = !RenderWindow::Singleton->HideMainImguiWnd;
 			}
 		}
 	}
