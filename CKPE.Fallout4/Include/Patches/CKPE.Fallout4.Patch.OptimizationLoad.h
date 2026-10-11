@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <EditorAPI/BSTArray.h>
+#include <EditorAPI/B/BSTArray.h>
 #include <CKPE.Common.Patch.h>
 
 namespace CKPE

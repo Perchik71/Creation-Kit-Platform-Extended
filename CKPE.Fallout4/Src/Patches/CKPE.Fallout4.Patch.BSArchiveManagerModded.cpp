@@ -8,8 +8,8 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/TESFile.h>
-#include <EditorAPI/BSResourceArchive2.h>
+#include <EditorAPI/T/TESFile.h>
+#include <EditorAPI/B/BSResourceArchive2.h>
 #include <Patches/CKPE.Fallout4.Patch.BSArchiveManagerModded.h>
 #include <xbyak.h>
 

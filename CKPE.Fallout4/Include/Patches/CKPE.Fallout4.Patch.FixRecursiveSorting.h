@@ -6,7 +6,7 @@
 
 #include <algorithm>
 #include <CKPE.Common.Patch.h>
-#include <EditorAPI/BSTArray.h>
+#include <EditorAPI/B/BSTArray.h>
 
 namespace CKPE
 {

@@ -7,7 +7,7 @@
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/BSSettings.h>
+#include <EditorAPI/B/BSSettings.h>
 #include <Patches/CKPE.Fallout4.Patch.CrashConditionItemGetCrime.h>
 
 namespace CKPE

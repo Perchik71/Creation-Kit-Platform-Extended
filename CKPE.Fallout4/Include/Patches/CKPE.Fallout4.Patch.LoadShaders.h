@@ -5,7 +5,7 @@
 #pragma once
 
 #include <CKPE.Common.Patch.h>
-#include <EditorAPI/BSIStream.h>
+#include <EditorAPI/B/BSIStream.h>
 
 namespace CKPE
 {

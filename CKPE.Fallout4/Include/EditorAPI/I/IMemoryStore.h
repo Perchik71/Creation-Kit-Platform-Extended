@@ -5,7 +5,7 @@
 #pragma once
 
 #include <cstdint>
-#include "IMemoryStoreBase.h"
+#include <EditorAPI/I/IMemoryStoreBase.h>
 
 namespace CKPE
 {

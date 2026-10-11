@@ -2,7 +2,7 @@
 
 #include <Windows.h>
 #include <CKPE.Utils.h>
-#include "../I/IMemoryStore.h"
+#include <EditorAPI/I/IMemoryStore.h>
 
 namespace CKPE
 {

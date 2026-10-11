@@ -7,8 +7,8 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/BSString.h>
-#include <EditorAPI/TESFile.h>
+#include <EditorAPI/B/BSString.h>
+#include <EditorAPI/T/TESFile.h>
 #include <Patches/CKPE.Fallout4.Patch.AllowSaveESMandMasterESP.h>
 
 namespace CKPE

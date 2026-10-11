@@ -13,10 +13,10 @@
 #include <CKPE.Common.UIListView.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/BGSRenderWindow.h>
-#include <EditorAPI/Forms/TESForm.h>
-#include <EditorAPI/TESFile.h>
-#include <EditorAPI/TESDataHandler.h>
+#include <EditorAPI/B/BGSRenderWindow.h>
+#include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/T/TESFile.h>
+#include <EditorAPI/T/TESDataHandler.h>
 #include <Patches/CKPE.Fallout4.Patch.ObjectWindow.h>
 #include <commctrl.h>
 

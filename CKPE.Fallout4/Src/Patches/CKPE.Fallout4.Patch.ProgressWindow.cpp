@@ -13,7 +13,7 @@
 #include <CKPE.Common.ProgressTaskBar.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/BSString.h>
+#include <EditorAPI/B/BSString.h>
 #include <Patches/CKPE.Fallout4.Patch.MainWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.ProgressWindow.h>
 

@@ -5,7 +5,7 @@
 #pragma once
 
 #include <CKPE.Singleton.h>
-#include <EditorAPI/Forms/TESObjectREFR.h>
+#include <EditorAPI/T/TESObjectREFR.h>
 #include <CKPE.Common.PatchBaseWindow.h>
 
 namespace CKPE

@@ -13,7 +13,7 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/BGSRenderWindow.h>
+#include <EditorAPI/B/BGSRenderWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.MainWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.RenderWindow.h>
 

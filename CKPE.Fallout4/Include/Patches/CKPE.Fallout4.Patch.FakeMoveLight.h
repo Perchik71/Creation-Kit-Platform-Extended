@@ -5,8 +5,8 @@
 #pragma once
 
 #include <CKPE.Common.Patch.h>
-#include <EditorAPI/Forms/TESObjectREFR.h>
-#include <EditorAPI/NiAPI/NiPoint.h>
+#include <EditorAPI/T/TESObjectREFR.h>
+#include <EditorAPI/N/NiPoint.h>
 
 namespace CKPE
 {

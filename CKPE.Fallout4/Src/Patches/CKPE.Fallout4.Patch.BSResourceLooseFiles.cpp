@@ -7,7 +7,7 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/BSResourceLooseFiles.h>
+#include <EditorAPI/B/BSResourceLooseFiles.h>
 #include <Patches/CKPE.Fallout4.Patch.BSResourceLooseFiles.h>
 
 #include <xbyak.h>

@@ -7,7 +7,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/Forms/TESForm.h>
+#include <EditorAPI/T/TESForm.h>
 #include <Patches/CKPE.Fallout4.Patch.FixPreviewHairColor.h>
 
 namespace CKPE

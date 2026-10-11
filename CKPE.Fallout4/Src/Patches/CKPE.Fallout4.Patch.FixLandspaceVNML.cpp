@@ -7,7 +7,7 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/Forms/TESObjectLAND.h>
+#include <EditorAPI/T/TESObjectLAND.h>
 #include <Patches/CKPE.Fallout4.Patch.FixLandspaceVNML.h>
 
 namespace CKPE

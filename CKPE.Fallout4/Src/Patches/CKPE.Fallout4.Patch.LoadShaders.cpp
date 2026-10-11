@@ -14,7 +14,7 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.RTTI.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/BSResourceArchive2.h>
+#include <EditorAPI/B/BSResourceArchive2.h>
 #include <Patches/CKPE.Fallout4.Patch.Console.h>
 #include <Patches/CKPE.Fallout4.Patch.LoadShaders.h>
 

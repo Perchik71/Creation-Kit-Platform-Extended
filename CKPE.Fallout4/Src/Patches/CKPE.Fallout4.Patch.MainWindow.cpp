@@ -18,10 +18,10 @@
 #include <CKPE.Common.UIMenus.h>
 #include <CKPE.Common.RTTI.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/BSString.h>
-#include <EditorAPI/TES.h>
-#include <EditorAPI/Forms/TESObjectREFR.h>
-#include <EditorAPI/BSPointerHandleManager.h>
+#include <EditorAPI/B/BSString.h>
+#include <EditorAPI/T/TES.h>
+#include <EditorAPI/T/TESObjectREFR.h>
+#include <EditorAPI/B/BSPointerHandleManager.h>
 #include <Patches/CKPE.Fallout4.Patch.ObjectWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.Console.h>
 #include <Patches/CKPE.Fallout4.Patch.RenderWindow.h>

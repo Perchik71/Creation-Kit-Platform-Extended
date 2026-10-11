@@ -5,7 +5,7 @@
 #pragma once
 
 #include <CKPE.Common.Patch.h>
-#include <EditorAPI/BSEntryString.h>
+#include <EditorAPI/B/BSEntryString.h>
 
 namespace CKPE
 {

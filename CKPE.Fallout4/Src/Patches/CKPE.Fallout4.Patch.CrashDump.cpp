@@ -12,12 +12,11 @@
 #include <CKPE.Common.CrashHandler.h>
 #include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
-//#include <EditorAPI/NiAPI/NiSourceTexture.h>
-#include <EditorAPI/Forms/TESForm.h>
-#include <EditorAPI/BSResource.h>
-#include <EditorAPI/BSShaderProperty.h>
-#include <EditorAPI/BSFile.h>
-#include <EditorAPI/BGSLocalizedString.h>
+#include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/B/BSResource.h>
+#include <EditorAPI/B/BSShaderProperty.h>
+#include <EditorAPI/B/BSFile.h>
+#include <EditorAPI/B/BGSLocalizedString.h>
 #include <Patches/CKPE.Fallout4.Patch.CrashDump.h>
 #include <resource_version2.h>
 

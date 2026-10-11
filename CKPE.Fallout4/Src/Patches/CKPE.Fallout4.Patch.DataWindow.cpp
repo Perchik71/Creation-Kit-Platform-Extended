@@ -13,7 +13,7 @@
 #include <CKPE.Common.UIListView.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/TESFile.h>
+#include <EditorAPI/T/TESFile.h>
 #include <Patches/CKPE.Fallout4.Patch.DataWindow.h>
 #include "../CKPE.Common/resource.h"
 

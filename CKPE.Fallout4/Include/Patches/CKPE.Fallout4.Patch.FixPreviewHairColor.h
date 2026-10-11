@@ -7,8 +7,8 @@
 #include <mutex>
 #include <vector>
 #include <CKPE.Common.Patch.h>
-#include <EditorAPI/BSShaderData.h>
-#include <EditorAPI/BSFaceGenUtils.h>
+#include <EditorAPI/B/BSShaderData.h>
+#include <EditorAPI/B/BSFaceGenUtils.h>
 
 namespace CKPE
 {

@@ -12,8 +12,8 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/BSFile.h>
-#include <EditorAPI/BSTArray.h>
+#include <EditorAPI/B/BSFile.h>
+#include <EditorAPI/B/BSTArray.h>
 #include <Patches/CKPE.Fallout4.Patch.OptimizationLoad.h>
 
 #include <xbyak.h>

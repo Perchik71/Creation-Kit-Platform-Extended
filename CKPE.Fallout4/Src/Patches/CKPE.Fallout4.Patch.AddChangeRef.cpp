@@ -6,7 +6,7 @@
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/Forms/TESObjectREFR.h>
+#include <EditorAPI/T/TESObjectREFR.h>
 #include <Patches/CKPE.Fallout4.Patch.AddChangeRef.h>
 
 namespace CKPE

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "IMemoryStore.h"
+#include <EditorAPI/I/IMemoryStore.h>
 
 namespace CKPE
 {

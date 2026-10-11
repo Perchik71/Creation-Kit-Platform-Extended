@@ -8,7 +8,7 @@
 #include <CKPE.Common.RTTI.h>
 #include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/Forms/TESForm.h>
+#include <EditorAPI/T/TESForm.h>
 #include <Patches/CKPE.Fallout4.Patch.Console.h>
 #include <Patches/CKPE.Fallout4.Patch.CrashInvalidStrings.h>
 

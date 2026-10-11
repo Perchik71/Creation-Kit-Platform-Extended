@@ -6,7 +6,7 @@
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
-#include <EditorAPI/BSStringCache.h>
+#include <EditorAPI/B/BSStringCache.h>
 #include <Patches/CKPE.Fallout4.Patch.BSStringRefRE.h>
 
 namespace CKPE
