@@ -263,6 +263,9 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.BSPointerHandleManager.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.TintSelectedObjects.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ReEnableFog.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -792,6 +795,9 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.BSPointerHandleManager.h">
       <Filter>Patches</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.TintSelectedObjects.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ReEnableFog.h">
       <Filter>Patches</Filter>
     </ClInclude>
@@ -1021,6 +1027,12 @@
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BSShaderMaterial.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSLightingShaderProperty.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSRenderPass.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BSShaderProperty.h">
