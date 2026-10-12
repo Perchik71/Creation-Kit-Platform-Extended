@@ -140,7 +140,7 @@ namespace CKPE
 				UIHotkeysGeneral = (decltype(&CKPEHotkeys))Relocation(ID(191407)).WriteJump(&CKPEHotkeys);
 				UIHotkeysSub = (decltype(&sub))Relocation(ID(618847)).WriteJump(&sub);
 				UIHotkeysSub2 = Relocation<TUIHotkeysSub2>(ID(604959)).Get();
-				UIHotkeysSub3 = Relocation<TUIHotkeysSub3>(ID(974159)).Get();
+				UIHotkeysSub3 = Relocation<TUIHotkeysSub3>(ID{ 619686, 974159 }).Get();
 				
 				ToggleDebugShaderSetting = (byte*)ID(486220).Address();
 				DebugShaderTypeSetting = (uint32_t*)ID(340720).Address();
