@@ -14,12 +14,13 @@ object FormMainInstaller: TFormMainInstaller
   Font.Name = 'Segoe UI'
   Font.Quality = fqCleartype
   FormStyle = fsStayOnTop
+  Position = poScreenCenter
+  LCLVersion = '4.8.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnMouseWheel = FormMouseWheel
   OnResize = FormResize
   OnShow = FormShow
-  Position = poScreenCenter
-  LCLVersion = '2.2.6.0'
   object PanelMain: TPanel
     Left = 0
     Height = 572
@@ -29,6 +30,7 @@ object FormMainInstaller: TFormMainInstaller
     BevelOuter = bvNone
     ClientHeight = 572
     ClientWidth = 910
+    ParentBackground = False
     TabOrder = 0
     OnPaint = PanelMainPaint
     object PanelMainBody: TPanel
@@ -43,6 +45,7 @@ object FormMainInstaller: TFormMainInstaller
       BevelOuter = bvNone
       ClientHeight = 476
       ClientWidth = 684
+      ParentBackground = False
       TabOrder = 0
       object ListBoxSections: TListBox
         Left = 0
@@ -58,10 +61,10 @@ object FormMainInstaller: TFormMainInstaller
         Font.Name = 'Segoe UI Light'
         Font.Quality = fqCleartype
         ItemHeight = 0
-        OnClick = ListBoxSectionsClick
         ParentFont = False
         Sorted = True
         TabOrder = 0
+        OnClick = ListBoxSectionsClick
       end
       object PageControlSectionsConfig: TPageControl
         Left = 204
@@ -89,6 +92,7 @@ object FormMainInstaller: TFormMainInstaller
       Font.Height = -13
       Font.Name = 'Segoe UI Light'
       Font.Quality = fqCleartype
+      ParentBackground = False
       ParentFont = False
       TabOrder = 1
       object LabelVersionOs: TLabel
@@ -134,6 +138,7 @@ object FormMainInstaller: TFormMainInstaller
       BevelOuter = bvNone
       ClientHeight = 476
       ClientWidth = 170
+      ParentBackground = False
       TabOrder = 2
       object PanelApplyBtn: TPanel
         Left = 0
@@ -146,6 +151,7 @@ object FormMainInstaller: TFormMainInstaller
         BevelInner = bvLowered
         BevelOuter = bvNone
         Caption = 'Apply changes and close'
+        ParentBackground = False
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
@@ -165,6 +171,7 @@ object FormMainInstaller: TFormMainInstaller
         BevelInner = bvLowered
         BevelOuter = bvNone
         Caption = 'Cancel changes'
+        ParentBackground = False
         ParentShowHint = False
         ShowHint = True
         TabOrder = 1
@@ -181,6 +188,7 @@ object FormMainInstaller: TFormMainInstaller
       BevelOuter = bvNone
       ClientHeight = 552
       ClientWidth = 885
+      ParentBackground = False
       TabOrder = 3
       object ImageCKPE: TImage
         Left = 0
@@ -5819,7 +5827,7 @@ object FormMainInstaller: TFormMainInstaller
         Left = 424
         Height = 118
         Top = 48
-        Width = 334
+        Width = 325
         Caption = 'Hi,'#13#10'my name is CKPE'
         Font.Color = clBlack
         Font.Height = -43
@@ -5836,6 +5844,7 @@ object FormMainInstaller: TFormMainInstaller
         BevelOuter = bvNone
         ClientHeight = 330
         ClientWidth = 442
+        ParentBackground = False
         TabOrder = 0
         object LabelHi1: TLabel
           Left = 49
@@ -5858,8 +5867,8 @@ object FormMainInstaller: TFormMainInstaller
           Top = 128
           Width = 75
           Caption = 'Continue'
-          OnClick = Button1Click
           TabOrder = 0
+          OnClick = Button1Click
         end
         object LabelHi2: TLabel
           Left = 32
@@ -5888,6 +5897,7 @@ object FormMainInstaller: TFormMainInstaller
     BevelOuter = bvNone
     ClientHeight = 112
     ClientWidth = 910
+    ParentBackground = False
     TabOrder = 1
     OnMouseDown = PanelHeaderMouseDown
     OnMouseMove = PanelHeaderMouseMove
@@ -5903,6 +5913,7 @@ object FormMainInstaller: TFormMainInstaller
       BevelOuter = bvNone
       ClientHeight = 112
       ClientWidth = 175
+      ParentBackground = False
       TabOrder = 0
       OnMouseDown = PanelHeaderMouseDown
       OnMouseMove = PanelHeaderMouseMove
@@ -5917,6 +5928,7 @@ object FormMainInstaller: TFormMainInstaller
         BevelOuter = bvNone
         ClientHeight = 32
         ClientWidth = 175
+        ParentBackground = False
         TabOrder = 0
         OnPaint = PanelMainPaint
         object PanelButtonQuit: TPanel
@@ -5931,6 +5943,7 @@ object FormMainInstaller: TFormMainInstaller
           Font.Height = -24
           Font.Name = 'Segoe UI Light'
           Font.Quality = fqCleartype
+          ParentBackground = False
           ParentFont = False
           TabOrder = 0
           OnClick = PanelButtonQuitClick
@@ -5950,9 +5963,6 @@ object FormMainInstaller: TFormMainInstaller
       BorderSpacing.Top = 30
       BorderSpacing.Right = 16
       Center = True
-      OnMouseDown = PanelHeaderMouseDown
-      OnMouseMove = PanelHeaderMouseMove
-      OnMouseUp = PanelHeaderMouseUp
       Picture.Data = {
         1754506F727461626C654E6574776F726B47726170686963AE3C000089504E47
         0D0A1A0A0000000D4948445200000052000000520806000000C72C839B000000
@@ -6444,6 +6454,9 @@ object FormMainInstaller: TFormMainInstaller
       }
       Proportional = True
       Transparent = True
+      OnMouseDown = PanelHeaderMouseDown
+      OnMouseMove = PanelHeaderMouseMove
+      OnMouseUp = PanelHeaderMouseUp
     end
     object LabelCaptionApp: TLabel
       Left = 130

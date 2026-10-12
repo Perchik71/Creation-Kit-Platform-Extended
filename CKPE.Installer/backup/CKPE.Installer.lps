@@ -8,7 +8,7 @@
       <Unit>
         <Filename Value="CKPE.Installer.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="2"/>
         <CursorPos X="39" Y="26"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -21,8 +21,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="CKPE.Installer.MainForm"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="719"/>
-        <CursorPos X="22" Y="752"/>
+        <TopLine Value="45"/>
+        <CursorPos X="51" Y="67"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -38,10 +38,9 @@
       <Unit>
         <Filename Value="_depend\toml\TOML.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="132"/>
-        <CursorPos X="36" Y="179"/>
+        <EditorIndex Value="1"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="ckpe.installer.fileversion.pas"/>
@@ -49,7 +48,7 @@
         <UnitName Value="CKPE.Installer.FileVersion"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="73" Y="37"/>
-        <UsageCount Value="184"/>
+        <UsageCount Value="187"/>
       </Unit>
       <Unit>
         <Filename Value="_depend\toml\TOML.Serializer.pas"/>
@@ -57,7 +56,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="342"/>
         <CursorPos X="33" Y="342"/>
-        <UsageCount Value="183"/>
+        <UsageCount Value="186"/>
       </Unit>
       <Unit>
         <Filename Value="_depend\toml\TOML.Types.pas"/>
@@ -65,7 +64,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="143"/>
         <CursorPos X="19" Y="188"/>
-        <UsageCount Value="183"/>
+        <UsageCount Value="186"/>
       </Unit>
       <Unit>
         <Filename Value="_depend\toml\TOML.Parser.pas"/>
@@ -73,7 +72,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="1348"/>
         <CursorPos X="17" Y="1396"/>
-        <UsageCount Value="183"/>
+        <UsageCount Value="186"/>
       </Unit>
       <Unit>
         <Filename Value="_depend\toml\TOMLParser.pas"/>
@@ -172,19 +171,17 @@
       <Unit>
         <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\registry.pp"/>
         <UnitName Value="Registry"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="469"/>
         <CursorPos X="41" Y="495"/>
         <UsageCount Value="14"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\winreg.inc"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="54"/>
         <CursorPos X="3" Y="93"/>
         <UsageCount Value="14"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\regini.inc"/>
@@ -203,124 +200,124 @@
     </Units>
     <JumpHistory HistoryIndex="29">
       <Position>
-        <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\registry.pp"/>
-        <Caret Line="177" Column="26" TopLine="146"/>
-      </Position>
-      <Position>
-        <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\registry.pp"/>
-        <Caret Line="941" Column="10" TopLine="937"/>
-      </Position>
-      <Position>
-        <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\registry.pp"/>
-        <Caret Line="83" Column="22" TopLine="53"/>
-      </Position>
-      <Position>
-        <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\registry.pp"/>
-        <Caret Line="399" Column="20" TopLine="378"/>
-      </Position>
-      <Position>
-        <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\registry.pp"/>
-        <Caret Line="69" Column="25" TopLine="41"/>
-      </Position>
-      <Position>
-        <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\registry.pp"/>
-        <Caret Line="165" Column="24" TopLine="133"/>
-      </Position>
-      <Position>
-        <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\registry.pp"/>
-        <Caret Line="805" Column="15" TopLine="795"/>
-      </Position>
-      <Position>
-        <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\registry.pp"/>
-        <Caret Line="173" Column="27" TopLine="147"/>
-      </Position>
-      <Position>
-        <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\registry.pp"/>
-        <Caret Line="212" Column="22" TopLine="181"/>
-      </Position>
-      <Position>
-        <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\registry.pp"/>
-        <Caret Line="117" Column="22" TopLine="96"/>
-      </Position>
-      <Position>
-        <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\registry.pp"/>
-        <Caret Line="524" Column="22" TopLine="504"/>
-      </Position>
-      <Position>
-        <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\registry.pp"/>
-        <Caret Line="125" Column="25" TopLine="91"/>
-      </Position>
-      <Position>
-        <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\registry.pp"/>
-        <Caret Line="495" Column="10" TopLine="487"/>
-      </Position>
-      <Position>
-        <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\registry.pp"/>
-        <Caret Line="68" Column="25" TopLine="45"/>
-      </Position>
-      <Position>
-        <Filename Value="E:\Lazarus\fpc\3.2.2\source\packages\fcl-registry\src\registry.pp"/>
-        <Caret Line="125" Column="25" TopLine="92"/>
+        <Filename Value="ckpe.installer.mainform.pas"/>
+        <Caret Line="405" Column="44" TopLine="367"/>
       </Position>
       <Position>
         <Filename Value="ckpe.installer.mainform.pas"/>
-        <Caret Line="1628" Column="14" TopLine="1582"/>
+        <Caret Line="931" Column="39" TopLine="909"/>
       </Position>
       <Position>
         <Filename Value="ckpe.installer.mainform.pas"/>
-        <Caret Line="223" Column="27" TopLine="197"/>
+        <Caret Line="951" Column="28" TopLine="923"/>
       </Position>
       <Position>
         <Filename Value="ckpe.installer.mainform.pas"/>
-        <Caret Line="1566" Column="35" TopLine="1515"/>
+        <Caret Line="970" Column="39" TopLine="948"/>
       </Position>
       <Position>
         <Filename Value="ckpe.installer.mainform.pas"/>
-        <Caret Line="126" Column="55" TopLine="104"/>
+        <Caret Line="1000" Column="32" TopLine="978"/>
       </Position>
       <Position>
         <Filename Value="ckpe.installer.mainform.pas"/>
-        <Caret Line="619" Column="76" TopLine="574"/>
+        <Caret Line="1032" Column="32" TopLine="1004"/>
       </Position>
       <Position>
         <Filename Value="ckpe.installer.mainform.pas"/>
-        <Caret Line="1518" Column="70" TopLine="1489"/>
+        <Caret Line="1066" Column="79" TopLine="1034"/>
       </Position>
       <Position>
         <Filename Value="ckpe.installer.mainform.pas"/>
-        <Caret Line="1631" Column="76" TopLine="1583"/>
+        <Caret Line="903" Column="63" TopLine="883"/>
       </Position>
       <Position>
         <Filename Value="ckpe.installer.mainform.pas"/>
-        <Caret Line="122" Column="37" TopLine="94"/>
+        <Caret Line="113" Column="27" TopLine="90"/>
       </Position>
       <Position>
         <Filename Value="ckpe.installer.mainform.pas"/>
-        <Caret Line="612" Column="80" TopLine="577"/>
+        <Caret Line="914" Column="41" TopLine="887"/>
       </Position>
       <Position>
         <Filename Value="ckpe.installer.mainform.pas"/>
-        <Caret Line="613" Column="64" TopLine="577"/>
+        <Caret Line="1463" Column="37" TopLine="1447"/>
       </Position>
       <Position>
         <Filename Value="ckpe.installer.mainform.pas"/>
-        <Caret Line="615" Column="23" TopLine="577"/>
+        <Caret Line="1455" Column="25" TopLine="1434"/>
       </Position>
       <Position>
         <Filename Value="ckpe.installer.mainform.pas"/>
-        <Caret Line="616" Column="37" TopLine="577"/>
+        <Caret Line="1468" Column="50" TopLine="1442"/>
       </Position>
       <Position>
         <Filename Value="ckpe.installer.mainform.pas"/>
-        <Caret Line="619" Column="41" TopLine="577"/>
+        <Caret Line="1470" Column="39" TopLine="1447"/>
       </Position>
       <Position>
         <Filename Value="ckpe.installer.mainform.pas"/>
-        <Caret Line="620" Column="67" TopLine="577"/>
+        <Caret Line="1477" Column="99" TopLine="1447"/>
       </Position>
       <Position>
         <Filename Value="ckpe.installer.mainform.pas"/>
-        <Caret Line="631" Column="47" TopLine="593"/>
+        <Caret Line="1478" Column="99" TopLine="1448"/>
+      </Position>
+      <Position>
+        <Filename Value="ckpe.installer.mainform.pas"/>
+        <Caret Line="1477" Column="99" TopLine="1447"/>
+      </Position>
+      <Position>
+        <Filename Value="ckpe.installer.mainform.pas"/>
+        <Caret Line="694" Column="63" TopLine="650"/>
+      </Position>
+      <Position>
+        <Filename Value="ckpe.installer.mainform.pas"/>
+        <Caret Line="693" Column="48" TopLine="818"/>
+      </Position>
+      <Position>
+        <Filename Value="ckpe.installer.mainform.pas"/>
+        <Caret Line="23" Column="20"/>
+      </Position>
+      <Position>
+        <Filename Value="ckpe.installer.mainform.pas"/>
+        <Caret Line="733" Column="79" TopLine="710"/>
+      </Position>
+      <Position>
+        <Filename Value="ckpe.installer.mainform.pas"/>
+        <Caret Line="945" Column="40" TopLine="917"/>
+      </Position>
+      <Position>
+        <Filename Value="ckpe.installer.mainform.pas"/>
+        <Caret Line="947" Column="29" TopLine="917"/>
+      </Position>
+      <Position>
+        <Filename Value="ckpe.installer.mainform.pas"/>
+        <Caret Line="1389" TopLine="1379"/>
+      </Position>
+      <Position>
+        <Filename Value="ckpe.installer.mainform.pas"/>
+        <Caret Line="1502" Column="41" TopLine="1480"/>
+      </Position>
+      <Position>
+        <Filename Value="ckpe.installer.mainform.pas"/>
+        <Caret Line="1508" Column="28" TopLine="1480"/>
+      </Position>
+      <Position>
+        <Filename Value="ckpe.installer.mainform.pas"/>
+        <Caret Line="1511" Column="41" TopLine="1480"/>
+      </Position>
+      <Position>
+        <Filename Value="ckpe.installer.mainform.pas"/>
+        <Caret Line="21" Column="34"/>
+      </Position>
+      <Position>
+        <Filename Value="ckpe.installer.mainform.pas"/>
+        <Caret Line="642" Column="34" TopLine="611"/>
+      </Position>
+      <Position>
+        <Filename Value="ckpe.installer.mainform.pas"/>
+        <Caret Line="1500" Column="25" TopLine="1468"/>
       </Position>
     </JumpHistory>
     <RunParams>

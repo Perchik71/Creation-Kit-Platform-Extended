@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
   ComCtrls, Spin, ComObj, ActiveX, Windows, JwaWbemCli, TOML, TOML.Types,
-  Registry, CKPE.Installer.ApplicationVersion, CKPE.Installer.FileVersion;
+  Registry, CKPE.Installer.ApplicationVersion, CKPE.Installer.FileVersion, Types;
 
 type
 
@@ -15,6 +15,13 @@ type
 
   TRange = packed record
     _Beg, _End, _Line: Integer;
+  end;
+
+  { TMyScrollBox }
+  TMyScrollBox = class(TScrollBox)
+  protected
+    function DoMouseWheel(Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint): Boolean; override;
+    procedure WndProc(var Message: TMessage); override;
   end;
 
   { TFormMainInstaller }
@@ -49,6 +56,8 @@ type
     TimerThemeScroll: TTimer;
     procedure Button1Click(Sender: TObject);
     procedure ColorButtonSettingColorChanged(Sender: TObject);
+    procedure FormMouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
     procedure FormShow(Sender: TObject);
     procedure ImageSettingClick(Sender: TObject);
     procedure ImageThemeBtnPaint(Sender: TObject);
@@ -133,6 +142,37 @@ var
   CharsetMap: TStringList;
 
 {$R *.lfm}
+
+{ TMyScrollBox }
+
+function TMyScrollBox.DoMouseWheel(Shift: TShiftState; WheelDelta: Integer;
+  MousePos: TPoint): Boolean;
+begin
+  Result := inherited DoMouseWheel(Shift, WheelDelta, MousePos);
+  if not Result then begin
+    if Shift*[ssShift..ssCtrl]=[] then begin
+      VertScrollBar.Position := VertScrollBar.Position - WheelDelta;
+      Result := True;
+    end;
+  end;
+end;
+
+procedure TMyScrollBox.WndProc(var Message: TMessage);
+begin
+  if Message.Msg=WM_MOUSEHWHEEL then begin
+    (* For some reason using a message handler for WM_MOUSEHWHEEL doesn't work. The messages
+       don't always arrive. It seems to occur when both scroll bars are active. Strangely,
+       if we handle the message here, then the messages all get through. Go figure! *)
+    if TWMMouseWheel(Message).Keys=0 then begin
+      HorzScrollBar.Position := HorzScrollBar.Position + TWMMouseWheel(Message).WheelDelta;
+      Message.Result := 0;
+    end else begin
+      Message.Result := 1;
+    end;
+  end else begin
+    inherited;
+  end;
+end;
 
 { TFormMainInstaller }
 
@@ -594,7 +634,7 @@ var
   _Value: TTOMLValue;
   TableSection: TTOMLTable;
   _TabSheet: TTabSheet;
-  _ScrollBox: TScrollBox;
+  _ScrollBox: TMyScrollBox;
   _Panel: TPanel;
 begin
   // Read file
@@ -678,7 +718,7 @@ begin
     end;
 
     // Scroll window
-    _ScrollBox := TScrollBox.Create(FPanelTheme);
+    _ScrollBox := TMyScrollBox.Create(FPanelTheme);
     _ScrollBox.Parent := FPanelTheme;
     _ScrollBox.SetBounds(0, 60, PageControlSectionsConfig.Width - 9,
        PageControlSectionsConfig.Height - 69);
@@ -810,7 +850,7 @@ begin
             TableSection := _Value as TTOMLTable;
             // Parse
             ParseSection(FTOMLStrDataCustomTheme, TableSection, FPanelTheme,
-              NameSection, PageControlSectionsConfig.Width, 90);
+              'Colors', PageControlSectionsConfig.Width, 90);
           end;
         end;
 
@@ -843,7 +883,7 @@ begin
             TableSection := _Value as TTOMLTable;
             // Parse
             ParseSection(FTOMLStrDataCustomTheme, TableSection, _Panel,
-              NameSection, 0, 90);
+              'Assets', 0, 90);
           end;
         end;
       end
@@ -897,17 +937,18 @@ var
   IVal, _HeightLast, I, C, RetSize: Integer;
   _Value, VMoreTheme: TTOMLValue;
   _TabSheet: TTabSheet;
-  _ScrollBox: TScrollBox;
+  _ScrollBox: TMyScrollBox;
 begin
   NameSection := ANameOption;
   // Scroll window
-  _ScrollBox := TScrollBox.Create(AParent);
+  _ScrollBox := TMyScrollBox.Create(AParent);
   _ScrollBox.Parent := AParent as TWinControl;
   _ScrollBox.Align := alCustom;
   _ScrollBox.SetBounds(AOffsetX, AOffsetY,
     PageControlSectionsConfig.Width - 10,
     PageControlSectionsConfig.Height - AOffsetY - 8);
   _ScrollBox.BorderStyle := bsNone;
+  _ScrollBox.VertScrollBar.Page := 20;
   // Start top
   _HeightLast := 20;
   with _ScrollBox do
@@ -1435,7 +1476,7 @@ begin
   Range := GetRangeForEdition(Strs, _This.Name);
   if (Range._Beg = -1) or (Range._End = -1) or (Range._Line = -1) then
   begin
-    MessageDlg('Internal error save color', mtError, [mbOk], 0);
+    MessageDlg(Format('Internal error save color %s', [_This.Name]), mtError, [mbOk], 0);
     Exit;
   end;
 
@@ -1445,6 +1486,34 @@ begin
   System.Insert(Format('[%d,%d,%d]',
     [GetRValue(C), GetGValue(C), GetBValue(C)]), STemp, Range._Beg);
   Strs[Range._Line] := STemp;
+end;
+
+procedure TFormMainInstaller.FormMouseWheel(Sender: TObject;
+  Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
+  var Handled: Boolean);
+var
+  ScrollLines: Integer;
+  DControl: TControl;
+  DScrollBox: TScrollBox;
+  P: TPoint;
+begin
+  // Получаем координаты курсора относительно клиентской области формы
+  P := ScreenToClient(Mouse.CursorPos);
+  // Ищем контроль по координатам
+  DControl := ControlAtPos(P, True, True);
+  // Проверяем, находится ли курсор мыши над вашим ScrollBox
+  if DControl is TScrollBox then
+  begin
+    Handled := True; // Сообщаем системе, что событие обработано
+    DScrollBox := DControl as TScrollBox;
+    // Определяем системную скорость прокрутки (количество строк)
+    ScrollLines := Mouse.WheelScrollLines;
+    // Если WheelDelta > 0, колесико крутят вверх, иначе вниз
+    if WheelDelta > 0 then
+      DScrollBox.VertScrollBar.Position := DScrollBox.VertScrollBar.Position - (ScrollLines * 10)
+    else
+      DScrollBox.VertScrollBar.Position := DScrollBox.VertScrollBar.Position + (ScrollLines * 10);
+  end;
 end;
 
 procedure TFormMainInstaller.Button1Click(Sender: TObject);
