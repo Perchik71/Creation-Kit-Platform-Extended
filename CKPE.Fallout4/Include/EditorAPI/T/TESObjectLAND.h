@@ -4,10 +4,15 @@
 
 #pragma once
 
-#include <EditorAPI/B/BSDynamicTriShape.h>
-#include <EditorAPI/N/NiTypes.h>
+#include <CKPE.EnumSet.h>
+#include <CKPE.Stream.h>
+#include <EditorAPI/N/NiNode.h>
+#include <EditorAPI/N/NiPoint.h>
+#include <EditorAPI/N/NiPointer.h>
+#include <EditorAPI/B/BSTriShape.h>
 #include <EditorAPI/T/TESLandTexture.h>
-#include <EditorAPI/T/TESObjectLAND.h>
+#include <EditorAPI/T/TESChildCell.h>
+#include <array>
 
 namespace CKPE
 {
@@ -17,10 +22,8 @@ namespace CKPE
 		{
 			namespace Forms
 			{
-				class TESObjectCELL;
-
 				// size 0x50
-				class TESObjectLAND : public TESForm
+				class TESObjectLAND : public TESForm, public TESChildCell
 				{
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftLandspace;
@@ -33,7 +36,24 @@ namespace CKPE
 					constexpr static std::uint32_t TOTAL_INDEX = 289;
 					constexpr static std::uint32_t TOTAL_INDEX_ALL_PARTS = TOTAL_INDEX * PART_COUNT;
 
-					struct VertexNormalsT
+					struct OBJ_LAND
+					{
+					public:
+						enum class Flag
+						{
+							kNone = 0,
+							kVertexNormals_HeightMap = 1 << 0,
+							kVertexColors = 1 << 1,
+							kLayers = 1 << 2,
+							kMPCD = 1 << 10
+						};
+
+						// members
+						CKPE::TEnumSet<Flag, std::uint32_t> flags;  // 0
+					};
+					static_assert(sizeof(OBJ_LAND) == 0x4);
+
+					struct CHAR_NORM
 					{
 						std::uint8_t x, y, z;
 					};
@@ -42,11 +62,11 @@ namespace CKPE
 					// I don't know what it means if the index is negative, but I won't study it further.
 					// Also, since there is no fractional part, the highest 2 bytes are used.
 					// You can check it on the website https://www.h-schmidt.net/FloatConverter/IEEE754.html
-					typedef float AlphaIndex;
+					typedef float Height;
 
-					struct AlphaData
+					struct PercentData
 					{
-						std::uint8_t MixValues[MAX_TEXTURE_COUNT];
+						std::array<std::uint8_t, MAX_TEXTURE_COUNT> MixValues;
 					};
 
 					// size 0x6420
@@ -54,27 +74,23 @@ namespace CKPE
 					{
 						struct TextureList
 						{
-							TESLandTexture* Items[MAX_TEXTURE_COUNT];
+							std::array<TESLandTexture*, MAX_TEXTURE_COUNT> Items;
 						};
 
-						// Parts with tex ??? (if the location is not loaded, these are all nullptr)
-						NiAPI::NiNode* Parts[PART_COUNT];
-						// size 0x1210 (bytes)
-						AlphaIndex AlphaIndexes[TOTAL_INDEX_ALL_PARTS];
-						// size 0x3630 (bytes)
-						AlphaData AlphaData[TOTAL_INDEX_ALL_PARTS];
-						// size 0xD8C (bytes)
-						NiAPI::NiRGB VertexColors[TOTAL_INDEX_ALL_PARTS];
-						// size 0xD8C (bytes)
-						VertexNormalsT VertexNormals[TOTAL_INDEX_ALL_PARTS];
+						std::array<NiAPI::NiNode*, PART_COUNT> Mesh;
+						std::array<Height, TOTAL_INDEX_ALL_PARTS> Heights;			// size 0x1210 (bytes)
+						std::array<PercentData, TOTAL_INDEX_ALL_PARTS> Percents;	// size 0x3630 (bytes)
+						std::array<NiAPI::NiRGB, TOTAL_INDEX_ALL_PARTS> Colors;		// size 0xD8C (bytes)
+						std::array<CHAR_NORM, TOTAL_INDEX_ALL_PARTS> VertexNormals;	// size 0xD8C (bytes)
 						char pad6378[0x18];
 						// what ???
-						BSDynamicTriShape* TriShapeParts[PART_COUNT];
-						char pad63B0[0x10];
-						TESLandTexture* LandTextureDefaultPart[PART_COUNT];
+						std::array<NiAPI::NiPointer<BSTriShape>, PART_COUNT> Geom;
+						NiAPI::NiPointer<BSTriShape> border;
+						NiAPI::NiPoint2 heightExtents;
+						std::array<TESLandTexture*, PART_COUNT> LandTextureDefaultPart;
 						// A strange pointer, where there are 4 arrays packed to capacity with "1".
 						char pad63E0[0x8];
-						TextureList* _LandTextureListPart[PART_COUNT];
+						std::array<TextureList*, PART_COUNT> LandTextureListPart;
 						char pad6408[0x18];
 
 						// Normalizing normals
@@ -88,14 +104,14 @@ namespace CKPE
 						}
 					};
 				private:
-					char pad28[0x10];
+					OBJ_LAND		data;
 					TESObjectCELL* _ParentCell;
 					char pad40[0x8];
 					Layers* _Layers;				// Can be nullptr if cell not loaded
 				};
 				static_assert(sizeof(TESObjectLAND) == 0x50);
-				static_assert(sizeof(TESObjectLAND::VertexNormalsT) == 0x3);
-				static_assert(sizeof(TESObjectLAND::AlphaData) == 0xC);
+				static_assert(sizeof(TESObjectLAND::CHAR_NORM) == 0x3);
+				static_assert(sizeof(TESObjectLAND::PercentData) == 0xC);
 				static_assert(sizeof(TESObjectLAND::Layers) == 0x6420);
 			}
 		}

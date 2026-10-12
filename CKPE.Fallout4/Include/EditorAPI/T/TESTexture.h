@@ -57,13 +57,13 @@ namespace CKPE
 				virtual ~TESTexture() = default;
 
 				virtual void SetTextureFromDialogBox(HWND hDialogBox, std::uint32_t CtrlID) noexcept(true);
-				[[nodiscard]] virtual std::uint32_t GetSlotIndex() const noexcept(true);
-				virtual const char* GetAsNormalFile(BSString& sOut) const noexcept(true);
+				[[nodiscard]] virtual std::uint32_t GetMaxAllowedSize() const noexcept(true);
+				virtual const char* GetAsNormalFile(BSString& a_out) const noexcept(true);
 				[[nodiscard]] virtual const char* GetDefaultPath() const noexcept(true);
-				[[nodiscard]] virtual const char* GetActionName() const noexcept(true);
+				[[nodiscard]] virtual const char* GetCaptionForOpenDialog() const noexcept(true);
 				virtual void SetTextureFromFileName(const char* lpstrFileName) noexcept(true);
 
-				[[nodiscard]] inline const char* GetFileName() const noexcept(true) { return _FileName.empty() ? "" : _FileName.c_str(); }
+				[[nodiscard]] inline const char* GetFileName() const noexcept(true) { return _FileName.empty() ? "" : _FileName; }
 				[[nodiscard]] inline TEXTURE_INFO* GetDataInfo() const noexcept(true) { return _Info; }
 			};
 			static_assert(sizeof(TESTexture) == 0x28);

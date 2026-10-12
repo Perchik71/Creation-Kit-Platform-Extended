@@ -84,7 +84,7 @@ namespace CKPE
 						std::array<CHAR_NORM, TOTAL_INDEX_ALL_PARTS> VertexNormals;	// size 0xD8C (bytes)
 						std::array<NiAPI::NiPointer<BSTriShape>, PART_COUNT> Geom;
 						NiAPI::NiPointer<BSTriShape> border;
-						NiPoint2 heightExtents;
+						NiAPI::NiPoint2 heightExtents;
 						std::array<TESLandTexture*, PART_COUNT> LandTextureDefaultPart;
 						// A strange pointer, where there are 4 arrays packed to capacity with "1".
 						char pad48B0[0x8];

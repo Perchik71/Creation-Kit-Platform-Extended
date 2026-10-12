@@ -18,14 +18,14 @@ namespace CKPE
 				this_call<void>(0xA8, this, hDialogBox, CtrlID);
 			}
 
-			std::uint32_t TESTexture::GetSlotIndex() const noexcept(true)
+			std::uint32_t TESTexture::GetMaxAllowedSize() const noexcept(true)
 			{
 				return 0; /* always */ 
 			}
 
-			const char* TESTexture::GetAsNormalFile(BSString& sOut) const noexcept(true)
+			const char* TESTexture::GetAsNormalFile(BSString& a_out) const noexcept(true)
 			{
-				return this_call<const char*>(0xB8, this, &sOut);
+				return this_call<const char*>(0xB8, this, &a_out);
 			}
 
 			const char* TESTexture::GetDefaultPath() const noexcept(true) 
@@ -33,7 +33,7 @@ namespace CKPE
 				return "Data\\Textures\\"; 
 			}
 
-			const char* TESTexture::GetActionName() const noexcept(true) 
+			const char* TESTexture::GetCaptionForOpenDialog() const noexcept(true)
 			{ 
 				return "Add Image File"; 
 			}

@@ -323,6 +323,7 @@
     <ClInclude Include="Include\EditorAPI\T\TESActorValue.h" />
     <ClInclude Include="Include\EditorAPI\T\TESBoundObject.h" />
     <ClInclude Include="Include\EditorAPI\T\TESCellUseList.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESChildCell.h" />
     <ClInclude Include="Include\EditorAPI\T\TESCondition.h" />
     <ClInclude Include="Include\EditorAPI\T\TESDataHandler.h" />
     <ClInclude Include="Include\EditorAPI\T\TESDescription.h" />
@@ -341,6 +342,8 @@
     <ClInclude Include="Include\EditorAPI\T\TESTexture.h" />
     <ClInclude Include="Include\EditorAPI\T\TESTopic.h" />
     <ClInclude Include="Include\EditorAPI\T\TESTopicInfo.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESValueForm.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESWeightForm.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AddChangeRef.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AllowMultipleWindowAndMaster.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AllowSaveESMandMasterESP.h" />

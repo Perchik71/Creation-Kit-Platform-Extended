@@ -972,6 +972,15 @@
     <ClInclude Include="Include\EditorAPI\B\BGSPickHandler.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESValueForm.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESWeightForm.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESChildCell.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">
