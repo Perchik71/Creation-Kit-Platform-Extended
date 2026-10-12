@@ -264,6 +264,7 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.StableSortForPerks.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.TESDataHandlerHook.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.TESModelTextureSwapCorrectlyLoad.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.TintSelectedObjects.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.TESParameters_CTDA.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.UIHotkeys.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.UnEquipSound.cpp" />
@@ -318,6 +319,8 @@
     <ClInclude Include="Include\EditorAPI\B\BSResources.h" />
     <ClInclude Include="Include\EditorAPI\B\BSShaderMaterial.h" />
     <ClInclude Include="Include\EditorAPI\B\BSShaderProperty.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSLightingShaderProperty.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSRenderPass.h" />
     <ClInclude Include="Include\EditorAPI\B\BSShaderResourceManager.h" />
     <ClInclude Include="Include\EditorAPI\B\BSSpinLock.h" />
     <ClInclude Include="Include\EditorAPI\B\BSString.h" />
@@ -496,6 +499,7 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.StableSortForPerks.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.TESDataHandlerHook.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.TESModelTextureSwapCorrectlyLoad.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.TintSelectedObjects.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.TESParameters_CTDA.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.UIHotkeys.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.UnEquipSound.h" />
