@@ -124,6 +124,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.StableSortForPerks.h>
 #include <Patches/CKPE.SkyrimSE.Patch.TESDataHandlerHook.h>
 #include <Patches/CKPE.SkyrimSE.Patch.TESModelTextureSwapCorrectlyLoad.h>
+#include <Patches/CKPE.SkyrimSE.Patch.TintSelectedObjects.h>
 #include <Patches/CKPE.SkyrimSE.Patch.TESParameters_CTDA.h>
 #include <Patches/CKPE.SkyrimSE.Patch.UIHotkeys.h>
 #include <Patches/CKPE.SkyrimSE.Patch.UnEquipSound.h>
@@ -256,6 +257,7 @@ namespace CKPE
 			mgr->Register(new Patch::TESDataHandlerHook);
 			mgr->Register(new Patch::TESModelTextureSwapCorrectlyLoad);
 			mgr->Register(new Patch::TESParameters_CTDA);
+			mgr->Register(new Patch::TintSelectedObjects);
 			mgr->Register(new Patch::UIHotkeys);
 			mgr->Register(new Patch::UnEquipSound);
 			mgr->Register(new Patch::Unicode);

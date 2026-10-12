@@ -28,6 +28,11 @@ bOwnArchiveLoader=true					# Loading mod archives.
 bNavMeshPseudoDelete=false				# Remove a triangle from a navmesh without deleting it.
 bWarningCreateTexture2D=false			# Make CK react to poor texture loading.
 bOverlapsGenerateONAM=true				# Replaces the generating ONAM algorithm when saving to the master file, increasing the number of valid forms from 65.536 to 4.294.967.296. If you received a crash during saving .esm, it makes sense to enable the option.
+bTintSelectedObjects=true				# Highlight the objects selected in the Render Window in green (adds an emissive tint to their lighting shader).
+fSelectionTintColorR=0.0				# Selection tint red component (value must be [0.0 : 1.0]).
+fSelectionTintColorG=1.0				# Selection tint green component (value must be [0.0 : 1.0]).
+fSelectionTintColorB=0.0				# Selection tint blue component (value must be [0.0 : 1.0]).
+fSelectionTintIntensity=0.35			# Selection tint strength, the colour is multiplied by it (value must be [0.0 : 4.0]).
 
 # Options that are linked to the version of the editor, read the description
 
