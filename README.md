@@ -1,91 +1,147 @@
-
 <div align="right">
-  <details>
-    <summary >🌐 Language</summary>
-    <div>
-      <div align="center">
-        <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=en">English</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=zh-CN">简体中文</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=zh-TW">繁體中文</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=ja">日本語</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=ko">한국어</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=hi">हिन्दी</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=th">ไทย</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=fr">Français</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=de">Deutsch</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=es">Español</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=it">Italiano</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=ru">Русский</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=pt">Português</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=nl">Nederlands</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=pl">Polski</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=ar">العربية</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=fa">فارسی</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=tr">Türkçe</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=vi">Tiếng Việt</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=id">Bahasa Indonesia</a>
-        | <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=as">অসমীয়া</
-      </div>
-    </div>
-  </details>
+	<details>
+		<summary>🌐 Language</summary>
+		<div>
+			<div align="center">
+				<a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=en">English</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=zh-CN">简体中文</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=zh-TW">繁體中文</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=ja">日本語</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=ko">한국어</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=hi">हिन्दी</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=th">ไทย</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=fr">Français</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=de">Deutsch</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=es">Español</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=it">Italiano</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=ru">Русский</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=pt">Português</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=nl">Nederlands</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=pl">Polski</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=ar">العربية</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=fa">فارسی</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=tr">Türkçe</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=vi">Tiếng Việt</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=id">Bahasa Indonesia</a>
+				| <a href="https://openaitx.github.io/view.html?user=Perchik71&project=Creation-Kit-Platform-Extended&lang=as">অসমীয়া</a>
+			</div>
+		</div>
+	</details>
+</div>
+<br>
+<div align="center">
+
+<img src="Resources/logo.png" alt="Creation Kit Platform Extended" width="400px">
+
+A collection of modifications, enhancements, and reverse engineered resources for Bethesda's Creation Kit.
+
+[![CI](https://img.shields.io/github/actions/workflow/status/Perchik71/Creation-Kit-Platform-Extended/msbuild.yml?branch=master&style=for-the-badge&label=CI&logo=githubactions&logoColor=white)](https://github.com/Perchik71/Creation-Kit-Platform-Extended/actions/workflows/msbuild.yml)
+[![License](https://img.shields.io/badge/License-LGPL%203.0-blue?style=for-the-badge)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/Perchik71/Creation-Kit-Platform-Extended?style=for-the-badge&label=release&color=orange)](https://github.com/Perchik71/Creation-Kit-Platform-Extended/releases/latest)
+[![Editors](https://img.shields.io/badge/Editors-Skyrim%20SE%20%C2%B7%20Fallout%204%20%C2%B7%20Starfield-3a7d44?style=for-the-badge)](#supported-editors)
 
 </div>
+<br>
 
-<p align="center">
-  <img src="https://github.com/Perchik71/Creation-Kit-Platform-Extended/blob/master/Resources/logo.png" alt="Creation Kit Platform Extended" border="0" width="400px">
-</p>
-<p align="center">
-  A collection of modifications, enhancements, and reverse engineered resources for Creation Kit by Bethesda.
-</p>
+## Description
 
-# Description
-**CKPE** a shared source powerful platform makes numerous fixes and improvements to the Creation Kit editor from **Bethesda**, includes editor support for games such as **Skyrim Special Edition**, **Fallout 4**, **Starfield**, is a successor to the [SSE CKFixes](https://github.com/Nukem9/skyrimse-test), [SSE CKFixes Update](https://github.com/Perchik71/SkyrimSETest), [FO4 CKFixes](https://github.com/Perchik71/Fallout4Test) projects, also [Unicode patch for SSE CK 1.5.73](https://github.com/Perchik71/usse_test) which started it all for the author of **perchik71**.  
+**Creation Kit Platform Extended (CKPE)** is a powerful shared-source platform that provides numerous fixes and improvements to **Bethesda's Creation Kit**, including support for **Skyrim Special Edition**, **Fallout 4** and **Starfield**.
 
-[Wiki](https://github.com/Perchik71/Creation-Kit-Platform-Extended/wiki) page  
+CKPE is a direct successor to the projects that preceded it, including [SSE CKFixes](https://github.com/Nukem9/skyrimse-test), [SSE CKFixes Update](https://github.com/Perchik71/SkyrimSETest), [FO4 CKFixes](https://github.com/Perchik71/Fallout4Test) and [Unicode Patch for SSE CK 1.5.73](https://github.com/Perchik71/usse_test), which is the project that started it all for **CKPE**'s author, **perchik71**.
 
-# Dependencies
-[toml11](https://github.com/ToruNiina/toml11) by `ToruNiina` and other  
-[Zydis](https://github.com/zyantific/zydis.git) by `zyantifi` and other  
-[zipper](https://github.com/kuba--/zip.git) by `kuba--`  
-[libdeflate](https://github.com/ebiggers/libdeflate.git) by `ebiggers` and other  
-[xbyak](https://github.com/herumi/xbyak.git) by `herumi` and other    
-[DirectXTex](https://github.com/microsoft/DirectXTex.git) by `microsoft`  
-[jDialogs](https://github.com/Perchik71/jDialogs.git) by `perchik71` *(recursive)*
+For more information, please take a look at [CKPE's Wiki](https://github.com/Perchik71/Creation-Kit-Platform-Extended/wiki).
 
-# Install
+## Supported Editors
+
+| Game Editor | Version |
+|---|---|
+| **Skyrim Special Edition** | **1.5.73.0** and later |
+| **Fallout 4** | **1.10.162.0** and later |
+| **Starfield** | **1.15.222.0** and later |
+
+For more information, please check the brief section in the [Wiki page](https://github.com/Perchik71/Creation-Kit-Platform-Extended/wiki#brief).
+
+## Installation
+
 >[!IMPORTANT]
->Regular or noavx2 release?  
->Check with Steam if your CPU support avx2. Open Steam, in left corner hover over help menu select System Information and search for AVX2.  
->If it is supported go with regular release  
->If it is not, go with noavx2 release  
+>**CKPE** has a **Regular (AVX2)** and a **No AVX2** release depending on your CPU.<br>
+>To determine which version of **CKPE** you should install, you can use **Steam**:
+>1. Open **Steam** → Click on **Help** in the top menu bar → **System Information**.<br>
+>2. Find the **Processor Information** section and check what it says for **AVX2**.
+>
+>If it says `AVX2: Supported`, then use the **Regular (AVX2)** Release.<br>
+>If it says `AVX2: Unsupported`, then use the **No AVX2** Release.
+
+>[!NOTE]
+>After a fresh install or update, **ckpe_loader.exe** should be in the same folder as **CreationKit.exe**.
+
 ### Fresh Install
-Download any [supported game](https://github.com/Perchik71/Creation-Kit-Platform-Extended/wiki#brief) and install Creation Kit.  
-Download [latest release](https://github.com/Perchik71/Creation-Kit-Platform-Extended/releases) of **CKPE** for your game.  
-Extract all contents into game directory, so that **ckpe_loader.exe** is in the same folder as **CreationKit.exe**.
-### Update
-Download [latest release](https://github.com/Perchik71/Creation-Kit-Platform-Extended/releases) of **CKPE** for your game.  
-Extract all contents into game directory, so that **ckpe_loader.exe** is in the same folder as **CreationKit.exe**.  
-Agree to replace all files.
-### Compilation
-Regular users only need this method to access the newest features which haven't been released yet.  
-Open a project in **`Visual Studio 2022`** or later. Build the project in **`Release`** mode or **`Release-NoAVX2`**.  
-Then move your build output into game directory, so that **ckpe_loader.exe** is in the same folder as **CreationKit.exe**.  
-If you are asked to replace old files agree to replace all.
-### Automate builds (Beta)
-Download [latest commit build](https://github.com/Perchik71/Creation-Kit-Platform-Extended/actions) of **CKPE** for your game.  
-Extract all contents into game directory, so that **ckpe_loader.exe** is in the same folder as **CreationKit.exe**.  
-Possible errors.
 
-# Credits
-[Nukem9](https://github.com/Nukem9) (for experimental functions, hash and so on, very useful)  
-[adzm](https://github.com/adzm) (I really appreciate your work, you have [done](https://github.com/adzm/win32-custom-menubar-aero-theme) what I have long wanted to do myself)  
-[yak3d](https://github.com/yak3d) (For the contribution and development of workflow and support newest Starfield)  
-[DioKyrie-Git](https://github.com/DioKyrie-Git) (For the design of the readme)  
+1. Install a [supported game](#supported-editors) and its **Creation Kit** from **Steam**.
+2. Download the [latest release](https://github.com/Perchik71/Creation-Kit-Platform-Extended/releases) of **CKPE** for your game and CPU.
+3. Extract all files into the game's **root** directory, alongside **CreationKit.exe**.
 
-# License
-Starting with the v0.6 (commit [9d93970](https://github.com/Perchik71/Creation-Kit-Platform-Extended/commit/9d93970cc3918099c895872d46a24aa29a34db11)) project is licensed by [LGPLv3](https://www.gnu.org/licenses/lgpl-3.0.html). <br />
-Early versions is licensed by [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html) <br />
-Copyright © 2023-2025 aka perchik71. All rights reserved. <br />
-File `Stuffs\FO4\CreationKitPlatformExtended_FO4_Resources.pak` contains proprietary and not licensed files; the same applies to files in `d3dcompiler\*.*`. <br />
-Dependencies are under their respective licenses. 
+### Updating
 
+1. Download the [latest release](https://github.com/Perchik71/Creation-Kit-Platform-Extended/releases) of **CKPE** for your game and CPU.
+2. Extract all files into the game's **root** directory, alongside **CreationKit.exe**.
+3. Agree to replace all files when asked.
+
+### Beta Builds
+
+You can also test the latest development builds of **CKPE** for your game.<br>
+Be warned that these are in-development builds and may have issues.
+1. Download the [latest development build](https://github.com/Perchik71/Creation-Kit-Platform-Extended/actions) of **CKPE** for your game and CPU.
+2. Extract all files into the game's **root** directory, alongside **CreationKit.exe**.
+3. Agree to replace all files if asked.
+
+## Building
+
+### Requirements
+
+* Visual Studio 2022 or later.
+
+### Clone the Repository
+
+```bash
+git clone --recurse-submodules https://github.com/Perchik71/Creation-Kit-Platform-Extended.git
+```
+
+### Opening and Building the Solution
+
+1. Open the **`Creation Kit Platform Extended.sln`** solution in **Visual Studio 2022** or later.
+2. Select either the **`Release`** or **`Release-NoAVX2`** build configuration depending on your processor.
+3. Build the solution and copy the **Build Output** into your game's **root** directory next to **CreationKit.exe**.
+4. Agree to replace all files if asked.
+
+## Dependencies
+
+| Dependency | Authors |
+|---|---|
+| **[toml11](https://github.com/ToruNiina/toml11)** | ToruNiina and contributors |
+| **[Zydis](https://github.com/zyantific/zydis.git)** | zyantifi and contributors |
+| **[zip](https://github.com/kuba--/zip.git)** | kuba-- |
+| **[libdeflate](https://github.com/ebiggers/libdeflate.git)** | ebiggers and contributors |
+| **[xbyak](https://github.com/herumi/xbyak.git)** | herumi and contributors |
+| **[DirectXTex](https://github.com/microsoft/DirectXTex.git)** | Microsoft |
+| **[jDialogs](https://github.com/Perchik71/jDialogs.git)** | perchik71 |
+
+## Credits
+
+| Contributor | Contribution |
+|---|---|
+| **[Nukem9](https://github.com/Nukem9)** | Experimental Functions, Hashes, and many other useful information. |
+| **[adzm](https://github.com/adzm)** | Really appreciated work for the `win32-custom-menubar-aero-theme` project. |
+| **[yak3d](https://github.com/yak3d)** | Contributions, development of Workflows and support for the latest Starfield. |
+| **[DioKyrie-Git](https://github.com/DioKyrie-Git) and [TheGamerX20](https://github.com/TheGamerX20)** | Design of the README.md file. |
+
+## License
+
+**Creation Kit Platform Extended** is licensed under the [LGPLv3](https://www.gnu.org/licenses/lgpl-3.0.html) License starting with v0.6 (commit [9d93970](https://github.com/Perchik71/Creation-Kit-Platform-Extended/commit/9d93970cc3918099c895872d46a24aa29a34db11)).<br>
+Earlier versions of **Creation Kit Platform Extended** were licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html) License.<br>
+Copyright © 2023-2026 aka perchik71. All rights reserved.
+
+>[!WARNING]
+>`Stuffs\FO4\CreationKitPlatformExtended_FO4_Resources.pak` contains unlicensed proprietary files.<br>
+>Similarly the `d3dcompiler` folder contains unlicensed proprietary files.<br>
+>Dependencies are licensed under their own respective licenses.
