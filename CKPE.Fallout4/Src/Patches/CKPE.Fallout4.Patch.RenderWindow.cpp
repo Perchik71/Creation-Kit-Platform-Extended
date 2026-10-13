@@ -36,6 +36,7 @@ namespace CKPE
 
 			static float StepInRender = 15.f;
 			static bool HideMainImguiWnd = true;
+			static bool ShowRenderStatsGroups = false;
 
 			struct Area
 			{
@@ -87,6 +88,7 @@ namespace CKPE
 			{
 				StepInRender = _READ_OPTION_FLOAT("Graphics", "fStepInRender", 15.f);
 				StepInRender = std::min(std::max(StepInRender, 15.f), 100.f);
+				ShowRenderStatsGroups = _READ_OPTION_BOOL("Graphics", "bRenderStatsGroups", false);
 
 				*(std::uintptr_t*)&_oldWndProc = Common::Relocation(Common::ID{ 177103, 1933064 }).WriteJump(&HKWndProc);
 				_TempDrawArea = Common::Relocation<Area*>(Common::ID(583093)).Get();
@@ -249,6 +251,52 @@ namespace CKPE
 				EditorAPI::BGSRenderWindow::DrawInfo::FramePerSecond = va_arg(ap, UINT);
 
 				va_end(ap);
+
+				// The stats live in the per-thread renderer state: *(TLS[index] + statsOffset) ->
+				// { ..., +0x2FF0 current group, +0x2FF8 [9] x { calls, polys, 8 bytes } } (the same layout in all
+				// builds). The "%u main draw calls, ..." formatter reads group 2 / the sum of them
+				// (CK 1.10.162.0 sub_14045EBB0, 1.10.982.3 sub_1405533C0, 1.11.240.0 sub_14056EB90).
+				// index is the dword the PE TLS directory points to (AddressOfIndex), statsOffset is where the
+				// pointer to the stats sits in the TLS block.
+				EditorAPI::BGSRenderWindow::DrawInfo::GroupsValid = false;
+				if (ShowRenderStatsGroups)
+				{
+					std::uintptr_t tlsIndexRva = 0, statsOffset = 0;
+					switch (VersionLists::GetEditorVersion())
+					{
+					case VersionLists::EDITOR_FALLOUT_C4_1_10_162_0:
+						tlsIndexRva = 0xA5CE474; statsOffset = 0x2FD0;
+						break;
+					case VersionLists::EDITOR_FALLOUT_C4_1_10_982_3:
+						tlsIndexRva = 0x80690B0; statsOffset = 0x39B0;
+						break;
+					case VersionLists::EDITOR_FALLOUT_C4_1_11_240_0:
+						tlsIndexRva = 0x8016A70; statsOffset = 0x39B0;
+						break;
+					default:
+						break;
+					}
+
+					auto tls = (std::uintptr_t*)__readgsqword(0x58);
+					if (tlsIndexRva && tls)
+					{
+						auto index = *(std::uint32_t*)((std::uintptr_t)GetModuleHandleA(nullptr) + tlsIndexRva);
+						if (tls[index])
+						{
+							auto stats = *(std::uintptr_t*)(tls[index] + statsOffset);
+							if (stats)
+							{
+								for (std::uint32_t i = 0; i < EditorAPI::BGSRenderWindow::DrawInfo::GroupCount; i++)
+								{
+									auto entry = (std::uint32_t*)(stats + 0x2FF8 + i * 0x10);
+									EditorAPI::BGSRenderWindow::DrawInfo::GroupDrawCalls[i] = entry[0];
+									EditorAPI::BGSRenderWindow::DrawInfo::GroupPolys[i] = entry[1];
+								}
+								EditorAPI::BGSRenderWindow::DrawInfo::GroupsValid = true;
+							}
+						}
+					}
+				}
 			}
 
 			void RenderWindow::DrawFrameEx(IDXGISwapChain* This, UINT SyncInterval, UINT Flags)
@@ -338,6 +386,28 @@ namespace CKPE
 							ImGui::TextColored(gImGuiRedColor, "%u", EditorAPI::BGSRenderWindow::DrawInfo::DrawCalls);
 						ImGui::SameLine(0.0f, 0.0f);
 						ImGui::Text(" / %u", EditorAPI::BGSRenderWindow::DrawInfo::Polys);
+
+						if (EditorAPI::BGSRenderWindow::DrawInfo::GroupsValid)
+						{
+							// Render-stats groups, named after the render passes that select them (CK 1.11.240.0)
+							static constexpr const char* GroupNames[EditorAPI::BGSRenderWindow::DrawInfo::GroupCount] = {
+								"0 (other)", "1 Lights/Shadow", "2 Main", "3 DFDecals", "4 (unknown)",
+								"5 DFComposite", "6 Forward/Effect", "7 Refraction", "8 (unknown)" };
+
+							for (std::uint32_t i = 0; i < EditorAPI::BGSRenderWindow::DrawInfo::GroupCount; i++)
+							{
+								if (!EditorAPI::BGSRenderWindow::DrawInfo::GroupDrawCalls[i] &&
+									!EditorAPI::BGSRenderWindow::DrawInfo::GroupPolys[i])
+									continue;
+
+								ImGui::TableNextRow();
+								ImGui::TableNextColumn();
+								ImGui::TextDisabled("  %s", GroupNames[i]);
+								ImGui::TableNextColumn();
+								ImGui::TextDisabled("%u / %u", EditorAPI::BGSRenderWindow::DrawInfo::GroupDrawCalls[i],
+									EditorAPI::BGSRenderWindow::DrawInfo::GroupPolys[i]);
+							}
+						}
 
 						auto ActiveCell = Root->GetCurrentCell();
 						if (ActiveCell)

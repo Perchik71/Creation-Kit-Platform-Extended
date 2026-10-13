@@ -135,6 +135,13 @@ namespace CKPE
 					inline static std::uint32_t FramePerSecond;
 					inline static char TexturesSize[32];
 					inline static std::uint32_t Polys;
+
+					// Per render-stats group counters (CK 1.10.162.0, 1.10.982.3 and 1.11.240.0, see RenderWindow::UpdateDrawInfo).
+					// "Polys" above is the sum of all groups, "DrawCalls" is group 2 only.
+					static constexpr std::uint32_t GroupCount = 9;
+					inline static std::uint32_t GroupDrawCalls[GroupCount];
+					inline static std::uint32_t GroupPolys[GroupCount];
+					inline static bool GroupsValid;
 				};
 
 				struct Pick

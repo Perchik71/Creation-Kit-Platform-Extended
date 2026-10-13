@@ -113,6 +113,9 @@ fTAAJitter = 0.125
 # Number of units when moving in the rendering window as in Starfield (value must be [15.0 : 100.0]).
 fStepInRender = 30.0
 
+# Show the render-stats groups (Lights/Shadow, Main, DFDecals, ...) under the draw calls / polys line of the Render Window info panel. For diagnostics, CK 1.11.240.0 only.
+bRenderStatsGroups = false
+
 
 [FaceGen]
 
