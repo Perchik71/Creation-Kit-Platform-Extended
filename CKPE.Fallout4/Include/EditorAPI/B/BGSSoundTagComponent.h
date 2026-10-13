@@ -1,4 +1,4 @@
-// Copyright © 2023-2025 aka CKPE team. All rights reserved.
+// Copyright © 2020-2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -12,27 +12,16 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
-			class BGSSoundTagComponent : public BaseFormComponent
+			// CK 1.11.240.0: size 0x8 (only the vtable pointer; the scalar deleting destructor frees 8 bytes),
+			// 21 virtual functions. The constructor only stores the vtable, the destructor takes the global spin lock.
+			// The dword that follows the component inside TESBoundObject (0x88) belongs to TESBoundObject, not to the component.
+			class BGSSoundTagComponent :
+				public BaseFormComponent   // 000
 			{
-				std::uint32_t _Tag{ 0x43544143 };
 			public:
-				constexpr BGSSoundTagComponent() = default;
-				BGSSoundTagComponent(std::uint32_t tag) : _Tag(tag) {}
-				BGSSoundTagComponent(const BGSSoundTagComponent& Rhs) : _Tag(Rhs._Tag) {}
-
-				BGSSoundTagComponent& operator=(const BGSSoundTagComponent& Rhs) noexcept(true) { _Tag = Rhs._Tag; return *this; }
-
-				constexpr bool operator==(const BGSSoundTagComponent& Rhs) const noexcept(true) { return _Tag == Rhs._Tag; }
-				constexpr bool operator!=(const BGSSoundTagComponent& Rhs) const noexcept(true) { return _Tag != Rhs._Tag; }
-
 				virtual ~BGSSoundTagComponent() = default;
-			public:
-				[[nodiscard]] inline std::uint32_t GetTag() const noexcept(true) { return _Tag; }
-				inline void SetTag(std::uint32_t tag) noexcept(true) { _Tag = tag; }
-			public:
-				CKPE_PROPERTY(GetTag, SetTag) std::uint32_t Tag;
 			};
-			static_assert(sizeof(BGSSoundTagComponent) == 0x10);
+			static_assert(sizeof(BGSSoundTagComponent) == 0x8);
 		}
 	}
 }

@@ -5,6 +5,7 @@
 #pragma once
 
 #include <EditorAPI/B/BGSMaterialSwap.h>
+#include <EditorAPI/T/TESModel.h>
 
 namespace CKPE
 {
@@ -16,12 +17,13 @@ namespace CKPE
 			{
 				// size = 0x50
 				// func = 27
-				class BGSModelMaterialSwap
+				class BGSModelMaterialSwap :
+					public TESModel   // 000
 				{
 				public:
 					virtual ~BGSModelMaterialSwap() = default;
 				public:
-					[[nodiscard]] inline const char* GetModelPath() const noexcept(true) { return !_ModelPath.empty() ? _ModelPath.c_str() : nullptr; }
+					[[nodiscard]] inline const char* GetModelPath() const noexcept(true) { return !modelName.empty() ? modelName.c_str() : nullptr; }
 					[[nodiscard]] inline BGSMaterialSwap* GetMaterialSwap() const noexcept(true) { return _MaterialSwap; }
 					[[nodiscard]] inline float GetColorRemapIndex() const noexcept(true) { return fColorRemapIndex; }
 					[[nodiscard]] inline bool HasColorRemapIndex() const noexcept(true)
@@ -34,17 +36,15 @@ namespace CKPE
 					CKPE_READ_PROPERTY(GetMaterialSwap) BGSMaterialSwap* MaterialSwap;
 					CKPE_READ_PROPERTY(GetColorRemapIndex) float ColorRemapIndex;
 				private:
-					BSFixedString _ModelPath;
-					char pad10[0x18];
-					std::uint32_t u32Unk28;
-					char pad2C[0x14];
-					BGSMaterialSwap* _MaterialSwap;
+					// TESModel is 0x38 bytes (modelName at 0x08)
+					char pad38[0x8];					// 38
+					BGSMaterialSwap* _MaterialSwap;			// 0x40
 					union
 					{
 						float fColorRemapIndex;
 						std::uint32_t uColorRemapIndex;
 					};
-					char pad4[0x4];
+					char pad4C[0x4];					// 4C
 				};
 				static_assert(sizeof(BGSModelMaterialSwap) == 0x50);
 			}

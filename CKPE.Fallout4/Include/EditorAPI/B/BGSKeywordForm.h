@@ -1,0 +1,45 @@
+// Copyright © 2020-2025 aka CKPE team. All rights reserved.
+// Contacts: <email:timencevaleksej@gmail.com>
+// License: https://www.gnu.org/licenses/lgpl-3.0.html
+
+#pragma once
+
+#include <cstdint>
+#include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/F/FormInterfaces.h>
+
+namespace CKPE
+{
+	namespace Fallout4
+	{
+		namespace EditorAPI
+		{
+			namespace Forms
+			{
+				class BGSKeyword;
+			}
+
+
+			// 1.11.240.0: size 0x20, vtable RVA 0x3019990, 23 virtual functions
+			class BGSKeywordForm :
+				public BaseFormComponent,  // 000
+				public IKeywordFormBase    // 008
+			{
+			public:
+				virtual ~BGSKeywordForm() = default;
+
+				[[nodiscard]] inline Forms::BGSKeyword** GetKeywords() const noexcept(true) { return keywords; }
+				[[nodiscard]] inline std::uint32_t GetKeywordCount() const noexcept(true) { return numKeywords; }
+
+				virtual void sub_0A8() { return; } // 21 - RVA 0x898690
+				virtual Forms::BGSKeyword* GetDefaultKeyword() const noexcept(true) { return nullptr; } // 22 - RVA 0x45AAC0, return 0;
+
+			public:
+				Forms::BGSKeyword** keywords; // 10 - verified: array of BGSKeyword*, see BGSKeywordForm vfuncs
+				std::uint32_t numKeywords; // 18
+				std::uint32_t listControlID; // 1C - dialog control ID (5320) used with GetDlgItem by the dialog virtuals
+			};
+			static_assert(sizeof(BGSKeywordForm) == 0x20);
+		}
+	}
+}
