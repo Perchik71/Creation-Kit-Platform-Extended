@@ -1,11 +1,12 @@
-// Copyright © 2023-2024 aka CKPE team. All rights reserved.
+// Copyright © 2020-2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
-// License: https://www.gnu.org/licenses/gpl-3.0.html
+// License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #pragma once
 
-#include <EditorAPI/N/NiFlags.h>
+#include <cstdint>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/N/NiFlags.h>
 
 namespace CKPE
 {
@@ -15,11 +16,13 @@ namespace CKPE
 		{
 			namespace Forms
 			{
-				// size = 0x40
-				// func = 124
-				class BGSVoiceType : public TESForm
+				// 1.11.240.0: size 0x30, vtable RVA 0x3040CE8, 124 virtual functions
+				class BGSVoiceType :
+					public TESForm   // 000
 				{
 				public:
+					virtual ~BGSVoiceType() = default;
+
 					constexpr static std::uint8_t TYPE_ID = ftVoice;
 
 					enum Flags
@@ -27,9 +30,7 @@ namespace CKPE
 						kAllowDefaultDialogue = 1,
 						kWoman = 2,
 					};
-				public:
-					virtual ~BGSVoiceType() = default;
-				public:
+
 					[[nodiscard]] inline bool HasMale() const noexcept(true) { return !HasWoman(); }
 					[[nodiscard]] inline bool HasWoman() const noexcept(true) { return flag.Has(kWoman); }
 					[[nodiscard]] inline bool HasAllowDefaultDialogue() const noexcept(true) { return flag.Has(kAllowDefaultDialogue); }
@@ -42,18 +43,19 @@ namespace CKPE
 							flag.Unset(kWoman);
 					}
 
-					inline void SetAllowDefaultDialogue(bool v) 
+					inline void SetAllowDefaultDialogue(bool v)
 					{
 						if (v)
 							flag.Set(kAllowDefaultDialogue);
 						else
 							flag.Unset(kAllowDefaultDialogue);
 					}
-				private:
-					NiAPI::NiTFlags<std::uint8_t, BGSVoiceType> flag;
-					char pad29[0x17];
+
+				public:
+					NiAPI::NiTFlags<std::uint8_t, BGSVoiceType> flag; // 28
+					std::uint8_t pad29[7]; // 29
 				};
-				static_assert(sizeof(BGSVoiceType) == 0x40);
+				static_assert(sizeof(BGSVoiceType) == 0x30);
 			}
 		}
 	}

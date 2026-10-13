@@ -18,12 +18,16 @@ namespace CKPE
 				class TESTopic;
 				// size = 0xE0
 				// func = 126
-				class TESTopicInfo : public TESForm
+				class TESTopicInfo :
+					public TESForm   // 000
 				{
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftTopicInfo;
 
 					virtual ~TESTopicInfo() = default;
+					// CK 1.11.240.0: 126 virtual functions (TESForm has 124)
+					virtual void sub_3E0() { return; } // 124 - RVA 0xB6A6D0
+					virtual void sub_3E8() { return; } // 125 - RVA 0xB6A7B0
 				public:
 					struct Response
 					{

@@ -18,7 +18,9 @@ namespace CKPE
 		{
 			namespace Forms
 			{
-				class TESObjectCELL : public TESForm, public TESFullName
+				class TESObjectCELL :
+					public TESForm,      // 000
+					public TESFullName   // 028
 				{
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftCell;
@@ -108,6 +110,7 @@ namespace CKPE
 					char _pad3[0x8];
 					TESFormArray* _navmeshes;
 					BSTArray<TESObjectREFR*> _items;
+					char pad98[0xD8];									// 98 - up to 170 (see the TESObjectCELL generated layout notes in docs)
 				public:
 					[[nodiscard]] inline const TESObjectREFR** GetItemsConst() const noexcept(true) { return (const TESObjectREFR**)_items.data(); }
 					[[nodiscard]] inline TESObjectREFR** GetItems() noexcept(true) { return (TESObjectREFR**)_items.data(); }
@@ -145,6 +148,7 @@ namespace CKPE
 				public:
 					virtual ~TESObjectCELL() = default;
 				};
+				static_assert(sizeof(TESObjectCELL) == 0x170);
 			}
 		}
 	}
