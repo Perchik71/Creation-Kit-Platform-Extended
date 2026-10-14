@@ -28,7 +28,7 @@ namespace CKPE
 				GetRefFromGeometryFn g_GetRefFromGeometry = nullptr;
 
 				// Colour added to the emissive term of every selected geometry (emissive colour * multiplier)
-				EditorAPI::NiAPI::NiColor g_SelectionColor{ 0.0f, 0.576f, 0.0f };
+				EditorAPI::NiAPI::NiColor g_SelectionColor{ 0.0f, 0.35f, 0.0f };
 
 				// Selected references are cached; the pick list is re-read at most every kRefreshMs.
 				constexpr ULONGLONG kRefreshMs = 30;
