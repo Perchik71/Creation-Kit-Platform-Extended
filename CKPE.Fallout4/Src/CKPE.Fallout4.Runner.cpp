@@ -39,6 +39,7 @@
 #include <Patches/CKPE.Fallout4.Patch.FixCrashNoRootMat.h>
 #include <Patches/CKPE.Fallout4.Patch.FixCrashSpellEaxDur.h>
 #include <Patches/CKPE.Fallout4.Patch.FixDeleteTintToRace.h>
+#include <Patches/CKPE.Fallout4.Patch.FixLayerRefCount.h>
 #include <Patches/CKPE.Fallout4.Patch.FixInfiniteLoopPapyrusCompile.h>
 #include <Patches/CKPE.Fallout4.Patch.FixLandspaceVNML.h>
 #include <Patches/CKPE.Fallout4.Patch.FixLoadD3DCompiler.h>
@@ -143,6 +144,7 @@ namespace CKPE
 			mgr->Register(new Patch::FixCrashNoRootMat);
 			mgr->Register(new Patch::FixCrashSpellEaxDur);
 			mgr->Register(new Patch::FixDeleteTintToRace);
+			mgr->Register(new Patch::FixLayerRefCount);
 			mgr->Register(new Patch::FixInfiniteLoopPapyrusCompile);
 			mgr->Register(new Patch::FixLandspaceVNML);
 			mgr->Register(new Patch::FixLoadD3DCompiler);

@@ -221,6 +221,9 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.LayersWindow.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixLayerRefCount.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ResponseWindow.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -625,6 +628,9 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.LayersWindow.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixLayerRefCount.h">
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ResponseWindow.h">

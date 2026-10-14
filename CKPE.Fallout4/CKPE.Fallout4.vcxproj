@@ -180,6 +180,7 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixCrashNoRootMat.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixCrashSpellEaxDur.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixDeleteTintToRace.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixLayerRefCount.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixInfiniteLoopPapyrusCompile.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixLandspaceVNML.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixLoadD3DCompiler.cpp" />
@@ -373,6 +374,7 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixCrashNoRootMat.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixCrashSpellEaxDur.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixDeleteTintToRace.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixLayerRefCount.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixInfiniteLoopPapyrusCompile.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixLandspaceVNML.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixLoadD3DCompiler.h" />
