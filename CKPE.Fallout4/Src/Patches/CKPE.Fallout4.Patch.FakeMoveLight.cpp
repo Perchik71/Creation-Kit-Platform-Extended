@@ -55,7 +55,17 @@ namespace CKPE
 				auto offset = ID{ 639595, 1990553 };
 
 				Relocation(offset, Offset{ 0x37A, 0x422 }).WriteFill(NOP, 0x2D);
-				Relocation(offset, Offset{ 0x37A, 0x422 }).Write({ 0x48, 0x8D, 0x55, 0xB7, 0x4C, 0x89, 0xE1, 0x4D, 0x8D, 0x46, 0x70 });
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
+				{
+					// 1.10.162.0 keeps the reference in rbx, the render window edit module in rsi and the source
+					// position at [rbp-0x61]: lea rdx, [rbp-0x61]; mov rcx, rbx; lea r8, [rsi+0x70]
+					Relocation(offset, Offset{ 0x37A, 0x422 }).Write({ 0x48, 0x8D, 0x55, 0x9F, 0x48, 0x89, 0xD9, 0x4C, 0x8D, 0x46, 0x70 });
+				}
+				else
+				{
+					// lea rdx, [rbp-0x49]; mov rcx, r12; lea r8, [r14+0x70]
+					Relocation(offset, Offset{ 0x37A, 0x422 }).Write({ 0x48, 0x8D, 0x55, 0xB7, 0x4C, 0x89, 0xE1, 0x4D, 0x8D, 0x46, 0x70 });
+				}
 				Relocation(offset, Offset{ 0x385, 0x42D }).WriteCall(&SetPosition);
 
 				return true;
