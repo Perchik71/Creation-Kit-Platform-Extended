@@ -255,32 +255,31 @@ namespace CKPE
 				// The stats live in the per-thread renderer state: *(TLS[index] + statsOffset) ->
 				// { ..., +0x2FF0 current group, +0x2FF8 [9] x { calls, polys, 8 bytes } } (the same layout in all
 				// builds). The "%u main draw calls, ..." formatter reads group 2 / the sum of them
-				// (CK 1.10.162.0 sub_14045EBB0, 1.10.982.3 sub_1405533C0, 1.11.240.0 sub_14056EB90).
+				// (CK 1.10.162.0 sub_14045EBB0, 1.10.982.3 sub_1405533C0, 1.11.137.0 sub_14056C730, 1.11.240.0 sub_14056EB90).
 				// index is the dword the PE TLS directory points to (AddressOfIndex), statsOffset is where the
 				// pointer to the stats sits in the TLS block.
 				EditorAPI::BGSRenderWindow::DrawInfo::GroupsValid = false;
 				if (ShowRenderStatsGroups)
 				{
-					std::uintptr_t tlsIndexRva = 0, statsOffset = 0;
+					std::uintptr_t statsOffset = 0;
 					switch (VersionLists::GetEditorVersion())
 					{
 					case VersionLists::EDITOR_FALLOUT_C4_1_10_162_0:
-						tlsIndexRva = 0xA5CE474; statsOffset = 0x2FD0;
+						statsOffset = 0x2FD0;
 						break;
 					case VersionLists::EDITOR_FALLOUT_C4_1_10_982_3:
-						tlsIndexRva = 0x80690B0; statsOffset = 0x39B0;
-						break;
+					case VersionLists::EDITOR_FALLOUT_C4_1_11_137_0:
 					case VersionLists::EDITOR_FALLOUT_C4_1_11_240_0:
-						tlsIndexRva = 0x8016A70; statsOffset = 0x39B0;
+						statsOffset = 0x39B0;
 						break;
 					default:
 						break;
 					}
 
 					auto tls = (std::uintptr_t*)__readgsqword(0x58);
-					if (tlsIndexRva && tls)
+					if (statsOffset && tls)
 					{
-						auto index = *(std::uint32_t*)((std::uintptr_t)GetModuleHandleA(nullptr) + tlsIndexRva);
+						auto index = *Common::Relocation<std::uint32_t*>(Common::ID{ 91815, 1343534 }).Get();
 						if (tls[index])
 						{
 							auto stats = *(std::uintptr_t*)(tls[index] + statsOffset);
