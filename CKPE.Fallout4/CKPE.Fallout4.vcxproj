@@ -174,6 +174,7 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ESLTip.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.Facegen.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FakeMoveLight.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixAcousticSpaceMarker.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixBadPictureInRender.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixBNet.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixCrashMapMarkerCmd.cpp" />
@@ -368,6 +369,7 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ESLTip.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.Facegen.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FakeMoveLight.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixAcousticSpaceMarker.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixBadPictureInRender.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixBNet.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixCrashMapMarkerCmd.h" />

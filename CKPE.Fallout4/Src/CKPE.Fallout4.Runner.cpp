@@ -33,6 +33,7 @@
 #include <Patches/CKPE.Fallout4.Patch.ESLTip.h>
 #include <Patches/CKPE.Fallout4.Patch.Facegen.h>
 #include <Patches/CKPE.Fallout4.Patch.FakeMoveLight.h>
+#include <Patches/CKPE.Fallout4.Patch.FixAcousticSpaceMarker.h>
 #include <Patches/CKPE.Fallout4.Patch.FixBadPictureInRender.h>
 #include <Patches/CKPE.Fallout4.Patch.FixBNet.h>
 #include <Patches/CKPE.Fallout4.Patch.FixCrashMapMarkerCmd.h>
@@ -138,6 +139,7 @@ namespace CKPE
 			mgr->Register(new Patch::ESLTip);
 			mgr->Register(new Patch::Facegen);
 			mgr->Register(new Patch::FakeMoveLight);
+			mgr->Register(new Patch::FixAcousticSpaceMarker);
 			mgr->Register(new Patch::FixBadPictureInRender);
 			mgr->Register(new Patch::FixBNet);
 			mgr->Register(new Patch::FixCrashMapMarkerCmd);

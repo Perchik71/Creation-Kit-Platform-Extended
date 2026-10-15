@@ -53,6 +53,9 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixCrashMapMarkerCmd.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixAcousticSpaceMarker.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixBNet.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -460,6 +463,9 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixCrashMapMarkerCmd.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixAcousticSpaceMarker.h">
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixBNet.h">
