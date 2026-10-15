@@ -218,7 +218,18 @@ namespace CKPE
 			RECT extended{};
 			if (SUCCEEDED(DwmGetWindowAttribute(hWnd, DWMWA_EXTENDED_FRAME_BOUNDS, &extended, sizeof(extended))) &&
 				(extended.right > extended.left) && (extended.bottom > extended.top))
+			{
+				// DWMWA_EXTENDED_FRAME_BOUNDS is always in physical pixels, while GetWindowRect, ClientToScreen and
+				// GetCursorPos are virtualized for a DPI-unaware process (the CK at a display scale above 100%).
+				// Bring it into the same space, otherwise the frame insets computed against GetWindowRect are wrong.
+				POINT topLeft{ extended.left, extended.top };
+				POINT bottomRight{ extended.right, extended.bottom };
+				if (PhysicalToLogicalPointForPerMonitorDPI(hWnd, std::addressof(topLeft)) &&
+					PhysicalToLogicalPointForPerMonitorDPI(hWnd, std::addressof(bottomRight)))
+					return { topLeft.x, topLeft.y, bottomRight.x, bottomRight.y };
+
 				return extended;
+			}
 
 			RECT fallback{};
 			GetWindowRect(hWnd, std::addressof(fallback));
