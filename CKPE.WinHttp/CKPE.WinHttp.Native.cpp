@@ -80,7 +80,7 @@ namespace CKPE
 
         void Runner::EnableBreakpoint() noexcept(true)
         {
-            _MESSAGE("Module base: %llX", _moduleBase);
+            _MESSAGE("Module base: %llX"sv, _moduleBase);
 
             auto app = Application::GetSingleton();
       
@@ -147,10 +147,10 @@ namespace CKPE
                 if (ckpe_ver.has_value())
                 {
                     auto& v = ckpe_ver.value();
-                    _MESSAGE("CKPE Runtime:\n\t%u.%u build %u\n", v.major(), v.minor(), v.build());
+                    _MESSAGE("CKPE Runtime:\n\t%u.%u build %u\n"sv, v.major(), v.minor(), v.build());
                 }
 
-                _MESSAGE(L"OS:\n\t%s\n\t%u.%u build %u\n", 
+                _MESSAGE(L"OS:\n\t%s\n\t%u.%u build %u\n"sv, 
                     // Without COM interface (Important in this stage application)
                     HardwareInfo::OS::GetVersionByString().c_str(),
                     GET_EXE_VERSION_EX_MAJOR(osver),
@@ -186,7 +186,7 @@ namespace CKPE
                     Patterns::ASCIIStringToMask("Skyrim.esm")))
                 {
                     // SKYRIM
-                    _MESSAGE("Game:\n\tSkyrimSE\n");
+                    _MESSAGE("Game:\n\tSkyrimSE\n"sv);
                     if (!game_mgr->Initialize(GameManager::Game::CK_SKYRIMSE))
                         throw RuntimeError("CKPE is installed incorrectly."
                             "\nThere is no library to support Creation Kit the SkyrimSE game.");
@@ -195,7 +195,7 @@ namespace CKPE
                     Patterns::ASCIIStringToMask("Fallout4.esm")))
                 {
                     // FALLOUT4
-                    _MESSAGE("Game:\n\tFallout 4\n");
+                    _MESSAGE("Game:\n\tFallout 4\n"sv);
                     if (!game_mgr->Initialize(GameManager::Game::CK_FALLOUT4))
                         throw RuntimeError("CKPE is installed incorrectly."
                             "\nThere is no library to support Creation Kit the Fallout 4 game.");
@@ -204,7 +204,7 @@ namespace CKPE
                     Patterns::ASCIIStringToMask("Starfield.esm")))
                 {
                     // STARFIELD
-                    _MESSAGE("Game:\n\tStarfield\n");
+                    _MESSAGE("Game:\n\tStarfield\n"sv);
                     if (!game_mgr->Initialize(GameManager::Game::CK_STARFIELD))
                         throw RuntimeError("CKPE is installed incorrectly."
                             "\nThere is no library to support Creation Kit the Starfield game.");
@@ -220,7 +220,7 @@ namespace CKPE
 
                 std::wstring version;
                 auto result = game_mgr->QueryLib(version);
-                _MESSAGE(L"\tLaunch: %s\n", version.c_str());
+                _MESSAGE(L"\tLaunch: %s\n"sv, version.c_str());
                 
                 switch (result)
                 {
@@ -252,14 +252,12 @@ namespace CKPE
                 EnableBreakpoint();
                 _run = true;
             }
-            // Added at the request of Michael, and the author of the mod "xSE Plugin Preloader" took the name of mine .dll
-            // does not want to fix this misunderstanding... bitch.
-            // 
+
             // Because CKPE is always loaded... Let's check the game, if it's a game, then I're making dirt!
             // (At least it's not according to the rules of this project)
             else if (sname.contains(L"fallout4"))
             {
-                static constexpr auto PreloaderModName = L"xSEPluginPreloader.dll"; //L"bullshit.dll";
+                static constexpr auto PreloaderModName = L"xSEPluginPreloader.dll";
 
                 if (PathUtils::FileExists(PathUtils::GetApplicationPath() + PreloaderModName))
                     LoadLibraryW((PathUtils::GetApplicationPath() + PreloaderModName).c_str());

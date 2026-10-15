@@ -30,10 +30,12 @@ extern "C"
 		auto ver = CKPE::FileUtils::GetFileVersion(CKPE::PathUtils::GetApplicationFileName());
 		if (ver.has_value())
 		{
-			if (ver.value() != version_num)
-				return CKPE::GameManager::FAKE;
 			if (CKPE::Starfield::VersionLists::HasAllowedEditorVersion())
+			{
+				if (ver.value() != version_num)
+					return CKPE::GameManager::FAKE;
 				return CKPE::GameManager::SUPPORTED;
+			}
 			if (CKPE::Starfield::VersionLists::HasOutdatedEditorVersion())
 				return CKPE::GameManager::DEPRECATED;
 		}

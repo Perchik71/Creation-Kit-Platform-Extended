@@ -31,10 +31,12 @@ extern "C"
 		auto ver = CKPE::FileUtils::GetFileVersion(CKPE::PathUtils::GetApplicationFileName());
 		if (ver.has_value())
 		{
-			if (ver.value() != version_num)
-				return CKPE::GameManager::FAKE;
 			if (CKPE::Fallout4::VersionLists::HasAllowedEditorVersion())
+			{
+				if (ver.value() != version_num)
+					return CKPE::GameManager::FAKE;
 				return CKPE::GameManager::SUPPORTED;
+			}
 			if (CKPE::Fallout4::VersionLists::HasOutdatedEditorVersion())
 				return CKPE::GameManager::DEPRECATED;
 		}

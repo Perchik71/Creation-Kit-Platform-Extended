@@ -94,9 +94,8 @@ namespace CKPE
 			L"Fallout 4 [v1.11.246.0]"sv,
 		};
 
-		constexpr Runtime Runtime_Latest = Runtime_AE3;
-			
-		constexpr std::array<Runtime, 4> global_RuntimeList
+		constexpr Runtime Runtime_Latest = Runtime_AE3;			
+		constexpr std::array<Runtime, Common::SUPPORT_RUNTIMECOUNT> global_RuntimeList
 		{ Runtime_OG, Runtime_NG, Runtime_AE, Runtime_AE3 };
 
 		void VersionLists::Verify()
