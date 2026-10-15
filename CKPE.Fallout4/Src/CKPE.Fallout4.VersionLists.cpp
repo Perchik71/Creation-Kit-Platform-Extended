@@ -10,101 +10,106 @@
 #include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.Fallout4.VersionLists.h>
 
+#include <atomic>
+#include <array>
+
 namespace CKPE
 {
 	namespace Fallout4
 	{
-		VersionLists::EDITOR_EXECUTABLE_TYPE _seditor_ver{ VersionLists::EDITOR_UNKNOWN };
+		std::atomic<int8_t> global_RuntimeIndex{ -1 };
 
-		// Список проверенных исполняемых файлов, допущенных к запуску
-		static std::unordered_map<uint32_t, VersionLists::EDITOR_EXECUTABLE_TYPE> _sallowedEditorVersion =
+		struct Runtime
 		{
-			{ 0xDF67F346ul, VersionLists::EDITOR_FALLOUT_C4_1_10_162_0		},	// Default
-			{ 0x481CCE95ul, VersionLists::EDITOR_FALLOUT_C4_1_10_982_3		},	// Redirect Steam
-			{ 0x55F7F580ul, VersionLists::EDITOR_FALLOUT_C4_1_10_982_3		},	// No Steam and Redirect Steam
-			{ 0x49E45284ul, VersionLists::EDITOR_FALLOUT_C4_1_11_137_0		},	// Default
-			{ 0x94FA23E9ul, VersionLists::EDITOR_FALLOUT_C4_1_11_240_0		},	// Default
+			VersionLists::EDITOR_EXECUTABLE_TYPE editor;
+			std::initializer_list<std::uint32_t> crc32AllowedEditorVersion;
+			std::uint32_t offsetForChecks;
+			std::string_view stringForChecks;
+			CKPE::Version version;
+			std::wstring_view versionStr;
+
+			[[nodiscard]] inline bool Crc32Matches(std::uint32_t a_crc32) const noexcept(true)
+			{
+				return std::find(crc32AllowedEditorVersion.begin(), crc32AllowedEditorVersion.end(), a_crc32)
+					!= crc32AllowedEditorVersion.end();
+			}
+
+			[[nodiscard]] bool CheckBinary() const noexcept(true)
+			{
+				__try
+				{
+					return !strcmp(reinterpret_cast<const char*>(
+						reinterpret_cast<std::uintptr_t>(GetModuleHandleA(nullptr)) + offsetForChecks),
+						stringForChecks.data());
+				}
+				__except (EXCEPTION_EXECUTE_HANDLER)
+				{
+					return false;
+				}
+			}
 		};
 
-		// Список устаревших версий редакторов - outdated versions
-		static std::vector<VersionLists::EDITOR_EXECUTABLE_TYPE> _soutdatedEditorVersion =
-		{
-			VersionLists::EDITOR_FALLOUT_C4_1_10_943_1,
-		};
-
-		// Список ключевых смещений в исполняемых файлах, допущенных к запуску (но не точно) - offsets in exe holding name
-		static std::unordered_map<uint32_t, std::pair<std::string_view, VersionLists::EDITOR_EXECUTABLE_TYPE>> _sallowedEditorVersion2 =
-		{
-			{ 0x3896168ul, { "1.10.162.0",	VersionLists::EDITOR_FALLOUT_C4_1_10_162_0		} },
-			{ 0x2F8D1C8ul, { "1.10.943.1",	VersionLists::EDITOR_FALLOUT_C4_1_10_943_1		} },
-			{ 0x2F8D298ul, { "1.10.982.3",	VersionLists::EDITOR_FALLOUT_C4_1_10_982_3		} },
-			{ 0x3017E68ul, { "1.11.137.0",	VersionLists::EDITOR_FALLOUT_C4_1_11_137_0		} },
-			{ 0x30284D8ul, { "1.11.240.0",  VersionLists::EDITOR_FALLOUT_C4_1_11_240_0		} },
-		};
-
-		// Список версий - version list
-		static std::vector<CKPE::Version> _sEditorVersion =
-		{
-			{},
+		constexpr Runtime Runtime_OG{
+			VersionLists::EDITOR_FALLOUT_C4_1_10_162_0,
+			{ 0xDF67F346ul },								// CRC32
+			0x3896168ul,
+			"1.10.162.0"sv,
 			{ 1, 10, 162, 0 },
-			{ 1, 10, 943, 1 },
+			L"Fallout 4 [v1.10.162.0]"sv,
+		};
+
+		constexpr Runtime Runtime_NG{
+			VersionLists::EDITOR_FALLOUT_C4_1_10_982_3,
+			{ 0x481CCE95ul, 0x55F7F580ul },					// CRC32
+			0x2F8D298ul,
+			"1.10.982.3"sv,
 			{ 1, 10, 982, 3 },
+			L"Fallout 4 [v1.10.982.3]"sv,
+		};
+
+		constexpr Runtime Runtime_AE{
+			VersionLists::EDITOR_FALLOUT_C4_1_11_137_0,
+			{ 0x49E45284ul },								// CRC32
+			0x3017E68ul,
+			"1.11.137.0"sv,
 			{ 1, 11, 137, 0 },
+			L"Fallout 4 [v1.11.137.0]"sv,
+		};
+
+		constexpr Runtime Runtime_AE2{
+			VersionLists::EDITOR_FALLOUT_C4_1_11_240_0,
+			{ 0x94FA23E9ul },								// CRC32
+			0x30284D8ul,
+			"1.11.240.0"sv,
 			{ 1, 11, 240, 0 },
+			L"Fallout 4 [v1.11.240.0]"sv,
 		};
 
-		// Список названий редакторов - editor names
-		static std::vector<std::wstring_view> _sEditorVersionStr =
-		{
-			L"Unknown version",
-			L"Fallout 4 [v1.10.162.0]",
-			L"Fallout 4 [v1.10.943.1]",
-			L"Fallout 4 [v1.10.982.3]",
-			L"Fallout 4 [v1.11.137.0]",
-			L"Fallout 4 [v1.11.240.0]",
+		constexpr Runtime Runtime_AE3{
+			VersionLists::EDITOR_FALLOUT_C4_1_11_246_0,
+			{ 0x3E8BBBE7ul },								// CRC32
+			0x30294D8ul,
+			"1.11.246.0"sv,
+			{ 1, 11, 246, 0 },
+			L"Fallout 4 [v1.11.246.0]"sv,
 		};
 
-		// Список имён файлов базы данных - db list
-		// Обязательно ограничено Common::SUPPORT_RUNTIMECOUNT
-		static std::array<std::pair<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view>, Common::SUPPORT_RUNTIMECOUNT> _sallowedDatabaseVersion =
-		{ {
-			{ VersionLists::EDITOR_FALLOUT_C4_1_10_162_0,	L"CreationKitPlatformExtended_FO4_1_10_162.database"	},
-			{ VersionLists::EDITOR_FALLOUT_C4_1_10_982_3,	L"CreationKitPlatformExtended_FO4_1_10_982_3.database"	},
-			{ VersionLists::EDITOR_FALLOUT_C4_1_11_137_0,	L"CreationKitPlatformExtended_FO4_1_11_137_0.database"	},
-			{ VersionLists::EDITOR_FALLOUT_C4_1_11_240_0,	L"CreationKitPlatformExtended_FO4_1_11_240_0.database"	},
-		} };
-		static_assert(_sallowedDatabaseVersion.size() == Common::SUPPORT_RUNTIMECOUNT);
-		
-		// CK Address Library
-		static std::unordered_map<VersionLists::EDITOR_EXECUTABLE_TYPE, std::wstring_view> _sallowedAddressLibraryVersion =
-		{
-			{ VersionLists::EDITOR_FALLOUT_C4_1_11_240_0,	L"version-1-11-240-0.bin" },
-		};
+		constexpr Runtime Runtime_Latest = Runtime_AE3;
+			
+		constexpr std::array<Runtime, 4> global_RuntimeList
+		{ Runtime_OG, Runtime_NG, Runtime_AE, Runtime_AE3 };
 
 		void VersionLists::Verify()
 		{
-			auto it = _sallowedEditorVersion.find(Application::GetSingleton()->GetFileCRC32());
-			if (it != _sallowedEditorVersion.end())
+			auto crc32 = Application::GetSingleton()->GetFileCRC32();
+			for (std::int8_t runtimeIdx = 0; runtimeIdx < global_RuntimeList.size(); runtimeIdx++)
 			{
-				_seditor_ver = it->second;
-				return;
-			}
-
-			for (auto& it2 : _sallowedEditorVersion2)
-			{
-				// Защита в случаи выхода за пределы при проверке
-				__try
+				const auto& runtime = global_RuntimeList[runtimeIdx];
+				if (runtime.Crc32Matches(crc32) || runtime.CheckBinary())
 				{
-					// Сравнение по указанному смещению нужной строки - string comparison at offset
-					if (!_stricmp((const char*)((std::uintptr_t)GetModuleHandleA(nullptr) + it2.first),
-						it2.second.first.data()))
-					{
-						_seditor_ver = it2.second.second;
-						break;
-					}
+					global_RuntimeIndex.store(runtimeIdx);
+					break;
 				}
-				__except (EXCEPTION_EXECUTE_HANDLER)
-				{}
 			}
 		}
 
@@ -113,13 +118,15 @@ namespace CKPE
 			if (HasOutdatedEditorVersion())
 				return false;
 
-			return _seditor_ver != VersionLists::EDITOR_UNKNOWN;
+			auto idx = GetRuntimeIndex();
+			return idx != 0xFF;
 		}
 
 		bool VersionLists::HasOutdatedEditorVersion() noexcept(true)
 		{
-			return std::find(_soutdatedEditorVersion.begin(), _soutdatedEditorVersion.end(), _seditor_ver)
-				!= _soutdatedEditorVersion.end();
+			auto idx = GetRuntimeIndex();
+			auto ver = Application::GetSingleton()->GetFileVersion();
+			return (idx == 0xFF && (ver.value_or<CKPE::Version>({}) <= Runtime_Latest.version));
 		}
 
 		std::wstring VersionLists::GetGameName() noexcept(true)
@@ -129,47 +136,20 @@ namespace CKPE
 
 		std::uint8_t VersionLists::GetRuntimeIndex() noexcept(true)
 		{
-			static std::uint8_t cache = 0xFF;
-			if (cache != 0xFF) return cache;
-
-			std::uint8_t id{ 0 };
-			for (auto& p : _sallowedDatabaseVersion)
-			{
-				if (p.first == _seditor_ver)
-					return cache = id;
-				id++;
-			}
-
-			return 0xFF;
+			return static_cast<uint8_t>(global_RuntimeIndex.load());
 		}
 
 		CKPE::Version VersionLists::GetEditorVersionByNum() noexcept(true)
 		{
-			return _sEditorVersion[_seditor_ver];
-		}
-
-		std::wstring VersionLists::GetDatabaseFileName() noexcept(true)
-		{
-			auto it = std::find_if(_sallowedDatabaseVersion.begin(), _sallowedDatabaseVersion.end(), [](auto& it) {
-				return it.first == _seditor_ver;
-				});
-			return (it != _sallowedDatabaseVersion.end()) ? it->second.data() : L"";
-		}
-
-		bool VersionLists::HasAddressLibrarySupport() noexcept(true)
-		{
-			return _sallowedAddressLibraryVersion.contains(_seditor_ver);
-		}
-
-		std::wstring VersionLists::GetAddressLibraryFileName() noexcept(true)
-		{
-			auto it = _sallowedAddressLibraryVersion.find(_seditor_ver);
-			return (it != _sallowedAddressLibraryVersion.end()) ? it->second.data() : L"";
+			auto idx = GetRuntimeIndex();
+			constexpr CKPE::Version unknown{};
+			return idx != 0xFF ? global_RuntimeList[idx].version : unknown;
 		}
 
 		std::wstring VersionLists::GetEditorVersionByString() noexcept(true)
 		{
-			return (_sEditorVersionStr.size() > _seditor_ver) ? _sEditorVersionStr[_seditor_ver].data() : _sEditorVersionStr[0].data();
+			auto idx = GetRuntimeIndex();
+			return idx != 0xFF ? global_RuntimeList[idx].versionStr.data() : L"Unknown version";
 		}
 
 		std::wstring VersionLists::GetExternalResourcePackageFileName() noexcept(true)
@@ -179,17 +159,8 @@ namespace CKPE
 
 		VersionLists::EDITOR_EXECUTABLE_TYPE VersionLists::GetEditorVersion() noexcept(true)
 		{
-			return _seditor_ver;
-		}
-
-		std::wstring VersionLists::GetAddressLibraryRelativePath() noexcept(true)
-		{
-			std::wstring path = L"CKPEBins\\";
-			path += GetGameName();
-			path += L"\\";
-			path += GetAddressLibraryFileName();
-
-			return path;
+			auto idx = GetRuntimeIndex();
+			return idx != 0xFF ? global_RuntimeList[idx].editor : EDITOR_EXECUTABLE_TYPE::EDITOR_UNKNOWN;
 		}
 	}
 }

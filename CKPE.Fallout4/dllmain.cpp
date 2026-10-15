@@ -20,7 +20,7 @@ extern "C"
 		CKPEGameLibraryData::kVersion,
 		{ VERSION_MAJOR, VERSION_MINOR, VERSION_BUILD, VERSION_REVISION },
 		"Fallout4",
-		"Perchik71",
+		"CKPE Team",
 	};
 
 	__declspec(dllexport) std::uint32_t CKPEGameLibrary_Query(std::wstring& version)
@@ -45,11 +45,9 @@ extern "C"
 	{
 		auto dialog_pakfn = CKPE::StringUtils::FormatString(L"CreationKitPlatformExtended_%s_Dialogs.pak",
 			CKPE::Fallout4::VersionLists::GetGameName().c_str());
-		auto database_pakfn = CKPE::StringUtils::FormatString(L"CreationKitPlatformExtended_%s_Databases.pak",
-			CKPE::Fallout4::VersionLists::GetGameName().c_str());
 		auto interface = CKPE::Common::Interface::GetSingleton();
 		interface->Initialize(ckpe, CKPE::Fallout4::VersionLists::GetEditorVersionByNum(), CKPEGameLibrary_Data.dataVersion,
-			dialog_pakfn, database_pakfn, CKPE::Fallout4::VersionLists::GetDatabaseFileName(),
+			dialog_pakfn, L"", L"",
 			CKPE::Fallout4::VersionLists::GetExternalResourcePackageFileName(), true,
 			CKPE::Fallout4::VersionLists::GetRuntimeIndex()
 		);

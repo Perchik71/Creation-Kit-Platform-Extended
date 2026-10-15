@@ -24,7 +24,8 @@ namespace CKPE
 				EDITOR_FALLOUT_C4_1_10_982_3,
 				EDITOR_FALLOUT_C4_1_11_137_0,
 				EDITOR_FALLOUT_C4_1_11_240_0,
-				EDITOR_FALLOUT_C4_LAST = EDITOR_FALLOUT_C4_1_11_240_0,
+				EDITOR_FALLOUT_C4_1_11_246_0,
+				EDITOR_FALLOUT_C4_LAST = EDITOR_FALLOUT_C4_1_11_246_0,
 			};
 
 			static void Verify();
@@ -32,14 +33,10 @@ namespace CKPE
 			[[nodiscard]] static bool HasOutdatedEditorVersion() noexcept(true);
 			[[nodiscard]] static std::wstring GetGameName() noexcept(true);
 			[[nodiscard]] static std::uint8_t GetRuntimeIndex() noexcept(true);
-			[[nodiscard]] static std::wstring GetDatabaseFileName() noexcept(true);
-			[[nodiscard]] static bool HasAddressLibrarySupport() noexcept(true);
-			[[nodiscard]] static std::wstring GetAddressLibraryFileName() noexcept(true);
 			[[nodiscard]] static CKPE::Version GetEditorVersionByNum() noexcept(true);
 			[[nodiscard]] static std::wstring GetEditorVersionByString() noexcept(true);
 			[[nodiscard]] static std::wstring GetExternalResourcePackageFileName() noexcept(true);
 			[[nodiscard]] static EDITOR_EXECUTABLE_TYPE GetEditorVersion() noexcept(true);
-			[[nodiscard]] static std::wstring GetAddressLibraryRelativePath() noexcept(true);
 		};
 	}
 }
