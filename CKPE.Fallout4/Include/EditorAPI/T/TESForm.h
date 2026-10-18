@@ -5,8 +5,11 @@
 #pragma once
 
 #include <cstdint>
+#include <windows.h>
+#include <commctrl.h>
 #include <CKPE.Common.h>
 #include <EditorAPI/T/TESFile.h>
+#include <EditorAPI/B/BSString.h>
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/N/NiFlags.h>
@@ -255,13 +258,15 @@ namespace CKPE
 					/* 0C0 */ virtual void LoadPartial(TESFile* File);
 					/* 0C8 */ virtual void LoadEdit(TESFile* File);
 					/* 0D0 */ virtual void Save(TESFile* File);
-					/* 0D8 */ virtual void SavePlugin(TESFile* File);
+					/* 0D8 */ virtual bool SavePlugin(TESFile* File);
 					/* 0E0 */ virtual void LoadPlugin(TESFile* File);
-					/* 0E8 */ virtual void sub_0E8();
-					/* 0F0 */ virtual void sub_0F0();
-					/* 0F8 */ virtual void sub_0F8();
+					/* 0E8 */ virtual bool SaveForm(TESFile* File);
+					// GroupRecord is the on-disk GRUP header
+					/* 0F0 */ [[nodiscard]] virtual bool IsBeforeGroup(const void* GroupRecord) const noexcept(true);
+					/* 0F8 */ [[nodiscard]] virtual bool IsBeforeForm(TESForm* Rhs) const noexcept(true);
 					/* 100 */ virtual TESForm* CreateDuplicateForm(bool bCreateEditorID, void* Unk);
-					/* 108 */ virtual void sub_108();
+					// Likely FixupDuplicateForm; CopyMap maps original forms to duplicates
+					/* 108 */ virtual void sub_108(void* CopyMap) noexcept(true);
 					/* 110 */ virtual void InitItemImpl() noexcept(true);
 					/* 118 */ [[nodiscard]] virtual TESFile* GetDescriptionOwnerFile() const noexcept(true);
 					/* 120 */ [[nodiscard]] virtual FormType GetFormType() const noexcept(true);
@@ -300,46 +305,57 @@ namespace CKPE
 					/* 228 */ virtual void CreateGroupData(TESForm* OutGroupForm, TESForm* ParentGroup);
 					/* 230 */ [[nodiscard]] virtual std::uint32_t GetFormEditorIDLength() const;
 					/* 238 */ [[nodiscard]] virtual const char* GetFormEditorID() const;
-					/* 240 */ virtual void sub_240() { return; }
-					/* 248 */ virtual void sub_248() { return; }
-					/* 250 */ virtual void sub_250() { return; }
-					/* 258 */ virtual void sub_258() { return; }
-					/* 260 */ virtual void sub_260() { return; }
-					/* 268 */ virtual void sub_268() { return; }
-					/* 270 */ virtual void sub_270() { return; }
-					/* 278 */ virtual void sub_278() { return; }
-					/* 280 */ virtual void sub_280() { return; }
-					/* 288 */ virtual void sub_288() { return; }
-					/* 290 */ virtual void sub_290() { return; }
-					/* 298 */ virtual void sub_298() { return; }
-					/* 2A0 */ virtual void sub_2A0() { return; }
-					/* 2A8 */ virtual void sub_2A8() { return; }
-					/* 2B0 */ virtual void sub_2B0() { return; }
-					/* 2B8 */ virtual void sub_2B8() { return; }
-					/* 2C0 */ virtual void sub_2C0() { return; }
+					/* 240 */ [[nodiscard]] virtual bool IsParentForm() const noexcept(true);
+					/* 248 */ [[nodiscard]] virtual bool IsParentFormTree() const noexcept(true);
+					/* 250 */ [[nodiscard]] virtual bool IsFormTypeChild(FormType Type) const noexcept(true);
+					/* 258 */ virtual void AddReference(TESForm* ReferencingForm) noexcept(true);
+					/* 260 */ virtual bool CanCheckOut() noexcept(true);
+					// Likely CanReferenceDuringCheckIn; Forms is the check-in form list
+					/* 268 */ [[nodiscard]] virtual bool sub_268(TESForm* ReferencingForm, const void* Forms) const noexcept(true);
+					/* 270 */ [[nodiscard]] virtual bool HasAlteredChildren() const noexcept(true);
+					/* 278 */ virtual void GetObjectWindowTreePath(BSString& Path) const noexcept(true);
+					/* 280 */ virtual bool RemoveChildFormsFromList(void* Forms) noexcept(true);
+					// Likely CanCheckOutChildren; reports the first checked-out child
+					/* 288 */ virtual bool sub_288() noexcept(true);
+					// UserFile and VersionFile are the .fud and .fvd version-control wrappers
+					/* 290 */ virtual bool CheckOutChildren(void* UserFile, void* VersionFile) noexcept(true);
+					/* 298 */ virtual bool MarkChildFormsAsDeleted(bool bValue, void* UserFile, void* VersionFile) noexcept(true);
+					/* 2A0 */ virtual void RemoveReferencesToForm(TESForm* Form) noexcept(true);
+					/* 2A8 */ [[nodiscard]] virtual bool CanCheckIn(const void* Forms) const noexcept(true);
+					/* 2B0 */ virtual void BuildCheckInDependencyMessage(const void* Forms, BSString& Message) const noexcept(true);
+					// OutForms is a BSTBTree-style set of TESForm*
+					/* 2B8 */ virtual void GetReferencedForms(void* OutForms) const noexcept(true);
+					/* 2C0 */ virtual bool CheckOut(void* UserFile, void* VersionFile) noexcept(true);
 					/* 2C8 */ virtual bool UpdateTrackingData() noexcept(true);
-					/* 2D0 */ virtual void sub_2D0() { return; }
-					/* 2D8 */ virtual void sub_2D8() { return; }
-					/* 2E0 */ virtual void sub_2E0() { return; }
-					/* 2E8 */ virtual void sub_2E8() { return; }
-					/* 2F0 */ virtual void sub_2F0() { return; }
+					/* 2D0 */ virtual bool UndoCheckOut(void* UserFile) noexcept(true);
+					/* 2D8 */ virtual void PrepareForRevert() noexcept(true);
+					/* 2E0 */ virtual bool Revert() noexcept(true);
+					// Likely OnFormIDsRemapped; FormIDMap maps old to new FormIDs
+					/* 2E8 */ virtual void sub_2E8(void* FormIDMap) noexcept(true);
+					// Likely RecompileScripts
+					/* 2F0 */ virtual bool sub_2F0(void* Context) noexcept(true);
 					/* 2F8 */ [[nodiscard]] virtual bool HasRequiredEditorID() const noexcept(true);
 					/* 300 */ [[nodiscard]] virtual bool DoVerificationEditorID(HWND hDialogBox) const noexcept(true);
-					/* 308 */ virtual void sub_308() { return; }
-					/* 310 */ virtual void sub_310() { return; }
-					/* 318 */ virtual void sub_318() { return; }
-					/* 320 */ virtual void sub_320() { return; }
-					/* 328 */ virtual void sub_328() { return; }
-					/* 330 */ virtual void sub_330() { return; }
-					/* 338 */ virtual void sub_338() { return; }
+					// Names differ from BaseFormComponent to avoid overriding its slots
+					/* 308 */ virtual bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam,
+						LRESULT* pResult) noexcept(true);
+					/* 310 */ [[nodiscard]] virtual bool IsSuitableDialogBox(HWND hDialogBox) const noexcept(true);
+					/* 318 */ virtual void WriteDataToDialogBox(HWND hDialogBox) noexcept(true);
+					// Likely OnDialogBoxShown; called after ShowWindow
+					/* 320 */ virtual void sub_320(HWND hDialogBox) noexcept(true);
+					/* 328 */ virtual void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true);
+					/* 330 */ virtual void CleanupDialogBox(HWND hDialogBox) noexcept(true);
+					/* 338 */ virtual void OnDialogFormSaved(HWND hDialogBox, TESForm* SavedForm) noexcept(true);
 					/* 340 */ virtual void EditFormToWindow(HWND hParentWnd, bool bModalWindow,
 						[[maybe_unused]] bool bUnk1, [[maybe_unused]] std::int32_t nUnk2) noexcept(true);
-					/* 348 */ virtual void sub_348() { return; }
-					/* 350 */ virtual void sub_350() { return; }
-					/* 358 */ virtual void sub_358() { return; }
+					/* 348 */ virtual void FillListViewItem(NMLVDISPINFOA* pDispInfo) const noexcept(true);
+					// Column is 1-based; negative values select descending order
+					/* 350 */ [[nodiscard]] virtual std::int32_t CompareListViewItems(const TESForm* Rhs, LPARAM nSortColumn) const noexcept(true);
+					/* 358 */ virtual void InitializeListView(HWND hListView) const noexcept(true);
 					/* 360 */ [[nodiscard]] virtual bool HasRequiredUniqueEditorID() const noexcept(true);
-					/* 368 */ virtual void sub_368() { return; }
-					/* 370 */ virtual void sub_370() { return; }
+					/* 368 */ virtual void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true);
+					// VisitedForms and RequiredFiles are B-tree sets
+					/* 370 */ virtual void CollectRequiredFiles(void* VisitedForms, void* RequiredFiles) noexcept(true);
 					/* 378 */ virtual bool WriteWidthTabToSettingFile([[maybe_unused]] std::int64_t nUnk, std::int32_t nWidth) noexcept(true);
 					/* 380 */ [[nodiscard]] virtual std::int32_t ReadWidthTabFromSettingFile() const noexcept(true);
 					/* 388 */ virtual std::int32_t GetSafeFormEditorID(char* lpBuffer, std::uint32_t nBufferSize) noexcept(true);
