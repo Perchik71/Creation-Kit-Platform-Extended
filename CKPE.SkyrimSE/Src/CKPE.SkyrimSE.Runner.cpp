@@ -15,6 +15,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.AllowMultipleWindowAndMaster.h>
 #include <Patches/CKPE.SkyrimSE.Patch.AllowPlayerKnowsCondition.h>
 #include <Patches/CKPE.SkyrimSE.Patch.AllowSaveESMandMasterESP.h>
+#include <Patches/CKPE.SkyrimSE.Patch.SaveWorldSpaceOffsets.h>
 #include <Patches/CKPE.SkyrimSE.Patch.AlteredFormList.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BGSPerkRankArray.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BNetConvertUnicodeString.h>
@@ -148,6 +149,7 @@ namespace CKPE
 			mgr->Register(new Patch::AllowMultipleWindowAndMaster);
 			mgr->Register(new Patch::AllowPlayerKnowsCondition);
 			mgr->Register(new Patch::AllowSaveESMandMasterESP);
+			mgr->Register(new Patch::SaveWorldSpaceOffsets);
 			mgr->Register(new Patch::AlteredFormList);
 			mgr->Register(new Patch::BGSPerkRankArray);
 			mgr->Register(new Patch::BNetConvertUnicodeString);

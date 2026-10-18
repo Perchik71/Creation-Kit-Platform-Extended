@@ -245,6 +245,9 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AllowSaveESMandMasterESP.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.SaveWorldSpaceOffsets.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AlteredFormList.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -777,6 +780,9 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AllowSaveESMandMasterESP.h">
       <Filter>Patches</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.SaveWorldSpaceOffsets.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AlteredFormList.h">
       <Filter>Patches</Filter>
     </ClInclude>
@@ -1162,6 +1168,9 @@
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESFile.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESVersionControl.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESForm.h">
