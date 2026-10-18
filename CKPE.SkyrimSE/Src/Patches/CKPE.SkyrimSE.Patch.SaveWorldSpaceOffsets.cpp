@@ -4,6 +4,7 @@
 
 #include <windows.h>
 #include <string>
+#include <cstring>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.LogWindow.h>
@@ -38,6 +39,33 @@ namespace CKPE
 
 				return false;
 			}
+
+			// With bAllowSaveESM the CK keeps the active ESM flagged as a plain plugin (the flag is stripped on load and
+			// again while the header is written), so the in-memory flag cannot tell whether the saved file is a master.
+			static bool IsMasterExtension(const char* name) noexcept(true)
+			{
+				auto extension = strrchr(name, '.');
+				return extension && !_stricmp(extension, ".esm");
+			}
+
+			// OpenFile only accepts a master; flag the file as one while it is mapped, then restore the flag.
+			class MasterFlagGuard
+			{
+				EditorAPI::TESFile* _file;
+				bool _changed;
+			public:
+				MasterFlagGuard(EditorAPI::TESFile* file, bool set) noexcept(true) : _file(file), _changed(set)
+				{
+					if (_changed)
+						_file->SetMaster(true);
+				}
+
+				~MasterFlagGuard() noexcept(true)
+				{
+					if (_changed)
+						_file->SetMaster(false);
+				}
+			};
 
 			static bool GetFileStamp(const std::string& path, WIN32_FILE_ATTRIBUTE_DATA& data) noexcept(true)
 			{
@@ -99,8 +127,17 @@ namespace CKPE
 
 				// OFST is only read by the game for master files (ESM)
 				auto file = handler->ActiveMod;
-				if (!file || !file->IsMaster())
+				if (!file)
 					return;
+
+				const bool was_master = file->IsMaster();
+				if (!was_master && !IsMasterExtension(file->GetFileName().c_str()))
+				{
+					_CONSOLE("Save WorldSpace Offsets: \"%s\" is not a master file, skipped", file->GetFileName().c_str());
+					return;
+				}
+
+				MasterFlagGuard master_flag(file, !was_master);
 
 				auto& gate = EditorAPI::TESVersionControl::OpenFileGate();
 				auto& batch = EditorAPI::TESVersionControl::BatchMode();
@@ -145,9 +182,8 @@ namespace CKPE
 				}
 				gate = prev_gate;
 
-				if (updated || failed)
-					_CONSOLE("Save WorldSpace Offsets: %u worldspace(s) updated, %u failed in \"%s\"", updated, failed,
-						file->GetFileName().c_str());
+				_CONSOLE("Save WorldSpace Offsets: %u worldspace(s) updated, %u failed in \"%s\"", updated, failed,
+					file->GetFileName().c_str());
 			}
 
 			bool SaveWorldSpaceOffsets::hk_Save(void* handler, const char* file_name) noexcept(true)
@@ -167,8 +203,13 @@ namespace CKPE
 
 				auto result = pSave(handler, file_name);
 
-				if (result && active && !path.empty() && GetFileStamp(path, after) && !SameStamp(before, after))
-					UpdateOffsets();
+				if (result && active && !path.empty())
+				{
+					if (GetFileStamp(path, after) && !SameStamp(before, after))
+						UpdateOffsets();
+					else
+						_CONSOLE("Save WorldSpace Offsets: \"%s\" was not changed by the save, skipped", active->GetFileName().c_str());
+				}
 
 				return result;
 			}
