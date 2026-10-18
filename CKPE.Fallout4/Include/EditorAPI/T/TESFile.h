@@ -107,6 +107,7 @@ namespace CKPE
 				[[nodiscard]] inline FileHeaderInfo GetHeaderInfo() const noexcept(true) { return m_fileHeader; }
 				[[nodiscard]] inline bool IsLoaded() const noexcept(true) { return m_fileIndex != 0xFF; }
 				[[nodiscard]] inline bool IsMaster() const noexcept(true) { return m_RecordFlags & FILE_RECORD_ESM; }
+				inline void SetMaster(bool Value) noexcept(true) { if (Value) m_RecordFlags |= FILE_RECORD_ESM; else m_RecordFlags &= ~FILE_RECORD_ESM; }
 				[[nodiscard]] inline bool IsSelected() const noexcept(true) { return m_RecordFlags & FILE_RECORD_CHECKED; }
 				[[nodiscard]] inline bool IsActive() const noexcept(true) { return m_RecordFlags & FILE_RECORD_ACTIVE; }
 				[[nodiscard]] inline bool IsLocalized() const noexcept(true) { return m_RecordFlags & FILE_RECORD_LOCALIZED; }
