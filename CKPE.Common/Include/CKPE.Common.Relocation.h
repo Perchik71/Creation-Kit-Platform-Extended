@@ -97,7 +97,7 @@ namespace CKPE
 				noexcept(std::is_nothrow_invocable_v<const value_type&, Args...>)
 				requires(std::invocable<const value_type&, Args...>)
 			{
-				return Get()(std::forward<Args>(a_args)...);
+				return std::invoke(Get(), std::forward<Args>(a_args)...);
 			}
 
 			[[nodiscard]] constexpr std::uintptr_t Address() const noexcept(true) { return _impl; }

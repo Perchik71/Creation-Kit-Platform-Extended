@@ -154,6 +154,7 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.AddChangeRef.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.AllowMultipleWindowAndMaster.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.AllowSaveESMandMasterESP.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.SaveWorldSpaceOffsets.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.AssertD3D11.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.BSArchiveManagerModded.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.BSResourceLooseFiles.cpp" />
@@ -330,6 +331,7 @@
     <ClInclude Include="Include\EditorAPI\T\TESDataHandler.h" />
     <ClInclude Include="Include\EditorAPI\T\TESDescription.h" />
     <ClInclude Include="Include\EditorAPI\T\TESFile.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESVersionControl.h" />
     <ClInclude Include="Include\EditorAPI\T\TESForm.h" />
     <ClInclude Include="Include\EditorAPI\T\TESFullName.h" />
     <ClInclude Include="Include\EditorAPI\T\TESLandTexture.h" />
@@ -349,6 +351,7 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AddChangeRef.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AllowMultipleWindowAndMaster.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AllowSaveESMandMasterESP.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.SaveWorldSpaceOffsets.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.AssertD3D11.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.BSArchiveManagerModded.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.BSResourceLooseFiles.h" />

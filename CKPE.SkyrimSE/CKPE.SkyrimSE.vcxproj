@@ -155,6 +155,7 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AllowMultipleWindowAndMaster.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AllowPlayerKnowsCondition.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AllowSaveESMandMasterESP.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.SaveWorldSpaceOffsets.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AlteredFormList.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.BGSPerkRankArray.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.BNetConvertUnicodeString.cpp" />
@@ -366,6 +367,7 @@
     <ClInclude Include="Include\EditorAPI\T\TESDataHandler.h" />
     <ClInclude Include="Include\EditorAPI\T\TESDialogSpell.h" />
     <ClInclude Include="Include\EditorAPI\T\TESFile.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESVersionControl.h" />
     <ClInclude Include="Include\EditorAPI\T\TESForm.h" />
     <ClInclude Include="Include\EditorAPI\T\TESFullName.h" />
     <ClInclude Include="Include\EditorAPI\T\TESIcon.h" />
@@ -390,6 +392,7 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AllowMultipleWindowAndMaster.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AllowPlayerKnowsCondition.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AllowSaveESMandMasterESP.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.SaveWorldSpaceOffsets.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AlteredFormList.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.BGSPerkRankArray.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.BNetConvertUnicodeString.h" />
