@@ -13,6 +13,7 @@
 #include <Patches/CKPE.Fallout4.Patch.AddChangeRef.h>
 #include <Patches/CKPE.Fallout4.Patch.AllowMultipleWindowAndMaster.h>
 #include <Patches/CKPE.Fallout4.Patch.AllowSaveESMandMasterESP.h>
+#include <Patches/CKPE.Fallout4.Patch.SaveWorldSpaceOffsets.h>
 #include <Patches/CKPE.Fallout4.Patch.AssertD3D11.h>
 #include <Patches/CKPE.Fallout4.Patch.BSArchiveManagerModded.h>
 #include <Patches/CKPE.Fallout4.Patch.BSResourceLooseFiles.h>
@@ -119,6 +120,7 @@ namespace CKPE
 			mgr->Register(new Patch::AddChangeRef);
 			mgr->Register(new Patch::AllowMultipleWindowAndMaster);
 			mgr->Register(new Patch::AllowSaveESMandMasterESP);
+			mgr->Register(new Patch::SaveWorldSpaceOffsets);
 			mgr->Register(new Patch::AssertD3D11);
 			mgr->Register(new Patch::BSArchiveManagerModded);
 			mgr->Register(new Patch::BSResourceLooseFiles);

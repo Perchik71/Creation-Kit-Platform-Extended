@@ -42,6 +42,11 @@ bAllowSaveESM = true
 # Allow ESP files to act as master files while saving.
 bAllowMasterESP = true
 
+# After saving an active master file (ESM), rebuild the worldspace cell offset tables (WRLD OFST and CLSZ) with the Creation Kit's own
+# updater, which otherwise only runs in the internal version control check-in. The game uses them to find cells in master files faster.
+# Requires bAllowSaveESM to save a master file.
+bSaveWorldSpaceOffsets = false
+
 # Enable classic theme. Incompatible with bUIDarkTheme and may cause graphical problems.
 bUIClassicTheme = false
 
