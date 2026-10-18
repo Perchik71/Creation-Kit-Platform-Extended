@@ -7,6 +7,7 @@
 #include <cstdint>
 #include <d3d11.h>
 #include <EditorAPI/B/BSGraphicsTypes.h>
+#include <CKPE.Common.Relocation.h>
 
 namespace CKPE
 {
@@ -14,6 +15,11 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
+			namespace NiAPI
+			{
+				class NiCamera;
+			}
+
 			//https://github.com/hexabits/nifskope/blob/develop/src/data/niftypes.h
 
 			namespace BSGraphics
@@ -169,6 +175,35 @@ namespace CKPE
 				static_assert(sizeof(TriShape::IndexData) == 0x10);
 				static_assert(sizeof(TriShape::VertexData) == 0x10);
 				static_assert(sizeof(TriShape) == 0x20);
+
+				// bsgraphicsrendertargetmanager.cpp
+				class RenderTargetManager
+				{
+				public:
+					// Saves an acquired render target to a file (asserts "Render target not acquired to save it" when the target slot
+					// is -1). FaceGen uses it for the head diffuse / normal / specular textures. Target indices are < 100 (asserted).
+					// CK 1.11.246.0 0x142B72DB0.
+					inline void SaveRenderTarget(std::uint32_t Target, const char* FileName, std::int32_t Format, bool Flag) noexcept(true)
+					{
+						using func_t = decltype(&RenderTargetManager::SaveRenderTarget);
+						static CKPE::Common::Relocation<func_t> func{ CKPE::Common::ID{ 75665, 1589229 } };
+						return func(this, Target, FileName, Format, Flag);
+					}
+				};
+
+				class State
+				{
+				public:
+					// Loads the camera matrices into the per-thread renderer state. The camera must not be null (it is dereferenced).
+					// The call in the -MapMaker path of CK 1.11.246.0 0x140951020 + 0x92C passes the two float arguments.
+					// CK 1.11.246.0 0x142B87920.
+					inline void SetCameraData(NiAPI::NiCamera* Camera, bool Flag, float Arg4, float Arg5) noexcept(true)
+					{
+						using func_t = decltype(&State::SetCameraData);
+						static CKPE::Common::Relocation<func_t> func{ CKPE::Common::ID{ 795781, 1648232 } };
+						return func(this, Camera, Flag, Arg4, Arg5);
+					}
+				};
 			}
 		}
 	}

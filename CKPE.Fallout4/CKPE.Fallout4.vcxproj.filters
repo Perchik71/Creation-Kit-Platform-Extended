@@ -1248,6 +1248,30 @@
     <ClInclude Include="Include\EditorAPI\B\BSFaceGenUtils.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\C\CellViewWindow.h">
+      <Filter>EditorAPI\C</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\O\ObjectWindow.h">
+      <Filter>EditorAPI\O</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\P\ProgressWindow.h">
+      <Filter>EditorAPI\P</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\M\MainWindow.h">
+      <Filter>EditorAPI\M</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\U\UIControlPopulate.h">
+      <Filter>EditorAPI\U</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\D\DialogHelpers.h">
+      <Filter>EditorAPI\D</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\S\SortCallbacks.h">
+      <Filter>EditorAPI\S</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\R\RenderWindowManager.h">
+      <Filter>EditorAPI\R</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BSFadeNode.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
