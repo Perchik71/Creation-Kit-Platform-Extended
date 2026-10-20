@@ -484,7 +484,7 @@ namespace CKPE
 							{
 								bool ExtremlyMode = EditorAPI::BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId;
 
-								if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_982_3)
+								if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_FALLOUT_C4_1_10_982_3)
 								{
 									if (ExtremlyMode == 1)
 									{
