@@ -280,6 +280,8 @@
     <ClInclude Include="Include\EditorAPI\B\BSResourceArchive2.h" />
     <ClInclude Include="Include\EditorAPI\B\BSResourceEntryDB.h" />
     <ClInclude Include="Include\EditorAPI\B\BSResourceLooseFiles.h" />
+    <ClInclude Include="Include\EditorAPI\IDs.h" />
+    <ClInclude Include="Include\EditorAPI\IDs_VTABLE.h" />
     <ClInclude Include="Include\EditorAPI\B\BSSettings.h" />
     <ClInclude Include="Include\EditorAPI\B\BSShaderData.h" />
     <ClInclude Include="Include\EditorAPI\B\BSShaderMaterial.h" />
@@ -332,6 +334,7 @@
     <ClInclude Include="Include\EditorAPI\T\TESDataHandler.h" />
     <ClInclude Include="Include\EditorAPI\T\TESDescription.h" />
     <ClInclude Include="Include\EditorAPI\T\TESFile.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESRegionDataManager.h" />
     <ClInclude Include="Include\EditorAPI\T\TESVersionControl.h" />
     <ClInclude Include="Include\EditorAPI\T\TESForm.h" />
     <ClInclude Include="Include\EditorAPI\T\TESFullName.h" />

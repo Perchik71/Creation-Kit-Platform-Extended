@@ -738,6 +738,9 @@
     <ClInclude Include="Include\EditorAPI\T\TESFile.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESRegionDataManager.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESVersionControl.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
@@ -926,6 +929,12 @@
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BSResourceLooseFiles.h">
       <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\IDs.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\IDs_VTABLE.h">
+      <Filter>EditorAPI</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BSSettings.h">
       <Filter>EditorAPI\B</Filter>

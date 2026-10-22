@@ -8,6 +8,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <CKPE.Common.Relocation.h>
+#include <EditorAPI/IDs.h>
 #include <EditorAPI/T/TESFile.h>
 #include <EditorAPI/T/TESForm.h>
 
@@ -56,7 +57,7 @@ namespace CKPE
 				inline bool OpenFile(TESFile* File) noexcept(true)
 				{
 					using func_t = decltype(&TESVersionControl::OpenFile);
-					static Common::Relocation<func_t> func{ Common::ID{ 645113, 1672165 } };
+					static Common::Relocation<func_t> func{ IDs::TESVersionControl::OpenFile };
 					return func(this, File);
 				}
 
@@ -65,7 +66,7 @@ namespace CKPE
 				inline void Close() noexcept(true)
 				{
 					using func_t = decltype(&TESVersionControl::Close);
-					static Common::Relocation<func_t> func{ Common::ID{ 645120, 1665199 } };
+					static Common::Relocation<func_t> func{ IDs::TESVersionControl::Close };
 					return func(this);
 				}
 
@@ -74,7 +75,7 @@ namespace CKPE
 				inline bool UpdateWorldSpaceOffsets(Forms::TESForm* WorldSpace) noexcept(true)
 				{
 					using func_t = decltype(&TESVersionControl::UpdateWorldSpaceOffsets);
-					static Common::Relocation<func_t> func{ Common::ID{ 77497 } };
+					static Common::Relocation<func_t> func{ IDs::TESVersionControl::UpdateWorldSpaceOffsets };
 					return func(this, WorldSpace);
 				}
 
@@ -82,21 +83,21 @@ namespace CKPE
 				// CK 1.11.246.0 0x143D48D80.
 				[[nodiscard]] inline static std::uint8_t& OpenFileGate() noexcept(true)
 				{
-					static Common::Relocation<std::uint8_t*> data{ Common::ID{ 974693, 2007624 } };
+					static Common::Relocation<std::uint8_t*> data{ IDs::TESVersionControl::OpenFileGate };
 					return *data.Get();
 				}
 
 				// Set by the batch tools while they work on a file. CK 1.11.246.0 0x143D52331.
 				[[nodiscard]] inline static std::uint8_t& BatchMode() noexcept(true)
 				{
-					static Common::Relocation<std::uint8_t*> data{ Common::ID{ 500470 } };
+					static Common::Relocation<std::uint8_t*> data{ IDs::TESVersionControl::BatchMode };
 					return *data.Get();
 				}
 
 				// The file the batch tools write to; the form re-save localizes FormIDs against it. CK 1.11.246.0 0x143D52338.
 				[[nodiscard]] inline static TESFile*& TargetFile() noexcept(true)
 				{
-					static Common::Relocation<TESFile**> data{ Common::ID{ 140124 } };
+					static Common::Relocation<TESFile**> data{ IDs::TESVersionControl::TargetFile };
 					return *data.Get();
 				}
 			};

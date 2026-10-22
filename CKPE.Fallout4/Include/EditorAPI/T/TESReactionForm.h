@@ -26,7 +26,7 @@ namespace CKPE
 			public:
 				BSSimpleList<GROUP_REACTION*> reactionList; // 08
 				std::int8_t groupFormType; // 18
-				std::uint8_t unk19[0x7]; // 19
+				std::uint8_t pad19[0x7]; // 19
 			};
 			static_assert(sizeof(TESReactionForm) == 0x20);
 		}

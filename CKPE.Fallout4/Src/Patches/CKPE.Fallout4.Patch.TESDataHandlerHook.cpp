@@ -49,8 +49,8 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				static auto data = Relocation(ID{ 314871, 1538742 }).Address();
-				static auto active_data = Relocation(ID(583335)).Address();
+				static auto data = Relocation(EditorAPI::IDs::TESDataHandler::Instance).Address();
+				static auto active_data = Relocation(EditorAPI::IDs::TESDataHandler::UserModded).Address();
 
 				EditorAPI::TESDataHandler::Singleton = reinterpret_cast<std::uintptr_t>(std::addressof(data));
 				EditorAPI::TESDataHandler::UserModdedSingleton = reinterpret_cast<std::uintptr_t>(std::addressof(active_data));

@@ -56,9 +56,9 @@ namespace CKPE
 				std::int8_t numAddons; // 2A
 				std::int8_t numMaterials; // 2B
 				std::int8_t flags; // 2C
-				std::uint8_t unk2D[0x3]; // 2D
-				std::uint32_t unk30; // 30 - CK only (constant 2421 on construction)
-				std::uint32_t unk34; // 34 - CK only (constant 2420 on construction)
+				std::uint8_t pad2D[0x3]; // 2D
+				std::uint32_t modelNameControlID; // 30 - CK only, dialog control ID (IDC_MODEL_NAME, 2421 on construction)
+				std::uint32_t modelDataControlID; // 34 - CK only, dialog control ID (IDC_MODEL_DATA, 2420 on construction)
 			};
 			static_assert(sizeof(TESModel) == 0x38);
 		}

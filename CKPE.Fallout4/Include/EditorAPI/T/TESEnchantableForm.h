@@ -31,7 +31,7 @@ namespace CKPE
 				Forms::EnchantmentItem* formEnchanting; // 08
 				std::uint16_t castingType; // 10 - MagicSystem::CastingType
 				std::uint16_t amountOfEnchantment; // 12
-				std::uint32_t unk14; // 14
+				std::uint32_t pad14; // 14
 			};
 			static_assert(sizeof(TESEnchantableForm) == 0x18);
 		}

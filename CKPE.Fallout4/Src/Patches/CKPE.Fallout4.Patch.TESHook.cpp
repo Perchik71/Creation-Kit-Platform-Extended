@@ -48,11 +48,11 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				EditorAPI::TES::Singleton = Relocation<const EditorAPI::TES**>(ID(39712)).Get();
+				EditorAPI::TES::Singleton = Relocation<const EditorAPI::TES**>(EditorAPI::IDs::TES::Singleton).Get();
 
-				static const EditorAPI::Setting* sSetting_SkyView = Relocation<const EditorAPI::Setting*>(ID(169737)).Get();
-				static const EditorAPI::Setting* sSetting_FogEnabled = Relocation<const EditorAPI::Setting*>(ID(335998)).Get();
-				static const EditorAPI::Setting* sSetting_ShowMarkers = Relocation<const EditorAPI::Setting*>(ID(335995)).Get();
+				static const EditorAPI::Setting* sSetting_SkyView = Relocation<const EditorAPI::Setting*>(EditorAPI::IDs::Sky::SkyViewSetting).Get();
+				static const EditorAPI::Setting* sSetting_FogEnabled = Relocation<const EditorAPI::Setting*>(EditorAPI::IDs::Sky::FogEnabledSetting).Get();
+				static const EditorAPI::Setting* sSetting_ShowMarkers = Relocation<const EditorAPI::Setting*>(EditorAPI::IDs::TES::ShowMarkersSetting).Get();
 
 				EditorAPI::Sky::Setting_SkyView = std::addressof(sSetting_SkyView);
 				EditorAPI::Sky::Setting_FogEnabled = std::addressof(sSetting_FogEnabled);

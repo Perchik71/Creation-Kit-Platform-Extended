@@ -28,10 +28,10 @@ namespace CKPE
 			public:
 				std::int8_t idleFlags; // 08
 				std::int8_t idleCount; // 09
-				std::uint8_t unk0A[0x6]; // 0A
+				std::uint8_t pad0A[0x6]; // 0A
 				Forms::TESIdleForm** idleArray; // 10
 				float timerCheckForIdle; // 18
-				std::uint32_t unk1C; // 1C
+				std::uint32_t pad1C; // 1C
 			};
 			static_assert(sizeof(BGSIdleCollection) == 0x20);
 		}

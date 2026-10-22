@@ -21,7 +21,8 @@ namespace CKPE
 				virtual ~TESHealthForm() = default;
 
 			public:
-				std::uint64_t unk08; // 08
+				std::uint32_t health; // 08 - edited through dialog item 1024
+				std::uint32_t pad0C; // 0C
 			};
 			static_assert(sizeof(TESHealthForm) == 0x10);
 		}
