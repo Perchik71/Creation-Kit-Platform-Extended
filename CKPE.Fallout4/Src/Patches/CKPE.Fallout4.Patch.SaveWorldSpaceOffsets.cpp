@@ -4,7 +4,6 @@
 
 #include <windows.h>
 #include <string>
-#include <cstring>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.LogWindow.h>
@@ -40,15 +39,7 @@ namespace CKPE
 				return false;
 			}
 
-			// With bAllowSaveESM the CK keeps the active ESM flagged as a plain plugin (the flag is stripped on load and
-			// again while the header is written), so the in-memory flag cannot tell whether the saved file is a master.
-			static bool IsMasterExtension(const char* name) noexcept(true)
-			{
-				auto extension = strrchr(name, '.');
-				return extension && !_stricmp(extension, ".esm");
-			}
-
-			// OpenFile only accepts a master; flag the file as one while it is mapped, then restore the flag.
+			// OpenFile only accepts a master; flag the file (ESM or ESP) as one while it is mapped, then restore the flag.
 			class MasterFlagGuard
 			{
 				EditorAPI::TESFile* _file;
@@ -125,17 +116,11 @@ namespace CKPE
 				if (!handler)
 					return;
 
-				// OFST is only read by the game for master files (ESM)
 				auto file = handler->ActiveMod;
 				if (!file)
 					return;
 
 				const bool was_master = file->IsMaster();
-				if (!was_master && !IsMasterExtension(file->GetFileName().c_str()))
-				{
-					_CONSOLE("Save WorldSpace Offsets: \"%s\" is not a master file, skipped", file->GetFileName().c_str());
-					return;
-				}
 
 				MasterFlagGuard master_flag(file, !was_master);
 
