@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <xbyak.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.Relocation.h>
@@ -57,7 +58,7 @@ namespace CKPE
 				// Besides, everything worked fine for you, why spoil the working code?
 
 				// Remove useless stuff
-				auto rel = Relocation(ID(288239), 0x1B0);
+				auto rel = Relocation(EditorAPI::IDs::Functions::sub_D0F530, 0x1B0);
 				rel.WriteFill(NOP, 0x12B);
 				auto Rva1 = rel.Address();
 
@@ -110,7 +111,7 @@ namespace CKPE
 				};
 
 				xNormalize_Hook::Generate(Rva1);
-				Relocation(ID(1621802)).WriteJump(&EditorAPI::Forms::TESObjectLAND::Layers::HKNormalize);
+				Relocation(EditorAPI::IDs::Functions::TESObjectLAND_NormalizeLayers).WriteJump(&EditorAPI::Forms::TESObjectLAND::Layers::HKNormalize);
 
 				return true;
 			}

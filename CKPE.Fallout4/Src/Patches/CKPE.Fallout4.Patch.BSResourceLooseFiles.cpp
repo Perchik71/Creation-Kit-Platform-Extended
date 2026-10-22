@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.FileUtils.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.Relocation.h>
@@ -86,7 +87,7 @@ namespace CKPE
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
 					// Set new size class 0x1XX to 0x180
-					Relocation(ID{ 193501, 1992729 }, Offset{ 0x101, 0x101, 0x102 }).Write({ 0x80 });
+					Relocation(EditorAPI::IDs::Functions::BSResource__LooseFileStream_Create, Offset{ 0x101, 0x101, 0x102 }).Write({ 0x80 });
 				}
 				else
 				{
@@ -94,11 +95,11 @@ namespace CKPE
 					// consumer, which reads the 32-bit size at +8) is the interface at +0x138 of the allocation, so the new 64-bit
 					// fields at interface+0x170/+0x178 lie at allocation+0x2A8/+0x2B0. Allocate 0x2C0 (was 0x168/0x160) or the
 					// writes corrupt the neighbouring heap block (e.g. BSSystemFileStreamer's path table: "Scatter table has been trashed").
-					Relocation(ID{ 193501, 1992729 }, Offset{ 0x101, 0x101, 0x102 }).Write({ 0xC0, 0x02 });
+					Relocation(EditorAPI::IDs::Functions::BSResource__LooseFileStream_Create, Offset{ 0x101, 0x101, 0x102 }).Write({ 0xC0, 0x02 });
 				}
 
-				LooseFileStreamHook::Generate(Relocation(ID{ 767841, 1456433 }, 0x107).Address());
-				Relocation(ID{ 712081, 2009874 }).WriteJump(&sub);
+				LooseFileStreamHook::Generate(Relocation(EditorAPI::IDs::Functions::BSResource__OpenLooseFile, 0x107).Address());
+				Relocation(EditorAPI::IDs::Functions::BSResource__GetLooseFileSize32).WriteJump(&sub);
 
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
@@ -107,15 +108,15 @@ namespace CKPE
 					//
 					// mov rax, qword ptr ds:[rcx+0x170]
 					// jmp -> cmp rsi, rax
-					Relocation(ID(552578), 0x484).Write({ 0x48, 0x8B, 0x81, 0x70, 0x01, 0x00, 0x00, 0xEB, 0x1D });
+					Relocation(EditorAPI::IDs::Functions::sub_2464400, 0x484).Write({ 0x48, 0x8B, 0x81, 0x70, 0x01, 0x00, 0x00, 0xEB, 0x1D });
 					
 					// Ignoring the correctness check is not useful
-					Relocation(ID(255793), 0x160).Write(JMP);
-					Relocation(ID(647276), 0x14D).Write(JMP);
-					Relocation(ID(530259), 0x176).Write(JMP);
-					Relocation(ID(530994), 0xD2).Write(JMP);
-					Relocation(ID(648213)).Write(RET);
-					Relocation(ID(745724)).Write(RET);
+					Relocation(EditorAPI::IDs::Functions::legacy_BSResourceLooseFiles_255793, 0x160).Write(JMP);
+					Relocation(EditorAPI::IDs::Functions::legacy_BSResourceLooseFiles_647276, 0x14D).Write(JMP);
+					Relocation(EditorAPI::IDs::Functions::legacy_BSResourceLooseFiles_530259, 0x176).Write(JMP);
+					Relocation(EditorAPI::IDs::Functions::legacy_BSResourceLooseFiles_530994, 0xD2).Write(JMP);
+					Relocation(EditorAPI::IDs::Functions::legacy_BSResourceLooseFiles_648213).Write(RET);
+					Relocation(EditorAPI::IDs::Functions::legacy_BSResourceLooseFiles_745724).Write(RET);
 				}
 				else if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_982_3)
 				{
@@ -124,21 +125,21 @@ namespace CKPE
 					//
 					// mov rax, qword ptr ds:[rcx+0x170]
 					// jmp -> cmp rbx, rax
-					Relocation(ID(552578), 0x3F2).Write({ 0x48, 0x8B, 0x81, 0x70, 0x01, 0x00, 0x00, 0xEB, 0x19 });
+					Relocation(EditorAPI::IDs::Functions::sub_2464400, 0x3F2).Write({ 0x48, 0x8B, 0x81, 0x70, 0x01, 0x00, 0x00, 0xEB, 0x19 });
 
 					// Ignoring the correctness check is not useful
-					Relocation(ID(255793), 0x15A).Write(JMP);
-					Relocation(ID(1501752), 0x15E).Write(JMP);
-					Relocation(ID(530259), 0x180).Write(JMP);
-					Relocation(ID(530994), 0xD2).Write(JMP);
+					Relocation(EditorAPI::IDs::Functions::legacy_BSResourceLooseFiles_255793, 0x15A).Write(JMP);
+					Relocation(EditorAPI::IDs::Functions::legacy_BSResourceLooseFiles_1501752, 0x15E).Write(JMP);
+					Relocation(EditorAPI::IDs::Functions::legacy_BSResourceLooseFiles_530259, 0x180).Write(JMP);
+					Relocation(EditorAPI::IDs::Functions::legacy_BSResourceLooseFiles_530994, 0xD2).Write(JMP);
 				}
 				else
 				{
 					// Ignoring the correctness check is not useful
-					Relocation(ID(2203563), 0x159).Write(JMP);
-					Relocation(ID(2129124), 0x162).Write(JMP);
-					Relocation(ID(2203564), 0x19B).Write(JMP);
-					Relocation(ID(2147855), 0x5D).Write(JMP);
+					Relocation(EditorAPI::IDs::Functions::LooseFileStream_DoRead, 0x159).Write(JMP);
+					Relocation(EditorAPI::IDs::Functions::LooseFileStream_DoReadAlt, 0x162).Write(JMP);
+					Relocation(EditorAPI::IDs::Functions::LooseFileStream_DoSeek, 0x19B).Write(JMP);
+					Relocation(EditorAPI::IDs::Functions::LooseFileStream_DoWrite, 0x5D).Write(JMP);
 				}
 
 				return true;

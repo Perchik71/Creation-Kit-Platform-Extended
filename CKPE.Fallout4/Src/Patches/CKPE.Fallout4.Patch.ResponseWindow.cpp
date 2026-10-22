@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.StringUtils.h>
 #include <CKPE.PathUtils.h>
 #include <CKPE.Graphics.h>
@@ -98,28 +99,28 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				const auto target = ID{ 668460, 1645713 };
+				const auto target = EditorAPI::IDs::Functions::ResponseWindow_DlgProc;
 				*(std::uintptr_t*)&_oldWndProc = Relocation(target).WriteJump(&HKWndProc);
 
-				pointer_ResponseWindow_data = Relocation(ID(394722)).Address();
-				pointer_ResponseWindow_sub1 = Relocation(ID{ 658771, 1856176 }).Address();
-				pointer_ResponseWindow_sub2 = Relocation(ID{ 586309 }).Address();
+				pointer_ResponseWindow_data = Relocation(EditorAPI::IDs::Functions::data_3D6EC30).Address();
+				pointer_ResponseWindow_sub1 = Relocation(EditorAPI::IDs::Functions::sub_B65D00).Address();
+				pointer_ResponseWindow_sub2 = Relocation(EditorAPI::IDs::Functions::GetBounds_ID2D1Geometry__QEBAJAEBUD2D_MATRIX_3X2_F__PEAUD2D_RECT_F___Z_5).Address();
 				// pointer_ResponseWindow_sub3 is dead - it's assigned in the legacy code (offset(4) is
 				// an unused dummy <nope> entry in the relb) but never actually read anywhere, so it's
 				// deliberately left unset here.
 
 				// Hooking the jump. I don't allow the deny button.
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-					Relocation(ID(668482), 0x27B).WriteJump(&sub);
+					Relocation(EditorAPI::IDs::Functions::legacy_ResponseWindow_668482, 0x27B).WriteJump(&sub);
 				else
-					Relocation(ID(1992727), 0x2B5).WriteCall(&sub);
+					Relocation(EditorAPI::IDs::Functions::sub_B3ABB0, 0x2B5).WriteCall(&sub);
 				// Then continue in the same spirit, remove the button.... skip it
 				Relocation(target, Offset{ 0x3AB, 0x39C }).WriteFill(NOP, 0x19);
 				// In case of cancellation .wav triggers and closes the button, we will remove everything
 				Relocation(target, Offset{ 0x632, 0x652 }).WriteCall(&sub);
 				// Hook generate via LipGenerator (By the way, Bethesda does not post it)
 				if (VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-					Relocation(ID(1657523)).WriteJump(&sub2);
+					Relocation(EditorAPI::IDs::Functions::ResponseWindow_RunLipGenerator).WriteJump(&sub2);
 
 				V_LANG = _READ_OPTION_STR("LipGen", "sLanguage", "USEnglish");
 				V_GESTUREEXAGGERATION = _READ_OPTION_FLOAT("LipGen", "fGestureExaggeration", 1.f);

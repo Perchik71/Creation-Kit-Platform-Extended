@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Utils.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -114,16 +115,16 @@ namespace CKPE
 					}
 				};
 
-				Relocation(ID{ 641924, 1752948 }).WriteJump(&Common::EditorUI::ComboBoxInsertItemDeferred);
-				Relocation(ID{ 641951, 1463745 }).WriteJump(&Common::EditorUI::ListViewInsertItemDeferred);
+				Relocation(EditorAPI::IDs::Functions::ComboBox_InsertItem).WriteJump(&Common::EditorUI::ComboBoxInsertItemDeferred);
+				Relocation(EditorAPI::IDs::Functions::CellViewWindow_InsertForm).WriteJump(&Common::EditorUI::ListViewInsertItemDeferred);
 
-				Relocation(ID{ 636062, 1582406 }, Offset{ 0x71, 0x7A }).WriteCall(&sub1);
-				Relocation(ID{ 643131, 1820720 }, Offset{ 0x2DDB, 0x2FBF }).WriteCall(&sub2);
-				Relocation(ID{ 206118, 1450783 }, Offset{ 0xAA, 0xAE }).WriteCall(&sub3);
+				Relocation(EditorAPI::IDs::Functions::sub_528B00, Offset{ 0x71, 0x7A }).WriteCall(&sub1);
+				Relocation(EditorAPI::IDs::Functions::CellViewWindow_WndProc, Offset{ 0x2DDB, 0x2FBF }).WriteCall(&sub2);
+				Relocation(EditorAPI::IDs::Functions::sub_676190, Offset{ 0xAA, 0xAE }).WriteCall(&sub3);
 
-				pointer_UIDeffer_sub1 = Relocation(ID{ 636530, 1675545 }).Address();
-				pointer_UIDeffer_sub2 = Relocation(ID{ 645724, 1445476 }).Address();
-				pointer_UIDeffer_sub3 = Relocation(ID{ 643197, 1973863 }).Address();
+				pointer_UIDeffer_sub1 = Relocation(EditorAPI::IDs::Functions::sub_536B10).Address();
+				pointer_UIDeffer_sub2 = Relocation(EditorAPI::IDs::Functions::sub_710360).Address();
+				pointer_UIDeffer_sub3 = Relocation(EditorAPI::IDs::Functions::sub_677DA0_2).Address();
 
 
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)

@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <algorithm>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -54,9 +55,9 @@ namespace CKPE
 				using namespace Common;
 
 				EditorAPI::BSFaceGenUtils::pointer_SetupHeadPartTexture = reinterpret_cast<void(*)(EditorAPI::NiAPI::NiNode*,
-					EditorAPI::Forms::TESForm*, EditorAPI::Forms::TESNPC*)>(Relocation(ID{ 685825, 1426540 }).WriteJump(&sub_SetupHeadPartTexture));
+					EditorAPI::Forms::TESForm*, EditorAPI::Forms::TESNPC*)>(Relocation(EditorAPI::IDs::Functions::BSFaceGenUtils__SetupHeadPartShaderState).WriteJump(&sub_SetupHeadPartTexture));
 				EditorAPI::BSShaderData::pointer_ApplyMaterialData = reinterpret_cast<void(*)(EditorAPI::BSShaderData*,
-					EditorAPI::BSGeometry*, bool)>(Relocation(ID{ 797024, 1666424 }).WriteJump(&sub_ApplyMaterialData));
+					EditorAPI::BSGeometry*, bool)>(Relocation(EditorAPI::IDs::Functions::BSShaderData__ApplyMaterialData).WriteJump(&sub_ApplyMaterialData));
 
 				return true;
 			}

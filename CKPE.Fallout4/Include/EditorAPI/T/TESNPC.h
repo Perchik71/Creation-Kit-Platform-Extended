@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <EditorAPI/B/BSTHashMap.h>
 #include <EditorAPI/T/TESActorBase.h>
 #include <EditorAPI/T/TESRaceForm.h>
 #include <EditorAPI/B/BGSOverridePackCollection.h>
@@ -74,7 +75,7 @@ namespace CKPE
 					std::int8_t numHeadParts; // 390
 					std::uint8_t unk391[0x7]; // 391
 					std::uint8_t unk398[0x10]; // 398
-					void* morphSliderValues; // 3A8 - BSTHashMap<std::uint32_t, float>*
+					BSTHashMap<std::uint32_t, float>* morphSliderValues; // 3A8
 					void* tintingData; // 3B0 - BGSCharacterTint::Entries*
 				};
 				static_assert(sizeof(TESNPC) == 0x3B8);

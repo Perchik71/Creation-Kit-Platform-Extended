@@ -186,6 +186,27 @@ namespace CKPE
 					inline NiPoint3A(const NiPoint3A& Src) noexcept(true) : NiPoint3(Src) {}
 				};
 				static_assert(sizeof(NiPoint3A) == 0x10);
+
+				class NiPoint4
+				{
+				public:
+					float x, y, z, w;
+
+					inline NiPoint4() noexcept(true) : x(0.0f), y(0.0f), z(0.0f), w(0.0f) {}
+					inline NiPoint4(float fX, float fY, float fZ, float fW) noexcept(true) : x(fX), y(fY), z(fZ), w(fW) {}
+					inline NiPoint4(const NiPoint3& Src, float fW = 0.0f) noexcept(true) : x(Src.x), y(Src.y), z(Src.z), w(fW) {}
+
+					[[nodiscard]] inline float Dot(const NiPoint4& Rhs) const noexcept(true) { return (x * Rhs.x) + (y * Rhs.y) + (z * Rhs.z) + (w * Rhs.w); }
+					[[nodiscard]] inline float Magnitude2() const noexcept(true) { return Dot(*this); }
+					[[nodiscard]] inline float Magnitude() const noexcept(true) { return std::sqrt(Magnitude2()); }
+					[[nodiscard]] inline NiPoint3 XYZ() const noexcept(true) { return NiPoint3(x, y, z); }
+					[[nodiscard]] inline float& operator[](std::size_t Index) noexcept(true) { return (&x)[Index]; }
+					[[nodiscard]] inline const float& operator[](std::size_t Index) const noexcept(true) { return (&x)[Index]; }
+					[[nodiscard]] inline bool operator==(const NiPoint4& Rhs) const noexcept(true) { return x == Rhs.x && y == Rhs.y && z == Rhs.z && w == Rhs.w; }
+					[[nodiscard]] inline bool operator!=(const NiPoint4& Rhs) const noexcept(true) { return !(*this == Rhs); }
+				};
+				static_assert(sizeof(NiPoint4) == 0x10);
+
 			}
 		}
 	}

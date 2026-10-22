@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Utils.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -53,8 +54,8 @@ namespace CKPE
 
 				// Fix for crash when using the -MapMaker command line option. Nullptr camera passed to 
 				// BSGraphics::State::SetCameraData.
-				Relocation(ID(531868), Offset{ 0x917, 0x92C }).WriteCall(sub);
-				pointer_FixCrashMapMarkerCmd_sub = Relocation(ID{ 795781, 1648232 }).Address();
+				Relocation(EditorAPI::IDs::Functions::sub_951020, Offset{ 0x917, 0x92C }).WriteCall(sub);
+				pointer_FixCrashMapMarkerCmd_sub = Relocation(EditorAPI::IDs::Functions::BSGraphics__State__SetCameraData).Address();
 
 				return true;
 			}

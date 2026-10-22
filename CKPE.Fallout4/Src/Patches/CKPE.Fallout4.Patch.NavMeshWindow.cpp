@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -51,7 +52,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 636009, 1498789 }).WriteJump(&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::Functions::NavMeshWindow_WndProc).WriteJump(&HKWndProc);
 
 				return true;
 			}

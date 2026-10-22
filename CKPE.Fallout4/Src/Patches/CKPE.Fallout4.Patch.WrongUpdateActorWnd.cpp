@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Application.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.WrongUpdateActorWnd.h>
@@ -48,9 +49,9 @@ namespace CKPE
 				using namespace Common;
 
 				// ACTOR: Wrong InvalidateRect
-				Relocation(ID{ 650645, 1337975 }, Offset{ 0x131, 0x197 }).WriteFill(NOP, 6);
-				Relocation(ID{ 642042, 1457407 }, 0x15A).WriteFill(NOP, 6);
-				Relocation(ID{ 666248, 1989246 }, Offset{ 0x2835, 0x2C19 }).WriteFill(NOP, 0xF);
+				Relocation(EditorAPI::IDs::Functions::sub_7B48A0, Offset{ 0x131, 0x197 }).WriteFill(NOP, 6);
+				Relocation(EditorAPI::IDs::Functions::sub_642E40, 0x15A).WriteFill(NOP, 6);
+				Relocation(EditorAPI::IDs::Functions::TESNPC__PerformDialogBox, Offset{ 0x2835, 0x2C19 }).WriteFill(NOP, 0xF);
 
 				return true;
 			}

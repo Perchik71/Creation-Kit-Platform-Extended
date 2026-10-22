@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Application.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/B/BGSRenderWindow.h>
@@ -50,9 +51,9 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetPosition = Relocation(ID{ 87136, 1671826 }).WriteJump(&SetPosition);
+				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetPosition = Relocation(EditorAPI::IDs::Functions::TESObjectREFR__SetPosition).WriteJump(&SetPosition);
 
-				auto offset = ID{ 639595, 1990553 };
+				auto offset = EditorAPI::IDs::Functions::sub_5D2370;
 
 				Relocation(offset, Offset{ 0x37A, 0x422 }).WriteFill(NOP, 0x2D);
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)

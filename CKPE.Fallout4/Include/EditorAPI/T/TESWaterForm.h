@@ -5,6 +5,8 @@
 #pragma once
 
 #include <cstdint>
+#include <EditorAPI/N/NiPoint.h>
+#include <EditorAPI/N/NiColor.h>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/T/TESTexture.h>
@@ -82,17 +84,16 @@ namespace CKPE
 				public:
 					bool needUpdate; // 40
 					std::uint8_t unk41[0x3]; // 41
-					std::uint8_t unk44[0x8]; // 44
-					std::uint8_t unk4C[0x8]; // 4C
-					std::uint8_t unk54[0x8]; // 54
-					std::uint8_t unk5C[0x8]; // 5C
-					std::uint8_t unk64[0x8]; // 64
-					std::uint8_t unk6C[0xC]; // 6C
-					TESTexture unk78; // 78
-					TESTexture unkA0; // A0
-					TESTexture unkC8; // C8
-					std::uint16_t unkF0; // F0
-					std::uint8_t unkF2[0x6]; // F2
+					NiAPI::NiColorA texScroll0; // 44 - zeroed by the constructor
+					NiAPI::NiColorA texScroll1; // 54
+					NiAPI::NiColorA texScroll2; // 64
+					std::uint8_t pad74[0x4]; // 74
+					TESTexture noiseTexture0; // 78
+					TESTexture noiseTexture1; // A0
+					TESTexture noiseTexture2; // C8
+					std::int8_t alpha; // F0 - 75 on construction
+					std::int8_t flags; // F1
+					std::uint8_t padF2[0x6]; // F2
 					BGSMaterialType* materialType; // F8
 					BGSSoundDescriptorForm* waterSound; // 100
 					WaterShaderData data; // 108 - DATA
@@ -101,29 +102,37 @@ namespace CKPE
 					std::uint8_t unk1E0; // 1E0
 					std::uint8_t unk1E1[0x7]; // 1E1
 					TESWaterForm* waterWeatherControl[3]; // 1E8
-					std::uint64_t unk200; // 200
-					std::uint32_t unk208; // 208
-					std::uint32_t unk20C; // 20C
-					std::uint32_t unk210; // 210
-					std::uint32_t unk214; // 214
-					std::uint32_t unk218; // 218
-					std::uint32_t unk21C; // 21C
-					std::uint32_t unk220; // 220
-					std::uint32_t unk224; // 224
+					std::int32_t currentTextureSelect01; // 200
+					std::int32_t currentTextureSelect02; // 204
+					std::uint32_t frequencyX; // 208 - 9 on construction
+					std::uint32_t frequencyY; // 20C - 9 on construction
+					std::int32_t octaves; // 210 - 4 on construction
+					float amplitude; // 214 - 0.5 on construction
+					float lacunarity; // 218 - 2.0 on construction
+					float bias; // 21C - 0.5 on construction
+					float gain; // 220 - 0.5 on construction
+					std::uint32_t pad224; // 224
 					SpellItem* consumeSpell; // 228
 					SpellItem* contactSpell; // 230
-					std::uint64_t unk238; // 238
-					std::uint64_t unk240; // 240
-					std::uint64_t unk248; // 248
-					std::uint64_t unk250; // 250
-					std::uint64_t unk258; // 258
-					std::uint64_t unk260; // 260
-					std::uint8_t unk268; // 268
-					std::uint8_t unk269[0x7]; // 269
+					void* niNoiseTexture0; // 238 - NiPointer<NiTexture>
+					void* niNoiseTexture1; // 240 - NiPointer<NiTexture>
+					void* niNoiseTexture2; // 248 - NiPointer<NiTexture>
+					void* placeableAutoWater; // 250 - TESObjectACTI*
+					void* placeableLODWater; // 258 - TESObjectACTI*
+					void* waterShaderMaterial; // 260 - BSWaterShaderMaterial*
+					bool resetNoiseTextures; // 268
+					std::uint8_t pad269[0x7]; // 269
 					TESImageSpace* imageSpace; // 270
-					std::uint8_t linearVelocity[0xC]; // 278 - NiPoint3
-					std::uint8_t angularVelocity[0xC]; // 284 - NiPoint3
+					NiAPI::NiPoint3 linearVelocity; // 278
+					NiAPI::NiPoint3 angularVelocity; // 284
 				};
+				static_assert(offsetof(TESWaterForm, texScroll0) == 0x44);
+				static_assert(offsetof(TESWaterForm, noiseTexture2) == 0xC8);
+				static_assert(offsetof(TESWaterForm, alpha) == 0xF0);
+				static_assert(offsetof(TESWaterForm, currentTextureSelect01) == 0x200);
+				static_assert(offsetof(TESWaterForm, gain) == 0x220);
+				static_assert(offsetof(TESWaterForm, niNoiseTexture0) == 0x238);
+				static_assert(offsetof(TESWaterForm, resetNoiseTextures) == 0x268);
 				static_assert(sizeof(TESWaterForm) == 0x290);
 			}
 		}

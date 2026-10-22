@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Utils.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -116,10 +117,10 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				const auto target = ID(552578);
+				const auto target = EditorAPI::IDs::Functions::sub_2464400;
 
-				EditorAPI::BSResource::pointer_Archive2_sub1 = ID{ 767509, 1655730 }.Address();
-				EditorAPI::BSResource::pointer_Archive2_sub2 = ID{ 767637, 1991833 }.Address();
+				EditorAPI::BSResource::pointer_Archive2_sub1 = EditorAPI::IDs::Functions::sub_246EC50.Address();
+				EditorAPI::BSResource::pointer_Archive2_sub2 = EditorAPI::IDs::Functions::sub_2475B90.Address();
 				EditorAPI::BSResource::pointer_Archive2_sub3 = Relocation(target).WriteJump
 					(&EditorAPI::BSResource::Archive2::HKLoadArchive);
 				EditorAPI::BSResource::Archive2::Initialize(); 
@@ -150,9 +151,9 @@ namespace CKPE
 					rel1.WriteCall((std::uintptr_t)hook->getCode());
 				}
 
-				pointer_BSArchiveManagerModded_sub = ID{ 654208, 1514423 }.Address();
-				Relocation(ID{ 304833, 1995710 }, Offset{ 0x17, 0x1C }).WriteCall(&LoadTesFile);
-				Relocation(ID(142976), 0x12).WriteJump(&LoadTesFileFinal);
+				pointer_BSArchiveManagerModded_sub = EditorAPI::IDs::Functions::TESFile__LoadTESInfo.Address();
+				Relocation(EditorAPI::IDs::Functions::TESDataHandler_LoadFileDependencies, Offset{ 0x17, 0x1C }).WriteCall(&LoadTesFile);
+				Relocation(EditorAPI::IDs::Functions::MainWindow_SetStatusBarText, 0x12).WriteJump(&LoadTesFileFinal);
 
 				// Так как разница между первой и 8 версией лишь, то что был удалён GNF формат для PlayStation.
 				// То очевидно, 8 версии с GNF форматом просто не будет, то вполне безопасно, открывать любые версии архивы.

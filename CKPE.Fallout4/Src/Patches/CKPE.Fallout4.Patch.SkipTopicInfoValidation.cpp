@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Application.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.SkipTopicInfoValidation.h>
@@ -50,7 +51,7 @@ namespace CKPE
 				//
 				// Skip 'Topic Info' validation during load
 				//
-				Relocation(ID{ 524811, 1994104 }).Write(RET);
+				Relocation(EditorAPI::IDs::Functions::sub_B68750).Write(RET);
 
 				return true;
 			}

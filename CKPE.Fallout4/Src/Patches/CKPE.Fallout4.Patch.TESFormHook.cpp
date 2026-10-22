@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Application.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.LogWindow.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -49,9 +50,9 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				EditorAPI::Forms::TESForm::EnumFormIDs = (EditorAPI::Forms::TESForm::ENUM_FORM_ID*)Relocation(ID{ 1106870, 1618347 }).Get();
-				EditorAPI::Forms::TESForm::FindFormByFormID = Relocation<decltype(EditorAPI::Forms::TESForm::FindFormByFormID)>(ID{ 611970, 1519646 }).Get();
-				EditorAPI::Forms::TESForm::SetFormEditorIDImpl = Relocation<decltype(EditorAPI::Forms::TESForm::SetFormEditorIDImpl)>(ID{ 655843, 1618628 }).Get();
+				EditorAPI::Forms::TESForm::EnumFormIDs = (EditorAPI::Forms::TESForm::ENUM_FORM_ID*)Relocation(EditorAPI::IDs::Functions::data_3BAF440).Get();
+				EditorAPI::Forms::TESForm::FindFormByFormID = Relocation<decltype(EditorAPI::Forms::TESForm::FindFormByFormID)>(EditorAPI::IDs::Functions::TESForm__GetFormByNumericID).Get();
+				EditorAPI::Forms::TESForm::SetFormEditorIDImpl = Relocation<decltype(EditorAPI::Forms::TESForm::SetFormEditorIDImpl)>(EditorAPI::IDs::Functions::TESForm_MakeEditorIDUnique).Get();
 
 				return true;
 			}

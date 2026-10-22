@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Detours.h>
@@ -58,12 +59,12 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 84440, 1450938 }).WriteJump(&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::Functions::LayersDialog__DlgProc).WriteJump(&HKWndProc);
 
 				// Layers Window enable doublebuffered treeview control
-				Relocation(ID{ 646694, 1541828 }, Offset{ 0x315, 0x323 }).WriteCall(&sub);
+				Relocation(EditorAPI::IDs::Functions::sub_73BE90, Offset{ 0x315, 0x323 }).WriteCall(&sub);
 				// Layers dialog fix resize
-				const auto target = ID{ 646714, 1410439 };
+				const auto target = EditorAPI::IDs::Functions::sub_741290;
 				Relocation(target, Offset{ 0x195, 0x180 }).WriteCall(&MoveWindowBody);
 				Relocation(target, Offset{ 0x1C5, 0x1B0 }).WriteCall(&MoveWindowHeader);
 

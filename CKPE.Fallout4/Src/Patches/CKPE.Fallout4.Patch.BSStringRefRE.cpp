@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Application.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -49,9 +50,9 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::ctor = Relocation(ID{ 766110, 1340478 }).Address();
-				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::set = Relocation(ID{ 766111, 1698047 }).Address();
-				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::release = Relocation(ID{ 766148, 1624720 }).Address();
+				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::ctor = Relocation(EditorAPI::IDs::Functions::BSStringCache__Ref__Ref).Address();
+				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::set = Relocation(EditorAPI::IDs::Functions::BSStringCache__Ref__set).Address();
+				*(std::uintptr_t*)&EditorAPI::BSStringCache::Ref::release = Relocation(EditorAPI::IDs::Functions::BSStringCache__Ref__release).Address();
 
 				return true;
 			}

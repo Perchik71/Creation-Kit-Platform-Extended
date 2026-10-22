@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Asserts.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Exception.h>
 #include <CKPE.Zipper.h>
 #include <CKPE.PathUtils.h>
@@ -292,13 +293,13 @@ namespace CKPE
 				
 				if (VersionLists::GetEditorVersion() < VersionLists::EDITOR_FALLOUT_C4_1_11_137_0)
 				{
-					Relocation(ID{ 122998, 1575961 }, Offset{ 0x88, 0x8C }).WriteCall(&CreateStream_OG_NG);
-					pointer_LoadShaders_sub = Relocation(ID{ 774104, 1569121 }).Address();
+					Relocation(EditorAPI::IDs::Functions::BSShaderManager_LoadShaderPackages, Offset{ 0x88, 0x8C }).WriteCall(&CreateStream_OG_NG);
+					pointer_LoadShaders_sub = Relocation(EditorAPI::IDs::Functions::BSIStream__BSIStream).Address();
 				}
 				else
 				{
-					Relocation(ID(1575961), 0x8C).WriteCall(&CreateStream_AE);
-					pointer_LoadShaders_sub = Relocation(ID(1569121)).Address();
+					Relocation(EditorAPI::IDs::Functions::BSShaderManager_LoadShaderPackages_2, 0x8C).WriteCall(&CreateStream_AE);
+					pointer_LoadShaders_sub = Relocation(EditorAPI::IDs::Functions::BSIStream__BSIStream_2).Address();
 				}
 
 				return true;

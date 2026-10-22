@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Detours.h>
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
@@ -57,10 +58,10 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(ID(580023), Offset{ 0x206, 0x315 }).WriteCall(&FixVCPatch_sub);
+				Relocation(EditorAPI::IDs::Functions::sub_117DB60, Offset{ 0x206, 0x315 }).WriteCall(&FixVCPatch_sub);
 
 				// By disabling version control, allow the start				
-				const auto target = ID{ 643528, 1351048 };
+				const auto target = EditorAPI::IDs::Functions::VersionControl_PromptNetworkLocation;
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 					Relocation(target, 0x2BF).Write({0xEB, 0x81});					// skip msgbox
 				else

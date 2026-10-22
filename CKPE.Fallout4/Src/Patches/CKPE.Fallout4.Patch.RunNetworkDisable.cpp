@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Application.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.RunNetworkDisable.h>
@@ -50,7 +51,7 @@ namespace CKPE
 				using namespace Common;
 
 				// The ability to run CK without access to the Internet and/or a network device.
-				Relocation(ID{ 297712, 1477214, 2181936 }, Offset{ 0x7E1, 0x89D, 0x8AC }).Write(JMP);
+				Relocation(EditorAPI::IDs::Functions::WinMain_0, Offset{ 0x7E1, 0x89D, 0x8AC }).Write(JMP);
 
 				return true;
 			}

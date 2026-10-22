@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <combaseapi.h>
 #include <CKPE.MessageBox.h>
 #include <CKPE.Application.h>
@@ -50,9 +51,9 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(ID{ 250004, 1559469 }, Offset{ 0x66D, 0x79B }).WriteCall(&sub);
-				Relocation(ID{ 661598, 1991629 }, Offset{ 0x831, 0x939 }).WriteCall(&sub);
-				Relocation(ID{ 663691, 1468392 }, Offset{ 0x7DD, 0x90C }).WriteCall(&sub);
+				Relocation(EditorAPI::IDs::Functions::sub_993790, Offset{ 0x66D, 0x79B }).WriteCall(&sub);
+				Relocation(EditorAPI::IDs::Functions::sub_9C88F0, Offset{ 0x831, 0x939 }).WriteCall(&sub);
+				Relocation(EditorAPI::IDs::Functions::sub_A2D940, Offset{ 0x7DD, 0x90C }).WriteCall(&sub);
 
 				return true;
 			}

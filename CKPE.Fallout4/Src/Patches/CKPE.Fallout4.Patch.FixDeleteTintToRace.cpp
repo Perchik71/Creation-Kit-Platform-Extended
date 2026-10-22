@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Utils.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -52,7 +53,7 @@ namespace CKPE
 				using namespace Common;
 
 				// Fixed when you delete a group tinting to race window
-				const auto target = ID{ 286613, 1992272 };
+				const auto target = EditorAPI::IDs::Functions::sub_99DA30;
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
 					Relocation(target, 0x19E).Write({ 0x4D, 0x8B, 0x47, 0x8, 0x4C, 0x89, 0xE2 });

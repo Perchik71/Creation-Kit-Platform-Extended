@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Asserts.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -50,7 +51,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(ID(530343), Offset{ 0x4EE, 0x4CF, 0x4CE }).WriteCall(&sub);
+				Relocation(EditorAPI::IDs::Functions::BSGraphics_CreateDevice, Offset{ 0x4EE, 0x4CF, 0x4CE }).WriteCall(&sub);
 
 				return true;
 			}

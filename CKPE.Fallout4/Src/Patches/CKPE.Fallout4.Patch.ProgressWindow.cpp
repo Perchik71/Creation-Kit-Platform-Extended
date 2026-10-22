@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <commctrl.h>
 #include <CKPE.Detours.h>
 #include <CKPE.SafeWrite.h>
@@ -69,23 +70,23 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				auto rel = Relocation(ID{ 634156, 1725866 });
+				auto rel = Relocation(EditorAPI::IDs::Functions::ProgressWindow_Create);
 				rel.WriteFill<0x1C>(NOP, 0x2);
 				rel.WriteCall<0x3E>(&sub1);
 
 				// Hook Loading Files...Initializing...
-				Relocation(ID{ 452879, 1429824 }, Offset{ 0x47E, 0x3EE }).WriteCall(&sub2);
+				Relocation(EditorAPI::IDs::Functions::sub_86CEC0, Offset{ 0x47E, 0x3EE }).WriteCall(&sub2);
 				// Hook Loading Files...Initializing References...
-				Relocation(ID{ 654059, 1995336 }, Offset{ 0x16, 0x12 }).WriteCall(&sub2);
+				Relocation(EditorAPI::IDs::Functions::sub_87B8E0, Offset{ 0x16, 0x12 }).WriteCall(&sub2);
 				// Hook Validating forms...
-				Relocation(ID{ 653598, 1484721 }, Offset{ 0x20, 0x27 }).WriteCall(&sub2);
+				Relocation(EditorAPI::IDs::Functions::TESDataHandler_ValidateForms, Offset{ 0x20, 0x27 }).WriteCall(&sub2);
 
 				// Eliminate millions of calls to update the progress dialog, instead only updating 400 times (0% -> 100%)
 				//
-				dwProgressLoadCurrent = reinterpret_cast<LPDWORD>(ID{ 1110197, 1493376 }.Address());
-				dwProgressLoadMax = reinterpret_cast<LPDWORD>(ID{ 365092, 1990122 }.Address());
+				dwProgressLoadCurrent = reinterpret_cast<LPDWORD>(EditorAPI::IDs::Functions::data_3D5E5B8.Address());
+				dwProgressLoadMax = reinterpret_cast<LPDWORD>(EditorAPI::IDs::Functions::data_3D5E564.Address());
 
-				auto rel2 = Relocation(ID{ 264710, 1495600 }, Offset{ 0x23C, 0x264 });
+				auto rel2 = Relocation(EditorAPI::IDs::Functions::TESDataHandler__LoadFileRecords, Offset{ 0x23C, 0x264 });
 				rel2.Write({ 0x48, 0x8D, 0x4D, 0x78 });
 
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
@@ -101,7 +102,7 @@ namespace CKPE
 					//
 					// The output of a message to the user, every time you load something,
 					// should only be in the form of an error, and postpone the load of something.
-					Relocation(ID(653593), 0x2F1).Write({ 0xE9, 0x2B, 0x02, 0x00, 0x00, 0x90 });
+					Relocation(EditorAPI::IDs::Functions::legacy_ProgressWindow_653593, 0x2F1).Write({ 0xE9, 0x2B, 0x02, 0x00, 0x00, 0x90 });
 				}
 				else
 				{
@@ -116,10 +117,10 @@ namespace CKPE
 					//
 					// The output of a message to the user, every time you load something,
 					// should only be in the form of an error, and postpone the load of something.
-					Relocation(ID(1994158), 0x2EE).Write({ 0xE9, 0xFC, 0x01, 0x00, 0x00, 0x90 });
+					Relocation(EditorAPI::IDs::Functions::TESDataHandler__LoadFiles_2, 0x2EE).Write({ 0xE9, 0xFC, 0x01, 0x00, 0x00, 0x90 });
 				}
 
-				pointer_ProgressWindow_sub = Relocation(ID(142976)).Address();
+				pointer_ProgressWindow_sub = Relocation(EditorAPI::IDs::Functions::MainWindow_SetStatusBarText).Address();
 
 				return true;
 			}

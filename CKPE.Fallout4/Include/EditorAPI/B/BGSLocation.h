@@ -45,34 +45,23 @@ namespace CKPE
 					BSTArray<void*> specialRefs; // 98 - BSTArray<SpecialRefData>
 					BSTArray<void*> uniqueNPCs; // B0 - BSTArray<UniqueNPCData>
 					BSTArray<void*> unkC8; // C8 - element type not identified yet
-					std::uint8_t unkE0[0xC]; // E0
-					std::uint8_t unkEC[0x8]; // EC
-					std::uint32_t unkF4; // F4
-					std::uint64_t unkF8; // F8
-					std::uint32_t unk100; // 100
-					std::uint8_t unk104[0xC]; // 104
+					// Three 0x30 byte BSTHashMap-like tables (BSTScatterTable: size dword at +0x14, free entry tag pointer at +0x18); element types not identified.
+					std::uint8_t hashMapE0[0x30]; // E0
 					std::uint64_t unk110; // 110
 					BSTArray<void*> unk118; // 118 - element type not identified yet
 					BSTArray<void*> unk130; // 130 - element type not identified yet
-					std::uint8_t unk148[0xC]; // 148
-					std::uint8_t unk154[0x8]; // 154
-					std::uint32_t unk15C; // 15C
-					std::uint64_t unk160; // 160
-					std::uint32_t unk168; // 168
-					std::uint8_t unk16C[0xC]; // 16C
+					std::uint8_t hashMap148[0x30]; // 148
 					std::uint64_t unk178; // 178
-					std::uint8_t unk180[0xC]; // 180
-					std::uint8_t unk18C[0x8]; // 18C
-					std::uint32_t unk194; // 194
-					std::uint64_t unk198; // 198
-					std::uint32_t unk1A0; // 1A0
-					std::uint8_t unk1A4[0xC]; // 1A4
+					std::uint8_t hashMap180[0x30]; // 180
 					std::uint64_t unk1B0; // 1B0
 					std::uint64_t unk1B8; // 1B8
 					BSTArray<void*> unk1C0; // 1C0 - element type not identified yet
 					std::uint32_t unk1D8; // 1D8
 					std::uint32_t unk1DC; // 1DC
 				};
+				static_assert(offsetof(BGSLocation, hashMapE0) == 0xE0);
+				static_assert(offsetof(BGSLocation, hashMap148) == 0x148);
+				static_assert(offsetof(BGSLocation, hashMap180) == 0x180);
 				static_assert(sizeof(BGSLocation) == 0x1E0);
 			}
 		}

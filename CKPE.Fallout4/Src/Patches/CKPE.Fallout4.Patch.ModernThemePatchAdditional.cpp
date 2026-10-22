@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Utils.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Detours.h>
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Asserts.h>
@@ -242,35 +243,35 @@ namespace CKPE
 				// CinfigureWindow sets now
 				Common::ModernTheme::InitializeCurrentThread();
 
-				pointer_UIThemePatchAdditional_sub = Relocation(ID{ 577351, 1588570 }).Address();
+				pointer_UIThemePatchAdditional_sub = Relocation(EditorAPI::IDs::Functions::DialogHelpers_SetItemFloat).Address();
 				// replace main toolbar
-				const auto target = ID{ 88741, 1654076 };
+				const auto target = EditorAPI::IDs::Functions::TimeOfDayDialog_CreateControls;
 				Relocation(target, Offset{ 0x56 }).WriteCall(&Comctl32CreateToolbarEx_1);
-				Relocation(ID{ 644735, 1777801 }, Offset{ 0x56 }).WriteCall(&Comctl32CreateToolbarEx_NavMesh);
+				Relocation(EditorAPI::IDs::Functions::sub_6D74F0, Offset{ 0x56 }).WriteCall(&Comctl32CreateToolbarEx_NavMesh);
 				Relocation(target, Offset{ 0x2F1, 0x27C }).WriteJump(&HideOldTimeOfDayComponents);
 				// replace ImageList_LoadImage for item type
-				Relocation(ID{ 297712, 1477214, 2181936 }, Offset{ 0x1077, 0x131A, 0x1332 }).WriteCall(&Comctl32ImageList_LoadImageA_1);
+				Relocation(EditorAPI::IDs::Functions::WinMain_0, Offset{ 0x1077, 0x131A, 0x1332 }).WriteCall(&Comctl32ImageList_LoadImageA_1);
 
-				Relocation(ID{ 466561, 1988708 }, Offset{ 0xF0 }).WriteCall(&HKInitializeTimeOfDay);
-				Relocation(ID{ 637699, 1580232 }, Offset{ 0x1CA, 0x1CC }).WriteCall(&HKSetNewValueTimeOfDay);
+				Relocation(EditorAPI::IDs::Functions::TimeOfDayDialog_Initialize, Offset{ 0xF0 }).WriteCall(&HKInitializeTimeOfDay);
+				Relocation(EditorAPI::IDs::Functions::TimeOfDayDialog_SetNewValue, Offset{ 0x1CA, 0x1CC }).WriteCall(&HKSetNewValueTimeOfDay);
 
 				// replace ImageList_LoadImage
-				Relocation(ID{ 691706, 1689193 }, Offset{ 0x53, 0x4F }).WriteCall(&Comctl32ImageList_LoadImageA_2);		// item type Task Manager
-				Relocation(ID{ 697171, 1531107 }, Offset{ 0x1B2, 0x1D2 }).WriteCall(&Comctl32ImageList_LoadImageA_3);	// Scripts icons
-				Relocation(ID{ 70844, 1650572 }, Offset{ 0xFB }).WriteCall(&Comctl32ImageList_LoadImageA_3);			// Scripts icons
+				Relocation(EditorAPI::IDs::Functions::BGSStoryManagerEventNode__WriteDataToDialogBox, Offset{ 0x53, 0x4F }).WriteCall(&Comctl32ImageList_LoadImageA_2);		// item type Task Manager
+				Relocation(EditorAPI::IDs::Functions::PapyrusScriptEditWindow_WndProc, Offset{ 0x1B2, 0x1D2 }).WriteCall(&Comctl32ImageList_LoadImageA_3);	// Scripts icons
+				Relocation(EditorAPI::IDs::Functions::PapyrusPropertiesWindow_Create, Offset{ 0xFB }).WriteCall(&Comctl32ImageList_LoadImageA_3);			// Scripts icons
 
 				if (VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-					Relocation(ID(1515787), 0x18F).WriteCall(&Comctl32ImageList_LoadImageA_3);							// Scripts icons
+					Relocation(EditorAPI::IDs::Functions::PapyrusScriptEditWindow_StorePlacement, 0x18F).WriteCall(&Comctl32ImageList_LoadImageA_3);							// Scripts icons
 
 				Common::UI::ListView::InstallCustomDrawHandler(&DoCustomDrawListView);
 				
 				// Layers Window
-				Relocation(ID{ 646694, 1541828 }, Offset{ 0x465, 0x46D }).WriteCall(&HkSendMsgChangeColorTextForLayers);
+				Relocation(EditorAPI::IDs::Functions::sub_73BE90, Offset{ 0x465, 0x46D }).WriteCall(&HkSendMsgChangeColorTextForLayers);
 
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
 					// Rechange color text
-					const auto target = ID(646715);
+					const auto target = EditorAPI::IDs::Functions::legacy_ModernThemePatchAdditional_646715;
 					const auto rel1 = Relocation(target, 0x653);
 					rel1.WriteCall(&HkSetTextColorForLayers);
 					rel1.WriteCall<0x212>(&HkSetTextColorForLayers);
@@ -283,12 +284,12 @@ namespace CKPE
 					rel2.WriteCall<0x2C>(&HkDrawEdgeForLayers);
 					rel2.WriteCall<0x46C>(&HkDrawEdgeForLayers);
 					// Icons
-					Relocation(ID(635134), 0x3E).WriteCall(&HkImageListForLayers_LoadImageA);
+					Relocation(EditorAPI::IDs::Functions::legacy_ModernThemePatchAdditional_635134, 0x3E).WriteCall(&HkImageListForLayers_LoadImageA);
 				}
 				else
 				{
 					// Rechange color text
-					const auto target = ID(1673982);
+					const auto target = EditorAPI::IDs::Functions::TreeList_WndProc;
 					const auto rel1 = Relocation(target, 0x645);
 					rel1.WriteCall(&HkSetTextColorForLayers);
 					rel1.WriteCall<0x214>(&HkSetTextColorForLayers);
@@ -301,8 +302,8 @@ namespace CKPE
 					rel2.WriteCall<0x2C>(&HkDrawEdgeForLayers);
 					rel2.WriteCall<0x459>(&HkDrawEdgeForLayers);
 					// Icons
-					Relocation(ID(1844613), 0x3E).WriteCall(&HkImageListForLayers_LoadImageA);
-					Relocation(ID(1450938), 0xEBF).WriteCall(&HkImageListForLayers_LoadImageA);
+					Relocation(EditorAPI::IDs::Functions::LayersWindow_LoadImageList, 0x3E).WriteCall(&HkImageListForLayers_LoadImageA);
+					Relocation(EditorAPI::IDs::Functions::LayersDialog__DlgProc_2, 0xEBF).WriteCall(&HkImageListForLayers_LoadImageA);
 				}
 
 				return true;

@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Utils.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -50,7 +51,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&pointer_SortCrashCombinedPatch_sub = Relocation(ID{ 643144, 1621905 }).WriteJump(&sub);
+				*(std::uintptr_t*)&pointer_SortCrashCombinedPatch_sub = Relocation(EditorAPI::IDs::Functions::SortCallbacks_CompareItems).WriteJump(&sub);
 
 				return true;
 			}

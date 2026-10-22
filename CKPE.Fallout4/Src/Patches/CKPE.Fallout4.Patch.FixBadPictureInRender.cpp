@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.SafeWrite.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -51,7 +52,7 @@ namespace CKPE
 				using namespace Common;
 
 				// Remove stuff init FXAA or TAA
-				Relocation(ID{ 122998, 1575961 }, Offset{ 0x7D9, 0x9B5 }).WriteFill(NOP, 0x50);
+				Relocation(EditorAPI::IDs::Functions::BSShaderManager_LoadShaderPackages, Offset{ 0x7D9, 0x9B5 }).WriteFill(NOP, 0x50);
 
 				return true;
 			}

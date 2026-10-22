@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <EditorAPI/N/NiColor.h>
 #include <EditorAPI/T/TESBoundObject.h>
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/B/BGSModelMaterialSwap.h>
@@ -83,7 +84,7 @@ namespace CKPE
 					std::uint32_t unk214; // 214
 					BGSSoundDescriptorForm* sound; // 218 - SNAM
 					TESTexture goboTexture; // 220 - NAM0
-					std::uint8_t emittanceColor[0xC]; // 248 - NiColor, by position after goboTexture
+					NiAPI::NiColor emittanceColor; // 248 - by position after goboTexture
 					std::uint32_t unk254; // 254
 					BGSLensFlare* lensFlare; // 258 - LNAM
 					BGSGodRays* godRays; // 260 - WGDR

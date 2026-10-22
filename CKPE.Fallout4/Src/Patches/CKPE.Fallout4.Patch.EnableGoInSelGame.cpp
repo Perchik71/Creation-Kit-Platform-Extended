@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Application.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.EnableGoInSelGame.h>
@@ -48,7 +49,7 @@ namespace CKPE
 				using namespace Common;
 
 				// Enable the render window "Go to selection in game" hotkey even if version control is off
-				Relocation(ID(111996), 0x473).WriteFill(NOP, 2);
+				Relocation(EditorAPI::IDs::Functions::RenderWindow_RegisterHotkeyFunctions, 0x473).WriteFill(NOP, 2);
 
 				return true;
 			}

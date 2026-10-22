@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.SafeWrite.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.Relocation.h>
@@ -51,7 +52,7 @@ namespace CKPE
 
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
-					Relocation(ID(795140), 0x40).WriteFill(NOP, 6);
+					Relocation(EditorAPI::IDs::Functions::legacy_FixLoadD3DCompiler_795140, 0x40).WriteFill(NOP, 6);
 				}
 				else
 				{
@@ -60,9 +61,9 @@ namespace CKPE
 					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
 					// Fixed failed load d3dcompiler.dll
-					text.WriteNop(Relocation(ID(2009774), Offset{ 0x115, 0x115, 0x12A }).Address(), 6);
-					text.WriteNop(Relocation(ID(1569538), Offset{ 0x123, 0x123, 0x132 }).Address(), 6);
-					text.WriteNop(Relocation(ID(2009800), Offset{ 0x3B, 0x3B, 0x2C }).Address(), 6);
+					text.WriteNop(Relocation(EditorAPI::IDs::Functions::BSGraphics_LoadD3DCompiler_A, Offset{ 0x115, 0x115, 0x12A }).Address(), 6);
+					text.WriteNop(Relocation(EditorAPI::IDs::Functions::BSGraphics_LoadD3DCompiler_B, Offset{ 0x123, 0x123, 0x132 }).Address(), 6);
+					text.WriteNop(Relocation(EditorAPI::IDs::Functions::BSGraphics_LoadD3DCompiler_C, Offset{ 0x3B, 0x3B, 0x2C }).Address(), 6);
 				}
 
 				return true;

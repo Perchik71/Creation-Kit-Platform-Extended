@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -48,7 +49,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(ID{ 69589, 1343977 }, 0x12C).WriteCall(&sub);
+				Relocation(EditorAPI::IDs::Functions::PapyrusScriptEditWindow_Create, 0x12C).WriteCall(&sub);
 
 				return true;
 			}

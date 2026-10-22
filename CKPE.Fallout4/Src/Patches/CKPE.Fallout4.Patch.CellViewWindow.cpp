@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Utils.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Graphics.h>
 #include <CKPE.Application.h>
@@ -73,23 +74,23 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 643131, 1820720 }).WriteJump(&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::Functions::CellViewWindow_WndProc).WriteJump(&HKWndProc);
 
 				// Allow forms to be filtered in CellViewProc
-				Relocation(ID{ 645724, 1445476 }, 0xFF).WriteCall(&CellViewWindow::sub1);
-				Relocation(ID(552257), Offset{ 0x1C1, 0x1D1 }).WriteCall(&CellViewWindow::sub1);
-				pointer_CellViewWindow_sub1 = ID{ 641951, 1463745 }.Address();
+				Relocation(EditorAPI::IDs::Functions::sub_710360, 0xFF).WriteCall(&CellViewWindow::sub1);
+				Relocation(EditorAPI::IDs::Functions::sub_E5CF80, Offset{ 0x1C1, 0x1D1 }).WriteCall(&CellViewWindow::sub1);
+				pointer_CellViewWindow_sub1 = EditorAPI::IDs::Functions::CellViewWindow_InsertForm.Address();
 
 				// Allow objects to be filtered in CellViewProc
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
-					Relocation(ID(643197), 0x95).WriteCall(&CellViewWindow::sub2);
-					pointer_CellViewWindow_sub2 = ID(643205).Address();
+					Relocation(EditorAPI::IDs::Functions::legacy_CellViewWindow_643197, 0x95).WriteCall(&CellViewWindow::sub2);
+					pointer_CellViewWindow_sub2 = EditorAPI::IDs::Functions::legacy_CellViewWindow_643205.Address();
 				}
 				else
 				{
-					Relocation(ID(1973863), 0x1D3).WriteCall(&CellViewWindow::sub2_ver2);
-					pointer_CellViewWindow_sub2 = ID(1458119).Address();
+					Relocation(EditorAPI::IDs::Functions::sub_677DA0, 0x1D3).WriteCall(&CellViewWindow::sub2_ver2);
+					pointer_CellViewWindow_sub2 = EditorAPI::IDs::Functions::CellViewWindow_InsertObject.Address();
 				}
 
 				return true;

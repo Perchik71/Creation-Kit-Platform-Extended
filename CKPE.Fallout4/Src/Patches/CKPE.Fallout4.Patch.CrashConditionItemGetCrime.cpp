@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.Interface.h>
@@ -55,8 +56,8 @@ namespace CKPE
 				// Strangely, there are 6 elements in the array in memory, when Beth is forced to pass exactly 7
 				// 7 element is always nullptr
 
-				Relocation(ID{ 645755, 1827459 }).WriteJump(sub);
-				pointer_CrashConditionItemGetCrimePatch_data = Relocation<EditorAPI::Setting**>(ID(338206)).Get();
+				Relocation(EditorAPI::IDs::Functions::sub_712B50).WriteJump(sub);
+				pointer_CrashConditionItemGetCrimePatch_data = Relocation<EditorAPI::Setting**>(EditorAPI::IDs::Functions::data_3BAC818).Get();
 
 				return true;
 			}

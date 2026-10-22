@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Detours.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -62,27 +63,27 @@ namespace CKPE
 
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
-					Relocation(ID(581209), 0xD0).WriteFill(NOP, 0x6);
+					Relocation(EditorAPI::IDs::Functions::legacy_ChooseSoundFile_581209, 0xD0).WriteFill(NOP, 0x6);
 
-					auto target = ID(429186);
+					auto target = EditorAPI::IDs::Functions::legacy_ChooseSoundFile_429186;
 					Relocation(target, 0x67).WriteCall(&sub);
 					Relocation(target, 0xF9).WriteFill(NOP, 0x2);
 
-					Relocation(ID(216529), 0x5D).WriteFill(NOP, 0x2);
-					Relocation(ID(419916), 0xAE).WriteCall(&sub);
-					Relocation(ID(580601), 0x47E).WriteCall(&sub);
+					Relocation(EditorAPI::IDs::Functions::legacy_ChooseSoundFile_216529, 0x5D).WriteFill(NOP, 0x2);
+					Relocation(EditorAPI::IDs::Functions::legacy_ChooseSoundFile_419916, 0xAE).WriteCall(&sub);
+					Relocation(EditorAPI::IDs::Functions::sub_BB46E0, 0x47E).WriteCall(&sub);
 
-					ChooseSoundFileSub = reinterpret_cast<TChooseSoundFileSub*>(ID(645762).Address());
-					Relocation(ID(119311), 0x32).WriteFill(NOP, 0x2);
+					ChooseSoundFileSub = reinterpret_cast<TChooseSoundFileSub*>(EditorAPI::IDs::Functions::legacy_ChooseSoundFile_645762.Address());
+					Relocation(EditorAPI::IDs::Functions::legacy_ChooseSoundFile_119311, 0x32).WriteFill(NOP, 0x2);
 				}
 				else
 				{
-					Relocation(ID(1606845), 0x63).WriteCall(&sub);
-					Relocation(ID(1654850), 0x87).WriteCall(&sub);
-					Relocation(ID(1423625), 0x3CB).WriteCall(&sub);
-					Relocation(ID(580601), 0x57B).WriteCall(&sub);
-					ChooseSoundFileSub = reinterpret_cast<TChooseSoundFileSub*>(ID(1356949).Address());
-					Relocation(ID(1654852), 0x194).WriteFill(NOP, 0x6);
+					Relocation(EditorAPI::IDs::Functions::ChooseSoundFile_Browse, 0x63).WriteCall(&sub);
+					Relocation(EditorAPI::IDs::Functions::ChooseSoundFile_BrowseAlt, 0x87).WriteCall(&sub);
+					Relocation(EditorAPI::IDs::Functions::BGSAudioEffectChain__PerformDialogBox, 0x3CB).WriteCall(&sub);
+					Relocation(EditorAPI::IDs::Functions::sub_BB46E0, 0x57B).WriteCall(&sub);
+					ChooseSoundFileSub = reinterpret_cast<TChooseSoundFileSub*>(EditorAPI::IDs::Functions::DialogHelpers_ShowFileDialog_2.Address());
+					Relocation(EditorAPI::IDs::Functions::ChooseSoundFile_MakeRelativePath, 0x194).WriteFill(NOP, 0x6);
 				}
 
 				return true;

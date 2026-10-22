@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <windowsx.h>
 #include <CKPE.Graphics.h>
 #include <CKPE.Application.h>
@@ -200,9 +201,9 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 643283, 1992435 }).WriteJump(&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::Functions::DataWindow_WndProc).WriteJump(&HKWndProc);
 
-				auto rel = Relocation(ID{ 643293, 1664109 }, Offset{ 0xAB, 0xAF });
+				auto rel = Relocation(EditorAPI::IDs::Functions::DataWindow_UpdateFileInfo, Offset{ 0xAB, 0xAF });
 
 				rel.WriteFill(NOP, 0x1C);
 				rel.Write({ 0x48, 0x89, 0xF9 });

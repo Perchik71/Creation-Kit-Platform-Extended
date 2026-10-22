@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Detours.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.Relocation.h>
@@ -68,14 +69,14 @@ namespace CKPE
 				//
 
 				// void RenderWindow_OnShowMarkersChanged(...): 1.10.162.0, 1.10.982.3 and later
-				const auto handler = ID{ 359498, 1709686 };
+				const auto handler = EditorAPI::IDs::Functions::RenderWindow_OnShowMarkersChanged;
 				// the last call of the "show" branch (the redraw)
 				const auto tailCall = Relocation(handler, Offset{ 0xF0, 0x11B }).Address();
 				// mov rcx, [rip+disp32] (the render window manager), right before the call of SetSoundMarkerNodeCulled
 				const auto managerLoad = Relocation(handler, Offset{ 0x10A, 0x130 }).Address();
 
 				// void TESObjectCELL_SetSoundMarkerNodeCulled(RenderWindowManager* mgr, bool culled)
-				g_setSoundMarkerNodeCulled = reinterpret_cast<void(*)(void*, bool)>(ID(506883).Address());
+				g_setSoundMarkerNodeCulled = reinterpret_cast<void(*)(void*, bool)>(EditorAPI::IDs::Functions::RenderWindowManager__SetSoundMarkerNodeCulled.Address());
 				g_renderWindowManager = reinterpret_cast<std::uintptr_t*>(
 					managerLoad + 7 + *reinterpret_cast<std::int32_t*>(managerLoad + 3));
 

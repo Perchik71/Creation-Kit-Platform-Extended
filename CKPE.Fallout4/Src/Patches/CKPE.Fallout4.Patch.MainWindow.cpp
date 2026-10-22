@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Utils.h>
 #include <CKPE.FileUtils.h>
 #include <CKPE.StringUtils.h>
@@ -261,13 +262,13 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&_oldWndProc = Relocation(ID{ 643475, 1634204 }).WriteJump(&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::Functions::MainWindow_WndProc).WriteJump(&HKWndProc);
 
-				pointer_MainWindow_sub1 = ID(451607).Address();
-				pointer_MainWindow_sub2 = Relocation(ID(506991)).WriteJump(&FogToggling);
+				pointer_MainWindow_sub1 = EditorAPI::IDs::Functions::data_3D49308.Address();
+				pointer_MainWindow_sub2 = Relocation(EditorAPI::IDs::Functions::MainWindow_ToggleFog).WriteJump(&FogToggling);
 
 				// only erase it first
-				const auto target = Relocation(ID(359818));
+				const auto target = Relocation(EditorAPI::IDs::Functions::MainWindow_ToggleMarkers);
 				target.WriteFill<0x4>(NOP, 0x7);
 				pointer_MainWindow_sub3 = target.WriteJump(&MarkerToggling);
 				target.WriteFill<0x12>(NOP, 0x7);

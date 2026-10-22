@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Application.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.ResponseIgnoreMax.h>
@@ -50,7 +51,7 @@ namespace CKPE
 				//
 				// Skip message setting blocking text input after 149 characters.
 				//
-				Relocation(ID{ 492810, 1647136 }, Offset{ 0xC6, 0xC9 }).WriteFill(NOP, 6);
+				Relocation(EditorAPI::IDs::Functions::ResponseWindow_SelectIdle, Offset{ 0xC6, 0xC9 }).WriteFill(NOP, 6);
 
 				return true;
 			}
