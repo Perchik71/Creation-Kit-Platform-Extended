@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cstdint>
 #include <windows.h>
 #include <EditorAPI/B/BSTList.h>
 #include <EditorAPI/B/BSString.h>
@@ -15,6 +16,32 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
+			struct TESGroupHeader
+			{
+				char type[4];
+				std::uint32_t size;
+				std::uint32_t label;
+				std::int32_t groupType;
+				char pad10[0x8];
+			};
+			static_assert(sizeof(TESGroupHeader) == 0x18);
+
+			class TESFile;
+
+			// Both .fud ownership and .fvd version files use this layout.
+			struct TESBitArrayFile
+			{
+				/* 000 */ TESFile* File;
+				/* 008 */ char FileName[MAX_PATH];
+				/* 10C */ char pad10C[0x4];
+				/* 110 */ HANDLE FileHandle;
+				/* 118 */ HANDLE MappingHandle;
+				/* 120 */ std::uint8_t* Data;
+				/* 128 */ std::uint32_t DataSize;
+				/* 12C */ char pad12C[0x4];
+			};
+			static_assert(sizeof(TESBitArrayFile) == 0x130);
+
 			struct TESChunk
 			{
 				char type[4];

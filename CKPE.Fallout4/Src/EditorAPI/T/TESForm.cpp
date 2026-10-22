@@ -42,9 +42,9 @@ namespace CKPE
 					CKPE::vtbl_call<void>(0xD0, this, File);
 				}
 
-				void TESForm::SavePlugin(TESFile* File)
+				bool TESForm::SavePlugin(TESFile* File)
 				{
-					CKPE::vtbl_call<void>(0xD8, this, File);
+					return CKPE::vtbl_call<bool>(0xD8, this, File);
 				}
 
 				void TESForm::LoadPlugin(TESFile* File)
@@ -52,29 +52,29 @@ namespace CKPE
 					CKPE::vtbl_call<void>(0xE0, this, File);
 				}
 
-				void TESForm::sub_0E8()
+				bool TESForm::SaveForm(TESFile* File)
 				{
-					CKPE::vtbl_call<void>(0xE8, this);
+					return CKPE::vtbl_call<bool>(0xE8, this, File);
 				}
 
-				void TESForm::sub_0F0()
+				bool TESForm::IsBeforeGroup(const TESGroupHeader* GroupRecord) const noexcept(true)
 				{
-					CKPE::vtbl_call<void>(0xF0, this);
+					return CKPE::vtbl_call<bool>(0xF0, this, GroupRecord);
 				}
 
-				void TESForm::sub_0F8()
+				bool TESForm::IsBeforeForm(TESForm* Rhs) const noexcept(true)
 				{
-					CKPE::vtbl_call<void>(0xF8, this);
+					return CKPE::vtbl_call<bool>(0xF8, this, Rhs);
 				}
 
-				TESForm* TESForm::CreateDuplicateForm(bool bCreateEditorID, void* Unk) 
+				TESForm* TESForm::CreateDuplicateForm(bool bCreateEditorID, void* CopyMap)
 				{
-					return CKPE::vtbl_call<TESForm*>(0x100, this, bCreateEditorID, Unk);
+					return CKPE::vtbl_call<TESForm*>(0x100, this, bCreateEditorID, CopyMap);
 				}
 
-				void TESForm::sub_108()
+				void TESForm::FixupDuplicateForm(void* CopyMap) noexcept(true)
 				{
-					CKPE::vtbl_call<void>(0x108, this);
+					CKPE::vtbl_call<void>(0x108, this, CopyMap);
 				}
 
 				void TESForm::InitItemImpl() noexcept(true)
@@ -247,14 +247,14 @@ namespace CKPE
 					return CKPE::vtbl_call<std::int32_t>(0x218, this, Rhs);
 				}
 
-				bool TESForm::BelongsInGroup(TESForm* Group, bool bAllowParentGroups, bool bCurrentOnly)
+				bool TESForm::BelongsInGroup(TESGroupHeader* Group, bool bAllowParentGroups, bool bCurrentOnly)
 				{
 					return CKPE::vtbl_call<bool>(0x220, this, Group, bAllowParentGroups, bCurrentOnly);
 				}
 
-				void TESForm::CreateGroupData(TESForm* OutGroupForm, TESForm* ParentGroup)
+				void TESForm::CreateGroupData(TESGroupHeader* OutGroup, TESGroupHeader* ParentGroup)
 				{
-					CKPE::vtbl_call<void>(0x228, this, OutGroupForm, ParentGroup);
+					CKPE::vtbl_call<void>(0x228, this, OutGroup, ParentGroup);
 				}
 
 				std::uint32_t TESForm::GetFormEditorIDLength() const
@@ -267,14 +267,120 @@ namespace CKPE
 					return CKPE::vtbl_call<const char*>(0x238, this);
 				}
 
-				/////////////
+				bool TESForm::IsParentForm() const noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x240, this);
+				}
+
+				bool TESForm::IsParentFormTree() const noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x248, this);
+				}
+
+				bool TESForm::IsFormTypeChild(FormType Type) const noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x250, this, Type);
+				}
+
+				void TESForm::AddReference(TESForm* ReferencingForm) noexcept(true)
+				{
+					CKPE::vtbl_call<void>(0x258, this, ReferencingForm);
+				}
+
+				bool TESForm::CanCheckOut() noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x260, this);
+				}
+
+				bool TESForm::CanReferenceDuringCheckIn(TESForm* ReferencingForm, const CheckInFormList* Forms) const noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x268, this, ReferencingForm, Forms);
+				}
+
+				bool TESForm::HasAlteredChildren() const noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x270, this);
+				}
+
+				void TESForm::GetObjectWindowTreePath(BSString& Path) const noexcept(true)
+				{
+					CKPE::vtbl_call<void>(0x278, this, &Path);
+				}
+
+				bool TESForm::RemoveChildFormsFromList(CheckInFormList* Forms) noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x280, this, Forms);
+				}
+
+				bool TESForm::CanCheckOutChildren() noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x288, this);
+				}
+
+				bool TESForm::CheckOutChildren(TESBitArrayFile* UserFile, TESBitArrayFile* VersionFile) noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x290, this, UserFile, VersionFile);
+				}
+
+				bool TESForm::MarkChildFormsAsDeleted(bool bValue, TESBitArrayFile* UserFile, TESBitArrayFile* VersionFile) noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x298, this, bValue, UserFile, VersionFile);
+				}
+
+				void TESForm::RemoveReferencesToForm(TESForm* Form) noexcept(true)
+				{
+					CKPE::vtbl_call<void>(0x2A0, this, Form);
+				}
+
+				bool TESForm::CanCheckIn(const CheckInFormList* Forms) const noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x2A8, this, Forms);
+				}
+
+				void TESForm::BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true)
+				{
+					CKPE::vtbl_call<void>(0x2B0, this, Forms, &Message);
+				}
+
+				void TESForm::GetReferencedForms(void* OutForms) const noexcept(true)
+				{
+					CKPE::vtbl_call<void>(0x2B8, this, OutForms);
+				}
+
+				bool TESForm::CheckOut(TESBitArrayFile* UserFile, TESBitArrayFile* VersionFile) noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x2C0, this, UserFile, VersionFile);
+				}
 
 				bool TESForm::UpdateTrackingData() noexcept(true)
 				{
 					return CKPE::vtbl_call<bool>(0x2C8, this);
 				}
 
-				/////////////
+				bool TESForm::UndoCheckOut(TESBitArrayFile* UserFile) noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x2D0, this, UserFile);
+				}
+
+				void TESForm::PrepareForRevert() noexcept(true)
+				{
+					CKPE::vtbl_call<void>(0x2D8, this);
+				}
+
+				bool TESForm::Revert() noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x2E0, this);
+				}
+
+				void TESForm::OnFormIDsRemapped(void* FormIDMap) noexcept(true)
+				{
+					CKPE::vtbl_call<void>(0x2E8, this, FormIDMap);
+				}
+
+				bool TESForm::RecompileScripts(void* Context) noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x2F0, this, Context);
+				}
 
 				bool TESForm::HasRequiredEditorID() const noexcept(true)
 				{
@@ -286,11 +392,61 @@ namespace CKPE
 					return CKPE::vtbl_call<bool>(0x300, this, hDialogBox);
 				}
 
+				bool TESForm::PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam,
+					LRESULT* pResult) noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x308, this, hDialogBox, uMsg, wParam, lParam, pResult);
+				}
+
+				bool TESForm::IsSuitableDialogBox(HWND hDialogBox) const noexcept(true)
+				{
+					return CKPE::vtbl_call<bool>(0x310, this, hDialogBox);
+				}
+
+				void TESForm::WriteDataToDialogBox(HWND hDialogBox) noexcept(true)
+				{
+					CKPE::vtbl_call<void>(0x318, this, hDialogBox);
+				}
+
+				void TESForm::OnDialogBoxShown(HWND hDialogBox) noexcept(true)
+				{
+					CKPE::vtbl_call<void>(0x320, this, hDialogBox);
+				}
+
+				void TESForm::ReadDataFromDialogBox(HWND hDialogBox) noexcept(true)
+				{
+					CKPE::vtbl_call<void>(0x328, this, hDialogBox);
+				}
+
+				void TESForm::CleanupDialogBox(HWND hDialogBox) noexcept(true)
+				{
+					CKPE::vtbl_call<void>(0x330, this, hDialogBox);
+				}
+
+				void TESForm::OnDialogFormSaved(HWND hDialogBox, TESForm* SavedForm) noexcept(true)
+				{
+					CKPE::vtbl_call<void>(0x338, this, hDialogBox, SavedForm);
+				}
 
 				void TESForm::EditFormToWindow(HWND hParentWnd, bool bModalWindow,
-					[[maybe_unused]] bool bUnk1, [[maybe_unused]] std::int32_t nUnk2) noexcept(true)
+					[[maybe_unused]] bool bReserved, std::int32_t nObjectTemplateRequest) noexcept(true)
 				{
-					CKPE::vtbl_call<const char*>(0x340, this, hParentWnd, bModalWindow, bUnk1, nUnk2);
+					CKPE::vtbl_call<void>(0x340, this, hParentWnd, bModalWindow, bReserved, nObjectTemplateRequest);
+				}
+
+				void TESForm::FillListViewItem(NMLVDISPINFOA* pDispInfo) const noexcept(true)
+				{
+					CKPE::vtbl_call<void>(0x348, this, pDispInfo);
+				}
+
+				std::int32_t TESForm::CompareListViewItems(const TESForm* Rhs, LPARAM nSortColumn) const noexcept(true)
+				{
+					return CKPE::vtbl_call<std::int32_t>(0x350, this, Rhs, nSortColumn);
+				}
+
+				void TESForm::InitializeListView(HWND hListView) const noexcept(true)
+				{
+					CKPE::vtbl_call<void>(0x358, this, hListView);
 				}
 
 				bool TESForm::HasRequiredUniqueEditorID() const noexcept(true)
@@ -298,17 +454,27 @@ namespace CKPE
 					return CKPE::vtbl_call<bool>(0x360, this);
 				}
 
-				/////////////
-
-				bool TESForm::WriteWidthTabToSettingFile([[maybe_unused]] std::int64_t nUnk,
-					std::int32_t nWidth) noexcept(true)
+				void TESForm::CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true)
 				{
-					return CKPE::vtbl_call<std::int32_t>(0x378, this, nUnk, nWidth);
+					CKPE::vtbl_call<void>(0x368, this, &Files);
 				}
 
-				std::int32_t TESForm::ReadWidthTabFromSettingFile() const noexcept(true)
+				void TESForm::CollectRequiredFiles(void* VisitedForms, void* RequiredFiles) noexcept(true)
 				{
-					return CKPE::vtbl_call<std::int32_t>(0x380, this);
+					CKPE::vtbl_call<void>(0x370, this, VisitedForms, RequiredFiles);
+				}
+
+				/////////////
+
+				BOOL TESForm::SaveSelectedDialogTab(HWND hDialogBox,
+					std::int32_t nTabIndex) noexcept(true)
+				{
+					return CKPE::vtbl_call<BOOL>(0x378, this, hDialogBox, nTabIndex);
+				}
+
+				std::int32_t TESForm::GetSavedDialogTab(HWND hDialogBox) const noexcept(true)
+				{
+					return CKPE::vtbl_call<std::int32_t>(0x380, this, hDialogBox);
 				}
 
 				std::int32_t TESForm::GetSafeFormEditorID(char* lpBuffer, std::uint32_t nBufferSize) noexcept(true)

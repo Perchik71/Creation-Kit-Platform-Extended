@@ -25,14 +25,14 @@ namespace CKPE
 				};
 				static_assert(sizeof(IDLE_DATA) == 0x6);
 
-				// 1.11.240.0: size 0x78, vtable RVA 0x3043AE8, 125 virtual functions
+				// 1.11.246.0: size 0x78, vtable RVA 0x3044AE8, 125 virtual functions
 				class TESIdleForm :
 					public TESForm   // 000
 				{
 				public:
 					virtual ~TESIdleForm() = default;
 
-					virtual void sub_3E0() { return; } // 124 - RVA 0xA7ED90
+					virtual void OpenIdleManager() noexcept(true) { return; } // 124
 
 				public:
 					std::uint8_t unk28[0x18]; // 28

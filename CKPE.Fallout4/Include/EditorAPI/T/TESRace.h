@@ -45,7 +45,7 @@ namespace CKPE
 				class TESObjectWEAP;
 				class TESQuest;
 
-				// 1.11.240.0: size 0xC28, vtable RVA 0x304C8C8, 125 virtual functions
+				// 1.11.246.0: size 0xC28, vtable RVA 0x304D8C8, 125 virtual functions
 				class TESRace :
 					public TESForm,             // 000
 					public TESFullName,         // 028
@@ -61,7 +61,7 @@ namespace CKPE
 				public:
 					virtual ~TESRace() = default;
 
-					virtual void sub_3E0() { return; } // 124 - RVA 0xB1C9E0
+					virtual void UpdateRacePreview(HWND hDialogBox, bool ForceUpdate, void* Reference) noexcept(true) { return; } // 124
 
 				public:
 					TESModel skeletonModel[2]; // E8

@@ -696,6 +696,9 @@
     <ClInclude Include="Include\EditorAPI\T\TESObjectLIGH.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESObjectREFRFwd.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESObjectREFR.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
@@ -818,6 +821,9 @@
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\I\IMemoryStore.h">
       <Filter>EditorAPI\I</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\C\CheckInFormList.h">
+      <Filter>EditorAPI\C</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\C\CRC.h">
       <Filter>EditorAPI\C</Filter>

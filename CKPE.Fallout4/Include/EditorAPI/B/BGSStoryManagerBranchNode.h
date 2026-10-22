@@ -15,14 +15,14 @@ namespace CKPE
 		{
 			namespace Forms
 			{
-				// 1.11.240.0: size 0x70, vtable RVA 0x3013568, 136 virtual functions
+				// 1.11.246.0: size 0x70, vtable RVA 0x3014568, 136 virtual functions
 				class BGSStoryManagerBranchNode :
 					public BGSStoryManagerNodeBase   // 000
 				{
 				public:
 					virtual ~BGSStoryManagerBranchNode() = default;
 
-					virtual void sub_438() { return; } // 135 - RVA 0xFF1880, return (*(__int64 (__fastcall **)(__int64, __int64))(*(_QWORD *)a2 + 8LL))(a2, a1);
+					virtual std::uint32_t AcceptVisitor(void* Visitor) noexcept(true) { return 0; } // 135
 
 				public:
 					BSTArray<void*> children; // 58 - BSTArray<BGSStoryManagerNodeBase*>

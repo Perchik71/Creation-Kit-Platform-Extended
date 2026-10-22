@@ -30,7 +30,7 @@ namespace CKPE
 				};
 				static_assert(sizeof(QUEST_DATA) == 0x8);
 
-				// 1.11.240.0: size 0x270, vtable RVA 0x304A590, 129 virtual functions
+				// 1.11.246.0: size 0x270, vtable RVA 0x304B590, 129 virtual functions
 				class TESQuest :
 					public BGSStoryManagerTreeForm,  // 000
 					public TESFullName               // 028
@@ -40,7 +40,7 @@ namespace CKPE
 
 					constexpr static std::uint8_t TYPE_ID = ftQuest;
 
-					virtual void sub_400() { return; } // 128 - RVA 0xACB470, return a1 + 224;
+					virtual void* GetConditions() noexcept(true) { return nullptr; } // 128
 
 				public:
 					BSTArray<void*> aliases; // 40 - BSTArray<BGSBaseAlias*>

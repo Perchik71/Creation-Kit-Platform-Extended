@@ -9,6 +9,7 @@
 #include <EditorAPI/B/BGSMod.h>
 #include <EditorAPI/B/BGSPreviewTransform.h>
 #include <EditorAPI/B/BGSSoundTagComponent.h>
+#include <EditorAPI/T/TESObjectREFRFwd.h>
 
 namespace CKPE
 {
@@ -16,9 +17,17 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
+			class TESContainer;
+
+			namespace NiAPI
+			{
+				class NiAVObject;
+			}
+
 			namespace Forms
 			{
 				class BGSVoiceType;
+				class BGSSoundDescriptorForm;
 				// 0x90
 				class TESBoundObject :
 					public TESObject,        // 000
@@ -29,26 +38,26 @@ namespace CKPE
 
 					struct TESBound { std::int16_t x, y, z; };
 
-					// CK 1.11.240.0: 154 virtual functions (TESObject has 136), the new ones start at 0x440
+					// CK 1.11.246.0: 154 virtuals, vtable RVA 0x30920B8.
 					virtual ~TESBoundObject() = default;
-					virtual void* CreateInstanceData(const void* pData) const noexcept(true) { return nullptr; } // 136 - RVA 0x436830, return 0;
-					virtual const void* GetBaseInstanceData() const noexcept(true) { return nullptr; } // 137 - RVA 0x436870, return 0;
-					virtual bool GetAttachedMarkersVisible(void* pObj3D) const noexcept(true) { return false; } // 138 - RVA 0xC5A1A0, return 0;
-					virtual void SetAttachedMarkersVisible(void* pObj3D, bool bVisible) const noexcept(true) { return; } // 139 - RVA 0xC5A1B0
-					virtual bool QSupportsCountPerInstance() const noexcept(true) { return false; } // 140 - RVA 0x436980, return 0;
-					virtual void SetObjectVoiceType(BGSVoiceType* pVoiceType) noexcept(true) { return; } // 141 - RVA 0x4369A0
-					virtual BGSVoiceType* GetObjectVoiceType() const noexcept(true) { return nullptr; } // 142 - RVA 0x436890, return 0;
-					virtual void sub_478() { return; } // 143 - RVA 0xC5A270, return sub_14009E585(a1 + 128);
-					virtual void Clone3D(void* pRequester, void* pObj3D) noexcept(true) { return; } // 144 - RVA 0xC5A560, return (*(__int64 (__fastcall **)(__int64, __int64, __int64, _QWORD))(*(_QWORD *)a1 + 1024
-					virtual bool ReplaceModel(const char* lpFileName) noexcept(true) { return false; } // 145 - RVA 0xC5A6B0
-					virtual void sub_490() { return; } // 146 - RVA 0xC5A910
-					virtual void sub_498() { return; } // 147 - RVA 0xC5B0B0
-					virtual void sub_4A0() { return; } // 148 - RVA 0x436860
-					virtual void sub_4A8() { return; } // 149 - RVA 0x4368D0
-					virtual void sub_4B0() { return; } // 150 - RVA 0x436970
-					virtual void sub_4B8() { return; } // 151 - RVA 0x436940
-					virtual void sub_4C0() { return; } // 152 - RVA 0x436950
-					virtual void sub_4C8() { return; } // 153 - RVA 0x436960
+					virtual void* CreateInstanceData(const void* pData) const noexcept(true) { return nullptr; } // 136 - RVA 0x436870
+					virtual const void* GetBaseInstanceData() const noexcept(true) { return nullptr; } // 137 - RVA 0x4368B0
+					virtual bool GetAttachedMarkersVisible(void* pObj3D) const noexcept(true) { return false; } // 138 - RVA 0xC5A210
+					virtual void SetAttachedMarkersVisible(void* pObj3D, bool bVisible) const noexcept(true) { return; } // 139 - RVA 0xC5A220
+					virtual bool QSupportsCountPerInstance() const noexcept(true) { return false; } // 140 - RVA 0x4369C0
+					virtual void SetObjectVoiceType(BGSVoiceType* pVoiceType) noexcept(true) { return; } // 141 - RVA 0x4369E0
+					virtual BGSVoiceType* GetObjectVoiceType() const noexcept(true) { return nullptr; } // 142 - RVA 0x4368D0
+					[[nodiscard]] virtual BGSSoundDescriptorForm* GetSoundForTag(const BSFixedString& Tag) const noexcept(true) { return nullptr; } // 143
+					virtual void Clone3D(void* pRequester, void* pObj3D) noexcept(true) { return; } // 144 - RVA 0xC5A5D0
+					virtual bool ReplaceModel(const char* lpFileName) noexcept(true) { return false; } // 145 - RVA 0xC5A720
+					virtual void UpdatePreview(HWND hDialogBox, bool ForceUpdate) noexcept(true) { return; } // 146
+					virtual void CollectInventoryItems(TESContainer* Inventory, std::uint16_t Level, void* ExtraData) noexcept(true) { return; } // 147
+					virtual void CollectVoiceTypes(void* VoiceTypes) const noexcept(true) { return; } // 148
+					virtual void HandleRemoveItemFromContainer(TESObjectREFR* Reference) noexcept(true) { return; } // 149
+					virtual void OnRemove3D(NiAPI::NiAVObject* Object3D) noexcept(true) { return; } // 150
+					virtual void OnCheckModels() noexcept(true) { return; } // 151
+					virtual void OnCopyReference() noexcept(true) { return; } // 152
+					virtual void OnFinishScale() noexcept(true) { return; } // 153
 
 				private:
 					TESBound _BoundMin; // 40

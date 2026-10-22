@@ -14,6 +14,11 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
+			namespace NiAPI
+			{
+				class NiAVObject;
+			}
+
 			namespace BSResource
 			{
 				class ID;	// BSResource::ID, array element of textures/materials (12 bytes)
@@ -26,19 +31,20 @@ namespace CKPE
 			}
 
 
-			// 1.11.240.0: size 0x38, vtable RVA 0x30212A0, 27 virtual functions
+			// 1.11.246.0: size 0x38, vtable RVA 0x30222A0, 27 virtual functions
 			class TESModel :
 				public BaseFormComponent   // 000
 			{
 			public:
 				virtual ~TESModel() = default;
 
-				virtual const char* GetModel() const noexcept(true) { return nullptr; } // 21 - RVA 0x35AFE0, return sub_14007126F(a1 + 8);
-				virtual void SetModelFromDialogBox(HWND hDialogBox, std::uint32_t nCtrlID) noexcept(true) { return; } // 22 - RVA 0x8EAA40
-				virtual void SetModel(const char* lpModel) noexcept(true) { return; } // 23 - RVA 0x8E9370
-				virtual Forms::BGSModelMaterialSwap* GetAsModelMaterialSwap() noexcept(true) { return nullptr; } // 24 - RVA 0x8B3330, return 0;
-				virtual void sub_0C8() { return; } // 25 - RVA 0x8EAAF0
-				virtual void sub_0D0() { return; } // 26 - RVA 0x35AFF0
+				virtual const char* GetModel() const noexcept(true) { return nullptr; } // 21 - RVA 0x35B020
+				virtual void SetModelFromDialogBox(HWND hDialogBox, std::uint32_t nCtrlID) noexcept(true) { return; } // 22 - RVA 0x8EAAB0
+				virtual void SetModel(const char* lpModel) noexcept(true) { return; } // 23 - RVA 0x8E93E0
+				virtual Forms::BGSModelMaterialSwap* GetAsModelMaterialSwap() noexcept(true) { return nullptr; } // 24 - RVA 0x8B33A0
+				virtual bool UpdateResourceDependencies(NiAPI::NiAVObject* Object3D, Forms::TESForm* Owner) noexcept(true) { return false; } // 25
+				// Likely a model lifecycle hook; all inspected bodies are no-ops.
+				virtual void sub_0D0() { return; } // 26 - RVA 0x35B030
 
 			public:
 				BSFixedString modelName; // 08
