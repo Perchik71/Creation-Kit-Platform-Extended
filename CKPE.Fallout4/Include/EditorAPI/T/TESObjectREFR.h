@@ -72,14 +72,14 @@ namespace CKPE
 					[[nodiscard]] inline bool GetFullLODRef() const noexcept(true) { return CKPE::vtbl_call<bool>(0x410, this); }
 					inline void SetFullLODRef(bool val) noexcept(true) { CKPE::vtbl_call<void>(0x418, this, val); }
 					[[nodiscard]] inline void* GetSequencer() const noexcept(true) { return CKPE::vtbl_call<void*>(0x420, this); }
-					inline void SetActorCause(void* actorCause) noexcept(true) { CKPE::vtbl_call<void*>(0x448, this, actorCause); }
+					inline void SetActorCause(void* actorCause) noexcept(true) { CKPE::vtbl_call<void>(0x440, this, actorCause); }
 					[[nodiscard]] inline void* GetActorCause() const noexcept(true) { return CKPE::vtbl_call<void*>(0x448, this); }
 					[[nodiscard]] inline float GetActorWidthOrRefDiameter() const noexcept(true) { return CKPE::vtbl_call<float>(0x450, this); }
 					[[nodiscard]] inline float GetActorHeightOrRefBound() const noexcept(true) { return CKPE::vtbl_call<float>(0x458, this); }
 					[[nodiscard]] inline NiAPI::NiPoint3 GetStartingRotate() const noexcept(true) { return CKPE::vtbl_call<bool>(0x460, this); }
 					[[nodiscard]] inline NiAPI::NiPoint3 GetStartingPosition() const noexcept(true) { return CKPE::vtbl_call<bool>(0x468, this); }
 					inline void SetStartingPosition(const NiAPI::NiPoint3* position) noexcept(true) { CKPE::vtbl_call<void>(0x470, this, position); }
-					inline void UpdateRefLight(float delta) noexcept(true) { CKPE::vtbl_call<void>(0x478, delta); }
+					inline void UpdateRefLight(float delta) noexcept(true) { CKPE::vtbl_call<void>(0x478, this, delta); }
 
 					inline void SetEquipStateLocked(TESBoundObject* object, bool lock) noexcept(true) { CKPE::vtbl_call<void>(0x4A8, this, object, lock); }
 
@@ -93,8 +93,9 @@ namespace CKPE
 					inline void Set3D(NiAPI::NiAVObject* object, bool queue3DTasks) { CKPE::vtbl_call<void>(0x538, this, object, queue3DTasks); }
 					[[nodiscard]] inline bool ShouldBackgroundClone() const noexcept(true) { return CKPE::vtbl_call<bool>(0x540, this); }
 					[[nodiscard]] inline bool IsReadyForAttach(const void* priority) const noexcept(true) { return CKPE::vtbl_call<bool>(0x548, this, priority); }
-					[[nodiscard]] inline NiAPI::NiAVObject* Get3D() const noexcept(true) { return CKPE::vtbl_call<NiAPI::NiAVObject*>(0x550, this); }
-					[[nodiscard]] inline NiAPI::NiAVObject* Get3D(bool firstPerson) const noexcept(true) { return CKPE::vtbl_call<NiAPI::NiAVObject*>(0x558, this, firstPerson); }
+					[[nodiscard]] inline NiAPI::NiAVObject* Get3D() const noexcept(true) { return CKPE::vtbl_call<NiAPI::NiAVObject*>(0x558, this); }
+					// 1.11.246.0: slot 0x550 is Get3D(bool) and returns slot 0x558 (Get3D())
+					[[nodiscard]] inline NiAPI::NiAVObject* Get3D(bool firstPerson) const noexcept(true) { return CKPE::vtbl_call<NiAPI::NiAVObject*>(0x550, this, firstPerson); }
 					[[nodiscard]] inline NiAPI::NiAVObject* GetFullyLoaded3D() const noexcept(true) { return CKPE::vtbl_call<NiAPI::NiAVObject*>(0x560, this); }
 					[[nodiscard]] inline bool Is3rdPersonVisible() noexcept(true) { return CKPE::vtbl_call<bool>(0x568, this); }
 
@@ -117,6 +118,31 @@ namespace CKPE
 
 					inline void CreateInventoryList(const TESForm* container) noexcept(true) { CKPE::vtbl_call<void>(0x630, this, container); }
 					inline void DestroyInventoryList() noexcept(true) { CKPE::vtbl_call<void>(0x638, this); }
+					// Verified against 1.11.246.0 (bodies and call chains). Slots 0x4B0-0x4D8, 0x4E0 and 0x538 are not identified yet.
+					inline std::uint32_t RemoveItem(void* removeItemData) noexcept(true) { return CKPE::vtbl_call<std::uint32_t>(0x480, this, removeItemData); }
+					inline void AddWornOutfitImpl(void* outfit, bool queueItem) noexcept(true) { CKPE::vtbl_call<void>(0x488, this, outfit, queueItem); }
+					inline bool AddWornItem(TESBoundObject* object, void* extra, std::int32_t number, bool forceEquip, std::int32_t equipSlot) noexcept(true)
+					{ return CKPE::vtbl_call<bool>(0x490, this, object, extra, number, forceEquip, equipSlot); }
+					inline void DoTrap(void* trap, void* target) noexcept(true) { CKPE::vtbl_call<void>(0x498, this, trap, target); }
+					inline void DoTrapData(void* trapData) noexcept(true) { CKPE::vtbl_call<void>(0x4A0, this, trapData); }
+					[[nodiscard]] inline bool IsChild() const noexcept(true) { return CKPE::vtbl_call<bool>(0x4E8, this); }
+					[[nodiscard]] inline TESForm* GetTemplateActorBase() noexcept(true) { return CKPE::vtbl_call<TESForm*>(0x4F0, this); }
+					inline void SetTemplateActorBase(TESForm* actorBase) noexcept(true) { CKPE::vtbl_call<void>(0x4F8, this, actorBase); }
+					[[nodiscard]] inline bool PopulateGraphProjectsToLoad(const NiAPI::NiAVObject* obj3D, void* projectFileNames) const noexcept(true)
+					{ return CKPE::vtbl_call<bool>(0x570, this, obj3D, projectFileNames); }
+					[[nodiscard]] inline bool GetBehaviorRootNameOverrides(void* behaviorRoots) const noexcept(true) { return CKPE::vtbl_call<bool>(0x5A0, this, behaviorRoots); }
+					[[nodiscard]] inline bool GetBehaviorRootNameReplacement(void* rootNameReplacement) const noexcept(true) { return CKPE::vtbl_call<bool>(0x5A8, this, rootNameReplacement); }
+					[[nodiscard]] inline bool GetBehaviorRootData(bool onlyCollectActiveRoots, void* behaviorRoots) const noexcept(true)
+					{ return CKPE::vtbl_call<bool>(0x5B0, this, onlyCollectActiveRoots, behaviorRoots); }
+					// 0x600 is GetBiped(bool) and returns 0x608 (GetBiped()); 0x610 GetCurrentBiped() also returns GetBiped()
+					[[nodiscard]] inline void* GetBiped(bool firstPerson) const noexcept(true) { return CKPE::vtbl_call<void*>(0x600, this, firstPerson); }
+					[[nodiscard]] inline void* GetBiped() const noexcept(true) { return CKPE::vtbl_call<void*>(0x608, this); }
+					[[nodiscard]] inline void* GetCurrentBiped() const noexcept(true) { return CKPE::vtbl_call<void*>(0x610, this); }
+					inline void SetBiped(void* biped) noexcept(true) { CKPE::vtbl_call<void>(0x618, this, biped); }
+					inline void AttachWeapon(void* weaponInstance, std::int32_t equipIndex) noexcept(true) { CKPE::vtbl_call<void>(0x620, this, weaponInstance, equipIndex); }
+					inline void RemoveWeapon(void* weaponInstance, std::int32_t equipIndex) noexcept(true) { CKPE::vtbl_call<void>(0x628, this, weaponInstance, equipIndex); }
+					inline void SetRunsInLow(bool runsInLow) noexcept(true) { CKPE::vtbl_call<void>(0x640, this, runsInLow); }
+					inline void SetObjectReference(TESBoundObject* object) noexcept(true) { CKPE::vtbl_call<void>(0x648, this, object); }
 
 					inline void MoveHavok(bool forceRec) const noexcept(true) { CKPE::vtbl_call<void>(0x650, this, forceRec); }
 					inline void GetLinearVelocity(NiAPI::NiPoint3* velocity) const noexcept(true) { CKPE::vtbl_call<void>(0x658, this, velocity); }
