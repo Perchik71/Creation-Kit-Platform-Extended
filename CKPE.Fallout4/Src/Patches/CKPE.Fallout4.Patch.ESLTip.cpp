@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Application.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -52,7 +53,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(ID{ 643506, 2007835 }, Offset{ 0xE1 }).WriteCall(&sub);
+				Relocation(EditorAPI::IDs::Functions::sub_6A67F0, Offset{ 0xE1 }).WriteCall(&sub);
 
 				return true;
 			}

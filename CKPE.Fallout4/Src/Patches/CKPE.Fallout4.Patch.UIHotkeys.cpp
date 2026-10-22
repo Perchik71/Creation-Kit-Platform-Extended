@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <algorithm>
+#include <EditorAPI/IDs.h>
 #include <windows.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
@@ -119,9 +120,9 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				const auto target = ID{ 55199, 1619017 };
+				const auto target = EditorAPI::IDs::Functions::sub_568A00;
 				Relocation(target, Offset{ 0x1C3, 0x1AC }).WriteFill(NOP, 0x19);
-				Relocation(ID(584687)).WriteJump(&sub);
+				Relocation(EditorAPI::IDs::Functions::sub_3E2B1).WriteJump(&sub);
 
 				UIHotkeysSub = Relocation<decltype(&sub)>(target).Get();
 

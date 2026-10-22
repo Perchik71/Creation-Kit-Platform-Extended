@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.SafeWrite.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -49,7 +50,7 @@ namespace CKPE
 				using namespace Common;
 
 				// Fixed infinite loop by Compile Papyrus Scripts...
-				Relocation(ID(522253)).Write(RET);
+				Relocation(EditorAPI::IDs::Functions::sub_1137F50).Write(RET);
 
 				return true;
 			}

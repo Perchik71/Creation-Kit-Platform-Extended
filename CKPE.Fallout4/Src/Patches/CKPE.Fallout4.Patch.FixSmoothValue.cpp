@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Detours.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -49,7 +50,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				const auto target = ID{ 718656, 1601882 };
+				const auto target = EditorAPI::IDs::Functions::sub_2CBAA30;
 
 				// Fixed when the value is different from 0.0 to 1.0. Smoothness value to material (nif)
 				Relocation(target, 0xB7).WriteCall(&sub);

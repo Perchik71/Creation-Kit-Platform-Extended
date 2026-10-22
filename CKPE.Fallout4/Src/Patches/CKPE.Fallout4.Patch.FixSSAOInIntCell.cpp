@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Utils.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -55,7 +56,7 @@ namespace CKPE
 				using namespace Common;
 
 				// Fix crash caused by toggling SSAO while in an interior cell (no worldspace)
-				FixSSAOInIntCell_sub = reinterpret_cast<TFixSSAOInIntCell_sub*>(Relocation(ID{ 405154, 1993129 }).WriteJump(&sub));
+				FixSSAOInIntCell_sub = reinterpret_cast<TFixSSAOInIntCell_sub*>(Relocation(EditorAPI::IDs::Functions::sub_6A7AD0).WriteJump(&sub));
 
 				return true;
 			}

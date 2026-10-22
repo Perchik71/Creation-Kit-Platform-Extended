@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.SafeWrite.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.Relocation.h>
@@ -73,17 +74,17 @@ namespace CKPE
 					// For PS4 no needs patch
 					return true;
 
-				Relocation(ID{ 677726, 1377514 }, 0x13B).Write(std::addressof(precomb_flag), 4);
+				Relocation(EditorAPI::IDs::Functions::sub_D496E0, 0x13B).Write(std::addressof(precomb_flag), 4);
 
 				if (VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
-					Relocation(ID(1462644), 0x7D).Write({ 0x6A, (std::uint8_t)precomb_flag, 0x59 });
-					Relocation(ID(1990514)).Write<0x116>(std::addressof(precomb_flag), 4);
+					Relocation(EditorAPI::IDs::Functions::sub_492110, 0x7D).Write({ 0x6A, (std::uint8_t)precomb_flag, 0x59 });
+					Relocation(EditorAPI::IDs::Functions::sub_D267E0).Write<0x116>(std::addressof(precomb_flag), 4);
 				}
 				else
 				{
-					Relocation(ID(632758)).Write<0x6E>(precomb_flag);
-					Relocation(ID(415101)).Write<0xC7>(std::addressof(precomb_flag), 4);
+					Relocation(EditorAPI::IDs::Functions::legacy_PreCombined_632758).Write<0x6E>(precomb_flag);
+					Relocation(EditorAPI::IDs::Functions::legacy_PreCombined_415101).Write<0xC7>(std::addressof(precomb_flag), 4);
 				}
 
 				return true;

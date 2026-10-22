@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Detours.h>
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
@@ -98,23 +99,23 @@ namespace CKPE
 
 				if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_FALLOUT_C4_1_11_137_0)
 					// Remove from init function
-					text.WriteNop(Relocation(ID{ 2181936 }, Offset{ 0x59 }).Address(), 6);
+					text.WriteNop(Relocation(EditorAPI::IDs::Functions::WinMain_0_2, Offset{ 0x59 }).Address(), 6);
 
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
-					Relocation(ID(433039)).Write(RET);
-					Relocation(ID(752875)).Write(RET);
-					Relocation(ID(752927)).Write(RET);
-					Relocation(ID(809922)).Write(RET);
+					Relocation(EditorAPI::IDs::Functions::legacy_CrashDump_433039).Write(RET);
+					Relocation(EditorAPI::IDs::Functions::legacy_CrashDump_752875).Write(RET);
+					Relocation(EditorAPI::IDs::Functions::legacy_CrashDump_752927).Write(RET);
+					Relocation(EditorAPI::IDs::Functions::legacy_CrashDump_809922).Write(RET);
 				}
 				else if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_FALLOUT_C4_1_10_943_1)
 				{
-					Relocation(ID(1574397)).Write(RET);
-					Relocation(ID(1357980)).Write(RET);
-					Relocation(ID(1362949)).Write(RET);
-					Relocation(ID(1560296)).Write(RET);
-					Relocation(ID(1632576)).Write(RET);
-					Relocation(ID(1780312)).Write(RET);
+					Relocation(EditorAPI::IDs::Functions::sub_204C730).Write(RET);
+					Relocation(EditorAPI::IDs::Functions::sub_204E890).Write(RET);
+					Relocation(EditorAPI::IDs::Functions::sub_204E8D0).Write(RET);
+					Relocation(EditorAPI::IDs::Functions::scrt_fastfail).Write(RET);
+					Relocation(EditorAPI::IDs::Functions::raise_securityfailure).Write(RET);
+					Relocation(EditorAPI::IDs::Functions::sub_2D75E6C).Write(RET);
 				}
 
 				Common::CrashHandler::GetSingleton()->OnAnalyzeClassRef = DoAnalyzeClassRef;

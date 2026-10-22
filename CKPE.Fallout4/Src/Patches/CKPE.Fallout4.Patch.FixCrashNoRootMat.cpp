@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.SafeWrite.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.Relocation.h>
@@ -55,16 +56,16 @@ namespace CKPE
 
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
-					text.Write(Relocation(ID(649982), 0x1C).Address(), { 0x0F, 0xC6, 0x1D, 0x1C, 0xC0, 0x30, 0x01, 0xEE,
+					text.Write(Relocation(EditorAPI::IDs::Functions::legacy_FixCrashNoRootMat_649982, 0x1C).Address(), { 0x0F, 0xC6, 0x1D, 0x1C, 0xC0, 0x30, 0x01, 0xEE,
 							0x0F, 0xC6, 0x05, 0x14, 0xC0, 0x30, 0x01, 0x44, 0x31, 0xC0, JMP, 0x4B });
-					text.Write(Relocation(ID(54722), 0x39F).Address(), { JMP, 0x6F });
-					text.Write(Relocation(ID(797136), 0x317).Address(), { JMP });
+					text.Write(Relocation(EditorAPI::IDs::Functions::legacy_FixCrashNoRootMat_54722, 0x39F).Address(), { JMP, 0x6F });
+					text.Write(Relocation(EditorAPI::IDs::Functions::legacy_FixCrashNoRootMat_797136, 0x317).Address(), { JMP });
 				}
 				else
 				{
 					// Fixed crash when by load plugin in which there is no root parent to materials
-					auto rva = Relocation(ID(1471571), 0x1E).Address();
-					auto rva_data = Relocation(ID(351273)).Address();
+					auto rva = Relocation(EditorAPI::IDs::Functions::sub_24AD530, 0x1E).Address();
+					auto rva_data = Relocation(EditorAPI::IDs::Functions::xmmword_142F9D260).Address();
 
 					text.Write(rva, { 0x0F, 0xC6, 0x1D });
 					auto RelOff = (std::uint32_t)(rva_data - (rva + 8));
@@ -75,8 +76,8 @@ namespace CKPE
 					RelOff = (std::uint32_t)(rva_data - (rva + 8));
 					text.Write(rva + 3, (std::uint8_t*)&RelOff, 4);
 					text.Write(rva + 7, { 0x44, 0x31, 0xC0, JMP, 0x4D });
-					text.Write(Relocation(ID(1382630), 0x3A2).Address(), { JMP, 0x74 });
-					text.Write(Relocation(ID(1619614), 0x348).Address(), { JMP });
+					text.Write(Relocation(EditorAPI::IDs::Functions::sub_93BB30, 0x3A2).Address(), { JMP, 0x74 });
+					text.Write(Relocation(EditorAPI::IDs::Functions::sub_2BD9C40, 0x348).Address(), { JMP });
 				}
 
 				return true;

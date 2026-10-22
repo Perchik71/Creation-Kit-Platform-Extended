@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.MessageBox.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Utils.h>
 #include <CKPE.Detours.h>
 #include <CKPE.SafeWrite.h>
@@ -56,11 +57,11 @@ namespace CKPE
 
 				// Fix Encounter Zone
 				// TBM_GETPOS = wParam must be zero.
-				const auto target = ID(553619);
+				const auto target = EditorAPI::IDs::Functions::BGSEncounterZone__PerformDialogBox;
 				Relocation(target, Offset{ 0x15A, 0x156 }).Write({ 0x00 });
 				// Fix Encounter Zone
 				Relocation(target, 0x17E).WriteCall(&sub);
-				pointer_FixEncounterZone_sub = Relocation(ID(501084)).Address();
+				pointer_FixEncounterZone_sub = Relocation(EditorAPI::IDs::Functions::sub_CAC840).Address();
 
 				return true;
 			}

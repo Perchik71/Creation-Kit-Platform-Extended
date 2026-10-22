@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Application.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.VersionControlMergeWorkaround.h>
@@ -59,11 +60,11 @@ namespace CKPE
 				auto stext = Application::GetSingleton()->GetSegment(Segment::text);
 				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
-				const auto target1 = ID{ 76508, 1361378 };
-				const auto target2 = ID(49336);
-				const auto target3 = ID(581077);
-				const auto target4 = ID(581078);
-				const auto target5 = ID(438785);
+				const auto target1 = EditorAPI::IDs::Functions::sub_6EF7C0;
+				const auto target2 = EditorAPI::IDs::Functions::sub_6F1D90;
+				const auto target3 = EditorAPI::IDs::Functions::sub_6F1E00;
+				const auto target4 = EditorAPI::IDs::Functions::sub_6F2400;
+				const auto target5 = EditorAPI::IDs::Functions::sub_6FB070;
 
 				text.Write(Relocation(target1, Offset{ 0x21f, 0x123 }).Address(), { JMP });
 				text.Write(Relocation(target1, Offset{ 0x242, 0x3AF }).Address(), { JMP });

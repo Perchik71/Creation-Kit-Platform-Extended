@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.StringUtils.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.ModernTheme.h>
@@ -55,7 +56,7 @@ namespace CKPE
 				//
 				char* newWindowClass = new char[250];
 				sprintf_s(newWindowClass, 250, "Creation Kit %s", StringUtils::Utf16ToWinCP(VersionLists::GetEditorVersionByString()).c_str());
-				Relocation(ID{ 42440 }).Write(&newWindowClass, sizeof(newWindowClass));
+				Relocation(EditorAPI::IDs::Functions::lpWindowName).Write(&newWindowClass, sizeof(newWindowClass));
 				Common::ModernTheme::AddSpermanentWindowSubclass(newWindowClass);
 
 				return true;

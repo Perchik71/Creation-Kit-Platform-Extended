@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Application.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.FixSky.h>
@@ -47,7 +48,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				const auto target = ID(535695);
+				const auto target = EditorAPI::IDs::Functions::sub_E96F00;
 
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{

@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.SafeWrite.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.Relocation.h>
@@ -49,7 +50,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(ID{ 264710, 1495600 }, Offset{ 0x30C, 0x313 }).Write(JMP);
+				Relocation(EditorAPI::IDs::Functions::TESDataHandler__LoadFileRecords, Offset{ 0x30C, 0x313 }).Write(JMP);
 
 				return true;
 			}

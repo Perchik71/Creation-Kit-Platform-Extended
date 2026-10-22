@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Application.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.Common.Relocation.h>
@@ -101,7 +102,7 @@ namespace CKPE
 				if (runtime >= SUPPORT_RUNTIMECOUNT)
 					return false;
 
-				const auto func = Relocation(ID{ 531824 }).Address();
+				const auto func = Relocation(EditorAPI::IDs::Functions::TESObjectREFR__Set3D).Address();
 				const auto block = func + Set3D_Block[runtime];
 
 				// mov rcx, [rdi+18h]; cmp rcx, rsi / call rel32 / mov rbx, [rsp+...]

@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Detours.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.StringUtils.h>
 #include <CKPE.PathUtils.h>
 #include <CKPE.Application.h>
@@ -54,7 +55,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				const auto target = ID{ 632480, 1993061 };
+				const auto target = EditorAPI::IDs::Functions::sub_489830;
 
 				//	Add support quote to command line with -GeneratePreCombined
 				//	Should be: -GeneratePreCombined:"<ESMFilename>" [clean, filtered] [all, other, main, ints]

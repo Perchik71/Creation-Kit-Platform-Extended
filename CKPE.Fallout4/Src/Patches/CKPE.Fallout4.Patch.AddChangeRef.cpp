@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Application.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
@@ -57,9 +58,9 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(ID{ 636042, 1990688 }, Offset{ 0x5A2, 0x9C8 }).WriteCall(&HKInsertMenuA);
+				Relocation(EditorAPI::IDs::Functions::sub_5214D0, Offset{ 0x5A2, 0x9C8 }).WriteCall(&HKInsertMenuA);
 				
-				auto rel = ID(407591).Address();
+				auto rel = EditorAPI::IDs::Functions::sub_DB5B60.Address();
 				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetParentWithRedraw = rel;
 				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly_NG::SetParentWithRedraw = rel;
 				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR_Extremly::SetParentWithRedraw = rel;

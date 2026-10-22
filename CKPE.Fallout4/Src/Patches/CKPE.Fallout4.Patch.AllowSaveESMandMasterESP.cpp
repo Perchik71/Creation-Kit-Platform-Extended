@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.AddressLibrary.h>
@@ -91,9 +92,9 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				EditorAPI::pointer_TESFile_sub1 = ID{ 654263, 1994346 }.Address();
-				EditorAPI::pointer_TESFile_sub2 = ID{ 300396, 1818942 }.Address();
-				pointer_AllowSaveESMandMasterESP_sub1 = ID{ 645762, 1356949 }.Address();
+				EditorAPI::pointer_TESFile_sub1 = EditorAPI::IDs::Functions::sub_886890.Address();
+				EditorAPI::pointer_TESFile_sub2 = EditorAPI::IDs::Functions::sub_886930.Address();
+				pointer_AllowSaveESMandMasterESP_sub1 = EditorAPI::IDs::Functions::DialogHelpers_ShowFileDialog.Address();
 
 				EditorAPI::TESFile::AllowSaveESM = _READ_OPTION_BOOL("CreationKit", "bAllowSaveESM", false);
 				EditorAPI::TESFile::AllowMasterESP = _READ_OPTION_BOOL("CreationKit", "bAllowMasterESP", false);
@@ -101,27 +102,27 @@ namespace CKPE
 				if (EditorAPI::TESFile::AllowSaveESM || EditorAPI::TESFile::AllowMasterESP)
 				{
 					*(std::uintptr_t*)&EditorAPI::TESFile::LoadTESInfo =
-						Common::Relocation(Common::ID{ 654208, 1514423 }).WriteJump(&EditorAPI::TESFile::hk_LoadTESInfo);
+						Common::Relocation(EditorAPI::IDs::Functions::TESFile__LoadTESInfo).WriteJump(&EditorAPI::TESFile::hk_LoadTESInfo);
 					*(std::uintptr_t*)&EditorAPI::TESFile::WriteTESInfo =
-						Common::Relocation(Common::ID(532384)).WriteJump(&EditorAPI::TESFile::hk_WriteTESInfo);
+						Common::Relocation(EditorAPI::IDs::Functions::TESFile__WriteTESInfo).WriteJump(&EditorAPI::TESFile::hk_WriteTESInfo);
 
 					if (EditorAPI::TESFile::AllowSaveESM)
 					{
 						// Also allow non-game ESMs to be set as "Active File"
-						Relocation(ID(535497), 0x5F).WriteCall(&IsActiveFileBlacklist);
-						Relocation(ID{ 653585, 1754118 }, Offset{ 0x48, 0x4F }).WriteFill(NOP, 2);
+						Relocation(EditorAPI::IDs::Functions::sub_678E00, 0x5F).WriteCall(&IsActiveFileBlacklist);
+						Relocation(EditorAPI::IDs::Functions::sub_863990, Offset{ 0x48, 0x4F }).WriteFill(NOP, 2);
 
 						// Disable: "File '%s' is a master file or is in use.\n\nPlease select another file to save to."
 						auto newFormat = "File '%s' is in use.\n\nPlease select another file to save to.";
 
-						Relocation(ID{ 68391, 1386733 }, Offset{ 0x489, 0x55A }).WriteFill(NOP, 0xD);
-						Relocation(ID(41293)).Write(newFormat, strlen(newFormat) + 1);
-						Relocation(ID{ 462857, 1663801 }).WriteJump(&OpenPluginSaveDialog);
+						Relocation(EditorAPI::IDs::Functions::TESDataHandler__Save, Offset{ 0x489, 0x55A }).WriteFill(NOP, 0xD);
+						Relocation(EditorAPI::IDs::Functions::aFileSIsAMaster).Write(newFormat, strlen(newFormat) + 1);
+						Relocation(EditorAPI::IDs::Functions::sub_714300).WriteJump(&OpenPluginSaveDialog);
 					}
 
 					if (EditorAPI::TESFile::AllowMasterESP)
 						// Remove the check for IsMaster()
-						Relocation(ID{ 24274, 1450164 }, 0x5C).WriteFill(NOP, 9);
+						Relocation(EditorAPI::IDs::Functions::sub_876E60, 0x5C).WriteFill(NOP, 9);
 				}
 
 				return true;

@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.EditorUI.h>
@@ -68,7 +69,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				const auto target = ID{ 623435, 1989512 };
+				const auto target = EditorAPI::IDs::Functions::sub_347840;
 
 				// Removing stuff that messes up the index selected item.
 				Relocation(target, Offset{ 0x9E3, 0x993 }).WriteFill(NOP, 0xF);

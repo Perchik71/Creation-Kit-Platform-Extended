@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Application.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.IncreaseChunkSizeForSNAM.h>
@@ -50,7 +51,7 @@ namespace CKPE
 				using namespace Common;
 
 				// Increasing the size for the SNAM chunk from 512 to 2048
-				Relocation(ID{ 654208, 1514423 }, Offset{ 0x35D, 0x4D3 }).Write(std::addressof(uiMaxChunkSizeSNAM), 0x4);
+				Relocation(EditorAPI::IDs::Functions::TESFile__LoadTESInfo, Offset{ 0x35D, 0x4D3 }).Write(std::addressof(uiMaxChunkSizeSNAM), 0x4);
 
 				return true;
 			}

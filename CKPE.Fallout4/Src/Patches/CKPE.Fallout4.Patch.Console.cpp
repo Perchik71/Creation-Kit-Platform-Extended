@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Detours.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.LogWindow.h>
 #include <CKPE.Common.Interface.h>
@@ -87,13 +88,13 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(ID{ 440122, 1515122 }).WriteJump(LogWarningVa);
-				Relocation(ID{ 635645, 1668403 }).WriteJump(LogWarningUnknown1);
-				Relocation(ID{ 433174, 2009876 }).WriteJump(LogWarningUnknown1);
-				Relocation(ID{ 751443, 1618957 }).WriteJump(LogWarningUnknown1);
-				Relocation(ID{ 714644, 1618560 }).WriteJump(LogWarningUnknown1);
-				Relocation(ID{ 653593, 1994158 }, Offset{ 0x7B3, 0x744 }).WriteCall(LogWarningUnknown2);
-				Relocation(ID{ 509260, 1687367 }).WriteJump(LogAssert);
+				Relocation(EditorAPI::IDs::Functions::sub_1FFF220).WriteJump(LogWarningVa);
+				Relocation(EditorAPI::IDs::Functions::sub_1FFF750).WriteJump(LogWarningUnknown1);
+				Relocation(EditorAPI::IDs::Functions::sub_1FFF570).WriteJump(LogWarningUnknown1);
+				Relocation(EditorAPI::IDs::Functions::sub_1FFF610).WriteJump(LogWarningUnknown1);
+				Relocation(EditorAPI::IDs::Functions::sub_1FFF810).WriteJump(LogWarningUnknown1);
+				Relocation(EditorAPI::IDs::Functions::TESDataHandler__LoadFiles, Offset{ 0x7B3, 0x744 }).WriteCall(LogWarningUnknown2);
+				Relocation(EditorAPI::IDs::Functions::sub_1FFF470).WriteJump(LogAssert);
 
 				return true;
 			}

@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <commctrl.h>
 #include <CKPE.StringUtils.h>
 #include <CKPE.Application.h>
@@ -132,10 +133,10 @@ namespace CKPE
 				// Initially, the original state must be set
 				UnicodeConvertorString.SetMode(ConvertorString::MODE_ANSI);
 
-				const auto target1 = ID{ 613852, 1995935 };
-				const auto target2 = ID{ 650803, 1852383 };
-				const auto target3 = ID{ 643293, 1664109 };
-				const auto target4 = ID{ 643289, 1753394 };
+				const auto target1 = EditorAPI::IDs::Functions::sub_6BD1B0;
+				const auto target2 = EditorAPI::IDs::Functions::sub_242A490;
+				const auto target3 = EditorAPI::IDs::Functions::sub_68D6E0;
+				const auto target4 = EditorAPI::IDs::Functions::sub_68D580;
 
 				// Also delete it message "You must close all Dialoge Boxes",
 				// which has problems with programs that work with multiple monitors.
@@ -154,7 +155,7 @@ namespace CKPE
 				Relocation(target2, 0x1F).Write({ 0x51, 0x48, 0x89, 0xC1 });
 				Relocation(target2, 0x23).WriteCall(&BGSLocalizedString::GetStr);
 				Relocation(target2, 0x28).Write({ 0x59, 0xC3, 0x31, 0xC0, 0xC3 });
-				SafeWrite::WriteJump(Relocation(ID{ 158625, 1627008 }, 0x17).Address(), lOff);
+				SafeWrite::WriteJump(Relocation(EditorAPI::IDs::Functions::sub_242EA10, 0x17).Address(), lOff);
 
 				// In the "Data" dialog box, the "author" and "description" controls are independent,
 				// and I'm forced to make a trap for WinAPI calls
@@ -169,9 +170,9 @@ namespace CKPE
 				// Cut check book characters
 				//
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-					Relocation(ID(245849), 0x7A).Write({0xE9, 0x96, 0x00, 0x00, 0x00, 0x90});
+					Relocation(EditorAPI::IDs::Functions::legacy_Unicode_245849, 0x7A).Write({0xE9, 0x96, 0x00, 0x00, 0x00, 0x90});
 				else
-					Relocation(ID(1804550), 0xD5).Write({0xE9, 0x94, 0x00, 0x00, 0x00, 0x90});
+					Relocation(EditorAPI::IDs::Functions::sub_C796A0, 0xD5).Write({0xE9, 0x94, 0x00, 0x00, 0x00, 0x90});
 
 				//
 				// Cut check spelling window
@@ -181,14 +182,14 @@ namespace CKPE
 				auto stext = interface->GetApplication()->GetSegment(Segment::text);
 				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
-				text.WriteNop(Relocation(ID{ 243708, 1596835 }, Offset{ 0x11E, 0x1EA }).Address(), 5);
-				text.WriteNop(Relocation(ID{ 407774, 1988972 }, Offset{ 0x67E, 0x63A }).Address(), 5);
-				text.WriteNop(Relocation(ID{ 664457, 1894783 }, Offset{ 0x185, 0x165 }).Address(), 5);
-				text.WriteNop(Relocation(ID{ 668460, 1645713 }, Offset{ 0xA4F, 0xBBA }).Address(), 5);
-				text.WriteNop(Relocation(ID{ 668460, 1645713 }, Offset{ 0x137F, 0x157B }).Address(), 5);
-				text.WriteNop(Relocation(ID{ 668460, 1645713 }, Offset{ 0x1569, 0x190E }).Address(), 5);
-				text.WriteNop(Relocation(ID{ 668671, 1869554 }, Offset{ 0x3FE, 0x3C3 }).Address(), 5);
-				text.WriteNop(Relocation(ID{ 670625, 1774972 }, Offset{ 0x583, 0x547 }).Address(), 5);
+				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_8BE210, Offset{ 0x11E, 0x1EA }).Address(), 5);
+				text.WriteNop(Relocation(EditorAPI::IDs::Functions::BGSTerminal__PerformDialogBox, Offset{ 0x67E, 0x63A }).Address(), 5);
+				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_AEF0B0, Offset{ 0x185, 0x165 }).Address(), 5);
+				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_B37010, Offset{ 0xA4F, 0xBBA }).Address(), 5);
+				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_B37010, Offset{ 0x137F, 0x157B }).Address(), 5);
+				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_B37010, Offset{ 0x1569, 0x190E }).Address(), 5);
+				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_B42770, Offset{ 0x3FE, 0x3C3 }).Address(), 5);
+				text.WriteNop(Relocation(EditorAPI::IDs::Functions::TESTopicInfo__PerformDialogBox, Offset{ 0x583, 0x547 }).Address(), 5);
 
 				return true;
 			}

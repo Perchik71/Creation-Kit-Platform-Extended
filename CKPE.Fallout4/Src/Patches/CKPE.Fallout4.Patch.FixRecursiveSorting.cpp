@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Detours.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -50,8 +51,8 @@ namespace CKPE
 				using namespace Common;
 
 				// Fix for crash (recursive sorting function stack overflow) when saving certain ESP files (i.e SimSettlements.esp)
-				Relocation(ID{ 636467, 1991005 }).WriteJump(&sub<class TESForm*>);
-				Relocation(ID{ 384548, 1529588 }).Write(RET);
+				Relocation(EditorAPI::IDs::Functions::sub_8755D0).WriteJump(&sub<class TESForm*>);
+				Relocation(EditorAPI::IDs::Functions::sub_8757F0).Write(RET);
 
 				return true;
 			}

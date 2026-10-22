@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <d3d11_3.h>
+#include <EditorAPI/IDs.h>
 #include <comdef.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Utils.h>
@@ -223,15 +224,15 @@ namespace CKPE
 
                 if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
                 {
-                    auto rel = Relocation(ID(795948), 0x14B);
+                    auto rel = Relocation(EditorAPI::IDs::Functions::legacy_CreateDDS_795948, 0x14B);
                     rel.WriteFill(NOP, 0xC);
                     rel.WriteCall(&CreateDDSPatch_sub2);
-                    pointer_CreateDDS_sub = ID(795841).Address();
+                    pointer_CreateDDS_sub = EditorAPI::IDs::Functions::legacy_CreateDDS_795841.Address();
                 }
                 else
                 {
                     // Bethesda has finally added a check. Let's make it so that it causes a crash.
-                    Relocation(ID(1355670), 0x474).WriteCall(&CreateDDSPatch_sub2);
+                    Relocation(EditorAPI::IDs::Functions::sub_2B99AD0, 0x474).WriteCall(&CreateDDSPatch_sub2);
                 }
 
                 return true;

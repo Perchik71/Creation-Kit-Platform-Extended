@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Utils.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -50,19 +51,19 @@ namespace CKPE
 				using namespace Common;
 
 				// Send text to 4 part StatusBar (Game cam: .....)
-				Relocation(ID(548371), Offset{ 0x23A, 0x22F }).Write({ 0x02 });
+				Relocation(EditorAPI::IDs::Functions::sub_56E940, Offset{ 0x23A, 0x22F }).Write({ 0x02 });
 				// CheckMenuItem is called, however, it always gets zero, but eight is written on top,
 				// which is equal to MFS_CHECKED.
-				Relocation(ID{ 643475, 1634204 }, Offset{ 0xD3D, 0xF9C, 0xFC1, 0xFC3 }).WriteFill(NOP, 6);
+				Relocation(EditorAPI::IDs::Functions::sub_69C240, Offset{ 0xD3D, 0xF9C, 0xFC1, 0xFC3 }).WriteFill(NOP, 6);
 				// CheckMenuItem is called, however, it always gets MFS_CHECKED.
-				Relocation(ID{ 637365, 1698155 }, Offset{ 0x53, 0x51 }).WriteFill(NOP, 6);
+				Relocation(EditorAPI::IDs::Functions::sub_558F90, Offset{ 0x53, 0x51 }).WriteFill(NOP, 6);
 				// Fix repeat CheckMenuItem is called
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-					Relocation(ID(643475), 0xFF1).Write({ 0x20, 0x63 });
+					Relocation(EditorAPI::IDs::Functions::legacy_Misc_643475, 0xFF1).Write({ 0x20, 0x63 });
 				else
-					Relocation(ID(1634204), Offset{ 0x125A, 0x125A, 0x127F, 0x1281 }).Write({ 0xE9, 0xAE, 0x66, 0x00, 0x00, 0x90 });
+					Relocation(EditorAPI::IDs::Functions::sub_69C240_2, Offset{ 0x125A, 0x125A, 0x127F, 0x1281 }).Write({ 0xE9, 0xAE, 0x66, 0x00, 0x00, 0x90 });
 				// ret skip Warnings window
-				Relocation(ID{ 641592, 1843783 }).Write({ 0xC3, 0xCC, 0xCC, 0xCC, 0xCC });
+				Relocation(EditorAPI::IDs::Functions::sub_632EA0).Write({ 0xC3, 0xCC, 0xCC, 0xCC, 0xCC });
 
 				// Fixed crash when closing the window, occurs extremely rarely
 				// CONTEXT:  (.ecxr)
@@ -76,7 +77,7 @@ namespace CKPE
 				//	cs = 0033  ss = 002b  ds = 002b  es = 002b  fs = 0053  gs = 002b             efl = 00010246
 				//	CreationKit + 0x2511176:
 				//  00007ff7`7f381176 ff9090010000    call    qword ptr[rax + 190h] ds:000002db`7f90f9e0=bd8a591342b6b52e
-				Relocation(ID{ 768935, 1503558 }, 0x56).WriteCall(&sub);
+				Relocation(EditorAPI::IDs::Functions::sub_24BDB90, 0x56).WriteCall(&sub);
 
 				return true;
 			}

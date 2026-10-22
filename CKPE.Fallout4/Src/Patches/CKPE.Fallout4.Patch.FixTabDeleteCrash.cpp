@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -52,7 +53,7 @@ namespace CKPE
 				using namespace Common;
 
 				// Fix for crash when tab control buttons are deleted. Uninitialized TCITEMA structure variables.
-				Relocation(ID{ 642003, 1548425 }).WriteJump(&sub);
+				Relocation(EditorAPI::IDs::Functions::sub_641B60).WriteJump(&sub);
 
 				return true;
 			}

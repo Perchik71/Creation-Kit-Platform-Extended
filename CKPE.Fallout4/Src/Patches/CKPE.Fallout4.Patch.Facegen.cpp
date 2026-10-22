@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <d3d11_2.h>
+#include <EditorAPI/IDs.h>
 #include <DirectXTex.h>
 #include <commctrl.h>
 
@@ -141,10 +142,10 @@ namespace CKPE
 				auto stext = Application::GetSingleton()->GetSegment(Segment::text);
 				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
-				pointer_FaceGen_sub1 = Relocation(ID{ 75665, 1589229 }).Address();
-				pointer_FaceGen_sub2 = Relocation(ID{ 632518, 1388320 }).Address();
+				pointer_FaceGen_sub1 = Relocation(EditorAPI::IDs::Functions::BSGraphics__RenderTargetManager__SaveRenderTarget).Address();
+				pointer_FaceGen_sub2 = Relocation(EditorAPI::IDs::Functions::sub_492E90).Address();
 
-				const auto target1 = ID{ 666256, 1990278 };
+				const auto target1 = EditorAPI::IDs::Functions::sub_ABE160;
 
 				// Don't produce DDS files
 				if (_READ_OPTION_BOOL("FaceGen", "bDisableExportDDS", false))
@@ -179,14 +180,14 @@ namespace CKPE
 				// Don't produce NIF files
 				if (_READ_OPTION_BOOL("FaceGen", "bDisableExportNIF", false))
 				{
-					text.Write(Relocation(ID{ 50814, 1938871 }).Address(), { 0xC3 });
+					text.Write(Relocation(EditorAPI::IDs::Functions::data_3877430).Address(), { 0xC3 });
 					_MESSAGE("Disabling export FaceGen .NIF files");
 				}
 
 				bUseCompresionAsBC7U = _READ_OPTION_BOOL("FaceGen", "bUseCompressionAsBC7U", false);
 
 				// Allow variable tint mask resolution
-				const auto target2 = ID{ 800387, 1690631 };
+				const auto target2 = EditorAPI::IDs::Functions::BSRenderTargetManager__CreateRenderTargets;
 				std::uint32_t tintResolution = _READ_OPTION_UINT("FaceGen", "uTintMaskResolution", 1024);
 				text.Write(Relocation(target2, Offset{ 0xB9C, 0xBDD }).Address(),
 					(std::uint8_t*)&tintResolution, sizeof(std::uint32_t));

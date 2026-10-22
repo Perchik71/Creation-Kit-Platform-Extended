@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Utils.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.RTTI.h>
@@ -86,8 +87,8 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				CrashInvalidStringsLength	= reinterpret_cast<TCrashInvalidStringsLength*>(Relocation(ID{ 409166, 1382155 }).WriteJump(&GetLocalizeStringLengthSafe));
-				CrashInvalidStringsGet		= reinterpret_cast<TCrashInvalidStringsGet*>(Relocation(ID{ 381562 }).WriteJump(&GetLocalizeStringSafe));
+				CrashInvalidStringsLength	= reinterpret_cast<TCrashInvalidStringsLength*>(Relocation(EditorAPI::IDs::Functions::sub_2429C70).WriteJump(&GetLocalizeStringLengthSafe));
+				CrashInvalidStringsGet		= reinterpret_cast<TCrashInvalidStringsGet*>(Relocation(EditorAPI::IDs::Functions::sub_39AA50).WriteJump(&GetLocalizeStringSafe));
 
 				return true;
 			}

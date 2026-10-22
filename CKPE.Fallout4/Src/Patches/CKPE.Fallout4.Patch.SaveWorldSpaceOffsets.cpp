@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <string>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -105,7 +106,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&pSave = Relocation(ID{ 68391, 1386733 }).WriteJump(&hk_Save);
+				*(std::uintptr_t*)&pSave = Relocation(EditorAPI::IDs::Functions::TESDataHandler__Save).WriteJump(&hk_Save);
 
 				return true;
 			}

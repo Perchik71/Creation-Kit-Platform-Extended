@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Utils.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -56,8 +57,8 @@ namespace CKPE
 
 				using namespace Common;
 
-				Relocation(ID{ 632497, 1994724 }, Offset{ 0x2A1, 0x500 }).WriteCall(sub);
-				pointer_PreVisPatch_sub = Relocation(ID{ 611970, 1519646 }).Address();
+				Relocation(EditorAPI::IDs::Functions::sub_48D8D0, Offset{ 0x2A1, 0x500 }).WriteCall(sub);
+				pointer_PreVisPatch_sub = Relocation(EditorAPI::IDs::Functions::TESForm__GetFormByNumericID).Address();
 
 				return true;
 			}

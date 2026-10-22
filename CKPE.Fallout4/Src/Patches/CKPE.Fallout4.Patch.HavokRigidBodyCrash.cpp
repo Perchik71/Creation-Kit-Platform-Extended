@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Application.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.HavokRigidBodyCrash.h>
@@ -48,9 +49,9 @@ namespace CKPE
 				using namespace Common;
 
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-					Relocation(ID(720180), 0x610).Write({ 0x61 });
+					Relocation(EditorAPI::IDs::Functions::legacy_HavokRigidBodyCrash_720180, 0x610).Write({ 0x61 });
 				else
-					Relocation(ID(1990426), 0x7F1).Write({ 0x60 });
+					Relocation(EditorAPI::IDs::Functions::sub_1A2BB60, 0x7F1).Write({ 0x60 });
 				
 				return true;
 			}

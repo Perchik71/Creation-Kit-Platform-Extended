@@ -3,6 +3,7 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <EditorAPI/IDs.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Detours.h>
 #include <CKPE.Application.h>
@@ -51,7 +52,7 @@ namespace CKPE
 				using namespace Common;
 
 				// Fix crash when Unicode string conversion fails with bethesda.net http responses
-				Relocation(ID{ 103156, 1421864 }).WriteJump(sub);
+				Relocation(EditorAPI::IDs::Functions::sub_27FA7B0).WriteJump(sub);
 
 				return true;
 			}
