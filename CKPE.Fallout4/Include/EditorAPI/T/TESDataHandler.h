@@ -239,14 +239,30 @@ namespace CKPE
 				std::uint32_t UnkDAC;									// FA4
 				TESFile* activePlugin;									// FA8
 				ModList modList;										// FB0
-				BSTArray<void*> unkFD8;									// FD8 - zeroed by the constructor (CommonLibF4 has releasedFormIDArray at FF0)
-				std::uint8_t unkFF0[0x10];								// FF0 - flag bytes; the constructor sets FF7 to 1 and clears FF1..FF6, FF8, FFA..FFE (FF3 is read by LoadFiles, FF5 by SaveForm)
+				BSTArray<TESFile*> smallMods;							// FD8 - light (ESL) plugins; loadedMods + smallMods form CommonLibF4's TESFileCollection at FC0
+				std::uint8_t unkFF0;									// FF0
+				std::uint8_t unkFF1;									// FF1 - LoadFiles / TESWorldSpace::InitItemImpl gate
+				std::uint8_t buildingLOD;								// FF2 - set by the LOD build dispatcher for its duration, read by Save
+				std::uint8_t unkFF3;									// FF3 - LoadFiles: loads the active file's TES info first
+				std::uint8_t unkFF4;									// FF4 - gates TESForm file reassignment and NavMesh::LoadEdit
+				std::uint8_t unkFF5;									// FF5 - SaveForm: skips forms of non-master files when set
+				std::uint8_t clearingData;								// FF6 - set while the TES is destroyed; suppresses TESForm::SetAltered and UI updates
+				std::uint8_t unkFF7;									// FF7 - 1 on construction
+				std::uint8_t unkFF8;									// FF8 - gates the LightRadius lookup (sub_140C54630)
+				std::uint8_t loadingFiles;								// FF9 - set around LoadFiles; the TESForm constructor does not allocate a form ID while set
+				std::uint8_t unkFFA;									// FFA
+				std::uint8_t unkFFB;									// FFB - written by LoadFileRecords from its bool argument
+				std::uint8_t saveForGame;								// FFC - Save: with the game window open posts "FCF" to port 8080, else may launch Beta.exe with the plugin
+				std::uint8_t saveForGameAlt;							// FFD - Save: posts "FCF" to port 4600 (set by the save handler for mode 4)
+				std::uint8_t saveExtraNotify;							// FFE - Save: extra notification step (set by the save handler for mode 1)
+				std::uint8_t unkFFF;									// FFF
 				TESRegionDataManager* regionDataManager;				// 1000 - a TESRegionDataManagerEditor
 				std::uint8_t unk1008;									// 1008 - cleared by the constructor
 				char pad1009[0x7];										// 1009
 			public:
 				inline const TESFileList* GetMods() const { return &modList.modInfoList; }
 				inline const TESFileArray* GetLoadedMods() const { return &modList.loadedMods; }
+				inline const BSTArray<TESFile*>* GetSmallMods() const { return &smallMods; }
 				inline TESFile* GetActiveMod() const { return activePlugin; }
 				inline bool IsActiveMod() const { return activePlugin != nullptr; }
 
@@ -281,6 +297,11 @@ namespace CKPE
 			static_assert(offsetof(TESDataHandler, NextFormId) == 0xFA0);
 			static_assert(offsetof(TESDataHandler, activePlugin) == 0xFA8);
 			static_assert(offsetof(TESDataHandler, modList) == 0xFB0);
+			static_assert(offsetof(TESDataHandler, smallMods) == 0xFD8);
+			static_assert(offsetof(TESDataHandler, buildingLOD) == 0xFF2);
+			static_assert(offsetof(TESDataHandler, clearingData) == 0xFF6);
+			static_assert(offsetof(TESDataHandler, loadingFiles) == 0xFF9);
+			static_assert(offsetof(TESDataHandler, saveForGame) == 0xFFC);
 			static_assert(offsetof(TESDataHandler, regionDataManager) == 0x1000);
 		}
 	}
