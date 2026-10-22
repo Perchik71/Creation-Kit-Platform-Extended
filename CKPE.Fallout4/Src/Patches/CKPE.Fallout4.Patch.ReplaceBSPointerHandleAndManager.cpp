@@ -485,7 +485,7 @@ namespace CKPE
 					// Change UNUSED_BIT_START
 					total += __InstallPatchByPatternMask("0F BA E0 1A", 0, 317, 3,
 						&EditorAPI::BSUntypedPointerHandle_Extended_NG::UNUSED_BIT_START, 1);
-					total += __InstallPatchByPatternMaskEx("0F BA ?? 1A", 0, 72, 3,
+					total += __InstallPatchByPatternMaskEx("0F BA ? 1A", 0, 72, 3,
 						&EditorAPI::BSUntypedPointerHandle_Extended_NG::UNUSED_BIT_START, 1,
 						{ 18, 19, 23, 24, 30, 38, 39, 47, 48, 63, 64, 65, 66, 67, 68 });
 
@@ -859,7 +859,7 @@ namespace CKPE
 					// Change UNUSED_BIT_START
 					total += __InstallPatchByPatternMask("0F BA E0 1A", 0, 317, 3,
 						&EditorAPI::BSUntypedPointerHandle_Extended_NG::UNUSED_BIT_START, 1);
-					total += __InstallPatchByPatternMaskEx("0F BA ?? 1A", 0, 72, 3,
+					total += __InstallPatchByPatternMaskEx("0F BA ? 1A", 0, 72, 3,
 						&EditorAPI::BSUntypedPointerHandle_Extended_NG::UNUSED_BIT_START, 1,
 						{ 18, 19, 23, 24, 30, 38, 39, 47, 48, 63, 64, 65, 66, 67, 68 });
 
