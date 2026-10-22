@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <EditorAPI/B/BSTHashMap.h>
 #include <EditorAPI/T/TESFormIDListView.h>
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/T/TESTexture.h>
@@ -19,6 +20,7 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				class TESObjectCELL;
 				class BGSLightingTemplate;
 
 				class TESWaterForm;
@@ -61,23 +63,21 @@ namespace CKPE
 					virtual ~TESWorldSpace() = default;
 
 				public:
-					std::uint8_t unk68[0xC]; // 68
-					std::uint32_t unk74; // 74
-					std::uint32_t unk78; // 78
-					std::uint32_t unk7C; // 7C
-					std::uint64_t unk80; // 80
-					std::uint32_t unk88; // 88
-					std::uint8_t unk8C[0xC]; // 8C
-					std::uint64_t unk98; // 98
-					std::uint64_t unkA0; // A0
-					std::uint64_t unkA8; // A8
+					std::uint8_t pad68[0x8]; // 68
+					// BSTHashMap<std::int32_t, TESObjectCELL*> (BSTScatterTable: capacity 7C, free 80, good 84, sentinel 88, entries pointer 98).
+					// Same position as CommonLibF4's cellMap (0x40) shifted by the TESTexture base (+0x30), like climate (80 -> B0) and flags (88 -> B8).
+					BSTHashMap<std::int32_t, TESObjectCELL*> cellMap; // 70
+					void* persistentCell; // A0 - TESObjectCELL*
+					void* terrainManager; // A8 - BGSTerrainManager*
 					TESClimate* climate; // B0
 					std::int8_t flags; // B8 - DATA
-					std::uint8_t unkB9; // B9
+					std::uint8_t padB9; // B9
 					std::uint16_t parentUseFlags; // BA - REX::TEnumSet<PARENT_USE_FLAG, std::uint16_t>
 					std::int8_t worldFlags; // BC
-					std::uint8_t unkBD; // BD
-					std::uint8_t unkBE[0xA]; // BE
+					std::uint8_t padBD; // BD
+					std::int16_t fixedCenterX; // BE - ShortPoint fixedCenter
+					std::int16_t fixedCenterY; // C0
+					std::uint8_t padC2[0x6]; // C2
 					std::uint64_t unkC8; // C8
 					std::uint64_t unkD0; // D0
 					std::uint64_t unkD8; // D8
@@ -92,8 +92,8 @@ namespace CKPE
 					WORLD_MAP_OFFSET_DATA worldMapOffsetData; // 124
 					std::uint8_t unk134[0x4]; // 134
 					BGSMusicType* musicType; // 138
-					std::uint8_t minimumCoords[0x8]; // 140 - NiPoint2
-					std::uint8_t maximumCoords[0x8]; // 148 - NiPoint2
+					NiAPI::NiPoint2 minimumCoords; // 140
+					NiAPI::NiPoint2 maximumCoords; // 148
 					float defaultLandHeight; // 150
 					float defaultWaterHeight; // 154
 					float distantLODMult; // 158
@@ -122,6 +122,9 @@ namespace CKPE
 					char* lvlDataCellA; // 2A8
 					char* maxHeightData; // 2B0
 				};
+				static_assert(offsetof(TESWorldSpace, cellMap) == 0x70);
+				static_assert(offsetof(TESWorldSpace, persistentCell) == 0xA0);
+				static_assert(offsetof(TESWorldSpace, fixedCenterX) == 0xBE);
 				static_assert(sizeof(TESWorldSpace) == 0x2B8);
 			}
 		}

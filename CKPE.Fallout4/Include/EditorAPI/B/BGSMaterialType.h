@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <EditorAPI/N/NiColor.h>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESModel.h>
 #include <EditorAPI/B/BSFixedString.h>
@@ -32,7 +33,7 @@ namespace CKPE
 					BGSImpactDataSet* havokImpactDataSet; // 68
 					BSFixedString materialName; // 70
 					std::uint32_t materialID; // 78
-					std::uint8_t materialColor[0xC]; // 7C - NiColor
+					NiAPI::NiColor materialColor; // 7C
 					float buoyancy; // 88
 					std::uint32_t flags; // 8C
 				};

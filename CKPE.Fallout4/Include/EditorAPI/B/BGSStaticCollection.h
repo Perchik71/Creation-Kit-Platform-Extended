@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <EditorAPI/B/BSTHashMap.h>
 #include <EditorAPI/T/TESBoundObject.h>
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/B/BGSModelMaterialSwap.h>
@@ -27,7 +28,7 @@ namespace CKPE
 					virtual ~BGSStaticCollection() = default;
 
 				public:
-					void* dataMap; // F8 - BSTHashMap<TESBoundObject*, BSSimpleList<BGSStaticCollection::REF_COL_DATA>*>*
+					BSTHashMap<TESBoundObject*, void*>* dataMap; // F8 - value is BSSimpleList<BGSStaticCollection::REF_COL_DATA>*
 					std::uint64_t unk100; // 100
 					std::uint32_t unk108; // 108
 					std::uint32_t unk10C; // 10C
