@@ -334,6 +334,7 @@
     <ClInclude Include="Include\EditorAPI\T\TESDataHandler.h" />
     <ClInclude Include="Include\EditorAPI\T\TESDescription.h" />
     <ClInclude Include="Include\EditorAPI\T\TESFile.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESRegionDataManager.h" />
     <ClInclude Include="Include\EditorAPI\T\TESVersionControl.h" />
     <ClInclude Include="Include\EditorAPI\T\TESForm.h" />
     <ClInclude Include="Include\EditorAPI\T\TESFullName.h" />

@@ -19,6 +19,8 @@
 #include <EditorAPI/B/BGSVoiceType.h>
 #include <EditorAPI/T/TESTopic.h>
 #include <EditorAPI/T/TESFile.h>
+#include <EditorAPI/T/TESRegionDataManager.h>
+#include <EditorAPI/C/CheckInFormList.h>
 
 namespace CKPE
 {
@@ -30,12 +32,20 @@ namespace CKPE
 			using NiTPrimitiveArray = NiAPI::NiTObjectArray<_Ty>;
 			using TESFormArray = BSTArray<Forms::TESForm*>;
 
+			// 1.11.246.0: size 0x20, vtable RVA 0x302FD70, 3 virtual functions. A list of regions; frees them on destruction
+			// when ownsRegionMemory is set (same members as CommonLibF4's TESRegionList).
 			class TESRegionList
 			{
-				BSSimpleList<Forms::TESForm*> Region;
-				std::uint32_t unk;
+				BSSimpleList<Forms::TESForm*> Region;						// 08
+				std::uint8_t ownsRegionMemory;								// 18
+				std::uint8_t pad19[0x7];									// 19
 			public:
 				virtual ~TESRegionList();
+
+				// Calls Forms::TESRegion::CanCheckIn on every region, false as soon as one refuses (RVA 0x967B00).
+				[[nodiscard]] virtual bool CanCheckIn(const Forms::CheckInFormList* Forms) const noexcept(true); // 01
+				// Calls BuildCheckInDependencyMessage on every region that cannot be checked in (RVA 0x967B70).
+				virtual void BuildCheckInDependencyMessage(const Forms::CheckInFormList* Forms, BSString& Message) const noexcept(true); // 02
 
 				[[nodiscard]] inline const BSSimpleList<Forms::TESForm*>& GetRegions() const noexcept(true) { return Region; }
 			};
@@ -231,7 +241,7 @@ namespace CKPE
 				ModList modList;										// FB0
 				BSTArray<void*> unkFD8;									// FD8 - zeroed by the constructor (CommonLibF4 has releasedFormIDArray at FF0)
 				std::uint8_t unkFF0[0x10];								// FF0 - flag bytes; the constructor sets FF7 to 1 and clears FF1..FF6, FF8, FFA..FFE (FF3 is read by LoadFiles, FF5 by SaveForm)
-				void* regionDataManager;								// 1000 - TESRegionDataManagerEditor*
+				TESRegionDataManager* regionDataManager;				// 1000 - a TESRegionDataManagerEditor
 				std::uint8_t unk1008;									// 1008 - cleared by the constructor
 				char pad1009[0x7];										// 1009
 			public:
