@@ -980,11 +980,11 @@ namespace CKPE
 				if (!PathUtils::FileExists(filename))
 					throw RuntimeError(L"Error the settings file \"{}\" no found.", filename);
 
-				MemoryStream stream;
+				StringStream stream;
 				if (!stream.LoadFromFile(filename))
 					throw RuntimeError(L"Error reading the settings file \"{}\".", filename);
 
-				auto buff = stream.Data();
+				auto buff = const_cast<char*>(stream.String());
 				auto buffSize = stream.GetSize();
 				if (!buff || !buffSize)
 					throw RuntimeError("Out of memory");

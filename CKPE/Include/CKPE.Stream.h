@@ -170,4 +170,35 @@ namespace CKPE
 		MemoryStream(const MemoryStream& Stream) noexcept(true);
 		virtual ~MemoryStream() noexcept(true);
 	};
+
+	class CKPE_API StringStream : public Stream, public FileStreamIntf
+	{
+	protected:
+		char* _data{ nullptr };
+		std::uint64_t _size{ 0 };
+		std::uint64_t _caret{ 0 };
+
+		bool Allocate(std::uint64_t newsize) noexcept(true);
+		void Deallocate() noexcept(true);
+	public:
+		StringStream() noexcept(true) = default;
+		StringStream(const char* str, std::size_t size) noexcept(true);
+		StringStream(Stream& Stream) noexcept(true);
+		StringStream(const StringStream& Stream) noexcept(true);
+		virtual ~StringStream() noexcept(true);
+
+		std::uint32_t Read(void* buf, std::uint32_t size) const noexcept(true) override;
+		std::uint32_t Write(const void* buf, std::uint32_t size) noexcept(true) override;
+		[[nodiscard]] std::uint64_t GetSize() const noexcept(true) override;
+		std::uint64_t Offset(std::int64_t offset, OffsetStream flag = ofCurrent) noexcept(true) override;
+
+		bool LoadFromStream(Stream& stream) noexcept(true) override;
+		bool SaveToStream(Stream& stream) const noexcept(true) override;
+
+		void Set(const char* str, std::size_t size) noexcept(true);
+		void SetSize(std::size_t newsize);
+		void Clear() noexcept(true);
+		[[nodiscard]] constexpr bool Empty() const noexcept(true) { return _data == nullptr; }
+		[[nodiscard]] constexpr const char* String() const noexcept(true) { return _data; }
+	};
 }

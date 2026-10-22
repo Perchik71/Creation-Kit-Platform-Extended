@@ -709,4 +709,159 @@ namespace CKPE
 	{
 		Deallocate();
 	}
+
+	bool StringStream::Allocate(std::uint64_t newsize) noexcept(true)
+	{
+		if (!newsize) return false;
+
+		ScopeCriticalSection guard{ _section };
+
+		if (!_data)
+			_data = (char*)std::malloc(newsize + 1);
+		else
+		{
+			auto d = _data;
+			_data = (char*)std::realloc(d, newsize + 1);
+		}
+
+		if (_data)
+		{
+			_size = newsize;
+			if (_size < _caret)
+				_caret = _size;
+
+			return true;
+		}
+
+		_size = 0;
+		_caret = 0;
+
+		return false;
+	}
+
+	void StringStream::Deallocate() noexcept(true)
+	{
+		ScopeCriticalSection guard{ _section };
+
+		if (_data)
+		{
+			std::free(_data);
+
+			_size = 0;
+			_caret = 0;
+			_data = nullptr;
+		}
+	}
+
+	StringStream::StringStream(const char* str, std::size_t size) noexcept(true)
+	{
+		Set(str, size);
+	}
+
+	StringStream::StringStream(Stream& Stream) noexcept(true)
+	{
+		CopyFrom(Stream);
+	}
+
+	StringStream::StringStream(const StringStream& Stream) noexcept(true)
+	{
+		Set(Stream._data, Stream._size);
+	}
+
+	StringStream::~StringStream() noexcept(true)
+	{
+		Deallocate();
+	}
+
+	std::uint32_t StringStream::Read(void* buf, std::uint32_t size) const noexcept(true)
+	{
+		ScopeCriticalSection guard{ _section };
+
+		std::uint32_t Ret = size;
+
+		if (Ret > (std::uint32_t)(_size - _caret))
+			Ret = (std::uint32_t)(_size - _caret);
+
+		if (!Ret)
+			return Ret;
+
+		memcpy(buf, ((char*)_data) + _caret, Ret);
+		const_cast<StringStream*>(this)->_caret += Ret;
+
+		return Ret;
+	}
+
+	std::uint32_t StringStream::Write(const void* buf, std::uint32_t size) noexcept(true)
+	{
+		ScopeCriticalSection guard{ _section };
+
+		std::uint32_t Ret = size;
+
+		if (Ret > (_size - _caret))
+			if (!Allocate(_size + (Ret - (_size - _caret))))
+				return 0;
+
+		memcpy(((char*)_data) + _caret, buf, Ret);
+		_caret += Ret;
+
+		return Ret;
+	}
+
+	std::uint64_t StringStream::GetSize() const noexcept(true)
+	{
+		ScopeCriticalSection guard{ _section };
+		return _size;
+	}
+
+	std::uint64_t StringStream::Offset(std::int64_t offset, OffsetStream flag) noexcept(true)
+	{
+		ScopeCriticalSection guard{ _section };
+
+		switch (flag)
+		{
+		case Stream::ofBegin:
+			_caret = (std::uint64_t)offset;
+			break;
+		case Stream::ofCurrent:
+			_caret += offset;
+			break;
+		case Stream::ofEnd:
+			_caret = _size + offset;
+			break;
+		}
+
+		return _caret;
+	}
+
+	bool StringStream::LoadFromStream(Stream& stream) noexcept(true)
+	{
+		Assign(stream);
+		return true;
+	}
+
+	bool StringStream::SaveToStream(Stream& stream) const noexcept(true)
+	{
+		stream.Assign(*const_cast<StringStream*>(this));
+		return true;
+	}
+
+	void StringStream::Set(const char* str, std::size_t size) noexcept(true)
+	{
+		ScopeCriticalSection guard{ _section };
+		if (str && !size && Allocate(size))
+			memcpy(_data, (const void*)str, size);
+	}
+
+	void StringStream::SetSize(std::size_t newsize)
+	{
+		ScopeCriticalSection guard{ _section };
+
+		if (!Allocate(newsize))
+			RuntimeError("MemoryStream: Out of memory");
+	}
+
+	void StringStream::Clear() noexcept(true)
+	{
+		Deallocate();
+	}
 }
