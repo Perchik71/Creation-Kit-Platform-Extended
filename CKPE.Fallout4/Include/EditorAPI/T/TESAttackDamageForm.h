@@ -21,7 +21,8 @@ namespace CKPE
 				virtual ~TESAttackDamageForm() = default;
 
 			public:
-				std::uint64_t unk08; // 08
+				std::uint16_t attackDamage; // 08 - edited through dialog item 1015
+				std::uint8_t pad0A[0x6]; // 0A
 			};
 			static_assert(sizeof(TESAttackDamageForm) == 0x10);
 		}

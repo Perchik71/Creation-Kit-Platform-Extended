@@ -27,8 +27,8 @@ namespace CKPE
 
 			public:
 				Forms::TESObjectARMO* formSkin; // 08
-				std::uint32_t unk10; // 10
-				std::uint32_t unk14; // 14
+				std::uint32_t skinControlID; // 10 - dialog control ID (IDC_SKIN, 1087 on construction)
+				std::uint32_t pad14; // 14
 			};
 			static_assert(sizeof(BGSSkinForm) == 0x18);
 		}

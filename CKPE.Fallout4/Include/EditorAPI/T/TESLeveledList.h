@@ -60,7 +60,7 @@ namespace CKPE
 				std::int8_t chanceNone; // 21
 				std::int8_t llFlags; // 22
 				std::int8_t maxUseAllCount; // 23
-				std::uint32_t unk24; // 24
+				std::uint32_t pad24; // 24
 			};
 			static_assert(sizeof(TESLeveledList) == 0x28);
 		}

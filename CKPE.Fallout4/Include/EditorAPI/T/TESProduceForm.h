@@ -30,7 +30,7 @@ namespace CKPE
 				Forms::BGSSoundDescriptorForm* harvestSound; // 08
 				Forms::TESBoundObject* produceItem; // 10
 				std::int8_t produceChance[4]; // 18
-				std::uint32_t unk1C; // 1C
+				std::uint32_t pad1C; // 1C
 			};
 			static_assert(sizeof(TESProduceForm) == 0x20);
 		}

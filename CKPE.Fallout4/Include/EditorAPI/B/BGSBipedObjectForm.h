@@ -24,7 +24,7 @@ namespace CKPE
 
 			public:
 				std::uint32_t bipedModelData; // 08 - BIPED_MODEL, biped slot mask
-				std::uint32_t unk0C; // 0C
+				std::uint32_t pad0C; // 0C
 			};
 			static_assert(sizeof(BGSBipedObjectForm) == 0x10);
 		}
