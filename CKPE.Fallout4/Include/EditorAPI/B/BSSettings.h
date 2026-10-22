@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <CKPE.Common.Relocation.h>
+#include <EditorAPI/IDs.h>
 #include <EditorAPI/B/BSString.h>
 #include <EditorAPI/B/BSTList.h>
 
@@ -54,6 +56,8 @@ namespace CKPE
 				Setting(const char* name, const Value& value);
 				Setting(const Setting& s);
 				virtual ~Setting();
+				// 1.11.246.0: vtable RVA 0x2F9F068, 2 virtual functions (the SettingT<...> vtables share this body, so it is never true in the CK)
+				[[nodiscard]] virtual bool IsPrefSetting() const noexcept(true) { return false; } // 01 - RVA 0x25CCB70
 
 				[[nodiscard]] Types GetValueType() const;
 				[[nodiscard]] inline bool CheckValidValueType(Types t) const { return GetValueType() == t; }
@@ -96,6 +100,8 @@ namespace CKPE
 			};
 			static_assert(sizeof(Setting) == 0x18);
 
+			// 1.11.246.0: SettingCollection<Setting> vtable RVA 0x2F9F088, 11 virtual functions. CommonLibF4 has no
+			// equivalent of the DumpSettings virtual (03): the Creation Kit inserts it between Remove and WriteSetting.
 			template <class T>
 			class SettingCollection
 			{
@@ -106,7 +112,9 @@ namespace CKPE
 
 				virtual void Add(T* setting) = 0;									// 01
 				virtual void Remove(T* setting) = 0;								// 02
-				virtual std::uint32_t Count() = 0;                                  // 03
+				// Appends every setting to the report array (a "<title>" entry first, then one dump per setting and a
+				// "Total ...: %u" line for the INI/Game collections) and returns the number of settings.
+				virtual std::uint32_t DumpSettings(void* Report) = 0;				// 03
 				virtual bool WriteSetting(T* setting) = 0;							// 04
 				virtual bool ReadSetting(T* setting) = 0;							// 05
 				virtual bool Open([[maybe_unused]] bool write) { return false; }	// 06
@@ -117,6 +125,7 @@ namespace CKPE
 			};
 			static_assert(sizeof(SettingCollection<int>) == 0x118);
 
+			// 1.11.246.0: vtable RVA 0x2F9F130
 			template <class T>
 			class SettingCollectionList : public SettingCollection<T>
 			{
@@ -125,7 +134,58 @@ namespace CKPE
 			};
 			static_assert(sizeof(SettingCollectionList<int>) == 0x128);
 
-			typedef SettingCollectionList<Setting> INISettingCollection;
+			// 1.11.246.0: size 0x128, vtable RVA 0x2F9F1A8. Open() makes the collection its own handle, WriteSetting/
+			// ReadSetting go through the Windows profile (INI) API.
+			class INISettingCollection : public SettingCollectionList<Setting>
+			{
+			public:
+				[[nodiscard]] static INISettingCollection* GetSingleton() noexcept(true)
+				{
+					static Common::Relocation<INISettingCollection**> singleton{ IDs::Setting::INISettingCollection::Singleton };
+					return *singleton.Get();
+				}
+			};
+			static_assert(sizeof(INISettingCollection) == 0x128);
+
+			// 1.11.246.0: size 0x128, vtable RVA 0x2FA6AF0 (CreationKitPrefs.ini)
+			class INIPrefSettingCollection : public INISettingCollection
+			{
+			public:
+				[[nodiscard]] static INIPrefSettingCollection* GetSingleton() noexcept(true)
+				{
+					static Common::Relocation<INIPrefSettingCollection**> singleton{ IDs::Setting::INIPrefSettingCollection::Singleton };
+					return *singleton.Get();
+				}
+			};
+			static_assert(sizeof(INIPrefSettingCollection) == 0x128);
+
+			// 1.11.246.0: vtable RVA 0x2FA8258. The settings are kept in a B-tree keyed by the setting name.
+			template <class T>
+			class SettingCollectionMap : public SettingCollection<T>
+			{
+			public:
+				std::uint8_t unk118[0x8];		// 118 - not initialized by the constructor
+				std::uint32_t unk120;			// 120 - 0 on construction
+				std::uint32_t unk124;			// 124 - 4 on construction
+				void* settingsTree;				// 128 - root node of the B-tree (0x80 byte nodes: 4 {key, value} pairs, count at +0x68, 5 children at +0x40)
+				void* unk130;					// 130 - 0 on construction
+			};
+			static_assert(sizeof(SettingCollectionMap<int>) == 0x138);
+
+			// 1.11.246.0: size 0x138, vtable RVA 0x2FA82D0, 12 virtual functions
+			class GameSettingCollection : public SettingCollectionMap<Setting>
+			{
+			public:
+				// Opens the collection on Handle, reads the setting named Name and closes it again (0x14095C360).
+				virtual bool ReadNamedSetting(void* Handle, const char* Name) = 0;	// 0B
+
+				[[nodiscard]] static GameSettingCollection* GetSingleton() noexcept(true)
+				{
+					static Common::Relocation<GameSettingCollection**> singleton{ IDs::Setting::GameSettingCollection::Singleton };
+					return *singleton.Get();
+				}
+			};
+			static_assert(sizeof(GameSettingCollection) == 0x138);
 		}
 	}
 }
