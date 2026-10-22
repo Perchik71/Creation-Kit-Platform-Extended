@@ -43,6 +43,36 @@ namespace CKPE
 					inline constexpr Common::ID LoadFileRecords{ 0, 1495600 };
 				}
 
+				namespace TESVersionControl
+				{
+					// 1.11.246.0 0x1406E4F40
+					inline constexpr Common::ID OpenFile{ 645113, 1672165 };
+					// 0x1406E56A0
+					inline constexpr Common::ID Close{ 645120, 1665199 };
+					// 0x1406E7E00
+					inline constexpr Common::ID UpdateWorldSpaceOffsets{ 77497 };
+					// 0x143D48D80
+					inline constexpr Common::ID OpenFileGate{ 974693, 2007624 };
+					// 0x143D52331
+					inline constexpr Common::ID BatchMode{ 500470 };
+					// 0x143D52338
+					inline constexpr Common::ID TargetFile{ 140124 };
+				}
+
+				namespace TES
+				{
+					// Global TES* (pointer to the instance), 0x143D49150.
+					inline constexpr Common::ID Singleton{ 39712 };
+					// bShowMarkers setting object
+					inline constexpr Common::ID ShowMarkersSetting{ 335995 };
+				}
+
+				namespace Sky
+				{
+					inline constexpr Common::ID SkyViewSetting{ 169737 };
+					inline constexpr Common::ID FogEnabledSetting{ 335998 };
+				}
+
 				namespace Setting
 				{
 					namespace INISettingCollection
