@@ -152,7 +152,7 @@ namespace CKPE
 				}
 
 				pointer_BSArchiveManagerModded_sub = EditorAPI::IDs::Functions::TESFile__LoadTESInfo.Address();
-				Relocation(EditorAPI::IDs::Functions::sub_882210, Offset{ 0x17, 0x1C }).WriteCall(&LoadTesFile);
+				Relocation(EditorAPI::IDs::Functions::TESDataHandler_LoadFileDependencies, Offset{ 0x17, 0x1C }).WriteCall(&LoadTesFile);
 				Relocation(EditorAPI::IDs::Functions::MainWindow_SetStatusBarText, 0x12).WriteJump(&LoadTesFileFinal);
 
 				// Так как разница между первой и 8 версией лишь, то что был удалён GNF формат для PlayStation.

@@ -61,7 +61,7 @@ namespace CKPE
 				Relocation(EditorAPI::IDs::Functions::sub_117DB60, Offset{ 0x206, 0x315 }).WriteCall(&FixVCPatch_sub);
 
 				// By disabling version control, allow the start				
-				const auto target = EditorAPI::IDs::Functions::sub_6A8950;
+				const auto target = EditorAPI::IDs::Functions::VersionControl_PromptNetworkLocation;
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 					Relocation(target, 0x2BF).Write({0xEB, 0x81});					// skip msgbox
 				else

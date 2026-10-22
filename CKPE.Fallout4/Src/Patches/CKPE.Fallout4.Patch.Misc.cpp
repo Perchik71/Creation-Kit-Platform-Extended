@@ -54,14 +54,14 @@ namespace CKPE
 				Relocation(EditorAPI::IDs::Functions::sub_56E940, Offset{ 0x23A, 0x22F }).Write({ 0x02 });
 				// CheckMenuItem is called, however, it always gets zero, but eight is written on top,
 				// which is equal to MFS_CHECKED.
-				Relocation(EditorAPI::IDs::Functions::sub_69C240, Offset{ 0xD3D, 0xF9C, 0xFC1, 0xFC3 }).WriteFill(NOP, 6);
+				Relocation(EditorAPI::IDs::Functions::MainWindow_WndProc, Offset{ 0xD3D, 0xF9C, 0xFC1, 0xFC3 }).WriteFill(NOP, 6);
 				// CheckMenuItem is called, however, it always gets MFS_CHECKED.
 				Relocation(EditorAPI::IDs::Functions::sub_558F90, Offset{ 0x53, 0x51 }).WriteFill(NOP, 6);
 				// Fix repeat CheckMenuItem is called
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 					Relocation(EditorAPI::IDs::Functions::legacy_Misc_643475, 0xFF1).Write({ 0x20, 0x63 });
 				else
-					Relocation(EditorAPI::IDs::Functions::sub_69C240_2, Offset{ 0x125A, 0x125A, 0x127F, 0x1281 }).Write({ 0xE9, 0xAE, 0x66, 0x00, 0x00, 0x90 });
+					Relocation(EditorAPI::IDs::Functions::MainWindow_WndProc_2, Offset{ 0x125A, 0x125A, 0x127F, 0x1281 }).Write({ 0xE9, 0xAE, 0x66, 0x00, 0x00, 0x90 });
 				// ret skip Warnings window
 				Relocation(EditorAPI::IDs::Functions::sub_632EA0).Write({ 0xC3, 0xCC, 0xCC, 0xCC, 0xCC });
 

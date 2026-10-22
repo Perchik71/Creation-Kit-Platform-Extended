@@ -117,7 +117,7 @@ namespace CKPE
 
 						Relocation(EditorAPI::IDs::Functions::TESDataHandler__Save, Offset{ 0x489, 0x55A }).WriteFill(NOP, 0xD);
 						Relocation(EditorAPI::IDs::Functions::aFileSIsAMaster).Write(newFormat, strlen(newFormat) + 1);
-						Relocation(EditorAPI::IDs::Functions::sub_714300).WriteJump(&OpenPluginSaveDialog);
+						Relocation(EditorAPI::IDs::Functions::OpenPluginSaveDialog).WriteJump(&OpenPluginSaveDialog);
 					}
 
 					if (EditorAPI::TESFile::AllowMasterESP)

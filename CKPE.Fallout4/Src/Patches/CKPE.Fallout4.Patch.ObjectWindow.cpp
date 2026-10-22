@@ -169,7 +169,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::Functions::sub_5214D0).WriteJump(&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::Functions::ObjectWindow_DlgProc).WriteJump(&HKWndProc);
 				pointer_ObjectWindow_sub = EditorAPI::IDs::Functions::ObjectWindow_MatchFilterText.Address();
 
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)

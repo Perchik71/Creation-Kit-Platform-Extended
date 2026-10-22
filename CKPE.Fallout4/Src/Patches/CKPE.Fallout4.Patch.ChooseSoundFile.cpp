@@ -78,12 +78,12 @@ namespace CKPE
 				}
 				else
 				{
-					Relocation(EditorAPI::IDs::Functions::sub_667770, 0x63).WriteCall(&sub);
-					Relocation(EditorAPI::IDs::Functions::sub_667840, 0x87).WriteCall(&sub);
+					Relocation(EditorAPI::IDs::Functions::ChooseSoundFile_Browse, 0x63).WriteCall(&sub);
+					Relocation(EditorAPI::IDs::Functions::ChooseSoundFile_BrowseAlt, 0x87).WriteCall(&sub);
 					Relocation(EditorAPI::IDs::Functions::BGSAudioEffectChain__PerformDialogBox, 0x3CB).WriteCall(&sub);
 					Relocation(EditorAPI::IDs::Functions::sub_BB46E0, 0x57B).WriteCall(&sub);
 					ChooseSoundFileSub = reinterpret_cast<TChooseSoundFileSub*>(EditorAPI::IDs::Functions::DialogHelpers_ShowFileDialog_2.Address());
-					Relocation(EditorAPI::IDs::Functions::sub_667DE0, 0x194).WriteFill(NOP, 0x6);
+					Relocation(EditorAPI::IDs::Functions::ChooseSoundFile_MakeRelativePath, 0x194).WriteFill(NOP, 0x6);
 				}
 
 				return true;

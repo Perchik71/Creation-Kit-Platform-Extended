@@ -115,11 +115,11 @@ namespace CKPE
 					}
 				};
 
-				Relocation(EditorAPI::IDs::Functions::sub_63EE20).WriteJump(&Common::EditorUI::ComboBoxInsertItemDeferred);
+				Relocation(EditorAPI::IDs::Functions::ComboBox_InsertItem).WriteJump(&Common::EditorUI::ComboBoxInsertItemDeferred);
 				Relocation(EditorAPI::IDs::Functions::CellViewWindow_InsertForm).WriteJump(&Common::EditorUI::ListViewInsertItemDeferred);
 
 				Relocation(EditorAPI::IDs::Functions::sub_528B00, Offset{ 0x71, 0x7A }).WriteCall(&sub1);
-				Relocation(EditorAPI::IDs::Functions::sub_671DB0, Offset{ 0x2DDB, 0x2FBF }).WriteCall(&sub2);
+				Relocation(EditorAPI::IDs::Functions::CellViewWindow_WndProc, Offset{ 0x2DDB, 0x2FBF }).WriteCall(&sub2);
 				Relocation(EditorAPI::IDs::Functions::sub_676190, Offset{ 0xAA, 0xAE }).WriteCall(&sub3);
 
 				pointer_UIDeffer_sub1 = Relocation(EditorAPI::IDs::Functions::sub_536B10).Address();

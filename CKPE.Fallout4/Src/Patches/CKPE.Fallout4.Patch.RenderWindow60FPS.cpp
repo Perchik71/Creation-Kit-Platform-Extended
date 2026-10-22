@@ -70,7 +70,7 @@ namespace CKPE
 
 				if (!_READ_OPTION_BOOL("CreationKit", "bRenderWindowVSync", true))
 					// no VSync
-					Relocation(EditorAPI::IDs::Functions::sub_2B4F2A0, Offset{ 0xC2, 0x1DF }).Write({ 0x33, 0xD2, 0x90 });
+					Relocation(EditorAPI::IDs::Functions::BSGraphics_EndFrame, Offset{ 0xC2, 0x1DF }).Write({ 0x33, 0xD2, 0x90 });
 #if 0
 				ptrINIReadSetting = (decltype(&Hook_INIReadSetting))Detours::DetourClassJump(0x14259AB50, Hook_INIReadSetting);
 #endif

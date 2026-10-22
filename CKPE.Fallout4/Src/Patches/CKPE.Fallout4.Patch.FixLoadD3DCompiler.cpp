@@ -61,9 +61,9 @@ namespace CKPE
 					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
 					// Fixed failed load d3dcompiler.dll
-					text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_2B4570, Offset{ 0x115, 0x115, 0x12A }).Address(), 6);
-					text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_2B4CFF0, Offset{ 0x123, 0x123, 0x132 }).Address(), 6);
-					text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_2B5DE40, Offset{ 0x3B, 0x3B, 0x2C }).Address(), 6);
+					text.WriteNop(Relocation(EditorAPI::IDs::Functions::BSGraphics_LoadD3DCompiler_A, Offset{ 0x115, 0x115, 0x12A }).Address(), 6);
+					text.WriteNop(Relocation(EditorAPI::IDs::Functions::BSGraphics_LoadD3DCompiler_B, Offset{ 0x123, 0x123, 0x132 }).Address(), 6);
+					text.WriteNop(Relocation(EditorAPI::IDs::Functions::BSGraphics_LoadD3DCompiler_C, Offset{ 0x3B, 0x3B, 0x2C }).Address(), 6);
 				}
 
 				return true;

@@ -111,7 +111,7 @@ namespace CKPE
 				};
 
 				xNormalize_Hook::Generate(Rva1);
-				Relocation(EditorAPI::IDs::Functions::sub_24D00C0).WriteJump(&EditorAPI::Forms::TESObjectLAND::Layers::HKNormalize);
+				Relocation(EditorAPI::IDs::Functions::TESObjectLAND_NormalizeLayers).WriteJump(&EditorAPI::Forms::TESObjectLAND::Layers::HKNormalize);
 
 				return true;
 			}

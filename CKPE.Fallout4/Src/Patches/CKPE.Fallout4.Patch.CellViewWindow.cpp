@@ -74,7 +74,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::Functions::sub_671DB0).WriteJump(&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::Functions::CellViewWindow_WndProc).WriteJump(&HKWndProc);
 
 				// Allow forms to be filtered in CellViewProc
 				Relocation(EditorAPI::IDs::Functions::sub_710360, 0xFF).WriteCall(&CellViewWindow::sub1);

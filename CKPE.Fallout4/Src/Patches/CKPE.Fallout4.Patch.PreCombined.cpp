@@ -74,12 +74,12 @@ namespace CKPE
 					// For PS4 no needs patch
 					return true;
 
-				Relocation(EditorAPI::IDs::Functions::sub_D496E0, 0x13B).Write(std::addressof(precomb_flag), 4);
+				Relocation(EditorAPI::IDs::Functions::PreCombined_GetNifPath, 0x13B).Write(std::addressof(precomb_flag), 4);
 
 				if (VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
 					Relocation(EditorAPI::IDs::Functions::sub_492110, 0x7D).Write({ 0x6A, (std::uint8_t)precomb_flag, 0x59 });
-					Relocation(EditorAPI::IDs::Functions::sub_D267E0).Write<0x116>(std::addressof(precomb_flag), 4);
+					Relocation(EditorAPI::IDs::Functions::PreCombined_Generate).Write<0x116>(std::addressof(precomb_flag), 4);
 				}
 				else
 				{

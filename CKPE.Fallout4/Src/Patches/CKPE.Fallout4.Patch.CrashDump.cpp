@@ -111,7 +111,7 @@ namespace CKPE
 				else if (VersionLists::GetEditorVersion() >= VersionLists::EDITOR_FALLOUT_C4_1_10_943_1)
 				{
 					Relocation(EditorAPI::IDs::Functions::sub_204C730).Write(RET);
-					Relocation(EditorAPI::IDs::Functions::sub_204E890).Write(RET);
+					Relocation(EditorAPI::IDs::Functions::set_purecall_handler_wrapper).Write(RET);
 					Relocation(EditorAPI::IDs::Functions::sub_204E8D0).Write(RET);
 					Relocation(EditorAPI::IDs::Functions::scrt_fastfail).Write(RET);
 					Relocation(EditorAPI::IDs::Functions::raise_securityfailure).Write(RET);

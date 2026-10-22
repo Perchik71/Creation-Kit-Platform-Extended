@@ -262,7 +262,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::Functions::sub_69C240).WriteJump(&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::Functions::MainWindow_WndProc).WriteJump(&HKWndProc);
 
 				pointer_MainWindow_sub1 = EditorAPI::IDs::Functions::data_3D49308.Address();
 				pointer_MainWindow_sub2 = Relocation(EditorAPI::IDs::Functions::MainWindow_ToggleFog).WriteJump(&FogToggling);

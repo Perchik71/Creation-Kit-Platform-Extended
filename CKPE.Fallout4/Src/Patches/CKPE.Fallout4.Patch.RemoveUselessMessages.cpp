@@ -53,8 +53,8 @@ namespace CKPE
 				auto stext = Application::GetSingleton()->GetSegment(Segment::text);
 				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
-				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_2B64610, Offset{ 0x3C, 0x3A }).Address(), 5);	// Disable "Out of Pixel Shaders (running total: X)" log spam
-				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_2B5EAB0, 0x56).Address(), 5);					// Disable "Out of UCode space" log spam
+				text.WriteNop(Relocation(EditorAPI::IDs::Functions::BSGraphics_LogOutOfPixelShaders, Offset{ 0x3C, 0x3A }).Address(), 5);	// Disable "Out of Pixel Shaders (running total: X)" log spam
+				text.WriteNop(Relocation(EditorAPI::IDs::Functions::BSGraphics_LogOutOfUCodeSpace, 0x56).Address(), 5);					// Disable "Out of UCode space" log spam
 
 				const auto target1 = EditorAPI::IDs::Functions::sub_2C733C0;
 				text.WriteNop(Relocation(target1, Offset{ 0x293, 0x254 }).Address(), 5);				// Disable "BSMeshCombiner" log spam
@@ -78,7 +78,7 @@ namespace CKPE
 				text.WriteNop(Relocation(EditorAPI::IDs::Functions::NavMesh__InitItemImpl, Offset{ 0xAFC, 0x8C5 }).Address(), 0x5);
 
 				// Animation messages
-				const auto target2 = EditorAPI::IDs::Functions::sub_253D7F0;
+				const auto target2 = EditorAPI::IDs::Functions::NiControllerSequence__StoreTargets;
 				text.WriteNop(Relocation(target2, 0x158).Address(), 5);
 				text.WriteNop(Relocation(target2, Offset{ 0x61A, 0x5C4 }).Address(), 5);
 				text.WriteNop(Relocation(target2, Offset{ 0x683, 0x62F }).Address(), 5);
@@ -86,7 +86,7 @@ namespace CKPE
 				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_1CC48D0, Offset{ 0x1E7, 0x205 }).Address(), 5);
 
 				// TEXTURE Unable to load file
-				text.Write(Relocation(EditorAPI::IDs::Functions::sub_2BDFF60, Offset{ 0x157, 0x1AA }).Address(), { 0xE9, 0xB8, 0x00, 0x00, 0x00, 0x90 });
+				text.Write(Relocation(EditorAPI::IDs::Functions::BSShaderManager__GetTexture, Offset{ 0x157, 0x1AA }).Address(), { 0xE9, 0xB8, 0x00, 0x00, 0x00, 0x90 });
 
 				// MODEL Could not find model
 				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_25D1410, Offset{ 0x196, 0x189 }).Address(), 5);
@@ -122,7 +122,7 @@ namespace CKPE
 					// Scene Form ID: %i, HoldPackageNextScene set to on save: %s
 					text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_A51340, 0x75).Address(), 5);
 					// Could not load dependencies for File '%s'.
-					text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_882210_2, 0x35).Address(), 5);
+					text.WriteNop(Relocation(EditorAPI::IDs::Functions::TESDataHandler_LoadFileDependencies_2, 0x35).Address(), 5);
 					// Remove trash logs bethesda
 					text.Write(EditorAPI::IDs::Functions::sub_201A140.Address(), { RET });
 				}

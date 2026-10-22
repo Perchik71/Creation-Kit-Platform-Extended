@@ -49,7 +49,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(EditorAPI::IDs::Functions::sub_113A6A0, 0x12C).WriteCall(&sub);
+				Relocation(EditorAPI::IDs::Functions::PapyrusScriptEditWindow_Create, 0x12C).WriteCall(&sub);
 
 				return true;
 			}

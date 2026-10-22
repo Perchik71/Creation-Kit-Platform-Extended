@@ -51,7 +51,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetPosition = Relocation(EditorAPI::IDs::Functions::sub_5EB370).WriteJump(&SetPosition);
+				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetPosition = Relocation(EditorAPI::IDs::Functions::TESObjectREFR__SetPosition).WriteJump(&SetPosition);
 
 				auto offset = EditorAPI::IDs::Functions::sub_5D2370;
 

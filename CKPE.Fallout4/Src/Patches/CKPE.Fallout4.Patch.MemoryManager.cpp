@@ -234,18 +234,18 @@ namespace CKPE
 				// Принудительный вылет с сообщением для пользователя.
 				CKPE_ASSERT_MSG(LowMemory(), "Not enough memory to run the program");
 
-				Relocation(EditorAPI::IDs::Functions::sub_1FFC100).WriteJump(BSMemoryManager::Allocate);
-				Relocation(EditorAPI::IDs::Functions::sub_1FFC6B0).WriteJump(BSMemoryManager::Deallocate);
-				Relocation(EditorAPI::IDs::Functions::sub_1FFB440).WriteJump(BSMemoryManager::Size);
-				Relocation(EditorAPI::IDs::Functions::sub_2005120).WriteJump(BSScrapHeap::Allocate);
-				Relocation(EditorAPI::IDs::Functions::sub_20057C0).WriteJump(BSScrapHeap::Deallocate);
-				Relocation(EditorAPI::IDs::Functions::sub_2120A20).WriteJump(bhkThreadMemorySource::__ctor__);
-				Relocation(EditorAPI::IDs::Functions::sub_2D816E0).WriteJump(NiBSScrapAdapter_AllocateFromBSScrap);
+				Relocation(EditorAPI::IDs::Functions::BSMemoryManager__Allocate).WriteJump(BSMemoryManager::Allocate);
+				Relocation(EditorAPI::IDs::Functions::BSMemoryManager__Deallocate).WriteJump(BSMemoryManager::Deallocate);
+				Relocation(EditorAPI::IDs::Functions::BSMemoryManager__Size).WriteJump(BSMemoryManager::Size);
+				Relocation(EditorAPI::IDs::Functions::ScrapHeap__Allocate).WriteJump(BSScrapHeap::Allocate);
+				Relocation(EditorAPI::IDs::Functions::ScrapHeap__Deallocate).WriteJump(BSScrapHeap::Deallocate);
+				Relocation(EditorAPI::IDs::Functions::bhkThreadMemorySource__bhkThreadMemorySource).WriteJump(bhkThreadMemorySource::__ctor__);
+				Relocation(EditorAPI::IDs::Functions::NiBSScrapAdapter_AllocateFromBSScrap).WriteJump(NiBSScrapAdapter_AllocateFromBSScrap);
 
-				Relocation(EditorAPI::IDs::Functions::sub_46CF50).Write(RET);
+				Relocation(EditorAPI::IDs::Functions::BSMemoryManager_InitDefaultHeap).Write(RET);
 				Relocation(EditorAPI::IDs::Functions::sub_1FFBDA0).Write(RET);
-				Relocation(EditorAPI::IDs::Functions::sub_2004F00).Write(RET);
-				Relocation(EditorAPI::IDs::Functions::sub_2005AB0).Write(RET);
+				Relocation(EditorAPI::IDs::Functions::ScrapHeap__ScrapHeap).Write(RET);
+				Relocation(EditorAPI::IDs::Functions::ScrapHeap__ReleasePages).Write(RET);
 
 				return true;
 			}

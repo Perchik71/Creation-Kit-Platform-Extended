@@ -50,7 +50,7 @@ namespace CKPE
 				using namespace Common;
 
 				// Fixed infinite loop by Compile Papyrus Scripts...
-				Relocation(EditorAPI::IDs::Functions::sub_1137F50).Write(RET);
+				Relocation(EditorAPI::IDs::Functions::PapyrusCompileDialog_UpdateButtons).Write(RET);
 
 				return true;
 			}

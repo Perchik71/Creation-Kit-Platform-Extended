@@ -52,7 +52,7 @@ namespace CKPE
 
 				EditorAPI::Forms::TESForm::EnumFormIDs = (EditorAPI::Forms::TESForm::ENUM_FORM_ID*)Relocation(EditorAPI::IDs::Functions::data_3BAF440).Get();
 				EditorAPI::Forms::TESForm::FindFormByFormID = Relocation<decltype(EditorAPI::Forms::TESForm::FindFormByFormID)>(EditorAPI::IDs::Functions::TESForm__GetFormByNumericID).Get();
-				EditorAPI::Forms::TESForm::SetFormEditorIDImpl = Relocation<decltype(EditorAPI::Forms::TESForm::SetFormEditorIDImpl)>(EditorAPI::IDs::Functions::sub_8C5050).Get();
+				EditorAPI::Forms::TESForm::SetFormEditorIDImpl = Relocation<decltype(EditorAPI::Forms::TESForm::SetFormEditorIDImpl)>(EditorAPI::IDs::Functions::TESForm_MakeEditorIDUnique).Get();
 
 				return true;
 			}

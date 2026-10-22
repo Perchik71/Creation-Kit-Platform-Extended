@@ -49,7 +49,7 @@ namespace CKPE
 				using namespace Common;
 
 				// Enable the render window "Go to selection in game" hotkey even if version control is off
-				Relocation(EditorAPI::IDs::Functions::sub_57F380, 0x473).WriteFill(NOP, 2);
+				Relocation(EditorAPI::IDs::Functions::RenderWindow_RegisterHotkeyFunctions, 0x473).WriteFill(NOP, 2);
 
 				return true;
 			}

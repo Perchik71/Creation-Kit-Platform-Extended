@@ -52,7 +52,7 @@ namespace CKPE
 				using namespace Common;
 
 				// Remove stuff init FXAA or TAA
-				Relocation(EditorAPI::IDs::Functions::sub_2BDE840, Offset{ 0x7D9, 0x9B5 }).WriteFill(NOP, 0x50);
+				Relocation(EditorAPI::IDs::Functions::BSShaderManager_LoadShaderPackages, Offset{ 0x7D9, 0x9B5 }).WriteFill(NOP, 0x50);
 
 				return true;
 			}

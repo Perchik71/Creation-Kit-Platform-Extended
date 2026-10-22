@@ -136,10 +136,10 @@ namespace CKPE
 				else
 				{
 					// Ignoring the correctness check is not useful
-					Relocation(EditorAPI::IDs::Functions::sub_247F9B0, 0x159).Write(JMP);
-					Relocation(EditorAPI::IDs::Functions::sub_247FB80, 0x162).Write(JMP);
-					Relocation(EditorAPI::IDs::Functions::sub_247FD60, 0x19B).Write(JMP);
-					Relocation(EditorAPI::IDs::Functions::sub_24802A0, 0x5D).Write(JMP);
+					Relocation(EditorAPI::IDs::Functions::LooseFileStream_DoRead, 0x159).Write(JMP);
+					Relocation(EditorAPI::IDs::Functions::LooseFileStream_DoReadAlt, 0x162).Write(JMP);
+					Relocation(EditorAPI::IDs::Functions::LooseFileStream_DoSeek, 0x19B).Write(JMP);
+					Relocation(EditorAPI::IDs::Functions::LooseFileStream_DoWrite, 0x5D).Write(JMP);
 				}
 
 				return true;

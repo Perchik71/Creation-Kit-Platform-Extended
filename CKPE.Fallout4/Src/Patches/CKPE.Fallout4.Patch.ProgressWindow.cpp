@@ -70,7 +70,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				auto rel = Relocation(EditorAPI::IDs::Functions::sub_4C7DB0);
+				auto rel = Relocation(EditorAPI::IDs::Functions::ProgressWindow_Create);
 				rel.WriteFill<0x1C>(NOP, 0x2);
 				rel.WriteCall<0x3E>(&sub1);
 
@@ -79,7 +79,7 @@ namespace CKPE
 				// Hook Loading Files...Initializing References...
 				Relocation(EditorAPI::IDs::Functions::sub_87B8E0, Offset{ 0x16, 0x12 }).WriteCall(&sub2);
 				// Hook Validating forms...
-				Relocation(EditorAPI::IDs::Functions::sub_866080, Offset{ 0x20, 0x27 }).WriteCall(&sub2);
+				Relocation(EditorAPI::IDs::Functions::TESDataHandler_ValidateForms, Offset{ 0x20, 0x27 }).WriteCall(&sub2);
 
 				// Eliminate millions of calls to update the progress dialog, instead only updating 400 times (0% -> 100%)
 				//

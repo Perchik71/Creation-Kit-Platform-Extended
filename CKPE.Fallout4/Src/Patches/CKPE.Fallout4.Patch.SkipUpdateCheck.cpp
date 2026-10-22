@@ -49,7 +49,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(EditorAPI::IDs::Functions::sub_6A67F0, Offset{ 0x1CB, 0x1CB, 0x21F }).Write({ 0xEB, 0x10 });
+				Relocation(EditorAPI::IDs::Functions::MainWindow_UpdateTitle, Offset{ 0x1CB, 0x1CB, 0x21F }).Write({ 0xEB, 0x10 });
 
 				return true;
 			}

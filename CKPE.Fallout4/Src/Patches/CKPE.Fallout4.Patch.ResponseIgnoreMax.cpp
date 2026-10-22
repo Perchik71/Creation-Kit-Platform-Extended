@@ -51,7 +51,7 @@ namespace CKPE
 				//
 				// Skip message setting blocking text input after 149 characters.
 				//
-				Relocation(EditorAPI::IDs::Functions::sub_B3B3C0, Offset{ 0xC6, 0xC9 }).WriteFill(NOP, 6);
+				Relocation(EditorAPI::IDs::Functions::ResponseWindow_SelectIdle, Offset{ 0xC6, 0xC9 }).WriteFill(NOP, 6);
 
 				return true;
 			}

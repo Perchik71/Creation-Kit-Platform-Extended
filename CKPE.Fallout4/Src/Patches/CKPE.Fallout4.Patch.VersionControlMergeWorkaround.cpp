@@ -61,7 +61,7 @@ namespace CKPE
 				ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
 				const auto target1 = EditorAPI::IDs::Functions::sub_6EF7C0;
-				const auto target2 = EditorAPI::IDs::Functions::sub_6F1D90;
+				const auto target2 = EditorAPI::IDs::Functions::TESBitArray_GetFormIDAsBitArrayIndex;
 				const auto target3 = EditorAPI::IDs::Functions::sub_6F1E00;
 				const auto target4 = EditorAPI::IDs::Functions::sub_6F2400;
 				const auto target5 = EditorAPI::IDs::Functions::sub_6FB070;

@@ -170,14 +170,14 @@ namespace CKPE
 				// Spam in the status bar no more than 250ms
 				pointer_OptimizationLoad_sub1 = Relocation(EditorAPI::IDs::Functions::sub_56DA90, Offset{ 0x5E7, 0x848 }).WriteCall(&sub);
 
-				*(std::uintptr_t*)&zlibDetail::Inflate = Relocation(EditorAPI::IDs::Functions::sub_1810B70).WriteJump(&zlibDetail::Decompression::LibDeflate::Inflate);
+				*(std::uintptr_t*)&zlibDetail::Inflate = Relocation(EditorAPI::IDs::Functions::zlib_inflate).WriteJump(&zlibDetail::Decompression::LibDeflate::Inflate);
 
 				Detours::DetourIAT(base, "kernel32.dll", "FindFirstFileA", (std::uintptr_t)&HKFindFirstFileA);
 
 				// Skip remove failed forms
 				Relocation(EditorAPI::IDs::Functions::sub_86CEC0, Offset{ 0x14F4, 0x185E }).Write({ JMP });
 
-				EditorAPI::pointer_BSFile_sub = Relocation(EditorAPI::IDs::Functions::sub_242F6B0).Address();
+				EditorAPI::pointer_BSFile_sub = Relocation(EditorAPI::IDs::Functions::BSFile__BSFile).Address();
 				// 2 kb -> x kb >= 256 kb
 				*(std::uintptr_t*)&EditorAPI::BSFile::ICreateInstance =
 					Detours::DetourClassJump(EditorAPI::pointer_BSFile_sub,

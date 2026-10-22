@@ -51,7 +51,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(EditorAPI::IDs::Functions::sub_2B5FA60, Offset{ 0x4EE, 0x4CF, 0x4CE }).WriteCall(&sub);
+				Relocation(EditorAPI::IDs::Functions::BSGraphics_CreateDevice, Offset{ 0x4EE, 0x4CF, 0x4CE }).WriteCall(&sub);
 
 				return true;
 			}

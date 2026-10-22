@@ -110,7 +110,7 @@ namespace CKPE
 					Relocation(EditorAPI::IDs::Functions::legacy_ReplaceBSPointerHandleAndManager_636805).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended::GetCurrentHandle);
 					Relocation(EditorAPI::IDs::Functions::legacy_ReplaceBSPointerHandleAndManager_297556).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended::CreateHandle);
 					Relocation(EditorAPI::IDs::Functions::legacy_ReplaceBSPointerHandleAndManager_488462).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended::Destroy1);
-					Relocation(EditorAPI::IDs::Functions::sub_54DA60).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended::Destroy2);
+					Relocation(EditorAPI::IDs::Functions::BSHandleRefObject__DecRefCount).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended::Destroy2);
 					Relocation(EditorAPI::IDs::Functions::legacy_ReplaceBSPointerHandleAndManager_619127).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended::GetSmartPointer1);
 					Relocation(EditorAPI::IDs::Functions::legacy_ReplaceBSPointerHandleAndManager_161285).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Extended::GetSmartPointer2);
 
@@ -124,7 +124,7 @@ namespace CKPE
 					ScopeSafeWrite text(stext.GetAddress(), stext.GetSize());
 
 					// Stub out the rest of the functions which shouldn't ever be called now
-					Relocation(EditorAPI::IDs::Functions::sub_542F30).Write({ 0xCC });	// BSUntypedPointerHandle::Set
+					Relocation(EditorAPI::IDs::Functions::BSUntypedPointerHandle__Set).Write({ 0xCC });	// BSUntypedPointerHandle::Set
 
 					// Conversion BSHandleRefObject::IncRef and BSHandleRefObject::DecRef to 64bit
 
@@ -140,12 +140,12 @@ namespace CKPE
 					Relocation(EditorAPI::IDs::Functions::legacy_ReplaceBSPointerHandleAndManager_636805).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Original::GetCurrentHandle);
 					Relocation(EditorAPI::IDs::Functions::legacy_ReplaceBSPointerHandleAndManager_297556).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Original::CreateHandle);
 					Relocation(EditorAPI::IDs::Functions::legacy_ReplaceBSPointerHandleAndManager_488462).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Original::Destroy1);
-					Relocation(EditorAPI::IDs::Functions::sub_54DA60).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Original::Destroy2);
+					Relocation(EditorAPI::IDs::Functions::BSHandleRefObject__DecRefCount).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Original::Destroy2);
 					Relocation(EditorAPI::IDs::Functions::legacy_ReplaceBSPointerHandleAndManager_619127).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Original::GetSmartPointer1);
 					Relocation(EditorAPI::IDs::Functions::legacy_ReplaceBSPointerHandleAndManager_161285).WriteJump(&EditorAPI::BSPointerHandleManagerInterface_Original::GetSmartPointer2);
 
 					// Stub out the rest of the functions which shouldn't ever be called now
-					Relocation(EditorAPI::IDs::Functions::sub_542F30).Write({ 0xCC });	// BSUntypedPointerHandle::Set
+					Relocation(EditorAPI::IDs::Functions::BSUntypedPointerHandle__Set).Write({ 0xCC });	// BSUntypedPointerHandle::Set
 
 					EditorAPI::BSPointerHandleManagerCurrent::PointerHandleManagerCurrentId = 0;
 				}
@@ -175,7 +175,7 @@ namespace CKPE
 
 				auto winMain = Relocation(EditorAPI::IDs::Functions::legacy_ReplaceBSPointerHandleAndManager_1477214);
 				auto handleTable = Relocation(EditorAPI::IDs::Functions::data_3D27D80);
-				auto createHandle = Relocation(EditorAPI::IDs::Functions::sub_542280);
+				auto createHandle = Relocation(EditorAPI::IDs::Functions::BSPointerHandleManagerInterface__GetCurrentHandle);
 
 				if (!winMain || !handleTable || !createHandle)
 					return false;
@@ -457,7 +457,7 @@ namespace CKPE
 					total += __InstallPatchByPatternMask("81 E2 FF FF 1F 00", 0, 2, 2,
 						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
 
-					memcpy((void*)Relocation(EditorAPI::IDs::Functions::sub_542F30, 0x19).Address(),
+					memcpy((void*)Relocation(EditorAPI::IDs::Functions::BSUntypedPointerHandle__Set, 0x19).Address(),
 						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
 
 					total += 1;
@@ -544,7 +544,7 @@ namespace CKPE
 
 				auto winMain = Relocation(EditorAPI::IDs::Functions::WinMain_0_2);
 				auto handleTable = Relocation(EditorAPI::IDs::Functions::data_3D27D80);
-				auto createHandle = Relocation(EditorAPI::IDs::Functions::sub_542280);
+				auto createHandle = Relocation(EditorAPI::IDs::Functions::BSPointerHandleManagerInterface__GetCurrentHandle);
 
 				if (!winMain || !handleTable || !createHandle)
 					return false;
@@ -831,7 +831,7 @@ namespace CKPE
 					total += __InstallPatchByPatternMask("81 E2 FF FF 1F 00", 0, 2, 2,
 						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
 
-					memcpy((void*)Relocation(EditorAPI::IDs::Functions::sub_542F30, 0x19).Address(),
+					memcpy((void*)Relocation(EditorAPI::IDs::Functions::BSUntypedPointerHandle__Set, 0x19).Address(),
 						&EditorAPI::BSUntypedPointerHandle_Extended_NG::MASK_INDEX_BIT, 4);
 
 					total += 1;

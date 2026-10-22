@@ -293,12 +293,12 @@ namespace CKPE
 				
 				if (VersionLists::GetEditorVersion() < VersionLists::EDITOR_FALLOUT_C4_1_11_137_0)
 				{
-					Relocation(EditorAPI::IDs::Functions::sub_2BDE840, Offset{ 0x88, 0x8C }).WriteCall(&CreateStream_OG_NG);
+					Relocation(EditorAPI::IDs::Functions::BSShaderManager_LoadShaderPackages, Offset{ 0x88, 0x8C }).WriteCall(&CreateStream_OG_NG);
 					pointer_LoadShaders_sub = Relocation(EditorAPI::IDs::Functions::BSIStream__BSIStream).Address();
 				}
 				else
 				{
-					Relocation(EditorAPI::IDs::Functions::sub_2BDE840_2, 0x8C).WriteCall(&CreateStream_AE);
+					Relocation(EditorAPI::IDs::Functions::BSShaderManager_LoadShaderPackages_2, 0x8C).WriteCall(&CreateStream_AE);
 					pointer_LoadShaders_sub = Relocation(EditorAPI::IDs::Functions::BSIStream__BSIStream_2).Address();
 				}
 

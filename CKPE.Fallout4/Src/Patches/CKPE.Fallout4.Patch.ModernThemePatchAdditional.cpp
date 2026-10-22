@@ -245,23 +245,23 @@ namespace CKPE
 
 				pointer_UIThemePatchAdditional_sub = Relocation(EditorAPI::IDs::Functions::DialogHelpers_SetItemFloat).Address();
 				// replace main toolbar
-				const auto target = EditorAPI::IDs::Functions::sub_6D6E80;
+				const auto target = EditorAPI::IDs::Functions::TimeOfDayDialog_CreateControls;
 				Relocation(target, Offset{ 0x56 }).WriteCall(&Comctl32CreateToolbarEx_1);
 				Relocation(EditorAPI::IDs::Functions::sub_6D74F0, Offset{ 0x56 }).WriteCall(&Comctl32CreateToolbarEx_NavMesh);
 				Relocation(target, Offset{ 0x2F1, 0x27C }).WriteJump(&HideOldTimeOfDayComponents);
 				// replace ImageList_LoadImage for item type
 				Relocation(EditorAPI::IDs::Functions::WinMain_0, Offset{ 0x1077, 0x131A, 0x1332 }).WriteCall(&Comctl32ImageList_LoadImageA_1);
 
-				Relocation(EditorAPI::IDs::Functions::sub_6C83A0, Offset{ 0xF0 }).WriteCall(&HKInitializeTimeOfDay);
-				Relocation(EditorAPI::IDs::Functions::sub_6C8F50, Offset{ 0x1CA, 0x1CC }).WriteCall(&HKSetNewValueTimeOfDay);
+				Relocation(EditorAPI::IDs::Functions::TimeOfDayDialog_Initialize, Offset{ 0xF0 }).WriteCall(&HKInitializeTimeOfDay);
+				Relocation(EditorAPI::IDs::Functions::TimeOfDayDialog_SetNewValue, Offset{ 0x1CA, 0x1CC }).WriteCall(&HKSetNewValueTimeOfDay);
 
 				// replace ImageList_LoadImage
 				Relocation(EditorAPI::IDs::Functions::BGSStoryManagerEventNode__WriteDataToDialogBox, Offset{ 0x53, 0x4F }).WriteCall(&Comctl32ImageList_LoadImageA_2);		// item type Task Manager
-				Relocation(EditorAPI::IDs::Functions::sub_11425D0, Offset{ 0x1B2, 0x1D2 }).WriteCall(&Comctl32ImageList_LoadImageA_3);	// Scripts icons
-				Relocation(EditorAPI::IDs::Functions::sub_1159DB0, Offset{ 0xFB }).WriteCall(&Comctl32ImageList_LoadImageA_3);			// Scripts icons
+				Relocation(EditorAPI::IDs::Functions::PapyrusScriptEditWindow_WndProc, Offset{ 0x1B2, 0x1D2 }).WriteCall(&Comctl32ImageList_LoadImageA_3);	// Scripts icons
+				Relocation(EditorAPI::IDs::Functions::PapyrusPropertiesWindow_Create, Offset{ 0xFB }).WriteCall(&Comctl32ImageList_LoadImageA_3);			// Scripts icons
 
 				if (VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-					Relocation(EditorAPI::IDs::Functions::sub_1143C30, 0x18F).WriteCall(&Comctl32ImageList_LoadImageA_3);							// Scripts icons
+					Relocation(EditorAPI::IDs::Functions::PapyrusScriptEditWindow_StorePlacement, 0x18F).WriteCall(&Comctl32ImageList_LoadImageA_3);							// Scripts icons
 
 				Common::UI::ListView::InstallCustomDrawHandler(&DoCustomDrawListView);
 				
@@ -289,7 +289,7 @@ namespace CKPE
 				else
 				{
 					// Rechange color text
-					const auto target = EditorAPI::IDs::Functions::sub_73D090;
+					const auto target = EditorAPI::IDs::Functions::TreeList_WndProc;
 					const auto rel1 = Relocation(target, 0x645);
 					rel1.WriteCall(&HkSetTextColorForLayers);
 					rel1.WriteCall<0x214>(&HkSetTextColorForLayers);
@@ -302,7 +302,7 @@ namespace CKPE
 					rel2.WriteCall<0x2C>(&HkDrawEdgeForLayers);
 					rel2.WriteCall<0x459>(&HkDrawEdgeForLayers);
 					// Icons
-					Relocation(EditorAPI::IDs::Functions::sub_4EEB30, 0x3E).WriteCall(&HkImageListForLayers_LoadImageA);
+					Relocation(EditorAPI::IDs::Functions::LayersWindow_LoadImageList, 0x3E).WriteCall(&HkImageListForLayers_LoadImageA);
 					Relocation(EditorAPI::IDs::Functions::LayersDialog__DlgProc_2, 0xEBF).WriteCall(&HkImageListForLayers_LoadImageA);
 				}
 

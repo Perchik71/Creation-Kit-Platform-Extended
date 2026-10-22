@@ -133,9 +133,9 @@ namespace CKPE
 				// Initially, the original state must be set
 				UnicodeConvertorString.SetMode(ConvertorString::MODE_ANSI);
 
-				const auto target1 = EditorAPI::IDs::Functions::sub_6BD1B0;
+				const auto target1 = EditorAPI::IDs::Functions::MainWindow_SaveActiveFile;
 				const auto target2 = EditorAPI::IDs::Functions::sub_242A490;
-				const auto target3 = EditorAPI::IDs::Functions::sub_68D6E0;
+				const auto target3 = EditorAPI::IDs::Functions::DataWindow_UpdateFileInfo;
 				const auto target4 = EditorAPI::IDs::Functions::sub_68D580;
 
 				// Also delete it message "You must close all Dialoge Boxes",
@@ -172,7 +172,7 @@ namespace CKPE
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 					Relocation(EditorAPI::IDs::Functions::legacy_Unicode_245849, 0x7A).Write({0xE9, 0x96, 0x00, 0x00, 0x00, 0x90});
 				else
-					Relocation(EditorAPI::IDs::Functions::sub_C796A0, 0xD5).Write({0xE9, 0x94, 0x00, 0x00, 0x00, 0x90});
+					Relocation(EditorAPI::IDs::Functions::ValidateBookText, 0xD5).Write({0xE9, 0x94, 0x00, 0x00, 0x00, 0x90});
 
 				//
 				// Cut check spelling window
@@ -185,9 +185,9 @@ namespace CKPE
 				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_8BE210, Offset{ 0x11E, 0x1EA }).Address(), 5);
 				text.WriteNop(Relocation(EditorAPI::IDs::Functions::BGSTerminal__PerformDialogBox, Offset{ 0x67E, 0x63A }).Address(), 5);
 				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_AEF0B0, Offset{ 0x185, 0x165 }).Address(), 5);
-				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_B37010, Offset{ 0xA4F, 0xBBA }).Address(), 5);
-				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_B37010, Offset{ 0x137F, 0x157B }).Address(), 5);
-				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_B37010, Offset{ 0x1569, 0x190E }).Address(), 5);
+				text.WriteNop(Relocation(EditorAPI::IDs::Functions::ResponseWindow_DlgProc, Offset{ 0xA4F, 0xBBA }).Address(), 5);
+				text.WriteNop(Relocation(EditorAPI::IDs::Functions::ResponseWindow_DlgProc, Offset{ 0x137F, 0x157B }).Address(), 5);
+				text.WriteNop(Relocation(EditorAPI::IDs::Functions::ResponseWindow_DlgProc, Offset{ 0x1569, 0x190E }).Address(), 5);
 				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_B42770, Offset{ 0x3FE, 0x3C3 }).Address(), 5);
 				text.WriteNop(Relocation(EditorAPI::IDs::Functions::TESTopicInfo__PerformDialogBox, Offset{ 0x583, 0x547 }).Address(), 5);
 

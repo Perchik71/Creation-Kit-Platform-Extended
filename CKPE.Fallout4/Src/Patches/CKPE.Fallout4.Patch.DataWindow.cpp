@@ -201,9 +201,9 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::Functions::sub_68CBD0).WriteJump(&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::Functions::DataWindow_WndProc).WriteJump(&HKWndProc);
 
-				auto rel = Relocation(EditorAPI::IDs::Functions::sub_68D6E0, Offset{ 0xAB, 0xAF });
+				auto rel = Relocation(EditorAPI::IDs::Functions::DataWindow_UpdateFileInfo, Offset{ 0xAB, 0xAF });
 
 				rel.WriteFill(NOP, 0x1C);
 				rel.Write({ 0x48, 0x89, 0xF9 });

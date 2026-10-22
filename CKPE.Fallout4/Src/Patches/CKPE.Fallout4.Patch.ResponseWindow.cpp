@@ -99,7 +99,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				const auto target = EditorAPI::IDs::Functions::sub_B37010;
+				const auto target = EditorAPI::IDs::Functions::ResponseWindow_DlgProc;
 				*(std::uintptr_t*)&_oldWndProc = Relocation(target).WriteJump(&HKWndProc);
 
 				pointer_ResponseWindow_data = Relocation(EditorAPI::IDs::Functions::data_3D6EC30).Address();
@@ -120,7 +120,7 @@ namespace CKPE
 				Relocation(target, Offset{ 0x632, 0x652 }).WriteCall(&sub);
 				// Hook generate via LipGenerator (By the way, Bethesda does not post it)
 				if (VersionLists::GetEditorVersion() != VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-					Relocation(EditorAPI::IDs::Functions::sub_64C270).WriteJump(&sub2);
+					Relocation(EditorAPI::IDs::Functions::ResponseWindow_RunLipGenerator).WriteJump(&sub2);
 
 				V_LANG = _READ_OPTION_STR("LipGen", "sLanguage", "USEnglish");
 				V_GESTUREEXAGGERATION = _READ_OPTION_FLOAT("LipGen", "fGestureExaggeration", 1.f);

@@ -53,7 +53,7 @@ namespace CKPE
 				// Fix for crash when plugins.txt is present in the game root folder.
 				// Buffer overflow in ArchiveManager::OpenMasterArchives when appending to a string.
 				// Skip the parsing code completely.
-				Relocation(EditorAPI::IDs::Functions::sub_244BAD0, Offset{ 0x157, 0x167 }).WriteFill(NOP, 0x6);
+				Relocation(EditorAPI::IDs::Functions::LoadPluginsTxt, Offset{ 0x157, 0x167 }).WriteFill(NOP, 0x6);
 
 				return true;
 			}

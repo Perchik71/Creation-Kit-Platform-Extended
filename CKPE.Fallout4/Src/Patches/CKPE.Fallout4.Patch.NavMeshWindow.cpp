@@ -52,7 +52,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::Functions::sub_520350).WriteJump(&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::Functions::NavMeshWindow_WndProc).WriteJump(&HKWndProc);
 
 				return true;
 			}

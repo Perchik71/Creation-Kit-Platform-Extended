@@ -91,7 +91,7 @@ namespace CKPE
 				StepInRender = std::min(std::max(StepInRender, 15.f), 100.f);
 				ShowRenderStatsGroups = _READ_OPTION_BOOL("Graphics", "bRenderStatsGroups", false);
 
-				*(std::uintptr_t*)&_oldWndProc = Common::Relocation(EditorAPI::IDs::Functions::sub_570C30).WriteJump(&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Common::Relocation(EditorAPI::IDs::Functions::RenderWindow_WndProc).WriteJump(&HKWndProc);
 				_TempDrawArea = Common::Relocation<Area*>(EditorAPI::IDs::Functions::data_7FFD808).Get();
 			
 				EditorAPI::BGSRenderWindow::Singleton = EditorAPI::IDs::Functions::data_3D491E8.Address();
@@ -108,7 +108,7 @@ namespace CKPE
 				EditorAPI::BGSRenderWindow::Settings::Movement::CameraPanValueSingleton = Common::Relocation<EditorAPI::Setting*>(EditorAPI::IDs::Functions::data_3D49490).Get();
 				EditorAPI::BGSRenderWindow::Settings::Movement::LandspaceMultValueSingleton = Common::Relocation<EditorAPI::Setting*>(EditorAPI::IDs::Functions::data_3D494A8).Get();
 
-				const auto rel1 = Common::Relocation(EditorAPI::IDs::Functions::sub_2B4F2A0, Common::Offset{ 0xC5, 0x1E2 });
+				const auto rel1 = Common::Relocation(EditorAPI::IDs::Functions::BSGraphics_EndFrame, Common::Offset{ 0xC5, 0x1E2 });
 
 				if (VersionLists::GetEditorVersion() < VersionLists::EDITOR_FALLOUT_C4_1_10_943_1)
 					rel1.WriteFill(Common::NOP, 0x4B);
@@ -117,7 +117,7 @@ namespace CKPE
 
 				rel1.WriteCall(&DrawFrameEx);
 
-				const auto rel2 = Common::Relocation(EditorAPI::IDs::Functions::sub_56EC00, Common::Offset{ 0x1DC, 0x211 });
+				const auto rel2 = Common::Relocation(EditorAPI::IDs::Functions::RenderWindow_UpdateStatsText, Common::Offset{ 0x1DC, 0x211 });
 				rel2.WriteFill(Common::NOP, 0x14);
 				rel2.WriteCall(&UpdateDrawInfo);
 

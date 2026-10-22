@@ -145,7 +145,7 @@ namespace CKPE
 				pointer_FaceGen_sub1 = Relocation(EditorAPI::IDs::Functions::BSGraphics__RenderTargetManager__SaveRenderTarget).Address();
 				pointer_FaceGen_sub2 = Relocation(EditorAPI::IDs::Functions::sub_492E90).Address();
 
-				const auto target1 = EditorAPI::IDs::Functions::sub_ABE160;
+				const auto target1 = EditorAPI::IDs::Functions::ExportFaceTintText;
 
 				// Don't produce DDS files
 				if (_READ_OPTION_BOOL("FaceGen", "bDisableExportDDS", false))

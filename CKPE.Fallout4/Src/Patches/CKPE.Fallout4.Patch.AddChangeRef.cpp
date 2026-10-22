@@ -58,7 +58,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(EditorAPI::IDs::Functions::sub_5214D0, Offset{ 0x5A2, 0x9C8 }).WriteCall(&HKInsertMenuA);
+				Relocation(EditorAPI::IDs::Functions::ObjectWindow_DlgProc, Offset{ 0x5A2, 0x9C8 }).WriteCall(&HKInsertMenuA);
 				
 				auto rel = EditorAPI::IDs::Functions::sub_DB5B60.Address();
 				*(std::uintptr_t*)&EditorAPI::Forms::TESObjectREFR::SetParentWithRedraw = rel;

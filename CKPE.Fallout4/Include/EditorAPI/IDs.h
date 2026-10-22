@@ -359,31 +359,31 @@ namespace CKPE
 					// 1.11.246.0 0x142D75C14 __scrt_fastfail
 					inline constexpr Common::ID scrt_fastfail{ 1560296 };
 					// 1.11.246.0 0x141137F50 sub_141137F50
-					inline constexpr Common::ID sub_1137F50{ 522253 };
+					inline constexpr Common::ID PapyrusCompileDialog_UpdateButtons{ 522253 };
 					// 1.11.246.0 0x14113A6A0 sub_14113A6A0
-					inline constexpr Common::ID sub_113A6A0{ 69589, 1343977 };
+					inline constexpr Common::ID PapyrusScriptEditWindow_Create{ 69589, 1343977 };
 					// 1.11.246.0 0x1411425D0 sub_1411425D0
-					inline constexpr Common::ID sub_11425D0{ 697171, 1531107 };
+					inline constexpr Common::ID PapyrusScriptEditWindow_WndProc{ 697171, 1531107 };
 					// 1.11.246.0 0x141143C30 sub_141143C30
-					inline constexpr Common::ID sub_1143C30{ 1515787 };
+					inline constexpr Common::ID PapyrusScriptEditWindow_StorePlacement{ 1515787 };
 					// 1.11.246.0 0x141159DB0 sub_141159DB0
-					inline constexpr Common::ID sub_1159DB0{ 70844, 1650572 };
+					inline constexpr Common::ID PapyrusPropertiesWindow_Create{ 70844, 1650572 };
 					// 1.11.246.0 0x14117DB60 sub_14117DB60
 					inline constexpr Common::ID sub_117DB60{ 580023 };
 					// 1.11.246.0 0x141810B70 sub_141810B70
-					inline constexpr Common::ID sub_1810B70{ 531888, 1656061 };
+					inline constexpr Common::ID zlib_inflate{ 531888, 1656061 };
 					// 1.11.246.0 0x141A2BB60 sub_141A2BB60
 					inline constexpr Common::ID sub_1A2BB60{ 1990426 };
 					// 1.11.246.0 0x141CC48D0 sub_141CC48D0
 					inline constexpr Common::ID sub_1CC48D0{ 660208, 1990223 };
 					// 1.11.246.0 0x141FFB440 sub_141FFB440
-					inline constexpr Common::ID sub_1FFB440{ 446435, 1704908 };
+					inline constexpr Common::ID BSMemoryManager__Size{ 446435, 1704908 };
 					// 1.11.246.0 0x141FFBDA0 sub_141FFBDA0
 					inline constexpr Common::ID sub_1FFBDA0{ 650953, 1356979 };
 					// 1.11.246.0 0x141FFC100 sub_141FFC100
-					inline constexpr Common::ID sub_1FFC100{ 642906, 1670063 };
+					inline constexpr Common::ID BSMemoryManager__Allocate{ 642906, 1670063 };
 					// 1.11.246.0 0x141FFC6B0 sub_141FFC6B0
-					inline constexpr Common::ID sub_1FFC6B0{ 570472, 1372464 };
+					inline constexpr Common::ID BSMemoryManager__Deallocate{ 570472, 1372464 };
 					// 1.11.246.0 0x141FFF220 sub_141FFF220
 					inline constexpr Common::ID sub_1FFF220{ 440122, 1515122 };
 					// 1.11.246.0 0x141FFF3E0 sub_141FFF3E0
@@ -401,39 +401,39 @@ namespace CKPE
 					// 1.11.246.0 0x141FFF810 sub_141FFF810
 					inline constexpr Common::ID sub_1FFF810{ 714644, 1618560 };
 					// 1.11.246.0 0x142004F00 sub_142004F00
-					inline constexpr Common::ID sub_2004F00{ 525631, 1991938 };
+					inline constexpr Common::ID ScrapHeap__ScrapHeap{ 525631, 1991938 };
 					// 1.11.246.0 0x142005120 sub_142005120
-					inline constexpr Common::ID sub_2005120{ 5005, 1994738 };
+					inline constexpr Common::ID ScrapHeap__Allocate{ 5005, 1994738 };
 					// 1.11.246.0 0x1420057C0 sub_1420057C0
-					inline constexpr Common::ID sub_20057C0{ 751586, 1994657 };
+					inline constexpr Common::ID ScrapHeap__Deallocate{ 751586, 1994657 };
 					// 1.11.246.0 0x142005AB0 sub_142005AB0
-					inline constexpr Common::ID sub_2005AB0{ 540140, 1499067 };
+					inline constexpr Common::ID ScrapHeap__ReleasePages{ 540140, 1499067 };
 					// 1.11.246.0 0x14201A140 sub_14201A140
 					inline constexpr Common::ID sub_201A140{ 1352498 };
 					// 1.11.246.0 0x14204C730 sub_14204C730
 					inline constexpr Common::ID sub_204C730{ 1574397 };
 					// 1.11.246.0 0x14204E890 sub_14204E890
-					inline constexpr Common::ID sub_204E890{ 1357980 };
+					inline constexpr Common::ID set_purecall_handler_wrapper{ 1357980 };
 					// 1.11.246.0 0x14204E8D0 sub_14204E8D0
 					inline constexpr Common::ID sub_204E8D0{ 1362949 };
 					// 1.11.246.0 0x142120A20 sub_142120A20
-					inline constexpr Common::ID sub_2120A20{ 724189, 1347142 };
+					inline constexpr Common::ID bhkThreadMemorySource__bhkThreadMemorySource{ 724189, 1347142 };
 					// 1.11.246.0 0x142429820 sub_142429820
-					inline constexpr Common::ID sub_2429820{ 766110, 1340478 };
+					inline constexpr Common::ID BSStringCache__Ref__Ref{ 766110, 1340478 };
 					// 1.11.246.0 0x142429970 sub_142429970
-					inline constexpr Common::ID sub_2429970{ 766111, 1698047 };
+					inline constexpr Common::ID BSStringCache__Ref__set{ 766111, 1698047 };
 					// 1.11.246.0 0x142429C70 sub_142429C70
 					inline constexpr Common::ID sub_2429C70{ 409166, 1382155 };
 					// 1.11.246.0 0x14242A490 sub_14242A490
 					inline constexpr Common::ID sub_242A490{ 650803, 1852383 };
 					// 1.11.246.0 0x14242BA90 sub_14242BA90
-					inline constexpr Common::ID sub_242BA90{ 766148, 1624720 };
+					inline constexpr Common::ID BSStringCache__Ref__release{ 766148, 1624720 };
 					// 1.11.246.0 0x14242EA10 sub_14242EA10
 					inline constexpr Common::ID sub_242EA10{ 158625, 1627008 };
 					// 1.11.246.0 0x14242F6B0 sub_14242F6B0
-					inline constexpr Common::ID sub_242F6B0{ 481720, 1519241 };
+					inline constexpr Common::ID BSFile__BSFile{ 481720, 1519241 };
 					// 1.11.246.0 0x14244BAD0 sub_14244BAD0
-					inline constexpr Common::ID sub_244BAD0{ 84817, 1356072 };
+					inline constexpr Common::ID LoadPluginsTxt{ 84817, 1356072 };
 					// 1.11.246.0 0x142464400 sub_142464400
 					inline constexpr Common::ID sub_2464400{ 552578 };
 					// 1.11.246.0 0x14246EC50 sub_14246EC50
@@ -441,39 +441,39 @@ namespace CKPE
 					// 1.11.246.0 0x142475B90 sub_142475B90
 					inline constexpr Common::ID sub_2475B90{ 767637, 1991833 };
 					// 1.11.246.0 0x14247F9B0 sub_14247F9B0
-					inline constexpr Common::ID sub_247F9B0{ 2203563 };
+					inline constexpr Common::ID LooseFileStream_DoRead{ 2203563 };
 					// 1.11.246.0 0x14247FB80 sub_14247FB80
-					inline constexpr Common::ID sub_247FB80{ 2129124 };
+					inline constexpr Common::ID LooseFileStream_DoReadAlt{ 2129124 };
 					// 1.11.246.0 0x14247FD60 sub_14247FD60
-					inline constexpr Common::ID sub_247FD60{ 2203564 };
+					inline constexpr Common::ID LooseFileStream_DoSeek{ 2203564 };
 					// 1.11.246.0 0x1424802A0 sub_1424802A0
-					inline constexpr Common::ID sub_24802A0{ 2147855 };
+					inline constexpr Common::ID LooseFileStream_DoWrite{ 2147855 };
 					// 1.11.246.0 0x1424AD530 sub_1424AD530
 					inline constexpr Common::ID sub_24AD530{ 1471571 };
 					// 1.11.246.0 0x1424BDB90 sub_1424BDB90
 					inline constexpr Common::ID sub_24BDB90{ 768935, 1503558 };
 					// 1.11.246.0 0x1424D00C0 sub_1424D00C0
-					inline constexpr Common::ID sub_24D00C0{ 1621802 };
+					inline constexpr Common::ID TESObjectLAND_NormalizeLayers{ 1621802 };
 					// 1.11.246.0 0x14253D7F0 sub_14253D7F0
-					inline constexpr Common::ID sub_253D7F0{ 142900, 1621640 };
+					inline constexpr Common::ID NiControllerSequence__StoreTargets{ 142900, 1621640 };
 					// 1.11.246.0 0x1425D1410 sub_1425D1410
 					inline constexpr Common::ID sub_25D1410{ 305059, 1522044 };
 					// 1.11.246.0 0x1427FA7B0 sub_1427FA7B0
 					inline constexpr Common::ID sub_27FA7B0{ 103156, 1421864 };
 					// 1.11.246.0 0x1402B4570 sub_1402B4570
-					inline constexpr Common::ID sub_2B4570{ 2009774 };
+					inline constexpr Common::ID BSGraphics_LoadD3DCompiler_A{ 2009774 };
 					// 1.11.246.0 0x142B4CFF0 sub_142B4CFF0
-					inline constexpr Common::ID sub_2B4CFF0{ 1569538 };
+					inline constexpr Common::ID BSGraphics_LoadD3DCompiler_B{ 1569538 };
 					// 1.11.246.0 0x142B4F2A0 sub_142B4F2A0
-					inline constexpr Common::ID sub_2B4F2A0{ 570159, 1989813 };
+					inline constexpr Common::ID BSGraphics_EndFrame{ 570159, 1989813 };
 					// 1.11.246.0 0x142B5DE40 sub_142B5DE40
-					inline constexpr Common::ID sub_2B5DE40{ 2009800 };
+					inline constexpr Common::ID BSGraphics_LoadD3DCompiler_C{ 2009800 };
 					// 1.11.246.0 0x142B5EAB0 sub_142B5EAB0
-					inline constexpr Common::ID sub_2B5EAB0{ 700920, 1476321 };
+					inline constexpr Common::ID BSGraphics_LogOutOfUCodeSpace{ 700920, 1476321 };
 					// 1.11.246.0 0x142B5FA60 sub_142B5FA60
-					inline constexpr Common::ID sub_2B5FA60{ 530343 };
+					inline constexpr Common::ID BSGraphics_CreateDevice{ 530343 };
 					// 1.11.246.0 0x142B64610 sub_142B64610
-					inline constexpr Common::ID sub_2B64610{ 795189, 1627205 };
+					inline constexpr Common::ID BSGraphics_LogOutOfPixelShaders{ 795189, 1627205 };
 					// 1.11.246.0 0x142B99AD0 sub_142B99AD0
 					inline constexpr Common::ID sub_2B99AD0{ 1355670 };
 					// 1.11.246.0 0x142BCC490 sub_142BCC490
@@ -481,11 +481,11 @@ namespace CKPE
 					// 1.11.246.0 0x142BD9C40 sub_142BD9C40
 					inline constexpr Common::ID sub_2BD9C40{ 1619614 };
 					// 1.11.246.0 0x142BDE840 sub_142BDE840
-					inline constexpr Common::ID sub_2BDE840{ 122998, 1575961 };
+					inline constexpr Common::ID BSShaderManager_LoadShaderPackages{ 122998, 1575961 };
 					// 1.11.246.0 0x142BDE840 sub_142BDE840
-					inline constexpr Common::ID sub_2BDE840_2{ 1575961 };
+					inline constexpr Common::ID BSShaderManager_LoadShaderPackages_2{ 1575961 };
 					// 1.11.246.0 0x142BDFF60 sub_142BDFF60
-					inline constexpr Common::ID sub_2BDFF60{ 797202, 1623969 };
+					inline constexpr Common::ID BSShaderManager__GetTexture{ 797202, 1623969 };
 					// 1.11.246.0 0x142C733C0 sub_142C733C0
 					inline constexpr Common::ID sub_2C733C0{ 721218, 1856015 };
 					// 1.11.246.0 0x142CB92D0 sub_142CB92D0
@@ -497,7 +497,7 @@ namespace CKPE
 					// 1.11.246.0 0x142D75E6C sub_142D75E6C
 					inline constexpr Common::ID sub_2D75E6C{ 1780312 };
 					// 1.11.246.0 0x142D816E0 sub_142D816E0
-					inline constexpr Common::ID sub_2D816E0{ 811328, 1621670 };
+					inline constexpr Common::ID NiBSScrapAdapter_AllocateFromBSScrap{ 811328, 1621670 };
 					// 1.11.246.0 0x1402E2B50 sub_1402E2B50
 					inline constexpr Common::ID sub_2E2B50{ 620742, 1816981 };
 					// 1.11.246.0 0x14032D9F0 sub_14032D9F0
@@ -511,7 +511,7 @@ namespace CKPE
 					// 1.11.246.0 0x14003E2B1 sub_14003E2B1
 					inline constexpr Common::ID sub_3E2B1{ 584687 };
 					// 1.11.246.0 0x14046CF50 sub_14046CF50
-					inline constexpr Common::ID sub_46CF50{ 394350 };
+					inline constexpr Common::ID BSMemoryManager_InitDefaultHeap{ 394350 };
 					// 1.11.246.0 0x140489830 sub_140489830
 					inline constexpr Common::ID sub_489830{ 632480, 1993061 };
 					// 1.11.246.0 0x14048D8D0 sub_14048D8D0
@@ -521,13 +521,13 @@ namespace CKPE
 					// 1.11.246.0 0x140492E90 sub_140492E90
 					inline constexpr Common::ID sub_492E90{ 632518, 1388320 };
 					// 1.11.246.0 0x1404C7DB0 sub_1404C7DB0
-					inline constexpr Common::ID sub_4C7DB0{ 634156, 1725866 };
+					inline constexpr Common::ID ProgressWindow_Create{ 634156, 1725866 };
 					// 1.11.246.0 0x1404EEB30 sub_1404EEB30
-					inline constexpr Common::ID sub_4EEB30{ 1844613 };
+					inline constexpr Common::ID LayersWindow_LoadImageList{ 1844613 };
 					// 1.11.246.0 0x140520350 sub_140520350
-					inline constexpr Common::ID sub_520350{ 636009, 1498789 };
+					inline constexpr Common::ID NavMeshWindow_WndProc{ 636009, 1498789 };
 					// 1.11.246.0 0x1405214D0 sub_1405214D0
-					inline constexpr Common::ID sub_5214D0{ 636042, 1990688 };
+					inline constexpr Common::ID ObjectWindow_DlgProc{ 636042, 1990688 };
 					// 1.11.246.0 0x140528670 sub_140528670
 					inline constexpr Common::ID sub_528670{ 1528186 };
 					// 1.11.246.0 0x140528B00 sub_140528B00
@@ -535,11 +535,11 @@ namespace CKPE
 					// 1.11.246.0 0x140536B10 sub_140536B10
 					inline constexpr Common::ID sub_536B10{ 636530, 1675545 };
 					// 1.11.246.0 0x140542280 sub_140542280
-					inline constexpr Common::ID sub_542280{ 1618981 };
+					inline constexpr Common::ID BSPointerHandleManagerInterface__GetCurrentHandle{ 1618981 };
 					// 1.11.246.0 0x140542F30 sub_140542F30
-					inline constexpr Common::ID sub_542F30{ 505510 };
+					inline constexpr Common::ID BSUntypedPointerHandle__Set{ 505510 };
 					// 1.11.246.0 0x14054DA60 sub_14054DA60
-					inline constexpr Common::ID sub_54DA60{ 314534 };
+					inline constexpr Common::ID BSHandleRefObject__DecRefCount{ 314534 };
 					// 1.11.246.0 0x140553D60 sub_140553D60
 					inline constexpr Common::ID sub_553D60{ 1989539 };
 					// 1.11.246.0 0x1405566F0 sub_1405566F0
@@ -547,19 +547,19 @@ namespace CKPE
 					// 1.11.246.0 0x140558F90 sub_140558F90
 					inline constexpr Common::ID sub_558F90{ 637365, 1698155 };
 					// 1.11.246.0 0x140568A00 sub_140568A00
-					inline constexpr Common::ID sub_568A00{ 55199, 1619017 };
+					inline constexpr Common::ID Hotkeys_LoadSettings{ 55199, 1619017 };
 					// 1.11.246.0 0x14056DA90 sub_14056DA90
 					inline constexpr Common::ID sub_56DA90{ 177897, 1371227 };
 					// 1.11.246.0 0x14056E940 sub_14056E940
 					inline constexpr Common::ID sub_56E940{ 548371 };
 					// 1.11.246.0 0x14056EC00 sub_14056EC00
-					inline constexpr Common::ID sub_56EC00{ 638107, 1670900 };
+					inline constexpr Common::ID RenderWindow_UpdateStatsText{ 638107, 1670900 };
 					// 1.11.246.0 0x140570C30 sub_140570C30
-					inline constexpr Common::ID sub_570C30{ 177103, 1933064 };
+					inline constexpr Common::ID RenderWindow_WndProc{ 177103, 1933064 };
 					// 1.11.246.0 0x140573AC0 sub_140573AC0
 					inline constexpr Common::ID sub_573AC0{ 638120, 1475768 };
 					// 1.11.246.0 0x14057F380 sub_14057F380
-					inline constexpr Common::ID sub_57F380{ 111996 };
+					inline constexpr Common::ID RenderWindow_RegisterHotkeyFunctions{ 111996 };
 					// 1.11.246.0 0x1405CA7C0 sub_1405CA7C0
 					inline constexpr Common::ID sub_5CA7C0{ 1341552 };
 					// 1.11.246.0 0x1405CAA40 sub_1405CAA40
@@ -569,11 +569,11 @@ namespace CKPE
 					// 1.11.246.0 0x1405D2370 sub_1405D2370
 					inline constexpr Common::ID sub_5D2370{ 639595, 1990553 };
 					// 1.11.246.0 0x1405EB370 sub_1405EB370
-					inline constexpr Common::ID sub_5EB370{ 87136, 1671826 };
+					inline constexpr Common::ID TESObjectREFR__SetPosition{ 87136, 1671826 };
 					// 1.11.246.0 0x140632EA0 sub_140632EA0
 					inline constexpr Common::ID sub_632EA0{ 641592, 1843783 };
 					// 1.11.246.0 0x14063EE20 sub_14063EE20
-					inline constexpr Common::ID sub_63EE20{ 641924, 1752948 };
+					inline constexpr Common::ID ComboBox_InsertItem{ 641924, 1752948 };
 					// 1.11.246.0 0x140641B60 sub_140641B60
 					inline constexpr Common::ID sub_641B60{ 642003, 1548425 };
 					// 1.11.246.0 0x140642E40 sub_140642E40
@@ -583,15 +583,15 @@ namespace CKPE
 					// 1.11.246.0 0x140643750 sub_140643750
 					inline constexpr Common::ID sub_643750{ 1750857 };
 					// 1.11.246.0 0x14064C270 sub_14064C270
-					inline constexpr Common::ID sub_64C270{ 1657523 };
+					inline constexpr Common::ID ResponseWindow_RunLipGenerator{ 1657523 };
 					// 1.11.246.0 0x140667770 sub_140667770
-					inline constexpr Common::ID sub_667770{ 1606845 };
+					inline constexpr Common::ID ChooseSoundFile_Browse{ 1606845 };
 					// 1.11.246.0 0x140667840 sub_140667840
-					inline constexpr Common::ID sub_667840{ 1654850 };
+					inline constexpr Common::ID ChooseSoundFile_BrowseAlt{ 1654850 };
 					// 1.11.246.0 0x140667DE0 sub_140667DE0
-					inline constexpr Common::ID sub_667DE0{ 1654852 };
+					inline constexpr Common::ID ChooseSoundFile_MakeRelativePath{ 1654852 };
 					// 1.11.246.0 0x140671DB0 sub_140671DB0
-					inline constexpr Common::ID sub_671DB0{ 643131, 1820720 };
+					inline constexpr Common::ID CellViewWindow_WndProc{ 643131, 1820720 };
 					// 1.11.246.0 0x140676190 sub_140676190
 					inline constexpr Common::ID sub_676190{ 206118, 1450783 };
 					// 1.11.246.0 0x140677DA0 sub_140677DA0
@@ -601,35 +601,35 @@ namespace CKPE
 					// 1.11.246.0 0x140678E00 sub_140678E00
 					inline constexpr Common::ID sub_678E00{ 535497 };
 					// 1.11.246.0 0x14068CBD0 sub_14068CBD0
-					inline constexpr Common::ID sub_68CBD0{ 643283, 1992435 };
+					inline constexpr Common::ID DataWindow_WndProc{ 643283, 1992435 };
 					// 1.11.246.0 0x14068D580 sub_14068D580
 					inline constexpr Common::ID sub_68D580{ 643289, 1753394 };
 					// 1.11.246.0 0x14068D6E0 sub_14068D6E0
-					inline constexpr Common::ID sub_68D6E0{ 643293, 1664109 };
+					inline constexpr Common::ID DataWindow_UpdateFileInfo{ 643293, 1664109 };
 					// 1.11.246.0 0x14069C240 sub_14069C240
-					inline constexpr Common::ID sub_69C240{ 643475, 1634204 };
+					inline constexpr Common::ID MainWindow_WndProc{ 643475, 1634204 };
 					// 1.11.246.0 0x14069C240 sub_14069C240
-					inline constexpr Common::ID sub_69C240_2{ 1634204 };
+					inline constexpr Common::ID MainWindow_WndProc_2{ 1634204 };
 					// 1.11.246.0 0x1406A67F0 sub_1406A67F0
-					inline constexpr Common::ID sub_6A67F0{ 643506, 2007835 };
+					inline constexpr Common::ID MainWindow_UpdateTitle{ 643506, 2007835 };
 					// 1.11.246.0 0x1406A7AD0 sub_1406A7AD0
 					inline constexpr Common::ID sub_6A7AD0{ 405154, 1993129 };
 					// 1.11.246.0 0x1406A8950 sub_1406A8950
-					inline constexpr Common::ID sub_6A8950{ 643528, 1351048 };
+					inline constexpr Common::ID VersionControl_PromptNetworkLocation{ 643528, 1351048 };
 					// 1.11.246.0 0x1406BD1B0 sub_1406BD1B0
-					inline constexpr Common::ID sub_6BD1B0{ 613852, 1995935 };
+					inline constexpr Common::ID MainWindow_SaveActiveFile{ 613852, 1995935 };
 					// 1.11.246.0 0x1406C83A0 sub_1406C83A0
-					inline constexpr Common::ID sub_6C83A0{ 466561, 1988708 };
+					inline constexpr Common::ID TimeOfDayDialog_Initialize{ 466561, 1988708 };
 					// 1.11.246.0 0x1406C8F50 sub_1406C8F50
-					inline constexpr Common::ID sub_6C8F50{ 637699, 1580232 };
+					inline constexpr Common::ID TimeOfDayDialog_SetNewValue{ 637699, 1580232 };
 					// 1.11.246.0 0x1406D6E80 sub_1406D6E80
-					inline constexpr Common::ID sub_6D6E80{ 88741, 1654076 };
+					inline constexpr Common::ID TimeOfDayDialog_CreateControls{ 88741, 1654076 };
 					// 1.11.246.0 0x1406D74F0 sub_1406D74F0
 					inline constexpr Common::ID sub_6D74F0{ 644735, 1777801 };
 					// 1.11.246.0 0x1406EF7C0 sub_1406EF7C0
 					inline constexpr Common::ID sub_6EF7C0{ 76508, 1361378 };
 					// 1.11.246.0 0x1406F1D90 sub_1406F1D90
-					inline constexpr Common::ID sub_6F1D90{ 49336 };
+					inline constexpr Common::ID TESBitArray_GetFormIDAsBitArrayIndex{ 49336 };
 					// 1.11.246.0 0x1406F1E00 sub_1406F1E00
 					inline constexpr Common::ID sub_6F1E00{ 581077 };
 					// 1.11.246.0 0x1406F2400 sub_1406F2400
@@ -641,11 +641,11 @@ namespace CKPE
 					// 1.11.246.0 0x140712B50 sub_140712B50
 					inline constexpr Common::ID sub_712B50{ 645755, 1827459 };
 					// 1.11.246.0 0x140714300 sub_140714300
-					inline constexpr Common::ID sub_714300{ 462857, 1663801 };
+					inline constexpr Common::ID OpenPluginSaveDialog{ 462857, 1663801 };
 					// 1.11.246.0 0x14073BE90 sub_14073BE90
 					inline constexpr Common::ID sub_73BE90{ 646694, 1541828 };
 					// 1.11.246.0 0x14073D090 sub_14073D090
-					inline constexpr Common::ID sub_73D090{ 1673982 };
+					inline constexpr Common::ID TreeList_WndProc{ 1673982 };
 					// 1.11.246.0 0x140741290 sub_140741290
 					inline constexpr Common::ID sub_741290{ 646714, 1410439 };
 					// 1.11.246.0 0x1407B48A0 sub_1407B48A0
@@ -655,7 +655,7 @@ namespace CKPE
 					// 1.11.246.0 0x140863990 sub_140863990
 					inline constexpr Common::ID sub_863990{ 653585, 1754118 };
 					// 1.11.246.0 0x140866080 sub_140866080
-					inline constexpr Common::ID sub_866080{ 653598, 1484721 };
+					inline constexpr Common::ID TESDataHandler_ValidateForms{ 653598, 1484721 };
 					// 1.11.246.0 0x14086CEC0 sub_14086CEC0
 					inline constexpr Common::ID sub_86CEC0{ 452879, 1429824 };
 					// 1.11.246.0 0x1408755D0 sub_1408755D0
@@ -669,9 +669,9 @@ namespace CKPE
 					// 1.11.246.0 0x14087F110 sub_14087F110
 					inline constexpr Common::ID sub_87F110{ 531000 };
 					// 1.11.246.0 0x140882210 sub_140882210
-					inline constexpr Common::ID sub_882210{ 304833, 1995710 };
+					inline constexpr Common::ID TESDataHandler_LoadFileDependencies{ 304833, 1995710 };
 					// 1.11.246.0 0x140882210 sub_140882210
-					inline constexpr Common::ID sub_882210_2{ 1995710 };
+					inline constexpr Common::ID TESDataHandler_LoadFileDependencies_2{ 1995710 };
 					// 1.11.246.0 0x140886890 sub_140886890
 					inline constexpr Common::ID sub_886890{ 654263, 1994346 };
 					// 1.11.246.0 0x140886930 sub_140886930
@@ -679,7 +679,7 @@ namespace CKPE
 					// 1.11.246.0 0x1408BE210 sub_1408BE210
 					inline constexpr Common::ID sub_8BE210{ 243708, 1596835 };
 					// 1.11.246.0 0x1408C5050 sub_1408C5050
-					inline constexpr Common::ID sub_8C5050{ 655843, 1618628 };
+					inline constexpr Common::ID TESForm_MakeEditorIDUnique{ 655843, 1618628 };
 					// 1.11.246.0 0x1408DA7B0 sub_1408DA7B0
 					inline constexpr Common::ID sub_8DA7B0{ 135014 };
 					// 1.11.246.0 0x14092F1E0 sub_14092F1E0
@@ -701,15 +701,15 @@ namespace CKPE
 					// 1.11.246.0 0x140A51340 sub_140A51340
 					inline constexpr Common::ID sub_A51340{ 384122 };
 					// 1.11.246.0 0x140ABE160 sub_140ABE160
-					inline constexpr Common::ID sub_ABE160{ 666256, 1990278 };
+					inline constexpr Common::ID ExportFaceTintText{ 666256, 1990278 };
 					// 1.11.246.0 0x140AEF0B0 sub_140AEF0B0
 					inline constexpr Common::ID sub_AEF0B0{ 664457, 1894783 };
 					// 1.11.246.0 0x140B37010 sub_140B37010
-					inline constexpr Common::ID sub_B37010{ 668460, 1645713 };
+					inline constexpr Common::ID ResponseWindow_DlgProc{ 668460, 1645713 };
 					// 1.11.246.0 0x140B3ABB0 sub_140B3ABB0
 					inline constexpr Common::ID sub_B3ABB0{ 1992727 };
 					// 1.11.246.0 0x140B3B3C0 sub_140B3B3C0
-					inline constexpr Common::ID sub_B3B3C0{ 492810, 1647136 };
+					inline constexpr Common::ID ResponseWindow_SelectIdle{ 492810, 1647136 };
 					// 1.11.246.0 0x140B42770 sub_140B42770
 					inline constexpr Common::ID sub_B42770{ 668671, 1869554 };
 					// 1.11.246.0 0x140B58490 sub_140B58490
@@ -725,7 +725,7 @@ namespace CKPE
 					// 1.11.246.0 0x140BB46E0 sub_140BB46E0
 					inline constexpr Common::ID sub_BB46E0{ 580601 };
 					// 1.11.246.0 0x140C796A0 sub_140C796A0
-					inline constexpr Common::ID sub_C796A0{ 1804550 };
+					inline constexpr Common::ID ValidateBookText{ 1804550 };
 					// 1.11.246.0 0x140CAC840 sub_140CAC840
 					inline constexpr Common::ID sub_CAC840{ 501084 };
 					// 1.11.246.0 0x140CD0870 sub_140CD0870
@@ -733,9 +733,9 @@ namespace CKPE
 					// 1.11.246.0 0x140D0F530 sub_140D0F530
 					inline constexpr Common::ID sub_D0F530{ 288239 };
 					// 1.11.246.0 0x140D267E0 sub_140D267E0
-					inline constexpr Common::ID sub_D267E0{ 1990514 };
+					inline constexpr Common::ID PreCombined_Generate{ 1990514 };
 					// 1.11.246.0 0x140D496E0 sub_140D496E0
-					inline constexpr Common::ID sub_D496E0{ 677726, 1377514 };
+					inline constexpr Common::ID PreCombined_GetNifPath{ 677726, 1377514 };
 					// 1.11.246.0 0x140D7F970 sub_140D7F970
 					inline constexpr Common::ID sub_D7F970{ 495117 };
 					// 1.11.246.0 0x140DB5B60 sub_140DB5B60
@@ -743,7 +743,7 @@ namespace CKPE
 					// 1.11.246.0 0x140E5CF80 sub_140E5CF80
 					inline constexpr Common::ID sub_E5CF80{ 552257 };
 					// 1.11.246.0 0x140E6B380 sub_140E6B380
-					inline constexpr Common::ID sub_E6B380{ 425067, 1669436 };
+					inline constexpr Common::ID Conditions_CreateControls{ 425067, 1669436 };
 					// 1.11.246.0 0x140E96F00 sub_140E96F00
 					inline constexpr Common::ID sub_E96F00{ 535695 };
 					// 1.11.246.0 0x142F9D260 xmmword_142F9D260

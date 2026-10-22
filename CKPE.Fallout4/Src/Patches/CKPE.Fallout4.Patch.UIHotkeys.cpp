@@ -120,7 +120,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				const auto target = EditorAPI::IDs::Functions::sub_568A00;
+				const auto target = EditorAPI::IDs::Functions::Hotkeys_LoadSettings;
 				Relocation(target, Offset{ 0x1C3, 0x1AC }).WriteFill(NOP, 0x19);
 				Relocation(EditorAPI::IDs::Functions::sub_3E2B1).WriteJump(&sub);
 
