@@ -45,7 +45,7 @@ namespace CKPE
 			public:
 				AIDATA_GAME aiData; // 08
 				std::uint32_t unk18; // 18 - CK only
-				std::uint32_t unk1C; // 1C - CK only
+				std::uint32_t pad1C; // 1C
 				BSSimpleList<Forms::TESPackage*> aiPackList; // 20 - CommonLibF4 PackageList (at 18 there)
 			};
 			static_assert(sizeof(TESAIForm) == 0x30);
