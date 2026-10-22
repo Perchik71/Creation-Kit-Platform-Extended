@@ -32,14 +32,14 @@ namespace CKPE
 			}
 
 
-			// 1.11.240.0: size 0x78, vtable RVA 0x301C938, 22 virtual functions
+			// 1.11.246.0: size 0x78, vtable RVA 0x301D938, 22 virtual functions
 			class TESContainer :
 				public BaseFormComponent   // 000
 			{
 			public:
 				virtual ~TESContainer() = default;
 
-				virtual void sub_0A8() { return; } // 21 - RVA 0x8B5870
+				virtual void CollectInventoryItems(TESContainer* Inventory, std::uint16_t Level) const noexcept(true) { return; } // 21
 
 			public:
 				ContainerObject** containerObjects; // 08

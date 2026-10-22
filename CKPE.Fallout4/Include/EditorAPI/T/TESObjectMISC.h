@@ -25,7 +25,7 @@ namespace CKPE
 		{
 			namespace Forms
 			{
-				// 1.11.240.0: size 0x1E8, vtable RVA 0x3099A10, 156 virtual functions
+				// 1.11.246.0: size 0x1E8, vtable RVA 0x309AA10, 156 virtual functions
 				class TESObjectMISC :
 					public TESBoundObject,             // 000
 					public TESFullName,                // 090
@@ -42,8 +42,8 @@ namespace CKPE
 				public:
 					virtual ~TESObjectMISC() = default;
 
-					virtual void sub_4D0() { return; } // 154 - RVA 0xC4B350
-					virtual void sub_4D8() { return; } // 155 - RVA 0xC4B340
+					virtual void SaveImpl() noexcept(true) { return; } // 154
+					virtual void LoadImpl(TESFile* File, std::uint32_t ChunkID) noexcept(true) { return; } // 155
 
 				public:
 					BSTArray<void*> componentData; // 1C8 - BSTArray<BSTTuple<TESForm*, BGSTypedFormValuePair::SharedVal>>*

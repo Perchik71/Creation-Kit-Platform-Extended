@@ -30,16 +30,17 @@ namespace CKPE
 				};
 				static_assert(sizeof(SCRIPT_HEADER) == 0x14);
 
-				// 1.11.240.0: size 0x78, vtable RVA 0x3066FB8, 127 virtual functions
+				// 1.11.246.0: size 0x78, vtable RVA 0x3067FB8, 127 virtual functions
 				class Script :
 					public TESForm   // 000
 				{
 				public:
 					virtual ~Script() = default;
 
-					virtual void sub_3E0() { return; } // 124 - RVA 0xBE2580
-					virtual void sub_3E8() { return; } // 125 - RVA 0xBE2610
-					virtual void sub_3F0() { return; } // 126 - RVA 0xBE4A60
+					[[nodiscard]] virtual bool CanCheckInReferencedForms(TESForm* Owner, const void* Forms) const noexcept(true) { return true; } // 124
+					virtual void BuildReferencedFormsCheckInMessage(TESForm* Owner, const void* Forms,
+						BSString& Message) const noexcept(true) { return; } // 125
+					virtual Script* OpenScriptEditor(HWND hParentWnd) noexcept(true) { return this; } // 126
 
 				public:
 					SCRIPT_HEADER header; // 28

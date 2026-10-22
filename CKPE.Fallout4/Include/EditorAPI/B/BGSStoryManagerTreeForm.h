@@ -15,17 +15,18 @@ namespace CKPE
 		{
 			namespace Forms
 			{
-				// 1.11.240.0: size 0x28, vtable RVA 0x3012B70, 128 virtual functions
+				// 1.11.246.0: size 0x28, vtable RVA 0x3013B70, 128 virtual functions
 				class BGSStoryManagerTreeForm :
 					public TESForm   // 000
 				{
 				public:
 					virtual ~BGSStoryManagerTreeForm() = default;
 
-					virtual void sub_3E0() { return; } // 124 - RVA 0x87BF30
-					virtual void sub_3E8() { return; } // 125 - RVA 0x87E080
-					virtual void sub_3F0() { return; } // 126 - RVA 0x87CF20, return 0;
-					virtual void sub_3F8() { return; } // 127 - RVA 0x87BD10, return 0;
+					// Likely a tree lifecycle hook; inspected overrides are no-ops.
+					virtual void sub_3E0() { return; } // 124 - RVA 0x87BFA0
+					virtual void ReadNodeDataFromDialogBox(HWND hDialogBox) noexcept(true) { return; } // 125
+					[[nodiscard]] virtual std::uint32_t QChildCount() const noexcept(true) { return 0; } // 126
+					[[nodiscard]] virtual BGSStoryManagerTreeForm* GetChild(std::uint32_t Index) const noexcept(true) { return nullptr; } // 127
 				};
 				static_assert(sizeof(BGSStoryManagerTreeForm) == 0x28);
 			}

@@ -294,6 +294,7 @@
     <ClInclude Include="Include\EditorAPI\B\BSTList.h" />
     <ClInclude Include="Include\EditorAPI\B\BSTriShape.h" />
     <ClInclude Include="Include\EditorAPI\B\BSTSmartPointer.h" />
+    <ClInclude Include="Include\EditorAPI\C\CheckInFormList.h" />
     <ClInclude Include="Include\EditorAPI\C\CRC.h" />
     <ClInclude Include="Include\EditorAPI\I\IMemoryHeap.h" />
     <ClInclude Include="Include\EditorAPI\I\IMemoryStore.h" />
@@ -340,6 +341,7 @@
     <ClInclude Include="Include\EditorAPI\T\TESObjectLAND.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectLIGH.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectREFR.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESObjectREFRFwd.h" />
     <ClInclude Include="Include\EditorAPI\T\TESQuest.h" />
     <ClInclude Include="Include\EditorAPI\T\TESTexture.h" />
     <ClInclude Include="Include\EditorAPI\T\TESTopic.h" />

@@ -20,7 +20,7 @@ namespace CKPE
 			}
 
 
-			// 1.11.240.0: size 0x20, vtable RVA 0x3019990, 23 virtual functions
+			// 1.11.246.0: size 0x20, vtable RVA 0x301A990, 23 virtual functions
 			class BGSKeywordForm :
 				public BaseFormComponent,  // 000
 				public IKeywordFormBase    // 008
@@ -31,8 +31,9 @@ namespace CKPE
 				[[nodiscard]] inline Forms::BGSKeyword** GetKeywords() const noexcept(true) { return keywords; }
 				[[nodiscard]] inline std::uint32_t GetKeywordCount() const noexcept(true) { return numKeywords; }
 
-				virtual void sub_0A8() { return; } // 21 - RVA 0x898690
-				virtual Forms::BGSKeyword* GetDefaultKeyword() const noexcept(true) { return nullptr; } // 22 - RVA 0x45AAC0, return 0;
+				// Likely a keyword lifecycle hook; inspected bodies are no-ops.
+				virtual void sub_0A8() { return; } // 21 - RVA 0x898700
+				virtual Forms::BGSKeyword* GetDefaultKeyword() const noexcept(true) { return nullptr; } // 22 - RVA 0x45AB00
 
 			public:
 				Forms::BGSKeyword** keywords; // 10 - verified: array of BGSKeyword*, see BGSKeywordForm vfuncs

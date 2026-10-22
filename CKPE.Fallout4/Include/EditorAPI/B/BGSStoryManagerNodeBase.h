@@ -15,20 +15,22 @@ namespace CKPE
 		{
 			namespace Forms
 			{
-				// 1.11.240.0: size 0x58, vtable RVA 0x3013048, 135 virtual functions
+				// 1.11.246.0: size 0x58, vtable RVA 0x3014048, 135 virtual functions
 				class BGSStoryManagerNodeBase :
 					public BGSStoryManagerTreeForm   // 000
 				{
 				public:
 					virtual ~BGSStoryManagerNodeBase() = default;
 
-					virtual void sub_400() { return; } // 128 - RVA 0xFF8360
-					virtual void* GetConditions() noexcept(true) { return nullptr; } // 129 - RVA 0x87CF30, return (CDocument *)((char *)this + 64);
-					virtual void sub_410() { return; } // 130 - RVA 0x87B260, return 1;
-					virtual void sub_418() { return; } // 131 - RVA 0x87B270, return 1;
-					virtual void sub_420() { return; } // 132 - RVA 0x87BF40
-					virtual void sub_428() { return; } // 133 - RVA 0xFF8800
-					virtual void sub_430() { return; } // 134 - RVA 0xFF8BF0
+					virtual void SaveNodeData() noexcept(true) { return; } // 128
+					virtual void* GetConditions() noexcept(true) { return nullptr; } // 129 - RVA 0x87CFA0
+					[[nodiscard]] virtual bool CanCheckOutChildNodes() const noexcept(true) { return true; } // 130
+					virtual bool UpdateChildNodeTrackingData() noexcept(true) { return true; } // 131
+					// Likely a node lifecycle hook; inspected overrides are no-ops.
+					virtual void sub_420() { return; } // 132 - RVA 0x87BFB0
+					virtual void UpdateNodeDataInDialogBox(HWND hDialogBox) noexcept(true) { return; } // 133
+					virtual bool PerformNodeDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam,
+						LPARAM lParam, LRESULT Result) noexcept(true) { return false; } // 134
 
 				public:
 					std::uint8_t unk28[0x18]; // 28

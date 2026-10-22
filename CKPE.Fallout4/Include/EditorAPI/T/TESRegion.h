@@ -15,15 +15,15 @@ namespace CKPE
 		{
 			namespace Forms
 			{
-				// 1.11.240.0: size 0x68, vtable RVA 0x302DB90, 126 virtual functions
+				// 1.11.246.0: size 0x68, vtable RVA 0x302EB90, 126 virtual functions
 				class TESRegion :
 					public TESForm   // 000
 				{
 				public:
 					virtual ~TESRegion() = default;
 
-					virtual void sub_3E0() { return; } // 124 - RVA 0x95D4B0
-					virtual void sub_3E8() { return; } // 125 - RVA 0x95D630
+					virtual TESRegion* CloneRegion(TESRegion* Target) const noexcept(true) { return nullptr; } // 124
+					virtual bool Validate() noexcept(true) { return false; } // 125
 
 				public:
 					std::uint32_t unk28; // 28

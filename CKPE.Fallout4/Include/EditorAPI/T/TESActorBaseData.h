@@ -49,17 +49,17 @@ namespace CKPE
 			static_assert(sizeof(FACTION_RANK) == 0x10);
 
 
-			// 1.11.240.0: size 0x68, vtable RVA 0x301BB50, 25 virtual functions
+			// 1.11.246.0: size 0x68, vtable RVA 0x301CB50, 25 virtual functions
 			class TESActorBaseData :
 				public BaseFormComponent   // 000
 			{
 			public:
 				virtual ~TESActorBaseData() = default;
 
-				virtual void CopyFromTemplateForms() noexcept(true) { return; } // 21 - RVA 0x8ADCC0
-				virtual bool GetIsGhost() const noexcept(true) { return false; } // 22 - RVA 0x8ADDB0, return (*(_DWORD *)(a1 + 8) & 0x20000000) != 0;
-				virtual bool GetInvulnerable() const noexcept(true) { return false; } // 23 - RVA 0x8ADDA0, return *(_DWORD *)(a1 + 8) >> 31;
-				virtual void sub_0C0() { return; } // 24 - RVA 0x8A9F00
+				virtual void CopyFromTemplateForms() noexcept(true) { return; } // 21 - RVA 0x8ADD30
+				virtual bool GetIsGhost() const noexcept(true) { return false; } // 22 - RVA 0x8ADE20
+				virtual bool GetInvulnerable() const noexcept(true) { return false; } // 23 - RVA 0x8ADE10
+				virtual void UpdateLevelControls(HWND hDialogBox) const noexcept(true) { return; } // 24
 
 			public:
 				ACTOR_BASE_DATA actorData; // 08
