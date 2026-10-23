@@ -1047,6 +1047,9 @@
     <ClInclude Include="Include\EditorAPI\E\EffectItem.h">
       <Filter>EditorAPI\E</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\N\NiInterpolator.h">
+      <Filter>EditorAPI\N</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSTypedFormValuePair.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
