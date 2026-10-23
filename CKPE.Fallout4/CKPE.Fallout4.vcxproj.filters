@@ -1035,6 +1035,12 @@
     <ClInclude Include="Include\EditorAPI\B\BGSLocalizedString.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSCharacterMorph.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSTHashMap.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSMaterialSwap.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>

@@ -256,6 +256,8 @@
     <ClInclude Include="Include\EditorAPI\B\BGSKeyword.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSLayer.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSLocalizedString.h" />
+    <ClInclude Include="Include\EditorAPI\B\BGSCharacterMorph.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSTHashMap.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSMaterialSwap.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSMod.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSModelMaterialSwap.h" />

@@ -24,6 +24,8 @@
 #include <EditorAPI/B/BGSTextureModel.h>
 #include <EditorAPI/B/BGSBehaviorGraphModel.h>
 #include <EditorAPI/B/BSFixedString.h>
+#include <EditorAPI/B/BSTHashMap.h>
+#include <EditorAPI/B/BGSCharacterMorph.h>
 
 namespace CKPE
 {
@@ -34,16 +36,52 @@ namespace CKPE
 			namespace Forms
 			{
 				class BGSVoiceType;
-				class BGSBodyPartData;
-				class ActorValueInfo;
-
-
+				class BGSMovementType;
+				class BGSTextureSet;
+				class TESNPC;
+				class BGSColorForm;
+				class BGSHeadPart;
 				class BGSMaterialType;
 				class BGSArtObject;
-				class BGSTextureSet;
 				class BGSSoundDescriptorForm;
 				class TESObjectWEAP;
 				class TESQuest;
+
+				// 1.11.246.0: size 0xA0, allocated by TESRace Load/CopyFrom (constructor 0xB07200). The game's FaceRelatedData (0x68) holds the same
+				// members; the CK object keeps the first nine as pointers to heap BSTArrays (names and element types from TESRace::CopyFrom, the Load
+				// chunks TTGP/FTSF/RPRF/AHCF/HCLF/DFTF/FMRI and CommonLibF4's order) and then has a hash map in the CK's 0x38 byte layout.
+				class FaceRelatedData
+				{
+				public:
+					BGSCharacterTint::Template::Groups* tintingTemplate; // 00 - TTGP
+					BSTArray<BGSTextureSet*>* faceDetailsTextureSets; // 08
+					BGSTextureSet* defaultFaceDetailsTextureSet; // 10
+					BSTArray<TESNPC*>* presetNPCs; // 18 - RPRF/RPRM
+					BSTArray<BGSColorForm*>* availableHairColors; // 20 - AHCF/AHCM
+					BGSColorForm* defaultHairColor; // 28 - HCLF
+					BSTArray<BGSHeadPart*>* headParts; // 30
+					BSTArray<BGSCharacterMorph::Group*>* morphGroups; // 38 - MPGN
+					BSTArray<BGSCharacterMorph::FacialBoneRegion*>* facialBoneRegions; // 40 - FMRI
+					// Same instantiation as TESNPC::morphSliderValues (BSTHashMap<std::uint32_t, float>); not copied by Copy and not part of the
+					// game's FaceRelatedData.
+					BSTHashMap38<std::uint32_t, float> unk48; // 48
+					BGSCharacterMorph::FacialBoneRegion* unk80; // 80 - by position the game's neckFatFacialBoneRegion
+					NiAPI::NiPoint3 neckFatAdjustmentScales; // 88 - NTOP/NTOM
+					BSFixedString wrinkleMapPath; // 98 - WMAP
+				};
+				static_assert(offsetof(FaceRelatedData, unk48) == 0x48);
+				static_assert(offsetof(FaceRelatedData, unk80) == 0x80);
+				static_assert(offsetof(FaceRelatedData, neckFatAdjustmentScales) == 0x88);
+				static_assert(sizeof(FaceRelatedData) == 0xA0);
+
+				// 1.11.246.0: size 0x70. Filled by the BSMS chunks (BSMB base scales, BSMM modifiers); both maps use the CK's 0x38 byte layout.
+				class BodyMorphData
+				{
+				public:
+					BSTHashMap38<BSFixedString, BGSCharacterMorph::BoneBaseScales*> boneBaseScales; // 00
+					BSTHashMap38<BSFixedString, BGSCharacterMorph::BONE_MODIFIER_MIN_MAX*> boneModifiers; // 38
+				};
+				static_assert(sizeof(BodyMorphData) == 0x70);
 
 				// 1.11.246.0: size 0xC28, vtable RVA 0x304D8C8, 125 virtual functions
 				class TESRace :
@@ -95,21 +133,24 @@ namespace CKPE
 					TESQuest* dialogueQuest; // 6F0 - by order after armorParentRace
 					std::uint8_t unk6F8[0x10]; // 6F8
 					BSTArray<void*> unk708; // 708 - element type not identified yet
-					std::uint8_t unk720[0x418]; // 720
-					BSTArray<void*> unkB38; // B38 - element type not identified yet
-					std::uint8_t unkB50[0xC]; // B50
-					std::uint8_t unkB5C[0x8]; // B5C
-					std::uint32_t unkB64; // B64
-					std::uint64_t unkB68; // B68
-					std::uint32_t unkB70; // B70
-					std::uint8_t unkB74[0xC]; // B74
-					std::uint64_t unkB80; // B80
-					std::uint8_t unkB88[0x40]; // B88
+					BSTArray<void*> unk720[43]; // 720 - 43 empty-initialised arrays (CK only, not cleared by ClearData, element type not identified yet)
+					std::uint8_t unkB28[0x10]; // B28 - word at B28 and qword at B2C are zeroed by InitializeData/ClearData
+					BSTArray<BSFixedString> phonemeTargets; // B38 - 8 byte string elements released by ClearData, by position like CommonLibF4's phonemeTargets
+					BSTHashMap38<std::uint32_t, void*> morphSliders; // B50 - value BGSCharacterMorph::Slider*, by position after phonemeTargets (end-of-chain marker DEADBEEF at B68, entries pointer at B80)
+					BGSMovementType* baseMoveTypes[4]; // B88 - zeroed by InitializeData, by position like CommonLibF4's baseMoveTypes
+					FaceRelatedData* faceRelatedData[2]; // BA8 - heap objects of 160 bytes released by ClearData
+					BodyMorphData* bodyMorphData[2]; // BB8 - heap objects of 112 bytes released by ClearData
 					std::uint64_t unkBC8; // BC8
 					std::uint64_t unkBD0; // BD0
 					TESTexture hairColorLookupTexture; // BD8
 					TESTexture hairColorLookupTextureExt; // C00
 				};
+				static_assert(offsetof(TESRace, unk720) == 0x720);
+				static_assert(offsetof(TESRace, phonemeTargets) == 0xB38);
+				static_assert(offsetof(TESRace, morphSliders) == 0xB50);
+				static_assert(offsetof(TESRace, baseMoveTypes) == 0xB88);
+				static_assert(offsetof(TESRace, faceRelatedData) == 0xBA8);
+				static_assert(offsetof(TESRace, hairColorLookupTexture) == 0xBD8);
 				static_assert(sizeof(TESRace) == 0xC28);
 			}
 		}
