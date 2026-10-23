@@ -11,6 +11,8 @@
 #include <EditorAPI/B/BGSKeywordForm.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/E/EffectSetting.h>
+#include <EditorAPI/E/EffectItem.h>
 
 namespace CKPE
 {
@@ -20,8 +22,6 @@ namespace CKPE
 		{
 			namespace Forms
 			{
-				class Forms;
-				class EffectSetting;
 
 				// 1.11.246.0: size 0x2D0, vtable RVA 0x30C22F8, 188 virtual functions
 				class MagicItem :
@@ -68,15 +68,15 @@ namespace CKPE
 					virtual void RemoveMagicItemReferences(TESForm* ReferencingForm) noexcept(true) { return; } // 187
 
 				public:
-					BSTArray<void*> listOfEffects; // C8 - BSTArray<EffectItem*>
+					BSTArray<EffectItem*> listOfEffects; // C8
 					std::int32_t hostileCount; // E0
-					std::uint32_t unkE4; // E4
-					EffectSetting* avEffectSetting; // E8
-					std::uint8_t unkF0[0x100]; // F0
-					std::uint32_t castingType; // 1F0 - verified: SetCastingType (slot 155) writes it
-					std::uint32_t delivery; // 1F4 - verified: SetDelivery (slot 157) writes it
-					std::uint8_t unk1F8[0xD8]; // 1F8
+					std::uint32_t padE4; // E4
+					EffectSetting* avEffectSetting; // E8 - 0 on construction
+					// A whole EffectSetting is embedded here (constructed by MagicItem's constructor, 0x1E0 bytes): its data block starts at 170, which puts
+					// the casting type at 1F0 and the delivery at 1F4 (SetCastingType / SetDelivery write them).
+					EffectSetting effect; // F0
 				};
+				static_assert(offsetof(MagicItem, effect) == 0xF0);
 				static_assert(sizeof(MagicItem) == 0x2D0);
 			}
 		}

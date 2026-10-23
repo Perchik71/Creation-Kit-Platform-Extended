@@ -1044,6 +1044,9 @@
     <ClInclude Include="Include\EditorAPI\B\BSTBTree.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\E\EffectItem.h">
+      <Filter>EditorAPI\E</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSTypedFormValuePair.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
