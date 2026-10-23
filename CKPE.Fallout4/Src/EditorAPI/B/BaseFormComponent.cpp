@@ -53,28 +53,28 @@ namespace CKPE
 				CKPE::vtbl_call<void>(0x40, this, Form);
 			}
 
-			bool BaseFormComponent::CanCheckInComponentWithOwner(Forms::TESForm* Owner, const void* FormSet) const noexcept(true)
+			bool BaseFormComponent::CanCheckInComponentWithOwner(Forms::TESForm* Owner, const Forms::CheckInFormList* FormSet) const noexcept(true)
 			{ 
 				return CKPE::vtbl_call<bool>(0x48, this, Owner, FormSet);
 			}
 
-			bool BaseFormComponent::CanCheckInComponent(const void* FormSet) const noexcept(true)
+			bool BaseFormComponent::CanCheckInComponent(const Forms::CheckInFormList* FormSet) const noexcept(true)
 			{
 				return CKPE::vtbl_call<bool>(0x50, this, FormSet);
 			}
 
-			void BaseFormComponent::BuildComponentCheckInDependencyMessageWithOwner(const void* FormSet, BSString& Message,
+			void BaseFormComponent::BuildComponentCheckInDependencyMessageWithOwner(const Forms::CheckInFormList* FormSet, BSString& Message,
 				Forms::TESForm* Owner) const noexcept(true)
 			{
 				CKPE::vtbl_call<void>(0x58, this, FormSet, &Message, Owner);
 			}
 
-			void BaseFormComponent::BuildComponentCheckInDependencyMessage(const void* FormSet, BSString& Message) const noexcept(true)
+			void BaseFormComponent::BuildComponentCheckInDependencyMessage(const Forms::CheckInFormList* FormSet, BSString& Message) const noexcept(true)
 			{
 				CKPE::vtbl_call<void>(0x60, this, FormSet, &Message);
 			}
 
-			void BaseFormComponent::GetComponentReferencedForms(void* OutForms) const noexcept(true)
+			void BaseFormComponent::GetComponentReferencedForms(BSTBTree<Forms::TESForm*>* OutForms) const noexcept(true)
 			{
 				CKPE::vtbl_call<void>(0x68, this, OutForms);
 			}
@@ -109,7 +109,7 @@ namespace CKPE
 				CKPE::vtbl_call<void>(0x98, this, &Files);
 			}
 
-			void BaseFormComponent::RemapCopiedComponent(void* CopyMap, Forms::TESForm* Copy) noexcept(true)
+			void BaseFormComponent::RemapCopiedComponent(BSTHashMap38<Forms::TESForm*, Forms::TESForm*>* CopyMap, Forms::TESForm* Copy) noexcept(true)
 			{
 				CKPE::vtbl_call<void>(0xA0, this, CopyMap, Copy);
 			}

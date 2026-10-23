@@ -4,6 +4,9 @@
 
 #pragma once
 
+#include <EditorAPI/C/CheckInFormList.h>
+#include <EditorAPI/B/BSTBTree.h>
+#include <EditorAPI/B/BSTHashMap.h>
 #include <CKPE.Common.h>
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/B/BSTArray.h>
@@ -36,19 +39,19 @@ namespace CKPE
 				virtual void CopyComponent(BaseFormComponent* Copy, Forms::TESForm* Owner) noexcept(true);
 				[[nodiscard]] virtual bool IsComponentDifferent(const BaseFormComponent* Other) const noexcept(true);
 				virtual void RemoveComponentReferencesToForm(Forms::TESForm* Form) noexcept(true);
-				[[nodiscard]] virtual bool CanCheckInComponentWithOwner(Forms::TESForm* Owner, const void* FormSet) const noexcept(true);
-				[[nodiscard]] virtual bool CanCheckInComponent(const void* FormSet) const noexcept(true);
-				virtual void BuildComponentCheckInDependencyMessageWithOwner(const void* FormSet, BSString& Message,
+				[[nodiscard]] virtual bool CanCheckInComponentWithOwner(Forms::TESForm* Owner, const Forms::CheckInFormList* FormSet) const noexcept(true);
+				[[nodiscard]] virtual bool CanCheckInComponent(const Forms::CheckInFormList* FormSet) const noexcept(true);
+				virtual void BuildComponentCheckInDependencyMessageWithOwner(const Forms::CheckInFormList* FormSet, BSString& Message,
 					Forms::TESForm* Owner) const noexcept(true);
-				virtual void BuildComponentCheckInDependencyMessage(const void* FormSet, BSString& Message) const noexcept(true);
-				virtual void GetComponentReferencedForms(void* OutForms) const noexcept(true);
+				virtual void BuildComponentCheckInDependencyMessage(const Forms::CheckInFormList* FormSet, BSString& Message) const noexcept(true);
+				virtual void GetComponentReferencedForms(BSTBTree<Forms::TESForm*>* OutForms) const noexcept(true);
 				virtual bool Perform(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* Result);
 				[[nodiscard]] virtual bool IsDialogBoxSuitable(HWND hDialogBox) const noexcept(true);
 				virtual void UpdateDataInDialogBox(HWND hDialogBox) const noexcept(true);
 				virtual void UpdateDataFromDialogBox(HWND hDialogBox) noexcept(true);
 				virtual void CleanupComponentDialogBox(HWND hDialogBox) noexcept(true);
 				virtual void CollectComponentResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true);
-				virtual void RemapCopiedComponent(void* CopyMap, Forms::TESForm* Copy) noexcept(true);
+				virtual void RemapCopiedComponent(BSTHashMap38<Forms::TESForm*, Forms::TESForm*>* CopyMap, Forms::TESForm* Copy) noexcept(true);
 			};
 			static_assert(sizeof(BaseFormComponent) == 0x8);
 		}

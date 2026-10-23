@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <EditorAPI/N/NiPointer.h>
+#include <EditorAPI/T/TESObjectREFRFwd.h>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESActorValue.h>
 
@@ -13,6 +15,11 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
+			namespace NiAPI
+			{
+				class NiAVObject;
+			}
+
 			namespace Forms
 			{
 				class TESWaterForm;
@@ -31,7 +38,7 @@ namespace CKPE
 					virtual Forms::TESWaterForm* GetWaterType() const noexcept(true) { return nullptr; } // 125 - { return 0; }
 					virtual bool IsAutoCalc() const noexcept(true) { return false; } // 126 - { return 0; }
 					virtual void SetAutoCalc(bool bAutoCalc) noexcept(true) { return; } // 127
-					virtual void Clone3D(void* pRequester, void* pObj3D, bool bBackground) noexcept(true) { return; } // 128
+					virtual void Clone3D(TESObjectREFR* pRequester, NiAPI::NiPointer<NiAPI::NiAVObject>* pObj3D, bool bBackground) noexcept(true) { return; } // 128
 					virtual void UnClone3D(void* pRequester) noexcept(true) { return; } // 129
 					virtual bool IsMarker() noexcept(true) { return false; } // 130 - tests TESForm flag 0x800000
 					virtual bool IsOcclusionMarker() noexcept(true) { return false; } // 131 - verified: formType == ftStatic && this is one of the Plane/Room/Portal marker statics
