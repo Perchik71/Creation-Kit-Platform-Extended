@@ -44,13 +44,12 @@ namespace CKPE
 					virtual ~TESObjectSTAT() = default;
 
 				public:
-					TESObjectSTATData data; // 118
-					std::uint32_t unk130; // 130
-					std::uint32_t unk134; // 134
-					std::uint64_t unk138; // 138
+					TESObjectSTATData data; // 120 - the constructor sets 128 / 12C / 130 to 100.0 / 1.0 / 1.0 (threshold angle, leaf amplitude, leaf frequency); BGSNavmeshableObject occupies 118
+					std::uint64_t unk138; // 138 - 0 on construction
 					std::uint8_t unk140; // 140
 					std::uint8_t unk141[0x7]; // 141
 				};
+				static_assert(offsetof(TESObjectSTAT, data) == 0x120);
 				static_assert(sizeof(TESObjectSTAT) == 0x148);
 			}
 		}

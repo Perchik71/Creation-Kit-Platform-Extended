@@ -69,7 +69,7 @@ namespace CKPE
 
 				public:
 					FACTION_DATA data; // 60
-					std::uint32_t unk64; // 64
+					std::uint32_t pad64; // 64
 					TESObjectREFR* factionJailMarker; // 68
 					TESObjectREFR* factionWaitMarker; // 70
 					TESObjectREFR* factionStolenContainer; // 78
@@ -77,9 +77,9 @@ namespace CKPE
 					BGSListForm* crimeGroup; // 88
 					BGSOutfit* jailOutfit; // 90
 					FACTION_CRIME_DATA_VALUES crimeValues; // 98 - CRVA
-					std::uint32_t unkAC; // AC
+					std::uint32_t padAC; // AC
 					FACTION_VENDOR_DATA_VALUES vendorValues; // B0 - VENV
-					std::uint32_t unkBC; // BC
+					std::uint32_t padBC; // BC
 					PackageLocation* vendorLocation; // C0
 					TESCondition* vendorConditions; // C8
 					BGSListForm* vendorSellBuyList; // D0
