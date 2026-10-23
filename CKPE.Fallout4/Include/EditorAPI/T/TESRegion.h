@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/B/BSTList.h>
+#include <EditorAPI/N/NiColor.h>
 
 namespace CKPE
 {
@@ -15,6 +17,11 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				class TESRegionData;
+				class TESRegionPointList;
+				class TESWorldSpace;
+				class TESWeather;
+
 				// 1.11.246.0: size 0x68, vtable RVA 0x302EB90, 126 virtual functions
 				class TESRegion :
 					public TESForm   // 000
@@ -26,16 +33,19 @@ namespace CKPE
 					virtual bool Validate() noexcept(true) { return false; } // 125
 
 				public:
-					std::uint32_t unk28; // 28
-					std::uint32_t unk2C; // 2C
-					std::uint64_t unk30; // 30
-					void* pointLists; // 38 - BSSimpleList<TESRegionPointList*>*
-					std::uint64_t unk40; // 40
-					std::uint64_t unk48; // 48
-					std::uint64_t unk50; // 50
-					std::uint32_t unk58; // 58
-					std::uint8_t unk5C[0xC]; // 5C
+					std::uint32_t mapColor; // 28 - RCLR, 0xC80A8A on construction
+					std::uint32_t pad2C; // 2C
+					BSSimpleList<TESRegionData*>* dataList; // 30 - saved through each entry's virtual 01
+					BSSimpleList<TESRegionPointList*>* pointLists; // 38 - 56 byte point lists freed by ClearData
+					TESWorldSpace* worldSpace; // 40 - WNAM
+					TESWeather* currentWeather; // 48 - by position like CommonLibF4
+					NiAPI::NiColor emittanceColor; // 50
+					float lodDistanceModifier; // 5C
+					float occlusionAccuracy; // 60
+					std::uint32_t pad64; // 64
 				};
+				static_assert(offsetof(TESRegion, worldSpace) == 0x40);
+				static_assert(offsetof(TESRegion, emittanceColor) == 0x50);
 				static_assert(sizeof(TESRegion) == 0x68);
 			}
 		}
