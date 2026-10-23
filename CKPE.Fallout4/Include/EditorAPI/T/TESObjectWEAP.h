@@ -149,7 +149,7 @@ namespace CKPE
 					TESObjectWEAP* weaponTemplate; // 358
 					void* embeddedWeaponMod; // 360 - BGSMod::Attachment::Mod*
 					BGSAttachParentArray attachParents; // 368
-					std::uint32_t unk388; // 388
+					std::int32_t unk388; // 388 - 2 on InitializeData/ClearData
 					std::uint32_t unk38C; // 38C
 					std::uint64_t unk390; // 390
 					std::uint32_t unk398; // 398

@@ -78,9 +78,9 @@ namespace CKPE
 					std::int16_t fixedCenterX; // BE - ShortPoint fixedCenter
 					std::int16_t fixedCenterY; // C0
 					std::uint8_t padC2[0x6]; // C2
-					std::uint64_t unkC8; // C8
-					std::uint64_t unkD0; // D0
-					std::uint64_t unkD8; // D8
+					std::uint64_t unkC8; // C8 - reference counted polymorphic object (count at +8, released by ClearData)
+					void* unkD0; // D0 - 56 byte heap hash table, freed by ClearData (destructor called on +8)
+					void* unkD8; // D8 - 56 byte heap hash table, freed by ClearData
 					std::uint64_t unkE0; // E0
 					std::uint64_t unkE8; // E8
 					TESWorldSpace* parentWorld; // F0
