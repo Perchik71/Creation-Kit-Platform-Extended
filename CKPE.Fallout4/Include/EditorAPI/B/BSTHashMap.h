@@ -163,6 +163,9 @@ namespace CKPE
 			template <class Key, class Hash = BSCRC32<Key>, class KeyEq = std::equal_to<Key>>
 			using BSTSet = BSTScatterTable<Hash, KeyEq, BSTSetTraits<Key>>;
 
+			template <class Key, class Hash = BSCRC32<Key>, class KeyEq = std::equal_to<Key>>
+			using BSTSet38 = BSTScatterTable<Hash, KeyEq, BSTSetTraits<Key>, 0x38>;
+
 			static_assert(sizeof(BSTHashMap<std::uint32_t, void*>) == 0x30);
 			static_assert(sizeof(BSTHashMap38<std::uint32_t, float>) == 0x38);
 		}

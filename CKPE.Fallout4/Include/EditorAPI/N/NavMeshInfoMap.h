@@ -9,6 +9,8 @@
 #include <EditorAPI/F/FormInterfaces.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/B/BSTHashMap.h>
+#include <EditorAPI/B/BSReadWriteLock.h>
 
 namespace CKPE
 {
@@ -29,25 +31,15 @@ namespace CKPE
 				public:
 					std::uint8_t unk38[0x8]; // 38
 					BSTArray<void*> allPaths; // 40 - BSTArray<BSTArray<BSNavmeshInfo const*>*>, by layout (fills 0x38..0x88 exactly)
-					std::uint8_t infoToIndexMap[0x30]; // 58 - BSTScatterTable<BSNavmeshInfo const*, ...>, by layout
+					std::uint8_t infoToIndexMap[0x30]; // 58 - BSTScatterTable<BSNavmeshInfo const*, ...>, by layout (part of the 0x38 byte PrecomputedNavmeshInfoPathMap base)
 					bool updateAll; // 88
 					std::uint8_t unk89[0x7]; // 89
 					BSTArray<void*> staleNavmeshInfos; // 90 - BSTArray<BSNavmeshInfo*>, by position after updateAll
-					std::uint8_t unkA8[0xC]; // A8
-					std::uint8_t unkB4[0x8]; // B4
-					std::uint32_t unkBC; // BC
-					std::uint64_t unkC0; // C0
-					std::uint32_t unkC8; // C8
-					std::uint8_t unkCC[0xC]; // CC
-					std::uint64_t unkD8; // D8
-					std::uint8_t unkE0[0xC]; // E0
-					std::uint8_t unkEC[0x8]; // EC
-					std::uint32_t unkF4; // F4
-					std::uint64_t unkF8; // F8
-					std::uint32_t unk100; // 100
-					std::uint8_t unk104[0xC]; // 104
-					std::uint64_t unk110; // 110
-					std::uint64_t unk118; // 118
+					// Two hash maps in the CK's 0x38 byte table layout (end of chain markers at C0 and F8, entries at D8 and 110), CommonLibF4's
+					// infoMap and ckNavMeshInfoMap; the key/value types are CommonLibF4's.
+					BSTHashMap38<std::uint32_t, void*> infoMap; // A8 - NavMeshInfo*
+					BSTHashMap38<std::size_t, BSTArray<void*>*> ckNavMeshInfoMap; // E0 - values are BSTArray<BSNavmeshInfo*>*
+					BSReadWriteLock mapLock; // 118
 					bool init; // 120 - NVMI
 					std::uint8_t unk121[0x7]; // 121
 				};
