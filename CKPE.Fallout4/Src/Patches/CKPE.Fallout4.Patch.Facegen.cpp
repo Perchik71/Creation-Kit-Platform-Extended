@@ -187,7 +187,7 @@ namespace CKPE
 				bUseCompresionAsBC7U = _READ_OPTION_BOOL("FaceGen", "bUseCompressionAsBC7U", false);
 
 				// Allow variable tint mask resolution
-				const auto target2 = EditorAPI::IDs::Functions::BSRenderTargetManager__CreateRenderTargets;
+				const auto target2 = EditorAPI::IDs::BSGraphics::RenderTargetManager::CreateRenderTargets;
 				std::uint32_t tintResolution = _READ_OPTION_UINT("FaceGen", "uTintMaskResolution", 1024);
 				text.Write(Relocation(target2, Offset{ 0xB9C, 0xBDD }).Address(),
 					(std::uint8_t*)&tintResolution, sizeof(std::uint32_t));

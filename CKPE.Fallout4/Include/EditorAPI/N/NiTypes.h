@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdio>
+#include <cstddef>
 #include <EditorAPI/N/NiColor.h>
 #include <EditorAPI/N/NiMatrix.h>
 #include <EditorAPI/N/NiPoint.h>
@@ -19,11 +20,7 @@ namespace CKPE
 		{
 			namespace NiAPI
 			{
-				class NiCamera
-				{
-				public:
-					virtual ~NiCamera() = default;
-				};
+				class NiCamera;
 
 				class NiWindow
 				{
@@ -93,6 +90,11 @@ namespace CKPE
 					T m_top;		// 08
 					T m_bottom;		// 0C
 				};
+				static_assert(sizeof(NiRect<float>) == 0x10);
+				static_assert(offsetof(NiRect<float>, m_left) == 0x0);
+				static_assert(offsetof(NiRect<float>, m_right) == 0x4);
+				static_assert(offsetof(NiRect<float>, m_top) == 0x8);
+				static_assert(offsetof(NiRect<float>, m_bottom) == 0xC);
 
 				// 1C
 				class NiFrustum 
@@ -106,6 +108,14 @@ namespace CKPE
 					float	m_fFar;		// 14
 					bool	m_bOrtho;	// 18
 				};
+				static_assert(sizeof(NiFrustum) == 0x1C);
+				static_assert(offsetof(NiFrustum, m_fLeft) == 0x0);
+				static_assert(offsetof(NiFrustum, m_fRight) == 0x4);
+				static_assert(offsetof(NiFrustum, m_fTop) == 0x8);
+				static_assert(offsetof(NiFrustum, m_fBottom) == 0xC);
+				static_assert(offsetof(NiFrustum, m_fNear) == 0x10);
+				static_assert(offsetof(NiFrustum, m_fFar) == 0x14);
+				static_assert(offsetof(NiFrustum, m_bOrtho) == 0x18);
 
 				// 10
 				class NiQuaternion 

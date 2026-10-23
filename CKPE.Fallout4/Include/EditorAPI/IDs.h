@@ -71,6 +71,160 @@ namespace CKPE
 				{
 					inline constexpr Common::ID SkyViewSetting{ 169737 };
 					inline constexpr Common::ID FogEnabledSetting{ 335998 };
+					inline constexpr Common::ID Singleton{ 1111370, 1986735 };
+					inline constexpr Common::ID Constructor{ 577399, 1351847 };
+					inline constexpr Common::ID Destructor{ 409929, 1404520 };
+					inline constexpr Common::ID DeletingDestructor{ 684759, 1612300 };
+					inline constexpr Common::ID Update{ 585881, 1836126 };
+					inline constexpr Common::ID UpdateWeather{ 684694, 1744859 };
+					inline constexpr Common::ID SetMode{ 535440 };
+					inline constexpr Common::ID ReleaseWeatherOverride{ 218787 };
+				}
+
+				namespace NiCamera
+				{
+					inline constexpr Common::ID Constructor{ 96951, 1676096 };
+					inline constexpr Common::ID SetFrustum{ 486382, 1618815 };
+					inline constexpr Common::ID FitNearFarToBound{ 310174, 1622015 };
+					inline constexpr Common::ID LookAt{ 699388, 1657326 };
+					inline constexpr Common::ID WindowPointToRay{ 458875, 1671891 };
+					inline constexpr Common::ID ScreenPtToWorldRay{ 496643, 1753159 };
+					inline constexpr Common::ID WorldPtToScreenPt{ 536158, 1619043 };
+					inline constexpr Common::ID WorldPtToScreenPt3{ 571066, 1565274 };
+					inline constexpr Common::ID WorldPtToScreenPt3Static{ 769025, 1420850 };
+					inline constexpr Common::ID UpdateWorldToCamera{ 355623, 1619422 };
+					inline constexpr Common::ID UpdateWorldData{ 619373, 1600693 };
+					inline constexpr Common::ID UpdateWorldBound{ 769026, 1600691 };
+				}
+
+				namespace BGSRenderWindowCamera
+				{
+					inline constexpr Common::ID Constructor{ 533084 };
+					inline constexpr Common::ID Destructor{ 638414, 1675623 };
+					inline constexpr Common::ID Update{ 542406, 1683762 };
+					inline constexpr Common::ID FramePoint{ 638416, 1540329 };
+					inline constexpr Common::ID Orbit{ 72302, 1683763 };
+					inline constexpr Common::ID SetPosition{ 506956 };
+					inline constexpr Common::ID SetRotation{ 230208 };
+					inline constexpr Common::ID MoveLocal{ 436007 };
+					inline constexpr Common::ID MoveWorld{ 566831 };
+					inline constexpr Common::ID SetPivot{ 567073 };
+					inline constexpr Common::ID ClearPivot{ 529543 };
+					inline constexpr Common::ID UpdatePivotDirection{ 579133 };
+					inline constexpr Common::ID LookAt{ 578688 };
+					inline constexpr Common::ID Pan{ 584228, 1609034 };
+					inline constexpr Common::ID Zoom{ 638418, 1638698 };
+					inline constexpr Common::ID RotateBy{ 412014, 1734373 };
+					inline constexpr Common::ID SetViewMode{ 266543, 1441140 };
+					inline constexpr Common::ID SetCameraMode{ 586356 };
+					inline constexpr Common::ID UpdateOrthoFrustum{ 638419, 1362071 };
+				}
+
+				namespace BGSRenderWindow
+				{
+					inline constexpr Common::ID Singleton{ 494701 };
+					inline constexpr Common::ID Constructor{ 638105, 1994304 };
+					inline constexpr Common::ID Destructor{ 470905, 1556221 };
+					inline constexpr Common::ID DeletingDestructor{ 56459, 1599017 };
+					inline constexpr Common::ID Update{ 177897, 1371227 };
+					inline constexpr Common::ID Draw{ 520574 };
+					inline constexpr Common::ID Initialize{ 638120, 1475768 };
+					inline constexpr Common::ID DialogProc{ 177103, 1933064 };
+					inline constexpr Common::ID UpdateDrawInfo{ 638107, 1670900 };
+					inline constexpr Common::ID UpdateTitle{ 164835 };
+					inline constexpr Common::ID PickObject{ 579794 };
+					inline constexpr Common::ID OnMouseMove{ 638124, 1470771 };
+					inline constexpr Common::ID Refresh{ 638110, 1605939 };
+					inline constexpr Common::ID LoadedEvent{ 528328 };
+					inline constexpr Common::ID CellEvent{ 489652 };
+					inline constexpr Common::ID GetRefFromNiNode{ 495117 };
+
+					namespace Movement
+					{
+						inline constexpr Common::ID Flags{ 493984 };
+						inline constexpr Common::ID SnapGrid{ 506980 };
+						inline constexpr Common::ID SnapAngle{ 502295 };
+						inline constexpr Common::ID ArrowSnap{ 383762 };
+						inline constexpr Common::ID ObjectRotate{ 401851 };
+						inline constexpr Common::ID ObjectMove{ 463613 };
+						inline constexpr Common::ID CameraRotate{ 526097 };
+						inline constexpr Common::ID CameraZoom{ 443228 };
+						inline constexpr Common::ID CameraZoomOrtho{ 526100 };
+						inline constexpr Common::ID CameraPan{ 526106 };
+						inline constexpr Common::ID LandspaceMult{ 526107 };
+					}
+				}
+
+				namespace BGSRenderOrthoGrid
+				{
+					inline constexpr Common::ID Constructor{ 637980, 1508706 };
+					inline constexpr Common::ID Destructor{ 637982, 1675621 };
+					inline constexpr Common::ID DeletingDestructor{ 638021, 1476521 };
+				}
+
+				namespace BGSRenderWindowBorder
+				{
+					inline constexpr Common::ID Constructor{ 366933, 1675622 };
+					inline constexpr Common::ID Destructor{ 342726, 1396321 };
+					inline constexpr Common::ID DeletingDestructor{ 70712, 1599019 };
+				}
+
+				namespace BSCullingProcess
+				{
+					inline constexpr Common::ID Constructor{ 773529, 1382316 };
+					inline constexpr Common::ID Destructor{ 189842, 1619665 };
+					inline constexpr Common::ID GetRTTI{ 492362, 1532191 };
+				}
+
+				namespace BSPortalGraphEntry
+				{
+					inline constexpr Common::ID Constructor{ 774121, 1676417 };
+					inline constexpr Common::ID Destructor{ 396887, 1619719 };
+					inline constexpr Common::ID DeletingDestructor{ 229698, 1367062 };
+					inline constexpr Common::ID DeleteThis{ 768211, 1596429 };
+				}
+
+				namespace BSGraphics
+				{
+					namespace Renderer
+					{
+						inline constexpr Common::ID Instance{ 496887 };
+						inline constexpr Common::ID DataPointer{ 1014067, 1610923 };
+						inline constexpr Common::ID CurrentWindowPointer{ 1119708, 1986997 };
+						inline constexpr Common::ID DevicePointer{ 565507 };
+						inline constexpr Common::ID Constructor{ 609187, 1569538 };
+						inline constexpr Common::ID DataConstructor{ 795275, 1423453 };
+						inline constexpr Common::ID InitializeD3D{ 530343 };
+					}
+					namespace State
+					{
+						inline constexpr Common::ID Instance{ 161367 };
+						inline constexpr Common::ID Constructor{ 795776, 1687282 };
+						inline constexpr Common::ID UpdateTemporalData{ 795785, 1555185 };
+						inline constexpr Common::ID SetCamera{ 795781, 1648232 };
+						inline constexpr Common::ID BackBufferWidth{ 583093 };
+						inline constexpr Common::ID BackBufferHeight{ 583094 };
+						inline constexpr Common::ID ScreenWidth{ 565026 };
+						inline constexpr Common::ID ScreenHeight{ 583099 };
+						inline constexpr Common::ID FrameCount{ 583101 };
+						inline constexpr Common::ID FrameID{ 57812 };
+					}
+					namespace RenderTargetManager
+					{
+						inline constexpr Common::ID Instance{ 354850 };
+						inline constexpr Common::ID CreateRenderTarget{ 795484, 1497380 };
+						inline constexpr Common::ID CreateDepthStencilTarget{ 795486, 1593667 };
+						inline constexpr Common::ID CreateCubeMapRenderTarget{ 795487, 1990541 };
+						inline constexpr Common::ID AcquireRenderTarget{ 346853, 1621383 };
+						inline constexpr Common::ID ReleaseRenderTarget{ 795522, 1389607 };
+						inline constexpr Common::ID CreateRenderTargets{ 800387, 1690631 };
+						inline constexpr Common::ID GetRenderTargetName{ 800388, 1397815 };
+						inline constexpr Common::ID GetDepthStencilName{ 800390, 1667564 };
+						inline constexpr Common::ID GetCubeMapName{ 250682, 1669423 };
+						inline constexpr Common::ID RenderTargetNames{ 583573 };
+						inline constexpr Common::ID DepthStencilNames{ 583719 };
+						inline constexpr Common::ID CubeMapNames{ 474744 };
+					}
 				}
 
 				namespace Setting
@@ -122,14 +276,10 @@ namespace CKPE
 					inline constexpr Common::ID BSFaceGenUtils__SetupHeadPartShaderState{ 685825, 1426540 };
 					// 1.11.246.0 0x142B72DB0 BSGraphics::RenderTargetManager::SaveRenderTarget
 					inline constexpr Common::ID BSGraphics__RenderTargetManager__SaveRenderTarget{ 75665, 1589229 };
-					// 1.11.246.0 0x142B87920 BSGraphics::State::SetCameraData
-					inline constexpr Common::ID BSGraphics__State__SetCameraData{ 795781, 1648232 };
 					// 1.11.246.0 0x14261D020 BSIStream::BSIStream
 					inline constexpr Common::ID BSIStream__BSIStream{ 774104, 1569121 };
 					// 1.11.246.0 0x14261D020 BSIStream::BSIStream
 					inline constexpr Common::ID BSIStream__BSIStream_2{ 1569121 };
-					// 1.11.246.0 0x142CB1040 BSRenderTargetManager::CreateRenderTargets
-					inline constexpr Common::ID BSRenderTargetManager__CreateRenderTargets{ 800387, 1690631 };
 					// 1.11.246.0 0x14248BA20 BSResource::GetLooseFileSize32
 					inline constexpr Common::ID BSResource__GetLooseFileSize32{ 712081, 2009874 };
 					// 1.11.246.0 0x14247BD40 BSResource::LooseFileStream_Create
@@ -220,40 +370,14 @@ namespace CKPE
 					inline constexpr Common::ID data_3D2F9B4{ 1435996 };
 					// 1.11.246.0 0x143D2F9B8 
 					inline constexpr Common::ID data_3D2F9B8{ 1873557 };
-					// 1.11.246.0 0x143D491E8 
-					inline constexpr Common::ID data_3D491E8{ 494701 };
 					// 1.11.246.0 0x143D49308 
 					inline constexpr Common::ID data_3D49308{ 451607 };
-					// 1.11.246.0 0x143D493B8 
-					inline constexpr Common::ID data_3D493B8{ 493984 };
-					// 1.11.246.0 0x143D493D0 
-					inline constexpr Common::ID data_3D493D0{ 506980 };
-					// 1.11.246.0 0x143D493E8 
-					inline constexpr Common::ID data_3D493E8{ 502295 };
-					// 1.11.246.0 0x143D49400 
-					inline constexpr Common::ID data_3D49400{ 383762 };
-					// 1.11.246.0 0x143D49418 
-					inline constexpr Common::ID data_3D49418{ 401851 };
-					// 1.11.246.0 0x143D49430 
-					inline constexpr Common::ID data_3D49430{ 463613 };
-					// 1.11.246.0 0x143D49448 
-					inline constexpr Common::ID data_3D49448{ 526097 };
-					// 1.11.246.0 0x143D49460 
-					inline constexpr Common::ID data_3D49460{ 443228 };
-					// 1.11.246.0 0x143D49478 
-					inline constexpr Common::ID data_3D49478{ 526100 };
-					// 1.11.246.0 0x143D49490 
-					inline constexpr Common::ID data_3D49490{ 526106 };
-					// 1.11.246.0 0x143D494A8 
-					inline constexpr Common::ID data_3D494A8{ 526107 };
 					// 1.11.246.0 0x143D5E564 
 					inline constexpr Common::ID data_3D5E564{ 365092, 1990122 };
 					// 1.11.246.0 0x143D5E5B8 
 					inline constexpr Common::ID data_3D5E5B8{ 1110197, 1493376 };
 					// 1.11.246.0 0x143D6EC30 
 					inline constexpr Common::ID data_3D6EC30{ 394722 };
-					// 1.11.246.0 0x147FFD808 
-					inline constexpr Common::ID data_7FFD808{ 583093 };
 					// 1.11.246.0 0x148017B70 
 					inline constexpr Common::ID data_8017B70{ 91815, 1343534 };
 					// no 1.11.246.0 equivalent (used by BSResourceLooseFiles)
@@ -470,8 +594,6 @@ namespace CKPE
 					inline constexpr Common::ID BSGraphics_LoadD3DCompiler_C{ 2009800 };
 					// 1.11.246.0 0x142B5EAB0 sub_142B5EAB0
 					inline constexpr Common::ID BSGraphics_LogOutOfUCodeSpace{ 700920, 1476321 };
-					// 1.11.246.0 0x142B5FA60 sub_142B5FA60
-					inline constexpr Common::ID BSGraphics_CreateDevice{ 530343 };
 					// 1.11.246.0 0x142B64610 sub_142B64610
 					inline constexpr Common::ID BSGraphics_LogOutOfPixelShaders{ 795189, 1627205 };
 					// 1.11.246.0 0x142B99AD0 sub_142B99AD0
@@ -548,16 +670,8 @@ namespace CKPE
 					inline constexpr Common::ID sub_558F90{ 637365, 1698155 };
 					// 1.11.246.0 0x140568A00 sub_140568A00
 					inline constexpr Common::ID Hotkeys_LoadSettings{ 55199, 1619017 };
-					// 1.11.246.0 0x14056DA90 sub_14056DA90
-					inline constexpr Common::ID sub_56DA90{ 177897, 1371227 };
 					// 1.11.246.0 0x14056E940 sub_14056E940
 					inline constexpr Common::ID sub_56E940{ 548371 };
-					// 1.11.246.0 0x14056EC00 sub_14056EC00
-					inline constexpr Common::ID RenderWindow_UpdateStatsText{ 638107, 1670900 };
-					// 1.11.246.0 0x140570C30 sub_140570C30
-					inline constexpr Common::ID RenderWindow_WndProc{ 177103, 1933064 };
-					// 1.11.246.0 0x140573AC0 sub_140573AC0
-					inline constexpr Common::ID sub_573AC0{ 638120, 1475768 };
 					// 1.11.246.0 0x14057F380 sub_14057F380
 					inline constexpr Common::ID RenderWindow_RegisterHotkeyFunctions{ 111996 };
 					// 1.11.246.0 0x1405CA7C0 sub_1405CA7C0
@@ -736,8 +850,6 @@ namespace CKPE
 					inline constexpr Common::ID PreCombined_Generate{ 1990514 };
 					// 1.11.246.0 0x140D496E0 sub_140D496E0
 					inline constexpr Common::ID PreCombined_GetNifPath{ 677726, 1377514 };
-					// 1.11.246.0 0x140D7F970 sub_140D7F970
-					inline constexpr Common::ID sub_D7F970{ 495117 };
 					// 1.11.246.0 0x140DB5B60 sub_140DB5B60
 					inline constexpr Common::ID sub_DB5B60{ 407591 };
 					// 1.11.246.0 0x140E5CF80 sub_140E5CF80

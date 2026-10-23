@@ -168,7 +168,7 @@ namespace CKPE
 				auto base = Application::GetSingleton()->GetBase();
 
 				// Spam in the status bar no more than 250ms
-				pointer_OptimizationLoad_sub1 = Relocation(EditorAPI::IDs::Functions::sub_56DA90, Offset{ 0x5E7, 0x848 }).WriteCall(&sub);
+				pointer_OptimizationLoad_sub1 = Relocation(EditorAPI::IDs::BGSRenderWindow::Update, Offset{ 0x5E7, 0x848 }).WriteCall(&sub);
 
 				*(std::uintptr_t*)&zlibDetail::Inflate = Relocation(EditorAPI::IDs::Functions::zlib_inflate).WriteJump(&zlibDetail::Decompression::LibDeflate::Inflate);
 

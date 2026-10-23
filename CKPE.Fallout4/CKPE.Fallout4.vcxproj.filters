@@ -2,6 +2,15 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Src\EditorAPI\B\BSGraphicsState.cpp">
+      <Filter>EditorAPI\B</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\B\BSGraphicsRenderer.cpp">
+      <Filter>EditorAPI\B</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\B\BSGraphicsRenderTargetManager.cpp">
+      <Filter>EditorAPI\B</Filter>
+    </ClCompile>
     <ClCompile Include="Src\CKPE.Fallout4.Runner.cpp">
       <Filter>API</Filter>
     </ClCompile>
@@ -414,6 +423,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\EditorAPI\S\Sky.h">
+      <Filter>EditorAPI\S</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\N\NiCamera.h">
+      <Filter>EditorAPI\N</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSPortalGraphEntry.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSGraphicsTypes.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSGraphicsState.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSGraphicsRenderer.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSGraphicsRenderTargetManager.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSCullingProcess.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSRenderWindowBorder.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSRenderOrthoGrid.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\CKPE.Fallout4.VersionLists.h">
       <Filter>API</Filter>
     </ClInclude>
