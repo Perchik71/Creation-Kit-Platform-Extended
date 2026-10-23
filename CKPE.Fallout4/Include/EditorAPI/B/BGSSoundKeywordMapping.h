@@ -27,8 +27,8 @@ namespace CKPE
 					virtual ~BGSSoundKeywordMapping() = default;
 
 				public:
-					BSTSet38<BGSKeyword*> keywordSet; // 28 - KNAM, 0x38 byte table (capacity 34, entries 58, 16 byte entries)
-					BSTHashMap38<std::uint32_t, BGSSoundDescriptorForm*> reverbDescMap; // 60 - PTRN, 0x38 byte table (capacity 6C, entries 90, 24 byte entries)
+					BSTSet<BGSKeyword*> keywordSet; // 28 - KNAM, 0x38 byte table (capacity 34, entries 58, 16 byte entries)
+					BSTHashMap<std::uint32_t, BGSSoundDescriptorForm*> reverbDescMap; // 60 - PTRN, 0x38 byte table (capacity 6C, entries 90, 24 byte entries)
 					BGSSoundDescriptorForm* descriptor; // 98 - KNAM
 					BGSSoundDescriptorForm* exteriorTail; // A0 - KNAM
 					BGSSoundDescriptorForm* vatsDescriptor; // A8 - PTRN

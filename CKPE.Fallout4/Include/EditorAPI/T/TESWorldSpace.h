@@ -66,7 +66,7 @@ namespace CKPE
 					// BSTHashMap<std::int32_t, TESObjectCELL*> in the CK's 0x38 byte table layout: the constructor puts the end of chain marker at 80,
 					// the capacity/free/good counters at 74/78/7C, the modification count at 88 and the entries (24 bytes each) at 98. The position is
 					// CommonLibF4's cellMap (0x40) shifted by the TESTexture base (+0x28).
-					BSTHashMap38<std::int32_t, TESObjectCELL*> cellMap; // 68
+					BSTHashMap<std::int32_t, TESObjectCELL*> cellMap; // 68
 					void* persistentCell; // A0 - TESObjectCELL*
 					void* terrainManager; // A8 - BGSTerrainManager*
 					TESClimate* climate; // B0

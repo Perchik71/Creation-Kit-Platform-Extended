@@ -42,10 +42,10 @@ namespace CKPE
 				[[nodiscard]] static const key_type& unwrap_key(const value_type& Value) noexcept(true) { return Value; }
 			};
 
-			// Chained scatter table as laid out by the Creation Kit (size 0x30, heap allocator; same layout as CommonLibF4). TableSize 0x38
-			// selects the CK's second variant used by the race/NPC morph data (entries pointer at +30).
+			// Chained scatter table as laid out by the Creation Kit: 0x38 bytes (entries pointer at +30, modification count at +20). CommonLibF4's
+			// game table is 0x30 bytes (entries at +28); TableSize 0x30 selects that layout, but no Creation Kit table was found using it.
 			// The table lives in game memory: it can be queried and walked, but not grown or modified from here.
-			template <class Hash, class KeyEqual, class Traits, std::size_t TableSize = 0x30>
+			template <class Hash, class KeyEqual, class Traits, std::size_t TableSize = 0x38>
 			class BSTScatterTable
 			{
 			public:
@@ -149,25 +149,18 @@ namespace CKPE
 				size_type _free{ 0 };					// 10 - number of free slots
 				size_type _good{ 0 };					// 14 - last free index
 				std::uintptr_t _sentinel{ 0 };			// 18 - end of chain marker (points at the bytes DE AD BE EF)
-				std::uint8_t _padAllocator[TableSize - 0x28]{};	// 20 - 8 bytes in the 0x30 layout, 16 in the 0x38 one (modification count at 20, entries at 30)
+				std::uint8_t _padAllocator[TableSize - 0x28]{};	// 20 - 16 bytes in the CK's 0x38 layout (modification count at 20, entries at 30), 8 in the game's 0x30 one
 				entry_type* _entries{ nullptr };		// 28
 			};
 
 			template <class Key, class T, class Hash = BSCRC32<Key>, class KeyEq = std::equal_to<Key>>
 			using BSTHashMap = BSTScatterTable<Hash, KeyEq, BSTScatterTableTraits<Key, T>>;
 
-			// 0x38 byte variant of the CK (TESNPC morph slider values, race body/face morph data)
-			template <class Key, class T, class Hash = BSCRC32<Key>, class KeyEq = std::equal_to<Key>>
-			using BSTHashMap38 = BSTScatterTable<Hash, KeyEq, BSTScatterTableTraits<Key, T>, 0x38>;
-
 			template <class Key, class Hash = BSCRC32<Key>, class KeyEq = std::equal_to<Key>>
 			using BSTSet = BSTScatterTable<Hash, KeyEq, BSTSetTraits<Key>>;
 
-			template <class Key, class Hash = BSCRC32<Key>, class KeyEq = std::equal_to<Key>>
-			using BSTSet38 = BSTScatterTable<Hash, KeyEq, BSTSetTraits<Key>, 0x38>;
-
-			static_assert(sizeof(BSTHashMap<std::uint32_t, void*>) == 0x30);
-			static_assert(sizeof(BSTHashMap38<std::uint32_t, float>) == 0x38);
+			static_assert(sizeof(BSTHashMap<std::uint32_t, void*>) == 0x38);
+			static_assert(sizeof(BSTScatterTable<BSCRC32<std::uint32_t>, std::equal_to<std::uint32_t>, BSTScatterTableTraits<std::uint32_t, void*>, 0x30>) == 0x30);
 		}
 	}
 }

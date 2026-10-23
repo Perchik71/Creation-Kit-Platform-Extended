@@ -75,7 +75,7 @@ namespace CKPE
 					TESFaction* crimeFaction; // 370
 					BGSHeadPart** headParts; // 378
 					BSTArray<float>* morphRegionSliderValues; // 380 - 24 byte heap array (InitializeData/ClearData), CommonLibF4 position + A8
-					BSTHashMap38<std::uint32_t, BGSCharacterMorph::Transform>* facialBoneRegionSliderValues; // 388 - 56 byte table freed by ClearData
+					BSTHashMap<std::uint32_t, BGSCharacterMorph::Transform>* facialBoneRegionSliderValues; // 388 - 56 byte table freed by ClearData
 					std::int8_t numHeadParts; // 390
 					std::int8_t soundLevel; // 391 - 1 on construction
 					std::int8_t bodyTintColorR; // 392
@@ -85,7 +85,7 @@ namespace CKPE
 					std::uint8_t pad396[0x2]; // 396
 					BSTArray<BGSRelationship*>* relationships; // 398 - by position like CommonLibF4
 					std::uint64_t unk3A0; // 3A0
-					BSTHashMap38<std::uint32_t, float>* morphSliderValues; // 3A8 - 0x38 byte table allocated by Load
+					BSTHashMap<std::uint32_t, float>* morphSliderValues; // 3A8 - 0x38 byte table allocated by Load
 					BGSCharacterTint::Entries* tintingData; // 3B0 - 24 byte heap object
 				};
 				static_assert(sizeof(TESNPC) == 0x3B8);

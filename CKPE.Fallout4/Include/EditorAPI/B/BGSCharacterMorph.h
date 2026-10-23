@@ -97,7 +97,7 @@ namespace CKPE
 					BSFixedString associatedMorphGroupName; // 38
 					std::int32_t associatedTintSlot; // 40 - BGSCharacterTint::EntrySlot
 					std::uint32_t associatedHeadPartType; // 44 - BGSHeadPart::HeadPartType
-					BSTHashMap38<BSFixedString, TransformMinMax*> boneMinMaxMap; // 48
+					BSTHashMap<BSFixedString, TransformMinMax*> boneMinMaxMap; // 48
 					BSTArray<std::uint32_t> associatedMorphSliders; // 80
 					std::uint32_t id; // 98 - FMRI
 					std::uint32_t pad9C; // 9C

@@ -73,7 +73,7 @@ namespace CKPE
 					BSTArray<BGSCharacterMorph::FacialBoneRegion*>* facialBoneRegions; // 40 - FMRI
 					// Same instantiation as TESNPC::morphSliderValues (BSTHashMap<std::uint32_t, float>); not copied by Copy and not part of the
 					// game's FaceRelatedData.
-					BSTHashMap38<std::uint32_t, float> unk48; // 48
+					BSTHashMap<std::uint32_t, float> unk48; // 48
 					BGSCharacterMorph::FacialBoneRegion* unk80; // 80 - by position the game's neckFatFacialBoneRegion
 					NiAPI::NiPoint3 neckFatAdjustmentScales; // 88 - NTOP/NTOM
 					BSFixedString wrinkleMapPath; // 98 - WMAP
@@ -87,8 +87,8 @@ namespace CKPE
 				class BodyMorphData
 				{
 				public:
-					BSTHashMap38<BSFixedString, BGSCharacterMorph::BoneBaseScales*> boneBaseScales; // 00
-					BSTHashMap38<BSFixedString, BGSCharacterMorph::BONE_MODIFIER_MIN_MAX*> boneModifiers; // 38
+					BSTHashMap<BSFixedString, BGSCharacterMorph::BoneBaseScales*> boneBaseScales; // 00
+					BSTHashMap<BSFixedString, BGSCharacterMorph::BONE_MODIFIER_MIN_MAX*> boneModifiers; // 38
 				};
 				static_assert(sizeof(BodyMorphData) == 0x70);
 
@@ -161,7 +161,7 @@ namespace CKPE
 					std::uint32_t mlsi; // B30 - MLSI chunk
 					std::uint32_t unkB34; // B34
 					BSTArray<BSFixedString> phonemeTargets; // B38 - 8 byte string elements released by ClearData, by position like CommonLibF4's phonemeTargets
-					BSTHashMap38<std::uint32_t, void*> morphSliders; // B50 - value BGSCharacterMorph::Slider*, by position after phonemeTargets (end-of-chain marker DEADBEEF at B68, entries pointer at B80)
+					BSTHashMap<std::uint32_t, void*> morphSliders; // B50 - value BGSCharacterMorph::Slider*, by position after phonemeTargets (end-of-chain marker DEADBEEF at B68, entries pointer at B80)
 					BGSMovementType* baseMoveTypes[4]; // B88 - zeroed by InitializeData, by position like CommonLibF4's baseMoveTypes
 					FaceRelatedData* faceRelatedData[2]; // BA8 - heap objects of 160 bytes released by ClearData
 					BodyMorphData* bodyMorphData[2]; // BB8 - heap objects of 112 bytes released by ClearData

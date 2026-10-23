@@ -37,8 +37,8 @@ namespace CKPE
 					BSTArray<void*> staleNavmeshInfos; // 90 - BSTArray<BSNavmeshInfo*>, by position after updateAll
 					// Two hash maps in the CK's 0x38 byte table layout (end of chain markers at C0 and F8, entries at D8 and 110), CommonLibF4's
 					// infoMap and ckNavMeshInfoMap; the key/value types are CommonLibF4's.
-					BSTHashMap38<std::uint32_t, void*> infoMap; // A8 - NavMeshInfo*
-					BSTHashMap38<std::size_t, BSTArray<void*>*> ckNavMeshInfoMap; // E0 - values are BSTArray<BSNavmeshInfo*>*
+					BSTHashMap<std::uint32_t, void*> infoMap; // A8 - NavMeshInfo*
+					BSTHashMap<std::size_t, BSTArray<void*>*> ckNavMeshInfoMap; // E0 - values are BSTArray<BSNavmeshInfo*>*
 					BSReadWriteLock mapLock; // 118
 					bool init; // 120 - NVMI
 					std::uint8_t unk121[0x7]; // 121
