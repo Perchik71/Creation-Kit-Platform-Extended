@@ -67,12 +67,12 @@ namespace CKPE
 					return CKPE::vtbl_call<bool>(0xF8, this, Rhs);
 				}
 
-				TESForm* TESForm::CreateDuplicateForm(bool bCreateEditorID, BSTHashMap38<TESForm*, TESForm*>* CopyMap)
+				TESForm* TESForm::CreateDuplicateForm(bool bCreateEditorID, BSTHashMap<TESForm*, TESForm*>* CopyMap)
 				{
 					return CKPE::vtbl_call<TESForm*>(0x100, this, bCreateEditorID, CopyMap);
 				}
 
-				void TESForm::FixupDuplicateForm(BSTHashMap38<TESForm*, TESForm*>* CopyMap) noexcept(true)
+				void TESForm::FixupDuplicateForm(BSTHashMap<TESForm*, TESForm*>* CopyMap) noexcept(true)
 				{
 					CKPE::vtbl_call<void>(0x108, this, CopyMap);
 				}
@@ -372,7 +372,7 @@ namespace CKPE
 					return CKPE::vtbl_call<bool>(0x2E0, this);
 				}
 
-				void TESForm::OnFormIDsRemapped(BSTHashMap38<std::uint32_t, std::uint32_t>* FormIDMap) noexcept(true)
+				void TESForm::OnFormIDsRemapped(BSTHashMap<std::uint32_t, std::uint32_t>* FormIDMap) noexcept(true)
 				{
 					CKPE::vtbl_call<void>(0x2E8, this, FormIDMap);
 				}

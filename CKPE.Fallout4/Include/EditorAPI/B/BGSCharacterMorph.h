@@ -97,7 +97,7 @@ namespace CKPE
 					BSFixedString associatedMorphGroupName; // 38
 					std::int32_t associatedTintSlot; // 40 - BGSCharacterTint::EntrySlot
 					std::uint32_t associatedHeadPartType; // 44 - BGSHeadPart::HeadPartType
-					BSTHashMap38<BSFixedString, TransformMinMax*> boneMinMaxMap; // 48
+					BSTHashMap<BSFixedString, TransformMinMax*> boneMinMaxMap; // 48
 					BSTArray<std::uint32_t> associatedMorphSliders; // 80
 					std::uint32_t id; // 98 - FMRI
 					std::uint32_t pad9C; // 9C
@@ -112,10 +112,74 @@ namespace CKPE
 			{
 				namespace Template
 				{
-					class Group;
-					class Entry;
+					// 1.11.246.0: size 0x38, the polymorphic base of the tint entries (the factory 0x14041DEA0 creates Mask for slots below 7,
+					// Palette for 7-20 and TextureSet from 21). TTET creates the entry, TTEF loads the flags, CTDA the conditions.
+					class Entry
+					{
+					public:
+						virtual ~Entry() = default;
 
-					// The array object behind a race's TTGP data (the Group entries are not mapped yet)
+					public:
+						BGSLocalizedString name; // 08
+						std::uint8_t chargenConditions[0x18]; // 18 - TESCondition (0x18 bytes in the CK)
+						std::int32_t slot; // 30 - BGSCharacterTint::EntrySlot
+						std::uint16_t uniqueID; // 34
+						std::int8_t flags; // 36 - TTEF chunk
+						std::uint8_t pad37; // 37
+					};
+					static_assert(offsetof(Entry, name) == 0x8);
+					static_assert(offsetof(Entry, chargenConditions) == 0x18);
+					static_assert(offsetof(Entry, slot) == 0x30);
+					static_assert(sizeof(Entry) == 0x38);
+
+					// 1.11.246.0: size 0x48
+					class Mask :
+						public Entry   // 00
+					{
+					public:
+						BSFixedString maskTexture; // 38
+						std::int32_t blendOp; // 40 - 0 on construction
+						std::uint32_t pad44; // 44
+					};
+					static_assert(sizeof(Mask) == 0x48);
+
+					// 1.11.246.0: size 0x60
+					class Palette :
+						public Entry   // 00
+					{
+					public:
+						BSFixedString maskTextureName; // 38
+						std::int32_t defaultIndex; // 40 - -1 on construction
+						std::uint32_t pad44; // 44
+						BSTArray<void*> colorValues; // 48 - the game's ColorValue is 0x18 bytes {BGSColorForm*, value, blend op, swatch id}
+					};
+					static_assert(sizeof(Palette) == 0x60);
+
+					// 1.11.246.0: size 0x58
+					class TextureSet :
+						public Entry   // 00
+					{
+					public:
+						BSFixedString unk38; // 38
+						BSFixedString unk40; // 40
+						BSFixedString unk48; // 48
+						std::uint64_t unk50; // 50 - 0 on construction
+					};
+					static_assert(sizeof(TextureSet) == 0x58);
+
+					// 1.11.246.0: a tint group (TTGP / TTGR chunks); the CK object is bigger than the game's 0x28 because the name is a 0x10 byte
+					// localized string object.
+					class Group
+					{
+					public:
+						BGSLocalizedString name; // 00
+						std::uint32_t unk10; // 10
+						std::uint32_t chargenIndex; // 14 - read at the end of the group loader
+						BSTArray<Entry*> entries; // 18 - TTET chunks create the entries
+					};
+					static_assert(offsetof(Group, entries) == 0x18);
+
+					// The array object behind a race's TTGP data
 					class Groups
 					{
 					public:

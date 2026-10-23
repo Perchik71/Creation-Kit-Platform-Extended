@@ -28,7 +28,7 @@ namespace CKPE
 					virtual ~BGSStaticCollection() = default;
 
 				public:
-					BSTHashMap<TESBoundObject*, void*>* dataMap; // F8 - value is BSSimpleList<BGSStaticCollection::REF_COL_DATA>*
+					BSTHashMap<TESBoundObject*, void*>* dataMap; // F8 - table layout assumed to be the CK 0x38 byte one like every other CK table; value is BSSimpleList<BGSStaticCollection::REF_COL_DATA>*
 					std::uint64_t unk100; // 100
 					std::uint32_t unk108; // 108
 					std::uint32_t unk10C; // 10C

@@ -73,7 +73,7 @@ namespace CKPE
 					std::uint8_t storyManagerConditions[0x18]; // F8 - TESCondition
 					// Two BSTHashMap<BGSDialogueBranch*, BSTArray<TESTopic*>*> in the CK's 0x38 byte layout (CommonLibF4's branchedDialogues; the CK has no
 					// stage/objective/alias index tables). The constructor sets the end of chain markers at 128 and 160.
-					BSTHashMap38<BGSDialogueBranch*, BSTArray<TESTopic*>*> branchedDialogues[2]; // 110
+					BSTHashMap<BGSDialogueBranch*, BSTArray<TESTopic*>*> branchedDialogues[2]; // 110
 					BSTArray<TESTopic*> topics[6]; // 180 - the destructor loops over 6 arrays
 					BSTArray<BGSScene*> scenes; // 210 - by position like CommonLibF4's scenes
 					BSTArray<TESGlobal*>* textGlobal; // 228

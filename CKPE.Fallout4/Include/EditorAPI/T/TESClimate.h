@@ -30,7 +30,7 @@ namespace CKPE
 					std::uint8_t unk78[0x18]; // 78
 					TESTexture skyObjects[2]; // 90 - FNAM/GNAM
 					std::uint8_t data[0x6]; // E0 - TNAM
-					std::uint16_t unkE6; // E6
+					std::uint16_t padE6; // E6
 					std::uint64_t unkE8; // E8
 					std::uint32_t unkF0; // F0
 					std::uint32_t unkF4; // F4

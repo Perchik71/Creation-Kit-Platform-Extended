@@ -109,7 +109,7 @@ namespace CKPE
 				CKPE::vtbl_call<void>(0x98, this, &Files);
 			}
 
-			void BaseFormComponent::RemapCopiedComponent(BSTHashMap38<Forms::TESForm*, Forms::TESForm*>* CopyMap, Forms::TESForm* Copy) noexcept(true)
+			void BaseFormComponent::RemapCopiedComponent(BSTHashMap<Forms::TESForm*, Forms::TESForm*>* CopyMap, Forms::TESForm* Copy) noexcept(true)
 			{
 				CKPE::vtbl_call<void>(0xA0, this, CopyMap, Copy);
 			}

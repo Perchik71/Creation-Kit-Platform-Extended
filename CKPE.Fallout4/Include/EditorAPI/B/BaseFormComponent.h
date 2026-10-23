@@ -51,7 +51,7 @@ namespace CKPE
 				virtual void UpdateDataFromDialogBox(HWND hDialogBox) noexcept(true);
 				virtual void CleanupComponentDialogBox(HWND hDialogBox) noexcept(true);
 				virtual void CollectComponentResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true);
-				virtual void RemapCopiedComponent(BSTHashMap38<Forms::TESForm*, Forms::TESForm*>* CopyMap, Forms::TESForm* Copy) noexcept(true);
+				virtual void RemapCopiedComponent(BSTHashMap<Forms::TESForm*, Forms::TESForm*>* CopyMap, Forms::TESForm* Copy) noexcept(true);
 			};
 			static_assert(sizeof(BaseFormComponent) == 0x8);
 		}

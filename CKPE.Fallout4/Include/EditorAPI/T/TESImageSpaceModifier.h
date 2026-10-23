@@ -7,6 +7,7 @@
 #include <cstdint>
 #include <EditorAPI/T/TESFormIDListView.h>
 #include <EditorAPI/N/NiPoint.h>
+#include <EditorAPI/N/NiInterpolator.h>
 
 namespace CKPE
 {
@@ -53,29 +54,31 @@ namespace CKPE
 				public:
 					ImageSpaceModifierData data; // 28
 					std::uint32_t unk124; // 124
-					std::uint8_t interpolator[21][2][0x30]; // 128 - NiPointer<NiFloatInterpolator>[21][2] in the game (0x30-byte objects in the CK)
-					std::uint8_t blurInterpolator[0x30]; // 908
-					std::uint8_t doubleInterpolator[0x30]; // 938
-					std::uint8_t tintColorInterpolator[0x38]; // 968 - NiColorInterpolator in the game
-					std::uint8_t fadeColorInterpolator[0x38]; // 9A0 - NiColorInterpolator in the game
-					std::uint8_t radialBlurStrengthInterpolator[0x30]; // 9D8
-					std::uint8_t radialBlurRampupInterpolator[0x30]; // A08
-					std::uint8_t radialBlurStartInterpolator[0x30]; // A38
-					std::uint8_t radialBlurRampDownInterpolator[0x30]; // A68
-					std::uint8_t radialBlurDownStartInterpolator[0x30]; // A98
-					std::uint8_t depthOfFieldStrengthInterpolator[0x30]; // AC8
-					std::uint8_t depthOfFieldDistanceInterpolator[0x30]; // AF8
-					std::uint8_t depthOfFieldRangeInterpolator[0x30]; // B28
-					std::uint8_t depthOfFieldVignetteRadiusInterpolator[0x30]; // B58
-					std::uint8_t depthOfFieldVignetteStrengthInterpolator[0x30]; // B88
-					std::uint8_t motionBlurStrengthInterpolator[0x30]; // BB8
+					NiAPI::NiFloatInterpolator interpolator[21][2]; // 128 - embedded in the CK (NiPointer<NiFloatInterpolator>[21][2] in the game)
+					NiAPI::NiFloatInterpolator blurInterpolator; // 908
+					NiAPI::NiFloatInterpolator doubleInterpolator; // 938
+					NiAPI::NiColorInterpolator tintColorInterpolator; // 968 - embedded in the CK
+					NiAPI::NiColorInterpolator fadeColorInterpolator; // 9A0 - embedded in the CK
+					NiAPI::NiFloatInterpolator radialBlurStrengthInterpolator; // 9D8
+					NiAPI::NiFloatInterpolator radialBlurRampupInterpolator; // A08
+					NiAPI::NiFloatInterpolator radialBlurStartInterpolator; // A38
+					NiAPI::NiFloatInterpolator radialBlurRampDownInterpolator; // A68
+					NiAPI::NiFloatInterpolator radialBlurDownStartInterpolator; // A98
+					NiAPI::NiFloatInterpolator depthOfFieldStrengthInterpolator; // AC8
+					NiAPI::NiFloatInterpolator depthOfFieldDistanceInterpolator; // AF8
+					NiAPI::NiFloatInterpolator depthOfFieldRangeInterpolator; // B28
+					NiAPI::NiFloatInterpolator depthOfFieldVignetteRadiusInterpolator; // B58
+					NiAPI::NiFloatInterpolator depthOfFieldVignetteStrengthInterpolator; // B88
+					NiAPI::NiFloatInterpolator motionBlurStrengthInterpolator; // BB8
 					std::uint8_t unkBE8[0x1C8]; // BE8
 					std::uint32_t unkDB0; // DB0
 					std::uint32_t unkDB4; // DB4
-					std::uint64_t unkDB8; // DB8
+					std::uint64_t unkDB8; // DB8 - a string set to "ImageSpaceModifier" by the constructor
 					std::uint32_t unkDC0; // DC0
 					std::uint32_t unkDC4; // DC4
 				};
+				static_assert(offsetof(TESImageSpaceModifier, interpolator) == 0x128);
+				static_assert(offsetof(TESImageSpaceModifier, motionBlurStrengthInterpolator) == 0xBB8);
 				static_assert(sizeof(TESImageSpaceModifier) == 0xDC8);
 			}
 		}

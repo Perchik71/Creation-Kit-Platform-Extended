@@ -63,10 +63,10 @@ namespace CKPE
 					virtual ~TESWorldSpace() = default;
 
 				public:
-					std::uint8_t pad68[0x8]; // 68
-					// BSTHashMap<std::int32_t, TESObjectCELL*> (BSTScatterTable: capacity 7C, free 80, good 84, sentinel 88, entries pointer 98).
-					// Same position as CommonLibF4's cellMap (0x40) shifted by the TESTexture base (+0x30), like climate (80 -> B0) and flags (88 -> B8).
-					BSTHashMap<std::int32_t, TESObjectCELL*> cellMap; // 70
+					// BSTHashMap<std::int32_t, TESObjectCELL*> in the CK's 0x38 byte table layout: the constructor puts the end of chain marker at 80,
+					// the capacity/free/good counters at 74/78/7C, the modification count at 88 and the entries (24 bytes each) at 98. The position is
+					// CommonLibF4's cellMap (0x40) shifted by the TESTexture base (+0x28).
+					BSTHashMap<std::int32_t, TESObjectCELL*> cellMap; // 68
 					void* persistentCell; // A0 - TESObjectCELL*
 					void* terrainManager; // A8 - BGSTerrainManager*
 					TESClimate* climate; // B0
@@ -78,9 +78,9 @@ namespace CKPE
 					std::int16_t fixedCenterX; // BE - ShortPoint fixedCenter
 					std::int16_t fixedCenterY; // C0
 					std::uint8_t padC2[0x6]; // C2
-					std::uint64_t unkC8; // C8
-					std::uint64_t unkD0; // D0
-					std::uint64_t unkD8; // D8
+					std::uint64_t unkC8; // C8 - reference counted polymorphic object (count at +8, released by ClearData)
+					void* unkD0; // D0 - 56 byte heap hash table, freed by ClearData (destructor called on +8)
+					void* unkD8; // D8 - 56 byte heap hash table, freed by ClearData
 					std::uint64_t unkE0; // E0
 					std::uint64_t unkE8; // E8
 					TESWorldSpace* parentWorld; // F0
@@ -105,13 +105,8 @@ namespace CKPE
 					TESTexture waterEnvMap; // 1A0
 					TESTexture unk1C8; // 1C8
 					TESTexture unk1F0; // 1F0
-					std::uint8_t unk218[0xC]; // 218
-					std::uint8_t unk224[0x8]; // 224
-					std::uint32_t unk22C; // 22C
-					std::uint64_t unk230; // 230
-					std::uint32_t unk238; // 238
-					std::uint8_t unk23C[0xC]; // 23C
-					std::uint64_t unk248; // 248
+					// A second hash map in the CK's 0x38 byte layout (end of chain marker at 230, entries at 248); key and value types are not identified.
+					std::uint8_t unk218[0x38]; // 218
 					BSTArray<void*> unk250; // 250 - element type not identified yet
 					std::uint8_t largeRefData[0x38]; // 268 - BGSLargeRefData (0x38 in the CK)
 					std::uint32_t unk2A0; // 2A0
@@ -122,7 +117,8 @@ namespace CKPE
 					char* lvlDataCellA; // 2A8
 					char* maxHeightData; // 2B0
 				};
-				static_assert(offsetof(TESWorldSpace, cellMap) == 0x70);
+				static_assert(offsetof(TESWorldSpace, cellMap) == 0x68);
+				static_assert(offsetof(TESWorldSpace, unk218) == 0x218);
 				static_assert(offsetof(TESWorldSpace, persistentCell) == 0xA0);
 				static_assert(offsetof(TESWorldSpace, fixedCenterX) == 0xBE);
 				static_assert(sizeof(TESWorldSpace) == 0x2B8);

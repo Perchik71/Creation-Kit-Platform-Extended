@@ -267,8 +267,8 @@ namespace CKPE
 					/* 0F0 */ [[nodiscard]] virtual bool IsBeforeGroup(const TESGroupHeader* GroupRecord) const noexcept(true);
 					/* 0F8 */ [[nodiscard]] virtual bool IsBeforeForm(TESForm* Rhs) const noexcept(true);
 					// CopyMap maps original to copy (the CK's 0x38 byte scatter table).
-					/* 100 */ virtual TESForm* CreateDuplicateForm(bool bCreateEditorID, BSTHashMap38<TESForm*, TESForm*>* CopyMap);
-					/* 108 */ virtual void FixupDuplicateForm(BSTHashMap38<TESForm*, TESForm*>* CopyMap) noexcept(true);
+					/* 100 */ virtual TESForm* CreateDuplicateForm(bool bCreateEditorID, BSTHashMap<TESForm*, TESForm*>* CopyMap);
+					/* 108 */ virtual void FixupDuplicateForm(BSTHashMap<TESForm*, TESForm*>* CopyMap) noexcept(true);
 					/* 110 */ virtual void InitItemImpl() noexcept(true);
 					/* 118 */ [[nodiscard]] virtual TESFile* GetDescriptionOwnerFile() const noexcept(true);
 					/* 120 */ [[nodiscard]] virtual FormType GetFormType() const noexcept(true);
@@ -329,7 +329,7 @@ namespace CKPE
 					/* 2D8 */ virtual void PrepareForRevert() noexcept(true);
 					/* 2E0 */ virtual bool Revert() noexcept(true);
 					// FormIDMap maps old to new form ids.
-					/* 2E8 */ virtual void OnFormIDsRemapped(BSTHashMap38<std::uint32_t, std::uint32_t>* FormIDMap) noexcept(true);
+					/* 2E8 */ virtual void OnFormIDsRemapped(BSTHashMap<std::uint32_t, std::uint32_t>* FormIDMap) noexcept(true);
 					// Context is forwarded only; observed callers pass nullptr.
 					/* 2F0 */ virtual bool RecompileScripts(void* Context) noexcept(true);
 					/* 2F8 */ [[nodiscard]] virtual bool HasRequiredEditorID() const noexcept(true);
