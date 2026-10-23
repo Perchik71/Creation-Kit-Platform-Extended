@@ -112,10 +112,37 @@ namespace CKPE
 			{
 				namespace Template
 				{
-					class Group;
-					class Entry;
+					// 1.11.246.0: a polymorphic tint entry (mask, palette, texture set variants; created through a factory by type id). The base
+					// part below is what the group loader touches (TTET name, TTEF flags, CTDA conditions); the derived classes add their own members.
+					class Entry
+					{
+					public:
+						virtual ~Entry() = default;
 
-					// The array object behind a race's TTGP data (the Group entries are not mapped yet)
+					public:
+						BGSLocalizedString name; // 08 - loaded by the group loader
+						std::uint8_t chargenConditions[0x18]; // 18 - TESCondition (0x18 bytes in the CK), CTDA chunks
+						std::uint8_t unk30[0x6]; // 30
+						std::int8_t flags; // 36 - TTEF chunk
+						std::uint8_t pad37; // 37
+					};
+					static_assert(offsetof(Entry, name) == 0x8);
+					static_assert(offsetof(Entry, chargenConditions) == 0x18);
+					static_assert(offsetof(Entry, flags) == 0x36);
+
+					// 1.11.246.0: a tint group (TTGP / TTGR chunks); the CK object is bigger than the game's 0x28 because the name is a 0x10 byte
+					// localized string object.
+					class Group
+					{
+					public:
+						BGSLocalizedString name; // 00
+						std::uint32_t unk10; // 10
+						std::uint32_t chargenIndex; // 14 - read at the end of the group loader
+						BSTArray<Entry*> entries; // 18 - TTET chunks create the entries
+					};
+					static_assert(offsetof(Group, entries) == 0x18);
+
+					// The array object behind a race's TTGP data
 					class Groups
 					{
 					public:

@@ -25,6 +25,35 @@ namespace CKPE
 				class BGSKeyword;
 				class BGSSoundOutput;
 
+				class BGSSceneAction;
+
+				// 1.11.246.0: size 0x80, created per HNAM chunk (constructor 0x140A56D60); the game's BGSScenePhase is 0x18 bytes. The two
+				// condition lists are the start and completion conditions, in the game's order.
+				struct BGSScenePhase
+				{
+					std::uint64_t unk00; // 00
+					std::uint64_t unk08; // 08
+					std::uint16_t unk10; // 10
+					std::uint8_t pad12[0x6]; // 12
+					std::uint64_t unk18; // 18
+					std::uint32_t unk20; // 20
+					std::uint32_t pad24; // 24
+					std::uint32_t unk28; // 28 - a global default
+					std::int32_t unk2C; // 2C - -1 on construction
+					std::uint64_t unk30; // 30
+					std::uint64_t unk38; // 38
+					std::int16_t unk40; // 40 - -1 on construction
+					std::int16_t unk42; // 42 - -1 on construction
+					std::uint8_t pad44[0x4]; // 44
+					std::uint8_t startConditions[0x18]; // 48 - TESCondition (0x18 bytes in the CK)
+					std::uint8_t completionConditions[0x18]; // 60 - TESCondition
+					std::uint16_t unk78; // 78
+					std::uint8_t pad7A[0x6]; // 7A
+				};
+				static_assert(offsetof(BGSScenePhase, startConditions) == 0x48);
+				static_assert(offsetof(BGSScenePhase, completionConditions) == 0x60);
+				static_assert(sizeof(BGSScenePhase) == 0x80);
+
 				// 1.11.240.0: size 0x230, vtable RVA 0x303DEA8, 124 virtual functions
 				class BGSScene :
 					public TESForm,           // 000
@@ -36,11 +65,11 @@ namespace CKPE
 				public:
 					std::uint32_t unk30; // 30
 					std::uint32_t unk34; // 34
-					BSTArray<void*> phases; // 38 - BSTArray<BGSScenePhase*>
+					BSTArray<BGSScenePhase*> phases; // 38 - HNAM chunks create the 0x80 byte phases
 					BSTArray<std::uint32_t> actors; // 50
 					BSTArray<std::uint32_t> actorFlags; // 68
 					BSTArray<std::uint32_t> actorProgressionFlags; // 80
-					BSTArray<void*> actions; // 98 - BSTArray<BGSSceneAction*>
+					BSTArray<BGSSceneAction*> actions; // 98
 					TESQuest* parentQuest; // B0
 					BGSScene* templateScene; // B8
 					std::uint32_t flags; // C0
