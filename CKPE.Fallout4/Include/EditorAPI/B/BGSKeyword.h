@@ -18,6 +18,8 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				class BGSAttractionRule;
+
 				class BGS_KEYWORD_DATA
 				{
 				public:
@@ -64,12 +66,12 @@ namespace CKPE
 
 				public:
 					NiAPI::NiRGB color; // 40
-					std::uint8_t pad43[1]; // 43
-					std::uint32_t unk44; // 44
+					std::uint8_t alpha; // 43 - fourth byte of the CNAM dword (0xFF on construction)
+					std::uint32_t pad44; // 44
 					BSFixedString description; // 48
-					std::uint32_t type; // 50
-					std::uint32_t unk54; // 54
-					std::uint64_t unk58; // 58
+					std::uint32_t type; // 50 - TNAM
+					std::uint32_t pad54; // 54
+					BGSAttractionRule* attractionRule; // 58 - DATA, only used when type is 10 (attraction rule)
 				};
 				static_assert(sizeof(BGSKeyword) == 0x60);
 			}

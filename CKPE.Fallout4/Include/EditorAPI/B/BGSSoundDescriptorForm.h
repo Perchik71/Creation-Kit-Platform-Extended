@@ -28,9 +28,9 @@ namespace CKPE
 					virtual ~BGSSoundDescriptorForm() = default;
 
 				public:
-					BGSSoundDescriptor* impl; // 30
-					std::uint64_t unk38; // 38
-					BSFixedString unk40; // 40
+					BSFixedString unk30; // 30
+					BGSSoundDescriptor* impl; // 38 - CNAM, created from the sound descriptor type id through BSTCreateFactory
+					BSFixedString notes; // 40 - NNAM
 				};
 				static_assert(sizeof(BGSSoundDescriptorForm) == 0x48);
 			}

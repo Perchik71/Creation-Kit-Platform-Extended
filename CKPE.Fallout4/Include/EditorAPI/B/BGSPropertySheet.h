@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <EditorAPI/B/BGSTypedFormValuePair.h>
 #include <cstdint>
 #include <EditorAPI/B/BaseFormComponent.h>
 
@@ -21,7 +22,7 @@ namespace CKPE
 				virtual ~BGSPropertySheet() = default;
 
 			public:
-				void* properties; // 08 - BSTArray<BSTTuple<TESForm*, BGSTypedFormValuePair::SharedVal>>*, heap allocated 24 byte array
+				BGSTypedFormValuePair::Array* properties; // 08 - heap allocated 24 byte array
 			};
 			static_assert(sizeof(BGSPropertySheet) == 0x10);
 		}

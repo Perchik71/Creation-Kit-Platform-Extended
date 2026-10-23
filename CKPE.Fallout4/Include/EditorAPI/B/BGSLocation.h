@@ -45,15 +45,12 @@ namespace CKPE
 					BSTArray<void*> specialRefs; // 98 - BSTArray<SpecialRefData>
 					BSTArray<void*> uniqueNPCs; // B0 - BSTArray<UniqueNPCData>
 					BSTArray<void*> unkC8; // C8 - element type not identified yet
-					// Three 0x30 byte BSTHashMap-like tables (BSTScatterTable: size dword at +0x14, free entry tag pointer at +0x18); element types not identified.
-					std::uint8_t hashMapE0[0x30]; // E0
-					std::uint64_t unk110; // 110
+					// Three BSTHashMap-like tables in the CK's 0x38 byte layout (capacity +0C, free +10, good +14, end of chain marker +18, entries +30); element types not identified.
+					std::uint8_t hashMapE0[0x38]; // E0 - CK 0x38 byte layout, the entries pointer at +30 is 110
 					BSTArray<void*> unk118; // 118 - element type not identified yet
 					BSTArray<void*> unk130; // 130 - element type not identified yet
-					std::uint8_t hashMap148[0x30]; // 148
-					std::uint64_t unk178; // 178
-					std::uint8_t hashMap180[0x30]; // 180
-					std::uint64_t unk1B0; // 1B0
+					std::uint8_t hashMap148[0x38]; // 148 - CK 0x38 byte layout, the entries pointer at +30 is 178
+					std::uint8_t hashMap180[0x38]; // 180 - CK 0x38 byte layout, the entries pointer at +30 is 1B0
 					std::uint64_t unk1B8; // 1B8
 					BSTArray<void*> unk1C0; // 1C0 - element type not identified yet
 					std::uint32_t unk1D8; // 1D8

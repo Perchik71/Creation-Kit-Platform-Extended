@@ -75,7 +75,7 @@ namespace CKPE
 					std::int8_t numHeadParts; // 390
 					std::uint8_t unk391[0x7]; // 391
 					std::uint8_t unk398[0x10]; // 398
-					BSTHashMap<std::uint32_t, float>* morphSliderValues; // 3A8
+					BSTHashMap38<std::uint32_t, float>* morphSliderValues; // 3A8 - 0x38 byte table allocated by Load
 					void* tintingData; // 3B0 - BGSCharacterTint::Entries*
 				};
 				static_assert(sizeof(TESNPC) == 0x3B8);

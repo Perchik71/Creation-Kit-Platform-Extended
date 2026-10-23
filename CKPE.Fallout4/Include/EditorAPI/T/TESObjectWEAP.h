@@ -17,6 +17,9 @@
 #include <EditorAPI/B/BGSPickupPutdownSounds.h>
 #include <EditorAPI/B/BGSBlockBashData.h>
 #include <EditorAPI/B/BGSKeywordForm.h>
+#include <EditorAPI/B/TBO_InstanceData.h>
+#include <EditorAPI/B/BGSTypedFormValuePair.h>
+#include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/T/TESDescription.h>
 #include <EditorAPI/B/BGSInstanceNamingRulesForm.h>
 #include <EditorAPI/B/BGSAttachParentArray.h>
@@ -39,9 +42,32 @@ namespace CKPE
 				class TESAmmo;
 				class TESLevItem;
 
-				struct TESObjectWEAPData
+				class BGSProjectile;
+				class EnchantmentItem;
+				class BGSMaterialSwap;
+
+				// 1.11.246.0: size 0x30, the ranged weapon data (CommonLibF4 TESObjectWEAP::RangedData)
+				struct WeaponRangedData
 				{
-					std::uint8_t tboInstanceData[0x10]; // 00 - TBO_InstanceData (vptr, refcount)
+					BGSProjectile* overrideProjectile; // 00
+					float fireSeconds; // 08
+					float firingRumbleLeftMotorStrength; // 0C
+					float firingRumbleRightMotorStrength; // 10
+					float firingRumbleDuration; // 14
+					float reloadSeconds; // 18
+					float boltChargeSeconds; // 1C
+					float sightedTransitionSeconds; // 20
+					std::uint32_t rumblePeriod; // 24
+					std::int32_t rumblePattern; // 28 - REX::TEnumSet<WEAPON_RUMBLE_PATTERN, std::int32_t>
+					std::int8_t numProjectiles; // 2C
+					std::uint8_t pad2D[3]; // 2D
+				};
+				static_assert(sizeof(WeaponRangedData) == 0x30);
+
+				// Weapon instance data, created by TESObjectWEAP::CreateInstanceData (0x138 bytes)
+				struct TESObjectWEAPData :
+					public TBO_InstanceData   // 00
+				{
 					BGSSoundDescriptorForm* attackSound; // 10
 					BGSSoundDescriptorForm* attackSound2D; // 18
 					BGSSoundDescriptorForm* attackLoop; // 20
@@ -50,20 +76,20 @@ namespace CKPE
 					BGSSoundDescriptorForm* equipSound; // 38
 					BGSSoundDescriptorForm* unEquipSound; // 40
 					BGSSoundDescriptorForm* fastEquipSound; // 48
-					void* blockBashData; // 50 - BGSBlockBashData*
+					BGSBlockBashData* blockBashData; // 50
 					BGSImpactDataSet* impactDataSet; // 58
 					TESLevItem* npcAddAmmoList; // 60
 					TESAmmo* ammo; // 68
 					BGSEquipSlot* equipSlot; // 70
 					SpellItem* effect; // 78
-					void* keywords; // 80 - BGSKeywordForm*
+					BGSKeywordForm* keywords; // 80
 					BGSAimModel* aimModel; // 88
 					BGSZoomData* zoomData; // 90
-					void* rangedData; // 98 - RangedData*
-					void* enchantments; // A0 - BSTArray<EnchantmentItem*>*
-					void* materialSwaps; // A8 - BSTArray<BGSMaterialSwap*>*
-					void* damageTypes; // B0 - BSTArray<BSTTuple<TESForm*, BGSTypedFormValuePair::SharedVal>>*
-					void* actorValues; // B8 - BSTArray<BSTTuple<TESForm*, BGSTypedFormValuePair::SharedVal>>*
+					WeaponRangedData* rangedData; // 98
+					BSTArray<EnchantmentItem*>* enchantments; // A0
+					BSTArray<BGSMaterialSwap*>* materialSwaps; // A8
+					BGSTypedFormValuePair::Array* damageTypes; // B0
+					BGSTypedFormValuePair::Array* actorValues; // B8
 					float attackSeconds; // C0
 					float reloadSpeed; // C4
 					float speed; // C8

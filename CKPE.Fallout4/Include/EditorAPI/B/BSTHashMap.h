@@ -42,9 +42,10 @@ namespace CKPE
 				[[nodiscard]] static const key_type& unwrap_key(const value_type& Value) noexcept(true) { return Value; }
 			};
 
-			// Chained scatter table as laid out by the Creation Kit (size 0x30, heap allocator; same layout as CommonLibF4).
+			// Chained scatter table as laid out by the Creation Kit (size 0x30, heap allocator; same layout as CommonLibF4). TableSize 0x38
+			// selects the CK's second variant used by the race/NPC morph data (entries pointer at +30).
 			// The table lives in game memory: it can be queried and walked, but not grown or modified from here.
-			template <class Hash, class KeyEqual, class Traits>
+			template <class Hash, class KeyEqual, class Traits, std::size_t TableSize = 0x30>
 			class BSTScatterTable
 			{
 			public:
@@ -148,17 +149,22 @@ namespace CKPE
 				size_type _free{ 0 };					// 10 - number of free slots
 				size_type _good{ 0 };					// 14 - last free index
 				std::uintptr_t _sentinel{ 0 };			// 18 - end of chain marker (points at the bytes DE AD BE EF)
-				std::uint64_t _padAllocator{ 0 };		// 20
+				std::uint8_t _padAllocator[TableSize - 0x28]{};	// 20 - 8 bytes in the 0x30 layout, 16 in the 0x38 one (modification count at 20, entries at 30)
 				entry_type* _entries{ nullptr };		// 28
 			};
 
 			template <class Key, class T, class Hash = BSCRC32<Key>, class KeyEq = std::equal_to<Key>>
 			using BSTHashMap = BSTScatterTable<Hash, KeyEq, BSTScatterTableTraits<Key, T>>;
 
+			// 0x38 byte variant of the CK (TESNPC morph slider values, race body/face morph data)
+			template <class Key, class T, class Hash = BSCRC32<Key>, class KeyEq = std::equal_to<Key>>
+			using BSTHashMap38 = BSTScatterTable<Hash, KeyEq, BSTScatterTableTraits<Key, T>, 0x38>;
+
 			template <class Key, class Hash = BSCRC32<Key>, class KeyEq = std::equal_to<Key>>
 			using BSTSet = BSTScatterTable<Hash, KeyEq, BSTSetTraits<Key>>;
 
 			static_assert(sizeof(BSTHashMap<std::uint32_t, void*>) == 0x30);
+			static_assert(sizeof(BSTHashMap38<std::uint32_t, float>) == 0x38);
 		}
 	}
 }

@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <EditorAPI/B/BGSTypedFormValuePair.h>
+#include <EditorAPI/B/TBO_InstanceData.h>
 #include <cstdint>
 #include <EditorAPI/T/TESBoundObject.h>
 #include <EditorAPI/T/TESFullName.h>
@@ -30,6 +32,41 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				class TESObjectARMA;
+				class EnchantmentItem;
+				class BGSMaterialSwap;
+
+				// 1.11.246.0: size 0x58, created by TESObjectARMO::CreateInstanceData (0x140C6CCF0); the constructor defaults match CommonLibF4's
+				// TESObjectARMO::InstanceData (colorRemappingIndex is FLT_MAX until set).
+				class ArmorInstanceData :
+					public TBO_InstanceData   // 00
+				{
+				public:
+					BSTArray<EnchantmentItem*>* enchantments; // 10
+					BSTArray<BGSMaterialSwap*>* materialSwaps; // 18
+					BGSBlockBashData* blockBashData; // 20
+					BGSKeywordForm* keywords; // 28
+					BGSTypedFormValuePair::Array* damageTypes; // 30
+					BGSTypedFormValuePair::Array* actorValues; // 38
+					float weight; // 40
+					float colorRemappingIndex; // 44
+					std::uint32_t value; // 48
+					std::uint32_t health; // 4C
+					std::int32_t staggerRating; // 50 - REX::TEnumSet<STAGGER_MAGNITUDE, std::int32_t>
+					std::uint16_t rating; // 54
+					std::uint16_t index; // 56
+				};
+				static_assert(sizeof(ArmorInstanceData) == 0x58);
+
+				class ArmorAddon
+				{
+				public:
+					std::uint16_t index; // 00
+					std::uint8_t pad02[6]; // 02
+					TESObjectARMA* armorAddon; // 08
+				};
+				static_assert(sizeof(ArmorAddon) == 0x10);
+
 				// 1.11.240.0: size 0x3C0, vtable RVA 0x3094C30, 154 virtual functions
 				class TESObjectARMO :
 					public TESBoundObject,              // 000
@@ -50,19 +87,8 @@ namespace CKPE
 					virtual ~TESObjectARMO() = default;
 
 				public:
-					std::uint64_t unk318; // 318
-					std::uint64_t unk320; // 320
-					std::uint64_t unk328; // 328
-					std::uint64_t unk330; // 330
-					std::uint64_t unk338; // 338
-					std::uint64_t unk340; // 340
-					std::uint64_t unk348; // 348
-					std::uint64_t unk350; // 350
-					std::uint32_t unk358; // 358
-					std::uint8_t unk35C[0x8]; // 35C
-					std::uint8_t unk364[0x8]; // 364
-					std::uint32_t unk36C; // 36C
-					BSTArray<void*> modelArray; // 370 - BSTArray<ArmorAddon>
+					ArmorInstanceData armorData; // 318
+					BSTArray<ArmorAddon> modelArray; // 370
 					TESObjectARMO* armorTemplate; // 388
 					BGSAttachParentArray attachParents; // 390
 					std::uint8_t unk3B0[0x10]; // 3B0

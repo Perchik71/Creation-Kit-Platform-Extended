@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <EditorAPI/B/BSTHashMap.h>
 #include <EditorAPI/T/TESForm.h>
 
 namespace CKPE
@@ -15,6 +16,7 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				class BGSKeyword;
 				class BGSSoundDescriptorForm;
 
 				// 1.11.240.0: size 0xB8, vtable RVA 0x2FBAC48, 124 virtual functions
@@ -25,9 +27,9 @@ namespace CKPE
 					virtual ~BGSSoundKeywordMapping() = default;
 
 				public:
-					std::uint8_t keywordSet[0x30]; // 28 - BSTScatterTable<BSCRC32<BGSKeyword*>, ...> (KNAM)
+					BSTSet<BGSKeyword*> keywordSet; // 28 - KNAM, same type as CommonLibF4
 					std::uint8_t unk58[0x10]; // 58
-					std::uint8_t reverbDescMap[0x30]; // 68 - BSTScatterTable<BSCRC32<std::uint32_t>, ...> (PTRN)
+					BSTHashMap<std::uint32_t, BGSSoundDescriptorForm*> reverbDescMap; // 68 - PTRN, same type as CommonLibF4
 					BGSSoundDescriptorForm* descriptor; // 98 - KNAM
 					BGSSoundDescriptorForm* exteriorTail; // A0 - KNAM
 					BGSSoundDescriptorForm* vatsDescriptor; // A8 - PTRN

@@ -104,7 +104,7 @@ namespace CKPE
 					CellProcessLevels _cell_process_level;
 					char Unk54[0x1];									// set 0x1 when unloaded cell
 					char _pad2[0x3];
-					void* _extradata;
+					BSTSmartPointer<ExtraDataList> _extradata;			// 58 - allocated by the constructor (same ExtraDataList as references)
 					CellData _celldata;
 					TESObjectLAND* _landspace;
 					char _pad3[0x8];
@@ -112,6 +112,11 @@ namespace CKPE
 					BSTArray<TESObjectREFR*> _items;
 					char pad98[0xD8];									// 98 - up to 170 (see the TESObjectCELL generated layout notes in docs)
 				public:
+					[[nodiscard]] inline BSTSmartPointer<ExtraDataList> GetExtraData() const noexcept(true)
+					{
+						static_assert(offsetof(TESObjectCELL, _extradata) == 0x58);
+						return _extradata;
+					}
 					[[nodiscard]] inline const TESObjectREFR** GetItemsConst() const noexcept(true) { return (const TESObjectREFR**)_items.data(); }
 					[[nodiscard]] inline TESObjectREFR** GetItems() noexcept(true) { return (TESObjectREFR**)_items.data(); }
 					[[nodiscard]] inline std::uint32_t GetItemCount() const noexcept(true) { return (std::uint32_t)_items.size(); }

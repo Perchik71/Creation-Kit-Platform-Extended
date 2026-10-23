@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <EditorAPI/B/BSTBTree.h>
+#include <EditorAPI/B/BSTHashMap.h>
 #include <cstdint>
 #include <windows.h>
 #include <commctrl.h>
@@ -264,9 +266,9 @@ namespace CKPE
 					/* 0E8 */ virtual bool SaveForm(TESFile* File);
 					/* 0F0 */ [[nodiscard]] virtual bool IsBeforeGroup(const TESGroupHeader* GroupRecord) const noexcept(true);
 					/* 0F8 */ [[nodiscard]] virtual bool IsBeforeForm(TESForm* Rhs) const noexcept(true);
-					// CopyMap is BSTScatterTable<TESForm*, TESForm*> (original to copy).
-					/* 100 */ virtual TESForm* CreateDuplicateForm(bool bCreateEditorID, void* CopyMap);
-					/* 108 */ virtual void FixupDuplicateForm(void* CopyMap) noexcept(true);
+					// CopyMap maps original to copy (the CK's 0x38 byte scatter table).
+					/* 100 */ virtual TESForm* CreateDuplicateForm(bool bCreateEditorID, BSTHashMap38<TESForm*, TESForm*>* CopyMap);
+					/* 108 */ virtual void FixupDuplicateForm(BSTHashMap38<TESForm*, TESForm*>* CopyMap) noexcept(true);
 					/* 110 */ virtual void InitItemImpl() noexcept(true);
 					/* 118 */ [[nodiscard]] virtual TESFile* GetDescriptionOwnerFile() const noexcept(true);
 					/* 120 */ [[nodiscard]] virtual FormType GetFormType() const noexcept(true);
@@ -320,15 +322,14 @@ namespace CKPE
 					/* 2A0 */ virtual void RemoveReferencesToForm(TESForm* Form) noexcept(true);
 					/* 2A8 */ [[nodiscard]] virtual bool CanCheckIn(const CheckInFormList* Forms) const noexcept(true);
 					/* 2B0 */ virtual void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true);
-					// OutForms is BSTBTree<TESForm*>.
-					/* 2B8 */ virtual void GetReferencedForms(void* OutForms) const noexcept(true);
+					/* 2B8 */ virtual void GetReferencedForms(BSTBTree<TESForm*>* OutForms) const noexcept(true);
 					/* 2C0 */ virtual bool CheckOut(TESBitArrayFile* UserFile, TESBitArrayFile* VersionFile) noexcept(true);
 					/* 2C8 */ virtual bool UpdateTrackingData() noexcept(true);
 					/* 2D0 */ virtual bool UndoCheckOut(TESBitArrayFile* UserFile) noexcept(true);
 					/* 2D8 */ virtual void PrepareForRevert() noexcept(true);
 					/* 2E0 */ virtual bool Revert() noexcept(true);
-					// FormIDMap is BSTScatterTable<uint32_t, uint32_t> (old to new).
-					/* 2E8 */ virtual void OnFormIDsRemapped(void* FormIDMap) noexcept(true);
+					// FormIDMap maps old to new form ids.
+					/* 2E8 */ virtual void OnFormIDsRemapped(BSTHashMap38<std::uint32_t, std::uint32_t>* FormIDMap) noexcept(true);
 					// Context is forwarded only; observed callers pass nullptr.
 					/* 2F0 */ virtual bool RecompileScripts(void* Context) noexcept(true);
 					/* 2F8 */ [[nodiscard]] virtual bool HasRequiredEditorID() const noexcept(true);
@@ -352,8 +353,8 @@ namespace CKPE
 					/* 358 */ virtual void InitializeListView(HWND hListView) const noexcept(true);
 					/* 360 */ [[nodiscard]] virtual bool HasRequiredUniqueEditorID() const noexcept(true);
 					/* 368 */ virtual void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true);
-					// BSTBTree<TESForm*> and a BSTBTree string set, respectively.
-					/* 370 */ virtual void CollectRequiredFiles(void* VisitedForms, void* RequiredFiles) noexcept(true);
+					// Visited forms and the required resource file names.
+					/* 370 */ virtual void CollectRequiredFiles(BSTBTree<TESForm*>* VisitedForms, BSTBTree<BSFixedString>* RequiredFiles) noexcept(true);
 					/* 378 */ virtual BOOL SaveSelectedDialogTab(HWND hDialogBox, std::int32_t nTabIndex) noexcept(true);
 					/* 380 */ [[nodiscard]] virtual std::int32_t GetSavedDialogTab(HWND hDialogBox) const noexcept(true);
 					/* 388 */ virtual std::int32_t GetSafeFormEditorID(char* lpBuffer, std::uint32_t nBufferSize) noexcept(true);

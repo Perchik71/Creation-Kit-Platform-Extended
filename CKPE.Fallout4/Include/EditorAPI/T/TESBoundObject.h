@@ -4,6 +4,9 @@
 
 #pragma once
 
+#include <EditorAPI/B/TBO_InstanceData.h>
+#include <EditorAPI/N/NiPointer.h>
+#include <EditorAPI/B/BSTList.h>
 #include <EditorAPI/T/TESObject.h>
 #include <EditorAPI/T/TESCellUseList.h>
 #include <EditorAPI/B/BGSMod.h>
@@ -18,6 +21,7 @@ namespace CKPE
 		namespace EditorAPI
 		{
 			class TESContainer;
+			struct ContainerItemExtra;
 
 			namespace NiAPI
 			{
@@ -40,19 +44,19 @@ namespace CKPE
 
 					// CK 1.11.246.0: 154 virtuals, vtable RVA 0x30920B8.
 					virtual ~TESBoundObject() = default;
-					virtual void* CreateInstanceData(const void* pData) const noexcept(true) { return nullptr; } // 136 - RVA 0x436870
-					virtual const void* GetBaseInstanceData() const noexcept(true) { return nullptr; } // 137 - RVA 0x4368B0
+					virtual TBO_InstanceData* CreateInstanceData(const TBO_InstanceData* pData) const noexcept(true) { return nullptr; } // 136 - RVA 0x436870
+					virtual const TBO_InstanceData* GetBaseInstanceData() const noexcept(true) { return nullptr; } // 137 - RVA 0x4368B0
 					virtual bool GetAttachedMarkersVisible(void* pObj3D) const noexcept(true) { return false; } // 138 - RVA 0xC5A210
 					virtual void SetAttachedMarkersVisible(void* pObj3D, bool bVisible) const noexcept(true) { return; } // 139 - RVA 0xC5A220
 					virtual bool QSupportsCountPerInstance() const noexcept(true) { return false; } // 140 - RVA 0x4369C0
 					virtual void SetObjectVoiceType(BGSVoiceType* pVoiceType) noexcept(true) { return; } // 141 - RVA 0x4369E0
 					virtual BGSVoiceType* GetObjectVoiceType() const noexcept(true) { return nullptr; } // 142 - RVA 0x4368D0
 					[[nodiscard]] virtual BGSSoundDescriptorForm* GetSoundForTag(const BSFixedString& Tag) const noexcept(true) { return nullptr; } // 143
-					virtual void Clone3D(void* pRequester, void* pObj3D) noexcept(true) { return; } // 144 - RVA 0xC5A5D0
+					virtual void Clone3D(TESObjectREFR* pRequester, NiAPI::NiPointer<NiAPI::NiAVObject>* pObj3D) noexcept(true) { return; } // 144 - RVA 0xC5A5D0
 					virtual bool ReplaceModel(const char* lpFileName) noexcept(true) { return false; } // 145 - RVA 0xC5A720
 					virtual void UpdatePreview(HWND hDialogBox, bool ForceUpdate) noexcept(true) { return; } // 146
-					virtual void CollectInventoryItems(TESContainer* Inventory, std::uint16_t Level, void* ExtraData) noexcept(true) { return; } // 147
-					virtual void CollectVoiceTypes(void* VoiceTypes) const noexcept(true) { return; } // 148
+					virtual void CollectInventoryItems(TESContainer* Inventory, std::uint16_t Level, const ContainerItemExtra* ExtraData) noexcept(true) { return; } // 147
+					virtual void CollectVoiceTypes(BSSimpleList<BGSVoiceType*>* VoiceTypes) const noexcept(true) { return; } // 148
 					virtual void HandleRemoveItemFromContainer(TESObjectREFR* Reference) noexcept(true) { return; } // 149
 					virtual void OnRemove3D(NiAPI::NiAVObject* Object3D) noexcept(true) { return; } // 150
 					virtual void OnCheckModels() noexcept(true) { return; } // 151
