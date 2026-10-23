@@ -113,6 +113,7 @@ namespace CKPE
 				namespace Template
 				{
 					class Group;
+					class Entry;
 
 					// The array object behind a race's TTGP data (the Group entries are not mapped yet)
 					class Groups
@@ -122,6 +123,14 @@ namespace CKPE
 					};
 					static_assert(sizeof(Groups) == 0x18);
 				}
+
+				// 1.11.246.0: the 24 byte array object behind TESNPC::tintingData
+				class Entries
+				{
+				public:
+					BSTArray<Template::Entry*> entries; // 00
+				};
+				static_assert(sizeof(Entries) == 0x18);
 			}
 		}
 	}

@@ -15,6 +15,8 @@
 #include <EditorAPI/B/BGSLocalizedString.h>
 #include <EditorAPI/B/BGSSkinForm.h>
 #include <EditorAPI/N/NiPoint.h>
+#include <EditorAPI/B/BGSCharacterMorph.h>
+#include <EditorAPI/B/BSTHashMap.h>
 
 namespace CKPE
 {
@@ -26,6 +28,7 @@ namespace CKPE
 			{
 				class HeadRelatedData;
 				class TESClass;
+				class BGSRelationship;
 				class BGSListForm;
 				class TESCombatStyle;
 				class TESFurniture;
@@ -71,12 +74,19 @@ namespace CKPE
 					BGSListForm* defaultPackList; // 368
 					TESFaction* crimeFaction; // 370
 					BGSHeadPart** headParts; // 378
-					std::uint8_t unk380[0x10]; // 380
+					BSTArray<float>* morphRegionSliderValues; // 380 - 24 byte heap array (InitializeData/ClearData), CommonLibF4 position + A8
+					BSTHashMap38<std::uint32_t, BGSCharacterMorph::Transform>* facialBoneRegionSliderValues; // 388 - 56 byte table freed by ClearData
 					std::int8_t numHeadParts; // 390
-					std::uint8_t unk391[0x7]; // 391
-					std::uint8_t unk398[0x10]; // 398
+					std::int8_t soundLevel; // 391 - 1 on construction
+					std::int8_t bodyTintColorR; // 392
+					std::int8_t bodyTintColorG; // 393
+					std::int8_t bodyTintColorB; // 394
+					std::int8_t bodyTintColorA; // 395
+					std::uint8_t pad396[0x2]; // 396
+					BSTArray<BGSRelationship*>* relationships; // 398 - by position like CommonLibF4
+					std::uint64_t unk3A0; // 3A0
 					BSTHashMap38<std::uint32_t, float>* morphSliderValues; // 3A8 - 0x38 byte table allocated by Load
-					void* tintingData; // 3B0 - BGSCharacterTint::Entries*
+					BGSCharacterTint::Entries* tintingData; // 3B0 - 24 byte heap object
 				};
 				static_assert(sizeof(TESNPC) == 0x3B8);
 			}

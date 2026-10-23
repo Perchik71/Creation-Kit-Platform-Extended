@@ -21,6 +21,7 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				class BGSPerkEntry;
 				class BGSSoundDescriptorForm;
 
 				struct PerkData
@@ -45,25 +46,24 @@ namespace CKPE
 
 				public:
 					PerkData data; // 90
-					std::uint8_t unk95[0x3]; // 95
+					std::uint8_t pad95[0x3]; // 95
 					std::uint8_t perkConditions[0x18]; // 98 - TESCondition (0x18 in the CK) - CTDA
-					BSTArray<void*> perkEntries; // B0 - BSTArray<BGSPerkEntry*>, by position after perkConditions
-					BSFixedString swfFile; // C8 - BSFixedStringCS
-					BGSPerk* nextPerk; // D0
-					BGSSoundDescriptorForm* sound; // D8
-					std::uint64_t unkE0; // E0
-					std::uint64_t unkE8; // E8
-					std::uint8_t unkF0; // F0
-					std::uint8_t unkF1[0x13]; // F1
-					std::uint8_t unk104[0x8]; // 104
-					std::uint32_t unk10C; // 10C
-					std::uint64_t unk110; // 110
-					std::uint32_t unk118; // 118
-					std::uint8_t unk11C[0xC]; // 11C
-					std::uint64_t unk128; // 128
-					std::uint16_t unk130; // 130
-					std::uint8_t unk132[0x6]; // 132
+					BSTArray<BGSPerkEntry*> perkEntries; // B0 - polymorphic entries, destroyed through their virtual destructor by ClearData
+					BGSPerk* nextPerk; // C8 - zeroed by InitializeData
+					BGSSoundDescriptorForm* sound; // D0 - zeroed by InitializeData
+					BSFixedString swfFile; // D8 - BSFixedStringCS, emptied by ClearData
+					std::uint64_t unkE0; // E0 - 0 on construction
+					std::uint64_t unkE8; // E8 - 0 on construction
+					std::uint8_t unkF0; // F0 - 0 on construction
+					std::uint8_t padF1[0x7]; // F1
+					// A hash set in the CK's 0x38 byte table layout (capacity 104, good 10C, modification count 118, entries 128, end of chain marker
+					// 110): 16 byte entries {key, next}, trivially destructible; the key type is not identified yet.
+					std::uint8_t unkF8[0x38]; // F8
+					std::uint16_t unk130; // 130 - 0 on construction
+					std::uint8_t pad132[0x6]; // 132
 				};
+				static_assert(offsetof(BGSPerk, swfFile) == 0xD8);
+				static_assert(offsetof(BGSPerk, unkF8) == 0xF8);
 				static_assert(sizeof(BGSPerk) == 0x138);
 			}
 		}
