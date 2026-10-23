@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <EditorAPI/B/BGSTypedFormValuePair.h>
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/B/BGSPickupPutdownSounds.h>
@@ -34,7 +35,7 @@ namespace CKPE
 					virtual ~BGSConstructibleObject() = default;
 
 				public:
-					void* requiredItems; // 68 - BSTArray<BSTTuple<TESForm*, BGSTypedFormValuePair::SharedVal>>*
+					BGSTypedFormValuePair::Array* requiredItems; // 68
 					std::uint8_t unk70[0x18]; // 70
 					std::uint64_t unk88; // 88
 					std::uint64_t unk90; // 90

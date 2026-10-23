@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <EditorAPI/B/BSShaderData.h>
+#include <EditorAPI/B/BGSImpactData.h>
 #include <cstdint>
 #include <EditorAPI/T/TESBoundObject.h>
 #include <EditorAPI/B/BSTextureSet.h>
@@ -18,7 +20,6 @@ namespace CKPE
 		{
 			namespace Forms
 			{
-				class DecalData;
 
 				// 1.11.240.0: size 0x3D8, vtable RVA 0x3064968, 154 virtual functions
 				class BGSTextureSet :
@@ -31,10 +32,11 @@ namespace CKPE
 				public:
 					BSFixedString materialName; // A0
 					TESTexture textures[8]; // A8
-					DecalData* decalData; // 1E8
+					DecalData* decalData; // 1E8 - 0x24 byte heap object freed by ClearData
 					std::uint16_t flags; // 1F0
-					std::uint8_t unk1F2[0x6]; // 1F2
-					std::uint8_t unk1F8[0x1E0]; // 1F8
+					std::uint8_t pad1F2[0x6]; // 1F2
+					// The CK keeps the material data inline (the game's textureFileIDs array is absent); same 0x1E0 byte object as the game's.
+					BSShaderData materialData; // 1F8
 				};
 				static_assert(sizeof(BGSTextureSet) == 0x3D8);
 			}

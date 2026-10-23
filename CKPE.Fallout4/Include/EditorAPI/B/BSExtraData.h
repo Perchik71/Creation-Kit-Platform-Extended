@@ -589,7 +589,6 @@ namespace CKPE
 			{
 				BSExtraData* _head{ nullptr };
 				BSExtraData** _tail{ std::addressof(_head) };
-				std::uint8_t* _flags{ nullptr };				// looks like always nullptr for ck
 			public:
 				void AddExtra(BSExtraData* Extra) noexcept(true)
 				{
@@ -719,7 +718,8 @@ namespace CKPE
 				[[nodiscard]] BSExtraData* GetHead() const noexcept(true) { return _head; }
 				[[nodiscard]] BSExtraData** GetTail() const noexcept(true) { return _tail; }
 			};
-			static_assert(sizeof(BaseExtraList) == 0x18);
+			// 1.11.246.0: the CK's list holds only the head and the tail (no presence flag pointer); the read/write lock follows it inside ExtraDataList
+			static_assert(sizeof(BaseExtraList) == 0x10);
 
 			namespace Detail
 			{
@@ -780,9 +780,9 @@ namespace CKPE
 
 				// members
 				BaseExtraList extraData;              // 08
-				mutable BSReadWriteLock extraRWLock;  // 20
+				mutable BSReadWriteLock extraRWLock;  // 18 - initialised by the constructor 0x1407D71A0 (the object is 0x20 bytes)
 			};
-			static_assert(sizeof(ExtraDataList) == 0x28);
+			static_assert(sizeof(ExtraDataList) == 0x20);
 		}
 	}
 }

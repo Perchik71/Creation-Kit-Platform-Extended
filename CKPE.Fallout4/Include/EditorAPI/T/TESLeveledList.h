@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <EditorAPI/B/BGSTypedFormValuePair.h>
 #include <cstdint>
 #include <EditorAPI/B/BaseFormComponent.h>
 
@@ -54,7 +55,7 @@ namespace CKPE
 
 			public:
 				Forms::TESGlobal* chanceGlobal; // 08
-				void* keywordChances; // 10 - BSTArray<BSTTuple<TESForm*, BGSTypedFormValuePair::SharedVal>>*, heap allocated 24 byte array
+				BGSTypedFormValuePair::Array* keywordChances; // 10 - heap allocated 24 byte array
 				LEVELED_OBJECT* leveledLists; // 18
 				std::uint8_t baseListCount; // 20 - number of LEVELED_OBJECT in leveledLists (the CK has no scriptAddedLists)
 				std::int8_t chanceNone; // 21

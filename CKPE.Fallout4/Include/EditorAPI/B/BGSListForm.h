@@ -27,7 +27,7 @@ namespace CKPE
 					virtual ~BGSListForm() = default;
 
 				public:
-					BSTArray<void*> arrayOfForms; // 40 - BSTArray<TESForm*>
+					BSTArray<TESForm*> arrayOfForms; // 40
 				};
 				static_assert(sizeof(BGSListForm) == 0x58);
 			}

@@ -259,6 +259,8 @@
     <ClInclude Include="Include\EditorAPI\B\BGSCharacterMorph.h" />
     <ClInclude Include="Include\EditorAPI\B\BSTHashMap.h" />
     <ClInclude Include="Include\EditorAPI\B\BSTBTree.h" />
+    <ClInclude Include="Include\EditorAPI\B\BGSTypedFormValuePair.h" />
+    <ClInclude Include="Include\EditorAPI\B\TBO_InstanceData.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSMaterialSwap.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSMod.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSModelMaterialSwap.h" />

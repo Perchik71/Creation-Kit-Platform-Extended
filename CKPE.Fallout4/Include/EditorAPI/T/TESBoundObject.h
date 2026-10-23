@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <EditorAPI/B/TBO_InstanceData.h>
 #include <EditorAPI/N/NiPointer.h>
 #include <EditorAPI/B/BSTList.h>
 #include <EditorAPI/T/TESObject.h>
@@ -43,8 +44,8 @@ namespace CKPE
 
 					// CK 1.11.246.0: 154 virtuals, vtable RVA 0x30920B8.
 					virtual ~TESBoundObject() = default;
-					virtual void* CreateInstanceData(const void* pData) const noexcept(true) { return nullptr; } // 136 - RVA 0x436870
-					virtual const void* GetBaseInstanceData() const noexcept(true) { return nullptr; } // 137 - RVA 0x4368B0
+					virtual TBO_InstanceData* CreateInstanceData(const TBO_InstanceData* pData) const noexcept(true) { return nullptr; } // 136 - RVA 0x436870
+					virtual const TBO_InstanceData* GetBaseInstanceData() const noexcept(true) { return nullptr; } // 137 - RVA 0x4368B0
 					virtual bool GetAttachedMarkersVisible(void* pObj3D) const noexcept(true) { return false; } // 138 - RVA 0xC5A210
 					virtual void SetAttachedMarkersVisible(void* pObj3D, bool bVisible) const noexcept(true) { return; } // 139 - RVA 0xC5A220
 					virtual bool QSupportsCountPerInstance() const noexcept(true) { return false; } // 140 - RVA 0x4369C0
