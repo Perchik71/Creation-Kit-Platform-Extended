@@ -6,6 +6,7 @@
 
 #include <cstdint>
 #include <d3d11.h>
+#include <EditorAPI/B/BSGraphicsTypes.h>
 
 namespace CKPE
 {

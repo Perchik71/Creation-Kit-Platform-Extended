@@ -11,6 +11,7 @@
 #include <EditorAPI/T/TESObjectCELL.h>
 #include <EditorAPI/B/BSTList.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/S/Sky.h>
 
 namespace CKPE
 {
@@ -18,45 +19,6 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
-			class Clouds
-			{
-				char pad08[0x50A];
-				NiAPI::NiTFlags<std::uint16_t, Clouds> flags;
-			public:
-				virtual ~Clouds();
-			};
-			static_assert(sizeof(Clouds) == 0x518);
-
-			// 448
-			class Sky : public NiAPI::NiRefObject
-			{
-				NiAPI::NiNode* unk_node0;					// BSMultiBoundNode
-				NiAPI::NiNode* unk_node1;					// NiNode
-				char pad20[0x28];
-				void* ambientLight;							// NiAmbientLight
-				char pad50[0x30];
-				void* atmosphere;							// Atmosphere
-				void* stars;								// Stars
-				void* sun;									// Sun
-				Clouds* clouds;								// Clouds
-				char padA0[0x2DC];
-				NiAPI::NiTFlags<std::uint32_t, Sky> flags;
-			public:
-				virtual ~Sky();
-
-				inline void SetFog() noexcept(true) { flags.Set(1); }
-				inline void SetWeather() noexcept(true) { flags.Set(2); }
-				inline void UnsetFog() noexcept(true) { flags.Unset(1); }
-				inline void UnsetWeather() noexcept(true) { flags.Unset(2); }
-				[[nodiscard]] inline bool HasFog() const noexcept(true) { return flags.Has(1); }
-				[[nodiscard]] inline bool HasWeather() const noexcept(true) { return flags.Has(2); }
-				[[nodiscard]] inline Clouds* GetClouds() const noexcept(true) { return clouds; }
-
-				inline static ISingleton<Setting> Setting_SkyView;
-				inline static ISingleton<Setting> Setting_FogEnabled;
-			};
-			static_assert(sizeof(Sky) == 0x380);
-
 			// 1.11.246.0: size 0x138, vtable RVA 0x30120A8, the global pointer TES_Singleton is at 0x143D49150.
 			// From 0xA0 on the layout and names follow CommonLibF4's TES (offsets, constructor defaults and uses checked in the CK).
 			class TES : public NiAPI::NiRefObject

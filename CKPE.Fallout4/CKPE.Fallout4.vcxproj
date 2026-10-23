@@ -125,6 +125,9 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\EditorAPI\B\BSGraphicsState.cpp" />
+    <ClCompile Include="Src\EditorAPI\B\BSGraphicsRenderer.cpp" />
+    <ClCompile Include="Src\EditorAPI\B\BSGraphicsRenderTargetManager.cpp" />
     <ClCompile Include="..\Dependencies\DirectXTex\src\ScreenGrab11.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Src\CKPE.Fallout4.D3D11ImagespaceAA.cpp" />
@@ -233,6 +236,16 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.WrongUpdateActorWnd.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\EditorAPI\S\Sky.h" />
+    <ClInclude Include="Include\EditorAPI\N\NiCamera.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSPortalGraphEntry.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSGraphicsTypes.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSGraphicsState.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSGraphicsRenderer.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSGraphicsRenderTargetManager.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSCullingProcess.h" />
+    <ClInclude Include="Include\EditorAPI\B\BGSRenderWindowBorder.h" />
+    <ClInclude Include="Include\EditorAPI\B\BGSRenderOrthoGrid.h" />
     <ClInclude Include="..\Dependencies\DirectXTex\include\ScreenGrab11.h" />
     <ClInclude Include="Include\CKPE.Fallout4.D3D11ImagespaceAA.h" />
     <ClInclude Include="Include\CKPE.Fallout4.D3D11Shaders.h" />
