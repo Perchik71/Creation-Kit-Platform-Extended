@@ -47,6 +47,15 @@ namespace CKPE
 				class TESObjectWEAP;
 				class TESQuest;
 
+				// 1.11.246.0: size 0x78, an element of TESRace::speedOverrides (CommonLibF4 MOVEMENT_SPEED_OVERRIDE; the MTYP loader fills the
+				// 0x70 byte speed block and stores the movement type form id in front of it)
+				struct MovementSpeedOverride
+				{
+					BGSMovementType* moveType; // 00
+					float overrideData[28]; // 08 - Movement::MaxSpeeds
+				};
+				static_assert(sizeof(MovementSpeedOverride) == 0x78);
+
 				// 1.11.246.0: size 0xA0, allocated by TESRace Load/CopyFrom (constructor 0xB07200). The game's FaceRelatedData (0x68) holds the same
 				// members; the CK object keeps the first nine as pointers to heap BSTArrays (names and element types from TESRace::CopyFrom, the Load
 				// chunks TTGP/FTSF/RPRF/AHCF/HCLF/DFTF/FMRI and CommonLibF4's order) and then has a hash map in the CK's 0x38 byte layout.
@@ -132,7 +141,7 @@ namespace CKPE
 					TESRace* armorParentRace; // 6E8 - RNAM
 					TESQuest* dialogueQuest; // 6F0 - by order after armorParentRace
 					std::uint8_t unk6F8[0x10]; // 6F8
-					BSTArray<void*> unk708; // 708 - element type not identified yet
+					BSTArray<MovementSpeedOverride> speedOverrides; // 708 - MTYP chunks (0x78 byte elements), by position like CommonLibF4's speedOverrides
 					BSTArray<void*> unk720[43]; // 720 - 43 empty-initialised arrays (CK only, not cleared by ClearData, element type not identified yet)
 					std::uint8_t unkB28[0x10]; // B28 - word at B28 and qword at B2C are zeroed by InitializeData/ClearData
 					BSTArray<BSFixedString> phonemeTargets; // B38 - 8 byte string elements released by ClearData, by position like CommonLibF4's phonemeTargets

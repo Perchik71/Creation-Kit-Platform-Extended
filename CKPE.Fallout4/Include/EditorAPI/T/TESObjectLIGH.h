@@ -81,11 +81,11 @@ namespace CKPE
 					std::uint8_t unk1C8[0x10]; // 1C8
 					OBJ_LIGH data; // 1D8 - DATA (the 3 bytes at 0x1E0 were named m_SpecularColor: they are data.color)
 					float fade; // 210 - FNAM
-					std::uint32_t unk214; // 214
+					std::uint32_t pad214; // 214
 					BGSSoundDescriptorForm* sound; // 218 - SNAM
 					TESTexture goboTexture; // 220 - NAM0
 					NiAPI::NiColor emittanceColor; // 248 - by position after goboTexture
-					std::uint32_t unk254; // 254
+					std::uint32_t pad254; // 254
 					BGSLensFlare* lensFlare; // 258 - LNAM
 					BGSGodRays* godRays; // 260 - WGDR
 				};

@@ -18,6 +18,24 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				class BGSPerk;
+
+				// 1.11.246.0: size 0x28 (CommonLibF4 SpellItem::Data; the defaults are set by the constructor 0x140E851B0, SpellItem::GetSpellType
+				// reads 320 and GetCastingType 328)
+				struct SpellItemData
+				{
+					std::int32_t costOverride; // 00 - -1 on construction
+					std::uint32_t flags; // 04
+					std::int32_t spellType; // 08 - REX::TEnumSet<MagicSystem::SpellType, std::int32_t>
+					float chargeTime; // 0C
+					std::int32_t castingType; // 10 - 3 on construction
+					std::int32_t delivery; // 14 - 5 on construction
+					float castDuration; // 18
+					float range; // 1C
+					BGSPerk* castingPerk; // 20
+				};
+				static_assert(sizeof(SpellItemData) == 0x28);
+
 				// 1.11.240.0: size 0x340, vtable RVA 0x30C3CE8, 188 virtual functions
 				class SpellItem :
 					public MagicItem,             // 000
@@ -29,14 +47,9 @@ namespace CKPE
 					virtual ~SpellItem() = default;
 
 				public:
-					std::uint32_t unk318; // 318
-					std::uint8_t unk31C[0x8]; // 31C
-					std::uint32_t unk324; // 324
-					std::uint32_t unk328; // 328
-					std::uint8_t unk32C[0x8]; // 32C
-					std::uint32_t unk334; // 334
-					std::uint64_t unk338; // 338
+					SpellItemData data; // 318
 				};
+				static_assert(offsetof(SpellItem, data) == 0x318);
 				static_assert(sizeof(SpellItem) == 0x340);
 			}
 		}

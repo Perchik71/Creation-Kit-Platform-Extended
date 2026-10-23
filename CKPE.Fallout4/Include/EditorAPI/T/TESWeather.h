@@ -9,6 +9,8 @@
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/T/TESModel.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/B/BSTList.h>
+#include <EditorAPI/B/BGSLightingTemplate.h>
 #include <EditorAPI/T/TESTexture1024.h>
 
 namespace CKPE
@@ -25,6 +27,28 @@ namespace CKPE
 				class BGSShaderParticleGeometryData;
 				class TESImageSpace;
 
+				class MagicItem;
+				class TESObjectSTAT;
+				class BGSSoundDescriptorForm;
+
+				// 1.11.246.0: size 0x10
+				struct WeatherSpellData
+				{
+					MagicItem* spell; // 00
+					float threshold; // 08
+					std::uint32_t pad0C; // 0C
+				};
+				static_assert(sizeof(WeatherSpellData) == 0x10);
+
+				// 1.11.246.0: size 0x10, an element of the sound list
+				struct WeatherSound
+				{
+					BGSSoundDescriptorForm* soundForm; // 00
+					std::int32_t type; // 08 - REX::TEnumSet<SoundType, std::int32_t>
+					std::uint32_t pad0C; // 0C
+				};
+				static_assert(sizeof(WeatherSound) == 0x10);
+
 				// 1.11.240.0: size 0x1308, vtable RVA 0x30B90E0, 124 virtual functions
 				class TESWeather :
 					public TESForm   // 000
@@ -33,7 +57,7 @@ namespace CKPE
 					virtual ~TESWeather() = default;
 
 				public:
-					std::uint32_t context; // 28
+					std::int32_t context; // 28 - REX::TEnumSet<SpellContext, std::int32_t>
 					std::uint8_t unk2C[0x4]; // 2C
 					TESTexture1024 cloudTexture[32]; // 30
 					std::int8_t cloudLayerSpeedY[32]; // 530
@@ -45,14 +69,14 @@ namespace CKPE
 					float fogData[18]; // D88
 					std::uint32_t colorData[19][8]; // DD0
 					float fogColorScales[4][8]; // 1030
-					std::uint8_t weatherSpellData[0x20]; // 10B0 - SpellData
-					std::uint8_t soundList[0x10]; // 10D0 - WeatherSoundList
-					BSTArray<void*> skyStatics; // 10E0 - BSTArray<TESObjectSTAT*>
+					WeatherSpellData weatherSpellData[2]; // 10B0
+					BSSimpleList<WeatherSound*> soundList; // 10D0
+					BSTArray<TESObjectSTAT*> skyStatics; // 10E0
 					std::uint32_t numCloudLayers; // 10F8
 					std::uint8_t unk10FC[0x4]; // 10FC
 					TESImageSpace* imageSpace[8]; // 1100
 					BGSGodRays* godRays[8]; // 1140
-					std::uint8_t directionalAmbientLightingColors[0x100]; // 1180 - BGSDirectionalAmbientLightingColors
+					BGSDirectionalAmbientLightingColors directionalAmbientLightingColors[8]; // 1180
 					TESModel aurora; // 1280
 					BGSLensFlare* sunGlareLensFlare; // 12B8
 					float volatilityMult; // 12C0
