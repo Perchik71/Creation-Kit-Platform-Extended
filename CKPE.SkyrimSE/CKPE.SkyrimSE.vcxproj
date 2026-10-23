@@ -191,6 +191,7 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.EnableGameButtonToVC.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.EnableStateParentWorkaround.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.Facegen.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixAcousticSpaceMarker.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixActorDlg.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixBGSEntryPointFunctionDataTwoValue.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixBrightLightColor.cpp" />
@@ -428,6 +429,7 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.EnableGameButtonToVC.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.EnableStateParentWorkaround.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.Facegen.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixAcousticSpaceMarker.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixActorDlg.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixBGSEntryPointFunctionDataTwoValue.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixBrightLightColor.h" />
