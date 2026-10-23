@@ -17,6 +17,9 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				class TESQuest;
+				class BGSScene;
+
 				// 1.11.240.0: size 0x158, vtable RVA 0x2FB6F48, 124 virtual functions
 				class BGSSceneCollection :
 					public TESForm   // 000
@@ -27,9 +30,10 @@ namespace CKPE
 				public:
 					std::uint32_t unk28; // 28
 					std::uint32_t unk2C; // 2C
-					std::uint64_t unk30; // 30
-					BSTArray<void*> unk38; // 38 - element type not identified yet
-					std::uint8_t unk50[0x30]; // 50
+					TESQuest* parentQuest; // 30 - QNAM
+					BSTArray<BGSScene*> scenes; // 38 - SNAM
+					BSTArray<std::uint64_t> unk50; // 50
+					BSTArray<std::uint64_t> unk68; // 68
 					std::uint64_t unk80; // 80
 					BSTArray<void*> unk88; // 88 - element type not identified yet
 					std::uint8_t unkA0[0xC]; // A0
@@ -56,6 +60,10 @@ namespace CKPE
 					std::uint8_t unk144[0xC]; // 144
 					std::uint64_t unk150; // 150
 				};
+				static_assert(offsetof(BGSSceneCollection, parentQuest) == 0x30);
+				static_assert(offsetof(BGSSceneCollection, scenes) == 0x38);
+				static_assert(offsetof(BGSSceneCollection, unk50) == 0x50);
+				static_assert(offsetof(BGSSceneCollection, unk68) == 0x68);
 				static_assert(sizeof(BGSSceneCollection) == 0x158);
 			}
 		}

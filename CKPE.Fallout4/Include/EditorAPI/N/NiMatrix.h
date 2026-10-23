@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <cstring>
+
 #include <EditorAPI/N/NiPoint.h>
 
 namespace CKPE

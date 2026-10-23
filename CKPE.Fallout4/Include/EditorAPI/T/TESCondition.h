@@ -4,10 +4,7 @@
 
 #pragma once
 
-#include <EditorAPI/N/NiFlags.h>
-#include <EditorAPI/N/NiTypes.h>
-#include <EditorAPI/B/BSFixedString.h>
-#include <EditorAPI/T/TESForm.h>
+#include <cstddef>
 
 namespace CKPE
 {
@@ -17,11 +14,22 @@ namespace CKPE
 		{
 			namespace Forms
 			{
-				struct TESCondition
+				class TESCondition
 				{
-					void* head;
+				public:
+					virtual ~TESCondition() = default;
+
+					/* 0x008 */ void* head;
+				private:
+					/* 0x010 */ char pad10[0x8];
+				public:
+					[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+					{
+						return offsetof(TESCondition, head) == 0x8;
+					}
 				};
-				static_assert(sizeof(TESCondition) == 0x8);
+				static_assert(sizeof(TESCondition) == 0x18);
+				static_assert(TESCondition::VerifyLayout());
 			}
 		}
 	}

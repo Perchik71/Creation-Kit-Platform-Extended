@@ -9,6 +9,8 @@
 #include <EditorAPI/B/BSTList.h>
 #include <EditorAPI/B/BSString.h>
 #include <EditorAPI/B/BSSystemFile.h>
+#include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/B/BSTHashMap.h>
 
 namespace CKPE
 {
@@ -25,6 +27,14 @@ namespace CKPE
 				char pad10[0x8];
 			};
 			static_assert(sizeof(TESGroupHeader) == 0x18);
+			static_assert(offsetof(TESGroupHeader, groupType) == 0xC);
+
+			struct TESFileGroup
+			{
+				TESGroupHeader header;
+				std::uint8_t unk18[8];
+			};
+			static_assert(sizeof(TESFileGroup) == 0x20);
 
 			class TESFile;
 
@@ -41,6 +51,8 @@ namespace CKPE
 				/* 12C */ char pad12C[0x4];
 			};
 			static_assert(sizeof(TESBitArrayFile) == 0x130);
+			static_assert(offsetof(TESBitArrayFile, FileHandle) == 0x110);
+			static_assert(offsetof(TESBitArrayFile, Data) == 0x120);
 
 			struct TESChunk
 			{
@@ -53,6 +65,8 @@ namespace CKPE
 				std::uint16_t internalver;
 				std::uint16_t unk;
 			};
+			static_assert(sizeof(TESChunk) == 0x18);
+			static_assert(offsetof(TESChunk, identifier) == 0xC);
 
 			class TESFile
 			{
@@ -70,12 +84,25 @@ namespace CKPE
 					FILE_RECORD_ESL			= 0x200,	// Small file
 				};
 			private:
-				/* 000 */ char _pad0[0x78];
+				/* 000 */ std::uint32_t m_lastError;
+				/* 004 */ char pad004[4];
+				/* 008 */ TESFile* m_threadSafeParent;
+				/* 010 */ BSTHashMap<std::uint32_t, TESFile*> m_threadSafeFiles;
+				/* 048 */ void* unk048;
+				/* 050 */ class BSFile* m_temporaryFile;
+				/* 058 */ BSFile* m_file;
+				/* 060 */ TESBitArrayFile* m_formUserData;
+				/* 068 */ TESBitArrayFile* m_formVersionData;
+				/* 070 */ TESBitArrayFile* m_formIDData;
 				/* 078 */ char m_FileName[MAX_PATH];
 				/* 17C */ char m_FilePath[MAX_PATH];
-				/* 280 */ char _pad1[0x8];
+				/* 280 */ char* m_buffer;
 				/* 288 */ std::uint32_t m_bufsize;
-				/* 28C */ char _pad2[0x18];
+				/* 28C */ std::uint32_t unk28C;
+				/* 290 */ std::uint32_t unk290;
+				/* 294 */ char pad294[4];
+				/* 298 */ void* unk298;
+				/* 2A0 */ std::uint32_t unk2A0;
 				/* 2A4 */ TESChunk m_header_chunk;						// should be 'TES4'
 				/* 2BC */ std::uint32_t m_header_type;					// should be 'HEDR'
 				/* 2C0 */ std::uint32_t m_size_chunk_may_unused;		
@@ -83,9 +110,15 @@ namespace CKPE
 				/* 2C8 */ std::uint32_t m_currentRecordOffset;			// offset of current record in file
 				/* 2CC */ std::uint32_t m_currentChunkOffset;			// offset of current chunk in record
 				/* 2D0 */ std::uint32_t m_fetchedChunkDataSize;			// number of bytes read in last GetChunkData() call
-				/* 2D4 */ char _pad3[0x3C];
+				/* 2D4 */ TESChunk m_savedRecord;
+				/* 2EC */ std::uint32_t m_savedRecordOffset;
+				/* 2F0 */ std::uint32_t m_savedChunkOffset;
+				/* 2F4 */ char pad2F4[4];
+				/* 2F8 */ BSSimpleList<TESFileGroup> m_groups;
+				/* 308 */ bool unk308;
+				/* 309 */ char pad309[7];
 
-				BSSystemFile::Info m_findData;
+				/* 310 */ BSSystemFile::Info m_findData;
 
 				struct FileHeaderInfo 
 				{
@@ -104,8 +137,8 @@ namespace CKPE
 					/*00*/ std::uint32_t nFileSizeHigh;
 					/*04*/ std::uint32_t nFileSizeLow;
 				};
-				typedef BSSimpleList<DependFileData*> DependDataList;
-				typedef BSSimpleList<const char*> DependNameList;
+				typedef BSSimpleList<DependFileData> DependDataList;
+				typedef BSSimpleList<const char> DependNameList;
 
 				/* 340 */ DependNameList m_dependNames;
 				/* 350 */ DependDataList m_dependData;
@@ -117,12 +150,40 @@ namespace CKPE
 				/* 379 */ char _pad8[0x7];
 				/* 380 */ BSString m_authorName;
 				/* 390 */ BSString m_description;
-				/* 3A0 */ char _pad9[0x20];
+				/* 3A0 */ char* m_decompressedRecord;
+				/* 3A8 */ std::uint32_t m_decompressedRecordSize;
+				/* 3AC */ char pad3AC[4];
+				/* 3B0 */ void* m_reservedDecompressionBuffer;
+				/* 3B8 */ std::uint32_t m_reservedDecompressionBufferSize;
+				/* 3BC */ char pad3BC[4];
 				/* 3C0 */ TESFile* m_parentFile;
-				/* 3C8 */ char _pad10[0x8];
+				/* 3C8 */ std::uint32_t m_versionControlID;
+				/* 3CC */ char pad3CC[4];
 				/* 3D0 */ std::uint32_t* m_ownedIds;
-				/* 3D8 */ std::uint64_t m_countOwned;
+				/* 3D8 */ std::uint32_t m_countOwned;
+				/* 3DC */ char pad3DC[4];
+				/* 3E0 */ BSTArray<std::uint32_t>* m_transientFormIDs[0x9F];
+
+				static void CheckLayout() noexcept(true)
+				{
+					static_assert(offsetof(TESFile, m_file) == 0x58);
+					static_assert(offsetof(TESFile, m_threadSafeFiles) == 0x10);
+					static_assert(offsetof(TESFile, m_formUserData) == 0x60);
+					static_assert(offsetof(TESFile, m_FileName) == 0x78);
+					static_assert(offsetof(TESFile, m_header_chunk) == 0x2A4);
+					static_assert(offsetof(TESFile, m_groups) == 0x2F8);
+					static_assert(offsetof(TESFile, m_findData) == 0x310);
+					static_assert(offsetof(TESFile, m_RecordFlags) == 0x33C);
+					static_assert(offsetof(TESFile, m_dependArray) == 0x368);
+					static_assert(offsetof(TESFile, m_versionControlID) == 0x3C8);
+					static_assert(offsetof(TESFile, m_transientFormIDs) == 0x3E0);
+				}
 			public:
+				[[nodiscard]] BSFile* GetFile() const noexcept(true) { return m_file; }
+				[[nodiscard]] TESBitArrayFile* GetFormUserData() const noexcept(true) { return m_formUserData; }
+				[[nodiscard]] TESBitArrayFile* GetFormVersionData() const noexcept(true) { return m_formVersionData; }
+				[[nodiscard]] TESBitArrayFile* GetFormIDData() const noexcept(true) { return m_formIDData; }
+				[[nodiscard]] std::uint32_t GetVersionControlID() const noexcept(true) { return m_versionControlID; }
 				[[nodiscard]] inline BSString GetAuthorName() const noexcept(true) { return *m_authorName ? m_authorName : "DEFAULT"; }
 				[[nodiscard]] inline BSString GetDescription() const noexcept(true) { return m_description; }
 				[[nodiscard]] inline BSString GetFileName() const noexcept(true) { return m_FileName ? m_FileName : ""; }
@@ -161,7 +222,7 @@ namespace CKPE
 				static bool ReadFirstChunk(const char* fileName, TESChunk& chunk) noexcept(true);
 				static std::uint32_t GetTypeFile(const char* fileName) noexcept(true);
 			};
-			static_assert(sizeof(TESFile) == 0x3E0);
+			static_assert(sizeof(TESFile) == 0x8D8);
 		}
 	}
 }

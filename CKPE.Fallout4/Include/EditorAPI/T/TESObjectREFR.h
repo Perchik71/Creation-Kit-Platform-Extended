@@ -13,6 +13,8 @@
 #include <EditorAPI/B/BSHandleRefObject.h>
 #include <EditorAPI/B/BSExtraData.h>
 #include <EditorAPI/B/BSTSmartPointer.h>
+#include <EditorAPI/F/FormInterfaces.h>
+#include <EditorAPI/T/TESChildCell.h>
 #include <EditorAPI/T/TESForm.h>
 
 namespace CKPE
@@ -21,15 +23,24 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
+			class BGSInventoryList;
+			class LOADED_REF_DATA;
+
+			namespace ActorValueEvents
+			{
+				struct ActorValueChangedEvent;
+			}
+
 			namespace Forms
 			{
 				class TESObjectCELL;
 				class TESBoundObject;
 
 				template<class _Ty>
-				class TESObjectREFR_base : public TESForm, public BSTEventSink<void*>, public _Ty, 
+				class TESObjectREFR_base : public TESForm, public TESChildCell, public _Ty,
 					public BSTEventSink<BSActiveGraphIfInactiveEvent>, public BSTEventSink<BSAnimationGraphEvent>, 
-					public BSTEventSink<BGSInventoryListEvent::Event>
+					public BSTEventSink<BGSInventoryListEvent::Event>,
+					public IAnimationGraphManagerHolder, public IKeywordFormBase, public ActorValueOwner
 				{
 				public:
 					constexpr static uint8_t TYPE_ID = TESForm::FormType::ftReference;
@@ -41,20 +52,28 @@ namespace CKPE
 						fsFrozen = 1 << 29,
 					};
 				protected:
-					char _pad58[0x70];							// 0x58
+					BSTEventDispatcher<ActorValueEvents::ActorValueChangedEvent> _actorValueChangedEvents; // 0x70
 					TESObjectCELL* _parentCell;					// 0xC8
 					NiAPI::NiPoint3A _rotate;					// 0xD0, 0xD4, 0xD8, 0xDC
 					NiAPI::NiPoint3A _position;					// 0xE0, 0xE4, 0xE8, 0xEC
 					TESForm* _baseForm;							// 0xF0
-					void* _unkB8;								// 0xF8	// inventory			
-					void* _unkC0;								// 0x100
-					void* _unkC8;								// 0x108
-					//void* _unk11;
+					char _padF8[0x8];							// 0xF8
+					LOADED_REF_DATA* _loadedData;				// 0x100
+					BGSInventoryList* _inventoryList;			// 0x108
 					BSTSmartPointer<ExtraDataList> _extraData;	// 0x110
 					std::uint16_t _scale;						// 0x118
-					std::uint8_t _modelState;					// 0x10A
-					bool _predestroyed;							// 0x10B
-					char _pad11A[0x14];							// 0x11A
+					std::uint8_t _modelState;					// 0x11A
+					bool _predestroyed;							// 0x11B
+					char _pad11C[0x4];							// 0x11C
+					std::uint8_t _unk120[0x10];					// 0x120
+
+					[[nodiscard]] inline NiAPI::NiPoint3 CallPoint3Virtual(std::size_t offset) const noexcept(true)
+					{
+						// Member-function vector returns put the result buffer after this.
+						NiAPI::NiPoint3 result;
+						CKPE::vtbl_call<NiAPI::NiPoint3*>(offset, this, &result);
+						return result;
+					}
 				public:
 					virtual ~TESObjectREFR_base() = default;
 
@@ -63,7 +82,7 @@ namespace CKPE
 					[[nodiscard]] inline void* GetEditorLocation() const noexcept(true) { return CKPE::vtbl_call<void*>(0x3F0, this); }
 					[[nodiscard]] inline bool GetEditorLocation(NiAPI::NiPoint3* originalLocation, NiAPI::NiPoint3* originalAngle,
 						TESForm** locationFormOut, TESForm* locationForm) noexcept(true) 
-					{ return CKPE::vtbl_call<bool>(0x3F8, this); }
+					{ return CKPE::vtbl_call<bool>(0x3F8, this, originalLocation, originalAngle, locationFormOut, locationForm); }
 
 					inline void AddDynamicIdleCRC(std::uint32_t crc) noexcept(true) { CKPE::vtbl_call<void>(0x400, this, crc); }
 					inline void GetPreviousDynamicIdleCRCS(std::uint32_t* crcs, std::uint32_t requestSize) const noexcept(true)
@@ -76,8 +95,8 @@ namespace CKPE
 					[[nodiscard]] inline void* GetActorCause() const noexcept(true) { return CKPE::vtbl_call<void*>(0x448, this); }
 					[[nodiscard]] inline float GetActorWidthOrRefDiameter() const noexcept(true) { return CKPE::vtbl_call<float>(0x450, this); }
 					[[nodiscard]] inline float GetActorHeightOrRefBound() const noexcept(true) { return CKPE::vtbl_call<float>(0x458, this); }
-					[[nodiscard]] inline NiAPI::NiPoint3 GetStartingRotate() const noexcept(true) { return CKPE::vtbl_call<bool>(0x460, this); }
-					[[nodiscard]] inline NiAPI::NiPoint3 GetStartingPosition() const noexcept(true) { return CKPE::vtbl_call<bool>(0x468, this); }
+					[[nodiscard]] inline NiAPI::NiPoint3 GetStartingRotate() const noexcept(true) { return CallPoint3Virtual(0x460); }
+					[[nodiscard]] inline NiAPI::NiPoint3 GetStartingPosition() const noexcept(true) { return CallPoint3Virtual(0x468); }
 					inline void SetStartingPosition(const NiAPI::NiPoint3* position) noexcept(true) { CKPE::vtbl_call<void>(0x470, this, position); }
 					inline void UpdateRefLight(float delta) noexcept(true) { CKPE::vtbl_call<void>(0x478, this, delta); }
 
@@ -103,8 +122,8 @@ namespace CKPE
 					[[nodiscard]] inline TESForm* GetVisualsRace() const noexcept(true) { return CKPE::vtbl_call<TESForm*>(0x580, this); }
 					[[nodiscard]] inline void GetPhysicsTransform(NiAPI::NiTransform* outTransform) const noexcept(true) { CKPE::vtbl_call<void>(0x588, this, outTransform); }
 
-					[[nodiscard]] inline NiAPI::NiPoint3 GetBoundMin() const noexcept(true) { return CKPE::vtbl_call<NiAPI::NiPoint3>(0x590, this); }
-					[[nodiscard]] inline NiAPI::NiPoint3 GetBoundMax() const noexcept(true) { return CKPE::vtbl_call<NiAPI::NiPoint3>(0x598, this); }
+					[[nodiscard]] inline NiAPI::NiPoint3 GetBoundMin() const noexcept(true) { return CallPoint3Virtual(0x590); }
+					[[nodiscard]] inline NiAPI::NiPoint3 GetBoundMax() const noexcept(true) { return CallPoint3Virtual(0x598); }
 
 					inline void OnHeadInitialized() noexcept(true) { CKPE::vtbl_call<void>(0x5B8, this); }
 					[[nodiscard]] inline bool InitNonNPCAnimation(NiAPI::NiNode* nodeForAnim) noexcept(true) { return CKPE::vtbl_call<bool>(0x5C0, this, nodeForAnim); }
@@ -163,12 +182,27 @@ namespace CKPE
 					inline NiAPI::NiPoint3 GetRotate() const noexcept(true) { return _rotate; }
 					inline void SetRotate(const NiAPI::NiPoint3& val) { _rotate = val; }
 					
-					[[nodiscard]] inline std::uint16_t GetScale() const noexcept(true) { return *(std::uint16_t*)(((std::uintptr_t)this) + 0x118); }
-					inline void SetScale(std::uint16_t val) noexcept(true) { *(std::uint16_t*)(((std::uintptr_t)this) + 0x118) = val; }
+					[[nodiscard]] inline std::uint16_t GetScale() const noexcept(true) { return _scale; }
+					inline void SetScale(std::uint16_t val) noexcept(true) { _scale = val; }
 					inline float GetScaleFloat() const noexcept(true) { return ((float)GetScale() / 100); }
 					inline void SetScaleFloat(float val) { SetScale(std::uint16_t(val * 100)); }
 					
-					[[nodiscard]] inline BSTSmartPointer<ExtraDataList> GetExtraData() const noexcept(true) { return _extraData; }
+					[[nodiscard]] inline BSTSmartPointer<ExtraDataList> GetExtraData() const noexcept(true)
+					{
+						static_assert(offsetof(TESObjectREFR_base, _actorValueChangedEvents) == 0x70);
+						static_assert(offsetof(TESObjectREFR_base, _parentCell) == 0xC8);
+						static_assert(offsetof(TESObjectREFR_base, _rotate) == 0xD0);
+						static_assert(offsetof(TESObjectREFR_base, _position) == 0xE0);
+						static_assert(offsetof(TESObjectREFR_base, _baseForm) == 0xF0);
+						static_assert(offsetof(TESObjectREFR_base, _loadedData) == 0x100);
+						static_assert(offsetof(TESObjectREFR_base, _inventoryList) == 0x108);
+						static_assert(offsetof(TESObjectREFR_base, _extraData) == 0x110);
+						static_assert(offsetof(TESObjectREFR_base, _scale) == 0x118);
+						static_assert(offsetof(TESObjectREFR_base, _modelState) == 0x11A);
+						static_assert(offsetof(TESObjectREFR_base, _predestroyed) == 0x11B);
+						static_assert(offsetof(TESObjectREFR_base, _unk120) == 0x120);
+						return _extraData;
+					}
 					[[nodiscard]] inline TESObjectCELL* GetParentCell() const noexcept(true) { return _parentCell; }
 					[[nodiscard]] inline TESForm* GetParent() const noexcept(true) { return _baseForm; }
 					[[nodiscard]] inline bool IsInvisible() const noexcept(true) { return _FormFlags.Has(fs3DInvisible); }
@@ -188,6 +222,8 @@ namespace CKPE
 				typedef TESObjectREFR_base<BSHandleRefObject_64_Extremly> TESObjectREFR_Extremly;
 
 				static_assert(sizeof(TESObjectREFR_Original) == 0x130);
+				static_assert(sizeof(TESObjectREFR_Extremly_NG) == 0x130);
+				static_assert(sizeof(TESObjectREFR_Extremly) == 0x130);
 
 				// IncRef and DefRef - NO USE!!!
 				typedef TESObjectREFR_Original TESObjectREFR;

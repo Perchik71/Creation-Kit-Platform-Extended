@@ -423,6 +423,54 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\EditorAPI\T\TESRenderControl.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESPreviewControl.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\M\ModelessDialog.h">
+      <Filter>EditorAPI\M</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\M\ModalDialog.h">
+      <Filter>EditorAPI\M</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\E\EmbeddedChildDialog.h">
+      <Filter>EditorAPI\E</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\D\DialogExtraPreviewControl.h">
+      <Filter>EditorAPI\D</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\D\DialogExtraDialogData.h">
+      <Filter>EditorAPI\D</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BaseModelessDialog.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BaseDialog.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSShader.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSRenderPass.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSLightingShaderProperty.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSLightingShaderMaterialBase.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSLightingShader.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSEffectShaderProperty.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSEffectShaderMaterial.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\S\Sky.h">
       <Filter>EditorAPI\S</Filter>
     </ClInclude>

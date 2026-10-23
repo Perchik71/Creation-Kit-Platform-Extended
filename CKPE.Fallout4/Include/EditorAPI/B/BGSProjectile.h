@@ -21,6 +21,7 @@ namespace CKPE
 			{
 				class BGSCollisionLayer;
 				class BGSExplosion;
+				class BGSProjectile;
 				class BGSSoundDescriptorForm;
 				class BGSTextureSet;
 				class TESObjectLIGH;
@@ -53,6 +54,7 @@ namespace CKPE
 					BGSProjectile* vatsProjectile; // 80
 					std::int8_t tracerFrequency; // 88
 				};
+				static_assert(offsetof(BGSProjectileData, vatsProjectile) == 0x80);
 				static_assert(sizeof(BGSProjectileData) == 0x90);
 
 				// 1.11.240.0: size 0x1C8, vtable RVA 0x3083F18, 154 virtual functions

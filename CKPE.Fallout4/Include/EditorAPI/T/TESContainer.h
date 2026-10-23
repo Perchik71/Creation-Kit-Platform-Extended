@@ -18,6 +18,7 @@ namespace CKPE
 			namespace Forms
 			{
 				class TESForm;
+				class TESBoundObject;
 			}
 
 			// 1.11.246.0: size 0x28 (the game's ContainerItemExtra is 0x18). Allocated per entry by the CNTO/COED loader, freed by
@@ -44,12 +45,6 @@ namespace CKPE
 				ContainerItemExtra* itemExtra;	// 10
 			};
 			static_assert(sizeof(ContainerObject) == 0x18);
-
-
-			namespace Forms
-			{
-				class TESBoundObject;
-			}
 
 
 			// 1.11.246.0: size 0x78, vtable RVA 0x301D938, 22 virtual functions

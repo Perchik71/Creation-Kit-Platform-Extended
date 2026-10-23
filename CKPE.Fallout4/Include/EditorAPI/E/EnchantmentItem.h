@@ -25,15 +25,18 @@ namespace CKPE
 				public:
 					std::uint32_t unk2D0; // 2D0
 					std::uint32_t unk2D4; // 2D4
-					std::uint32_t unk2D8; // 2D8
+					std::int32_t castingType; // 2D8
 					std::uint32_t unk2DC; // 2DC
-					std::uint32_t unk2E0; // 2E0
-					std::uint32_t unk2E4; // 2E4
-					std::uint32_t unk2E8; // 2E8
+					std::int32_t delivery; // 2E0
+					std::int32_t spellType; // 2E4
+					float chargeTime; // 2E8
 					std::uint32_t unk2EC; // 2EC
 					std::uint64_t unk2F0; // 2F0
 					std::uint64_t unk2F8; // 2F8
 				};
+				static_assert(offsetof(EnchantmentItem, castingType) == 0x2D8);
+				static_assert(offsetof(EnchantmentItem, delivery) == 0x2E0);
+				static_assert(offsetof(EnchantmentItem, chargeTime) == 0x2E8);
 				static_assert(sizeof(EnchantmentItem) == 0x300);
 			}
 		}

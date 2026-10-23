@@ -1,10 +1,11 @@
-// Copyright © 2024-2026 aka CKPE team. All rights reserved.
+// Copyright ï¿½ 2024-2026 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #pragma once
 
 #include <cstddef>
+#include <cstdint>
 
 namespace CKPE
 {

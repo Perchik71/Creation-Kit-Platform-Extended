@@ -236,6 +236,22 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.WrongUpdateActorWnd.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\EditorAPI\T\TESRenderControl.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESPreviewControl.h" />
+    <ClInclude Include="Include\EditorAPI\M\ModelessDialog.h" />
+    <ClInclude Include="Include\EditorAPI\M\ModalDialog.h" />
+    <ClInclude Include="Include\EditorAPI\E\EmbeddedChildDialog.h" />
+    <ClInclude Include="Include\EditorAPI\D\DialogExtraPreviewControl.h" />
+    <ClInclude Include="Include\EditorAPI\D\DialogExtraDialogData.h" />
+    <ClInclude Include="Include\EditorAPI\B\BaseModelessDialog.h" />
+    <ClInclude Include="Include\EditorAPI\B\BaseDialog.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSShader.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSRenderPass.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSLightingShaderProperty.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSLightingShaderMaterialBase.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSLightingShader.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSEffectShaderProperty.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSEffectShaderMaterial.h" />
     <ClInclude Include="Include\EditorAPI\S\Sky.h" />
     <ClInclude Include="Include\EditorAPI\N\NiCamera.h" />
     <ClInclude Include="Include\EditorAPI\B\BSPortalGraphEntry.h" />

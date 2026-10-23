@@ -95,6 +95,7 @@ namespace CKPE
 					inline constexpr Common::ID UpdateWorldToCamera{ 355623, 1619422 };
 					inline constexpr Common::ID UpdateWorldData{ 619373, 1600693 };
 					inline constexpr Common::ID UpdateWorldBound{ 769026, 1600691 };
+					inline constexpr Common::ID RTTI{ 1112416, 1545753 };
 				}
 
 				namespace BGSRenderWindowCamera
@@ -227,6 +228,184 @@ namespace CKPE
 					}
 				}
 
+				namespace BGSDefaultObjectManager
+				{
+					inline constexpr Common::ID Constructor{ 530485 };
+					inline constexpr Common::ID Load{ 27927 };
+					inline constexpr Common::ID Save{ 187069 };
+					inline constexpr Common::ID InitItemImpl{ 41729 };
+				}
+
+				namespace NiObject
+				{
+					inline constexpr Common::ID RTTI{ 494783 };
+				}
+
+				namespace NiObjectNET
+				{
+					inline constexpr Common::ID RTTI{ 338065, 1437333 };
+				}
+
+				namespace NiAVObject
+				{
+					inline constexpr Common::ID RTTI{ 920988, 1614321 };
+				}
+
+				namespace NiNode
+				{
+					inline constexpr Common::ID RTTI{ 721669, 1461188 };
+				}
+
+				namespace BSFadeNode
+				{
+					inline constexpr Common::ID RTTI{ 184085, 1614855 };
+				}
+
+				namespace BSGeometry
+				{
+					inline constexpr Common::ID RTTI{ 1118139, 1614880 };
+				}
+
+				namespace BSTriShape
+				{
+					inline constexpr Common::ID RTTI{ 943464, 1614728 };
+				}
+
+				namespace BSDynamicTriShape
+				{
+					inline constexpr Common::ID RTTI{ 219653, 1614819 };
+				}
+
+				namespace NiLight
+				{
+					inline constexpr Common::ID RTTI{ 874872, 1465372 };
+				}
+
+				namespace NiPointLight
+				{
+					inline constexpr Common::ID RTTI{ 958479, 1614987 };
+				}
+
+				namespace NiCollisionObject
+				{
+					inline constexpr Common::ID RTTI{ 1118187, 1450228 };
+				}
+
+				namespace NiProperty
+				{
+					inline constexpr Common::ID RTTI{ 806243, 1600715 };
+				}
+
+				namespace NiInterpolator
+				{
+					inline constexpr Common::ID RTTI{ 128511, 1617827 };
+				}
+
+				namespace TESFile
+				{
+					inline constexpr Common::ID Constructor{ 531000 };
+				}
+
+				namespace BSShaderProperty
+				{
+					inline constexpr Common::ID Constructor{ 796890, 1676127 };
+					inline constexpr Common::ID SetMaterial{ 0, 1428595 };
+				}
+
+				namespace BSLightingShaderProperty
+				{
+					inline constexpr Common::ID Constructor{ 700052, 1676207 };
+				}
+
+				namespace BSEffectShaderProperty
+				{
+					inline constexpr Common::ID Constructor{ 797087, 1364224 };
+				}
+
+				namespace BSLightingShaderMaterialBase
+				{
+					inline constexpr Common::ID Constructor{ 800509, 1676256 };
+				}
+
+				namespace BSEffectShaderMaterial
+				{
+					inline constexpr Common::ID Constructor{ 285684, 1666435 };
+				}
+
+				namespace BSLight
+				{
+					inline constexpr Common::ID Constructor{ 799880, 1676255 };
+				}
+
+				namespace NiTexture
+				{
+					inline constexpr Common::ID Constructor{ 0, 1401123 };
+				}
+
+				namespace BSShader
+				{
+					inline constexpr Common::ID Constructor{ 128165, 1432688 };
+				}
+
+				namespace BSLightingShader
+				{
+					inline constexpr Common::ID Constructor{ 0, 1524881 };
+					inline constexpr Common::ID Singleton{ 0, 1614989 };
+				}
+
+				namespace BSRenderPass
+				{
+					inline constexpr Common::ID Constructor{ 0, 1485758 };
+				}
+
+				namespace BSShaderManager
+				{
+					inline constexpr Common::ID Initialize{ 0, 1575961 };
+				}
+
+				namespace BSShaderData
+				{
+					inline constexpr Common::ID Constructor{ 0, 1648472 };
+					inline constexpr Common::ID ApplyMaterialData{ 797024, 1666424 };
+				}
+
+				namespace BaseDialog
+				{
+					inline constexpr Common::ID GetWindowHandle{ 0, 1994744 };
+					inline constexpr Common::ID DialogProc{ 0, 1520149 };
+				}
+
+				namespace ModalDialog
+				{
+					inline constexpr Common::ID Show{ 0, 1855063 };
+				}
+
+				namespace TESRenderControl
+				{
+					inline constexpr Common::ID Constructor{ 531711 };
+					inline constexpr Common::ID AttachObject{ 490202 };
+					inline constexpr Common::ID DetachObject{ 528228 };
+					inline constexpr Common::ID ResizeViewport{ 581043 };
+				}
+
+				namespace TESPreviewControl
+				{
+					inline constexpr Common::ID Constructor{ 287227 };
+					inline constexpr Common::ID SetPreviewObject{ 581065 };
+				}
+
+				namespace DialogExtraPreviewControl
+				{
+					inline constexpr Common::ID Create{ 0, 1693407 };
+				}
+
+				namespace BGSPreviewTransform
+				{
+					inline constexpr Common::ID UpdateDataInDialogBox{ 579817 };
+					inline constexpr Common::ID UpdateDataFromDialogBox{ 579818 };
+					inline constexpr Common::ID CleanupDialogBox{ 487280 };
+				}
+
 				namespace Setting
 				{
 					namespace INISettingCollection
@@ -286,8 +465,6 @@ namespace CKPE
 					inline constexpr Common::ID BSResource__LooseFileStream_Create{ 193501, 1992729 };
 					// 1.11.246.0 0x14247C6A0 BSResource::OpenLooseFile
 					inline constexpr Common::ID BSResource__OpenLooseFile{ 767841, 1456433 };
-					// 1.11.246.0 0x142BCC610 BSShaderData::ApplyMaterialData
-					inline constexpr Common::ID BSShaderData__ApplyMaterialData{ 797024, 1666424 };
 					// 1.11.246.0 0x14063F780 CellViewWindow_InsertForm
 					inline constexpr Common::ID CellViewWindow_InsertForm{ 641951, 1463745 };
 					// 1.11.246.0 0x1406713B0 CellViewWindow_InsertObject
@@ -780,8 +957,6 @@ namespace CKPE
 					inline constexpr Common::ID sub_876E60{ 24274, 1450164 };
 					// 1.11.246.0 0x14087B8E0 sub_14087B8E0
 					inline constexpr Common::ID sub_87B8E0{ 654059, 1995336 };
-					// 1.11.246.0 0x14087F110 sub_14087F110
-					inline constexpr Common::ID sub_87F110{ 531000 };
 					// 1.11.246.0 0x140882210 sub_140882210
 					inline constexpr Common::ID TESDataHandler_LoadFileDependencies{ 304833, 1995710 };
 					// 1.11.246.0 0x140882210 sub_140882210

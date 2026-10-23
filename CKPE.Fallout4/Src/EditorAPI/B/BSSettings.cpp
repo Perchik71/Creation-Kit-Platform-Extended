@@ -1,4 +1,4 @@
-// Copyright © 2023-2025 aka CKPE team. All rights reserved.
+// Copyright ï¿½ 2023-2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -62,7 +62,7 @@ namespace CKPE
 			Setting::Types Setting::GetValueType() const
 			{
 				if (!_Name) return stError;
-				switch (tolower(_Name[0]))
+				switch (_Name[0])
 				{
 				case 'b':
 					return stBool;
@@ -71,13 +71,13 @@ namespace CKPE
 				case 'h':
 					return stUnsignedChar;
 				case 'i':
-				case 'n':
 					return stSignedInt;
 				case 'u':
 					return stUnsignedInt;
 				case 'f':
 					return stFloat;
 				case 's':
+				case 'S':
 					return stString;
 				case 'r':
 					return stRGB;

@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <cstddef>
+
 namespace CKPE
 {
 	namespace Fallout4
@@ -21,7 +23,15 @@ namespace CKPE
 				private:
 					const char* _Name;
 					NiRTTI* _Parent;
+				public:
+					[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+					{
+						return offsetof(NiRTTI, _Name) == 0x0 &&
+							offsetof(NiRTTI, _Parent) == 0x8;
+					}
 				};
+				static_assert(sizeof(NiRTTI) == 0x10);
+				static_assert(NiRTTI::VerifyLayout());
 
 				NiObject* _NI_DYNAMIC_CAST(const NiObject* Src, const char* lpstrFromType);
 			}

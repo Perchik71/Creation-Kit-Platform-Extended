@@ -4,11 +4,13 @@
 
 #pragma once
 
+#include <cstddef>
 #include <EditorAPI/N/NiTypes.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/N/NiPointer.h>
 #include <EditorAPI/N/NiTexture.h>
 #include <EditorAPI/B/BSTextureSet.h>
+#include <EditorAPI/B/BSLock.h>
 
 namespace CKPE
 {
@@ -47,10 +49,19 @@ namespace CKPE
 
 				virtual ~BSShaderMaterial() = default;
 
-				inline BSShaderMaterial* Create() const noexcept(true) { CKPE::vtbl_call<void>(0x8, this); }
+				inline BSShaderMaterial* Create() const noexcept(true) { return CKPE::vtbl_call<BSShaderMaterial*>(0x8, this); }
 				inline std::uint32_t GetType() const noexcept(true) { return CKPE::vtbl_call<std::uint32_t>(0x28, this); }
+				inline std::uint32_t GetFeature() const noexcept(true) { return GetType(); }
+				inline std::uint32_t GetMaterialType() const noexcept(true)
+				{ return CKPE::vtbl_call<std::uint32_t>(0x30, this); }
 				inline NiAPI::NiPoint2 GetTextCoordOffset() const noexcept(true) { return _TextCoordOffset[0]; }
 				inline NiAPI::NiPoint2 GetTextCoordScale() const noexcept(true) { return _TextCoordScale[0]; }
+				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+				{
+					return offsetof(BSShaderMaterial, _RefCount) == 0x8 &&
+						offsetof(BSShaderMaterial, _TextCoordOffset) == 0xC &&
+						offsetof(BSShaderMaterial, _TextCoordScale) == 0x1C;
+				}
 
 				inline void SetOffsetUV(float u, float v) noexcept(true)
 				{
@@ -83,9 +94,12 @@ namespace CKPE
 				volatile std::uint32_t	_RefCount;				// 08
 				NiAPI::NiPoint2			_TextCoordOffset[2];	// 0C
 				NiAPI::NiPoint2			_TextCoordScale[2];		// 1C
-				char					_Pad1C[0xC];			// 2C
+				std::uint32_t			_Unk2C;					// 2C
+				std::uint32_t			_Unk30;					// 30
+				char					_Pad34[4];				// 34
 			};
 			static_assert(sizeof(BSShaderMaterial) == 0x38);
+			static_assert(BSShaderMaterial::VerifyLayout());
 
 			// C0
 			class BSLightingShaderMaterialBase : public BSShaderMaterial
@@ -93,12 +107,14 @@ namespace CKPE
 			public:
 				virtual ~BSLightingShaderMaterialBase() = default;
 
-				inline bool IsLightingShaderMaterialEnvmap() const noexcept(true) { CKPE::vtbl_call<void>(0x68, this); }
+				inline bool IsLightingShaderMaterialEnvmap() const noexcept(true) { return CKPE::vtbl_call<BSLightingShaderMaterialBase*>(0x60, this) != nullptr; }
 				inline void ClearTextures() const noexcept(true) { CKPE::vtbl_call<void>(0x70, this); }
-				inline void GetTextures(NiAPI::NiTexture** Textures, std::uint32_t MaxSize) const noexcept(true) { CKPE::vtbl_call<void>(0x78, this, Textures, MaxSize); }
+				inline std::uint32_t GetTextures(NiAPI::NiTexture** Textures, std::uint32_t MaxSize) const noexcept(true)
+				{ return CKPE::vtbl_call<std::uint32_t>(0x78, this, Textures, MaxSize); }
 				inline void SaveToStream(void* Stream) const noexcept(true) { CKPE::vtbl_call<void>(0x80, this, Stream); }
 				inline void LoadFromStream(void* Stream) const noexcept(true) { CKPE::vtbl_call<void>(0x88, this, Stream); }
-				inline void PrefetchTextures() const noexcept(true) { CKPE::vtbl_call<void>(0x90, this); }
+				inline void PrefetchTextures(void* OutHandles, const BSTextureSet* TextureSet) const noexcept(true)
+				{ CKPE::vtbl_call<void>(0x90, this, OutHandles, TextureSet); }
 				inline void LoadTextureSet(BSShaderTextureSet* TextureSet) const noexcept(true) { CKPE::vtbl_call<void>(0xA0, this, TextureSet); }
 				inline NiAPI::NiColor& SpecularColor() { return _SpecularColor; }
 				inline NiAPI::NiPointer<NiAPI::NiTexture> GetDiffuseTexture() const noexcept(true) { return _DiffuseTexture; }
@@ -106,7 +122,7 @@ namespace CKPE
 				inline NiAPI::NiPointer<NiAPI::NiTexture> GetRimSoftLightingTexture() const noexcept(true) { return _RimSoftLightingTexture; }
 				inline NiAPI::NiPointer<NiAPI::NiTexture> GetSmoothnessSpecMaskTexture() const noexcept(true) { return _SmoothnessSpecMaskTexture; }
 				inline NiAPI::NiPointer<NiAPI::NiTexture> GetLookupTexture() const noexcept(true) { return _LookupTexture; }
-				inline std::uint64_t& TextureClampMode() noexcept(true) { return _TextureClampMode; }
+				inline std::uint32_t& TextureClampMode() noexcept(true) { return _TextureClampMode; }
 				inline NiAPI::NiPointer<BSShaderTextureSet> GetTextureSet() const noexcept(true) { return _TextureSet; }
 				inline float& MaterialAlpha() { return _MaterialAlpha; }
 				inline float& RefractionPower() { return _RefractionPower; }
@@ -123,6 +139,14 @@ namespace CKPE
 				inline float& RimLightPower() { return _RimLightPower; }
 				inline float& BackLightPower() { return _BackLightPower; }
 				inline float& LookupScale() { return _LookupScale; }
+				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+				{
+					return offsetof(BSLightingShaderMaterialBase, _DiffuseTexture) == 0x48 &&
+						offsetof(BSLightingShaderMaterialBase, _TextureClampMode) == 0x70 &&
+						offsetof(BSLightingShaderMaterialBase, _TextureSet) == 0x78 &&
+						offsetof(BSLightingShaderMaterialBase, _MaterialAlpha) == 0x80 &&
+						offsetof(BSLightingShaderMaterialBase, _LookupScale) == 0xB8;
+				}
 			protected:
 				NiAPI::NiColor							_SpecularColor;				// 38
 				char									_Pad44[4];					// 44
@@ -131,7 +155,8 @@ namespace CKPE
 				NiAPI::NiPointer<NiAPI::NiTexture>		_RimSoftLightingTexture;	// 58
 				NiAPI::NiPointer<NiAPI::NiTexture>		_SmoothnessSpecMaskTexture;	// 60
 				NiAPI::NiPointer<NiAPI::NiTexture>		_LookupTexture;				// 68
-				std::uint64_t							_TextureClampMode;			// 70
+				std::uint32_t							_TextureClampMode;			// 70
+				std::uint32_t							_Pad74;						// 74
 				NiAPI::NiPointer<BSShaderTextureSet>	_TextureSet;				// 78
 				float									_MaterialAlpha;				// 80
 				float									_RefractionPower;			// 84
@@ -148,19 +173,24 @@ namespace CKPE
 				float									_RimLightPower;				// B0
 				float									_BackLightPower;			// B4
 				float									_LookupScale;				// B8
-				std::uint32_t							_Unk;						// BC
+				BSNonReentrantSpinLock					_LoadTextureSetLock;		// BC
 			};
 			static_assert(sizeof(BSLightingShaderMaterialBase) == 0xC0);
+			static_assert(BSLightingShaderMaterialBase::VerifyLayout());
 
 			// C8
 			class BSLightingShaderMaterialFace : public BSLightingShaderMaterialBase
 			{
 			public:
 				inline NiAPI::NiPointer<NiAPI::NiTexture> GetBaseDiffuse() const { return _BaseDiffuse; }
+				inline NiAPI::NiPointer<NiAPI::NiTexture> GetWrinkleTexture() const { return _BaseDiffuse; }
+				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+				{ return offsetof(BSLightingShaderMaterialFace, _BaseDiffuse) == 0xC0; }
 			private:
 				NiAPI::NiPointer<NiAPI::NiTexture>	_BaseDiffuse;				// C0
 			};
 			static_assert(sizeof(BSLightingShaderMaterialFace) == 0xC8);
+			static_assert(BSLightingShaderMaterialFace::VerifyLayout());
 		}
 	}
 }

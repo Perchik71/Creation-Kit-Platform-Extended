@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <atomic>
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/N/NiTypes.h>
 #include <EditorAPI/N/NiFlags.h>

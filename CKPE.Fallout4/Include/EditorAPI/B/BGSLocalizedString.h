@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <cstddef>
 #include <EditorAPI/B/BSFixedString.h>
 
 namespace CKPE
@@ -20,8 +21,8 @@ namespace CKPE
 			{
 			public:
 				virtual void release(bool free = false) noexcept(true);
-				virtual void unk08() const noexcept(true);					// tag ???
-				virtual void unk10() const noexcept(true);					// ^
+				[[nodiscard]] virtual std::uint64_t GetID() const noexcept(true);
+				virtual bool SetID(std::uint32_t id) noexcept(true);
 				virtual std::uint32_t length() const noexcept(true);
 				virtual const char* c_str() const noexcept(true);
 			};
@@ -37,6 +38,10 @@ namespace CKPE
 			private:
 				// members
 				/*08*/ BSFixedString _Str;
+				static void CheckLayout() noexcept(true)
+				{
+					static_assert(offsetof(BGSLocalizedString, _Str) == 0x8);
+				}
 			};
 			static_assert(sizeof(BGSLocalizedString) == 0x10);
 
@@ -51,12 +56,18 @@ namespace CKPE
 				// members
 				/*08*/ std::uint32_t id;
 				/*10*/ BSFixedString _Str;
+				static void CheckLayout() noexcept(true)
+				{
+					static_assert(offsetof(BGSLocalizedStringDL, id) == 0x8);
+					static_assert(offsetof(BGSLocalizedStringDL, _Str) == 0x10);
+				}
 			};
 			static_assert(sizeof(BGSLocalizedStringDL) == 0x18);
 
 			// 0x10 5 functions
 			class BGSLocalizedStringIL : public BGSLocalizedString
 			{};
+			static_assert(sizeof(BGSLocalizedStringIL) == 0x10);
 		}
 	}
 }

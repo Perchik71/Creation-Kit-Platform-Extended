@@ -304,8 +304,9 @@ namespace CKPE
 
 			class ExtraStartingPosition : public BSExtraData
 			{
-				NiAPI::NiPoint3A _position;
-				NiAPI::NiPoint3A _rotate;
+				NiAPI::NiPoint3 _position;	// 18
+				NiAPI::NiPoint3 _rotate;		// 24
+				std::uint8_t _unk30[0x8]{};	// 30 - zeroed by CK creation
 			public:
 				static constexpr auto TYPE{ kStartingPosition };
 
@@ -314,10 +315,19 @@ namespace CKPE
 					BSExtraData(TYPE), _position(Position), _rotate(Rotate) {}
 				virtual ~ExtraStartingPosition() = default;
 
-				[[nodiscard]] inline NiAPI::NiPoint3A GetPosition() const noexcept(true) { return _position; }
-				[[nodiscard]] inline NiAPI::NiPoint3A GetRotate() const noexcept(true) { return _rotate; }
-				[[nodiscard]] inline NiAPI::NiPoint3A& GetPosition() noexcept(true) { return _position; }
-				[[nodiscard]] inline NiAPI::NiPoint3A& GetRotate() noexcept(true) { return _rotate; }
+				[[nodiscard]] inline NiAPI::NiPoint3A GetPosition() const noexcept(true)
+				{
+					static_assert(offsetof(ExtraStartingPosition, _position) == 0x18);
+					return _position;
+				}
+				[[nodiscard]] inline NiAPI::NiPoint3A GetRotate() const noexcept(true)
+				{
+					static_assert(offsetof(ExtraStartingPosition, _rotate) == 0x24);
+					static_assert(offsetof(ExtraStartingPosition, _unk30) == 0x30);
+					return _rotate;
+				}
+				[[nodiscard]] inline NiAPI::NiPoint3& GetPosition() noexcept(true) { return _position; }
+				[[nodiscard]] inline NiAPI::NiPoint3& GetRotate() noexcept(true) { return _rotate; }
 			};
 			static_assert(sizeof(ExtraStartingPosition) == 0x38);
 

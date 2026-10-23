@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/N/NiObject.h>
 
@@ -22,15 +23,28 @@ namespace CKPE
 					[[nodiscard]] inline const char* GetFileName() const noexcept(true) { return _FileName; }
 					[[nodiscard]] inline NiTexture* GetPrev() const noexcept(true) { return _PrevTexture; }
 					[[nodiscard]] inline NiTexture* GetNext() const noexcept(true) { return _NextTexture; }
+					[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+					{
+						return offsetof(NiTexture, _FileName) == 0x10 &&
+							offsetof(NiTexture, _PrevTexture) == 0x20 &&
+							offsetof(NiTexture, _NextTexture) == 0x28 &&
+							offsetof(NiTexture, _RendererTexture) == 0x38;
+					}
 				private:
-					std::uint32_t Unk10[4];			// 10
-					BSFixedString _FileName;		// 20
-					char _Pad28[8];					// 28
-					NiTexture* _PrevTexture;		// 30
-					NiTexture* _NextTexture;		// 38
-					char _Pad30[8];					// 40
+					BSFixedString _FileName;			// 10
+					std::uint32_t _Flags;			// 18
+					std::uint32_t _Pad1C;			// 1C
+					NiTexture* _PrevTexture;			// 20
+					NiTexture* _NextTexture;			// 28
+					void* _Stream;					// 30
+					void* _RendererTexture;			// 38
+					std::int8_t _DesiredDegradeLevel;	// 40
+					std::int8_t _SavedDegradeLevel;	// 41
+					std::uint8_t _TextureFlags;		// 42
+					char _Pad43[5];					// 43
 				};
 				static_assert(sizeof(NiTexture) == 0x48);
+				static_assert(NiTexture::VerifyLayout());
 			}
 		}
 	}

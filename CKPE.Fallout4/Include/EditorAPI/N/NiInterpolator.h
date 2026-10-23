@@ -6,6 +6,7 @@
 
 #include <cstdint>
 #include <EditorAPI/N/NiColor.h>
+#include <EditorAPI/N/NiObject.h>
 
 namespace CKPE
 {
@@ -17,6 +18,22 @@ namespace CKPE
 			{
 				class NiFloatData;
 				class NiColorData;
+
+				class NiInterpolator : public NiObject
+				{
+				public:
+					[[nodiscard]] inline float GetLastTime() const noexcept(true) { return _LastTime; }
+				private:
+					/* 0x10 */ float _LastTime;
+					/* 0x14 */ std::uint32_t _pad14;
+				public:
+					[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+					{
+						return offsetof(NiInterpolator, _LastTime) == 0x10;
+					}
+				};
+				static_assert(sizeof(NiInterpolator) == 0x18);
+				static_assert(NiInterpolator::VerifyLayout());
 
 				// 1.11.246.0: size 0x30, constructor 0x14254C660. The Creation Kit embeds these in TESImageSpaceModifier instead of the game's
 				// NiPointer<NiFloatInterpolator>. The 0x18 byte NiInterpolator part holds the vtable, the reference count at 08 and the base members.

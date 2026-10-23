@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <CKPE.Utils.h>
 #include <EditorAPI/N/NiObject.h>
 #include <EditorAPI/N/NiPointer.h>
@@ -27,7 +28,7 @@ namespace CKPE
 
 				inline void GetTexture(std::uint32_t Index, NiAPI::NiPointer<NiAPI::NiTexture>& Texture, 
 					bool Unk1 = true) const noexcept(true) 
-				{ return CKPE::vtbl_call<void>(0x168, this, Index, Texture, Unk1); }
+				{ return CKPE::vtbl_call<void>(0x168, this, Index, &Texture, Unk1); }
 				inline void SetTextureFilename(std::uint32_t Index, const char* FileName) const noexcept(true) 
 				{ return CKPE::vtbl_call<void>(0x170, this, Index, FileName); }
 			};
@@ -40,10 +41,13 @@ namespace CKPE
 				constexpr static std::uint32_t MAX = 10;
 				inline const char* At(std::uint32_t Index) const { return Textures[Index]; };
 				inline const char* operator[](std::uint32_t Index) const { return At(Index); };
+				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+				{ return offsetof(BSShaderTextureSet, Textures) == 0x10; }
 			protected:
 				BSFixedString Textures[MAX];	// 10
 			};
 			static_assert(sizeof(BSShaderTextureSet) == 0x60);
+			static_assert(BSShaderTextureSet::VerifyLayout());
 		}
 	}
 }

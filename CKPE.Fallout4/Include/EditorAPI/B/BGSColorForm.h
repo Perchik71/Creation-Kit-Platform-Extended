@@ -84,6 +84,11 @@ namespace CKPE
 					CKPE_READ_PROPERTY(GetName) const char* Name;
 					CKPE_PROPERTY(GetRemappingIndex, SetRemappingIndex) float RemappingIndex;
 					CKPE_PROPERTY(GetRawColor, SetRawColor) NiAPI::NiRGBA RawColor;
+					[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+					{
+						return offsetof(BGSColorForm, _Conditions) == 0x48 &&
+							offsetof(BGSColorForm, _Flags) == 0x60;
+					}
 				private:
 					union
 					{
@@ -92,10 +97,10 @@ namespace CKPE
 					};
 					char pad44[0x4];
 					TESCondition _Conditions;
-					char pad50[0x10];
 					NiAPI::NiTFlags<std::uint32_t, BGSColorForm> _Flags;
 				};
 				static_assert(sizeof(BGSColorForm) == 0x68);
+				static_assert(BGSColorForm::VerifyLayout());
 			}
 		}
 	}

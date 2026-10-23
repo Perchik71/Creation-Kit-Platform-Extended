@@ -20,10 +20,17 @@ namespace CKPE
 				[[nodiscard]] inline std::uint32_t GetVertices() const noexcept(true) { return Vertices; }
 			private:
 				std::uint32_t Triangles;	// 160
-				std::uint32_t Vertices;		// 164
-				char Pad168[8];				// 168
+				std::uint16_t Vertices;		// 164
+				char Pad166[0xA];			// 166
+			public:
+				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+				{
+					return offsetof(BSTriShape, Triangles) == 0x160 &&
+						offsetof(BSTriShape, Vertices) == 0x164;
+				}
 			};
 			static_assert(sizeof(BSTriShape) == 0x170);
+			static_assert(BSTriShape::VerifyLayout());
 		}
 	}
 }

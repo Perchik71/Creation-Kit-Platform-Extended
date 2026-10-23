@@ -6,6 +6,7 @@
 
 #include <cstdio>
 #include <cstddef>
+#include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/N/NiColor.h>
 #include <EditorAPI/N/NiMatrix.h>
 #include <EditorAPI/N/NiPoint.h>
@@ -18,15 +19,67 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
+			class BSShaderAccumulator;
+
 			namespace NiAPI
 			{
 				class NiCamera;
+				class NiAVObject;
+				template<typename T> class NiPointer;
 
 				class NiWindow
 				{
 				public:
-					virtual ~NiWindow() = default;
+					~NiWindow() = default;
+				protected:
+					// Slot zero is not a destructor.
+					/* 00 */ virtual void Unk00();
+				public:
+					/* 01 */ virtual bool SetSceneRoot(NiAVObject* Root);
+					/* 02 */ virtual void CreateCamera(NiPointer<NiCamera>& Camera);
+					/* 03 */ virtual bool Resize(std::uint32_t Width, std::uint32_t Height);
+				protected:
+					/* 04 */ virtual void Unk04();
+				public:
+					[[nodiscard]] inline NiAVObject* GetSceneRoot() const noexcept(true) { return ReadPointer<NiAVObject>(0x8, 0x10); }
+					[[nodiscard]] inline NiCamera* GetCamera() const noexcept(true) { return ReadPointer<NiCamera>(0x1A0, 0x1B0); }
+					[[nodiscard]] inline BSShaderAccumulator* GetAccumulator() const noexcept(true) { return ReadPointer<BSShaderAccumulator>(0x28, 0x30); }
+					[[nodiscard]] static std::size_t GetAllocationSize() noexcept(true)
+					{
+						return VersionLists::GetRuntimeIndex() == 0 ? 0x210 : 0x220;
+					}
+				private:
+					template<typename T>
+					[[nodiscard]] T* ReadPointer(std::size_t Old, std::size_t Current) const noexcept(true)
+					{
+						const auto Offset = VersionLists::GetRuntimeIndex() == 0 ? Old : Current;
+						return *reinterpret_cast<T* const*>(
+							reinterpret_cast<const std::uint8_t*>(this) + Offset);
+					}
+
+					// Storage is 982+; 162 accessors use its smaller layout.
+					/* 0x008 */ std::uint8_t _unk008[0x8];
+					/* 0x010 */ NiAVObject* _SceneRoot;
+					/* 0x018 */ std::uint32_t _unk018;
+					/* 0x01C */ std::uint32_t _pad01C;
+					/* 0x020 */ std::uint8_t _unk020[0x10];
+					/* 0x030 */ BSShaderAccumulator* _Accumulator;
+					/* 0x038 */ std::uint8_t _unk038[0x178];
+					/* 0x1B0 */ NiCamera* _Camera;
+					/* 0x1B8 */ std::uint8_t _unk1B8[0x28];
+					/* 0x1E0 */ std::uint32_t _RenderWindowID;
+					/* 0x1E4 */ std::uint8_t _unk1E4[0x3C];
+				public:
+					[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+					{
+						return offsetof(NiWindow, _SceneRoot) == 0x10 &&
+							offsetof(NiWindow, _Accumulator) == 0x30 &&
+							offsetof(NiWindow, _Camera) == 0x1B0 &&
+							offsetof(NiWindow, _RenderWindowID) == 0x1E0;
+					}
 				};
+				static_assert(sizeof(NiWindow) == 0x220);
+				static_assert(NiWindow::VerifyLayout());
 
 				class NiBinaryStream
 				{
@@ -194,6 +247,9 @@ namespace CKPE
 						std::int32_t m_iRadiusAsInt;
 					};
 				};
+				static_assert(sizeof(NiBound) == 0x10);
+				static_assert(offsetof(NiBound, m_kCenter) == 0x0);
+				static_assert(offsetof(NiBound, m_fRadius) == 0xC);
 
 				// 10
 				struct NiPlane 

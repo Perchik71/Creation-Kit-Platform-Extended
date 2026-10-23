@@ -107,7 +107,8 @@ namespace CKPE
 					BSTSmartPointer<ExtraDataList> _extradata;			// 58 - allocated by the constructor (same ExtraDataList as references)
 					CellData _celldata;
 					TESObjectLAND* _landspace;
-					char _pad3[0x8];
+					float _waterHeight;									// 70 - XCLW
+					char _pad74[0x4];
 					TESFormArray* _navmeshes;
 					BSTArray<TESObjectREFR*> _items;
 					char pad98[0xD8];									// 98 - up to 170 (see the TESObjectCELL generated layout notes in docs)
@@ -129,6 +130,11 @@ namespace CKPE
 					[[nodiscard]] inline std::int32_t GetGridX() const noexcept(true) { return (!HasInterior()) ? _celldata.Grid->X : 0; } // 0xDB3470
 					[[nodiscard]] inline std::int32_t GetGridY() const noexcept(true) { return (!HasInterior()) ? _celldata.Grid->Y : 0; } // 0xDB3490
 					[[nodiscard]] inline LightingData* GetLighting() const noexcept(true) { return (HasInterior()) ? _celldata.Lighting : nullptr; }
+					[[nodiscard]] inline float GetWaterHeight() const noexcept(true)
+					{
+						static_assert(offsetof(TESObjectCELL, _waterHeight) == 0x70);
+						return _waterHeight;
+					}
 					[[nodiscard]] inline bool IsAttached() const noexcept(true) { return _cell_process_level == CellProcessLevels::cplAttached; }
 					[[nodiscard]] inline bool IsLoaded() const noexcept(true) { return _cell_process_level == CellProcessLevels::cplLoaded; }
 					[[nodiscard]] inline bool HasFastTravel() const noexcept(true)
@@ -150,6 +156,7 @@ namespace CKPE
 					CKPE_READ_PROPERTY(GetGridX) std::int32_t GridX;
 					CKPE_READ_PROPERTY(GetGridY) std::int32_t GridY;
 					CKPE_READ_PROPERTY(GetLighting) LightingData* Lighting;
+					CKPE_READ_PROPERTY(GetWaterHeight) float WaterHeight;
 				public:
 					virtual ~TESObjectCELL() = default;
 				};

@@ -13,6 +13,8 @@ namespace CKPE
 		{
 			namespace NiAPI
 			{
+				class NiTimeController;
+				class NiExtraDataContainer;
 				// 18
 				class NiExtraData : public NiObject
 				{
@@ -32,6 +34,8 @@ namespace CKPE
 					virtual ~NiObjectNET() = default;
 
 					[[nodiscard]] inline const char* GetName() const noexcept(true) { return _ObjectName; }
+					[[nodiscard]] inline NiTimeController* GetControllers() const noexcept(true) { return _Controllers; }
+					[[nodiscard]] inline NiExtraDataContainer* GetExtraDataContainer() const noexcept(true) { return _ExtraData; }
 
 					inline void GetViewerStrings(void(*Callback)(const char*, ...)) const noexcept(true)
 					{
@@ -40,10 +44,18 @@ namespace CKPE
 					}
 				private:
 					BSFixedString _ObjectName;
-					char _pad18[0x8];
-					NiExtraData** _ExtraData;
+					NiTimeController* _Controllers;
+					NiExtraDataContainer* _ExtraData;
+				public:
+					[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+					{
+						return offsetof(NiObjectNET, _ObjectName) == 0x10 &&
+							offsetof(NiObjectNET, _Controllers) == 0x18 &&
+							offsetof(NiObjectNET, _ExtraData) == 0x20;
+					}
 				};
 				static_assert(sizeof(NiObjectNET) == 0x28);
+				static_assert(NiObjectNET::VerifyLayout());
 			}
 		}
 	}

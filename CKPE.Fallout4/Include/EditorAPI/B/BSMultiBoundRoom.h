@@ -34,7 +34,7 @@ namespace CKPE
 				[[nodiscard]] inline std::uint16_t GetBoundsX() const noexcept(true) { return _BoundsX; }
 				[[nodiscard]] inline std::uint16_t GetBoundsY() const noexcept(true) { return _BoundsY; }
 				[[nodiscard]] inline std::uint16_t GetBoundsZ() const noexcept(true) { return _BoundsZ; }
-				[[nodiscard]] inline NiAPI::NiPointer<BSMultiBound> GetMultiBound() const noexcept(true) { return _MultiBound; }
+				[[nodiscard]] inline const NiAPI::NiPointer<BSMultiBound>& GetMultiBound() const noexcept(true) { return _MultiBound; }
 				[[nodiscard]] inline BSTArray<BSLight*>& GetLights() noexcept(true) { return _Lights; }
 			};
 			static_assert(sizeof(BSMultiBoundRoom) == 0x1B0);
