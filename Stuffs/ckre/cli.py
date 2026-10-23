@@ -38,7 +38,10 @@ def parser():
     for name in ("rtti", "vtable", "xversion", "ctor", "strings-in", "xrefs"):
         command = commands.add_parser(name)
         common(command)
-        command.add_argument("target", nargs="?" if name in ("rtti", "xrefs") else None)
+        command.add_argument("target", nargs="?" if name in ("rtti", "xrefs", "ctor") else None)
+        if name == "ctor":
+            command.add_argument("--registry", action="store_true",
+                                 help="Include the established 246 factory registry")
         if name == "xrefs":
             command.add_argument("--slot-offset", type=number,
                                  help="Include virtual calls with this byte offset")
@@ -116,6 +119,17 @@ def selftest(config):
                 public = context.rtti.publics.byname.get("??_7TESForm@@6B@")
                 record("PDB decimal section offsets", public == expected[version],
                        {"TESForm_vtable_rva": public})
+                registry = context.ctors.factory_registry()
+                record("Form factory registry", registry["status"] == "PASS" and
+                       registry["slot_count"] == 159 and
+                       registry["registration_count"] == 138, {
+                           k: registry[k] for k in (
+                               "registry_rva", "slot_count", "registration_count",
+                               "anchor_checks")})
+            factories = context.ctors.factory_allocations("BGSLayer")
+            allocations = [a for f in factories for a in f["allocations"]]
+            record(f"BGSLayer factory {version}",
+                   sorted({a["size"] for a in allocations}) == [0x60], factories)
         finally:
             context.close()
     names = ["IDs::BGSRenderWindow::Constructor", "IDs::Sky::Constructor"]
@@ -129,10 +143,13 @@ def selftest(config):
     expected_sizes = {"TESForm": 0x28, "BGSRenderWindow": 0x180,
                       "BGSRenderWindowCamera": 0x88, "NiCamera": 0x1A0,
                       "Sky": 0x448, "BSGraphics::RendererData": 0x25D0,
-                      "BSGraphics::State": 0x3C0}
+                      "BSGraphics::State": 0x3C0, "TESObjectACTI": 0x1E8,
+                      "TESFullName": 0x18}
     headers = selected_headers(["TESForm.h", "BGSRenderWindow.h",
                                 "BGSRenderWindowCamera.h", "NiCamera.h",
-                                "Sky.h", "BSGraphicsRenderer.h", "BSGraphicsState.h"])
+                                "Sky.h", "BSGraphicsRenderer.h", "BSGraphicsState.h",
+                                "TESObjectACTI.h", "TESObjectREFR.h",
+                                "TESFullName.h"])
     context = Context(config, "246")
     try:
         gate = check(config, context.rtti, context.ctors, headers)
@@ -142,13 +159,38 @@ def selftest(config):
                           row["status"] != "FAIL" and gate["compiler_exit_code"] == 0)
             if name == "NiCamera":
                 passed = passed and row["size_status"] == "PASS" and row[
-                    "vtable_status"] == "PARTIAL"
+                    "vtable_status"] in ("PASS", "PARTIAL")
+            if name == "TESFullName":
+                passed = passed and row["size_status"] == "PASS" and row[
+                    "embedded_footprint"]["size"] == 0x18 and row[
+                    "binary_sizes"] == [0x20] and bool(row[
+                        "possible_composite_allocations"])
             record(f"layout {name}", passed, row)
+        aliases = [next((r for r in gate["classes"] if r["name"] == name), None)
+                   for name in ("TESObjectREFR", "TESObjectREFR_Original",
+                                "TESObjectREFR_Extremly_NG", "TESObjectREFR_Extremly")]
+        record("REFR template aliases", all(
+            row and row["header_size"] == 0x130 and row["size_status"] == "PASS"
+            and row["status"] != "FAIL" for row in aliases), aliases)
         sky = context.ctors.describe("Sky")
         sizes = sorted({a["size"] for c in sky["candidates"]
                         for a in c["allocations"] if a["confidence"] in
                         ("named", "binary_diagnostic")})
         record("Sky allocation", 0x448 in sizes, sky)
+        derived_calls = {"NiExtraData": 0xF98FBF, "NiObjectNET": 0x5733BA,
+                         "TESFormIDListView": 0xBDA267}
+        ownership = []
+        for name, site in derived_calls.items():
+            description = context.ctors.describe(name)
+            callers = [ref["site_rva"] for c in description["candidates"]
+                       for ref in context.ctors.callers(c["rva"])]
+            accepted = [a["constructor_call_rva"]
+                        for c in description["candidates"] for a in c["allocations"]]
+            ownership.append({"class": name, "derived_call_rva": site,
+                              "found": site in callers, "accepted": site in accepted})
+        record("Derived allocations do not size base objects",
+               all(row["found"] and not row["accepted"] for row in ownership),
+               ownership)
     finally:
         context.close()
     return {"status": "PASS" if all(c["status"] == "PASS" for c in checks) else "FAIL",
@@ -210,7 +252,12 @@ def run(args, config):
                 results.append({"version": version, "count": len(rtti.classes),
                                 "classes": rtti.classes})
             elif args.command == "ctor":
-                results.append(context.ctors.describe(args.target))
+                if not args.target and not args.registry:
+                    raise ValueError("Supply a class/RVA or --registry")
+                result = context.ctors.describe(args.target) if args.target else {}
+                if args.registry:
+                    result["factory_registry"] = context.ctors.factory_registry()
+                results.append(result)
             elif args.command == "strings-in":
                 rva = number(args.target)
                 results.append({"address": image.address(rva),

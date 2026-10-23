@@ -16,8 +16,9 @@ from .config import HEADERS, ROOT, atomic_write
 
 
 def source_inventory(headers=None):
-    result = []
-    for path in headers or sorted(HEADERS.rglob("*.h")):
+    result, aliases = [], []
+    selected = {p.resolve() for p in headers} if headers else None
+    for path in sorted(HEADERS.rglob("*.h")):
         text = path.read_text("utf-8-sig", errors="replace")
         masked = re.sub(r"/\*.*?\*/|//[^\n]*|\"(?:\\.|[^\"\\])*\"",
                         lambda m: " " * len(m[0]), text, flags=re.S)
@@ -26,8 +27,11 @@ def source_inventory(headers=None):
             r"\s*==\s*(0x[0-9a-fA-F]+|\d+)", masked)]
         tokens = list(re.finditer(
             r"\bnamespace\s+([\w:]+)\s*\{|"
-            r"\b(?:class|struct)\s+(?:alignas\([^)]*\)\s*)?(\w+)"
-            r"(?:\s+final)?\s*(?::[^;{}]+)?\s*\{|([{}])", masked))
+            r"\b(?:class|struct)\s+"
+            r"(?:(?:alignas|__declspec)\([^)]*\)\s*)*(\w+)"
+            r"(?:\s+final)?\s*(?::[^;{}]+)?\s*\{|([{}])|"
+            r"\busing\s+(\w+)\s*=\s*([^;]+);|"
+            r"\btypedef\s+([^;]+?)\s+(\w+)\s*;", masked))
         stack = []
         for token in tokens:
             if token[1]:
@@ -37,6 +41,19 @@ def source_inventory(headers=None):
                     r"\benum\s*$", masked[max(0, token.start() - 10):token.start()]
                 ) else "class"
                 stack.append((kind, token[2] if kind == "class" else "", token))
+            elif token[4] or token[7]:
+                name, expression = ((token[4], token[5]) if token[4] else
+                                    (token[7], token[6]))
+                if re.search(r"[&*(){}]", expression):
+                    continue
+                scope = "::".join(s[1] for s in stack if s[1])
+                qualified = scope + "::" + name if scope else name
+                after = [(at, size) for at, target, size in sizes
+                         if at > token.start() and target in (name, qualified)]
+                aliases.append({
+                    "cpp_name": qualified, "expression": expression.strip(),
+                    "scope": scope, "assert_size": min(after)[1] if after else None,
+                    "header": path.relative_to(ROOT).as_posix()})
             elif token[3] == "{":
                 stack.append(("other", "", token))
             elif stack:
@@ -86,7 +103,82 @@ def source_inventory(headers=None):
                     "sub_virtuals": len(re.findall(
                         r"\bvirtual\b[^;{}]*\bsub_\w*\s*\(", body)),
                 })
+    definitions = {source["cpp_name"]: source for source in result}
+    alias_names = {alias["cpp_name"]: alias for alias in aliases}
+    expanded = {}
+
+    def lookup(name, scope):
+        parts = scope.split("::") if scope else []
+        for depth in range(len(parts), -1, -1):
+            candidate = "::".join(parts[:depth] + [name])
+            if candidate in definitions or candidate in alias_names:
+                return candidate
+        return name
+
+    def expand(expression, scope, seen):
+        def identifier(match):
+            target = lookup(match[0], scope)
+            if target in alias_names:
+                if target in seen:
+                    return target
+                alias = alias_names[target]
+                return expand(alias["expression"], alias["scope"], seen | {target})
+            return target
+        return re.sub(r"\b[A-Za-z_]\w*(?:::[A-Za-z_]\w*)*", identifier, expression)
+
+    for alias in aliases:
+        target = expand(alias["expression"], alias["scope"], {alias["cpp_name"]})
+        definition = definitions.get(target.split("<", 1)[0].strip())
+        if not definition or target == alias["cpp_name"]:
+            continue
+        name = alias["cpp_name"].removeprefix("CKPE::Fallout4::EditorAPI::")
+        for prefix in ("Forms::", "NiAPI::"):
+            name = name.removeprefix(prefix)
+        inherited_assert = alias["assert_size"]
+        if inherited_assert is None:
+            parent = alias_names.get(lookup(alias["expression"], alias["scope"]))
+            if parent:
+                inherited_assert = parent["assert_size"]
+        row = {
+            **definition, "name": name, "cpp_name": alias["cpp_name"],
+            "header": alias["header"], "assert_size": inherited_assert,
+            "alias_of": target, "template_definition": definition["cpp_name"]}
+        previous = expanded.get(alias["cpp_name"])
+        if previous and previous["assert_size"] is not None and inherited_assert is None:
+            continue
+        expanded[alias["cpp_name"]] = row
+    binary_aliases = {}
+    for alias in expanded.values():
+        definition_name = alias["template_definition"].split("::")[-1]
+        if definition_name == alias["name"].split("::")[-1] + "_base":
+            binary_aliases[alias["template_definition"]] = alias["name"]
+    for alias in expanded.values():
+        alias["declaration_headers"] = sorted({
+            a["header"] for a in aliases if a["cpp_name"] == alias["cpp_name"]})
+        if alias["template_definition"] in binary_aliases:
+            alias["binary_name"] = binary_aliases[alias["template_definition"]]
+    result.extend(expanded.values())
+    if selected:
+        result = [source for source in result if
+                  any((ROOT / header).resolve() in selected for header in
+                      source.get("declaration_headers", [source["header"]]))]
     return result
+
+
+def normalize_type(name):
+    return re.sub(r"\s+", "", re.sub(r"\b(class|struct|__ptr64)\s*", "", name))
+
+
+def bind_alias_layouts(inventory, compiled):
+    normalized = {normalize_type(name): (name, layout)
+                  for name, layout in compiled.items()}
+    for source in inventory:
+        if "alias_of" not in source:
+            continue
+        match = normalized.get(normalize_type(source["alias_of"]))
+        if match:
+            name, layout = match
+            compiled[source["cpp_name"]] = {**layout, "instantiated_cpp_name": name}
 
 
 def compiler_environment():
@@ -292,10 +384,40 @@ def embedded_classes(inventory, compiled):
     return embedded
 
 
+def embedded_base_footprints(rtti):
+    gaps = {}
+    for owner in rtti.classes:
+        bases = owner["bases"]
+        for index, parent in enumerate(bases):
+            siblings, child = [], index + 1
+            end = min(len(bases), child + parent["contained_bases"])
+            while child < end:
+                siblings.append(bases[child])
+                child += bases[child]["contained_bases"] + 1
+            for base, following in zip(siblings, siblings[1:]):
+                if base["pdisp"] != -1 or following["pdisp"] != -1:
+                    continue
+                size = following["mdisp"] - base["mdisp"]
+                if size > 0:
+                    gaps.setdefault(base["name"], []).append({
+                        "owner": owner["name"], "parent": parent["name"],
+                        "offset": base["mdisp"], "next_base": following["name"],
+                        "next_offset": following["mdisp"], "size": size})
+    result = {}
+    for name, evidence in gaps.items():
+        minimum = min(item["size"] for item in evidence)
+        supporting = [item for item in evidence if item["size"] == minimum]
+        if len({item["owner"] for item in supporting}) >= 2:
+            result[name] = {"size": minimum, "evidence": supporting}
+    return result
+
+
 def check(config, rtti, constructors, headers=None, allocations=True):
     compiled = compile_inventory(config, headers)
     inventory = source_inventory(headers)
+    bind_alias_layouts(inventory, compiled["classes"])
     embedded = embedded_classes(inventory, compiled["classes"])
+    footprints = embedded_base_footprints(rtti)
     rows, binary_records = [], {}
 
     def fail(row, kind, header, binary, reason):
@@ -313,17 +435,21 @@ def check(config, rtti, constructors, headers=None, allocations=True):
                "binary_vtable_slots": None, "binary_sizes": [],
                "embedded_by": embedded.get(source["name"], []),
                "primary_methods": layout["methods"] if layout else [],
+               "instantiated_cpp_name": layout.get("instantiated_cpp_name") if layout else None,
                "new_primary_virtuals": None, "reasons": [], "evidence": []}
         rows.append(row)
         if not layout:
             row["reasons"].append("Compiler did not emit this class layout")
             continue
         try:
-            binary = rtti.get(source["name"])
+            binary = rtti.get(source.get("binary_name", source["name"]))
         except ValueError:
             binary = None
         if binary:
             binary_records[source["name"]] = binary
+            footprint = footprints.get(binary["name"])
+            if footprint:
+                row["embedded_footprint"] = footprint
             table = rtti.primary(binary)
             if table:
                 row["binary_vtable_slots"] = len(table["slots"])
@@ -333,8 +459,20 @@ def check(config, rtti, constructors, headers=None, allocations=True):
                 evidence = [a for c in description["candidates"]
                             for a in c["allocations"] if a["confidence"] in
                             ("named", "binary_diagnostic")]
+                evidence += description["factory_allocations"]
                 row["binary_sizes"] = sorted({a["size"] for a in evidence})
                 row["allocation_evidence"] = evidence
+                boundary = footprint["size"] if footprint else layout["size"]
+                composite = [a for a in evidence if
+                             a.get("constructor_initialized_extent") is not None
+                             and a["constructor_initialized_extent"] > boundary]
+                row["possible_composite_allocations"] = composite
+                row["size_gate_binary_sizes"] = sorted({
+                    a["size"] for a in evidence if a not in composite})
+                if composite:
+                    row["reasons"].append(
+                        "Possible composite allocation: constructor stores "
+                        "extend beyond the embedded footprint or claimed size")
         claimed = source["assert_size"] is not None or bool(row["embedded_by"])
         row["size_obligation"] = claimed
         if not claimed:
@@ -343,15 +481,21 @@ def check(config, rtti, constructors, headers=None, allocations=True):
         elif source["assert_size"] is not None and layout["size"] != source["assert_size"]:
             fail(row, "size", layout["size"], source["assert_size"],
                  "MSVC size disagrees with static_assert")
-        elif row["binary_sizes"]:
-            if row["binary_sizes"] == [layout["size"]]:
+        elif row.get("size_gate_binary_sizes"):
+            sizes = row["size_gate_binary_sizes"]
+            if sizes == [layout["size"]]:
                 row["size_status"] = "PASS"
                 row["verified"].append("size")
-            elif layout["size"] not in row["binary_sizes"]:
-                fail(row, "size", layout["size"], row["binary_sizes"],
+            elif layout["size"] not in sizes:
+                fail(row, "size", layout["size"], sizes,
                      "Claimed or embedded size disagrees with binary allocation")
             else:
                 row["reasons"].append("Conflicting allocation sizes")
+        elif row.get("embedded_footprint", {}).get("size") == layout["size"]:
+            row["size_status"] = "PASS"
+            row["verified"].append("size")
+            row["evidence"].append("RTTI sibling-base offset gaps")
+            row["reasons"].append("PASS (embedded footprint)")
         else:
             row["reasons"].append("No unambiguous binary allocation size")
         cpp_slots, binary_slots = row["header_vtable_slots"], row["binary_vtable_slots"]

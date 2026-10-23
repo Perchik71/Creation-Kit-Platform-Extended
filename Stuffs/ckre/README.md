@@ -159,25 +159,58 @@ Run the command separately on either header, or on a copied IDs block.
 ckre ctor Sky --json
 ```
 
-Output: `{target, version, candidates, limitations}`. Each candidate contains
+Output: `{target, version, candidates, factories, factory_allocations,
+allocation_sizes, limitations}`. Each candidate contains
 constructor RVA, field `stores`, calls, `allocations`, `allocation_sizes` and
 `initialized_extent`. A store gives offset, width, source kind and instruction
 RVA. Sources distinguish constants, zeros, other vtables, registers and call
 results. XOR-zeroed vector registers and `rep stos` stores are recognized.
+Constructor-call allocations retain `constructor_initialized_extent` so the
+gate can distinguish an embedded class from a larger composite initializer.
 Class discovery follows references to its primary vtable and requires that
 the last known primary-vtable write at offset zero is the requested class.
 Constructor IDs in `IDs.h` also locate nonpolymorphic classes; `DataConstructor`
 under `Renderer` denotes `RendererData`.
 
 Allocation evidence is from an immediately preceding call with a constant
-ECX/EDX size and `mov rcx,rax` forwarding to the constructor. Call/jump thunks
-are canonicalized once. Exact allocator PDB names are preferred. Otherwise
-targets called at least 100 times are candidates; embedded allocation and
-`memorymanager.cpp` diagnostics identify CK memory-manager allocation bodies.
+ECX/EDX size and unadjusted allocation-result forwarding to the constructor.
+Call/jump thunks are canonicalized once. Exact allocator PDB names and embedded
+allocation/`memorymanager.cpp` diagnostics identify allocation bodies.
 That path uses EDX as size, retaining diagnostic strings and xref counts.
-Frequency-only suggestions are labeled `frequency_heuristic` and excluded
-from the layout size gate. A subsequent different vtable materialization
-invalidates a base-constructor allocation inference.
+Otherwise targets called at least 100 times supply suggestions labeled
+`frequency_heuristic`, excluded from the layout size gate. A subsequent
+different vptr store into the allocated object invalidates a base-constructor
+allocation inference, including vtables loaded into saved registers earlier
+in the caller. Adjusted subobject pointers do not size the complete class.
+
+Concrete forms also use independently discovered RTTI types beginning with
+`.?AV?$ConcreteFormFactory@V<Class>@@`. Their primary vtable slot 1 is Create.
+The first diagnostic-identified allocator in Create supplies the complete-form
+size even when construction is inlined. Bounded fragment/tail-jump and small
+helper traversal retains a `create_path`; no constructor-call xref is required.
+MOV/LEA constant propagation handles `xor r9d,r9d; lea edx,[r9+size]`.
+Simple tail-call allocator wrappers preserve their incoming size register,
+including ECX-to-EDX transfers used by older builds and TESPackage.
+
+Factory evidence retains the decorated type, factory vtable/type-descriptor
+RVAs, Create RVA, allocation-site RVA, exact size instruction/RVA, argument
+register, underlying allocator and wrapper chain. Version 246 additionally
+associates registered factory-object RVAs and form-type indices.
+
+```powershell
+ckre ctor --registry --json
+ckre ctor TESObjectACTI --registry --json
+```
+
+`--registry` exposes the established 246 table at RVA `0x3D5F1B0` (159 slots),
+registration `0x8C1820`, lookup `0x8C17C0` and unregister `0x8C1880`.
+The report is nested under `factory_registry`, both with and without a class.
+Both registration and lookup are checked for the table address and bound.
+Registration callers are resolved through thunks; constant arguments and
+initializer vtable stores associate the static factory objects. The file's
+zero-filled/BSS registry is not reported as a live initialized registry:
+`image_pointer`/`loader_zero_fill` describe disk state, while `registrations`
+describe initializer code. Other versions report UNKNOWN registry anchors.
 
 Register provenance is linear, not a control-flow proof. Constructor and
 destructor vtable writes can both produce candidates. Inlined initialization,
@@ -227,6 +260,13 @@ sizes, verified dimensions, reasons and evidence. MSVC's first vftable block
 is primary, including `Class::$vftable@FirstBase@` spellings. Namespace and
 template spellings are preserved.
 
+Source declarations accept `class __declspec(empty_bases) X`. `typedef` and
+`using` aliases are expanded through namespace-qualified template arguments
+and bound to MSVC's instantiated layout spelling (`instantiated_cpp_name`).
+Assertions on the alias retain their size obligation. Variants of a canonical
+`X_base<...>` alias share the binary identity of `X`; this binds the three REFR
+handle variants and canonical `TESObjectREFR` to size `0x130` evidence.
+
 Counts always include `PASS`, `PARTIAL`, `STUB`, `UNKNOWN` and `FAIL`.
 Rows expose separate `size_status` and `vtable_status` plus structured
 `failures` with kind, header value, binary value and reason.
@@ -246,6 +286,13 @@ Pointer-only binary stubs with neither obligation are STUB, even when their
 observed allocation is larger. A claimed/embedded size that disagrees with
 unambiguous binary allocation evidence is FAIL. An assert alone does not
 prove the binary size; absent or ambiguous allocation evidence is UNKNOWN.
+RTTI sibling-base offset gaps establish an `embedded_footprint` when the
+minimum gap agrees across at least two classes. A matching claimed size is
+`PASS (embedded footprint)`. Constructor-call allocations whose stores extend
+beyond that footprint (or the claimed size if no footprint exists) remain in
+`binary_sizes` and `possible_composite_allocations`, but cannot fail the size
+gate. Factory Create allocations remain authoritative; `size_gate_binary_sizes`
+contains the allocations eligible for size verification.
 
 Overall status prioritizes FAIL, STUB, PARTIAL, PASS, then UNKNOWN. Both
 dimension statuses remain visible; a STUB can therefore also have a PARTIAL
@@ -284,8 +331,14 @@ ckre selftest --json
 Output: `{status, counts, checks}`. No mocks or synthetic fixtures are used.
 Checks cover TESForm's 124 slots and primary RVA in all four executables,
 the committed BGSRenderWindow/Sky constructor IDs and semantic fingerprints,
-the seven established layout sizes, and Sky's `0x448` allocation. NiCamera
-specifically requires size PASS at `0x1A0` and vtable PARTIAL, not vtable PASS.
+the established layout sizes, and Sky's `0x448` allocation. NiCamera requires
+size PASS at `0x1A0`; its vtable accepts complete PASS or trailing-slot PARTIAL.
+Regression checks cover BGSLayer's factory allocation in all four builds, the
+246 registry anchors/registrations, TESObjectACTI's `0x1E8` layout, the four
+REFR alias layouts at `0x130`, and exclusion of derived allocations attributed
+to NiExtraData, NiObjectNET or TESFormIDListView base constructors.
+TESFullName verifies its `0x18` embedded footprint despite a composite's
+attributed `0x20` allocation.
 Selftest does not rewrite headers or waive genuine gate failures.
 
 ## Fleet layout gate
