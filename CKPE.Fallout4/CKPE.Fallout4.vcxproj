@@ -481,7 +481,6 @@
     <ClInclude Include="Include\EditorAPI\T\TESObjectLAND.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectLIGH.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectREFR.h" />
-    <ClInclude Include="Include\EditorAPI\T\TESObjectREFRFwd.h" />
     <ClInclude Include="Include\EditorAPI\T\TESQuest.h" />
     <ClInclude Include="Include\EditorAPI\T\TESTexture.h" />
     <ClInclude Include="Include\EditorAPI\T\TESTopic.h" />

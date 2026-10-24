@@ -402,7 +402,6 @@
 #include <EditorAPI/T/TESObjectLIGH.h>
 #include <EditorAPI/T/TESObjectMISC.h>
 #include <EditorAPI/T/TESObjectREFR.h>
-#include <EditorAPI/T/TESObjectREFRFwd.h>
 #include <EditorAPI/T/TESObjectSTAT.h>
 #include <EditorAPI/T/TESObjectTREE.h>
 #include <EditorAPI/T/TESObjectWEAP.h>
