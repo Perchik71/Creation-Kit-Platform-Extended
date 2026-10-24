@@ -291,6 +291,7 @@ namespace CKPE
 				namespace NiCollisionObject
 				{
 					inline constexpr Common::ID RTTI{ 1118187, 1450228 };
+					inline constexpr Common::ID SetTarget{ 769362, 1496571 };
 				}
 
 				namespace NiProperty
@@ -575,6 +576,47 @@ namespace CKPE
 				namespace TESCustomPackageData
 				{
 					inline constexpr Common::ID Constructor{ 372998 };
+				}
+
+				namespace bhkRefObject
+				{
+					inline constexpr Common::ID SetReferencedObject{ 725722, 1521302 };
+				}
+
+				namespace bhkWorld
+				{
+					inline constexpr Common::ID Update{ 753440, 1626434 };
+					inline constexpr Common::ID Init{ 753447, 1505182 };
+				}
+
+				namespace bhkNPCollisionObject
+				{
+					inline constexpr Common::ID CreateInstance{ 753894, 1599525 };
+					inline constexpr Common::ID AddToWorld{ 753901, 1334468 };
+					inline constexpr Common::ID RemoveFromWorld{ 705852, 1599528 };
+					inline constexpr Common::ID SetCollisionFilterInfo{ 108700, 1582399 };
+					inline constexpr Common::ID GetBody{ 377675, 1626976 };
+				}
+
+				namespace bhkThreadMemorySource
+				{
+					inline constexpr Common::ID Constructor{ 724189, 1347142 };
+				}
+
+				namespace bhkCharacterController
+				{
+					inline constexpr Common::ID SetOrientationController{ 46640, 1838184 };
+				}
+
+				namespace hkaAnimationControl
+				{
+					inline constexpr Common::ID Ctor{ 742083, 1629421 };
+					inline constexpr Common::ID InitWeights{ 106589, 1534443 };
+				}
+
+				namespace hkaDefaultAnimationControl
+				{
+					inline constexpr Common::ID Ctor{ 233793, 1628644 };
 				}
 
 				namespace Setting

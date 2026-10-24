@@ -22,6 +22,11 @@ namespace CKPE
 			class BSSegmentedTriShape;
 			class BSSubIndexTriShape;
 			class BSLines;
+			class bhkNiCollisionObject;
+			class bhkBlendCollisionObject;
+			class bhkRigidBody;
+			class bhkLimitedHingeConstraint;
+			class bhkNPCollisionObject;
 
 			namespace NiAPI
 			{
@@ -38,11 +43,6 @@ namespace CKPE
 				class NiLight;
 				class NiObjectGroup;
 				class NiControllerManager;
-				class bhkNiCollisionObject;
-				class bhkBlendCollisionObject;
-				class bhkRigidBody;
-				class bhkLimitedHingeConstraint;
-				class bhkNPCollisionObject;
 
 				namespace Templates
 				{

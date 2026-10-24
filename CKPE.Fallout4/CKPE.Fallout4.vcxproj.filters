@@ -423,6 +423,141 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\EditorAPI\H\hkpWorld.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkpShape.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkpPhysics.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkpMotion.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkpMopp.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkpConstraintData.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkpCollisionFilter.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkpCollisionCollector.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkpCollisionAgent.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkpAction.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkcdGeometry.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkbModifiers.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkbGenerators.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkbBethesda.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkbBehaviorGraph.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkaAnimationControl.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkaAnimation.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkSceneGeometry.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkRuntimeExtras.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkReflectionTypes.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkMemory.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkLegacyPhysics.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkInfrastructure.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkGeometryProcessing.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkBaseTypes.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\H\hkBaseObject.h">
+      <Filter>EditorAPI\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkWorldStepListener.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkWorld.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkTrapListener.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkThreadPool.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkShape.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkRefObject.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkRagdoll.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkPhysicsSystem.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkMemorySystem.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkExtraData.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkEntity.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkConstraint.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkCollisionObject.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkCollisionFilter.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkCharacterState.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkCharacterOrientation.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkCharacterController.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkBlendController.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\bhkAction.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TreeListControl.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
