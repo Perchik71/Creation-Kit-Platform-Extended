@@ -4,6 +4,7 @@
 
 #include <windows.h>
 #include <EditorAPI/IDs.h>
+#include <EditorAPI/E/EditorWindowControls.h>
 #include <CKPE.Utils.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Graphics.h>
@@ -31,6 +32,7 @@ namespace CKPE
 	{
 		namespace Patch
 		{
+			namespace ObjectControls = EditorAPI::EditorWindows::ObjectWindow;
 			OBJWNDS ObjectWindows;
 			ObjectWindow* GlobalObjectWindowBasePtr = nullptr;
 			std::uintptr_t pointer_ObjectWindow_sub = 0;
@@ -217,9 +219,10 @@ namespace CKPE
 				return bResult;
 			}
 
-			std::int32_t ObjectWindow::sub(std::int64_t ObjectListInsertData, void* Form) noexcept(true)
+			std::int32_t ObjectWindow::sub(EditorAPI::BGSObjectWindowUtils::LegacyObjectListInsertData* ObjectListInsertData,
+				void* Form) noexcept(true)
 			{
-				const HWND objectWindowHandle = GetParent((*(HWND*)(ObjectListInsertData + 0x18)));
+				const HWND objectWindowHandle = GetParent(ObjectListInsertData->ListWindow);
 
 				bool allowInsert = true;
 				SendMessageA(objectWindowHandle, UI_OBJECT_WINDOW_ADD_ITEM, (WPARAM)Form, (LPARAM)&allowInsert);
@@ -272,13 +275,13 @@ namespace CKPE
 				{
 					auto lpObjWnd = new OBJWND;
 					lpObjWnd->ObjectWindow = Hwnd;
-					lpObjWnd->Controls.TreeList = lpObjWnd->ObjectWindow.GetControl(2093);
-					lpObjWnd->Controls.ItemList = lpObjWnd->ObjectWindow.GetControl(1041);
-					lpObjWnd->Controls.ToggleDecompose = lpObjWnd->ObjectWindow.GetControl(6027);
-					lpObjWnd->Controls.BtnObjLayout = lpObjWnd->ObjectWindow.GetControl(6025);
-					lpObjWnd->Controls.ComboLayout = lpObjWnd->ObjectWindow.GetControl(6024);
-					lpObjWnd->Controls.EditFilter = lpObjWnd->ObjectWindow.GetControl(2581);
-					lpObjWnd->Controls.Spliter = lpObjWnd->ObjectWindow.GetControl(2157);
+					lpObjWnd->Controls.TreeList = lpObjWnd->ObjectWindow.GetControl(ObjectControls::kCategoryTree);
+					lpObjWnd->Controls.ItemList = lpObjWnd->ObjectWindow.GetControl(ObjectControls::kObjectList);
+					lpObjWnd->Controls.ToggleDecompose = lpObjWnd->ObjectWindow.GetControl(ObjectControls::kDecompose);
+					lpObjWnd->Controls.BtnObjLayout = lpObjWnd->ObjectWindow.GetControl(ObjectControls::kEditLayout);
+					lpObjWnd->Controls.ComboLayout = lpObjWnd->ObjectWindow.GetControl(ObjectControls::kLayout);
+					lpObjWnd->Controls.EditFilter = lpObjWnd->ObjectWindow.GetControl(ObjectControls::kFilter);
+					lpObjWnd->Controls.Spliter = lpObjWnd->ObjectWindow.GetControl(ObjectControls::kSplitter);
 					lpObjWnd->Controls.ActiveOnly = GetDlgItem(Hwnd, UI_OBJECT_WINDOW_CHECKBOX);
 
 					// Eliminate the flicker when changing categories
@@ -393,7 +396,7 @@ namespace CKPE
 							auto SelItem = Pick->GetItems()->GetBeginIterator();
 
 							// get the desired form from the selected list
-							auto ItemList = GetDlgItem(Hwnd, 1041);
+							auto ItemList = GetDlgItem(Hwnd, ObjectControls::kObjectList);
 							CKPE_ASSERT(ItemList);
 
 							auto ItemCount = ListView_GetSelectedCount(ItemList);
@@ -430,7 +433,7 @@ namespace CKPE
 					}
 					else if ((param == Common::EditorUI::UI_EDITOR_COPY_EDITOR_ID) || (param == Common::EditorUI::UI_EDITOR_COPY_FORM_ID))
 					{
-						auto ItemList = GetDlgItem(Hwnd, 1041);
+						auto ItemList = GetDlgItem(Hwnd, ObjectControls::kObjectList);
 						CKPE_ASSERT(ItemList);
 
 						auto Form = (EditorAPI::Forms::TESForm*)Common::EditorUI::ListViewGetSelectedItem(ItemList);

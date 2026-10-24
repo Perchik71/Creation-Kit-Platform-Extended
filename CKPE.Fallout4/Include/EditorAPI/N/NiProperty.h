@@ -15,6 +15,8 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
+			class BSGeometry;
+
 			namespace NiAPI
 			{
 				namespace Templates
@@ -29,7 +31,7 @@ namespace CKPE
 							kTypeShade = 1
 						};
 
-						inline void GetType() const { CKPE::vtbl_call<void>(REL_GETTYPE, this); }
+						[[nodiscard]] inline std::uint32_t GetType() const noexcept(true) { return CKPE::vtbl_call<std::uint32_t>(REL_GETTYPE, this); }
 					};
 
 					template<typename T>
@@ -77,16 +79,30 @@ namespace CKPE
 					};
 				}
 
+				class NiUpdateData;
+
 				class NiProperty : public Templates::NiPropertyT<NiObjectNET, 0x150>
-				{};
+				{
+				public:
+					/* 2A */ [[nodiscard]] virtual std::uint32_t GetType() const noexcept(true) = 0;
+					/* 2B */ virtual void UpdateControllers(NiUpdateData& Data) noexcept(true);
+				};
 				static_assert(sizeof(NiProperty) == 0x28);
 
 				class NiShadeProperty : public NiProperty
-				{};
+				{
+				public:
+					[[nodiscard]] std::uint32_t GetType() const noexcept(true) override;
+				protected:
+					/* 2C */ virtual bool Unk2C(BSGeometry* Geometry) noexcept(true);
+				};
 				static_assert(sizeof(NiShadeProperty) == 0x28);
 
 				class NiAlphaProperty : public Templates::NiAlphaPropertyT<NiProperty>
-				{};
+				{
+				public:
+					[[nodiscard]] std::uint32_t GetType() const noexcept(true) override;
+				};
 				static_assert(sizeof(NiAlphaProperty) == 0x30);
 			}
 		}

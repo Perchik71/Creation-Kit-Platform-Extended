@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 
 namespace CKPE
@@ -25,9 +26,17 @@ namespace CKPE
 				ObjectRefHandle(std::uint32_t UniqueId) : _UniqueId(UniqueId) {}
 				ObjectRefHandle(const ObjectRefHandle& rhs) : _UniqueId(rhs._UniqueId) {}
 				
-				inline ObjectRefHandle& operator=(const ObjectRefHandle& rhs) noexcept(true) { _UniqueId = rhs._UniqueId; }
+				inline ObjectRefHandle& operator=(const ObjectRefHandle& rhs) noexcept(true)
+				{
+					_UniqueId = rhs._UniqueId;
+					return *this;
+				}
 
-				[[nodiscard]] inline std::uint32_t Id() const noexcept(true) { return _UniqueId; }
+				[[nodiscard]] inline std::uint32_t Id() const noexcept(true)
+				{
+					static_assert(offsetof(ObjectRefHandle, _UniqueId) == 0x00);
+					return _UniqueId;
+				}
 				[[nodiscard]] Forms::TESForm* Ref() const noexcept(true);
 
 				inline bool operator==(const ObjectRefHandle& rhs) const noexcept(true) { return _UniqueId == rhs._UniqueId; }

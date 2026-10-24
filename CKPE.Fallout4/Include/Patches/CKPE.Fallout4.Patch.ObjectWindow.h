@@ -5,6 +5,7 @@
 #pragma once
 
 #include <EditorAPI/T/TESObjectREFR.h>
+#include <EditorAPI/O/ObjectWindowInsertData.h>
 #include <CKPE.Singleton.h>
 #include <CKPE.Common.PatchBaseWindow.h>
 #include <CKPE.Common.UICheckboxControl.h>
@@ -41,7 +42,8 @@ namespace CKPE
 
 			class ObjectWindow : public Common::PatchBaseWindow
 			{
-				static std::int32_t sub(std::int64_t ObjectListInsertData, void* Form) noexcept(true);
+				static std::int32_t sub(EditorAPI::BGSObjectWindowUtils::LegacyObjectListInsertData* ObjectListInsertData,
+					void* Form) noexcept(true);
 				static std::int32_t sub2(HWND Hwnd, void* Form, const char* filterText) noexcept(true);
 				static void SetObjectWindowFilter(LPOBJWND lpObjWnd, const char* name,
 					const bool SkipText, const bool actived) noexcept(true);

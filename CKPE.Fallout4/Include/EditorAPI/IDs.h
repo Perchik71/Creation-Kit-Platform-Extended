@@ -41,6 +41,8 @@ namespace CKPE
 					inline constexpr Common::ID Save{ 0, 1386733 };
 					// 0x140868710
 					inline constexpr Common::ID LoadFileRecords{ 0, 1495600 };
+					inline constexpr Common::ID AddForm{ 167748, 1522536 };
+					inline constexpr Common::ID RemoveForm{ 653538, 1993993 };
 				}
 
 				namespace TESVersionControl
@@ -361,6 +363,14 @@ namespace CKPE
 				namespace BSShaderManager
 				{
 					inline constexpr Common::ID Initialize{ 0, 1575961 };
+					inline constexpr Common::ID CurrentCamera{ 218067 };
+					inline constexpr Common::ID TimerValues{ 577501 };
+					inline constexpr Common::ID ShaderArray{ 949374, 1691880 };
+					inline constexpr Common::ID GetShader{ 797192, 1624133 };
+					namespace State
+					{
+						inline constexpr Common::ID Singleton{ 123088 };
+					}
 				}
 
 				namespace BSShaderData
@@ -404,6 +414,167 @@ namespace CKPE
 					inline constexpr Common::ID UpdateDataInDialogBox{ 579817 };
 					inline constexpr Common::ID UpdateDataFromDialogBox{ 579818 };
 					inline constexpr Common::ID CleanupDialogBox{ 487280 };
+				}
+
+				namespace BaseExtraList
+				{
+					inline constexpr Common::ID AddExtra{ 651211, 1447487 };
+					inline constexpr Common::ID GetByType{ 651217, 1989546 };
+					inline constexpr Common::ID HasType{ 340485 };
+					inline constexpr Common::ID DetachByType{ 651212, 1989880 };
+					inline constexpr Common::ID RemoveAndDelete{ 168687, 1618824 };
+					inline constexpr Common::ID GetCount{ 0, 1780294 };
+				}
+
+				namespace ExtraDataList
+				{
+					inline constexpr Common::ID Constructor{ 538478 };
+					inline constexpr Common::ID GetByType{ 507082 };
+					inline constexpr Common::ID AddExtra{ 0, 1566358 };
+					inline constexpr Common::ID RemoveAndDelete{ 0, 1621983 };
+				}
+
+				namespace BSPointerHandleManagerInterface
+				{
+					inline constexpr Common::ID CreateHandle{ 297556, 1618981 };
+					inline constexpr Common::ID GetCurrentHandle{ 636805, 0 };
+					inline constexpr Common::ID GetSmartPointer1{ 619127, 0 };
+					inline constexpr Common::ID GetSmartPointer2{ 161285, 0 };
+					inline constexpr Common::ID Destroy1{ 488462, 0 };
+					inline constexpr Common::ID Destroy2{ 314534, 0 };
+				}
+
+				namespace BSPointerHandleManager
+				{
+					inline constexpr Common::ID InitSDM{ 644059, 0 };
+					inline constexpr Common::ID Table{ 0, 1591587 };
+					inline constexpr Common::ID LegacyTable{ 438313, 0 };
+					inline constexpr Common::ID FreeListHead{ 843708, 1435996 };
+					inline constexpr Common::ID FreeListTail{ 1109175, 1873557 };
+					inline constexpr Common::ID Lock{ 1109176, 1614257 };
+				}
+
+				namespace ImageSpaceManager
+				{
+					inline constexpr Common::ID Singleton{ 494960 };
+					inline constexpr Common::ID Constructor{ 345214, 1422747 };
+					inline constexpr Common::ID InitEffects{ 190238, 1577171 };
+				}
+
+				namespace NiAccumulator
+				{
+					inline constexpr Common::ID Constructor{ 769778, 1676560 };
+				}
+
+				namespace NiBackToFrontAccumulator
+				{
+					inline constexpr Common::ID Constructor{ 87865, 1411630 };
+				}
+
+				namespace NiAlphaAccumulator
+				{
+					inline constexpr Common::ID Constructor{ 769528, 1483782 };
+				}
+
+				namespace BSShaderAccumulator
+				{
+					inline constexpr Common::ID Constructor{ 797695, 1499850 };
+				}
+
+				namespace BSBatchRenderer
+				{
+					inline constexpr Common::ID Constructor{ 799582, 1990352 };
+				}
+
+				namespace ImageSpaceEffect
+				{
+					inline constexpr Common::ID Constructor{ 803752, 1396069 };
+				}
+
+				namespace BSImagespaceShader
+				{
+					inline constexpr Common::ID Constructor{ 111839, 1639434 };
+				}
+
+				namespace BGSLayerDialog
+				{
+					inline constexpr Common::ID Constructor{ 635113, 1992398 };
+					inline constexpr Common::ID GetSingleton{ 0, 1970093 };
+					inline constexpr Common::ID GetActiveLayer{ 0, 1720120 };
+					inline constexpr Common::ID OnRefLoadStateEvent{ 492351 };
+					inline constexpr Common::ID DialogProc{ 84440, 1450938 };
+				}
+
+				namespace BGSObjectWindowLayoutManager
+				{
+					inline constexpr Common::ID GetSingleton{ 0, 1675541 };
+				}
+
+				namespace BGSGenericCategoryLayoutManager
+				{
+					inline constexpr Common::ID Show{ 0, 1459330 };
+					inline constexpr Common::ID PopulateLayoutComboBox{ 0, 1620933 };
+				}
+
+				namespace DialogExtraLocalCopy
+				{
+					inline constexpr Common::ID Create{ 498332 };
+				}
+
+				namespace TESFormEdit
+				{
+					inline constexpr Common::ID DialogProc{ 0, 1618641 };
+				}
+
+				namespace TreeListControl
+				{
+					inline constexpr Common::ID Create{ 646694, 1541828 };
+					inline constexpr Common::ID Resize{ 646714, 1410439 };
+				}
+
+				namespace ResponseDialog
+				{
+					inline constexpr Common::ID AppendAudioRecord{ 0, 1436146 };
+				}
+
+				namespace TESWaterFormEditor
+				{
+					inline constexpr Common::ID ConstructPropertiesTab{ 129319 };
+				}
+
+				namespace BSStringCache
+				{
+					inline constexpr Common::ID GetSingleton{ 35135, 1626129 };
+				}
+
+				namespace Archive
+				{
+					inline constexpr Common::ID Constructor{ 599530, 1577865 };
+				}
+
+				namespace BGSLocAlias
+				{
+					inline constexpr Common::ID Constructor{ 374680 };
+				}
+
+				namespace BGSRefAlias
+				{
+					inline constexpr Common::ID Constructor{ 498231 };
+				}
+
+				namespace BGSRefCollectionAlias
+				{
+					inline constexpr Common::ID Constructor{ 226716 };
+				}
+
+				namespace BGSAttackData
+				{
+					inline constexpr Common::ID Constructor{ 92206 };
+				}
+
+				namespace TESCustomPackageData
+				{
+					inline constexpr Common::ID Constructor{ 372998 };
 				}
 
 				namespace Setting
@@ -477,8 +648,6 @@ namespace CKPE
 					inline constexpr Common::ID DialogHelpers_ShowFileDialog_2{ 1356949 };
 					// 1.11.246.0 0x140B32600 ?GetBounds@ID2D1Geometry@@QEBAJAEBUD2D_MATRIX_3X2_F@@PEAUD2D_RECT_F@@@Z_5
 					inline constexpr Common::ID GetBounds_ID2D1Geometry__QEBAJAEBUD2D_MATRIX_3X2_F__PEAUD2D_RECT_F___Z_5{ 586309 };
-					// 1.11.246.0 0x1404EEEC0 LayersDialog::DlgProc
-					inline constexpr Common::ID LayersDialog__DlgProc{ 84440, 1450938 };
 					// 1.11.246.0 0x1404EEEC0 LayersDialog::DlgProc
 					inline constexpr Common::ID LayersDialog__DlgProc_2{ 1450938 };
 					// 1.11.246.0 0x1406D6D70 MainWindow_SetStatusBarText
@@ -933,12 +1102,8 @@ namespace CKPE
 					inline constexpr Common::ID sub_712B50{ 645755, 1827459 };
 					// 1.11.246.0 0x140714300 sub_140714300
 					inline constexpr Common::ID OpenPluginSaveDialog{ 462857, 1663801 };
-					// 1.11.246.0 0x14073BE90 sub_14073BE90
-					inline constexpr Common::ID sub_73BE90{ 646694, 1541828 };
 					// 1.11.246.0 0x14073D090 sub_14073D090
 					inline constexpr Common::ID TreeList_WndProc{ 1673982 };
-					// 1.11.246.0 0x140741290 sub_140741290
-					inline constexpr Common::ID sub_741290{ 646714, 1410439 };
 					// 1.11.246.0 0x1407B48A0 sub_1407B48A0
 					inline constexpr Common::ID sub_7B48A0{ 650645, 1337975 };
 					// 1.11.246.0 0x140832E70 sub_140832E70

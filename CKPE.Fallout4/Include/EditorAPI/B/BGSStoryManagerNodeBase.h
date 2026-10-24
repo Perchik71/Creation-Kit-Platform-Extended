@@ -6,6 +6,7 @@
 
 #include <cstdint>
 #include <EditorAPI/B/BGSStoryManagerTreeForm.h>
+#include <EditorAPI/T/TESCondition.h>
 
 namespace CKPE
 {
@@ -15,6 +16,7 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				class BGSStoryManagerBranchNode;
 				// 1.11.246.0: size 0x58, vtable RVA 0x3014048, 135 virtual functions
 				class BGSStoryManagerNodeBase :
 					public BGSStoryManagerTreeForm   // 000
@@ -33,10 +35,16 @@ namespace CKPE
 						LPARAM lParam, LRESULT Result) noexcept(true) { return false; } // 134
 
 				public:
-					std::uint8_t unk28[0x18]; // 28
-					std::uint8_t unk40[0x18]; // 40
+					/* 0x028 */ BGSStoryManagerBranchNode* parent;
+					/* 0x030 */ BGSStoryManagerNodeBase* prevSibling;
+					/* 0x038 */ std::uint32_t maxQuests;
+					/* 0x03C */ std::uint32_t flags;
+					/* 0x040 */ TESCondition conditions;
 				};
 				static_assert(sizeof(BGSStoryManagerNodeBase) == 0x58);
+				static_assert(offsetof(BGSStoryManagerNodeBase, parent) == 0x28);
+				static_assert(offsetof(BGSStoryManagerNodeBase, flags) == 0x3C);
+				static_assert(offsetof(BGSStoryManagerNodeBase, conditions) == 0x40);
 			}
 		}
 	}

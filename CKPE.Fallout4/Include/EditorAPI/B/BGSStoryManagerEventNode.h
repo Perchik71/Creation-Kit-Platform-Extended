@@ -15,6 +15,7 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				class BGSRegisteredStoryEvent;
 				// 1.11.240.0: size 0x90, vtable RVA 0x310BCF0, 136 virtual functions
 				class BGSStoryManagerEventNode :
 					public BGSStoryManagerBranchNode   // 000
@@ -23,9 +24,11 @@ namespace CKPE
 					virtual ~BGSStoryManagerEventNode() = default;
 
 				public:
-					std::uint8_t unk70[0x20]; // 70
+					/* 0x070 */ std::uint8_t unk70[0x18];
+					/* 0x088 */ const BGSRegisteredStoryEvent* event;
 				};
 				static_assert(sizeof(BGSStoryManagerEventNode) == 0x90);
+				static_assert(offsetof(BGSStoryManagerEventNode, event) == 0x88);
 			}
 		}
 	}

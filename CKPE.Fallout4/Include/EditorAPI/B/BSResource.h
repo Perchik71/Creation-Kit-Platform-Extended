@@ -69,6 +69,12 @@ namespace CKPE
 						virtual EResultError DoGetInfo(void*) noexcept(true) { return EResultError::kUnsupported; }
 
 						[[nodiscard]] bool IsWritable() const noexcept(true) { return _flags.Has(1); }
+						[[nodiscard]] std::uint32_t GetTotalSize() const noexcept(true) { return _totalSize; }
+						[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+						{
+							return offsetof(StreamBase, _totalSize) == 0x8 &&
+								offsetof(StreamBase, _flags) == 0xC;
+						}
 
 						std::uint32_t IncRef() noexcept(true)
 						{
@@ -97,6 +103,7 @@ namespace CKPE
 						}
 					};
 					static_assert(sizeof(StreamBase) == 0x10);
+					static_assert(StreamBase::VerifyLayout());
 
 					class AsyncStream : public StreamBase
 					{
@@ -214,6 +221,12 @@ namespace CKPE
 						virtual EResultError DoGetInfo(void*) noexcept(true) { return EResultError::kUnsupported; }
 
 						[[nodiscard]] bool IsWritable() const noexcept(true) { return _flags.Has(1); }
+						[[nodiscard]] std::uint64_t GetTotalSize() const noexcept(true) { return _totalSize; }
+						[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+						{
+							return offsetof(StreamBase, _totalSize) == 0x8 &&
+								offsetof(StreamBase, _flags) == 0x10;
+						}
 
 						std::uint32_t IncRef() noexcept(true)
 						{
@@ -242,6 +255,7 @@ namespace CKPE
 						}
 					};
 					static_assert(sizeof(StreamBase) == 0x18);
+					static_assert(StreamBase::VerifyLayout());
 
 					class AsyncStream : public StreamBase
 					{
@@ -334,26 +348,64 @@ namespace CKPE
 			{
 				class BSResourceNiBinaryStream : public NiAPI::NiBinaryStream
 				{
-					BSResource::OG_NG::Stream* _Stream;
-					void* _Unk28;
+					/* 0x010 */ BSResource::OG_NG::Stream* _Stream;
+					/* 0x018 */ void* _buffer;
+					/* 0x020 */ std::uint64_t _streamPosition;
+					/* 0x028 */ BSResource::EResultError _lastError;
+					/* 0x02C */ std::uint32_t pad02C;
 				public:
+					virtual ~BSResourceNiBinaryStream() override;
+					[[nodiscard]] virtual bool IsOpen() override;
+					virtual void Seek(std::ptrdiff_t numBytes) override;
+					[[nodiscard]] virtual std::uint64_t GetPosition() override;
+					virtual void GetBufferInfo(BufferInfo& info) override;
+					virtual std::uint64_t DoRead(void* buffer, std::uint64_t bytes) override;
+					virtual std::uint64_t DoWrite(const void* buffer, std::uint64_t bytes) override;
 
 					inline const BSResource::OG_NG::Stream* GetStream() const noexcept(true) { return _Stream; }
+					[[nodiscard]] inline BSResource::EResultError GetLastError() const noexcept(true) { return _lastError; }
+					[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+					{
+						return offsetof(BSResourceNiBinaryStream, _Stream) == 0x10 &&
+							offsetof(BSResourceNiBinaryStream, _buffer) == 0x18 &&
+							offsetof(BSResourceNiBinaryStream, _streamPosition) == 0x20 &&
+							offsetof(BSResourceNiBinaryStream, _lastError) == 0x28;
+					}
 				};
-				static_assert(sizeof(BSResourceNiBinaryStream) == 0x20);
+				static_assert(sizeof(BSResourceNiBinaryStream) == 0x30);
+				static_assert(BSResourceNiBinaryStream::VerifyLayout());
 			}
 
 			namespace AE
 			{
 				class BSResourceNiBinaryStream : public NiAPI::NiBinaryStream
 				{
-					BSResource::AE::Stream* _Stream;
-					void* _Unk28;
+					/* 0x010 */ BSResource::AE::Stream* _Stream;
+					/* 0x018 */ void* _buffer;
+					/* 0x020 */ std::uint64_t _streamPosition;
+					/* 0x028 */ BSResource::EResultError _lastError;
+					/* 0x02C */ std::uint32_t pad02C;
 				public:
+					virtual ~BSResourceNiBinaryStream() override;
+					[[nodiscard]] virtual bool IsOpen() override;
+					virtual void Seek(std::ptrdiff_t numBytes) override;
+					[[nodiscard]] virtual std::uint64_t GetPosition() override;
+					virtual void GetBufferInfo(BufferInfo& info) override;
+					virtual std::uint64_t DoRead(void* buffer, std::uint64_t bytes) override;
+					virtual std::uint64_t DoWrite(const void* buffer, std::uint64_t bytes) override;
 
 					inline const BSResource::AE::Stream* GetStream() const noexcept(true) { return _Stream; }
+					[[nodiscard]] inline BSResource::EResultError GetLastError() const noexcept(true) { return _lastError; }
+					[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+					{
+						return offsetof(BSResourceNiBinaryStream, _Stream) == 0x10 &&
+							offsetof(BSResourceNiBinaryStream, _buffer) == 0x18 &&
+							offsetof(BSResourceNiBinaryStream, _streamPosition) == 0x20 &&
+							offsetof(BSResourceNiBinaryStream, _lastError) == 0x28;
+					}
 				};
-				static_assert(sizeof(BSResourceNiBinaryStream) == 0x20);
+				static_assert(sizeof(BSResourceNiBinaryStream) == 0x30);
+				static_assert(BSResourceNiBinaryStream::VerifyLayout());
 			}
 		}
 	}

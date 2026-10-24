@@ -4,7 +4,7 @@
 
 #include <CKPE.Asserts.h>
 #include <cstddef>
-#include <EditorAPI/B/BSSpinLock.h>
+#include <cstdint>
 
 #pragma once
 
@@ -19,7 +19,8 @@ namespace CKPE
 			public:
 				struct Lock
 				{
-					BSSpinLock lock;
+					volatile std::uint32_t state;
+					std::byte pad04[0xC];
 				};
 
 				struct Entry
@@ -128,14 +129,25 @@ namespace CKPE
 				BSStringCache() = default;
 				~BSStringCache() = default;
 
-				inline Lock* GetLock(std::uint32_t crc16) { return &locks[crc16 & 0xFF]; }
+				[[nodiscard]] inline Lock* GetLock(std::uint32_t crc16) noexcept(true)
+				{
+					return &locks[crc16 & 0x7F];
+				}
+
+				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+				{
+					return offsetof(BSStringCache, locks) == 0x80000 &&
+						offsetof(BSStringCache, isInit) == 0x80800;
+				}
 			private:
 				Entry* lut[0x10000];	// 00000
 				Lock locks[0x80];		// 80000
 				std::uint8_t isInit;	// 80800
 			};
 
-			static_assert(sizeof(BSStringCache::Lock) == 0x8);
+			static_assert(sizeof(BSStringCache) == 0x80808);
+			static_assert(BSStringCache::VerifyLayout());
+			static_assert(sizeof(BSStringCache::Lock) == 0x10);
 			static_assert(sizeof(BSStringCache::Ref) == 0x8);
 			static_assert(sizeof(BSStringCache::Entry) == 0x18);
 			static_assert(offsetof(BSStringCache::Entry, flags) == 0x8);

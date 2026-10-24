@@ -1,7 +1,14 @@
+// Copyright © 2026 aka CKPE team. All rights reserved.
+// Contacts: <email:timencevaleksej@gmail.com>
+// License: https://www.gnu.org/licenses/lgpl-3.0.html
+
 #pragma once
 
+#include <cstddef>
 #include <Windows.h>
 #include <CKPE.Utils.h>
+#include <CKPE.Common.Relocation.h>
+#include <EditorAPI/IDs.h>
 #include <EditorAPI/I/IMemoryStore.h>
 
 namespace CKPE
@@ -54,12 +61,27 @@ namespace CKPE
 
 				void* Allocate(std::size_t a_size, std::size_t a_alignment) const noexcept(true)
 				{
-					return fast_call<void*>(VTABLE + 0x70, this, a_size, a_alignment);
+					using func_t = void* (*)(const ScrapHeap*, std::size_t, std::uint32_t);
+					static Common::Relocation<func_t> func{
+						IDs::Functions::ScrapHeap__Allocate };
+					return func(this, a_size, static_cast<std::uint32_t>(a_alignment));
 				}
 
 				void Deallocate(void* a_mem) const noexcept(true)
 				{
-					return fast_call<void>(VTABLE + 0x78, this, a_mem);
+					using func_t = void (*)(const ScrapHeap*, void*);
+					static Common::Relocation<func_t> func{
+						IDs::Functions::ScrapHeap__Deallocate };
+					func(this, a_mem);
+				}
+
+				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+				{
+					return offsetof(ScrapHeap, smallBlocks) == 0x8 &&
+						offsetof(ScrapHeap, freeList) == 0x38 &&
+						offsetof(ScrapHeap, baseAddress) == 0x48 &&
+						offsetof(ScrapHeap, reserveSize) == 0x60 &&
+						offsetof(ScrapHeap, pmpBarrier) == 0x88;
 				}
 
 			private:
@@ -79,6 +101,7 @@ namespace CKPE
 				std::uint32_t	pmpBarrier{ 0 };				// 88
 			};
 			static_assert(sizeof(ScrapHeap) == 0x90);
+			static_assert(ScrapHeap::VerifyLayout());
 		}
 	}
 }

@@ -129,9 +129,7 @@ namespace CKPE
 					/* 26 */ virtual NiObjectGroup* GetGroup() const noexcept(true);
 					/* 27 */ virtual void SetGroup(NiObjectGroup* Group) noexcept(true);
 					/* 28 */ virtual NiControllerManager* IsNiControllerManager() noexcept(true);
-				protected:
-					// The slot is verified; its signature is not recovered.
-					/* 29 */ virtual void Unk29();
+					/* 29 */ virtual void GetAdditionalViewerStrings(void* Strings) noexcept(true);
 				};
 				static_assert(sizeof(NiObject) == 0x10);
 			}

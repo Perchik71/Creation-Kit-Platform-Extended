@@ -29,6 +29,7 @@ namespace CKPE
 					virtual ~NavMeshInfoMap() = default;
 
 				public:
+					std::uint8_t pad30[0x8]; // 30
 					std::uint8_t unk38[0x8]; // 38
 					BSTArray<void*> allPaths; // 40 - BSTArray<BSTArray<BSNavmeshInfo const*>*>, by layout (fills 0x38..0x88 exactly)
 					std::uint8_t infoToIndexMap[0x30]; // 58 - BSTScatterTable<BSNavmeshInfo const*, ...>, by layout (part of the 0x38 byte PrecomputedNavmeshInfoPathMap base)
@@ -44,6 +45,8 @@ namespace CKPE
 					std::uint8_t unk121[0x7]; // 121
 				};
 				static_assert(sizeof(NavMeshInfoMap) == 0x128);
+				static_assert(offsetof(NavMeshInfoMap, allPaths) == 0x40);
+				static_assert(offsetof(NavMeshInfoMap, mapLock) == 0x118);
 			}
 		}
 	}

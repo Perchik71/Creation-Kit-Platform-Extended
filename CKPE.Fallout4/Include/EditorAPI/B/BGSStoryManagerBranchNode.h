@@ -25,9 +25,10 @@ namespace CKPE
 					virtual std::uint32_t AcceptVisitor(void* Visitor) noexcept(true) { return 0; } // 135
 
 				public:
-					BSTArray<void*> children; // 58 - BSTArray<BGSStoryManagerNodeBase*>
+					BSTArray<BGSStoryManagerNodeBase*> children; // 58
 				};
 				static_assert(sizeof(BGSStoryManagerBranchNode) == 0x70);
+				static_assert(offsetof(BGSStoryManagerBranchNode, children) == 0x58);
 			}
 		}
 	}

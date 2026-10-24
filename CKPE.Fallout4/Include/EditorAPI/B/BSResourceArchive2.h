@@ -10,6 +10,9 @@
 #include <EditorAPI/B/BSResource.h>
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/B/BSResourceLooseFiles.h>
+#include <EditorAPI/B/BSResourceEntryDB.h>
+#include <EditorAPI/B/BSTEvents.h>
+#include <EditorAPI/B/BSReadWriteLock.h>
 
 namespace CKPE
 {
@@ -32,6 +35,51 @@ namespace CKPE
 				class Archive2
 				{
 				public:
+					class RegisteredEvent;
+					struct ClearRegistryEvent;
+
+					template<std::uint32_t ArchiveCount>
+					class TIndex :
+						public BSTEventSink<RegisteredEvent>,
+						public BSTEventSink<ClearRegistryEvent>
+					{
+					public:
+						inline static constexpr std::uint32_t MaxArchives = ArchiveCount;
+
+						virtual ~TIndex() override;
+						virtual EventResult ReceiveEvent(RegisteredEvent* event,
+							void* dispatcher) override;
+						virtual EventResult ReceiveEvent(ClearRegistryEvent* event,
+							void* dispatcher) override;
+
+						/* 0x0010 */ std::byte unk0010[0x20];
+						/* 0x0030 */ void* streams[MaxArchives];
+						void* asyncStreams[MaxArchives];
+						BSHashDB nameIDs[MaxArchives];
+						std::uint32_t dataFileCount;
+						std::uint32_t padCount;
+						void* pager;
+						void* rootPage;
+						std::uint64_t unkTree18;
+						std::uint64_t unkTree20;
+						BSReadWriteLock lock;
+					};
+					// CK 1.11.246 expands the archive registry from 256 to 1024.
+					using Index = TIndex<0x400>;
+					using Index256 = TIndex<0x100>;
+					static_assert(sizeof(Index) == 0x7060);
+					static_assert(sizeof(Index256) == 0x1C60);
+					static_assert(offsetof(Index, streams) == 0x30);
+					static_assert(offsetof(Index, asyncStreams) == 0x2030);
+					static_assert(offsetof(Index, nameIDs) == 0x4030);
+					static_assert(offsetof(Index, dataFileCount) == 0x7030);
+					static_assert(offsetof(Index, pager) == 0x7038);
+					static_assert(offsetof(Index, lock) == 0x7058);
+					static_assert(offsetof(Index256, asyncStreams) == 0x830);
+					static_assert(offsetof(Index256, nameIDs) == 0x1030);
+					static_assert(offsetof(Index256, dataFileCount) == 0x1C30);
+					static_assert(offsetof(Index256, lock) == 0x1C58);
+
 					static void Initialize() noexcept(true);
 					static void GetFileSizeStr(std::uint64_t fileSize, BSString& fileSizeStr) noexcept(true);
 					static EResultError HKLoadStreamArchive(void* arrayDataList, LooseFileStream*& resFile, void* Unk1, std::uint32_t Unk2) noexcept(true);
@@ -47,7 +95,7 @@ namespace CKPE
 						class ReaderStream : public BSResource::OG_NG::Stream
 						{
 							Stream* _source{ nullptr };								// 10
-							void* _unk18{ nullptr };								// 18
+							void* _context{ nullptr };								// 18
 							const std::uint64_t startOffset{ 0 };					// 20
 							BSFixedString name;										// 28
 							std::uint32_t currentRelativeOffset{ 0 };				// 30
@@ -58,6 +106,21 @@ namespace CKPE
 							inline static std::uint64_t RTTI = 0;
 
 							ReaderStream() noexcept(true) = default;
+
+							[[nodiscard]] const Stream* GetSource() const noexcept(true) { return _source; }
+							[[nodiscard]] const BSFixedString& GetName() const noexcept(true) { return name; }
+							[[nodiscard]] std::uint64_t GetStartOffset() const noexcept(true) { return startOffset; }
+							[[nodiscard]] std::uint32_t GetRelativeOffset() const noexcept(true) { return currentRelativeOffset; }
+							[[nodiscard]] std::uint32_t GetCompressedSize() const noexcept(true) { return compressedSize; }
+							[[nodiscard]] std::uint32_t GetUncompressedSize() const noexcept(true) { return uncompressedSize; }
+							[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+							{
+								return offsetof(ReaderStream, _source) == 0x10 &&
+									offsetof(ReaderStream, _context) == 0x18 &&
+									offsetof(ReaderStream, startOffset) == 0x20 &&
+									offsetof(ReaderStream, name) == 0x28 &&
+									offsetof(ReaderStream, flags) == 0x3C;
+							}
 
 							virtual ~ReaderStream();
 							virtual EResultError DoOpen() noexcept(true) override;
@@ -90,7 +153,7 @@ namespace CKPE
 						class ReaderStream : public BSResource::AE::Stream
 						{
 							Stream* _source{ nullptr };								// 18
-							void* _unk18{ nullptr };								// 20
+							void* _context{ nullptr };								// 20
 							const std::uint64_t startOffset{ 0 };					// 28
 							BSFixedString name;										// 30
 							std::uint32_t currentRelativeOffset{ 0 };				// 38
@@ -101,6 +164,21 @@ namespace CKPE
 							inline static std::uint64_t RTTI = 0;
 
 							ReaderStream() noexcept(true) = default;
+
+							[[nodiscard]] const Stream* GetSource() const noexcept(true) { return _source; }
+							[[nodiscard]] const BSFixedString& GetName() const noexcept(true) { return name; }
+							[[nodiscard]] std::uint64_t GetStartOffset() const noexcept(true) { return startOffset; }
+							[[nodiscard]] std::uint32_t GetRelativeOffset() const noexcept(true) { return currentRelativeOffset; }
+							[[nodiscard]] std::uint32_t GetCompressedSize() const noexcept(true) { return compressedSize; }
+							[[nodiscard]] std::uint32_t GetUncompressedSize() const noexcept(true) { return uncompressedSize; }
+							[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+							{
+								return offsetof(ReaderStream, _source) == 0x18 &&
+									offsetof(ReaderStream, _context) == 0x20 &&
+									offsetof(ReaderStream, startOffset) == 0x28 &&
+									offsetof(ReaderStream, name) == 0x30 &&
+									offsetof(ReaderStream, flags) == 0x44;
+							}
 
 							virtual ~ReaderStream();
 							virtual EResultError DoOpen() noexcept(true) override;
@@ -130,6 +208,8 @@ namespace CKPE
 				};
 				static_assert(sizeof(Archive2::OG_NG::ReaderStream) == 0x40);
 				static_assert(sizeof(Archive2::AE::ReaderStream) == 0x48);
+				static_assert(Archive2::OG_NG::ReaderStream::VerifyLayout());
+				static_assert(Archive2::AE::ReaderStream::VerifyLayout());
 			}
 		}
 	}

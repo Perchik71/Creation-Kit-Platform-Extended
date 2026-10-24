@@ -44,7 +44,7 @@ namespace CKPE
 				};
 				static_assert(sizeof(ImageSpaceModifierData) == 0xFC);
 
-				// 1.11.240.0: size 0xDC8, vtable RVA 0x30A9C88, 126 virtual functions
+				// Unlike the game, the CK embeds its interpolators.
 				class TESImageSpaceModifier :
 					public TESFormIDListView   // 000
 				{
@@ -77,6 +77,7 @@ namespace CKPE
 					std::uint32_t unkDC0; // DC0
 					std::uint32_t unkDC4; // DC4
 				};
+				static_assert(offsetof(TESImageSpaceModifier, data) == 0x28);
 				static_assert(offsetof(TESImageSpaceModifier, interpolator) == 0x128);
 				static_assert(offsetof(TESImageSpaceModifier, motionBlurStrengthInterpolator) == 0xBB8);
 				static_assert(sizeof(TESImageSpaceModifier) == 0xDC8);

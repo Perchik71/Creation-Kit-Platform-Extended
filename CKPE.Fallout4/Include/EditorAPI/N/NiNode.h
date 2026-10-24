@@ -33,9 +33,7 @@ namespace CKPE
 					/* 42 */ virtual void SetAtAndGet(std::uint32_t Index, NiAVObject* Child, NiPointer<NiAVObject>& Result) noexcept(true);
 					/* 43 */ virtual void SetAt(std::uint32_t Index, NiAVObject* Child) noexcept(true);
 					/* 44 */ virtual void UpdateUpwardPass(NiUpdateData& Data) noexcept(true);
-				protected:
-					// The slot is verified; its signature is not recovered.
-					/* 45 */ virtual void Unk45();
+					/* 45 */ [[nodiscard]] virtual bool IsCombinedNode() const noexcept(true);
 				public:
 					// CommonLibF4: NiNode::children
 					[[nodiscard]] inline const NiTObjectArray<NiPointer<NiAVObject>>& GetChildren() const noexcept(true) { return _array_objs; }

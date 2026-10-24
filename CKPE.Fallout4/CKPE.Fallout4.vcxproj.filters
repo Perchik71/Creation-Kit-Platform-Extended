@@ -423,6 +423,144 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\EditorAPI\T\TreeListControl.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESWaterFormEditor.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESPackageData.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESFormEditParams.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\R\ResponseDialogAudio.h">
+      <Filter>EditorAPI\R</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\P\PackageLocation.h">
+      <Filter>EditorAPI\P</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\O\ObjectWindowInsertData.h">
+      <Filter>EditorAPI\O</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\N\NiTimeController.h">
+      <Filter>EditorAPI\N</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\N\NiAlphaAccumulator.h">
+      <Filter>EditorAPI\N</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\I\ImageSpaceManager.h">
+      <Filter>EditorAPI\I</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\I\ImageSpaceEffects.h">
+      <Filter>EditorAPI\I</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\I\ImageSpaceEffectOption.h">
+      <Filter>EditorAPI\I</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\I\ImageSpaceEffect.h">
+      <Filter>EditorAPI\I</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\E\ExtraWorldData.h">
+      <Filter>EditorAPI\E</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\E\ExtraRuntimeData.h">
+      <Filter>EditorAPI\E</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\E\ExtraReferenceData.h">
+      <Filter>EditorAPI\E</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\E\ExtraDataTypes.h">
+      <Filter>EditorAPI\E</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\E\ExtraActorData.h">
+      <Filter>EditorAPI\E</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\E\EditorWindowControls.h">
+      <Filter>EditorAPI\E</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\D\DialogExtraWorkingFile.h">
+      <Filter>EditorAPI\D</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\D\DialogExtraWorkingData.h">
+      <Filter>EditorAPI\D</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\D\DialogExtraParam.h">
+      <Filter>EditorAPI\D</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\D\DialogExtraLocalReferenceCopy.h">
+      <Filter>EditorAPI\D</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\D\DialogExtraLocalCopy.h">
+      <Filter>EditorAPI\D</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\D\DialogExtraLocalBaseObjectExtraCopy.h">
+      <Filter>EditorAPI\D</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\D\DialogExtraLocalBaseObjectCopy.h">
+      <Filter>EditorAPI\D</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\D\DialogExtraFormTypeContext.h">
+      <Filter>EditorAPI\D</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\C\CompressedArchiveFile.h">
+      <Filter>EditorAPI\C</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSShaderPropertyLightData.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSShaderManager.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSShaderAccumulator.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSResourceLocation.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSImagespaceShader.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSBatchRenderer.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSProcedure.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSPerkEntry.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSObjectWindowUtils.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSLayerDialog.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSGenericCategoryLayout.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSEntryPointFunctionData.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSEntryPoint.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSBaseAlias.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSAttackData.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSAIWorldLocation.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\A\ArchiveFile.h">
+      <Filter>EditorAPI\A</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\A\Archive.h">
+      <Filter>EditorAPI\A</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESRenderControl.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>

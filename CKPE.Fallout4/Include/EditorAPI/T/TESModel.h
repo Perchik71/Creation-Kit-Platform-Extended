@@ -43,8 +43,9 @@ namespace CKPE
 				virtual void SetModel(const char* lpModel) noexcept(true) { return; } // 23 - RVA 0x8E93E0
 				virtual Forms::BGSModelMaterialSwap* GetAsModelMaterialSwap() noexcept(true) { return nullptr; } // 24 - RVA 0x8B33A0
 				virtual bool UpdateResourceDependencies(NiAPI::NiAVObject* Object3D, Forms::TESForm* Owner) noexcept(true) { return false; } // 25
-				// Likely a model lifecycle hook; all inspected bodies are no-ops.
-				virtual void sub_0D0() { return; } // 26 - RVA 0x35B030
+				virtual void OnModelChanged() { return; } // 26 - RVA 0x35B030
+
+				inline void sub_0D0() { OnModelChanged(); }
 
 			public:
 				BSFixedString modelName; // 08
@@ -61,6 +62,8 @@ namespace CKPE
 				std::uint32_t modelDataControlID; // 34 - CK only, dialog control ID (IDC_MODEL_DATA, 2420 on construction)
 			};
 			static_assert(sizeof(TESModel) == 0x38);
+			static_assert(offsetof(TESModel, modelName) == 0x8);
+			static_assert(offsetof(TESModel, modelNameControlID) == 0x30);
 		}
 	}
 }

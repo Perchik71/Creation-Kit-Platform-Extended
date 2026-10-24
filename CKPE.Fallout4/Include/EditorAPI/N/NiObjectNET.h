@@ -3,6 +3,7 @@
 #pragma once
 
 #include <EditorAPI/N/NiObject.h>
+#include <EditorAPI/N/NiTimeController.h>
 #include <EditorAPI/B/BSFixedString.h>
 
 namespace CKPE

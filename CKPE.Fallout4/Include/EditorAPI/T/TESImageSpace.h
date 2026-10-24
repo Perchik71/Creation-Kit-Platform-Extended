@@ -73,7 +73,7 @@ namespace CKPE
 				};
 				static_assert(sizeof(ImageSpaceBaseData) == 0x58);
 
-				// 1.11.240.0: size 0xC0, vtable RVA 0x30A94A0, 126 virtual functions
+				// The CK embeds its form-list state before the image-space data.
 				class TESImageSpace :
 					public TESFormIDListView   // 000
 				{
@@ -88,6 +88,9 @@ namespace CKPE
 					TESTexture lutTexture; // 90 - TX00
 					std::uint64_t niLutTexture; // B8 - NiPointer<NiTexture>, by position after lutTexture
 				};
+				static_assert(offsetof(TESImageSpace, data) == 0x38);
+				static_assert(offsetof(TESImageSpace, lutTexture) == 0x90);
+				static_assert(offsetof(TESImageSpace, niLutTexture) == 0xB8);
 				static_assert(sizeof(TESImageSpace) == 0xC0);
 			}
 		}

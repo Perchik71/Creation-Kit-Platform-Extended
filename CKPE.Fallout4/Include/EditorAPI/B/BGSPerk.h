@@ -12,6 +12,7 @@
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/B/BSFixedString.h>
+#include <EditorAPI/B/BGSPerkEntry.h>
 
 namespace CKPE
 {
@@ -63,6 +64,7 @@ namespace CKPE
 					std::uint8_t pad132[0x6]; // 132
 				};
 				static_assert(offsetof(BGSPerk, swfFile) == 0xD8);
+				static_assert(offsetof(BGSPerk, perkEntries) == 0xB0);
 				static_assert(offsetof(BGSPerk, unkF8) == 0xF8);
 				static_assert(sizeof(BGSPerk) == 0x138);
 			}

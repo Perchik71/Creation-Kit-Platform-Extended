@@ -4,6 +4,7 @@
 
 #include <CKPE.Utils.h>
 #include <EditorAPI/IDs.h>
+#include <EditorAPI/E/EditorWindowControls.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Graphics.h>
 #include <CKPE.Application.h>
@@ -34,6 +35,7 @@ namespace CKPE
 	{
 		namespace Patch
 		{
+			namespace CellViewControls = EditorAPI::EditorWindows::CellViewWindow;
 			std::uintptr_t pointer_CellViewWindow_sub1 = 0;
 			std::uintptr_t pointer_CellViewWindow_sub2 = 0;
 			char* str_CellViewWindow_Filter = nullptr;
@@ -261,23 +263,23 @@ namespace CKPE
 					SetWindowPos(Hwnd, nullptr, 0, 0, 0, 0,
 						SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
 
-					__This->m_WorldSpaceLabel = GetDlgItem(Hwnd, 1164);
-					__This->m_WorldSpaceComboBox = GetDlgItem(Hwnd, 2083);
-					__This->m_XEdit = GetDlgItem(Hwnd, 5283);
-					__This->m_YEdit = GetDlgItem(Hwnd, 5099);
-					__This->m_XLabel = GetDlgItem(Hwnd, 5281);
-					__This->m_YLabel = GetDlgItem(Hwnd, 5282);
+					__This->m_WorldSpaceLabel = GetDlgItem(Hwnd, CellViewControls::kWorldSpaceLabel);
+					__This->m_WorldSpaceComboBox = GetDlgItem(Hwnd, CellViewControls::kWorldSpace);
+					__This->m_XEdit = GetDlgItem(Hwnd, CellViewControls::kX);
+					__This->m_YEdit = GetDlgItem(Hwnd, CellViewControls::kY);
+					__This->m_XLabel = GetDlgItem(Hwnd, CellViewControls::kXLabel);
+					__This->m_YLabel = GetDlgItem(Hwnd, CellViewControls::kYLabel);
 					__This->m_GoButton = GetDlgItem(Hwnd, UI_CELL_VIEW_GO_BUTTON);
-					__This->m_LoadedAtTop = GetDlgItem(Hwnd, 5662);
-					__This->m_FilteredOnly = GetDlgItem(Hwnd, 5664);
-					__This->m_VisibleObjectsOnly = GetDlgItem(Hwnd, 5666);
-					__This->m_SelectObjectsOnly = GetDlgItem(Hwnd, 5665);
-					__This->m_IdEdit = GetDlgItem(Hwnd, 2581);
-					__This->m_SelectedObjectLabel = GetDlgItem(Hwnd, 1163);
+					__This->m_LoadedAtTop = GetDlgItem(Hwnd, CellViewControls::kLoadedAtTop);
+					__This->m_FilteredOnly = GetDlgItem(Hwnd, CellViewControls::kFilteredOnly);
+					__This->m_VisibleObjectsOnly = GetDlgItem(Hwnd, CellViewControls::kVisibleOnly);
+					__This->m_SelectObjectsOnly = GetDlgItem(Hwnd, CellViewControls::kSelectedOnly);
+					__This->m_IdEdit = GetDlgItem(Hwnd, CellViewControls::kFilter);
+					__This->m_SelectedObjectLabel = GetDlgItem(Hwnd, CellViewControls::kSelectedCellLabel);
 					__This->m_ActiveCellsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_ACTIVE_CELLS_CHECKBOX);
 					__This->m_ActiveObjectsOnly = GetDlgItem(Hwnd, UI_CELL_VIEW_ACTIVE_CELL_OBJECTS_CHECKBOX);
-					__This->m_CellListView = GetDlgItem(Hwnd, 1155);
-					__This->m_ObjectListView = GetDlgItem(Hwnd, 1156);
+					__This->m_CellListView = GetDlgItem(Hwnd, CellViewControls::kCellList);
+					__This->m_ObjectListView = GetDlgItem(Hwnd, CellViewControls::kObjectList);
 					__This->m_FilterCellEdit = GetDlgItem(Hwnd, UI_CELL_VIEW_FILTER_CELL);
 
 					__This->m_WorldSpaceLabel.Style |= SS_CENTER;

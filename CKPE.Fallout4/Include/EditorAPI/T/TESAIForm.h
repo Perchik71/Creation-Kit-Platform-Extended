@@ -19,20 +19,24 @@ namespace CKPE
 				class TESPackage;
 			}
 
-			// 0x10 bytes, bitfield layout from CommonLibF4 (default 0x03000400 stored by the CK constructor)
+			// CK uses byte-valued traits and three dword aggression radii.
 			struct AIDATA_GAME
 			{
-				std::uint32_t aggression : 2;		// 00:00
-				std::uint32_t confidence : 3;		// 00:02
-				std::uint32_t energy : 8;			// 00:05
-				std::uint32_t morality : 2;			// 00:13
-				std::uint32_t unused : 3;			// 00:15
-				std::uint32_t assistance : 2;		// 00:18
-				std::uint32_t useAggroRadius : 1;	// 00:20
-				std::uint16_t aggroRadius[3];		// 04
-				std::uint32_t noSlowApproach : 1;	// 0C:00
+				/* 0x00 */ std::uint8_t aggression;
+				/* 0x01 */ std::uint8_t confidence;
+				/* 0x02 */ std::uint8_t energy;
+				/* 0x03 */ std::uint8_t morality;
+				/* 0x04 */ std::uint8_t unused;
+				/* 0x05 */ std::uint8_t assistance;
+				/* 0x06 */ bool useAggroRadius;
+				/* 0x07 */ std::uint8_t pad07;
+				/* 0x08 */ std::uint32_t aggroRadius[3];
+				/* 0x14 */ bool noSlowApproach;
+				/* 0x15 */ std::uint8_t pad15[3];
 			};
-			static_assert(sizeof(AIDATA_GAME) == 0x10);
+			static_assert(sizeof(AIDATA_GAME) == 0x18);
+			static_assert(offsetof(AIDATA_GAME, aggroRadius) == 0x8);
+			static_assert(offsetof(AIDATA_GAME, noSlowApproach) == 0x14);
 
 
 			// 1.11.240.0: size 0x30, vtable RVA 0x301C2C0, 21 virtual functions
@@ -44,11 +48,11 @@ namespace CKPE
 
 			public:
 				AIDATA_GAME aiData; // 08
-				std::uint32_t unk18; // 18 - CK only
-				std::uint32_t pad1C; // 1C
 				BSSimpleList<Forms::TESPackage*> aiPackList; // 20 - CommonLibF4 PackageList (at 18 there)
 			};
 			static_assert(sizeof(TESAIForm) == 0x30);
+			static_assert(offsetof(TESAIForm, aiData) == 0x8);
+			static_assert(offsetof(TESAIForm, aiPackList) == 0x20);
 		}
 	}
 }

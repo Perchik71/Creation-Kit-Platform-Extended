@@ -38,8 +38,9 @@ namespace CKPE
 					/* 01 */ virtual bool SetSceneRoot(NiAVObject* Root);
 					/* 02 */ virtual void CreateCamera(NiPointer<NiCamera>& Camera);
 					/* 03 */ virtual bool Resize(std::uint32_t Width, std::uint32_t Height);
-				protected:
-					/* 04 */ virtual void Unk04();
+					/* 04 */ virtual bool UpdateCameraFrustum(NiCamera* Camera,
+						std::int32_t Width, std::int32_t Height, float FarPlane,
+						float FieldOfView);
 				public:
 					[[nodiscard]] inline NiAVObject* GetSceneRoot() const noexcept(true) { return ReadPointer<NiAVObject>(0x8, 0x10); }
 					[[nodiscard]] inline NiCamera* GetCamera() const noexcept(true) { return ReadPointer<NiCamera>(0x1A0, 0x1B0); }
@@ -83,6 +84,18 @@ namespace CKPE
 
 				class NiBinaryStream
 				{
+				public:
+					struct BufferInfo
+					{
+						/* 0x00 */ void* Buffer;
+						/* 0x08 */ std::uint64_t TotalSize;
+						/* 0x10 */ std::uint64_t BufferSize;
+						/* 0x18 */ std::uint64_t BufferReadSize;
+						/* 0x20 */ std::uint64_t BufferPosition;
+						/* 0x28 */ std::uint64_t StreamPosition;
+					};
+					static_assert(sizeof(BufferInfo) == 0x30);
+					static_assert(offsetof(BufferInfo, StreamPosition) == 0x28);
 				protected:
 					/*000*/							// --vtbls
 					std::uint64_t _Pos;			
@@ -92,7 +105,7 @@ namespace CKPE
 					[[nodiscard]] virtual bool IsOpen() = 0;
 					virtual void Seek(std::ptrdiff_t numBytes) = 0;   
 					[[nodiscard]] virtual std::uint64_t GetPosition();
-					virtual void Cleanup();
+					virtual void GetBufferInfo(BufferInfo& Info);
 					virtual std::uint64_t DoRead(void* buffer, std::uint64_t bytes) = 0;
 					virtual std::uint64_t DoWrite(const void* buffer, std::uint64_t bytes) = 0;
 				};
@@ -128,7 +141,11 @@ namespace CKPE
 					[[nodiscard]] inline std::uint64_t GetCurrentFilePos() const noexcept(true) { return _CurrentFilePos; }
 					[[nodiscard]] inline HANDLE GetHandle() const noexcept(true) { return _SysFile.Handle; }
 					[[nodiscard]] inline const char* GetFileName() const noexcept(true) { return _FileName; }
-					[[nodiscard]] inline virtual bool IsOpen() const noexcept(true) { return (bool)_IsOpen; }
+					using NiBinaryStream::Seek;
+
+					virtual void Seek(std::int64_t Offset, std::uint32_t SeekMode);	// 07
+
+					[[nodiscard]] inline bool IsOpen() const noexcept(true) { return (bool)_IsOpen; }
 					[[nodiscard]] virtual std::uint64_t GetSize();
 				};
 				static_assert(sizeof(NiFile) == 0x150);
