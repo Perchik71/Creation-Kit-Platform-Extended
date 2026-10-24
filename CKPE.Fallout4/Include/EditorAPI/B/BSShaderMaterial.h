@@ -18,6 +18,8 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
+			class BSShaderProperty;
+
 			// 0x38
 			class BSShaderMaterial
 			{
@@ -91,6 +93,25 @@ namespace CKPE
 					*v = _TextCoordScale[0].y;
 				}
 			protected:
+				/* 0x008 */ virtual BSShaderMaterial* CreateImpl() const;
+				/* 0x010 */ virtual void CopyMembers(const BSShaderMaterial* Material);
+				/* 0x018 */ virtual std::uint32_t ComputeCRC32(
+					std::uint32_t Seed, bool Combining) const;
+				// Likely default material; returns a shared material pointer.
+				/* 0x020 */ virtual void sub_020();
+				/* 0x028 */ virtual std::uint32_t GetTypeImpl() const;
+				/* 0x030 */ virtual std::uint32_t GetMaterialTypeImpl() const;
+				/* 0x038 */ virtual void ReceiveValuesFromRootMaterial(
+					BSShaderProperty* Property);
+				/* 0x040 */ virtual std::uint64_t GetDifferenceMask(
+					const BSShaderMaterial* Material) const;
+				/* 0x048 */ virtual bool DescribeDifferences(
+					const BSShaderMaterial* Material, std::uint64_t Differences,
+					char* Buffer, std::uint32_t BufferSize) const;
+				// Likely material viewer; formats UV and reference-count state.
+				/* 0x050 */ virtual void sub_050();
+				/* 0x058 */ virtual void sub_058();
+
 				volatile std::uint32_t	_RefCount;				// 08
 				NiAPI::NiPoint2			_TextCoordOffset[2];	// 0C
 				NiAPI::NiPoint2			_TextCoordScale[2];		// 1C
@@ -148,6 +169,21 @@ namespace CKPE
 						offsetof(BSLightingShaderMaterialBase, _LookupScale) == 0xB8;
 				}
 			protected:
+				/* 0x060 */ virtual BSLightingShaderMaterialBase* AsEnvmap();
+				/* 0x068 */ virtual void sub_068();
+				/* 0x070 */ virtual void ClearTexturesImpl();
+				/* 0x078 */ virtual std::uint32_t GetTexturesImpl(
+					NiAPI::NiTexture** Textures, std::uint32_t MaxSize);
+				/* 0x080 */ virtual void SaveToStreamImpl(void* Stream);
+				/* 0x088 */ virtual void LoadFromStreamImpl(void* Stream);
+				/* 0x090 */ virtual void PrefetchTexturesImpl(
+					void* OutHandles, const BSTextureSet* TextureSet);
+				// Likely texture-set load; also consumes prefetched handles.
+				/* 0x098 */ virtual void sub_098();
+				/* 0x0A0 */ virtual void LoadTextureSetImpl(BSShaderTextureSet* TextureSet);
+				// Likely root-material copy; reads the source material's values.
+				/* 0x0A8 */ virtual void sub_0A8();
+
 				NiAPI::NiColor							_SpecularColor;				// 38
 				char									_Pad44[4];					// 44
 				NiAPI::NiPointer<NiAPI::NiTexture>		_DiffuseTexture;			// 48

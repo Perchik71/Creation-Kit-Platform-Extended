@@ -119,6 +119,21 @@ namespace CKPE
 					public:
 						virtual ~Entry() = default;
 
+					private:
+						// CK-only editor slots; unproven contracts are not callable.
+						/* 008 */ virtual void sub_008();
+						/* 010 */ virtual void sub_010();
+					public:
+						/* 018 */ virtual void CopyFrom(const Entry& source);
+						/* 020 */ [[nodiscard]] virtual bool Equals(const Entry& other) const;
+					private:
+						/* 028 */ virtual void sub_028();
+						/* 030 */ virtual void sub_030();
+						/* 038 */ virtual void sub_038();
+						/* 040 */ virtual void sub_040();
+						/* 048 */ virtual void sub_048();
+						/* 050 */ virtual void sub_050();
+						/* 058 */ virtual void sub_058();
 					public:
 						BGSLocalizedString name; // 08
 						std::uint8_t chargenConditions[0x18]; // 18 - TESCondition (0x18 bytes in the CK)
@@ -178,6 +193,7 @@ namespace CKPE
 						BSTArray<Entry*> entries; // 18 - TTET chunks create the entries
 					};
 					static_assert(offsetof(Group, entries) == 0x18);
+					static_assert(sizeof(Group) == 0x30);
 
 					// The array object behind a race's TTGP data
 					class Groups

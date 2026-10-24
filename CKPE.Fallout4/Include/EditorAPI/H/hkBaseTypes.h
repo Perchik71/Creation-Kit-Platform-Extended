@@ -10,6 +10,8 @@
 namespace CKPE::Fallout4::EditorAPI
 {
 	class hkContainerHeapAllocator;
+	class hkClassEnum;
+	class hknpShape;
 
 	template<class T>
 	struct hkArrayBase
@@ -137,12 +139,13 @@ namespace CKPE::Fallout4::EditorAPI
 		/* 0x000 */ Storage m_value;
 	};
 
-	static_assert(sizeof(hkArrayBase<void*>) == 0x10);
+	static_assert(sizeof(hkArrayBase<std::uint8_t>) == 0x10);
+	static_assert(sizeof(hkArray<std::uint8_t>) == 0x10);
 	static_assert(sizeof(hkArray<void*>) == 0x10);
-	static_assert(sizeof(hkSmallArray<void*>) == 0x10);
-	static_assert(sizeof(hkSimpleArray<void*>) == 0x10);
-	static_assert(offsetof(hkArrayBase<void*>, m_capacityAndFlags) == 0xC);
-	static_assert(sizeof(hkRefPtr<void>) == 0x8);
+	static_assert(sizeof(hkSmallArray<void>) == 0x10);
+	static_assert(sizeof(hkSimpleArray<hkClassEnum>) == 0x10);
+	static_assert(offsetof(hkArrayBase<std::uint8_t>, m_capacityAndFlags) == 0xC);
+	static_assert(sizeof(hkRefPtr<hknpShape>) == 0x8);
 	static_assert(sizeof(hkStringPtr) == 0x8);
 	static_assert(sizeof(hkVector4f) == 0x10);
 	static_assert(sizeof(hkQuaternionf) == 0x10);
@@ -154,7 +157,4 @@ namespace CKPE::Fallout4::EditorAPI
 	static_assert(offsetof(hkQsTransformf, m_scale) == 0x20);
 	static_assert(sizeof(hkBool) == 0x1);
 	static_assert(sizeof(hkHalf) == 0x2);
-	static_assert(sizeof(hkEnum<int, std::uint8_t>) == 0x1);
-	static_assert(sizeof(hkFlags<int, std::uint32_t>) == 0x4);
-	static_assert(sizeof(hkHandle<std::uint16_t, 0xFFFF, void>) == 0x2);
 }

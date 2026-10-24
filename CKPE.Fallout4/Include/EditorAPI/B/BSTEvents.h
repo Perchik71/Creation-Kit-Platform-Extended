@@ -4,10 +4,12 @@
 
 #pragma once
 
+#include <cstddef>
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/B/BSTList.h>
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/B/BSLock.h>
+#include <EditorAPI/T/TESObjectREFRFwd.h>
 
 namespace CKPE
 {
@@ -95,8 +97,15 @@ namespace CKPE
 
 			struct BSAnimationGraphEvent
 			{
-
+				// Native event prefix; no closed total-size witness.
+				/* 0x00 */ Forms::TESObjectREFR* holder;
+				/* 0x08 */ BSFixedString tag;
+				/* 0x10 */ BSFixedString payload;
 			};
+			static_assert(sizeof(BSAnimationGraphEvent) == 0x18);
+			static_assert(offsetof(BSAnimationGraphEvent, holder) == 0x0);
+			static_assert(offsetof(BSAnimationGraphEvent, tag) == 0x8);
+			static_assert(offsetof(BSAnimationGraphEvent, payload) == 0x10);
 
 			struct BSSubGraphActivationUpdate
 			{
@@ -139,7 +148,7 @@ namespace CKPE
 
 			};
 
-			// 08
+			// 58
 			template <typename EventT>
 			class BSTEventDispatcher
 			{
@@ -151,7 +160,7 @@ namespace CKPE
 					BSAutoLock locker(&lock);
 
 					// Check for duplicate first
-					for (int i = 0; i < eventSinks.count; i++)
+					for (std::uint32_t i = 0; i < eventSinks.size(); i++)
 					{
 						if (eventSinks[i] == sink)
 							return false;
@@ -165,7 +174,7 @@ namespace CKPE
 				{
 					BSAutoLock locker(&lock);
 
-					for (int i = 0; i < eventSinks.count; i++)
+					for (std::uint32_t i = 0; i < eventSinks.size(); i++)
 					{
 						if (eventSinks[i] == sink) {
 							eventSinks.Remove(i);
@@ -179,8 +188,18 @@ namespace CKPE
 				BSTArray<SinkT*>	addBuffer;			// 020
 				BSTArray<SinkT*>	removeBuffer;		// 038
 				bool				stateFlag;			// 050
-				char				pad[3];
+				char				pad[7];
 			};
+
+			template <typename EventT>
+			using BSTEventSource = BSTEventDispatcher<EventT>;
+
+			static_assert(sizeof(BSTEventSink<TESObjectLoadedEvent>) == 0x8);
+			static_assert(sizeof(BSTEventDispatcher<TESObjectLoadedEvent>) == 0x58);
+			static_assert(offsetof(BSTEventDispatcher<TESObjectLoadedEvent>, eventSinks) == 0x8);
+			static_assert(offsetof(BSTEventDispatcher<TESObjectLoadedEvent>, addBuffer) == 0x20);
+			static_assert(offsetof(BSTEventDispatcher<TESObjectLoadedEvent>, removeBuffer) == 0x38);
+			static_assert(offsetof(BSTEventDispatcher<TESObjectLoadedEvent>, stateFlag) == 0x50);
 
 			class BSTGlobalEvent
 			{

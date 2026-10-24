@@ -74,6 +74,25 @@ namespace CKPE
 				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
 				{ return offsetof(BSShader, _ShaderType) == 0x18; }
 			private:
+				/* 0x010 */ virtual bool SetupTechniqueImpl(std::uint32_t Technique);
+				/* 0x018 */ virtual void RestoreTechniqueImpl(std::uint32_t Technique);
+				/* 0x020 */ virtual void SetupMaterialImpl(const BSShaderMaterial* Material);
+				/* 0x028 */ virtual void RestoreMaterialImpl(const BSShaderMaterial* Material);
+				// Likely secondary material setup; the base is a no-op.
+				/* 0x030 */ virtual void sub_030();
+				/* 0x038 */ virtual void SetupGeometryImpl(BSRenderPass* Pass);
+				/* 0x040 */ virtual void RestoreGeometryImpl(BSRenderPass* Pass);
+				// Likely technique name; formats edx into the r8/r9 buffer.
+				/* 0x048 */ virtual void sub_048();
+				/* 0x050 */ virtual void sub_050();
+				/* 0x058 */ virtual void sub_058();
+				/* 0x060 */ virtual void sub_060();
+				/* 0x068 */ virtual void sub_068();
+				/* 0x070 */ virtual void sub_070();
+				/* 0x078 */ virtual void sub_078();
+				/* 0x080 */ virtual void sub_080();
+				/* 0x088 */ virtual void sub_088();
+
 				std::int32_t _ShaderType;							// 018
 				std::uint32_t _Pad1C;								// 01C
 				// 982+ inserts three 0x38 critical-section wrappers before the maps.

@@ -239,7 +239,7 @@ namespace CKPE
 				Relocation(EditorAPI::IDs::Functions::BSMemoryManager__Size).WriteJump(BSMemoryManager::Size);
 				Relocation(EditorAPI::IDs::Functions::ScrapHeap__Allocate).WriteJump(BSScrapHeap::Allocate);
 				Relocation(EditorAPI::IDs::Functions::ScrapHeap__Deallocate).WriteJump(BSScrapHeap::Deallocate);
-				Relocation(EditorAPI::IDs::Functions::bhkThreadMemorySource__bhkThreadMemorySource).WriteJump(bhkThreadMemorySource::__ctor__);
+				Relocation(EditorAPI::IDs::bhkThreadMemorySource::Constructor).WriteJump(bhkThreadMemorySource::__ctor__);
 				Relocation(EditorAPI::IDs::Functions::NiBSScrapAdapter_AllocateFromBSScrap).WriteJump(NiBSScrapAdapter_AllocateFromBSScrap);
 
 				Relocation(EditorAPI::IDs::Functions::BSMemoryManager_InitDefaultHeap).Write(RET);

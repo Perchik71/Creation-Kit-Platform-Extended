@@ -93,6 +93,12 @@ namespace CKPE
 						offsetof(BSLight, _PointLight) == 0x170 &&
 						offsetof(BSLight, _Shape) == 0x180;
 				}
+			private:
+				// Likely viewer strings; emits the light's diagnostic labels.
+				/* 0x010 */ virtual void sub_010();
+				/* 0x018 */ virtual void SetSourceLight(NiAPI::NiLight* Light);
+				/* 0x020 */ virtual void sub_020();
+				/* 0x028 */ virtual void sub_028();
 			};
 			static_assert(sizeof(BSLight) == 0x190);
 			static_assert(BSLight::VerifyLayout());

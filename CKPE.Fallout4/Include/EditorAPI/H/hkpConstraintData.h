@@ -41,7 +41,7 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpConstraintMotor : public hkReferencedObject
 	{
 	public:
-		virtual void sub_04();
+		/* 0x020 */ [[nodiscard]] virtual hkpConstraintMotor* Clone() const;
 		/* 0x010 */ std::int8_t m_type;
 		/* 0x011 */ std::uint8_t pad011[7];
 	};

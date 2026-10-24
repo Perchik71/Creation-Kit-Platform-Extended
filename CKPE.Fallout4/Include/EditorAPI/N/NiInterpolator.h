@@ -18,10 +18,38 @@ namespace CKPE
 			{
 				class NiFloatData;
 				class NiColorData;
+				class NiObjectNET;
+				class NiQuatTransform;
+				class NiQuaternion;
+				class NiPoint3;
+				class NiAnimationKey;
+				class NiAVObjectPalette;
+				class NiBoolInterpolator;
 
 				class NiInterpolator : public NiObject
 				{
 				public:
+					/* 2A */ virtual bool UpdateTransform(float Time, NiObjectNET* Target, NiQuatTransform& Value) noexcept(true);
+					/* 2B */ virtual bool UpdateColor(float Time, NiObjectNET* Target, NiColorA& Value) noexcept(true);
+					/* 2C */ virtual bool UpdatePoint3(float Time, NiObjectNET* Target, NiPoint3& Value) noexcept(true);
+					/* 2D */ virtual bool UpdateQuaternion(float Time, NiObjectNET* Target, NiQuaternion& Value) noexcept(true);
+					/* 2E */ virtual bool UpdateFloat(float Time, NiObjectNET* Target, float& Value) noexcept(true);
+					/* 2F */ virtual bool UpdateBool(float Time, NiObjectNET* Target, bool& Value) noexcept(true);
+					/* 30 */ [[nodiscard]] virtual bool IsBoolValueSupported() const noexcept(true);
+					/* 31 */ [[nodiscard]] virtual bool IsFloatValueSupported() const noexcept(true);
+					/* 32 */ [[nodiscard]] virtual bool IsQuaternionValueSupported() const noexcept(true);
+					/* 33 */ [[nodiscard]] virtual bool IsPoint3ValueSupported() const noexcept(true);
+					/* 34 */ [[nodiscard]] virtual bool IsColorValueSupported() const noexcept(true);
+					/* 35 */ [[nodiscard]] virtual bool IsTransformValueSupported() const noexcept(true);
+					/* 36 */ virtual void Collapse() noexcept(true);
+					/* 37 */ virtual void GuaranteeTimeRange(float Start, float End) noexcept(true);
+					/* 38 */ [[nodiscard]] virtual NiInterpolator* GetSequenceInterpolator(float Start, float End) noexcept(true);
+					/* 39 */ virtual bool ResolveDependencies(NiAVObjectPalette* Palette) noexcept(true);
+					/* 3A */ virtual bool SetUpDependencies() noexcept(true);
+					/* 3B */ [[nodiscard]] virtual bool AlwaysUpdate() const noexcept(true);
+					/* 3C */ [[nodiscard]] virtual NiBoolInterpolator* IsBoolInterpolator() noexcept(true);
+					/* 3D */ virtual void GetActiveTimeRange(float& Start, float& End) const noexcept(true) = 0;
+
 					[[nodiscard]] inline float GetLastTime() const noexcept(true) { return _LastTime; }
 				private:
 					/* 0x10 */ float _LastTime;
@@ -35,17 +63,32 @@ namespace CKPE
 				static_assert(sizeof(NiInterpolator) == 0x18);
 				static_assert(NiInterpolator::VerifyLayout());
 
-				// 1.11.246.0: size 0x30, constructor 0x14254C660. The Creation Kit embeds these in TESImageSpaceModifier instead of the game's
-				// NiPointer<NiFloatInterpolator>. The 0x18 byte NiInterpolator part holds the vtable, the reference count at 08 and the base members.
-				class NiFloatInterpolator
+				class NiKeyBasedInterpolator : public NiInterpolator
 				{
 				public:
-					virtual ~NiFloatInterpolator() = default;
+					void GetActiveTimeRange(float& Start, float& End) const noexcept(true) override;
+					/* 3E */ [[nodiscard]] virtual std::uint16_t GetKeyChannelCount() const noexcept(true) = 0;
+					/* 3F */ [[nodiscard]] virtual std::uint32_t GetKeyCount(std::uint16_t Channel) const noexcept(true) = 0;
+					/* 40 */ [[nodiscard]] virtual std::uint32_t GetKeyType(std::uint16_t Channel) const noexcept(true) = 0;
+					/* 41 */ [[nodiscard]] virtual std::uint32_t GetKeyContent(std::uint16_t Channel) const noexcept(true) = 0;
+					/* 42 */ [[nodiscard]] virtual NiAnimationKey* GetKeys(std::uint16_t Channel) const noexcept(true) = 0;
+					/* 43 */ [[nodiscard]] virtual std::uint8_t GetKeyStride(std::uint16_t Channel) const noexcept(true) = 0;
+					/* 44 */ [[nodiscard]] virtual bool IsPosed(std::uint16_t Channel) const noexcept(true) = 0;
+				};
+				static_assert(sizeof(NiKeyBasedInterpolator) == 0x18);
 
+				// The CK embeds interpolators by value in TESImageSpaceModifier.
+				class NiFloatInterpolator : public NiKeyBasedInterpolator
+				{
 				public:
-					std::uint32_t refCount; // 08
-					std::uint32_t pad0C; // 0C
-					std::uint8_t niInterpolator[0x8]; // 10
+					[[nodiscard]] std::uint16_t GetKeyChannelCount() const noexcept(true) override;
+					[[nodiscard]] std::uint32_t GetKeyCount(std::uint16_t Channel) const noexcept(true) override;
+					[[nodiscard]] std::uint32_t GetKeyType(std::uint16_t Channel) const noexcept(true) override;
+					[[nodiscard]] std::uint32_t GetKeyContent(std::uint16_t Channel) const noexcept(true) override;
+					[[nodiscard]] NiAnimationKey* GetKeys(std::uint16_t Channel) const noexcept(true) override;
+					[[nodiscard]] std::uint8_t GetKeyStride(std::uint16_t Channel) const noexcept(true) override;
+					[[nodiscard]] bool IsPosed(std::uint16_t Channel) const noexcept(true) override;
+
 					float value; // 18 - -FLT_MAX (invalid) on construction
 					std::uint32_t pad1C; // 1C
 					NiFloatData* data; // 20 - reference counted (count at +8)
@@ -56,16 +99,17 @@ namespace CKPE
 				static_assert(offsetof(NiFloatInterpolator, data) == 0x20);
 				static_assert(sizeof(NiFloatInterpolator) == 0x30);
 
-				// 1.11.246.0: size 0x38, constructor 0x14254D3E0
-				class NiColorInterpolator
+				class NiColorInterpolator : public NiKeyBasedInterpolator
 				{
 				public:
-					virtual ~NiColorInterpolator() = default;
+					[[nodiscard]] std::uint16_t GetKeyChannelCount() const noexcept(true) override;
+					[[nodiscard]] std::uint32_t GetKeyCount(std::uint16_t Channel) const noexcept(true) override;
+					[[nodiscard]] std::uint32_t GetKeyType(std::uint16_t Channel) const noexcept(true) override;
+					[[nodiscard]] std::uint32_t GetKeyContent(std::uint16_t Channel) const noexcept(true) override;
+					[[nodiscard]] NiAnimationKey* GetKeys(std::uint16_t Channel) const noexcept(true) override;
+					[[nodiscard]] std::uint8_t GetKeyStride(std::uint16_t Channel) const noexcept(true) override;
+					[[nodiscard]] bool IsPosed(std::uint16_t Channel) const noexcept(true) override;
 
-				public:
-					std::uint32_t refCount; // 08
-					std::uint32_t pad0C; // 0C
-					std::uint8_t niInterpolator[0x8]; // 10
 					NiColorA value; // 18 - invalid marker on construction
 					NiColorData* data; // 28 - reference counted (count at +8)
 					std::uint32_t lastIndex; // 30

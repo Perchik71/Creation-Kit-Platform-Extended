@@ -21,14 +21,23 @@ namespace CKPE::Fallout4::EditorAPI
 		NoRequest = 0xB
 	};
 
-	// The fieldless hknpCharacterState intermediate base is not modeled.
-	class bhkCharacterState : public hkReferencedObject
+	class hknpCharacterState : public hkReferencedObject
 	{
 	public:
-		[[nodiscard]] inline bhkCharacterStateType GetType() const noexcept(true)
-		{
-			return CKPE::vtbl_call<bhkCharacterStateType>(0x20, this);
-		}
+		/* 0x020 */ [[nodiscard]] virtual bhkCharacterStateType GetType() const noexcept(true);
+
+	private:
+		/* 0x028 */ virtual void sub_028();
+		/* 0x030 */ virtual void sub_030();
+		/* 0x038 */ virtual void sub_038();
+		/* 0x040 */ virtual void sub_040();
+	};
+	static_assert(sizeof(hknpCharacterState) == 0x10);
+
+	class bhkCharacterState : public hknpCharacterState
+	{
+	private:
+		/* 0x048 */ virtual void sub_048();
 	};
 	static_assert(sizeof(bhkCharacterState) == 0x10);
 

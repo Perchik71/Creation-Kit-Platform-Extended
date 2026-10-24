@@ -42,6 +42,15 @@ namespace CKPE
 				public:
 					virtual ~BGSPrimitive() = default;
 
+				private:
+					/* 008 */ virtual void sub_008(); // Likely rebuilds editor geometry.
+				public:
+					/* 010 */ virtual void SetColor(const NiAPI::NiColorA& color);
+					/* 018 */ virtual void SetRadius(const NiAPI::NiPoint3& radius);
+					/* 020 */ [[nodiscard]] virtual bool IsPointInside(const NiAPI::NiPoint3& point);
+				private:
+					/* 028 */ virtual void sub_028(); // Likely creates a multibound.
+				public:
 					[[nodiscard]] inline std::uint32_t GetType() const noexcept(true) { return _Type; }
 					[[nodiscard]] inline NiAPI::NiPoint3 GetRadius() const noexcept(true) { return _Radius; }
 					[[nodiscard]] inline NiAPI::NiColorA GetColor() const noexcept(true) { return _Color; }
@@ -57,6 +66,9 @@ namespace CKPE
 					static constexpr auto TYPE{ kPlane };
 
 					virtual ~BGSPrimitivePlane() = default;
+				private:
+					/* 030 */ virtual void sub_030(); // Likely creates a room.
+					/* 038 */ virtual void sub_038(); // Likely creates a portal.
 				};
 				static_assert(sizeof(BGSPrimitivePlane) == 0xA0);
 
@@ -66,10 +78,12 @@ namespace CKPE
 					static constexpr auto TYPE{ kBox };
 
 					virtual ~BGSPrimitiveBox() = default;
+				private:
+					/* 030 */ virtual void sub_030(); // Likely creates a room.
 				};
 				static_assert(sizeof(BGSPrimitiveBox) == 0xA0);
 
-				class BGSPrimitiveLine : public BGSPrimitive
+				class BGSPrimitiveLine : public BGSPrimitiveBox
 				{
 				public:
 					static constexpr auto TYPE{ kLine };
@@ -87,7 +101,7 @@ namespace CKPE
 				};
 				static_assert(sizeof(BGSPrimitiveSphere) == 0xA0);
 
-				class BGSPrimitiveEllipsoid : public BGSPrimitive
+				class BGSPrimitiveEllipsoid : public BGSPrimitiveSphere
 				{
 				public:
 					static constexpr auto TYPE{ kEllipsoid };
@@ -99,4 +113,3 @@ namespace CKPE
 		}
 	}
 }
-

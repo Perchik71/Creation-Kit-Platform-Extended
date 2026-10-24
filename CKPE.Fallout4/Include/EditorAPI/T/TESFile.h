@@ -4,8 +4,10 @@
 
 #pragma once
 
+#include <EditorAPI/IDs.h>
 #include <cstdint>
 #include <windows.h>
+#include <CKPE.Common.Relocation.h>
 #include <EditorAPI/B/BSTList.h>
 #include <EditorAPI/B/BSString.h>
 #include <EditorAPI/B/BSSystemFile.h>
@@ -48,11 +50,61 @@ namespace CKPE
 				/* 118 */ HANDLE MappingHandle;
 				/* 120 */ std::uint8_t* Data;
 				/* 128 */ std::uint32_t DataSize;
-				/* 12C */ char pad12C[0x4];
+				/* 12C */ bool Detached;
+				/* 12D */ char pad12D[0x3];
+
+				[[nodiscard]] bool GetBit(std::uint32_t formID) const noexcept(true)
+				{
+					using func_t = bool (*)(const TESBitArrayFile*, std::uint32_t);
+					static Common::Relocation<func_t> func{
+						EditorAPI::IDs::TESBitArrayFile::GetBit };
+					return func(this, formID);
+				}
+
+				void SetBit(std::uint32_t formID, bool value) noexcept(true)
+				{
+					using func_t = void (*)(TESBitArrayFile*, std::uint32_t, bool);
+					static Common::Relocation<func_t> func{ EditorAPI::IDs::TESBitArrayFile::SetBit };
+					func(this, formID, value);
+				}
+
+				[[nodiscard]] std::uint8_t GetByte(std::uint32_t formID) const noexcept(true)
+				{
+					using func_t = std::uint8_t (*)(const TESBitArrayFile*, std::uint32_t);
+					static Common::Relocation<func_t> func{
+						EditorAPI::IDs::TESBitArrayFile::GetByte };
+					return func(this, formID);
+				}
+
+				void SetByte(std::uint32_t formID, std::uint8_t value) noexcept(true)
+				{
+					using func_t = void (*)(TESBitArrayFile*, std::uint32_t, std::uint8_t);
+					static Common::Relocation<func_t> func{
+						EditorAPI::IDs::TESBitArrayFile::SetByte };
+					func(this, formID, value);
+				}
+
+				// Even form IDs occupy the high nibble.
+				[[nodiscard]] std::uint8_t GetNibble(std::uint32_t formID) const noexcept(true)
+				{
+					using func_t = std::uint8_t (*)(const TESBitArrayFile*, std::uint32_t);
+					static Common::Relocation<func_t> func{
+						EditorAPI::IDs::TESBitArrayFile::GetNibble };
+					return func(this, formID);
+				}
+
+				void SetNibble(std::uint32_t formID, std::uint8_t value) noexcept(true)
+				{
+					using func_t = void (*)(TESBitArrayFile*, std::uint32_t, std::uint8_t);
+					static Common::Relocation<func_t> func{
+						EditorAPI::IDs::TESBitArrayFile::SetNibble };
+					func(this, formID, value);
+				}
 			};
 			static_assert(sizeof(TESBitArrayFile) == 0x130);
 			static_assert(offsetof(TESBitArrayFile, FileHandle) == 0x110);
 			static_assert(offsetof(TESBitArrayFile, Data) == 0x120);
+			static_assert(offsetof(TESBitArrayFile, Detached) == 0x12C);
 
 			struct TESChunk
 			{
@@ -126,6 +178,8 @@ namespace CKPE
 					std::uint32_t numRecords;		// number of record blocks in file
 					std::uint32_t nextFormID;		// including file index in highest byte
 				};
+				static_assert(sizeof(FileHeaderInfo) == 0xC);
+				static_assert(offsetof(FileHeaderInfo, nextFormID) == 0x8);
 
 				/* 330 */ FileHeaderInfo m_fileHeader;
 				/* 33C */ std::uint32_t m_RecordFlags;
@@ -137,8 +191,12 @@ namespace CKPE
 					/*00*/ std::uint32_t nFileSizeHigh;
 					/*04*/ std::uint32_t nFileSizeLow;
 				};
+				static_assert(sizeof(DependFileData) == 0x8);
+				static_assert(offsetof(DependFileData, nFileSizeLow) == 0x4);
 				typedef BSSimpleList<DependFileData> DependDataList;
 				typedef BSSimpleList<const char> DependNameList;
+				static_assert(sizeof(DependDataList) == 0x10);
+				static_assert(sizeof(DependNameList) == 0x10);
 
 				/* 340 */ DependNameList m_dependNames;
 				/* 350 */ DependDataList m_dependData;
@@ -177,6 +235,8 @@ namespace CKPE
 					static_assert(offsetof(TESFile, m_dependArray) == 0x368);
 					static_assert(offsetof(TESFile, m_versionControlID) == 0x3C8);
 					static_assert(offsetof(TESFile, m_transientFormIDs) == 0x3E0);
+					static_assert(offsetof(TESFile, m_authorName) == 0x380);
+					static_assert(offsetof(TESFile, m_description) == 0x390);
 				}
 			public:
 				[[nodiscard]] BSFile* GetFile() const noexcept(true) { return m_file; }

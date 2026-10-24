@@ -155,6 +155,41 @@ namespace CKPE
 						offsetof(BSShaderProperty, _ClearRenderPassesLock) == 0x68;
 				}
 			private:
+				/* 0x168 */ virtual RenderPassArray* GetRenderPassesImpl(
+					BSGeometry* Geometry, std::uint32_t RenderMode,
+					BSShaderAccumulator* Accumulator);
+				// Likely shadow passes; the base returns no passes.
+				/* 0x170 */ virtual void sub_170();
+				// Likely local-map passes; the base returns no passes.
+				/* 0x178 */ virtual void sub_178();
+				// Likely VATS mask passes; the base returns no passes.
+				/* 0x180 */ virtual void sub_180();
+				/* 0x188 */ virtual void sub_188();
+				// Likely depth passes; the base returns no passes.
+				/* 0x190 */ virtual void sub_190();
+				/* 0x198 */ virtual bool CanMergeImpl(
+					const BSShaderProperty* Property) const;
+				/* 0x1A0 */ virtual std::uint64_t GetDifferenceMaskImpl(
+					const BSShaderProperty* Property) const;
+				/* 0x1A8 */ virtual bool DescribeDifferencesImpl(
+					const BSShaderProperty* Property, std::uint64_t Differences,
+					char* Buffer, std::uint32_t BufferSize) const;
+				/* 0x1B0 */ virtual void SetMaterialAlphaImpl(float Alpha);
+				/* 0x1B8 */ virtual float GetMaterialAlphaImpl() const;
+				/* 0x1C0 */ virtual const BSFixedString& GetRootNameImpl() const;
+				/* 0x1C8 */ virtual std::int32_t ForEachTextureImpl(
+					ForEachVisitor& Visitor);
+				/* 0x1D0 */ virtual std::int32_t GetShaderTypeImpl() const;
+				/* 0x1D8 */ virtual void sub_1D8();
+				/* 0x1E0 */ virtual void sub_1E0();
+				/* 0x1E8 */ virtual NiAPI::NiTexture* GetBaseTextureImpl() const;
+				/* 0x1F0 */ virtual void sub_1F0();
+				/* 0x1F8 */ virtual void sub_1F8();
+				/* 0x200 */ virtual void sub_200();
+				/* 0x208 */ virtual void sub_208();
+				/* 0x210 */ virtual void sub_210();
+				/* 0x218 */ virtual void ClearRenderPassesImpl();
+
 				float												_Alpha;				// 28
 				std::int32_t										_LastRenderPassState;	// 2C
 				NiAPI::NiTFlags<std::uint64_t, BSShaderProperty>	_Flags;				// 30

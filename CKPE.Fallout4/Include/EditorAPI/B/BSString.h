@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 #include <climits>
 #include <string>
@@ -167,7 +168,14 @@ namespace CKPE
 				std::uint16_t	m_dataLen;	// 08
 				std::uint16_t	m_bufLen;	// 0A
 				std::uint32_t	pad0C;		// 0C
+				static void CheckLayout() noexcept(true)
+				{
+					static_assert(offsetof(BSString, m_data) == 0x0);
+					static_assert(offsetof(BSString, m_dataLen) == 0x8);
+					static_assert(offsetof(BSString, m_bufLen) == 0xA);
+				}
 			};
+			static_assert(sizeof(BSString) == 0x10);
 		}
 	}
 }

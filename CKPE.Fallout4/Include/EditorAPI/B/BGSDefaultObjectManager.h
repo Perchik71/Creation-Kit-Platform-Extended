@@ -46,6 +46,27 @@ namespace CKPE
 				static_assert(offsetof(BGSDefaultObjectManager, objectInitialized) == 0xC88);
 				static_assert(offsetof(BGSDefaultObjectManager, originalObjects) == 0xE14);
 				static_assert(offsetof(BGSDefaultObjectManager, hasOriginalObjects) == 0x1A74);
+
+				// CK 1.10.162 only; the modern view has two additional entries.
+				class BGSDefaultObjectManager_Original : public TESForm
+				{
+				public:
+					using DefaultObjectData = BGSDefaultObjectManager::DefaultObjectData;
+					constexpr static std::size_t DEFAULT_OBJECT_COUNT = 394;
+
+					virtual ~BGSDefaultObjectManager_Original() = default;
+
+					/* 0x028 */ TESForm* objects[DEFAULT_OBJECT_COUNT];
+					/* 0xC78 */ bool objectInitialized[DEFAULT_OBJECT_COUNT];
+					/* 0xE04 */ DefaultObjectData originalObjects[DEFAULT_OBJECT_COUNT];
+					/* 0x1A54 */ bool hasOriginalObjects;
+					/* 0x1A55 */ std::uint8_t pad1A55[3];
+				};
+				static_assert(sizeof(BGSDefaultObjectManager_Original) == 0x1A58);
+				static_assert(offsetof(BGSDefaultObjectManager_Original, objects) == 0x28);
+				static_assert(offsetof(BGSDefaultObjectManager_Original, objectInitialized) == 0xC78);
+				static_assert(offsetof(BGSDefaultObjectManager_Original, originalObjects) == 0xE04);
+				static_assert(offsetof(BGSDefaultObjectManager_Original, hasOriginalObjects) == 0x1A54);
 			}
 		}
 	}

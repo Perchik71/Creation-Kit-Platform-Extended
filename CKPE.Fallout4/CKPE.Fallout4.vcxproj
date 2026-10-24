@@ -236,6 +236,13 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.WrongUpdateActorWnd.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\EditorAPI\N\NiTPointerList.h" />
+    <ClInclude Include="Include\EditorAPI\B\bhkConstraintMotor.h" />
+    <ClInclude Include="Include\EditorAPI\B\BShkbHkxDB.h" />
+    <ClInclude Include="Include\EditorAPI\B\BShkbAnimationGraph.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSNiNode.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSMultiBoundNode.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSAnimationGraphManager.h" />
     <ClInclude Include="Include\EditorAPI\H\hkpWorld.h" />
     <ClInclude Include="Include\EditorAPI\H\hkpShape.h" />
     <ClInclude Include="Include\EditorAPI\H\hkpPhysics.h" />

@@ -327,6 +327,12 @@ namespace CKPE
 			};
 			static_assert(sizeof(TESDataHandler) == 0x1010);
 			static_assert(offsetof(TESDataHandler, arrNONE) == 0x68);
+			static_assert(offsetof(TESDataHandler, regionList) == 0xF50);
+			static_assert(offsetof(TESDataHandler, cellList) == 0xF58);
+			static_assert(offsetof(TESDataHandler, addonNodes) == 0xF70);
+			static_assert(offsetof(TESDataHandler, modList) == 0xFB0);
+			static_assert(offsetof(TESDataHandler, smallMods) == 0xFD8);
+			static_assert(offsetof(TESDataHandler, arrNONE) == 0x68);
 			static_assert(offsetof(TESDataHandler, arrOVIS) == 0xF38);
 			static_assert(offsetof(TESDataHandler, regionList) == 0xF50);
 			static_assert(offsetof(TESDataHandler, NextFormId) == 0xFA0);

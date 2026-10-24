@@ -43,6 +43,9 @@ namespace CKPE
 					std::uint32_t depthOfFieldVignetteStrengthKeySize; // F8
 				};
 				static_assert(sizeof(ImageSpaceModifierData) == 0xFC);
+				static_assert(offsetof(ImageSpaceModifierData, duration) == 0x4);
+				static_assert(offsetof(ImageSpaceModifierData, radialBlurCenter) == 0xCC);
+				static_assert(offsetof(ImageSpaceModifierData, depthOfFieldVignetteStrengthKeySize) == 0xF8);
 
 				// Unlike the game, the CK embeds its interpolators.
 				class TESImageSpaceModifier :

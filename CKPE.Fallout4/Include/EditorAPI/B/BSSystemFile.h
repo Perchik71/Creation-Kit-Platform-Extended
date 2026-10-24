@@ -5,6 +5,7 @@
 #pragma once
 
 #include <windows.h>
+#include <cstddef>
 #include <cstdint>
 
 namespace CKPE
@@ -33,11 +34,15 @@ namespace CKPE
 					std::uint64_t FileSize;
 				};
 				static_assert(sizeof(Info) == 0x20);
+				static_assert(offsetof(Info, FileSize) == 0x18);
 
-				std::uint64_t Flags;
-				HANDLE Handle;
+				/* 0x000 */ std::uint32_t Flags;
+				/* 0x004 */ std::uint32_t pad04;
+				/* 0x008 */ HANDLE Handle;
 			};
 			static_assert(sizeof(BSSystemFile) == 0x10);
+			static_assert(offsetof(BSSystemFile, Flags) == 0x0);
+			static_assert(offsetof(BSSystemFile, Handle) == 0x8);
 		}
 	}
 }

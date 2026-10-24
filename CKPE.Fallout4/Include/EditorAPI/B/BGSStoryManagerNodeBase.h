@@ -29,6 +29,7 @@ namespace CKPE
 					[[nodiscard]] virtual bool CanCheckOutChildNodes() const noexcept(true) { return true; } // 130
 					virtual bool UpdateChildNodeTrackingData() noexcept(true) { return true; } // 131
 					// Likely a node lifecycle hook; inspected overrides are no-ops.
+					// All four native node tables inherit this no-op.
 					virtual void sub_420() { return; } // 132 - RVA 0x87BFB0
 					virtual void UpdateNodeDataInDialogBox(HWND hDialogBox) noexcept(true) { return; } // 133
 					virtual bool PerformNodeDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam,

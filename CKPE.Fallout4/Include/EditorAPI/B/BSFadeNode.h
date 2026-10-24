@@ -40,9 +40,12 @@ namespace CKPE
 				[[nodiscard]] inline const BSShaderPropertyLightData& GetLightData() const noexcept(true) { return _LightData; }
 				[[nodiscard]] inline const BSTArray<FlattenedGeometryData>& GetFlattenedGeometry() const noexcept(true) { return _Geometry; }
 			protected:
-				/* 46 */ virtual BSTreeNode* Unk46();
-				/* 47 */ virtual BSLeafAnimNode* Unk47();
-				/* 48 */ virtual BSLeafAnimNode* Unk48();
+				// Likely AsTreeNode; the tree override returns this.
+				/* 46 */ virtual void sub_230();
+				// Likely AsLeafAnimNode; the const distinction is unproved.
+				/* 47 */ virtual void sub_238();
+				// Likely AsLeafAnimNode; both leaf overrides return this.
+				/* 48 */ virtual void sub_240();
 			private:
 				/* 0x140 */ BSShaderPropertyLightData _LightData;
 				/* 0x168 */ BSTArray<FlattenedGeometryData> _Geometry;

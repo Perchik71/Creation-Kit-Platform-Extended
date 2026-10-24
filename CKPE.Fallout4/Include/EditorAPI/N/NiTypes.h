@@ -27,9 +27,49 @@ namespace CKPE
 				class NiAVObject;
 				template<typename T> class NiPointer;
 
+				struct NiWindowStorage162
+				{
+					/* 0x000 */ void* VTable;
+					/* 0x008 */ NiAVObject* SceneRoot;
+					/* 0x010 */ std::uint8_t unk010[0x18];
+					/* 0x028 */ BSShaderAccumulator* Accumulator;
+					/* 0x030 */ std::uint8_t unk030[0x170];
+					/* 0x1A0 */ NiCamera* Camera;
+					/* 0x1A8 */ std::uint8_t unk1A8[0x28];
+					/* 0x1D0 */ std::uint32_t RenderWindowID;
+					/* 0x1D4 */ std::uint8_t unk1D4[0x3C];
+				};
+				static_assert(sizeof(NiWindowStorage162) == 0x210);
+				static_assert(offsetof(NiWindowStorage162, SceneRoot) == 0x8);
+				static_assert(offsetof(NiWindowStorage162, Accumulator) == 0x28);
+				static_assert(offsetof(NiWindowStorage162, Camera) == 0x1A0);
+				static_assert(offsetof(NiWindowStorage162, RenderWindowID) == 0x1D0);
+
+				struct NiWindowStorage982
+				{
+					/* 0x000 */ void* VTable;
+					/* 0x008 */ std::uint8_t unk008[0x8];
+					/* 0x010 */ NiAVObject* SceneRoot;
+					/* 0x018 */ std::uint8_t unk018[0x18];
+					/* 0x030 */ BSShaderAccumulator* Accumulator;
+					/* 0x038 */ std::uint8_t unk038[0x178];
+					/* 0x1B0 */ NiCamera* Camera;
+					/* 0x1B8 */ std::uint8_t unk1B8[0x28];
+					/* 0x1E0 */ std::uint32_t RenderWindowID;
+					/* 0x1E4 */ std::uint8_t unk1E4[0x3C];
+				};
+				static_assert(sizeof(NiWindowStorage982) == 0x220);
+				static_assert(offsetof(NiWindowStorage982, SceneRoot) == 0x10);
+				static_assert(offsetof(NiWindowStorage982, Accumulator) == 0x30);
+				static_assert(offsetof(NiWindowStorage982, Camera) == 0x1B0);
+				static_assert(offsetof(NiWindowStorage982, RenderWindowID) == 0x1E0);
+
 				class NiWindow
 				{
 				public:
+					using Storage162 = NiWindowStorage162;
+					using Storage982 = NiWindowStorage982;
+
 					~NiWindow() = default;
 				protected:
 					// Slot zero is not a destructor.
@@ -42,12 +82,16 @@ namespace CKPE
 						std::int32_t Width, std::int32_t Height, float FarPlane,
 						float FieldOfView);
 				public:
-					[[nodiscard]] inline NiAVObject* GetSceneRoot() const noexcept(true) { return ReadPointer<NiAVObject>(0x8, 0x10); }
-					[[nodiscard]] inline NiCamera* GetCamera() const noexcept(true) { return ReadPointer<NiCamera>(0x1A0, 0x1B0); }
-					[[nodiscard]] inline BSShaderAccumulator* GetAccumulator() const noexcept(true) { return ReadPointer<BSShaderAccumulator>(0x28, 0x30); }
+					[[nodiscard]] inline NiAVObject* GetSceneRoot() const noexcept(true)
+					{ return ReadPointer<NiAVObject>(offsetof(Storage162, SceneRoot), offsetof(Storage982, SceneRoot)); }
+					[[nodiscard]] inline NiCamera* GetCamera() const noexcept(true)
+					{ return ReadPointer<NiCamera>(offsetof(Storage162, Camera), offsetof(Storage982, Camera)); }
+					[[nodiscard]] inline BSShaderAccumulator* GetAccumulator() const noexcept(true)
+					{ return ReadPointer<BSShaderAccumulator>(offsetof(Storage162, Accumulator), offsetof(Storage982, Accumulator)); }
 					[[nodiscard]] static std::size_t GetAllocationSize() noexcept(true)
 					{
-						return VersionLists::GetRuntimeIndex() == 0 ? 0x210 : 0x220;
+						return VersionLists::GetRuntimeIndex() == 0 ?
+							sizeof(Storage162) : sizeof(Storage982);
 					}
 				private:
 					template<typename T>
@@ -253,6 +297,11 @@ namespace CKPE
 						yaw = std::atan2(t3, t4);
 					}
 				};
+				static_assert(sizeof(NiQuaternion) == 0x10);
+				static_assert(offsetof(NiQuaternion, m_fW) == 0x0);
+				static_assert(offsetof(NiQuaternion, m_fX) == 0x4);
+				static_assert(offsetof(NiQuaternion, m_fY) == 0x8);
+				static_assert(offsetof(NiQuaternion, m_fZ) == 0xC);
 
 				// 10
 				class NiBound 

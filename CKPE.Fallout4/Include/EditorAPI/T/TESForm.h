@@ -331,6 +331,7 @@ namespace CKPE
 					// FormIDMap maps old to new form ids.
 					/* 2E8 */ virtual void OnFormIDsRemapped(BSTHashMap<std::uint32_t, std::uint32_t>* FormIDMap) noexcept(true);
 					// Context is forwarded only; observed callers pass nullptr.
+					// Native implementations ignore the null-only opaque context.
 					/* 2F0 */ virtual bool RecompileScripts(void* Context) noexcept(true);
 					/* 2F8 */ [[nodiscard]] virtual bool HasRequiredEditorID() const noexcept(true);
 					/* 300 */ [[nodiscard]] virtual bool DoVerificationEditorID(HWND hDialogBox) const noexcept(true);

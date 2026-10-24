@@ -31,6 +31,9 @@ namespace CKPE
 							offsetof(NiTexture, _RendererTexture) == 0x38;
 					}
 				private:
+					// Likely texture-array cast; the base returns null.
+					/* 0x150 */ virtual void sub_150();
+
 					BSFixedString _FileName;			// 10
 					std::uint32_t _Flags;			// 18
 					std::uint32_t _Pad1C;			// 1C

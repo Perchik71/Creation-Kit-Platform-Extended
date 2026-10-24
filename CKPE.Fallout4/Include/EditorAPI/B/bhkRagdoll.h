@@ -23,6 +23,9 @@ namespace CKPE::Fallout4::EditorAPI
 
 	class bhkRagdollTemplate : public NiAPI::NiExtraData
 	{
+	private:
+		/* 0x170 */ virtual void sub_170();
+
 	public:
 		/* 0x018 */ std::byte unk018[0x18];
 	};

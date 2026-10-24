@@ -20,17 +20,25 @@ namespace CKPE
 			// 10
 			class BSTextureSet : public NiAPI::NiObject
 			{
+			protected:
+				/* 2A */ virtual const BSFixedString& GetTextureFilenameRef(std::uint32_t Index) const noexcept(true);
+				/* 2B */ virtual const char* GetTextureFilenameImpl(std::uint32_t Index) const noexcept(true);
+				/* 2C */ virtual void sub_160();
+				/* 2D */ virtual void GetTextureImpl(std::uint32_t Index,
+					NiAPI::NiPointer<NiAPI::NiTexture>& Texture, bool Unk1) const noexcept(true);
+				/* 2E */ virtual void SetTextureFilenameImpl(std::uint32_t Index,
+					const char* FileName) const noexcept(true);
 			public:
 				inline BSFixedString GetTextureFilenameFS(std::uint32_t Index) const noexcept(true)
-				{ return CKPE::vtbl_call<BSFixedString>(0x150, this, Index); }
+				{ return GetTextureFilenameRef(Index); }
 				inline const char* GetTextureFilename(std::uint32_t Index) const noexcept(true) 
-				{ return CKPE::vtbl_call<const char*>(0x158, this, Index); }
+				{ return GetTextureFilenameImpl(Index); }
 
 				inline void GetTexture(std::uint32_t Index, NiAPI::NiPointer<NiAPI::NiTexture>& Texture, 
 					bool Unk1 = true) const noexcept(true) 
-				{ return CKPE::vtbl_call<void>(0x168, this, Index, &Texture, Unk1); }
+				{ GetTextureImpl(Index, Texture, Unk1); }
 				inline void SetTextureFilename(std::uint32_t Index, const char* FileName) const noexcept(true) 
-				{ return CKPE::vtbl_call<void>(0x170, this, Index, FileName); }
+				{ SetTextureFilenameImpl(Index, FileName); }
 			};
 			static_assert(sizeof(BSTextureSet) == 0x10);
 

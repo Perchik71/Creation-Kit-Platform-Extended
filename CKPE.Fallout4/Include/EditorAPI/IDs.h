@@ -619,6 +619,21 @@ namespace CKPE
 					inline constexpr Common::ID Ctor{ 233793, 1628644 };
 				}
 
+				namespace TESBitArrayFile
+				{
+					inline constexpr Common::ID GetBit{ 278609, 1840653 };
+					inline constexpr Common::ID SetBit{ 200021 };
+					inline constexpr Common::ID GetByte{ 25027, 1618634 };
+					inline constexpr Common::ID SetByte{ 43380, 1618639 };
+					inline constexpr Common::ID GetNibble{ 643104, 1532694 };
+					inline constexpr Common::ID SetNibble{ 226424, 1689550 };
+				}
+
+				namespace BSAnimationGraphManager
+				{
+					inline constexpr Common::ID NotifyAnimationGraph{ 405302, 1475908 };
+				}
+
 				namespace Setting
 				{
 					namespace INISettingCollection
@@ -928,8 +943,6 @@ namespace CKPE
 					inline constexpr Common::ID set_purecall_handler_wrapper{ 1357980 };
 					// 1.11.246.0 0x14204E8D0 sub_14204E8D0
 					inline constexpr Common::ID sub_204E8D0{ 1362949 };
-					// 1.11.246.0 0x142120A20 sub_142120A20
-					inline constexpr Common::ID bhkThreadMemorySource__bhkThreadMemorySource{ 724189, 1347142 };
 					// 1.11.246.0 0x142429820 sub_142429820
 					inline constexpr Common::ID BSStringCache__Ref__Ref{ 766110, 1340478 };
 					// 1.11.246.0 0x142429970 sub_142429970

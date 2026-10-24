@@ -48,7 +48,14 @@ namespace CKPE
 				public:
 					[[nodiscard]] inline NiAPI::NiNode* GetBonesAt(std::uint32_t Index) const noexcept(true) { return Bones[Index]; }
 					[[nodiscard]] inline std::uint32_t GetBonesCount() const noexcept(true) { return Bones.size(); }
-					[[nodiscard]] inline NiAPI::NiTransform* GetTransformAt(std::uint32_t Index) const noexcept(true) { return WorldTransforms[Index]; }
+					[[nodiscard]] inline NiAPI::NiTransform* GetTransformAt(std::uint32_t Index) const noexcept(true)
+					{
+						static_assert(offsetof(Instance, Bones) == 0x10);
+						static_assert(offsetof(Instance, WorldTransforms) == 0x28);
+						static_assert(offsetof(Instance, BoneData) == 0x40);
+						static_assert(offsetof(Instance, Unk60) == 0x60);
+						return WorldTransforms[Index];
+					}
 					[[nodiscard]] inline std::uint32_t GetTransformCount() const noexcept(true) { return WorldTransforms.size(); }
 					[[nodiscard]] inline BoneData* GetBoneData() const noexcept(true) { return BoneData; }
 					[[nodiscard]] inline NiAPI::NiAVObject* GetRootNode() const noexcept(true) { return RootNode; }
@@ -58,7 +65,7 @@ namespace CKPE
 					BoneData*						BoneData;			// 40
 					NiAPI::NiAVObject*				RootNode;			// 48
 					char							Pad50[0x10];		// 50
-					NiAPI::NiMatrix4				Unk60;				// Usually identity matrix
+					NiAPI::NiTransform			Unk60;				// 60
 					char							PadA0[0x20];		// A0
 				};
 			};

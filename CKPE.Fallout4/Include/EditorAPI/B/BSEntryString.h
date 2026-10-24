@@ -13,6 +13,7 @@ namespace CKPE
 		namespace EditorAPI
 		{
 			typedef BSStringCache::Entry BSEntryString;
+			static_assert(sizeof(BSEntryString) == 0x18);
 		}
 	}
 }

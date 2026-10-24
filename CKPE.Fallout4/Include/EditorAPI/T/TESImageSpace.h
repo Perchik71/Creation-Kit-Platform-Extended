@@ -29,6 +29,7 @@ namespace CKPE
 					float eyeAdaptStrength; // 20
 				};
 				static_assert(sizeof(ImageSpaceBaseDataHDR) == 0x24);
+				static_assert(offsetof(ImageSpaceBaseDataHDR, eyeAdaptStrength) == 0x20);
 
 				struct ImageSpaceBaseDataCinematic
 				{
@@ -37,6 +38,7 @@ namespace CKPE
 					float contrast; // 08
 				};
 				static_assert(sizeof(ImageSpaceBaseDataCinematic) == 0xC);
+				static_assert(offsetof(ImageSpaceBaseDataCinematic, contrast) == 0x8);
 
 				struct ImageSpaceBaseDataColorF
 				{
@@ -52,6 +54,7 @@ namespace CKPE
 					ImageSpaceBaseDataColorF color; // 04
 				};
 				static_assert(sizeof(ImageSpaceBaseDataTint) == 0x10);
+				static_assert(offsetof(ImageSpaceBaseDataTint, color) == 0x4);
 
 				struct ImageSpaceBaseDataDepthOfField
 				{
@@ -63,6 +66,7 @@ namespace CKPE
 					float mode; // 14
 				};
 				static_assert(sizeof(ImageSpaceBaseDataDepthOfField) == 0x18);
+				static_assert(offsetof(ImageSpaceBaseDataDepthOfField, mode) == 0x14);
 
 				struct ImageSpaceBaseData
 				{
@@ -72,6 +76,9 @@ namespace CKPE
 					ImageSpaceBaseDataDepthOfField dofData; // 40
 				};
 				static_assert(sizeof(ImageSpaceBaseData) == 0x58);
+				static_assert(offsetof(ImageSpaceBaseData, cinematicData) == 0x24);
+				static_assert(offsetof(ImageSpaceBaseData, tintData) == 0x30);
+				static_assert(offsetof(ImageSpaceBaseData, dofData) == 0x40);
 
 				// The CK embeds its form-list state before the image-space data.
 				class TESImageSpace :

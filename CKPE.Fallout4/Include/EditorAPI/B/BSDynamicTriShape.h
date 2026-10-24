@@ -7,6 +7,8 @@
 #include <EditorAPI/B/BSTriShape.h>
 #include <EditorAPI/B/BSSpinLock.h>
 
+struct ID3D11Buffer;
+
 namespace CKPE
 {
 	namespace Fallout4
@@ -33,23 +35,28 @@ namespace CKPE
 
 				[[nodiscard]] inline std::uint32_t GetDynamicDataSize() const noexcept(true) { return _DynamicDataSize; }
 				[[nodiscard]] inline const void* GetDynamicData() const noexcept(true) { return _DynamicData; }
+				[[nodiscard]] inline std::uint32_t GetLastUpdatedFrame() const noexcept(true) { return _LastUpdatedFrame; }
 			private:
 				/* 0x170 */ std::uint32_t _DynamicDataSize;
-				/* 0x174 */ std::uint32_t _unk174;
+				/* 0x174 */ std::uint32_t _LastUpdatedFrame;
 				/* 0x178 */ BSSpinLock _DynamicDataLock;
 				/* 0x180 */ void* _DynamicData;
 				/* 0x188 */ NiAPI::NiPointer<NiAPI::NiRefObject> _SegmentData;
 				/* 0x190 */ DynamicVertexBuffer _VertexBuffer;
-				/* 0x1A0 */ std::uint8_t _unk1A0[0x10];
+				/* 0x1A0 */ ID3D11Buffer* _D3DVertexBuffer;
+				/* 0x1A8 */ std::uint32_t _VertexBufferOffset;
+				/* 0x1AC */ std::uint32_t _pad1AC;
 			public:
 				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
 				{
 					return offsetof(BSDynamicTriShape, _DynamicDataSize) == 0x170 &&
+						offsetof(BSDynamicTriShape, _LastUpdatedFrame) == 0x174 &&
 						offsetof(BSDynamicTriShape, _DynamicDataLock) == 0x178 &&
 						offsetof(BSDynamicTriShape, _DynamicData) == 0x180 &&
 						offsetof(BSDynamicTriShape, _SegmentData) == 0x188 &&
 						offsetof(BSDynamicTriShape, _VertexBuffer) == 0x190 &&
-						offsetof(BSDynamicTriShape, _unk1A0) == 0x1A0;
+						offsetof(BSDynamicTriShape, _D3DVertexBuffer) == 0x1A0 &&
+						offsetof(BSDynamicTriShape, _VertexBufferOffset) == 0x1A8;
 				}
 			};
 			static_assert(sizeof(BSDynamicTriShape) == 0x1B0);

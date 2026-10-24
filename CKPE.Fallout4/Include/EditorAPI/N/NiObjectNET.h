@@ -22,11 +22,22 @@ namespace CKPE
 				public:
 					virtual ~NiExtraData() = 0;
 
+					/* 2A */ [[nodiscard]] virtual bool KeepForExport() const noexcept(true);
+					/* 2B */ [[nodiscard]] virtual bool KeepForExporterOnly() const noexcept(true);
+					/* 2C */ [[nodiscard]] virtual bool IsStreamable() const noexcept(true);
+					/* 2D */ [[nodiscard]] virtual bool IsCloneable() const noexcept(true);
+
 					[[nodiscard]] inline const char* GetName() const noexcept(true) { return name; }
 				private:
 					BSFixedString name;  // 10
+				public:
+					[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+					{
+						return offsetof(NiExtraData, name) == 0x10;
+					}
 				};
 				static_assert(sizeof(NiExtraData) == 0x18);
+				static_assert(NiExtraData::VerifyLayout());
 
 				// 28
 				class NiObjectNET : public NiObject

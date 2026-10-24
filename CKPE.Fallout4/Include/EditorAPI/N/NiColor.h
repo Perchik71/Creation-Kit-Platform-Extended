@@ -9,6 +9,7 @@
 #include <xmmintrin.h>
 
 #include <algorithm>
+#include <cstddef>
 #include <string>
 
 #include <CKPE.Asserts.h>
@@ -891,6 +892,14 @@ namespace CKPE
 					[[nodiscard]] inline __m128 AsXmm() const noexcept(true) { return _mm_load_ps(Data()); }
 				};
 				static_assert(sizeof(NiColorA) == 0x10);
+				static_assert(sizeof(NiRGB) == 0x3);
+				static_assert(offsetof(NiRGB, r) == 0x0);
+				static_assert(offsetof(NiRGB, g) == 0x1);
+				static_assert(offsetof(NiRGB, b) == 0x2);
+				static_assert(sizeof(NiRGBA) == 0x4);
+				static_assert(offsetof(NiRGBA, a) == 0x3);
+				static_assert(offsetof(NiColor, b) == 0x8);
+				static_assert(offsetof(NiColorA, a) == 0xC);
 
 				constexpr NiColor& NiColor::operator=(const NiColorA& a_rhs) noexcept(true)
 				{

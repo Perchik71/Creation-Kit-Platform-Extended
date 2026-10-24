@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 
 namespace CKPE
@@ -14,6 +15,9 @@ namespace CKPE
 		{
 			namespace NiAPI
 			{
+				class NiAVObject;
+				template <class T> class NiPointer;
+
 				// sparse array, can have NULL entries that should be skipped
 				// iterate from 0 to m_emptyRunStart - 1
 				template <typename T>
@@ -29,6 +33,12 @@ namespace CKPE
 					std::uint16_t	Size;				// 14 - number of filled slots
 					std::uint16_t	GrowSize;			// 16 - number of slots to grow m_data by
 				};
+				static_assert(sizeof(NiTObjectArray<NiPointer<NiAVObject>>) == 0x18);
+				static_assert(offsetof(NiTObjectArray<NiPointer<NiAVObject>>, Data) == 0x8);
+				static_assert(offsetof(NiTObjectArray<NiPointer<NiAVObject>>, ArrayBufLen) == 0x10);
+				static_assert(offsetof(NiTObjectArray<NiPointer<NiAVObject>>, EmptyRunStart) == 0x12);
+				static_assert(offsetof(NiTObjectArray<NiPointer<NiAVObject>>, Size) == 0x14);
+				static_assert(offsetof(NiTObjectArray<NiPointer<NiAVObject>>, GrowSize) == 0x16);
 			}
 		}
 	}

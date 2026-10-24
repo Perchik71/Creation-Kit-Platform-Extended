@@ -49,6 +49,12 @@ namespace CKPE::Fallout4::EditorAPI
 		{ return GetImagespaceRuntimeData().effect; }
 
 	private:
+		/* 0x090 */ virtual void sub_090();
+		/* 0x098 */ virtual void sub_098();
+		/* 0x0A0 */ virtual void sub_0A0();
+		/* 0x0A8 */ virtual void sub_0A8();
+		/* 0x0B0 */ virtual void sub_0B0();
+
 		// The secondary base follows the runtime-sized BSShader base.
 		std::byte _runtimeStorage[0x128];
 	};
