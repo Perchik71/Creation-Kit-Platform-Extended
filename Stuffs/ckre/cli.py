@@ -249,8 +249,133 @@ def selftest(config):
                ownership)
     finally:
         context.close()
+    regression_checks(config, record)
     return {"status": "PASS" if all(c["status"] == "PASS" for c in checks) else "FAIL",
             "counts": dict(Counter(c["status"] for c in checks)), "checks": checks}
+
+
+def regression_checks(config, record):
+    from .evidence import evaluate, verify
+    from .layout import (bind_alias_layouts, check, compile_inventory,
+                         evidence_identities, normalize_type, object_alias, source_inventory)
+    with tempfile.TemporaryDirectory(prefix="leaf-regression-", dir=config.cache) as work:
+        path = Path(work) / "IDs.h"
+        path.write_text("namespace IDs { namespace Leaf { "
+                        "inline constexpr Common::ID Constructor{199447}; } }", "utf-8")
+        resolved = resolve(config, path, list(VERSIONS))[0]
+    leaves, anchors = [], []
+    for version in VERSIONS:
+        context = Context(config, version)
+        try:
+            rva = AddressLibrary(config, version).ids[199447]
+            analysis = context.ctors.analyze(rva)
+            refs = context.disasm.xrefs(rva)
+            interior = context.disasm.function(rva + 2)
+            try:
+                context.ctors.describe(hex(rva + 2))
+            except ValueError:
+                interior_rejected = True
+            else:
+                interior_rejected = False
+            row = resolved["versions"][version]
+            leaves.append({
+                "version": version, "rva": rva,
+                "passed": not context.image.bounds(rva) and
+                row["status"] == "PASS" and row["fingerprint"]["size"] == 0x23 and
+                row["fingerprint"]["bounds_complete"] and
+                {s["offset"] for s in analysis["stores"]} == {0, 8, 0x10, 0x12, 0x18, 0x20} and
+                any(ref.get("function_source") == "inferred" for ref in refs) and
+                any(c["rva"] == rva for c in
+                    context.ctors.candidates("DialogExtraPreviewControl")),
+                "interior_rejected": bool(
+                    interior_rejected and interior and interior["start"] == rva),
+                "function": analysis["function"]})
+            if version == "246":
+                for kind in ("direct_call", "vtable_slot"):
+                    leaf = next((f for f in context.disasm._leaves.values()
+                                 if any(p["kind"] == kind for p in f["provenance"])
+                                 and not any(p["kind"] == "aligned_padding"
+                                             for p in f["provenance"])), None)
+                    anchors.append({
+                        "kind": kind, "function": leaf,
+                        "passed": bool(leaf and not context.image.bounds(leaf["start"])
+                                       and context.disasm.instructions(leaf["start"]))})
+        finally:
+            context.close()
+    record("No-unwind ID199447 resolves and exposes constructor stores/xrefs in all builds",
+           not resolved["body_mismatch"] and all(r["passed"] for r in leaves), leaves)
+    record("Inferred leaf bounds reject arbitrary interior function starts",
+           all(r["interior_rejected"] for r in leaves), leaves)
+    record("Non-padding direct-call and vtable targets prove leaf starts",
+           all(row["passed"] for row in anchors), anchors)
+
+    headers = selected_headers(["TESDataHandler.h", "hkBaseTypes.h",
+                                "hkBaseObject.h", "hkGeometryProcessing.h", "BSTHashMap.h"])
+    map_type = ("CKPE::Fallout4::EditorAPI::BSTHashMap<"
+                "CKPE::Fallout4::EditorAPI::BSFixedString,void*>")
+    inventory = source_inventory(headers, instances=[
+        "hkEnum<hkReferencedObject&,std::uint8_t>", map_type])
+    compiled = compile_inventory(config, headers, inventory)
+    bind_alias_layouts(inventory, compiled["classes"], compiled.get("alias_bindings"))
+    expected = {"TESFormArray": 0x18, "hkgpIndexedMeshStorage": 0x40,
+                "hkEnum<hkReferencedObject&,std::uint8_t>": 1,
+                map_type.removeprefix("CKPE::Fallout4::EditorAPI::"): 0x38}
+    bindings = {}
+    for name, size in expected.items():
+        source = next((s for s in inventory if s["name"] == name), None)
+        layout = compiled["classes"].get(source["cpp_name"]) if source else None
+        bindings[name] = {"layout": layout, "passed": bool(
+            layout and layout["size"] == size and layout.get("instantiated_cpp_name") and
+            (source.get("evidence_class") != map_type or
+             normalize_type(map_type) in evidence_identities(source)))}
+    record("Pointer/reference template arguments bind actual MSVC instantiations",
+           compiled["compiler_exit_code"] == 0 and
+           all(item["passed"] for item in bindings.values()) and
+           not object_alias("hkArray<hkReferencedObject*>*") and
+           not object_alias("hkArray<hkReferencedObject*>&"), bindings)
+
+    # One real class deliberately has two sizes. Exercise the complete gate with
+    # isolated proofs: the modern facade must FAIL against 162, not conflict
+    # with, or accidentally consume, the other builds' exact evidence.
+    sites = {"162": 0x462EA5, "982": 0x5582C5,
+             "137": 0x571635, "246": 0x573B05}
+    with tempfile.TemporaryDirectory(prefix="version-evidence-", dir=config.cache) as work:
+        path = Path(work) / "versions.toml"
+        blocks = []
+        for versions, size in ((["162"], 0x210), (["982", "137", "246"], 0x220)):
+            proofs = ",\n".join(
+                f'{{version = "{v}", rva = 0x{sites[v]:X}, '
+                f'expect = "mov edx, 0x{size:x}"}}' for v in versions)
+            blocks.append(
+                '[[evidence]]\nclass = "NiWindow"\n'
+                f'size = 0x{size:X}\nkind = "exact"\n'
+                f'versions = {json.dumps(versions)}\nproof = [{proofs}]\n'
+                'note = "NiWindow own allocation immediately before its constructor."\n')
+        path.write_text("\n".join(blocks), "utf-8")
+        proofs = verify(config, directory=Path(work))
+        results = []
+        for version in VERSIONS:
+            context = Context(config, version)
+            try:
+                gate = check(config, context.rtti, context.ctors,
+                             selected_headers(["NiTypes.h"]), allocations=False,
+                             evidence_directory=Path(work))
+                row = next(r for r in gate["classes"] if r["name"] == "NiWindow")
+                correct = 0x210 if version == "162" else 0x220
+                evaluated = evaluate(proofs["entries"], version, correct)
+                results.append({
+                    "version": version, "header_size": row["header_size"],
+                    "evidence_status": row["size_evidence_status"],
+                    "expected_binary_size": correct,
+                    "passed": gate["compiler_exit_code"] == 0 and
+                    evaluated["status"] == "PASS" and
+                    {e["size"] for e in row["size_evidence"]} == {correct} and
+                    row["size_evidence_status"] ==
+                    ("FAIL" if version == "162" else "PASS (evidence)")})
+            finally:
+                context.close()
+    record("NiWindow disjoint-version exact sizes are selected by the layout gate",
+           proofs["status"] == "PASS" and all(row["passed"] for row in results), results)
 
 
 def run(args, config):
@@ -327,7 +452,8 @@ def run(args, config):
             elif args.command == "strings-in":
                 rva = number(args.target)
                 results.append({"address": image.address(rva),
-                                "bounds": image.bounds(rva),
+                                "bounds": context.disasm.bounds(rva),
+                                "function": context.disasm.function(rva),
                                 "strings": context.disasm.strings(rva)})
             elif args.command == "xrefs":
                 rva = number(args.target) if args.target else 0

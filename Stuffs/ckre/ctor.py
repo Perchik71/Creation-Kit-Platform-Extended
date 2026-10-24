@@ -274,7 +274,7 @@ class Constructors:
                     return [{**direct[0], "create_path": [*path, body]}]
                 if depth >= 2:
                     return []
-                bounds = self.image.bounds(body)
+                bounds = self.disasm.bounds(body)
                 for ins in instructions:
                     if not ins.operands or ins.operands[0].type != X86_OP_IMM:
                         continue
@@ -510,6 +510,7 @@ class Constructors:
                         "value": value, "instruction": mnemonic,
                     })
         result = {"rva": body, "address": self.image.address(body),
+                  "function": self.disasm.function(body),
                   "symbol": self.rtti.publics.lookup(body),
                   "stores": stores, "calls": calls}
         self._analyses[body] = result
@@ -651,6 +652,9 @@ class Constructors:
             candidates = self.candidates(target)
             factories = self.factory_allocations(target)
         else:
+            function = self.disasm.function(rva)
+            if not function or function["start"] != rva:
+                raise ValueError(f"RVA 0x{rva:X} is not a proven function start")
             candidates = [self.analyze(rva)]
         for candidate in candidates:
             candidate["allocations"] = self.allocations(candidate["rva"])

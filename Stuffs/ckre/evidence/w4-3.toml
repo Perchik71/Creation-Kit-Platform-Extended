@@ -1,0 +1,447 @@
+[[evidence]]
+class = "BSShaderMaterial"
+size = 0x38
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CB2CF8, expect = "mov edx, 0x38" }]
+note = "RTTI scalar deleting destructor frees this with size 0x38."
+
+[[evidence]]
+class = "BSLightingShaderMaterialBase"
+size = 0xC0
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CC49E9, expect = "mov edx, 0xc0" }]
+note = "RTTI scalar deleting destructor frees this with size 0xC0."
+
+[[evidence]]
+class = "BSLightingShaderMaterial"
+size = 0xC0
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x72C859, expect = "mov edx, 0xc0" }]
+note = "RTTI scalar deleting destructor frees this with size 0xC0."
+
+[[evidence]]
+class = "BSLightingShaderMaterialDismemberment"
+size = 0xC8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CC4AA3, expect = "mov edx, 0xc8" }]
+note = "RTTI scalar deleting destructor frees this with size 0xC8."
+
+[[evidence]]
+class = "BSLightingShaderMaterialEnvmap"
+size = 0xD8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CC4BBC, expect = "mov edx, 0xd8" }]
+note = "RTTI scalar deleting destructor frees this with size 0xD8."
+
+[[evidence]]
+class = "BSLightingShaderMaterialEye"
+size = 0xF0
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CC4CEC, expect = "mov edx, 0xf0" }]
+note = "RTTI scalar deleting destructor frees this with size 0xF0."
+
+[[evidence]]
+class = "BSLightingShaderMaterialFace"
+size = 0xC8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CC4DD3, expect = "mov edx, 0xc8" }]
+note = "RTTI scalar deleting destructor frees this with size 0xC8."
+
+[[evidence]]
+class = "BSLightingShaderMaterialGlowmap"
+size = 0xC8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CC4EA3, expect = "mov edx, 0xc8" }]
+note = "RTTI scalar deleting destructor frees this with size 0xC8."
+
+[[evidence]]
+class = "BSLightingShaderMaterialHairTint"
+size = 0xD0
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CC4F09, expect = "mov edx, 0xd0" }]
+note = "RTTI scalar deleting destructor frees this with size 0xD0."
+
+[[evidence]]
+class = "BSLightingShaderMaterialLandscape"
+size = 0x190
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CC4FA9, expect = "mov edx, 0x190" }]
+note = "RTTI scalar deleting destructor frees this with size 0x190."
+
+[[evidence]]
+class = "BSLightingShaderMaterialLODLandscape"
+size = 0xF0
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CC4F59, expect = "mov edx, 0xf0" }]
+note = "RTTI scalar deleting destructor frees this with size 0xF0."
+
+[[evidence]]
+class = "BSLightingShaderMaterialMultiLayerParallax"
+size = 0xF0
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CC4FF9, expect = "mov edx, 0xf0" }]
+note = "RTTI scalar deleting destructor frees this with size 0xF0."
+
+[[evidence]]
+class = "BSLightingShaderMaterialParallax"
+size = 0xC8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CC50B3, expect = "mov edx, 0xc8" }]
+note = "RTTI scalar deleting destructor frees this with size 0xC8."
+
+[[evidence]]
+class = "BSLightingShaderMaterialParallaxOcc"
+size = 0xD0
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CC5183, expect = "mov edx, 0xd0" }]
+note = "RTTI scalar deleting destructor frees this with size 0xD0."
+
+[[evidence]]
+class = "BSLightingShaderMaterialSkinTint"
+size = 0xD0
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CC51F3, expect = "mov edx, 0xd0" }]
+note = "RTTI scalar deleting destructor frees this with size 0xD0."
+
+[[evidence]]
+class = "BSLightingShaderMaterialSnow"
+size = 0xD0
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CC5239, expect = "mov edx, 0xd0" }]
+note = "RTTI scalar deleting destructor frees this with size 0xD0."
+
+[[evidence]]
+class = "BSShader"
+size = 0x1E8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2D11145, expect = "mov edx, 0x1e8" }]
+note = "RTTI scalar deleting destructor frees the modern object with size 0x1E8."
+
+[[evidence]]
+class = "BSShaderProperty"
+size = 0x70
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2BC5159, expect = "mov edx, 0x70" }]
+note = "RTTI scalar deleting destructor frees this with size 0x70."
+
+[[evidence]]
+class = "BGSRenderWindowEditModule"
+size = 0xB0
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x586750, expect = "mov edx, 0xb0" }]
+note = "Scalar deleting destructor frees rbx=this with 0xB0, not its owned 0x90 object."
+
+[[evidence]]
+class = "BGSRenderWindowReferenceEditModule"
+size = 0x128
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x5EA26F, expect = "mov edx, 0x128" }]
+note = "Scalar deleting destructor frees rbx=this with 0x128, not its owned 0x50 object."
+
+[[evidence]]
+class = "BSImagespaceShader"
+size = 0x310
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CA6247, expect = "mov edx, 0x310" }]
+note = "RTTI scalar deleting destructor frees the modern object with size 0x310."
+
+[[evidence]]
+class = "BSLight"
+size = 0x190
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2C80D79, expect = "mov edx, 0x190" }]
+note = "RTTI scalar deleting destructor frees this with size 0x190."
+
+[[evidence]]
+class = "NiTexture"
+size = 0x48
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x24C8738, expect = "mov edx, 0x48" }]
+note = "RTTI scalar deleting destructor frees this with size 0x48."
+
+[[evidence]]
+class = "SkyObject"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xEA64B5, expect = "mov edx, 0x10" }]
+note = "RTTI scalar deleting destructor frees this with size 0x10."
+
+[[evidence]]
+class = "Clouds"
+size = 0x518
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xE97769, expect = "mov edx, 0x518" }]
+note = "RTTI scalar deleting destructor frees this with size 0x518."
+
+[[evidence]]
+class = "BSEffectShaderMaterial"
+size = 0xB8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2C69939, expect = "mov edx, 0xb8" }]
+note = "RTTI scalar deleting destructor frees this with size 0xB8."
+
+[[evidence]]
+class = "BSWaterShaderProperty"
+size = 0xC0
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CCB8C8, expect = "mov edx, 0xc0" }]
+note = "RTTI scalar deleting destructor frees this with size 0xC0."
+
+[[evidence]]
+class = "BSSkyShaderProperty"
+size = 0xB0
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CD8622, expect = "mov edx, 0xb0" }]
+note = "RTTI scalar deleting destructor frees this with size 0xB0."
+
+[[evidence]]
+class = "BSGraphics::RenderTarget"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2B5CBF0, expect = "lea rsi, [rax + rax*2]" }, { version = "246", rva = 0x2B5CBF4, expect = "shl rsi, 4" }]
+note = "CreateRenderTarget indexes the physical color records by index*3*16."
+
+[[evidence]]
+class = "BSGraphics::DepthStencilTarget"
+size = 0x98
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2B5CF85, expect = "imul rax, r13, 0x98" }]
+note = "CreateDepthStencilTarget indexes the physical depth records with stride 0x98."
+
+[[evidence]]
+class = "BSGraphics::RenderTargetProperties"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2B70C9D, expect = "shl r14, 5" }]
+note = "Manager color creation indexes property records with stride 0x20 and copies two xmmwords."
+
+[[evidence]]
+class = "BSGraphics::DepthStencilTargetProperties"
+size = 0x1C
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2B70F7E, expect = "imul r15, rsi, 0x1c" }]
+note = "Manager depth creation indexes property records with stride 0x1C and copies 16+8+4 bytes."
+
+[[evidence]]
+class = "BSGraphics::CubeMapRenderTargetProperties"
+size = 0x24
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2B7124E, expect = "lea rax, [rsi + rsi*8]" }, { version = "246", rva = 0x2B71252, expect = "lea r15, [rax*4]" }]
+note = "Manager cube creation indexes property records by index*9*4 and copies 16+16+4 bytes."
+
+[[evidence]]
+class = "BSGraphics::CameraStateData"
+size = 0x250
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2B876DA, expect = "mov dword ptr [rsp + 0x20], 0x250" }]
+note = "Graphics State constructor supplies 0x250 as the camera-cache element size."
+
+[[evidence]]
+class = "BSBatchRenderer::PassGroup"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2C6A81D, expect = "shl rsi, 4" }, { version = "246", rva = 0x2C6A870, expect = "add rbx, 0x10" }]
+note = "Batch constructor iterates renderPasses elements with stride 0x10 and follows passHead at +0."
+
+[[evidence]]
+class = "BSBatchRenderer::GeometryGroup"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2C6A940, expect = "lea edx, [r9 + 0x28]" }]
+note = "r9 is zero; batch constructor allocates a geometry group and stores its pointer in geometryGroups."
+
+[[evidence]]
+class = "BSBatchRenderer::CommandBufferPassesData"
+size = 0x10018
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2C6FEC0, expect = "mov edx, 0x10018" }]
+note = "Command-buffer allocation initializes currentBuffer at +0x10000 and next at +0x10008."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::BSBatchRenderer::PassGroup>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2C6A6C7, expect = "mov r12d, 0xd" }, { version = "246", rva = 0x2C6A6D0, expect = "lea edx, [r12 + 0xb]" }, { version = "246", rva = 0x2C6A888, expect = "add r15, 0x18" }]
+note = "Constructor creates 13 renderPasses containers at +8, supplying 0x18 element size, then iterates them at 0x18 stride."
+
+[[evidence]]
+class = "BSRenderPass"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2BD71F3, expect = "mov ecx, 0x60" }]
+note = "Effect pass builder allocates 0x60 then calls the BSRenderPass constructor and links the result."
+
+[[evidence]]
+class = "ImageSpaceManager"
+size = 0x1B8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2BDF000, expect = "mov edx, 0x1b8" }]
+note = "Shader manager initialization allocates 0x1B8, calls the manager constructor, and publishes singleton 0x7FFE8F0."
+
+[[evidence]]
+class = "BSBatchRenderer::CommandBufferPassesDataEntry"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2C71970, expect = "shl rax, 4" }]
+note = "Command-buffer array accessor called with batch+0x430 returns data + index*0x10."
+
+[[evidence]]
+class = "BSGraphics::CubeMapRenderTarget"
+size = 0x40
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2B5D2B8, expect = "shl r13, 6" }]
+note = "Low-level cube resource creator indexes physical cube records with stride 0x40."
+
+[[evidence]]
+class = "BSGraphics::RendererWindow"
+size = 0x50
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2B6CE05, expect = "mov qword ptr [rcx + 0x58], rax" }, { version = "246", rva = 0x2B6CE35, expect = "mov qword ptr [rcx + 0xa8], rax" }, { version = "246", rva = 0x2B6CE74, expect = "mov qword ptr [rcx + 0xf8], rax" }]
+note = "RendererData constructor unrolls 32 identical window-record initializations beginning +0x58/+0xA8/+0xF8 at stride 0x50."
+
+[[evidence]]
+class = "BSGraphics::RendererData"
+size = 0x25C9
+kind = "lower_bound"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2B6D5F0, expect = "mov byte ptr [rbx + 0x25c8], 0" }]
+note = "RendererData constructor's final own byte store ends at 0x25C9."
+
+[[evidence]]
+class = "BSGraphics::RendererData"
+size = 0x25D0
+kind = "upper_bound"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2B4D309, expect = "lea rdx, [r13 + 0x25e0]" }]
+note = "Renderer embeds data at +0x10; separate adapter output starts +0x25E0, bounding data by 0x25D0. Eight-byte alignment closes the lower bound."
+
+[[evidence]]
+class = "BSShader::RuntimeData"
+size = 0x120
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2D110AE, expect = "mov rcx, qword ptr [rcx + 0x1e0]" }, { version = "246", rva = 0x2D11145, expect = "mov edx, 0x1e8" }]
+note = "Modern payload starts +0xC8; final FXP pointer occupies +0x1E0..0x1E8, exactly filling the object's sized-deletion extent."
+
+[[evidence]]
+class = "BSImagespaceShader::RuntimeData"
+size = 0x128
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CA6204, expect = "lea rcx, [rsi + 0x2e0]" }, { version = "246", rva = 0x2CA61F7, expect = "lea rcx, [rsi + 0x2f8]" }, { version = "246", rva = 0x2CA6247, expect = "mov edx, 0x310" }]
+note = "Secondary effect payload starts at RTTI offset 0x1E8; four adjacent 0x18-byte names arrays end at the 0x310 sized-deletion boundary."
+
+[[evidence]]
+class = "ImageSpaceBaseDataHDR"
+size = 0x24
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xCE56E5, expect = "mov r8d, 0x24" }, { version = "246", rva = 0xCE56F7, expect = "lea rcx, [rdi + 0x38]" }]
+note = "TESImageSpace loader reads the 0x24-byte HDR chunk then copies its complete payload to data+0."
+
+[[evidence]]
+class = "ImageSpaceBaseDataCinematic"
+size = 0xC
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xCE561D, expect = "mov r8d, 0xc" }, { version = "246", rva = 0xCE562F, expect = "lea rcx, [rdi + 0x5c]" }]
+note = "TESImageSpace loader reads the 0xC-byte cinematic chunk then copies it to data+0x24."
+
+[[evidence]]
+class = "ImageSpaceBaseDataTint"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xCE56BC, expect = "lea r8d, [rcx + 4]" }, { version = "246", rva = 0xCE56CC, expect = "lea rax, [rdi + 0x68]" }]
+note = "Chunk dispatch proves ecx=0xC here; loader reads and copies the 0x10-byte tint record to data+0x30."
+
+[[evidence]]
+class = "ImageSpaceBaseDataDepthOfField"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xCE5663, expect = "mov r8d, 0x18" }, { version = "246", rva = 0xCE5675, expect = "lea rax, [rdi + 0x78]" }]
+note = "TESImageSpace loader reads and copies the 0x18-byte depth-of-field chunk to data+0x40."
+
+[[evidence]]
+class = "ImageSpaceBaseData"
+size = 0x58
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xCE56F7, expect = "lea rcx, [rdi + 0x38]" }, { version = "246", rva = 0xCE5675, expect = "lea rax, [rdi + 0x78]" }, { version = "246", rva = 0xCE5663, expect = "mov r8d, 0x18" }]
+note = "Four serialized subrecords exactly tile form+0x38..0x90: 0x24 HDR, 0xC cinematic, 0x10 tint, 0x18 DOF. The next TESTexture begins at +0x90."
+
+[[evidence]]
+class = "ImageSpaceModifierData"
+size = 0xFC
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xCEB004, expect = "lea rdx, [r15 + 0x28]" }, { version = "246", rva = 0xCEB008, expect = "mov r8d, 0xfc" }]
+note = "TESImageSpaceModifier loader reads the complete fixed payload directly to form+0x28 with byte count 0xFC."
+
+[[evidence]]
+class = "BSShaderProperty::RenderPassArray"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2BD99AD, expect = "lea rcx, [rbx + 0x90]" }, { version = "246", rva = 0x2BD99C7, expect = "lea edx, [rdi + 8]" }, { version = "246", rva = 0x2BD99CA, expect = "lea r8d, [rdi + 3]" }]
+note = "Lighting property constructor creates three adjacent pass-list records at +0x90 with size 8 and count 3; edi=0."
+
+[[evidence]]
+class = "BSLightingShader::RuntimeData"
+size = 0x48
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2D11145, expect = "mov edx, 0x1e8" }, { version = "246", rva = 0x2CB8738, expect = "mov edx, 0x230" }]
+note = "Lighting payload starts after the proven 0x1E8 shader base and ends at the lighting object's 0x230 sized-deletion boundary; the final FrameID DWORD at relative +0x40 rounds to that boundary."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::NiAPI::NiPointer<CKPE::Fallout4::EditorAPI::NiAPI::NiRefObject>"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xEA646E, expect = "mov rcx, qword ptr [rcx + 8]" }, { version = "246", rva = 0xEA647C, expect = "mov qword ptr [rbx + 8], 0" }, { version = "246", rva = 0xEA64B5, expect = "mov edx, 0x10" }]
+note = "SkyObject owns the retained NiRefObject pointer in its sole eight-byte member at +8; deleting extent is 0x10 including the vptr."

@@ -107,8 +107,10 @@ def resolve(config, path, versions, names=None):
                 section = image.section(rva)
                 row["section"] = section["name"] if section else None
                 if image.is_code(rva):
-                    bounds = image.bounds(rva)
-                    row["function_start"] = bool(bounds and bounds[0] == rva)
+                    function = disasm.function(rva)
+                    row["function_start"] = bool(function and function["start"] == rva)
+                    row["function_source"] = function["source"] if function else None
+                    row["function_provenance"] = function["provenance"] if function else []
                     row["status"] = "PASS" if row["function_start"] else "FAIL"
                     row["fingerprint"] = disasm.fingerprint(rva)
                     if entry["name"].endswith("::Constructor"):

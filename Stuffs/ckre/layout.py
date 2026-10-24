@@ -15,8 +15,23 @@ import xml.etree.ElementTree as ET
 from .config import HEADERS, ROOT, atomic_write
 
 
-def source_inventory(headers=None):
-    result, aliases = [], []
+def object_alias(expression):
+    """Pointer/reference arguments are objects; pointer/reference aliases are not."""
+    depth = 0
+    for character in expression:
+        if character == "<":
+            depth += 1
+        elif character == ">":
+            depth -= 1
+            if depth < 0:
+                return False
+        elif depth == 0 and character in "&*(){}[]":
+            return False
+    return depth == 0
+
+
+def source_inventory(headers=None, instances=()):
+    result, aliases, declarations = [], [], {}
     selected = {p.resolve() for p in headers} if headers else None
     for path in sorted(HEADERS.rglob("*.h")):
         text = path.read_text("utf-8-sig", errors="replace")
@@ -31,8 +46,15 @@ def source_inventory(headers=None):
             r"(?:(?:alignas|__declspec)\([^)]*\)\s*)*(\w+)"
             r"(?:\s+final)?\s*(?::[^;{}]+)?\s*\{|([{}])|"
             r"\busing\s+(\w+)\s*=\s*([^;]+);|"
-            r"\btypedef\s+([^;]+?)\s+(\w+)\s*;", masked))
-        stack = []
+            r"\btypedef\s+([^;]+?)\s+(\w+)\s*;|"
+            r"\b(public|private|protected)\s*:|"
+            r"\b(?:class|struct)\s+(\w+)\s*;", masked))
+        stack, access = [], {}
+
+        def templated(at):
+            return bool(re.search(r"\btemplate\s*<[^;{}]+>\s*$",
+                                  masked[max(0, at - 2000):at]))
+
         for token in tokens:
             if token[1]:
                 stack.append(("namespace", token[1], token))
@@ -41,10 +63,11 @@ def source_inventory(headers=None):
                     r"\benum\s*$", masked[max(0, token.start() - 10):token.start()]
                 ) else "class"
                 stack.append((kind, token[2] if kind == "class" else "", token))
+                access[token.start()] = "public" if token[0].startswith("struct") else "private"
             elif token[4] or token[7]:
                 name, expression = ((token[4], token[5]) if token[4] else
                                     (token[7], token[6]))
-                if re.search(r"[&*(){}]", expression):
+                if not object_alias(expression):
                     continue
                 scope = "::".join(s[1] for s in stack if s[1])
                 qualified = scope + "::" + name if scope else name
@@ -53,7 +76,20 @@ def source_inventory(headers=None):
                 aliases.append({
                     "cpp_name": qualified, "expression": expression.strip(),
                     "scope": scope, "assert_size": min(after)[1] if after else None,
+                    "is_template": templated(token.start()),
+                    "probe_alias": not templated(token.start()) and all(
+                        kind == "namespace" or (
+                            kind == "class" and not templated(opening.start()) and
+                            access[opening.start()] == "public")
+                        for kind, _, opening in stack),
                     "header": path.relative_to(ROOT).as_posix()})
+            elif token[8]:
+                if stack and stack[-1][0] == "class":
+                    access[stack[-1][2].start()] = token[8]
+            elif token[9]:
+                if all(kind in ("namespace", "class") for kind, _, _ in stack):
+                    qualified = "::".join([s[1] for s in stack if s[1]] + [token[9]])
+                    declarations.setdefault(qualified, path.relative_to(ROOT).as_posix())
             elif token[3] == "{":
                 stack.append(("other", "", token))
             elif stack:
@@ -111,24 +147,43 @@ def source_inventory(headers=None):
         parts = scope.split("::") if scope else []
         for depth in range(len(parts), -1, -1):
             candidate = "::".join(parts[:depth] + [name])
-            if candidate in definitions or candidate in alias_names:
+            if candidate in definitions or candidate in alias_names or candidate in declarations:
                 return candidate
         return name
 
-    def expand(expression, scope, seen):
+    def expand(expression, scope, seen, loose=False):
         def identifier(match):
             target = lookup(match[0], scope)
+            if loose and target == match[0]:
+                candidates = [name for name in
+                              definitions.keys() | alias_names.keys() | declarations.keys()
+                              if name.endswith("::" + target)]
+                if len(candidates) == 1:
+                    target = candidates[0]
             if target in alias_names:
                 if target in seen:
                     return target
                 alias = alias_names[target]
-                return expand(alias["expression"], alias["scope"], seen | {target})
+                if alias["is_template"]:
+                    # Let MSVC substitute template parameters and defaults.
+                    # Textual expansion here would leave free Key/T/etc. and
+                    # append a second argument list to the underlying type.
+                    return target
+                return expand(alias["expression"], alias["scope"], seen | {target}, loose)
             return target
         return re.sub(r"\b[A-Za-z_]\w*(?:::[A-Za-z_]\w*)*", identifier, expression)
 
+    def definition_of(target):
+        root, seen = target.split("<", 1)[0].strip(), set()
+        while root in alias_names and root not in seen:
+            seen.add(root)
+            alias = alias_names[root]
+            root = expand(alias["expression"], alias["scope"], seen).split("<", 1)[0].strip()
+        return definitions.get(root)
+
     for alias in aliases:
         target = expand(alias["expression"], alias["scope"], {alias["cpp_name"]})
-        definition = definitions.get(target.split("<", 1)[0].strip())
+        definition = definition_of(target)
         if not definition or target == alias["cpp_name"]:
             continue
         name = alias["cpp_name"].removeprefix("CKPE::Fallout4::EditorAPI::")
@@ -142,11 +197,35 @@ def source_inventory(headers=None):
         row = {
             **definition, "name": name, "cpp_name": alias["cpp_name"],
             "header": alias["header"], "assert_size": inherited_assert,
-            "alias_of": target, "template_definition": definition["cpp_name"]}
+            "alias_of": target, "template_definition": definition["cpp_name"],
+            "probe_alias": alias["probe_alias"]}
         previous = expanded.get(alias["cpp_name"])
         if previous and previous["assert_size"] is not None and inherited_assert is None:
             continue
         expanded[alias["cpp_name"]] = row
+    # Explicit evidence can name a concrete template specialization directly.
+    # Generic definitions remain UNKNOWN; no proof is generalized to other T's.
+    for expression in sorted(set(instances)):
+        if "<" not in expression or not re.fullmatch(r"[\w:<>,*&\s]+", expression):
+            continue
+        if not object_alias(expression):
+            continue
+        target = expand(expression, "CKPE::Fallout4::EditorAPI", set(), loose=True)
+        definition = definition_of(target)
+        if not definition or target in expanded or target in definitions:
+            continue
+        expanded[target] = {
+            **definition, "name": expression.removeprefix("CKPE::Fallout4::EditorAPI::"),
+            "cpp_name": target, "assert_size": None, "alias_of": target,
+            "template_definition": definition["cpp_name"], "probe_alias": True,
+            "evidence_instance": True, "evidence_class": expression,
+            "witness_headers": sorted({
+                (definitions[match[0]]["header"] if match[0] in definitions
+                 else declarations[match[0]] if match[0] in declarations
+                 else alias_names[match[0]]["header"])
+                for match in re.finditer(r"\b[A-Za-z_]\w*(?:::[A-Za-z_]\w*)*", target)
+                if match[0] in definitions or match[0] in declarations
+                or match[0] in alias_names})}
     binary_aliases = {}
     for alias in expanded.values():
         definition_name = alias["template_definition"].split("::")[-1]
@@ -154,7 +233,8 @@ def source_inventory(headers=None):
             binary_aliases[alias["template_definition"]] = alias["name"]
     for alias in expanded.values():
         alias["declaration_headers"] = sorted({
-            a["header"] for a in aliases if a["cpp_name"] == alias["cpp_name"]})
+            a["header"] for a in aliases if a["cpp_name"] == alias["cpp_name"]}
+            or {alias["header"]})
         if alias["template_definition"] in binary_aliases:
             alias["binary_name"] = binary_aliases[alias["template_definition"]]
     result.extend(expanded.values())
@@ -169,13 +249,20 @@ def normalize_type(name):
     return re.sub(r"\s+", "", re.sub(r"\b(class|struct|__ptr64)\s*", "", name))
 
 
-def bind_alias_layouts(inventory, compiled):
+def evidence_identities(source):
+    return {normalize_type(source[key]) for key in
+            ("name", "cpp_name", "binary_name", "alias_of", "evidence_class")
+            if key in source}
+
+
+def bind_alias_layouts(inventory, compiled, bindings=None):
     normalized = {normalize_type(name): (name, layout)
                   for name, layout in compiled.items()}
     for source in inventory:
         if "alias_of" not in source:
             continue
-        match = normalized.get(normalize_type(source["alias_of"]))
+        target = (bindings or {}).get(source["cpp_name"], source["alias_of"])
+        match = normalized.get(normalize_type(target))
         if match:
             name, layout = match
             compiled[source["cpp_name"]] = {**layout, "instantiated_cpp_name": name}
@@ -284,8 +371,19 @@ def ordered_headers(headers):
     return ordered
 
 
-def compile_inventory(config, headers=None):
+def compile_inventory(config, headers=None, inventory=None):
     headers = ordered_headers(headers or sorted(HEADERS.rglob("*.h")))
+    inventory = inventory if inventory is not None else source_inventory(headers)
+    witness_headers = sorted({header for source in inventory
+                              for header in source.get("witness_headers", [])})
+    headers = ordered_headers([*headers, *(ROOT / header for header in witness_headers)])
+    aliases = sorted(source["cpp_name"] for source in inventory
+                     if source.get("probe_alias"))
+    extra = "\n".join(
+        f"template<class T, unsigned N> struct ckre_type_{index} "
+        f"{{ unsigned char bytes[N]; }};\n"
+        f"ckre_type_{index}<{name}, sizeof({name})> ckre_type_value_{index};"
+        for index, name in enumerate(aliases))
     # Transitive includes and project flags invalidate cached compiler reports.
     inputs = sorted((ROOT / "CKPE/Include").rglob("*.h"))
     inputs += sorted((ROOT / "CKPE.Common/Include").rglob("*.h"))
@@ -296,6 +394,7 @@ def compile_inventory(config, headers=None):
         stamp.update(path.read_bytes())
     stamp.update((ROOT / "CKPE.Fallout4/CKPE.Fallout4.vcxproj").read_bytes())
     stamp.update("\n".join(str(p) for p in headers).encode())
+    stamp.update(("alias-probes-v1" + extra).encode())
     cache = config.cache / f"layout-{stamp.hexdigest()[:24]}.json"
     if cache.exists():
         result = json.loads(cache.read_text("utf-8"))
@@ -306,7 +405,7 @@ def compile_inventory(config, headers=None):
     environment = compiler_environment()
     with tempfile.TemporaryDirectory(prefix="ckre-layout-") as temporary:
         directory = Path(temporary)
-        code, output = compile_headers(headers, directory, environment)
+        code, output = compile_headers(headers, directory, environment, extra)
         skipped = []
         if code:
             # Keep standalone failures visible instead of masking them.
@@ -329,10 +428,16 @@ def compile_inventory(config, headers=None):
                     })
                 else:
                     good.append(header)
-            code, output = compile_headers(good, directory, environment)
+            code, output = compile_headers(good, directory, environment, extra)
         report = config.cache / f"layout-{stamp.hexdigest()[:24]}.txt"
         atomic_write(report, output)
         result = {"classes": parse_layout(output), "skipped_headers": skipped,
+                  "witness_headers": witness_headers,
+                  "alias_bindings": {
+                      aliases[int(match[1])]: match[2].strip()
+                      for match in re.finditer(
+                          r"^(?:class|struct) ckre_type_(\d+)<(.+),\s*\d+>"
+                          r"\s+size\(", output, re.M)},
                   "compiler_exit_code": code,
                   "report": report.relative_to(config.cache).as_posix(),
                   "errors": [line for line in output.splitlines()
@@ -357,6 +462,8 @@ def evidence_alignments(config, compiled, headers, names):
         return json.loads(cache.read_text("utf-8"))
     skipped = {item["header"] for item in compiled["skipped_headers"]}
     includes = ordered_headers(headers or sorted(HEADERS.rglob("*.h")))
+    includes = ordered_headers([
+        *includes, *(ROOT / header for header in compiled.get("witness_headers", []))])
     includes = [path for path in includes
                 if path.relative_to(ROOT).as_posix() not in skipped]
     environment = compiler_environment()
@@ -450,22 +557,23 @@ def embedded_base_footprints(rtti):
     return result
 
 
-def check(config, rtti, constructors, headers=None, allocations=True):
+def check(config, rtti, constructors, headers=None, allocations=True,
+          evidence_directory=None):
     from .evidence import evaluate, verify
     from .hkclass import Reflection
-    compiled = compile_inventory(config, headers)
-    inventory = source_inventory(headers)
-    bind_alias_layouts(inventory, compiled["classes"])
+    proof_report = verify(config, [rtti.image.version],
+                          images={rtti.image.version: rtti.image},
+                          directory=evidence_directory)
+    entries = [entry for entry in proof_report["entries"] if entry["status"] == "PASS"]
+    inventory = source_inventory(headers, instances=[entry["class"] for entry in entries])
+    compiled = compile_inventory(config, headers, inventory)
+    bind_alias_layouts(inventory, compiled["classes"], compiled.get("alias_bindings"))
     embedded = embedded_classes(inventory, compiled["classes"])
     footprints = embedded_base_footprints(rtti)
-    proof_report = verify(config, [rtti.image.version],
-                          images={rtti.image.version: rtti.image})
-    entries = [entry for entry in proof_report["entries"] if entry["status"] == "PASS"]
     reflection = Reflection(constructors)
 
     def claims(source):
-        identities = {normalize_type(source[key]) for key in
-                      ("name", "cpp_name", "binary_name", "alias_of") if key in source}
+        identities = evidence_identities(source)
         result = [entry for entry in entries
                   if normalize_type(entry["class"]) in identities]
         reflected = reflection.size_evidence(source)

@@ -1,0 +1,367 @@
+[[evidence]]
+class = "BSArchiveHeader"
+size = 0x24
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x244F660, expect = "mov r8d, 0x24" }, { version = "246", rva = 0x244F666, expect = "lea rdx, [r15 + 0x2c0]" }]
+note = "Archive constructor reads the entire serialized BSA header into its BSArchiveHeader base with a 36-byte read."
+
+[[evidence]]
+class = "BSArchive"
+size = 0x30
+kind = "lower_bound"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x244F579, expect = "add rcx, 0x2c0" }, { version = "246", rva = 0x244F588, expect = "mov qword ptr [r15 + 0x2e8], r12" }]
+note = "RTTI places BSArchive at Archive+2C0. Its folder pointer ends at +2F0, proving at least 30 bytes. No separate allocation or next-base boundary independently excludes a larger trailing extent."
+
+[[evidence]]
+class = "BSString"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x87F190, expect = "mov qword ptr [rcx + 0x380], r12" }, { version = "246", rva = 0x87F197, expect = "mov dword ptr [rcx + 0x388], r12d" }, { version = "246", rva = 0x87F19E, expect = "mov qword ptr [rcx + 0x390], r12" }]
+note = "TESFile constructs adjacent author/description BSStrings at 380 and 390; pointer plus two 16-bit lengths occupy the first 12 bytes of each 16-byte element."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSStringCache::Entry"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x24298D0, expect = "lea rax, [rcx + 0x18]" }, { version = "246", rva = 0x24298C2, expect = "mov rcx, qword ptr [rcx + 0x10]" }]
+note = "Fixed-string converting constructor returns characters at Entry+18, or follows the external-entry pointer at +10; 18 is the variable payload's exact header boundary."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSStringCache::Ref"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2429826, expect = "mov qword ptr [rcx], 0" }, { version = "246", rva = 0x2429881, expect = "mov qword ptr [r9], r8" }]
+note = "Native fixed-string construction/copy use one entry pointer as the entire output holder; Archive2 ReaderStream stores this holder at +30 before its DWORD at +38."
+
+[[evidence]]
+class = "BSStringCache::Lock"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x242E967, expect = "mov edx, 0x10" }, { version = "246", rva = 0x242E96C, expect = "lea r8d, [rdx + 0x70]" }]
+note = "The cache singleton initializer invokes the vector constructor with 80 locks of stride 10 at base+80000."
+
+[[evidence]]
+class = "BSStringCache"
+size = 0x80801
+kind = "lower_bound"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x242E97C, expect = "mov byte ptr [rip + 0x4fcb87d], 1" }]
+note = "Initialization byte is singleton base+80800. Static storage has no deleting-size witness; this is only a lower bound, not proof that no additional tail exists."
+
+[[evidence]]
+class = "BSSystemFile"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x243B510, expect = "mov eax, dword ptr [rdi]" }, { version = "246", rva = 0x243B51B, expect = "mov rax, qword ptr [rdi + 8]" }, { version = "246", rva = 0x243B512, expect = "lea rdx, [rdi + 0x10]" }]
+note = "BSFile reopen transfers the system-file DWORD flags and HANDLE prefix; the larger open-data object's next member (path) starts at +10, bounding the embedded system-file footprint."
+
+[[evidence]]
+class = "BSSystemFile::Info"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x87F31D, expect = "mov qword ptr [rbx + 0x310], rax" }, { version = "246", rva = 0x87F332, expect = "mov qword ptr [rbx + 0x328], rax" }, { version = "246", rva = 0x87F347, expect = "mov qword ptr [rbx + 0x330], 0x3f800000" }]
+note = "TESFile initializes four QWORDs of file info at +310..+32F; its next own HEDR payload begins at +330. The info is three FILETIMEs and a file size."
+
+[[evidence]]
+class = "TESFile"
+size = 0x8D8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x6E4D61, expect = "mov edx, 0x8d8" }]
+note = "Direct memory-manager allocation before the TESFile constructor call; ckre ctor TESFile reports the allocator diagnostic and constructor ownership."
+
+[[evidence]]
+class = "BaseExtraList"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x7D71AB, expect = "lea rax, [rbx + 8]" }, { version = "246", rva = 0x7D71B8, expect = "mov qword ptr [rax + 8], rax" }, { version = "246", rva = 0x7D71B4, expect = "lea rcx, [rbx + 0x18]" }]
+note = "ExtraDataList constructs its head/tail list at +8; the following independently constructed read/write lock starts at +18. The head/tail pair exactly fills the intervening 10 bytes."
+
+[[evidence]]
+class = "ExtraDataList"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x38E71E, expect = "lea edx, [r9 + 0x20]" }, { version = "246", rva = 0x38E731, expect = "call 0x134c1" }]
+note = "Zeroed R9 sets allocation size 20; the resulting object is passed to the ExtraDataList constructor thunk 134C1 -> 7D71A0."
+
+[[evidence]]
+class = "ObjectRefHandle"
+size = 0x4
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x542361, expect = "mov dword ptr [rdi], ebx" }]
+note = "CreateHandle writes the complete packed native handle into its four-byte output holder; masks separately prove 21 index, 5 age, and one active bit."
+
+[[evidence]]
+class = "BSUntypedPointerHandle_Original"
+size = 0x4
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x542361, expect = "mov dword ptr [rdi], ebx" }]
+note = "The original handle alias is the same complete packed DWORD produced by native CreateHandle; extended CKPE variants are not native binary classes."
+
+[[evidence]]
+class = "BSPointerHandleManagerEntry_Original"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x54239F, expect = "shl rbx, 4" }, { version = "246", rva = 0x5423E0, expect = "lea rcx, [rbx + 8]" }]
+note = "CreateHandle multiplies the native table index by 10 and assigns a NiPointer at entry+8; this is the exact original entry stride, not std::vector replacement storage."
+
+[[evidence]]
+class = "BSHandleRefObject_Original"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0xD736F6, expect = "mov edx, 0x10" }, { version = "137", rva = 0xD9E3F6, expect = "mov edx, 0x10" }, { version = "246", rva = 0xDA3E46, expect = "mov edx, 0x10" }]
+note = "RTTI BSHandleRefObject's scalar deleting destructor passes size 10 to operator delete. The CKPE original alias models that native base; extended aliases do not."
+
+[[evidence]]
+class = "REFR_LOCK"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x811753, expect = "mov edx, 0x18" }, { version = "246", rva = 0x811758, expect = "mov rcx, qword ptr [rcx + 0x18]" }]
+note = "ExtraLock destructor sized-deletes its separate Lock payload, not the ExtraLock object, with size 18."
+
+[[evidence]]
+class = "DoorTeleportData"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x81187A, expect = "mov rdi, qword ptr [rcx + 0x18]" }, { version = "246", rva = 0x811898, expect = "mov edx, 0x20" }]
+note = "ExtraTeleport destructor destroys and sized-deletes its separate TeleportData payload with size 20."
+
+[[evidence]]
+class = "MapMarkerData"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x81195A, expect = "mov rdi, qword ptr [rcx + 0x18]" }, { version = "246", rva = 0x811978, expect = "mov edx, 0x20" }]
+note = "ExtraMapMarker destructor destroys and sized-deletes its separate MarkerData payload with size 20."
+
+[[evidence]]
+class = "BSResource::BSHashDB"
+size = 0xC
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x246A84E, expect = "lea rcx, [rbx + 0x4030]" }, { version = "246", rva = 0x246A868, expect = "mov edx, 0xc" }, { version = "246", rva = 0x246A86D, expect = "mov r8d, 0x400" }]
+note = "Archive2 Index constructs its 1024 nameIDs as an array of exact C-byte elements at +4030."
+
+[[evidence]]
+class = "BSResource::AE::StreamBase"
+size = 0x18
+kind = "exact"
+versions = ["137", "246"]
+proof = [{ version = "137", rva = 0x2459638, expect = "mov edx, 0x18" }, { version = "246", rva = 0x245EA58, expect = "mov edx, 0x18" }]
+note = "RTTI StreamBase scalar deleting destructor passes size 18 to operator delete in the AE builds."
+
+[[evidence]]
+class = "BSResource::AE::Stream"
+size = 0x18
+kind = "exact"
+versions = ["137", "246"]
+proof = [{ version = "137", rva = 0x24595F8, expect = "mov edx, 0x18" }, { version = "246", rva = 0x245EA18, expect = "mov edx, 0x18" }]
+note = "RTTI Stream scalar deleting destructor passes size 18 to operator delete in the AE builds."
+
+[[evidence]]
+class = "BSResource::AE::AsyncStream"
+size = 0x20
+kind = "exact"
+versions = ["137", "246"]
+proof = [{ version = "137", rva = 0x2466AF8, expect = "mov edx, 0x20" }, { version = "246", rva = 0x246BF68, expect = "mov edx, 0x20" }]
+note = "RTTI AsyncStream scalar deleting destructor passes size 20 to operator delete in the AE builds."
+
+[[evidence]]
+class = "BSResource::Archive2::AE::ReaderStream"
+size = 0x48
+kind = "exact"
+versions = ["137", "246"]
+proof = [{ version = "137", rva = 0x2466C27, expect = "mov edx, 0x48" }, { version = "246", rva = 0x246C097, expect = "mov edx, 0x48" }]
+note = "Archive2 ReaderStream scalar deleting destructor passes size 48 to operator delete in the AE builds."
+
+[[evidence]]
+class = "BSResource::OG_NG::StreamBase"
+size = 0x10
+kind = "exact"
+versions = ["982"]
+proof = [{ version = "982", rva = 0x242C3D8, expect = "mov edx, 0x10" }]
+note = "982 StreamBase scalar deleting destructor passes size 10 to operator delete; 162 uses unsized deletion and was not promoted to an exact deletion proof."
+
+[[evidence]]
+class = "BSResource::OG_NG::Stream"
+size = 0x10
+kind = "exact"
+versions = ["982"]
+proof = [{ version = "982", rva = 0x242C398, expect = "mov edx, 0x10" }]
+note = "982 Stream scalar deleting destructor passes size 10 to operator delete."
+
+[[evidence]]
+class = "BSResource::OG_NG::AsyncStream"
+size = 0x18
+kind = "exact"
+versions = ["982"]
+proof = [{ version = "982", rva = 0x24397E8, expect = "mov edx, 0x18" }]
+note = "982 AsyncStream scalar deleting destructor passes size 18 to operator delete."
+
+[[evidence]]
+class = "BSResource::Archive2::OG_NG::ReaderStream"
+size = 0x40
+kind = "exact"
+versions = ["982"]
+proof = [{ version = "982", rva = 0x2439917, expect = "mov edx, 0x40" }]
+note = "982 Archive2 ReaderStream scalar deleting destructor passes size 40 to operator delete."
+
+[[evidence]]
+class = "AE::BSResourceNiBinaryStream"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0xFA484B, expect = "lea edx, [r9 + 0x30]" }, { version = "982", rva = 0xE82162, expect = "lea edx, [r9 + 0x30]" }, { version = "137", rva = 0xEACE72, expect = "lea edx, [r9 + 0x30]" }, { version = "246", rva = 0xEB28C2, expect = "lea edx, [r9 + 0x30]" }]
+note = "Native NiBinaryStream wrappers allocate 30 bytes in all four versions, independently of the pointed-to resource StreamBase ABI. Zeroed R9; ckre constructor-call ownership was rechecked."
+
+[[evidence]]
+class = "OG_NG::BSResourceNiBinaryStream"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0xFA484B, expect = "lea edx, [r9 + 0x30]" }, { version = "982", rva = 0xE82162, expect = "lea edx, [r9 + 0x30]" }, { version = "137", rva = 0xEACE72, expect = "lea edx, [r9 + 0x30]" }, { version = "246", rva = 0xEB28C2, expect = "lea edx, [r9 + 0x30]" }]
+note = "The wrapper's own 30-byte extent does not change with the resource pointer type; these two CKPE declarations describe the same native wrapper storage."
+
+[[evidence]]
+class = "BSResource::Archive2::Index"
+size = 0x7060
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x246BFA9, expect = "mov edx, 0x7060" }]
+note = "246 Archive2 Index scalar deleting destructor passes size 7060 to operator delete; constructor independently builds 1024-element stream and key arrays."
+
+[[evidence]]
+class = "BSResource::Archive2::Index256"
+size = 0x1C60
+kind = "exact"
+versions = ["982", "137"]
+proof = [{ version = "982", rva = 0x2439829, expect = "mov edx, 0x1c60" }, { version = "137", rva = 0x2466B39, expect = "mov edx, 0x1c60" }]
+note = "982/137 Index deleting destructors pass size 1C60; both constructors build 256-element arrays. This historical alias is deliberately not assigned a 246 proof."
+
+[[evidence]]
+class = "TESDataHandler::ModList"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x859007, expect = "mov qword ptr [rbx + 0xfb0], rbp" }, { version = "246", rva = 0x858FB6, expect = "lea rcx, [rbx + 0xfc0]" }, { version = "246", rva = 0x859026, expect = "lea rcx, [rbx + 0xfd8]" }]
+note = "The embedded mod list is the FB0 linked-list pair followed by the FC0 18-byte loadedMods array; the independent smallMods array starts at FD8."
+
+[[evidence]]
+class = "TESDataHandler::TESFileList"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x859007, expect = "mov qword ptr [rbx + 0xfb0], rbp" }, { version = "246", rva = 0x85900E, expect = "mov qword ptr [rbx + 0xfb8], rbp" }, { version = "246", rva = 0x858FB6, expect = "lea rcx, [rbx + 0xfc0]" }]
+note = "The actually used BSSimpleList<TESFile> instantiation occupies FB0..FBF before the loadedMods array."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::Forms::TESForm*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x858F7E, expect = "lea rdi, [rbx + 0x68]" }, { version = "246", rva = 0x858F82, expect = "mov esi, 0x9f" }, { version = "246", rva = 0x858F98, expect = "add rdi, 0x18" }]
+note = "TESDataHandler constructs the 159 concrete form arrays beginning +68 with exact 18-byte element stride, reaching the region-list pointer at F50."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::TESFile*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x858FB6, expect = "lea rcx, [rbx + 0xfc0]" }, { version = "246", rva = 0x859026, expect = "lea rcx, [rbx + 0xfd8]" }]
+note = "Two consecutive actual BSTArray<TESFile*> instances loadedMods and smallMods begin at FC0 and FD8 and use the same pointer/capacity/count constructor pair."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::NiAPI::NiTObjectArray<CKPE::Fallout4::EditorAPI::Forms::TESObjectCELL*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x858FAF, expect = "mov qword ptr [rbx + 0xf58], rax" }, { version = "246", rva = 0x858FEC, expect = "mov qword ptr [rbx + 0xf70], rax" }]
+note = "TESDataHandler constructs the cellList NiTObjectArray at F58 and next addonNodes NiTObjectArray at F70; vptr, data pointer and four WORD counters fill its 18-byte footprint."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::NiAPI::NiTObjectArray<CKPE::Fallout4::EditorAPI::Forms::TESForm*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x858FEC, expect = "mov qword ptr [rbx + 0xf70], rax" }, { version = "246", rva = 0x858FF9, expect = "mov qword ptr [rbx + 0xf88], rbp" }]
+note = "TESDataHandler constructs the addonNodes NiTObjectArray at F70; the next independent bad-form list begins at F88, bounding the array footprint at 18."
+
+[[evidence]]
+class = "TESFile::DependFileData"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x88099A, expect = "mov ecx, 8" }, { version = "246", rva = 0x8809A4, expect = "mov r8d, 8" }, { version = "246", rva = 0x8809C1, expect = "lea rdi, [rbx + 0x350]" }]
+note = "LoadTESInfo allocates an eight-byte DATA payload, reads eight bytes into it, and inserts it in m_dependData at +350."
+
+[[evidence]]
+class = "TESFile::DependDataList"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x880A0C, expect = "lea edx, [r9 + 0x10]" }, { version = "246", rva = 0x880A1A, expect = "mov qword ptr [rax], rsi" }, { version = "246", rva = 0x880A24, expect = "mov qword ptr [rax + 8], rbp" }]
+note = "LoadTESInfo appends an actual BSSimpleList<DependFileData> node with exact 10-byte allocation, payload pointer +0, and next +8; the embedded head uses the same two-word representation."
+
+[[evidence]]
+class = "TESBitArrayFile"
+size = 0x130
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x6F2BD3, expect = "mov ecx, 0x130" }, { version = "246", rva = 0x6F2BEA, expect = "mov r8d, 0x1fffff" }, { version = "246", rva = 0x6F2C48, expect = "mov qword ptr [rdi + 0x70], rbx" }, { version = "246", rva = 0x8853D7, expect = "mov edx, 0x130" }]
+note = "TESFile's form-ID bitfile path allocates 130, constructs a 1FFFFF-byte bit array, stores it at TESFile+70, and sized-deletes the same type with 130. Cleanup also recognizes the +60/+68 bitfile slots."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::SettingCollection<CKPE::Fallout4::EditorAPI::Setting>"
+size = 0x118
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CC748, expect = "mov edx, 0x118" }]
+note = "RTTI SettingCollection<Setting> primary vtable 2F9F088 points to scalar deleting destructor 2CC730, which passes exact size 118 to operator delete. This proves this specialization only."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::SettingCollectionList<CKPE::Fallout4::EditorAPI::Setting>"
+size = 0x128
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2CCBE9, expect = "mov edx, 0x128" }]
+note = "RTTI SettingCollectionList<Setting> primary vtable 2F9F130 points to scalar deleting destructor 2CCBD0, which passes exact size 128 to operator delete."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::SettingCollectionMap<CKPE::Fallout4::EditorAPI::Setting>"
+size = 0x138
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x340AB4, expect = "mov edx, 0x138" }]
+note = "RTTI SettingCollectionMap<Setting> primary vtable 2FA8258 points to scalar deleting destructor 340A80, which passes exact size 138 to operator delete."
+
+[[evidence]]
+class = "TESFile::FileHeaderInfo"
+size = 0xC
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x880ABD, expect = "cmp ecx, 0x52444548" }, { version = "246", rva = 0x880BD4, expect = "lea rdx, [rbx + 0x330]" }, { version = "246", rva = 0x880BDB, expect = "mov r8d, 0xc" }]
+note = "LoadTESInfo's HEDR chunk case reads exactly C bytes directly into TESFile's FileHeaderInfo at +330."
+
+[[evidence]]
+class = "TESFile::DependNameList"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x880AC9, expect = "cmp ecx, 0x5453414d" }, { version = "246", rva = 0x880B2B, expect = "lea rdi, [rbx + 0x340]" }, { version = "246", rva = 0x880B7B, expect = "lea edx, [r9 + 0x10]" }, { version = "246", rva = 0x880B89, expect = "mov qword ptr [rax], rsi" }, { version = "246", rva = 0x880B93, expect = "mov qword ptr [rax + 8], rbp" }]
+note = "LoadTESInfo's MAST case appends an exact 10-byte BSSimpleList<const char> node at +340, storing the filename pointer and next pointer; m_dependData starts immediately at +350."

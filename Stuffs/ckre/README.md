@@ -64,6 +64,9 @@ ckre coverage --output Stuffs\ckre
 `resolve-ids` reads `Common::ID{a}` as one ID for all versions and `{a, b}`
 as `a` for 1.10.162 and `b` for 1.10.982.3 onward; 0 means unresolved.
 Fingerprint matches are a triage aid, not proof that two bodies are the same.
+Functions without `.pdata` need a direct-call/vtable target or a 16-byte-aligned
+start after padding; inferred bounds carry provenance. Interior addresses do
+not become function starts. Leaf code also participates in constructor/xref scans.
 
 `ctor` sizes come from the allocator call before a constructor, or for forms
 from slot 1 (`Create`) of `ConcreteFormFactory<T>`. Unproven sizes stay
@@ -124,6 +127,10 @@ and padding assumptions in `note`. No bare assert proves a size. Exact matches
 report `PASS (evidence)`; converging bounds use compiled `alignof` and report
 `PASS (bounded)`. Provenance is additive under `size_evidence`/`evidence_check`.
 Coverage retains annotated non-RTTI PODs under `evidence_classes`.
+Use separate entries with disjoint `versions` for differing native sizes.
+Concrete template names (for example `BSTArray<BSFixedString>`) get independent
+MSVC layout witnesses, including pointer/reference arguments and defaults;
+generic template rows remain UNKNOWN, never borrowing a specialization's proof.
 
 ## Workflow
 

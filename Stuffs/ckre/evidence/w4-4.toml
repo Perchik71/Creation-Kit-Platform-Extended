@@ -1,0 +1,295 @@
+[[evidence]]
+class = "TBO_InstanceData"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xAB0339, expect = "mov edx, 0x10" }]
+note = "TBO_InstanceData scalar deleting destructor passes 0x10 to sized delete."
+
+[[evidence]]
+class = "BGSCharacterMorph::BoneBaseScales"
+size = 0x24
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xAF79B0, expect = "mov ecx, 0x24" }]
+note = "TESRace Load allocates the BSMS base-scale map value, reads 0x24 bytes into it, and inserts it into BodyMorphData's first map."
+
+[[evidence]]
+class = "BGSCharacterMorph::BONE_MODIFIER_MIN_MAX"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xAF78F2, expect = "mov ecx, 0x10" }]
+note = "TESRace Load allocates and reads a 0x10-byte bone-modifier value, then inserts it into the second BodyMorphData map."
+
+[[evidence]]
+class = "BGSCharacterMorph::Group"
+size = 0x40
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xAFCA07, expect = "lea edx, [r9 + 0x40]" }]
+note = "Zero r9 precedes this allocation. Construction initializes the name, arrays at +8 and +0x20, and the uint16 preset mask at +0x38; the result goes into FaceRelatedData's morphGroups array."
+
+[[evidence]]
+class = "BGSCharacterMorph::FacialBoneRegion"
+size = 0xA0
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xAFCD09, expect = "mov edx, 0xa0" }]
+note = "Allocation initializes the transform, localized name +0x28, bone map +0x48, sliders +0x80 and id +0x98, then inserts the pointer into FaceRelatedData's facialBoneRegions array at +0x40."
+
+[[evidence]]
+class = "FaceRelatedData"
+size = 0xA0
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xAF6F30, expect = "mov edx, 0xa0" }]
+note = "TESRace Load allocates 0xA0 then calls the FaceRelatedData constructor at 0xB07200 through thunk 0x55795; the result is a race faceRelatedData element."
+
+[[evidence]]
+class = "BodyMorphData"
+size = 0x70
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xB0D545, expect = "mov edx, 0x70" }]
+note = "TESRace CopyFrom destroys and sized-deletes the value of a race +0xBB8 bodyMorphData pointer before replacing that same element."
+
+[[evidence]]
+class = "TESObjectLAND::Layers"
+size = 0x6420
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xD0148A, expect = "mov edx, 0x6420" }]
+note = "Landscape layer allocation; initializes geometry and array fields and is stored through TESObjectLAND +0x48. Its deleting destructor independently passes 0x6420 at 0xD06AA6."
+
+[[evidence]]
+class = "TESObjectLAND::Layers::TextureList"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xD07296, expect = "mov r8d, 0x60" }]
+note = "TESObjectLAND CopyFrom copies all six 16-byte blocks of each pointed-to texture list at Layers +0x63E8, or clears exactly 0x60 bytes for a missing source."
+
+[[evidence]]
+class = "TESObjectLAND::CHAR_NORM"
+size = 0x3
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xD005EE, expect = "lea rdx, [rdx + rdx*2]" }]
+note = "Landscape normal getter uses a three-byte stride at Layers +0x55EC and reads three signed bytes before converting to float normals."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::BGSCharacterMorph::Preset>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xAFCA20, expect = "lea rcx, [rdi + 8]" }, { version = "246", rva = 0xAFCA32, expect = "lea rcx, [rdi + 0x20]" }]
+note = "Morph Group construction places the preset array at +8 and the next slider array at +0x20. Its allocator and count initialization uses +8 and +0x18; 8-byte alignment closes the exact 0x18 footprint."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<std::uint32_t>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xAFCA32, expect = "lea rcx, [rdi + 0x20]" }, { version = "246", rva = 0xAFCA49, expect = "mov word ptr [rdi + 0x38], ax" }]
+note = "Morph Group places its uint32 slider array at +0x20 and the next uint16 field at +0x38; count initialization is at +0x30 and the array has 8-byte alignment."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTHashMap<CKPE::Fallout4::EditorAPI::BSFixedString, CKPE::Fallout4::EditorAPI::BGSCharacterMorph::TransformMinMax*>"
+size = 0x38
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xAFCDD1, expect = "mov qword ptr [rdi + 0x78], r15" }, { version = "246", rva = 0xAFCDBA, expect = "lea rcx, [rdi + 0x80]" }]
+note = "FacialBoneRegion boneMinMaxMap spans +0x48 through its terminal entries pointer +0x78; the next 8-byte-aligned array begins at +0x80."
+
+[[evidence]]
+class = "IMPACT_DATA_DATA"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xB96884, expect = "mov r9d, 0x18" }]
+note = "Modern BGSImpactData DATA chunk reads exactly 0x18 bytes into the data block at +0x60, immediately before the first texture pointer at +0x78. The old serialized 0x38-byte variant is translated rather than copied as this layout."
+
+[[evidence]]
+class = "DECAL_DATA_DATA"
+size = 0x24
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xBD1DC3, expect = "mov r8d, 0x24" }]
+note = "DecalData's loader reads exactly 0x24 bytes into its sole data member. BGSImpactData Load calls it with the embedded decal at +0xA8; the following float begins at +0xCC."
+
+[[evidence]]
+class = "DecalData"
+size = 0x24
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xBD1DC3, expect = "mov r8d, 0x24" }]
+note = "The complete DecalData loader consumes a 0x24-byte block; BGSImpactData places its next field immediately after that block at +0xCC."
+
+[[evidence]]
+class = "PackageTarget"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x795F0E, expect = "lea edx, [r9 + 0x20]" }]
+note = "TESPackage path zeros r9, allocates 0x20, calls PackageTarget's constructor through thunk 0x99A8, and stores the complete pointer at package +0x48."
+
+[[evidence]]
+class = "ResponseDialogAudio"
+size = 0x120
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xB3CF61, expect = "mov edx, 0x120" }]
+note = "Response audio-list callback allocates 0x120 bytes, stores the voice type at +0, then fills filename and existence flags in that same list-item record."
+
+[[evidence]]
+class = "TreeListControl"
+size = 0x3B8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x73BF4B, expect = "mov edx, 0x3b8" }]
+note = "TreeListControl Create allocates 0x3B8 and initializes the state behind TREELIST_PTR; it independently writes 0x3B8 at +0x308."
+
+[[evidence]]
+class = "BGSCharacterTint::Template::Group"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x41DBAF, expect = "lea edx, [r9 + 0x30]" }]
+note = "Template group factory zeros r9, allocates 0x30, constructs localized name +0, indices +0x10/+0x14, and entry pointer array +0x18."
+
+[[evidence]]
+class = "BGSCharacterTint::Template::Groups"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xAF73E0, expect = "lea edx, [r9 + 0x18]" }]
+note = "TESRace TTGP loader zeros r9, allocates 0x18, constructs the tint-group array and stores its pointer at FaceRelatedData +0."
+
+[[evidence]]
+class = "BGSDefaultObjectManager::DefaultObjectData"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xB8FB38, expect = { mnemonic = "add", immediate = 8 } }]
+note = "Default-object DNAM loader asserts chunk size divisible by eight, reads uniqueID at record +0 and formID +4, advances each record by eight, and copies one qword into originalObjects."
+
+[[evidence]]
+class = "UnknownRaceTables"
+size = 0x80
+kind = "lower_bound"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x6362DA, expect = "mov qword ptr [rcx + 0x78], rdx" }]
+note = "The helper called for TESRace +0x400 initializes its last map entries pointer at +0x78, ending the initialized object at +0x80."
+
+[[evidence]]
+class = "UnknownRaceTables"
+size = 0x80
+kind = "upper_bound"
+versions = ["246"]
+proof = [{ version = "246", rva = 11487910, expect = "mov qword ptr [rbx + 0x480], r13" }]
+note = "TESRace constructor initializes the next distinct own qword at +0x480 after invoking the UnknownRaceTables constructor at +0x400; this closes the embedded component at +0x80."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::BGSCharacterTint::Template::Entry*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x41DBAF, expect = "lea edx, [r9 + 0x30]" }, { version = "246", rva = 0x41F103, expect = "call 0x8762d" }]
+note = "Allocated 0x30 tint Group contains the entry array at +0x18. Loader passes allocator +0x18 and count +0x28 to append; count extent +0x2C and 8-byte alignment close the terminal array at +0x30."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::BGSCharacterTint::Template::Group*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xAF73E0, expect = "lea edx, [r9 + 0x18]" }, { version = "246", rva = 0x41DC2A, expect = "call 0x8762d" }]
+note = "The complete 0x18 TTGP Groups allocation is the group pointer array. Append addresses its allocator at +0 and count at +0x10."
+
+[[evidence]]
+class = "ArmorInstanceData"
+size = 0x58
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xC6CD2E, expect = "lea edx, [r9 + 0x58]" }, { version = "246", rva = 0xC713E9, expect = "mov edx, 0x58" }]
+note = "TESObjectARMO CreateInstanceData allocates 0x58 with zero r9; TESObjectARMO::InstanceData deleting destructor independently sized-deletes 0x58. ArmorInstanceData is this existing CKPE layout spelling."
+
+[[evidence]]
+class = "TESObjectWEAPData"
+size = 0x138
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xC923FE, expect = "mov edx, 0x138" }, { version = "246", rva = 0xCA2A3B, expect = "mov edx, 0x138" }]
+note = "TESObjectWEAP CreateInstanceData allocation and TESObjectWEAP::InstanceData deleting destructor agree on 0x138. TESObjectWEAPData is this existing CKPE layout spelling."
+
+[[evidence]]
+class = "TESActorValue"
+size = 0x1A8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x73BC23, expect = "mov edx, 0x1a8" }]
+note = "TESActorValue is a C++ compatibility alias of ActorValueInfo, whose deleting destructor sized-deletes 0x1A8; there is no separate TESActorValue native form."
+
+[[evidence]]
+class = "BGSLightingTemplateData"
+size = 0x88
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xCB152E, expect = "lea rdx, [rbx + 0x28]" }, { version = "246", rva = 0xCB1532, expect = "mov r8d, 0x88" }]
+note = "BGSLightingTemplate Save passes exactly 0x88 bytes from form +0x28 to the lighting-data serializer."
+
+[[evidence]]
+class = "FACTION_CRIME_DATA_VALUES"
+size = 0x14
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xA7112B, expect = "lea rdx, [r14 + 0x98]" }, { version = "246", rva = 0xA71132, expect = "mov r8d, 0x14" }]
+note = "TESFaction Load reads the complete crime-data chunk directly into the matching payload at form +0x98."
+
+[[evidence]]
+class = "FACTION_VENDOR_DATA_VALUES"
+size = 0xC
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xA7176D, expect = "lea rdx, [r14 + 0xb0]" }, { version = "246", rva = 0xA71774, expect = "mov r8d, 0xc" }]
+note = "TESFaction Load's VENV branch reads the complete 12-byte vendor-data chunk directly into form +0xB0."
+
+[[evidence]]
+class = "FACTION_DATA"
+size = 4
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xA71171, expect = "mov r9d, 4" }, { version = "246", rva = 0xA71177, expect = "lea r8, [r14 + 0x60]" }]
+note = "Modern TESFaction DATA branch reads four bytes directly into flags at form +0x60; old records are separately sign-extended from a byte."
+
+[[evidence]]
+class = "AttackData"
+size = 0x38
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x758199, expect = "lea rax, [rbx + 0x18]" }, { version = "246", rva = 0x7581C6, expect = "movsd qword ptr [rax + 0x30], xmm1" }]
+note = "BGSAttackData copier transfers three 16-byte blocks and one eight-byte block for the complete data payload at +0x18; the next independent equip-slot pointer starts at +0x50."
+
+[[evidence]]
+class = "BGSDefaultObjectManager_Original::DefaultObjectData"
+size = 8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0xB8FB38, expect = { mnemonic = "add", immediate = 8 } }]
+note = "This C++ alias names BGSDefaultObjectManager::DefaultObjectData, the same eight-byte uniqueID/formID record; it does not claim that the complete legacy manager is present in build 246."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::NiAPI::NiNode*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x24AC9AB, expect = "lea rbx, [rdi + 0x10]" }, { version = "246", rva = 0x24AC9BD, expect = "lea rcx, [rbx + 0x10]" }, { version = "246", rva = 0x24AC9C7, expect = "lea rbx, [rdi + 0x28]" }]
+note = "BSSkin::Instance constructor initializes Bones allocator at +0x10 and count at +0x20; the next independently initialized WorldTransforms array starts at +0x28, closing this actual node-pointer array at 0x18 bytes."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::NiAPI::NiTransform*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x24AC9C7, expect = "lea rbx, [rdi + 0x28]" }, { version = "246", rva = 0x24AC9D9, expect = "lea rcx, [rbx + 0x10]" }, { version = "246", rva = 0x24AC9E5, expect = "mov qword ptr [rdi + 0x40], rbx" }]
+note = "BSSkin::Instance constructor initializes WorldTransforms allocator at +0x28 and count at +0x38; next own BoneData pointer starts at +0x40, closing this actual transform-pointer array at 0x18 bytes."
