@@ -201,10 +201,10 @@ def compiler_environment():
                 if "=" in line and not line.startswith("="))
 
 
-def compile_headers(headers, directory, environment):
+def compile_headers(headers, directory, environment, extra=""):
     source = directory / "layout.cpp"
     source.write_text("\n".join(
-        f'#include "{p.as_posix()}"' for p in headers), "utf-8")
+        f'#include "{p.as_posix()}"' for p in headers) + "\n" + extra, "utf-8")
     includes = ["CKPE/Include", "CKPE.Common/Include", "CKPE.Fallout4/Include",
                 "Dependencies", "Dependencies/toml11", "Dependencies/zydis/include",
                 "Dependencies/xbyak"]
@@ -346,6 +346,44 @@ def compile_inventory(config, headers=None):
 GATE_STATES = ("PASS", "PARTIAL", "STUB", "UNKNOWN", "FAIL")
 
 
+def evidence_alignments(config, compiled, headers, names):
+    if not names:
+        return {}
+    names = sorted(names)
+    stamp = hashlib.sha256(
+        ("alignment-v2" + compiled["report"] + repr(names)).encode()).hexdigest()[:24]
+    cache = config.cache / f"alignment-{stamp}.json"
+    if cache.exists():
+        return json.loads(cache.read_text("utf-8"))
+    skipped = {item["header"] for item in compiled["skipped_headers"]}
+    includes = ordered_headers(headers or sorted(HEADERS.rglob("*.h")))
+    includes = [path for path in includes
+                if path.relative_to(ROOT).as_posix() not in skipped]
+    environment = compiler_environment()
+
+    def probe(selected):
+        extra = "\n".join(
+            f"template<unsigned N> struct ckre_alignment_{index} "
+            f"{{ unsigned char bytes[N]; }};\n"
+            f"ckre_alignment_{index}<alignof({name})> ckre_alignment_value_{index};"
+            for index, name in enumerate(selected))
+        with tempfile.TemporaryDirectory(prefix="ckre-align-") as temporary:
+            code, text = compile_headers(includes, Path(temporary), environment, extra)
+        if code:
+            return {}
+        return {selected[int(match[1])]: int(match[2])
+                for match in re.finditer(
+                    r"\b(?:class|struct) ckre_alignment_(\d+)<(\d+)>\s+size\(", text)}
+
+    result = probe(names)
+    if len(result) != len(names):
+        for name in names:
+            if name not in result:
+                result.update(probe([name]))
+    atomic_write(cache, json.dumps(result))
+    return result
+
+
 def embedded_classes(inventory, compiled):
     sources = {source["cpp_name"]: source for source in inventory}
     embedded = {}
@@ -413,11 +451,27 @@ def embedded_base_footprints(rtti):
 
 
 def check(config, rtti, constructors, headers=None, allocations=True):
+    from .evidence import evaluate, verify
     compiled = compile_inventory(config, headers)
     inventory = source_inventory(headers)
     bind_alias_layouts(inventory, compiled["classes"])
     embedded = embedded_classes(inventory, compiled["classes"])
     footprints = embedded_base_footprints(rtti)
+    proof_report = verify(config, [rtti.image.version],
+                          images={rtti.image.version: rtti.image})
+    entries = [entry for entry in proof_report["entries"] if entry["status"] == "PASS"]
+
+    def claims(source):
+        identities = {normalize_type(source[key]) for key in
+                      ("name", "cpp_name", "binary_name", "alias_of") if key in source}
+        return [entry for entry in entries
+                if normalize_type(entry["class"]) in identities]
+
+    matched = {source["cpp_name"]: claims(source) for source in inventory}
+    bounded = {name for name, evidence in matched.items()
+               if {"lower_bound", "upper_bound"} <= {e["kind"] for e in evidence}
+               and name in compiled["classes"]}
+    alignments = evidence_alignments(config, compiled, headers, bounded)
     rows, binary_records = [], {}
 
     def fail(row, kind, header, binary, reason):
@@ -436,7 +490,10 @@ def check(config, rtti, constructors, headers=None, allocations=True):
                "embedded_by": embedded.get(source["name"], []),
                "primary_methods": layout["methods"] if layout else [],
                "instantiated_cpp_name": layout.get("instantiated_cpp_name") if layout else None,
-               "new_primary_virtuals": None, "reasons": [], "evidence": []}
+               "new_primary_virtuals": None, "reasons": [], "evidence": [],
+               "header_alignment": alignments.get(source["cpp_name"]),
+               "size_evidence": matched[source["cpp_name"]],
+               "size_evidence_status": "UNKNOWN"}
         rows.append(row)
         if not layout:
             row["reasons"].append("Compiler did not emit this class layout")
@@ -473,7 +530,8 @@ def check(config, rtti, constructors, headers=None, allocations=True):
                     row["reasons"].append(
                         "Possible composite allocation: constructor stores "
                         "extend beyond the embedded footprint or claimed size")
-        claimed = source["assert_size"] is not None or bool(row["embedded_by"])
+        claimed = (source["assert_size"] is not None or bool(row["embedded_by"])
+                   or bool(row["size_evidence"]))
         row["size_obligation"] = claimed
         if not claimed:
             row["size_status"] = "STUB" if binary else "UNKNOWN"
@@ -498,6 +556,33 @@ def check(config, rtti, constructors, headers=None, allocations=True):
             row["reasons"].append("PASS (embedded footprint)")
         else:
             row["reasons"].append("No unambiguous binary allocation size")
+        if row["size_evidence"]:
+            assessed = evaluate(row["size_evidence"], rtti.image.version,
+                                layout["size"], row["header_alignment"])
+            row["size_evidence_status"] = assessed.get("label", assessed["status"])
+            row["size_evidence_bounds"] = {
+                key: assessed[key] for key in (
+                    "lower_bound", "upper_bound", "rounded_lower", "rounded_upper",
+                    "alignment", "exact_size")}
+            if assessed["status"] == "ERROR":
+                for message in assessed["errors"]:
+                    proof_report["errors"].append({
+                        "file": None, "entry": None, "class": row["name"],
+                        "error": message})
+            elif assessed["status"] == "FAIL":
+                fail(row, "size", layout["size"],
+                     assessed["exact_size"] or {
+                         "lower_bound": assessed["lower_bound"],
+                         "upper_bound": assessed["upper_bound"]},
+                     "; ".join(assessed["reasons"]))
+            elif assessed["status"] == "PASS" and row["size_status"] != "FAIL":
+                row["size_status"] = "PASS"
+                if "size" not in row["verified"]:
+                    row["verified"].append("size")
+                row["reasons"].append(assessed["label"])
+                row["evidence"].append("Mechanically verified committed size evidence")
+            elif row["size_status"] != "FAIL":
+                row["reasons"].append("Verified bounds do not establish an exact size")
         cpp_slots, binary_slots = row["header_vtable_slots"], row["binary_vtable_slots"]
         if cpp_slots is not None and binary_slots is not None:
             if cpp_slots == binary_slots:
@@ -572,8 +657,11 @@ def check(config, rtti, constructors, headers=None, allocations=True):
                               if state in states), "UNKNOWN")
     counts = {state: sum(row["status"] == state for row in rows)
               for state in GATE_STATES}
+    if proof_report["errors"]:
+        proof_report["status"] = "ERROR"
     return {"version": rtti.image.version, "counts": counts, "classes": rows,
             "skipped_headers": compiled["skipped_headers"],
             "compiler_exit_code": compiled["compiler_exit_code"],
             "compiler_errors": compiled["errors"],
-            "compiler_report": compiled["report"]}
+            "compiler_report": compiled["report"],
+            "evidence_check": proof_report}

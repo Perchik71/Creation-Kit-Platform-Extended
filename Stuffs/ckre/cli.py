@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
 
 from .addrlib import AddressLibrary, resolve
 from .config import Config, HEADERS, HOME, ROOT, VERSIONS
@@ -58,6 +59,11 @@ def parser():
     gate = nested.add_parser("check")
     common(gate)
     gate.add_argument("--headers", nargs="+")
+    command = commands.add_parser("evidence")
+    common(command)
+    command.set_defaults(version="all")
+    nested = command.add_subparsers(dest="evidence_command", required=True)
+    common(nested.add_parser("check"))
     command = commands.add_parser("coverage")
     common(command)
     command.add_argument("--output", type=Path, default=HOME)
@@ -149,7 +155,7 @@ def selftest(config):
                                 "BGSRenderWindowCamera.h", "NiCamera.h",
                                 "Sky.h", "BSGraphicsRenderer.h", "BSGraphicsState.h",
                                 "TESObjectACTI.h", "TESObjectREFR.h",
-                                "TESFullName.h"])
+                                "TESFullName.h", "NiObjectNET.h", "BGSLayer.h"])
     context = Context(config, "246")
     try:
         gate = check(config, context.rtti, context.ctors, headers)
@@ -172,6 +178,45 @@ def selftest(config):
         record("REFR template aliases", all(
             row and row["header_size"] == 0x130 and row["size_status"] == "PASS"
             and row["status"] != "FAIL" for row in aliases), aliases)
+        from .evidence import evaluate, verify
+        committed = verify(config, images={"246": context.image})
+        record("Committed size evidence verifies in every declared build",
+               committed["status"] == "PASS", committed)
+        layer = next((r for r in gate["classes"] if r["name"] == "BGSLayer"), None)
+        record("Exact committed allocation evidence", bool(
+            layer and layer["header_size"] == 0x60 and
+            layer["size_status"] == "PASS" and
+            layer["size_evidence_status"] == "PASS (evidence)"), layer)
+        net = next(r for r in gate["classes"] if r["name"] == "NiObjectNET")
+        bounded = evaluate([entry for entry in net["size_evidence"]
+                            if entry["kind"] in ("lower_bound", "upper_bound")],
+                           "246", net["header_size"], net["header_alignment"])
+        for kind, invalid_size in (("lower_bound", 0x20), ("upper_bound", 0x30)):
+            evidence = [entry for entry in net["size_evidence"] if entry["kind"] == kind]
+            assessed = evaluate(evidence, "246", net["header_size"],
+                                net["header_alignment"])
+            mismatch = evaluate(evidence, "246", invalid_size,
+                                net["header_alignment"])
+            passed = bool(evidence and assessed["status"] == "UNKNOWN" and
+                          mismatch["status"] == "FAIL" and
+                          net["size_status"] == "PASS" and
+                          net["header_size"] == 0x28 and
+                          bounded.get("label") == "PASS (bounded)")
+            record(f"Committed {kind} and bounded size",
+                   passed, {"class": net["name"], "alignment": net["header_alignment"],
+                            "matching": assessed, "mismatch": mismatch})
+        with tempfile.TemporaryDirectory(prefix="bad-evidence-", dir=config.cache) as directory:
+            path = Path(directory) / "invalid.toml"
+            path.write_text(
+                '[[evidence]]\nclass = "NiObjectNET"\nsize = 0x28\n'
+                'kind = "lower_bound"\nversions = ["246"]\n'
+                'proof = [{version = "246", rva = 0x2497DF5, expect = "ud2"}]\n',
+                "utf-8")
+            invalid = verify(config, directory=Path(directory),
+                             images={"246": context.image})
+        record("Unverifiable instruction evidence is never trusted",
+               invalid["status"] == "ERROR" and bool(invalid["errors"]) and
+               all(entry["status"] != "PASS" for entry in invalid["entries"]), invalid)
         sky = context.ctors.describe("Sky")
         sizes = sorted({a["size"] for c in sky["candidates"]
                         for a in c["allocations"] if a["confidence"] in
@@ -199,6 +244,10 @@ def selftest(config):
 
 def run(args, config):
     versions = list(VERSIONS) if args.version == "all" else [args.version]
+    if args.command == "evidence":
+        from .evidence import verify
+        result = verify(config, versions)
+        return result, 2 if result["errors"] else 0
     if args.command == "selftest":
         result = selftest(config)
         return result, int(result["status"] != "PASS")
@@ -276,7 +325,8 @@ def run(args, config):
                 result = check(config, rtti, context.ctors,
                                selected_headers(args.headers))
                 results.append(result)
-                exit_code |= int(result["counts"].get("FAIL", 0) > 0)
+                exit_code = max(exit_code, 2 if result["evidence_check"]["errors"]
+                                else int(result["counts"].get("FAIL", 0) > 0))
             elif args.command == "coverage":
                 from .coverage import build
                 if version != "246":
@@ -285,7 +335,10 @@ def run(args, config):
                 results.append({"totals": result["totals"],
                                 "layout_counts": result["layout_counts"],
                                 "next_targets": result["next_targets"][:20],
-                                "output": str(args.output)})
+                                "output": str(args.output),
+                                "evidence_check": result["evidence_check"]})
+                if result["evidence_check"]["errors"]:
+                    exit_code = 2
         finally:
             context.close()
     if args.command == "xversion":

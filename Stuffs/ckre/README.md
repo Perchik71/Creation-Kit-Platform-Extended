@@ -82,10 +82,42 @@ and compares each class with the 1.11.246 binary.
 | `FAIL` | Proven mismatch |
 
 A vtable FAILs when it overruns the binary, or when it's partial and a modeled
-subclass adds virtuals after it. A size is checked only when the header asserts
-it or the class is embedded by value. Embedded-base footprints come from RTTI
-base-offset gaps, so a larger composite allocation can't fail a component.
+subclass adds virtuals after it. A size is checked when the header asserts it,
+the class is embedded by value, or committed evidence targets it. Embedded-base
+footprints come from RTTI base-offset gaps, so a larger composite allocation
+can't fail a component.
 Only FAIL makes the command exit 1.
+
+## Size evidence
+
+Commit reviewed proofs in `evidence/*.toml`; run `ckre evidence check --json`
+to recheck every declared build. `layout check` and `coverage` consume only
+verified entries. Invalid proofs are tool errors (exit 2), never size evidence.
+
+```toml
+[[evidence]]
+class = "NiObjectNET"
+size = 0x28
+kind = "lower_bound"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2497DF5, expect = "mov qword ptr [rbx + 0x20], rax" }]
+note = "Final own pointer store ends at 0x28; this alone is not exact."
+```
+
+| Kind | Gate use |
+|---|---|
+| `exact` | Reviewed stride, element allocation or padding-free span: PASS or FAIL |
+| `lower_bound` | Store/member extent: only FAIL a smaller header |
+| `upper_bound` | Proven next own/member boundary: only FAIL a larger header |
+
+Every listed version needs a proof. `expect` is full Capstone instruction text
+or a table such as `{ mnemonic = "imul", immediate = 0x20 }`;
+`scale` and `displacement` are also supported (all predicates must match).
+Proofs pin instructions, not their interpretation: document class ownership
+and padding assumptions in `note`. No bare assert proves a size. Exact matches
+report `PASS (evidence)`; converging bounds use compiled `alignof` and report
+`PASS (bounded)`. Provenance is additive under `size_evidence`/`evidence_check`.
+Coverage retains annotated non-RTTI PODs under `evidence_classes`.
 
 ## Workflow
 

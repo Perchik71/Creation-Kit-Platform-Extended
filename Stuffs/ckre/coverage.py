@@ -81,6 +81,9 @@ def build(config, rtti, constructors, output):
             "layout_status": layout["status"] if layout else "UNKNOWN",
             "size_status": layout["size_status"] if layout else "UNKNOWN",
             "vtable_status": layout["vtable_status"] if layout else "UNKNOWN",
+            "size_evidence": layout["size_evidence"] if layout else [],
+            "size_evidence_status": layout["size_evidence_status"] if layout else "UNKNOWN",
+            "size_evidence_bounds": layout.get("size_evidence_bounds") if layout else None,
         }
         (ignored if noise(name) else rows).append(row)
     targets = sorted((r for r in rows if not r["modeled"] or
@@ -102,7 +105,13 @@ def build(config, rtti, constructors, output):
     result = {"version": "246", "totals": totals, "classes": rows,
               "noise": ignored, "next_targets": targets,
               "layout_counts": gate["counts"],
-              "skipped_headers": gate["skipped_headers"]}
+              "skipped_headers": gate["skipped_headers"],
+              "evidence_check": gate["evidence_check"],
+              "evidence_classes": [{
+                  key: row.get(key) for key in (
+                      "name", "cpp_name", "header", "header_size", "size_status",
+                      "size_evidence_status", "size_evidence", "size_evidence_bounds")
+              } for row in gate["classes"] if row["size_evidence"]]}
     output = Path(output)
     atomic_write(output / "coverage.json", json.dumps(result, indent=2))
     markdown = ["# EditorAPI coverage", "", "## Totals", "",
@@ -118,6 +127,13 @@ def build(config, rtti, constructors, output):
                     f"| {row['name']} | {row['layout_status']} | {row['modeled']} | "
                     f"{row['size_status']} | {row['vtable_status']} | {row['unknown_bytes']} | "
                     f"{row['unk_scalars']} | {row['sub_virtuals']} |")
+    if result["evidence_classes"]:
+        markdown += ["", "## Committed size evidence", "",
+                     "| Class | Header size | Status | Evidence |",
+                     "|---|---:|---|---|"]
+        markdown += [
+            f"| {row['name']} | {row['header_size']} | {row['size_status']} | "
+            f"{row['size_evidence_status']} |" for row in result["evidence_classes"]]
     markdown += ["", "## Next targets", "",
                  "| Class | Patch files | Descendants | Unknown bytes |",
                  "|---|---:|---:|---:|"]

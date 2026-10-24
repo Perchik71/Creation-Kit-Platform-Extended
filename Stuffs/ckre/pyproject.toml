@@ -15,3 +15,6 @@ ckre = "ckre.cli:main"
 [tool.setuptools]
 packages = ["ckre"]
 package-dir = {ckre = "."}
+
+[tool.setuptools.package-data]
+ckre = ["evidence/*.toml"]
