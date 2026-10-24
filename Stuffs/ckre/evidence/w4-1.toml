@@ -1,0 +1,468 @@
+[[evidence]]
+class = "NiWindowStorage162"
+size = 0x210
+kind = "exact"
+versions = ["162"]
+proof = [
+  { version = "162", rva = 0x462EA5, expect = "mov edx, 0x210" },
+  { version = "162", rva = 0x462EC3, expect = "call 0x25e64" },
+  { version = "162", rva = 0x578B8E, expect = "mov qword ptr [rcx + 8], rsi" },
+  { version = "162", rva = 0x578BA2, expect = "mov qword ptr [rcx + 0x28], rsi" },
+  { version = "162", rva = 0x578BB2, expect = "mov qword ptr [rdi + 0x1a0], rsi" },
+  { version = "162", rva = 0x578CFF, expect = "mov dword ptr [rdi + 0x1d0], eax" },
+]
+note = "Native NiWindow allocation returned directly to constructor 0x578B70 through thunk 0x25E64. This storage view includes the vptr; the runtime facade intentionally retains modern sizeof."
+
+[[evidence]]
+class = "NiWindowStorage982"
+size = 0x220
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x5582C5, expect = "mov edx, 0x220" },
+  { version = "982", rva = 0x5582E3, expect = "call 0x28baa" },
+  { version = "137", rva = 0x571635, expect = "mov edx, 0x220" },
+  { version = "137", rva = 0x571653, expect = "call 0x2847f" },
+  { version = "246", rva = 0x573B05, expect = "mov edx, 0x220" },
+  { version = "246", rva = 0x573B23, expect = "call 0x2832b" },
+  { version = "246", rva = 0x655A79, expect = "mov qword ptr [rcx + 0x10], rsi" },
+  { version = "246", rva = 0x655A85, expect = "mov qword ptr [rcx + 0x30], rsi" },
+  { version = "246", rva = 0x655A92, expect = "mov qword ptr [rdi + 0x1b0], rsi" },
+  { version = "246", rva = 0x655C1A, expect = "mov dword ptr [rdi + 0x1e0], eax" },
+]
+note = "Allocation flows to NiWindow constructors 0x639640/0x652F20/0x655A50. Separate view represents 982.3 and later, not 162."
+
+[[evidence]]
+class = "NiColor"
+size = 0xC
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x24CDBC6, expect = "mov dword ptr [rbx + 0x120], 0x3f800000" },
+  { version = "246", rva = 0x24CDBDA, expect = "mov dword ptr [rbx + 0x128], 0x3f800000" },
+  { version = "246", rva = 0x24CDBE4, expect = "mov dword ptr [rbx + 0x12c], 0x3f800000" },
+  { version = "246", rva = 0x24CDC02, expect = "mov dword ptr [rbx + 0x138], 0x3f800000" },
+  { version = "246", rva = 0x24CDBBC, expect = "mov dword ptr [rbx + 0x144], 0x3f800000" },
+]
+note = "NiLight constructor initializes three consecutive RGB float triples at 120/12C/138; the distinct dimmer float starts at 144. All starts and the next field are four-byte aligned, leaving no inter-element padding."
+
+[[evidence]]
+class = "NiColorA"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2C67AD7, expect = "movups xmmword ptr [rbx + 0x48], xmm0" },
+  { version = "246", rva = 0x2C67AE2, expect = "mov qword ptr [rbx + 0x58], rax" },
+  { version = "246", rva = 0x254CFD9, expect = "movups xmmword ptr [rbx + 0x18], xmm0" },
+  { version = "246", rva = 0x254CFDD, expect = "mov qword ptr [rbx + 0x28], 0" },
+]
+note = "BSEffectShaderMaterial BaseColor occupies 48..57 before texture NiPointer at 58. NiColorInterpolator independently copies its complete RGBA value at 18..27 before its data pointer at 28."
+
+[[evidence]]
+class = "NiPoint2"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xE4F5B3, expect = "mov dword ptr [rdi + 0x140], 0x7f7fffff" },
+  { version = "246", rva = 0xE4F5A9, expect = "mov dword ptr [rdi + 0x144], 0x7f7fffff" },
+  { version = "246", rva = 0xE4F5C7, expect = "mov dword ptr [rdi + 0x148], 0xff7fffff" },
+  { version = "246", rva = 0xE4F5BD, expect = "mov dword ptr [rdi + 0x14c], 0xff7fffff" },
+]
+note = "TESWorldSpace initializes consecutive minimum/maximum coordinate pairs at 140/148, each two floats with matching extrema."
+
+[[evidence]]
+class = "NiPoint3A"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xD6AB75, expect = "mov qword ptr [rsi + 0xd0], rbp" },
+  { version = "246", rva = 0xD6AB7C, expect = "mov qword ptr [rsi + 0xd8], rbp" },
+  { version = "246", rva = 0xD6AB83, expect = "mov qword ptr [rsi + 0xe0], rbp" },
+  { version = "246", rva = 0xD6AB8A, expect = "mov qword ptr [rsi + 0xe8], rbp" },
+  { version = "246", rva = 0xD6ABC4, expect = "mov qword ptr [rsi + 0xf0], rbp" },
+]
+note = "TESObjectREFR zeroes the complete padded rotation and position spans D0..DF/E0..EF; the separately owned base-form pointer starts F0. The fourth float is storage padding, not a quaternion component."
+
+[[evidence]]
+class = "NiQuaternion"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2573B69, expect = "movups xmmword ptr [rbx + 0x18], xmm0" },
+  { version = "246", rva = 0x2573B6D, expect = "mov qword ptr [rbx + 0x28], 0" },
+  { version = "246", rva = 0x2573B8E, expect = "movups xmm0, xmmword ptr [rdi + 0x18]" },
+  { version = "246", rva = 0x2573B92, expect = "movups xmmword ptr [rbx + 0x18], xmm0" },
+]
+note = "NiQuaternionInterpolator clone initializes/copies the complete quaternion value at 18..27; a separately refcounted data pointer starts at 28."
+
+[[evidence]]
+class = "NiFrustum"
+size = 0x1C
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x24C2C9A, expect = "mov dword ptr [rdi + 0x160], 0xbf000000" },
+  { version = "246", rva = 0x24C2C7C, expect = "mov dword ptr [rdi + 0x174], 0x40000000" },
+  { version = "246", rva = 0x24C2CAE, expect = "mov byte ptr [rdi + 0x178], al" },
+  { version = "246", rva = 0x24C2CB4, expect = "mov dword ptr [rdi + 0x17c], 0x3dcccccd" },
+]
+note = "NiCamera frustum starts at 160: six floats and orthographic byte at 178; minimum-near-plane float begins 17C, closing the four-byte-aligned frustum span."
+
+[[evidence]]
+class = "NiAPI::NiRect<float>"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x24C2C6B, expect = "mov qword ptr [rdi + 0x184], rax" },
+  { version = "246", rva = 0x24C2CC9, expect = "mov qword ptr [rdi + 0x18c], 0x3f800000" },
+  { version = "246", rva = 0x24C2CD4, expect = "mov dword ptr [rdi + 0x188], 0x3f800000" },
+  { version = "246", rva = 0x24C2CDE, expect = "mov dword ptr [rdi + 0x194], 0x3f800000" },
+]
+note = "NiCamera normalized viewport has four floats at 184/188/18C/190; LOD adjustment starts 194."
+
+[[evidence]]
+class = "BSSpinLock"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x1D0C490, expect = "mov dword ptr [rcx + 0x10], ebp" },
+  { version = "246", rva = 0x1D0C496, expect = "mov dword ptr [rcx + 0x14], ebp" },
+  { version = "246", rva = 0x1D0C499, expect = "add rcx, 0x18" },
+]
+note = "First BShkbAnimationGraph event-source base starts at 10. Its lock is two dwords 10/14 and its first array starts 18, closing the eight-byte lock."
+
+[[evidence]]
+class = "BSTArray<void*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x351262, expect = "mov eax, dword ptr [rcx + 0x18]" },
+  { version = "246", rva = 0x351269, expect = "mov rbx, qword ptr [rcx + 8]" },
+  { version = "246", rva = 0x3512C6, expect = "cmp dword ptr [r14 + 0x10], eax" },
+  { version = "246", rva = 0x3512F5, expect = "lea rcx, [r14 + 8]" },
+]
+note = "BGSMod::Template::Items has only BaseFormComponent vptr at 0 followed by this array at 8; its complete object sized delete is 0x20 (0x354EA0). Destructor proves pointer/capacity/count at array-relative 0/8/10, with eight-byte alignment closing its 0x18 tail span."
+
+[[evidence]]
+class = "BSTArray<const char*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2CA49E6, expect = "lea rsi, [rdi + 0x2b0]" },
+  { version = "246", rva = 0x2CA4A05, expect = "lea rbx, [rdi + 0x2c8]" },
+  { version = "246", rva = 0x2CA4A24, expect = "lea rbx, [rdi + 0x2e0]" },
+  { version = "246", rva = 0x2CA4A43, expect = "lea rbx, [rdi + 0x2f8]" },
+  { version = "246", rva = 0x2CA4AAB, expect = "mov qword ptr [rcx + rax*8], rdx" },
+]
+note = "BSImagespaceShader constructs four consecutive native parameter-name arrays with stride 18; inserting ResolutionParams stores an eight-byte const-char pointer."
+
+[[evidence]]
+class = "BSTArray<BSFixedString>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x4E24D6, expect = "add rcx, 0x18" },
+  { version = "246", rva = 0x4E24DF, expect = "lea rcx, [rdi + 0x28]" },
+  { version = "246", rva = 0x4E24E8, expect = "lea rcx, [rdi + 0x30]" },
+  { version = "246", rva = 0x4E24F1, expect = "lea rcx, [rdi + 0x40]" },
+]
+note = "BGSGenericCategoryLayout::Manager initializes item/category fixed-string arrays at 18/30, with counts 28/40. The first string array's exact span is 18 bytes; native getter 4E7350 accesses the interned strings."
+
+[[evidence]]
+class = "NiAPI::NiTObjectArray<NiAPI::NiPointer<NiAPI::NiAVObject>>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2498C1F, expect = "lea rbx, [rdi + 0x120]" },
+  { version = "246", rva = 0x2498C35, expect = "mov word ptr [rbx + 0x10], si" },
+  { version = "246", rva = 0x2498C39, expect = "mov dword ptr [rbx + 0x14], 0x10000" },
+  { version = "246", rva = 0x2498C42, expect = "mov word ptr [rbx + 0x12], bp" },
+  { version = "246", rva = 0x2498C53, expect = "mov qword ptr [rbx + 8], rax" },
+  { version = "246", rva = 0x2498C67, expect = "mov qword ptr [rdi + 0x138], rbp" },
+]
+note = "NiNode child array starts120, has vptr0/data8 and four uint16 fields10/12/14/16; dirty-state/fade storage starts138, closing the exact18-byte array subobject."
+
+[[evidence]]
+class = "BSTAtomicValue<std::uint32_t>"
+size = 0x4
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2498C67, expect = "mov qword ptr [rdi + 0x138], rbp" },
+]
+note = "NiNode constructor zeroes dirty-state uint32 at138 together with distinct float mesh-LOD fade at13C; these share one qword store. Native dirty-state operations use its lower dword."
+
+[[evidence]]
+class = "BSTSmartPointer<ExtraDataList>"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xD6AB3D, expect = "mov qword ptr [rsi + 0x110], rax" },
+  { version = "246", rva = 0xD6AB49, expect = "lock inc dword ptr [rax]" },
+  { version = "246", rva = 0xD6AB98, expect = "mov word ptr [rsi + 0x118], ax" },
+]
+note = "TESObjectREFR owns one intrusive ExtraDataList pointer at110; refcount increment is through its pointee, while the independent scale field starts118."
+
+[[evidence]]
+class = "NiAPI::NiPointer<NiAPI::NiTexture>"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2C67AF2, expect = "lock inc dword ptr [rax + 8]" },
+  { version = "246", rva = 0x2C67AF6, expect = "mov qword ptr [rbx + 0x58], rax" },
+  { version = "246", rva = 0x2C67B15, expect = "mov qword ptr [rbx + 0x60], rax" },
+]
+note = "BSEffectShaderMaterial adjacent BaseTexture and GrayscaleTexture are native NiPointers at58/60; each owns a single texture pointer and uses its pointee's NiRefObject refcount."
+
+[[evidence]]
+class = "BSTEventDispatcher<ActorValueEvents::ActorValueChangedEvent>"
+size = 0x58
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xD6AA34, expect = "mov dword ptr [rsi + 0x70], ebp" },
+  { version = "246", rva = 0xD6AA37, expect = "mov dword ptr [rsi + 0x74], ebp" },
+  { version = "246", rva = 0xD6AA25, expect = "lea rcx, [rsi + 0x78]" },
+  { version = "246", rva = 0xD6AA4B, expect = "lea rcx, [rsi + 0x90]" },
+  { version = "246", rva = 0xD6AA63, expect = "lea rcx, [rsi + 0xa8]" },
+  { version = "246", rva = 0xD6AA7B, expect = "mov byte ptr [rsi + 0xc0], bpl" },
+  { version = "246", rva = 0xD6AAE4, expect = "mov qword ptr [rsi + 0xc8], rbp" },
+]
+note = "TESObjectREFR event-source base spans70..C7, immediately followed by parent-cell pointerC8. Constructor establishes lock, three18-byte arrays and the state byte."
+
+[[evidence]]
+class = "BSReadWriteLock"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x7D71B4, expect = "lea rcx, [rbx + 0x18]" },
+  { version = "246", rva = 0x7D71BC, expect = "call 0x3fd14" },
+  { version = "246", rva = 0x20076C2, expect = "mov dword ptr [rcx], eax" },
+  { version = "246", rva = 0x20076C4, expect = "mov dword ptr [rcx + 4], eax" },
+  { version = "246", rva = 0xD6AB22, expect = "lea edx, [r9 + 0x20]" },
+  { version = "246", rva = 0xD6AB33, expect = "call 0x134c1" },
+]
+note = "TESObjectREFR allocates20 bytes for ExtraDataList; its constructor7D71A0 tail-embeds the native read/write lock at18 and invokes constructor20076C0, which initializes exactly two dwords. The CKPE replacement preserves the footprint, not the native second dword's internal interpretation."
+
+[[evidence]]
+class = "BSTHashMap<BSFixedString, BGSAttackData*>"
+size = 0x38
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x75860E, expect = "mov qword ptr [rcx + 0x1c], rdx" },
+  { version = "246", rva = 0x758607, expect = "mov qword ptr [rcx + 0x28], rax" },
+  { version = "246", rva = 0x758615, expect = "mov dword ptr [rcx + 0x30], edx" },
+  { version = "246", rva = 0x758618, expect = "mov qword ptr [rcx + 0x40], rdx" },
+  { version = "246", rva = 0x75861C, expect = "mov qword ptr [rcx + 0x48], rdx" },
+]
+note = "BGSAttackDataMap constructor7585E0 starts its string-key map at10: capacity1C, sentinel28, modification counter30, entries40. Distinct default-data TESRace pointer starts48, closing map span10..47."
+
+[[evidence]]
+class = "BSTHashMap<Forms::BGSSoundCategory*, float>"
+size = 0x38
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x43DA01, expect = "mov qword ptr [rbx + 0x34], rcx" },
+  { version = "246", rva = 0x43DA13, expect = "mov qword ptr [rbx + 0x40], rax" },
+  { version = "246", rva = 0x43DA08, expect = "mov dword ptr [rbx + 0x48], ecx" },
+  { version = "246", rva = 0x43DA0B, expect = "mov qword ptr [rbx + 0x58], rcx" },
+  { version = "246", rva = 0x43DA17, expect = "mov byte ptr [rbx + 0x60], 0x32" },
+]
+note = "BGSSoundCategorySnapshot map at28 has counters34..3F, sentinel40, modification counter48 and entries58; distinct priority byte60 closes38-byte span. CNAM loader43DC20 inserts form-ID/float pairs."
+
+[[evidence]]
+class = "BSTHashMap<std::uint32_t, Forms::BGSSoundDescriptorForm*>"
+size = 0x38
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x43F2DA, expect = "mov qword ptr [rbx + 0x78], rax" },
+  { version = "246", rva = 0x43F2E1, expect = "mov qword ptr [rbx + 0x6c], rcx" },
+  { version = "246", rva = 0x43F2EE, expect = "mov qword ptr [rbx + 0x90], rcx" },
+  { version = "246", rva = 0x43F2F5, expect = "mov qword ptr [rbx + 0x98], rcx" },
+]
+note = "BGSSoundKeywordMapping descriptor map starts60, after keyword set28; capacity6C, sentinel78 and entries90. Distinct descriptor pointer98 closes its38-byte native scatter-table span."
+
+[[evidence]]
+class = "BSTSet<Forms::BGSKeyword*>"
+size = 0x38
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x43F2C1, expect = "mov qword ptr [rbx + 0x40], rax" },
+  { version = "246", rva = 0x43F2CC, expect = "mov qword ptr [rbx + 0x34], rcx" },
+  { version = "246", rva = 0x43F2D0, expect = "mov dword ptr [rbx + 0x3c], ecx" },
+  { version = "246", rva = 0x43F2D3, expect = "mov dword ptr [rbx + 0x48], ecx" },
+  { version = "246", rva = 0x43F2D6, expect = "mov qword ptr [rbx + 0x58], rcx" },
+  { version = "246", rva = 0x43F2DA, expect = "mov qword ptr [rbx + 0x78], rax" },
+]
+note = "BGSSoundKeywordMapping keyword set28..5F: capacity34, sentinel40, modification counter48 and entries58. Next descriptor map starts60 (sentinel78), with identical38-byte header span."
+
+[[evidence]]
+class = "NiRGB"
+size = 0x3
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xCFD933, expect = "imul rdx, rax, 0x121" },
+  { version = "246", rva = 0xCFD944, expect = "movzx ecx, byte ptr [rdx + rax + 0x4860]" },
+  { version = "246", rva = 0xCFD94C, expect = "lea rdx, [rdx + rdx*2]" },
+  { version = "246", rva = 0xCFD964, expect = "movzx ecx, byte ptr [rdx + rax + 0x4861]" },
+  { version = "246", rva = 0xCFD981, expect = "movzx ecx, byte ptr [rdx + rax + 0x4862]" },
+]
+note = "TESObjectLAND color getter computes 289*quadrant+vertex, multiplies by three, and reads three unsigned RGB bytes at colors4860/4861/4862. Conversion divides by255 and produces alpha1; this is not the signed normal triple."
+
+[[evidence]]
+class = "NiRGBA"
+size = 0x4
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xB8EC7D, expect = "sub eax, 0x4d414e43" },
+  { version = "246", rva = 0xB8ECE0, expect = "lea rdx, [rdi + 0x40]" },
+  { version = "246", rva = 0xB8ECE4, expect = "mov r8d, 4" },
+  { version = "246", rva = 0xB8ECED, expect = "call 0x33262" },
+]
+note = "BGSColorForm CNAM loader transfers the complete four-byte color/remapping union at40. Its raw packed-color view is four bytes; modern remapping interpretation shares those same bits, not the following editor padding."
+
+[[evidence]]
+class = "BSTBTree<SettingCollectionMap<Setting>::Entry>"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x3466F7, expect = "mov edx, 0x138" },
+  { version = "246", rva = 0x34670F, expect = "mov qword ptr [rax + 0x110], rdi" },
+  { version = "246", rva = 0x346733, expect = "lea rsi, [rbx + 0x120]" },
+  { version = "246", rva = 0x34673D, expect = "mov dword ptr [rsi], edi" },
+  { version = "246", rva = 0x34673F, expect = "mov dword ptr [rsi + 4], 4" },
+  { version = "246", rva = 0x346746, expect = "mov qword ptr [rsi + 8], rdi" },
+  { version = "246", rva = 0x34674A, expect = "mov qword ptr [rsi + 0x10], rdi" },
+  { version = "246", rva = 0x340AB4, expect = "mov edx, 0x138" },
+]
+note = "Game settings collection allocation/destruction agree on138. Base handle is110; the nonvirtual allocator/tree header spans118..137, with key count120, capacity124, root128 and free list130. This evidence targets the actual16-byte Setting entry specialization."
+
+[[evidence]]
+class = "BSTBTree<SettingCollectionMap<Setting>::Entry>::Node"
+size = 0x80
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x346716, expect = "mov edx, 0x80" },
+  { version = "246", rva = 0x34674E, expect = "call 0x57f81" },
+  { version = "246", rva = 0x346773, expect = "mov dword ptr [rbp + 0x68], edi" },
+  { version = "246", rva = 0x34677D, expect = "mov qword ptr [rbp + 0x40], rdi" },
+]
+note = "Game setting-tree creation requests one80-byte node through its allocator; four16-byte entries precede five links at40, then count68. It is not the six-eight-byte-key node interpretation."
+
+[[evidence]]
+class = "BSTBTree<BSFixedString>::Node"
+size = 0x80
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2EA88D, expect = "mov edx, 0x80" },
+  { version = "246", rva = 0x2EA895, expect = "call 0x9d1fd" },
+  { version = "246", rva = 0x2EA89A, expect = "add dword ptr [rbx + 0xc], 6" },
+  { version = "246", rva = 0x2EA8A1, expect = "mov dword ptr [rcx + 0x68], esi" },
+  { version = "246", rva = 0x2EA8A8, expect = "mov qword ptr [rcx + 0x30], rsi" },
+]
+note = "Fixed-string B-tree insertion2EA860 allocates80-byte nodes, six keys per node. It constructs/refcounts local BSFixedStrings and copies the promoted key through helper1C530; six eight-byte keys precede child links30 onward."
+
+[[evidence]]
+class = "BSSimpleList<Forms::WeatherSound*>"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xE3639E, expect = "mov qword ptr [rdi + 0x10d0], rbp" },
+  { version = "246", rva = 0xE363A5, expect = "mov qword ptr [rdi + 0x10d8], rbp" },
+  { version = "246", rva = 0xE3637D, expect = "lea rcx, [rdi + 0x10e0]" },
+  { version = "246", rva = 0xE363AC, expect = "call 0x3f2a1" },
+]
+note = "TESWeather sound-list head is the two initialized qwords10D0/10D8, followed by distinct sky-static array10E0. This proves the current specialization's footprint only, not the header's extra pointer level for its value type."
+
+[[evidence]]
+class = "BSTArray<Forms::TESObjectSTAT*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xE3637D, expect = "lea rcx, [rdi + 0x10e0]" },
+  { version = "246", rva = 0xE363AC, expect = "call 0x3f2a1" },
+  { version = "246", rva = 0xE363B1, expect = "lea rcx, [rdi + 0x10f0]" },
+  { version = "246", rva = 0xE363B8, expect = "call 0x3d9dd" },
+  { version = "246", rva = 0xE3956D, expect = "mov dword ptr [rcx + 0x10f8], 3" },
+]
+note = "TESWeather constructor initializes the sky-static array at10E0 with count10F0; InitializeDataE39560 writes the independent cloud-layer-count dword10F8, closing its18-byte span."
+
+[[evidence]]
+class = "NiAPI::NiTFlags<std::uint64_t, NiAPI::NiAVObject>"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x24BE9E8, expect = "mov qword ptr [rbx + 0x108], rdx" },
+  { version = "246", rva = 0x24BE9EF, expect = "mov qword ptr [rbx + 0x110], rdx" },
+  { version = "246", rva = 0x24BEA0C, expect = "and qword ptr [rbx + 0x108], 0xfffffffffffffffe" },
+  { version = "246", rva = 0x24BEA14, expect = "or qword ptr [rbx + 0x108], 0x20000000" },
+]
+note = "NiAVObject constructor initializes and independently modifies the full flag qword108; the next distinct pointer is110. These are actual flag read-modify-writes, not a wide zeroing store over two unrelated dwords."
+
+[[evidence]]
+class = "NiAPI::NiTFlags<std::uint64_t, BSShaderProperty>"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2BC33A8, expect = "mov qword ptr [rbx + 0x30], rax" },
+  { version = "246", rva = 0x2BC33AC, expect = "mov qword ptr [rbx + 0x38], rax" },
+]
+note = "BSShaderProperty constructor initializes flags30 and the following independent RenderPassArray pointer38. The concrete64-bit flag wrapper spans precisely those eight bytes."
+
+[[evidence]]
+class = "NiAPI::NiTFlags<std::uint32_t, Forms::BGSColorForm>"
+size = 0x4
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xB8EA84, expect = "mov dword ptr [rdi + 0x60], eax" },
+]
+note = "BGSColorForm constructor initializes its32-bit native flag value60. The wrapper contains only that integral storage; remaining bytes64..67 are enclosing-object alignment, not another flag member."
+
+[[evidence]]
+class = "BSAnimationGraphEvent"
+size = 0x18
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x1D13654, expect = "mov rax, qword ptr [r14 + 0x380]" },
+  { version = "246", rva = 0x1D13661, expect = "mov qword ptr [rsp + 0x30], rax" },
+  { version = "246", rva = 0x1D1366A, expect = "lea rcx, [rsp + 0x38]" },
+  { version = "246", rva = 0x1D1366F, expect = "call 0x1c530" },
+  { version = "246", rva = 0x1D1367B, expect = "lea rcx, [rsp + 0x40]" },
+  { version = "246", rva = 0x1D13680, expect = "call 0x1c530" },
+  { version = "246", rva = 0x1D13685, expect = "lea rdx, [rsp + 0x30]" },
+  { version = "246", rva = 0x1D1368A, expect = "lea rcx, [r14 + 0x68]" },
+  { version = "246", rva = 0x1D1368E, expect = "call 0x15b40" },
+  { version = "246", rva = 0x1D13693, expect = "lea rcx, [rsp + 0x40]" },
+  { version = "246", rva = 0x1D13698, expect = "call 0x65aa5" },
+  { version = "246", rva = 0x1D1369D, expect = "lea rcx, [rsp + 0x38]" },
+  { version = "246", rva = 0x1D136A2, expect = "call 0x65aa5" },
+]
+note = "Graph emission1D13590 borrows holder pointer from graph380, copy-constructs tag/payload BSFixedStrings at event8/10, dispatches event0 to source68, then destroys both strings. Stack event30..47 proves an18-byte prefix only; unused stack48..4F does not close its total size."

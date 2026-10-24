@@ -7,6 +7,9 @@
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/B/BGSIdleCollection.h>
+#include <EditorAPI/T/TESPackageData.h>
+#include <EditorAPI/T/TESCondition.h>
+#include <EditorAPI/P/PackageLocation.h>
 
 namespace CKPE
 {
@@ -67,7 +70,7 @@ namespace CKPE
 					BGSIdleCollection* idleCollection; // 50
 					PackageSchedule packSched; // 58
 					std::uint8_t unk64[0x4]; // 64
-					std::uint8_t packConditions[0x18]; // 68 - TESCondition (0x18 in the CK)
+					TESCondition packConditions; // 68
 					TESCombatStyle* combatStyle; // 80
 					TESQuest* ownerQuest; // 88
 					std::uint8_t onBegin[0x20]; // 90 - PackageEventAction (0x20 in the CK)
@@ -80,6 +83,10 @@ namespace CKPE
 					std::uint64_t unk110; // 110
 				};
 				static_assert(sizeof(TESPackage) == 0x118);
+				static_assert(offsetof(TESPackage, packData) == 0x38);
+				static_assert(offsetof(TESPackage, packSched) == 0x58);
+				static_assert(offsetof(TESPackage, packConditions) == 0x68);
+				static_assert(offsetof(TESPackage, onBegin) == 0x90);
 			}
 		}
 	}

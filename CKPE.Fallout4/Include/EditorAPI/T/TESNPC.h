@@ -37,9 +37,6 @@ namespace CKPE
 				class BGSHeadPart;
 
 
-				class BGSCharacterTint;
-				class Entries;
-
 				// 1.11.240.0: size 0x3B8, vtable RVA 0x30465B0, 158 virtual functions
 				class TESNPC :
 					public TESActorBase,               // 000
@@ -88,6 +85,7 @@ namespace CKPE
 					BSTHashMap<std::uint32_t, float>* morphSliderValues; // 3A8 - 0x38 byte table allocated by Load
 					BGSCharacterTint::Entries* tintingData; // 3B0 - 24 byte heap object
 				};
+				static_assert(offsetof(TESNPC, tintingData) == 0x3B0);
 				static_assert(sizeof(TESNPC) == 0x3B8);
 			}
 		}

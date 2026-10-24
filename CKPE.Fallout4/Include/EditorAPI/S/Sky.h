@@ -25,7 +25,22 @@ namespace CKPE
 				class TESRegion;
 			}
 
-			class Clouds
+			class SkyObject
+			{
+			public:
+				virtual ~SkyObject();
+				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+				{ return offsetof(SkyObject, _Object) == 0x8; }
+			protected:
+				/* 0x008 */ virtual void sub_008();
+				/* 0x010 */ virtual void sub_010();
+
+				/* 0x008 */ NiAPI::NiPointer<NiAPI::NiRefObject> _Object;
+			};
+			static_assert(sizeof(SkyObject) == 0x10);
+			static_assert(SkyObject::VerifyLayout());
+
+			class Clouds : public SkyObject
 			{
 			public:
 				virtual ~Clouds();
@@ -35,7 +50,7 @@ namespace CKPE
 					return offsetof(Clouds, _Flags) == 0x512;
 				}
 			private:
-				/* 0x008 */ char pad008[0x50A];
+				/* 0x010 */ char pad010[0x502];
 				/* 0x512 */ NiAPI::NiTFlags<std::uint16_t, Clouds> _Flags;
 			};
 			static_assert(sizeof(Clouds) == 0x518);

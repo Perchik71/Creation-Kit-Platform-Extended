@@ -1,0 +1,32 @@
+[[evidence]]
+class = "BGSLayer"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+note = "ConcreteFormFactory<BGSLayer> Create allocates the complete object through the diagnostic-identified MemoryManager allocator. Zero R9 plus 0x60 supplies EDX."
+proof = [
+  { version = "246", rva = 0x4642A2, expect = "xor r9d, r9d" },
+  { version = "246", rva = 0x4642AF, expect = { text = "lea edx, [r9 + 0x60]", displacement = 0x60 } },
+  { version = "246", rva = 0x4642B3, expect = { mnemonic = "call", immediate = 0x4978D } },
+]
+
+[[evidence]]
+class = "NiObjectNET"
+size = 0x28
+kind = "lower_bound"
+versions = ["246"]
+note = "NiObjectNET constructor zeros its own final pointer at this+0x20; the qword store ends at 0x28. This is a lower bound, not an allocation or exact-size claim."
+proof = [
+  { version = "246", rva = 0x2497DF5, expect = "mov qword ptr [rbx + 0x20], rax" },
+]
+
+[[evidence]]
+class = "NiObjectNET"
+size = 0x28
+kind = "upper_bound"
+versions = ["246"]
+note = "NiAVObject has a single nonvirtual NiObjectNET base. After its base-constructor call, its first own member Parent starts at 0x28, bounding the base above. Combined with the base constructor's final pointer extent this is exact."
+proof = [
+  { version = "246", rva = 0x24BE960, expect = { text = "call 0x19c4f", immediate = 0x19C4F } },
+  { version = "246", rva = 0x24BE972, expect = { text = "mov qword ptr [rbx + 0x28], rdx", displacement = 0x28 } },
+]

@@ -4,7 +4,9 @@
 
 #pragma once
 
+#include <cstddef>
 #include <EditorAPI/N/NiTypes.h>
+#include <EditorAPI/B/BSString.h>
 
 namespace CKPE
 {
@@ -34,7 +36,23 @@ namespace CKPE
 				/*2A8*/ std::uint32_t	unk2A8;
 				/*2AC*/ std::uint32_t	unk2AC;
 			public:
-				//__forceinline DWORD64 GetFileSize(VOID) const { return _FileSize; }
+				using NiAPI::NiFile::Seek;
+				virtual void Seek(std::int64_t offset, std::uint32_t mode) override;	// 07
+				virtual bool Reopen() noexcept(true);								// 09
+				virtual bool ReopenWithOpenData(void* openData) noexcept(true);		// 0A
+				virtual std::uint64_t RefreshFileSize() noexcept(true);				// 0B
+				virtual std::uint32_t ReadString(BSString& value,
+					std::uint64_t maxBytes) noexcept(true);							// 0C
+				virtual std::uint32_t ReadWideString(void* value,
+					std::uint64_t maxBytes) noexcept(true);							// 0D
+				virtual std::uint64_t ReadLine(char* buffer, std::uint64_t capacity,
+					std::uint16_t delimiter) noexcept(true);							// 0E
+				virtual std::uint64_t WriteString(const BSString& value,
+					bool includeTerminator) noexcept(true);							// 0F
+				virtual std::uint64_t WriteWideString(const void* value,
+					bool includeTerminator) noexcept(true);							// 10
+				[[nodiscard]] virtual bool Exists() noexcept(true);					// 11
+
 				static BSFile* CreateInstance(const char* fileName, std::uint32_t mode, std::uint64_t bufferSize, 
 					bool isTextFile) noexcept(true);
 				void DeleteInstance(bool ReleaseMemory = true);
@@ -42,12 +60,20 @@ namespace CKPE
 				std::uint64_t GetFileSize() const noexcept(true);
 				std::uint64_t Read(void* buffer, std::uint64_t size) noexcept(true);
 				std::uint64_t Write(const void* buffer, std::uint64_t size) noexcept(true);
+
+				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+				{
+					return offsetof(BSFile, _FileName2) == 0x16C &&
+						offsetof(BSFile, _Pos2) == 0x280 &&
+						offsetof(BSFile, _FileSize) == 0x288;
+				}
 			public:
 				inline static bool(*ICreateInstance)(BSFile*, const char*, std::uint32_t, std::uint64_t, bool);
 				static bool HKCreateInstance(BSFile* This, const char* fileName, std::uint32_t mode,
 					std::uint64_t bufferSize, bool isTextFile);
 			};
 			static_assert(sizeof(BSFile) == 0x2B0, "BSFile class should be the size of 0x2B0");
+			static_assert(BSFile::VerifyLayout());
 		}
 	}
 }

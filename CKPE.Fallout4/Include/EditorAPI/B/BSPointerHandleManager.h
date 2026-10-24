@@ -22,21 +22,15 @@ namespace CKPE
 			class IBSUntypedPointerHandle
 			{
 			public:
-				// NOTE: Handle index bits increased from 21 (vanilla)
-				//
-				// 27       26       21                   0
-				// |--------|--------|--------------------|
-				// | Active |    Age |    Handle Index    |
-				// |--------|--------|--------------------|
-				//
+				// Vanilla: index bits 0-20, age bits 21-25, active bit 26.
 				constexpr static _Ty INDEX_BIT = IndexBits;
 				constexpr static _Ty AGE_BIT = AgeCountBits;
 				constexpr static _Ty UNUSED_BIT_START = INDEX_BIT + AGE_BIT;							// 26 in vanilla
 
-				constexpr static _Ty MASK_INDEX_BIT = (((_Ty)1) << INDEX_BIT) - ((_Ty)1);				// 03FFFFFF
-				constexpr static _Ty MASK_AGE_BIT = ((((_Ty)1) << AGE_BIT) - ((_Ty)1)) << INDEX_BIT;	// 7C000000
-				constexpr static _Ty MASK_ACTIVE_BIT = ((_Ty)1) << UNUSED_BIT_START;					// 80000000
-				constexpr static _Ty MAX_HANDLE_COUNT = ((_Ty)1) << INDEX_BIT;							// 04000000
+				constexpr static _Ty MASK_INDEX_BIT = (((_Ty)1) << INDEX_BIT) - ((_Ty)1);
+				constexpr static _Ty MASK_AGE_BIT = ((((_Ty)1) << AGE_BIT) - ((_Ty)1)) << INDEX_BIT;
+				constexpr static _Ty MASK_ACTIVE_BIT = ((_Ty)1) << UNUSED_BIT_START;
+				constexpr static _Ty MAX_HANDLE_COUNT = ((_Ty)1) << INDEX_BIT;
 			protected:
 				_Ty m_Bits;
 			public:
@@ -49,7 +43,8 @@ namespace CKPE
 				[[nodiscard]] inline bool IsInUse() const noexcept(true) { return (m_Bits & MASK_ACTIVE_BIT) != 0; }
 				inline void IncrementAge() noexcept(true)
 				{
-					m_Bits = ((m_Bits << INDEX_BIT) & MASK_AGE_BIT) | (m_Bits & ~MASK_AGE_BIT);
+					m_Bits = ((m_Bits + (static_cast<_Ty>(1) << INDEX_BIT)) &
+						MASK_AGE_BIT) | (m_Bits & ~MASK_AGE_BIT);
 				}
 
 				void Set(_Ty Index, _Ty Age) noexcept(true)
@@ -90,6 +85,10 @@ namespace CKPE
 			typedef IBSUntypedPointerHandle<std::uint32_t, 21, 5> BSUntypedPointerHandle_Original;
 			typedef IBSUntypedPointerHandle<std::uint32_t, 23, 5> BSUntypedPointerHandle_Extended_NG;
 			typedef IBSUntypedPointerHandle<std::uint32_t, 26, 5> BSUntypedPointerHandle_Extended;
+			static_assert(BSUntypedPointerHandle_Original::MASK_INDEX_BIT == 0x001FFFFF);
+			static_assert(BSUntypedPointerHandle_Original::MASK_AGE_BIT == 0x03E00000);
+			static_assert(BSUntypedPointerHandle_Original::MASK_ACTIVE_BIT == 0x04000000);
+			static_assert(BSUntypedPointerHandle_Original::MAX_HANDLE_COUNT == 0x00200000);
 
 			template<typename _Ty, typename HandleType, typename HandleRef>
 			class IBSPointerHandleManagerEntry : public HandleType
@@ -108,7 +107,11 @@ namespace CKPE
 				}
 
 				inline void SetPointer(HandleRef* Pointer) noexcept(true) { m_Pointer = Pointer; }
-				[[nodiscard]] inline HandleRef* GetPointer() const noexcept(true) { return m_Pointer.operator HandleRef* (); }
+				[[nodiscard]] inline HandleRef* GetPointer() const noexcept(true)
+				{
+					static_assert(offsetof(IBSPointerHandleManagerEntry, m_Pointer) == 0x08);
+					return m_Pointer.operator HandleRef* ();
+				}
 
 				[[nodiscard]] inline bool IsValid(_Ty Age) const noexcept(true)
 				{
@@ -273,7 +276,7 @@ namespace CKPE
 								newHandle.IncrementAge();
 								newHandle.SetInUse();
 
-								untypedHandle.Set(newHandle.GetNextFreeEntry(), newHandle.GetAge());
+								untypedHandle.Set(Manager::FreeListHead, newHandle.GetAge());
 								newHandle.SetPointer(Refr);
 
 								Refr->SetHandleEntryIndex(Manager::FreeListHead);
@@ -372,7 +375,8 @@ namespace CKPE
 
 					Out = static_cast<ObjectType*>(arrayHandle.GetPointer());
 
-					if (!arrayHandle.IsValid(Handle.GetAge()) || Out->GetHandleEntryIndex() != handleIndex)
+					if (!arrayHandle.IsValid(Handle.GetAge()) || !Out ||
+						Out->GetHandleEntryIndex() != handleIndex)
 						Out = nullptr;
 
 					return Out != nullptr;
@@ -391,7 +395,8 @@ namespace CKPE
 
 					Out = static_cast<ObjectType*>(arrayHandle.GetPointer());
 
-					if (!arrayHandle.IsValid(Handle.GetAge()) || Out->GetHandleEntryIndex() != handleIndex)
+					if (!arrayHandle.IsValid(Handle.GetAge()) || !Out ||
+						Out->GetHandleEntryIndex() != handleIndex)
 					{
 						// Identical to GetSmartPointer1 except for this Handle.SetBitwiseNull();
 						Handle.SetBitwiseNull();
@@ -403,11 +408,15 @@ namespace CKPE
 
 				static ObjectType* GetPointer(std::uint32_t UniqueId)
 				{
+					if (!UniqueId)
+						return nullptr;
+
 					const auto handleIndex = UniqueId & HandleType::MASK_INDEX_BIT;
 					auto& arrayHandle = Manager::HandleEntries[handleIndex];
 					auto Out = static_cast<ObjectType*>(arrayHandle.GetPointer());
 
-					if (Out->GetHandleEntryIndex() != handleIndex)
+					if (!arrayHandle.IsValid(UniqueId & HandleType::MASK_AGE_BIT) ||
+						!Out || Out->GetHandleEntryIndex() != handleIndex)
 						Out = nullptr;
 
 					return Out;
@@ -423,7 +432,8 @@ namespace CKPE
 					if (!arrayHandle.IsValid(Handle.GetAge()))
 						return false;
 
-					return arrayHandle.GetPointer()->GetHandleEntryIndex() == handleIndex;
+					const auto pointer = arrayHandle.GetPointer();
+					return pointer && pointer->GetHandleEntryIndex() == handleIndex;
 				}
 			};
 		

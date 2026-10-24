@@ -36,6 +36,7 @@ namespace CKPE
 			namespace Forms
 			{
 				class BGSVoiceType;
+				class BGSBodyPartData;
 				class BGSMovementType;
 				class BGSTextureSet;
 				class TESNPC;

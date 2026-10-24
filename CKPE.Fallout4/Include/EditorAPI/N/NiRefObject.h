@@ -7,6 +7,7 @@
 #pragma once
 
 #include <cstdint>
+#include <cstddef>
 
 namespace CKPE
 {
@@ -31,7 +32,13 @@ namespace CKPE
 					std::uint32_t DecRefCount() noexcept(true);
 
 					void GetViewerStrings(void(*Callback)(const char*, ...)) const noexcept(true);
+					[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+					{
+						return offsetof(NiRefObject, m_uiRefCount) == 0x8;
+					}
 				};
+				static_assert(sizeof(NiRefObject) == 0x10);
+				static_assert(NiRefObject::VerifyLayout());
 
 				// 10
 				class __declspec(align(8)) NiRefObject64
@@ -48,7 +55,13 @@ namespace CKPE
 					std::uint64_t DecRefCount() noexcept(true);
 
 					void GetViewerStrings(void(*Callback)(const char*, ...)) const noexcept(true);
+					[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+					{
+						return offsetof(NiRefObject64, m_uiRefCount) == 0x8;
+					}
 				};
+				static_assert(sizeof(NiRefObject64) == 0x10);
+				static_assert(NiRefObject64::VerifyLayout());
 			}
 		}
 	}

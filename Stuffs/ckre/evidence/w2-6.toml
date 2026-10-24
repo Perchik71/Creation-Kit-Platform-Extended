@@ -1,0 +1,1477 @@
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BGSAttachParentArray"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x333ab8, expect = "test dil, 1" },
+  { version = "982", rva = 0x333abe, expect = "mov edx, 0x20" },
+  { version = "982", rva = 0x333ac6, expect = "call 0x1c35" },
+  { version = "137", rva = 0x338678, expect = "test dil, 1" },
+  { version = "137", rva = 0x33867e, expect = "mov edx, 0x20" },
+  { version = "137", rva = 0x338686, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x339bf8, expect = "test dil, 1" },
+  { version = "246", rva = 0x339bfe, expect = "mov edx, 0x20" },
+  { version = "246", rva = 0x339c06, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x333a50; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x338610; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x339b90; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BGSBehaviorGraphModel"
+size = 0x38
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0xad7a14, expect = "test bl, 1" },
+  { version = "982", rva = 0xad7a19, expect = "mov edx, 0x38" },
+  { version = "982", rva = 0xad7a21, expect = "call 0x1c35" },
+  { version = "137", rva = 0xb02584, expect = "test bl, 1" },
+  { version = "137", rva = 0xb02589, expect = "mov edx, 0x38" },
+  { version = "137", rva = 0xb02591, expect = "call 0x1c4e" },
+  { version = "246", rva = 0xb07f84, expect = "test bl, 1" },
+  { version = "246", rva = 0xb07f89, expect = "mov edx, 0x38" },
+  { version = "246", rva = 0xb07f91, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0xad7a00; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0xb02570; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0xb07f70; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BGSCharacterTint::Template::Entry"
+size = 0x38
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x41bccb, expect = "test bl, 1" },
+  { version = "982", rva = 0x41bcd0, expect = "mov edx, 0x38" },
+  { version = "982", rva = 0x41bcd8, expect = "call 0x1c35" },
+  { version = "137", rva = 0x420a7b, expect = "test bl, 1" },
+  { version = "137", rva = 0x420a80, expect = "mov edx, 0x38" },
+  { version = "137", rva = 0x420a88, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x421ffb, expect = "test bl, 1" },
+  { version = "246", rva = 0x422000, expect = "mov edx, 0x38" },
+  { version = "246", rva = 0x422008, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x41bca0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x420a50; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x421fd0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BGSCharacterTint::Template::Mask"
+size = 0x48
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x41bd34, expect = "test bl, 1" },
+  { version = "982", rva = 0x41bd39, expect = "mov edx, 0x48" },
+  { version = "982", rva = 0x41bd41, expect = "call 0x1c35" },
+  { version = "137", rva = 0x420ae4, expect = "test bl, 1" },
+  { version = "137", rva = 0x420ae9, expect = "mov edx, 0x48" },
+  { version = "137", rva = 0x420af1, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x422064, expect = "test bl, 1" },
+  { version = "246", rva = 0x422069, expect = "mov edx, 0x48" },
+  { version = "246", rva = 0x422071, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x41bd00; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x420ab0; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x422030; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BGSCharacterTint::Template::Palette"
+size = 0x60
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x41bded, expect = "test bl, 1" },
+  { version = "982", rva = 0x41bdf2, expect = "mov edx, 0x60" },
+  { version = "982", rva = 0x41bdfa, expect = "call 0x1c35" },
+  { version = "137", rva = 0x420b9d, expect = "test bl, 1" },
+  { version = "137", rva = 0x420ba2, expect = "mov edx, 0x60" },
+  { version = "137", rva = 0x420baa, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x42211d, expect = "test bl, 1" },
+  { version = "246", rva = 0x422122, expect = "mov edx, 0x60" },
+  { version = "246", rva = 0x42212a, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x41bdb0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x420b60; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x4220e0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BGSCharacterTint::Template::TextureSet"
+size = 0x58
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x41beb6, expect = "test bl, 1" },
+  { version = "982", rva = 0x41bebb, expect = "mov edx, 0x58" },
+  { version = "982", rva = 0x41bec3, expect = "call 0x1c35" },
+  { version = "137", rva = 0x420c66, expect = "test bl, 1" },
+  { version = "137", rva = 0x420c6b, expect = "mov edx, 0x58" },
+  { version = "137", rva = 0x420c73, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x4221e6, expect = "test bl, 1" },
+  { version = "246", rva = 0x4221eb, expect = "mov edx, 0x58" },
+  { version = "246", rva = 0x4221f3, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x41be70; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x420c20; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x4221a0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BGSCraftingUseSound"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x3385b3, expect = "test dl, 1" },
+  { version = "982", rva = 0x3385b8, expect = "mov edx, 0x10" },
+  { version = "982", rva = 0x3385bd, expect = "call 0x1c35" },
+  { version = "137", rva = 0x33d173, expect = "test dl, 1" },
+  { version = "137", rva = 0x33d178, expect = "mov edx, 0x10" },
+  { version = "137", rva = 0x33d17d, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x33e6f3, expect = "test dl, 1" },
+  { version = "246", rva = 0x33e6f8, expect = "mov edx, 0x10" },
+  { version = "246", rva = 0x33e6fd, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x3385a0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x33d160; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x33e6e0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::Forms::BGSDefaultObjectManager"
+size = 0x1a78
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0xb5fcbe, expect = "test bl, 1" },
+  { version = "982", rva = 0xb5fcc3, expect = "mov edx, 0x1a78" },
+  { version = "982", rva = 0xb5fccb, expect = "call 0x1c35" },
+  { version = "137", rva = 0xb8a8be, expect = "test bl, 1" },
+  { version = "137", rva = 0xb8a8c3, expect = "mov edx, 0x1a78" },
+  { version = "137", rva = 0xb8a8cb, expect = "call 0x1c4e" },
+  { version = "246", rva = 0xb902ee, expect = "test bl, 1" },
+  { version = "246", rva = 0xb902f3, expect = "mov edx, 0x1a78" },
+  { version = "246", rva = 0xb902fb, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0xb5fca0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0xb8a8a0; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0xb902d0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BGSFeaturedItemMessage"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x338cdb, expect = "test dl, 1" },
+  { version = "982", rva = 0x338ce0, expect = "mov edx, 0x10" },
+  { version = "982", rva = 0x338ce5, expect = "call 0x1c35" },
+  { version = "137", rva = 0x33d89b, expect = "test dl, 1" },
+  { version = "137", rva = 0x33d8a0, expect = "mov edx, 0x10" },
+  { version = "137", rva = 0x33d8a5, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x33ee1b, expect = "test dl, 1" },
+  { version = "246", rva = 0x33ee20, expect = "mov edx, 0x10" },
+  { version = "246", rva = 0x33ee25, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x338cc0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x33d880; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x33ee00; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BGSIdleCollection"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x866f61, expect = "test dil, 1" },
+  { version = "982", rva = 0x866f67, expect = "mov edx, 0x20" },
+  { version = "982", rva = 0x866f6f, expect = "call 0x1c35" },
+  { version = "137", rva = 0x8908f1, expect = "test dil, 1" },
+  { version = "137", rva = 0x8908f7, expect = "mov edx, 0x20" },
+  { version = "137", rva = 0x8908ff, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x895dc1, expect = "test dil, 1" },
+  { version = "246", rva = 0x895dc7, expect = "mov edx, 0x20" },
+  { version = "246", rva = 0x895dcf, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x866ed0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x890860; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x895d30; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BGSInstanceNamingRulesForm"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x33a293, expect = "test dl, 1" },
+  { version = "982", rva = 0x33a298, expect = "mov edx, 0x10" },
+  { version = "982", rva = 0x33a29d, expect = "call 0x1c35" },
+  { version = "137", rva = 0x33ee53, expect = "test dl, 1" },
+  { version = "137", rva = 0x33ee58, expect = "mov edx, 0x10" },
+  { version = "137", rva = 0x33ee5d, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x3403d3, expect = "test dl, 1" },
+  { version = "246", rva = 0x3403d8, expect = "mov edx, 0x10" },
+  { version = "246", rva = 0x3403dd, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x33a280; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x33ee40; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x3403c0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BGSMod::Template::Items"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x34ec95, expect = "test r15b, 1" },
+  { version = "982", rva = 0x34eca8, expect = "mov edx, 0x20" },
+  { version = "982", rva = 0x34ecb0, expect = "call 0x1c35" },
+  { version = "137", rva = 0x353a45, expect = "test r15b, 1" },
+  { version = "137", rva = 0x353a58, expect = "mov edx, 0x20" },
+  { version = "137", rva = 0x353a60, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x354fc5, expect = "test r15b, 1" },
+  { version = "246", rva = 0x354fd8, expect = "mov edx, 0x20" },
+  { version = "246", rva = 0x354fe0, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x34eb70; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x353920; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x354ea0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::Forms::BGSObjectVisibilityManager"
+size = 0x60
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x39721d, expect = "test bpl, 1" },
+  { version = "982", rva = 0x397232, expect = "mov edx, 0x60" },
+  { version = "982", rva = 0x39723a, expect = "call 0x1c35" },
+  { version = "137", rva = 0x39bfcd, expect = "test bpl, 1" },
+  { version = "137", rva = 0x39bfe2, expect = "mov edx, 0x60" },
+  { version = "137", rva = 0x39bfea, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x39d54d, expect = "test bpl, 1" },
+  { version = "246", rva = 0x39d562, expect = "mov edx, 0x60" },
+  { version = "246", rva = 0x39d56a, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x397160; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x39bf10; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x39d490; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BGSOverridePackCollection"
+size = 0x38
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x86d8a3, expect = "test dl, 1" },
+  { version = "982", rva = 0x86d8a8, expect = "mov edx, 0x38" },
+  { version = "982", rva = 0x86d8ad, expect = "call 0x1c35" },
+  { version = "137", rva = 0x897223, expect = "test dl, 1" },
+  { version = "137", rva = 0x897228, expect = "mov edx, 0x38" },
+  { version = "137", rva = 0x89722d, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x89c6f3, expect = "test dl, 1" },
+  { version = "246", rva = 0x89c6f8, expect = "mov edx, 0x38" },
+  { version = "246", rva = 0x89c6fd, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x86d890; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x897210; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x89c6e0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::Forms::BGSPrimitive"
+size = 0xa0
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x8fe3c4, expect = "test bl, 1" },
+  { version = "982", rva = 0x8fe3c9, expect = "mov edx, 0xa0" },
+  { version = "982", rva = 0x8fe3d1, expect = "call 0x1c35" },
+  { version = "137", rva = 0x928ca4, expect = "test bl, 1" },
+  { version = "137", rva = 0x928ca9, expect = "mov edx, 0xa0" },
+  { version = "137", rva = 0x928cb1, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x92e6a4, expect = "test bl, 1" },
+  { version = "246", rva = 0x92e6a9, expect = "mov edx, 0xa0" },
+  { version = "246", rva = 0x92e6b1, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x8fe3b0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x928c90; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x92e690; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::Forms::BGSPrimitivePlane"
+size = 0xa0
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x8fe504, expect = "test bl, 1" },
+  { version = "982", rva = 0x8fe509, expect = "mov edx, 0xa0" },
+  { version = "982", rva = 0x8fe511, expect = "call 0x1c35" },
+  { version = "137", rva = 0x928de4, expect = "test bl, 1" },
+  { version = "137", rva = 0x928de9, expect = "mov edx, 0xa0" },
+  { version = "137", rva = 0x928df1, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x92e7e4, expect = "test bl, 1" },
+  { version = "246", rva = 0x92e7e9, expect = "mov edx, 0xa0" },
+  { version = "246", rva = 0x92e7f1, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x8fe4f0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x928dd0; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x92e7d0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::Forms::BGSPrimitiveBox"
+size = 0xa0
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x8fe414, expect = "test bl, 1" },
+  { version = "982", rva = 0x8fe419, expect = "mov edx, 0xa0" },
+  { version = "982", rva = 0x8fe421, expect = "call 0x1c35" },
+  { version = "137", rva = 0x928cf4, expect = "test bl, 1" },
+  { version = "137", rva = 0x928cf9, expect = "mov edx, 0xa0" },
+  { version = "137", rva = 0x928d01, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x92e6f4, expect = "test bl, 1" },
+  { version = "246", rva = 0x92e6f9, expect = "mov edx, 0xa0" },
+  { version = "246", rva = 0x92e701, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x8fe400; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x928ce0; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x92e6e0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::Forms::BGSPrimitiveLine"
+size = 0xa0
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x8fe4b4, expect = "test bl, 1" },
+  { version = "982", rva = 0x8fe4b9, expect = "mov edx, 0xa0" },
+  { version = "982", rva = 0x8fe4c1, expect = "call 0x1c35" },
+  { version = "137", rva = 0x928d94, expect = "test bl, 1" },
+  { version = "137", rva = 0x928d99, expect = "mov edx, 0xa0" },
+  { version = "137", rva = 0x928da1, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x92e794, expect = "test bl, 1" },
+  { version = "246", rva = 0x92e799, expect = "mov edx, 0xa0" },
+  { version = "246", rva = 0x92e7a1, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x8fe4a0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x928d80; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x92e780; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::Forms::BGSPrimitiveSphere"
+size = 0xa0
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x8fe554, expect = "test bl, 1" },
+  { version = "982", rva = 0x8fe559, expect = "mov edx, 0xa0" },
+  { version = "982", rva = 0x8fe561, expect = "call 0x1c35" },
+  { version = "137", rva = 0x928e34, expect = "test bl, 1" },
+  { version = "137", rva = 0x928e39, expect = "mov edx, 0xa0" },
+  { version = "137", rva = 0x928e41, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x92e834, expect = "test bl, 1" },
+  { version = "246", rva = 0x92e839, expect = "mov edx, 0xa0" },
+  { version = "246", rva = 0x92e841, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x8fe540; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x928e20; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x92e820; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::Forms::BGSPrimitiveEllipsoid"
+size = 0xa0
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x8fe464, expect = "test bl, 1" },
+  { version = "982", rva = 0x8fe469, expect = "mov edx, 0xa0" },
+  { version = "982", rva = 0x8fe471, expect = "call 0x1c35" },
+  { version = "137", rva = 0x928d44, expect = "test bl, 1" },
+  { version = "137", rva = 0x928d49, expect = "mov edx, 0xa0" },
+  { version = "137", rva = 0x928d51, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x92e744, expect = "test bl, 1" },
+  { version = "246", rva = 0x92e749, expect = "mov edx, 0xa0" },
+  { version = "246", rva = 0x92e751, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x8fe450; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x928d30; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x92e730; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BGSSoundTagComponent"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x36b11b, expect = "test bpl, 1" },
+  { version = "982", rva = 0x36b129, expect = "mov edx, 8" },
+  { version = "982", rva = 0x36b131, expect = "call 0x1c35" },
+  { version = "137", rva = 0x36fecb, expect = "test bpl, 1" },
+  { version = "137", rva = 0x36fed9, expect = "mov edx, 8" },
+  { version = "137", rva = 0x36fee1, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x37144b, expect = "test bpl, 1" },
+  { version = "246", rva = 0x371459, expect = "mov edx, 8" },
+  { version = "246", rva = 0x371461, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x36aff0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x36fda0; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x371320; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BGSTextureModel"
+size = 0x38
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0xad7a64, expect = "test bl, 1" },
+  { version = "982", rva = 0xad7a69, expect = "mov edx, 0x38" },
+  { version = "982", rva = 0xad7a71, expect = "call 0x1c35" },
+  { version = "137", rva = 0xb025d4, expect = "test bl, 1" },
+  { version = "137", rva = 0xb025d9, expect = "mov edx, 0x38" },
+  { version = "137", rva = 0xb025e1, expect = "call 0x1c4e" },
+  { version = "246", rva = 0xb07fd4, expect = "test bl, 1" },
+  { version = "246", rva = 0xb07fd9, expect = "mov edx, 0x38" },
+  { version = "246", rva = 0xb07fe1, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0xad7a50; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0xb025c0; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0xb07fc0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTextureSet"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0xba018a, expect = "test dl, 1" },
+  { version = "982", rva = 0xba018f, expect = "mov edx, 0x10" },
+  { version = "982", rva = 0xba0194, expect = "call 0x1c35" },
+  { version = "137", rva = 0xbcad8a, expect = "test dl, 1" },
+  { version = "137", rva = 0xbcad8f, expect = "mov edx, 0x10" },
+  { version = "137", rva = 0xbcad94, expect = "call 0x1c4e" },
+  { version = "246", rva = 0xbd07ba, expect = "test dl, 1" },
+  { version = "246", rva = 0xbd07bf, expect = "mov edx, 0x10" },
+  { version = "246", rva = 0xbd07c4, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0xba0170; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0xbcad70; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0xbd07a0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::IKeywordFormBase"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x868633, expect = "test dl, 1" },
+  { version = "982", rva = 0x868638, expect = "mov edx, 8" },
+  { version = "982", rva = 0x86863d, expect = "call 0x1c35" },
+  { version = "137", rva = 0x891fb3, expect = "test dl, 1" },
+  { version = "137", rva = 0x891fb8, expect = "mov edx, 8" },
+  { version = "137", rva = 0x891fbd, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x897483, expect = "test dl, 1" },
+  { version = "246", rva = 0x897488, expect = "mov edx, 8" },
+  { version = "246", rva = 0x89748d, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x868620; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x891fa0; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x897470; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSIAudioEffectChain"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x42d904, expect = "test bl, 1" },
+  { version = "982", rva = 0x42d909, expect = "mov edx, 8" },
+  { version = "982", rva = 0x42d911, expect = "call 0x1c35" },
+  { version = "137", rva = 0x4326b4, expect = "test bl, 1" },
+  { version = "137", rva = 0x4326b9, expect = "mov edx, 8" },
+  { version = "137", rva = 0x4326c1, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x433c34, expect = "test bl, 1" },
+  { version = "246", rva = 0x433c39, expect = "mov edx, 8" },
+  { version = "246", rva = 0x433c41, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x42d8f0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x4326a0; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x433c20; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSIMusicTrack"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0xb85d13, expect = "test dl, 1" },
+  { version = "982", rva = 0xb85d18, expect = "mov edx, 0x10" },
+  { version = "982", rva = 0xb85d1d, expect = "call 0x1c35" },
+  { version = "137", rva = 0xbb0913, expect = "test dl, 1" },
+  { version = "137", rva = 0xbb0918, expect = "mov edx, 0x10" },
+  { version = "137", rva = 0xbb091d, expect = "call 0x1c4e" },
+  { version = "246", rva = 0xbb6343, expect = "test dl, 1" },
+  { version = "246", rva = 0xbb6348, expect = "mov edx, 0x10" },
+  { version = "246", rva = 0xbb634d, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0xb85d00; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0xbb0900; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0xbb6330; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSIMusicType"
+size = 0x50
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0xb89b5b, expect = "test bl, 1" },
+  { version = "982", rva = 0xb89b60, expect = "mov edx, 0x50" },
+  { version = "982", rva = 0xb89b68, expect = "call 0x1c35" },
+  { version = "137", rva = 0xbb475b, expect = "test bl, 1" },
+  { version = "137", rva = 0xbb4760, expect = "mov edx, 0x50" },
+  { version = "137", rva = 0xbb4768, expect = "call 0x1c4e" },
+  { version = "246", rva = 0xbba18b, expect = "test bl, 1" },
+  { version = "246", rva = 0xbba190, expect = "mov edx, 0x50" },
+  { version = "246", rva = 0xbba198, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x7 -> 0xb89b30; delete body 0x467140; 137: RTTI primary slot 0x7 -> 0xbb4730; delete body 0x46bd50; 246: RTTI primary slot 0x7 -> 0xbba160; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSISoundCategory"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0xb8f173, expect = "test dl, 1" },
+  { version = "982", rva = 0xb8f178, expect = "mov edx, 8" },
+  { version = "982", rva = 0xb8f17d, expect = "call 0x1c35" },
+  { version = "137", rva = 0xbb9d73, expect = "test dl, 1" },
+  { version = "137", rva = 0xbb9d78, expect = "mov edx, 8" },
+  { version = "137", rva = 0xbb9d7d, expect = "call 0x1c4e" },
+  { version = "246", rva = 0xbbf7a3, expect = "test dl, 1" },
+  { version = "246", rva = 0xbbf7a8, expect = "mov edx, 8" },
+  { version = "246", rva = 0xbbf7ad, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0xb8f160; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0xbb9d60; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0xbbf790; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSISoundDescriptor"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x42f353, expect = "test dl, 1" },
+  { version = "982", rva = 0x42f358, expect = "mov edx, 8" },
+  { version = "982", rva = 0x42f35d, expect = "call 0x1c35" },
+  { version = "137", rva = 0x434103, expect = "test dl, 1" },
+  { version = "137", rva = 0x434108, expect = "mov edx, 8" },
+  { version = "137", rva = 0x43410d, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x435683, expect = "test dl, 1" },
+  { version = "246", rva = 0x435688, expect = "mov edx, 8" },
+  { version = "246", rva = 0x43568d, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x42f340; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x4340f0; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x435670; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSISoundOutputModel"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0xb96fe4, expect = "test bl, 1" },
+  { version = "982", rva = 0xb96fe9, expect = "mov edx, 8" },
+  { version = "982", rva = 0xb96ff1, expect = "call 0x1c35" },
+  { version = "137", rva = 0xbc1be4, expect = "test bl, 1" },
+  { version = "137", rva = 0xbc1be9, expect = "mov edx, 8" },
+  { version = "137", rva = 0xbc1bf1, expect = "call 0x1c4e" },
+  { version = "246", rva = 0xbc7614, expect = "test bl, 1" },
+  { version = "246", rva = 0xbc7619, expect = "mov edx, 8" },
+  { version = "246", rva = 0xbc7621, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0xb96fd0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0xbc1bd0; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0xbc7600; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSMaterialObject"
+size = 0x50
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0xb716b4, expect = "test bl, 1" },
+  { version = "982", rva = 0xb716b9, expect = "mov edx, 0x50" },
+  { version = "982", rva = 0xb716c1, expect = "call 0x1c35" },
+  { version = "137", rva = 0xb9c2b4, expect = "test bl, 1" },
+  { version = "137", rva = 0xb9c2b9, expect = "mov edx, 0x50" },
+  { version = "137", rva = 0xb9c2c1, expect = "call 0x1c4e" },
+  { version = "246", rva = 0xba1ce4, expect = "test bl, 1" },
+  { version = "246", rva = 0xba1ce9, expect = "mov edx, 0x50" },
+  { version = "246", rva = 0xba1cf1, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0xb716a0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0xb9c2a0; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0xba1cd0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSNavmesh"
+size = 0x228
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x26abe94, expect = "test bl, 1" },
+  { version = "982", rva = 0x26abe99, expect = "mov edx, 0x228" },
+  { version = "982", rva = 0x26abea1, expect = "call 0x1c35" },
+  { version = "137", rva = 0x26d93f4, expect = "test bl, 1" },
+  { version = "137", rva = 0x26d93f9, expect = "mov edx, 0x228" },
+  { version = "137", rva = 0x26d9401, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x26df084, expect = "test bl, 1" },
+  { version = "246", rva = 0x26df089, expect = "mov edx, 0x228" },
+  { version = "246", rva = 0x26df091, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x26abe80; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x26d93e0; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x26df070; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSNavmeshInfoMap"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x2710c01, expect = "test dil, 1" },
+  { version = "982", rva = 0x2710c07, expect = "mov edx, 8" },
+  { version = "982", rva = 0x2710c0f, expect = "call 0x1c35" },
+  { version = "137", rva = 0x273e161, expect = "test dil, 1" },
+  { version = "137", rva = 0x273e167, expect = "mov edx, 8" },
+  { version = "137", rva = 0x273e16f, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x2743df1, expect = "test dil, 1" },
+  { version = "246", rva = 0x2743df7, expect = "mov edx, 8" },
+  { version = "246", rva = 0x2743dff, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x2710bb0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x273e110; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x2743da0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::Forms::NavMeshObstacleCoverManager"
+size = 0x60
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x40a004, expect = "test r15b, 1" },
+  { version = "982", rva = 0x40a01e, expect = "mov edx, 0x60" },
+  { version = "982", rva = 0x40a026, expect = "call 0x1c35" },
+  { version = "137", rva = 0x40edb4, expect = "test r15b, 1" },
+  { version = "137", rva = 0x40edce, expect = "mov edx, 0x60" },
+  { version = "137", rva = 0x40edd6, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x410334, expect = "test r15b, 1" },
+  { version = "246", rva = 0x41034e, expect = "mov edx, 0x60" },
+  { version = "246", rva = 0x410356, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x409f70; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x40ed20; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x4102a0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::NiAPI::NiInterpolator"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x255dc2a, expect = "test dl, 1" },
+  { version = "982", rva = 0x255dc2f, expect = "mov edx, 0x18" },
+  { version = "982", rva = 0x255dc34, expect = "call 0x1c35" },
+  { version = "137", rva = 0x258b06a, expect = "test dl, 1" },
+  { version = "137", rva = 0x258b06f, expect = "mov edx, 0x18" },
+  { version = "137", rva = 0x258b074, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x25908fa, expect = "test dl, 1" },
+  { version = "246", rva = 0x25908ff, expect = "mov edx, 0x18" },
+  { version = "246", rva = 0x2590904, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x255dc10; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x258b050; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x25908e0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::NiAPI::NiObject"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x2461d4a, expect = "test dl, 1" },
+  { version = "982", rva = 0x2461d4f, expect = "mov edx, 0x10" },
+  { version = "982", rva = 0x2461d54, expect = "call 0x1c35" },
+  { version = "137", rva = 0x248f19a, expect = "test dl, 1" },
+  { version = "137", rva = 0x248f19f, expect = "mov edx, 0x10" },
+  { version = "137", rva = 0x248f1a4, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x2494a2a, expect = "test dl, 1" },
+  { version = "246", rva = 0x2494a2f, expect = "mov edx, 0x10" },
+  { version = "246", rva = 0x2494a34, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x2461d30; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x248f180; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x2494a10; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::NiAPI::NiExtraData"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x2463e73, expect = "test bl, 1" },
+  { version = "982", rva = 0x2463e78, expect = "mov edx, 0x18" },
+  { version = "982", rva = 0x2463e80, expect = "call 0x1c35" },
+  { version = "137", rva = 0x24912c3, expect = "test bl, 1" },
+  { version = "137", rva = 0x24912c8, expect = "mov edx, 0x18" },
+  { version = "137", rva = 0x24912d0, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x2496b53, expect = "test bl, 1" },
+  { version = "246", rva = 0x2496b58, expect = "mov edx, 0x18" },
+  { version = "246", rva = 0x2496b60, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x2463e40; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x2491290; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x2496b20; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::NiAPI::NiObjectNET"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x2465683, expect = "test dil, 1" },
+  { version = "982", rva = 0x2465689, expect = "mov edx, 0x28" },
+  { version = "982", rva = 0x2465691, expect = "call 0x1c35" },
+  { version = "137", rva = 0x2492ad3, expect = "test dil, 1" },
+  { version = "137", rva = 0x2492ad9, expect = "mov edx, 0x28" },
+  { version = "137", rva = 0x2492ae1, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x2498363, expect = "test dil, 1" },
+  { version = "246", rva = 0x2498369, expect = "mov edx, 0x28" },
+  { version = "246", rva = 0x2498371, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x2465620; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x2492a70; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x2498300; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::NiAPI::NiProperty"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x5324d4, expect = "test bl, 1" },
+  { version = "982", rva = 0x5324d9, expect = "mov edx, 0x28" },
+  { version = "982", rva = 0x5324e1, expect = "call 0x1c35" },
+  { version = "137", rva = 0x54b554, expect = "test bl, 1" },
+  { version = "137", rva = 0x54b559, expect = "mov edx, 0x28" },
+  { version = "137", rva = 0x54b561, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x54da24, expect = "test bl, 1" },
+  { version = "246", rva = 0x54da29, expect = "mov edx, 0x28" },
+  { version = "246", rva = 0x54da31, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x5324c0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x54b540; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x54da10; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::NiAPI::NiShadeProperty"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x249bff4, expect = "test bl, 1" },
+  { version = "982", rva = 0x249bff9, expect = "mov edx, 0x28" },
+  { version = "982", rva = 0x249c001, expect = "call 0x1c35" },
+  { version = "137", rva = 0x24c9444, expect = "test bl, 1" },
+  { version = "137", rva = 0x24c9449, expect = "mov edx, 0x28" },
+  { version = "137", rva = 0x24c9451, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x24cecd4, expect = "test bl, 1" },
+  { version = "246", rva = 0x24cecd9, expect = "mov edx, 0x28" },
+  { version = "246", rva = 0x24cece1, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x249bfe0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x24c9430; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x24cecc0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::NiAPI::NiBinaryStream"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x23f5c43, expect = "test dl, 1" },
+  { version = "982", rva = 0x23f5c48, expect = "mov edx, 0x10" },
+  { version = "982", rva = 0x23f5c4d, expect = "call 0x1c35" },
+  { version = "137", rva = 0x2422543, expect = "test dl, 1" },
+  { version = "137", rva = 0x2422548, expect = "mov edx, 0x10" },
+  { version = "137", rva = 0x242254d, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x2427963, expect = "test dl, 1" },
+  { version = "246", rva = 0x2427968, expect = "mov edx, 0x10" },
+  { version = "246", rva = 0x242796d, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x23f5c30; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x2422530; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x2427950; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::Forms::TESActorBase"
+size = 0x248
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0xa7fe04, expect = "test bl, 1" },
+  { version = "982", rva = 0xa7fe09, expect = "mov edx, 0x248" },
+  { version = "982", rva = 0xa7fe11, expect = "call 0x1c35" },
+  { version = "137", rva = 0xaaa984, expect = "test bl, 1" },
+  { version = "137", rva = 0xaaa989, expect = "mov edx, 0x248" },
+  { version = "137", rva = 0xaaa991, expect = "call 0x1c4e" },
+  { version = "246", rva = 0xab0384, expect = "test bl, 1" },
+  { version = "246", rva = 0xab0389, expect = "mov edx, 0x248" },
+  { version = "246", rva = 0xab0391, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0xa7fdf0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0xaaa970; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0xab0370; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::TESAttackDamageForm"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x882203, expect = "test dl, 1" },
+  { version = "982", rva = 0x882208, expect = "mov edx, 0x10" },
+  { version = "982", rva = 0x88220d, expect = "call 0x1c35" },
+  { version = "137", rva = 0x8abb83, expect = "test dl, 1" },
+  { version = "137", rva = 0x8abb88, expect = "mov edx, 0x10" },
+  { version = "137", rva = 0x8abb8d, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x8b1053, expect = "test dl, 1" },
+  { version = "246", rva = 0x8b1058, expect = "mov edx, 0x10" },
+  { version = "246", rva = 0x8b105d, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x8821f0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x8abb70; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x8b1040; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::TESBipedModelForm"
+size = 0x190
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x88448e, expect = "test r15b, 1" },
+  { version = "982", rva = 0x884494, expect = "mov edx, 0x190" },
+  { version = "982", rva = 0x88449c, expect = "call 0x1c35" },
+  { version = "137", rva = 0x8ade0e, expect = "test r15b, 1" },
+  { version = "137", rva = 0x8ade14, expect = "mov edx, 0x190" },
+  { version = "137", rva = 0x8ade1c, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x8b32de, expect = "test r15b, 1" },
+  { version = "246", rva = 0x8b32e4, expect = "mov edx, 0x190" },
+  { version = "246", rva = 0x8b32ec, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x8843c0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x8add40; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x8b3210; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::TESHealthForm"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x8ae1a3, expect = "test dl, 1" },
+  { version = "982", rva = 0x8ae1a8, expect = "mov edx, 0x10" },
+  { version = "982", rva = 0x8ae1ad, expect = "call 0x1c35" },
+  { version = "137", rva = 0x8d7c23, expect = "test dl, 1" },
+  { version = "137", rva = 0x8d7c28, expect = "mov edx, 0x10" },
+  { version = "137", rva = 0x8d7c2d, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x8dd213, expect = "test dl, 1" },
+  { version = "246", rva = 0x8dd218, expect = "mov edx, 0x10" },
+  { version = "246", rva = 0x8dd21d, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x8ae190; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x8d7c10; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x8dd200; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::TESLeveledList"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x8b3a2c, expect = "test dil, 1" },
+  { version = "982", rva = 0x8b3a32, expect = "mov edx, 0x28" },
+  { version = "982", rva = 0x8b3a3a, expect = "call 0x1c35" },
+  { version = "137", rva = 0x8dd4ac, expect = "test dil, 1" },
+  { version = "137", rva = 0x8dd4b2, expect = "mov edx, 0x28" },
+  { version = "137", rva = 0x8dd4ba, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x8e2a9c, expect = "test dil, 1" },
+  { version = "246", rva = 0x8e2aa2, expect = "mov edx, 0x28" },
+  { version = "246", rva = 0x8e2aaa, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x8b39a0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x8dd420; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x8e2a10; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::TESModelRDT"
+size = 0x38
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x884514, expect = "test bl, 1" },
+  { version = "982", rva = 0x884519, expect = "mov edx, 0x38" },
+  { version = "982", rva = 0x884521, expect = "call 0x1c35" },
+  { version = "137", rva = 0x8ade94, expect = "test bl, 1" },
+  { version = "137", rva = 0x8ade99, expect = "mov edx, 0x38" },
+  { version = "137", rva = 0x8adea1, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x8b3364, expect = "test bl, 1" },
+  { version = "246", rva = 0x8b3369, expect = "mov edx, 0x38" },
+  { version = "246", rva = 0x8b3371, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x884500; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x8ade80; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x8b3350; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::TESModelTri"
+size = 0x38
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x985a64, expect = "test bl, 1" },
+  { version = "982", rva = 0x985a69, expect = "mov edx, 0x38" },
+  { version = "982", rva = 0x985a71, expect = "call 0x1c35" },
+  { version = "137", rva = 0x9b0484, expect = "test bl, 1" },
+  { version = "137", rva = 0x9b0489, expect = "mov edx, 0x38" },
+  { version = "137", rva = 0x9b0491, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x9b5e84, expect = "test bl, 1" },
+  { version = "246", rva = 0x9b5e89, expect = "mov edx, 0x38" },
+  { version = "246", rva = 0x9b5e91, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x985a50; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x9b0470; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x9b5e70; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::TESProduceForm"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x8c4893, expect = "test dl, 1" },
+  { version = "982", rva = 0x8c4898, expect = "mov edx, 0x20" },
+  { version = "982", rva = 0x8c489d, expect = "call 0x1c35" },
+  { version = "137", rva = 0x8ee313, expect = "test dl, 1" },
+  { version = "137", rva = 0x8ee318, expect = "mov edx, 0x20" },
+  { version = "137", rva = 0x8ee31d, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x8f3903, expect = "test dl, 1" },
+  { version = "246", rva = 0x8f3908, expect = "mov edx, 0x20" },
+  { version = "246", rva = 0x8f390d, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x8c4880; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x8ee300; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x8f38f0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::TESReactionForm"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x8c9701, expect = "test bl, 1" },
+  { version = "982", rva = 0x8c9706, expect = "mov edx, 0x20" },
+  { version = "982", rva = 0x8c970e, expect = "call 0x1c35" },
+  { version = "137", rva = 0x8f3181, expect = "test bl, 1" },
+  { version = "137", rva = 0x8f3186, expect = "mov edx, 0x20" },
+  { version = "137", rva = 0x8f318e, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x8f8771, expect = "test bl, 1" },
+  { version = "246", rva = 0x8f8776, expect = "mov edx, 0x20" },
+  { version = "246", rva = 0x8f877e, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x8c96d0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x8f3150; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x8f8740; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::TESRegionDataManager"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x84c1d3, expect = "test dl, 1" },
+  { version = "982", rva = 0x84c1d8, expect = "mov edx, 0x10" },
+  { version = "982", rva = 0x84c1dd, expect = "call 0x1c35" },
+  { version = "137", rva = 0x875773, expect = "test dl, 1" },
+  { version = "137", rva = 0x875778, expect = "mov edx, 0x10" },
+  { version = "137", rva = 0x87577d, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x87ac43, expect = "test dl, 1" },
+  { version = "246", rva = 0x87ac48, expect = "mov edx, 0x10" },
+  { version = "246", rva = 0x87ac4d, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x84c1c0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x875760; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x87ac30; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::TESRegionDataManagerEditor"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x84c213, expect = "test dl, 1" },
+  { version = "982", rva = 0x84c218, expect = "mov edx, 0x10" },
+  { version = "982", rva = 0x84c21d, expect = "call 0x1c35" },
+  { version = "137", rva = 0x8757b3, expect = "test dl, 1" },
+  { version = "137", rva = 0x8757b8, expect = "mov edx, 0x10" },
+  { version = "137", rva = 0x8757bd, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x87ac83, expect = "test dl, 1" },
+  { version = "246", rva = 0x87ac88, expect = "mov edx, 0x10" },
+  { version = "246", rva = 0x87ac8d, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x84c200; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x8757a0; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x87ac70; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::TESTexture1024"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0xe0bfe4, expect = "test bl, 1" },
+  { version = "982", rva = 0xe0bfe9, expect = "mov edx, 0x28" },
+  { version = "982", rva = 0xe0bff1, expect = "call 0x1c35" },
+  { version = "137", rva = 0xe36d04, expect = "test bl, 1" },
+  { version = "137", rva = 0xe36d09, expect = "mov edx, 0x28" },
+  { version = "137", rva = 0xe36d11, expect = "call 0x1c4e" },
+  { version = "246", rva = 0xe3c754, expect = "test bl, 1" },
+  { version = "246", rva = 0xe3c759, expect = "mov edx, 0x28" },
+  { version = "246", rva = 0xe3c761, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0xe0bfd0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0xe36cf0; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0xe3c740; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::NiAPI::NiTimeController"
+size = 0x48
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  { version = "982", rva = 0x2472333, expect = "test dil, 1" },
+  { version = "982", rva = 0x2472339, expect = "mov edx, 0x48" },
+  { version = "982", rva = 0x2472341, expect = "call 0x1c35" },
+  { version = "137", rva = 0x249f783, expect = "test dil, 1" },
+  { version = "137", rva = 0x249f789, expect = "mov edx, 0x48" },
+  { version = "137", rva = 0x249f791, expect = "call 0x1c4e" },
+  { version = "246", rva = 0x24a5013, expect = "test dil, 1" },
+  { version = "246", rva = 0x24a5019, expect = "mov edx, 0x48" },
+  { version = "246", rva = 0x24a5021, expect = "call 0x1c49" },
+]
+note = "Native scalar deleting destructor tests its incoming deletion flag and forwards the original object pointer plus native sizeof in EDX to sized delete. 982: RTTI primary slot 0x0 -> 0x24722e0; delete body 0x467140; 137: RTTI primary slot 0x0 -> 0x249f730; delete body 0x46bd50; 246: RTTI primary slot 0x0 -> 0x24a4fc0; delete body 0x46d2d0. Build 162 uses unsized deletion."
+
+[[evidence]]
+class = "NiAVObject"
+size = 0x120
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x24be9f6, expect = "mov qword ptr [rbx + 0x118], 0x3f800000" },
+]
+note = "NiAVObject constructor writes its final fade/LOD state through byte 0x11F."
+
+[[evidence]]
+class = "NiAVObject"
+size = 0x120
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2498c1f, expect = "lea rbx, [rdi + 0x120]" },
+  { version = "246", rva = 0x2498c32, expect = "mov qword ptr [rbx], rax" },
+]
+note = "NiNode constructs the separately polymorphic child array at 0x120, immediately after its primary NiAVObject base; lower bound fills the span."
+
+[[evidence]]
+class = "BSGeometry"
+size = 0x15e
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x24a5641, expect = "mov word ptr [rbx + 0x15c], bp" },
+]
+note = "BSGeometry constructor initializes the type and following state byte; native pointer members require eight-byte object alignment."
+
+[[evidence]]
+class = "BSGeometry"
+size = 0x160
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x24b3e1a, expect = "mov dword ptr [rbx + 0x160], eax" },
+]
+note = "BSTriShape's triangle count begins at 0x160 after BSGeometry; aligning the 0x15E lower bound to eight bytes closes the size interval."
+
+[[evidence]]
+class = "BSFadeNode::FlattenedGeometryData"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2c541da, expect = "add rdi, 0x20" },
+  { version = "246", rva = 0x2c541de, expect = "cmp rdi, r14" },
+  { version = "246", rva = 0x2c541e1, expect = "jne 0x2c54165" },
+]
+note = "BSFadeNode GeomArray viewer traverses each complete flattened geometry element, including its padding, with a 0x20-byte array stride."
+
+
+# Additional native member bounds
+
+[[evidence]]
+class = "FACTION_RANK"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x8a4cdb, expect = "shl rbx, 4" },
+  { version = "246", rva = 0x8a4d21, expect = "shl r15, 4" },
+  { version = "246", rva = 0x8a4d52, expect = "add rbx, 0x10" },
+  { version = "246", rva = 0x8a4d56, expect = "cmp rbx, r15" },
+  { version = "246", rva = 0x8a4d59, expect = "jne 0x8a4d30" },
+  { version = "246", rva = 0x8a4d5d, expect = "movzx r13d, byte ptr [rbx + 8]" },
+]
+note = "TESActorBaseData::CompareComponent traverses its faction array at +0x50 using count at +0x60. Both end-pointer calculations multiply by 16; the inner search advances complete faction-pointer/rank elements by 16, including element padding. This is an exact array stride, not a payload size."
+
+[[evidence]]
+class = "AIDATA_GAME"
+size = 0x15
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x8aed70, expect = "mov r8, rdx" },
+  { version = "246", rva = 0x8aed73, expect = "mov r9, rcx" },
+  { version = "246", rva = 0x8aedaf, expect = "cmp byte ptr [rdx + 0x14], 0" },
+  { version = "246", rva = 0x8aedb6, expect = "mov byte ptr [rcx + 0x1c], al" },
+  { version = "246", rva = 0x8aedce, expect = "mov dword ptr [r9 + 0x10], eax" },
+  { version = "246", rva = 0x8aeddf, expect = "mov dword ptr [r9 + 0x14], eax" },
+  { version = "246", rva = 0x8aedf2, expect = "mov dword ptr [r9 + 0x18], eax" },
+]
+note = "TESAIForm's typed AI-data conversion takes its destination component in RCX and the unpacked AI data in RDX. AI data begins at component +8. It copies the noSlowApproach byte from source +0x14 to component +0x1C, and writes the three dword radii at component +0x10/+0x14/+0x18. The final byte therefore establishes data extent 0x15; dword alignment rounds to 0x18."
+
+[[evidence]]
+class = "AIDATA_GAME"
+size = 0x18
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x8ae843, expect = "add rcx, 0x20" },
+  { version = "246", rva = 0x8ae847, expect = "call 0x875c9" },
+  { version = "246", rva = 0x8ae84e, expect = "mov dword ptr [rbx + 8], 0x3000400" },
+  { version = "246", rva = 0x8ae855, expect = "mov word ptr [rbx + 0xc], 0" },
+  { version = "246", rva = 0x8ae85b, expect = "mov byte ptr [rbx + 0xe], 0" },
+  { version = "246", rva = 0x8ae85f, expect = "mov qword ptr [rbx + 0x10], rax" },
+  { version = "246", rva = 0x8ae863, expect = "mov dword ptr [rbx + 0x18], eax" },
+]
+note = "TESAIForm constructor separately constructs its package-list member at +0x20 and initializes the preceding AI-data block starting +8. Distinct non-overlapping members bound the AI data by 0x20-8=0x18; the aligned lower bound fills this span, excluding unaccounted tail padding."
+
+[[evidence]]
+class = "BSShaderPropertyLightData"
+size = 0x24
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2c5423d, expect = "lea rax, [rdi + 0x140]" },
+  { version = "246", rva = 0x2c54255, expect = "lea rbx, [rax + 0x10]" },
+  { version = "246", rva = 0x2c54261, expect = "call 0x3f2a1" },
+  { version = "246", rva = 0x2c54267, expect = "lea rcx, [rbx + 0x10]" },
+  { version = "246", rva = 0x2c5426b, expect = "call 0x3d9dd" },
+  { version = "246", rva = 0x2d12dd0, expect = "mov eax, dword ptr [rcx + 0x20]" },
+]
+note = "BSFadeNode constructs the lighting-data member at +0x140 and its pointer array at member +0x10. The lighting-data count getter reads a dword at +0x20. This proves extent 0x24; the native pointer-array alignment is eight."
+
+[[evidence]]
+class = "BSShaderPropertyLightData"
+size = 0x28
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2c5423d, expect = "lea rax, [rdi + 0x140]" },
+  { version = "246", rva = 0x2c54271, expect = "lea rbx, [rdi + 0x168]" },
+  { version = "246", rva = 0x2c54280, expect = "call 0x3f2a1" },
+  { version = "246", rva = 0x2c54286, expect = "lea rcx, [rbx + 0x10]" },
+  { version = "246", rva = 0x2c5428a, expect = "call 0x3d9dd" },
+]
+note = "BSFadeNode separately constructs its flattened-geometry array at +0x168 after the lighting-data member at +0x140. The independently constructed array bounds the lighting member by 0x28. Its aligned lower extent is also 0x28, so neither member overlap nor unidentified tail bytes are assumed."
+
+[[evidence]]
+class = "BGSAimModelData"
+size = 0x40
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x446966, expect = "lea rdx, [rdi + 0x28]" },
+  { version = "246", rva = 0x44696a, expect = "mov r8d, 0x40" },
+  { version = "246", rva = 0x446973, expect = "call 0x33262" },
+]
+note = "BGSAimModel reads 0x40 initialized bytes directly into its typed BGSAimModelData member at +0x28; this establishes a lower extent only."
+
+[[evidence]]
+class = "BGSAimModelData"
+size = 0x40
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x4462ef, expect = "lea edx, [r9 + 0x68]" },
+  { version = "246", rva = 0x4462f3, expect = "call 0x4978d" },
+  { version = "246", rva = 0x44696a, expect = "mov r8d, 0x40" },
+]
+note = "BGSAimModel's RTTI ConcreteFormFactory::Create at 0x4462c0 allocates the complete native object with size 0x68. Its BGSAimModelData member begins at +0x28, bounding the member by 0x68-0x28=0x40. The matching loader lower extent fills this complete remaining allocation span, ruling out tail padding."
+
+[[evidence]]
+class = "ATTRACTION_RULE_DATA"
+size = 0x10
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x41a7f8, expect = "lea rdx, [rdi + 0x28]" },
+  { version = "246", rva = 0x41a7fc, expect = "mov r8d, 0x10" },
+  { version = "246", rva = 0x41a805, expect = "call 0x33262" },
+]
+note = "BGSAttractionRule reads 0x10 initialized bytes directly into its typed ATTRACTION_RULE_DATA member at +0x28; this establishes a lower extent only."
+
+[[evidence]]
+class = "ATTRACTION_RULE_DATA"
+size = 0x10
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x41a3cf, expect = "lea edx, [r9 + 0x38]" },
+  { version = "246", rva = 0x41a3d3, expect = "call 0x4978d" },
+  { version = "246", rva = 0x41a7fc, expect = "mov r8d, 0x10" },
+]
+note = "BGSAttractionRule's RTTI ConcreteFormFactory::Create at 0x41a3a0 allocates the complete native object with size 0x38. Its ATTRACTION_RULE_DATA member begins at +0x28, bounding the member by 0x38-0x28=0x10. The matching loader lower extent fills this complete remaining allocation span, ruling out tail padding."
+
+[[evidence]]
+class = "CLASS_DATA"
+size = 0x8
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xa6f69c, expect = "mov r8d, 8" },
+  { version = "246", rva = 0xa6f6a2, expect = "lea rdx, [rdi + 0xa0]" },
+  { version = "246", rva = 0xa6f6a9, expect = "call 0x33262" },
+]
+note = "TESClass reads 0x8 initialized bytes directly into its typed CLASS_DATA member at +0xa0; this establishes a lower extent only."
+
+[[evidence]]
+class = "CLASS_DATA"
+size = 0x8
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xa6efdf, expect = "mov edx, 0xa8" },
+  { version = "246", rva = 0xa6efe4, expect = "call 0x4978d" },
+  { version = "246", rva = 0xa6f6a2, expect = "lea rdx, [rdi + 0xa0]" },
+]
+note = "TESClass's RTTI ConcreteFormFactory::Create at 0xa6efb0 allocates the complete native object with size 0xa8. Its CLASS_DATA member begins at +0xa0, bounding the member by 0xa8-0xa0=0x8. The matching loader lower extent fills this complete remaining allocation span, ruling out tail padding."
+
+[[evidence]]
+class = "CombatStyleGeneralData"
+size = 0x30
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xc3397e, expect = "lea rdx, [rdi + 0x28]" },
+  { version = "246", rva = 0xc33982, expect = "mov r8d, 0x30" },
+  { version = "246", rva = 0xc33988, expect = "jmp 0xc33b26" },
+  { version = "246", rva = 0xc33b26, expect = "mov rcx, rsi" },
+  { version = "246", rva = 0xc33b29, expect = "call 0x33262" },
+]
+note = "TESCombatStyle loader reads 0x30 bytes directly into the typed CombatStyleGeneralData member at +0x28. This payload is a lower extent, not by itself a complete-object size."
+
+[[evidence]]
+class = "CombatStyleGeneralData"
+size = 0x30
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xc3397e, expect = "lea rdx, [rdi + 0x28]" },
+  { version = "246", rva = 0xc33a71, expect = "lea rdx, [rdi + 0x58]" },
+  { version = "246", rva = 0xc33a75, expect = "mov r8d, 0x28" },
+  { version = "246", rva = 0xc33a7b, expect = "jmp 0xc33b26" },
+  { version = "246", rva = 0xc33b26, expect = "mov rcx, rsi" },
+  { version = "246", rva = 0xc33b29, expect = "call 0x33262" },
+]
+note = "TESCombatStyle's next distinct record member starts at +0x58, independently addressed and read in its own loader branch. The CombatStyleGeneralData member at +0x28 cannot extend beyond this boundary. The resulting upper size 0x30 matches its initialized lower extent exactly; these non-base members cannot reuse one another's tail padding."
+
+[[evidence]]
+class = "CombatStyleMeleeData"
+size = 0x28
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xc33a71, expect = "lea rdx, [rdi + 0x58]" },
+  { version = "246", rva = 0xc33a75, expect = "mov r8d, 0x28" },
+  { version = "246", rva = 0xc33a7b, expect = "jmp 0xc33b26" },
+  { version = "246", rva = 0xc33b26, expect = "mov rcx, rsi" },
+  { version = "246", rva = 0xc33b29, expect = "call 0x33262" },
+]
+note = "TESCombatStyle loader reads 0x28 bytes directly into the typed CombatStyleMeleeData member at +0x58. This payload is a lower extent, not by itself a complete-object size."
+
+[[evidence]]
+class = "CombatStyleMeleeData"
+size = 0x28
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xc33a71, expect = "lea rdx, [rdi + 0x58]" },
+  { version = "246", rva = 0xc339af, expect = "lea rdx, [rdi + 0x80]" },
+  { version = "246", rva = 0xc339b6, expect = "mov r8d, 4" },
+  { version = "246", rva = 0xc339bc, expect = "jmp 0xc33b26" },
+  { version = "246", rva = 0xc33b26, expect = "mov rcx, rsi" },
+  { version = "246", rva = 0xc33b29, expect = "call 0x33262" },
+]
+note = "TESCombatStyle's next distinct record member starts at +0x80, independently addressed and read in its own loader branch. The CombatStyleMeleeData member at +0x58 cannot extend beyond this boundary. The resulting upper size 0x28 matches its initialized lower extent exactly; these non-base members cannot reuse one another's tail padding."
+
+[[evidence]]
+class = "CombatStyleRangedData"
+size = 0x4
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xc339af, expect = "lea rdx, [rdi + 0x80]" },
+  { version = "246", rva = 0xc339b6, expect = "mov r8d, 4" },
+  { version = "246", rva = 0xc339bc, expect = "jmp 0xc33b26" },
+  { version = "246", rva = 0xc33b26, expect = "mov rcx, rsi" },
+  { version = "246", rva = 0xc33b29, expect = "call 0x33262" },
+]
+note = "TESCombatStyle loader reads 0x4 bytes directly into the typed CombatStyleRangedData member at +0x80. This payload is a lower extent, not by itself a complete-object size."
+
+[[evidence]]
+class = "CombatStyleRangedData"
+size = 0x4
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xc339af, expect = "lea rdx, [rdi + 0x80]" },
+  { version = "246", rva = 0xc33ae2, expect = "lea rdx, [rdi + 0x84]" },
+  { version = "246", rva = 0xc33ae9, expect = "mov r8d, 0x2c" },
+  { version = "246", rva = 0xc33aef, expect = "jmp 0xc33b26" },
+  { version = "246", rva = 0xc33b26, expect = "mov rcx, rsi" },
+  { version = "246", rva = 0xc33b29, expect = "call 0x33262" },
+]
+note = "TESCombatStyle's next distinct record member starts at +0x84, independently addressed and read in its own loader branch. The CombatStyleRangedData member at +0x80 cannot extend beyond this boundary. The resulting upper size 0x4 matches its initialized lower extent exactly; these non-base members cannot reuse one another's tail padding."
+
+[[evidence]]
+class = "CombatStyleCloseRangeData"
+size = 0x2c
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xc33ae2, expect = "lea rdx, [rdi + 0x84]" },
+  { version = "246", rva = 0xc33ae9, expect = "mov r8d, 0x2c" },
+  { version = "246", rva = 0xc33aef, expect = "jmp 0xc33b26" },
+  { version = "246", rva = 0xc33b26, expect = "mov rcx, rsi" },
+  { version = "246", rva = 0xc33b29, expect = "call 0x33262" },
+]
+note = "TESCombatStyle loader reads 0x2c bytes directly into the typed CombatStyleCloseRangeData member at +0x84. This payload is a lower extent, not by itself a complete-object size."
+
+[[evidence]]
+class = "CombatStyleCloseRangeData"
+size = 0x2c
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xc33ae2, expect = "lea rdx, [rdi + 0x84]" },
+  { version = "246", rva = 0xc33b19, expect = "lea rdx, [rdi + 0xb0]" },
+  { version = "246", rva = 0xc33b20, expect = "mov r8d, 0x14" },
+  { version = "246", rva = 0xc33b26, expect = "mov rcx, rsi" },
+  { version = "246", rva = 0xc33b29, expect = "call 0x33262" },
+]
+note = "TESCombatStyle's next distinct record member starts at +0xb0, independently addressed and read in its own loader branch. The CombatStyleCloseRangeData member at +0x84 cannot extend beyond this boundary. The resulting upper size 0x2c matches its initialized lower extent exactly; these non-base members cannot reuse one another's tail padding."
+
+[[evidence]]
+class = "CombatStyleLongRangeData"
+size = 0x14
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xc33b19, expect = "lea rdx, [rdi + 0xb0]" },
+  { version = "246", rva = 0xc33b20, expect = "mov r8d, 0x14" },
+  { version = "246", rva = 0xc33b26, expect = "mov rcx, rsi" },
+  { version = "246", rva = 0xc33b29, expect = "call 0x33262" },
+]
+note = "TESCombatStyle loader reads 0x14 bytes directly into the typed CombatStyleLongRangeData member at +0xb0. This payload is a lower extent, not by itself a complete-object size."
+
+[[evidence]]
+class = "CombatStyleLongRangeData"
+size = 0x14
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xc33b19, expect = "lea rdx, [rdi + 0xb0]" },
+  { version = "246", rva = 0xc33b0a, expect = "lea rdx, [rdi + 0xc4]" },
+  { version = "246", rva = 0xc33b11, expect = "mov r8d, 4" },
+  { version = "246", rva = 0xc33b17, expect = "jmp 0xc33b26" },
+  { version = "246", rva = 0xc33b26, expect = "mov rcx, rsi" },
+  { version = "246", rva = 0xc33b29, expect = "call 0x33262" },
+]
+note = "TESCombatStyle's next distinct record member starts at +0xc4, independently addressed and read in its own loader branch. The CombatStyleLongRangeData member at +0xb0 cannot extend beyond this boundary. The resulting upper size 0x14 matches its initialized lower extent exactly; these non-base members cannot reuse one another's tail padding."
+
+[[evidence]]
+class = "CombatStyleCoverData"
+size = 0x4
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xc33b0a, expect = "lea rdx, [rdi + 0xc4]" },
+  { version = "246", rva = 0xc33b11, expect = "mov r8d, 4" },
+  { version = "246", rva = 0xc33b17, expect = "jmp 0xc33b26" },
+  { version = "246", rva = 0xc33b26, expect = "mov rcx, rsi" },
+  { version = "246", rva = 0xc33b29, expect = "call 0x33262" },
+]
+note = "TESCombatStyle loader reads 0x4 bytes directly into the typed CombatStyleCoverData member at +0xc4. This payload is a lower extent, not by itself a complete-object size."
+
+[[evidence]]
+class = "CombatStyleCoverData"
+size = 0x4
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xc33b0a, expect = "lea rdx, [rdi + 0xc4]" },
+  { version = "246", rva = 0xc33a94, expect = "lea rdx, [rdi + 0xc8]" },
+  { version = "246", rva = 0xc33a9b, expect = "mov r8d, 0x20" },
+  { version = "246", rva = 0xc33aa1, expect = "jmp 0xc33b26" },
+  { version = "246", rva = 0xc33b26, expect = "mov rcx, rsi" },
+  { version = "246", rva = 0xc33b29, expect = "call 0x33262" },
+]
+note = "TESCombatStyle's next distinct record member starts at +0xc8, independently addressed and read in its own loader branch. The CombatStyleCoverData member at +0xc4 cannot extend beyond this boundary. The resulting upper size 0x4 matches its initialized lower extent exactly; these non-base members cannot reuse one another's tail padding."
+
+[[evidence]]
+class = "CombatStyleFlightData"
+size = 0x20
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xc33a94, expect = "lea rdx, [rdi + 0xc8]" },
+  { version = "246", rva = 0xc33a9b, expect = "mov r8d, 0x20" },
+  { version = "246", rva = 0xc33aa1, expect = "jmp 0xc33b26" },
+  { version = "246", rva = 0xc33b26, expect = "mov rcx, rsi" },
+  { version = "246", rva = 0xc33b29, expect = "call 0x33262" },
+]
+note = "TESCombatStyle loader reads 0x20 bytes directly into the typed CombatStyleFlightData member at +0xc8. This payload is a lower extent, not by itself a complete-object size."
+
+[[evidence]]
+class = "CombatStyleFlightData"
+size = 0x20
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0xc33a94, expect = "lea rdx, [rdi + 0xc8]" },
+  { version = "246", rva = 0xc3399d, expect = "lea rdx, [rdi + 0xe8]" },
+  { version = "246", rva = 0xc339a4, expect = "mov r8d, 4" },
+  { version = "246", rva = 0xc339aa, expect = "jmp 0xc33b26" },
+  { version = "246", rva = 0xc33b26, expect = "mov rcx, rsi" },
+  { version = "246", rva = 0xc33b29, expect = "call 0x33262" },
+]
+note = "TESCombatStyle's next distinct record member starts at +0xe8, independently addressed and read in its own loader branch. The CombatStyleFlightData member at +0xc8 cannot extend beyond this boundary. The resulting upper size 0x20 matches its initialized lower extent exactly; these non-base members cannot reuse one another's tail padding."
+
+[[evidence]]
+class = "NiTransform"
+size = 0x40
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x24be976, expect = "lea rcx, [rbx + 0x30]" },
+  { version = "246", rva = 0x24be97a, expect = "mov dword ptr [rcx + 0x3c], 0x3f800000" },
+  { version = "246", rva = 0x24be981, expect = "mov dword ptr [rbx + 0xac], 0x3f800000" },
+  { version = "246", rva = 0x24be2c6, expect = "mov eax, dword ptr [rbx + 0xac]" },
+  { version = "246", rva = 0x24be2cc, expect = "mov dword ptr [rbx + 0xfc], eax" },
+]
+note = "NiAVObject constructor initializes local-transform scale at local+0x3C and world-transform scale at object+0xAC. UpdateWorldData copies the world transform from +0x70 through +0xAC to the previous transform at +0xC0. The separately initialized world bound starts +0xB0. The world-transform extent and next-member boundary both give 0x40, including any padding."
+
+[[evidence]]
+class = "NiTransform"
+size = 0x40
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x24be209, expect = "mov eax, dword ptr [rbx + 0x70]" },
+  { version = "246", rva = 0x24be2c6, expect = "mov eax, dword ptr [rbx + 0xac]" },
+  { version = "246", rva = 0x24be993, expect = "movss dword ptr [rbx + 0xb0], xmm0" },
+]
+note = "NiAVObject constructor initializes local-transform scale at local+0x3C and world-transform scale at object+0xAC. UpdateWorldData copies the world transform from +0x70 through +0xAC to the previous transform at +0xC0. The separately initialized world bound starts +0xB0. The world-transform extent and next-member boundary both give 0x40, including any padding."
+
+[[evidence]]
+class = "NiMatrix43"
+size = 0x30
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x24be209, expect = "mov eax, dword ptr [rbx + 0x70]" },
+  { version = "246", rva = 0x24be266, expect = "mov eax, dword ptr [rbx + 0x90]" },
+  { version = "246", rva = 0x24be26c, expect = "movss xmm2, dword ptr [rbx + 0x9c]" },
+  { version = "246", rva = 0x24be29a, expect = "movss dword ptr [rbx + 0xec], xmm2" },
+]
+note = "NiAVObject::UpdateWorldData copies the three four-float rotation rows from +0x70/+0x80/+0x90, ending at +0x9F. Its distinct translation member begins +0xA0. The CK padded rotation representation therefore has lower and upper size 0x30; this is not the packed NiMatrix3."
+
+[[evidence]]
+class = "NiMatrix43"
+size = 0x30
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x24be209, expect = "mov eax, dword ptr [rbx + 0x70]" },
+  { version = "246", rva = 0x24be2a2, expect = "mov eax, dword ptr [rbx + 0xa0]" },
+  { version = "246", rva = 0x24be2a8, expect = "mov dword ptr [rbx + 0xf0], eax" },
+]
+note = "NiAVObject::UpdateWorldData copies the three four-float rotation rows from +0x70/+0x80/+0x90, ending at +0x9F. Its distinct translation member begins +0xA0. The CK padded rotation representation therefore has lower and upper size 0x30; this is not the packed NiMatrix3."
+
+[[evidence]]
+class = "NiPoint3"
+size = 0xc
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x24be2a2, expect = "mov eax, dword ptr [rbx + 0xa0]" },
+  { version = "246", rva = 0x24be2ae, expect = "mov eax, dword ptr [rbx + 0xa4]" },
+  { version = "246", rva = 0x24be2ba, expect = "mov eax, dword ptr [rbx + 0xa8]" },
+  { version = "246", rva = 0x24be2c0, expect = "mov dword ptr [rbx + 0xf8], eax" },
+]
+note = "NiAVObject::UpdateWorldData copies the world transform's translation as three dwords from +0xA0/+0xA4/+0xA8. The distinct scale float begins +0xAC. Thus the non-base translation member occupies exactly 0xC bytes, with neither uninitialized tail bytes nor tail reuse."
+
+[[evidence]]
+class = "NiPoint3"
+size = 0xc
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x24be2a2, expect = "mov eax, dword ptr [rbx + 0xa0]" },
+  { version = "246", rva = 0x24be2c6, expect = "mov eax, dword ptr [rbx + 0xac]" },
+  { version = "246", rva = 0x24be2cc, expect = "mov dword ptr [rbx + 0xfc], eax" },
+]
+note = "NiAVObject::UpdateWorldData copies the world transform's translation as three dwords from +0xA0/+0xA4/+0xA8. The distinct scale float begins +0xAC. Thus the non-base translation member occupies exactly 0xC bytes, with neither uninitialized tail bytes nor tail reuse."
+
+[[evidence]]
+class = "NiBound"
+size = 0x10
+kind = "lower_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x24be993, expect = "movss dword ptr [rbx + 0xb0], xmm0" },
+  { version = "246", rva = 0x24be9a3, expect = "movss dword ptr [rbx + 0xb4], xmm1" },
+  { version = "246", rva = 0x24be9b3, expect = "movss dword ptr [rbx + 0xb8], xmm0" },
+  { version = "246", rva = 0x24be9c3, expect = "movss dword ptr [rbx + 0xbc], xmm1" },
+]
+note = "NiAVObject constructor initializes world-bound center at +0xB0/+0xB4/+0xB8 and radius at +0xBC. UpdateWorldData separately copies the previous transform starting +0xC0. Bounds extent and following distinct member boundary both establish 0x10."
+
+[[evidence]]
+class = "NiBound"
+size = 0x10
+kind = "upper_bound"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x24be993, expect = "movss dword ptr [rbx + 0xb0], xmm0" },
+  { version = "246", rva = 0x24be224, expect = "mov dword ptr [rbx + 0xc0], eax" },
+  { version = "246", rva = 0x24be2cc, expect = "mov dword ptr [rbx + 0xfc], eax" },
+]
+note = "NiAVObject constructor initializes world-bound center at +0xB0/+0xB4/+0xB8 and radius at +0xBC. UpdateWorldData separately copies the previous transform starting +0xC0. Bounds extent and following distinct member boundary both establish 0x10."

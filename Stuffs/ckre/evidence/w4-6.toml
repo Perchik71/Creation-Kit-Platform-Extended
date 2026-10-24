@@ -1,0 +1,150 @@
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::NiAPI::NiRTTI"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x249BD00, expect = "mov qword ptr [rcx], rdx" },
+  { version = "246", rva = 0x249BD06, expect = "mov qword ptr [rcx + 8], r8" },
+  { version = "246", rva = 0x29FF0E, expect = "lea rcx, [rip + 0x71a415b]" },
+  { version = "246", rva = 0x29FF15, expect = "jmp 0x33fa5" },
+  { version = "246", rva = 0x29FF2E, expect = "lea rcx, [rip + 0x71a414b]" },
+  { version = "246", rva = 0x29FF35, expect = "jmp 0x33fa5" },
+]
+note = "NiRTTI constructor stores two pointers through +8. BSSkin::BoneData and BSSkin::Instance initializers pass adjacent independent records at 0x7444070 and 0x7444080 to thunk 0x33FA5 -> 0x249BD00. Their 0x10 separation supplies the exact upper bound."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSNiNode"
+size = 0x140
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26A11F0, expect = "mov qword ptr [rcx], rax" },
+  { version = "246", rva = 0x26A1243, expect = "mov edx, 0x140" },
+  { version = "246", rva = 0x26A124B, expect = "call 0x92e79" },
+]
+note = "BSNiNode RTTI primary deleting destructor 0x26A11D0 installs its vtable then passes native sizeof 0x140 and the original allocation to sized-delete thunk 0x92E79."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSMultiBoundNode"
+size = 0x150
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2624DB5, expect = "mov qword ptr [rcx], rax" },
+  { version = "246", rva = 0x2624E5C, expect = "mov edx, 0x150" },
+  { version = "246", rva = 0x2624E64, expect = "call 0x92e79" },
+]
+note = "BSMultiBoundNode primary deleting destructor 0x2624D90 destroys its +0x140 NiPointer and passes native sizeof 0x150 to sized-delete thunk 0x92E79."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::NiAPI::NiKeyBasedInterpolator"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x254C15E, expect = "test bl, 1" },
+  { version = "246", rva = 0x254C163, expect = "mov edx, 0x18" },
+  { version = "246", rva = 0x254C16B, expect = "call 0x1c49" },
+]
+note = "NiKeyBasedInterpolator primary deleting destructor 0x254C140 tests its deletion flag and forwards this plus native sizeof 0x18 to the standard sized-delete thunk."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSFadeNode::FlattenedGeometryData"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2C54155, expect = "shl r14, 5" },
+  { version = "246", rva = 0x2C54182, expect = "mov ebx, dword ptr [rdi + 0x18]" },
+  { version = "246", rva = 0x2C541DA, expect = "add rdi, 0x20" },
+]
+note = "BSFadeNode viewer labels GeomArray then traverses +0x168 data for +0x178 elements, multiplying the count by 0x20 and advancing each element by 0x20. It reads geometry at +0x10 and flags at +0x18."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSDynamicTriShape::DynamicVertexBuffer"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x24C8D91, expect = "lea rdx, [r14 + 0x190]" },
+  { version = "246", rva = 0x2B5C03A, expect = "mov dword ptr [rsi + 8], eax" },
+  { version = "246", rva = 0x24C8D41, expect = "mov qword ptr [r14 + 0x1a0], rax" },
+]
+note = "Renderer initialization receives the inline record at BSDynamicTriShape+0x190 and writes its pointer at +0 and aligned size at +8. The independently used D3D buffer pointer starts at +0x1A0, closing the 8-byte-aligned record's extent at 0x10."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::NiAPI::NiTPointerList<CKPE::Fallout4::EditorAPI::BSPortal*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2651893, expect = "mov qword ptr [rdi + 0x150], rax" },
+  { version = "246", rva = 0x265189A, expect = "mov qword ptr [rdi + 0x158], rax" },
+  { version = "246", rva = 0x265188D, expect = "mov dword ptr [rdi + 0x160], eax" },
+  { version = "246", rva = 0x26518A7, expect = "mov qword ptr [rdi + 0x168], rax" },
+]
+note = "BSMultiBoundRoom constructor initializes portal-list head/tail/count at +0x150/+0x158/+0x160; next independent list starts +0x168. Destructor 0x26524C0 traverses next at node+0 and portal value at node+0x10, then clears these three fields."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::NiAPI::NiTPointerList<CKPE::Fallout4::EditorAPI::BSOcclusionShape*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26518A7, expect = "mov qword ptr [rdi + 0x168], rax" },
+  { version = "246", rva = 0x26518AE, expect = "mov qword ptr [rdi + 0x170], rax" },
+  { version = "246", rva = 0x26518A1, expect = "mov dword ptr [rdi + 0x178], eax" },
+  { version = "246", rva = 0x26518BB, expect = "mov qword ptr [rdi + 0x180], rax" },
+]
+note = "BSMultiBoundRoom occluder-list head/tail/count are +0x168/+0x170/+0x178, bounded by the next independent list at +0x180. Destructor 0x26524C0 destroys this list separately."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::NiAPI::NiTPointerList<CKPE::Fallout4::EditorAPI::NiAPI::NiPointer<CKPE::Fallout4::EditorAPI::BSMultiBound>>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26518BB, expect = "mov qword ptr [rdi + 0x180], rax" },
+  { version = "246", rva = 0x26518C2, expect = "mov qword ptr [rdi + 0x188], rax" },
+  { version = "246", rva = 0x26518B5, expect = "mov dword ptr [rdi + 0x190], eax" },
+  { version = "246", rva = 0x26518C9, expect = "lea rbx, [rdi + 0x198]" },
+]
+note = "BSMultiBoundRoom joined-bound-list head/tail/count are +0x180/+0x188/+0x190, bounded by the light array at +0x198. Room intersection overrides 0x2651E00/0x2651E90 traverse its node+0x10 inline NiPointer value as BSMultiBound*."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::BSFadeNode::FlattenedGeometryData>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2C54271, expect = "lea rbx, [rdi + 0x168]" },
+  { version = "246", rva = 0x2C54286, expect = "lea rcx, [rbx + 0x10]" },
+  { version = "246", rva = 0x2C54290, expect = "lea rbx, [rdi + 0x180]" },
+]
+note = "BSFadeNode initializes its geometry allocator at +0x168 and count at +0x178, then the independent merged-bound array at +0x180. Viewer traversal reads that data/count pair with 0x20-byte elements; exact array span is 0x18."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::NiAPI::NiBound>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2C54290, expect = "lea rbx, [rdi + 0x180]" },
+  { version = "246", rva = 0x2C542A5, expect = "lea rcx, [rbx + 0x10]" },
+  { version = "246", rva = 0x2C53CAD, expect = "movss xmm6, dword ptr [rdi + 0x198]" },
+]
+note = "BSFadeNode merged-bound array begins +0x180, with count initialized at +0x190. Independently labeled near-distance float starts +0x198, closing the 8-byte-aligned array at 0x18."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::BSLight*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26518C9, expect = "lea rbx, [rdi + 0x198]" },
+  { version = "246", rva = 0x26518DE, expect = "lea rcx, [rbx + 0x10]" },
+  { version = "246", rva = 0x2652639, expect = "mov edx, 0x1b0" },
+  { version = "246", rva = 0x2652641, expect = "call 0x92e79" },
+]
+note = "BSMultiBoundRoom initializes its final light array at +0x198 and its count at +0x1A8. Native deleting destructor passes 0x1B0 to sized delete and separately destroys that array, closing its exact 0x18 span."

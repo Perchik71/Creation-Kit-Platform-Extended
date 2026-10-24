@@ -1,0 +1,407 @@
+[[evidence]]
+class = "bhkAction"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1AC6609, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkAngularDashpotAction"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B76A1D, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkBallAndSocketConstraint"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B692AD, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkBallSocketConstraintChain"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B6A20D, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkBinaryAction"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B76A69, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkBoxShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B4A16D, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor; constructor allocation agrees."
+
+[[evidence]]
+class = "bhkBreakableConstraint"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B74BED, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkBvTreeShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B63309, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkCapsuleShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B6692D, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor; constructor allocation agrees."
+
+[[evidence]]
+class = "bhkCompressedMeshShape"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B51D46, expect="mov edx, 0x30"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkCompressedMeshShapeData"
+size = 0x110
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B51DF9, expect="mov edx, 0x110"}]
+note = "Scalar deleting destructor; constructor allocation agrees."
+
+[[evidence]]
+class = "bhkConstraint"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1AE32BD, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkConstraintChain"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B6A259, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkConvexShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B4A1B9, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkConvexTransformShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B53D3D, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor; constructor allocation agrees."
+
+[[evidence]]
+class = "bhkConvexTranslateShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B550DD, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor; constructor allocation agrees."
+
+[[evidence]]
+class = "bhkConvexVerticesShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B572CD, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor; constructor allocation agrees."
+
+[[evidence]]
+class = "bhkCylinderShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B588ED, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor; constructor allocation agrees."
+
+[[evidence]]
+class = "bhkDashpotAction"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B778AD, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkFixedConstraint"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B6D76D, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkGenericConstraint"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B6D7B9, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkGroupConstraint"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B6AB4D, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkHeightFieldShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B60699, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkHingeConstraint"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B6B9CD, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkHingeLimitsConstraint"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B6C89D, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkLimitedHingeConstraint"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B6ED7D, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkLiquidAction"
+size = 0x58
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B79A19, expect="mov edx, 0x58"}]
+note = "Scalar deleting destructor; constructor allocation agrees."
+
+[[evidence]]
+class = "bhkListShape"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B6886D, expect="mov edx, 0x30"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkMalleableConstraint"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B6D809, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkMoppBvTreeShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B6337D, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkMotorAction"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B7B08D, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkMouseSpringAction"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1AC6709, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkNiTriStripsShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B5B22D, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkOrientHingedBodyAction"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B7BE9D, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkPackedNiTriStripsShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B5D18D, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkPlaneShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B6070D, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkPointToPathConstraint"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1C113BD, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkPrismaticConstraint"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B6FAFD, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkRagdollConstraint"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B7142D, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkRagdollLimitsConstraint"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B722ED, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B4A209, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkShapeCollection"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B51E59, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkSphereRepShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B4A259, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkSphereShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B60FDD, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor; constructor allocation agrees."
+
+[[evidence]]
+class = "bhkSpringAction"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B7CC6D, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkStickyContactAction"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B7E12D, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkStiffSpringConstraint"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B72D3D, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkTransformShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B64FBD, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor; clone allocation agrees."
+
+[[evidence]]
+class = "bhkTriangleShape"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B61C9D, expect="mov edx, 0x28"}]
+note = "Scalar deleting destructor; constructor allocation agrees."
+
+[[evidence]]
+class = "bhkUnaryAction"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1AC6759, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkWheelConstraint"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x1B73A2D, expect="mov edx, 0x20"}]
+note = "Scalar deleting destructor; clone allocation agrees."

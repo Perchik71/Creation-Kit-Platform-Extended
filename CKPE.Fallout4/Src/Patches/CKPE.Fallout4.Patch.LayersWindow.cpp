@@ -4,6 +4,7 @@
 
 #include <windows.h>
 #include <EditorAPI/IDs.h>
+#include <EditorAPI/B/BGSLayerDialog.h>
 
 #include <CKPE.SafeWrite.h>
 #include <CKPE.Detours.h>
@@ -59,12 +60,12 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::Functions::LayersDialog__DlgProc).WriteJump(&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::BGSLayerDialog::DialogProc).WriteJump(&HKWndProc);
 
 				// Layers Window enable doublebuffered treeview control
-				Relocation(EditorAPI::IDs::Functions::sub_73BE90, Offset{ 0x315, 0x323 }).WriteCall(&sub);
+				Relocation(EditorAPI::IDs::TreeListControl::Create, Offset{ 0x315, 0x323 }).WriteCall(&sub);
 				// Layers dialog fix resize
-				const auto target = EditorAPI::IDs::Functions::sub_741290;
+				const auto target = EditorAPI::IDs::TreeListControl::Resize;
 				Relocation(target, Offset{ 0x195, 0x180 }).WriteCall(&MoveWindowBody);
 				Relocation(target, Offset{ 0x1C5, 0x1B0 }).WriteCall(&MoveWindowHeader);
 
@@ -78,11 +79,11 @@ namespace CKPE
 					case WM_INITDIALOG:
 					{
 						LayersWindow::Singleton->m_hWnd = Hwnd;
-						LayersWindow::Singleton->PushbuttonNewLayer = GetDlgItem(Hwnd, 1124);
-						LayersWindow::Singleton->PushbuttonAddSelection = GetDlgItem(Hwnd, 3682);
-						LayersWindow::Singleton->EdittextFilter = GetDlgItem(Hwnd, 2581);
-						LayersWindow::Singleton->PushbuttonPlus = GetDlgItem(Hwnd, 5593);
-						LayersWindow::Singleton->BodyForData = GetDlgItem(Hwnd, 6086);
+						LayersWindow::Singleton->PushbuttonNewLayer = GetDlgItem(Hwnd, EditorAPI::BGSLayerDialog::kNewLayer);
+						LayersWindow::Singleton->PushbuttonAddSelection = GetDlgItem(Hwnd, EditorAPI::BGSLayerDialog::kAddSelection);
+						LayersWindow::Singleton->EdittextFilter = GetDlgItem(Hwnd, EditorAPI::BGSLayerDialog::kFilter);
+						LayersWindow::Singleton->PushbuttonPlus = GetDlgItem(Hwnd, EditorAPI::BGSLayerDialog::kExpandAll);
+						LayersWindow::Singleton->BodyForData = GetDlgItem(Hwnd, EditorAPI::BGSLayerDialog::kTreeBody);
 
 						Common::Interface::GetSingleton()->GetDockingManager()->AddWindow((std::uintptr_t)Hwnd);
 						SetWindowPos(Hwnd, nullptr, 0, 0, 0, 0,

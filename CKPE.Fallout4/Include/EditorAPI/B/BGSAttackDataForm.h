@@ -6,6 +6,7 @@
 
 #include <cstdint>
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/B/BGSAttackData.h>
 
 namespace CKPE
 {
@@ -26,6 +27,7 @@ namespace CKPE
 				BGSAttackDataMap* attackDataMap; // 08 - NiPointer<BGSAttackDataMap>
 			};
 			static_assert(sizeof(BGSAttackDataForm) == 0x10);
+			static_assert(offsetof(BGSAttackDataForm, attackDataMap) == 0x8);
 		}
 	}
 }

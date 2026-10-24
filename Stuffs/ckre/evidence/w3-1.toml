@@ -1,0 +1,215 @@
+[[evidence]]
+class = "bhkSerializable"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1B3F509, expect = "mov edx, 0x18" }]
+note = "RTTI primary deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkRefObject"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1B3F49F, expect = "mov edx, 0x20" }]
+note = "RTTI primary deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkWorld"
+size = 0x190
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x20B60B9, expect = "mov edx, 0x190" }]
+note = "Deleting destructor size agrees with constructor allocation at RVA 20A6FE0."
+
+[[evidence]]
+class = "bhkMigrationWorld"
+size = 0xC5C0
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1AC66A9, expect = "mov edx, 0xc5c0" }]
+note = "RTTI primary deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkPhysicsSystem"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x20C7459, expect = "mov edx, 0x28" }]
+note = "Deleting destructor size agrees with constructor allocation at RVA 20C2780."
+
+[[evidence]]
+class = "bhkNiCollisionObject"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1AE118B, expect = "mov edx, 0x28" }]
+note = "RTTI primary deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkCollisionObject"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1AE42B9, expect = "mov edx, 0x28" }]
+note = "RTTI primary deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkBlendCollisionObject"
+size = 0x48
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1B81149, expect = "mov edx, 0x48" }]
+note = "Deleting destructor size agrees with constructor allocation at RVA 1B801C0."
+
+[[evidence]]
+class = "bhkPCollisionObject"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1B7F679, expect = "mov edx, 0x28" }]
+note = "RTTI primary deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkSPCollisionObject"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1B7FD59, expect = "mov edx, 0x28" }]
+note = "RTTI primary deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkNPCollisionObjectBase"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x20C0C79, expect = "mov edx, 0x20" }]
+note = "RTTI primary deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkNPCollisionObject"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x20C0C29, expect = "mov edx, 0x30" }]
+note = "Deleting destructor size agrees with constructor allocation at RVA 20B9FF0."
+
+[[evidence]]
+class = "bhkNPCollisionObjectUnlinked"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x20C0CC9, expect = "mov edx, 0x30" }]
+note = "RTTI deleting destructor and derived RTTI first base gap both prove 0x30."
+
+[[evidence]]
+class = "bhkWorldObject"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1AC8E3D, expect = "mov edx, 0x28" }]
+note = "RTTI primary deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkEntity"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1AD1729, expect = "mov edx, 0x28" }]
+note = "RTTI primary deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkRigidBody"
+size = 0x40
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1AD17FF, expect = "mov edx, 0x40" }]
+note = "Deleting destructor size agrees with constructor allocation at RVA 1AD1100."
+
+[[evidence]]
+class = "bhkPhantom"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1B7EE39, expect = "mov edx, 0x28" }]
+note = "RTTI primary deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkAabbPhantom"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1B7EDED, expect = "mov edx, 0x28" }]
+note = "RTTI primary deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkShapePhantom"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1B826E9, expect = "mov edx, 0x28" }]
+note = "RTTI primary deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkCachingShapePhantom"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1B837ED, expect = "mov edx, 0x28" }]
+note = "Deleting destructor size agrees with constructor allocation at RVA 1B836B0."
+
+[[evidence]]
+class = "bhkCollisionFilter"
+size = 0x7B0
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x20CD15B, expect = "mov edx, 0x7b0" }]
+note = "Deleting destructor size equals final 32-element string array end 0x6B0+0x100."
+
+[[evidence]]
+class = "bhkMigrationCollisionFilter"
+size = 0x9E8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1B44367, expect = "mov edx, 0x9e8" }]
+note = "Deleting destructor size equals final 32-element string array end 0x8E8+0x100."
+
+[[evidence]]
+class = "bhkMemorySystem"
+size = 0x7C0
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2128F16, expect = "mov edx, 0x7c0" }]
+note = "RTTI primary deleting destructor passes compiler sizeof to sized delete."
+
+[[evidence]]
+class = "bhkThreadMemorySource"
+size = 0xE8
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x2127563, expect = "mov edx, 0xe8" }]
+note = "Primary deleting destructor size; RTTI secondary IMemoryHeap is at offset 8."
+
+[[evidence]]
+class = "bhkExtraData"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x211310D, expect = "mov edx, 0x30" }]
+note = "Deleting destructor size agrees with constructor allocation at RVA 2112F70."
+
+[[evidence]]
+class = "NiCollisionObject"
+size = 0x18
+kind = "lower_bound"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x24DA3B6, expect = "mov qword ptr [rcx + 0x10], rdx" }]
+note = "Target setter writes the last pointer ending at 0x18."
+
+[[evidence]]
+class = "NiCollisionObject"
+size = 0x18
+kind = "upper_bound"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1ADF5FA, expect = "mov word ptr [rbx + 0x18], ax" }]
+note = "Single-base bhkNiCollisionObject owns flags immediately after NiCollisionObject."

@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ckre"
+version = "0.1.0"
+description = "Creation Kit binary and EditorAPI verification tools"
+requires-python = ">=3.12"
+dependencies = ["pefile>=2023.2.7", "capstone>=5.0"]
+
+[project.scripts]
+ckre = "ckre.cli:main"
+
+[tool.setuptools]
+packages = ["ckre"]
+package-dir = {ckre = "."}
+
+[tool.setuptools.package-data]
+ckre = ["evidence/*.toml"]

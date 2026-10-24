@@ -4,6 +4,7 @@
 
 #include <windows.h>
 #include <EditorAPI/IDs.h>
+#include <EditorAPI/E/EditorWindowControls.h>
 #include <windowsx.h>
 #include <CKPE.Graphics.h>
 #include <CKPE.Application.h>
@@ -23,7 +24,7 @@
 
 #undef MessageBox
 
-#define UI_DATA_DIALOG_PLUGINLISTVIEW		1056
+#define UI_DATA_DIALOG_PLUGINLISTVIEW		EditorAPI::EditorWindows::DataWindow::kPluginList
 #define UI_DATA_DIALOG_FILTERBOX			1003
 #define UI_LISTVIEW_PLUGINS					UI_DATA_DIALOG_PLUGINLISTVIEW
 #define UI_NEW_LISTVIEW_CONTROL_TO_RESULT	52005

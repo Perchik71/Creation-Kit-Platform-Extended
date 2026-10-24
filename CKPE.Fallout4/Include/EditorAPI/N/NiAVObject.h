@@ -24,6 +24,11 @@ namespace CKPE
 
 			namespace NiAPI
 			{
+				class NiUpdateData;
+				class PerformOpFunc;
+				class NiAlphaProperty;
+				class NiCullingProcess;
+
 				class NiAVObject : public NiObjectNET
 				{
 				public:
@@ -35,11 +40,25 @@ namespace CKPE
 				public:
 					virtual ~NiAVObject() = default;
 
-					// CommonLibF4: NiObject::IsGeometry (vfunc 08 in the game, +0x50 in the Creation Kit 1.10.162.0 - 1.11.240.0),
-					// verified in BSFaceGenUtils::SetupHeadPartTexture (CK 1.11.240.0 0x140ED9A90).
-					[[nodiscard]] inline BSGeometry* IsGeometry() noexcept(true) { return CKPE::vtbl_call<BSGeometry*>(0x50, this); }
-					// CommonLibF4: NiAVObject::GetObjectByName (+0x180 in the Creation Kit 1.10.162.0 - 1.11.240.0), same function as above.
-					[[nodiscard]] inline NiAVObject* GetObjectByName(const BSFixedString& Name) noexcept(true) { return CKPE::vtbl_call<NiAVObject*>(0x180, this, &Name); }
+					/* 2A */ virtual void UpdateControllers(NiUpdateData& Data) noexcept(true);
+					/* 2B */ virtual void PerformOp(PerformOpFunc& Operation) noexcept(true);
+					/* 2C */ virtual void AttachProperty(NiAlphaProperty* Property) noexcept(true);
+					/* 2D */ virtual void SetMaterialNeedsUpdate(bool NeedsUpdate) noexcept(true);
+					/* 2E */ virtual void SetDefaultMaterialNeedsUpdateFlag(bool NeedsUpdate) noexcept(true);
+					/* 2F */ virtual void SetAppCulled(bool Culled) noexcept(true);
+					/* 30 */ virtual NiAVObject* GetObjectByName(const BSFixedString& Name) noexcept(true);
+					/* 31 */ virtual void SetSelectiveUpdateFlags(bool& SelectiveUpdate,
+						bool SelectiveUpdateTransforms, bool& Rigid) noexcept(true);
+					/* 32 */ virtual void UpdateDownwardPass(NiUpdateData& Data, std::uint32_t Flags) noexcept(true);
+					/* 33 */ virtual void UpdateSelectedDownwardPass(NiUpdateData& Data, std::uint32_t Flags) noexcept(true);
+					/* 34 */ virtual void UpdateRigidDownwardPass(NiUpdateData& Data, std::uint32_t Flags) noexcept(true);
+					/* 35 */ virtual void UpdateWorldBound() noexcept(true);
+					/* 36 */ virtual void UpdateWorldData(NiUpdateData* Data) noexcept(true);
+					/* 37 */ virtual void UpdateTransformAndBounds(NiUpdateData& Data) noexcept(true);
+					/* 38 */ virtual void UpdateTransforms(NiUpdateData& Data) noexcept(true);
+					/* 39 */ virtual void PreAttachUpdate(NiNode* Parent, NiUpdateData& Data) noexcept(true);
+					/* 3A */ virtual void PostAttachUpdate() noexcept(true);
+					/* 3B */ virtual void OnVisible(NiCullingProcess& Culler) noexcept(true);
 
 					[[nodiscard]] inline NiAVObject* GetParent() const noexcept(true) { return _Parent; }
 					[[nodiscard]] inline const NiTransform& GetLocalTransform() const noexcept(true) { return _Local; }
@@ -56,14 +75,6 @@ namespace CKPE
 					[[nodiscard]] inline bool QNotVisible() const noexcept(true) { return _Flags.Has(NOT_VISIBLE); }
 
 					[[nodiscard]] inline std::int32_t IsVisualObjectI() const noexcept(true) { return _WorldBound.m_iRadiusAsInt; }
-
-					inline void SetAppCulled(bool Culled) noexcept(true)
-					{
-						if (Culled)
-							_Flags.Set(APP_CULLED);
-						else
-							_Flags.Unset(APP_CULLED);
-					}
 
 					inline void SetNotVisible(bool NotVisible) noexcept(true)
 					{
@@ -96,8 +107,22 @@ namespace CKPE
 					std::int8_t _MeshLODFadingLevel;				// 0x11D
 					std::int8_t _CurrentMeshLODLevel;				// 0x11E
 					std::int8_t _PreviousMeshLODLevel;				// 0x11F
+				public:
+					[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+					{
+						return offsetof(NiAVObject, _Parent) == 0x28 &&
+							offsetof(NiAVObject, _Local) == 0x30 &&
+							offsetof(NiAVObject, _World) == 0x70 &&
+							offsetof(NiAVObject, _WorldBound) == 0xB0 &&
+							offsetof(NiAVObject, _PreviousWorld) == 0xC0 &&
+							offsetof(NiAVObject, _CollisionObject) == 0x100 &&
+							offsetof(NiAVObject, _Flags) == 0x108 &&
+							offsetof(NiAVObject, _FormRef) == 0x110 &&
+							offsetof(NiAVObject, _FadeAmount) == 0x118;
+					}
 				};
 				static_assert(sizeof(NiAVObject) == 0x120);
+				static_assert(NiAVObject::VerifyLayout());
 			}
 		}
 	}

@@ -4,8 +4,10 @@
 
 #pragma once
 
+#include <EditorAPI/IDs.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Common.RTTI.h>
+#include <CKPE.Common.Relocation.h>
 #include <EditorAPI/N/NiFlags.h>
 #include <EditorAPI/N/NiPointer.h>
 #include <EditorAPI/N/NiTypes.h>
@@ -18,8 +20,9 @@
 #include <EditorAPI/B/BSTSmartPointer.h>
 #include <EditorAPI/B/BSEntryString.h>
 #include <EditorAPI/O/ObjectRefHandle.h>
-#include <algorithm>
-#include <span>
+#include <concepts>
+#include <memory>
+#include <type_traits>
 
 namespace CKPE
 {
@@ -40,7 +43,7 @@ namespace CKPE
 			class BSExtraData
 			{
 			public:
-				enum : std::uint8_t
+				enum EXTRA_DATA_TYPE : std::uint8_t
 				{
 					kNone,						// BSExtraData
 					kHavok,
@@ -208,6 +211,8 @@ namespace CKPE
 					kLockList,
 					kForcedLandingMarker,
 					kLargeRefOwnerCells,
+					kEditorTestRadius,
+					kEditorFlags,
 					kCellWaterEnvMap,
 					kCellGrassData,
 					kTeleportName,
@@ -224,9 +229,9 @@ namespace CKPE
 					kMissingRefIDs,
 					kBendableSplineParams,
 					kReferenceGroup,
-					kReferenceCharacterController,	
-					kMovementController,
 					kLayer,
+					kMovementController,
+					kReferenceCharacterController,
 					kMaterialSwap,				// ExtraMaterialSwap
 					kInstanceData,				// ExtraInstanceData
 					kPowerArmor,
@@ -236,7 +241,6 @@ namespace CKPE
 					kWorkshop,					// Workshop::ExtraData
 					kRadioReceiver,
 					kCulledBone,
-					kActorValueStorage,
 					kDirectAtTarget,
 					kActivateNext,
 					kCellCombinedRefs,
@@ -245,7 +249,6 @@ namespace CKPE
 					kIgnoredAttractKeywords,
 					kModRank,
 					kInteriorLODWorldspace,
-					kActorBoneScaleMap,
 					kActorFXPickNodes,
 					kPowerArmorPreload,
 					kAnimGraphPreload,
@@ -262,7 +265,7 @@ namespace CKPE
 				static constexpr auto TYPE{ kNone };
 
 				BSExtraData() : BSExtraData(TYPE) {}
-				BSExtraData(std::uint8_t type) : _type(type) {}
+				BSExtraData(std::uint8_t type) : _flags{}, _type(type) {}
 				virtual ~BSExtraData() = default;
 
 				virtual bool CompareImpl([[maybe_unused]] const BSExtraData& rhs) const noexcept(true) { return false; }
@@ -277,7 +280,13 @@ namespace CKPE
 				inline void SetFlag(std::uint16_t f) noexcept(true) { _flags.Set(f); }
 				inline void UnsetFlag(std::uint16_t f) noexcept(true) { _flags.Unset(f); }
 
-				inline void SetNext(BSExtraData* extra) noexcept(true) { _next = extra; }
+				inline void SetNext(BSExtraData* extra) noexcept(true)
+				{
+					static_assert(offsetof(BSExtraData, _next) == 0x08);
+					static_assert(offsetof(BSExtraData, _flags) == 0x10);
+					static_assert(offsetof(BSExtraData, _type) == 0x12);
+					_next = extra;
+				}
 				[[nodiscard]] inline BSExtraData* GetNext() const noexcept(true) { return _next; }
 				[[nodiscard]] inline BSExtraData** GetNextAddressOf() noexcept(true) { return std::addressof(_next); }
 				[[nodiscard]] inline std::uint8_t GetType() const noexcept(true) { return _type; }
@@ -287,6 +296,13 @@ namespace CKPE
 				std::uint8_t _type{ kNone };
 			};
 			static_assert(sizeof(BSExtraData) == 0x18);
+			static_assert(BSExtraData::kEditorTestRadius == 0xA6);
+			static_assert(BSExtraData::kCellWaterEnvMap == 0xA8);
+			static_assert(BSExtraData::kLayer == 0xB8);
+			static_assert(BSExtraData::kMaterialSwap == 0xBB);
+			static_assert(BSExtraData::kDirectAtTarget == 0xC4);
+			static_assert(BSExtraData::kActorFXPickNodes == 0xCC);
+			static_assert(BSExtraData::kTotal == 0xD6);
 
 			class ExtraCellWaterType : public BSExtraData
 			{
@@ -304,8 +320,9 @@ namespace CKPE
 
 			class ExtraStartingPosition : public BSExtraData
 			{
-				NiAPI::NiPoint3A _position;
-				NiAPI::NiPoint3A _rotate;
+				NiAPI::NiPoint3 _position;	// 18
+				NiAPI::NiPoint3 _rotate;		// 24
+				std::uint8_t _unk30[0x8]{};	// 30 - zeroed by CK creation
 			public:
 				static constexpr auto TYPE{ kStartingPosition };
 
@@ -314,10 +331,19 @@ namespace CKPE
 					BSExtraData(TYPE), _position(Position), _rotate(Rotate) {}
 				virtual ~ExtraStartingPosition() = default;
 
-				[[nodiscard]] inline NiAPI::NiPoint3A GetPosition() const noexcept(true) { return _position; }
-				[[nodiscard]] inline NiAPI::NiPoint3A GetRotate() const noexcept(true) { return _rotate; }
-				[[nodiscard]] inline NiAPI::NiPoint3A& GetPosition() noexcept(true) { return _position; }
-				[[nodiscard]] inline NiAPI::NiPoint3A& GetRotate() noexcept(true) { return _rotate; }
+				[[nodiscard]] inline NiAPI::NiPoint3A GetPosition() const noexcept(true)
+				{
+					static_assert(offsetof(ExtraStartingPosition, _position) == 0x18);
+					return _position;
+				}
+				[[nodiscard]] inline NiAPI::NiPoint3A GetRotate() const noexcept(true)
+				{
+					static_assert(offsetof(ExtraStartingPosition, _rotate) == 0x24);
+					static_assert(offsetof(ExtraStartingPosition, _unk30) == 0x30);
+					return _rotate;
+				}
+				[[nodiscard]] inline NiAPI::NiPoint3& GetPosition() noexcept(true) { return _position; }
+				[[nodiscard]] inline NiAPI::NiPoint3& GetRotate() noexcept(true) { return _rotate; }
 			};
 			static_assert(sizeof(ExtraStartingPosition) == 0x38);
 
@@ -594,24 +620,11 @@ namespace CKPE
 				{
 					CKPE_ASSERT(Extra != nullptr);
 					CKPE_ASSERT(Extra->GetNext() == nullptr);
-
-					const auto type = Extra->GetType();
-					CKPE_ASSERT(!HasType(type));
-
-					if (!_head || !IsHighUseExtra(type))
-					{
-						CKPE_ASSERT(_tail != nullptr);
-						*_tail = Extra;
-						_tail = Extra->GetNextAddressOf();
-					}
-					else 
-					{
-						Extra->SetNext(_head);
-						_head = Extra;
-					}
-
-					// remove for ck
-					// MarkType(type, true);
+					CKPE_ASSERT(!HasType(Extra->GetType()));
+					using func_t = BSExtraData* (*)(BaseExtraList*, BSExtraData*);
+					static Common::Relocation<func_t> func{
+						EditorAPI::IDs::BaseExtraList::AddExtra };
+					func(this, Extra);
 				}
 
 				[[nodiscard]] BSExtraData* GetByType(std::uint8_t Type) const noexcept(true)
@@ -627,41 +640,16 @@ namespace CKPE
 
 				[[nodiscard]] bool HasType(std::uint8_t Type) const noexcept(true)
 				{
-					// No work for ck
-					/*const auto idx = Type / 8;
-					const auto flags = GetFlags();
-					
-					if (!flags.empty() && idx < flags.size()) 
-					{
-						const auto pos = static_cast<std::uint8_t>(1u << (Type % 8));
-						return (flags[idx] & pos) != 0;
-					}*/
-					
-					return GetByType(Type) ? true : false;
+					return GetByType(Type) != nullptr;
 				}
 
 				std::unique_ptr<BSExtraData> RemoveExtra(std::uint8_t Type) noexcept(true)
 				{
-					BSExtraData* prev = nullptr;
-					for (auto iter = _head; iter; prev = iter, iter = iter->GetNext()) 
-					{
-						if (iter->GetType() == Type) 
-						{
-							if (prev)
-								prev->SetNext(iter->GetNext());
-							else
-								_head = iter->GetNext();
-
-							if (!_tail || *_tail == iter)
-								_tail = prev ? prev->GetNextAddressOf() : std::addressof(_head);
-
-							// remove for ck
-							// MarkType(Type, false);
-							return std::unique_ptr<BSExtraData>{ iter };
-						}
-					}
-
-					return nullptr;
+					// The CK detach also invalidates its thread-local type cache.
+					using func_t = BSExtraData* (*)(BaseExtraList*, std::uint8_t);
+					static Common::Relocation<func_t> func{
+						EditorAPI::IDs::BaseExtraList::DetachByType };
+					return std::unique_ptr<BSExtraData>{ func(this, Type) };
 				}
 
 				void Dump(void(*Callback)(const char*, ...)) const noexcept(true)
@@ -676,49 +664,15 @@ namespace CKPE
 					}
 				}
 			private:
-				//static constexpr std::size_t N = (BSExtraData::kTotal / 8) + 1;
-
-				[[nodiscard]] static bool IsHighUseExtra(std::uint8_t Type) noexcept(true)
+				[[nodiscard]] BSExtraData* GetHead() const noexcept(true)
 				{
-					return !((Type - 11) & ~0x22u) && (Type != BSExtraData::kLeveledCreature);
+					static_assert(offsetof(BaseExtraList, _head) == 0x00);
+					static_assert(offsetof(BaseExtraList, _tail) == 0x08);
+					return _head;
 				}
-
-				/*void CreateFlags() noexcept(true)
-				{ 
-					_flags = (std::uint8_t*)CKPE::Common::MemoryManager::GetSingleton()->MemAlloc(N, 8, true);
-				}
-
-				[[nodiscard]] std::span<std::uint8_t> GetFlags() const noexcept(true)
-				{
-					if (_flags)
-						return { _flags, N };
-					return {};
-				}
-
-				[[nodiscard]] std::span<std::uint8_t, N> GetOrCreateFlags() noexcept(true)
-				{
-					if (!_flags)
-						CreateFlags();
-
-					return std::span{ reinterpret_cast<std::uint8_t(&)[N]>(*_flags) };
-				}
-
-				void MarkType(std::uint8_t Type, bool Set)
-				{
-					CKPE_ASSERT(Type < BSExtraData::kTotal);
-
-					const auto idx = Type / 8;
-					const auto pos = static_cast<std::uint8_t>(1u << (Type % 8));
-					const auto flags = GetOrCreateFlags();
-					
-					if (Set) flags[idx] |= pos;
-					else flags[idx] &= ~pos;
-				}*/
-
-				[[nodiscard]] BSExtraData* GetHead() const noexcept(true) { return _head; }
 				[[nodiscard]] BSExtraData** GetTail() const noexcept(true) { return _tail; }
 			};
-			// 1.11.246.0: the CK's list holds only the head and the tail (no presence flag pointer); the read/write lock follows it inside ExtraDataList
+			// CK uses a thread-local type cache, not an embedded presence bitfield.
 			static_assert(sizeof(BaseExtraList) == 0x10);
 
 			namespace Detail
@@ -783,6 +737,8 @@ namespace CKPE
 				mutable BSReadWriteLock extraRWLock;  // 18 - initialised by the constructor 0x1407D71A0 (the object is 0x20 bytes)
 			};
 			static_assert(sizeof(ExtraDataList) == 0x20);
+			static_assert(offsetof(ExtraDataList, extraData) == 0x08);
+			static_assert(offsetof(ExtraDataList, extraRWLock) == 0x18);
 		}
 	}
 }

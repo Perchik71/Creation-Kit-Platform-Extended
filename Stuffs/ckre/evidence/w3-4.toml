@@ -1,0 +1,2119 @@
+[[evidence]]
+class = "hkAabb"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693A65, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x269829, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x26C6B9, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x26D889, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x26D860: r9d is reflected object size; descriptor RVA 0x3E68240."
+
+[[evidence]]
+class = "hkAabb16"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694B65, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x26AD49, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x26DBD9, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x26EDA9, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x26ED80: r9d is reflected object size; descriptor RVA 0x3E692F0."
+
+[[evidence]]
+class = "hkAabbHalf"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369A7DD, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x271B35, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x2749C5, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x275B95, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x275B60: r9d is reflected object size; descriptor RVA 0x3E6D7D0."
+
+[[evidence]]
+class = "hkAabbUint32"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693AC5, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x2698A9, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x26C739, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x26D909, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x26D8E0: r9d is reflected object size; descriptor RVA 0x3E68290."
+
+[[evidence]]
+class = "hkAlignSceneToNodeOptions"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B639D, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x292699, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x298969, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x299B39, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkClass initializer 0x299B00: r9d is reflected object size; descriptor RVA 0x73757E0."
+
+[[evidence]]
+class = "hkArrayStreamWriter"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3695F6C, expect = "lea r9d, [rax + 0x28]" }, { version = "982", rva = 0x26C1E9, expect = "lea r9d, [rax + 0x28]" }, { version = "137", rva = 0x26F079, expect = "lea r9d, [rax + 0x28]" }, { version = "246", rva = 0x270249, expect = "lea r9d, [rax + 0x28]" }]
+note = "hkClass initializer 0x270220: r9d is reflected object size; descriptor RVA 0x3E6A0B0."
+
+[[evidence]]
+class = "hkArrayTypeAttribute"
+size = 0x1
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693B22, expect = "lea r9d, [rcx + 1]" }, { version = "982", rva = 0x269929, expect = "lea r9d, [rcx + 1]" }, { version = "137", rva = 0x26C7B9, expect = "lea r9d, [rcx + 1]" }, { version = "246", rva = 0x26D989, expect = "lea r9d, [rcx + 1]" }]
+note = "hkClass initializer 0x26D960: r9d is reflected object size; descriptor RVA 0x3E68300."
+
+[[evidence]]
+class = "hkBaseObject"
+size = 0x8
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36942F8, expect = "lea r9d, [rax + 8]" }, { version = "982", rva = 0x26A359, expect = "lea r9d, [rax + 8]" }, { version = "137", rva = 0x26D1E9, expect = "lea r9d, [rax + 8]" }, { version = "246", rva = 0x26E3B9, expect = "lea r9d, [rax + 8]" }]
+note = "hkClass initializer 0x26E390: r9d is reflected object size; descriptor RVA 0x3E689E0."
+
+[[evidence]]
+class = "hkBitField"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36A8FE9, expect = "lea r9d, [rax + 0x18]" }, { version = "982", rva = 0x2903A5, expect = "lea r9d, [rax + 0x18]" }, { version = "137", rva = 0x296675, expect = "lea r9d, [rax + 0x18]" }, { version = "246", rva = 0x297845, expect = "lea r9d, [rax + 0x18]" }]
+note = "hkClass initializer 0x297810: r9d is reflected object size; descriptor RVA 0x7373E00."
+
+[[evidence]]
+class = "hkBitFieldBasehkBitFieldStoragehkArrayunsignedinthkContainerHeapAllocator"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36A8F35, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x290299, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x296569, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x297739, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x297710: r9d is reflected object size; descriptor RVA 0x7373E50."
+
+[[evidence]]
+class = "hkBitFieldBasehkOffsetBitFieldStoragehkArrayunsignedinthkContainerHeapAllocator"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36A8F95, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x290319, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x2965E9, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x2977B9, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x297790: r9d is reflected object size; descriptor RVA 0x7373EA0."
+
+[[evidence]]
+class = "hkBitFieldStoragehkArrayunsignedinthkContainerHeapAllocator"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36A9055, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x290409, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x2966D9, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x2978A9, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x297880: r9d is reflected object size; descriptor RVA 0x7373EF0."
+
+[[evidence]]
+class = "hkBufferedStreamWriter"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3695FCC, expect = "lea r9d, [rax + 0x30]" }, { version = "982", rva = 0x26C259, expect = "lea r9d, [rax + 0x30]" }, { version = "137", rva = 0x26F0E9, expect = "lea r9d, [rax + 0x30]" }, { version = "246", rva = 0x2702B9, expect = "lea r9d, [rax + 0x30]" }]
+note = "hkClass initializer 0x270290: r9d is reflected object size; descriptor RVA 0x3E6A110."
+
+[[evidence]]
+class = "hkClass"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369926F, expect = "lea r9d, [rcx + 0x50]" }, { version = "982", rva = 0x2700A5, expect = "lea r9d, [rcx + 0x50]" }, { version = "137", rva = 0x272F35, expect = "lea r9d, [rcx + 0x50]" }, { version = "246", rva = 0x274105, expect = "lea r9d, [rcx + 0x50]" }]
+note = "hkClass initializer 0x2740D0: r9d is reflected object size; descriptor RVA 0x3E6C4E0."
+
+[[evidence]]
+class = "hkClassEnum"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3699192, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x26FF69, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x272DF9, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x273FC9, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkClass initializer 0x273FA0: r9d is reflected object size; descriptor RVA 0x3E6C470."
+
+[[evidence]]
+class = "hkClassEnumItem"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3699205, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x26FFF9, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x272E89, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x274059, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x274030: r9d is reflected object size; descriptor RVA 0x3E6C420."
+
+[[evidence]]
+class = "hkClassMember"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3699112, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x26FEB9, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x272D49, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x273F19, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkClass initializer 0x273EF0: r9d is reflected object size; descriptor RVA 0x3E6C3C0."
+
+[[evidence]]
+class = "hkColor"
+size = 0x1
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36AB55C, expect = "lea r9d, [rax + 1]" }, { version = "982", rva = 0x28F8D9, expect = "lea r9d, [rax + 1]" }, { version = "137", rva = 0x295D89, expect = "lea r9d, [rax + 1]" }, { version = "246", rva = 0x296F59, expect = "lea r9d, [rax + 1]" }]
+note = "hkClass initializer 0x296F30: r9d is reflected object size; descriptor RVA 0x73738A0."
+
+[[evidence]]
+class = "hkCompressedMassProperties"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36937C5, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x2696D9, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x26C569, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x26D739, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x26D710: r9d is reflected object size; descriptor RVA 0x3E68140."
+
+[[evidence]]
+class = "hkContactPoint"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36AF1C5, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x28F209, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x295799, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x296969, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x296940: r9d is reflected object size; descriptor RVA 0x73734A0."
+
+[[evidence]]
+class = "hkContactPointMaterial"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36AFA42, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x29076C, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x296A3C, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x297C0C, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x297BD0: r9d is reflected object size; descriptor RVA 0x7374180."
+
+[[evidence]]
+class = "hkCustomAttributes"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369A2B5, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x271489, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x274319, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x2754E9, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x2754C0: r9d is reflected object size; descriptor RVA 0x3E6D380."
+
+[[evidence]]
+class = "hkCustomAttributesAttribute"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369A255, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x271409, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x274299, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x275469, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x275440: r9d is reflected object size; descriptor RVA 0x3E6D330."
+
+[[evidence]]
+class = "hkDataObjectTypeAttribute"
+size = 0x8
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693BA5, expect = "lea r9d, [rcx + 8]" }, { version = "982", rva = 0x2699D9, expect = "lea r9d, [rcx + 8]" }, { version = "137", rva = 0x26C869, expect = "lea r9d, [rcx + 8]" }, { version = "246", rva = 0x26DA39, expect = "lea r9d, [rcx + 8]" }]
+note = "hkClass initializer 0x26DA10: r9d is reflected object size; descriptor RVA 0x3E68350."
+
+[[evidence]]
+class = "hkDefaultCompoundMeshBody"
+size = 0x80
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36BECD3, expect = "mov r9d, 0x80" }, { version = "982", rva = 0x29B2C8, expect = "mov r9d, 0x80" }, { version = "137", rva = 0x29E1D8, expect = "mov r9d, 0x80" }, { version = "246", rva = 0x29F3A8, expect = "mov r9d, 0x80" }]
+note = "hkClass initializer 0x29F380: r9d is reflected object size; descriptor RVA 0x7379590."
+
+[[evidence]]
+class = "hkDefaultCompoundMeshShape"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36BED2C, expect = "lea r9d, [rax + 0x40]" }, { version = "982", rva = 0x29B33D, expect = "lea r9d, [rax + 0x40]" }, { version = "137", rva = 0x29E24D, expect = "lea r9d, [rax + 0x40]" }, { version = "246", rva = 0x29F41D, expect = "lea r9d, [rax + 0x40]" }]
+note = "hkClass initializer 0x29F3F0: r9d is reflected object size; descriptor RVA 0x7379540."
+
+[[evidence]]
+class = "hkDefaultMemoryTracker"
+size = 0xF8
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369C333, expect = "mov r9d, 0xf8" }, { version = "982", rva = 0x273C98, expect = "mov r9d, 0xf8" }, { version = "137", rva = 0x276B28, expect = "mov r9d, 0xf8" }, { version = "246", rva = 0x277CF8, expect = "mov r9d, 0xf8" }]
+note = "hkClass initializer 0x277CD0: r9d is reflected object size; descriptor RVA 0x3E6EDA0."
+
+[[evidence]]
+class = "hkDefaultMeshMaterialRegistry"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36BEC0C, expect = "lea r9d, [rax + 0x20]" }, { version = "982", rva = 0x29B1ED, expect = "lea r9d, [rax + 0x20]" }, { version = "137", rva = 0x29E0FD, expect = "lea r9d, [rax + 0x20]" }, { version = "246", rva = 0x29F2CD, expect = "lea r9d, [rax + 0x20]" }]
+note = "hkClass initializer 0x29F2A0: r9d is reflected object size; descriptor RVA 0x7379470."
+
+[[evidence]]
+class = "hkDescriptionAttribute"
+size = 0x8
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693C05, expect = "lea r9d, [rcx + 8]" }, { version = "982", rva = 0x269A59, expect = "lea r9d, [rcx + 8]" }, { version = "137", rva = 0x26C8E9, expect = "lea r9d, [rcx + 8]" }, { version = "246", rva = 0x26DAB9, expect = "lea r9d, [rcx + 8]" }]
+note = "hkClass initializer 0x26DA90: r9d is reflected object size; descriptor RVA 0x3E683A0."
+
+[[evidence]]
+class = "hkDocumentationAttribute"
+size = 0x8
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693C65, expect = "lea r9d, [rcx + 8]" }, { version = "982", rva = 0x269AD9, expect = "lea r9d, [rcx + 8]" }, { version = "137", rva = 0x26C969, expect = "lea r9d, [rcx + 8]" }, { version = "246", rva = 0x26DB39, expect = "lea r9d, [rcx + 8]" }]
+note = "hkClass initializer 0x26DB10: r9d is reflected object size; descriptor RVA 0x3E683F0."
+
+[[evidence]]
+class = "hkFloat16"
+size = 0x2
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36AFFD5, expect = "lea r9d, [rcx + 2]" }, { version = "982", rva = 0x2907E9, expect = "lea r9d, [rcx + 2]" }, { version = "137", rva = 0x296AB9, expect = "lea r9d, [rcx + 2]" }, { version = "246", rva = 0x297C89, expect = "lea r9d, [rcx + 2]" }]
+note = "hkClass initializer 0x297C60: r9d is reflected object size; descriptor RVA 0x73741E0."
+
+[[evidence]]
+class = "hkFloat16Transform"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B0035, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x290869, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x296B39, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x297D09, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x297CE0: r9d is reflected object size; descriptor RVA 0x7374240."
+
+[[evidence]]
+class = "hkFourTransposedPointsf"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B0095, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x2908E9, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x296BB9, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x297D89, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x297D60: r9d is reflected object size; descriptor RVA 0x73742A0."
+
+[[evidence]]
+class = "hkFreeListArrayhknpMaterialhknpMaterialId8hknpMaterialFreeListArrayOperations"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x368BAA5, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x260349, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x2631D9, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x2643A9, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x264380: r9d is reflected object size; descriptor RVA 0x3E33340."
+
+[[evidence]]
+class = "hkFreeListArrayhknpMotionPropertieshknpMotionPropertiesId8hknpMotionPropertiesFreeListArrayOperations"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x368BB05, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x2603C9, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x263259, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x264429, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x264400: r9d is reflected object size; descriptor RVA 0x3E33390."
+
+[[evidence]]
+class = "hkFreeListArrayhknpShapeInstancehkHandleshort32767hknpShapeInstanceIdDiscriminant8hknpShapeInstance"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x368BB65, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x260449, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x2632D9, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x2644A9, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x264480: r9d is reflected object size; descriptor RVA 0x3E333E0."
+
+[[evidence]]
+class = "hkGeometry"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36AEDBF, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x28FC59, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x296109, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x2972D9, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x2972A0: r9d is reflected object size; descriptor RVA 0x7373B50."
+
+[[evidence]]
+class = "hkGeometryTriangle"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36AEE35, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x28FCD9, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x296189, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x297359, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x297330: r9d is reflected object size; descriptor RVA 0x7373B00."
+
+[[evidence]]
+class = "hkGizmoAttribute"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693CC2, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x269B59, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x26C9E9, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x26DBB9, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x26DB90: r9d is reflected object size; descriptor RVA 0x3E68440."
+
+[[evidence]]
+class = "hkIndexedTransformSet"
+size = 0x68
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369B15D, expect = "lea r9d, [rcx + 0x68]" }, { version = "982", rva = 0x272329, expect = "lea r9d, [rcx + 0x68]" }, { version = "137", rva = 0x2751B9, expect = "lea r9d, [rcx + 0x68]" }, { version = "246", rva = 0x276389, expect = "lea r9d, [rcx + 0x68]" }]
+note = "hkClass initializer 0x276350: r9d is reflected object size; descriptor RVA 0x3E6DCE0."
+
+[[evidence]]
+class = "hkIntRealPair"
+size = 0x8
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B0385, expect = "lea r9d, [rcx + 8]" }, { version = "982", rva = 0x290969, expect = "lea r9d, [rcx + 8]" }, { version = "137", rva = 0x296C39, expect = "lea r9d, [rcx + 8]" }, { version = "246", rva = 0x297E09, expect = "lea r9d, [rcx + 8]" }]
+note = "hkClass initializer 0x297DE0: r9d is reflected object size; descriptor RVA 0x7374300."
+
+[[evidence]]
+class = "hkLinkAttribute"
+size = 0x1
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693D42, expect = "lea r9d, [rcx + 1]" }, { version = "982", rva = 0x269C09, expect = "lea r9d, [rcx + 1]" }, { version = "137", rva = 0x26CA99, expect = "lea r9d, [rcx + 1]" }, { version = "246", rva = 0x26DC69, expect = "lea r9d, [rcx + 1]" }]
+note = "hkClass initializer 0x26DC40: r9d is reflected object size; descriptor RVA 0x3E68490."
+
+[[evidence]]
+class = "hkLocalFrame"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36940FC, expect = "lea r9d, [rax + 0x10]" }, { version = "982", rva = 0x26A10D, expect = "lea r9d, [rax + 0x10]" }, { version = "137", rva = 0x26CF9D, expect = "lea r9d, [rax + 0x10]" }, { version = "246", rva = 0x26E16D, expect = "lea r9d, [rax + 0x10]" }]
+note = "hkClass initializer 0x26E140: r9d is reflected object size; descriptor RVA 0x3E68840."
+
+[[evidence]]
+class = "hkLocalFrameGroup"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694165, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x26A17D, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x26D00D, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x26E1DD, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x26E1B0: r9d is reflected object size; descriptor RVA 0x3E68890."
+
+[[evidence]]
+class = "hkMassProperties"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B438D, expect = "lea r9d, [rcx + 0x50]" }, { version = "982", rva = 0x28F195, expect = "lea r9d, [rcx + 0x50]" }, { version = "137", rva = 0x295725, expect = "lea r9d, [rcx + 0x50]" }, { version = "246", rva = 0x2968F5, expect = "lea r9d, [rcx + 0x50]" }]
+note = "hkClass initializer 0x2968C0: r9d is reflected object size; descriptor RVA 0x7373440."
+
+[[evidence]]
+class = "hkMemoryMeshBody"
+size = 0x80
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369BEC3, expect = "mov r9d, 0x80" }, { version = "982", rva = 0x2736E8, expect = "mov r9d, 0x80" }, { version = "137", rva = 0x276578, expect = "mov r9d, 0x80" }, { version = "246", rva = 0x277748, expect = "mov r9d, 0x80" }]
+note = "hkClass initializer 0x277720: r9d is reflected object size; descriptor RVA 0x3E6E9E0."
+
+[[evidence]]
+class = "hkMemoryMeshMaterial"
+size = 0x80
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B92D7, expect = "mov r9d, 0x80" }, { version = "982", rva = 0x294199, expect = "mov r9d, 0x80" }, { version = "137", rva = 0x29A469, expect = "mov r9d, 0x80" }, { version = "246", rva = 0x29B639, expect = "mov r9d, 0x80" }]
+note = "hkClass initializer 0x29B600: r9d is reflected object size; descriptor RVA 0x73769A0."
+
+[[evidence]]
+class = "hkMemoryMeshShape"
+size = 0x48
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B947D, expect = "lea r9d, [rcx + 0x48]" }, { version = "982", rva = 0x294289, expect = "lea r9d, [rcx + 0x48]" }, { version = "137", rva = 0x29A559, expect = "lea r9d, [rcx + 0x48]" }, { version = "246", rva = 0x29B729, expect = "lea r9d, [rcx + 0x48]" }]
+note = "hkClass initializer 0x29B6F0: r9d is reflected object size; descriptor RVA 0x7376A90."
+
+[[evidence]]
+class = "hkMemoryMeshShapeSection"
+size = 0x38
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B94F5, expect = "lea r9d, [rcx + 0x38]" }, { version = "982", rva = 0x2942F9, expect = "lea r9d, [rcx + 0x38]" }, { version = "137", rva = 0x29A5C9, expect = "lea r9d, [rcx + 0x38]" }, { version = "246", rva = 0x29B799, expect = "lea r9d, [rcx + 0x38]" }]
+note = "hkClass initializer 0x29B770: r9d is reflected object size; descriptor RVA 0x7376A40."
+
+[[evidence]]
+class = "hkMemoryMeshSystem"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36BEBAC, expect = "lea r9d, [rax + 0x28]" }, { version = "982", rva = 0x29B17D, expect = "lea r9d, [rax + 0x28]" }, { version = "137", rva = 0x29E08D, expect = "lea r9d, [rax + 0x28]" }, { version = "246", rva = 0x29F25D, expect = "lea r9d, [rax + 0x28]" }]
+note = "hkClass initializer 0x29F230: r9d is reflected object size; descriptor RVA 0x7379410."
+
+[[evidence]]
+class = "hkMemoryMeshTexture"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B96CD, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x294469, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x29A739, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x29B909, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x29B8D0: r9d is reflected object size; descriptor RVA 0x7376B40."
+
+[[evidence]]
+class = "hkMemoryMeshVertexBuffer"
+size = 0x1B8
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B9887, expect = "mov r9d, 0x1b8" }, { version = "982", rva = 0x294559, expect = "mov r9d, 0x1b8" }, { version = "137", rva = 0x29A829, expect = "mov r9d, 0x1b8" }, { version = "246", rva = 0x29B9F9, expect = "mov r9d, 0x1b8" }]
+note = "hkClass initializer 0x29B9C0: r9d is reflected object size; descriptor RVA 0x7376BE0."
+
+[[evidence]]
+class = "hkMemoryResourceContainer"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B1ECD, expect = "lea r9d, [rcx + 0x40]" }, { version = "982", rva = 0x291039, expect = "lea r9d, [rcx + 0x40]" }, { version = "137", rva = 0x297309, expect = "lea r9d, [rcx + 0x40]" }, { version = "246", rva = 0x2984D9, expect = "lea r9d, [rcx + 0x40]" }]
+note = "hkClass initializer 0x2984A0: r9d is reflected object size; descriptor RVA 0x7374840."
+
+[[evidence]]
+class = "hkMemoryResourceHandle"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B1F9D, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x291129, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x2973F9, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x2985C9, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x298590: r9d is reflected object size; descriptor RVA 0x7374910."
+
+[[evidence]]
+class = "hkMemoryResourceHandleExternalLink"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B200D, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x2911A5, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x297475, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x298645, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x298610: r9d is reflected object size; descriptor RVA 0x73748C0."
+
+[[evidence]]
+class = "hkMeshBody"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369BF8A, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x2737E5, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x276675, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x277845, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x277820: r9d is reflected object size; descriptor RVA 0x3E6EA80."
+
+[[evidence]]
+class = "hkMeshBoneIndexMapping"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369B235, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x272409, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x275299, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x276469, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x276440: r9d is reflected object size; descriptor RVA 0x3E6DD60."
+
+[[evidence]]
+class = "hkMeshMaterial"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369BFEC, expect = "lea r9d, [rax + 0x10]" }, { version = "982", rva = 0x27386D, expect = "lea r9d, [rax + 0x10]" }, { version = "137", rva = 0x2766FD, expect = "lea r9d, [rax + 0x10]" }, { version = "246", rva = 0x2778CD, expect = "lea r9d, [rax + 0x10]" }]
+note = "hkClass initializer 0x2778A0: r9d is reflected object size; descriptor RVA 0x3E6EAE0."
+
+[[evidence]]
+class = "hkMeshMaterialRegistry"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36BED8C, expect = "lea r9d, [rax + 0x10]" }, { version = "982", rva = 0x29B3AD, expect = "lea r9d, [rax + 0x10]" }, { version = "137", rva = 0x29E2BD, expect = "lea r9d, [rax + 0x10]" }, { version = "246", rva = 0x29F48D, expect = "lea r9d, [rax + 0x10]" }]
+note = "hkClass initializer 0x29F460: r9d is reflected object size; descriptor RVA 0x7379600."
+
+[[evidence]]
+class = "hkMeshSection"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369C0DF, expect = "lea r9d, [rcx + 0x40]" }, { version = "982", rva = 0x273995, expect = "lea r9d, [rcx + 0x40]" }, { version = "137", rva = 0x276825, expect = "lea r9d, [rcx + 0x40]" }, { version = "246", rva = 0x2779F5, expect = "lea r9d, [rcx + 0x40]" }]
+note = "hkClass initializer 0x2779C0: r9d is reflected object size; descriptor RVA 0x3E6EB30."
+
+[[evidence]]
+class = "hkMeshSectionCinfo"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369C04D, expect = "lea r9d, [rcx + 0x40]" }, { version = "982", rva = 0x2738E5, expect = "lea r9d, [rcx + 0x40]" }, { version = "137", rva = 0x276775, expect = "lea r9d, [rcx + 0x40]" }, { version = "246", rva = 0x277945, expect = "lea r9d, [rcx + 0x40]" }]
+note = "hkClass initializer 0x277910: r9d is reflected object size; descriptor RVA 0x3E6EB80."
+
+[[evidence]]
+class = "hkMeshShape"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369C16A, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x273A45, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x2768D5, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x277AA5, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x277A80: r9d is reflected object size; descriptor RVA 0x3E6EBD0."
+
+[[evidence]]
+class = "hkMeshSystem"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36BEC6C, expect = "lea r9d, [rax + 0x10]" }, { version = "982", rva = 0x29B25D, expect = "lea r9d, [rax + 0x10]" }, { version = "137", rva = 0x29E16D, expect = "lea r9d, [rax + 0x10]" }, { version = "246", rva = 0x29F33D, expect = "lea r9d, [rax + 0x10]" }]
+note = "hkClass initializer 0x29F310: r9d is reflected object size; descriptor RVA 0x73794E0."
+
+[[evidence]]
+class = "hkMeshTexture"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B8E8A, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x293DA5, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x29A075, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x29B245, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x29B220: r9d is reflected object size; descriptor RVA 0x7376710."
+
+[[evidence]]
+class = "hkMeshTextureRawBufferDescriptor"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B8EF5, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x293E29, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x29A0F9, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x29B2C9, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x29B2A0: r9d is reflected object size; descriptor RVA 0x73766C0."
+
+[[evidence]]
+class = "hkMeshVertexBuffer"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369C1CA, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x273AC5, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x276955, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x277B25, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x277B00: r9d is reflected object size; descriptor RVA 0x3E6EC60."
+
+[[evidence]]
+class = "hkModelerNodeTypeAttribute"
+size = 0x1
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693DC2, expect = "lea r9d, [rcx + 1]" }, { version = "982", rva = 0x269CB9, expect = "lea r9d, [rcx + 1]" }, { version = "137", rva = 0x26CB49, expect = "lea r9d, [rcx + 1]" }, { version = "246", rva = 0x26DD19, expect = "lea r9d, [rcx + 1]" }]
+note = "hkClass initializer 0x26DCF0: r9d is reflected object size; descriptor RVA 0x3E684E0."
+
+[[evidence]]
+class = "hkMonitorStreamColorTable"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369BC45, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x2733CD, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x27625D, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x27742D, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkClass initializer 0x277400: r9d is reflected object size; descriptor RVA 0x3E6E810."
+
+[[evidence]]
+class = "hkMonitorStreamColorTableColorPair"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369BCB5, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x273449, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x2762D9, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x2774A9, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x277480: r9d is reflected object size; descriptor RVA 0x3E6E7C0."
+
+[[evidence]]
+class = "hkMonitorStreamFrameInfo"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369BD72, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x273539, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x2763C9, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x277599, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkClass initializer 0x277570: r9d is reflected object size; descriptor RVA 0x3E6E890."
+
+[[evidence]]
+class = "hkMonitorStreamStringMap"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369BDF5, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x2735E9, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x276479, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x277649, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x277620: r9d is reflected object size; descriptor RVA 0x3E6E930."
+
+[[evidence]]
+class = "hkMonitorStreamStringMapStringMap"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369BE55, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x273669, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x2764F9, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x2776C9, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x2776A0: r9d is reflected object size; descriptor RVA 0x3E6E8E0."
+
+[[evidence]]
+class = "hkMotionState"
+size = 0xB0
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694D20, expect = "mov r9d, 0xb0" }, { version = "982", rva = 0x26AF5A, expect = "mov r9d, 0xb0" }, { version = "137", rva = 0x26DDEA, expect = "mov r9d, 0xb0" }, { version = "246", rva = 0x26EFBA, expect = "mov r9d, 0xb0" }]
+note = "hkClass initializer 0x26EF90: r9d is reflected object size; descriptor RVA 0x3E69470."
+
+[[evidence]]
+class = "hkMultiThreadCheck"
+size = 0xC
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694CA2, expect = "lea r9d, [rcx + 0xc]" }, { version = "982", rva = 0x26AEC9, expect = "lea r9d, [rcx + 0xc]" }, { version = "137", rva = 0x26DD59, expect = "lea r9d, [rcx + 0xc]" }, { version = "246", rva = 0x26EF29, expect = "lea r9d, [rcx + 0xc]" }]
+note = "hkClass initializer 0x26EF00: r9d is reflected object size; descriptor RVA 0x3E69410."
+
+[[evidence]]
+class = "hkMultipleVertexBuffer"
+size = 0x160
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B9AF3, expect = "mov r9d, 0x160" }, { version = "982", rva = 0x294638, expect = "mov r9d, 0x160" }, { version = "137", rva = 0x29A908, expect = "mov r9d, 0x160" }, { version = "246", rva = 0x29BAD8, expect = "mov r9d, 0x160" }]
+note = "hkClass initializer 0x29BAB0: r9d is reflected object size; descriptor RVA 0x7376D70."
+
+[[evidence]]
+class = "hkMultipleVertexBufferElementInfo"
+size = 0x2
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B9B55, expect = "lea r9d, [rcx + 2]" }, { version = "982", rva = 0x2946B9, expect = "lea r9d, [rcx + 2]" }, { version = "137", rva = 0x29A989, expect = "lea r9d, [rcx + 2]" }, { version = "246", rva = 0x29BB59, expect = "lea r9d, [rcx + 2]" }]
+note = "hkClass initializer 0x29BB30: r9d is reflected object size; descriptor RVA 0x7376CD0."
+
+[[evidence]]
+class = "hkMultipleVertexBufferLockedElement"
+size = 0x7
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B9BB5, expect = "lea r9d, [rcx + 7]" }, { version = "982", rva = 0x294739, expect = "lea r9d, [rcx + 7]" }, { version = "137", rva = 0x29AA09, expect = "lea r9d, [rcx + 7]" }, { version = "246", rva = 0x29BBD9, expect = "lea r9d, [rcx + 7]" }]
+note = "hkClass initializer 0x29BBB0: r9d is reflected object size; descriptor RVA 0x7376D20."
+
+[[evidence]]
+class = "hkMultipleVertexBufferVertexBufferInfo"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B9C75, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x294829, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x29AAF9, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x29BCC9, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x29BCA0: r9d is reflected object size; descriptor RVA 0x7376C80."
+
+[[evidence]]
+class = "hkOffsetBitField"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36A90AC, expect = "lea r9d, [rax + 0x18]" }, { version = "982", rva = 0x29048D, expect = "lea r9d, [rax + 0x18]" }, { version = "137", rva = 0x29675D, expect = "lea r9d, [rax + 0x18]" }, { version = "246", rva = 0x29792D, expect = "lea r9d, [rax + 0x18]" }]
+note = "hkClass initializer 0x297900: r9d is reflected object size; descriptor RVA 0x7373F40."
+
+[[evidence]]
+class = "hkOffsetBitFieldStoragehkArrayunsignedinthkContainerHeapAllocator"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36A9115, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x2904F9, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x2967C9, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x297999, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x297970: r9d is reflected object size; descriptor RVA 0x7373F90."
+
+[[evidence]]
+class = "hkOstream"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3692C9C, expect = "lea r9d, [rax + 0x18]" }, { version = "982", rva = 0x268519, expect = "lea r9d, [rax + 0x18]" }, { version = "137", rva = 0x26B3A9, expect = "lea r9d, [rax + 0x18]" }, { version = "246", rva = 0x26C579, expect = "lea r9d, [rax + 0x18]" }]
+note = "hkClass initializer 0x26C550: r9d is reflected object size; descriptor RVA 0x3E64F60."
+
+[[evidence]]
+class = "hkPackedVector3"
+size = 0x8
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B0CE5, expect = "lea r9d, [rcx + 8]" }, { version = "982", rva = 0x290CB9, expect = "lea r9d, [rcx + 8]" }, { version = "137", rva = 0x296F89, expect = "lea r9d, [rcx + 8]" }, { version = "246", rva = 0x298159, expect = "lea r9d, [rcx + 8]" }]
+note = "hkClass initializer 0x298130: r9d is reflected object size; descriptor RVA 0x73745A0."
+
+[[evidence]]
+class = "hkPackedVector8_3"
+size = 0x4
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B0D45, expect = "lea r9d, [rcx + 4]" }, { version = "982", rva = 0x290D39, expect = "lea r9d, [rcx + 4]" }, { version = "137", rva = 0x297009, expect = "lea r9d, [rcx + 4]" }, { version = "246", rva = 0x2981D9, expect = "lea r9d, [rcx + 4]" }]
+note = "hkClass initializer 0x2981B0: r9d is reflected object size; descriptor RVA 0x73745F0."
+
+[[evidence]]
+class = "hkPackfileHeader"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36992DD, expect = "lea r9d, [rcx + 0x40]" }, { version = "982", rva = 0x270135, expect = "lea r9d, [rcx + 0x40]" }, { version = "137", rva = 0x272FC5, expect = "lea r9d, [rcx + 0x40]" }, { version = "246", rva = 0x274195, expect = "lea r9d, [rcx + 0x40]" }]
+note = "hkClass initializer 0x274160: r9d is reflected object size; descriptor RVA 0x3E6C540."
+
+[[evidence]]
+class = "hkPackfileSectionHeader"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369934D, expect = "lea r9d, [rcx + 0x40]" }, { version = "982", rva = 0x2701B5, expect = "lea r9d, [rcx + 0x40]" }, { version = "137", rva = 0x273045, expect = "lea r9d, [rcx + 0x40]" }, { version = "246", rva = 0x274215, expect = "lea r9d, [rcx + 0x40]" }]
+note = "hkClass initializer 0x2741E0: r9d is reflected object size; descriptor RVA 0x3E6C5A0."
+
+[[evidence]]
+class = "hkPostFinishAttribute"
+size = 0x8
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693E45, expect = "lea r9d, [rcx + 8]" }, { version = "982", rva = 0x269D69, expect = "lea r9d, [rcx + 8]" }, { version = "137", rva = 0x26CBF9, expect = "lea r9d, [rcx + 8]" }, { version = "246", rva = 0x26DDC9, expect = "lea r9d, [rcx + 8]" }]
+note = "hkClass initializer 0x26DDA0: r9d is reflected object size; descriptor RVA 0x3E68530."
+
+[[evidence]]
+class = "hkQTransform"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B1019, expect = "lea r9d, [rax + 0x20]" }, { version = "982", rva = 0x290DC5, expect = "lea r9d, [rax + 0x20]" }, { version = "137", rva = 0x297095, expect = "lea r9d, [rax + 0x20]" }, { version = "246", rva = 0x298265, expect = "lea r9d, [rax + 0x20]" }]
+note = "hkClass initializer 0x298230: r9d is reflected object size; descriptor RVA 0x7374660."
+
+[[evidence]]
+class = "hkQTransformf"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B1155, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x290E29, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x2970F9, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x2982C9, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x2982A0: r9d is reflected object size; descriptor RVA 0x73746C0."
+
+[[evidence]]
+class = "hkRangeInt32Attribute"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693EA5, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x269DE9, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x26CC79, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x26DE49, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x26DE20: r9d is reflected object size; descriptor RVA 0x3E68580."
+
+[[evidence]]
+class = "hkRangeRealAttribute"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693F05, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x269E69, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x26CCF9, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x26DEC9, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x26DEA0: r9d is reflected object size; descriptor RVA 0x3E685D0."
+
+[[evidence]]
+class = "hkRefCountedProperties"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36938EF, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x2695D5, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x26C465, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x26D635, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x26D600: r9d is reflected object size; descriptor RVA 0x3E680D0."
+
+[[evidence]]
+class = "hkRefCountedPropertiesEntry"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693965, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x269659, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x26C4E9, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x26D6B9, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x26D690: r9d is reflected object size; descriptor RVA 0x3E68080."
+
+[[evidence]]
+class = "hkReferencedObject"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693825, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x2694DD, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x26C36D, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x26D53D, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x26D510: r9d is reflected object size; descriptor RVA 0x3E67FE0."
+
+[[evidence]]
+class = "hkResourceBase"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B20DA, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x291285, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x297555, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x298725, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x298700: r9d is reflected object size; descriptor RVA 0x7374990."
+
+[[evidence]]
+class = "hkResourceContainer"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B213C, expect = "lea r9d, [rax + 0x10]" }, { version = "982", rva = 0x29130D, expect = "lea r9d, [rax + 0x10]" }, { version = "137", rva = 0x2975DD, expect = "lea r9d, [rax + 0x10]" }, { version = "246", rva = 0x2987AD, expect = "lea r9d, [rax + 0x10]" }]
+note = "hkClass initializer 0x298780: r9d is reflected object size; descriptor RVA 0x73749E0."
+
+[[evidence]]
+class = "hkResourceHandle"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B219C, expect = "lea r9d, [rax + 0x10]" }, { version = "982", rva = 0x29137D, expect = "lea r9d, [rax + 0x10]" }, { version = "137", rva = 0x29764D, expect = "lea r9d, [rax + 0x10]" }, { version = "246", rva = 0x29881D, expect = "lea r9d, [rax + 0x10]" }]
+note = "hkClass initializer 0x2987F0: r9d is reflected object size; descriptor RVA 0x7374A30."
+
+[[evidence]]
+class = "hkRootLevelContainer"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694A15, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x26AB99, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x26DA29, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x26EBF9, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x26EBD0: r9d is reflected object size; descriptor RVA 0x3E69210."
+
+[[evidence]]
+class = "hkRootLevelContainerNamedVariant"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694A6D, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x26AC25, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x26DAB5, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x26EC85, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x26EC50: r9d is reflected object size; descriptor RVA 0x3E691C0."
+
+[[evidence]]
+class = "hkScriptableAttribute"
+size = 0x1
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693F5C, expect = "lea r9d, [rax + 1]" }, { version = "982", rva = 0x269EE9, expect = "lea r9d, [rax + 1]" }, { version = "137", rva = 0x26CD79, expect = "lea r9d, [rax + 1]" }, { version = "246", rva = 0x26DF49, expect = "lea r9d, [rax + 1]" }]
+note = "hkClass initializer 0x26DF20: r9d is reflected object size; descriptor RVA 0x3E68620."
+
+[[evidence]]
+class = "hkSemanticsAttribute"
+size = 0x1
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693FC2, expect = "lea r9d, [rcx + 1]" }, { version = "982", rva = 0x269F59, expect = "lea r9d, [rcx + 1]" }, { version = "137", rva = 0x26CDE9, expect = "lea r9d, [rcx + 1]" }, { version = "246", rva = 0x26DFB9, expect = "lea r9d, [rcx + 1]" }]
+note = "hkClass initializer 0x26DF90: r9d is reflected object size; descriptor RVA 0x3E68670."
+
+[[evidence]]
+class = "hkSetIntFloatPair"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B03DC, expect = "lea r9d, [rax + 0x18]" }, { version = "982", rva = 0x2909ED, expect = "lea r9d, [rax + 0x18]" }, { version = "137", rva = 0x296CBD, expect = "lea r9d, [rax + 0x18]" }, { version = "246", rva = 0x297E8D, expect = "lea r9d, [rax + 0x18]" }]
+note = "hkClass initializer 0x297E60: r9d is reflected object size; descriptor RVA 0x7374350."
+
+[[evidence]]
+class = "hkSetUint32"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B043C, expect = "lea r9d, [rax + 0x18]" }, { version = "982", rva = 0x290A5D, expect = "lea r9d, [rax + 0x18]" }, { version = "137", rva = 0x296D2D, expect = "lea r9d, [rax + 0x18]" }, { version = "246", rva = 0x297EFD, expect = "lea r9d, [rax + 0x18]" }]
+note = "hkClass initializer 0x297ED0: r9d is reflected object size; descriptor RVA 0x73743A0."
+
+[[evidence]]
+class = "hkSetUint64"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B049C, expect = "lea r9d, [rax + 0x18]" }, { version = "982", rva = 0x290ACD, expect = "lea r9d, [rax + 0x18]" }, { version = "137", rva = 0x296D9D, expect = "lea r9d, [rax + 0x18]" }, { version = "246", rva = 0x297F6D, expect = "lea r9d, [rax + 0x18]" }]
+note = "hkClass initializer 0x297F40: r9d is reflected object size; descriptor RVA 0x73743F0."
+
+[[evidence]]
+class = "hkSethkIntRealPairhkContainerHeapAllocatorhkMapOperationshkIntRealPair"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B0505, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x290B39, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x296E09, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x297FD9, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x297FB0: r9d is reflected object size; descriptor RVA 0x7374440."
+
+[[evidence]]
+class = "hkSetunsignedinthkContainerHeapAllocatorhkMapOperationsunsignedint"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B0565, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x290BB9, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x296E89, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x298059, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x298030: r9d is reflected object size; descriptor RVA 0x7374490."
+
+[[evidence]]
+class = "hkSetunsignedlonglonghkContainerHeapAllocatorhkMapOperationsunsignedlonglong"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B05C5, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x290C39, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x296F09, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x2980D9, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x2980B0: r9d is reflected object size; descriptor RVA 0x73744E0."
+
+[[evidence]]
+class = "hkSimpleLocalFrame"
+size = 0x80
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694247, expect = "mov r9d, 0x80" }, { version = "982", rva = 0x26A279, expect = "mov r9d, 0x80" }, { version = "137", rva = 0x26D109, expect = "mov r9d, 0x80" }, { version = "246", rva = 0x26E2D9, expect = "mov r9d, 0x80" }]
+note = "hkClass initializer 0x26E2A0: r9d is reflected object size; descriptor RVA 0x3E68910."
+
+[[evidence]]
+class = "hkSimpleProperty"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694BBD, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x26ADD5, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x26DC65, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x26EE35, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x26EE00: r9d is reflected object size; descriptor RVA 0x3E69350."
+
+[[evidence]]
+class = "hkSimplePropertyValue"
+size = 0x8
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694C2D, expect = "lea r9d, [rcx + 8]" }, { version = "982", rva = 0x26AE55, expect = "lea r9d, [rcx + 8]" }, { version = "137", rva = 0x26DCE5, expect = "lea r9d, [rcx + 8]" }, { version = "246", rva = 0x26EEB5, expect = "lea r9d, [rcx + 8]" }]
+note = "hkClass initializer 0x26EE80: r9d is reflected object size; descriptor RVA 0x3E693A0."
+
+[[evidence]]
+class = "hkSkinBinding"
+size = 0x38
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B9DA5, expect = "lea r9d, [rcx + 0x38]" }, { version = "982", rva = 0x2948AD, expect = "lea r9d, [rcx + 0x38]" }, { version = "137", rva = 0x29AB7D, expect = "lea r9d, [rcx + 0x38]" }, { version = "246", rva = 0x29BD4D, expect = "lea r9d, [rcx + 0x38]" }]
+note = "hkClass initializer 0x29BD20: r9d is reflected object size; descriptor RVA 0x7376E40."
+
+[[evidence]]
+class = "hkSkinnedMeshShape"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B901C, expect = "lea r9d, [rax + 0x10]" }, { version = "982", rva = 0x293FAD, expect = "lea r9d, [rax + 0x10]" }, { version = "137", rva = 0x29A27D, expect = "lea r9d, [rax + 0x10]" }, { version = "246", rva = 0x29B44D, expect = "lea r9d, [rax + 0x10]" }]
+note = "hkClass initializer 0x29B420: r9d is reflected object size; descriptor RVA 0x7376870."
+
+[[evidence]]
+class = "hkSkinnedMeshShapeBoneSection"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B8F4D, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x293EB5, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x29A185, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x29B355, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x29B320: r9d is reflected object size; descriptor RVA 0x73767D0."
+
+[[evidence]]
+class = "hkSkinnedMeshShapeBoneSet"
+size = 0x4
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B8FC5, expect = "lea r9d, [rcx + 4]" }, { version = "982", rva = 0x293F29, expect = "lea r9d, [rcx + 4]" }, { version = "137", rva = 0x29A1F9, expect = "lea r9d, [rcx + 4]" }, { version = "246", rva = 0x29B3C9, expect = "lea r9d, [rcx + 4]" }]
+note = "hkClass initializer 0x29B3A0: r9d is reflected object size; descriptor RVA 0x7376780."
+
+[[evidence]]
+class = "hkSkinnedMeshShapePart"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B907D, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x294025, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x29A2F5, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x29B4C5, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x29B490: r9d is reflected object size; descriptor RVA 0x7376820."
+
+[[evidence]]
+class = "hkSkinnedRefMeshShape"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B9F3D, expect = "lea r9d, [rcx + 0x40]" }, { version = "982", rva = 0x2949A9, expect = "lea r9d, [rcx + 0x40]" }, { version = "137", rva = 0x29AC79, expect = "lea r9d, [rcx + 0x40]" }, { version = "246", rva = 0x29BE49, expect = "lea r9d, [rcx + 0x40]" }]
+note = "hkClass initializer 0x29BE10: r9d is reflected object size; descriptor RVA 0x7376EE0."
+
+[[evidence]]
+class = "hkSphere"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36AEEF5, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x290219, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x2964E9, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x2976B9, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x297690: r9d is reflected object size; descriptor RVA 0x7373DA0."
+
+[[evidence]]
+class = "hkStorageSkinnedMeshShape"
+size = 0x58
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B90ED, expect = "lea r9d, [rcx + 0x58]" }, { version = "982", rva = 0x2940A9, expect = "lea r9d, [rcx + 0x58]" }, { version = "137", rva = 0x29A379, expect = "lea r9d, [rcx + 0x58]" }, { version = "246", rva = 0x29B549, expect = "lea r9d, [rcx + 0x58]" }]
+note = "hkClass initializer 0x29B510: r9d is reflected object size; descriptor RVA 0x73768C0."
+
+[[evidence]]
+class = "hkStringObject"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36AEF55, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x29066D, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x29693D, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x297B0D, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x297AE0: r9d is reflected object size; descriptor RVA 0x73740E0."
+
+[[evidence]]
+class = "hkSweptTransformf"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B1785, expect = "lea r9d, [rcx + 0x50]" }, { version = "982", rva = 0x290EA9, expect = "lea r9d, [rcx + 0x50]" }, { version = "137", rva = 0x297179, expect = "lea r9d, [rcx + 0x50]" }, { version = "246", rva = 0x298349, expect = "lea r9d, [rcx + 0x50]" }]
+note = "hkClass initializer 0x298320: r9d is reflected object size; descriptor RVA 0x7374720."
+
+[[evidence]]
+class = "hkTraceStreamTitle"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B17E9, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x290F2D, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x2971FD, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x2983CD, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x2983A0: r9d is reflected object size; descriptor RVA 0x7374780."
+
+[[evidence]]
+class = "hkUFloat8"
+size = 0x1
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694AE5, expect = "lea r9d, [rcx + 1]" }, { version = "982", rva = 0x26AC99, expect = "lea r9d, [rcx + 1]" }, { version = "137", rva = 0x26DB29, expect = "lea r9d, [rcx + 1]" }, { version = "246", rva = 0x26ECF9, expect = "lea r9d, [rcx + 1]" }]
+note = "hkClass initializer 0x26ECD0: r9d is reflected object size; descriptor RVA 0x3E69280."
+
+[[evidence]]
+class = "hkUiAttribute"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369403F, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x26A015, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x26CEA5, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x26E075, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkClass initializer 0x26E040: r9d is reflected object size; descriptor RVA 0x3E686C0."
+
+[[evidence]]
+class = "hkUuid"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B19ED, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x290FB5, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x297285, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x298455, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x298420: r9d is reflected object size; descriptor RVA 0x73747E0."
+
+[[evidence]]
+class = "hkVariableTweakingHelper"
+size = 0x88
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B8D1C, expect = "mov r9d, 0x88" }, { version = "982", rva = 0x2822AC, expect = "mov r9d, 0x88" }, { version = "137", rva = 0x288A8C, expect = "mov r9d, 0x88" }, { version = "246", rva = 0x289C5C, expect = "mov r9d, 0x88" }]
+note = "hkClass initializer 0x289C40: r9d is reflected object size; descriptor RVA 0x736AC20."
+
+[[evidence]]
+class = "hkVariableTweakingHelperBoolVariableInfo"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B8CB5, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x282239, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x288A19, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x289BE9, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x289BC0: r9d is reflected object size; descriptor RVA 0x736AAE0."
+
+[[evidence]]
+class = "hkVariableTweakingHelperIntVariableInfo"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B8D75, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x282339, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x288B19, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x289CE9, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x289CC0: r9d is reflected object size; descriptor RVA 0x736AB30."
+
+[[evidence]]
+class = "hkVariableTweakingHelperRealVariableInfo"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B8DD5, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x2823B9, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x288B99, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x289D69, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x289D40: r9d is reflected object size; descriptor RVA 0x736AB80."
+
+[[evidence]]
+class = "hkVariableTweakingHelperVector4VariableInfo"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B8E35, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x282439, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x288C19, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x289DE9, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x289DC0: r9d is reflected object size; descriptor RVA 0x736ABD0."
+
+[[evidence]]
+class = "hkVertexFormat"
+size = 0x104
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369C232, expect = "mov r9d, 0x104" }, { version = "982", rva = 0x273B3C, expect = "mov r9d, 0x104" }, { version = "137", rva = 0x2769CC, expect = "mov r9d, 0x104" }, { version = "246", rva = 0x277B9C, expect = "mov r9d, 0x104" }]
+note = "hkClass initializer 0x277B80: r9d is reflected object size; descriptor RVA 0x3E6ED00."
+
+[[evidence]]
+class = "hkVertexFormatElement"
+size = 0x8
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369C2A5, expect = "lea r9d, [rcx + 8]" }, { version = "982", rva = 0x273BD9, expect = "lea r9d, [rcx + 8]" }, { version = "137", rva = 0x276A69, expect = "lea r9d, [rcx + 8]" }, { version = "246", rva = 0x277C39, expect = "lea r9d, [rcx + 8]" }]
+note = "hkClass initializer 0x277C10: r9d is reflected object size; descriptor RVA 0x3E6ECB0."
+
+[[evidence]]
+class = "hkWorldMemoryAvailableWatchDog"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x368ED29, expect = "lea r9d, [rax + 0x10]" }, { version = "982", rva = 0x263A65, expect = "lea r9d, [rax + 0x10]" }, { version = "137", rva = 0x2668F5, expect = "lea r9d, [rax + 0x10]" }, { version = "246", rva = 0x267AC5, expect = "lea r9d, [rax + 0x10]" }]
+note = "hkClass initializer 0x267A90: r9d is reflected object size; descriptor RVA 0x3E373F0."
+
+[[evidence]]
+class = "hkcdAdf"
+size = 0x80
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B41FC, expect = "mov r9d, 0x80" }, { version = "982", rva = 0x29204C, expect = "mov r9d, 0x80" }, { version = "137", rva = 0x29831C, expect = "mov r9d, 0x80" }, { version = "246", rva = 0x2994EC, expect = "mov r9d, 0x80" }]
+note = "hkClass initializer 0x2994D0: r9d is reflected object size; descriptor RVA 0x7375360."
+
+[[evidence]]
+class = "hkcdDynamicAabbTree"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B3DCD, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x291D09, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x297FD9, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x2991A9, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x299170: r9d is reflected object size; descriptor RVA 0x7375120."
+
+[[evidence]]
+class = "hkcdDynamicTreeAnisotropicMetric"
+size = 0x1
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369977C, expect = "lea r9d, [rax + 1]" }, { version = "982", rva = 0x2706D9, expect = "lea r9d, [rax + 1]" }, { version = "137", rva = 0x273569, expect = "lea r9d, [rax + 1]" }, { version = "246", rva = 0x274739, expect = "lea r9d, [rax + 1]" }]
+note = "hkClass initializer 0x274710: r9d is reflected object size; descriptor RVA 0x3E6C9B0."
+
+[[evidence]]
+class = "hkcdDynamicTreeBalanceMetric"
+size = 0x1
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36997DC, expect = "lea r9d, [rax + 1]" }, { version = "982", rva = 0x270749, expect = "lea r9d, [rax + 1]" }, { version = "137", rva = 0x2735D9, expect = "lea r9d, [rax + 1]" }, { version = "246", rva = 0x2747A9, expect = "lea r9d, [rax + 1]" }]
+note = "hkClass initializer 0x274780: r9d is reflected object size; descriptor RVA 0x3E6CA00."
+
+[[evidence]]
+class = "hkcdDynamicTreeCentroidMetric"
+size = 0x1
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369983C, expect = "lea r9d, [rax + 1]" }, { version = "982", rva = 0x2707B9, expect = "lea r9d, [rax + 1]" }, { version = "137", rva = 0x273649, expect = "lea r9d, [rax + 1]" }, { version = "246", rva = 0x274819, expect = "lea r9d, [rax + 1]" }]
+note = "hkClass initializer 0x2747F0: r9d is reflected object size; descriptor RVA 0x3E6CA50."
+
+[[evidence]]
+class = "hkcdDynamicTreeCodec18"
+size = 0x12
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3699485, expect = "lea r9d, [rcx + 0x12]" }, { version = "982", rva = 0x270309, expect = "lea r9d, [rcx + 0x12]" }, { version = "137", rva = 0x273199, expect = "lea r9d, [rcx + 0x12]" }, { version = "246", rva = 0x274369, expect = "lea r9d, [rcx + 0x12]" }]
+note = "hkClass initializer 0x274340: r9d is reflected object size; descriptor RVA 0x3E6C6B0."
+
+[[evidence]]
+class = "hkcdDynamicTreeCodec32"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36994E5, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x270389, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x273219, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x2743E9, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x2743C0: r9d is reflected object size; descriptor RVA 0x3E6C700."
+
+[[evidence]]
+class = "hkcdDynamicTreeCodecInt16"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3699545, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x270409, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x273299, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x274469, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x274440: r9d is reflected object size; descriptor RVA 0x3E6C7A0."
+
+[[evidence]]
+class = "hkcdDynamicTreeCodecInt16IntAabb"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369959C, expect = "lea r9d, [rax + 0x10]" }, { version = "982", rva = 0x27048D, expect = "lea r9d, [rax + 0x10]" }, { version = "137", rva = 0x27331D, expect = "lea r9d, [rax + 0x10]" }, { version = "246", rva = 0x2744ED, expect = "lea r9d, [rax + 0x10]" }]
+note = "hkClass initializer 0x2744C0: r9d is reflected object size; descriptor RVA 0x3E6C750."
+
+[[evidence]]
+class = "hkcdDynamicTreeCodecRawUint"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36995FC, expect = "lea r9d, [rax + 0x30]" }, { version = "982", rva = 0x2704FD, expect = "lea r9d, [rax + 0x30]" }, { version = "137", rva = 0x27338D, expect = "lea r9d, [rax + 0x30]" }, { version = "246", rva = 0x27455D, expect = "lea r9d, [rax + 0x30]" }]
+note = "hkClass initializer 0x274530: r9d is reflected object size; descriptor RVA 0x3E6C7F0."
+
+[[evidence]]
+class = "hkcdDynamicTreeCodecRawUlong"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369965C, expect = "lea r9d, [rax + 0x40]" }, { version = "982", rva = 0x27056D, expect = "lea r9d, [rax + 0x40]" }, { version = "137", rva = 0x2733FD, expect = "lea r9d, [rax + 0x40]" }, { version = "246", rva = 0x2745CD, expect = "lea r9d, [rax + 0x40]" }]
+note = "hkClass initializer 0x2745A0: r9d is reflected object size; descriptor RVA 0x3E6C840."
+
+[[evidence]]
+class = "hkcdDynamicTreeCodecRawunsignedint"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36996C5, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x2705D9, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x273469, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x274639, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x274610: r9d is reflected object size; descriptor RVA 0x3E6C890."
+
+[[evidence]]
+class = "hkcdDynamicTreeCodecRawunsignedlong"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3699725, expect = "lea r9d, [rcx + 0x40]" }, { version = "982", rva = 0x270659, expect = "lea r9d, [rcx + 0x40]" }, { version = "137", rva = 0x2734E9, expect = "lea r9d, [rcx + 0x40]" }, { version = "246", rva = 0x2746B9, expect = "lea r9d, [rcx + 0x40]" }]
+note = "hkClass initializer 0x274690: r9d is reflected object size; descriptor RVA 0x3E6C8E0."
+
+[[evidence]]
+class = "hkcdDynamicTreeDefaultDynamicStoragehkcdDynamicTreeCodec32"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36963FC, expect = "lea r9d, [rax + 0x18]" }, { version = "982", rva = 0x26C73D, expect = "lea r9d, [rax + 0x18]" }, { version = "137", rva = 0x26F5CD, expect = "lea r9d, [rax + 0x18]" }, { version = "246", rva = 0x27079D, expect = "lea r9d, [rax + 0x18]" }]
+note = "hkClass initializer 0x270770: r9d is reflected object size; descriptor RVA 0x3E6A3C0."
+
+[[evidence]]
+class = "hkcdDynamicTreeDefaultDynamicStoragehkcdDynamicTreeCodecInt16"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369645C, expect = "lea r9d, [rax + 0x18]" }, { version = "982", rva = 0x26C7AD, expect = "lea r9d, [rax + 0x18]" }, { version = "137", rva = 0x26F63D, expect = "lea r9d, [rax + 0x18]" }, { version = "246", rva = 0x27080D, expect = "lea r9d, [rax + 0x18]" }]
+note = "hkClass initializer 0x2707E0: r9d is reflected object size; descriptor RVA 0x3E6A410."
+
+[[evidence]]
+class = "hkcdDynamicTreeDefaultDynamicStoragehkcdDynamicTreeCodecRawUint"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36964BC, expect = "lea r9d, [rax + 0x18]" }, { version = "982", rva = 0x26C81D, expect = "lea r9d, [rax + 0x18]" }, { version = "137", rva = 0x26F6AD, expect = "lea r9d, [rax + 0x18]" }, { version = "246", rva = 0x27087D, expect = "lea r9d, [rax + 0x18]" }]
+note = "hkClass initializer 0x270850: r9d is reflected object size; descriptor RVA 0x3E6A460."
+
+[[evidence]]
+class = "hkcdDynamicTreeDefaultDynamicStoragehkcdDynamicTreeCodecRawUlong"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369651C, expect = "lea r9d, [rax + 0x18]" }, { version = "982", rva = 0x26C88D, expect = "lea r9d, [rax + 0x18]" }, { version = "137", rva = 0x26F71D, expect = "lea r9d, [rax + 0x18]" }, { version = "246", rva = 0x2708ED, expect = "lea r9d, [rax + 0x18]" }]
+note = "hkClass initializer 0x2708C0: r9d is reflected object size; descriptor RVA 0x3E6A4B0."
+
+[[evidence]]
+class = "hkcdDynamicTreeDefaultTree32Storage"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369435C, expect = "lea r9d, [rax + 0x28]" }, { version = "982", rva = 0x26A3CD, expect = "lea r9d, [rax + 0x28]" }, { version = "137", rva = 0x26D25D, expect = "lea r9d, [rax + 0x28]" }, { version = "246", rva = 0x26E42D, expect = "lea r9d, [rax + 0x28]" }]
+note = "hkClass initializer 0x26E400: r9d is reflected object size; descriptor RVA 0x3E68A40."
+
+[[evidence]]
+class = "hkcdDynamicTreeDefaultTree48Storage"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36943BC, expect = "lea r9d, [rax + 0x28]" }, { version = "982", rva = 0x26A43D, expect = "lea r9d, [rax + 0x28]" }, { version = "137", rva = 0x26D2CD, expect = "lea r9d, [rax + 0x28]" }, { version = "246", rva = 0x26E49D, expect = "lea r9d, [rax + 0x28]" }]
+note = "hkClass initializer 0x26E470: r9d is reflected object size; descriptor RVA 0x3E68A90."
+
+[[evidence]]
+class = "hkcdDynamicTreeDefaultTreeInt16Storage"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369441C, expect = "lea r9d, [rax + 0x28]" }, { version = "982", rva = 0x26A4AD, expect = "lea r9d, [rax + 0x28]" }, { version = "137", rva = 0x26D33D, expect = "lea r9d, [rax + 0x28]" }, { version = "246", rva = 0x26E50D, expect = "lea r9d, [rax + 0x28]" }]
+note = "hkClass initializer 0x26E4E0: r9d is reflected object size; descriptor RVA 0x3E68AE0."
+
+[[evidence]]
+class = "hkcdDynamicTreeDefaultTreePtrStorage"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369447C, expect = "lea r9d, [rax + 0x28]" }, { version = "982", rva = 0x26A51D, expect = "lea r9d, [rax + 0x28]" }, { version = "137", rva = 0x26D3AD, expect = "lea r9d, [rax + 0x28]" }, { version = "246", rva = 0x26E57D, expect = "lea r9d, [rax + 0x28]" }]
+note = "hkClass initializer 0x26E550: r9d is reflected object size; descriptor RVA 0x3E68B30."
+
+[[evidence]]
+class = "hkcdDynamicTreeDynamicStorage0hkcdDynamicTreeAnisotropicMetrichkcdDynamicTreeCodec32"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3696585, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x26C8FD, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x26F78D, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x27095D, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x270930: r9d is reflected object size; descriptor RVA 0x3E6A500."
+
+[[evidence]]
+class = "hkcdDynamicTreeDynamicStorage0hkcdDynamicTreeAnisotropicMetrichkcdDynamicTreeCodecInt16"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36965F5, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x26C97D, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x26F80D, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x2709DD, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x2709B0: r9d is reflected object size; descriptor RVA 0x3E6A550."
+
+[[evidence]]
+class = "hkcdDynamicTreeDynamicStorage0hkcdDynamicTreeAnisotropicMetrichkcdDynamicTreeCodecRawUint"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3696665, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x26C9FD, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x26F88D, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x270A5D, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x270A30: r9d is reflected object size; descriptor RVA 0x3E6A5A0."
+
+[[evidence]]
+class = "hkcdDynamicTreeDynamicStorage0hkcdDynamicTreeAnisotropicMetrichkcdDynamicTreeCodecRawUlong"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36966D5, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x26CA7D, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x26F90D, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x270ADD, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x270AB0: r9d is reflected object size; descriptor RVA 0x3E6A5F0."
+
+[[evidence]]
+class = "hkcdDynamicTreeDynamicStorage16"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369673C, expect = "lea r9d, [rax + 0x18]" }, { version = "982", rva = 0x26CAFD, expect = "lea r9d, [rax + 0x18]" }, { version = "137", rva = 0x26F98D, expect = "lea r9d, [rax + 0x18]" }, { version = "246", rva = 0x270B5D, expect = "lea r9d, [rax + 0x18]" }]
+note = "hkClass initializer 0x270B30: r9d is reflected object size; descriptor RVA 0x3E6A640."
+
+[[evidence]]
+class = "hkcdDynamicTreeDynamicStorage32"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369679C, expect = "lea r9d, [rax + 0x18]" }, { version = "982", rva = 0x26CB6D, expect = "lea r9d, [rax + 0x18]" }, { version = "137", rva = 0x26F9FD, expect = "lea r9d, [rax + 0x18]" }, { version = "246", rva = 0x270BCD, expect = "lea r9d, [rax + 0x18]" }]
+note = "hkClass initializer 0x270BA0: r9d is reflected object size; descriptor RVA 0x3E6A690."
+
+[[evidence]]
+class = "hkcdDynamicTreeDynamicStorageInt16"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36967FC, expect = "lea r9d, [rax + 0x18]" }, { version = "982", rva = 0x26CBDD, expect = "lea r9d, [rax + 0x18]" }, { version = "137", rva = 0x26FA6D, expect = "lea r9d, [rax + 0x18]" }, { version = "246", rva = 0x270C3D, expect = "lea r9d, [rax + 0x18]" }]
+note = "hkClass initializer 0x270C10: r9d is reflected object size; descriptor RVA 0x3E6A6E0."
+
+[[evidence]]
+class = "hkcdDynamicTreeDynamicStoragePtr"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369685C, expect = "lea r9d, [rax + 0x18]" }, { version = "982", rva = 0x26CC4D, expect = "lea r9d, [rax + 0x18]" }, { version = "137", rva = 0x26FADD, expect = "lea r9d, [rax + 0x18]" }, { version = "246", rva = 0x270CAD, expect = "lea r9d, [rax + 0x18]" }]
+note = "hkClass initializer 0x270C80: r9d is reflected object size; descriptor RVA 0x3E6A730."
+
+[[evidence]]
+class = "hkcdDynamicTreeTreehkcdDynamicTreeDynamicStorage16"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36944E5, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x26A58D, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x26D41D, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x26E5ED, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkClass initializer 0x26E5C0: r9d is reflected object size; descriptor RVA 0x3E68B80."
+
+[[evidence]]
+class = "hkcdDynamicTreeTreehkcdDynamicTreeDynamicStorage32"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694555, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x26A60D, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x26D49D, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x26E66D, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkClass initializer 0x26E640: r9d is reflected object size; descriptor RVA 0x3E68BD0."
+
+[[evidence]]
+class = "hkcdDynamicTreeTreehkcdDynamicTreeDynamicStorageInt16"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36945C5, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x26A68D, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x26D51D, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x26E6ED, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkClass initializer 0x26E6C0: r9d is reflected object size; descriptor RVA 0x3E68C20."
+
+[[evidence]]
+class = "hkcdDynamicTreeTreehkcdDynamicTreeDynamicStoragePtr"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694635, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x26A70D, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x26D59D, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x26E76D, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkClass initializer 0x26E740: r9d is reflected object size; descriptor RVA 0x3E68C70."
+
+[[evidence]]
+class = "hkcdFourAabb"
+size = 0x60
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B4502, expect = "lea r9d, [rcx + 0x60]" }, { version = "982", rva = 0x2920D9, expect = "lea r9d, [rcx + 0x60]" }, { version = "137", rva = 0x2983A9, expect = "lea r9d, [rcx + 0x60]" }, { version = "246", rva = 0x299579, expect = "lea r9d, [rcx + 0x60]" }]
+note = "hkClass initializer 0x299550: r9d is reflected object size; descriptor RVA 0x73753C0."
+
+[[evidence]]
+class = "hkcdPlanarCsgOperand"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B2775, expect = "lea r9d, [rcx + 0x40]" }, { version = "982", rva = 0x2913ED, expect = "lea r9d, [rcx + 0x40]" }, { version = "137", rva = 0x2976BD, expect = "lea r9d, [rcx + 0x40]" }, { version = "246", rva = 0x29888D, expect = "lea r9d, [rcx + 0x40]" }]
+note = "hkClass initializer 0x298860: r9d is reflected object size; descriptor RVA 0x7374B50."
+
+[[evidence]]
+class = "hkcdPlanarCsgOperandGeomSource"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B27E5, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x291469, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x297739, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x298909, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x2988E0: r9d is reflected object size; descriptor RVA 0x7374B00."
+
+[[evidence]]
+class = "hkcdPlanarEntity"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B28A5, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x29155D, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x29782D, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x2989FD, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x2989D0: r9d is reflected object size; descriptor RVA 0x7374C00."
+
+[[evidence]]
+class = "hkcdPlanarGeometry"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B2975, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x29164D, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x29791D, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x298AED, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x298AC0: r9d is reflected object size; descriptor RVA 0x7374CA0."
+
+[[evidence]]
+class = "hkcdPlanarGeometryPlanesCollection"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B30B2, expect = "lea r9d, [rcx + 0x40]" }, { version = "982", rva = 0x29173D, expect = "lea r9d, [rcx + 0x40]" }, { version = "137", rva = 0x297A0D, expect = "lea r9d, [rcx + 0x40]" }, { version = "246", rva = 0x298BDD, expect = "lea r9d, [rcx + 0x40]" }]
+note = "hkClass initializer 0x298BB0: r9d is reflected object size; descriptor RVA 0x7374D40."
+
+[[evidence]]
+class = "hkcdPlanarGeometryPolygonCollection"
+size = 0xD90
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B3183, expect = "mov r9d, 0xd90" }, { version = "982", rva = 0x291838, expect = "mov r9d, 0xd90" }, { version = "137", rva = 0x297B08, expect = "mov r9d, 0xd90" }, { version = "246", rva = 0x298CD8, expect = "mov r9d, 0xd90" }]
+note = "hkClass initializer 0x298CB0: r9d is reflected object size; descriptor RVA 0x7374DE0."
+
+[[evidence]]
+class = "hkcdPlanarGeometryPrimitivesCollection28"
+size = 0xD90
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B3463, expect = "mov r9d, 0xd90" }, { version = "982", rva = 0x291918, expect = "mov r9d, 0xd90" }, { version = "137", rva = 0x297BE8, expect = "mov r9d, 0xd90" }, { version = "246", rva = 0x298DB8, expect = "mov r9d, 0xd90" }]
+note = "hkClass initializer 0x298D90: r9d is reflected object size; descriptor RVA 0x7374E80."
+
+[[evidence]]
+class = "hkcdPlanarGeometryPrimitivesPlane"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B3995, expect = "lea r9d, [rcx + 0x40]" }, { version = "982", rva = 0x291C79, expect = "lea r9d, [rcx + 0x40]" }, { version = "137", rva = 0x297F49, expect = "lea r9d, [rcx + 0x40]" }, { version = "246", rva = 0x299119, expect = "lea r9d, [rcx + 0x40]" }]
+note = "hkClass initializer 0x2990F0: r9d is reflected object size; descriptor RVA 0x73750C0."
+
+[[evidence]]
+class = "hkcdPlanarSolid"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B3522, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x291A0D, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x297CDD, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x298EAD, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x298E80: r9d is reflected object size; descriptor RVA 0x7374FF0."
+
+[[evidence]]
+class = "hkcdPlanarSolidNode"
+size = 0x1C
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B3595, expect = "lea r9d, [rcx + 0x1c]" }, { version = "982", rva = 0x291A99, expect = "lea r9d, [rcx + 0x1c]" }, { version = "137", rva = 0x297D69, expect = "lea r9d, [rcx + 0x1c]" }, { version = "246", rva = 0x298F39, expect = "lea r9d, [rcx + 0x1c]" }]
+note = "hkClass initializer 0x298F10: r9d is reflected object size; descriptor RVA 0x7374FA0."
+
+[[evidence]]
+class = "hkcdPlanarSolidNodeStorage"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B35F5, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x291B1D, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x297DED, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x298FBD, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkClass initializer 0x298F90: r9d is reflected object size; descriptor RVA 0x7374F20."
+
+[[evidence]]
+class = "hkcdShapeDispatchType"
+size = 0x1
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694E06, expect = "lea r9d, [rcx + 1]" }, { version = "982", rva = 0x26B081, expect = "lea r9d, [rcx + 1]" }, { version = "137", rva = 0x26DF11, expect = "lea r9d, [rcx + 1]" }, { version = "246", rva = 0x26F0E1, expect = "lea r9d, [rcx + 1]" }]
+note = "hkClass initializer 0x26F0C0: r9d is reflected object size; descriptor RVA 0x3E69550."
+
+[[evidence]]
+class = "hkcdShapeInfoCodecType"
+size = 0x1
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694E66, expect = "lea r9d, [rcx + 1]" }, { version = "982", rva = 0x26B0F1, expect = "lea r9d, [rcx + 1]" }, { version = "137", rva = 0x26DF81, expect = "lea r9d, [rcx + 1]" }, { version = "246", rva = 0x26F151, expect = "lea r9d, [rcx + 1]" }]
+note = "hkClass initializer 0x26F130: r9d is reflected object size; descriptor RVA 0x3E695A0."
+
+[[evidence]]
+class = "hkcdShapeType"
+size = 0x1
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694EC6, expect = "lea r9d, [rcx + 1]" }, { version = "982", rva = 0x26B161, expect = "lea r9d, [rcx + 1]" }, { version = "137", rva = 0x26DFF1, expect = "lea r9d, [rcx + 1]" }, { version = "246", rva = 0x26F1C1, expect = "lea r9d, [rcx + 1]" }]
+note = "hkClass initializer 0x26F1A0: r9d is reflected object size; descriptor RVA 0x3E695F0."
+
+[[evidence]]
+class = "hkcdSimdTree"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B40AD, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x291EE9, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x2981B9, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x299389, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x299350: r9d is reflected object size; descriptor RVA 0x73752B0."
+
+[[evidence]]
+class = "hkcdSimdTreeNode"
+size = 0x70
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B4122, expect = "lea r9d, [rcx + 0x70]" }, { version = "982", rva = 0x291F5D, expect = "lea r9d, [rcx + 0x70]" }, { version = "137", rva = 0x29822D, expect = "lea r9d, [rcx + 0x70]" }, { version = "246", rva = 0x2993FD, expect = "lea r9d, [rcx + 0x70]" }]
+note = "hkClass initializer 0x2993D0: r9d is reflected object size; descriptor RVA 0x7375260."
+
+[[evidence]]
+class = "hkcdStaticAabbTree"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B3FDD, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x291DF9, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x2980C9, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x299299, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x299260: r9d is reflected object size; descriptor RVA 0x73751C0."
+
+[[evidence]]
+class = "hkcdStaticMeshTreeBase"
+size = 0x70
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B4572, expect = "lea r9d, [rcx + 0x70]" }, { version = "982", rva = 0x29216D, expect = "lea r9d, [rcx + 0x70]" }, { version = "137", rva = 0x29843D, expect = "lea r9d, [rcx + 0x70]" }, { version = "246", rva = 0x29960D, expect = "lea r9d, [rcx + 0x70]" }]
+note = "hkClass initializer 0x2995E0: r9d is reflected object size; descriptor RVA 0x73755B0."
+
+[[evidence]]
+class = "hkcdStaticMeshTreeBasePrimitive"
+size = 0x4
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B45E2, expect = "lea r9d, [rcx + 4]" }, { version = "982", rva = 0x2921F9, expect = "lea r9d, [rcx + 4]" }, { version = "137", rva = 0x2984C9, expect = "lea r9d, [rcx + 4]" }, { version = "246", rva = 0x299699, expect = "lea r9d, [rcx + 4]" }]
+note = "hkClass initializer 0x299670: r9d is reflected object size; descriptor RVA 0x7375560."
+
+[[evidence]]
+class = "hkcdStaticMeshTreeBasePrimitiveDataRunBasehknpCompressedMeshShapeTreeDataRunData"
+size = 0x4
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36A9315, expect = "lea r9d, [rcx + 4]" }, { version = "982", rva = 0x2995C9, expect = "lea r9d, [rcx + 4]" }, { version = "137", rva = 0x27CA09, expect = "lea r9d, [rcx + 4]" }, { version = "246", rva = 0x27DBD9, expect = "lea r9d, [rcx + 4]" }]
+note = "hkClass initializer 0x27DBB0: r9d is reflected object size; descriptor RVA 0x7363040."
+
+[[evidence]]
+class = "hkcdStaticMeshTreeBasePrimitiveDataRunBaseunsignedshort"
+size = 0x4
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B4655, expect = "lea r9d, [rcx + 4]" }, { version = "982", rva = 0x292289, expect = "lea r9d, [rcx + 4]" }, { version = "137", rva = 0x298559, expect = "lea r9d, [rcx + 4]" }, { version = "246", rva = 0x299729, expect = "lea r9d, [rcx + 4]" }]
+note = "hkClass initializer 0x299700: r9d is reflected object size; descriptor RVA 0x7375600."
+
+[[evidence]]
+class = "hkcdStaticMeshTreeBaseSection"
+size = 0x60
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B46AF, expect = "lea r9d, [rcx + 0x60]" }, { version = "982", rva = 0x292319, expect = "lea r9d, [rcx + 0x60]" }, { version = "137", rva = 0x2985E9, expect = "lea r9d, [rcx + 0x60]" }, { version = "246", rva = 0x2997B9, expect = "lea r9d, [rcx + 0x60]" }]
+note = "hkClass initializer 0x299780: r9d is reflected object size; descriptor RVA 0x7375510."
+
+[[evidence]]
+class = "hkcdStaticMeshTreeBaseSectionDataRuns"
+size = 0x4
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B4725, expect = "lea r9d, [rcx + 4]" }, { version = "982", rva = 0x292399, expect = "lea r9d, [rcx + 4]" }, { version = "137", rva = 0x298669, expect = "lea r9d, [rcx + 4]" }, { version = "246", rva = 0x299839, expect = "lea r9d, [rcx + 4]" }]
+note = "hkClass initializer 0x299810: r9d is reflected object size; descriptor RVA 0x73754C0."
+
+[[evidence]]
+class = "hkcdStaticMeshTreeBaseSectionPrimitives"
+size = 0x4
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B4785, expect = "lea r9d, [rcx + 4]" }, { version = "982", rva = 0x292419, expect = "lea r9d, [rcx + 4]" }, { version = "137", rva = 0x2986E9, expect = "lea r9d, [rcx + 4]" }, { version = "246", rva = 0x2998B9, expect = "lea r9d, [rcx + 4]" }]
+note = "hkClass initializer 0x299890: r9d is reflected object size; descriptor RVA 0x7375470."
+
+[[evidence]]
+class = "hkcdStaticMeshTreeBaseSectionSharedVertices"
+size = 0x4
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B47E5, expect = "lea r9d, [rcx + 4]" }, { version = "982", rva = 0x292499, expect = "lea r9d, [rcx + 4]" }, { version = "137", rva = 0x298769, expect = "lea r9d, [rcx + 4]" }, { version = "246", rva = 0x299939, expect = "lea r9d, [rcx + 4]" }]
+note = "hkClass initializer 0x299910: r9d is reflected object size; descriptor RVA 0x7375420."
+
+[[evidence]]
+class = "hkcdStaticMeshTreeDefaultDataRun"
+size = 0x4
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B483C, expect = "lea r9d, [rax + 4]" }, { version = "982", rva = 0x29251D, expect = "lea r9d, [rax + 4]" }, { version = "137", rva = 0x2987ED, expect = "lea r9d, [rax + 4]" }, { version = "246", rva = 0x2999BD, expect = "lea r9d, [rax + 4]" }]
+note = "hkClass initializer 0x299990: r9d is reflected object size; descriptor RVA 0x7375650."
+
+[[evidence]]
+class = "hkcdStaticMeshTreehkcdStaticMeshTreeCommonConfigunsignedintunsignedlonglong1121hknpCompressedMeshShapeTreeDataRun"
+size = 0xA0
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36A938E, expect = "mov r9d, 0xa0" }, { version = "982", rva = 0x299648, expect = "mov r9d, 0xa0" }, { version = "137", rva = 0x27CA88, expect = "mov r9d, 0xa0" }, { version = "246", rva = 0x27DC58, expect = "mov r9d, 0xa0" }]
+note = "hkClass initializer 0x27DC30: r9d is reflected object size; descriptor RVA 0x7363090."
+
+[[evidence]]
+class = "hkcdStaticPvs"
+size = 0x70
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B4B25, expect = "lea r9d, [rcx + 0x70]" }, { version = "982", rva = 0x292609, expect = "lea r9d, [rcx + 0x70]" }, { version = "137", rva = 0x2988D9, expect = "lea r9d, [rcx + 0x70]" }, { version = "246", rva = 0x299AA9, expect = "lea r9d, [rcx + 0x70]" }]
+note = "hkClass initializer 0x299A80: r9d is reflected object size; descriptor RVA 0x7375770."
+
+[[evidence]]
+class = "hkcdStaticPvsBlockHeader"
+size = 0x8
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B4AC5, expect = "lea r9d, [rcx + 8]" }, { version = "982", rva = 0x292589, expect = "lea r9d, [rcx + 8]" }, { version = "137", rva = 0x298859, expect = "lea r9d, [rcx + 8]" }, { version = "246", rva = 0x299A29, expect = "lea r9d, [rcx + 8]" }]
+note = "hkClass initializer 0x299A00: r9d is reflected object size; descriptor RVA 0x7375720."
+
+[[evidence]]
+class = "hkcdStaticTreeCodec3Axis"
+size = 0x3
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36999F5, expect = "lea r9d, [rcx + 3]" }, { version = "982", rva = 0x2709A9, expect = "lea r9d, [rcx + 3]" }, { version = "137", rva = 0x273839, expect = "lea r9d, [rcx + 3]" }, { version = "246", rva = 0x274A09, expect = "lea r9d, [rcx + 3]" }]
+note = "hkClass initializer 0x2749E0: r9d is reflected object size; descriptor RVA 0x3E6CAD0."
+
+[[evidence]]
+class = "hkcdStaticTreeCodec3Axis4"
+size = 0x4
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36998A5, expect = "lea r9d, [rcx + 4]" }, { version = "982", rva = 0x27082D, expect = "lea r9d, [rcx + 4]" }, { version = "137", rva = 0x2736BD, expect = "lea r9d, [rcx + 4]" }, { version = "246", rva = 0x27488D, expect = "lea r9d, [rcx + 4]" }]
+note = "hkClass initializer 0x274860: r9d is reflected object size; descriptor RVA 0x3E6CB20."
+
+[[evidence]]
+class = "hkcdStaticTreeCodec3Axis5"
+size = 0x5
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3699915, expect = "lea r9d, [rcx + 5]" }, { version = "982", rva = 0x2708AD, expect = "lea r9d, [rcx + 5]" }, { version = "137", rva = 0x27373D, expect = "lea r9d, [rcx + 5]" }, { version = "246", rva = 0x27490D, expect = "lea r9d, [rcx + 5]" }]
+note = "hkClass initializer 0x2748E0: r9d is reflected object size; descriptor RVA 0x3E6CB70."
+
+[[evidence]]
+class = "hkcdStaticTreeCodec3Axis6"
+size = 0x6
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3699985, expect = "lea r9d, [rcx + 6]" }, { version = "982", rva = 0x27092D, expect = "lea r9d, [rcx + 6]" }, { version = "137", rva = 0x2737BD, expect = "lea r9d, [rcx + 6]" }, { version = "246", rva = 0x27498D, expect = "lea r9d, [rcx + 6]" }]
+note = "hkClass initializer 0x274960: r9d is reflected object size; descriptor RVA 0x3E6CBC0."
+
+[[evidence]]
+class = "hkcdStaticTreeCodecRaw"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3699A55, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x270A29, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x2738B9, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x274A89, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x274A60: r9d is reflected object size; descriptor RVA 0x3E6CC10."
+
+[[evidence]]
+class = "hkcdStaticTreeDefaultTreeStorage32"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369469C, expect = "lea r9d, [rax + 0x30]" }, { version = "982", rva = 0x26A78D, expect = "lea r9d, [rax + 0x30]" }, { version = "137", rva = 0x26D61D, expect = "lea r9d, [rax + 0x30]" }, { version = "246", rva = 0x26E7ED, expect = "lea r9d, [rax + 0x30]" }]
+note = "hkClass initializer 0x26E7C0: r9d is reflected object size; descriptor RVA 0x3E68D40."
+
+[[evidence]]
+class = "hkcdStaticTreeDefaultTreeStorage4"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36946FC, expect = "lea r9d, [rax + 0x30]" }, { version = "982", rva = 0x26A7FD, expect = "lea r9d, [rax + 0x30]" }, { version = "137", rva = 0x26D68D, expect = "lea r9d, [rax + 0x30]" }, { version = "246", rva = 0x26E85D, expect = "lea r9d, [rax + 0x30]" }]
+note = "hkClass initializer 0x26E830: r9d is reflected object size; descriptor RVA 0x3E68D90."
+
+[[evidence]]
+class = "hkcdStaticTreeDefaultTreeStorage5"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369475C, expect = "lea r9d, [rax + 0x30]" }, { version = "982", rva = 0x26A86D, expect = "lea r9d, [rax + 0x30]" }, { version = "137", rva = 0x26D6FD, expect = "lea r9d, [rax + 0x30]" }, { version = "246", rva = 0x26E8CD, expect = "lea r9d, [rax + 0x30]" }]
+note = "hkClass initializer 0x26E8A0: r9d is reflected object size; descriptor RVA 0x3E68DE0."
+
+[[evidence]]
+class = "hkcdStaticTreeDefaultTreeStorage6"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36947BC, expect = "lea r9d, [rax + 0x30]" }, { version = "982", rva = 0x26A8DD, expect = "lea r9d, [rax + 0x30]" }, { version = "137", rva = 0x26D76D, expect = "lea r9d, [rax + 0x30]" }, { version = "246", rva = 0x26E93D, expect = "lea r9d, [rax + 0x30]" }]
+note = "hkClass initializer 0x26E910: r9d is reflected object size; descriptor RVA 0x3E68E30."
+
+[[evidence]]
+class = "hkcdStaticTreeDynamicStorage32"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36968BC, expect = "lea r9d, [rax + 0x10]" }, { version = "982", rva = 0x26CCBD, expect = "lea r9d, [rax + 0x10]" }, { version = "137", rva = 0x26FB4D, expect = "lea r9d, [rax + 0x10]" }, { version = "246", rva = 0x270D1D, expect = "lea r9d, [rax + 0x10]" }]
+note = "hkClass initializer 0x270CF0: r9d is reflected object size; descriptor RVA 0x3E6A840."
+
+[[evidence]]
+class = "hkcdStaticTreeDynamicStorage4"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369691C, expect = "lea r9d, [rax + 0x10]" }, { version = "982", rva = 0x26CD2D, expect = "lea r9d, [rax + 0x10]" }, { version = "137", rva = 0x26FBBD, expect = "lea r9d, [rax + 0x10]" }, { version = "246", rva = 0x270D8D, expect = "lea r9d, [rax + 0x10]" }]
+note = "hkClass initializer 0x270D60: r9d is reflected object size; descriptor RVA 0x3E6A890."
+
+[[evidence]]
+class = "hkcdStaticTreeDynamicStorage5"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369697C, expect = "lea r9d, [rax + 0x10]" }, { version = "982", rva = 0x26CD9D, expect = "lea r9d, [rax + 0x10]" }, { version = "137", rva = 0x26FC2D, expect = "lea r9d, [rax + 0x10]" }, { version = "246", rva = 0x270DFD, expect = "lea r9d, [rax + 0x10]" }]
+note = "hkClass initializer 0x270DD0: r9d is reflected object size; descriptor RVA 0x3E6A8E0."
+
+[[evidence]]
+class = "hkcdStaticTreeDynamicStorage6"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36969DC, expect = "lea r9d, [rax + 0x10]" }, { version = "982", rva = 0x26CE0D, expect = "lea r9d, [rax + 0x10]" }, { version = "137", rva = 0x26FC9D, expect = "lea r9d, [rax + 0x10]" }, { version = "246", rva = 0x270E6D, expect = "lea r9d, [rax + 0x10]" }]
+note = "hkClass initializer 0x270E40: r9d is reflected object size; descriptor RVA 0x3E6A930."
+
+[[evidence]]
+class = "hkcdStaticTreeDynamicStoragehkcdStaticTreeCodec3Axis4"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3696A45, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x26CE79, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x26FD09, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x270ED9, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x270EB0: r9d is reflected object size; descriptor RVA 0x3E6A980."
+
+[[evidence]]
+class = "hkcdStaticTreeDynamicStoragehkcdStaticTreeCodec3Axis5"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3696AA5, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x26CEF9, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x26FD89, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x270F59, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x270F30: r9d is reflected object size; descriptor RVA 0x3E6A9D0."
+
+[[evidence]]
+class = "hkcdStaticTreeDynamicStoragehkcdStaticTreeCodec3Axis6"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3696B05, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x26CF79, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x26FE09, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x270FD9, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x270FB0: r9d is reflected object size; descriptor RVA 0x3E6AA20."
+
+[[evidence]]
+class = "hkcdStaticTreeDynamicStoragehkcdStaticTreeCodecRaw"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3696B65, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x26CFF9, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x26FE89, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x271059, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x271030: r9d is reflected object size; descriptor RVA 0x3E6AA70."
+
+[[evidence]]
+class = "hkcdStaticTreeTreehkcdStaticTreeDynamicStorage32"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694825, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x26A94D, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x26D7DD, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x26E9AD, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x26E980: r9d is reflected object size; descriptor RVA 0x3E68E80."
+
+[[evidence]]
+class = "hkcdStaticTreeTreehkcdStaticTreeDynamicStorage4"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694895, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x26A9CD, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x26D85D, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x26EA2D, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x26EA00: r9d is reflected object size; descriptor RVA 0x3E68ED0."
+
+[[evidence]]
+class = "hkcdStaticTreeTreehkcdStaticTreeDynamicStorage5"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694905, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x26AA4D, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x26D8DD, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x26EAAD, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x26EA80: r9d is reflected object size; descriptor RVA 0x3E68F20."
+
+[[evidence]]
+class = "hkcdStaticTreeTreehkcdStaticTreeDynamicStorage6"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694975, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x26AACD, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x26D95D, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x26EB2D, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x26EB00: r9d is reflected object size; descriptor RVA 0x3E68F70."
+
+[[evidence]]
+class = "hkxAnimatedFloat"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369B85D, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x272FB9, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x275E49, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x277019, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkClass initializer 0x276FE0: r9d is reflected object size; descriptor RVA 0x3E6E540."
+
+[[evidence]]
+class = "hkxAnimatedMatrix"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369BAED, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x2732C9, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x276159, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x277329, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkClass initializer 0x2772F0: r9d is reflected object size; descriptor RVA 0x3E6E720."
+
+[[evidence]]
+class = "hkxAnimatedQuaternion"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369BA1D, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x2731D9, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x276069, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x277239, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x277200: r9d is reflected object size; descriptor RVA 0x3E6E680."
+
+[[evidence]]
+class = "hkxAnimatedVector"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369B93D, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x2730C9, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x275F59, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x277129, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkClass initializer 0x2770F0: r9d is reflected object size; descriptor RVA 0x3E6E5E0."
+
+[[evidence]]
+class = "hkxAttribute"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369BBCF, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x2728B5, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x275745, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x276915, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x2768E0: r9d is reflected object size; descriptor RVA 0x3E6E0A0."
+
+[[evidence]]
+class = "hkxAttributeGroup"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369B295, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x272029, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x274EB9, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x276089, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x276060: r9d is reflected object size; descriptor RVA 0x3E6DB20."
+
+[[evidence]]
+class = "hkxAttributeHolder"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369AB4D, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x271E59, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x274CE9, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x275EB9, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x275E80: r9d is reflected object size; descriptor RVA 0x3E6D9D0."
+
+[[evidence]]
+class = "hkxBlob"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B653D, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x292789, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x298A59, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x299C29, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x299BF0: r9d is reflected object size; descriptor RVA 0x7375880."
+
+[[evidence]]
+class = "hkxBlobMeshShape"
+size = 0x38
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B6615, expect = "lea r9d, [rcx + 0x38]" }, { version = "982", rva = 0x29286D, expect = "lea r9d, [rcx + 0x38]" }, { version = "137", rva = 0x298B3D, expect = "lea r9d, [rcx + 0x38]" }, { version = "246", rva = 0x299D0D, expect = "lea r9d, [rcx + 0x38]" }]
+note = "hkClass initializer 0x299CE0: r9d is reflected object size; descriptor RVA 0x7375920."
+
+[[evidence]]
+class = "hkxCamera"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B67AD, expect = "lea r9d, [rcx + 0x50]" }, { version = "982", rva = 0x292969, expect = "lea r9d, [rcx + 0x50]" }, { version = "137", rva = 0x298C39, expect = "lea r9d, [rcx + 0x50]" }, { version = "246", rva = 0x299E09, expect = "lea r9d, [rcx + 0x50]" }]
+note = "hkClass initializer 0x299DD0: r9d is reflected object size; descriptor RVA 0x73759C0."
+
+[[evidence]]
+class = "hkxEdgeSelectionChannel"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B687D, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x292A59, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x298D29, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x299EF9, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x299EC0: r9d is reflected object size; descriptor RVA 0x7375A60."
+
+[[evidence]]
+class = "hkxEnum"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369B595, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x272C5D, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x275AED, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x276CBD, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x276C90: r9d is reflected object size; descriptor RVA 0x3E6E350."
+
+[[evidence]]
+class = "hkxEnumItem"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369B605, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x272CD9, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x275B69, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x276D39, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x276D10: r9d is reflected object size; descriptor RVA 0x3E6E300."
+
+[[evidence]]
+class = "hkxEnvironment"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B6AED, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x292B49, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x298E19, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x299FE9, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x299FB0: r9d is reflected object size; descriptor RVA 0x7375B50."
+
+[[evidence]]
+class = "hkxEnvironmentVariable"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B6BC5, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x292C29, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x298EF9, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x29A0C9, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x29A0A0: r9d is reflected object size; descriptor RVA 0x7375B00."
+
+[[evidence]]
+class = "hkxIndexBuffer"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369AC1F, expect = "lea r9d, [rcx + 0x40]" }, { version = "982", rva = 0x272499, expect = "lea r9d, [rcx + 0x40]" }, { version = "137", rva = 0x275329, expect = "lea r9d, [rcx + 0x40]" }, { version = "246", rva = 0x2764F9, expect = "lea r9d, [rcx + 0x40]" }]
+note = "hkClass initializer 0x2764C0: r9d is reflected object size; descriptor RVA 0x3E6DDE0."
+
+[[evidence]]
+class = "hkxLight"
+size = 0x60
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B735F, expect = "lea r9d, [rcx + 0x60]" }, { version = "982", rva = 0x292CB9, expect = "lea r9d, [rcx + 0x60]" }, { version = "137", rva = 0x298F89, expect = "lea r9d, [rcx + 0x60]" }, { version = "246", rva = 0x29A159, expect = "lea r9d, [rcx + 0x60]" }]
+note = "hkClass initializer 0x29A120: r9d is reflected object size; descriptor RVA 0x7375C00."
+
+[[evidence]]
+class = "hkxMaterial"
+size = 0xE0
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369AE89, expect = "mov r9d, 0xe0" }, { version = "982", rva = 0x2720DC, expect = "mov r9d, 0xe0" }, { version = "137", rva = 0x274F6C, expect = "mov r9d, 0xe0" }, { version = "246", rva = 0x27613C, expect = "mov r9d, 0xe0" }]
+note = "hkClass initializer 0x276110: r9d is reflected object size; descriptor RVA 0x3E6DC20."
+
+[[evidence]]
+class = "hkxMaterialEffect"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B743F, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x292DD9, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x2990A9, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x29A279, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x29A240: r9d is reflected object size; descriptor RVA 0x7375CA0."
+
+[[evidence]]
+class = "hkxMaterialProperty"
+size = 0x8
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369AEE5, expect = "lea r9d, [rcx + 8]" }, { version = "982", rva = 0x272179, expect = "lea r9d, [rcx + 8]" }, { version = "137", rva = 0x275009, expect = "lea r9d, [rcx + 8]" }, { version = "246", rva = 0x2761D9, expect = "lea r9d, [rcx + 8]" }]
+note = "hkClass initializer 0x2761B0: r9d is reflected object size; descriptor RVA 0x3E6DBD0."
+
+[[evidence]]
+class = "hkxMaterialShader"
+size = 0x48
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B751F, expect = "lea r9d, [rcx + 0x48]" }, { version = "982", rva = 0x292EF9, expect = "lea r9d, [rcx + 0x48]" }, { version = "137", rva = 0x2991C9, expect = "lea r9d, [rcx + 0x48]" }, { version = "246", rva = 0x29A399, expect = "lea r9d, [rcx + 0x48]" }]
+note = "hkClass initializer 0x29A360: r9d is reflected object size; descriptor RVA 0x7375D40."
+
+[[evidence]]
+class = "hkxMaterialShaderSet"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B75FD, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x293019, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x2992E9, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x29A4B9, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x29A480: r9d is reflected object size; descriptor RVA 0x7375DE0."
+
+[[evidence]]
+class = "hkxMaterialTextureStage"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369AF32, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x272211, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x2750A1, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x276271, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x276230: r9d is reflected object size; descriptor RVA 0x3E6DB80."
+
+[[evidence]]
+class = "hkxMesh"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3699FED, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x2711C9, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x274059, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x275229, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x2751F0: r9d is reflected object size; descriptor RVA 0x3E6D210."
+
+[[evidence]]
+class = "hkxMeshSection"
+size = 0x70
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369AA7D, expect = "lea r9d, [rcx + 0x70]" }, { version = "982", rva = 0x271F49, expect = "lea r9d, [rcx + 0x70]" }, { version = "137", rva = 0x274DD9, expect = "lea r9d, [rcx + 0x70]" }, { version = "246", rva = 0x275FA9, expect = "lea r9d, [rcx + 0x70]" }]
+note = "hkClass initializer 0x275F70: r9d is reflected object size; descriptor RVA 0x3E6DA70."
+
+[[evidence]]
+class = "hkxMeshUserChannelInfo"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369A0C5, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x2712AD, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x27413D, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x27530D, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x2752E0: r9d is reflected object size; descriptor RVA 0x3E6D190."
+
+[[evidence]]
+class = "hkxNode"
+size = 0x80
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B7817, expect = "mov r9d, 0x80" }, { version = "982", rva = 0x293189, expect = "mov r9d, 0x80" }, { version = "137", rva = 0x299459, expect = "mov r9d, 0x80" }, { version = "246", rva = 0x29A629, expect = "mov r9d, 0x80" }]
+note = "hkClass initializer 0x29A5F0: r9d is reflected object size; descriptor RVA 0x7375ED0."
+
+[[evidence]]
+class = "hkxNodeAnnotationData"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B77A5, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x2930F9, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x2993C9, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x29A599, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x29A570: r9d is reflected object size; descriptor RVA 0x7375E80."
+
+[[evidence]]
+class = "hkxNodeSelectionSet"
+size = 0x38
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B79A5, expect = "lea r9d, [rcx + 0x38]" }, { version = "982", rva = 0x29326D, expect = "lea r9d, [rcx + 0x38]" }, { version = "137", rva = 0x29953D, expect = "lea r9d, [rcx + 0x38]" }, { version = "246", rva = 0x29A70D, expect = "lea r9d, [rcx + 0x38]" }]
+note = "hkClass initializer 0x29A6E0: r9d is reflected object size; descriptor RVA 0x7375F80."
+
+[[evidence]]
+class = "hkxScene"
+size = 0xF0
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B7A8E, expect = "mov r9d, 0xf0" }, { version = "982", rva = 0x29335C, expect = "mov r9d, 0xf0" }, { version = "137", rva = 0x29962C, expect = "mov r9d, 0xf0" }, { version = "246", rva = 0x29A7FC, expect = "mov r9d, 0xf0" }]
+note = "hkClass initializer 0x29A7D0: r9d is reflected object size; descriptor RVA 0x7376020."
+
+[[evidence]]
+class = "hkxSkinBinding"
+size = 0x80
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B7C17, expect = "mov r9d, 0x80" }, { version = "982", rva = 0x293469, expect = "mov r9d, 0x80" }, { version = "137", rva = 0x299739, expect = "mov r9d, 0x80" }, { version = "246", rva = 0x29A909, expect = "mov r9d, 0x80" }]
+note = "hkClass initializer 0x29A8D0: r9d is reflected object size; descriptor RVA 0x73760C0."
+
+[[evidence]]
+class = "hkxSparselyAnimatedBool"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369B3ED, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x272A89, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x275919, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x276AE9, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x276AB0: r9d is reflected object size; descriptor RVA 0x3E6E1C0."
+
+[[evidence]]
+class = "hkxSparselyAnimatedEnum"
+size = 0x38
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369B6BD, expect = "lea r9d, [rcx + 0x38]" }, { version = "982", rva = 0x272DD9, expect = "lea r9d, [rcx + 0x38]" }, { version = "137", rva = 0x275C69, expect = "lea r9d, [rcx + 0x38]" }, { version = "246", rva = 0x276E39, expect = "lea r9d, [rcx + 0x38]" }]
+note = "hkClass initializer 0x276E00: r9d is reflected object size; descriptor RVA 0x3E6E3D0."
+
+[[evidence]]
+class = "hkxSparselyAnimatedInt"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369B4BD, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x272B79, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x275A09, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x276BD9, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x276BA0: r9d is reflected object size; descriptor RVA 0x3E6E260."
+
+[[evidence]]
+class = "hkxSparselyAnimatedString"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369B78D, expect = "lea r9d, [rcx + 0x30]" }, { version = "982", rva = 0x272EC9, expect = "lea r9d, [rcx + 0x30]" }, { version = "137", rva = 0x275D59, expect = "lea r9d, [rcx + 0x30]" }, { version = "246", rva = 0x276F29, expect = "lea r9d, [rcx + 0x30]" }]
+note = "hkClass initializer 0x276EF0: r9d is reflected object size; descriptor RVA 0x3E6E4A0."
+
+[[evidence]]
+class = "hkxSpline"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B81E2, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x29354D, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x29981D, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x29A9ED, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkClass initializer 0x29A9C0: r9d is reflected object size; descriptor RVA 0x73761B0."
+
+[[evidence]]
+class = "hkxSplineControlPoint"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B8255, expect = "lea r9d, [rcx + 0x40]" }, { version = "982", rva = 0x2935D9, expect = "lea r9d, [rcx + 0x40]" }, { version = "137", rva = 0x2998A9, expect = "lea r9d, [rcx + 0x40]" }, { version = "246", rva = 0x29AA79, expect = "lea r9d, [rcx + 0x40]" }]
+note = "hkClass initializer 0x29AA50: r9d is reflected object size; descriptor RVA 0x7376160."
+
+[[evidence]]
+class = "hkxTextureFile"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B832D, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x2936F9, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x2999C9, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x29AB99, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkClass initializer 0x29AB60: r9d is reflected object size; descriptor RVA 0x7376260."
+
+[[evidence]]
+class = "hkxTextureInplace"
+size = 0x38
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B83FD, expect = "lea r9d, [rcx + 0x38]" }, { version = "982", rva = 0x2937E9, expect = "lea r9d, [rcx + 0x38]" }, { version = "137", rva = 0x299AB9, expect = "lea r9d, [rcx + 0x38]" }, { version = "246", rva = 0x29AC89, expect = "lea r9d, [rcx + 0x38]" }]
+note = "hkClass initializer 0x29AC50: r9d is reflected object size; descriptor RVA 0x7376300."
+
+[[evidence]]
+class = "hkxTriangleSelectionChannel"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B84CD, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x2938D9, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x299BA9, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x29AD79, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x29AD40: r9d is reflected object size; descriptor RVA 0x73763A0."
+
+[[evidence]]
+class = "hkxVertexAnimation"
+size = 0xC0
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369B033, expect = "mov r9d, 0xc0" }, { version = "982", rva = 0x2725A8, expect = "mov r9d, 0xc0" }, { version = "137", rva = 0x275438, expect = "mov r9d, 0xc0" }, { version = "246", rva = 0x276608, expect = "mov r9d, 0xc0" }]
+note = "hkClass initializer 0x2765E0: r9d is reflected object size; descriptor RVA 0x3E6DED0."
+
+[[evidence]]
+class = "hkxVertexAnimationUsageMap"
+size = 0x4
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369B0F5, expect = "lea r9d, [rcx + 4]" }, { version = "982", rva = 0x272699, expect = "lea r9d, [rcx + 4]" }, { version = "137", rva = 0x275529, expect = "lea r9d, [rcx + 4]" }, { version = "246", rva = 0x2766F9, expect = "lea r9d, [rcx + 4]" }]
+note = "hkClass initializer 0x2766D0: r9d is reflected object size; descriptor RVA 0x3E6DE80."
+
+[[evidence]]
+class = "hkxVertexBuffer"
+size = 0x88
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369AD17, expect = "mov r9d, 0x88" }, { version = "982", rva = 0x272749, expect = "mov r9d, 0x88" }, { version = "137", rva = 0x2755D9, expect = "mov r9d, 0x88" }, { version = "246", rva = 0x2767A9, expect = "mov r9d, 0x88" }]
+note = "hkClass initializer 0x276770: r9d is reflected object size; descriptor RVA 0x3E6DFD0."
+
+[[evidence]]
+class = "hkxVertexBufferVertexData"
+size = 0x68
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369ADCD, expect = "lea r9d, [rcx + 0x68]" }, { version = "982", rva = 0x272835, expect = "lea r9d, [rcx + 0x68]" }, { version = "137", rva = 0x2756C5, expect = "lea r9d, [rcx + 0x68]" }, { version = "246", rva = 0x276895, expect = "lea r9d, [rcx + 0x68]" }]
+note = "hkClass initializer 0x276860: r9d is reflected object size; descriptor RVA 0x3E6DF80."
+
+[[evidence]]
+class = "hkxVertexDescription"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369B2EF, expect = "lea r9d, [rcx + 0x10]" }, { version = "982", rva = 0x272945, expect = "lea r9d, [rcx + 0x10]" }, { version = "137", rva = 0x2757D5, expect = "lea r9d, [rcx + 0x10]" }, { version = "246", rva = 0x2769A5, expect = "lea r9d, [rcx + 0x10]" }]
+note = "hkClass initializer 0x276970: r9d is reflected object size; descriptor RVA 0x3E6E150."
+
+[[evidence]]
+class = "hkxVertexDescriptionElementDecl"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369B35D, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x2729D5, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x275865, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x276A35, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkClass initializer 0x276A00: r9d is reflected object size; descriptor RVA 0x3E6E100."
+
+[[evidence]]
+class = "hkxVertexFloatDataChannel"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B859F, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x2939C9, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x299C99, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x29AE69, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkClass initializer 0x29AE30: r9d is reflected object size; descriptor RVA 0x7376440."
+
+[[evidence]]
+class = "hkxVertexIntDataChannel"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B867D, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x293AE9, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x299DB9, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x29AF89, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x29AF50: r9d is reflected object size; descriptor RVA 0x73764E0."
+
+[[evidence]]
+class = "hkxVertexSelectionChannel"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B874D, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x293BD9, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x299EA9, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x29B079, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x29B040: r9d is reflected object size; descriptor RVA 0x7376580."
+
+[[evidence]]
+class = "hkxVertexVectorDataChannel"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B881D, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x293CC9, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x299F99, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x29B169, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkClass initializer 0x29B130: r9d is reflected object size; descriptor RVA 0x7376620."

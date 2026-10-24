@@ -7,7 +7,9 @@
 #include <CKPE.Common.Relocation.h>
 #include <EditorAPI/IDs.h>
 #include <EditorAPI/B/BSString.h>
+#include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/B/BSTList.h>
+#include <EditorAPI/B/BSTBTree.h>
 
 namespace CKPE
 {
@@ -25,14 +27,14 @@ namespace CKPE
 					stBool = 0x0,			// 'b' size 1
 					stChar = 0x1,			// 'c' size 1
 					stUnsignedChar = 0x2,	// 'h' size 1
-					stSignedInt = 0x3,		// 'i'/'n' size 4
+					stSignedInt = 0x3,		// 'i' size 4
 					stUnsignedInt = 0x4,	// 'u' size 4
 					stFloat = 0x5,			// 'f' size 4
 					stString = 0x6,			// 'S'/'s' size indet.
 					stRGB = 0x7,			// 'r' size 4, alpha byte set to 255
 					stRGBA = 0x8,			// 'a' size 4
 					stMAX = 0x9,
-					stError
+					stError = stMAX
 				};
 				// union for various value types
 				union Value
@@ -68,8 +70,8 @@ namespace CKPE
 				bool SetUnsignedInt(std::uint32_t value);
 				bool SetFloat(float value);
 				bool SetString(const char* value);
-				inline bool SetString(const BSString& value) { SetString(value.c_str()); }
-				inline bool SetString(const std::string& value) { SetString(value.c_str()); }
+				inline bool SetString(const BSString& value) { return SetString(value.c_str()); }
+				inline bool SetString(const std::string& value) { return SetString(value.c_str()); }
 				bool SetRGB(std::uint8_t r, std::uint8_t g, std::uint8_t b);
 				bool SetRGBA(std::uint8_t r, std::uint8_t g, std::uint8_t b, std::uint8_t a);
 
@@ -97,6 +99,11 @@ namespace CKPE
 				/* 00 vtable */
 				/* 08 */ Value _Value;
 				/* 10 */ char* _Name;
+				static void CheckLayout() noexcept(true)
+				{
+					static_assert(offsetof(Setting, _Value) == 0x8);
+					static_assert(offsetof(Setting, _Name) == 0x10);
+				}
 			};
 			static_assert(sizeof(Setting) == 0x18);
 
@@ -105,9 +112,18 @@ namespace CKPE
 			template <class T>
 			class SettingCollection
 			{
-				char filename[260];
-				void* handle;
+				/* 008 */ char filename[260];
+				/* 10C */ std::uint8_t pad10C[4];
+				/* 110 */ void* handle;
+				static void CheckLayout() noexcept(true)
+				{
+					static_assert(offsetof(SettingCollection, filename) == 0x8);
+					static_assert(offsetof(SettingCollection, handle) == 0x110);
+				}
 			public:
+				[[nodiscard]] const char* GetFileName() const noexcept(true) { return filename; }
+				[[nodiscard]] void* GetHandle() const noexcept(true) { return handle; }
+
 				virtual ~SettingCollection();
 
 				virtual void Add(T* setting) = 0;									// 01
@@ -130,7 +146,25 @@ namespace CKPE
 			class SettingCollectionList : public SettingCollection<T>
 			{
 			public:
-				BSSimpleList<T*> settings;		// 118
+				BSSimpleList<T> settings;		// 118
+
+				template <class Visitor>
+				void ForEach(Visitor&& visitor) const
+				{
+					for (auto it = settings.Begin(); !it.End(); ++it)
+						if (auto setting = it.Get()) visitor(setting);
+				}
+
+				[[nodiscard]] T* GetSetting(const char* name) const noexcept(true)
+				{
+					T* result = nullptr;
+					ForEach([&](T* setting)
+					{
+						if (!result && !_stricmp(setting->GetName(), name))
+							result = setting;
+					});
+					return result;
+				}
 			};
 			static_assert(sizeof(SettingCollectionList<int>) == 0x128);
 
@@ -146,6 +180,7 @@ namespace CKPE
 				}
 			};
 			static_assert(sizeof(INISettingCollection) == 0x128);
+			static_assert(offsetof(INISettingCollection, settings) == 0x118);
 
 			// 1.11.246.0: size 0x128, vtable RVA 0x2FA6AF0 (CreationKitPrefs.ini)
 			class INIPrefSettingCollection : public INISettingCollection
@@ -164,11 +199,68 @@ namespace CKPE
 			class SettingCollectionMap : public SettingCollection<T>
 			{
 			public:
-				std::uint8_t unk118[0x8];		// 118 - not initialized by the constructor
-				std::uint32_t unk120;			// 120 - 0 on construction
-				std::uint32_t unk124;			// 124 - 4 on construction
-				void* settingsTree;				// 128 - root node of the B-tree (0x80 byte nodes: 4 {key, value} pairs, count at +0x68, 5 children at +0x40)
-				void* unk130;					// 130 - 0 on construction
+				struct Entry
+				{
+					/* 00 */ BSFixedString key;
+					/* 08 */ T* value;
+				};
+				struct Node
+				{
+					/* 00 */ Entry entries[4];
+					/* 40 */ Node* children[5];
+					/* 68 */ std::uint32_t count;
+					/* 6C */ std::uint8_t pad6C[0x14];
+				};
+				static_assert(sizeof(Entry) == 0x10);
+				static_assert(sizeof(Node) == 0x80);
+				static_assert(offsetof(Node, children) == 0x40);
+				static_assert(offsetof(Node, count) == 0x68);
+
+				/* 118 */ BSTBTree<Entry> settings;
+
+				[[nodiscard]] std::uint32_t size() const noexcept(true) { return settings.size(); }
+
+				[[nodiscard]] T* GetSetting(const char* name) const noexcept(true)
+				{
+					BSAutoFixedString key(name);
+					const auto address = reinterpret_cast<std::uintptr_t>(key.c_str());
+					auto node = reinterpret_cast<const Node*>(settings.root);
+					while (node)
+					{
+						std::uint32_t first = 0, last = node->count;
+						while (first < last)
+						{
+							const auto mid = (first + last) / 2;
+							if (address > reinterpret_cast<std::uintptr_t>(node->entries[mid].key.c_str()))
+								first = mid + 1;
+							else
+								last = mid;
+						}
+						if (first < node->count && node->entries[first].key == key)
+							return node->entries[first].value;
+						node = node->children[first];
+					}
+					return nullptr;
+				}
+
+				template <class Visitor>
+				void ForEach(Visitor&& visitor) const
+				{
+					VisitNode(reinterpret_cast<const Node*>(settings.root), visitor);
+				}
+
+			private:
+				template <class Visitor>
+				static void VisitNode(const Node* node, Visitor& visitor)
+				{
+					if (!node) return;
+					for (std::uint32_t i = 0; i < node->count; ++i)
+					{
+						VisitNode(node->children[i], visitor);
+						visitor(node->entries[i].value);
+					}
+					VisitNode(node->children[node->count], visitor);
+				}
 			};
 			static_assert(sizeof(SettingCollectionMap<int>) == 0x138);
 
@@ -186,6 +278,7 @@ namespace CKPE
 				}
 			};
 			static_assert(sizeof(GameSettingCollection) == 0x138);
+			static_assert(offsetof(GameSettingCollection, settings) == 0x118);
 		}
 	}
 }

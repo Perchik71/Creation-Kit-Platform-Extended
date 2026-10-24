@@ -38,13 +38,14 @@ namespace CKPE
 					public BGSModelMaterialSwap,  // 0A8
 					public BGSPropertySheet,      // 0F8
 					public BGSForcedLocRefType,   // 108
-					public BGSNavmeshableObject   // 118
+					public BGSNavmeshableObject
 				{
 				public:
 					virtual ~TESObjectSTAT() = default;
 
 				public:
-					TESObjectSTATData data; // 120 - the constructor sets 128 / 12C / 130 to 100.0 / 1.0 / 1.0 (threshold angle, leaf amplitude, leaf frequency); BGSNavmeshableObject occupies 118
+					std::uint8_t pad118[0x8]; // 118
+					TESObjectSTATData data; // 120
 					std::uint64_t unk138; // 138 - 0 on construction
 					std::uint8_t unk140; // 140
 					std::uint8_t unk141[0x7]; // 141

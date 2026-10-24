@@ -11,6 +11,8 @@
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/B/BSTHashMap.h>
+#include <EditorAPI/B/BGSBaseAlias.h>
+#include <EditorAPI/T/TESCondition.h>
 
 namespace CKPE
 {
@@ -52,7 +54,7 @@ namespace CKPE
 
 				public:
 					BSTArray<BGSBaseAlias*> aliases; // 40 - polymorphic objects, destroyed through their virtual destructor by ClearData
-					std::uint32_t unk58; // 58
+					std::uint32_t nextAliasID; // 58 - ANAM
 					std::uint32_t unk5C; // 5C
 					BGSLocation* nonDormantLocation; // 60 - LNAM
 					TESGlobal* questCompleteXPGlobal; // 68 - 0 on construction, by position like CommonLibF4
@@ -69,8 +71,8 @@ namespace CKPE
 					std::uint32_t eventID; // AC - ENAM
 					BSTArray<TESQuestStage*> stages; // B0 - 0x28 byte heap objects
 					BSTArray<BGSQuestObjective*> objectives; // C8 - 0x30 byte heap objects (the game's order: stages, objectives)
-					std::uint8_t objConditions[0x18]; // E0 - TESCondition (0x18 bytes in the CK, vptr + list head + owner; both owners are set after construction)
-					std::uint8_t storyManagerConditions[0x18]; // F8 - TESCondition
+					TESCondition objConditions; // E0
+					TESCondition storyManagerConditions; // F8
 					// Two BSTHashMap<BGSDialogueBranch*, BSTArray<TESTopic*>*> in the CK's 0x38 byte layout (CommonLibF4's branchedDialogues; the CK has no
 					// stage/objective/alias index tables). The constructor sets the end of chain markers at 128 and 160.
 					BSTHashMap<BGSDialogueBranch*, BSTArray<TESTopic*>*> branchedDialogues[2]; // 110
@@ -86,6 +88,8 @@ namespace CKPE
 					std::uint64_t unk268; // 268
 				};
 				static_assert(offsetof(TESQuest, stages) == 0xB0);
+				static_assert(offsetof(TESQuest, aliases) == 0x40);
+				static_assert(offsetof(TESQuest, nextAliasID) == 0x58);
 				static_assert(offsetof(TESQuest, branchedDialogues) == 0x110);
 				static_assert(offsetof(TESQuest, topics) == 0x180);
 				static_assert(offsetof(TESQuest, textGlobal) == 0x228);

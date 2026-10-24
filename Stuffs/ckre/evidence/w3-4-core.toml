@@ -1,0 +1,735 @@
+[[evidence]]
+class = "hkgpIndexedMeshStorage"
+size = 0x40
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1AA9D32, expect = "mov edx, 0x40" }, { version = "982", rva = 0x1AA9D3A, expect = "call 0x92370" }, { version = "137", rva = 0x1AD4732, expect = "mov edx, 0x40" }, { version = "137", rva = 0x1AD473A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1AD9AC2, expect = "mov edx, 0x40" }, { version = "246", rva = 0x1AD9ACA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1AD9A60; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkgpMeshStorage"
+size = 0x40
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E6A5AF, expect = "mov edx, 0x40" }, { version = "982", rva = 0x1E6A5B7, expect = "call 0x92370" }, { version = "137", rva = 0x1E9503F, expect = "mov edx, 0x40" }, { version = "137", rva = 0x1E95047, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E9A40F, expect = "mov edx, 0x40" }, { version = "246", rva = 0x1E9A417, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E9A370; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkContainerDebugAllocator::Allocator"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CAA892, expect = "mov edx, 8" }, { version = "982", rva = 0x1CAA89A, expect = "call 0x92370" }, { version = "137", rva = 0x1CD5322, expect = "mov edx, 8" }, { version = "137", rva = 0x1CD532A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CDA6D2, expect = "mov edx, 8" }, { version = "246", rva = 0x1CDA6DA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CDA680; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkContainerHeapAllocator::Allocator"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CAA802, expect = "mov edx, 8" }, { version = "982", rva = 0x1CAA80A, expect = "call 0x92370" }, { version = "137", rva = 0x1CD5292, expect = "mov edx, 8" }, { version = "137", rva = 0x1CD529A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CDA642, expect = "mov edx, 8" }, { version = "246", rva = 0x1CDA64A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CDA5F0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkContainerResourceMap"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DA3D1B, expect = "mov edx, 0x20" }, { version = "982", rva = 0x1DA3D23, expect = "call 0x92370" }, { version = "137", rva = 0x1DCE7AB, expect = "mov edx, 0x20" }, { version = "137", rva = 0x1DCE7B3, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DD3B7B, expect = "mov edx, 0x20" }, { version = "246", rva = 0x1DD3B83, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DD3B20; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkContainerTempAllocator::Allocator"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CAA772, expect = "mov edx, 8" }, { version = "982", rva = 0x1CAA77A, expect = "call 0x92370" }, { version = "137", rva = 0x1CD5202, expect = "mov edx, 8" }, { version = "137", rva = 0x1CD520A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CDA5B2, expect = "mov edx, 8" }, { version = "246", rva = 0x1CDA5BA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CDA560; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkCrc32StreamWriter"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CAE9B4, expect = "mov edx, 0x18" }, { version = "982", rva = 0x1CAE9B9, expect = "call 0x92370" }, { version = "137", rva = 0x1CD9444, expect = "mov edx, 0x18" }, { version = "137", rva = 0x1CD9449, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CDE7F4, expect = "mov edx, 0x18" }, { version = "246", rva = 0x1CDE7F9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CDE790; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkDebugDisplayProcess"
+size = 0x48
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CC7652, expect = "mov edx, 0x48" }, { version = "982", rva = 0x1CC765A, expect = "call 0x92370" }, { version = "137", rva = 0x1CF20E2, expect = "mov edx, 0x48" }, { version = "137", rva = 0x1CF20EA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CF7492, expect = "mov edx, 0x48" }, { version = "246", rva = 0x1CF749A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CF7430; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkDummyMemoryTrackerImpl"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F8995B, expect = "mov edx, 8" }, { version = "982", rva = 0x1F89960, expect = "call 0x92370" }, { version = "137", rva = 0x1FB43EB, expect = "mov edx, 8" }, { version = "137", rva = 0x1FB43F0, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB97BB, expect = "mov edx, 8" }, { version = "246", rva = 0x1FB97C0, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB97A0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkGeometryUtils::IVertices"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x190EA65, expect = "mov edx, 8" }, { version = "982", rva = 0x190EA6A, expect = "call 0x92370" }, { version = "137", rva = 0x1939465, expect = "mov edx, 8" }, { version = "137", rva = 0x193946A, expect = "call 0x92c7b" }, { version = "246", rva = 0x193E7F5, expect = "mov edx, 8" }, { version = "246", rva = 0x193E7FA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x193E7B0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkInspectProcess"
+size = 0x60
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F615A2, expect = "mov edx, 0x60" }, { version = "982", rva = 0x1F615AA, expect = "call 0x92370" }, { version = "137", rva = 0x1F8C032, expect = "mov edx, 0x60" }, { version = "137", rva = 0x1F8C03A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F91402, expect = "mov edx, 0x60" }, { version = "246", rva = 0x1F9140A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F913A0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkMemoryMeshTexture::Sampler"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22EF090, expect = "mov edx, 0x18" }, { version = "982", rva = 0x22EF098, expect = "call 0x92370" }, { version = "137", rva = 0x233E420, expect = "mov edx, 0x18" }, { version = "137", rva = 0x233E428, expect = "call 0x92c7b" }, { version = "246", rva = 0x2343840, expect = "mov edx, 0x18" }, { version = "246", rva = 0x2343848, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x23437D0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkMemorySnapshotProcess"
+size = 0x40
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F619FF, expect = "mov edx, 0x40" }, { version = "982", rva = 0x1F61A04, expect = "call 0x92370" }, { version = "137", rva = 0x1F8C48F, expect = "mov edx, 0x40" }, { version = "137", rva = 0x1F8C494, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F9185F, expect = "mov edx, 0x40" }, { version = "246", rva = 0x1F91864, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F917F0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkMemoryTracker"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F8999B, expect = "mov edx, 8" }, { version = "982", rva = 0x1F899A0, expect = "call 0x92370" }, { version = "137", rva = 0x1FB442B, expect = "mov edx, 8" }, { version = "137", rva = 0x1FB4430, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB97FB, expect = "mov edx, 8" }, { version = "246", rva = 0x1FB9800, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB97E0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkMeshTexture::Sampler"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x23A74C4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x23A74C9, expect = "call 0x92370" }, { version = "137", rva = 0x23EEB04, expect = "mov edx, 0x10" }, { version = "137", rva = 0x23EEB09, expect = "call 0x92c7b" }, { version = "246", rva = 0x23F3F24, expect = "mov edx, 0x10" }, { version = "246", rva = 0x23F3F29, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x23F3EC0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkNiTriStripsShape"
+size = 0xD0
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1BC6FB8, expect = "mov edx, 0xd0" }, { version = "982", rva = 0x1BC6FC0, expect = "call 0x92370" }, { version = "137", rva = 0x1BF19B8, expect = "mov edx, 0xd0" }, { version = "137", rva = 0x1BF19C0, expect = "call 0x92c7b" }, { version = "246", rva = 0x1BF6D48, expect = "mov edx, 0xd0" }, { version = "246", rva = 0x1BF6D50, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1BF6CA0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkPackedNiTriStripsData"
+size = 0x40
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B2F920, expect = "mov edx, 0x40" }, { version = "982", rva = 0x1B2F928, expect = "call 0x1c35" }, { version = "137", rva = 0x1B5A320, expect = "mov edx, 0x40" }, { version = "137", rva = 0x1B5A328, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B5F6B0, expect = "mov edx, 0x40" }, { version = "246", rva = 0x1B5F6B8, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B5F560; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkPackedNiTriStripsShape"
+size = 0xC0
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B2FA89, expect = "mov edx, 0xc0" }, { version = "982", rva = 0x1B2FA91, expect = "call 0x92370" }, { version = "137", rva = 0x1B5A489, expect = "mov edx, 0xc0" }, { version = "137", rva = 0x1B5A491, expect = "call 0x92c7b" }, { version = "246", rva = 0x1B5F819, expect = "mov edx, 0xc0" }, { version = "246", rva = 0x1B5F821, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1B5F730; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkPackfileWriter::AddObjectListener"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B195F4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1B195F9, expect = "call 0x92370" }, { version = "137", rva = 0x1B43FF4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1B43FF9, expect = "call 0x92c7b" }, { version = "246", rva = 0x1B49384, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1B49389, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1B49320; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkRemoteObjectProcess"
+size = 0x50
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F62082, expect = "mov edx, 0x50" }, { version = "982", rva = 0x1F6208A, expect = "call 0x92370" }, { version = "137", rva = 0x1F8CB12, expect = "mov edx, 0x50" }, { version = "137", rva = 0x1F8CB1A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F91EE2, expect = "mov edx, 0x50" }, { version = "246", rva = 0x1F91EEA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F91E80; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkResourceMap"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DA40C5, expect = "mov edx, 8" }, { version = "982", rva = 0x1DA40CA, expect = "call 0x92370" }, { version = "137", rva = 0x1DCEB55, expect = "mov edx, 8" }, { version = "137", rva = 0x1DCEB5A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DD3F25, expect = "mov edx, 8" }, { version = "246", rva = 0x1DD3F2A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DD3EE0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkServerDebugDisplayHandler"
+size = 0x98
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F67572, expect = "mov edx, 0x98" }, { version = "982", rva = 0x1F6757A, expect = "call 0x92370" }, { version = "137", rva = 0x1F92002, expect = "mov edx, 0x98" }, { version = "137", rva = 0x1F9200A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F973D2, expect = "mov edx, 0x98" }, { version = "246", rva = 0x1F973DA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F97370; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkServerProcessHandler"
+size = 0x90
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F58C72, expect = "mov edx, 0x90" }, { version = "982", rva = 0x1F58C7A, expect = "call 0x92370" }, { version = "137", rva = 0x1F83702, expect = "mov edx, 0x90" }, { version = "137", rva = 0x1F8370A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F88AD2, expect = "mov edx, 0x90" }, { version = "246", rva = 0x1F88ADA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F88A70; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkSignal0::Slot"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1A395D5, expect = "mov edx, 0x18" }, { version = "982", rva = 0x1A395DA, expect = "call 0x92370" }, { version = "137", rva = 0x1A63FD5, expect = "mov edx, 0x18" }, { version = "137", rva = 0x1A63FDA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1A69365, expect = "mov edx, 0x18" }, { version = "246", rva = 0x1A6936A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1A69320; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkStatisticsProcess"
+size = 0x70
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F62EF2, expect = "mov edx, 0x70" }, { version = "982", rva = 0x1F62EFA, expect = "call 0x92370" }, { version = "137", rva = 0x1F8D982, expect = "mov edx, 0x70" }, { version = "137", rva = 0x1F8D98A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F92D52, expect = "mov edx, 0x70" }, { version = "246", rva = 0x1F92D5A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F92CF0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkTaskQueue"
+size = 0xE0
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D86A71, expect = "mov edx, 0xe0" }, { version = "982", rva = 0x1D86A79, expect = "call 0x92370" }, { version = "137", rva = 0x1DB1501, expect = "mov edx, 0xe0" }, { version = "137", rva = 0x1DB1509, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DB68D1, expect = "mov edx, 0xe0" }, { version = "246", rva = 0x1DB68D9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DB6750; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkTaskQueue::EmptyTask"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D868B4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1D868B9, expect = "call 0x92370" }, { version = "137", rva = 0x1DB1344, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1DB1349, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DB6714, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1DB6719, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DB66B0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdConvexCellsCollection"
+size = 0xD90
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22B68F3, expect = "mov edx, 0xd90" }, { version = "982", rva = 0x22B68FB, expect = "call 0x92370" }, { version = "137", rva = 0x2305C83, expect = "mov edx, 0xd90" }, { version = "137", rva = 0x2305C8B, expect = "call 0x92c7b" }, { version = "246", rva = 0x230B0A3, expect = "mov edx, 0xd90" }, { version = "246", rva = 0x230B0AB, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x230B000; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdConvexCellsTree2D"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x23E77E2, expect = "mov edx, 0x30" }, { version = "982", rva = 0x23E77EA, expect = "call 0x92370" }, { version = "137", rva = 0x24145B2, expect = "mov edx, 0x30" }, { version = "137", rva = 0x24145BA, expect = "call 0x92c7b" }, { version = "246", rva = 0x24199D2, expect = "mov edx, 0x30" }, { version = "246", rva = 0x24199DA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2419970; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdConvexCellsTree3D"
+size = 0x48
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x2388842, expect = "mov edx, 0x48" }, { version = "982", rva = 0x238884A, expect = "call 0x92370" }, { version = "137", rva = 0x23CFE82, expect = "mov edx, 0x48" }, { version = "137", rva = 0x23CFE8A, expect = "call 0x92c7b" }, { version = "246", rva = 0x23D52A2, expect = "mov edx, 0x48" }, { version = "246", rva = 0x23D52AA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x23D5240; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdDynamicAabbTree"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22E5442, expect = "mov edx, 0x20" }, { version = "982", rva = 0x22E544A, expect = "call 0x92370" }, { version = "137", rva = 0x23347D2, expect = "mov edx, 0x20" }, { version = "137", rva = 0x23347DA, expect = "call 0x92c7b" }, { version = "246", rva = 0x2339BF2, expect = "mov edx, 0x20" }, { version = "246", rva = 0x2339BFA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2339B90; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdGskBase::ShapeInterface"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1AD4525, expect = "mov edx, 8" }, { version = "982", rva = 0x1AD452A, expect = "call 0x92370" }, { version = "137", rva = 0x1AFEF25, expect = "mov edx, 8" }, { version = "137", rva = 0x1AFEF2A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1B042B5, expect = "mov edx, 8" }, { version = "246", rva = 0x1B042BA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1B04270; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdGsk_Vector4ShapeInterface"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CC1045, expect = "mov edx, 8" }, { version = "982", rva = 0x1CC104A, expect = "call 0x92370" }, { version = "137", rva = 0x1CEBAD5, expect = "mov edx, 8" }, { version = "137", rva = 0x1CEBADA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CF0E85, expect = "mov edx, 8" }, { version = "246", rva = 0x1CF0E8A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CF0E40; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdPlanarCsgOperand"
+size = 0x40
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22B69A2, expect = "mov edx, 0x40" }, { version = "982", rva = 0x22B69AA, expect = "call 0x92370" }, { version = "137", rva = 0x2305D32, expect = "mov edx, 0x40" }, { version = "137", rva = 0x2305D3A, expect = "call 0x92c7b" }, { version = "246", rva = 0x230B152, expect = "mov edx, 0x40" }, { version = "246", rva = 0x230B15A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x230B0F0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdPlanarEntity"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x2118754, expect = "mov edx, 0x18" }, { version = "982", rva = 0x211875C, expect = "call 0x92370" }, { version = "137", rva = 0x2151794, expect = "mov edx, 0x18" }, { version = "137", rva = 0x215179C, expect = "call 0x92c7b" }, { version = "246", rva = 0x2156BB4, expect = "mov edx, 0x18" }, { version = "246", rva = 0x2156BBC, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2156B00; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdPlanarGeometry"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22CAC32, expect = "mov edx, 0x30" }, { version = "982", rva = 0x22CAC3A, expect = "call 0x92370" }, { version = "137", rva = 0x2319FC2, expect = "mov edx, 0x30" }, { version = "137", rva = 0x2319FCA, expect = "call 0x92c7b" }, { version = "246", rva = 0x231F3E2, expect = "mov edx, 0x30" }, { version = "246", rva = 0x231F3EA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x231F380; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdPlanarGeometry::VertexStorage"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22CAB79, expect = "mov edx, 0x20" }, { version = "982", rva = 0x22CAB81, expect = "call 0x92370" }, { version = "137", rva = 0x2319F09, expect = "mov edx, 0x20" }, { version = "137", rva = 0x2319F11, expect = "call 0x92c7b" }, { version = "246", rva = 0x231F329, expect = "mov edx, 0x20" }, { version = "246", rva = 0x231F331, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x231F280; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdPlanarGeometryPlanesCollection"
+size = 0x40
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22D79D2, expect = "mov edx, 0x40" }, { version = "982", rva = 0x22D79DA, expect = "call 0x92370" }, { version = "137", rva = 0x2326D62, expect = "mov edx, 0x40" }, { version = "137", rva = 0x2326D6A, expect = "call 0x92c7b" }, { version = "246", rva = 0x232C182, expect = "mov edx, 0x40" }, { version = "246", rva = 0x232C18A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x232C120; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdPlanarGeometryPolygonCollection"
+size = 0xD90
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22D91B3, expect = "mov edx, 0xd90" }, { version = "982", rva = 0x22D91BB, expect = "call 0x92370" }, { version = "137", rva = 0x2328543, expect = "mov edx, 0xd90" }, { version = "137", rva = 0x232854B, expect = "call 0x92c7b" }, { version = "246", rva = 0x232D963, expect = "mov edx, 0xd90" }, { version = "246", rva = 0x232D96B, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x232D8C0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdPlanarSolid"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22E0A32, expect = "mov edx, 0x30" }, { version = "982", rva = 0x22E0A3A, expect = "call 0x92370" }, { version = "137", rva = 0x232FDC2, expect = "mov edx, 0x30" }, { version = "137", rva = 0x232FDCA, expect = "call 0x92c7b" }, { version = "246", rva = 0x23351E2, expect = "mov edx, 0x30" }, { version = "246", rva = 0x23351EA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2335180; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdPlanarSolid::ArrayMgr"
+size = 0xDA8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22B6812, expect = "mov edx, 0xda8" }, { version = "982", rva = 0x22B681A, expect = "call 0x92370" }, { version = "137", rva = 0x2305BA2, expect = "mov edx, 0xda8" }, { version = "137", rva = 0x2305BAA, expect = "call 0x92c7b" }, { version = "246", rva = 0x230AFC2, expect = "mov edx, 0xda8" }, { version = "246", rva = 0x230AFCA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x230AF60; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdPlanarSolid::NodeStorage"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x2118B27, expect = "mov edx, 0x28" }, { version = "982", rva = 0x2118B2F, expect = "call 0x92370" }, { version = "137", rva = 0x2151B67, expect = "mov edx, 0x28" }, { version = "137", rva = 0x2151B6F, expect = "call 0x92c7b" }, { version = "246", rva = 0x2156F87, expect = "mov edx, 0x28" }, { version = "246", rva = 0x2156F8F, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2156EE0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdShape"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x190EAF4, expect = "mov edx, 0x18" }, { version = "982", rva = 0x190EAF9, expect = "call 0x92370" }, { version = "137", rva = 0x19394F4, expect = "mov edx, 0x18" }, { version = "137", rva = 0x19394F9, expect = "call 0x92c7b" }, { version = "246", rva = 0x193E884, expect = "mov edx, 0x18" }, { version = "246", rva = 0x193E889, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x193E820; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdSimdTree"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x19A4B52, expect = "mov edx, 0x18" }, { version = "982", rva = 0x19A4B5A, expect = "call 0x92370" }, { version = "137", rva = 0x19CF552, expect = "mov edx, 0x18" }, { version = "137", rva = 0x19CF55A, expect = "call 0x92c7b" }, { version = "246", rva = 0x19D48E2, expect = "mov edx, 0x18" }, { version = "246", rva = 0x19D48EA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x19D4850; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdSimdTree::BuildContext"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x19F74F2, expect = "mov edx, 0x30" }, { version = "982", rva = 0x19F74FA, expect = "call 0x92370" }, { version = "137", rva = 0x1A21EF2, expect = "mov edx, 0x30" }, { version = "137", rva = 0x1A21EFA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1A27282, expect = "mov edx, 0x30" }, { version = "246", rva = 0x1A2728A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1A27230; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdSimdTree::IParallelBuild::IRunnable"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D5B355, expect = "mov edx, 8" }, { version = "982", rva = 0x1D5B35A, expect = "call 0x92370" }, { version = "137", rva = 0x1D85DE5, expect = "mov edx, 8" }, { version = "137", rva = 0x1D85DEA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1D8B1B5, expect = "mov edx, 8" }, { version = "246", rva = 0x1D8B1BA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1D8B170; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdSimdTree::LeafCollector"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x19A49F5, expect = "mov edx, 8" }, { version = "982", rva = 0x19A49FA, expect = "call 0x92370" }, { version = "137", rva = 0x19CF3F5, expect = "mov edx, 8" }, { version = "137", rva = 0x19CF3FA, expect = "call 0x92c7b" }, { version = "246", rva = 0x19D4785, expect = "mov edx, 8" }, { version = "246", rva = 0x19D478A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x19D4740; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdSimdTreeUtils::Build::EmptyRunnable"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D5B2A5, expect = "mov edx, 8" }, { version = "982", rva = 0x1D5B2AA, expect = "call 0x92370" }, { version = "137", rva = 0x1D85D35, expect = "mov edx, 8" }, { version = "137", rva = 0x1D85D3A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1D8B105, expect = "mov edx, 8" }, { version = "246", rva = 0x1D8B10A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1D8B0C0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdSimdTreeUtils::Build::IRefit"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D5B2E8, expect = "mov edx, 8" }, { version = "982", rva = 0x1D5B2ED, expect = "call 0x1c35" }, { version = "137", rva = 0x1D85D78, expect = "mov edx, 8" }, { version = "137", rva = 0x1D85D7D, expect = "call 0x1c4e" }, { version = "246", rva = 0x1D8B148, expect = "mov edx, 8" }, { version = "246", rva = 0x1D8B14D, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1D8B130; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdSimdTreeUtils::Build::Task"
+size = 0x40
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D5B3C5, expect = "mov edx, 0x40" }, { version = "982", rva = 0x1D5B3CA, expect = "call 0x92370" }, { version = "137", rva = 0x1D85E55, expect = "mov edx, 0x40" }, { version = "137", rva = 0x1D85E5A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1D8B225, expect = "mov edx, 0x40" }, { version = "246", rva = 0x1D8B22A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1D8B1E0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdStaticAabbTree"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22E9562, expect = "mov edx, 0x20" }, { version = "982", rva = 0x22E956A, expect = "call 0x92370" }, { version = "137", rva = 0x23388F2, expect = "mov edx, 0x20" }, { version = "137", rva = 0x23388FA, expect = "call 0x92c7b" }, { version = "246", rva = 0x233DD12, expect = "mov edx, 0x20" }, { version = "246", rva = 0x233DD1A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x233DCB0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdVertexGeometry"
+size = 0xDE0
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x238F592, expect = "mov edx, 0xde0" }, { version = "982", rva = 0x238F59A, expect = "call 0x92370" }, { version = "137", rva = 0x23D6BD2, expect = "mov edx, 0xde0" }, { version = "137", rva = 0x23D6BDA, expect = "call 0x92c7b" }, { version = "246", rva = 0x23DBFF2, expect = "mov edx, 0xde0" }, { version = "246", rva = 0x23DBFFA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x23DBF90; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdVertexGeometry::VPolygonCollection"
+size = 0xD90
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x238F3F3, expect = "mov edx, 0xd90" }, { version = "982", rva = 0x238F3FB, expect = "call 0x92370" }, { version = "137", rva = 0x23D6A33, expect = "mov edx, 0xd90" }, { version = "137", rva = 0x23D6A3B, expect = "call 0x92c7b" }, { version = "246", rva = 0x23DBE53, expect = "mov edx, 0xd90" }, { version = "246", rva = 0x23DBE5B, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x23DBDB0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkcdVertexGeometry::VPolygonCollectionBase"
+size = 0xD90
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x238F4E3, expect = "mov edx, 0xd90" }, { version = "982", rva = 0x238F4EB, expect = "call 0x92370" }, { version = "137", rva = 0x23D6B23, expect = "mov edx, 0xd90" }, { version = "137", rva = 0x23D6B2B, expect = "call 0x92c7b" }, { version = "246", rva = 0x23DBF43, expect = "mov edx, 0xd90" }, { version = "246", rva = 0x23DBF4B, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x23DBEA0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkgpCgoInternal::ICollapse"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F2FE15, expect = "mov edx, 0x18" }, { version = "982", rva = 0x1F2FE1A, expect = "call 0x92370" }, { version = "137", rva = 0x1F5A8A5, expect = "mov edx, 0x18" }, { version = "137", rva = 0x1F5A8AA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F5FC75, expect = "mov edx, 0x18" }, { version = "246", rva = 0x1F5FC7A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F5FC30; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkgpConvexHull"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D4BB82, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1D4BB8A, expect = "call 0x92370" }, { version = "137", rva = 0x1D76612, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1D7661A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1D7B9E2, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1D7B9EA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1D7B980; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkgpIndexedMesh"
+size = 0x90
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D9CCA2, expect = "mov edx, 0x90" }, { version = "982", rva = 0x1D9CCAA, expect = "call 0x92370" }, { version = "137", rva = 0x1DC7732, expect = "mov edx, 0x90" }, { version = "137", rva = 0x1DC773A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DCCB02, expect = "mov edx, 0x90" }, { version = "246", rva = 0x1DCCB0A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DCCAA0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkgpIndexedMesh::EdgeBarrier"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F2FDA5, expect = "mov edx, 8" }, { version = "982", rva = 0x1F2FDAA, expect = "call 0x92370" }, { version = "137", rva = 0x1F5A835, expect = "mov edx, 8" }, { version = "137", rva = 0x1F5A83A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F5FC05, expect = "mov edx, 8" }, { version = "246", rva = 0x1F5FC0A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F5FBC0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkgpIndexedMesh::IEdgeCollapse"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D9CB35, expect = "mov edx, 8" }, { version = "982", rva = 0x1D9CB3A, expect = "call 0x92370" }, { version = "137", rva = 0x1DC75C5, expect = "mov edx, 8" }, { version = "137", rva = 0x1DC75CA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DCC995, expect = "mov edx, 8" }, { version = "246", rva = 0x1DCC99A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DCC950; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkgpIndexedMesh::ITriangleRemoval"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D9CBA5, expect = "mov edx, 8" }, { version = "982", rva = 0x1D9CBAA, expect = "call 0x92370" }, { version = "137", rva = 0x1DC7635, expect = "mov edx, 8" }, { version = "137", rva = 0x1DC763A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DCCA05, expect = "mov edx, 8" }, { version = "246", rva = 0x1DCCA0A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DCC9C0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkgpIndexedMesh::IVertexRemoval"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D9CC15, expect = "mov edx, 8" }, { version = "982", rva = 0x1D9CC1A, expect = "call 0x92370" }, { version = "137", rva = 0x1DC76A5, expect = "mov edx, 8" }, { version = "137", rva = 0x1DC76AA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DCCA75, expect = "mov edx, 8" }, { version = "246", rva = 0x1DCCA7A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DCCA30; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkgpIndexedMeshInternals::DefaultEdgeCollapseInterface"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D9CAC5, expect = "mov edx, 8" }, { version = "982", rva = 0x1D9CACA, expect = "call 0x92370" }, { version = "137", rva = 0x1DC7555, expect = "mov edx, 8" }, { version = "137", rva = 0x1DC755A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DCC925, expect = "mov edx, 8" }, { version = "246", rva = 0x1DCC92A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DCC8E0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkgpJobQueue::IJob"
+size = 0x40
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E6A829, expect = "mov edx, 0x40" }, { version = "982", rva = 0x1E6A831, expect = "call 0x1c35" }, { version = "137", rva = 0x1E952B9, expect = "mov edx, 0x40" }, { version = "137", rva = 0x1E952C1, expect = "call 0x1c4e" }, { version = "246", rva = 0x1E9A689, expect = "mov edx, 0x40" }, { version = "246", rva = 0x1E9A691, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1E9A670; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkgpMesh"
+size = 0x98
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E6A932, expect = "mov edx, 0x98" }, { version = "982", rva = 0x1E6A93A, expect = "call 0x92370" }, { version = "137", rva = 0x1E953C2, expect = "mov edx, 0x98" }, { version = "137", rva = 0x1E953CA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E9A792, expect = "mov edx, 0x98" }, { version = "246", rva = 0x1E9A79A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E9A730; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkgpMesh::ExternShape"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E6A7A5, expect = "mov edx, 0x18" }, { version = "982", rva = 0x1E6A7AA, expect = "call 0x92370" }, { version = "137", rva = 0x1E95235, expect = "mov edx, 0x18" }, { version = "137", rva = 0x1E9523A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E9A605, expect = "mov edx, 0x18" }, { version = "246", rva = 0x1E9A60A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E9A5C0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkgpMesh::IConvexOverlap"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E4FEC8, expect = "mov edx, 8" }, { version = "982", rva = 0x1E4FECD, expect = "call 0x1c35" }, { version = "137", rva = 0x1E7A958, expect = "mov edx, 8" }, { version = "137", rva = 0x1E7A95D, expect = "call 0x1c4e" }, { version = "246", rva = 0x1E7FD28, expect = "mov edx, 8" }, { version = "246", rva = 0x1E7FD2D, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1E7FD10; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkgpMesh::IConvexOverlap::IConvexShape"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E6A7E8, expect = "mov edx, 8" }, { version = "982", rva = 0x1E6A7ED, expect = "call 0x1c35" }, { version = "137", rva = 0x1E95278, expect = "mov edx, 8" }, { version = "137", rva = 0x1E9527D, expect = "call 0x1c4e" }, { version = "246", rva = 0x1E9A648, expect = "mov edx, 8" }, { version = "246", rva = 0x1E9A64D, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1E9A630; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkgpMesh::TriangleShape"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E6A8A5, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1E6A8AA, expect = "call 0x92370" }, { version = "137", rva = 0x1E95335, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1E9533A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E9A705, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1E9A70A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E9A6C0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkgpTriangulatorBase"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E6A9D4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1E6A9D9, expect = "call 0x92370" }, { version = "137", rva = 0x1E95464, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1E95469, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E9A834, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1E9A839, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E9A7D0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkxMesh::UserChannelInfo"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F3FD07, expect = "mov edx, 0x30" }, { version = "982", rva = 0x1F3FD0F, expect = "call 0x92370" }, { version = "137", rva = 0x1F6A797, expect = "mov edx, 0x30" }, { version = "137", rva = 0x1F6A79F, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F6FB67, expect = "mov edx, 0x30" }, { version = "246", rva = 0x1F6FB6F, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F6FAF0; size is EDX immediately before native sized delete."
+
+[[evidence]]
+class = "hkStringPtr"
+size = 0x8
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694A6D, expect = "lea r9d, [rcx + 0x18]" }, { version = "982", rva = 0x26AC25, expect = "lea r9d, [rcx + 0x18]" }, { version = "137", rva = 0x26DAB5, expect = "lea r9d, [rcx + 0x18]" }, { version = "246", rva = 0x26EC85, expect = "lea r9d, [rcx + 0x18]" }]
+note = "hkRootLevelContainerNamedVariant reflected member span: name0,className8,variant10: adjacent string and pointer spans are eight bytes. Member tables 162:0x3B3BE50, 982:0x31FB100, 137:0x328C1F0, 246:0x329D880."
+
+[[evidence]]
+class = "hkVector4f"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693A65, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x269829, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x26C6B9, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x26D889, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkAabb reflected member span: min VECTOR4 at0,max VECTOR4 at10,size20; two packed vector members, SSE alignment16. Member tables 162:0x3B39620, 982:0x31F7F30, 137:0x3289020, 246:0x329A6B0."
+
+[[evidence]]
+class = "hkQuaternionf"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B1155, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x290E29, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x2970F9, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x2982C9, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkQTransformf reflected member span: rotation QUATERNION at0 followed by translation VECTOR4 at10; size20. Member tables 162:0x3BD1E20, 982:0x32C9F00, 137:0x33650F0, 246:0x3376780."
+
+[[evidence]]
+class = "hkRotationf"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B438D, expect = "lea r9d, [rcx + 0x50]" }, { version = "982", rva = 0x28F195, expect = "lea r9d, [rcx + 0x50]" }, { version = "137", rva = 0x295725, expect = "lea r9d, [rcx + 0x50]" }, { version = "246", rva = 0x2968F5, expect = "lea r9d, [rcx + 0x50]" }]
+note = "hkMassProperties reflected member span: inertiaTensor MATRIX3 at20 ends at50, with no trailing members; three vector columns. Member tables 162:0x3BDA160, 982:0x32C6D80, 137:0x33620C0, 246:0x3373750."
+
+[[evidence]]
+class = "hkMatrix4f"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B7C17, expect = "mov r9d, 0x80" }, { version = "982", rva = 0x293469, expect = "mov r9d, 0x80" }, { version = "137", rva = 0x299739, expect = "mov r9d, 0x80" }, { version = "246", rva = 0x29A909, expect = "mov r9d, 0x80" }]
+note = "hkxSkinBinding reflected member span: initSkinTransform MATRIX4 at40 ends at80; four vector columns. Member tables 162:0x3BE6CF0, 982:0x32CEC50, 137:0x3369E30, 246:0x337B4C0."
+
+[[evidence]]
+class = "hkTransformf"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694D20, expect = "mov r9d, 0xb0" }, { version = "982", rva = 0x26AF5A, expect = "mov r9d, 0xb0" }, { version = "137", rva = 0x26DDEA, expect = "mov r9d, 0xb0" }, { version = "246", rva = 0x26EFBA, expect = "mov r9d, 0xb0" }]
+note = "hkMotionState reflected member span: transform TRANSFORM at0, next sweptTransform starts40; three rotation columns plus translation. Member tables 162:0x3B3C710, 982:0x31FBC00, 137:0x328CCF0, 246:0x329E380."
+
+[[evidence]]
+class = "hkQsTransformf"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3698845, expect = "lea r9d, [rcx + 0x40]" }, { version = "982", rva = 0x26F379, expect = "lea r9d, [rcx + 0x40]" }, { version = "137", rva = 0x272209, expect = "lea r9d, [rcx + 0x40]" }, { version = "246", rva = 0x2733D9, expect = "lea r9d, [rcx + 0x40]" }]
+note = "hkaSkeletonMapperDataSimpleMapping reflected member span: aFromBTransform QSTRANSFORM at10 ends at40; translation,quaternion,scale vector lanes. Member tables 162:0x3B5A400, 982:0x321F330, 137:0x32B0510, 246:0x32C1BA0."
+
+[[evidence]]
+class = "hkBool"
+size = 0x1
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x369403F, expect = "lea r9d, [rcx + 0x28]" }, { version = "982", rva = 0x26A015, expect = "lea r9d, [rcx + 0x28]" }, { version = "137", rva = 0x26CEA5, expect = "lea r9d, [rcx + 0x28]" }, { version = "246", rva = 0x26E075, expect = "lea r9d, [rcx + 0x28]" }]
+note = "hkUiAttribute reflected member span: visible BOOL at0 followed by editable BOOL at1 and name CSTRING at8; byte-wide boolean spans. Member tables 162:0x45EAB10, 982:0x3B73D40, 137:0x3C28E80, 246:0x3C3DE00."
+
+[[evidence]]
+class = "hkHalf"
+size = 0x2
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694D20, expect = "mov r9d, 0xb0" }, { version = "982", rva = 0x26AF5A, expect = "mov r9d, 0xb0" }, { version = "137", rva = 0x26DDEA, expect = "mov r9d, 0xb0" }, { version = "246", rva = 0x26EFBA, expect = "mov r9d, 0xb0" }]
+note = "hkMotionState reflected member span: linearDamping HALF atA4,angularDamping HALF atA6,timeFactor HALF atA8, next field AA. Member tables 162:0x3B3C710, 982:0x31FBC00, 137:0x328CCF0, 246:0x329E380."
+
+[[evidence]]
+class = "hkVector4"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3693A65, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x269829, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x26C6B9, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x26D889, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkAabb reflected member span: min VECTOR4 at0,max VECTOR4 at10,size20; two packed vector members, SSE alignment16. Member tables 162:0x3B39620, 982:0x31F7F30, 137:0x3289020, 246:0x329A6B0."
+
+[[evidence]]
+class = "hkQuaternion"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B1155, expect = "lea r9d, [rcx + 0x20]" }, { version = "982", rva = 0x290E29, expect = "lea r9d, [rcx + 0x20]" }, { version = "137", rva = 0x2970F9, expect = "lea r9d, [rcx + 0x20]" }, { version = "246", rva = 0x2982C9, expect = "lea r9d, [rcx + 0x20]" }]
+note = "hkQTransformf reflected member span: rotation QUATERNION at0 followed by translation VECTOR4 at10; size20. Member tables 162:0x3BD1E20, 982:0x32C9F00, 137:0x33650F0, 246:0x3376780."
+
+[[evidence]]
+class = "hkRotation"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B438D, expect = "lea r9d, [rcx + 0x50]" }, { version = "982", rva = 0x28F195, expect = "lea r9d, [rcx + 0x50]" }, { version = "137", rva = 0x295725, expect = "lea r9d, [rcx + 0x50]" }, { version = "246", rva = 0x2968F5, expect = "lea r9d, [rcx + 0x50]" }]
+note = "hkMassProperties reflected member span: inertiaTensor MATRIX3 at20 ends at50, with no trailing members; three vector columns. Member tables 162:0x3BDA160, 982:0x32C6D80, 137:0x33620C0, 246:0x3373750."
+
+[[evidence]]
+class = "hkMatrix3f"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B438D, expect = "lea r9d, [rcx + 0x50]" }, { version = "982", rva = 0x28F195, expect = "lea r9d, [rcx + 0x50]" }, { version = "137", rva = 0x295725, expect = "lea r9d, [rcx + 0x50]" }, { version = "246", rva = 0x2968F5, expect = "lea r9d, [rcx + 0x50]" }]
+note = "hkMassProperties reflected member span: inertiaTensor MATRIX3 at20 ends at50, with no trailing members; three vector columns. Member tables 162:0x3BDA160, 982:0x32C6D80, 137:0x33620C0, 246:0x3373750."
+
+[[evidence]]
+class = "hkMatrix3"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B438D, expect = "lea r9d, [rcx + 0x50]" }, { version = "982", rva = 0x28F195, expect = "lea r9d, [rcx + 0x50]" }, { version = "137", rva = 0x295725, expect = "lea r9d, [rcx + 0x50]" }, { version = "246", rva = 0x2968F5, expect = "lea r9d, [rcx + 0x50]" }]
+note = "hkMassProperties reflected member span: inertiaTensor MATRIX3 at20 ends at50, with no trailing members; three vector columns. Member tables 162:0x3BDA160, 982:0x32C6D80, 137:0x33620C0, 246:0x3373750."
+
+[[evidence]]
+class = "hkMatrix4"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x36B7C17, expect = "mov r9d, 0x80" }, { version = "982", rva = 0x293469, expect = "mov r9d, 0x80" }, { version = "137", rva = 0x299739, expect = "mov r9d, 0x80" }, { version = "246", rva = 0x29A909, expect = "mov r9d, 0x80" }]
+note = "hkxSkinBinding reflected member span: initSkinTransform MATRIX4 at40 ends at80; four vector columns. Member tables 162:0x3BE6CF0, 982:0x32CEC50, 137:0x3369E30, 246:0x337B4C0."
+
+[[evidence]]
+class = "hkTransform"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3694D20, expect = "mov r9d, 0xb0" }, { version = "982", rva = 0x26AF5A, expect = "mov r9d, 0xb0" }, { version = "137", rva = 0x26DDEA, expect = "mov r9d, 0xb0" }, { version = "246", rva = 0x26EFBA, expect = "mov r9d, 0xb0" }]
+note = "hkMotionState reflected member span: transform TRANSFORM at0, next sweptTransform starts40; three rotation columns plus translation. Member tables 162:0x3B3C710, 982:0x31FBC00, 137:0x328CCF0, 246:0x329E380."
+
+[[evidence]]
+class = "hkQsTransform"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x3698845, expect = "lea r9d, [rcx + 0x40]" }, { version = "982", rva = 0x26F379, expect = "lea r9d, [rcx + 0x40]" }, { version = "137", rva = 0x272209, expect = "lea r9d, [rcx + 0x40]" }, { version = "246", rva = 0x2733D9, expect = "lea r9d, [rcx + 0x40]" }]
+note = "hkaSkeletonMapperDataSimpleMapping reflected member span: aFromBTransform QSTRANSFORM at10 ends at40; translation,quaternion,scale vector lanes. Member tables 162:0x3B5A400, 982:0x321F330, 137:0x32B0510, 246:0x32C1BA0."
+
+[[evidence]]
+class = "hkMemoryTrackStreamWriter"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1CDC702, expect = "mov edi, 0x20" }, { version = "246", rva = 0x1CDC796, expect = "mov rdx, rdi" }, { version = "246", rva = 0x1CDC79C, expect = "call 0x92e79" }]
+note = "Scalar deleting destructor carries native sizeof20 in EDI; forwards it in RDX to sized Havok delete."
+
+[[evidence]]
+class = "hkMemoryRouter"
+size = 0x7C
+kind = "lower_bound"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x1C70B85, expect = "mov dword ptr [rbx + 0x78], eax" }]
+note = "Router constructor initializes final refObjLocalStore dword at78; embedded hkLifoAllocator supplies alignment8."
+
+[[evidence]]
+class = "hkMemoryRouter"
+size = 0x80
+kind = "upper_bound"
+versions = ["246"]
+proof = [{ version = "246", rva = 0x21286F1, expect = "mov dword ptr [rcx + 0x7b0], ebp" }]
+note = "bhkMemorySystem embeds router at730 and its next own field begins7B0; combined with lower7C and alignment8 proves80."
+
+[[evidence]]
+class = "hkMemoryRouter"
+size = 0x7C
+kind = "lower_bound"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1C0B9A5, expect = "mov dword ptr [rbx + 0x78], eax" }, { version = "982", rva = 0x1C40DF5, expect = "mov dword ptr [rbx + 0x78], eax" }, { version = "137", rva = 0x1C6B7F5, expect = "mov dword ptr [rbx + 0x78], eax" }, { version = "246", rva = 0x1C70B85, expect = "mov dword ptr [rbx + 0x78], eax" }]
+note = "Native router constructor ends with dword78; bhkMemorySystem constructor embeds router730, then constructs its next field7B0. Alignment8 bounds exact size80 in all four builds."
+
+[[evidence]]
+class = "hkMemoryRouter"
+size = 0x80
+kind = "upper_bound"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x21179D9, expect = "lea rcx, [rbx + 0x730]" }, { version = "162", rva = 0x21179E6, expect = "lea rcx, [rbx + 0x7b0]" }, { version = "982", rva = 0x20F68F9, expect = "lea rcx, [rbx + 0x730]" }, { version = "982", rva = 0x20F6906, expect = "lea rcx, [rbx + 0x7b0]" }, { version = "137", rva = 0x21231F9, expect = "lea rcx, [rbx + 0x730]" }, { version = "137", rva = 0x2123206, expect = "lea rcx, [rbx + 0x7b0]" }, { version = "246", rva = 0x2128619, expect = "lea rcx, [rbx + 0x730]" }, { version = "246", rva = 0x2128626, expect = "lea rcx, [rbx + 0x7b0]" }]
+note = "Native router constructor ends with dword78; bhkMemorySystem constructor embeds router730, then constructs its next field7B0. Alignment8 bounds exact size80 in all four builds."

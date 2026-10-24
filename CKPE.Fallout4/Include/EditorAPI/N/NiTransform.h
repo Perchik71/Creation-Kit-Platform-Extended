@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <EditorAPI/N/NiMatrix.h>
 
 namespace CKPE
@@ -46,6 +47,9 @@ namespace CKPE
 					}
 				};
 				static_assert(sizeof(NiTransform) == 0x40);
+				static_assert(offsetof(NiTransform, m_Rotate) == 0x0);
+				static_assert(offsetof(NiTransform, m_Translate) == 0x30);
+				static_assert(offsetof(NiTransform, m_fScale) == 0x3C);
 			}
 		}
 	}

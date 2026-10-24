@@ -52,6 +52,7 @@ namespace CKPE
 					CKPE_READ_PROPERTY(GetParentConst) const BGSLayer* ParentConst;
 					CKPE_READ_PROPERTY(GetParent) BGSLayer* Parent;
 				};
+				static_assert(sizeof(BGSLayer) == 0x60);
 			}
 		}
 	}

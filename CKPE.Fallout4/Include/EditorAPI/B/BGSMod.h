@@ -4,7 +4,8 @@
 
 #pragma once
 
-#include <EditorAPI/T/TESFullName.h>
+#include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/B/BSTArray.h>
 
 namespace CKPE
 {
@@ -23,11 +24,13 @@ namespace CKPE
 
 				namespace Template
 				{
-					class Items : public TESFullName, public Container
+					class Items : public BaseFormComponent
 					{
-					private:
+					public:
+						/* 0x008 */ BSTArray<void*> items;
 					};
 					static_assert(sizeof(Items) == 0x20);
+					static_assert(offsetof(Items, items) == 0x8);
 				}
 			}
 		}

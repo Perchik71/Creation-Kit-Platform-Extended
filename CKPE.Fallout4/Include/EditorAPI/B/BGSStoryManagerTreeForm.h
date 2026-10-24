@@ -23,6 +23,7 @@ namespace CKPE
 					virtual ~BGSStoryManagerTreeForm() = default;
 
 					// Likely a tree lifecycle hook; inspected overrides are no-ops.
+					// All six native tree-form tables inherit this no-op.
 					virtual void sub_3E0() { return; } // 124 - RVA 0x87BFA0
 					virtual void ReadNodeDataFromDialogBox(HWND hDialogBox) noexcept(true) { return; } // 125
 					[[nodiscard]] virtual std::uint32_t QChildCount() const noexcept(true) { return 0; } // 126

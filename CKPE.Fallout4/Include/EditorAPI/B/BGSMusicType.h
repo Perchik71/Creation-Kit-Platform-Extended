@@ -25,19 +25,10 @@ namespace CKPE
 				public:
 					virtual ~BGSMusicType() = default;
 
-				public:
-					std::uint32_t flags; // 30 - BSIMusicType::flags
-					std::int8_t priority; // 34
-					std::uint8_t pad35; // 35
-					std::uint16_t ducksOtherMusicBy; // 36
-					float fadeTime; // 38
-					std::uint32_t currentTrackIndex; // 3C
-					BSTArray<void*> trackHistory; // 40 - BSTArray<std::uint32_t>
-					BSTArray<void*> tracks; // 58 - BSTArray<BSIMusicTrack*>
-					std::int32_t typeStatus; // 70 - REX::EnumSet<BSIMusicTrack::MUSIC_STATUS, std::int32_t>
-					std::uint32_t pad74; // 74
 				};
 				static_assert(sizeof(BGSMusicType) == 0x78);
+				static_assert(offsetof(BGSMusicType, flags) == 0x30);
+				static_assert(offsetof(BGSMusicType, tracks) == 0x58);
 			}
 		}
 	}

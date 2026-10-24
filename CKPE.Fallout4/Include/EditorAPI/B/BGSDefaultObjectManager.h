@@ -16,19 +16,57 @@ namespace CKPE
 		{
 			namespace Forms
 			{
-				// 1.11.240.0: size 0x1A78, vtable RVA 0x3059BA8, 124 virtual functions
+				// CK 1.10.982.3+ layout; 1.10.162 has 394 default objects.
 				class BGSDefaultObjectManager :
 					public TESForm,                                        // 000
 					public BSTSingletonImplicit<BGSDefaultObjectManager>   // 028
 				{
 				public:
+					struct DefaultObjectData
+					{
+						std::uint32_t uniqueID;
+						std::uint32_t formID;
+					};
+					static_assert(sizeof(DefaultObjectData) == 0x8);
+
+					constexpr static std::size_t DEFAULT_OBJECT_COUNT = 396;
+
 					virtual ~BGSDefaultObjectManager() = default;
 
 				public:
-					std::uint8_t unk28[0xC60]; // 28
-					std::uint8_t unkC88[0xDF0]; // C88
+					// Load stores form IDs here until InitItemImpl resolves them.
+					/* 0x028 */ TESForm* objects[DEFAULT_OBJECT_COUNT];
+					/* 0xC88 */ bool objectInitialized[DEFAULT_OBJECT_COUNT];
+					/* 0xE14 */ DefaultObjectData originalObjects[DEFAULT_OBJECT_COUNT];
+					/* 0x1A74 */ bool hasOriginalObjects;
+					/* 0x1A75 */ std::uint8_t pad1A75[3];
 				};
 				static_assert(sizeof(BGSDefaultObjectManager) == 0x1A78);
+				static_assert(offsetof(BGSDefaultObjectManager, objects) == 0x28);
+				static_assert(offsetof(BGSDefaultObjectManager, objectInitialized) == 0xC88);
+				static_assert(offsetof(BGSDefaultObjectManager, originalObjects) == 0xE14);
+				static_assert(offsetof(BGSDefaultObjectManager, hasOriginalObjects) == 0x1A74);
+
+				// CK 1.10.162 only; the modern view has two additional entries.
+				class BGSDefaultObjectManager_Original : public TESForm
+				{
+				public:
+					using DefaultObjectData = BGSDefaultObjectManager::DefaultObjectData;
+					constexpr static std::size_t DEFAULT_OBJECT_COUNT = 394;
+
+					virtual ~BGSDefaultObjectManager_Original() = default;
+
+					/* 0x028 */ TESForm* objects[DEFAULT_OBJECT_COUNT];
+					/* 0xC78 */ bool objectInitialized[DEFAULT_OBJECT_COUNT];
+					/* 0xE04 */ DefaultObjectData originalObjects[DEFAULT_OBJECT_COUNT];
+					/* 0x1A54 */ bool hasOriginalObjects;
+					/* 0x1A55 */ std::uint8_t pad1A55[3];
+				};
+				static_assert(sizeof(BGSDefaultObjectManager_Original) == 0x1A58);
+				static_assert(offsetof(BGSDefaultObjectManager_Original, objects) == 0x28);
+				static_assert(offsetof(BGSDefaultObjectManager_Original, objectInitialized) == 0xC78);
+				static_assert(offsetof(BGSDefaultObjectManager_Original, originalObjects) == 0xE04);
+				static_assert(offsetof(BGSDefaultObjectManager_Original, hasOriginalObjects) == 0x1A54);
 			}
 		}
 	}

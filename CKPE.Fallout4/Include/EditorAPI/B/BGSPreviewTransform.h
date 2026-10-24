@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <EditorAPI/B/BaseFormComponent.h>
 
 namespace CKPE
@@ -19,8 +20,14 @@ namespace CKPE
 
 			class BGSPreviewTransform : public BaseFormComponent
 			{
-				Forms::BGSTransform* _Transform;
+				/* 0x008 */ Forms::BGSTransform* _Transform{ nullptr };
 			public:
+				enum : std::uint32_t
+				{
+					kTransformComboBox = 0x41E,
+					kPreviewControl = 0x87F
+				};
+
 				BGSPreviewTransform() = default;
 				BGSPreviewTransform(Forms::BGSTransform& transform) : _Transform(&transform) {}
 				BGSPreviewTransform(Forms::BGSTransform* transform) : _Transform(transform) {}
@@ -33,7 +40,11 @@ namespace CKPE
 
 				virtual ~BGSPreviewTransform() = default;
 			public:
-				[[nodiscard]] inline Forms::BGSTransform* GetTransform() const noexcept(true) { return _Transform; }
+				[[nodiscard]] inline Forms::BGSTransform* GetTransform() const noexcept(true)
+				{
+					static_assert(offsetof(BGSPreviewTransform, _Transform) == 0x8);
+					return _Transform;
+				}
 				inline void SetTransform(Forms::BGSTransform* transform) noexcept(true) { _Transform = transform; }
 			public:
 				CKPE_PROPERTY(GetTransform, SetTransform) Forms::BGSTransform* Transform;

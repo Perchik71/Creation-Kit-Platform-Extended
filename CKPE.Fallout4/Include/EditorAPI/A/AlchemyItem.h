@@ -43,7 +43,7 @@ namespace CKPE
 
 				public:
 					std::uint32_t unk3F8; // 3F8
-					std::uint32_t unk3FC; // 3FC
+					std::uint32_t flags; // 3FC
 					std::uint64_t unk400; // 400
 					std::uint32_t unk408; // 408
 					std::uint32_t unk40C; // 40C
@@ -51,6 +51,9 @@ namespace CKPE
 					BGSLocalizedString unk418; // 418
 					TESIcon unk428; // 428
 				};
+				static_assert(offsetof(AlchemyItem, unk3F8) == 0x3F8);
+				static_assert(offsetof(AlchemyItem, flags) == 0x3FC);
+				static_assert(offsetof(AlchemyItem, unk428) == 0x428);
 				static_assert(sizeof(AlchemyItem) == 0x450);
 			}
 		}

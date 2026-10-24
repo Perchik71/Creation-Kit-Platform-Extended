@@ -4,6 +4,8 @@
 
 #include <windows.h>
 #include <EditorAPI/IDs.h>
+#include <EditorAPI/E/EditorWindowControls.h>
+#include <EditorAPI/R/ResponseDialogAudio.h>
 #include <CKPE.StringUtils.h>
 #include <CKPE.PathUtils.h>
 #include <CKPE.Graphics.h>
@@ -25,6 +27,7 @@ namespace CKPE
 	{
 		namespace Patch
 		{
+			namespace ResponseControls = EditorAPI::EditorWindows::ResponseWindow;
 			static bool EnableLipGeneration = false;
 			static bool EnableFuzGeneration = false;
 
@@ -135,7 +138,7 @@ namespace CKPE
 					auto _This = ResponseWindow::Singleton.GetSingleton();
 
 					_This->m_hWnd = Hwnd;
-					_This->m_List = GetDlgItem(Hwnd, 2168);
+					_This->m_List = GetDlgItem(Hwnd, ResponseControls::kAudioList);
 
 					EnableWindow(GetDlgItem(Hwnd, 1017), FALSE);
 					
@@ -174,7 +177,7 @@ namespace CKPE
 					switch (const UINT32 param = LOWORD(wParam); param)
 					{
 						// "Generate Lip File"
-					case 1016:
+					case ResponseControls::kGenerateLip:
 						// "Generate Fuz File"
 					case 1017:
 						// "From WAV"
@@ -184,7 +187,7 @@ namespace CKPE
 							Common::EditorUI::ListViewGetSelectedItem(ResponseWindow::Singleton.GetSingleton()->m_List.Handle);
 
 						// "Generate Lip File"
-						if (param == 1016)
+						if (param == ResponseControls::kGenerateLip)
 						{
 							if (!EnableLipGeneration || !item)
 								return S_FALSE;
@@ -279,8 +282,8 @@ namespace CKPE
 			void ResponseWindow::sub(HWND hWndButtonGenerate) noexcept(true)
 			{
 				HWND hDlg = GetParent(hWndButtonGenerate);
-				HWND hList = GetDlgItem(hDlg, 0x878);
-				HWND hLTFCheck = GetDlgItem(hDlg, 0x94C);
+				HWND hList = GetDlgItem(hDlg, ResponseControls::kAudioList);
+				HWND hLTFCheck = GetDlgItem(hDlg, ResponseControls::kFromLTF);
 
 				// no support .ltf
 				EnableWindow(hLTFCheck, FALSE);
@@ -291,11 +294,12 @@ namespace CKPE
 
 				if (int iCount = ListView_GetItemCount(hList); iCount > 0) 
 				{
-					if (auto item = (std::int64_t)Common::EditorUI::ListViewGetSelectedItem(hList); item)
+					if (auto item = static_cast<EditorAPI::ResponseDialogAudio*>(
+						Common::EditorUI::ListViewGetSelectedItem(hList)); item)
 					{
 						bEnableGenerate =
-							IsDlgButtonChecked(hDlg, 2379) && *(std::uint32_t*)(item + 0x110) ||
-							IsDlgButtonChecked(hDlg, 2380) && *(std::uint32_t*)(item + 0x118);
+							(IsDlgButtonChecked(hDlg, ResponseControls::kFromWAV) && item->HasWAV) ||
+							(IsDlgButtonChecked(hDlg, ResponseControls::kFromLTF) && item->HasLTF);
 					}
 				}
 

@@ -150,7 +150,7 @@ namespace CKPE
 				size_type _good{ 0 };					// 14 - last free index
 				std::uintptr_t _sentinel{ 0 };			// 18 - end of chain marker (points at the bytes DE AD BE EF)
 				std::uint8_t _padAllocator[TableSize - 0x28]{};	// 20 - 16 bytes in the CK's 0x38 layout (modification count at 20, entries at 30), 8 in the game's 0x30 one
-				entry_type* _entries{ nullptr };		// 28
+				entry_type* _entries{ nullptr };		// TableSize - 8
 			};
 
 			template <class Key, class T, class Hash = BSCRC32<Key>, class KeyEq = std::equal_to<Key>>

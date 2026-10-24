@@ -7,6 +7,7 @@
 #pragma once
 
 #include <cmath>
+#include <cstddef>
 #include <intrin.h>
 
 namespace CKPE
@@ -24,6 +25,8 @@ namespace CKPE
 					float y;
 				};
 				static_assert(sizeof(NiPoint2) == 0x8);
+				static_assert(offsetof(NiPoint2, x) == 0x0);
+				static_assert(offsetof(NiPoint2, y) == 0x4);
 
 				class NiPoint3
 				{

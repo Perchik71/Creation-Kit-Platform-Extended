@@ -28,12 +28,18 @@ namespace CKPE
 			public:
 				virtual ~BGSKeywordForm() = default;
 
+				[[nodiscard]] bool HasKeyword(const Forms::BGSKeyword* keyword,
+					const TBO_InstanceData* data) const noexcept(true) override;
+				void CollectAllKeywords(void* keywords,
+					const TBO_InstanceData* data) const noexcept(true) override;
+
 				[[nodiscard]] inline Forms::BGSKeyword** GetKeywords() const noexcept(true) { return keywords; }
 				[[nodiscard]] inline std::uint32_t GetKeywordCount() const noexcept(true) { return numKeywords; }
 
-				// Likely a keyword lifecycle hook; inspected bodies are no-ops.
-				virtual void sub_0A8() { return; } // 21 - RVA 0x898700
+				virtual void OnKeywordsChanged() { return; } // 21 - RVA 0x898700
 				virtual Forms::BGSKeyword* GetDefaultKeyword() const noexcept(true) { return nullptr; } // 22 - RVA 0x45AB00
+
+				inline void sub_0A8() { OnKeywordsChanged(); }
 
 			public:
 				Forms::BGSKeyword** keywords; // 10 - verified: array of BGSKeyword*, see BGSKeywordForm vfuncs
@@ -41,6 +47,9 @@ namespace CKPE
 				std::uint32_t listControlID; // 1C - dialog control ID (5320) used with GetDlgItem by the dialog virtuals
 			};
 			static_assert(sizeof(BGSKeywordForm) == 0x20);
+			static_assert(offsetof(BGSKeywordForm, keywords) == 0x10);
+			static_assert(offsetof(BGSKeywordForm, numKeywords) == 0x18);
+			static_assert(offsetof(BGSKeywordForm, listControlID) == 0x1C);
 		}
 	}
 }

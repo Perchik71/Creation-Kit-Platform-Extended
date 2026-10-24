@@ -45,7 +45,7 @@ namespace CKPE
 				void LockForReadAndWrite() const noexcept(true);
 				bool IsWritingThread() const noexcept(true);
 			};
-			static_assert(sizeof(BSReadWriteLock) <= 0x8, "Lock must fit inside the original game structure");
+			static_assert(sizeof(BSReadWriteLock) == 0x8, "Lock must match the original game storage");
 
 			class BSAutoReadAndWriteLock
 			{

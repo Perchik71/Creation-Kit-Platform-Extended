@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <CKPE.Common.h>
 #include <EditorAPI/B/BGSRenderWindowReferenceEditModule.h>
 
 namespace CKPE

@@ -186,12 +186,12 @@ namespace CKPE
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
 					Relocation(EditorAPI::IDs::Functions::legacy_OptimizationLoad_528149, 0x292).Write({0x41, 0xB9, 0x00, 0x00, 0x04, 0x00, 0x90});
-					Relocation(EditorAPI::IDs::Functions::sub_87F110, 0x1CF).WriteFill(NOP, 4);
+					Relocation(EditorAPI::IDs::TESFile::Constructor, 0x1CF).WriteFill(NOP, 4);
 				}
 				else
-					Relocation(EditorAPI::IDs::Functions::sub_87F110, 0x1A7).Write({0x41, 0x89, 0xC6, 0x90});
+					Relocation(EditorAPI::IDs::TESFile::Constructor, 0x1A7).Write({0x41, 0x89, 0xC6, 0x90});
 
-				Relocation(EditorAPI::IDs::Functions::sub_87F110, Offset{ 0x1CA, 0x184 }).Write({ 0x04 });
+				Relocation(EditorAPI::IDs::TESFile::Constructor, Offset{ 0x1CA, 0x184 }).Write({ 0x04 });
 
 				if (_READ_OPTION_BOOL("Animation", "bSkipAnimationBuildData", false))
 				{

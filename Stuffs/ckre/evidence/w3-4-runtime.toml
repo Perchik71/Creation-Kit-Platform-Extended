@@ -1,0 +1,1615 @@
+[[evidence]]
+class = "hkAlignSceneToNodeOptions"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22E98B0, expect = "mov edx, 0x28" }, { version = "982", rva = 0x22E98B8, expect = "call 0x92370" }, { version = "137", rva = 0x2338C40, expect = "mov edx, 0x28" }, { version = "137", rva = 0x2338C48, expect = "call 0x92c7b" }, { version = "246", rva = 0x233E060, expect = "mov edx, 0x28" }, { version = "246", rva = 0x233E068, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x233DFF0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkArrayStreamWriter"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CAC849, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1CAC851, expect = "call 0x92370" }, { version = "137", rva = 0x1CD72D9, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1CD72E1, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CDC689, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1CDC691, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CDC5E0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkBallAndSocketConstraintCinfo"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B39580, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1B39588, expect = "call 0x1c35" }, { version = "137", rva = 0x1B63F80, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1B63F88, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B69310, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1B69318, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B692E0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkBallSocketChainCinfo"
+size = 0x48
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B3A568, expect = "mov edx, 0x48" }, { version = "982", rva = 0x1B3A570, expect = "call 0x1c35" }, { version = "137", rva = 0x1B64F68, expect = "mov edx, 0x48" }, { version = "137", rva = 0x1B64F70, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B6A2F8, expect = "mov edx, 0x48" }, { version = "246", rva = 0x1B6A300, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B6A290; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkBaseObject"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x2E2CEB, expect = "mov edx, 8" }, { version = "982", rva = 0x2E2CF0, expect = "call 0x92370" }, { version = "137", rva = 0x2E78CB, expect = "mov edx, 8" }, { version = "137", rva = 0x2E78D0, expect = "call 0x92c7b" }, { version = "246", rva = 0x2E8DAB, expect = "mov edx, 8" }, { version = "246", rva = 0x2E8DB0, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2E8D90; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkBinaryPackfileWriter"
+size = 0x140
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E16132, expect = "mov edx, 0x140" }, { version = "982", rva = 0x1E1613A, expect = "call 0x92370" }, { version = "137", rva = 0x1E40BC2, expect = "mov edx, 0x140" }, { version = "137", rva = 0x1E40BCA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E45F92, expect = "mov edx, 0x140" }, { version = "246", rva = 0x1E45F9A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E45F30; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkBinaryTagfileReader"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E171C4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1E171C9, expect = "call 0x92370" }, { version = "137", rva = 0x1E41C54, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1E41C59, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E47024, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1E47029, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E46FC0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkBinaryTagfileWriter"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CB09D4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1CB09D9, expect = "call 0x92370" }, { version = "137", rva = 0x1CDB464, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1CDB469, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CE0814, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1CE0819, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CE07B0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkBlockStreamAllocator"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D98D44, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1D98D49, expect = "call 0x92370" }, { version = "137", rva = 0x1DC37D4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1DC37D9, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DC8BA4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1DC8BA9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DC8B40; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkBlockStreamCommandWriter"
+size = 0x38
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D87704, expect = "mov edx, 0x38" }, { version = "982", rva = 0x1D87709, expect = "call 0x92370" }, { version = "137", rva = 0x1DB2194, expect = "mov edx, 0x38" }, { version = "137", rva = 0x1DB2199, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DB7564, expect = "mov edx, 0x38" }, { version = "246", rva = 0x1DB7569, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DB7500; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkBreakableConstraintCinfo"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B44EC0, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1B44EC8, expect = "call 0x1c35" }, { version = "137", rva = 0x1B6F8C0, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1B6F8C8, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B74C50, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1B74C58, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B74C20; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkBsdSocket"
+size = 0x48
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F311F2, expect = "mov edx, 0x48" }, { version = "982", rva = 0x1F311FA, expect = "call 0x92370" }, { version = "137", rva = 0x1F5BC82, expect = "mov edx, 0x48" }, { version = "137", rva = 0x1F5BC8A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F61052, expect = "mov edx, 0x48" }, { version = "246", rva = 0x1F6105A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F60FF0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkBufferedStreamReader"
+size = 0x38
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DC22D2, expect = "mov edx, 0x38" }, { version = "982", rva = 0x1DC22DA, expect = "call 0x92370" }, { version = "137", rva = 0x1DECD62, expect = "mov edx, 0x38" }, { version = "137", rva = 0x1DECD6A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DF2132, expect = "mov edx, 0x38" }, { version = "246", rva = 0x1DF213A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DF20D0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkBufferedStreamWriter"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DFE622, expect = "mov edx, 0x30" }, { version = "982", rva = 0x1DFE62A, expect = "call 0x92370" }, { version = "137", rva = 0x1E290B2, expect = "mov edx, 0x30" }, { version = "137", rva = 0x1E290BA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E2E482, expect = "mov edx, 0x30" }, { version = "246", rva = 0x1E2E48A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E2E420; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkBuiltinTypeRegistry"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CB25E4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1CB25E9, expect = "call 0x92370" }, { version = "137", rva = 0x1CDD074, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1CDD079, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CE2424, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1CE2429, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CE23C0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkClassNameRegistry"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CB2684, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1CB2689, expect = "call 0x92370" }, { version = "137", rva = 0x1CDD114, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1CDD119, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CE24C4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1CE24C9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CE2460; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkCommandRouter"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F58B90, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1F58B98, expect = "call 0x92370" }, { version = "137", rva = 0x1F83620, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1F83628, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F889F0, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1F889F8, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F88980; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkConstraintChainCinfo"
+size = 0x38
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B3A5C9, expect = "mov edx, 0x38" }, { version = "982", rva = 0x1B3A5D1, expect = "call 0x1c35" }, { version = "137", rva = 0x1B64FC9, expect = "mov edx, 0x38" }, { version = "137", rva = 0x1B64FD1, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B6A359, expect = "mov edx, 0x38" }, { version = "246", rva = 0x1B6A361, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B6A340; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkConstraintCinfo"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B395E0, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1B395E8, expect = "call 0x1c35" }, { version = "137", rva = 0x1B63FE0, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1B63FE8, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B69370, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1B69378, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B69340; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDataArrayImpl"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E06104, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1E06109, expect = "call 0x92370" }, { version = "137", rva = 0x1E30B94, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1E30B99, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E35F64, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1E35F69, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E35F00; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDataArrayNative"
+size = 0x50
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E0EAB4, expect = "mov edx, 0x50" }, { version = "982", rva = 0x1E0EAB9, expect = "call 0x92370" }, { version = "137", rva = 0x1E39544, expect = "mov edx, 0x50" }, { version = "137", rva = 0x1E39549, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E3E914, expect = "mov edx, 0x50" }, { version = "246", rva = 0x1E3E919, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E3E8B0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDataClassDict"
+size = 0x60
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E061E0, expect = "mov edx, 0x60" }, { version = "982", rva = 0x1E061E8, expect = "call 0x92370" }, { version = "137", rva = 0x1E30C70, expect = "mov edx, 0x60" }, { version = "137", rva = 0x1E30C78, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E36040, expect = "mov edx, 0x60" }, { version = "246", rva = 0x1E36048, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E35FA0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDataClassImpl"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E06294, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1E06299, expect = "call 0x92370" }, { version = "137", rva = 0x1E30D24, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1E30D29, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E360F4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1E360F9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E36090; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDataClassNative"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E0EB54, expect = "mov edx, 0x20" }, { version = "982", rva = 0x1E0EB59, expect = "call 0x92370" }, { version = "137", rva = 0x1E395E4, expect = "mov edx, 0x20" }, { version = "137", rva = 0x1E395E9, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E3E9B4, expect = "mov edx, 0x20" }, { version = "246", rva = 0x1E3E9B9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E3E950; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDataObjectDict"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E06367, expect = "mov edx, 0x30" }, { version = "982", rva = 0x1E0636F, expect = "call 0x92370" }, { version = "137", rva = 0x1E30DF7, expect = "mov edx, 0x30" }, { version = "137", rva = 0x1E30DFF, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E361C7, expect = "mov edx, 0x30" }, { version = "246", rva = 0x1E361CF, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E36130; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDataObjectImpl"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E06414, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1E06419, expect = "call 0x92370" }, { version = "137", rva = 0x1E30EA4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1E30EA9, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E36274, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1E36279, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E36210; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDataObjectNative"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E0EC3C, expect = "mov edx, 0x30" }, { version = "982", rva = 0x1E0EC44, expect = "call 0x92370" }, { version = "137", rva = 0x1E396CC, expect = "mov edx, 0x30" }, { version = "137", rva = 0x1E396D4, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E3EA9C, expect = "mov edx, 0x30" }, { version = "246", rva = 0x1E3EAA4, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E3E9F0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDataRefCounted"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E064B4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1E064B9, expect = "call 0x92370" }, { version = "137", rva = 0x1E30F44, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1E30F49, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E36314, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1E36319, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E362B0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDataWorld"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E06554, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1E06559, expect = "call 0x92370" }, { version = "137", rva = 0x1E30FE4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1E30FE9, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E363B4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1E363B9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E36350; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDataWorldDict"
+size = 0x120
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E065F2, expect = "mov edx, 0x120" }, { version = "982", rva = 0x1E065FA, expect = "call 0x92370" }, { version = "137", rva = 0x1E31082, expect = "mov edx, 0x120" }, { version = "137", rva = 0x1E3108A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E36452, expect = "mov edx, 0x120" }, { version = "246", rva = 0x1E3645A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E363F0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDataWorldNative"
+size = 0x168
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E0ECF2, expect = "mov edx, 0x168" }, { version = "982", rva = 0x1E0ECFA, expect = "call 0x92370" }, { version = "137", rva = 0x1E39782, expect = "mov edx, 0x168" }, { version = "137", rva = 0x1E3978A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E3EB52, expect = "mov edx, 0x168" }, { version = "246", rva = 0x1E3EB5A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E3EAF0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDebugCommandProcessor"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x19CF134, expect = "mov edx, 0x10" }, { version = "982", rva = 0x19CF139, expect = "call 0x92370" }, { version = "137", rva = 0x19F9B34, expect = "mov edx, 0x10" }, { version = "137", rva = 0x19F9B39, expect = "call 0x92c7b" }, { version = "246", rva = 0x19FEEC4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x19FEEC9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x19FEE60; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDebugDisplay"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CC6362, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1CC636A, expect = "call 0x92370" }, { version = "137", rva = 0x1CF0DF2, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1CF0DFA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CF61A2, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1CF61AA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CF6140; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDebugDisplayHandler"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CC75C8, expect = "mov edx, 8" }, { version = "982", rva = 0x1CC75CD, expect = "call 0x1c35" }, { version = "137", rva = 0x1CF2058, expect = "mov edx, 8" }, { version = "137", rva = 0x1CF205D, expect = "call 0x1c4e" }, { version = "246", rva = 0x1CF7408, expect = "mov edx, 8" }, { version = "246", rva = 0x1CF740D, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1CF73F0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDefaultBuiltinTypeRegistry"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CB30F4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1CB30F9, expect = "call 0x92370" }, { version = "137", rva = 0x1CDDB84, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1CDDB89, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CE2F34, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1CE2F39, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CE2ED0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDefaultClassNameRegistry"
+size = 0x38
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CB2B60, expect = "mov edx, 0x38" }, { version = "982", rva = 0x1CB2B68, expect = "call 0x92370" }, { version = "137", rva = 0x1CDD5F0, expect = "mov edx, 0x38" }, { version = "137", rva = 0x1CDD5F8, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CE29A0, expect = "mov edx, 0x38" }, { version = "246", rva = 0x1CE29A8, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CE2930; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDefaultClassWrapper"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E28AC4, expect = "mov edx, 0x18" }, { version = "982", rva = 0x1E28ACC, expect = "call 0x92370" }, { version = "137", rva = 0x1E53554, expect = "mov edx, 0x18" }, { version = "137", rva = 0x1E5355C, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E58924, expect = "mov edx, 0x18" }, { version = "246", rva = 0x1E5892C, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E58870; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDefaultCompoundMeshBody"
+size = 0x80
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x23F1582, expect = "mov edx, 0x80" }, { version = "982", rva = 0x23F158A, expect = "call 0x92370" }, { version = "137", rva = 0x241DE82, expect = "mov edx, 0x80" }, { version = "137", rva = 0x241DE8A, expect = "call 0x92c7b" }, { version = "246", rva = 0x24232A2, expect = "mov edx, 0x80" }, { version = "246", rva = 0x24232AA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2423240; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDefaultCompoundMeshShape"
+size = 0x40
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x23F1622, expect = "mov edx, 0x40" }, { version = "982", rva = 0x23F162A, expect = "call 0x92370" }, { version = "137", rva = 0x241DF22, expect = "mov edx, 0x40" }, { version = "137", rva = 0x241DF2A, expect = "call 0x92c7b" }, { version = "246", rva = 0x2423342, expect = "mov edx, 0x40" }, { version = "246", rva = 0x242334A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x24232E0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDefaultError"
+size = 0x48
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E79970, expect = "mov edx, 0x48" }, { version = "982", rva = 0x1E79978, expect = "call 0x92370" }, { version = "137", rva = 0x1EA4400, expect = "mov edx, 0x48" }, { version = "137", rva = 0x1EA4408, expect = "call 0x92c7b" }, { version = "246", rva = 0x1EA97D0, expect = "mov edx, 0x48" }, { version = "246", rva = 0x1EA97D8, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1EA9710; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDefaultImage"
+size = 0x38
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x23F1E16, expect = "mov edx, 0x38" }, { version = "982", rva = 0x23F1E1E, expect = "call 0x92370" }, { version = "137", rva = 0x241E716, expect = "mov edx, 0x38" }, { version = "137", rva = 0x241E71E, expect = "call 0x92c7b" }, { version = "246", rva = 0x2423B36, expect = "mov edx, 0x38" }, { version = "246", rva = 0x2423B3E, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2423A60; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDefaultMeshMaterialRegistry"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x232BB22, expect = "mov edx, 0x20" }, { version = "982", rva = 0x232BB2A, expect = "call 0x92370" }, { version = "137", rva = 0x2358422, expect = "mov edx, 0x20" }, { version = "137", rva = 0x235842A, expect = "call 0x92c7b" }, { version = "246", rva = 0x235D842, expect = "mov edx, 0x20" }, { version = "246", rva = 0x235D84A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x235D7E0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDisplayAABB"
+size = 0x90
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D92542, expect = "mov edx, 0x90" }, { version = "982", rva = 0x1D9254A, expect = "call 0x92370" }, { version = "137", rva = 0x1DBCFD2, expect = "mov edx, 0x90" }, { version = "137", rva = 0x1DBCFDA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DC23A2, expect = "mov edx, 0x90" }, { version = "246", rva = 0x1DC23AA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DC2340; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDisplayBox"
+size = 0x80
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F81C12, expect = "mov edx, 0x80" }, { version = "982", rva = 0x1F81C1A, expect = "call 0x92370" }, { version = "137", rva = 0x1FAC6A2, expect = "mov edx, 0x80" }, { version = "137", rva = 0x1FAC6AA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB1A72, expect = "mov edx, 0x80" }, { version = "246", rva = 0x1FB1A7A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB1A10; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDisplayCapsule"
+size = 0xA0
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D90E82, expect = "mov edx, 0xa0" }, { version = "982", rva = 0x1D90E8A, expect = "call 0x92370" }, { version = "137", rva = 0x1DBB912, expect = "mov edx, 0xa0" }, { version = "137", rva = 0x1DBB91A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DC0CE2, expect = "mov edx, 0xa0" }, { version = "246", rva = 0x1DC0CEA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DC0C80; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDisplayCone"
+size = 0xA0
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F7F6D2, expect = "mov edx, 0xa0" }, { version = "982", rva = 0x1F7F6DA, expect = "call 0x92370" }, { version = "137", rva = 0x1FAA162, expect = "mov edx, 0xa0" }, { version = "137", rva = 0x1FAA16A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FAF532, expect = "mov edx, 0xa0" }, { version = "246", rva = 0x1FAF53A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FAF4D0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDisplayConvex"
+size = 0x70
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D91272, expect = "mov edx, 0x70" }, { version = "982", rva = 0x1D9127A, expect = "call 0x92370" }, { version = "137", rva = 0x1DBBD02, expect = "mov edx, 0x70" }, { version = "137", rva = 0x1DBBD0A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DC10D2, expect = "mov edx, 0x70" }, { version = "246", rva = 0x1DC10DA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DC1070; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDisplayCylinder"
+size = 0xA0
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DB3172, expect = "mov edx, 0xa0" }, { version = "982", rva = 0x1DB317A, expect = "call 0x92370" }, { version = "137", rva = 0x1DDDC02, expect = "mov edx, 0xa0" }, { version = "137", rva = 0x1DDDC0A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DE2FD2, expect = "mov edx, 0xa0" }, { version = "246", rva = 0x1DE2FDA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DE2F70; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDisplayGeometry"
+size = 0x70
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D8F952, expect = "mov edx, 0x70" }, { version = "982", rva = 0x1D8F95A, expect = "call 0x92370" }, { version = "137", rva = 0x1DBA3E2, expect = "mov edx, 0x70" }, { version = "137", rva = 0x1DBA3EA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DBF7B2, expect = "mov edx, 0x70" }, { version = "246", rva = 0x1DBF7BA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DBF750; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDisplayGeometryBuilder"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x23346E4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x23346E9, expect = "call 0x92370" }, { version = "137", rva = 0x2360FE4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x2360FE9, expect = "call 0x92c7b" }, { version = "246", rva = 0x2366404, expect = "mov edx, 0x10" }, { version = "246", rva = 0x2366409, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x23663A0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDisplayMesh"
+size = 0x90
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F80B16, expect = "mov edx, 0x90" }, { version = "982", rva = 0x1F80B1E, expect = "call 0x92370" }, { version = "137", rva = 0x1FAB5A6, expect = "mov edx, 0x90" }, { version = "137", rva = 0x1FAB5AE, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB0976, expect = "mov edx, 0x90" }, { version = "246", rva = 0x1FB097E, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB0880; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDisplayPlane"
+size = 0xB0
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F804E2, expect = "mov edx, 0xb0" }, { version = "982", rva = 0x1F804EA, expect = "call 0x92370" }, { version = "137", rva = 0x1FAAF72, expect = "mov edx, 0xb0" }, { version = "137", rva = 0x1FAAF7A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB0342, expect = "mov edx, 0xb0" }, { version = "246", rva = 0x1FB034A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB02E0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDisplaySemiCircle"
+size = 0xB0
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F7FF22, expect = "mov edx, 0xb0" }, { version = "982", rva = 0x1F7FF2A, expect = "call 0x92370" }, { version = "137", rva = 0x1FAA9B2, expect = "mov edx, 0xb0" }, { version = "137", rva = 0x1FAA9BA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FAFD82, expect = "mov edx, 0xb0" }, { version = "246", rva = 0x1FAFD8A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FAFD20; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDisplaySerializeIStream"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F68712, expect = "mov edx, 0x20" }, { version = "982", rva = 0x1F6871A, expect = "call 0x92370" }, { version = "137", rva = 0x1F931A2, expect = "mov edx, 0x20" }, { version = "137", rva = 0x1F931AA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F98572, expect = "mov edx, 0x20" }, { version = "246", rva = 0x1F9857A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F98510; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDisplaySerializeOStream"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F63AE2, expect = "mov edx, 0x20" }, { version = "982", rva = 0x1F63AEA, expect = "call 0x92370" }, { version = "137", rva = 0x1F8E572, expect = "mov edx, 0x20" }, { version = "137", rva = 0x1F8E57A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F93942, expect = "mov edx, 0x20" }, { version = "246", rva = 0x1F9394A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F938E0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDisplaySphere"
+size = 0x90
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D90502, expect = "mov edx, 0x90" }, { version = "982", rva = 0x1D9050A, expect = "call 0x92370" }, { version = "137", rva = 0x1DBAF92, expect = "mov edx, 0x90" }, { version = "137", rva = 0x1DBAF9A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DC0362, expect = "mov edx, 0x90" }, { version = "246", rva = 0x1DC036A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DC0300; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDisplayTaperedCapsule"
+size = 0xA0
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F81E72, expect = "mov edx, 0xa0" }, { version = "982", rva = 0x1F81E7A, expect = "call 0x92370" }, { version = "137", rva = 0x1FAC902, expect = "mov edx, 0xa0" }, { version = "137", rva = 0x1FAC90A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB1CD2, expect = "mov edx, 0xa0" }, { version = "246", rva = 0x1FB1CDA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB1C70; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDisplayWireframe"
+size = 0x80
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D926CD, expect = "mov edx, 0x80" }, { version = "982", rva = 0x1D926D5, expect = "call 0x92370" }, { version = "137", rva = 0x1DBD15D, expect = "mov edx, 0x80" }, { version = "137", rva = 0x1DBD165, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DC252D, expect = "mov edx, 0x80" }, { version = "246", rva = 0x1DC2535, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DC2490; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDrawUtil"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x233AD24, expect = "mov edx, 0x18" }, { version = "982", rva = 0x233AD29, expect = "call 0x92370" }, { version = "137", rva = 0x2367624, expect = "mov edx, 0x18" }, { version = "137", rva = 0x2367629, expect = "call 0x92c7b" }, { version = "246", rva = 0x236CA44, expect = "mov edx, 0x18" }, { version = "246", rva = 0x236CA49, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x236C9E0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDummySingleton"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D97BD4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1D97BD9, expect = "call 0x92370" }, { version = "137", rva = 0x1DC2664, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1DC2669, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DC7A34, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1DC7A39, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DC79D0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkDynamicClassNameRegistry"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CB2AB0, expect = "mov edx, 0x30" }, { version = "982", rva = 0x1CB2AB8, expect = "call 0x92370" }, { version = "137", rva = 0x1CDD540, expect = "mov edx, 0x30" }, { version = "137", rva = 0x1CDD548, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CE28F0, expect = "mov edx, 0x30" }, { version = "246", rva = 0x1CE28F8, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CE2880; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkErrStream"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D05E52, expect = "mov edx, 0x18" }, { version = "982", rva = 0x1D05E5A, expect = "call 0x92370" }, { version = "137", rva = 0x1D308E2, expect = "mov edx, 0x18" }, { version = "137", rva = 0x1D308EA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1D35C92, expect = "mov edx, 0x18" }, { version = "246", rva = 0x1D35C9A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1D35C30; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkError"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0xE5B734, expect = "mov edx, 0x10" }, { version = "982", rva = 0xE5B739, expect = "call 0x92370" }, { version = "137", rva = 0xE86444, expect = "mov edx, 0x10" }, { version = "137", rva = 0xE86449, expect = "call 0x92c7b" }, { version = "246", rva = 0xE8BE94, expect = "mov edx, 0x10" }, { version = "246", rva = 0xE8BE99, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0xE8BE30; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkFileSystem"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0xE5B7D4, expect = "mov edx, 0x10" }, { version = "982", rva = 0xE5B7D9, expect = "call 0x92370" }, { version = "137", rva = 0xE864E4, expect = "mov edx, 0x10" }, { version = "137", rva = 0xE864E9, expect = "call 0x92c7b" }, { version = "246", rva = 0xE8BF34, expect = "mov edx, 0x10" }, { version = "246", rva = 0xE8BF39, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0xE8BED0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkFileSystem::Iterator::Impl"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D05324, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1D05329, expect = "call 0x92370" }, { version = "137", rva = 0x1D2FDB4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1D2FDB9, expect = "call 0x92c7b" }, { version = "246", rva = 0x1D35164, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1D35169, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1D35100; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkFixedBlockStreamAllocator"
+size = 0x70
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D98DE2, expect = "mov edx, 0x70" }, { version = "982", rva = 0x1D98DEA, expect = "call 0x92370" }, { version = "137", rva = 0x1DC3872, expect = "mov edx, 0x70" }, { version = "137", rva = 0x1DC387A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DC8C42, expect = "mov edx, 0x70" }, { version = "246", rva = 0x1DC8C4A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DC8BE0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkFixedConstraintCinfo"
+size = 0x38
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B3DAE0, expect = "mov edx, 0x38" }, { version = "982", rva = 0x1B3DAE8, expect = "call 0x1c35" }, { version = "137", rva = 0x1B684E0, expect = "mov edx, 0x38" }, { version = "137", rva = 0x1B684E8, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B6D870, expect = "mov edx, 0x38" }, { version = "246", rva = 0x1B6D878, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B6D840; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkForwardingDisplayGeometryBuilder"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x2334784, expect = "mov edx, 0x10" }, { version = "982", rva = 0x2334789, expect = "call 0x92370" }, { version = "137", rva = 0x2361084, expect = "mov edx, 0x10" }, { version = "137", rva = 0x2361089, expect = "call 0x92c7b" }, { version = "246", rva = 0x23664A4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x23664A9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2366440; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkGenericConstraintCinfo"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B3DB40, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1B3DB48, expect = "call 0x1c35" }, { version = "137", rva = 0x1B68540, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1B68548, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B6D8D0, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1B6D8D8, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B6D8A0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkGeometry"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x19A4A82, expect = "mov edx, 0x30" }, { version = "982", rva = 0x19A4A8A, expect = "call 0x92370" }, { version = "137", rva = 0x19CF482, expect = "mov edx, 0x30" }, { version = "137", rva = 0x19CF48A, expect = "call 0x92c7b" }, { version = "246", rva = 0x19D4812, expect = "mov edx, 0x30" }, { version = "246", rva = 0x19D481A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x19D47B0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkHardwareInfo"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D88EB4, expect = "mov edx, 0x18" }, { version = "982", rva = 0x1D88EB9, expect = "call 0x92370" }, { version = "137", rva = 0x1DB3944, expect = "mov edx, 0x18" }, { version = "137", rva = 0x1DB3949, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DB8D14, expect = "mov edx, 0x18" }, { version = "246", rva = 0x1DB8D19, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DB8CB0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkHingeConstraintCinfo"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B3BCA0, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1B3BCA8, expect = "call 0x1c35" }, { version = "137", rva = 0x1B666A0, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1B666A8, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B6BA30, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1B6BA38, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B6BA00; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkHingeLimitsConstraintCinfo"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B3CB70, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1B3CB78, expect = "call 0x1c35" }, { version = "137", rva = 0x1B67570, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1B67578, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B6C900, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1B6C908, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B6C8D0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkIArchive"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DA5522, expect = "mov edx, 0x20" }, { version = "982", rva = 0x1DA552A, expect = "call 0x92370" }, { version = "137", rva = 0x1DCFFB2, expect = "mov edx, 0x20" }, { version = "137", rva = 0x1DCFFBA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DD5382, expect = "mov edx, 0x20" }, { version = "246", rva = 0x1DD538A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DD5320; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkImage"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x23F1EE2, expect = "mov edx, 0x10" }, { version = "982", rva = 0x23F1EEA, expect = "call 0x92370" }, { version = "137", rva = 0x241E7E2, expect = "mov edx, 0x10" }, { version = "137", rva = 0x241E7EA, expect = "call 0x92c7b" }, { version = "246", rva = 0x2423C02, expect = "mov edx, 0x10" }, { version = "246", rva = 0x2423C0A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2423BA0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkIndexedTransformSet"
+size = 0x68
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F70882, expect = "mov edx, 0x68" }, { version = "982", rva = 0x1F7088A, expect = "call 0x92370" }, { version = "137", rva = 0x1F9B312, expect = "mov edx, 0x68" }, { version = "137", rva = 0x1F9B31A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FA06E2, expect = "mov edx, 0x68" }, { version = "246", rva = 0x1FA06EA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FA0680; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkIstream"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E01D12, expect = "mov edx, 0x18" }, { version = "982", rva = 0x1E01D1A, expect = "call 0x92370" }, { version = "137", rva = 0x1E2C7A2, expect = "mov edx, 0x18" }, { version = "137", rva = 0x1E2C7AA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E31B72, expect = "mov edx, 0x18" }, { version = "246", rva = 0x1E31B7A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E31B10; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkLifoAllocator"
+size = 0x50
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1C40CEC, expect = "mov edx, 0x50" }, { version = "982", rva = 0x1C40CF4, expect = "call 0x92370" }, { version = "137", rva = 0x1C6B6EC, expect = "mov edx, 0x50" }, { version = "137", rva = 0x1C6B6F4, expect = "call 0x92c7b" }, { version = "246", rva = 0x1C70A7C, expect = "mov edx, 0x50" }, { version = "246", rva = 0x1C70A84, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1C70A60; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkLimitedHingeConstraintCinfo"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B3F050, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1B3F058, expect = "call 0x1c35" }, { version = "137", rva = 0x1B69A50, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1B69A58, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B6EDE0, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1B6EDE8, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B6EDB0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkLiquidAction"
+size = 0x50
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1BD54EF, expect = "mov edx, 0x50" }, { version = "982", rva = 0x1BD54F7, expect = "call 0x92370" }, { version = "137", rva = 0x1BFFEEF, expect = "mov edx, 0x50" }, { version = "137", rva = 0x1BFFEF7, expect = "call 0x92c7b" }, { version = "246", rva = 0x1C0527F, expect = "mov edx, 0x50" }, { version = "246", rva = 0x1C05287, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1C05210; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkLoader"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1C6E4C2, expect = "mov edx, 0x20" }, { version = "982", rva = 0x1C6E4CA, expect = "call 0x92370" }, { version = "137", rva = 0x1C98F32, expect = "mov edx, 0x20" }, { version = "137", rva = 0x1C98F3A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1C9E2C2, expect = "mov edx, 0x20" }, { version = "246", rva = 0x1C9E2CA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1C9E260; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkLocalFrame"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DA55C4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1DA55C9, expect = "call 0x92370" }, { version = "137", rva = 0x1DD0054, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1DD0059, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DD5424, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1DD5429, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DD53C0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkLocalFrameCollector"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F32CF4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1F32CF9, expect = "call 0x92370" }, { version = "137", rva = 0x1F5D784, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1F5D789, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F62B54, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1F62B59, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F62AF0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkLocalFrameGroup"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DA5670, expect = "mov edx, 0x18" }, { version = "982", rva = 0x1DA5678, expect = "call 0x92370" }, { version = "137", rva = 0x1DD0100, expect = "mov edx, 0x18" }, { version = "137", rva = 0x1DD0108, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DD54D0, expect = "mov edx, 0x18" }, { version = "246", rva = 0x1DD54D8, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DD5460; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMalleableConstraintCinfo"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B3DBA0, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1B3DBA8, expect = "call 0x1c35" }, { version = "137", rva = 0x1B685A0, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1B685A8, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B6D930, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1B6D938, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B6D900; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMallocAllocator"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DFD39C, expect = "mov edx, 0x18" }, { version = "982", rva = 0x1DFD3A4, expect = "call 0x92370" }, { version = "137", rva = 0x1E27E2C, expect = "mov edx, 0x18" }, { version = "137", rva = 0x1E27E34, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E2D1FC, expect = "mov edx, 0x18" }, { version = "246", rva = 0x1E2D204, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E2D1E0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMemoryAllocator"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1C40D3C, expect = "mov edx, 8" }, { version = "982", rva = 0x1C40D44, expect = "call 0x92370" }, { version = "137", rva = 0x1C6B73C, expect = "mov edx, 8" }, { version = "137", rva = 0x1C6B744, expect = "call 0x92c7b" }, { version = "246", rva = 0x1C70ACC, expect = "mov edx, 8" }, { version = "246", rva = 0x1C70AD4, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1C70AB0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMemoryMeshBody"
+size = 0x80
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F893E2, expect = "mov edx, 0x80" }, { version = "982", rva = 0x1F893EA, expect = "call 0x92370" }, { version = "137", rva = 0x1FB3E72, expect = "mov edx, 0x80" }, { version = "137", rva = 0x1FB3E7A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB9242, expect = "mov edx, 0x80" }, { version = "246", rva = 0x1FB924A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB91E0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMemoryMeshMaterial"
+size = 0x80
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22EDA32, expect = "mov edx, 0x80" }, { version = "982", rva = 0x22EDA3A, expect = "call 0x92370" }, { version = "137", rva = 0x233CDC2, expect = "mov edx, 0x80" }, { version = "137", rva = 0x233CDCA, expect = "call 0x92c7b" }, { version = "246", rva = 0x23421E2, expect = "mov edx, 0x80" }, { version = "246", rva = 0x23421EA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2342180; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMemoryMeshShape"
+size = 0x48
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22EEBE2, expect = "mov edx, 0x48" }, { version = "982", rva = 0x22EEBEA, expect = "call 0x92370" }, { version = "137", rva = 0x233DF72, expect = "mov edx, 0x48" }, { version = "137", rva = 0x233DF7A, expect = "call 0x92c7b" }, { version = "246", rva = 0x2343392, expect = "mov edx, 0x48" }, { version = "246", rva = 0x234339A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2343330; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMemoryMeshSystem"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x23D2B02, expect = "mov edx, 0x28" }, { version = "982", rva = 0x23D2B0A, expect = "call 0x92370" }, { version = "137", rva = 0x23FF402, expect = "mov edx, 0x28" }, { version = "137", rva = 0x23FF40A, expect = "call 0x92c7b" }, { version = "246", rva = 0x2404822, expect = "mov edx, 0x28" }, { version = "246", rva = 0x240482A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x24047C0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMemoryMeshTexture"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x211B7DB, expect = "mov edx, 0x30" }, { version = "982", rva = 0x211B7E3, expect = "call 0x92370" }, { version = "137", rva = 0x215481B, expect = "mov edx, 0x30" }, { version = "137", rva = 0x2154823, expect = "call 0x92c7b" }, { version = "246", rva = 0x2159C3B, expect = "mov edx, 0x30" }, { version = "246", rva = 0x2159C43, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2159B90; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMemoryMeshVertexBuffer"
+size = 0x1B8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22EFD82, expect = "mov edx, 0x1b8" }, { version = "982", rva = 0x22EFD8A, expect = "call 0x92370" }, { version = "137", rva = 0x233F112, expect = "mov edx, 0x1b8" }, { version = "137", rva = 0x233F11A, expect = "call 0x92c7b" }, { version = "246", rva = 0x2344532, expect = "mov edx, 0x1b8" }, { version = "246", rva = 0x234453A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x23444D0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMemoryResourceContainer"
+size = 0x40
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DA3DC2, expect = "mov edx, 0x40" }, { version = "982", rva = 0x1DA3DCA, expect = "call 0x92370" }, { version = "137", rva = 0x1DCE852, expect = "mov edx, 0x40" }, { version = "137", rva = 0x1DCE85A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DD3C22, expect = "mov edx, 0x40" }, { version = "246", rva = 0x1DD3C2A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DD3BC0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMemoryResourceHandle"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DA3E62, expect = "mov edx, 0x30" }, { version = "982", rva = 0x1DA3E6A, expect = "call 0x92370" }, { version = "137", rva = 0x1DCE8F2, expect = "mov edx, 0x30" }, { version = "137", rva = 0x1DCE8FA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DD3CC2, expect = "mov edx, 0x30" }, { version = "246", rva = 0x1DD3CCA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DD3C60; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMemoryStreamReader"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E7BA62, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1E7BA6A, expect = "call 0x92370" }, { version = "137", rva = 0x1EA64F2, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1EA64FA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1EAB8C2, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1EAB8CA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1EAB860; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMemorySystem"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1D9857C, expect = "mov edx, 8" }, { version = "982", rva = 0x1D98584, expect = "call 0x92370" }, { version = "137", rva = 0x1DC300C, expect = "mov edx, 8" }, { version = "137", rva = 0x1DC3014, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DC83DC, expect = "mov edx, 8" }, { version = "246", rva = 0x1DC83E4, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DC83C0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMemoryTrackStreamReader"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DFDFB2, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1DFDFBA, expect = "call 0x92370" }, { version = "137", rva = 0x1E28A42, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1E28A4A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E2DE12, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1E2DE1A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E2DDB0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMeshBody"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F89484, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1F89489, expect = "call 0x92370" }, { version = "137", rva = 0x1FB3F14, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1FB3F19, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB92E4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1FB92E9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB9280; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMeshMaterial"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22EDAD4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x22EDAD9, expect = "call 0x92370" }, { version = "137", rva = 0x233CE64, expect = "mov edx, 0x10" }, { version = "137", rva = 0x233CE69, expect = "call 0x92c7b" }, { version = "246", rva = 0x2342284, expect = "mov edx, 0x10" }, { version = "246", rva = 0x2342289, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2342220; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMeshMaterialRegistry"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x232BBC4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x232BBC9, expect = "call 0x92370" }, { version = "137", rva = 0x23584C4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x23584C9, expect = "call 0x92c7b" }, { version = "246", rva = 0x235D8E4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x235D8E9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x235D880; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMeshShape"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x21194D4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x21194D9, expect = "call 0x92370" }, { version = "137", rva = 0x2152514, expect = "mov edx, 0x10" }, { version = "137", rva = 0x2152519, expect = "call 0x92c7b" }, { version = "246", rva = 0x2157934, expect = "mov edx, 0x10" }, { version = "246", rva = 0x2157939, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x21578D0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMeshSystem"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x23D2BA4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x23D2BA9, expect = "call 0x92370" }, { version = "137", rva = 0x23FF4A4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x23FF4A9, expect = "call 0x92c7b" }, { version = "246", rva = 0x24048C4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x24048C9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2404860; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMeshTexture"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x211B6E4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x211B6E9, expect = "call 0x92370" }, { version = "137", rva = 0x2154724, expect = "mov edx, 0x10" }, { version = "137", rva = 0x2154729, expect = "call 0x92c7b" }, { version = "246", rva = 0x2159B44, expect = "mov edx, 0x10" }, { version = "246", rva = 0x2159B49, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2159AE0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMeshVertexBuffer"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22EFE24, expect = "mov edx, 0x10" }, { version = "982", rva = 0x22EFE29, expect = "call 0x92370" }, { version = "137", rva = 0x233F1B4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x233F1B9, expect = "call 0x92c7b" }, { version = "246", rva = 0x23445D4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x23445D9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2344570; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMonitorStreamColorTable"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F7EBBF, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1F7EBC7, expect = "call 0x92370" }, { version = "137", rva = 0x1FA964F, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1FA9657, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FAEA1F, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1FAEA27, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FAE960; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkMultipleVertexBuffer"
+size = 0x160
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22F19C2, expect = "mov edx, 0x160" }, { version = "982", rva = 0x22F19CA, expect = "call 0x92370" }, { version = "137", rva = 0x2340D52, expect = "mov edx, 0x160" }, { version = "137", rva = 0x2340D5A, expect = "call 0x92c7b" }, { version = "246", rva = 0x2346172, expect = "mov edx, 0x160" }, { version = "246", rva = 0x234617A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2346110; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkNormalTriangleShape"
+size = 0x80
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B2F78F, expect = "mov edx, 0x80" }, { version = "982", rva = 0x1B2F794, expect = "call 0x92370" }, { version = "137", rva = 0x1B5A18F, expect = "mov edx, 0x80" }, { version = "137", rva = 0x1B5A194, expect = "call 0x92c7b" }, { version = "246", rva = 0x1B5F51F, expect = "mov edx, 0x80" }, { version = "246", rva = 0x1B5F524, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1B5F4B0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkOArchive"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DA4E42, expect = "mov edx, 0x20" }, { version = "982", rva = 0x1DA4E4A, expect = "call 0x92370" }, { version = "137", rva = 0x1DCF8D2, expect = "mov edx, 0x20" }, { version = "137", rva = 0x1DCF8DA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DD4CA2, expect = "mov edx, 0x20" }, { version = "246", rva = 0x1DD4CAA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DD4C40; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkObjectCopier"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1EFA202, expect = "mov edx, 0x20" }, { version = "982", rva = 0x1EFA20A, expect = "call 0x92370" }, { version = "137", rva = 0x1F24C92, expect = "mov edx, 0x20" }, { version = "137", rva = 0x1F24C9A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F2A062, expect = "mov edx, 0x20" }, { version = "246", rva = 0x1F2A06A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F2A000; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkObjectResource"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F12D62, expect = "mov edx, 0x30" }, { version = "982", rva = 0x1F12D6A, expect = "call 0x92370" }, { version = "137", rva = 0x1F3D7F2, expect = "mov edx, 0x30" }, { version = "137", rva = 0x1F3D7FA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F42BC2, expect = "mov edx, 0x30" }, { version = "246", rva = 0x1F42BCA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F42B60; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkObjectWriter"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F08624, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1F08629, expect = "call 0x92370" }, { version = "137", rva = 0x1F330B4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1F330B9, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F38484, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1F38489, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F38420; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkOffsetOnlyStreamWriter"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F07D04, expect = "mov edx, 0x18" }, { version = "982", rva = 0x1F07D09, expect = "call 0x92370" }, { version = "137", rva = 0x1F32794, expect = "mov edx, 0x18" }, { version = "137", rva = 0x1F32799, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F37B64, expect = "mov edx, 0x18" }, { version = "246", rva = 0x1F37B69, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F37B00; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkOrientHingedBodyAction"
+size = 0x80
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1BD5FEF, expect = "mov edx, 0x80" }, { version = "982", rva = 0x1BD5FF7, expect = "call 0x92370" }, { version = "137", rva = 0x1C009EF, expect = "mov edx, 0x80" }, { version = "137", rva = 0x1C009F7, expect = "call 0x92c7b" }, { version = "246", rva = 0x1C05D7F, expect = "mov edx, 0x80" }, { version = "246", rva = 0x1C05D87, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1C05D10; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkOstream"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CACA12, expect = "mov edx, 0x18" }, { version = "982", rva = 0x1CACA1A, expect = "call 0x92370" }, { version = "137", rva = 0x1CD74A2, expect = "mov edx, 0x18" }, { version = "137", rva = 0x1CD74AA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CDC852, expect = "mov edx, 0x18" }, { version = "246", rva = 0x1CDC85A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CDC7F0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkPackfileData"
+size = 0xA8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F12762, expect = "mov edx, 0xa8" }, { version = "982", rva = 0x1F1276A, expect = "call 0x92370" }, { version = "137", rva = 0x1F3D1F2, expect = "mov edx, 0xa8" }, { version = "137", rva = 0x1F3D1FA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F425C2, expect = "mov edx, 0xa8" }, { version = "246", rva = 0x1F425CA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F42560; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkPackfileWriter"
+size = 0x138
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E00D02, expect = "mov edx, 0x138" }, { version = "982", rva = 0x1E00D0A, expect = "call 0x92370" }, { version = "137", rva = 0x1E2B792, expect = "mov edx, 0x138" }, { version = "137", rva = 0x1E2B79A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E30B62, expect = "mov edx, 0x138" }, { version = "246", rva = 0x1E30B6A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E30B00; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkParserBuffer"
+size = 0x40
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F136B2, expect = "mov edx, 0x40" }, { version = "982", rva = 0x1F136BA, expect = "call 0x92370" }, { version = "137", rva = 0x1F3E142, expect = "mov edx, 0x40" }, { version = "137", rva = 0x1F3E14A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F43512, expect = "mov edx, 0x40" }, { version = "246", rva = 0x1F4351A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F434B0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkPlatformObjectWriter"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F086C2, expect = "mov edx, 0x20" }, { version = "982", rva = 0x1F086CA, expect = "call 0x92370" }, { version = "137", rva = 0x1F33152, expect = "mov edx, 0x20" }, { version = "137", rva = 0x1F3315A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F38522, expect = "mov edx, 0x20" }, { version = "246", rva = 0x1F3852A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F384C0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkPlatformObjectWriter::Cache"
+size = 0x40
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F08582, expect = "mov edx, 0x40" }, { version = "982", rva = 0x1F0858A, expect = "call 0x92370" }, { version = "137", rva = 0x1F33012, expect = "mov edx, 0x40" }, { version = "137", rva = 0x1F3301A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F383E2, expect = "mov edx, 0x40" }, { version = "246", rva = 0x1F383EA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F38380; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkPointToPathConstraintCinfo"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B654D0, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1B654D8, expect = "call 0x1c35" }, { version = "137", rva = 0x1B8FED0, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1B8FED8, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B95260, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1B95268, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B95230; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkPrismaticConstraintCinfo"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B3FDD0, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1B3FDD8, expect = "call 0x1c35" }, { version = "137", rva = 0x1B6A7D0, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1B6A7D8, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B6FB60, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1B6FB68, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B6FB30; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkProcess"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CC76D5, expect = "mov edx, 0x30" }, { version = "982", rva = 0x1CC76DA, expect = "call 0x92370" }, { version = "137", rva = 0x1CF2165, expect = "mov edx, 0x30" }, { version = "137", rva = 0x1CF216A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CF7515, expect = "mov edx, 0x30" }, { version = "246", rva = 0x1CF751A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CF74D0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkProcessContext"
+size = 0x90
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x20AD33F, expect = "mov edx, 0x90" }, { version = "982", rva = 0x20AD347, expect = "call 0x92370" }, { version = "137", rva = 0x20D9C3F, expect = "mov edx, 0x90" }, { version = "137", rva = 0x20D9C47, expect = "call 0x92c7b" }, { version = "246", rva = 0x20DF05F, expect = "mov edx, 0x90" }, { version = "246", rva = 0x20DF067, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x20DF000; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkProcessFactory"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E2C8B2, expect = "mov edx, 0x30" }, { version = "982", rva = 0x1E2C8BA, expect = "call 0x92370" }, { version = "137", rva = 0x1E57342, expect = "mov edx, 0x30" }, { version = "137", rva = 0x1E5734A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E5C712, expect = "mov edx, 0x30" }, { version = "246", rva = 0x1E5C71A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E5C6B0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkProcessHandler"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F58BE8, expect = "mov edx, 8" }, { version = "982", rva = 0x1F58BED, expect = "call 0x1c35" }, { version = "137", rva = 0x1F83678, expect = "mov edx, 8" }, { version = "137", rva = 0x1F8367D, expect = "call 0x1c4e" }, { version = "246", rva = 0x1F88A48, expect = "mov edx, 8" }, { version = "246", rva = 0x1F88A4D, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1F88A30; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkPruneRedundantMaterialRegistry"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x232BD1C, expect = "mov edx, 0x30" }, { version = "982", rva = 0x232BD24, expect = "call 0x92370" }, { version = "137", rva = 0x235861C, expect = "mov edx, 0x30" }, { version = "137", rva = 0x2358624, expect = "call 0x92c7b" }, { version = "246", rva = 0x235DA3C, expect = "mov edx, 0x30" }, { version = "246", rva = 0x235DA44, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x235D920; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkRagdollConstraintCinfo"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B41700, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1B41708, expect = "call 0x1c35" }, { version = "137", rva = 0x1B6C100, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1B6C108, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B71490, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1B71498, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B71460; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkRagdollLimitsConstraintCinfo"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B425C0, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1B425C8, expect = "call 0x1c35" }, { version = "137", rva = 0x1B6CFC0, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1B6CFC8, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B72350, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1B72358, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B72320; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkReferencedObject"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x2E2D74, expect = "mov edx, 0x10" }, { version = "982", rva = 0x2E2D79, expect = "call 0x92370" }, { version = "137", rva = 0x2E7954, expect = "mov edx, 0x10" }, { version = "137", rva = 0x2E7959, expect = "call 0x92c7b" }, { version = "246", rva = 0x2E8E34, expect = "mov edx, 0x10" }, { version = "246", rva = 0x2E8E39, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2E8DD0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkReferencedObjectLock"
+size = 0x50
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1C41591, expect = "mov edx, 0x50" }, { version = "982", rva = 0x1C41599, expect = "call 0x92370" }, { version = "137", rva = 0x1C6BF91, expect = "mov edx, 0x50" }, { version = "137", rva = 0x1C6BF99, expect = "call 0x92c7b" }, { version = "246", rva = 0x1C71321, expect = "mov edx, 0x50" }, { version = "246", rva = 0x1C71329, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1C712B0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkRemoteObjectClientSideListener"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22384B5, expect = "mov edx, 0x10" }, { version = "982", rva = 0x22384BA, expect = "call 0x92370" }, { version = "137", rva = 0x2287845, expect = "mov edx, 0x10" }, { version = "137", rva = 0x228784A, expect = "call 0x92c7b" }, { version = "246", rva = 0x228CC65, expect = "mov edx, 0x10" }, { version = "246", rva = 0x228CC6A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x228CC20; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkRemoteObjectServerSideListener"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x2338DB5, expect = "mov edx, 8" }, { version = "982", rva = 0x2338DBA, expect = "call 0x92370" }, { version = "137", rva = 0x23656B5, expect = "mov edx, 8" }, { version = "137", rva = 0x23656BA, expect = "call 0x92c7b" }, { version = "246", rva = 0x236AAD5, expect = "mov edx, 8" }, { version = "246", rva = 0x236AADA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x236AA90; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkReplayStreamReader"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F64186, expect = "mov edx, 0x30" }, { version = "982", rva = 0x1F6418E, expect = "call 0x92370" }, { version = "137", rva = 0x1F8EC16, expect = "mov edx, 0x30" }, { version = "137", rva = 0x1F8EC1E, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F93FE6, expect = "mov edx, 0x30" }, { version = "246", rva = 0x1F93FEE, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F93F00; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkResource"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DC3864, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1DC3869, expect = "call 0x92370" }, { version = "137", rva = 0x1DEE2F4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1DEE2F9, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DF36C4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1DF36C9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DF3660; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkResourceBase"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DA3F04, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1DA3F09, expect = "call 0x92370" }, { version = "137", rva = 0x1DCE994, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1DCE999, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DD3D64, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1DD3D69, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DD3D00; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkResourceContainer"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DA3FA4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1DA3FA9, expect = "call 0x92370" }, { version = "137", rva = 0x1DCEA34, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1DCEA39, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DD3E04, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1DD3E09, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DD3DA0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkResourceHandle"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DA4044, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1DA4049, expect = "call 0x92370" }, { version = "137", rva = 0x1DCEAD4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1DCEAD9, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DD3EA4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1DD3EA9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DD3E40; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkScaledMoppBvTreeShape"
+size = 0x80
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B3368F, expect = "mov edx, 0x80" }, { version = "982", rva = 0x1B33697, expect = "call 0x92370" }, { version = "137", rva = 0x1B5E08F, expect = "mov edx, 0x80" }, { version = "137", rva = 0x1B5E097, expect = "call 0x92c7b" }, { version = "246", rva = 0x1B6341F, expect = "mov edx, 0x80" }, { version = "246", rva = 0x1B63427, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1B633B0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkSecondaryCommandDispatcher"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x19CF1D4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x19CF1D9, expect = "call 0x92370" }, { version = "137", rva = 0x19F9BD4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x19F9BD9, expect = "call 0x92c7b" }, { version = "246", rva = 0x19FEF64, expect = "mov edx, 0x10" }, { version = "246", rva = 0x19FEF69, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x19FEF00; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkSeekableStreamReader"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DC2374, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1DC2379, expect = "call 0x92370" }, { version = "137", rva = 0x1DECE04, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1DECE09, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DF21D4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1DF21D9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DF2170; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkSerializeDeprecated"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E2A584, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1E2A589, expect = "call 0x92370" }, { version = "137", rva = 0x1E55014, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1E55019, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E5A3E4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1E5A3E9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E5A380; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkSimpleLocalFrame"
+size = 0x80
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DA5752, expect = "mov edx, 0x80" }, { version = "982", rva = 0x1DA575A, expect = "call 0x92370" }, { version = "137", rva = 0x1DD01E2, expect = "mov edx, 0x80" }, { version = "137", rva = 0x1DD01EA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DD55B2, expect = "mov edx, 0x80" }, { version = "246", rva = 0x1DD55BA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DD5550; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkSkinnedMeshShape"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22ECD02, expect = "mov edx, 0x10" }, { version = "982", rva = 0x22ECD0A, expect = "call 0x92370" }, { version = "137", rva = 0x233C092, expect = "mov edx, 0x10" }, { version = "137", rva = 0x233C09A, expect = "call 0x92c7b" }, { version = "246", rva = 0x23414B2, expect = "mov edx, 0x10" }, { version = "246", rva = 0x23414BA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2341450; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkSkinnedRefMeshShape"
+size = 0x40
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22F27A2, expect = "mov edx, 0x40" }, { version = "982", rva = 0x22F27AA, expect = "call 0x92370" }, { version = "137", rva = 0x2341B32, expect = "mov edx, 0x40" }, { version = "137", rva = 0x2341B3A, expect = "call 0x92c7b" }, { version = "246", rva = 0x2346F52, expect = "mov edx, 0x40" }, { version = "246", rva = 0x2346F5A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2346EF0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkSlot"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0xE63BF5, expect = "mov edx, 0x18" }, { version = "982", rva = 0xE63BFA, expect = "call 0x92370" }, { version = "137", rva = 0xE8E905, expect = "mov edx, 0x18" }, { version = "137", rva = 0xE8E90A, expect = "call 0x92c7b" }, { version = "246", rva = 0xE94355, expect = "mov edx, 0x18" }, { version = "246", rva = 0xE9435A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0xE94310; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkSocket"
+size = 0x40
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E79E5C, expect = "mov edx, 0x40" }, { version = "982", rva = 0x1E79E61, expect = "call 0x92370" }, { version = "137", rva = 0x1EA48EC, expect = "mov edx, 0x40" }, { version = "137", rva = 0x1EA48F1, expect = "call 0x92c7b" }, { version = "246", rva = 0x1EA9CBC, expect = "mov edx, 0x40" }, { version = "246", rva = 0x1EA9CC1, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1EA9C50; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkSocket::ReaderAdapter"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E79D14, expect = "mov edx, 0x18" }, { version = "982", rva = 0x1E79D19, expect = "call 0x92370" }, { version = "137", rva = 0x1EA47A4, expect = "mov edx, 0x18" }, { version = "137", rva = 0x1EA47A9, expect = "call 0x92c7b" }, { version = "246", rva = 0x1EA9B74, expect = "mov edx, 0x18" }, { version = "246", rva = 0x1EA9B79, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1EA9B10; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkSocket::WriterAdapter"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E79DB4, expect = "mov edx, 0x18" }, { version = "982", rva = 0x1E79DB9, expect = "call 0x92370" }, { version = "137", rva = 0x1EA4844, expect = "mov edx, 0x18" }, { version = "137", rva = 0x1EA4849, expect = "call 0x92c7b" }, { version = "246", rva = 0x1EA9C14, expect = "mov edx, 0x18" }, { version = "246", rva = 0x1EA9C19, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1EA9BB0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkSolverAllocator"
+size = 0x468
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x21865CC, expect = "mov edx, 0x468" }, { version = "982", rva = 0x21865D4, expect = "call 0x92370" }, { version = "137", rva = 0x21B2ECC, expect = "mov edx, 0x468" }, { version = "137", rva = 0x21B2ED4, expect = "call 0x92c7b" }, { version = "246", rva = 0x21B82EC, expect = "mov edx, 0x468" }, { version = "246", rva = 0x21B82F4, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x21B82D0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkStackTracer"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E7DD02, expect = "mov edx, 8" }, { version = "982", rva = 0x1E7DD0A, expect = "call 0x92370" }, { version = "137", rva = 0x1EA8792, expect = "mov edx, 8" }, { version = "137", rva = 0x1EA879A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1EADB62, expect = "mov edx, 8" }, { version = "246", rva = 0x1EADB6A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1EADB10; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkStaticClassNameRegistry"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E2AC04, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1E2AC09, expect = "call 0x92370" }, { version = "137", rva = 0x1E55694, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1E55699, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E5AA64, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1E5AA69, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E5AA00; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkStdioStreamReader"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E46D82, expect = "mov edx, 0x20" }, { version = "982", rva = 0x1E46D8A, expect = "call 0x92370" }, { version = "137", rva = 0x1E71812, expect = "mov edx, 0x20" }, { version = "137", rva = 0x1E7181A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E76BE2, expect = "mov edx, 0x20" }, { version = "246", rva = 0x1E76BEA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E76B80; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkStiffSpringConstraintCinfo"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B43010, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1B43018, expect = "call 0x1c35" }, { version = "137", rva = 0x1B6DA10, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1B6DA18, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B72DA0, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1B72DA8, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B72D70; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkStreamReader"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0xE5B874, expect = "mov edx, 0x10" }, { version = "982", rva = 0xE5B879, expect = "call 0x92370" }, { version = "137", rva = 0xE86584, expect = "mov edx, 0x10" }, { version = "137", rva = 0xE86589, expect = "call 0x92c7b" }, { version = "246", rva = 0xE8BFD4, expect = "mov edx, 0x10" }, { version = "246", rva = 0xE8BFD9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0xE8BF70; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkStreamWriter"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0xE5B914, expect = "mov edx, 0x10" }, { version = "982", rva = 0xE5B919, expect = "call 0x92370" }, { version = "137", rva = 0xE86624, expect = "mov edx, 0x10" }, { version = "137", rva = 0xE86629, expect = "call 0x92c7b" }, { version = "246", rva = 0xE8C074, expect = "mov edx, 0x10" }, { version = "246", rva = 0xE8C079, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0xE8C010; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkStringObject"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x2117E00, expect = "mov edx, 0x18" }, { version = "982", rva = 0x2117E08, expect = "call 0x92370" }, { version = "137", rva = 0x2150E40, expect = "mov edx, 0x18" }, { version = "137", rva = 0x2150E48, expect = "call 0x92c7b" }, { version = "246", rva = 0x2156260, expect = "mov edx, 0x18" }, { version = "246", rva = 0x2156268, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x21561F0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkSubStreamWriter"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E161D4, expect = "mov edx, 0x20" }, { version = "982", rva = 0x1E161D9, expect = "call 0x92370" }, { version = "137", rva = 0x1E40C64, expect = "mov edx, 0x20" }, { version = "137", rva = 0x1E40C69, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E46034, expect = "mov edx, 0x20" }, { version = "246", rva = 0x1E46039, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E45FD0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTagfileReader"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CB0A74, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1CB0A79, expect = "call 0x92370" }, { version = "137", rva = 0x1CDB504, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1CDB509, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CE08B4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1CE08B9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CE0850; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTagfileWriter"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CB0B14, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1CB0B19, expect = "call 0x92370" }, { version = "137", rva = 0x1CDB5A4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1CDB5A9, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CE0954, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1CE0959, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CE08F0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTagfileWriter::AddDataObjectListener"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CB07A4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1CB07A9, expect = "call 0x92370" }, { version = "137", rva = 0x1CDB234, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1CDB239, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CE05E4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1CE05E9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CE0580; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTask"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x19CF274, expect = "mov edx, 0x10" }, { version = "982", rva = 0x19CF279, expect = "call 0x92370" }, { version = "137", rva = 0x19F9C74, expect = "mov edx, 0x10" }, { version = "137", rva = 0x19F9C79, expect = "call 0x92c7b" }, { version = "246", rva = 0x19FF004, expect = "mov edx, 0x10" }, { version = "246", rva = 0x19FF009, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x19FEFA0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkThreadMemory"
+size = 0x1B8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x20F727A, expect = "mov edx, 0x1b8" }, { version = "982", rva = 0x20F7282, expect = "call 0x92370" }, { version = "137", rva = 0x2123B7A, expect = "mov edx, 0x1b8" }, { version = "137", rva = 0x2123B82, expect = "call 0x92c7b" }, { version = "246", rva = 0x2128F9A, expect = "mov edx, 0x1b8" }, { version = "246", rva = 0x2128FA2, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2128F60; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkThreadPool"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x20DE3CF, expect = "mov edx, 0x10" }, { version = "982", rva = 0x20DE3D4, expect = "call 0x92370" }, { version = "137", rva = 0x210ACCF, expect = "mov edx, 0x10" }, { version = "137", rva = 0x210ACD4, expect = "call 0x92c7b" }, { version = "246", rva = 0x21100EF, expect = "mov edx, 0x10" }, { version = "246", rva = 0x21100F4, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x2110080; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTraceStream"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1DB326F, expect = "mov edx, 0x30" }, { version = "982", rva = 0x1DB3277, expect = "call 0x92370" }, { version = "137", rva = 0x1DDDCFF, expect = "mov edx, 0x30" }, { version = "137", rva = 0x1DDDD07, expect = "call 0x92c7b" }, { version = "246", rva = 0x1DE30CF, expect = "mov edx, 0x30" }, { version = "246", rva = 0x1DE30D7, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1DE3030; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTrackerArrayLayoutHandler"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F87254, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1F87259, expect = "call 0x92370" }, { version = "137", rva = 0x1FB1CE4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1FB1CE9, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB70B4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1FB70B9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB7050; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTrackerEnumLayoutHandler"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F872F4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1F872F9, expect = "call 0x92370" }, { version = "137", rva = 0x1FB1D84, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1FB1D89, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB7154, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1FB7159, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB70F0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTrackerFlagsLayoutHandler"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F87394, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1F87399, expect = "call 0x92370" }, { version = "137", rva = 0x1FB1E24, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1FB1E29, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB71F4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1FB71F9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB7190; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTrackerJobQueueDynamicDataLayoutHandler"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F87434, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1F87439, expect = "call 0x92370" }, { version = "137", rva = 0x1FB1EC4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1FB1EC9, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB7294, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1FB7299, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB7230; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTrackerJobQueueLayoutHandler"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F874D4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1F874D9, expect = "call 0x92370" }, { version = "137", rva = 0x1FB1F64, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1FB1F69, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB7334, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1FB7339, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB72D0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTrackerLayoutCalculator"
+size = 0x60
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F87572, expect = "mov edx, 0x60" }, { version = "982", rva = 0x1F8757A, expect = "call 0x92370" }, { version = "137", rva = 0x1FB2002, expect = "mov edx, 0x60" }, { version = "137", rva = 0x1FB200A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB73D2, expect = "mov edx, 0x60" }, { version = "246", rva = 0x1FB73DA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB7370; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTrackerLayoutHandler"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F87614, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1F87619, expect = "call 0x92370" }, { version = "137", rva = 0x1FB20A4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1FB20A9, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB7474, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1FB7479, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB7410; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTrackerPadSpuLayoutHandler"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F876B4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1F876B9, expect = "call 0x92370" }, { version = "137", rva = 0x1FB2144, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1FB2149, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB7514, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1FB7519, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB74B0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTrackerPointerMapLayoutHandler"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F87754, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1F87759, expect = "call 0x92370" }, { version = "137", rva = 0x1FB21E4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1FB21E9, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB75B4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1FB75B9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB7550; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTrackerQueueLayoutHandler"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F877F4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1F877F9, expect = "call 0x92370" }, { version = "137", rva = 0x1FB2284, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1FB2289, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB7654, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1FB7659, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB75F0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTrackerRefPtrLayoutHandler"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F87894, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1F87899, expect = "call 0x92370" }, { version = "137", rva = 0x1FB2324, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1FB2329, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB76F4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1FB76F9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB7690; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTrackerScanSnapshot"
+size = 0x158
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F83532, expect = "mov edx, 0x158" }, { version = "982", rva = 0x1F8353A, expect = "call 0x92370" }, { version = "137", rva = 0x1FADFC2, expect = "mov edx, 0x158" }, { version = "137", rva = 0x1FADFCA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB3392, expect = "mov edx, 0x158" }, { version = "246", rva = 0x1FB339A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB3330; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTrackerSetLayoutHandler"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F87934, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1F87939, expect = "call 0x92370" }, { version = "137", rva = 0x1FB23C4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1FB23C9, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB7794, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1FB7799, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB7730; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTrackerStringMapLayoutHandler"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F879D4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1F879D9, expect = "call 0x92370" }, { version = "137", rva = 0x1FB2464, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1FB2469, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB7834, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1FB7839, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB77D0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTrackerStringPtrLayoutHandler"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F87A74, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1F87A79, expect = "call 0x92370" }, { version = "137", rva = 0x1FB2504, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1FB2509, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB78D4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1FB78D9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB7870; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTrackerTypeLayout"
+size = 0x40
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F87B86, expect = "mov edx, 0x40" }, { version = "982", rva = 0x1F87B8E, expect = "call 0x92370" }, { version = "137", rva = 0x1FB2616, expect = "mov edx, 0x40" }, { version = "137", rva = 0x1FB261E, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB79E6, expect = "mov edx, 0x40" }, { version = "246", rva = 0x1FB79EE, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB7910; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTrackerTypeTreeCache"
+size = 0x170
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F8491D, expect = "mov edx, 0x170" }, { version = "982", rva = 0x1F84925, expect = "call 0x92370" }, { version = "137", rva = 0x1FAF3AD, expect = "mov edx, 0x170" }, { version = "137", rva = 0x1FAF3B5, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FB477D, expect = "mov edx, 0x170" }, { version = "246", rva = 0x1FB4785, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FB46D0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTypeInfoRegistry"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CB0BC0, expect = "mov edx, 0x30" }, { version = "982", rva = 0x1CB0BC8, expect = "call 0x92370" }, { version = "137", rva = 0x1CDB650, expect = "mov edx, 0x30" }, { version = "137", rva = 0x1CDB658, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CE0A00, expect = "mov edx, 0x30" }, { version = "246", rva = 0x1CE0A08, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CE0990; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkTypeManager"
+size = 0x100
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F0AAB2, expect = "mov edx, 0x100" }, { version = "982", rva = 0x1F0AABA, expect = "call 0x92370" }, { version = "137", rva = 0x1F35542, expect = "mov edx, 0x100" }, { version = "137", rva = 0x1F3554A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F3A912, expect = "mov edx, 0x100" }, { version = "246", rva = 0x1F3A91A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F3A8B0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkUuidPseudoRandomGenerator"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x22B09B0, expect = "mov edx, 0x20" }, { version = "982", rva = 0x22B09B8, expect = "call 0x92370" }, { version = "137", rva = 0x22FFD40, expect = "mov edx, 0x20" }, { version = "137", rva = 0x22FFD48, expect = "call 0x92c7b" }, { version = "246", rva = 0x2305160, expect = "mov edx, 0x20" }, { version = "246", rva = 0x2305168, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x23050F0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkVdbCommandWriter"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F75712, expect = "mov edx, 0x30" }, { version = "982", rva = 0x1F7571A, expect = "call 0x92370" }, { version = "137", rva = 0x1FA01A2, expect = "mov edx, 0x30" }, { version = "137", rva = 0x1FA01AA, expect = "call 0x92c7b" }, { version = "246", rva = 0x1FA5572, expect = "mov edx, 0x30" }, { version = "246", rva = 0x1FA557A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1FA5510; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkVersionPatchManager"
+size = 0x60
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E28B82, expect = "mov edx, 0x60" }, { version = "982", rva = 0x1E28B8A, expect = "call 0x92370" }, { version = "137", rva = 0x1E53612, expect = "mov edx, 0x60" }, { version = "137", rva = 0x1E5361A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E589E2, expect = "mov edx, 0x60" }, { version = "246", rva = 0x1E589EA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E58980; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkVersionPatchManager::ClassWrapper"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E289D4, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1E289D9, expect = "call 0x92370" }, { version = "137", rva = 0x1E53464, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1E53469, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E58834, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1E58839, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E587D0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkVisualDebugger"
+size = 0xD8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F48EB2, expect = "mov edx, 0xd8" }, { version = "982", rva = 0x1F48EBA, expect = "call 0x92370" }, { version = "137", rva = 0x1F73942, expect = "mov edx, 0xd8" }, { version = "137", rva = 0x1F7394A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F78D12, expect = "mov edx, 0xd8" }, { version = "246", rva = 0x1F78D1A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F78CB0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkVtableClassRegistry"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CB2D8A, expect = "mov edx, 0x20" }, { version = "982", rva = 0x1CB2D92, expect = "call 0x92370" }, { version = "137", rva = 0x1CDD81A, expect = "mov edx, 0x20" }, { version = "137", rva = 0x1CDD822, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CE2BCA, expect = "mov edx, 0x20" }, { version = "246", rva = 0x1CE2BD2, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CE2B40; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkWheelConstraintCinfo"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1B43D00, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1B43D08, expect = "call 0x1c35" }, { version = "137", rva = 0x1B6E700, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1B6E708, expect = "call 0x1c4e" }, { version = "246", rva = 0x1B73A90, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1B73A98, expect = "call 0x1c49" }]
+note = "RTTI scalar deleting destructor 0x1B73A60; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkWin32FileSystem"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0xE5B9B4, expect = "mov edx, 0x10" }, { version = "982", rva = 0xE5B9B9, expect = "call 0x92370" }, { version = "137", rva = 0xE866C4, expect = "mov edx, 0x10" }, { version = "137", rva = 0xE866C9, expect = "call 0x92c7b" }, { version = "246", rva = 0xE8C114, expect = "mov edx, 0x10" }, { version = "246", rva = 0xE8C119, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0xE8C0B0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkWin32StreamWriter"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1E47102, expect = "mov edx, 0x18" }, { version = "982", rva = 0x1E4710A, expect = "call 0x92370" }, { version = "137", rva = 0x1E71B92, expect = "mov edx, 0x18" }, { version = "137", rva = 0x1E71B9A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1E76F62, expect = "mov edx, 0x18" }, { version = "246", rva = 0x1E76F6A, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1E76F00; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkXmlLexAnalyzer"
+size = 0x58
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F42B80, expect = "mov edx, 0x58" }, { version = "982", rva = 0x1F42B88, expect = "call 0x92370" }, { version = "137", rva = 0x1F6D610, expect = "mov edx, 0x58" }, { version = "137", rva = 0x1F6D618, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F729E0, expect = "mov edx, 0x58" }, { version = "246", rva = 0x1F729E8, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F72970; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkXmlParser"
+size = 0x28
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F17392, expect = "mov edx, 0x28" }, { version = "982", rva = 0x1F1739A, expect = "call 0x92370" }, { version = "137", rva = 0x1F41E22, expect = "mov edx, 0x28" }, { version = "137", rva = 0x1F41E2A, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F471F2, expect = "mov edx, 0x28" }, { version = "246", rva = 0x1F471FA, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F47190; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkXmlParser::Characters"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F17060, expect = "mov edx, 0x20" }, { version = "982", rva = 0x1F17068, expect = "call 0x92370" }, { version = "137", rva = 0x1F41AF0, expect = "mov edx, 0x20" }, { version = "137", rva = 0x1F41AF8, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F46EC0, expect = "mov edx, 0x20" }, { version = "246", rva = 0x1F46EC8, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F46E50; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkXmlParser::EndElement"
+size = 0x20
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F17110, expect = "mov edx, 0x20" }, { version = "982", rva = 0x1F17118, expect = "call 0x92370" }, { version = "137", rva = 0x1F41BA0, expect = "mov edx, 0x20" }, { version = "137", rva = 0x1F41BA8, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F46F70, expect = "mov edx, 0x20" }, { version = "246", rva = 0x1F46F78, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F46F00; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkXmlParser::Node"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F171B4, expect = "mov edx, 0x18" }, { version = "982", rva = 0x1F171B9, expect = "call 0x92370" }, { version = "137", rva = 0x1F41C44, expect = "mov edx, 0x18" }, { version = "137", rva = 0x1F41C49, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F47014, expect = "mov edx, 0x18" }, { version = "246", rva = 0x1F47019, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F46FB0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkXmlParser::StartElement"
+size = 0x30
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F172C1, expect = "mov edx, 0x30" }, { version = "982", rva = 0x1F172C9, expect = "call 0x92370" }, { version = "137", rva = 0x1F41D51, expect = "mov edx, 0x30" }, { version = "137", rva = 0x1F41D59, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F47121, expect = "mov edx, 0x30" }, { version = "246", rva = 0x1F47129, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F47050; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkXmlStreamParser"
+size = 0xB8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1F14B77, expect = "mov edx, 0xb8" }, { version = "982", rva = 0x1F14B7F, expect = "call 0x92370" }, { version = "137", rva = 0x1F3F607, expect = "mov edx, 0xb8" }, { version = "137", rva = 0x1F3F60F, expect = "call 0x92c7b" }, { version = "246", rva = 0x1F449D7, expect = "mov edx, 0xb8" }, { version = "246", rva = 0x1F449DF, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1F448B0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkXmlTagfileReader"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CB0C64, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1CB0C69, expect = "call 0x92370" }, { version = "137", rva = 0x1CDB6F4, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1CDB6F9, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CE0AA4, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1CE0AA9, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CE0A40; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."
+
+[[evidence]]
+class = "hkXmlTagfileWriter"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1CB0D04, expect = "mov edx, 0x10" }, { version = "982", rva = 0x1CB0D09, expect = "call 0x92370" }, { version = "137", rva = 0x1CDB794, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1CDB799, expect = "call 0x92c7b" }, { version = "246", rva = 0x1CE0B44, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1CE0B49, expect = "call 0x92e79" }]
+note = "RTTI scalar deleting destructor 0x1CE0AE0; EDX supplies native sizeof to sized Havok or CRT delete (Address Library IDs 1596337 and 1988749)."

@@ -55,7 +55,7 @@ namespace CKPE
 
 					struct CHAR_NORM
 					{
-						std::uint8_t x, y, z;
+						std::int8_t x, y, z;
 					};
 
 					// It real numbers [-288 : 288]
@@ -91,7 +91,9 @@ namespace CKPE
 						// A strange pointer, where there are 4 arrays packed to capacity with "1".
 						char pad63E0[0x8];
 						std::array<TextureList*, PART_COUNT> LandTextureListPart;
-						char pad6408[0x18];
+						char pad6408[0x8];
+						float heightOffset;
+						char pad6414[0xC];
 
 						// Normalizing normals
 						inline static void HKNormalize(NiAPI::NiPoint3* Normals, std::int32_t Size, std::int32_t Offset)
@@ -113,6 +115,11 @@ namespace CKPE
 				static_assert(sizeof(TESObjectLAND::CHAR_NORM) == 0x3);
 				static_assert(sizeof(TESObjectLAND::PercentData) == 0xC);
 				static_assert(sizeof(TESObjectLAND::Layers) == 0x6420);
+				static_assert(sizeof(TESObjectLAND::Layers::TextureList) == 0x60);
+				static_assert(offsetof(TESObjectLAND::Layers, Heights) == 0x20);
+				static_assert(offsetof(TESObjectLAND::Layers, Percents) == 0x1230);
+				static_assert(offsetof(TESObjectLAND::Layers, VertexNormals) == 0x55EC);
+				static_assert(offsetof(TESObjectLAND::Layers, heightOffset) == 0x6410);
 			}
 		}
 	}

@@ -5,6 +5,7 @@
 #pragma once
 
 #include <EditorAPI/B/BSFixedString.h>
+#include <EditorAPI/A/ActorValueInfo.h>
 #include "TESForm.h"
 
 namespace CKPE
@@ -15,16 +16,9 @@ namespace CKPE
 		{
 			namespace Forms
 			{
-				class TESActorValue : public TESForm 
-				{
-				private:
-					constexpr static std::uint8_t TYPE_ID = ftActorValueInfo;
-
-					enum { eTypeID = FormType::ftActorValueInfo };
-				public:
-					//	/*68*/ TESActorValue* _ParentActorValue;		// ???
-				};
-				//static_assert(sizeof(TESActorValue) == 0x70);
+				// AVIF records use ActorValueInfo, not a separate TESActorValue type.
+				using TESActorValue = ActorValueInfo;
+				static_assert(sizeof(TESActorValue) == 0x1A8);
 
 				class TESActorValueArray : public BaseFormComponent 
 				{

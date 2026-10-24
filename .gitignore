@@ -55,3 +55,4 @@ Offsets Transfer/backup/
 
 # Linux cross-build (msvc-wine) output tree
 /build-linux/
+/Stuffs/ckre/ckre.local.toml

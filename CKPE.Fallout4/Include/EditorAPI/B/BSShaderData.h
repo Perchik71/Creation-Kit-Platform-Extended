@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <EditorAPI/B/BSGeometry.h>
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/B/BSTArray.h>
@@ -16,13 +17,9 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
-			// Shader data loaded from a material file (BGSM). CommonLibF4: BSShaderData.
-			// Members follow CommonLibF4; the texture set and the controllers stay untyped pointers.
 			class BSShaderData
 			{
 			public:
-				// 1.11.246.0: size 0x1E0, the same layout as CommonLibF4's BSShaderData (the constructor 0x142BC5E40 matches the defaults at each offset:
-				// specular 08, colours 0C-18, material paths 58/70, alpha test 84-8D, five BSTArrays from C8, controller pointer 140).
 				std::uint32_t refCount; // 00 - BSIntrusiveRefCounted
 				std::int32_t lightingShader; // 04
 				bool specularEnabled; // 08
@@ -52,7 +49,9 @@ namespace CKPE
 				std::uint8_t pad6D[0x3]; // 6D
 				BSFixedString materialPath; // 70
 				bool alphaBlend; // 78
-				std::uint8_t pad79[0xB]; // 79
+				std::uint8_t pad79[0x3]; // 79
+				std::uint32_t sourceBlendMode; // 7C
+				std::uint32_t destinationBlendMode; // 80
 				bool alphaTest; // 84
 				std::uint8_t pad85[0x3]; // 85
 				std::int32_t alphaTestFunction; // 88
@@ -148,11 +147,9 @@ namespace CKPE
 				NiAPI::NiColor hairTintColor; // 1C0
 				std::uint8_t pad1CC[0x4]; // 1CC
 				void* textureSet; // 1D0
-				std::uint8_t pad1D8[0x8]; // 1D8
-				// CommonLibF4: BSShaderData::ApplyMaterialData (CK 1.11.240.0 0x142BCC550; address ID 1666424 in 1.10.982.3 - 1.11.240.0, 797024 in 1.10.162.0 = 0x142AB67E0).
-				// Rebuilds the BSShaderProperty material of the geometry from the material file, which resets every material member
-				// (including BSLightingShaderMaterialBase::lookupScale, the colour remapping index) to the values stored in the file.
-				// Set by the patches that detour it to the original function.
+				std::uint32_t textureClampMode; // 1D8
+				std::uint32_t pad1DC; // 1DC
+				// Material application replaces runtime material values with file values.
 				inline static void(*pointer_ApplyMaterialData)(BSShaderData*, BSGeometry*, bool) { nullptr };
 
 				inline void ApplyMaterialData(BSGeometry* Geometry, bool Flag) noexcept(true)
@@ -161,6 +158,12 @@ namespace CKPE
 				}
 			};
 			static_assert(sizeof(BSShaderData) == 0x1E0);
+			static_assert(offsetof(BSShaderData, sourceBlendMode) == 0x7C);
+			static_assert(offsetof(BSShaderData, destinationBlendMode) == 0x80);
+			static_assert(offsetof(BSShaderData, alphaTest) == 0x84);
+			static_assert(offsetof(BSShaderData, lightingFloatControllers) == 0xC8);
+			static_assert(offsetof(BSShaderData, textureSet) == 0x1D0);
+			static_assert(offsetof(BSShaderData, textureClampMode) == 0x1D8);
 		}
 	}
 }

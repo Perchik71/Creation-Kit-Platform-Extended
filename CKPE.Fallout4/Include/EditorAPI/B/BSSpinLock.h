@@ -31,6 +31,7 @@ namespace CKPE
 				bool IsLocked() const noexcept(true);
 				bool ThreadOwnsLock() const noexcept(true);
 			};
+			static_assert(sizeof(BSSpinLock) == 0x8);
 		}
 	}
 }

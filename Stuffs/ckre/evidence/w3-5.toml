@@ -1,0 +1,1111 @@
+[[evidence]]
+class = "hkpAngularDashpotAction"
+size = 0x60
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b87272, expect = "mov ebx, 0x60" }, { version = "982", rva = 0x1bd4dde, expect = "mov edi, 0x60" }, { version = "137", rva = 0x1bff7de, expect = "mov edi, 0x60" }, { version = "246", rva = 0x1c04b6e, expect = "mov edi, 0x60" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpDashpotAction"
+size = 0x80
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b87eb2, expect = "mov ebx, 0x80" }, { version = "982", rva = 0x1bd523e, expect = "mov edi, 0x80" }, { version = "137", rva = 0x1bffc3e, expect = "mov edi, 0x80" }, { version = "246", rva = 0x1c04fce, expect = "mov edi, 0x80" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSpringAction"
+size = 0x80
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b893c2, expect = "mov ebx, 0x80" }, { version = "982", rva = 0x1bd665e, expect = "mov edi, 0x80" }, { version = "137", rva = 0x1c0105e, expect = "mov edi, 0x80" }, { version = "246", rva = 0x1c063ee, expect = "mov edi, 0x80" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMotorAction"
+size = 0x60
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b88412, expect = "mov ebx, 0x60" }, { version = "982", rva = 0x1bd587e, expect = "mov edi, 0x60" }, { version = "137", rva = 0x1c0027e, expect = "mov edi, 0x60" }, { version = "246", rva = 0x1c0560e, expect = "mov edi, 0x60" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMouseSpringAction"
+size = 0x90
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b4c46e, expect = "mov edi, 0x90" }, { version = "982", rva = 0x1b9ae76, expect = "mov edi, 0x90" }, { version = "137", rva = 0x1bc5876, expect = "mov edi, 0x90" }, { version = "246", rva = 0x1bcac06, expect = "mov edi, 0x90" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpStickyContactAction"
+size = 0x80
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b8a232, expect = "mov ebx, 0x80" }, { version = "982", rva = 0x1bd7879, expect = "mov edi, 0x80" }, { version = "137", rva = 0x1c02279, expect = "mov edi, 0x80" }, { version = "246", rva = 0x1c07609, expect = "mov edi, 0x80" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpCollisionAgent"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1ab78c6, expect = "mov edi, 0x18" }, { version = "982", rva = 0x1b17f00, expect = "mov edi, 0x18" }, { version = "137", rva = 0x1b42900, expect = "mov edi, 0x18" }, { version = "246", rva = 0x1b47c90, expect = "mov edi, 0x18" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpIterativeLinearCastAgent"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b4e2c6, expect = "mov edi, 0x18" }, { version = "982", rva = 0x1b9ca10, expect = "mov edi, 0x18" }, { version = "137", rva = 0x1bc7410, expect = "mov edi, 0x18" }, { version = "246", rva = 0x1bcc7a0, expect = "mov edi, 0x18" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpBoxBoxAgent"
+size = 0x60
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b4e266, expect = "mov edi, 0x60" }, { version = "982", rva = 0x1b9c970, expect = "mov edi, 0x60" }, { version = "137", rva = 0x1bc7370, expect = "mov edi, 0x60" }, { version = "246", rva = 0x1bcc700, expect = "mov edi, 0x60" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpBvAgent"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1ab77e6, expect = "mov edi, 0x28" }, { version = "982", rva = 0x1b17d80, expect = "mov edi, 0x28" }, { version = "137", rva = 0x1b42780, expect = "mov edi, 0x28" }, { version = "246", rva = 0x1b47b10, expect = "mov edi, 0x28" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpBvTreeAgent::LinearCastAabbCastCollector"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b561b4, expect = "mov r8d, 0x50" }, { version = "982", rva = 0x1ba2d79, expect = "mov r8d, 0x50" }, { version = "137", rva = 0x1bcd779, expect = "mov r8d, 0x50" }, { version = "246", rva = 0x1bd2b09, expect = "mov r8d, 0x50" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpBvTreeAgent"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b50be1, expect = "mov edi, 0x50" }, { version = "982", rva = 0x1b9f445, expect = "mov edi, 0x50" }, { version = "137", rva = 0x1bc9e45, expect = "mov edi, 0x50" }, { version = "246", rva = 0x1bcf1d5, expect = "mov edi, 0x50" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpBvCompressedMeshAgent"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b56281, expect = "mov edi, 0x50" }, { version = "982", rva = 0x1ba2ea5, expect = "mov edi, 0x50" }, { version = "137", rva = 0x1bcd8a5, expect = "mov edi, 0x50" }, { version = "246", rva = 0x1bd2c35, expect = "mov edi, 0x50" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpBvTreeStreamAgent"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b544e1, expect = "mov edi, 0x50" }, { version = "982", rva = 0x1ba1059, expect = "mov edi, 0x50" }, { version = "137", rva = 0x1bcba59, expect = "mov edi, 0x50" }, { version = "246", rva = 0x1bd0de9, expect = "mov edi, 0x50" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMoppAgent"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b55621, expect = "mov edi, 0x50" }, { version = "982", rva = 0x1ba21d5, expect = "mov edi, 0x50" }, { version = "137", rva = 0x1bccbd5, expect = "mov edi, 0x50" }, { version = "246", rva = 0x1bd1f65, expect = "mov edi, 0x50" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpStaticCompoundAgent"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b56ba1, expect = "mov edi, 0x50" }, { version = "982", rva = 0x1ba3995, expect = "mov edi, 0x50" }, { version = "137", rva = 0x1bce395, expect = "mov edi, 0x50" }, { version = "246", rva = 0x1bd3725, expect = "mov edi, 0x50" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpCapsuleCapsuleAgent"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b5b546, expect = "mov edi, 0x20" }, { version = "982", rva = 0x1ba8950, expect = "mov edi, 0x20" }, { version = "137", rva = 0x1bd3350, expect = "mov edi, 0x20" }, { version = "246", rva = 0x1bd86e0, expect = "mov edi, 0x20" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpCapsuleTriangleAgent"
+size = 0x38
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b5cbf6, expect = "mov edi, 0x38" }, { version = "982", rva = 0x1baa6d0, expect = "mov edi, 0x38" }, { version = "137", rva = 0x1bd50d0, expect = "mov edi, 0x38" }, { version = "246", rva = 0x1bda460, expect = "mov edi, 0x38" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpGskBaseAgent"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1bb3b36, expect = "mov edi, 0x40" }, { version = "982", rva = 0x1bfe460, expect = "mov edi, 0x40" }, { version = "137", rva = 0x1c28e60, expect = "mov edi, 0x40" }, { version = "246", rva = 0x1c2e1f0, expect = "mov edi, 0x40" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpGskfAgent"
+size = 0x90
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1bb4636, expect = "mov edi, 0x90" }, { version = "982", rva = 0x1bfeb60, expect = "mov edi, 0x90" }, { version = "137", rva = 0x1c29560, expect = "mov edi, 0x90" }, { version = "246", rva = 0x1c2e8f0, expect = "mov edi, 0x90" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpPredGskfAgent"
+size = 0x90
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b4d536, expect = "mov edi, 0x90" }, { version = "982", rva = 0x1b9bee0, expect = "mov edi, 0x90" }, { version = "137", rva = 0x1bc68e0, expect = "mov edi, 0x90" }, { version = "246", rva = 0x1bcbc70, expect = "mov edi, 0x90" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpConvexListAgent"
+size = 0xa0
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b63dd6, expect = "mov edi, 0xa0" }, { version = "982", rva = 0x1bb24f0, expect = "mov edi, 0xa0" }, { version = "137", rva = 0x1bdcef0, expect = "mov edi, 0xa0" }, { version = "246", rva = 0x1be2280, expect = "mov edi, 0xa0" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpListAgent"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b62107, expect = "mov edi, 0x30" }, { version = "982", rva = 0x1bb021f, expect = "mov edi, 0x30" }, { version = "137", rva = 0x1bdac1f, expect = "mov edi, 0x30" }, { version = "246", rva = 0x1bdffaf, expect = "mov edi, 0x30" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMultiSphereAgent"
+size = 0x68
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b67487, expect = "mov edi, 0x68" }, { version = "982", rva = 0x1bb617b, expect = "mov edi, 0x68" }, { version = "137", rva = 0x1be0b7b, expect = "mov edi, 0x68" }, { version = "246", rva = 0x1be5f0b, expect = "mov edi, 0x68" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMultiSphereTriangleAgent"
+size = 0x38
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b5f996, expect = "mov edi, 0x38" }, { version = "982", rva = 0x1bad830, expect = "mov edi, 0x38" }, { version = "137", rva = 0x1bd8230, expect = "mov edi, 0x38" }, { version = "246", rva = 0x1bdd5c0, expect = "mov edi, 0x38" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpNullAgent"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b24f96, expect = "mov edi, 0x18" }, { version = "982", rva = 0x1b7b6a0, expect = "mov edi, 0x18" }, { version = "137", rva = 0x1ba60a0, expect = "mov edi, 0x18" }, { version = "246", rva = 0x1bab430, expect = "mov edi, 0x18" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpPhantomAgent"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b571f6, expect = "mov edi, 0x40" }, { version = "982", rva = 0x1ba4110, expect = "mov edi, 0x40" }, { version = "137", rva = 0x1bceb10, expect = "mov edi, 0x40" }, { version = "246", rva = 0x1bd3ea0, expect = "mov edi, 0x40" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpShapeCollectionAgent"
+size = 0x68
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b65ad7, expect = "mov edi, 0x68" }, { version = "982", rva = 0x1bb47ab, expect = "mov edi, 0x68" }, { version = "137", rva = 0x1bdf1ab, expect = "mov edi, 0x68" }, { version = "246", rva = 0x1be453b, expect = "mov edi, 0x68" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSphereBoxAgent"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b5e6e6, expect = "mov edi, 0x20" }, { version = "982", rva = 0x1bac320, expect = "mov edi, 0x20" }, { version = "137", rva = 0x1bd6d20, expect = "mov edi, 0x20" }, { version = "246", rva = 0x1bdc0b0, expect = "mov edi, 0x20" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSphereCapsuleAgent"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b58bc6, expect = "mov edi, 0x20" }, { version = "982", rva = 0x1ba5d40, expect = "mov edi, 0x20" }, { version = "137", rva = 0x1bd0740, expect = "mov edi, 0x20" }, { version = "246", rva = 0x1bd5ad0, expect = "mov edi, 0x20" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSphereSphereAgent"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b57b76, expect = "mov edi, 0x20" }, { version = "982", rva = 0x1ba4c10, expect = "mov edi, 0x20" }, { version = "137", rva = 0x1bcf610, expect = "mov edi, 0x20" }, { version = "246", rva = 0x1bd49a0, expect = "mov edi, 0x20" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSphereTriangleAgent"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b5a2a6, expect = "mov edi, 0x30" }, { version = "982", rva = 0x1ba7670, expect = "mov edi, 0x30" }, { version = "137", rva = 0x1bd2070, expect = "mov edi, 0x30" }, { version = "246", rva = 0x1bd7400, expect = "mov edi, 0x30" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpTransformAgent"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b61356, expect = "mov edi, 0x20" }, { version = "982", rva = 0x1baf2a0, expect = "mov edi, 0x20" }, { version = "137", rva = 0x1bd9ca0, expect = "mov edi, 0x20" }, { version = "246", rva = 0x1bdf030, expect = "mov edi, 0x20" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpContactMgr"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a9cb86, expect = "mov edi, 0x18" }, { version = "982", rva = 0x1afe640, expect = "mov edi, 0x18" }, { version = "137", rva = 0x1b29040, expect = "mov edi, 0x18" }, { version = "246", rva = 0x1b2e3d0, expect = "mov edi, 0x18" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpContactMgrFactory"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a9cbe6, expect = "mov edi, 0x10" }, { version = "982", rva = 0x1afe6e0, expect = "mov edi, 0x10" }, { version = "137", rva = 0x1b290e0, expect = "mov edi, 0x10" }, { version = "246", rva = 0x1b2e470, expect = "mov edi, 0x10" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpDynamicsContactMgr"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b2d316, expect = "mov edi, 0x20" }, { version = "982", rva = 0x1b83690, expect = "mov edi, 0x20" }, { version = "137", rva = 0x1bae090, expect = "mov edi, 0x20" }, { version = "246", rva = 0x1bb3420, expect = "mov edi, 0x20" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSimpleConstraintContactMgr::Factory"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b2d2b6, expect = "mov edi, 0x18" }, { version = "982", rva = 0x1b835f0, expect = "mov edi, 0x18" }, { version = "137", rva = 0x1badff0, expect = "mov edi, 0x18" }, { version = "246", rva = 0x1bb3380, expect = "mov edi, 0x18" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpReportContactMgr::Factory"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b2e416, expect = "mov edi, 0x18" }, { version = "982", rva = 0x1b843a0, expect = "mov edi, 0x18" }, { version = "137", rva = 0x1baeda0, expect = "mov edi, 0x18" }, { version = "246", rva = 0x1bb4130, expect = "mov edi, 0x18" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpReportContactMgr"
+size = 0x38
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b2e472, expect = "mov ebx, 0x38" }, { version = "982", rva = 0x1b8443e, expect = "mov edi, 0x38" }, { version = "137", rva = 0x1baee3e, expect = "mov edi, 0x38" }, { version = "246", rva = 0x1bb41ce, expect = "mov edi, 0x38" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpNullContactMgr"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a9cde6, expect = "mov edi, 0x18" }, { version = "982", rva = 0x1afe960, expect = "mov edi, 0x18" }, { version = "137", rva = 0x1b29360, expect = "mov edi, 0x18" }, { version = "246", rva = 0x1b2e6f0, expect = "mov edi, 0x18" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpNullContactMgrFactory"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a9ce4a, expect = "mov edi, 0x28" }, { version = "982", rva = 0x1afea04, expect = "mov edi, 0x28" }, { version = "137", rva = 0x1b29404, expect = "mov edi, 0x28" }, { version = "246", rva = 0x1b2e794, expect = "mov edi, 0x28" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMapPointsToSubShapeContactMgr"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b63e36, expect = "mov edi, 0x28" }, { version = "982", rva = 0x1bb2590, expect = "mov edi, 0x28" }, { version = "137", rva = 0x1bdcf90, expect = "mov edi, 0x28" }, { version = "246", rva = 0x1be2320, expect = "mov edi, 0x28" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpCollisionDispatcher"
+size = 0x2a80
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b24042, expect = "mov ebx, 0x2a80" }, { version = "982", rva = 0x1b7aaee, expect = "mov edi, 0x2a80" }, { version = "137", rva = 0x1ba54ee, expect = "mov edi, 0x2a80" }, { version = "246", rva = 0x1baa87e, expect = "mov edi, 0x2a80" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpBroadPhase"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b43832, expect = "mov ebx, 0x30" }, { version = "982", rva = 0x1b92d2e, expect = "mov edi, 0x30" }, { version = "137", rva = 0x1bbd72e, expect = "mov edi, 0x30" }, { version = "246", rva = 0x1bc2abe, expect = "mov edi, 0x30" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSimulation"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1aae292, expect = "mov ebx, 0x40" }, { version = "982", rva = 0x1b0dc9e, expect = "mov edi, 0x40" }, { version = "137", rva = 0x1b3869e, expect = "mov edi, 0x40" }, { version = "246", rva = 0x1b3da2e, expect = "mov edi, 0x40" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpBroadPhaseBorder"
+size = 0x78
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b2bcd2, expect = "mov ebx, 0x78" }, { version = "982", rva = 0x1b8206e, expect = "mov edi, 0x78" }, { version = "137", rva = 0x1baca6e, expect = "mov edi, 0x78" }, { version = "246", rva = 0x1bb1dfe, expect = "mov edi, 0x78" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpCollisionCallbackUtil"
+size = 0x78
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a9cb1b, expect = "mov ebx, 0x78" }, { version = "982", rva = 0x1afe597, expect = "mov edi, 0x78" }, { version = "137", rva = 0x1b28f97, expect = "mov edi, 0x78" }, { version = "246", rva = 0x1b2e327, expect = "mov edi, 0x78" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpEndOfStepCallbackUtil"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b42d12, expect = "mov ebx, 0x50" }, { version = "982", rva = 0x1b92419, expect = "mov edi, 0x50" }, { version = "137", rva = 0x1bbce19, expect = "mov edi, 0x50" }, { version = "246", rva = 0x1bc21a9, expect = "mov edi, 0x50" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpStickContactParam"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b8a1d6, expect = "mov edi, 0x28" }, { version = "982", rva = 0x1bd77c9, expect = "mov edi, 0x28" }, { version = "137", rva = 0x1c021c9, expect = "mov edi, 0x28" }, { version = "246", rva = 0x1c07559, expect = "mov edi, 0x28" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSerializedAgentNnEntry"
+size = 0x190
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1bdc7d2, expect = "mov ebx, 0x190" }, { version = "982", rva = 0x1c1d51e, expect = "mov edi, 0x190" }, { version = "137", rva = 0x1c47f1e, expect = "mov edi, 0x190" }, { version = "246", rva = 0x1c4d2ae, expect = "mov edi, 0x190" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpAabbCastCollector"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b561f4, expect = "mov r8d, 0x20" }, { version = "982", rva = 0x1ba2de9, expect = "mov r8d, 0x20" }, { version = "137", rva = 0x1bcd7e9, expect = "mov r8d, 0x20" }, { version = "246", rva = 0x1bd2b79, expect = "mov r8d, 0x20" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpBroadPhaseCastCollector"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1afe4a8, expect = "mov edx, 8" }, { version = "137", rva = 0x1b28ea8, expect = "mov edx, 8" }, { version = "246", rva = 0x1b2e238, expect = "mov edx, 8" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpRayHitCollector"
+size = 0x10
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1c17198, expect = "mov edx, 0x10" }, { version = "137", rva = 0x1c41b98, expect = "mov edx, 0x10" }, { version = "246", rva = 0x1c46f28, expect = "mov edx, 0x10" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpCdBodyPairCollector"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1ab7844, expect = "mov r8d, 0x10" }, { version = "982", rva = 0x1b17e19, expect = "mov r8d, 0x10" }, { version = "137", rva = 0x1b42819, expect = "mov r8d, 0x10" }, { version = "246", rva = 0x1b47ba9, expect = "mov r8d, 0x10" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpCdPointCollector"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1ab7884, expect = "mov r8d, 0x10" }, { version = "982", rva = 0x1b17e89, expect = "mov r8d, 0x10" }, { version = "137", rva = 0x1b42889, expect = "mov r8d, 0x10" }, { version = "246", rva = 0x1b47c19, expect = "mov r8d, 0x10" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpFlagCdBodyPairCollector"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1ab7924, expect = "mov r8d, 0x10" }, { version = "982", rva = 0x1b17f99, expect = "mov r8d, 0x10" }, { version = "137", rva = 0x1b42999, expect = "mov r8d, 0x10" }, { version = "246", rva = 0x1b47d29, expect = "mov r8d, 0x10" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpClosestCdPointCollector"
+size = 0x60
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b4c3e4, expect = "mov r8d, 0x60" }, { version = "982", rva = 0x1b9adb9, expect = "mov r8d, 0x60" }, { version = "137", rva = 0x1bc57b9, expect = "mov r8d, 0x60" }, { version = "246", rva = 0x1bcab49, expect = "mov r8d, 0x60" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpClosestRayHitCollector"
+size = 0x70
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1bd5b04, expect = "mov r8d, 0x70" }, { version = "982", rva = 0x1c17139, expect = "mov r8d, 0x70" }, { version = "137", rva = 0x1c41b39, expect = "mov r8d, 0x70" }, { version = "246", rva = 0x1c46ec9, expect = "mov r8d, 0x70" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSimpleClosestContactCollector"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1ab7964, expect = "mov r8d, 0x40" }, { version = "982", rva = 0x1b18009, expect = "mov r8d, 0x40" }, { version = "137", rva = 0x1b42a09, expect = "mov r8d, 0x40" }, { version = "246", rva = 0x1b47d99, expect = "mov r8d, 0x40" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSymmetricAgentFlipBodyCollector"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1ab79a4, expect = "mov r8d, 0x18" }, { version = "982", rva = 0x1b18079, expect = "mov r8d, 0x18" }, { version = "137", rva = 0x1b42a79, expect = "mov r8d, 0x18" }, { version = "246", rva = 0x1b47e09, expect = "mov r8d, 0x18" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSymmetricAgentFlipCastCollector"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1ab79e4, expect = "mov r8d, 0x30" }, { version = "982", rva = 0x1b180e9, expect = "mov r8d, 0x30" }, { version = "137", rva = 0x1b42ae9, expect = "mov r8d, 0x30" }, { version = "246", rva = 0x1b47e79, expect = "mov r8d, 0x30" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSymmetricAgentFlipCollector"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1ab7a24, expect = "mov r8d, 0x10" }, { version = "982", rva = 0x1b18159, expect = "mov r8d, 0x10" }, { version = "137", rva = 0x1b42b59, expect = "mov r8d, 0x10" }, { version = "246", rva = 0x1b47ee9, expect = "mov r8d, 0x10" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSimpleWorldRayCaster"
+size = 0x60
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a9d024, expect = "mov r8d, 0x60" }, { version = "982", rva = 0x1afec09, expect = "mov r8d, 0x60" }, { version = "137", rva = 0x1b29609, expect = "mov r8d, 0x60" }, { version = "246", rva = 0x1b2e999, expect = "mov r8d, 0x60" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpWorldRayCaster"
+size = 0x70
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a9d1d4, expect = "mov r8d, 0x70" }, { version = "982", rva = 0x1afedc9, expect = "mov r8d, 0x70" }, { version = "137", rva = 0x1b297c9, expect = "mov r8d, 0x70" }, { version = "246", rva = 0x1b2eb59, expect = "mov r8d, 0x70" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpWorldLinearCaster"
+size = 0xc0
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a9d114, expect = "mov r8d, 0xc0" }, { version = "982", rva = 0x1afed19, expect = "mov r8d, 0xc0" }, { version = "137", rva = 0x1b29719, expect = "mov r8d, 0xc0" }, { version = "246", rva = 0x1b2eaa9, expect = "mov r8d, 0xc0" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpStaticCompoundShape_Internals::AabbCastQuery::AabbCastCollectorWrapper"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1bd5a44, expect = "mov r8d, 0x50" }, { version = "982", rva = 0x1c170c9, expect = "mov r8d, 0x50" }, { version = "137", rva = 0x1c41ac9, expect = "mov r8d, 0x50" }, { version = "246", rva = 0x1c46e59, expect = "mov r8d, 0x50" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSaveContactPointsUtil::EntitySelector"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1c1d408, expect = "mov edx, 8" }, { version = "137", rva = 0x1c47e08, expect = "mov edx, 8" }, { version = "246", rva = 0x1c4d198, expect = "mov edx, 8" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpCollidableCollidableFilter"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1afe528, expect = "mov edx, 8" }, { version = "137", rva = 0x1b28f28, expect = "mov edx, 8" }, { version = "246", rva = 0x1b2e2b8, expect = "mov edx, 8" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpShapeCollectionFilter"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1afebb8, expect = "mov edx, 8" }, { version = "137", rva = 0x1b295b8, expect = "mov edx, 8" }, { version = "246", rva = 0x1b2e948, expect = "mov edx, 8" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpRayShapeCollectionFilter"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1afeb78, expect = "mov edx, 8" }, { version = "137", rva = 0x1b29578, expect = "mov edx, 8" }, { version = "246", rva = 0x1b2e908, expect = "mov edx, 8" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpRayCollidableFilter"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1afeb38, expect = "mov edx, 8" }, { version = "137", rva = 0x1b29538, expect = "mov edx, 8" }, { version = "246", rva = 0x1b2e8c8, expect = "mov edx, 8" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpConstraintListener"
+size = 0x8
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a3c6d4, expect = "mov r8d, 8" }, { version = "982", rva = 0x1ab158a, expect = "mov r8d, 8" }, { version = "137", rva = 0x1adbf8a, expect = "mov r8d, 8" }, { version = "246", rva = 0x1ae131a, expect = "mov r8d, 8" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpContactListener"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1bd7728, expect = "mov edx, 8" }, { version = "137", rva = 0x1c02128, expect = "mov edx, 8" }, { version = "246", rva = 0x1c074b8, expect = "mov edx, 8" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpEntityActivationListener"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1bd7768, expect = "mov edx, 8" }, { version = "137", rva = 0x1c02168, expect = "mov edx, 8" }, { version = "246", rva = 0x1c074f8, expect = "mov edx, 8" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpWorldDeletionListener"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1b82168, expect = "mov edx, 8" }, { version = "137", rva = 0x1bacb68, expect = "mov edx, 8" }, { version = "246", rva = 0x1bb1ef8, expect = "mov edx, 8" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpWorldPostSimulationListener"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1afed78, expect = "mov edx, 8" }, { version = "137", rva = 0x1b29778, expect = "mov edx, 8" }, { version = "246", rva = 0x1b2eb08, expect = "mov edx, 8" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpPhantomOverlapListener"
+size = 0x8
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b2bd34, expect = "mov r8d, 8" }, { version = "982", rva = 0x1b82109, expect = "mov r8d, 8" }, { version = "137", rva = 0x1bacb09, expect = "mov r8d, 8" }, { version = "246", rva = 0x1bb1e99, expect = "mov r8d, 8" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpBroadPhaseListener"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1afe4e8, expect = "mov edx, 8" }, { version = "137", rva = 0x1b28ee8, expect = "mov edx, 8" }, { version = "246", rva = 0x1b2e278, expect = "mov edx, 8" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpNullCollisionFilter"
+size = 0x48
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a9cd82, expect = "mov ebx, 0x48" }, { version = "982", rva = 0x1afe8be, expect = "mov edi, 0x48" }, { version = "137", rva = 0x1b292be, expect = "mov edi, 0x48" }, { version = "246", rva = 0x1b2e64e, expect = "mov edi, 0x48" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpPairCollisionFilter"
+size = 0x60
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b993e2, expect = "mov ebx, 0x60" }, { version = "982", rva = 0x1be6ebe, expect = "mov edi, 0x60" }, { version = "137", rva = 0x1c118be, expect = "mov edi, 0x60" }, { version = "246", rva = 0x1c16c4e, expect = "mov edi, 0x60" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpConstraintCollisionFilter"
+size = 0x68
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b99382, expect = "mov ebx, 0x68" }, { version = "982", rva = 0x1be6e1e, expect = "mov edi, 0x68" }, { version = "137", rva = 0x1c1181e, expect = "mov edi, 0x68" }, { version = "246", rva = 0x1c16bae, expect = "mov edi, 0x68" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpDefaultConvexListFilter"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a9cca6, expect = "mov edi, 0x10" }, { version = "982", rva = 0x1afe820, expect = "mov edi, 0x10" }, { version = "137", rva = 0x1b29220, expect = "mov edi, 0x10" }, { version = "246", rva = 0x1b2e5b0, expect = "mov edi, 0x10" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpBroadPhaseBorderListener"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a9ca11, expect = "mov edi, 0x18" }, { version = "982", rva = 0x1afe41b, expect = "mov edi, 0x18" }, { version = "137", rva = 0x1b28e1b, expect = "mov edi, 0x18" }, { version = "246", rva = 0x1b2e1ab, expect = "mov edi, 0x18" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpNullBroadPhaseListener"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b24ad1, expect = "mov edi, 0x18" }, { version = "982", rva = 0x1b7b36b, expect = "mov edi, 0x18" }, { version = "137", rva = 0x1ba5d6b, expect = "mov edi, 0x18" }, { version = "246", rva = 0x1bab0fb, expect = "mov edi, 0x18" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpPhantomBroadPhaseListener"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a9cec1, expect = "mov edi, 0x18" }, { version = "982", rva = 0x1afeaab, expect = "mov edi, 0x18" }, { version = "137", rva = 0x1b294ab, expect = "mov edi, 0x18" }, { version = "246", rva = 0x1b2e83b, expect = "mov edi, 0x18" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpEntityEntityBroadPhaseListener"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b2a161, expect = "mov edi, 0x20" }, { version = "982", rva = 0x1b802eb, expect = "mov edi, 0x20" }, { version = "137", rva = 0x1baaceb, expect = "mov edi, 0x20" }, { version = "246", rva = 0x1bb007b, expect = "mov edi, 0x20" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpConstraintChainData"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b807c6, expect = "mov edi, 0x18" }, { version = "982", rva = 0x1bcdfa0, expect = "mov edi, 0x18" }, { version = "137", rva = 0x1bf89a0, expect = "mov edi, 0x18" }, { version = "246", rva = 0x1bfdd30, expect = "mov edi, 0x18" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMalleableConstraintData"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1ae3d02, expect = "mov ebx, 0x50" }, { version = "982", rva = 0x1b46049, expect = "mov edi, 0x50" }, { version = "137", rva = 0x1b70a49, expect = "mov edi, 0x50" }, { version = "246", rva = 0x1b75dd9, expect = "mov edi, 0x50" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpBallSocketChainData"
+size = 0x70
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b80762, expect = "mov ebx, 0x70" }, { version = "982", rva = 0x1bcdefe, expect = "mov edi, 0x70" }, { version = "137", rva = 0x1bf88fe, expect = "mov edi, 0x70" }, { version = "246", rva = 0x1bfdc8e, expect = "mov edi, 0x70" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpGenericConstraintData"
+size = 0x90
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b83052, expect = "mov ebx, 0x90" }, { version = "982", rva = 0x1bd0a6e, expect = "mov edi, 0x90" }, { version = "137", rva = 0x1bfb46e, expect = "mov edi, 0x90" }, { version = "246", rva = 0x1c007fe, expect = "mov edi, 0x90" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSimpleContactConstraintData"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b2d3d2, expect = "mov ebx, 0x50" }, { version = "982", rva = 0x1b837ce, expect = "mov edi, 0x50" }, { version = "137", rva = 0x1bae1ce, expect = "mov edi, 0x50" }, { version = "246", rva = 0x1bb355e, expect = "mov edi, 0x50" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMoppAssembler"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1bfed96, expect = "mov edi, 0x10" }, { version = "982", rva = 0x1c3d480, expect = "mov edi, 0x10" }, { version = "137", rva = 0x1c67e80, expect = "mov edi, 0x10" }, { version = "246", rva = 0x1c6d210, expect = "mov edi, 0x10" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMoppDefaultAssembler"
+size = 0xa0
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1bfedf2, expect = "mov ebx, 0xa0" }, { version = "982", rva = 0x1c3d51e, expect = "mov edi, 0xa0" }, { version = "137", rva = 0x1c67f1e, expect = "mov edi, 0xa0" }, { version = "246", rva = 0x1c6d2ae, expect = "mov edi, 0xa0" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMoppMediator"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1be6c66, expect = "mov edi, 0x10" }, { version = "982", rva = 0x1c26c00, expect = "mov edi, 0x10" }, { version = "137", rva = 0x1c51600, expect = "mov edi, 0x10" }, { version = "246", rva = 0x1c56990, expect = "mov edi, 0x10" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMoppShapeMediator"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1be6cc2, expect = "mov ebx, 0x20" }, { version = "982", rva = 0x1c26c9e, expect = "mov edi, 0x20" }, { version = "137", rva = 0x1c5169e, expect = "mov edi, 0x20" }, { version = "246", rva = 0x1c56a2e, expect = "mov edi, 0x20" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMoppCachedShapeMediator"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1be7582, expect = "mov ebx, 0x30" }, { version = "982", rva = 0x1c273de, expect = "mov edi, 0x30" }, { version = "137", rva = 0x1c51dde, expect = "mov edi, 0x30" }, { version = "246", rva = 0x1c5716e, expect = "mov edi, 0x30" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMoppNodeMgr"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1bf9ea6, expect = "mov edi, 0x10" }, { version = "982", rva = 0x1c384c0, expect = "mov edi, 0x10" }, { version = "137", rva = 0x1c62ec0, expect = "mov edi, 0x10" }, { version = "246", rva = 0x1c68250, expect = "mov edi, 0x10" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMoppSplitter"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1bf9f06, expect = "mov edi, 0x10" }, { version = "982", rva = 0x1c38560, expect = "mov edi, 0x10" }, { version = "137", rva = 0x1c62f60, expect = "mov edi, 0x10" }, { version = "246", rva = 0x1c682f0, expect = "mov edi, 0x10" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMoppDefaultSplitter"
+size = 0x78
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1bf9e42, expect = "mov ebx, 0x78" }, { version = "982", rva = 0x1c3841e, expect = "mov edi, 0x78" }, { version = "137", rva = 0x1c62e1e, expect = "mov edi, 0x78" }, { version = "246", rva = 0x1c681ae, expect = "mov edi, 0x78" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMoppCodeGenerator"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1bfb3a2, expect = "mov ebx, 0x30" }, { version = "982", rva = 0x1c3908e, expect = "mov edi, 0x30" }, { version = "137", rva = 0x1c63a8e, expect = "mov edi, 0x30" }, { version = "246", rva = 0x1c68e1e, expect = "mov edi, 0x30" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMoppCostFunction"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1be78b6, expect = "mov edi, 0x28" }, { version = "982", rva = 0x1c27550, expect = "mov edi, 0x28" }, { version = "137", rva = 0x1c51f50, expect = "mov edi, 0x28" }, { version = "246", rva = 0x1c572e0, expect = "mov edi, 0x28" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSphereMotion"
+size = 0x140
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a14066, expect = "mov edi, 0x140" }, { version = "982", rva = 0x1a8d760, expect = "mov edi, 0x140" }, { version = "137", rva = 0x1ab8160, expect = "mov edi, 0x140" }, { version = "246", rva = 0x1abd4f0, expect = "mov edi, 0x140" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpBoxMotion"
+size = 0x140
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a8e9e6, expect = "mov edi, 0x140" }, { version = "982", rva = 0x1af2b50, expect = "mov edi, 0x140" }, { version = "137", rva = 0x1b1d550, expect = "mov edi, 0x140" }, { version = "246", rva = 0x1b228e0, expect = "mov edi, 0x140" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpThinBoxMotion"
+size = 0x140
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a8eb06, expect = "mov edi, 0x140" }, { version = "982", rva = 0x1af2d30, expect = "mov edi, 0x140" }, { version = "137", rva = 0x1b1d730, expect = "mov edi, 0x140" }, { version = "246", rva = 0x1b22ac0, expect = "mov edi, 0x140" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpCharacterMotion"
+size = 0x140
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a13ee6, expect = "mov edi, 0x140" }, { version = "982", rva = 0x1a8d4e0, expect = "mov edi, 0x140" }, { version = "137", rva = 0x1ab7ee0, expect = "mov edi, 0x140" }, { version = "246", rva = 0x1abd270, expect = "mov edi, 0x140" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpFixedRigidMotion"
+size = 0x140
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a8eaa2, expect = "mov ebx, 0x140" }, { version = "982", rva = 0x1af2c8e, expect = "mov edi, 0x140" }, { version = "137", rva = 0x1b1d68e, expect = "mov edi, 0x140" }, { version = "246", rva = 0x1b22a1e, expect = "mov edi, 0x140" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpHavokSnapshot::ConvertListener"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1ab92b2, expect = "mov ebx, 0x20" }, { version = "982", rva = 0x1b1965e, expect = "mov edi, 0x20" }, { version = "137", rva = 0x1b4405e, expect = "mov edi, 0x20" }, { version = "246", rva = 0x1b493ee, expect = "mov edi, 0x20" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSphereShape"
+size = 0x38
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b7b4f6, expect = "mov edi, 0x38" }, { version = "982", rva = 0x1bc8db0, expect = "mov edi, 0x38" }, { version = "137", rva = 0x1bf37b0, expect = "mov edi, 0x38" }, { version = "246", rva = 0x1bf8b40, expect = "mov edi, 0x38" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpBoxShape"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b76b62, expect = "mov ebx, 0x40" }, { version = "982", rva = 0x1bc3a4e, expect = "mov edi, 0x40" }, { version = "137", rva = 0x1bee44e, expect = "mov edi, 0x40" }, { version = "246", rva = 0x1bf37de, expect = "mov edi, 0x40" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpCapsuleShape"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b7e836, expect = "mov edi, 0x50" }, { version = "982", rva = 0x1bcbfa0, expect = "mov edi, 0x50" }, { version = "137", rva = 0x1bf69a0, expect = "mov edi, 0x50" }, { version = "246", rva = 0x1bfbd30, expect = "mov edi, 0x50" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpCylinderShape"
+size = 0x70
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1973486, expect = "mov edi, 0x70" }, { version = "982", rva = 0x1a1f270, expect = "mov edi, 0x70" }, { version = "137", rva = 0x1a49c70, expect = "mov edi, 0x70" }, { version = "246", rva = 0x1a4f000, expect = "mov edi, 0x70" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpConvexVerticesShape"
+size = 0x80
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x19757c2, expect = "mov ebx, 0x80" }, { version = "982", rva = 0x1a2149e, expect = "mov edi, 0x80" }, { version = "137", rva = 0x1a4be9e, expect = "mov edi, 0x80" }, { version = "246", rva = 0x1a5122e, expect = "mov edi, 0x80" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpConvexVerticesConnectivity"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1becf62, expect = "mov ebx, 0x30" }, { version = "982", rva = 0x1c2c783, expect = "mov edi, 0x30" }, { version = "137", rva = 0x1c57183, expect = "mov edi, 0x30" }, { version = "246", rva = 0x1c5c513, expect = "mov edi, 0x30" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpConvexTransformShape"
+size = 0x80
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1971ff0, expect = "mov ebx, 0x80" }, { version = "982", rva = 0x1a1db6c, expect = "mov edi, 0x80" }, { version = "137", rva = 0x1a4856c, expect = "mov edi, 0x80" }, { version = "246", rva = 0x1a4d8fc, expect = "mov edi, 0x80" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpConvexTranslateShape"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1ac5c42, expect = "mov ebx, 0x50" }, { version = "982", rva = 0x1b253c7, expect = "mov edi, 0x50" }, { version = "137", rva = 0x1b4fdc7, expect = "mov edi, 0x50" }, { version = "246", rva = 0x1b55157, expect = "mov edi, 0x50" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpListShape"
+size = 0x90
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b7f792, expect = "mov ebx, 0x90" }, { version = "982", rva = 0x1bcd0ae, expect = "mov edi, 0x90" }, { version = "137", rva = 0x1bf7aae, expect = "mov edi, 0x90" }, { version = "246", rva = 0x1bfce3e, expect = "mov edi, 0x90" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpConvexListShape"
+size = 0x80
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1bec592, expect = "mov ebx, 0x80" }, { version = "982", rva = 0x1c2bebe, expect = "mov edi, 0x80" }, { version = "137", rva = 0x1c568be, expect = "mov edi, 0x80" }, { version = "246", rva = 0x1c5bc4e, expect = "mov edi, 0x80" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpBvTreeShape"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x17bd8e6, expect = "mov edi, 0x28" }, { version = "982", rva = 0x190ec00, expect = "mov edi, 0x28" }, { version = "137", rva = 0x1939600, expect = "mov edi, 0x28" }, { version = "246", rva = 0x193e990, expect = "mov edi, 0x28" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpBvCompressedMeshShape"
+size = 0x110
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x17bd832, expect = "mov ebx, 0x110" }, { version = "982", rva = 0x190eb5e, expect = "mov edi, 0x110" }, { version = "137", rva = 0x193955e, expect = "mov edi, 0x110" }, { version = "246", rva = 0x193e8ee, expect = "mov edi, 0x110" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpStaticCompoundShape"
+size = 0xa0
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1bd5b72, expect = "mov ebx, 0xa0" }, { version = "982", rva = 0x1c171ee, expect = "mov edi, 0xa0" }, { version = "137", rva = 0x1c41bee, expect = "mov edi, 0xa0" }, { version = "246", rva = 0x1c46f7e, expect = "mov edi, 0xa0" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpCompressedMeshShape"
+size = 0x130
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1afd192, expect = "mov ebx, 0x130" }, { version = "982", rva = 0x1b60b0e, expect = "mov edi, 0x130" }, { version = "137", rva = 0x1b8b50e, expect = "mov edi, 0x130" }, { version = "246", rva = 0x1b9089e, expect = "mov edi, 0x130" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSimpleMeshShape"
+size = 0x68
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b911f2, expect = "mov ebx, 0x68" }, { version = "982", rva = 0x1bde588, expect = "mov edi, 0x68" }, { version = "137", rva = 0x1c08f88, expect = "mov edi, 0x68" }, { version = "246", rva = 0x1c0e318, expect = "mov edi, 0x68" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpPlaneShape"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b7aaf6, expect = "mov edi, 0x50" }, { version = "982", rva = 0x1bc8380, expect = "mov edi, 0x50" }, { version = "137", rva = 0x1bf2d80, expect = "mov edi, 0x50" }, { version = "246", rva = 0x1bf8110, expect = "mov edi, 0x50" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpStorageSampledHeightFieldShape"
+size = 0xb0
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b74eb4, expect = "mov edi, 0xb0" }, { version = "982", rva = 0x1bc213c, expect = "mov edi, 0xb0" }, { version = "137", rva = 0x1becb3c, expect = "mov edi, 0xb0" }, { version = "246", rva = 0x1bf1ecc, expect = "mov edi, 0xb0" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpTransformShape"
+size = 0x90
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b7dcb0, expect = "mov ebx, 0x90" }, { version = "982", rva = 0x1bcb1fc, expect = "mov edi, 0x90" }, { version = "137", rva = 0x1bf5bfc, expect = "mov edi, 0x90" }, { version = "246", rva = 0x1bfaf8c, expect = "mov edi, 0x90" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMoppCode"
+size = 0x40
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1ad2c92, expect = "mov ebx, 0x40" }, { version = "982", rva = 0x1b33753, expect = "mov edi, 0x40" }, { version = "137", rva = 0x1b5e153, expect = "mov edi, 0x40" }, { version = "246", rva = 0x1b634e3, expect = "mov edi, 0x40" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkMoppBvTreeShapeBase"
+size = 0x50
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b7c1d2, expect = "mov ebx, 0x50" }, { version = "982", rva = 0x1bca12e, expect = "mov edi, 0x50" }, { version = "137", rva = 0x1bf4b2e, expect = "mov edi, 0x50" }, { version = "246", rva = 0x1bf9ebe, expect = "mov edi, 0x50" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpMoppBvTreeShape"
+size = 0x70
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b7c232, expect = "mov ebx, 0x70" }, { version = "982", rva = 0x1bca1ce, expect = "mov edi, 0x70" }, { version = "137", rva = 0x1bf4bce, expect = "mov edi, 0x70" }, { version = "246", rva = 0x1bf9f5e, expect = "mov edi, 0x70" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpBvCompressedMeshShapeGc"
+size = 0x18
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [{ version = "982", rva = 0x1a18328, expect = "mov edx, 0x18" }, { version = "137", rva = 0x1a42d28, expect = "mov edx, 0x18" }, { version = "246", rva = 0x1a480b8, expect = "mov edx, 0x18" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpAabbPhantom"
+size = 0x130
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b8b732, expect = "mov ebx, 0x130" }, { version = "982", rva = 0x1bd8bee, expect = "mov edi, 0x130" }, { version = "137", rva = 0x1c035ee, expect = "mov edi, 0x130" }, { version = "246", rva = 0x1c0897e, expect = "mov edi, 0x130" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpShapePhantom"
+size = 0x1a0
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b98b62, expect = "mov ebx, 0x1a0" }, { version = "982", rva = 0x1be661e, expect = "mov edi, 0x1a0" }, { version = "137", rva = 0x1c1101e, expect = "mov edi, 0x1a0" }, { version = "246", rva = 0x1c163ae, expect = "mov edi, 0x1a0" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpCachingShapePhantom"
+size = 0x1c0
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b8e162, expect = "mov ebx, 0x1c0" }, { version = "982", rva = 0x1bdb79e, expect = "mov edi, 0x1c0" }, { version = "137", rva = 0x1c0619e, expect = "mov edi, 0x1c0" }, { version = "246", rva = 0x1c0b52e, expect = "mov edi, 0x1c0" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpSimpleShapePhantom"
+size = 0x1c0
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b8d082, expect = "mov ebx, 0x1c0" }, { version = "982", rva = 0x1bda47e, expect = "mov edi, 0x1c0" }, { version = "137", rva = 0x1c04e7e, expect = "mov edi, 0x1c0" }, { version = "246", rva = 0x1c0a20e, expect = "mov edi, 0x1c0" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpConstraintOwner"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b2ad36, expect = "mov edi, 0x20" }, { version = "982", rva = 0x1b80f10, expect = "mov edi, 0x20" }, { version = "137", rva = 0x1bab910, expect = "mov edi, 0x20" }, { version = "246", rva = 0x1bb0ca0, expect = "mov edi, 0x20" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpWorld"
+size = 0x440
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1a9d0b2, expect = "mov ebx, 0x440" }, { version = "982", rva = 0x1afec7e, expect = "mov edi, 0x440" }, { version = "137", rva = 0x1b2967e, expect = "mov edi, 0x440" }, { version = "246", rva = 0x1b2ea0e, expect = "mov edi, 0x440" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpPhysicsSystemWithContacts"
+size = 0x78
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b6e7b2, expect = "mov ebx, 0x78" }, { version = "982", rva = 0x1bbdb1e, expect = "mov edi, 0x78" }, { version = "137", rva = 0x1be851e, expect = "mov edi, 0x78" }, { version = "246", rva = 0x1bed8ae, expect = "mov edi, 0x78" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpWorldExtension"
+size = 0x20
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b41816, expect = "mov edi, 0x20" }, { version = "982", rva = 0x1b91120, expect = "mov edi, 0x20" }, { version = "137", rva = 0x1bbbb20, expect = "mov edi, 0x20" }, { version = "246", rva = 0x1bc0eb0, expect = "mov edi, 0x20" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpWorldMaintenanceMgr"
+size = 0x10
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b41586, expect = "mov edi, 0x10" }, { version = "982", rva = 0x1b90e90, expect = "mov edi, 0x10" }, { version = "137", rva = 0x1bbb890, expect = "mov edi, 0x10" }, { version = "246", rva = 0x1bc0c20, expect = "mov edi, 0x10" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."
+
+[[evidence]]
+class = "hkpDefaultWorldMaintenanceMgr"
+size = 0x18
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [{ version = "162", rva = 0x1b41526, expect = "mov edi, 0x18" }, { version = "982", rva = 0x1b90df0, expect = "mov edi, 0x18" }, { version = "137", rva = 0x1bbb7f0, expect = "mov edi, 0x18" }, { version = "246", rva = 0x1bc0b80, expect = "mov edi, 0x18" }]
+note = "Scalar deleting destructor passes this exact class footprint to sized deallocation; no array cookie or interior allocation."

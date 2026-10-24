@@ -1,0 +1,549 @@
+[[evidence]]
+class = "bhkPositionConstraintMotor"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [
+  {version="162", rva=0x1B01E36, expect="mov edi, 0x30"},
+  {version="982", rva=0x1B6580F, expect="mov edx, 0x30"},
+  {version="137", rva=0x1B9020F, expect="mov edx, 0x30"},
+  {version="246", rva=0x1B9559F, expect="mov edx, 0x30"},
+]
+note = "Deleting destructor compiler sizeof; no extra fields beyond hkpPositionConstraintMotor. All four primary vtables have 30 slots."
+
+[[evidence]]
+class = "bhkVelocityConstraintMotor"
+size = 0x30
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [
+  {version="162", rva=0x1B022C6, expect="mov edi, 0x30"},
+  {version="982", rva=0x1B65CBF, expect="mov edx, 0x30"},
+  {version="137", rva=0x1B906BF, expect="mov edx, 0x30"},
+  {version="246", rva=0x1B95A4F, expect="mov edx, 0x30"},
+]
+note = "Deleting destructor compiler sizeof; no extra fields beyond hkpVelocityConstraintMotor. All four primary vtables have 30 slots."
+
+[[evidence]]
+class = "bhkSpringDamperConstraintMotor"
+size = 0x28
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [
+  {version="162", rva=0x1B02726, expect="mov edi, 0x28"},
+  {version="982", rva=0x1B661BF, expect="mov edx, 0x28"},
+  {version="137", rva=0x1B90BBF, expect="mov edx, 0x28"},
+  {version="246", rva=0x1B95F4F, expect="mov edx, 0x28"},
+]
+note = "Deleting destructor compiler sizeof; no extra fields beyond hkpSpringDamperConstraintMotor. All four primary vtables have 30 slots."
+
+[[evidence]]
+class = "hknpCharacterState"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{version="246", rva=0x210B4CF, expect="mov edx, 0x10"}]
+note = "Fieldless RTTI primary base of bhkCharacterState. Complete bhkCharacterState deleting destructor uses sizeof 0x10; its hkReferencedObject ancestor independently supplies at least 0x10 bytes, bounding this intermediate base to exactly 0x10. Native hknpCharacterState owns nine slots; bhkCharacterState appends slot nine."
+
+[[evidence]]
+class = "BSAnimationGraphManager"
+size = 0xE0
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [
+  {version="162", rva=0x119FCED, expect="mov edx, 0xe0"},
+  {version="982", rva=0x1CD9C03, expect="mov edx, 0xe0"},
+  {version="137", rva=0x1D04693, expect="mov edx, 0xe0"},
+  {version="246", rva=0x1D09A43, expect="mov edx, 0xe0"},
+]
+note = "162 allocation at 0x119FCF2 requests 0xE0; its returned pointer is passed to manager copy constructor 0x1CA57F0 at 0x119FD12. Later builds supply deleting-destructor compiler sizeof. RTTI event sink at zero and intrusive refcount at +8 agree across all builds."
+
+[[evidence]]
+class = "BSAnimationGraphManager::DependentManagerSmartPtr"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1D03B74, expect="mov rcx, qword ptr [rdi]"},
+  {version="246", rva=0x1D03B7A, expect="and rax, 0xfffffffffffffffe"},
+  {version="246", rva=0x1D03D9D, expect="add rdi, 8"},
+]
+note = "Manager traverses subManagers with 8-byte elements, masks bit zero from each qword before acquiring the pointed manager's intrusive reference and forwarding notification. The slot stores only this tagged pointer."
+
+[[evidence]]
+class = "BSAnimationGraphManager::QueuedEvent"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1D1365D, expect="shl rdi, 4"},
+  {version="246", rva=0x1D1366F, expect="call 0x1c530"},
+  {version="246", rva=0x1D13674, expect="lea rdx, [rbp + 8]"},
+  {version="246", rva=0x1D13680, expect="call 0x1c530"},
+]
+note = "Native graph event dispatcher indexes queued records by i*16, copies BSFixedString tag from record+0 and payload from record+8 into the emitted BSAnimationGraphEvent, then releases those two copied strings."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::BSAnimationGraphManager::DependentManagerSmartPtr>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1D011C5, expect="lea rcx, [rdi + 0x58]"},
+  {version="246", rva=0x1D011CE, expect="lea rcx, [rdi + 0x68]"},
+  {version="246", rva=0x1D011D7, expect="lea rcx, [rdi + 0x70]"},
+]
+note = "Manager initializes subManagers allocator at +0x58, count at +0x68 and the next eventQueue allocator at +0x70. Native traversal 0x1D03AB0 confirms the tagged-pointer element type and stride."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::BSAnimationGraphManager::QueuedEvent>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1D011D7, expect="lea rcx, [rdi + 0x70]"},
+  {version="246", rva=0x1D011E0, expect="lea rcx, [rdi + 0x80]"},
+  {version="246", rva=0x1D011EC, expect="lea rcx, [rdi + 0x88]"},
+]
+note = "Manager initializes eventQueue allocator at +0x70, count at +0x80 and the next variableCache at +0x88. Event generation body 0x1D01FA0 moves 16-byte pairs of BSFixedString values through this queue."
+
+[[evidence]]
+class = "BSAnimationGraphVariableCache"
+size = 0x40
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1E64207, expect="mov qword ptr [rsi + 0x30], rdi"},
+  {version="246", rva=0x1E6420B, expect="mov qword ptr [rsi + 0x38], 0"},
+  {version="246", rva=0x1D0120A, expect="mov dword ptr [rdi + 0xc8], esi"},
+]
+note = "Manager constructs cache at +0x88, passes updateLock at +0xC8, and initializes that lock immediately afterward. Cache constructor stores its final graph pointer at +0x38, closing the padding-free 0x40 span before the next member."
+
+[[evidence]]
+class = "AnimVariableCacheInfo"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1E6475F, expect="mov qword ptr [rbx + 8], r13"},
+  {version="246", rva=0x1E64898, expect="add rbx, 0x10"},
+]
+note = "BSAnimationGraphVariableCache rebuilds 16-byte name/value entries: copies the BSFixedString at element+0, stores graph variable lookup result at element+8, and destroys names with 0x10 stride. Native reserve helper 0x1E65980 also uses 0x10-byte elements."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::AnimVariableCacheInfo>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1E641E8, expect="call 0x8dd9d"},
+  {version="246", rva=0x1E641ED, expect="lea rcx, [rsi + 0x18]"},
+]
+note = "Variable-cache constructor initializes its name/value array at +0 using 0x1E65980, then initializes the independent quick-lookup array at +0x18. Rebuild 0x1E64350 verifies the first array's 16-byte name/value element stride."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::hkbVariableValue*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1E641ED, expect="lea rcx, [rsi + 0x18]"},
+  {version="246", rva=0x1E641F6, expect="lea rcx, [rsi + 0x28]"},
+  {version="246", rva=0x1E64207, expect="mov qword ptr [rsi + 0x30], rdi"},
+]
+note = "Variable-cache quick lookup array starts +0x18, count is +0x28, and the independent lock pointer starts +0x30. Rebuild 0x1E64350 fills these 8-byte elements with graph-variable lookup results."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTSmartPointer<CKPE::Fallout4::EditorAPI::BShkbAnimationGraph>"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1E6420B, expect="mov qword ptr [rsi + 0x38], 0"},
+  {version="246", rva=0x1D0120A, expect="mov dword ptr [rdi + 0xc8], esi"},
+]
+note = "Variable-cache final graph smart pointer starts +0x38 and ends +0x40; manager embeds the cache at +0x88 immediately before updateLock +0xC8. Rebuild 0x1E64350 increments/decrements the pointee's intrusive refcount at +8 when replacing that pointer."
+
+[[evidence]]
+class = "BSIRagdollDriver"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  {version="982", rva=0x1CF8698, expect="mov edx, 8"},
+  {version="137", rva=0x1D23128, expect="mov edx, 8"},
+  {version="246", rva=0x1D284D8, expect="mov edx, 8"},
+]
+note = "Deleting destructor compiler sizeof; BShkbAnimationGraph RTTI puts the following intrusive refcount base at +8. All four builds have 22 slots."
+
+[[evidence]]
+class = "BShkbAnimationGraph"
+size = 0x3D0
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [
+  {version="162", rva=0xE6A0EB, expect="mov edx, 0x3d0"},
+  {version="982", rva=0x1CF871C, expect="mov edx, 0x3d0"},
+  {version="137", rva=0x1D231AC, expect="mov edx, 0x3d0"},
+  {version="246", rva=0x1D2855C, expect="mov edx, 0x3d0"},
+]
+note = "162 TESObjectREFR holder allocates 0x3D0 at 0xE6A0F6 then calls graph constructor 0x1CAE340 at 0xE6A10C; two standalone holders repeat the same allocation. Later builds supply deleting-destructor compiler sizeof, also corroborated by three independent 246 allocations. Character starts +0x1C8 after five native event source bases."
+
+[[evidence]]
+class = "BSAnimationDBData"
+size = 0x8
+kind = "exact"
+versions = ["982", "137", "246"]
+proof = [
+  {version="982", rva=0x1C43A69, expect="mov edx, 8"},
+  {version="137", rva=0x1C6E469, expect="mov edx, 8"},
+  {version="246", rva=0x1C737F9, expect="mov edx, 8"},
+]
+note = "Deleting destructor compiler sizeof; three-slot secondary interface of hkxDBData at +0x20."
+
+[[evidence]]
+class = "BShkbHkxDB::hkxDBData"
+size = 0x38
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [
+  {version="162", rva=0x1C07447, expect="mov ebx, 0x38"},
+  {version="982", rva=0x1C6E577, expect="mov edx, 0x38"},
+  {version="137", rva=0x1C98FE7, expect="mov edx, 0x38"},
+  {version="246", rva=0x1C9E377, expect="mov edx, 0x38"},
+]
+note = "Deleting destructor compiler sizeof; hkLoader primary base and BSAnimationDBData secondary base at +0x20. Stream loader 0x1C99BA0 stores loaded root +0x28 and stream file length +0x30."
+
+[[evidence]]
+class = "BShkbHkxDB::ProjectDBData"
+size = 0x1C8
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [
+  {version="162", rva=0x1C07272, expect="mov ebx, 0x1c8"},
+  {version="982", rva=0x1C6E2D2, expect="mov edx, 0x1c8"},
+  {version="137", rva=0x1C98D42, expect="mov edx, 0x1c8"},
+  {version="246", rva=0x1C9E0D2, expect="mov edx, 0x1c8"},
+]
+note = "Deleting destructor compiler sizeof; constructor at 0x1C99FB0 initializes the final flag at +0x1C0."
+
+[[evidence]]
+class = "hkgpIndexedMeshStorage"
+size = 0x40
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1DC8CAC, expect="mov dword ptr [rbx + 0x38], ecx"},
+  {version="246", rva=0x1DC8CB2, expect="mov qword ptr [rbx + 0x40], rcx"},
+]
+note = "Actual hkgpAbstractMesh<hkgpIndexedMeshDefinitions::Edge,Vertex,Triangle,hkContainerHeapAllocator> base: constructor initializes the final base list count at +0x38, and the next derived-own pointer at +0x40. RTTI hierarchy and 8-byte alignment close the base footprint at 0x40, not the composite 0x90 allocation."
+
+[[evidence]]
+class = "hkgpMeshStorage"
+size = 0x40
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1E82DB5, expect="mov dword ptr [rcx + 0x38], esi"},
+  {version="246", rva=0x1E82DEC, expect="mov qword ptr [rcx + 0x40], rax"},
+]
+note = "Actual hkgpAbstractMesh<hkgpMeshBase::Edge,Vertex,Triangle,hkContainerHeapAllocator> base: final base list count is +0x38; derived-own dispatch pointer begins +0x40. RTTI hierarchy and 8-byte alignment close the base at 0x40, not the composite 0x98 allocation."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::hkArray<CKPE::Fallout4::EditorAPI::hkpRigidBody*>"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1BB429D, expect="mov qword ptr [rcx + 0x10], rdi"},
+  {version="246", rva=0x1BB42A9, expect="mov dword ptr [rcx + 0x1c], 0x80000000"},
+  {version="246", rva=0x1BB42B0, expect="mov qword ptr [rcx + 0x20], rdi"},
+]
+note = "hkpPhysicsSystem reflected rigidBodies member at +0x10 ends immediately before constraints at +0x20; default constructor initializes pointer, count and capacity/flags at +0x10/+0x18/+0x1C."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::hkArray<CKPE::Fallout4::EditorAPI::hkpConstraintInstance*>"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1BB42B0, expect="mov qword ptr [rcx + 0x20], rdi"},
+  {version="246", rva=0x1BB42B7, expect="mov dword ptr [rcx + 0x2c], 0x80000000"},
+  {version="246", rva=0x1BB42BE, expect="mov qword ptr [rcx + 0x30], rdi"},
+]
+note = "hkpPhysicsSystem reflected constraints member occupies +0x20..+0x30, bounded by actions. Independent hkpEntity constraintsSlave initializer at +0x108/+0x110/+0x114 agrees."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::hkArray<CKPE::Fallout4::EditorAPI::hkpAction*>"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1BB42BE, expect="mov qword ptr [rcx + 0x30], rdi"},
+  {version="246", rva=0x1BB42C5, expect="mov dword ptr [rcx + 0x3c], 0x80000000"},
+  {version="246", rva=0x1BB42CC, expect="mov qword ptr [rcx + 0x40], rdi"},
+]
+note = "hkpPhysicsSystem reflected actions member occupies +0x30..+0x40, bounded by phantoms."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::hkArray<CKPE::Fallout4::EditorAPI::hkpPhantom*>"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1BB42CC, expect="mov qword ptr [rcx + 0x40], rdi"},
+  {version="246", rva=0x1BB42D3, expect="mov dword ptr [rcx + 0x4c], 0x80000000"},
+]
+note = "hkpPhysicsSystem reflected phantoms member starts +0x40; the next reflected name member is +0x50. Constructor initializes all 16 bytes of the pointer/count/capacity header."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::hkArray<std::uint8_t>"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1B21988, expect="mov qword ptr [rdi + 0x118], rbp"},
+  {version="246", rva=0x1B21995, expect="mov dword ptr [rdi + 0x124], 0x80000000"},
+  {version="246", rva=0x1B21A0C, expect="mov qword ptr [rdi + 0x128], rbp"},
+]
+note = "hkpEntity reflected constraintRuntime byte array spans +0x118..+0x128, bounded by simulationIsland."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::hkArrayBase<std::uint8_t>"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1B21988, expect="mov qword ptr [rdi + 0x118], rbp"},
+  {version="246", rva=0x1B2198F, expect="mov dword ptr [rdi + 0x120], ebp"},
+  {version="246", rva=0x1B21995, expect="mov dword ptr [rdi + 0x124], 0x80000000"},
+  {version="246", rva=0x1B21A0C, expect="mov qword ptr [rdi + 0x128], rbp"},
+]
+note = "Actual constraintRuntime header underlying hkArray<uint8_t>: pointer/count/capacity occupy +0x118/+0x120/+0x124, bounded by simulationIsland +0x128. The allocator policy contributes no separate state; this is the actual used byte-array base specialization, not a generic template proof."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::hkArray<void*>"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1BAC990, expect="mov qword ptr [rbx + 0xd8], rdi"},
+  {version="246", rva=0x1BAC965, expect="mov dword ptr [rbx + 0xe0], edi"},
+  {version="246", rva=0x1BAC997, expect="mov dword ptr [rbx + 0xe4], 0x80000000"},
+]
+note = "hkpPhantom native destructor resets the final phantomListeners pointer/count/capacity at +0xD8/+0xE0/+0xE4. Reflected ARRAY<POINTER VOID> member +0xD8 ends at independently proven complete-object size 0xE8."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::hkArray<CKPE::Fallout4::EditorAPI::hkSimpleProperty>"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1B8985F, expect="mov qword ptr [r14 + 0xb8], rbp"},
+  {version="246", rva=0x1B89870, expect="mov dword ptr [r14 + 0xc4], 0x80000000"},
+]
+note = "hkpWorldObject reflected properties member at +0xB8 is the final field of the independently proven 0xC8 object. Constructor initializes pointer/count/capacity through +0xC8."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::hkSmallArray<void>"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1B21960, expect="mov qword ptr [rdi + 0xf8], rbp"},
+  {version="246", rva=0x1B21967, expect="mov dword ptr [rdi + 0x100], 0x80000000"},
+  {version="246", rva=0x1B21971, expect="mov qword ptr [rdi + 0x108], rbp"},
+]
+note = "hkpEntity reflected constraintsMaster small-array header starts +0xF8, with combined 16-bit size/capacity at +0x100, immediately before constraintsSlave +0x108. Element type remains intentionally opaque."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::hkSmallArray<CKPE::Fallout4::EditorAPI::hkpContactListener*>"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1B219D9, expect="mov qword ptr [rdi + 0x290], rbp"},
+  {version="246", rva=0x1B219E0, expect="mov dword ptr [rdi + 0x298], 0x80000000"},
+  {version="246", rva=0x1B219EA, expect="mov qword ptr [rdi + 0x2a0], rbp"},
+]
+note = "hkpEntity contactListeners small array occupies +0x290..+0x2A0, bounded by actions. Reflected member offsets and constructor agree."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::hkSmallArray<CKPE::Fallout4::EditorAPI::hkpAction*>"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1B219EA, expect="mov qword ptr [rdi + 0x2a0], rbp"},
+  {version="246", rva=0x1B219F1, expect="mov dword ptr [rdi + 0x2a8], 0x80000000"},
+  {version="246", rva=0x1B219FB, expect="mov qword ptr [rdi + 0x2b0], rbp"},
+]
+note = "hkpEntity actions small array occupies +0x2A0..+0x2B0, bounded by localFrame. Reflected member offsets and constructor agree."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::hkSmallArray<CKPE::Fallout4::EditorAPI::hkpConstraintListener*>"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1B932B6, expect="mov qword ptr [rcx + 0x40], rbp"},
+  {version="246", rva=0x1B932BA, expect="mov dword ptr [rcx + 0x48], 0x80000000"},
+]
+note = "hkpConstraintInstance reflected listeners starts +0x40 and next reflected name member starts +0x50; constructor initializes small-array pointer and combined 16-bit size/capacity."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::hkRefPtr<CKPE::Fallout4::EditorAPI::hknpShape>"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x20FE7C4, expect="lea rcx, [r14 + 0x360]"},
+  {version="246", rva=0x20FE7DE, expect="lea edx, [rbp + 8]"},
+  {version="246", rva=0x20FE7E1, expect="lea r8d, [rbp + 2]"},
+  {version="246", rva=0x20FE7E5, expect="call 0x86908"},
+]
+note = "bhkCharacterController constructs its two shape smart pointers at +0x360 using the native vector constructor with element stride 8 and count 2; the following scalar starts +0x370. RBP is the constructor's zero register."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::hkSimpleArray<CKPE::Fallout4::EditorAPI::hkClassEnum>"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1CDD26C, expect="mov qword ptr [rcx + 0x18], rax"},
+  {version="246", rva=0x1CDD274, expect="mov dword ptr [rcx + 0x20], eax"},
+  {version="246", rva=0x1CDD27C, expect="mov qword ptr [rcx + 0x28], rax"},
+]
+note = "Native hkClass constructor initializes declaredEnums pointer/count at +0x18/+0x20, immediately before declaredMembers at +0x28. hkClass reflection record 0x3E6C4E0 confirms SIMPLEARRAY<STRUCT hkClassEnum> and both boundaries."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::hkSimpleArray<CKPE::Fallout4::EditorAPI::hkClassMember>"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1CDD27C, expect="mov qword ptr [rcx + 0x28], rax"},
+  {version="246", rva=0x1CDD284, expect="mov dword ptr [rcx + 0x30], eax"},
+  {version="246", rva=0x1CDD28C, expect="mov qword ptr [rcx + 0x38], rax"},
+]
+note = "Native hkClass constructor initializes declaredMembers pointer/count at +0x28/+0x30, immediately before defaults at +0x38. hkClass reflection record 0x3E6C4E0 confirms SIMPLEARRAY<STRUCT hkClassMember> and both boundaries."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTEventSource<CKPE::Fallout4::EditorAPI::BSActiveGraphIfInactiveEvent>"
+size = 0x58
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1D0C490, expect="mov dword ptr [rcx + 0x10], ebp"},
+  {version="246", rva=0x1D0C4CF, expect="mov byte ptr [r14 + 0x60], bpl"},
+  {version="246", rva=0x1D0C4D7, expect="mov dword ptr [r14 + 0x68], ebp"},
+]
+note = "BShkbAnimationGraph RTTI places this concrete source at +0x10 and the next source at +0x68. Constructor initializes lock at +0x10, three 0x18 arrays and final notifying flag at +0x60, proving the 0x58 span."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTEventSource<CKPE::Fallout4::EditorAPI::BSAnimationGraphEvent>"
+size = 0x58
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1D0C4D7, expect="mov dword ptr [r14 + 0x68], ebp"},
+  {version="246", rva=0x1D0C520, expect="mov byte ptr [r14 + 0xb8], bpl"},
+  {version="246", rva=0x1D0C52E, expect="mov dword ptr [r14 + 0xc0], ebp"},
+]
+note = "BShkbAnimationGraph RTTI places this concrete source at +0x68 and the next source at +0xC0. Constructor lock, arrays and final flag independently match the 0x58 span."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTEventSource<CKPE::Fallout4::EditorAPI::BSMovementDataChangedEvent>"
+size = 0x58
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1D0C52E, expect="mov dword ptr [r14 + 0xc0], ebp"},
+  {version="246", rva=0x1D0C57D, expect="mov byte ptr [r14 + 0x110], bpl"},
+  {version="246", rva=0x1D0C58B, expect="mov dword ptr [r14 + 0x118], ebp"},
+]
+note = "BShkbAnimationGraph RTTI places this concrete source at +0xC0 and the next source at +0x118. Constructor lock, arrays and final flag independently match the 0x58 span."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTEventSource<CKPE::Fallout4::EditorAPI::BSSubGraphActivationUpdate>"
+size = 0x58
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1D0C58B, expect="mov dword ptr [r14 + 0x118], ebp"},
+  {version="246", rva=0x1D0C5DA, expect="mov byte ptr [r14 + 0x168], bpl"},
+  {version="246", rva=0x1D0C5E8, expect="mov dword ptr [r14 + 0x170], ebp"},
+]
+note = "BShkbAnimationGraph RTTI places this concrete source at +0x118 and the next source at +0x170. Constructor lock, arrays and final flag independently match the 0x58 span."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTEventSource<CKPE::Fallout4::EditorAPI::BSTransformDeltaEvent>"
+size = 0x58
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1D0C5E8, expect="mov dword ptr [r14 + 0x170], ebp"},
+  {version="246", rva=0x1D0C63E, expect="mov byte ptr [r14 + 0x1c0], bpl"},
+  {version="246", rva=0x1D0C645, expect="lea rcx, [r14 + 0x1c8]"},
+]
+note = "BShkbAnimationGraph RTTI places this source at +0x170. Constructor initializes its final flag +0x1C0 then constructs the reflected hkbCharacter at +0x1C8, closing the final source's 0x58 span."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::BSTEventSink<CKPE::Fallout4::EditorAPI::BSActiveGraphIfInactiveEvent>*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1D0C499, expect="add rcx, 0x18"},
+  {version="246", rva=0x1D0C4A2, expect="lea rcx, [r14 + 0x28]"},
+  {version="246", rva=0x1D0C4AB, expect="lea rcx, [r14 + 0x30]"},
+]
+note = "First graph source's native eventSinks array at +0x18 has allocator pointer/capacity init there, count init +0x28, and the next same-typed array starts +0x30. Actual sink type comes from the source RTTI specialization."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::BSTEventSink<CKPE::Fallout4::EditorAPI::BSAnimationGraphEvent>*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1D0C4D3, expect="lea rcx, [r14 + 0x70]"},
+  {version="246", rva=0x1D0C4E4, expect="lea rcx, [r14 + 0x80]"},
+  {version="246", rva=0x1D0C4F0, expect="lea rcx, [r14 + 0x88]"},
+]
+note = "Second graph source's eventSinks array spans +0x70..+0x88; count is initialized +0x80. Actual sink type comes from the source RTTI specialization."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::BSTEventSink<CKPE::Fallout4::EditorAPI::BSMovementDataChangedEvent>*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1D0C527, expect="lea rcx, [r14 + 0xc8]"},
+  {version="246", rva=0x1D0C541, expect="lea rcx, [r14 + 0xd8]"},
+  {version="246", rva=0x1D0C54D, expect="lea rcx, [r14 + 0xe0]"},
+]
+note = "Third graph source's eventSinks array spans +0xC8..+0xE0; count is initialized +0xD8. Actual sink type comes from the source RTTI specialization."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::BSTEventSink<CKPE::Fallout4::EditorAPI::BSSubGraphActivationUpdate>*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1D0C584, expect="lea rcx, [r14 + 0x120]"},
+  {version="246", rva=0x1D0C59E, expect="lea rcx, [r14 + 0x130]"},
+  {version="246", rva=0x1D0C5AA, expect="lea rcx, [r14 + 0x138]"},
+]
+note = "Fourth graph source's eventSinks array spans +0x120..+0x138; count is initialized +0x130. Actual sink type comes from the source RTTI specialization."
+
+[[evidence]]
+class = "CKPE::Fallout4::EditorAPI::BSTArray<CKPE::Fallout4::EditorAPI::BSTEventSink<CKPE::Fallout4::EditorAPI::BSTransformDeltaEvent>*>"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  {version="246", rva=0x1D0C5E1, expect="lea rcx, [r14 + 0x178]"},
+  {version="246", rva=0x1D0C5FB, expect="lea rcx, [r14 + 0x188]"},
+  {version="246", rva=0x1D0C607, expect="lea rcx, [r14 + 0x190]"},
+]
+note = "Fifth graph source's eventSinks array spans +0x178..+0x190; count is initialized +0x188. Actual sink type comes from the source RTTI specialization."

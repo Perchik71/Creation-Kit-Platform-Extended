@@ -113,7 +113,7 @@ namespace CKPE
 			};
 			static_assert(sizeof(BSIMusicTrack) == 0x10);
 
-			// size 0x8, 9 virtual functions
+			// size 0x50, 9 virtual functions
 			class BSIMusicType
 			{
 			public:
@@ -127,8 +127,23 @@ namespace CKPE
 				virtual void DoPrepare() noexcept(true) { return; } // 030
 				virtual ~BSIMusicType() = default; // 038
 				[[nodiscard]] virtual const char* GetDebugID() const noexcept(true) = 0; // 040
+
+				/* 0x08 */ std::uint32_t flags;
+				/* 0x0C */ std::int8_t priority;
+				/* 0x0D */ std::uint8_t pad35;
+				/* 0x0E */ std::uint16_t ducksOtherMusicBy;
+				/* 0x10 */ float fadeTime;
+				/* 0x14 */ std::uint32_t currentTrackIndex;
+				/* 0x18 */ BSTArray<void*> trackHistory;
+				/* 0x30 */ BSTArray<void*> tracks;
+				/* 0x48 */ std::int32_t typeStatus;
+				/* 0x4C */ std::uint32_t pad74;
 			};
-			static_assert(sizeof(BSIMusicType) == 0x8);
+			static_assert(sizeof(BSIMusicType) == 0x50);
+			static_assert(offsetof(BSIMusicType, flags) == 0x8);
+			static_assert(offsetof(BSIMusicType, trackHistory) == 0x18);
+			static_assert(offsetof(BSIMusicType, tracks) == 0x30);
+			static_assert(offsetof(BSIMusicType, typeStatus) == 0x48);
 
 			// size 0x8, 11 virtual functions
 			class BSIReverbType
@@ -238,7 +253,7 @@ namespace CKPE
 			};
 			static_assert(sizeof(BSNavmesh) == 0x228);
 
-			// size 0x10, 6 virtual functions
+			// size 0x8, 6 virtual functions
 			class BSNavmeshInfoMap
 			{
 			public:
@@ -252,9 +267,8 @@ namespace CKPE
 					BSTArray<BSNavmeshInfo*>* result) noexcept(true) = 0; // 020
 				virtual void ForEach(IVisitor& visitor) noexcept(true) = 0; // 028
 
-				std::uint8_t unk08[0x8];
 			};
-			static_assert(sizeof(BSNavmeshInfoMap) == 0x10);
+			static_assert(sizeof(BSNavmeshInfoMap) == 0x8);
 
 			// size 0x8, 26 virtual functions
 			class IAnimationGraphManagerHolder

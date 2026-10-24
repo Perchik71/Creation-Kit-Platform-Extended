@@ -266,7 +266,7 @@ namespace CKPE
 				Common::UI::ListView::InstallCustomDrawHandler(&DoCustomDrawListView);
 				
 				// Layers Window
-				Relocation(EditorAPI::IDs::Functions::sub_73BE90, Offset{ 0x465, 0x46D }).WriteCall(&HkSendMsgChangeColorTextForLayers);
+				Relocation(EditorAPI::IDs::TreeListControl::Create, Offset{ 0x465, 0x46D }).WriteCall(&HkSendMsgChangeColorTextForLayers);
 
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{

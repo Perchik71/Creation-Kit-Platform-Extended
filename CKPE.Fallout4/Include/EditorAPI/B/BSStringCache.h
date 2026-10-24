@@ -3,7 +3,8 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Asserts.h>
-#include <EditorAPI/B/BSSpinLock.h>
+#include <cstddef>
+#include <cstdint>
 
 #pragma once
 
@@ -18,7 +19,8 @@ namespace CKPE
 			public:
 				struct Lock
 				{
-					BSSpinLock lock;
+					volatile std::uint32_t state;
+					std::byte pad04[0xC];
 				};
 
 				struct Entry
@@ -34,15 +36,13 @@ namespace CKPE
 					std::uint16_t flags;		// 08	refcount, flags
 					volatile std::uint16_t crc;	// 0A
 					std::uint32_t unk1;			// 0C
-					// with 4000 flag, is 0
-					std::uint32_t len;			// 10
-					std::uint32_t unk2;			// 14
-					union						// 18
+					union						// 10
 					{
-						struct s1
+						struct
 						{
-							const char str[1];
-						} direct;
+							std::uint32_t len;
+							std::uint32_t unk2;
+						};
 						struct s2
 						{
 							Entry* right;
@@ -56,8 +56,8 @@ namespace CKPE
 						const auto entry = leaf();
 						if (entry)
 						{
-							CKPE_ASSERT(!is_wide());
-							return entry->direct.str;
+							CKPE_ASSERT(!entry->is_wide());
+							return reinterpret_cast<const char*>(entry + 1);
 						}
 						else
 							return nullptr;
@@ -68,8 +68,8 @@ namespace CKPE
 						const auto entry = leaf();
 						if (entry)
 						{
-							CKPE_ASSERT(is_wide());
-							return (const wchar_t*)entry->direct.str;
+							CKPE_ASSERT(entry->is_wide());
+							return reinterpret_cast<const wchar_t*>(entry + 1);
 						}
 						else
 							return nullptr;
@@ -129,16 +129,29 @@ namespace CKPE
 				BSStringCache() = default;
 				~BSStringCache() = default;
 
-				inline Lock* GetLock(std::uint32_t crc16) { return &locks[crc16 & 0xFF]; }
+				[[nodiscard]] inline Lock* GetLock(std::uint32_t crc16) noexcept(true)
+				{
+					return &locks[crc16 & 0x7F];
+				}
+
+				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+				{
+					return offsetof(BSStringCache, locks) == 0x80000 &&
+						offsetof(BSStringCache, isInit) == 0x80800;
+				}
 			private:
 				Entry* lut[0x10000];	// 00000
 				Lock locks[0x80];		// 80000
 				std::uint8_t isInit;	// 80800
 			};
 
-			static_assert(sizeof(BSStringCache::Lock) == 0x8);
+			static_assert(sizeof(BSStringCache) == 0x80808);
+			static_assert(BSStringCache::VerifyLayout());
+			static_assert(sizeof(BSStringCache::Lock) == 0x10);
 			static_assert(sizeof(BSStringCache::Ref) == 0x8);
-			static_assert(sizeof(BSStringCache::Entry) == 0x20);
+			static_assert(sizeof(BSStringCache::Entry) == 0x18);
+			static_assert(offsetof(BSStringCache::Entry, flags) == 0x8);
+			static_assert(offsetof(BSStringCache::Entry, len) == 0x10);
 		}
 	}
 }

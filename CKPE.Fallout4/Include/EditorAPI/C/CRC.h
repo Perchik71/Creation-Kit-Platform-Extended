@@ -4,8 +4,12 @@
 
 #pragma once
 
+#include <memory>
 #include <span>
+#include <string_view>
+#include <type_traits>
 #include <CKPE.HashUtils.h>
+#include <EditorAPI/B/BSFixedString.h>
 
 namespace CKPE
 {
@@ -17,8 +21,8 @@ namespace CKPE
 			{
 				[[nodiscard]] inline static std::uint32_t GenerateCRC32(std::span<const std::uint8_t> data) noexcept(true)
 				{
-					return HashUtils::CRC32Buffer(reinterpret_cast<const void*>(data.front()),
-						(std::uint32_t)data.size());
+					// CK table hashes start at zero and do not complement the result.
+					return HashUtils::CRC32Update(data.data(), (std::uint32_t)data.size(), 0);
 				}
 
 				template<class, bool>
@@ -40,6 +44,16 @@ namespace CKPE
 				[[nodiscard]] std::uint32_t operator()(Key data) const noexcept(true)
 				{
 					return Detail::GenerateCRC32({ reinterpret_cast<const std::uint8_t*>(std::addressof(data)), sizeof(Key) });
+				}
+			};
+
+			template <>
+			struct BSCRC32<BSFixedString>
+			{
+			public:
+				[[nodiscard]] std::uint32_t operator()(const BSFixedString& data) const noexcept(true)
+				{
+					return BSCRC32<BSStringCache::Entry*>()(data.data);
 				}
 			};
 

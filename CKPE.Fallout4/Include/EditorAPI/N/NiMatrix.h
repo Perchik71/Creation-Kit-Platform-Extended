@@ -6,6 +6,9 @@
 
 #pragma once
 
+#include <cstddef>
+#include <cstring>
+
 #include <EditorAPI/N/NiPoint.h>
 
 namespace CKPE
@@ -244,6 +247,9 @@ namespace CKPE
 						m_pEntry[2][2] = -sh * sa * sb + ch * cb;
 					}
 				};
+
+				static_assert(sizeof(NiMatrix43) == 0x30);
+				static_assert(offsetof(NiMatrix43, m_pEntry) == 0x0);
 
 				class NiMatrix4
 				{

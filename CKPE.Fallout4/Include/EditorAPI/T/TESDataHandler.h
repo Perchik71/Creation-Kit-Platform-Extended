@@ -61,6 +61,8 @@ namespace CKPE
 					TESFileList modInfoList;							// 00
 					TESFileArray loadedMods;							// 10
 				};
+				static_assert(sizeof(ModList) == 0x28);
+				static_assert(offsetof(ModList, loadedMods) == 0x10);
 
 				using UnkArray = BSTArray<LPVOID>;
 				// BSTEventSource<TESDataHandlerEditorEvent> (the render window edit module manager registers as a
@@ -266,6 +268,38 @@ namespace CKPE
 				inline TESFile* GetActiveMod() const { return activePlugin; }
 				inline bool IsActiveMod() const { return activePlugin != nullptr; }
 
+				inline bool AddForm(Forms::TESForm* form) noexcept(true)
+				{
+					using func_t = decltype(&TESDataHandler::AddForm);
+					static Common::Relocation<func_t> func{
+						EditorAPI::IDs::TESDataHandler::AddForm };
+					return func(this, form);
+				}
+
+				inline void RemoveForm(Forms::TESForm* form) noexcept(true)
+				{
+					using func_t = decltype(&TESDataHandler::RemoveForm);
+					static Common::Relocation<func_t> func{
+						EditorAPI::IDs::TESDataHandler::RemoveForm };
+					func(this, form);
+				}
+
+				inline bool LoadFiles(bool flag) noexcept(true)
+				{
+					using func_t = decltype(&TESDataHandler::LoadFiles);
+					static Common::Relocation<func_t> func{
+						IDs::Functions::TESDataHandler__LoadFiles };
+					return func(this, flag);
+				}
+
+				inline bool LoadFileRecords(TESFile* file, bool flag) noexcept(true)
+				{
+					using func_t = decltype(&TESDataHandler::LoadFileRecords);
+					static Common::Relocation<func_t> func{
+						IDs::Functions::TESDataHandler__LoadFileRecords };
+					return func(this, file, flag);
+				}
+
 				inline static ISingleton<bool> UserModdedSingleton;
 				inline static ISingleton<TESDataHandler> Singleton;
 
@@ -291,6 +325,13 @@ namespace CKPE
 				CKPE_READ_PROPERTY(GetLoadedMods) const TESFileArray* LoadedMods;
 				CKPE_READ_PROPERTY(GetActiveMod) TESFile* ActiveMod;
 			};
+			static_assert(sizeof(TESDataHandler) == 0x1010);
+			static_assert(offsetof(TESDataHandler, arrNONE) == 0x68);
+			static_assert(offsetof(TESDataHandler, regionList) == 0xF50);
+			static_assert(offsetof(TESDataHandler, cellList) == 0xF58);
+			static_assert(offsetof(TESDataHandler, addonNodes) == 0xF70);
+			static_assert(offsetof(TESDataHandler, modList) == 0xFB0);
+			static_assert(offsetof(TESDataHandler, smallMods) == 0xFD8);
 			static_assert(offsetof(TESDataHandler, arrNONE) == 0x68);
 			static_assert(offsetof(TESDataHandler, arrOVIS) == 0xF38);
 			static_assert(offsetof(TESDataHandler, regionList) == 0xF50);

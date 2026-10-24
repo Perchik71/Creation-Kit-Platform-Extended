@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <EditorAPI/N/NiAVObject.h>
-#include <EditorAPI/N/NiPointer.h>
+#include <EditorAPI/B/BSMultiBoundNode.h>
+#include <EditorAPI/N/NiTPointerList.h>
 #include <EditorAPI/B/BSTArray.h>
 
 namespace CKPE
@@ -16,28 +16,39 @@ namespace CKPE
 		{
 			class BSMultiBound;
 			class BSLight;
+			class BSPortal;
+			class BSOcclusionShape;
 
-			// BSMultiBoundRoom -> NiAPI::NiObject but this copy NiAPI::NiAVObject data
-			class BSMultiBoundRoom : public NiAPI::NiAVObject		
+			class BSMultiBoundRoom : public BSMultiBoundNode
 			{
-				std::uint16_t _BoundsX;
-				std::uint16_t _BoundsY;
-				std::uint16_t _BoundsZ;
-				char _Unk1[0xA];
-				NiAPI::NiPointer<BSMultiBound> _MultiBound;
-				char _Unk2[0x50];
-				BSTArray<BSLight*> _Lights;
-				char _Unk3[0x10];
+				/* 0x150 */ NiAPI::NiTPointerList<BSPortal*> _Portals;
+				/* 0x168 */ NiAPI::NiTPointerList<BSOcclusionShape*> _Occluders;
+				/* 0x180 */ NiAPI::NiTPointerList<NiAPI::NiPointer<BSMultiBound>> _JoinedMultiBounds;
+				/* 0x198 */ BSTArray<BSLight*> _Lights;
 			public:
 				virtual ~BSMultiBoundRoom() = default;
 
-				[[nodiscard]] inline std::uint16_t GetBoundsX() const noexcept(true) { return _BoundsX; }
-				[[nodiscard]] inline std::uint16_t GetBoundsY() const noexcept(true) { return _BoundsY; }
-				[[nodiscard]] inline std::uint16_t GetBoundsZ() const noexcept(true) { return _BoundsZ; }
-				[[nodiscard]] inline NiAPI::NiPointer<BSMultiBound> GetMultiBound() const noexcept(true) { return _MultiBound; }
+				[[nodiscard]] inline const NiAPI::NiTPointerList<BSPortal*>& GetPortals() const noexcept(true) { return _Portals; }
+				[[nodiscard]] inline const NiAPI::NiTPointerList<BSOcclusionShape*>& GetOccluders() const noexcept(true) { return _Occluders; }
+				[[nodiscard]] inline const NiAPI::NiTPointerList<NiAPI::NiPointer<BSMultiBound>>& GetJoinedMultiBounds() const noexcept(true) { return _JoinedMultiBounds; }
 				[[nodiscard]] inline BSTArray<BSLight*>& GetLights() noexcept(true) { return _Lights; }
+
+				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+				{
+					return offsetof(BSMultiBoundRoom, _Portals) == 0x150 &&
+						offsetof(BSMultiBoundRoom, _Occluders) == 0x168 &&
+						offsetof(BSMultiBoundRoom, _JoinedMultiBounds) == 0x180 &&
+						offsetof(BSMultiBoundRoom, _Lights) == 0x198;
+				}
 			};
 			static_assert(sizeof(BSMultiBoundRoom) == 0x1B0);
+			static_assert(BSMultiBoundRoom::VerifyLayout());
+			static_assert(sizeof(NiAPI::NiTPointerList<BSPortal*>) == 0x18);
+			static_assert(sizeof(NiAPI::NiTPointerList<BSOcclusionShape*>) == 0x18);
+			static_assert(sizeof(NiAPI::NiTPointerList<NiAPI::NiPointer<BSMultiBound>>) == 0x18);
+			static_assert(NiAPI::NiTPointerList<BSPortal*>::VerifyLayout());
+			static_assert(NiAPI::NiTPointerList<BSOcclusionShape*>::VerifyLayout());
+			static_assert(NiAPI::NiTPointerList<NiAPI::NiPointer<BSMultiBound>>::VerifyLayout());
 		}
 	}
 }

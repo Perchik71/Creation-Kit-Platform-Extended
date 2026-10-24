@@ -297,8 +297,9 @@ namespace CKPE
 					/* 1D8 */ [[nodiscard]] virtual bool IsObject() const noexcept(true);
 					/* 1E0 */ [[nodiscard]] virtual bool IsMagicItem() const noexcept(true);
 					/* 1E8 */ [[nodiscard]] virtual bool IsWater() const noexcept(true);
-					/* 1F0 */ [[nodiscard]] virtual TESForm* AsReference() noexcept(true);
+					// MSVC emits overloaded virtuals in reverse declaration order
 					/* 1F8 */ [[nodiscard]] virtual const TESForm* AsReference() const noexcept(true);
+					/* 1F0 */ [[nodiscard]] virtual TESForm* AsReference() noexcept(true);
 					/* 200 */ virtual std::uint32_t GetRefCount() const noexcept(true);
 					/* 208 */ virtual const char* GetTextForParsedSubTag(const BSFixedString& sSubTag) const noexcept(true);
 					/* 210 */ virtual void CopyFrom(TESForm* Source) noexcept(true);
@@ -331,6 +332,7 @@ namespace CKPE
 					// FormIDMap maps old to new form ids.
 					/* 2E8 */ virtual void OnFormIDsRemapped(BSTHashMap<std::uint32_t, std::uint32_t>* FormIDMap) noexcept(true);
 					// Context is forwarded only; observed callers pass nullptr.
+					// Native implementations ignore the null-only opaque context.
 					/* 2F0 */ virtual bool RecompileScripts(void* Context) noexcept(true);
 					/* 2F8 */ [[nodiscard]] virtual bool HasRequiredEditorID() const noexcept(true);
 					/* 300 */ [[nodiscard]] virtual bool DoVerificationEditorID(HWND hDialogBox) const noexcept(true);
@@ -357,8 +359,9 @@ namespace CKPE
 					/* 370 */ virtual void CollectRequiredFiles(BSTBTree<TESForm*>* VisitedForms, BSTBTree<BSFixedString>* RequiredFiles) noexcept(true);
 					/* 378 */ virtual BOOL SaveSelectedDialogTab(HWND hDialogBox, std::int32_t nTabIndex) noexcept(true);
 					/* 380 */ [[nodiscard]] virtual std::int32_t GetSavedDialogTab(HWND hDialogBox) const noexcept(true);
-					/* 388 */ virtual std::int32_t GetSafeFormEditorID(char* lpBuffer, std::uint32_t nBufferSize) noexcept(true);
+					// MSVC emits overloaded virtuals in reverse declaration order
 					/* 390 */ virtual std::int32_t GetSafeFormEditorID(char* lpBuffer, std::uint32_t nBufferSize) const noexcept(true);
+					/* 388 */ virtual std::int32_t GetSafeFormEditorID(char* lpBuffer, std::uint32_t nBufferSize) noexcept(true);
 					/* 398 */ virtual void SetNewFormID(std::uint32_t nNewFormID, bool bUpdateFile = true) noexcept(true);
 					/* 3A0 */ [[nodiscard]] virtual const char* GetObjectTypeName() const noexcept(true);
 					/* 3A8 */ [[nodiscard]] virtual bool HasAvailableInGame() const noexcept(true);
