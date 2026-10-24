@@ -13,6 +13,8 @@ import tempfile
 import xml.etree.ElementTree as ET
 
 from .config import HEADERS, ROOT, atomic_write
+from .virtuals import (OverrideChecker, annotation_check, inventory_bindings,
+                       declarations as parse_virtual_declarations, method_name)
 
 
 def object_alias(expression):
@@ -138,6 +140,8 @@ def source_inventory(headers=None, instances=()):
                     "unknown_arrays": arrays, "unk_scalars": scalars,
                     "sub_virtuals": len(re.findall(
                         r"\bvirtual\b[^;{}]*\bsub_\w*\s*\(", body)),
+                    "virtual_declarations": parse_virtual_declarations(
+                        body, 1 + text.count("\n", 0, opening.end())),
                 })
     definitions = {source["cpp_name"]: source for source in result}
     alias_names = {alias["cpp_name"]: alias for alias in aliases}
@@ -333,18 +337,27 @@ def parse_layout(output):
         members = [member[1].strip() for member in re.finditer(
             r"^\s*\d+\s*\|\s*([^|+{}\n][^\n]*)", block, re.M)]
         classes[name] = {"size": int(match[2]), "vtable_slots": None,
-                         "bases": bases, "members": members, "methods": []}
+                         "bases": bases, "members": members, "methods": [],
+                         "vftables": [], "vtable_entries": []}
     for match in re.finditer(r"^(.+?)::\$vftable(?:@.*?)?:\s*\n", output, re.M):
         name = match[1].strip()
-        if name not in classes or classes[name]["vtable_slots"] is not None:
+        if name not in classes:
             continue
         rest = output[match.end():]
         block = rest.split("\n\n", 1)[0]
-        indices = [int(m[1]) for m in re.finditer(r"^\s*(\d+)\s+\|", block, re.M)]
-        classes[name]["vtable_slots"] = max(indices) + 1 if indices else 0
-        classes[name]["methods"] = [
-            method[1].strip().split("::")[-1] for method in re.finditer(
-                r"^\s*\d+\s*\|\s*&?(.+?)\s*$", block, re.M)]
+        displacement = re.search(r"^\s*\|\s*(-?\d+)\s*$", block, re.M)
+        offset = -int(displacement[1]) if displacement else None
+        entries = []
+        for method in re.finditer(r"^\s*(\d+)\s*\|\s*&?(.+?)\s*$", block, re.M):
+            symbol = method[2].strip()
+            entries.append({"slot": int(method[1]), "name": method_name(symbol),
+                            "symbol": symbol})
+        classes[name]["vftables"].append({"offset": offset, "entries": entries})
+        if offset == 0 or (offset is None and not classes[name]["vtable_entries"]):
+            classes[name]["vtable_entries"] = entries
+            classes[name]["vtable_slots"] = max(
+                (entry["slot"] for entry in entries), default=-1) + 1
+            classes[name]["methods"] = [entry["name"] for entry in entries]
     return classes
 
 
@@ -568,6 +581,13 @@ def check(config, rtti, constructors, headers=None, allocations=True,
     inventory = source_inventory(headers, instances=[entry["class"] for entry in entries])
     compiled = compile_inventory(config, headers, inventory)
     bind_alias_layouts(inventory, compiled["classes"], compiled.get("alias_bindings"))
+    bindings = inventory_bindings(inventory, compiled["classes"], normalize_type)
+    normalized_layouts = {normalize_type(name): layout
+                          for name, layout in compiled["classes"].items()}
+    normalized_bindings = {normalize_type(name): methods for name, methods in bindings.items()}
+    modeled_binary_sources = {source.get("binary_name", source["name"]): source
+                              for source in inventory}
+    overrides = OverrideChecker(rtti, constructors.disasm)
     embedded = embedded_classes(inventory, compiled["classes"])
     footprints = embedded_base_footprints(rtti)
     reflection = Reflection(constructors)
@@ -720,6 +740,44 @@ def check(config, rtti, constructors, headers=None, allocations=True,
                     0, cpp_slots - primary["vtable_slots"])
             elif not binary or len(binary["bases"]) == 1:
                 row["new_primary_virtuals"] = cpp_slots
+            annotation = annotation_check(source, layout, bindings[source["cpp_name"]])
+            row["slot_annotations"] = annotation
+            for mismatch in annotation["checks"]:
+                if mismatch["status"] != "FAIL":
+                    continue
+                fail(row, "vtable", mismatch["compiled_slot"], mismatch["annotated_slot"],
+                     f"{mismatch['method']}: annotation slot 0x{mismatch['annotated_slot']:X} "
+                     f"differs from compiled slot 0x{mismatch['compiled_slot']:X}")
+                row["failures"][-1].update({
+                    key: mismatch[key] for key in
+                    ("method", "parameters", "const", "annotated_slot", "compiled_slot", "line")})
+            base_name = next((base["cpp_name"] for base in layout["bases"]
+                              if base["offset"] == 0 and normalized_layouts.get(
+                                  normalize_type(base["cpp_name"]), {}).get(
+                                      "vtable_slots") is not None), None)
+            base_layout = normalized_layouts.get(normalize_type(base_name)) if base_name else None
+            base_methods = (normalized_bindings.get(normalize_type(base_name), [])
+                            if base_name else [])
+            if base_layout is None and binary:
+                native_base = rtti.direct_base(binary)
+                base_source = modeled_binary_sources.get(native_base["name"]) if native_base else None
+                if base_source:
+                    base_layout = compiled["classes"].get(base_source["cpp_name"])
+                    base_methods = bindings.get(base_source["cpp_name"], [])
+            checked = overrides.check(source, layout, bindings[source["cpp_name"]],
+                                      base_layout, base_methods, binary)
+            row["binary_overrides"] = checked
+            row["virtual_warnings"] = annotation["warnings"] + checked["warnings"]
+            for mismatch in checked["checks"]:
+                if mismatch["status"] != "FAIL":
+                    continue
+                expected = mismatch.get("binary_named_slot", mismatch["base_slot"])
+                fail(row, "vtable", mismatch["compiled_slot"], expected,
+                     f"{mismatch['method']}: {mismatch['reason']}")
+                row["failures"][-1].update({
+                    "method": mismatch["method"],
+                    "compiled_slot": mismatch["compiled_slot"],
+                    "binary_slot": expected})
 
     byname = {row["name"]: row for row in rows}
     for row in rows:
@@ -778,6 +836,12 @@ def check(config, rtti, constructors, headers=None, allocations=True,
             "compiler_exit_code": compiled["compiler_exit_code"],
             "compiler_errors": compiled["errors"],
             "compiler_report": compiled["report"],
+            "virtual_checks": {
+                "annotations": dict(Counter(
+                    row.get("slot_annotations", {}).get("status", "SKIP") for row in rows)),
+                "binary_overrides": dict(Counter(
+                    check["status"] for row in rows
+                    for check in row.get("binary_overrides", {}).get("checks", [])))},
             "evidence_check": proof_report,
             "hkclass_summary": {
                 "class_count": len(reflection.by_name),

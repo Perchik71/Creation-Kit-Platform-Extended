@@ -96,6 +96,11 @@ the class is embedded by value, or committed evidence targets it. Embedded-base
 footprints come from RTTI base-offset gaps, so a larger composite allocation
 can't fail a component.
 Only FAIL makes the command exit 1.
+Slot annotations are checked against named MSVC primary-vftable entries, not just
+the slot count (including overload ordering and destructors). Byte-offset and
+hex/decimal slot-index comments are distinguished; ambiguous annotations/secondary-only
+methods warn or skip. Binary overrides use primary-base slots, followed thunks
+and exact publics; ambiguous names or folded bodies never produce guessed FAILs.
 
 ## Size evidence
 

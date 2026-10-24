@@ -250,6 +250,7 @@ def selftest(config):
     finally:
         context.close()
     regression_checks(config, record)
+    virtual_slot_regression(config, record)
     return {"status": "PASS" if all(c["status"] == "PASS" for c in checks) else "FAIL",
             "counts": dict(Counter(c["status"] for c in checks)), "checks": checks}
 
@@ -376,6 +377,42 @@ def regression_checks(config, record):
                 context.close()
     record("NiWindow disjoint-version exact sizes are selected by the layout gate",
            proofs["status"] == "PASS" and all(row["passed"] for row in results), results)
+
+
+def virtual_slot_regression(config, record):
+    from .layout import (annotation_check, compile_headers, compiler_environment,
+                         parse_layout, source_inventory)
+    header = HEADERS / "N/NiObject.h"
+    source = next(row for row in source_inventory([header]) if row["name"] == "NiObject")
+    text = header.read_text("utf-8-sig")
+    import re
+    pattern = (r"(?m)^[ \t]*using Templates::NiObjectT<[^;\n]+>::"
+               r"(?:CreateClone|LinkObject|RegisterStreamables);[ \t]*\r?\n")
+    usings = re.findall(pattern, text)
+    modified = re.sub(pattern, "", text)
+    at = modified.index("/* 02 */", modified.index("class NiObject :"))
+    modified = modified[:at] + "\n".join(usings) + "\n" + modified[at:]
+    environment = compiler_environment()
+    with tempfile.TemporaryDirectory(prefix="ckre-slot-regression-") as temporary:
+        directory = Path(temporary)
+        good_code, good_text = compile_headers([header], directory, environment)
+        bad_code, bad_text = compile_headers([], directory, environment, modified)
+    good = parse_layout(good_text).get(source["cpp_name"])
+    bad = parse_layout(bad_text).get(source["cpp_name"])
+    good_check = annotation_check(source, good) if good else {}
+    bad_check = annotation_check(source, bad) if bad else {}
+    good_slots = {entry["name"]: entry["slot"] for entry in good["vtable_entries"]} if good else {}
+    bad_slots = {entry["name"]: entry["slot"] for entry in bad["vtable_entries"]} if bad else {}
+    passed = bool(
+        len(usings) == 3 and good_code == bad_code == 0 and good and bad and
+        good["vtable_slots"] == bad["vtable_slots"] == 42 and
+        good_check["status"] == "PASS" and bad_check["status"] == "FAIL" and
+        good_slots.get("IsTriShape") == 0x0A and good_slots.get("IsGeometry") == 8 and
+        bad_slots.get("IsTriShape") == 0x0D and bad_slots.get("IsGeometry") == 0x0B)
+    record("NiObject using-first ordering fails despite an unchanged virtual slot count",
+           passed, {"real": good_check, "using_first": bad_check,
+                    "real_slots": good_slots, "using_first_slots": bad_slots,
+                    "compiler_exit_codes": [good_code, bad_code]})
 
 
 def run(args, config):
