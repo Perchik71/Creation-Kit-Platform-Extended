@@ -9,6 +9,7 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/B/BSTriShape.h>
 #include <Patches/CKPE.Fallout4.Patch.FixPreviewHairColor.h>
 
 namespace CKPE
@@ -70,9 +71,9 @@ namespace CKPE
 				if (!Scene || !HeadPart)
 					return;
 
-				// Find the geometry the same way the original function does and remember the remapping index it has just written.
+				// Find the geometry the same way the original function does (vtable +0x50) and remember the remapping index it has just written.
 				auto Object = Scene->GetObjectByName(HeadPart->GetEntryEditID());
-				auto Geometry = Object ? Object->IsGeometry() : nullptr;
+				EditorAPI::BSGeometry* Geometry = Object ? Object->IsTriShape() : nullptr;
 				if (!Geometry)
 					return;
 

@@ -86,10 +86,6 @@ namespace CKPE
 				class NiObject : public Templates::NiObjectT<NiRefObject, 0x10, 0xD0, 0xD8, 0xF0, 0xE0, 0xE8>
 				{
 				public:
-					using Templates::NiObjectT<NiRefObject, 0x10, 0xD0, 0xD8, 0xF0, 0xE0, 0xE8>::CreateClone;
-					using Templates::NiObjectT<NiRefObject, 0x10, 0xD0, 0xD8, 0xF0, 0xE0, 0xE8>::LinkObject;
-					using Templates::NiObjectT<NiRefObject, 0x10, 0xD0, 0xD8, 0xF0, 0xE0, 0xE8>::RegisterStreamables;
-
 					/* 02 */ virtual NiRTTI* GetRTTI() const noexcept(true);
 					/* 03 */ virtual const NiNode* IsNodeConst() const noexcept(true);
 					/* 04 */ virtual NiNode* IsNode() noexcept(true);
@@ -130,6 +126,11 @@ namespace CKPE
 					/* 27 */ virtual void SetGroup(NiObjectGroup* Group) noexcept(true);
 					/* 28 */ virtual NiControllerManager* IsNiControllerManager() noexcept(true);
 					/* 29 */ virtual void GetAdditionalViewerStrings(void* Strings) noexcept(true);
+
+					// Declared after the virtuals: MSVC places overloads at first mention
+					using Templates::NiObjectT<NiRefObject, 0x10, 0xD0, 0xD8, 0xF0, 0xE0, 0xE8>::CreateClone;
+					using Templates::NiObjectT<NiRefObject, 0x10, 0xD0, 0xD8, 0xF0, 0xE0, 0xE8>::LinkObject;
+					using Templates::NiObjectT<NiRefObject, 0x10, 0xD0, 0xD8, 0xF0, 0xE0, 0xE8>::RegisterStreamables;
 				};
 				static_assert(sizeof(NiObject) == 0x10);
 			}
