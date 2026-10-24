@@ -236,6 +236,7 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.WrongUpdateActorWnd.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\EditorAPI\Fallout4.h" />
     <ClInclude Include="Include\EditorAPI\N\NiTPointerList.h" />
     <ClInclude Include="Include\EditorAPI\B\bhkConstraintMotor.h" />
     <ClInclude Include="Include\EditorAPI\B\BShkbHkxDB.h" />

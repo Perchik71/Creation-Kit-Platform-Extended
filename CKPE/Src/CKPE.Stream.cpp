@@ -1,4 +1,4 @@
-﻿// Copyright © 2025 aka CKPE team. All rights reserved.
+// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -805,6 +805,18 @@ namespace CKPE
 		_caret += Ret;
 
 		return Ret;
+	}
+
+	std::uint32_t StringStream::ReadString(char* buf, std::uint32_t size) const noexcept(true)
+	{
+		if (!buf || !size) return 0;
+		return Read(buf, size);
+	}
+
+	std::uint32_t StringStream::WriteString(const char* buf, std::uint32_t size) noexcept(true)
+	{
+		if (!buf || !size) return 0;
+		return Write(buf, size);
 	}
 
 	std::uint64_t StringStream::GetSize() const noexcept(true)

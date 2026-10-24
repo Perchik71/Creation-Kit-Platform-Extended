@@ -1935,6 +1935,9 @@
     <ClInclude Include="Include\EditorAPI\T\TESWorldSpace.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Fallout4.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">

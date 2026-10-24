@@ -1,4 +1,4 @@
-﻿// Copyright © 2025 aka CKPE team. All rights reserved.
+// Copyright © 2025 aka CKPE team. All rights reserved.
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
@@ -7,8 +7,8 @@
 #include <string>
 #include <cstdint>
 #include <cstdio>
-#include <string>
 #include <string_view>
+#include <sstream>
 #include <CKPE.CriticalSection.h>
 
 namespace CKPE
@@ -187,8 +187,10 @@ namespace CKPE
 		StringStream(const StringStream& Stream) noexcept(true);
 		virtual ~StringStream() noexcept(true);
 
-		std::uint32_t Read(void* buf, std::uint32_t size) const noexcept(true) override;
-		std::uint32_t Write(const void* buf, std::uint32_t size) noexcept(true) override;
+		virtual std::uint32_t Read(void* buf, std::uint32_t size) const noexcept(true);
+		virtual std::uint32_t Write(const void* buf, std::uint32_t size) noexcept(true);
+		virtual std::uint32_t ReadString(char* buf, std::uint32_t size) const noexcept(true);
+		virtual std::uint32_t WriteString(const char* buf, std::uint32_t size) noexcept(true);
 		[[nodiscard]] std::uint64_t GetSize() const noexcept(true) override;
 		std::uint64_t Offset(std::int64_t offset, OffsetStream flag = ofCurrent) noexcept(true) override;
 
@@ -200,5 +202,29 @@ namespace CKPE
 		void Clear() noexcept(true);
 		[[nodiscard]] constexpr bool Empty() const noexcept(true) { return _data == nullptr; }
 		[[nodiscard]] constexpr const char* String() const noexcept(true) { return _data; }
+		[[nodiscard]] constexpr std::string GetStdString() const noexcept(true) { return _data; }
 	};
+
+	/**
+	 * @brief Overload for writing const char* literals/pointers into a StringStream.
+	 */
+	inline CKPE::StringStream& operator<<(StringStream& stream, const char* c_str) noexcept(true)
+	{
+		if (!c_str) return stream;
+		stream.WriteString(c_str, static_cast<std::uint32_t>(std::strlen(c_str)));
+		return stream;
+	}
+
+	/**
+	 * @brief Template overload for writing primitives and formatted types T into a StringStream.
+	 */
+	template <typename T>
+	inline CKPE::StringStream& operator<<(StringStream& stream, const T& value) noexcept(true)
+	{
+		// Use stringstream to safely format the type into a string representation.
+		std::stringstream ss;
+		ss << value;
+		stream.WriteString(ss.str().c_str(), static_cast<std::uint32_t>(ss.str().length()));
+		return stream;
+	}
 }
