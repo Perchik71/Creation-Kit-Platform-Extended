@@ -452,6 +452,7 @@ def embedded_base_footprints(rtti):
 
 def check(config, rtti, constructors, headers=None, allocations=True):
     from .evidence import evaluate, verify
+    from .hkclass import Reflection
     compiled = compile_inventory(config, headers)
     inventory = source_inventory(headers)
     bind_alias_layouts(inventory, compiled["classes"])
@@ -460,12 +461,17 @@ def check(config, rtti, constructors, headers=None, allocations=True):
     proof_report = verify(config, [rtti.image.version],
                           images={rtti.image.version: rtti.image})
     entries = [entry for entry in proof_report["entries"] if entry["status"] == "PASS"]
+    reflection = Reflection(constructors)
 
     def claims(source):
         identities = {normalize_type(source[key]) for key in
                       ("name", "cpp_name", "binary_name", "alias_of") if key in source}
-        return [entry for entry in entries
-                if normalize_type(entry["class"]) in identities]
+        result = [entry for entry in entries
+                  if normalize_type(entry["class"]) in identities]
+        reflected = reflection.size_evidence(source)
+        if reflected:
+            result.append(reflected)
+        return result
 
     matched = {source["cpp_name"]: claims(source) for source in inventory}
     bounded = {name for name, evidence in matched.items()
@@ -664,4 +670,8 @@ def check(config, rtti, constructors, headers=None, allocations=True):
             "compiler_exit_code": compiled["compiler_exit_code"],
             "compiler_errors": compiled["errors"],
             "compiler_report": compiled["report"],
-            "evidence_check": proof_report}
+            "evidence_check": proof_report,
+            "hkclass_summary": {
+                "class_count": len(reflection.by_name),
+                "record_count": len(reflection.records),
+                "errors": reflection.data["errors"]}}

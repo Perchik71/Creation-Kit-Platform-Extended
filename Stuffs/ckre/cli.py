@@ -36,10 +36,11 @@ def parser():
     root.set_defaults(data=None, json=False, version="246")
     common(root)
     commands = root.add_subparsers(dest="command", required=True)
-    for name in ("rtti", "vtable", "xversion", "ctor", "strings-in", "xrefs"):
+    for name in ("rtti", "vtable", "xversion", "ctor", "strings-in", "xrefs", "hkclass"):
         command = commands.add_parser(name)
         common(command)
-        command.add_argument("target", nargs="?" if name in ("rtti", "xrefs", "ctor") else None)
+        command.add_argument("target", nargs="?" if name in (
+            "rtti", "xrefs", "ctor", "hkclass") else None)
         if name == "ctor":
             command.add_argument("--registry", action="store_true",
                                  help="Include the established 246 factory registry")
@@ -122,6 +123,16 @@ def selftest(config):
                    {"slots": len(table["slots"]) if table else None,
                     "rva": table["rva"] if table else None})
             if version == "246":
+                from .hkclass import Reflection
+                reflection = Reflection(context.ctors)
+                referenced = reflection.get("hkReferencedObject")
+                record("Havok reflected hkReferencedObject",
+                       bool(referenced and referenced["size"] == 0x10 and
+                            referenced["parent"] == "hkBaseObject" and
+                            any(member["offset"] == 8 and member["type"] == "UINT32"
+                                and member["name"] == "memSizeAndRefCount"
+                                for member in referenced["members"]) and
+                            not reflection.data["errors"]), referenced)
                 public = context.rtti.publics.byname.get("??_7TESForm@@6B@")
                 record("PDB decimal section offsets", public == expected[version],
                        {"TESForm_vtable_rva": public})
@@ -282,7 +293,13 @@ def run(args, config):
         context = Context(config, version)
         try:
             image, rtti = context.image, context.rtti
-            if args.command in ("vtable", "xversion") or (
+            if args.command == "hkclass":
+                from .hkclass import Reflection
+                reflection = Reflection(context.ctors)
+                results.append(reflection.describe(args.target))
+                if reflection.data["errors"]:
+                    exit_code = 2
+            elif args.command in ("vtable", "xversion") or (
                     args.command == "rtti" and args.target):
                 description = rtti.describe(args.target, context.disasm)
                 if args.command == "xversion":

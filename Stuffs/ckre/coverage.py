@@ -107,6 +107,7 @@ def build(config, rtti, constructors, output):
               "layout_counts": gate["counts"],
               "skipped_headers": gate["skipped_headers"],
               "evidence_check": gate["evidence_check"],
+              "hkclass_summary": gate["hkclass_summary"],
               "evidence_classes": [{
                   key: row.get(key) for key in (
                       "name", "cpp_name", "header", "header_size", "size_status",

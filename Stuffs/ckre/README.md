@@ -39,6 +39,7 @@ Exit codes: `0` ok, `1` verification FAIL, `2` input or tool error.
 | Command | Purpose |
 |---|---|
 | `rtti [Class]` | RTTI type descriptors, COLs, hierarchy and vtables |
+| `hkclass [Name]` | Havok reflection sizes, parents, members and enums; supports `--version all` |
 | `vtable Class` | Vtable slots with thunks followed and overrides marked |
 | `xversion Class` | Vtable structure compared across all four builds |
 | `id ID` / `id --rva RVA` | Address Library lookup in either direction |
@@ -67,6 +68,11 @@ Fingerprint matches are a triage aid, not proof that two bodies are the same.
 `ctor` sizes come from the allocator call before a constructor, or for forms
 from slot 1 (`Create`) of `ConcreteFormFactory<T>`. Unproven sizes stay
 unknown; `initialized_extent` is only a lower bound.
+
+`ckre hkclass hkpRigidBody` reconstructs loader-initialized reflection records;
+unambiguous positive sizes feed the gate/coverage as exact record-RVA evidence,
+with old serialization variants retained and native `hkTypeInfo` used to
+disambiguate conflicting sizes.
 
 ## Layout gate
 

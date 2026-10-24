@@ -1,0 +1,239 @@
+[[evidence]]
+class = "bhkBipedOrientationController"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x21209E0, expect = "mov edx, 0x10"}]
+note = "Primary scalar deleting destructor passes sizeof complete object to sized delete."
+
+[[evidence]]
+class = "bhkBlendController"
+size = 0x48
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x1B81849, expect = "mov edx, 0x48"}]
+note = "Primary scalar deleting destructor passes sizeof complete object to sized delete."
+
+[[evidence]]
+class = "bhkCharProxyController"
+size = 0x8D0
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x21AD979, expect = "mov edx, 0x8d0"}]
+note = "Complete-object deleting destructor flag4 branch passes sizeof to sized delete."
+
+[[evidence]]
+class = "bhkCharProxyControllerCinfo"
+size = 0x150
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x21ADA41, expect = "mov edx, 0x150"}]
+note = "Complete-object deleting destructor flag4 branch passes sizeof to sized delete."
+
+[[evidence]]
+class = "bhkCharProxyManager"
+size = 0x78
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x20B5FC9, expect = "mov edx, 0x78"}]
+note = "Primary scalar deleting destructor passes sizeof complete object to sized delete."
+
+[[evidence]]
+class = "bhkCharRigidBodyController"
+size = 0x8B0
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x21B775D, expect = "mov edx, 0x8b0"}]
+note = "Complete-object deleting destructor flag4 branch passes sizeof to sized delete."
+
+[[evidence]]
+class = "bhkCharRigidBodyControllerCinfo"
+size = 0x140
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x21B7871, expect = "mov edx, 0x140"}]
+note = "Complete-object deleting destructor flag4 branch passes sizeof to sized delete."
+
+[[evidence]]
+class = "bhkCharRigidBodyManager"
+size = 0x78
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x20B6019, expect = "mov edx, 0x78"}]
+note = "Primary scalar deleting destructor passes sizeof complete object to sized delete."
+
+[[evidence]]
+class = "bhkCharacterController"
+size = 0x460
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x210B369, expect = "mov edx, 0x460"}]
+note = "Complete-object deleting destructor flag4 branch; secondary rigid-body listener starts at460."
+
+[[evidence]]
+class = "bhkCharacterControllerCinfo"
+size = 0xA0
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x210B419, expect = "mov edx, 0xa0"}]
+note = "Complete-object deleting destructor flag4 branch passes sizeof to sized delete."
+
+[[evidence]]
+class = "bhkCharacterPointCollector"
+size = 0x420
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x2378D46, expect = "mov edx, 0x420"}]
+note = "Complete-object deleting destructor flag4 branch; embedded at20 in440-byte proxy wrapper."
+
+[[evidence]]
+class = "bhkCharacterProxy"
+size = 0x440
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x21ADAA9, expect = "mov edx, 0x440"}]
+note = "Primary scalar deleting destructor passes sizeof complete object to sized delete."
+
+[[evidence]]
+class = "bhkCharacterRigidBody"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x21B1F36, expect = "mov edx, 0x18"}]
+note = "Primary scalar deleting destructor passes sizeof complete object to sized delete."
+
+[[evidence]]
+class = "bhkCharacterRigidBodyCinfo"
+size = 0xA0
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x21B792F, expect = "mov edx, 0xa0"}]
+note = "Complete-object deleting destructor flag4 branch passes sizeof to sized delete."
+
+[[evidence]]
+class = "bhkCharacterState"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x210B4CF, expect = "mov edx, 0x10"}]
+note = "Primary deleting destructor flag4 branch passes complete-object size to sized delete."
+
+[[evidence]]
+class = "bhkCharacterStateClimbing"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x210B57F, expect = "mov edx, 0x10"}]
+note = "Deleting destructor size agrees with TLS allocator argument10 in controller Cinfo constructor."
+
+[[evidence]]
+class = "bhkCharacterStateFloating"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x21A20CF, expect = "mov edx, 0x10"}]
+note = "Primary deleting destructor flag4 branch passes complete-object size to sized delete."
+
+[[evidence]]
+class = "bhkCharacterStateFlying"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x210B62F, expect = "mov edx, 0x10"}]
+note = "Deleting destructor size agrees with TLS allocator argument10 in controller Cinfo constructor."
+
+[[evidence]]
+class = "bhkCharacterStateInAir"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x21A29DF, expect = "mov edx, 0x18"}]
+note = "Primary deleting destructor flag4 branch passes complete-object size to sized delete."
+
+[[evidence]]
+class = "bhkCharacterStateJumping"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x21A2D2F, expect = "mov edx, 0x10"}]
+note = "Primary deleting destructor flag4 branch passes complete-object size to sized delete."
+
+[[evidence]]
+class = "bhkCharacterStateOnGround"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x21A38DF, expect = "mov edx, 0x18"}]
+note = "Primary deleting destructor flag4 branch passes complete-object size to sized delete."
+
+[[evidence]]
+class = "bhkCharacterStateSwimming"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x21A3DEF, expect = "mov edx, 0x10"}]
+note = "Primary deleting destructor flag4 branch passes complete-object size to sized delete."
+
+[[evidence]]
+class = "bhkICharOrientationController"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x210B688, expect = "mov edx, 8"}]
+note = "Primary scalar deleting destructor passes sizeof complete object to sized delete."
+
+[[evidence]]
+class = "bhkIWorldStepListener"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x1D0C228, expect = "mov edx, 0x10"}]
+note = "Primary scalar deleting destructor passes sizeof complete object to sized delete."
+
+[[evidence]]
+class = "bhkPoseArray"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x1B88251, expect = "mov edx, 0x30"}]
+note = "Final complete-object delete branch after owned arrays are destroyed, not nested allocation18."
+
+[[evidence]]
+class = "bhkQuadOrientationController"
+size = 0xE0
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x21A5AF3, expect = "mov edx, 0xe0"}]
+note = "Complete-object deleting destructor flag4 branch agrees with ctor allocation."
+
+[[evidence]]
+class = "bhkRagdollSystem"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x20C74A9, expect = "mov edx, 0x28"}]
+note = "Primary scalar deleting destructor agrees with ctor allocation."
+
+[[evidence]]
+class = "bhkRagdollTemplate"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x1B86873, expect = "mov edx, 0x30"}]
+note = "Primary scalar deleting destructor passes sizeof complete object to sized delete."
+
+[[evidence]]
+class = "bhkRagdollTemplateData"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x1B869FF, expect = "mov edx, 0x60"}]
+note = "Primary scalar deleting destructor agrees with ctor allocation."
+
+[[evidence]]
+class = "bhkThreadPool"
+size = 0x38
+kind = "exact"
+versions = ["246"]
+proof = [{version = "246", rva = 0x211003F, expect = "mov edx, 0x38"}]
+note = "Primary deleting destructor flag4 branch passes complete-object size to sized delete."

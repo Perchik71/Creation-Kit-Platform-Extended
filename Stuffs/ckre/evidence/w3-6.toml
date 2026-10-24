@@ -1,0 +1,3666 @@
+[[evidence]]
+class = "BSAlignBoneModifier"
+size = 0xE0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x289FCC, expect = "mov r9d, 0xe0" },
+  { version = "246", rva = 0x289FC0, expect = "lea rdx, [rip + 0x30c4179]" },
+]
+note = "hkClass initializer 0x289FA0: BSAlignBoneModifier name in rdx, exact objectSize in r9d; descriptor 0x736AD60. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSAssignVariablesModifier"
+size = 0x118
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28A0DC, expect = "mov r9d, 0x118" },
+  { version = "246", rva = 0x28A0D0, expect = "lea rdx, [rip + 0x30c6109]" },
+]
+note = "hkClass initializer 0x28A0B0: BSAssignVariablesModifier name in rdx, exact objectSize in r9d; descriptor 0x736AE60. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSBehaviorGraphSwapGenerator"
+size = 0xA0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28A1DC, expect = "mov r9d, 0xa0" },
+  { version = "246", rva = 0x28A1D0, expect = "lea rdx, [rip + 0x30c6141]" },
+]
+note = "hkClass initializer 0x28A1B0: BSBehaviorGraphSwapGenerator name in rdx, exact objectSize in r9d; descriptor 0x736AF10. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSBoneSwitchGenerator"
+size = 0xB0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28A2E9, expect = "mov r9d, 0xb0" },
+  { version = "246", rva = 0x28A2DA, expect = "lea rdx, [rip + 0x30c61e7]" },
+]
+note = "hkClass initializer 0x28A2B0: BSBoneSwitchGenerator name in rdx, exact objectSize in r9d; descriptor 0x736AFC0. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSBoneSwitchGeneratorBoneData"
+size = 0x40
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28A3D9, expect = "lea r9d, [rcx + 0x40]" },
+  { version = "246", rva = 0x28A3CA, expect = "lea rdx, [rip + 0x30c61ff]" },
+]
+note = "hkClass initializer 0x28A3A0: BSBoneSwitchGeneratorBoneData name in rdx, exact objectSize in r9d; descriptor 0x736B060. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSComputeAddBoneAnimModifier"
+size = 0xA0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28A4BC, expect = "mov r9d, 0xa0" },
+  { version = "246", rva = 0x28A4B0, expect = "lea rdx, [rip + 0x30c64b9]" },
+]
+note = "hkClass initializer 0x28A490: BSComputeAddBoneAnimModifier name in rdx, exact objectSize in r9d; descriptor 0x736B100. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSCyclicBlendTransitionGenerator"
+size = 0x120
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28A5DC, expect = "mov r9d, 0x120" },
+  { version = "246", rva = 0x28A5D0, expect = "lea rdx, [rip + 0x30c6c29]" },
+]
+note = "hkClass initializer 0x28A5B0: BSCyclicBlendTransitionGenerator name in rdx, exact objectSize in r9d; descriptor 0x736B1A0. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSDecomposeVectorModifier"
+size = 0x80
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28A6E8, expect = "mov r9d, 0x80" },
+  { version = "246", rva = 0x28A6DC, expect = "lea rdx, [rip + 0x30c6f45]" },
+]
+note = "hkClass initializer 0x28A6C0: BSDecomposeVectorModifier name in rdx, exact objectSize in r9d; descriptor 0x736B240. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSDirectAtCapturePoseModifier"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28A7ED, expect = "lea r9d, [rcx + 0x60]" },
+  { version = "246", rva = 0x28A7DC, expect = "lea rdx, [rip + 0x30c70b5]" },
+]
+note = "hkClass initializer 0x28A7C0: BSDirectAtCapturePoseModifier name in rdx, exact objectSize in r9d; descriptor 0x736B2E0. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSDirectAtModifier"
+size = 0x1B0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28A91C, expect = "mov r9d, 0x1b0" },
+  { version = "246", rva = 0x28A910, expect = "lea rdx, [rip + 0x30c8829]" },
+]
+note = "hkClass initializer 0x28A8F0: BSDirectAtModifier name in rdx, exact objectSize in r9d; descriptor 0x736B380. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSDistTriggerModifier"
+size = 0x90
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28AA2C, expect = "mov r9d, 0x90" },
+  { version = "246", rva = 0x28AA20, expect = "lea rdx, [rip + 0x30c8a61]" },
+]
+note = "hkClass initializer 0x28AA00: BSDistTriggerModifier name in rdx, exact objectSize in r9d; descriptor 0x736B420. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSEventEveryNEventsModifier"
+size = 0x88
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28AB2C, expect = "mov r9d, 0x88" },
+  { version = "246", rva = 0x28AB20, expect = "lea rdx, [rip + 0x30c8f31]" },
+]
+note = "hkClass initializer 0x28AB00: BSEventEveryNEventsModifier name in rdx, exact objectSize in r9d; descriptor 0x736B4C0. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSEventOnDeactivateModifier"
+size = 0x68
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28AC39, expect = "lea r9d, [rcx + 0x68]" },
+  { version = "246", rva = 0x28AC2A, expect = "lea rdx, [rip + 0x30c8f27]" },
+]
+note = "hkClass initializer 0x28AC00: BSEventOnDeactivateModifier name in rdx, exact objectSize in r9d; descriptor 0x736B560. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSEventOnFalseToTrueModifier"
+size = 0xA8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28AD1C, expect = "mov r9d, 0xa8" },
+  { version = "246", rva = 0x28AD10, expect = "lea rdx, [rip + 0x30c9521]" },
+]
+note = "hkClass initializer 0x28ACF0: BSEventOnFalseToTrueModifier name in rdx, exact objectSize in r9d; descriptor 0x736B600. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSGetTimeStepModifier"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28AE1D, expect = "lea r9d, [rcx + 0x60]" },
+  { version = "246", rva = 0x28AE0C, expect = "lea rdx, [rip + 0x30c9525]" },
+]
+note = "hkClass initializer 0x28ADF0: BSGetTimeStepModifier name in rdx, exact objectSize in r9d; descriptor 0x736B6A0. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSIStateManagerModifier"
+size = 0x88
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28B08C, expect = "mov r9d, 0x88" },
+  { version = "246", rva = 0x28B080, expect = "lea rdx, [rip + 0x30c98d9]" },
+]
+note = "hkClass initializer 0x28B060: BSIStateManagerModifier name in rdx, exact objectSize in r9d; descriptor 0x736B810. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSIStateManagerModifier::BSIStateManagerStateListener"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28AF1D, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x28AF0C, expect = "lea rdx, [rip + 0x30c9915]" },
+]
+note = "hkClass initializer 0x28AEF0: BSIStateManagerModifierBSIStateManagerStateListener name in rdx, exact objectSize in r9d; descriptor 0x736B790. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSInterpValueModifier"
+size = 0x70
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28B18D, expect = "lea r9d, [rcx + 0x70]" },
+  { version = "246", rva = 0x28B17C, expect = "lea rdx, [rip + 0x30c9aa5]" },
+]
+note = "hkClass initializer 0x28B160: BSInterpValueModifier name in rdx, exact objectSize in r9d; descriptor 0x736B8E0. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSIsActiveModifier"
+size = 0x68
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28B2A5, expect = "lea r9d, [rcx + 0x68]" },
+  { version = "246", rva = 0x28B28A, expect = "lea rdx, [rip + 0x30ca14f]" },
+]
+note = "hkClass initializer 0x28B260: BSIsActiveModifier name in rdx, exact objectSize in r9d; descriptor 0x736B9A0. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSLimbCycleModifier"
+size = 0xA8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28B388, expect = "mov r9d, 0xa8" },
+  { version = "246", rva = 0x28B37C, expect = "lea rdx, [rip + 0x30ca41d]" },
+]
+note = "hkClass initializer 0x28B360: BSLimbCycleModifier name in rdx, exact objectSize in r9d; descriptor 0x736BA40. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSLimbIKModifier"
+size = 0x80
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28B478, expect = "mov r9d, 0x80" },
+  { version = "246", rva = 0x28B46C, expect = "lea rdx, [rip + 0x30ca965]" },
+]
+note = "hkClass initializer 0x28B450: BSLimbIKModifier name in rdx, exact objectSize in r9d; descriptor 0x736BAE0. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSLookAtCapturePoseModifier"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28B57D, expect = "lea r9d, [rcx + 0x60]" },
+  { version = "246", rva = 0x28B56C, expect = "lea rdx, [rip + 0x30ca9d5]" },
+]
+note = "hkClass initializer 0x28B550: BSLookAtCapturePoseModifier name in rdx, exact objectSize in r9d; descriptor 0x736BB80. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSLookAtModifier"
+size = 0x330
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28B67C, expect = "mov r9d, 0x330" },
+  { version = "246", rva = 0x28B670, expect = "lea rdx, [rip + 0x30cbdb1]" },
+]
+note = "hkClass initializer 0x28B650: BSLookAtModifier name in rdx, exact objectSize in r9d; descriptor 0x736BC20. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSLookAtModifierBoneData"
+size = 0x210
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28C450, expect = "mov r9d, 0x210" },
+  { version = "246", rva = 0x28C445, expect = "lea rdx, [rip + 0x30cf314]" },
+]
+note = "hkClass initializer 0x28C430: BSLookAtModifierBoneData name in rdx, exact objectSize in r9d; descriptor 0x736C4C0. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSModifyOnceModifier"
+size = 0x80
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28B7BC, expect = "mov r9d, 0x80" },
+  { version = "246", rva = 0x28B7B0, expect = "lea rdx, [rip + 0x30cbde9]" },
+]
+note = "hkClass initializer 0x28B790: BSModifyOnceModifier name in rdx, exact objectSize in r9d; descriptor 0x736BCC0. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSOffsetAnimationGenerator"
+size = 0xF0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28B8BC, expect = "mov r9d, 0xf0" },
+  { version = "246", rva = 0x28B8B0, expect = "lea rdx, [rip + 0x30cc3e9]" },
+]
+note = "hkClass initializer 0x28B890: BSOffsetAnimationGenerator name in rdx, exact objectSize in r9d; descriptor 0x736BD60. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSPassByTargetTriggerModifier"
+size = 0xB0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28B9BC, expect = "mov r9d, 0xb0" },
+  { version = "246", rva = 0x28B9B0, expect = "lea rdx, [rip + 0x30cc651]" },
+]
+note = "hkClass initializer 0x28B990: BSPassByTargetTriggerModifier name in rdx, exact objectSize in r9d; descriptor 0x736BE00. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSRagdollContactListenerModifier"
+size = 0x78
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28BABD, expect = "lea r9d, [rcx + 0x78]" },
+  { version = "246", rva = 0x28BAAC, expect = "lea rdx, [rip + 0x30cc795]" },
+]
+note = "hkClass initializer 0x28BA90: BSRagdollContactListenerModifier name in rdx, exact objectSize in r9d; descriptor 0x736BEA0. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSRandomAlarmModifier"
+size = 0x78
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28BBAD, expect = "lea r9d, [rcx + 0x78]" },
+  { version = "246", rva = 0x28BB9C, expect = "lea rdx, [rip + 0x30cca85]" },
+]
+note = "hkClass initializer 0x28BB80: BSRandomAlarmModifier name in rdx, exact objectSize in r9d; descriptor 0x736BF40. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSRetargetBodyBlend"
+size = 0xB0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28BCB9, expect = "mov r9d, 0xb0" },
+  { version = "246", rva = 0x28BCAA, expect = "lea rdx, [rip + 0x30cca37]" },
+]
+note = "hkClass initializer 0x28BC80: BSRetargetBodyBlend name in rdx, exact objectSize in r9d; descriptor 0x736BFE0. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSReverseSpineTwistModifier"
+size = 0x100
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28BD9C, expect = "mov r9d, 0x100" },
+  { version = "246", rva = 0x28BD90, expect = "lea rdx, [rip + 0x30cdae9]" },
+]
+note = "hkClass initializer 0x28BD70: BSReverseSpineTwistModifier name in rdx, exact objectSize in r9d; descriptor 0x736C080. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSRootTwistModifier"
+size = 0x90
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28BF4C, expect = "mov r9d, 0x90" },
+  { version = "246", rva = 0x28BF40, expect = "lea rdx, [rip + 0x30cdcd1]" },
+]
+note = "hkClass initializer 0x28BF20: BSRootTwistModifier name in rdx, exact objectSize in r9d; descriptor 0x736C190. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSSpeedSamplerModifier"
+size = 0x68
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28C075, expect = "lea r9d, [rcx + 0x68]" },
+  { version = "246", rva = 0x28C05A, expect = "lea rdx, [rip + 0x30cdf9f]" },
+]
+note = "hkClass initializer 0x28C030: BSSpeedSamplerModifier name in rdx, exact objectSize in r9d; descriptor 0x736C240. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSSpringState"
+size = 0x14
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28BEB1, expect = "lea r9d, [rcx + 0x14]" },
+  { version = "246", rva = 0x28BE8E, expect = "lea rdx, [rip + 0x30cdb33]" },
+]
+note = "hkClass initializer 0x28BE70: BSSpringState name in rdx, exact objectSize in r9d; descriptor 0x736C100. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSTimerModifier"
+size = 0x78
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28C15D, expect = "lea r9d, [rcx + 0x78]" },
+  { version = "246", rva = 0x28C14C, expect = "lea rdx, [rip + 0x30ce0ad]" },
+]
+note = "hkClass initializer 0x28C130: BSTimerModifier name in rdx, exact objectSize in r9d; descriptor 0x736C2E0. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSTweenerModifier"
+size = 0xD0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28C25C, expect = "mov r9d, 0xd0" },
+  { version = "246", rva = 0x28C250, expect = "lea rdx, [rip + 0x30ce561]" },
+]
+note = "hkClass initializer 0x28C230: BSTweenerModifier name in rdx, exact objectSize in r9d; descriptor 0x736C380. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSiStateTaggingGenerator"
+size = 0xA0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27059C, expect = "mov r9d, 0xa0" },
+  { version = "246", rva = 0x270590, expect = "lea rdx, [rip + 0x303a7a9]" },
+]
+note = "hkClass initializer 0x270570: BSiStateTaggingGenerator name in rdx, exact objectSize in r9d; descriptor 0x3E6A240. All four reflected layouts agree."
+
+[[evidence]]
+class = "BSiStateTaggingStateListener"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2706A9, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x27069A, expect = "lea rdx, [rip + 0x303a6df]" },
+]
+note = "hkClass initializer 0x270670: BSiStateTaggingStateListener name in rdx, exact objectSize in r9d; descriptor 0x3E6A2C0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaAngularReferenceFrame"
+size = 0x70
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27DF4D, expect = "lea r9d, [rcx + 0x70]" },
+  { version = "246", rva = 0x27DF3C, expect = "lea rdx, [rip + 0x30a2edd]" },
+]
+note = "hkClass initializer 0x27DF20: hkaAngularReferenceFrame name in rdx, exact objectSize in r9d; descriptor 0x73632A0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaAnimatedReferenceFrame"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27510D, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x2750FC, expect = "lea rdx, [rip + 0x3053905]" },
+]
+note = "hkClass initializer 0x2750E0: hkaAnimatedReferenceFrame name in rdx, exact objectSize in r9d; descriptor 0x3E6D0D0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaAnimation"
+size = 0x38
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x272D49, expect = "lea r9d, [rcx + 0x38]" },
+  { version = "246", rva = 0x272D30, expect = "lea rdx, [rip + 0x304e6d9]" },
+]
+note = "hkClass initializer 0x272D10: hkaAnimation name in rdx, exact objectSize in r9d; descriptor 0x3E6B860. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaAnimationBinding"
+size = 0x58
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26FD40, expect = "lea r9d, [rcx + 0x58]" },
+  { version = "246", rva = 0x26FD20, expect = "lea rdx, [rip + 0x30342b1]" },
+]
+note = "hkClass initializer 0x26FD00: hkaAnimationBinding name in rdx, exact objectSize in r9d; descriptor 0x3E69D80. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaAnimationContainer"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26FE69, expect = "lea r9d, [rcx + 0x60]" },
+  { version = "246", rva = 0x26FE5A, expect = "lea rdx, [rip + 0x3034317]" },
+]
+note = "hkClass initializer 0x26FE30: hkaAnimationContainer name in rdx, exact objectSize in r9d; descriptor 0x3E69E20. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaAnimationPreviewColorContainer"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27E049, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x27E03A, expect = "lea rdx, [rip + 0x30a2e8f]" },
+]
+note = "hkClass initializer 0x27E010: hkaAnimationPreviewColorContainer name in rdx, exact objectSize in r9d; descriptor 0x7363340. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaAnnotationTrack"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x275089, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x275071, expect = "lea rdx, [rip + 0x30539c0]" },
+]
+note = "hkClass initializer 0x275060: hkaAnnotationTrack name in rdx, exact objectSize in r9d; descriptor 0x3E6D060. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaAnnotationTrackAnnotation"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x275009, expect = "lea r9d, [rcx + 0x10]" },
+  { version = "246", rva = 0x274FF1, expect = "lea rdx, [rip + 0x3053a70]" },
+]
+note = "hkClass initializer 0x274FE0: hkaAnnotationTrackAnnotation name in rdx, exact objectSize in r9d; descriptor 0x3E6D010. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaBone"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x275199, expect = "lea r9d, [rcx + 0x10]" },
+  { version = "246", rva = 0x275181, expect = "lea rdx, [rip + 0x30538a0]" },
+]
+note = "hkClass initializer 0x275170: hkaBone name in rdx, exact objectSize in r9d; descriptor 0x3E6D130. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaBoneAttachment"
+size = 0x80
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x272FC9, expect = "mov r9d, 0x80" },
+  { version = "246", rva = 0x272FBA, expect = "lea rdx, [rip + 0x304e947]" },
+]
+note = "hkClass initializer 0x272F90: hkaBoneAttachment name in rdx, exact objectSize in r9d; descriptor 0x3E6BA20. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaDefaultAnimatedReferenceFrame"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27E12D, expect = "lea r9d, [rcx + 0x60]" },
+  { version = "246", rva = 0x27E11C, expect = "lea rdx, [rip + 0x304a9cd]" },
+]
+note = "hkClass initializer 0x27E100: hkaDefaultAnimatedReferenceFrame name in rdx, exact objectSize in r9d; descriptor 0x73633E0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaDirectionalReferenceFrame"
+size = 0x70
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27E21D, expect = "lea r9d, [rcx + 0x70]" },
+  { version = "246", rva = 0x27E20C, expect = "lea rdx, [rip + 0x30a2ee5]" },
+]
+note = "hkClass initializer 0x27E1F0: hkaDirectionalReferenceFrame name in rdx, exact objectSize in r9d; descriptor 0x7363480. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaFootstepAnalysisInfo"
+size = 0xD0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27E319, expect = "mov r9d, 0xd0" },
+  { version = "246", rva = 0x27E30A, expect = "lea rdx, [rip + 0x30a31cf]" },
+]
+note = "hkClass initializer 0x27E2E0: hkaFootstepAnalysisInfo name in rdx, exact objectSize in r9d; descriptor 0x7363520. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaFootstepAnalysisInfoContainer"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27E399, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x27E38A, expect = "lea rdx, [rip + 0x30a319f]" },
+]
+note = "hkClass initializer 0x27E360: hkaFootstepAnalysisInfoContainer name in rdx, exact objectSize in r9d; descriptor 0x73635A0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaInterleavedUncompressedAnimation"
+size = 0x58
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27E4ED, expect = "lea r9d, [rcx + 0x58]" },
+  { version = "246", rva = 0x27E4DC, expect = "lea rdx, [rip + 0x304a5ad]" },
+]
+note = "hkClass initializer 0x27E4C0: hkaInterleavedUncompressedAnimation name in rdx, exact objectSize in r9d; descriptor 0x7363660. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaLosslessCompressedAnimation"
+size = 0xE0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27E5D8, expect = "mov r9d, 0xe0" },
+  { version = "246", rva = 0x27E5CC, expect = "lea rdx, [rip + 0x30a35bd]" },
+]
+note = "hkClass initializer 0x27E5B0: hkaLosslessCompressedAnimation name in rdx, exact objectSize in r9d; descriptor 0x7363700. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaMeshBinding"
+size = 0x50
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2730B9, expect = "lea r9d, [rcx + 0x50]" },
+  { version = "246", rva = 0x2730AA, expect = "lea rdx, [rip + 0x304ea67]" },
+]
+note = "hkClass initializer 0x273080: hkaMeshBinding name in rdx, exact objectSize in r9d; descriptor 0x3E6BB10. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaMeshBindingMapping"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x273129, expect = "lea r9d, [rcx + 0x10]" },
+  { version = "246", rva = 0x273111, expect = "lea rdx, [rip + 0x304e988]" },
+]
+note = "hkClass initializer 0x273100: hkaMeshBindingMapping name in rdx, exact objectSize in r9d; descriptor 0x3E6BAC0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaParameterizedAnimationReferenceFrame"
+size = 0x80
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27E6D8, expect = "mov r9d, 0x80" },
+  { version = "246", rva = 0x27E6CC, expect = "lea rdx, [rip + 0x30a36bd]" },
+]
+note = "hkClass initializer 0x27E6B0: hkaParameterizedAnimationReferenceFrame name in rdx, exact objectSize in r9d; descriptor 0x73637A0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaParameterizedReferenceFrame"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27DEDD, expect = "lea r9d, [rax + 0x60]" },
+  { version = "246", rva = 0x27DEC1, expect = "lea rdx, [rip + 0x30a2eb8]" },
+]
+note = "hkClass initializer 0x27DEB0: hkaParameterizedReferenceFrame name in rdx, exact objectSize in r9d; descriptor 0x7363240. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaPredictiveCompressedAnimation"
+size = 0xC0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27E7DC, expect = "mov r9d, 0xc0" },
+  { version = "246", rva = 0x27E7D0, expect = "lea rdx, [rip + 0x30a4009]" },
+]
+note = "hkClass initializer 0x27E7B0: hkaPredictiveCompressedAnimation name in rdx, exact objectSize in r9d; descriptor 0x7363890. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaPredictiveCompressedAnimationTrackCompressionParams"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27E869, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x27E851, expect = "lea rdx, [rip + 0x30a3e50]" },
+]
+note = "hkClass initializer 0x27E840: hkaPredictiveCompressedAnimationTrackCompressionParams name in rdx, exact objectSize in r9d; descriptor 0x7363840. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaQuantizedAnimation"
+size = 0x58
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27E95D, expect = "lea r9d, [rcx + 0x58]" },
+  { version = "246", rva = 0x27E94C, expect = "lea rdx, [rip + 0x30a4105]" },
+]
+note = "hkClass initializer 0x27E930: hkaQuantizedAnimation name in rdx, exact objectSize in r9d; descriptor 0x7363990. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaQuantizedAnimationTrackCompressionParams"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27E9D9, expect = "lea r9d, [rcx + 0x10]" },
+  { version = "246", rva = 0x27E9C1, expect = "lea rdx, [rip + 0x30a4020]" },
+]
+note = "hkClass initializer 0x27E9B0: hkaQuantizedAnimationTrackCompressionParams name in rdx, exact objectSize in r9d; descriptor 0x7363940. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaReferencePoseAnimation"
+size = 0x40
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27EACD, expect = "lea r9d, [rcx + 0x40]" },
+  { version = "246", rva = 0x27EABC, expect = "lea rdx, [rip + 0x30a40dd]" },
+]
+note = "hkClass initializer 0x27EAA0: hkaReferencePoseAnimation name in rdx, exact objectSize in r9d; descriptor 0x7363A40. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaSkeleton"
+size = 0x88
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x272DD9, expect = "mov r9d, 0x88" },
+  { version = "246", rva = 0x272DCA, expect = "lea rdx, [rip + 0x304e9f7]" },
+]
+note = "hkClass initializer 0x272DA0: hkaSkeleton name in rdx, exact objectSize in r9d; descriptor 0x3E6B960. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaSkeletonLocalFrameOnBone"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x272E49, expect = "lea r9d, [rcx + 0x10]" },
+  { version = "246", rva = 0x272E31, expect = "lea rdx, [rip + 0x304e878]" },
+]
+note = "hkClass initializer 0x272E20: hkaSkeletonLocalFrameOnBone name in rdx, exact objectSize in r9d; descriptor 0x3E6B8C0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaSkeletonMapper"
+size = 0xC0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26FF48, expect = "mov r9d, 0xc0" },
+  { version = "246", rva = 0x26FF3C, expect = "lea rdx, [rip + 0x30343ad]" },
+]
+note = "hkClass initializer 0x26FF20: hkaSkeletonMapper name in rdx, exact objectSize in r9d; descriptor 0x3E69EC0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaSkeletonMapperData"
+size = 0xB0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x273290, expect = "mov r9d, 0xb0" },
+  { version = "246", rva = 0x273285, expect = "lea rdx, [rip + 0x304eeac]" },
+]
+note = "hkClass initializer 0x273270: hkaSkeletonMapperData name in rdx, exact objectSize in r9d; descriptor 0x3E6BCB0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaSkeletonMapperDataChainMapping"
+size = 0x70
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x273219, expect = "lea r9d, [rcx + 0x70]" },
+  { version = "246", rva = 0x273201, expect = "lea rdx, [rip + 0x304ed40]" },
+]
+note = "hkClass initializer 0x2731F0: hkaSkeletonMapperDataChainMapping name in rdx, exact objectSize in r9d; descriptor 0x3E6BC10. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaSkeletonMapperDataPartitionMappingRange"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x273359, expect = "lea r9d, [rcx + 8]" },
+  { version = "246", rva = 0x273341, expect = "lea rdx, [rip + 0x304ec80]" },
+]
+note = "hkClass initializer 0x273330: hkaSkeletonMapperDataPartitionMappingRange name in rdx, exact objectSize in r9d; descriptor 0x3E6BC60. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaSkeletonMapperDataSimpleMapping"
+size = 0x40
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2733D9, expect = "lea r9d, [rcx + 0x40]" },
+  { version = "246", rva = 0x2733C1, expect = "lea rdx, [rip + 0x304eaa8]" },
+]
+note = "hkClass initializer 0x2733B0: hkaSkeletonMapperDataSimpleMapping name in rdx, exact objectSize in r9d; descriptor 0x3E6BBC0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaSkeletonPartition"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x272ED5, expect = "lea r9d, [rcx + 0x10]" },
+  { version = "246", rva = 0x272EBE, expect = "lea rdx, [rip + 0x304e853]" },
+]
+note = "hkClass initializer 0x272EA0: hkaSkeletonPartition name in rdx, exact objectSize in r9d; descriptor 0x3E6B910. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaSplineCompressedAnimation"
+size = 0xB0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27EC38, expect = "mov r9d, 0xb0" },
+  { version = "246", rva = 0x27EC2C, expect = "lea rdx, [rip + 0x3049bed]" },
+]
+note = "hkClass initializer 0x27EC10: hkaSplineCompressedAnimation name in rdx, exact objectSize in r9d; descriptor 0x7363B80. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaSplineCompressedAnimationAnimationCompressionParams"
+size = 0x4
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27EBB9, expect = "lea r9d, [rcx + 4]" },
+  { version = "246", rva = 0x27EBA1, expect = "lea rdx, [rip + 0x30a4710]" },
+]
+note = "hkClass initializer 0x27EB90: hkaSplineCompressedAnimationAnimationCompressionParams name in rdx, exact objectSize in r9d; descriptor 0x7363B30. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaSplineCompressedAnimationTrackCompressionParams"
+size = 0x1C
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27ECB9, expect = "lea r9d, [rcx + 0x1c]" },
+  { version = "246", rva = 0x27ECA1, expect = "lea rdx, [rip + 0x30a4570]" },
+]
+note = "hkClass initializer 0x27EC90: hkaSplineCompressedAnimationTrackCompressionParams name in rdx, exact objectSize in r9d; descriptor 0x7363AE0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbAiControlCancelPathCommand"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28698D, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x28697C, expect = "lea rdx, [rip + 0x30bc62d]" },
+]
+note = "hkClass initializer 0x286960: hkbAiControlCancelPathCommand name in rdx, exact objectSize in r9d; descriptor 0x7368BB0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbAiControlControlData"
+size = 0xC
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2861A9, expect = "lea r9d, [rcx + 0xc]" },
+  { version = "246", rva = 0x286191, expect = "lea rdx, [rip + 0x30b88c0]" },
+]
+note = "hkClass initializer 0x286180: hkbAiControlControlData name in rdx, exact objectSize in r9d; descriptor 0x73685B0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbAiControlControlDataBlendable"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x286129, expect = "lea r9d, [rcx + 8]" },
+  { version = "246", rva = 0x286111, expect = "lea rdx, [rip + 0x30b89a0]" },
+]
+note = "hkClass initializer 0x286100: hkbAiControlControlDataBlendable name in rdx, exact objectSize in r9d; descriptor 0x7368600. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbAiControlControlDataNonBlendable"
+size = 0x4
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x286229, expect = "lea r9d, [rcx + 4]" },
+  { version = "246", rva = 0x286211, expect = "lea rdx, [rip + 0x30b8900]" },
+]
+note = "hkClass initializer 0x286200: hkbAiControlControlDataNonBlendable name in rdx, exact objectSize in r9d; descriptor 0x7368650. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbAiControlPathToCommand"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x286A7D, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x286A6C, expect = "lea rdx, [rip + 0x30bc59d]" },
+]
+note = "hkClass initializer 0x286A50: hkbAiControlPathToCommand name in rdx, exact objectSize in r9d; descriptor 0x7368C30. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbAlignBoneModifier"
+size = 0xB0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x288238, expect = "mov r9d, 0xb0" },
+  { version = "246", rva = 0x28822C, expect = "lea rdx, [rip + 0x30bbdb5]" },
+]
+note = "hkClass initializer 0x288210: hkbAlignBoneModifier name in rdx, exact objectSize in r9d; descriptor 0x7369AE0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbAnimatedSkeletonGenerator"
+size = 0x90
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x288338, expect = "mov r9d, 0x90" },
+  { version = "246", rva = 0x28832C, expect = "lea rdx, [rip + 0x30bbd3d]" },
+]
+note = "hkClass initializer 0x288310: hkbAnimatedSkeletonGenerator name in rdx, exact objectSize in r9d; descriptor 0x7369B80. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbAssetBundle"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x272B7D, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x272B6C, expect = "lea rdx, [rip + 0x304e5dd]" },
+]
+note = "hkClass initializer 0x272B50: hkbAssetBundle name in rdx, exact objectSize in r9d; descriptor 0x3E6B760. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbAssetBundleStringData"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x272C29, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x272C11, expect = "lea rdx, [rip + 0x304e588]" },
+]
+note = "hkClass initializer 0x272C00: hkbAssetBundleStringData name in rdx, exact objectSize in r9d; descriptor 0x3E6B7E0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbAttachmentModifier"
+size = 0xD0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27F13C, expect = "mov r9d, 0xd0" },
+  { version = "246", rva = 0x27F130, expect = "lea rdx, [rip + 0x304d5c9]" },
+]
+note = "hkClass initializer 0x27F110: hkbAttachmentModifier name in rdx, exact objectSize in r9d; descriptor 0x7363EC0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbAttachmentSetup"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27F250, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x27F230, expect = "lea rdx, [rip + 0x304dfa1]" },
+]
+note = "hkClass initializer 0x27F210: hkbAttachmentSetup name in rdx, exact objectSize in r9d; descriptor 0x7363F60. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbAttributeModifier"
+size = 0x68
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27F3ED, expect = "lea r9d, [rcx + 0x68]" },
+  { version = "246", rva = 0x27F3DC, expect = "lea rdx, [rip + 0x304d865]" },
+]
+note = "hkClass initializer 0x27F3C0: hkbAttributeModifier name in rdx, exact objectSize in r9d; descriptor 0x7364050. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbAttributeModifierAssignment"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27F369, expect = "lea r9d, [rcx + 8]" },
+  { version = "246", rva = 0x27F351, expect = "lea rdx, [rip + 0x304ebb8]" },
+]
+note = "hkClass initializer 0x27F340: hkbAttributeModifierAssignment name in rdx, exact objectSize in r9d; descriptor 0x7364000. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbAuxiliaryNodeInfo"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x286B79, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x286B6A, expect = "lea rdx, [rip + 0x30bc51f]" },
+]
+note = "hkClass initializer 0x286B40: hkbAuxiliaryNodeInfo name in rdx, exact objectSize in r9d; descriptor 0x7368CB0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBehaviorEventsInfo"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x286C89, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x286C7A, expect = "lea rdx, [rip + 0x30bc467]" },
+]
+note = "hkClass initializer 0x286C50: hkbBehaviorEventsInfo name in rdx, exact objectSize in r9d; descriptor 0x7368D30. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBehaviorGraph"
+size = 0x1B0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26F45C, expect = "mov r9d, 0x1b0" },
+  { version = "246", rva = 0x26F450, expect = "lea rdx, [rip + 0x3031aa1]" },
+]
+note = "hkClass initializer 0x26F430: hkbBehaviorGraph name in rdx, exact objectSize in r9d; descriptor 0x3E697D0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBehaviorGraphData"
+size = 0x70
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x271D89, expect = "lea r9d, [rcx + 0x70]" },
+  { version = "246", rva = 0x271D7A, expect = "lea rdx, [rip + 0x304cc0f]" },
+]
+note = "hkClass initializer 0x271D50: hkbBehaviorGraphData name in rdx, exact objectSize in r9d; descriptor 0x3E6AE10. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBehaviorGraphInternalState"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27F4DD, expect = "lea r9d, [rcx + 0x28]" },
+  { version = "246", rva = 0x27F4CC, expect = "lea rdx, [rip + 0x30a697d]" },
+]
+note = "hkClass initializer 0x27F4B0: hkbBehaviorGraphInternalState name in rdx, exact objectSize in r9d; descriptor 0x7364100. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBehaviorGraphInternalStateInfo"
+size = 0x50
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x286D79, expect = "lea r9d, [rcx + 0x50]" },
+  { version = "246", rva = 0x286D6A, expect = "lea rdx, [rip + 0x30bc3ff]" },
+]
+note = "hkClass initializer 0x286D40: hkbBehaviorGraphInternalStateInfo name in rdx, exact objectSize in r9d; descriptor 0x7368DB0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBehaviorGraphStringData"
+size = 0x50
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x274CB9, expect = "lea r9d, [rcx + 0x50]" },
+  { version = "246", rva = 0x274CAA, expect = "lea rdx, [rip + 0x30544d7]" },
+]
+note = "hkClass initializer 0x274C80: hkbBehaviorGraphStringData name in rdx, exact objectSize in r9d; descriptor 0x3E6CDB0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBehaviorInfo"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x286E69, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x286E5A, expect = "lea rdx, [rip + 0x30bc3e7]" },
+]
+note = "hkClass initializer 0x286E30: hkbBehaviorInfo name in rdx, exact objectSize in r9d; descriptor 0x7368E80. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBehaviorInfoIdToNamePair"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x286EE5, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x286ECE, expect = "lea rdx, [rip + 0x30bc313]" },
+]
+note = "hkClass initializer 0x286EB0: hkbBehaviorInfoIdToNamePair name in rdx, exact objectSize in r9d; descriptor 0x7368E30. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBehaviorReferenceGenerator"
+size = 0x98
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26F558, expect = "mov r9d, 0x98" },
+  { version = "246", rva = 0x26F54C, expect = "lea rdx, [rip + 0x3031aa5]" },
+]
+note = "hkClass initializer 0x26F530: hkbBehaviorReferenceGenerator name in rdx, exact objectSize in r9d; descriptor 0x3E69870. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBindable"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x274B0D, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x274AFC, expect = "lea rdx, [rip + 0x3054655]" },
+]
+note = "hkClass initializer 0x274AE0: hkbBindable name in rdx, exact objectSize in r9d; descriptor 0x3E6CCB0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBlenderGenerator"
+size = 0xE0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27297C, expect = "mov r9d, 0xe0" },
+  { version = "246", rva = 0x272970, expect = "lea rdx, [rip + 0x304e049]" },
+]
+note = "hkClass initializer 0x272950: hkbBlenderGenerator name in rdx, exact objectSize in r9d; descriptor 0x3E6B610. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBlenderGeneratorChild"
+size = 0x50
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x274EB5, expect = "lea r9d, [rcx + 0x50]" },
+  { version = "246", rva = 0x274E9A, expect = "lea rdx, [rip + 0x3058cb7]" },
+]
+note = "hkClass initializer 0x274E70: hkbBlenderGeneratorChild name in rdx, exact objectSize in r9d; descriptor 0x3E6CF10. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBlenderGeneratorChildInternalState"
+size = 0x2
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2728F9, expect = "lea r9d, [rcx + 2]" },
+  { version = "246", rva = 0x2728E1, expect = "lea rdx, [rip + 0x304def8]" },
+]
+note = "hkClass initializer 0x2728D0: hkbBlenderGeneratorChildInternalState name in rdx, exact objectSize in r9d; descriptor 0x3E6B5C0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBlenderGeneratorInternalState"
+size = 0x40
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27F6BD, expect = "lea r9d, [rcx + 0x40]" },
+  { version = "246", rva = 0x27F6AC, expect = "lea rdx, [rip + 0x30a69fd]" },
+]
+note = "hkClass initializer 0x27F690: hkbBlenderGeneratorInternalState name in rdx, exact objectSize in r9d; descriptor 0x7364240. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBlendingTransitionEffect"
+size = 0x140
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27F7EC, expect = "mov r9d, 0x140" },
+  { version = "246", rva = 0x27F7E0, expect = "lea rdx, [rip + 0x3049581]" },
+]
+note = "hkClass initializer 0x27F7C0: hkbBlendingTransitionEffect name in rdx, exact objectSize in r9d; descriptor 0x73642E0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBlendingTransitionEffectInternalState"
+size = 0x90
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27F909, expect = "mov r9d, 0x90" },
+  { version = "246", rva = 0x27F8FA, expect = "lea rdx, [rip + 0x30a6f7f]" },
+]
+note = "hkClass initializer 0x27F8D0: hkbBlendingTransitionEffectInternalState name in rdx, exact objectSize in r9d; descriptor 0x7364380. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBoneIndexArray"
+size = 0x40
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27FA0D, expect = "lea r9d, [rcx + 0x40]" },
+  { version = "246", rva = 0x27F9FC, expect = "lea rdx, [rip + 0x304d6fd]" },
+]
+note = "hkClass initializer 0x27F9E0: hkbBoneIndexArray name in rdx, exact objectSize in r9d; descriptor 0x7364420. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBoneWeightArray"
+size = 0x40
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x275DBD, expect = "lea r9d, [rcx + 0x40]" },
+  { version = "246", rva = 0x275DAC, expect = "lea rdx, [rip + 0x30570ed]" },
+]
+note = "hkClass initializer 0x275D90: hkbBoneWeightArray name in rdx, exact objectSize in r9d; descriptor 0x3E6D930. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBoolVariableSequencedData"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27229D, expect = "lea r9d, [rcx + 0x28]" },
+  { version = "246", rva = 0x27228C, expect = "lea rdx, [rip + 0x304d9e5]" },
+]
+note = "hkClass initializer 0x272270: hkbBoolVariableSequencedData name in rdx, exact objectSize in r9d; descriptor 0x3E6B1C0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbBoolVariableSequencedDataSample"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x272329, expect = "lea r9d, [rcx + 8]" },
+  { version = "246", rva = 0x272311, expect = "lea rdx, [rip + 0x304d870]" },
+]
+note = "hkClass initializer 0x272300: hkbBoolVariableSequencedDataSample name in rdx, exact objectSize in r9d; descriptor 0x3E6B170. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCameraShakeEventPayload"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28842D, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x28841C, expect = "lea rdx, [rip + 0x30bbe35]" },
+]
+note = "hkClass initializer 0x288400: hkbCameraShakeEventPayload name in rdx, exact objectSize in r9d; descriptor 0x7369C20. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCameraVariablesChangedCommand"
+size = 0x50
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x286FED, expect = "lea r9d, [rcx + 0x50]" },
+  { version = "246", rva = 0x286FDC, expect = "lea rdx, [rip + 0x30bc305]" },
+]
+note = "hkClass initializer 0x286FC0: hkbCameraVariablesChangedCommand name in rdx, exact objectSize in r9d; descriptor 0x7368F00. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCharacter"
+size = 0xD8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27FAFC, expect = "mov r9d, 0xd8" },
+  { version = "246", rva = 0x27FAF0, expect = "lea rdx, [rip + 0x304cdb9]" },
+]
+note = "hkClass initializer 0x27FAD0: hkbCharacter name in rdx, exact objectSize in r9d; descriptor 0x73644C0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCharacterAddedInfo"
+size = 0x90
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2870E9, expect = "mov r9d, 0x90" },
+  { version = "246", rva = 0x2870DA, expect = "lea rdx, [rip + 0x30bc2d7]" },
+]
+note = "hkClass initializer 0x2870B0: hkbCharacterAddedInfo name in rdx, exact objectSize in r9d; descriptor 0x7368F80. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCharacterControlCommand"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2871D9, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x2871C0, expect = "lea rdx, [rip + 0x30bc281]" },
+]
+note = "hkClass initializer 0x2871A0: hkbCharacterControlCommand name in rdx, exact objectSize in r9d; descriptor 0x7369000. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCharacterControllerModifier"
+size = 0xB0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27FC2C, expect = "mov r9d, 0xb0" },
+  { version = "246", rva = 0x27FC20, expect = "lea rdx, [rip + 0x30a8399]" },
+]
+note = "hkClass initializer 0x27FC00: hkbCharacterControllerModifier name in rdx, exact objectSize in r9d; descriptor 0x7364560. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCharacterControllerModifierControlData"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27FCC9, expect = "lea r9d, [rcx + 0x10]" },
+  { version = "246", rva = 0x27FCB1, expect = "lea rdx, [rip + 0x30a86e8]" },
+]
+note = "hkClass initializer 0x27FCA0: hkbCharacterControllerModifierControlData name in rdx, exact objectSize in r9d; descriptor 0x73645E0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCharacterControllerModifierInternalState"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27FDBD, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x27FDAC, expect = "lea rdx, [rip + 0x30a871d]" },
+]
+note = "hkClass initializer 0x27FD90: hkbCharacterControllerModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x7364660. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCharacterControllerSetup"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2739F9, expect = "lea r9d, [rcx + 0x28]" },
+  { version = "246", rva = 0x2739E1, expect = "lea rdx, [rip + 0x3051570]" },
+]
+note = "hkClass initializer 0x2739D0: hkbCharacterControllerSetup name in rdx, exact objectSize in r9d; descriptor 0x3E6C0E0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCharacterData"
+size = 0xF0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27004C, expect = "mov r9d, 0xf0" },
+  { version = "246", rva = 0x270040, expect = "lea rdx, [rip + 0x30347e1]" },
+]
+note = "hkClass initializer 0x270020: hkbCharacterData name in rdx, exact objectSize in r9d; descriptor 0x3E69F60. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCharacterInfo"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2872F9, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x2872E0, expect = "lea rdx, [rip + 0x30bc1e9]" },
+]
+note = "hkClass initializer 0x2872C0: hkbCharacterInfo name in rdx, exact objectSize in r9d; descriptor 0x7369080. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCharacterSelectedInfo"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28740D, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x2873FC, expect = "lea rdx, [rip + 0x30bc115]" },
+]
+note = "hkClass initializer 0x2873E0: hkbCharacterSelectedInfo name in rdx, exact objectSize in r9d; descriptor 0x7369100. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCharacterSetup"
+size = 0x68
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27FEB9, expect = "lea r9d, [rcx + 0x68]" },
+  { version = "246", rva = 0x27FEAA, expect = "lea rdx, [rip + 0x30a8947]" },
+]
+note = "hkClass initializer 0x27FE80: hkbCharacterSetup name in rdx, exact objectSize in r9d; descriptor 0x7364700. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCharacterSkinInfo"
+size = 0x38
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x287509, expect = "lea r9d, [rcx + 0x38]" },
+  { version = "246", rva = 0x2874FA, expect = "lea rdx, [rip + 0x30bc07f]" },
+]
+note = "hkClass initializer 0x2874D0: hkbCharacterSkinInfo name in rdx, exact objectSize in r9d; descriptor 0x7369180. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCharacterSteppedInfo"
+size = 0x70
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2875F9, expect = "lea r9d, [rcx + 0x70]" },
+  { version = "246", rva = 0x2875EA, expect = "lea rdx, [rip + 0x30bbfff]" },
+]
+note = "hkClass initializer 0x2875C0: hkbCharacterSteppedInfo name in rdx, exact objectSize in r9d; descriptor 0x7369200. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCharacterStringData"
+size = 0xE0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x273469, expect = "mov r9d, 0xe0" },
+  { version = "246", rva = 0x27345A, expect = "lea rdx, [rip + 0x304f2f7]" },
+]
+note = "hkClass initializer 0x273430: hkbCharacterStringData name in rdx, exact objectSize in r9d; descriptor 0x3E6BD90. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCharacterStringDataFileNameMeshNamePair"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2734D9, expect = "lea r9d, [rcx + 0x10]" },
+  { version = "246", rva = 0x2734C1, expect = "lea rdx, [rip + 0x304f068]" },
+]
+note = "hkClass initializer 0x2734B0: hkbCharacterStringDataFileNameMeshNamePair name in rdx, exact objectSize in r9d; descriptor 0x3E6BD40. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbClientCharacterState"
+size = 0x120
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2886A9, expect = "mov r9d, 0x120" },
+  { version = "246", rva = 0x28869A, expect = "lea rdx, [rip + 0x30bc347]" },
+]
+note = "hkClass initializer 0x288670: hkbClientCharacterState name in rdx, exact objectSize in r9d; descriptor 0x7369DC0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbClipGenerator"
+size = 0x160
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26F66C, expect = "mov r9d, 0x160" },
+  { version = "246", rva = 0x26F660, expect = "lea rdx, [rip + 0x30321f1]" },
+]
+note = "hkClass initializer 0x26F640: hkbClipGenerator name in rdx, exact objectSize in r9d; descriptor 0x3E69960. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbClipGeneratorEcho"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26F709, expect = "lea r9d, [rcx + 0x10]" },
+  { version = "246", rva = 0x26F6F1, expect = "lea rdx, [rip + 0x3031ee8]" },
+]
+note = "hkClass initializer 0x26F6E0: hkbClipGeneratorEcho name in rdx, exact objectSize in r9d; descriptor 0x3E69910. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbClipGeneratorInternalState"
+size = 0x70
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27FF9D, expect = "lea r9d, [rcx + 0x70]" },
+  { version = "246", rva = 0x27FF8C, expect = "lea rdx, [rip + 0x30a8a4d]" },
+]
+note = "hkClass initializer 0x27FF70: hkbClipGeneratorInternalState name in rdx, exact objectSize in r9d; descriptor 0x73647A0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbClipTrigger"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26F901, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x26F8DE, expect = "lea rdx, [rip + 0x3031fe3]" },
+]
+note = "hkClass initializer 0x26F8C0: hkbClipTrigger name in rdx, exact objectSize in r9d; descriptor 0x3E699E0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbClipTriggerArray"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26F7FD, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x26F7EC, expect = "lea rdx, [rip + 0x3032105]" },
+]
+note = "hkClass initializer 0x26F7D0: hkbClipTriggerArray name in rdx, exact objectSize in r9d; descriptor 0x3E69A30. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCombineTransformsModifier"
+size = 0xD0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x280088, expect = "mov r9d, 0xd0" },
+  { version = "246", rva = 0x28007C, expect = "lea rdx, [rip + 0x30a9165]" },
+]
+note = "hkClass initializer 0x280060: hkbCombineTransformsModifier name in rdx, exact objectSize in r9d; descriptor 0x7364840. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCombineTransformsModifierInternalState"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28018D, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x28017C, expect = "lea rdx, [rip + 0x30a914d]" },
+]
+note = "hkClass initializer 0x280160: hkbCombineTransformsModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x73648E0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCompiledExpressionSet"
+size = 0x38
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x280289, expect = "lea r9d, [rcx + 0x38]" },
+  { version = "246", rva = 0x28027A, expect = "lea rdx, [rip + 0x304d48f]" },
+]
+note = "hkClass initializer 0x280250: hkbCompiledExpressionSet name in rdx, exact objectSize in r9d; descriptor 0x73649D0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCompiledExpressionSetToken"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2802F9, expect = "lea r9d, [rcx + 8]" },
+  { version = "246", rva = 0x2802E1, expect = "lea rdx, [rip + 0x304dc80]" },
+]
+note = "hkClass initializer 0x2802D0: hkbCompiledExpressionSetToken name in rdx, exact objectSize in r9d; descriptor 0x7364980. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbComputeDirectionModifier"
+size = 0xA0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x280428, expect = "mov r9d, 0xa0" },
+  { version = "246", rva = 0x28041C, expect = "lea rdx, [rip + 0x30aa0e5]" },
+]
+note = "hkClass initializer 0x280400: hkbComputeDirectionModifier name in rdx, exact objectSize in r9d; descriptor 0x7364A80. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbComputeDirectionModifierInternalState"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28051D, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x28050C, expect = "lea rdx, [rip + 0x30aa13d]" },
+]
+note = "hkClass initializer 0x2804F0: hkbComputeDirectionModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x7364B20. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbComputeRotationFromAxisAngleModifier"
+size = 0x90
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x280608, expect = "mov r9d, 0x90" },
+  { version = "246", rva = 0x2805FC, expect = "lea rdx, [rip + 0x30aa30d]" },
+]
+note = "hkClass initializer 0x2805E0: hkbComputeRotationFromAxisAngleModifier name in rdx, exact objectSize in r9d; descriptor 0x7364BC0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbComputeRotationFromAxisAngleModifierInternalState"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28070D, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x2806FC, expect = "lea rdx, [rip + 0x30aa2d5]" },
+]
+note = "hkClass initializer 0x2806E0: hkbComputeRotationFromAxisAngleModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x7364C60. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbComputeRotationToTargetModifier"
+size = 0xD0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2807F8, expect = "mov r9d, 0xd0" },
+  { version = "246", rva = 0x2807EC, expect = "lea rdx, [rip + 0x30aa7e5]" },
+]
+note = "hkClass initializer 0x2807D0: hkbComputeRotationToTargetModifier name in rdx, exact objectSize in r9d; descriptor 0x7364D00. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbComputeRotationToTargetModifierInternalState"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2808FD, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x2808EC, expect = "lea rdx, [rip + 0x30aa7a5]" },
+]
+note = "hkClass initializer 0x2808D0: hkbComputeRotationToTargetModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x7364DA0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbComputeWorldFromModelModifier"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28878D, expect = "lea r9d, [rcx + 0x60]" },
+  { version = "246", rva = 0x28877C, expect = "lea rdx, [rip + 0x30bc3bd]" },
+]
+note = "hkClass initializer 0x288760: hkbComputeWorldFromModelModifier name in rdx, exact objectSize in r9d; descriptor 0x7369E60. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCondition"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x274F9D, expect = "lea r9d, [rax + 0x10]" },
+  { version = "246", rva = 0x274F81, expect = "lea rdx, [rip + 0x3054508]" },
+]
+note = "hkClass initializer 0x274F70: hkbCondition name in rdx, exact objectSize in r9d; descriptor 0x3E6CFB0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbConstraintSetup"
+size = 0x1
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x273A79, expect = "lea r9d, [rcx + 1]" },
+  { version = "246", rva = 0x273A61, expect = "lea rdx, [rip + 0x3051568]" },
+]
+note = "hkClass initializer 0x273A50: hkbConstraintSetup name in rdx, exact objectSize in r9d; descriptor 0x3E6C130. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbContext"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2862B5, expect = "lea r9d, [rcx + 0x60]" },
+  { version = "246", rva = 0x28629E, expect = "lea rdx, [rip + 0x30b8c03]" },
+]
+note = "hkClass initializer 0x286280: hkbContext name in rdx, exact objectSize in r9d; descriptor 0x73686D0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbCustomIdSelector"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27EE7D, expect = "lea r9d, [rax + 0x10]" },
+  { version = "246", rva = 0x27EE61, expect = "lea rdx, [rip + 0x30a5730]" },
+]
+note = "hkClass initializer 0x27EE50: hkbCustomIdSelector name in rdx, exact objectSize in r9d; descriptor 0x7363CA0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbDampingModifier"
+size = 0xC0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2809EC, expect = "mov r9d, 0xc0" },
+  { version = "246", rva = 0x2809E0, expect = "lea rdx, [rip + 0x30ab2e1]" },
+]
+note = "hkClass initializer 0x2809C0: hkbDampingModifier name in rdx, exact objectSize in r9d; descriptor 0x7364E40. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbDampingModifierInternalState"
+size = 0x50
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x280AED, expect = "lea r9d, [rcx + 0x50]" },
+  { version = "246", rva = 0x280ADC, expect = "lea rdx, [rip + 0x30ab36d]" },
+]
+note = "hkClass initializer 0x280AC0: hkbDampingModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x7364EE0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbDefaultMessageLog"
+size = 0x1
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x286329, expect = "lea r9d, [rax + 1]" },
+  { version = "246", rva = 0x286306, expect = "lea rdx, [rip + 0x30b8bbb]" },
+]
+note = "hkClass initializer 0x286300: hkbDefaultMessageLog name in rdx, exact objectSize in r9d; descriptor 0x7368730. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbDelayedModifier"
+size = 0x70
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x280BDD, expect = "lea r9d, [rcx + 0x70]" },
+  { version = "246", rva = 0x280BCC, expect = "lea rdx, [rip + 0x304b97d]" },
+]
+note = "hkClass initializer 0x280BB0: hkbDelayedModifier name in rdx, exact objectSize in r9d; descriptor 0x7364F80. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbDelayedModifierInternalState"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x280CDD, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x280CCC, expect = "lea rdx, [rip + 0x30ab52d]" },
+]
+note = "hkClass initializer 0x280CB0: hkbDelayedModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x7365020. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbDetectCloseToGroundModifier"
+size = 0x80
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x280DCC, expect = "mov r9d, 0x80" },
+  { version = "246", rva = 0x280DC0, expect = "lea rdx, [rip + 0x30aba51]" },
+]
+note = "hkClass initializer 0x280DA0: hkbDetectCloseToGroundModifier name in rdx, exact objectSize in r9d; descriptor 0x73650C0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbDetectCloseToGroundModifierInternalState"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x280ECD, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x280EBC, expect = "lea rdx, [rip + 0x30aba05]" },
+]
+note = "hkClass initializer 0x280EA0: hkbDetectCloseToGroundModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x7365160. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbDockingGenerator"
+size = 0xE0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x280FEC, expect = "mov r9d, 0xe0" },
+  { version = "246", rva = 0x280FE0, expect = "lea rdx, [rip + 0x30ac0e1]" },
+]
+note = "hkClass initializer 0x280FC0: hkbDockingGenerator name in rdx, exact objectSize in r9d; descriptor 0x7365200. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbDockingGeneratorInternalState"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2810FD, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x2810EC, expect = "lea rdx, [rip + 0x30ac0fd]" },
+]
+note = "hkClass initializer 0x2810D0: hkbDockingGeneratorInternalState name in rdx, exact objectSize in r9d; descriptor 0x73652A0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEvaluateExpressionModifier"
+size = 0x78
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2811F9, expect = "lea r9d, [rcx + 0x78]" },
+  { version = "246", rva = 0x2811EA, expect = "lea rdx, [rip + 0x304c807]" },
+]
+note = "hkClass initializer 0x2811C0: hkbEvaluateExpressionModifier name in rdx, exact objectSize in r9d; descriptor 0x7365390. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEvaluateExpressionModifierInternalExpressionData"
+size = 0x2
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x281269, expect = "lea r9d, [rcx + 2]" },
+  { version = "246", rva = 0x281251, expect = "lea rdx, [rip + 0x30ac370]" },
+]
+note = "hkClass initializer 0x281240: hkbEvaluateExpressionModifierInternalExpressionData name in rdx, exact objectSize in r9d; descriptor 0x7365340. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEvaluateExpressionModifierInternalState"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2814FD, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x2814EC, expect = "lea rdx, [rip + 0x30ac3e5]" },
+]
+note = "hkClass initializer 0x2814D0: hkbEvaluateExpressionModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x7365540. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEvaluateHandleModifier"
+size = 0xF0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28160C, expect = "mov r9d, 0xf0" },
+  { version = "246", rva = 0x281600, expect = "lea rdx, [rip + 0x304c681]" },
+]
+note = "hkClass initializer 0x2815E0: hkbEvaluateHandleModifier name in rdx, exact objectSize in r9d; descriptor 0x73655E0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEvent"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x271FC9, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x271FBA, expect = "lea rdx, [rip + 0x304cec7]" },
+]
+note = "hkClass initializer 0x271F90: hkbEvent name in rdx, exact objectSize in r9d; descriptor 0x3E6AF10. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEventBase"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x271F29, expect = "lea r9d, [rcx + 0x10]" },
+  { version = "246", rva = 0x271F11, expect = "lea rdx, [rip + 0x304cfc8]" },
+]
+note = "hkClass initializer 0x271F00: hkbEventBase name in rdx, exact objectSize in r9d; descriptor 0x3E6AF60. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEventDrivenModifier"
+size = 0x70
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28171D, expect = "lea r9d, [rcx + 0x70]" },
+  { version = "246", rva = 0x28170C, expect = "lea rdx, [rip + 0x304c945]" },
+]
+note = "hkClass initializer 0x2816F0: hkbEventDrivenModifier name in rdx, exact objectSize in r9d; descriptor 0x7365680. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEventDrivenModifierInternalState"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28181D, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x28180C, expect = "lea rdx, [rip + 0x30aca45]" },
+]
+note = "hkClass initializer 0x2817F0: hkbEventDrivenModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x7365720. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEventInfo"
+size = 0x4
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x274BF9, expect = "lea r9d, [rcx + 4]" },
+  { version = "246", rva = 0x274BE1, expect = "lea rdx, [rip + 0x30547d8]" },
+]
+note = "hkClass initializer 0x274BD0: hkbEventInfo name in rdx, exact objectSize in r9d; descriptor 0x3E6CD50. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEventPayload"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26B81D, expect = "lea r9d, [rax + 0x10]" },
+  { version = "246", rva = 0x26B801, expect = "lea rdx, [rip + 0x301fd38]" },
+]
+note = "hkClass initializer 0x26B7F0: hkbEventPayload name in rdx, exact objectSize in r9d; descriptor 0x3E634B0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEventPayloadList"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26B88D, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x26B87C, expect = "lea rdx, [rip + 0x3020085]" },
+]
+note = "hkClass initializer 0x26B860: hkbEventPayloadList name in rdx, exact objectSize in r9d; descriptor 0x3E63530. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEventProperty"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x272045, expect = "lea r9d, [rax + 0x10]" },
+  { version = "246", rva = 0x27202E, expect = "lea rdx, [rip + 0x304cecb]" },
+]
+note = "hkClass initializer 0x272010: hkbEventProperty name in rdx, exact objectSize in r9d; descriptor 0x3E6AFB0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEventRaisedInfo"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2876E9, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x2876DA, expect = "lea rdx, [rip + 0x30bbf7f]" },
+]
+note = "hkClass initializer 0x2876B0: hkbEventRaisedInfo name in rdx, exact objectSize in r9d; descriptor 0x7369280. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEventRangeData"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2819F9, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x2819E1, expect = "lea rdx, [rip + 0x30acd88]" },
+]
+note = "hkClass initializer 0x2819D0: hkbEventRangeData name in rdx, exact objectSize in r9d; descriptor 0x73657C0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEventRangeDataArray"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28190D, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x2818FC, expect = "lea rdx, [rip + 0x30acf3d]" },
+]
+note = "hkClass initializer 0x2818E0: hkbEventRangeDataArray name in rdx, exact objectSize in r9d; descriptor 0x7365810. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEventSequencedData"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27241D, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x27240C, expect = "lea rdx, [rip + 0x304d98d]" },
+]
+note = "hkClass initializer 0x2723F0: hkbEventSequencedData name in rdx, exact objectSize in r9d; descriptor 0x3E6B290. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEventSequencedDataSequencedEvent"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x272499, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x272481, expect = "lea rdx, [rip + 0x304d888]" },
+]
+note = "hkClass initializer 0x272470: hkbEventSequencedDataSequencedEvent name in rdx, exact objectSize in r9d; descriptor 0x3E6B240. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEventsFromRangeModifier"
+size = 0x78
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x281AAD, expect = "lea r9d, [rcx + 0x78]" },
+  { version = "246", rva = 0x281A9C, expect = "lea rdx, [rip + 0x30acecd]" },
+]
+note = "hkClass initializer 0x281A80: hkbEventsFromRangeModifier name in rdx, exact objectSize in r9d; descriptor 0x7365890. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbEventsFromRangeModifierInternalState"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x281B9D, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x281B8C, expect = "lea rdx, [rip + 0x30ace85]" },
+]
+note = "hkClass initializer 0x281B70: hkbEventsFromRangeModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x7365960. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbExpressionCondition"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x272A99, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x272A8A, expect = "lea rdx, [rip + 0x304e56f]" },
+]
+note = "hkClass initializer 0x272A60: hkbExpressionCondition name in rdx, exact objectSize in r9d; descriptor 0x3E6B6C0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbExpressionData"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x281449, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x281431, expect = "lea rdx, [rip + 0x304c4e8]" },
+]
+note = "hkClass initializer 0x281420: hkbExpressionData name in rdx, exact objectSize in r9d; descriptor 0x7365410. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbExpressionDataArray"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28135D, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x28134C, expect = "lea rdx, [rip + 0x304c39d]" },
+]
+note = "hkClass initializer 0x281330: hkbExpressionDataArray name in rdx, exact objectSize in r9d; descriptor 0x7365460. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbExtractRagdollPoseModifier"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x281CA5, expect = "lea r9d, [rcx + 0x60]" },
+  { version = "246", rva = 0x281C8A, expect = "lea rdx, [rip + 0x30ad14f]" },
+]
+note = "hkClass initializer 0x281C60: hkbExtractRagdollPoseModifier name in rdx, exact objectSize in r9d; descriptor 0x7365A00. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbExtrapolatingTransitionEffect"
+size = 0x2B0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x281D88, expect = "mov r9d, 0x2b0" },
+  { version = "246", rva = 0x281D7C, expect = "lea rdx, [rip + 0x30ad4fd]" },
+]
+note = "hkClass initializer 0x281D60: hkbExtrapolatingTransitionEffect name in rdx, exact objectSize in r9d; descriptor 0x7365AA0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbExtrapolatingTransitionEffectInternalState"
+size = 0x180
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x281E89, expect = "mov r9d, 0x180" },
+  { version = "246", rva = 0x281E7A, expect = "lea rdx, [rip + 0x30ad68f]" },
+]
+note = "hkClass initializer 0x281E50: hkbExtrapolatingTransitionEffectInternalState name in rdx, exact objectSize in r9d; descriptor 0x7365B40. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbFootIkControlData"
+size = 0x50
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2863A5, expect = "lea r9d, [rcx + 0x50]" },
+  { version = "246", rva = 0x28638E, expect = "lea rdx, [rip + 0x30464cb]" },
+]
+note = "hkClass initializer 0x286370: hkbFootIkControlData name in rdx, exact objectSize in r9d; descriptor 0x7368790. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbFootIkControlsModifier"
+size = 0xE0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x281F6C, expect = "mov r9d, 0xe0" },
+  { version = "246", rva = 0x281F60, expect = "lea rdx, [rip + 0x304af91]" },
+]
+note = "hkClass initializer 0x281F40: hkbFootIkControlsModifier name in rdx, exact objectSize in r9d; descriptor 0x7365C30. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbFootIkControlsModifierLeg"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x282011, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x281FEE, expect = "lea rdx, [rip + 0x30adcc3]" },
+]
+note = "hkClass initializer 0x281FD0: hkbFootIkControlsModifierLeg name in rdx, exact objectSize in r9d; descriptor 0x7365BE0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbFootIkDriverInfo"
+size = 0x48
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2735E5, expect = "lea r9d, [rcx + 0x48]" },
+  { version = "246", rva = 0x2735CA, expect = "lea rdx, [rip + 0x3051117]" },
+]
+note = "hkClass initializer 0x2735A0: hkbFootIkDriverInfo name in rdx, exact objectSize in r9d; descriptor 0x3E6BE90. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbFootIkDriverInfoLeg"
+size = 0x50
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x273671, expect = "lea r9d, [rcx + 0x50]" },
+  { version = "246", rva = 0x27364E, expect = "lea rdx, [rip + 0x305067b]" },
+]
+note = "hkClass initializer 0x273630: hkbFootIkDriverInfoLeg name in rdx, exact objectSize in r9d; descriptor 0x3E6BE40. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbFootIkGains"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x286431, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x28640E, expect = "lea rdx, [rip + 0x304653b]" },
+]
+note = "hkClass initializer 0x2863F0: hkbFootIkGains name in rdx, exact objectSize in r9d; descriptor 0x73687F0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbFootIkModifier"
+size = 0xE0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28211C, expect = "mov r9d, 0xe0" },
+  { version = "246", rva = 0x282110, expect = "lea rdx, [rip + 0x304b401]" },
+]
+note = "hkClass initializer 0x2820F0: hkbFootIkModifier name in rdx, exact objectSize in r9d; descriptor 0x7365D80. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbFootIkModifierInternalLegData"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2821C5, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x2821AE, expect = "lea rdx, [rip + 0x30aecc3]" },
+]
+note = "hkClass initializer 0x282190: hkbFootIkModifierInternalLegData name in rdx, exact objectSize in r9d; descriptor 0x7365D30. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbFootIkModifierLeg"
+size = 0x90
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x282230, expect = "mov r9d, 0x90" },
+  { version = "246", rva = 0x282225, expect = "lea rdx, [rip + 0x304ba3c]" },
+]
+note = "hkClass initializer 0x282210: hkbFootIkModifierLeg name in rdx, exact objectSize in r9d; descriptor 0x7365CE0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbGenerator"
+size = 0x88
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26F3B8, expect = "mov r9d, 0x88" },
+  { version = "246", rva = 0x26F3AC, expect = "lea rdx, [rip + 0x3031665]" },
+]
+note = "hkClass initializer 0x26F390: hkbGenerator name in rdx, exact objectSize in r9d; descriptor 0x3E69770. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbGeneratorOutputListener"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27EEED, expect = "lea r9d, [rax + 0x10]" },
+  { version = "246", rva = 0x27EED1, expect = "lea rdx, [rip + 0x30a56d8]" },
+]
+note = "hkClass initializer 0x27EEC0: hkbGeneratorOutputListener name in rdx, exact objectSize in r9d; descriptor 0x7363D00. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbGeneratorPartitionInfo"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x271BF9, expect = "lea r9d, [rcx + 0x28]" },
+  { version = "246", rva = 0x271BE1, expect = "lea rdx, [rip + 0x304acd0]" },
+]
+note = "hkClass initializer 0x271BD0: hkbGeneratorPartitionInfo name in rdx, exact objectSize in r9d; descriptor 0x3E6AD10. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbGeneratorSyncInfo"
+size = 0xA8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2847FA, expect = "mov r9d, 0xa8" },
+  { version = "246", rva = 0x2847EE, expect = "lea rdx, [rip + 0x30b503b]" },
+]
+note = "hkClass initializer 0x2847D0: hkbGeneratorSyncInfo name in rdx, exact objectSize in r9d; descriptor 0x73675B0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbGeneratorSyncInfoActiveInterval"
+size = 0x14
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x284779, expect = "lea r9d, [rcx + 0x14]" },
+  { version = "246", rva = 0x284761, expect = "lea rdx, [rip + 0x30b5008]" },
+]
+note = "hkClass initializer 0x284750: hkbGeneratorSyncInfoActiveInterval name in rdx, exact objectSize in r9d; descriptor 0x7367560. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbGeneratorSyncInfoSyncPoint"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x284879, expect = "lea r9d, [rcx + 8]" },
+  { version = "246", rva = 0x284861, expect = "lea rdx, [rip + 0x30b4e98]" },
+]
+note = "hkClass initializer 0x284850: hkbGeneratorSyncInfoSyncPoint name in rdx, exact objectSize in r9d; descriptor 0x7367510. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbGeneratorTransitionEffect"
+size = 0xD8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28233C, expect = "mov r9d, 0xd8" },
+  { version = "246", rva = 0x282330, expect = "lea rdx, [rip + 0x30afb81]" },
+]
+note = "hkClass initializer 0x282310: hkbGeneratorTransitionEffect name in rdx, exact objectSize in r9d; descriptor 0x7365E40. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbGeneratorTransitionEffectInternalState"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x282459, expect = "lea r9d, [rcx + 0x28]" },
+  { version = "246", rva = 0x28244A, expect = "lea rdx, [rip + 0x30afab7]" },
+]
+note = "hkClass initializer 0x282420: hkbGeneratorTransitionEffectInternalState name in rdx, exact objectSize in r9d; descriptor 0x7365EE0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbGetHandleOnBoneModifier"
+size = 0x70
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28257D, expect = "lea r9d, [rcx + 0x70]" },
+  { version = "246", rva = 0x28256C, expect = "lea rdx, [rip + 0x304a40d]" },
+]
+note = "hkClass initializer 0x282550: hkbGetHandleOnBoneModifier name in rdx, exact objectSize in r9d; descriptor 0x7365F80. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbGetUpModifier"
+size = 0x90
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28267C, expect = "mov r9d, 0x90" },
+  { version = "246", rva = 0x282670, expect = "lea rdx, [rip + 0x304b941]" },
+]
+note = "hkClass initializer 0x282650: hkbGetUpModifier name in rdx, exact objectSize in r9d; descriptor 0x7366020. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbGetUpModifierInternalState"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28277D, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x28276C, expect = "lea rdx, [rip + 0x30b043d]" },
+]
+note = "hkClass initializer 0x282750: hkbGetUpModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x73660C0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbGetWorldFromModelModifier"
+size = 0x80
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x282868, expect = "mov r9d, 0x80" },
+  { version = "246", rva = 0x28285C, expect = "lea rdx, [rip + 0x30b054d]" },
+]
+note = "hkClass initializer 0x282840: hkbGetWorldFromModelModifier name in rdx, exact objectSize in r9d; descriptor 0x7366160. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbGetWorldFromModelModifierInternalState"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28296D, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x28295C, expect = "lea rdx, [rip + 0x30b052d]" },
+]
+note = "hkClass initializer 0x282940: hkbGetWorldFromModelModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x7366200. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbGravityModifier"
+size = 0xA0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x289128, expect = "mov r9d, 0xa0" },
+  { version = "246", rva = 0x28911C, expect = "lea rdx, [rip + 0x30c235d]" },
+]
+note = "hkClass initializer 0x289100: hkbGravityModifier name in rdx, exact objectSize in r9d; descriptor 0x736A3D0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbHandIkControlData"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2864BC, expect = "lea r9d, [rcx + 0x60]" },
+  { version = "246", rva = 0x286495, expect = "lea rdx, [rip + 0x30ba2d4]" },
+]
+note = "hkClass initializer 0x286480: hkbHandIkControlData name in rdx, exact objectSize in r9d; descriptor 0x7368850. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbHandIkControlsModifier"
+size = 0x68
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x282A5D, expect = "lea r9d, [rcx + 0x68]" },
+  { version = "246", rva = 0x282A4C, expect = "lea rdx, [rip + 0x30b07f5]" },
+]
+note = "hkClass initializer 0x282A30: hkbHandIkControlsModifier name in rdx, exact objectSize in r9d; descriptor 0x73662F0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbHandIkControlsModifierHand"
+size = 0x70
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x282AD9, expect = "lea r9d, [rcx + 0x70]" },
+  { version = "246", rva = 0x282AC1, expect = "lea rdx, [rip + 0x30b06f8]" },
+]
+note = "hkClass initializer 0x282AB0: hkbHandIkControlsModifierHand name in rdx, exact objectSize in r9d; descriptor 0x73662A0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbHandIkDriverInfo"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x273D3D, expect = "lea r9d, [rcx + 0x28]" },
+  { version = "246", rva = 0x273D2C, expect = "lea rdx, [rip + 0x305241d]" },
+]
+note = "hkClass initializer 0x273D10: hkbHandIkDriverInfo name in rdx, exact objectSize in r9d; descriptor 0x3E6C310. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbHandIkDriverInfoHand"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x273E01, expect = "lea r9d, [rcx + 0x60]" },
+  { version = "246", rva = 0x273DDE, expect = "lea rdx, [rip + 0x30522c3]" },
+]
+note = "hkClass initializer 0x273DC0: hkbHandIkDriverInfoHand name in rdx, exact objectSize in r9d; descriptor 0x3E6C2C0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbHandIkModifier"
+size = 0x80
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x282BE8, expect = "mov r9d, 0x80" },
+  { version = "246", rva = 0x282BDC, expect = "lea rdx, [rip + 0x304991d]" },
+]
+note = "hkClass initializer 0x282BC0: hkbHandIkModifier name in rdx, exact objectSize in r9d; descriptor 0x73663F0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbHandIkModifierHand"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x282C91, expect = "lea r9d, [rcx + 0x60]" },
+  { version = "246", rva = 0x282C6E, expect = "lea rdx, [rip + 0x304937b]" },
+]
+note = "hkClass initializer 0x282C50: hkbHandIkModifierHand name in rdx, exact objectSize in r9d; descriptor 0x73663A0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbHandle"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x282D95, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x282D7A, expect = "lea rdx, [rip + 0x304b13f]" },
+]
+note = "hkClass initializer 0x282D50: hkbHandle name in rdx, exact objectSize in r9d; descriptor 0x73664A0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbHoldFromBlendingTransitionEffect"
+size = 0x190
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x289228, expect = "mov r9d, 0x190" },
+  { version = "246", rva = 0x28921C, expect = "lea rdx, [rip + 0x304323d]" },
+]
+note = "hkClass initializer 0x289200: hkbHoldFromBlendingTransitionEffect name in rdx, exact objectSize in r9d; descriptor 0x736A470. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbIntEventPayload"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26B9ED, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x26B9DC, expect = "lea rdx, [rip + 0x301ff8d]" },
+]
+note = "hkClass initializer 0x26B9C0: hkbIntEventPayload name in rdx, exact objectSize in r9d; descriptor 0x3E635B0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbIntVariableSequencedData"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27258D, expect = "lea r9d, [rcx + 0x28]" },
+  { version = "246", rva = 0x27257C, expect = "lea rdx, [rip + 0x304d8b5]" },
+]
+note = "hkClass initializer 0x272560: hkbIntVariableSequencedData name in rdx, exact objectSize in r9d; descriptor 0x3E6B360. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbIntVariableSequencedDataSample"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x272619, expect = "lea r9d, [rcx + 8]" },
+  { version = "246", rva = 0x272601, expect = "lea rdx, [rip + 0x304d7d8]" },
+]
+note = "hkClass initializer 0x2725F0: hkbIntVariableSequencedDataSample name in rdx, exact objectSize in r9d; descriptor 0x3E6B310. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbJigglerGroup"
+size = 0x58
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x282E95, expect = "lea r9d, [rcx + 0x58]" },
+  { version = "246", rva = 0x282E7A, expect = "lea rdx, [rip + 0x30b1f47]" },
+]
+note = "hkClass initializer 0x282E50: hkbJigglerGroup name in rdx, exact objectSize in r9d; descriptor 0x7366540. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbJigglerModifier"
+size = 0x98
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x282F9C, expect = "mov r9d, 0x98" },
+  { version = "246", rva = 0x282F90, expect = "lea rdx, [rip + 0x30b20c9]" },
+]
+note = "hkClass initializer 0x282F70: hkbJigglerModifier name in rdx, exact objectSize in r9d; descriptor 0x73665E0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbJigglerModifierInternalState"
+size = 0x38
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2830AD, expect = "lea r9d, [rcx + 0x38]" },
+  { version = "246", rva = 0x28309C, expect = "lea rdx, [rip + 0x30b20dd]" },
+]
+note = "hkClass initializer 0x283080: hkbJigglerModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x7366680. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbKeyFrameControlData"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x286559, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x286541, expect = "lea rdx, [rip + 0x30baa48]" },
+]
+note = "hkClass initializer 0x286530: hkbKeyFrameControlData name in rdx, exact objectSize in r9d; descriptor 0x73688B0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbKeyframeBonesModifier"
+size = 0x70
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2831A9, expect = "lea r9d, [rcx + 0x70]" },
+  { version = "246", rva = 0x28319A, expect = "lea rdx, [rip + 0x304a49f]" },
+]
+note = "hkClass initializer 0x283170: hkbKeyframeBonesModifier name in rdx, exact objectSize in r9d; descriptor 0x7366770. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbKeyframeBonesModifierKeyframeInfo"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x283219, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x283201, expect = "lea rdx, [rip + 0x304ae20]" },
+]
+note = "hkClass initializer 0x2831F0: hkbKeyframeBonesModifierKeyframeInfo name in rdx, exact objectSize in r9d; descriptor 0x7366720. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbLayer"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x283325, expect = "lea r9d, [rcx + 0x60]" },
+  { version = "246", rva = 0x28330A, expect = "lea rdx, [rip + 0x30b2cff]" },
+]
+note = "hkClass initializer 0x2832E0: hkbLayer name in rdx, exact objectSize in r9d; descriptor 0x7366830. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbLayerGenerator"
+size = 0xB8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x283428, expect = "mov r9d, 0xb8" },
+  { version = "246", rva = 0x28341C, expect = "lea rdx, [rip + 0x30b2e95]" },
+]
+note = "hkClass initializer 0x283400: hkbLayerGenerator name in rdx, exact objectSize in r9d; descriptor 0x7366920. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbLayerGeneratorInternalState"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2835ED, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x2835DC, expect = "lea rdx, [rip + 0x30b2dcd]" },
+]
+note = "hkClass initializer 0x2835C0: hkbLayerGeneratorInternalState name in rdx, exact objectSize in r9d; descriptor 0x73669D0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbLayerGeneratorLayerInternalState"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2834C9, expect = "lea r9d, [rcx + 0x10]" },
+  { version = "246", rva = 0x2834B1, expect = "lea rdx, [rip + 0x30b2d70]" },
+]
+note = "hkClass initializer 0x2834A0: hkbLayerGeneratorLayerInternalState name in rdx, exact objectSize in r9d; descriptor 0x73668D0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbLinkedSymbolInfo"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2877CD, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x2877BC, expect = "lea rdx, [rip + 0x30bbecd]" },
+]
+note = "hkClass initializer 0x2877A0: hkbLinkedSymbolInfo name in rdx, exact objectSize in r9d; descriptor 0x7369300. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbLookAtModifier"
+size = 0x100
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2836DC, expect = "mov r9d, 0x100" },
+  { version = "246", rva = 0x2836D0, expect = "lea rdx, [rip + 0x3049419]" },
+]
+note = "hkClass initializer 0x2836B0: hkbLookAtModifier name in rdx, exact objectSize in r9d; descriptor 0x7366A70. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbLookAtModifierInternalState"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2837DD, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x2837CC, expect = "lea rdx, [rip + 0x30b3d2d]" },
+]
+note = "hkClass initializer 0x2837B0: hkbLookAtModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x7366B10. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbManualSelectorGenerator"
+size = 0xD0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2838CC, expect = "mov r9d, 0xd0" },
+  { version = "246", rva = 0x2838C0, expect = "lea rdx, [rip + 0x30b41f9]" },
+]
+note = "hkClass initializer 0x2838A0: hkbManualSelectorGenerator name in rdx, exact objectSize in r9d; descriptor 0x7366BB0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbManualSelectorGeneratorInternalState"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2839CD, expect = "lea r9d, [rcx + 0x28]" },
+  { version = "246", rva = 0x2839BC, expect = "lea rdx, [rip + 0x30b420d]" },
+]
+note = "hkClass initializer 0x2839A0: hkbManualSelectorGeneratorInternalState name in rdx, exact objectSize in r9d; descriptor 0x7366C50. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbManualSelectorTransitionEffect"
+size = 0xE8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x283AB8, expect = "mov r9d, 0xe8" },
+  { version = "246", rva = 0x283AAC, expect = "lea rdx, [rip + 0x30b456d]" },
+]
+note = "hkClass initializer 0x283A90: hkbManualSelectorTransitionEffect name in rdx, exact objectSize in r9d; descriptor 0x7366CF0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbManualSelectorTransitionEffectInternalState"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x283BBD, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x283BAC, expect = "lea rdx, [rip + 0x30b4525]" },
+]
+note = "hkClass initializer 0x283B90: hkbManualSelectorTransitionEffectInternalState name in rdx, exact objectSize in r9d; descriptor 0x7366D90. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbMessageLog"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x286669, expect = "lea r9d, [rcx + 0x10]" },
+  { version = "246", rva = 0x286651, expect = "lea rdx, [rip + 0x30bac48]" },
+]
+note = "hkClass initializer 0x286640: hkbMessageLog name in rdx, exact objectSize in r9d; descriptor 0x7368970. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbMirrorModifier"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x283CAD, expect = "lea r9d, [rcx + 0x60]" },
+  { version = "246", rva = 0x283C9C, expect = "lea rdx, [rip + 0x30b455d]" },
+]
+note = "hkClass initializer 0x283C80: hkbMirrorModifier name in rdx, exact objectSize in r9d; descriptor 0x7366E30. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbMirroredSkeletonInfo"
+size = 0x40
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x273915, expect = "lea r9d, [rcx + 0x40]" },
+  { version = "246", rva = 0x2738FA, expect = "lea rdx, [rip + 0x30512e7]" },
+]
+note = "hkClass initializer 0x2738D0: hkbMirroredSkeletonInfo name in rdx, exact objectSize in r9d; descriptor 0x3E6C040. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbModifier"
+size = 0x58
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2720AD, expect = "lea r9d, [rcx + 0x58]" },
+  { version = "246", rva = 0x27209C, expect = "lea rdx, [rip + 0x304d08d]" },
+]
+note = "hkClass initializer 0x272080: hkbModifier name in rdx, exact objectSize in r9d; descriptor 0x3E6B030. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbModifierGenerator"
+size = 0x98
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x283DA8, expect = "mov r9d, 0x98" },
+  { version = "246", rva = 0x283D9C, expect = "lea rdx, [rip + 0x3049afd]" },
+]
+note = "hkClass initializer 0x283D80: hkbModifierGenerator name in rdx, exact objectSize in r9d; descriptor 0x7366ED0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbModifierList"
+size = 0x68
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x283E9D, expect = "lea r9d, [rcx + 0x68]" },
+  { version = "246", rva = 0x283E8C, expect = "lea rdx, [rip + 0x30493fd]" },
+]
+note = "hkClass initializer 0x283E70: hkbModifierList name in rdx, exact objectSize in r9d; descriptor 0x7366F70. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbModifierWrapper"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x283F8D, expect = "lea r9d, [rcx + 0x60]" },
+  { version = "246", rva = 0x283F7C, expect = "lea rdx, [rip + 0x304896d]" },
+]
+note = "hkClass initializer 0x283F60: hkbModifierWrapper name in rdx, exact objectSize in r9d; descriptor 0x7367010. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbMoveBoneAttachmentModifier"
+size = 0x70
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28407D, expect = "lea r9d, [rcx + 0x70]" },
+  { version = "246", rva = 0x28406C, expect = "lea rdx, [rip + 0x30b4765]" },
+]
+note = "hkClass initializer 0x284050: hkbMoveBoneAttachmentModifier name in rdx, exact objectSize in r9d; descriptor 0x73670B0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbMoveCharacterModifier"
+size = 0x80
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x284178, expect = "mov r9d, 0x80" },
+  { version = "246", rva = 0x28416C, expect = "lea rdx, [rip + 0x30b47dd]" },
+]
+note = "hkClass initializer 0x284150: hkbMoveCharacterModifier name in rdx, exact objectSize in r9d; descriptor 0x7367150. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbMoveCharacterModifierInternalState"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28427D, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x28426C, expect = "lea rdx, [rip + 0x30b477d]" },
+]
+note = "hkClass initializer 0x284250: hkbMoveCharacterModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x73671F0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbNamedEventPayload"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26BADD, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x26BACC, expect = "lea rdx, [rip + 0x301feed]" },
+]
+note = "hkClass initializer 0x26BAB0: hkbNamedEventPayload name in rdx, exact objectSize in r9d; descriptor 0x3E63630. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbNamedIntEventPayload"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26BBCD, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x26BBBC, expect = "lea rdx, [rip + 0x301fe3d]" },
+]
+note = "hkClass initializer 0x26BBA0: hkbNamedIntEventPayload name in rdx, exact objectSize in r9d; descriptor 0x3E636B0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbNamedRealEventPayload"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26BCBD, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x26BCAC, expect = "lea rdx, [rip + 0x301fdbd]" },
+]
+note = "hkClass initializer 0x26BC90: hkbNamedRealEventPayload name in rdx, exact objectSize in r9d; descriptor 0x3E63730. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbNamedStringEventPayload"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26BDAD, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x26BD9C, expect = "lea rdx, [rip + 0x301fd3d]" },
+]
+note = "hkClass initializer 0x26BD80: hkbNamedStringEventPayload name in rdx, exact objectSize in r9d; descriptor 0x3E637B0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbNode"
+size = 0x50
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x271C89, expect = "lea r9d, [rcx + 0x50]" },
+  { version = "246", rva = 0x271C70, expect = "lea rdx, [rip + 0x304cb31]" },
+]
+note = "hkClass initializer 0x271C50: hkbNode name in rdx, exact objectSize in r9d; descriptor 0x3E6AD70. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbNodeInternalStateInfo"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27F5CD, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x27F5BC, expect = "lea rdx, [rip + 0x30a692d]" },
+]
+note = "hkClass initializer 0x27F5A0: hkbNodeInternalStateInfo name in rdx, exact objectSize in r9d; descriptor 0x7364180. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbNullPhysicsInterface"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x289331, expect = "lea r9d, [rax + 0x18]" },
+  { version = "246", rva = 0x289311, expect = "lea rdx, [rip + 0x30c25a8]" },
+]
+note = "hkClass initializer 0x289300: hkbNullPhysicsInterface name in rdx, exact objectSize in r9d; descriptor 0x736A510. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbParametricMotionGenerator"
+size = 0xF0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28438C, expect = "mov r9d, 0xf0" },
+  { version = "246", rva = 0x284380, expect = "lea rdx, [rip + 0x30b49b9]" },
+]
+note = "hkClass initializer 0x284360: hkbParametricMotionGenerator name in rdx, exact objectSize in r9d; descriptor 0x7367290. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbParticleSystemEventPayload"
+size = 0x50
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28940D, expect = "lea r9d, [rcx + 0x50]" },
+  { version = "246", rva = 0x2893FC, expect = "lea rdx, [rip + 0x30c2985]" },
+]
+note = "hkClass initializer 0x2893E0: hkbParticleSystemEventPayload name in rdx, exact objectSize in r9d; descriptor 0x736A5C0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbPhysicsInterface"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2868A1, expect = "lea r9d, [rax + 0x18]" },
+  { version = "246", rva = 0x286881, expect = "lea rdx, [rip + 0x30bb4a8]" },
+]
+note = "hkClass initializer 0x286870: hkbPhysicsInterface name in rdx, exact objectSize in r9d; descriptor 0x7368AF0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbPinBonesGenerator"
+size = 0xA8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x289528, expect = "mov r9d, 0xa8" },
+  { version = "246", rva = 0x28951C, expect = "lea rdx, [rip + 0x30c2c0d]" },
+]
+note = "hkClass initializer 0x289500: hkbPinBonesGenerator name in rdx, exact objectSize in r9d; descriptor 0x736A660. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbPoseMatchingGenerator"
+size = 0x130
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26FA9C, expect = "mov r9d, 0x130" },
+  { version = "246", rva = 0x26FA90, expect = "lea rdx, [rip + 0x3033ab1]" },
+]
+note = "hkClass initializer 0x26FA70: hkbPoseMatchingGenerator name in rdx, exact objectSize in r9d; descriptor 0x3E69BB0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbPoseMatchingGeneratorInternalState"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28449D, expect = "lea r9d, [rcx + 0x28]" },
+  { version = "246", rva = 0x28448C, expect = "lea rdx, [rip + 0x30b49ed]" },
+]
+note = "hkClass initializer 0x284470: hkbPoseMatchingGeneratorInternalState name in rdx, exact objectSize in r9d; descriptor 0x7367330. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbPoseStoringGeneratorOutputListener"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28962D, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x28961C, expect = "lea rdx, [rip + 0x30c2e0d]" },
+]
+note = "hkClass initializer 0x289600: hkbPoseStoringGeneratorOutputListener name in rdx, exact objectSize in r9d; descriptor 0x736A780. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbPoseStoringGeneratorOutputListener::StoredPose"
+size = 0x70
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2896AD, expect = "lea r9d, [rcx + 0x70]" },
+  { version = "246", rva = 0x28969C, expect = "lea rdx, [rip + 0x30c2cf5]" },
+]
+note = "hkClass initializer 0x289680: hkbPoseStoringGeneratorOutputListenerStoredPose name in rdx, exact objectSize in r9d; descriptor 0x736A700. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbPoweredRagdollControlData"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x286701, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x2866DE, expect = "lea rdx, [rip + 0x3045eb3]" },
+]
+note = "hkClass initializer 0x2866C0: hkbPoweredRagdollControlData name in rdx, exact objectSize in r9d; descriptor 0x73689D0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbPoweredRagdollControlsModifier"
+size = 0xA0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28458C, expect = "mov r9d, 0xa0" },
+  { version = "246", rva = 0x284580, expect = "lea rdx, [rip + 0x30480f1]" },
+]
+note = "hkClass initializer 0x284560: hkbPoweredRagdollControlsModifier name in rdx, exact objectSize in r9d; descriptor 0x73673D0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbProceduralBlenderGenerator"
+size = 0x90
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27EF58, expect = "mov r9d, 0x90" },
+  { version = "246", rva = 0x27EF4C, expect = "lea rdx, [rip + 0x30a56bd]" },
+]
+note = "hkClass initializer 0x27EF30: hkbProceduralBlenderGenerator name in rdx, exact objectSize in r9d; descriptor 0x7363D60. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbProjectData"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26F2B9, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x26F2AA, expect = "lea rdx, [rip + 0x3030327]" },
+]
+note = "hkClass initializer 0x26F280: hkbProjectData name in rdx, exact objectSize in r9d; descriptor 0x3E696C0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbProjectStringData"
+size = 0x80
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x271129, expect = "mov r9d, 0x80" },
+  { version = "246", rva = 0x27111A, expect = "lea rdx, [rip + 0x303cc5f]" },
+]
+note = "hkClass initializer 0x2710F0: hkbProjectStringData name in rdx, exact objectSize in r9d; descriptor 0x3E6AB50. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbRadialSelectorGenerator"
+size = 0xB8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x289808, expect = "mov r9d, 0xb8" },
+  { version = "246", rva = 0x2897FC, expect = "lea rdx, [rip + 0x30c3215]" },
+]
+note = "hkClass initializer 0x2897E0: hkbRadialSelectorGenerator name in rdx, exact objectSize in r9d; descriptor 0x736A8E0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbRadialSelectorGeneratorGeneratorInfo"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x289899, expect = "lea r9d, [rcx + 0x10]" },
+  { version = "246", rva = 0x289881, expect = "lea rdx, [rip + 0x30c3038]" },
+]
+note = "hkClass initializer 0x289870: hkbRadialSelectorGeneratorGeneratorInfo name in rdx, exact objectSize in r9d; descriptor 0x736A840. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbRadialSelectorGeneratorGeneratorPair"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x289919, expect = "lea r9d, [rcx + 0x28]" },
+  { version = "246", rva = 0x289901, expect = "lea rdx, [rip + 0x30c3020]" },
+]
+note = "hkClass initializer 0x2898F0: hkbRadialSelectorGeneratorGeneratorPair name in rdx, exact objectSize in r9d; descriptor 0x736A890. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbRagdollControllerSetup"
+size = 0x1
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x273B29, expect = "lea r9d, [rcx + 1]" },
+  { version = "246", rva = 0x273B11, expect = "lea rdx, [rip + 0x3051508]" },
+]
+note = "hkClass initializer 0x273B00: hkbRagdollControllerSetup name in rdx, exact objectSize in r9d; descriptor 0x3E6C180. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbRagdollInterface"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28691D, expect = "lea r9d, [rax + 0x10]" },
+  { version = "246", rva = 0x286901, expect = "lea rdx, [rip + 0x30bb440]" },
+]
+note = "hkClass initializer 0x2868F0: hkbRagdollInterface name in rdx, exact objectSize in r9d; descriptor 0x7368B50. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbRaiseEventCommand"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2878BD, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x2878AC, expect = "lea rdx, [rip + 0x30bbe15]" },
+]
+note = "hkClass initializer 0x287890: hkbRaiseEventCommand name in rdx, exact objectSize in r9d; descriptor 0x7369380. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbRealEventPayload"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26BE9D, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x26BE8C, expect = "lea rdx, [rip + 0x301fc95]" },
+]
+note = "hkClass initializer 0x26BE70: hkbRealEventPayload name in rdx, exact objectSize in r9d; descriptor 0x3E63830. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbRealVariableSequencedData"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27270D, expect = "lea r9d, [rcx + 0x28]" },
+  { version = "246", rva = 0x2726FC, expect = "lea rdx, [rip + 0x304d7e5]" },
+]
+note = "hkClass initializer 0x2726E0: hkbRealVariableSequencedData name in rdx, exact objectSize in r9d; descriptor 0x3E6B430. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbRealVariableSequencedDataSample"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x272799, expect = "lea r9d, [rcx + 8]" },
+  { version = "246", rva = 0x272781, expect = "lea rdx, [rip + 0x304d700]" },
+]
+note = "hkClass initializer 0x272770: hkbRealVariableSequencedDataSample name in rdx, exact objectSize in r9d; descriptor 0x3E6B3E0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbRebuildScriptsCommand"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2879AD, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x28799C, expect = "lea rdx, [rip + 0x30bbd65]" },
+]
+note = "hkClass initializer 0x287980: hkbRebuildScriptsCommand name in rdx, exact objectSize in r9d; descriptor 0x7369400. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbReferencePoseGenerator"
+size = 0x90
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x284688, expect = "mov r9d, 0x90" },
+  { version = "246", rva = 0x28467C, expect = "lea rdx, [rip + 0x304877d]" },
+]
+note = "hkClass initializer 0x284660: hkbReferencePoseGenerator name in rdx, exact objectSize in r9d; descriptor 0x7367470. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbReferencedGeneratorSyncInfo"
+size = 0xB8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2848F8, expect = "mov r9d, 0xb8" },
+  { version = "246", rva = 0x2848EC, expect = "lea rdx, [rip + 0x30b4f7d]" },
+]
+note = "hkClass initializer 0x2848D0: hkbReferencedGeneratorSyncInfo name in rdx, exact objectSize in r9d; descriptor 0x7367600. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbRigidBodyRagdollControlData"
+size = 0x40
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2865F1, expect = "lea r9d, [rcx + 0x40]" },
+  { version = "246", rva = 0x2865CE, expect = "lea rdx, [rip + 0x3046a63]" },
+]
+note = "hkClass initializer 0x2865B0: hkbRigidBodyRagdollControlData name in rdx, exact objectSize in r9d; descriptor 0x7368900. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbRigidBodyRagdollControlsModifier"
+size = 0xB0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2849EC, expect = "mov r9d, 0xb0" },
+  { version = "246", rva = 0x2849E0, expect = "lea rdx, [rip + 0x3047d79]" },
+]
+note = "hkClass initializer 0x2849C0: hkbRigidBodyRagdollControlsModifier name in rdx, exact objectSize in r9d; descriptor 0x73676D0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbRigidBodySetup"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x273BD9, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x273BC1, expect = "lea rdx, [rip + 0x3051500]" },
+]
+note = "hkClass initializer 0x273BB0: hkbRigidBodySetup name in rdx, exact objectSize in r9d; descriptor 0x3E6C1D0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbRoleAttribute"
+size = 0x4
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x271E69, expect = "lea r9d, [rcx + 4]" },
+  { version = "246", rva = 0x271E51, expect = "lea rdx, [rip + 0x304ced8]" },
+]
+note = "hkClass initializer 0x271E40: hkbRoleAttribute name in rdx, exact objectSize in r9d; descriptor 0x3E6AEB0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbRotateCharacterModifier"
+size = 0x80
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x284AEC, expect = "mov r9d, 0x80" },
+  { version = "246", rva = 0x284AE0, expect = "lea rdx, [rip + 0x3048961]" },
+]
+note = "hkClass initializer 0x284AC0: hkbRotateCharacterModifier name in rdx, exact objectSize in r9d; descriptor 0x7367770. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbRotateCharacterModifierInternalState"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x284BED, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x284BDC, expect = "lea rdx, [rip + 0x30b518d]" },
+]
+note = "hkClass initializer 0x284BC0: hkbRotateCharacterModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x7367810. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbScriptCondition"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x284CDD, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x284CCC, expect = "lea rdx, [rip + 0x30b522d]" },
+]
+note = "hkClass initializer 0x284CB0: hkbScriptCondition name in rdx, exact objectSize in r9d; descriptor 0x73678B0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbScriptGenerator"
+size = 0xD0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x284DC8, expect = "mov r9d, 0xd0" },
+  { version = "246", rva = 0x284DBC, expect = "lea rdx, [rip + 0x30b5795]" },
+]
+note = "hkClass initializer 0x284DA0: hkbScriptGenerator name in rdx, exact objectSize in r9d; descriptor 0x7367950. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbSenseHandleModifier"
+size = 0xF0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x284EDC, expect = "mov r9d, 0xf0" },
+  { version = "246", rva = 0x284ED0, expect = "lea rdx, [rip + 0x3047211]" },
+]
+note = "hkClass initializer 0x284EB0: hkbSenseHandleModifier name in rdx, exact objectSize in r9d; descriptor 0x7367A50. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbSenseHandleModifierRange"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x284F79, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x284F61, expect = "lea rdx, [rip + 0x3047828]" },
+]
+note = "hkClass initializer 0x284F50: hkbSenseHandleModifierRange name in rdx, exact objectSize in r9d; descriptor 0x73679F0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbSequence"
+size = 0x100
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26F978, expect = "mov r9d, 0x100" },
+  { version = "246", rva = 0x26F96C, expect = "lea rdx, [rip + 0x303273d]" },
+]
+note = "hkClass initializer 0x26F950: hkbSequence name in rdx, exact objectSize in r9d; descriptor 0x3E69B10. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbSequenceInternalState"
+size = 0x58
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28506D, expect = "lea r9d, [rcx + 0x58]" },
+  { version = "246", rva = 0x28505C, expect = "lea rdx, [rip + 0x30b687d]" },
+]
+note = "hkClass initializer 0x285040: hkbSequenceInternalState name in rdx, exact objectSize in r9d; descriptor 0x7367B00. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbSequenceStringData"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2721AD, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x27219C, expect = "lea rdx, [rip + 0x304d04d]" },
+]
+note = "hkClass initializer 0x272180: hkbSequenceStringData name in rdx, exact objectSize in r9d; descriptor 0x3E6B0D0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbSequencedData"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27288D, expect = "lea r9d, [rax + 0x10]" },
+  { version = "246", rva = 0x272871, expect = "lea rdx, [rip + 0x304d6c0]" },
+]
+note = "hkClass initializer 0x272860: hkbSequencedData name in rdx, exact objectSize in r9d; descriptor 0x3E6B4B0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbSetBehaviorCommand"
+size = 0x48
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x287AA9, expect = "lea r9d, [rcx + 0x48]" },
+  { version = "246", rva = 0x287A9A, expect = "lea rdx, [rip + 0x30bbcef]" },
+]
+note = "hkClass initializer 0x287A70: hkbSetBehaviorCommand name in rdx, exact objectSize in r9d; descriptor 0x7369480. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbSetLocalTimeOfClipGeneratorCommand"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x287B8D, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x287B7C, expect = "lea rdx, [rip + 0x30bbc4d]" },
+]
+note = "hkClass initializer 0x287B60: hkbSetLocalTimeOfClipGeneratorCommand name in rdx, exact objectSize in r9d; descriptor 0x7369500. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbSetNodePropertyCommand"
+size = 0x30
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x287C89, expect = "lea r9d, [rcx + 0x30]" },
+  { version = "246", rva = 0x287C7A, expect = "lea rdx, [rip + 0x30bbbcf]" },
+]
+note = "hkClass initializer 0x287C50: hkbSetNodePropertyCommand name in rdx, exact objectSize in r9d; descriptor 0x7369580. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbSetSelectedCharacterCommand"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x287D6D, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x287D5C, expect = "lea rdx, [rip + 0x30bbb2d]" },
+]
+note = "hkClass initializer 0x287D40: hkbSetSelectedCharacterCommand name in rdx, exact objectSize in r9d; descriptor 0x7369600. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbSetWordVariableCommand"
+size = 0x50
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x287E5D, expect = "lea r9d, [rcx + 0x50]" },
+  { version = "246", rva = 0x287E4C, expect = "lea rdx, [rip + 0x30bbaad]" },
+]
+note = "hkClass initializer 0x287E30: hkbSetWordVariableCommand name in rdx, exact objectSize in r9d; descriptor 0x7369680. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbSetWorldFromModelModifier"
+size = 0x90
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x285158, expect = "mov r9d, 0x90" },
+  { version = "246", rva = 0x28514C, expect = "lea rdx, [rip + 0x30b6b1d]" },
+]
+note = "hkClass initializer 0x285130: hkbSetWorldFromModelModifier name in rdx, exact objectSize in r9d; descriptor 0x7367BA0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbShapeSetup"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x273C89, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x273C71, expect = "lea rdx, [rip + 0x3051560]" },
+]
+note = "hkClass initializer 0x273C60: hkbShapeSetup name in rdx, exact objectSize in r9d; descriptor 0x3E6C220. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbSimulationControlCommand"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x287F6D, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x287F5C, expect = "lea rdx, [rip + 0x30bba85]" },
+]
+note = "hkClass initializer 0x287F40: hkbSimulationControlCommand name in rdx, exact objectSize in r9d; descriptor 0x7369700. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbSimulationStateInfo"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28808D, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x28807C, expect = "lea rdx, [rip + 0x30bb9cd]" },
+]
+note = "hkClass initializer 0x288060: hkbSimulationStateInfo name in rdx, exact objectSize in r9d; descriptor 0x7369780. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStateChooser"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27EFDD, expect = "lea r9d, [rax + 0x10]" },
+  { version = "246", rva = 0x27EFC1, expect = "lea rdx, [rip + 0x30a5730]" },
+]
+note = "hkClass initializer 0x27EFB0: hkbStateChooser name in rdx, exact objectSize in r9d; descriptor 0x7363DC0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStateChooserWrapper"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27F04D, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x27F03C, expect = "lea rdx, [rip + 0x30a56e5]" },
+]
+note = "hkClass initializer 0x27F020: hkbStateChooserWrapper name in rdx, exact objectSize in r9d; descriptor 0x7363E10. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStateDependentModifier"
+size = 0x88
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x289A08, expect = "mov r9d, 0x88" },
+  { version = "246", rva = 0x2899FC, expect = "lea rdx, [rip + 0x30c3195]" },
+]
+note = "hkClass initializer 0x2899E0: hkbStateDependentModifier name in rdx, exact objectSize in r9d; descriptor 0x736A9A0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStateListener"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x27428D, expect = "lea r9d, [rax + 0x10]" },
+  { version = "246", rva = 0x274271, expect = "lea rdx, [rip + 0x30549c8]" },
+]
+note = "hkClass initializer 0x274260: hkbStateListener name in rdx, exact objectSize in r9d; descriptor 0x3E6C610. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStateMachine"
+size = 0x148
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28530C, expect = "mov r9d, 0x148" },
+  { version = "246", rva = 0x285300, expect = "lea rdx, [rip + 0x3043ea1]" },
+]
+note = "hkClass initializer 0x2852E0: hkbStateMachine name in rdx, exact objectSize in r9d; descriptor 0x7367FF0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStateMachineActiveTransitionInfo"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x285295, expect = "lea r9d, [rcx + 0x28]" },
+  { version = "246", rva = 0x28527E, expect = "lea rdx, [rip + 0x30b7cb3]" },
+]
+note = "hkClass initializer 0x285260: hkbStateMachineActiveTransitionInfo name in rdx, exact objectSize in r9d; descriptor 0x7367D30. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStateMachineDelayedTransitionInfo"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2853B5, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x28539E, expect = "lea rdx, [rip + 0x30b7e83]" },
+]
+note = "hkClass initializer 0x285380: hkbStateMachineDelayedTransitionInfo name in rdx, exact objectSize in r9d; descriptor 0x7367FA0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStateMachine::EventPropertyArray"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28542D, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x28541C, expect = "lea rdx, [rip + 0x30b7c55]" },
+]
+note = "hkClass initializer 0x285400: hkbStateMachineEventPropertyArray name in rdx, exact objectSize in r9d; descriptor 0x7367E50. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStateMachineInternalState"
+size = 0x68
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x285A2D, expect = "lea r9d, [rcx + 0x68]" },
+  { version = "246", rva = 0x285A1C, expect = "lea rdx, [rip + 0x30b7bed]" },
+]
+note = "hkClass initializer 0x285A00: hkbStateMachineInternalState name in rdx, exact objectSize in r9d; descriptor 0x7368150. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStateMachineNestedStateMachineData"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x285519, expect = "lea r9d, [rcx + 0x10]" },
+  { version = "246", rva = 0x285501, expect = "lea rdx, [rip + 0x30b7c38]" },
+]
+note = "hkClass initializer 0x2854F0: hkbStateMachineNestedStateMachineData name in rdx, exact objectSize in r9d; descriptor 0x7367F50. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStateMachineProspectiveTransitionInfo"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2855A5, expect = "lea r9d, [rcx + 0x10]" },
+  { version = "246", rva = 0x28558E, expect = "lea rdx, [rip + 0x30b7a03]" },
+]
+note = "hkClass initializer 0x285570: hkbStateMachineProspectiveTransitionInfo name in rdx, exact objectSize in r9d; descriptor 0x7367D80. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStateMachine::StateInfo"
+size = 0x78
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x285635, expect = "lea r9d, [rcx + 0x78]" },
+  { version = "246", rva = 0x28561A, expect = "lea rdx, [rip + 0x3043e3f]" },
+]
+note = "hkClass initializer 0x2855F0: hkbStateMachineStateInfo name in rdx, exact objectSize in r9d; descriptor 0x7367ED0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStateMachineTimeInterval"
+size = 0x10
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x285719, expect = "lea r9d, [rcx + 0x10]" },
+  { version = "246", rva = 0x285701, expect = "lea rdx, [rip + 0x30434e0]" },
+]
+note = "hkClass initializer 0x2856F0: hkbStateMachineTimeInterval name in rdx, exact objectSize in r9d; descriptor 0x7367C40. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStateMachineTransitionInfo"
+size = 0x48
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x285895, expect = "lea r9d, [rcx + 0x48]" },
+  { version = "246", rva = 0x285875, expect = "lea rdx, [rip + 0x3043a0c]" },
+]
+note = "hkClass initializer 0x285860: hkbStateMachineTransitionInfo name in rdx, exact objectSize in r9d; descriptor 0x7367C90. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStateMachine::TransitionInfoArray"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28579D, expect = "lea r9d, [rcx + 0x28]" },
+  { version = "246", rva = 0x28578C, expect = "lea rdx, [rip + 0x3043575]" },
+]
+note = "hkClass initializer 0x285770: hkbStateMachineTransitionInfoArray name in rdx, exact objectSize in r9d; descriptor 0x7367DD0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStateMachineTransitionInfoReference"
+size = 0x6
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x285925, expect = "lea r9d, [rcx + 6]" },
+  { version = "246", rva = 0x28590E, expect = "lea rdx, [rip + 0x30b7503]" },
+]
+note = "hkClass initializer 0x2858F0: hkbStateMachineTransitionInfoReference name in rdx, exact objectSize in r9d; descriptor 0x7367CE0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStringCondition"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x285B1D, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x285B0C, expect = "lea rdx, [rip + 0x30b7c65]" },
+]
+note = "hkClass initializer 0x285AF0: hkbStringCondition name in rdx, exact objectSize in r9d; descriptor 0x73681F0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbStringEventPayload"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x26BF8D, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x26BF7C, expect = "lea rdx, [rip + 0x301fbdd]" },
+]
+note = "hkClass initializer 0x26BF60: hkbStringEventPayload name in rdx, exact objectSize in r9d; descriptor 0x3E638B0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbTestIdSelector"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x289AFD, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x289AEC, expect = "lea rdx, [rip + 0x30c31bd]" },
+]
+note = "hkClass initializer 0x289AD0: hkbTestIdSelector name in rdx, exact objectSize in r9d; descriptor 0x736AA40. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbTimerModifier"
+size = 0x78
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x285C25, expect = "lea r9d, [rcx + 0x78]" },
+  { version = "246", rva = 0x285C0A, expect = "lea rdx, [rip + 0x3048287]" },
+]
+note = "hkClass initializer 0x285BE0: hkbTimerModifier name in rdx, exact objectSize in r9d; descriptor 0x7368290. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbTimerModifierInternalState"
+size = 0x18
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x285D0D, expect = "lea r9d, [rcx + 0x18]" },
+  { version = "246", rva = 0x285CFC, expect = "lea rdx, [rip + 0x30b7cd5]" },
+]
+note = "hkClass initializer 0x285CE0: hkbTimerModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x7368330. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbTransformVectorModifier"
+size = 0xB0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x285DF8, expect = "mov r9d, 0xb0" },
+  { version = "246", rva = 0x285DEC, expect = "lea rdx, [rip + 0x30b821d]" },
+]
+note = "hkClass initializer 0x285DD0: hkbTransformVectorModifier name in rdx, exact objectSize in r9d; descriptor 0x73683D0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbTransformVectorModifierInternalState"
+size = 0x20
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x285EFD, expect = "lea r9d, [rcx + 0x20]" },
+  { version = "246", rva = 0x285EEC, expect = "lea rdx, [rip + 0x30b81c5]" },
+]
+note = "hkClass initializer 0x285ED0: hkbTransformVectorModifierInternalState name in rdx, exact objectSize in r9d; descriptor 0x7368470. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbTransitionEffect"
+size = 0xA8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x271238, expect = "mov r9d, 0xa8" },
+  { version = "246", rva = 0x27122C, expect = "lea rdx, [rip + 0x303cf9d]" },
+]
+note = "hkClass initializer 0x271210: hkbTransitionEffect name in rdx, exact objectSize in r9d; descriptor 0x3E6ABF0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbTwistModifier"
+size = 0xA0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28601C, expect = "mov r9d, 0xa0" },
+  { version = "246", rva = 0x286010, expect = "lea rdx, [rip + 0x30b88a1]" },
+]
+note = "hkClass initializer 0x285FF0: hkbTwistModifier name in rdx, exact objectSize in r9d; descriptor 0x7368510. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbVariableBindingSet"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x275CD5, expect = "lea r9d, [rcx + 0x28]" },
+  { version = "246", rva = 0x275CBA, expect = "lea rdx, [rip + 0x30531b7]" },
+]
+note = "hkClass initializer 0x275C90: hkbVariableBindingSet name in rdx, exact objectSize in r9d; descriptor 0x3E6D880. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbVariableBindingSetBinding"
+size = 0x28
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x275C3C, expect = "lea r9d, [rcx + 0x28]" },
+  { version = "246", rva = 0x275C15, expect = "lea rdx, [rip + 0x305318c]" },
+]
+note = "hkClass initializer 0x275C00: hkbVariableBindingSetBinding name in rdx, exact objectSize in r9d; descriptor 0x3E6D830. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbVariableBounds"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x274D99, expect = "lea r9d, [rcx + 8]" },
+  { version = "246", rva = 0x274D81, expect = "lea rdx, [rip + 0x305c288]" },
+]
+note = "hkClass initializer 0x274D70: hkbVariableBounds name in rdx, exact objectSize in r9d; descriptor 0x3E6CE50. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbVariableInfo"
+size = 0x6
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x273765, expect = "lea r9d, [rcx + 6]" },
+  { version = "246", rva = 0x273745, expect = "lea rdx, [rip + 0x30511ec]" },
+]
+note = "hkClass initializer 0x273730: hkbVariableInfo name in rdx, exact objectSize in r9d; descriptor 0x3E6BF40. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbVariableValue"
+size = 0x4
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x274E19, expect = "lea r9d, [rcx + 4]" },
+  { version = "246", rva = 0x274E01, expect = "lea rdx, [rip + 0x3053e68]" },
+]
+note = "hkClass initializer 0x274DF0: hkbVariableValue name in rdx, exact objectSize in r9d; descriptor 0x3E6CEA0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbVariableValueSet"
+size = 0x40
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x273819, expect = "lea r9d, [rcx + 0x40]" },
+  { version = "246", rva = 0x27380A, expect = "lea rdx, [rip + 0x305123f]" },
+]
+note = "hkClass initializer 0x2737E0: hkbVariableValueSet name in rdx, exact objectSize in r9d; descriptor 0x3E6BFA0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbWorldFromModelModeData"
+size = 0x8
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x2867E9, expect = "lea r9d, [rcx + 8]" },
+  { version = "246", rva = 0x2867D1, expect = "lea rdx, [rip + 0x3045de8]" },
+]
+note = "hkClass initializer 0x2867C0: hkbWorldFromModelModeData name in rdx, exact objectSize in r9d; descriptor 0x7368A90. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbnpPhysicsInterface"
+size = 0xA0
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28C518, expect = "mov r9d, 0xa0" },
+  { version = "246", rva = 0x28C50C, expect = "lea rdx, [rip + 0x3042645]" },
+]
+note = "hkClass initializer 0x28C4F0: hkbnpPhysicsInterface name in rdx, exact objectSize in r9d; descriptor 0x736C520. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkbnpRagdollInterface"
+size = 0x60
+kind = "exact"
+versions = ["246"]
+proof = [
+  { version = "246", rva = 0x28C60D, expect = "lea r9d, [rcx + 0x60]" },
+  { version = "246", rva = 0x28C5FC, expect = "lea rdx, [rip + 0x30cf5d5]" },
+]
+note = "hkClass initializer 0x28C5E0: hkbnpRagdollInterface name in rdx, exact objectSize in r9d; descriptor 0x736C5C0. All four reflected layouts agree."
+
+[[evidence]]
+class = "hkaAnimationControl"
+size = 0x58
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [
+  { version = "162", rva = 0x1E39D42, expect = "mov ebx, 0x58" },
+  { version = "982", rva = 0x1E2D1EE, expect = "mov edi, 0x58" },
+  { version = "137", rva = 0x1E57C7E, expect = "mov edi, 0x58" },
+  { version = "246", rva = 0x1E5D04E, expect = "mov edi, 0x58" },
+]
+note = "Deleting destructor supplies its exact fallback size to hkMemoryAllocator::blockFree; all four primary vtables have 18 entries."
+
+[[evidence]]
+class = "hkaDefaultAnimationControl"
+size = 0xC0
+kind = "exact"
+versions = ["162", "982", "137", "246"]
+proof = [
+  { version = "162", rva = 0x1C9DD72, expect = "mov ebx, 0xc0" },
+  { version = "982", rva = 0x1CC88FE, expect = "mov edi, 0xc0" },
+  { version = "137", rva = 0x1CF338E, expect = "mov edi, 0xc0" },
+  { version = "246", rva = 0x1CF873E, expect = "mov edi, 0xc0" },
+]
+note = "Deleting destructor supplies exact fallback size to blockFree; allocation at 0x7321E4 agrees and calls the constructor through 0x29122."

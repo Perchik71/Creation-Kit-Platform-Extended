@@ -39,6 +39,7 @@ class Constructors:
 
     def constants(self, instructions):
         values, calls, writes = {}, [], []
+        stack_aliases, stack_values = {"rsp": 0}, {}
 
         def operand_value(ins, operand):
             if operand.type == X86_OP_IMM:
@@ -73,16 +74,24 @@ class Constructors:
                     calls.append({
                         "site_rva": ins.address, "target_rva": operands[0].imm,
                         "kind": ins.mnemonic,
+                        "stack_arguments": {
+                            offset - stack_aliases["rsp"]: value.copy()
+                            for offset, value in stack_values.items()
+                            if "rsp" in stack_aliases and
+                            offset >= stack_aliases["rsp"] + 0x20},
                         "arguments": {reg: values[reg].copy() for reg in
                                       ("rcx", "rdx", "r8", "r9") if reg in values}})
                 if ins.mnemonic == "call":
                     for reg in ("rax", "rcx", "rdx", "r8", "r9", "r10", "r11"):
                         values.pop(reg, None)
+                        stack_aliases.pop(reg, None)
+                    stack_values.clear()
                 continue
             if not operands:
                 _, changed = ins.regs_access()
                 for reg in changed:
                     values.pop(register(ins.reg_name(reg)), None)
+                    stack_aliases.pop(register(ins.reg_name(reg)), None)
                 continue
             dst = operands[0]
             value = None
@@ -105,10 +114,47 @@ class Constructors:
                     "rva": at - self.image.base if at is not None else None,
                     "base": register(ins.reg_name(dst.mem.base)),
                     "displacement": dst.mem.disp, "indexed": bool(dst.mem.index),
-                    "value": value, "site_rva": ins.address})
+                    "value": value, "site_rva": ins.address, "width": dst.size,
+                    "instruction": f"{ins.mnemonic} {ins.op_str}"})
+            if dst.type == X86_OP_MEM and not dst.mem.index:
+                base = stack_aliases.get(register(ins.reg_name(dst.mem.base)))
+                if base is not None:
+                    offset = base + dst.mem.disp
+                    for old, known in list(stack_values.items()):
+                        if old < offset + dst.size and offset < old + known["width"]:
+                            del stack_values[old]
+                    if value is not None:
+                        stack_values[offset] = {
+                            "value": value, "width": dst.size,
+                            "site_rva": ins.address,
+                            "instruction": f"{ins.mnemonic} {ins.op_str}"}
+            stack_offset = None
+            stack_pointer = stack_aliases.get("rsp")
+            if stack_pointer is not None and ins.mnemonic in ("push", "pop"):
+                stack_pointer += -8 if ins.mnemonic == "push" else 8
+            else:
+                stack_pointer = None
+            if dst.type == X86_OP_REG and len(operands) == 2:
+                src = operands[1]
+                if ins.mnemonic == "mov" and src.type == X86_OP_REG:
+                    stack_offset = stack_aliases.get(register(ins.reg_name(src.reg)))
+                elif ins.mnemonic == "lea" and src.type == X86_OP_MEM:
+                    base = stack_aliases.get(register(ins.reg_name(src.mem.base)))
+                    if base is not None and not src.mem.index:
+                        stack_offset = base + src.mem.disp
+                elif ins.mnemonic in ("add", "sub") and src.type == X86_OP_IMM:
+                    base = stack_aliases.get(register(ins.reg_name(dst.reg)))
+                    if base is not None:
+                        stack_offset = base + src.imm * (
+                            1 if ins.mnemonic == "add" else -1)
             _, changed = ins.regs_access()
             for reg in changed:
                 values.pop(register(ins.reg_name(reg)), None)
+                stack_aliases.pop(register(ins.reg_name(reg)), None)
+            if stack_pointer is not None:
+                stack_aliases["rsp"] = stack_pointer
+            if stack_offset is not None and dst.size == 8:
+                stack_aliases[register(ins.reg_name(dst.reg))] = stack_offset
             if dst.type == X86_OP_REG:
                 reg = register(ins.reg_name(dst.reg))
                 if value is not None and ins.reg_name(dst.reg) not in (
