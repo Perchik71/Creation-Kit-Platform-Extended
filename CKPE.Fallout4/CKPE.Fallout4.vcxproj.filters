@@ -1098,6 +1098,9 @@
     <ClInclude Include="Include\EditorAPI\T\TESFile.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESRegionData.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESRegionDataManager.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
