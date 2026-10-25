@@ -6,6 +6,9 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <windows.h>
+#include <EditorAPI/B/BSString.h>
+#include <EditorAPI/C/CheckInFormList.h>
 #include <EditorAPI/B/BGSEntryPoint.h>
 #include <EditorAPI/B/BGSEntryPointFunctionData.h>
 
@@ -17,11 +20,13 @@ namespace CKPE::Fallout4::EditorAPI
 namespace CKPE::Fallout4::EditorAPI::Forms
 {
 	class TESQuest;
+	class TESForm;
 	class TESCondition;
 
 	class BGSPerkEntry
 	{
 	protected:
+		// 0x000-0x010: return 0 in the base and the quest/ability entries (the entry point entry overrides them); not identified
 		virtual void sub_000() = 0;
 		virtual void sub_008() = 0;
 		virtual void sub_010() = 0;
@@ -32,31 +37,47 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		[[nodiscard]] virtual std::uint32_t GetType() const = 0; // 04
 
 	protected:
-		virtual void sub_028() = 0;
-		virtual void sub_030() = 0;
-		virtual void sub_038() = 0;
-		virtual void sub_040() = 0;
-		virtual void sub_048() = 0;
-		virtual void sub_050() = 0;
+		virtual void sub_028() = 0; // 05 - no-op in the base, quest and ability entries
 
 	public:
-		virtual bool Load(TESFile* File) = 0; // 11
+		// Resolves the form ids read by Load into pointers through the owning perk (the quest entry looks the quest up and registers
+		// the owner as a reference holder).
+		virtual void ResolveReferences(TESForm* Owner) = 0; // 06
+		// Allocates a new entry of the same type and copies this one into it
+		[[nodiscard]] virtual BGSPerkEntry* Clone() const = 0; // 07
+		// Copies the shared header: rank and priority
+		virtual void CopyBaseData(const BGSPerkEntry* Source) = 0; // 08
+		[[nodiscard]] virtual bool IsDifferent(const BGSPerkEntry* Other) const = 0; // 09
+		virtual void Save() = 0; // 0A - writes the entry's chunks
+		virtual bool Load(TESFile* File) = 0; // 0B
 
 	protected:
-		virtual void sub_060() = 0;
-		virtual void sub_068() = 0;
-		virtual void sub_070() = 0;
-		virtual void sub_078() = 0;
-		virtual void sub_080() = 0;
-		virtual void sub_088() = 0;
-		virtual void sub_090() = 0;
-		virtual void sub_098() = 0;
-		virtual void sub_0A0() = 0;
-		virtual void sub_0A8() = 0;
-		virtual void sub_0B0() = 0;
-		virtual void sub_0B8() = 0;
-		virtual void sub_0C0() = 0;
-		virtual void sub_0C8() = 0;
+		virtual void sub_060() = 0; // 0C
+		virtual void sub_068() = 0; // 0D
+		virtual void sub_070() = 0; // 0E - returns 0xFFFF in the base and quest entries
+		virtual void sub_078() = 0; // 0F
+
+	public:
+		// Dialog box handling of the perk entry editor (the quest entry fills controls 2158 and 2446)
+		virtual void UpdateDataInDialogBox(HWND hDialogBox) = 0; // 10
+		virtual void UpdateDataFromDialogBox(HWND hDialogBox) = 0; // 11
+
+	protected:
+		virtual void sub_090() = 0; // 12 - no-op in the quest entry
+		virtual void sub_098() = 0; // 13 - formats a value for the entry list according to a format id
+
+	public:
+		virtual void EnableDialogControls(HWND hDialogBox, bool bEnable) = 0; // 14
+
+	protected:
+		virtual void sub_0A8() = 0; // 15 - releases a reference counted object (count at +30)
+		virtual void sub_0B0() = 0; // 16 - no-op in the base, quest and ability entries
+
+	public:
+		// The entry is acceptable for check-in when its referenced form (if any) passes TESForm::CanReferenceDuringCheckIn
+		[[nodiscard]] virtual bool CanCheckIn(const CheckInFormList* Forms) const = 0; // 17
+		virtual void RemoveReferencesToForm(TESForm* Form) = 0; // 18
+		virtual void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const = 0; // 19
 
 	public:
 		/* 0x008 */ std::uint8_t rank;

@@ -6,6 +6,12 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <windows.h>
+
+namespace CKPE::Fallout4::EditorAPI
+{
+	class TESFile;
+}
 
 namespace CKPE::Fallout4::EditorAPI::Forms
 {
@@ -32,19 +38,28 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		[[nodiscard]] virtual Type GetType() const = 0; // 01
 
 	protected:
-		virtual void sub_010() = 0;
-		virtual void sub_018() = 0;
-		virtual void sub_020() = 0;
-		virtual void sub_028() = 0;
-		virtual void sub_030() = 0;
-		virtual void sub_038() = 0;
-		virtual void sub_040() = 0;
-		virtual void sub_048() = 0;
-		virtual void sub_050() = 0;
-		virtual void sub_058() = 0;
-		virtual void sub_060() = 0;
-		virtual void sub_068() = 0;
-		virtual void sub_070() = 0;
+		virtual void sub_010() = 0; // 02 - no-op for plain values; the form based types (leveled list, spell, actor value) override it
+		virtual void sub_018() = 0; // 03 - no-op in most types
+		virtual void sub_020() = 0; // 04 - returns 0 in most types
+
+	public:
+		// Dialog box handling of the perk entry editor (the one value type sets up a numeric edit control)
+		virtual void InitDialogControls(HWND hDialogBox) = 0; // 05
+		virtual void UpdateDataFromDialogBox(HWND hDialogBox) = 0; // 06
+		// Formats the value for a list view; returns false when Format is not handled (the one value type handles format 5 as "%.02f")
+		virtual bool FormatValueText(std::int32_t Format, char* Buffer) = 0; // 07
+
+	protected:
+		virtual void sub_040() = 0; // 08 - returns true for plain values
+		virtual void sub_048() = 0; // 09 - no-op in most types
+		virtual void sub_050() = 0; // 0A - no-op in most types
+
+	public:
+		// Allocates a new data object of the same type and copies this one into it
+		[[nodiscard]] virtual BGSEntryPointFunctionData* Clone() const = 0; // 0B
+		[[nodiscard]] virtual bool IsDifferent(const BGSEntryPointFunctionData* Other) const = 0; // 0C
+		virtual void Save() const = 0; // 0D - writes the EPFD chunk
+		virtual bool Load(TESFile* File) = 0; // 0E - reads the EPFD chunk, false when its size does not match the type
 
 	public:
 		/* 0x008 */ std::uint8_t unk08[0x10];
