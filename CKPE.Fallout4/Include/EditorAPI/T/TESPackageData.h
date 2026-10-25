@@ -6,25 +6,34 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <windows.h>
 
 namespace CKPE::Fallout4::EditorAPI::Forms
 {
 	class TESPackage;
+	class TESForm;
 
 	class TESPackageData
 	{
 	public:
 		virtual ~TESPackageData() = default;
 
+	public:
+		// The base implementations (vtable 0x1430081A0) are no-ops, IsDifferent returns true and ProcessDialogMessage false.
+		virtual void CopyFrom(const TESPackageData* Source) = 0; // 01
+		[[nodiscard]] virtual bool IsDifferent(const TESPackageData* Other) const = 0; // 02
+		// Resolves the form ids read by Load into pointers through the owning package
+		virtual void ResolveReferences(TESForm* Owner) = 0; // 03
+		virtual void Save() = 0; // 04 - writes the package data chunk
+		virtual bool ProcessDialogMessage(HWND hDialogBox, UINT uMsg, WPARAM wParam) = 0; // 05
+
+		virtual void UpdateDataInDialogBox(HWND hDialogBox) = 0; // 06
+
 	protected:
-		virtual void sub_008() = 0;
-		virtual void sub_010() = 0;
-		virtual void sub_018() = 0;
-		virtual void sub_020() = 0;
-		virtual void sub_028() = 0;
-		virtual void sub_030() = 0;
-		virtual void sub_038() = 0;
-		virtual void sub_040() = 0;
+		virtual void sub_038() = 0; // 07 - no-op in the base and every derived type
+
+	public:
+		virtual void UpdateDataFromDialogBox(HWND hDialogBox) = 0; // 08
 	};
 	static_assert(sizeof(TESPackageData) == 0x8);
 
