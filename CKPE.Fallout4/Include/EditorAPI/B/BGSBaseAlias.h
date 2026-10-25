@@ -6,6 +6,9 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <windows.h>
+#include <EditorAPI/B/BSString.h>
+#include <EditorAPI/C/CheckInFormList.h>
 #include <EditorAPI/B/BSFixedString.h>
 
 namespace CKPE::Fallout4::EditorAPI
@@ -16,6 +19,7 @@ namespace CKPE::Fallout4::EditorAPI
 namespace CKPE::Fallout4::EditorAPI::Forms
 {
 	class TESQuest;
+	class TESForm;
 	class BGSLocation;
 	class BGSKeyword;
 	class TESCondition;
@@ -32,32 +36,47 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 
 		virtual ~BGSBaseAlias() = default; // 00
 
-	protected:
-		// Unresolved editor-only signatures must not be called through these slots.
-		virtual void sub_008() = 0;
-		virtual void sub_010() = 0;
-		virtual void sub_018() = 0;
-
 	public:
+		// Copies another alias of the same type (checked through QType)
+		virtual void CopyFrom(const BGSBaseAlias* Source) = 0; // 01
+		[[nodiscard]] virtual bool IsDifferent(const BGSBaseAlias* Other) const = 0; // 02
+		virtual void Save() const = 0; // 03 - writes the alias chunks
 		virtual bool Load(TESFile* File) = 0; // 04
 		virtual void InitItem() = 0; // 05
 		[[nodiscard]] virtual const BSFixedString& QType() const = 0; // 06
 
 	protected:
-		virtual void sub_038() = 0;
-		virtual void sub_040() = 0;
-		virtual void sub_048() = 0;
-		virtual void sub_050() = 0;
-		virtual void sub_058() = 0;
-		virtual void sub_060() = 0;
-		virtual void sub_068() = 0;
-		virtual void sub_070() = 0;
-		virtual void sub_078() = 0;
-		virtual void sub_080() = 0;
-		virtual void sub_088() = 0;
-		virtual void sub_090() = 0;
-		virtual void sub_098() = 0;
-		virtual void sub_0A0() = 0;
+		virtual void sub_038() = 0; // 07 - location alias: tells the referenced forms to track the owner (virtual 75 of TESForm, one form without arguments)
+		virtual void sub_040() = 0; // 08 - location alias: registers the owner on the referenced forms
+
+	public:
+		virtual void RemoveReferencesToForm(TESForm* Form) = 0; // 09
+		[[nodiscard]] virtual bool CanCheckIn(const CheckInFormList* Forms, TESForm* ReferencingForm) const = 0; // 0A
+		virtual void BuildCheckInDependencyMessage(const CheckInFormList* Forms, TESForm* ReferencingForm, BSString& Message) const = 0; // 0B
+		// Dialog template resource id of the alias editor page (3364 for location aliases)
+		[[nodiscard]] virtual std::int32_t GetDialogTemplateID() const = 0; // 0C
+
+	protected:
+		virtual void sub_068() = 0; // 0D - formats a text for the alias list by column id
+		virtual void sub_070() = 0; // 0E - builds the alias summary text
+
+	public:
+		// Allocates a new alias of the same type and copies this one into it
+		[[nodiscard]] virtual BGSBaseAlias* Clone() const = 0; // 0F
+
+	protected:
+		virtual void sub_080() = 0; // 10 - fills the alias editor dialog (also takes a second argument)
+
+	public:
+		virtual void UpdateDataFromDialogBox(HWND hDialogBox) = 0; // 11
+
+	protected:
+		virtual void sub_090() = 0; // 12 - releases the alias editor dialog data
+		virtual void sub_098() = 0; // 13 - alias editor dialog message handler (WM_COMMAND etc.)
+
+	public:
+		// Appends the flag letters of the alias (R, S, ...) to the text
+		virtual void BuildFlagsText(BSString& Text) const = 0; // 14
 
 	public:
 		[[nodiscard]] virtual TESQuest* QExternalQuest() const = 0; // 21
