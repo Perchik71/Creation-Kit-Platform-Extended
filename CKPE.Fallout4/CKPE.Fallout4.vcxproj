@@ -470,6 +470,9 @@
     <ClInclude Include="Include\EditorAPI\T\TESFile.h" />
     <ClInclude Include="Include\EditorAPI\T\TESRegionDataManager.h" />
     <ClInclude Include="Include\EditorAPI\T\TESRegionData.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESRegionObject.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESWeatherList.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESWaterObject.h" />
     <ClInclude Include="Include\EditorAPI\T\TESVersionControl.h" />
     <ClInclude Include="Include\EditorAPI\T\TESForm.h" />
     <ClInclude Include="Include\EditorAPI\T\TESFullName.h" />

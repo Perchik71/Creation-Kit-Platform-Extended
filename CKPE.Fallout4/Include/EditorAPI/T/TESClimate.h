@@ -8,6 +8,7 @@
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESModel.h>
 #include <EditorAPI/T/TESTexture.h>
+#include <EditorAPI/T/TESWeatherList.h>
 
 namespace CKPE
 {
@@ -42,8 +43,7 @@ namespace CKPE
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESClimate[0];
 				public:
 					TESModel nightSky; // 28
-					std::uint8_t weatherList[0x18]; // 60 - TESWeatherList (WLST)
-					std::uint8_t unk78[0x18]; // 78
+					TESWeatherList weatherList; // 60 - WLST
 					TESTexture skyObjects[2]; // 90 - FNAM/GNAM
 					std::uint8_t data[0x6]; // E0 - TNAM
 					std::uint16_t padE6; // E6
