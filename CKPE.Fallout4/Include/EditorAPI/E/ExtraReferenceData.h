@@ -64,7 +64,10 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kOwnership };
 		ExtraOwnership() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x10];
+		/* 0x018 */ std::uint64_t unk18;
+		/* 0x020 */ std::uint32_t unk20;
+		/* 0x024 */ std::uint8_t unk24;
+		/* 0x025 */ std::uint8_t unk25[0x03];
 	};
 	static_assert(sizeof(ExtraOwnership) == 0x28);
 	static_assert(offsetof(ExtraOwnership, unk18) == 0x18);
@@ -134,7 +137,10 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kLocationRefType };
 		ExtraLocationRefType() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x18];
+		/* 0x018 */ std::uint64_t unk18;
+		/* 0x020 */ std::uint8_t unk20[0x08];
+		/* 0x028 */ std::uint32_t unk28;
+		/* 0x02C */ std::uint8_t unk2C[0x04];
 	};
 	static_assert(sizeof(ExtraLocationRefType) == 0x30);
 	static_assert(offsetof(ExtraLocationRefType, unk18) == 0x18);
@@ -144,7 +150,10 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kActivateRef };
 		ExtraActivateRef() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x18];
+		/* 0x018 */ std::uint8_t unk18;
+		/* 0x019 */ std::uint8_t unk19[0x07];
+		/* 0x020 */ std::uint64_t unk20;
+		/* 0x028 */ std::uint64_t unk28;
 	};
 	static_assert(sizeof(ExtraActivateRef) == 0x30);
 	static_assert(offsetof(ExtraActivateRef, unk18) == 0x18);
@@ -154,7 +163,10 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kActivateRefChildren };
 		ExtraActivateRefChildren() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x18];
+		/* 0x018 */ std::uint64_t unk18;
+		/* 0x020 */ std::uint64_t unk20;
+		/* 0x028 */ std::uint32_t unk28;
+		/* 0x02C */ std::uint8_t unk2C[0x04];
 	};
 	static_assert(sizeof(ExtraActivateRefChildren) == 0x30);
 	static_assert(offsetof(ExtraActivateRefChildren, unk18) == 0x18);
@@ -164,7 +176,9 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kEnableStateChildren };
 		ExtraEnableStateChildren() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x10];
+		/* 0x018 */ std::uint32_t unk18;
+		/* 0x01C */ std::uint8_t unk1C[0x04];
+		/* 0x020 */ std::uint64_t unk20;
 	};
 	static_assert(sizeof(ExtraEnableStateChildren) == 0x28);
 	static_assert(offsetof(ExtraEnableStateChildren, unk18) == 0x18);
@@ -174,7 +188,8 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kEditorTestRadius };
 		ExtraEditorTestRadius() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x08];
+		/* 0x018 */ float unk18;
+		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraEditorTestRadius) == 0x20);
 	static_assert(offsetof(ExtraEditorTestRadius, unk18) == 0x18);
@@ -184,7 +199,8 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kEditorFlags };
 		ExtraEditorFlags() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x08];
+		/* 0x018 */ std::uint32_t unk18;
+		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraEditorFlags) == 0x20);
 	static_assert(offsetof(ExtraEditorFlags, unk18) == 0x18);
@@ -194,7 +210,8 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kOriginalReference };
 		ExtraOriginalReference() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x08];
+		/* 0x018 */ std::uint32_t unk18;
+		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraOriginalReference) == 0x20);
 	static_assert(offsetof(ExtraOriginalReference, unk18) == 0x18);
@@ -204,7 +221,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kReferenceGroup };
 		ExtraReferenceGroup() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x08];
+		/* 0x018 */ std::uint64_t unk18;
 	};
 	static_assert(sizeof(ExtraReferenceGroup) == 0x20);
 	static_assert(offsetof(ExtraReferenceGroup, unk18) == 0x18);
@@ -214,7 +231,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kStartingWorldOrCell };
 		ExtraStartingWorldOrCell() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x08];
+		/* 0x018 */ std::uint64_t unk18;
 	};
 	static_assert(sizeof(ExtraStartingWorldOrCell) == 0x20);
 	static_assert(offsetof(ExtraStartingWorldOrCell, unk18) == 0x18);
@@ -224,7 +241,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kMasterFileCell };
 		ExtraMasterFileCell() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x08];
+		/* 0x018 */ std::uint64_t unk18;
 	};
 	static_assert(sizeof(ExtraMasterFileCell) == 0x20);
 	static_assert(offsetof(ExtraMasterFileCell, unk18) == 0x18);
@@ -234,7 +251,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kMasterLocation };
 		ExtraMasterLocation() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x08];
+		/* 0x018 */ std::uint64_t unk18;
 	};
 	static_assert(sizeof(ExtraMasterLocation) == 0x20);
 	static_assert(offsetof(ExtraMasterLocation, unk18) == 0x18);
@@ -244,7 +261,10 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kAttachArrows3D };
 		ExtraAttachedArrows3D() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x20];
+		/* 0x018 */ std::uint64_t unk18;
+		/* 0x020 */ std::uint8_t unk20[0x08];
+		/* 0x028 */ std::uint32_t unk28;
+		/* 0x02C */ std::uint8_t unk2C[0x0C];
 	};
 	static_assert(sizeof(ExtraAttachedArrows3D) == 0x38);
 	static_assert(offsetof(ExtraAttachedArrows3D, unk18) == 0x18);
@@ -254,7 +274,8 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kAttachRef };
 		ExtraAttachRef() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x08];
+		/* 0x018 */ std::uint32_t unk18;
+		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraAttachRef) == 0x20);
 	static_assert(offsetof(ExtraAttachRef, unk18) == 0x18);
@@ -274,7 +295,8 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kOpenCloseActivateRef };
 		ExtraOpenCloseActivateRef() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x08];
+		/* 0x018 */ std::uint32_t unk18;
+		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraOpenCloseActivateRef) == 0x20);
 	static_assert(offsetof(ExtraOpenCloseActivateRef, unk18) == 0x18);
@@ -284,7 +306,8 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kForcedLandingMarker };
 		ExtraForcedLandingMarker() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x08];
+		/* 0x018 */ std::uint32_t unk18;
+		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraForcedLandingMarker) == 0x20);
 	static_assert(offsetof(ExtraForcedLandingMarker, unk18) == 0x18);
@@ -294,7 +317,8 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kForcedTarget };
 		ExtraForcedTarget() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x08];
+		/* 0x018 */ std::uint32_t unk18;
+		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraForcedTarget) == 0x20);
 	static_assert(offsetof(ExtraForcedTarget, unk18) == 0x18);
@@ -304,7 +328,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kTeleportName };
 		ExtraTeleportName() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x08];
+		/* 0x018 */ std::uint64_t unk18;
 	};
 	static_assert(sizeof(ExtraTeleportName) == 0x20);
 	static_assert(offsetof(ExtraTeleportName, unk18) == 0x18);
@@ -314,7 +338,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kTeleportMarker };
 		ExtraRandomTeleportMarker() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x08];
+		/* 0x018 */ std::uint64_t unk18;
 	};
 	static_assert(sizeof(ExtraRandomTeleportMarker) == 0x20);
 	static_assert(offsetof(ExtraRandomTeleportMarker, unk18) == 0x18);
@@ -324,7 +348,8 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kRangeDistOverride };
 		ExtraRangedDistOverride() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x08];
+		/* 0x018 */ float unk18;
+		/* 0x01C */ float unk1C;
 	};
 	static_assert(sizeof(ExtraRangedDistOverride) == 0x20);
 	static_assert(offsetof(ExtraRangedDistOverride, unk18) == 0x18);
@@ -334,7 +359,8 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kScale };
 		ExtraScale() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x08];
+		/* 0x018 */ float unk18;
+		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraScale) == 0x20);
 	static_assert(offsetof(ExtraScale, unk18) == 0x18);
@@ -344,7 +370,8 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kCachedScale };
 		ExtraCachedScale() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x08];
+		/* 0x018 */ float unk18;
+		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraCachedScale) == 0x20);
 	static_assert(offsetof(ExtraCachedScale, unk18) == 0x18);
@@ -354,7 +381,8 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kObjectHealth };
 		ExtraObjectHealth() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x08];
+		/* 0x018 */ float unk18;
+		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraObjectHealth) == 0x20);
 	static_assert(offsetof(ExtraObjectHealth, unk18) == 0x18);
