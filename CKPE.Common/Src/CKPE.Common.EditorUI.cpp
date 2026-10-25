@@ -22,6 +22,10 @@ namespace CKPE
 {
 	namespace Common
 	{
+		// Bypass Wine's result truncation bug
+		// Declare a thread-local variable
+		thread_local std::ptrdiff_t dialogModalResult = 0;
+
 		struct DialogOverrideData
 		{
 			DLGPROC DialogFunc;	// Original function pointer
@@ -476,13 +480,18 @@ namespace CKPE
 						(HINSTANCE)hInstance);
 			}
 
-			return DialogBoxParamA((HINSTANCE)hInstance, lpTemplateName, (HWND)hWndParent, 
-				(DLGPROC)DialogFuncOverride, dwInitParam);
+			// Skips result... use dialogModalResult
+			(void)DialogBoxParamA((HINSTANCE)hInstance, lpTemplateName, (HWND)hWndParent,
+				(DLGPROC)DialogFuncOverride, dwInitParam);	
+			return dialogModalResult;
 		}
 
 		bool EditorUI::Hook::HKEndDialog(void* hDlg, std::ptrdiff_t nResult) noexcept(true)
 		{
 			ScopeCriticalSection lock{ DialogLock };
+
+			// Store result for fixed Wine's trunc bug
+			dialogModalResult = nResult;
 
 			// Fix for the CK calling EndDialog on a CreateDialogParamA window
 			if (auto itr = DialogOverrides.find((HWND)hDlg); itr != DialogOverrides.end() && !itr->second.IsDialog)
