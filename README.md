@@ -134,7 +134,7 @@ git clone --recurse-submodules https://github.com/Perchik71/Creation-Kit-Platfor
 | **[adzm](https://github.com/adzm)** | Really appreciated work for the `win32-custom-menubar-aero-theme` project. |
 | **[yak3d](https://github.com/yak3d)** | Contributions, development of Workflows and support for the latest Starfield. |
 | **[FlenarnDev](https://github.com/FlenarnDev)** | Contributions, core and maintenance Fallout 4. |
-| **[frakkin64](https://github.com/frakkin64)** | Contributions, maintenance AI Assistant. |
+| **[frakkin64](https://github.com/frakkin64)**, **[northaxosky/muteptr](https://github.com/northaxosky) | Contributions, maintenance AI Assistant. |
 | **[GammaMetroid](https://github.com/GammaMetroid)** | Contributions, maintenance SSE branch. |
 | **[DioKyrie-Git](https://github.com/DioKyrie-Git) and [TheGamerX20](https://github.com/TheGamerX20)** | Design of the README.md file. |
 
