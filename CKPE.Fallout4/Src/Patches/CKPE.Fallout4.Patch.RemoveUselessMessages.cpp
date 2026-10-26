@@ -104,6 +104,9 @@ namespace CKPE
 
 				// Always off option bAllowFileWrite:MESSAGES
 				text.Write(Relocation(EditorAPI::IDs::Functions::sub_32D9F0).Address(), { 0x31, 0xC0, 0xC3, 0x90 });
+
+				// BNet.0.log is spammed while offline
+				text.Write(EditorAPI::IDs::Functions::BNet_Log.Address(), { RET });
 				
 				// The format of face customization texture %s (%d) does not match that of other textures (%u) on race '%s' (%08X)
 				const auto target3 = EditorAPI::IDs::Functions::sub_9A0F50; 

@@ -15,7 +15,9 @@
 #include <CKPE.Detours.h>
 #include <algorithm>
 #include <Shlwapi.h>
+#include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <array>
 
 namespace CKPE
@@ -228,7 +230,7 @@ namespace CKPE
 					std::sort(_DeferredMenuItems->begin(), _DeferredMenuItems->end(),
 						[](const auto& a, const auto& b) -> bool
 						{
-							return _stricmp(a.first, b.first) > 0;
+							return _stricmp(a.first, b.first) < 0;
 						});
 				}
 
@@ -375,6 +377,380 @@ namespace CKPE
 				}
 				CloseClipboard();
 			}
+		}
+
+		namespace
+		{
+			constexpr int kCompileFilterHeight = 20;
+			constexpr int kCompileFilterGap = 4;
+			constexpr int kCompileFilterOffset = kCompileFilterHeight + kCompileFilterGap;
+
+			struct CompileScriptEntry
+			{
+				std::string Name;
+				LPARAM Param;
+			};
+
+			struct CompileScriptsDialogState
+			{
+				HWND DialogHandle{ nullptr };
+				HWND ListViewHandle{ nullptr };
+				HWND FilterEditHandle{ nullptr };
+				std::vector<CompileScriptEntry> MasterItems;
+				std::unordered_set<LPARAM> CheckedParams;
+				bool SuppressNotify{ false };
+			};
+
+			class ScopedCompileListViewRedraw
+			{
+				CompileScriptsDialogState& _state;
+			public:
+				explicit ScopedCompileListViewRedraw(CompileScriptsDialogState& State) noexcept(true) : _state(State)
+				{
+					_state.SuppressNotify = true;
+					if (IsWindow(_state.ListViewHandle))
+						SendMessageA(_state.ListViewHandle, WM_SETREDRAW, FALSE, 0);
+				}
+
+				~ScopedCompileListViewRedraw() noexcept(true)
+				{
+					if (IsWindow(_state.ListViewHandle))
+					{
+						SendMessageA(_state.ListViewHandle, WM_SETREDRAW, TRUE, 0);
+						RedrawWindow(_state.ListViewHandle, nullptr, nullptr, RDW_ERASE | RDW_INVALIDATE | RDW_NOCHILDREN);
+					}
+					_state.SuppressNotify = false;
+				}
+			};
+
+			std::unordered_map<void*, CompileScriptsDialogState> s_CompileScriptsDialogs;
+
+			HWND ResolveCompileDialogHwnd(void* This, HWND FallbackChild) noexcept(true)
+			{
+				if (auto it = s_CompileScriptsDialogs.find(This); it != s_CompileScriptsDialogs.end() && IsWindow(it->second.DialogHandle))
+					return it->second.DialogHandle;
+
+				if (FallbackChild && IsWindow(FallbackChild))
+				{
+					if (HWND parent = GetParent(FallbackChild); IsWindow(parent))
+						return parent;
+				}
+
+				if (This)
+				{
+					HWND candidate = *reinterpret_cast<HWND*>(reinterpret_cast<std::uintptr_t>(This) + 0x10);
+					if (IsWindow(candidate))
+						return candidate;
+				}
+
+				return nullptr;
+			}
+
+			void EnsureCompileHandles(CompileScriptsDialogState& State, void* This,
+				HWND FallbackChild, std::uint32_t ListViewId) noexcept(true)
+			{
+				if (!IsWindow(State.DialogHandle))
+					State.DialogHandle = ResolveCompileDialogHwnd(This, FallbackChild);
+				if (!IsWindow(State.ListViewHandle) && IsWindow(State.DialogHandle))
+					State.ListViewHandle = GetDlgItem(State.DialogHandle, ListViewId);
+				if (!IsWindow(State.FilterEditHandle) && IsWindow(State.DialogHandle))
+					State.FilterEditHandle = GetDlgItem(State.DialogHandle, EditorUI::UI_COMPILESCRIPT_DIALOG_FILTER);
+			}
+
+			template<typename Fn>
+			void ForEachVisibleCompileItem(HWND ListViewHandle, Fn&& Callback) noexcept(true)
+			{
+				const int count = ListView_GetItemCount(ListViewHandle);
+				for (int i = 0; i < count; ++i)
+				{
+					LVITEMA item{};
+					item.mask = LVIF_PARAM;
+					item.iItem = i;
+					if (ListView_GetItem(ListViewHandle, &item))
+						Callback(i, item.lParam);
+				}
+			}
+
+			void UpdateCompileDialogButtons(const CompileScriptsDialogState& State) noexcept(true)
+			{
+				if (!IsWindow(State.DialogHandle) || !IsWindow(State.ListViewHandle))
+					return;
+
+				const int visibleCount = ListView_GetItemCount(State.ListViewHandle);
+				const BOOL hasChecked = !State.CheckedParams.empty() ? TRUE : FALSE;
+				const BOOL hasVisible = (visibleCount > 0) ? TRUE : FALSE;
+
+				if (HWND hCompile = GetDlgItem(State.DialogHandle, EditorUI::UI_COMPILESCRIPT_DIALOG_COMPILE))
+					EnableWindow(hCompile, hasChecked);
+				if (HWND hCheckAll = GetDlgItem(State.DialogHandle, EditorUI::UI_COMPILESCRIPT_DIALOG_CHECKALL))
+					EnableWindow(hCheckAll, hasVisible);
+				if (HWND hUncheckAll = GetDlgItem(State.DialogHandle, EditorUI::UI_COMPILESCRIPT_DIALOG_UNCHECKALL))
+					EnableWindow(hUncheckAll, hasVisible);
+			}
+
+			void SyncCompileFilterBounds(CompileScriptsDialogState& State, void* This, std::uint32_t ListViewId) noexcept(true)
+			{
+				EnsureCompileHandles(State, This, nullptr, ListViewId);
+				if (!IsWindow(State.ListViewHandle) || !IsWindow(State.FilterEditHandle))
+					return;
+
+				RECT rcList{};
+				GetWindowRect(State.ListViewHandle, &rcList);
+				MapWindowPoints(HWND_DESKTOP, State.DialogHandle, reinterpret_cast<LPPOINT>(&rcList), 2);
+
+				SetWindowPos(State.FilterEditHandle, nullptr, rcList.left, rcList.top - kCompileFilterOffset,
+					rcList.right - rcList.left, kCompileFilterHeight, SWP_NOZORDER | SWP_NOACTIVATE);
+			}
+
+			void PopulateCompileListView(CompileScriptsDialogState& State, const char* Filter) noexcept(true)
+			{
+				if (!IsWindow(State.ListViewHandle))
+					return;
+
+				{
+					ScopedCompileListViewRedraw redraw(State);
+					ListView_DeleteAllItems(State.ListViewHandle);
+
+					const bool hasFilter = Filter && Filter[0] != '\0';
+					int insertIndex = 0;
+
+					for (const auto& entry : State.MasterItems)
+					{
+						if (hasFilter && !StrStrIA(entry.Name.c_str(), Filter))
+							continue;
+
+						LVITEMA item{};
+						item.mask = LVIF_TEXT | LVIF_PARAM;
+						item.iItem = insertIndex;
+						item.pszText = const_cast<LPSTR>(entry.Name.c_str());
+						item.lParam = entry.Param;
+
+						const int idx = ListView_InsertItem(State.ListViewHandle, &item);
+						if (idx != -1 && State.CheckedParams.contains(entry.Param))
+							ListView_SetCheckState(State.ListViewHandle, idx, TRUE);
+
+						++insertIndex;
+					}
+				}
+
+				UpdateCompileDialogButtons(State);
+			}
+
+			void PrepareCompileDialogControls(CompileScriptsDialogState& State, void* This,
+				std::uintptr_t wParam, std::uint32_t ListViewId) noexcept(true)
+			{
+				State.MasterItems.clear();
+				State.CheckedParams.clear();
+				EnsureCompileHandles(State, This, reinterpret_cast<HWND>(wParam), ListViewId);
+				if (!IsWindow(State.DialogHandle) || !IsWindow(State.ListViewHandle))
+					return;
+
+				RECT rcList{};
+				GetWindowRect(State.ListViewHandle, &rcList);
+				MapWindowPoints(HWND_DESKTOP, State.DialogHandle, reinterpret_cast<LPPOINT>(&rcList), 2);
+
+				const int width = rcList.right - rcList.left;
+				const int height = (std::max)(20L, (rcList.bottom - rcList.top) - kCompileFilterOffset);
+
+				SetWindowPos(State.ListViewHandle, nullptr, rcList.left, rcList.top + kCompileFilterOffset, width, height,
+					SWP_NOZORDER | SWP_NOACTIVATE);
+
+				if (!IsWindow(State.FilterEditHandle))
+				{
+					State.FilterEditHandle = CreateWindowExA(WS_EX_CLIENTEDGE, WC_EDITA, "",
+						WS_CHILD | WS_VISIBLE | WS_TABSTOP | ES_AUTOHSCROLL,
+						rcList.left, rcList.top, width, kCompileFilterHeight,
+						State.DialogHandle, reinterpret_cast<HMENU>(static_cast<std::uintptr_t>(EditorUI::UI_COMPILESCRIPT_DIALOG_FILTER)),
+						GetModuleHandleA(nullptr), nullptr);
+				}
+
+				if (IsWindow(State.FilterEditHandle))
+				{
+					SendMessageA(State.FilterEditHandle, WM_SETFONT, SendMessageA(State.DialogHandle, WM_GETFONT, 0, 0), TRUE);
+					SendMessageW(State.FilterEditHandle, EM_SETCUEBANNER, FALSE, reinterpret_cast<LPARAM>(L"Filter scripts..."));
+				}
+			}
+
+			void CaptureMasterCompileList(CompileScriptsDialogState& State, void* This, std::uint32_t ListViewId) noexcept(true)
+			{
+				EnsureCompileHandles(State, This, nullptr, ListViewId);
+				if (IsWindow(State.ListViewHandle))
+				{
+					const int count = ListView_GetItemCount(State.ListViewHandle);
+					State.MasterItems.reserve(count);
+
+					char textBuf[1024]{};
+					for (int i = 0; i < count; ++i)
+					{
+						textBuf[0] = '\0';
+						LVITEMA item{};
+						item.mask = LVIF_TEXT | LVIF_PARAM;
+						item.iItem = i;
+						item.iSubItem = 0;
+						item.pszText = textBuf;
+						item.cchTextMax = sizeof(textBuf);
+
+						if (ListView_GetItem(State.ListViewHandle, &item))
+						{
+							State.MasterItems.push_back({ textBuf, item.lParam });
+							if (ListView_GetCheckState(State.ListViewHandle, i))
+								State.CheckedParams.insert(item.lParam);
+						}
+					}
+				}
+
+				SyncCompileFilterBounds(State, This, ListViewId);
+				UpdateCompileDialogButtons(State);
+			}
+		}
+
+		std::ptrdiff_t EditorUI::CompileScriptsDialogProc(void* This, std::uint32_t Message,
+			std::uintptr_t wParam, std::ptrdiff_t lParam, std::uint32_t ListViewId,
+			TCompileScriptsDlgProc DefaultDlgProc,
+			const std::function<void(void*)>& OnInitDialog,
+			const std::function<void(void*)>& OnSize,
+			const std::function<void(void*)>& OnCheckAllCheckedOut,
+			const std::function<void(void*)>& OnCompile) noexcept(true)
+		{
+			switch (Message)
+			{
+			case WM_INITDIALOG:
+			{
+				auto& state = s_CompileScriptsDialogs[This];
+				PrepareCompileDialogControls(state, This, wParam, ListViewId);
+				std::ptrdiff_t res = 0;
+				{
+					ScopedCompileListViewRedraw redraw(state);
+					if (OnInitDialog)
+						OnInitDialog(This);
+					res = DefaultDlgProc(This, Message, wParam, lParam);
+				}
+				CaptureMasterCompileList(state, This, ListViewId);
+				return res;
+			}
+			case WM_SIZE:
+			case WM_WINDOWPOSCHANGED:
+			{
+				if (Message == WM_SIZE && OnSize)
+					OnSize(This);
+				const auto res = DefaultDlgProc(This, Message, wParam, lParam);
+				if (auto it = s_CompileScriptsDialogs.find(This); it != s_CompileScriptsDialogs.end())
+					SyncCompileFilterBounds(it->second, This, ListViewId);
+				return res;
+			}
+			case WM_NOTIFY:
+			{
+				auto* hdr = reinterpret_cast<LPNMHDR>(lParam);
+				if (hdr && hdr->idFrom == ListViewId && hdr->code == LVN_ITEMCHANGED)
+				{
+					if (auto it = s_CompileScriptsDialogs.find(This); it != s_CompileScriptsDialogs.end())
+					{
+						auto& state = it->second;
+						if (!state.SuppressNotify)
+						{
+							auto* nmlv = reinterpret_cast<LPNMLISTVIEW>(lParam);
+							if (nmlv->uChanged & LVIF_STATE)
+							{
+								const std::uint32_t stateImg = (nmlv->uNewState & LVIS_STATEIMAGEMASK) >> 12;
+								if (stateImg == 2)
+									state.CheckedParams.insert(nmlv->lParam);
+								else if (stateImg == 1)
+									state.CheckedParams.erase(nmlv->lParam);
+
+								UpdateCompileDialogButtons(state);
+							}
+						}
+						return 1;
+					}
+				}
+				break;
+			}
+			case WM_COMMAND:
+			{
+				auto it = s_CompileScriptsDialogs.find(This);
+				if (it != s_CompileScriptsDialogs.end())
+				{
+					auto& state = it->second;
+					EnsureCompileHandles(state, This, reinterpret_cast<HWND>(lParam), ListViewId);
+
+					const std::uint32_t cmdId = LOWORD(wParam);
+					const std::uint32_t notifyCode = HIWORD(wParam);
+
+					if (cmdId == UI_COMPILESCRIPT_DIALOG_FILTER && notifyCode == EN_CHANGE)
+					{
+						char filterText[256]{};
+						if (IsWindow(state.FilterEditHandle))
+							GetWindowTextA(state.FilterEditHandle, filterText, sizeof(filterText));
+
+						PopulateCompileListView(state, filterText);
+						return 1;
+					}
+
+					if (cmdId == UI_COMPILESCRIPT_DIALOG_CHECKALL || cmdId == UI_COMPILESCRIPT_DIALOG_UNCHECKALL)
+					{
+						if (IsWindow(state.ListViewHandle))
+						{
+							const bool check = (cmdId == UI_COMPILESCRIPT_DIALOG_CHECKALL);
+							{
+								ScopedCompileListViewRedraw redraw(state);
+								ForEachVisibleCompileItem(state.ListViewHandle, [&](int Index, LPARAM Param)
+									{
+										if (check)
+											state.CheckedParams.insert(Param);
+										else
+											state.CheckedParams.erase(Param);
+										ListView_SetCheckState(state.ListViewHandle, Index, check ? TRUE : FALSE);
+									});
+							}
+							UpdateCompileDialogButtons(state);
+						}
+						return 1;
+					}
+
+					if (cmdId == UI_COMPILESCRIPT_DIALOG_CHECKALLCHECKEDOUT)
+					{
+						if (IsWindow(state.ListViewHandle))
+						{
+							{
+								ScopedCompileListViewRedraw redraw(state);
+								if (OnCheckAllCheckedOut)
+									OnCheckAllCheckedOut(This);
+								else
+									DefaultDlgProc(This, Message, wParam, lParam);
+
+								ForEachVisibleCompileItem(state.ListViewHandle, [&](int Index, LPARAM Param)
+									{
+										if (ListView_GetCheckState(state.ListViewHandle, Index))
+											state.CheckedParams.insert(Param);
+										else if (state.CheckedParams.contains(Param))
+											ListView_SetCheckState(state.ListViewHandle, Index, TRUE);
+									});
+							}
+							UpdateCompileDialogButtons(state);
+						}
+						return 1;
+					}
+
+					if (cmdId == UI_COMPILESCRIPT_DIALOG_COMPILE)
+					{
+						if (IsWindow(state.ListViewHandle) &&
+							static_cast<std::size_t>(ListView_GetItemCount(state.ListViewHandle)) != state.MasterItems.size())
+						{
+							PopulateCompileListView(state, "");
+						}
+						if (OnCompile)
+							OnCompile(This);
+					}
+				}
+				break;
+			}
+			case WM_DESTROY:
+			case WM_NCDESTROY:
+				s_CompileScriptsDialogs.erase(This);
+				break;
+			}
+
+			return DefaultDlgProc(This, Message, wParam, lParam);
 		}
 
 		/////////////////////////////////////////

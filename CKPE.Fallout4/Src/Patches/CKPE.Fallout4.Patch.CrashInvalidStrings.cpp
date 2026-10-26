@@ -53,6 +53,16 @@ namespace CKPE
 				}
 			}
 
+			std::int32_t CrashInvalidStrings::GetSafeFormEditorIDSafe(const void* This, char* lpBuffer, std::uint32_t nBufferSize)
+			{
+				if (!lpBuffer || !nBufferSize)
+					return 0;
+
+				const auto* form = reinterpret_cast<const EditorAPI::Forms::TESForm*>(This);
+				const auto* editorId = form ? form->GetFormEditorID() : nullptr;
+				return _snprintf_s(lpBuffer, nBufferSize, _TRUNCATE, "%s", editorId ? editorId : "");
+			}
+
 			CrashInvalidStrings::CrashInvalidStrings() : Common::Patch()
 			{
 				SetName("Crash Invalid Strings");
@@ -89,6 +99,8 @@ namespace CKPE
 
 				CrashInvalidStringsLength	= reinterpret_cast<TCrashInvalidStringsLength*>(Relocation(EditorAPI::IDs::Functions::sub_2429C70).WriteJump(&GetLocalizeStringLengthSafe));
 				CrashInvalidStringsGet		= reinterpret_cast<TCrashInvalidStringsGet*>(Relocation(EditorAPI::IDs::Functions::sub_39AA50).WriteJump(&GetLocalizeStringSafe));
+				Relocation(EditorAPI::IDs::Functions::TESForm__GetSafeFormEditorID_A).WriteJump(&GetSafeFormEditorIDSafe);
+				Relocation(EditorAPI::IDs::Functions::TESForm__GetSafeFormEditorID_B).WriteJump(&GetSafeFormEditorIDSafe);
 
 				return true;
 			}

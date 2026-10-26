@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
 #include <vector>
 #include <CKPE.Common.Common.h>
 
@@ -49,6 +50,13 @@ namespace CKPE
 			constexpr static std::uint32_t UI_EDITOR_CHANGEBASEFORM = 40670;		// "Change Base Form"
 
 			constexpr static std::uint32_t UI_DATA_DIALOG_PLUGINLISTVIEW = 1056;
+			constexpr static std::uint32_t UI_COMPILESCRIPT_DIALOG_COMPILE = 1;
+			constexpr static std::uint32_t UI_COMPILESCRIPT_DIALOG_CHECKALL = 5474;
+			constexpr static std::uint32_t UI_COMPILESCRIPT_DIALOG_UNCHECKALL = 5475;
+			constexpr static std::uint32_t UI_COMPILESCRIPT_DIALOG_CHECKALLCHECKEDOUT = 5602;
+			constexpr static std::uint32_t UI_SSE_COMPILESCRIPT_DIALOG_LISTVIEW = 5401;
+			constexpr static std::uint32_t UI_FO4_COMPILESCRIPT_DIALOG_LISTVIEW = 6088;
+			constexpr static std::uint32_t UI_COMPILESCRIPT_DIALOG_FILTER = 52010;
 
 			EditorUI() noexcept(true);
 
@@ -94,6 +102,16 @@ namespace CKPE
 				void* Value, bool AllowResize) noexcept(true);
 
 			static void CopyTextToClipboard(void* Hwnd, const char* Text) noexcept(true);
+
+			using TCompileScriptsDlgProc = std::ptrdiff_t(*)(void*, std::uint32_t, std::uintptr_t, std::ptrdiff_t);
+
+			static std::ptrdiff_t CompileScriptsDialogProc(void* This, std::uint32_t Message,
+				std::uintptr_t wParam, std::ptrdiff_t lParam, std::uint32_t ListViewId,
+				TCompileScriptsDlgProc DefaultDlgProc,
+				const std::function<void(void*)>& OnInitDialog = {},
+				const std::function<void(void*)>& OnSize = {},
+				const std::function<void(void*)>& OnCheckAllCheckedOut = {},
+				const std::function<void(void*)>& OnCompile = {}) noexcept(true);
 		public:
 			struct CKPE_COMMON_API Hook
 			{

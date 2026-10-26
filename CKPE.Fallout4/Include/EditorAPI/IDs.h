@@ -885,8 +885,32 @@ namespace CKPE
 					inline constexpr Common::ID raise_securityfailure{ 1632576 };
 					// 1.11.246.0 0x142D75C14 __scrt_fastfail
 					inline constexpr Common::ID scrt_fastfail{ 1560296 };
+					// 1.11.246.0 0x1408CB980 TESForm::GetSafeFormEditorID (non-const)
+					inline constexpr Common::ID TESForm__GetSafeFormEditorID_A{ 81623 };
+					// 1.11.246.0 0x1408CB9C0 TESForm::GetSafeFormEditorID (const)
+					inline constexpr Common::ID TESForm__GetSafeFormEditorID_B{ 489157 };
+					// 1.11.246.0 0x141137B70 CSScript::PickScriptsToCompileDlg::DlgProc
+					inline constexpr Common::ID PapyrusCompileDialog_DlgProc{ 580037 };
 					// 1.11.246.0 0x141137F50 sub_141137F50
 					inline constexpr Common::ID PapyrusCompileDialog_UpdateButtons{ 522253 };
+					// 1.11.246.0 0x142847CA0 BNet::Log
+					inline constexpr Common::ID BNet_Log{ 200383, 1680890 };
+					// 1.11.246.0 0x140488130 BGSArchiveBrowser stdout capture lambda 1
+					inline constexpr Common::ID BGSArchiveBrowser_AppendOutput_1{ 428354, 2007543 };
+					// 1.11.246.0 0x140488140 BGSArchiveBrowser stdout capture lambda 2
+					inline constexpr Common::ID BGSArchiveBrowser_AppendOutput_2{ 632413, 1472816 };
+					// 1.11.246.0 0x140488230 BGSArchiveBrowser stdout capture lambda 3
+					inline constexpr Common::ID BGSArchiveBrowser_AppendOutput_3{ 118013, 1507206 };
+					// 1.11.246.0 0x1404C8AA0 BGSErrorDlg::OnInitDialog
+					inline constexpr Common::ID BGSErrorDlg_OnInitDialog{ 532471 };
+					// 1.11.246.0 0x143BAA070 bPreviewShowLandPlane:PreviewMovement value byte
+					inline constexpr Common::ID bPreviewShowLandPlane{ 7994 };
+					// 1.11.246.0 0x14053AF30 ModelData::DlgProc
+					inline constexpr Common::ID ModelData_DlgProc{ 436240, 1690230 };
+					// 1.11.246.0 0x140068377 DialogExtraPreviewControl::Get
+					inline constexpr Common::ID DialogExtraPreviewControl_Get{ 432191 };
+					// 1.11.246.0 0x140729A30 TESPreviewControl::ToggleGroundPlane
+					inline constexpr Common::ID TESPreviewControl_ToggleGroundPlane{ 76398, 1729980 };
 					// 1.11.246.0 0x14113A6A0 sub_14113A6A0
 					inline constexpr Common::ID PapyrusScriptEditWindow_Create{ 69589, 1343977 };
 					// 1.11.246.0 0x1411425D0 sub_1411425D0
