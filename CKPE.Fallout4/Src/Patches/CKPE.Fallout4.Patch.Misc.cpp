@@ -3,12 +3,21 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
+#include <commctrl.h>
+#include <richedit.h>
+#include <cstring>
+#include <string>
 #include <EditorAPI/IDs.h>
+#include <EditorAPI/B/BSString.h>
 #include <CKPE.Utils.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.Misc.h>
+
+#define UI_MODELDATA_PREVIEW_CONTROL		2175
+#define UI_MODELDATA_GROUNDPLANE_CHECKBOX	52011
 
 namespace CKPE
 {
@@ -16,6 +25,111 @@ namespace CKPE
 	{
 		namespace Patch
 		{
+			namespace
+			{
+				std::string s_ArchiveOutput;
+
+				using TBSStringAppend = EditorAPI::BSString*(*)(EditorAPI::BSString*, const char*);
+				using TModelDataDlgProc = INT_PTR(CALLBACK*)(HWND, UINT, WPARAM, LPARAM);
+				using TGetPreviewControl = void*(*)(HWND, std::uint32_t);
+				using TToggleGroundPlane = void(*)(void*);
+
+				TBSStringAppend OldBSStringAppend = nullptr;
+				TModelDataDlgProc OldModelDataDlgProc = nullptr;
+				TGetPreviewControl GetPreviewControl = nullptr;
+				TToggleGroundPlane ToggleGroundPlane = nullptr;
+
+				EditorAPI::BSString* AppendArchiveOutput(EditorAPI::BSString* Str, const char* Chunk) noexcept(true)
+				{
+					if (Str && Chunk)
+					{
+						if (Str->IsEmpty())
+							s_ArchiveOutput.clear();
+						s_ArchiveOutput.append(Chunk);
+
+						if (OldBSStringAppend && (static_cast<std::size_t>(Str->Length()) + std::strlen(Chunk) < 0xFF00))
+							return OldBSStringAppend(Str, Chunk);
+					}
+					return Str;
+				}
+
+				BOOL SetErrorDlgRichEditText(HWND hRichEdit, LPCSTR lpString) noexcept(true)
+				{
+					SendMessageA(hRichEdit, EM_EXLIMITTEXT, 0, 0x7FFFFFFF);
+					if (!s_ArchiveOutput.empty() && lpString && lpString[0] != '\0' &&
+						std::strncmp(s_ArchiveOutput.c_str(), lpString, 64) == 0)
+					{
+						const BOOL res = SetWindowTextA(hRichEdit, s_ArchiveOutput.c_str());
+						s_ArchiveOutput.clear();
+						return res;
+					}
+					return SetWindowTextA(hRichEdit, lpString);
+				}
+
+				void SyncGroundPlaneCheck(HWND hDlg) noexcept(true)
+				{
+					const auto valueAddr = EditorAPI::IDs::Functions::bPreviewShowLandPlane.Address();
+					if (HWND hCheck = GetDlgItem(hDlg, UI_MODELDATA_GROUNDPLANE_CHECKBOX); hCheck && valueAddr)
+					{
+						const bool showGround = *reinterpret_cast<const bool*>(valueAddr);
+						SendMessageA(hCheck, BM_SETCHECK, showGround ? BST_CHECKED : BST_UNCHECKED, 0);
+					}
+				}
+
+				INT_PTR CALLBACK HKModelDataDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) noexcept(true)
+				{
+					if (uMsg == WM_INITDIALOG)
+					{
+						const INT_PTR res = OldModelDataDlgProc(hDlg, uMsg, wParam, lParam);
+
+						HWND hPreview = GetDlgItem(hDlg, UI_MODELDATA_PREVIEW_CONTROL);
+						HWND hOk = GetDlgItem(hDlg, IDOK);
+						if (hPreview && hOk && !GetDlgItem(hDlg, UI_MODELDATA_GROUNDPLANE_CHECKBOX))
+						{
+							RECT rcPreview{}, rcOk{};
+							GetWindowRect(hPreview, &rcPreview);
+							GetWindowRect(hOk, &rcOk);
+							MapWindowPoints(HWND_DESKTOP, hDlg, reinterpret_cast<LPPOINT>(&rcPreview), 2);
+							MapWindowPoints(HWND_DESKTOP, hDlg, reinterpret_cast<LPPOINT>(&rcOk), 2);
+
+							HWND hCheck = CreateWindowExA(0, WC_BUTTONA, "Ground Plane",
+								WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX,
+								rcPreview.left, rcOk.top, 110, rcOk.bottom - rcOk.top,
+								hDlg, reinterpret_cast<HMENU>(static_cast<std::uintptr_t>(UI_MODELDATA_GROUNDPLANE_CHECKBOX)),
+								GetModuleHandleA(nullptr), nullptr);
+
+							if (hCheck)
+							{
+								SendMessageA(hCheck, WM_SETFONT, SendMessageA(hDlg, WM_GETFONT, 0, 0), TRUE);
+								SyncGroundPlaneCheck(hDlg);
+							}
+						}
+
+						return res;
+					}
+
+					if (uMsg == WM_COMMAND && LOWORD(wParam) == UI_MODELDATA_GROUNDPLANE_CHECKBOX && HIWORD(wParam) == BN_CLICKED)
+					{
+						if (GetPreviewControl && ToggleGroundPlane)
+						{
+							if (void* preview = GetPreviewControl(hDlg, UI_MODELDATA_PREVIEW_CONTROL))
+							{
+								ToggleGroundPlane(preview);
+								CKPE::vtbl_call<void>(0x28, preview, 0.0f, false);
+							}
+						}
+						SyncGroundPlaneCheck(hDlg);
+						return TRUE;
+					}
+
+					const INT_PTR res = OldModelDataDlgProc(hDlg, uMsg, wParam, lParam);
+
+					if (uMsg == WM_NOTIFY || uMsg == WM_KEYDOWN)
+						SyncGroundPlaneCheck(hDlg);
+
+					return res;
+				}
+			}
 			Misc::Misc() : Common::Patch()
 			{
 				SetName("Misc");
@@ -78,6 +192,20 @@ namespace CKPE
 				//	CreationKit + 0x2511176:
 				//  00007ff7`7f381176 ff9090010000    call    qword ptr[rax + 190h] ds:000002db`7f90f9e0=bd8a591342b6b52e
 				Relocation(EditorAPI::IDs::Functions::sub_24BDB90, 0x56).WriteCall(&sub);
+
+				// BSString caps at 64K; keep full Archive2 log for the error dialog
+				*(std::uintptr_t*)&OldBSStringAppend =
+					Relocation(EditorAPI::IDs::Functions::BGSArchiveBrowser_AppendOutput_1, 0x7).WriteJump(&AppendArchiveOutput);
+				Relocation(EditorAPI::IDs::Functions::BGSArchiveBrowser_AppendOutput_2, 0x7).WriteJump(&AppendArchiveOutput);
+				Relocation(EditorAPI::IDs::Functions::BGSArchiveBrowser_AppendOutput_3, 0x7).WriteJump(&AppendArchiveOutput);
+				auto errDlgRel = Relocation(EditorAPI::IDs::Functions::BGSErrorDlg_OnInitDialog, 0x77);
+				errDlgRel.WriteFill(NOP, 6);
+				errDlgRel.WriteCall(&SetErrorDlgRichEditText);
+
+				GetPreviewControl = Relocation<TGetPreviewControl>(EditorAPI::IDs::Functions::DialogExtraPreviewControl_Get).Get();
+				ToggleGroundPlane = Relocation<TToggleGroundPlane>(EditorAPI::IDs::Functions::TESPreviewControl_ToggleGroundPlane).Get();
+				*(std::uintptr_t*)&OldModelDataDlgProc =
+					Relocation(EditorAPI::IDs::Functions::ModelData_DlgProc).WriteJump(&HKModelDataDlgProc);
 
 				return true;
 			}

@@ -2,10 +2,13 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
+#include <windows.h>
 #include <CKPE.SafeWrite.h>
 #include <EditorAPI/IDs.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.EditorUI.h>
+#include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.FixInfiniteLoopPapyrusCompile.h>
 
@@ -15,6 +18,15 @@ namespace CKPE
 	{
 		namespace Patch
 		{
+			static Common::EditorUI::TCompileScriptsDlgProc OldPickScriptsToCompileDlgProc = nullptr;
+
+			static LRESULT HKPickScriptsToCompileDlgProc(void* This, UINT Message, WPARAM wParam,
+				LPARAM lParam) noexcept(true)
+			{
+				return Common::EditorUI::CompileScriptsDialogProc(This, Message, wParam, lParam,
+					Common::EditorUI::UI_FO4_COMPILESCRIPT_DIALOG_LISTVIEW, OldPickScriptsToCompileDlgProc);
+			}
+
 			FixInfiniteLoopPapyrusCompile::FixInfiniteLoopPapyrusCompile() : Common::Patch()
 			{
 				SetName("Fixed infinite loop by Compile Papyrus Scripts");
@@ -51,6 +63,8 @@ namespace CKPE
 
 				// Fixed infinite loop by Compile Papyrus Scripts...
 				Relocation(EditorAPI::IDs::Functions::PapyrusCompileDialog_UpdateButtons).Write(RET);
+				*(std::uintptr_t*)&OldPickScriptsToCompileDlgProc =
+					Relocation(EditorAPI::IDs::Functions::PapyrusCompileDialog_DlgProc).WriteJump(&HKPickScriptsToCompileDlgProc);
 
 				return true;
 			}

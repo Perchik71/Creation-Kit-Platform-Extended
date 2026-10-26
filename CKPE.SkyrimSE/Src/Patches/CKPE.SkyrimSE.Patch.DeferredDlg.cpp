@@ -14,12 +14,6 @@
 #include <EditorAPI/T/TESForm.h>
 #include <Patches/CKPE.SkyrimSE.Patch.DeferredDlg.h>
 
-#define UI_COMIPLESCRIPT_DIALOG_COMPILE				1		// "Compile"
-#define UI_COMIPLESCRIPT_DIALOG_CHECKALL			5474	// "Check All"
-#define UI_COMIPLESCRIPT_DIALOG_UNCHECKALL			5475	// "Uncheck All"
-#define UI_COMIPLESCRIPT_DIALOG_CHECKALLCHECKEDOUT	5602	// "Check All Checked-Out"
-#define UI_COMIPLESCRIPT_DIALOG_LISTVIEW			5401	// Script list view
-
 namespace CKPE
 {
 	namespace SkyrimSE
@@ -30,19 +24,16 @@ namespace CKPE
 			using TDeferredDlg_sub2 = void(void*, HWND, std::int64_t);
 			using TDeferredDlg_sub3 = void(void*, HWND*);
 			using TDeferredDlg_sub4 = void(void*);
-			using TDeferredDlg_sub5 = LRESULT(void*, UINT, WPARAM, LPARAM);
+			using TDeferredDlg_sub5 = std::ptrdiff_t(*)(void*, std::uint32_t, std::uintptr_t, std::ptrdiff_t);
 
 			static std::function<TDeferredDlg_sub1> DeferredDlg_sub1;
 			static std::function<TDeferredDlg_sub2> DeferredDlg_sub2;
 			static std::function<TDeferredDlg_sub3> DeferredDlg_sub3;
-			static std::function<TDeferredDlg_sub4> DeferredDlg_sub4;
 			static std::function<TDeferredDlg_sub4> DeferredDlg_sub5;
 			static std::function<TDeferredDlg_sub4> DeferredDlg_sub6;
-			static std::function<TDeferredDlg_sub4> DeferredDlg_sub7;
-			static std::function<TDeferredDlg_sub4> DeferredDlg_sub8;
 			static std::function<TDeferredDlg_sub4> DeferredDlg_sub9;
 			static std::function<TDeferredDlg_sub4> DeferredDlg_subA;
-			static std::function<TDeferredDlg_sub5> DeferredDlg_subB;
+			static TDeferredDlg_sub5 DeferredDlg_subB = nullptr;
 
 			template<typename T, bool Stable = false>
 			static void DeferredDlg_ArrayQuickSortRecursive(EditorAPI::BSTArray<T>& Array,
@@ -104,69 +95,9 @@ namespace CKPE
 			static LRESULT DeferredDlg_PickScriptsToCompileDlgProc(void* This, UINT Message, WPARAM wParam,
 				LPARAM lParam) noexcept(true)
 			{
-				thread_local bool disableListViewUpdates;
-
-				auto updateListViewItems = [This]
-					{
-						if (!disableListViewUpdates)
-							DeferredDlg_sub4(This);
-					};
-
-				switch (Message)
-				{
-				case WM_SIZE:
-					DeferredDlg_sub5(This);
-					break;
-
-				case WM_NOTIFY:
-				{
-					auto notification = reinterpret_cast<LPNMHDR>(lParam);
-
-					// "SysListView32" control
-					if (notification->idFrom == UI_COMIPLESCRIPT_DIALOG_LISTVIEW && notification->code == LVN_ITEMCHANGED)
-					{
-						updateListViewItems();
-						return 1;
-					}
-				}
-				break;
-
-				case WM_INITDIALOG:
-					disableListViewUpdates = true;
-					DeferredDlg_sub6(This);
-					disableListViewUpdates = false;
-
-					// Update it ONCE after everything is inserted
-					updateListViewItems();
-					break;
-
-				case WM_COMMAND:
-				{
-					const uint32_t param = LOWORD(wParam);
-
-					if (param == UI_COMIPLESCRIPT_DIALOG_CHECKALL || param == UI_COMIPLESCRIPT_DIALOG_UNCHECKALL ||
-						param == UI_COMIPLESCRIPT_DIALOG_CHECKALLCHECKEDOUT)
-					{
-						disableListViewUpdates = true;
-						if (param == UI_COMIPLESCRIPT_DIALOG_CHECKALL)
-							DeferredDlg_sub7(This);
-						else if (param == UI_COMIPLESCRIPT_DIALOG_UNCHECKALL)
-							DeferredDlg_sub8(This);
-						else if (param == UI_COMIPLESCRIPT_DIALOG_CHECKALLCHECKEDOUT)
-							DeferredDlg_sub9(This);
-						disableListViewUpdates = false;
-
-						updateListViewItems();
-						return 1;
-					}
-					else if (param == UI_COMIPLESCRIPT_DIALOG_COMPILE)
-						// "Compile" button
-						DeferredDlg_subA(This);
-				}
-				break;
-				}
-
-				return DeferredDlg_subB(This, Message, wParam, lParam);
+				return Common::EditorUI::CompileScriptsDialogProc(This, Message, wParam, lParam,
+					Common::EditorUI::UI_SSE_COMPILESCRIPT_DIALOG_LISTVIEW, DeferredDlg_subB,
+					DeferredDlg_sub6, DeferredDlg_sub5, DeferredDlg_sub9, DeferredDlg_subA);
 			}
 
 			DeferredDlg::DeferredDlg() : Common::Patch()
@@ -211,11 +142,8 @@ namespace CKPE
 				DeferredDlg_sub1 = Relocation<TDeferredDlg_sub1>(ID(559670)).Get();
 				DeferredDlg_sub2 = Relocation<TDeferredDlg_sub2>(ID(66544)).Get();
 				DeferredDlg_sub3 = Relocation<TDeferredDlg_sub3>(ID{ 754119, 1018099 }).Get();
-				DeferredDlg_sub4 = Relocation<TDeferredDlg_sub4>(ID(309367)).Get();
 				DeferredDlg_sub5 = Relocation<TDeferredDlg_sub4>(ID(339341)).Get();
 				DeferredDlg_sub6 = Relocation<TDeferredDlg_sub4>(ID(134769)).Get();
-				DeferredDlg_sub7 = Relocation<TDeferredDlg_sub4>(ID(277731)).Get();
-				DeferredDlg_sub8 = Relocation<TDeferredDlg_sub4>(ID(357191)).Get();
 				DeferredDlg_sub9 = Relocation<TDeferredDlg_sub4>(ID(344535)).Get();
 				DeferredDlg_subA = Relocation<TDeferredDlg_sub4>(ID(32469)).Get();
 				DeferredDlg_subB = Relocation<TDeferredDlg_sub5>(ID(346632)).Get();

@@ -16,6 +16,7 @@ namespace CKPE
 			{
 				static std::uint32_t GetLocalizeStringLengthSafe(void* This);
 				static const char* GetLocalizeStringSafe(void* This);
+				static std::int32_t GetSafeFormEditorIDSafe(const void* This, char* lpBuffer, std::uint32_t nBufferSize);
 
 				CrashInvalidStrings(const CrashInvalidStrings&) = delete;
 				CrashInvalidStrings& operator=(const CrashInvalidStrings&) = delete;

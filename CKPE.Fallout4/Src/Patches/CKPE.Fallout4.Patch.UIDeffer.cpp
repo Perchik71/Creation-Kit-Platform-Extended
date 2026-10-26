@@ -130,7 +130,7 @@ namespace CKPE
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 				{
 					static constexpr std::uint32_t formIteratorIds[] =
-					{ 598079, 616663, 11246, 587937, 425909, 590847, 15116, 293664, 595577, 374116, 370287 };
+					{ 598079, 616663, 11246, 587937, 425909, 590847, 15116, 293664, 595577, 374116, 370287, 5926 };
 
 					for (auto id : formIteratorIds)
 					{
@@ -144,7 +144,7 @@ namespace CKPE
 				else
 				{
 					static constexpr std::uint32_t formIteratorIds[] =
-					{ 1390677, 1850037, 1828090, 587937, 1852614, 1795871, 374116, 15116, 1676014 };
+					{ 1390677, 1850037, 1828090, 587937, 1852614, 1795871, 374116, 15116, 1676014, 5926 };
 
 					for (auto id : formIteratorIds)
 					{
