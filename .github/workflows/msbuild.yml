@@ -11,6 +11,14 @@ name: MSBuild
 
 on:
   workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Тип релиза для публикации'
+        required: true
+        type: choice
+        options:
+          - prerelease
+          - release
 
 env:
   # Path to the solution file relative to the root of the project.
@@ -324,7 +332,7 @@ jobs:
         name: ckpe-sf-master-noavx2-${{env.SHORT_SHA}}
         path: "ckpe-sf-master-noavx2-${{env.SHORT_SHA}}"
 
-  publish-prerelease:
+  publish:
     needs: [build-master, noavx2-build-master]
     runs-on: ubuntu-latest
     permissions:
@@ -344,48 +352,26 @@ jobs:
           (cd "$dir" && zip -qr "${GITHUB_WORKSPACE}/dist/${name}.zip" .)
         done
 
-    - name: Publish prerelease manually
+    - name: Publish release
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         SHORT_SHA="${GITHUB_SHA:0:8}"
-        gh release delete prerelease --repo "${GITHUB_REPOSITORY}" --cleanup-tag --yes || true
-        gh release create prerelease dist/*.zip \
-          --repo "${GITHUB_REPOSITORY}" \
-          --target "${GITHUB_SHA}" \
-          --title "Pre-release (${SHORT_SHA})" \
-          --notes "Automated pre-release build from commit ${GITHUB_SHA}." \
-          --prerelease \
-          --latest=false
-
-  publish-release:
-    needs: [build-master, noavx2-build-master]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
-    steps:
-    - name: Download build artifacts
-      uses: actions/download-artifact@v8
-      with:
-        path: artifacts
-
-    - name: Package release archives
-      run: |
-        mkdir -p dist
-        for dir in artifacts/ckpe-*; do
-          name="$(basename "$dir")"
-          (cd "$dir" && zip -qr "${GITHUB_WORKSPACE}/dist/${name}.zip" .)
-        done
-
-    - name: Publish release manually
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        SHORT_SHA="${GITHUB_SHA:0:8}"
-        gh release create release dist/*.zip \
-          --repo "${GITHUB_REPOSITORY}" \
-          --target "${GITHUB_SHA}" \
-          --title "Release (${SHORT_SHA})" \
-          --notes "Automated release build from commit ${GITHUB_SHA}." \
-          --latest
+        
+        if [ "${{ inputs.release_type }}" = "prerelease" ]; then
+          gh release delete prerelease --repo "${GITHUB_REPOSITORY}" --cleanup-tag --yes || true
+          gh release create prerelease dist/*.zip \
+            --repo "${GITHUB_REPOSITORY}" \
+            --target "${GITHUB_SHA}" \
+            --title "Pre-release (${SHORT_SHA})" \
+            --notes "Automated pre-release build from commit ${GITHUB_SHA}." \
+            --prerelease \
+            --latest=false
+        elif [ "${{ inputs.release_type }}" = "release" ]; then
+          gh release create release dist/*.zip \
+            --repo "${GITHUB_REPOSITORY}" \
+            --target "${GITHUB_SHA}" \
+            --title "Release (${SHORT_SHA})" \
+            --notes "Automated release build from commit ${GITHUB_SHA}." \
+            --latest
+        fi
