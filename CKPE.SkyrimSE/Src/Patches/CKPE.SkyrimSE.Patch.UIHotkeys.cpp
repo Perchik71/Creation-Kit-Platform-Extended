@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <windows.h>
+#include <CommCtrl.h>
 #include <CKPE.Asserts.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
@@ -24,12 +25,19 @@ namespace CKPE
 			using TUIHotkeysSub3 = std::uintptr_t(void*);
 			static std::function<TUIHotkeysSub2> UIHotkeysSub2;
 			static std::function<TUIHotkeysSub3> UIHotkeysSub3;
-		
+			
+			uint64_t* PreferencesWindowAddr = 0;
+			
 			byte* ToggleDebugShaderSetting = 0;
 			uint32_t* DebugShaderTypeSetting = 0;
 			// 1 = Number of Lights
 			// 4 = Number of Passes
 			// 6 = Texture Usage
+			
+			byte* ToggleAmbientSetting  = 0;
+			byte* ToggleDiffuseSetting  = 0;
+			byte* ToggleSpecularSetting = 0;
+			byte* ToggleTextureSetting  = 0;
 
 			static bool ReplaceHotkeys(const char* HotkeyFunction, [[maybe_unused]] const char* DisplayText, char* VirtualKey,
 				bool* Alt, bool* Ctrl, bool* Shift) noexcept(true)
@@ -142,8 +150,15 @@ namespace CKPE
 				UIHotkeysSub2 = Relocation<TUIHotkeysSub2>(ID(604959)).Get();
 				UIHotkeysSub3 = Relocation<TUIHotkeysSub3>(ID{ 619686, 974159 }).Get();
 				
+				PreferencesWindowAddr = (uintptr_t*)ID(470553).Address();
+				
 				ToggleDebugShaderSetting = (byte*)ID(486220).Address();
-				DebugShaderTypeSetting = (uint32_t*)ID(340720).Address();
+				DebugShaderTypeSetting   = (uint32_t*)ID(340720).Address();
+				
+				ToggleAmbientSetting  = (byte*)ID(420123).Address();
+				ToggleDiffuseSetting  = (byte*)ID(217261).Address();
+				ToggleSpecularSetting = (byte*)ID(13563).Address();
+				ToggleTextureSetting  = (byte*)ID(420126).Address();
 
 				return true;
 			}
@@ -189,15 +204,51 @@ namespace CKPE
 			
 			void UIHotkeys::ToggleDebugShader()
 			{
+				HWND h_PreferencesWindow = (HWND)*PreferencesWindowAddr;
 				if (*ToggleDebugShaderSetting == 0)
 				{
 					*ToggleDebugShaderSetting = 1;
 					*DebugShaderTypeSetting = 1;
+					// if Preferences Window is open and Shaders tab is selected
+					if ((h_PreferencesWindow != (HWND)0x0) && (SendDlgItemMessageA(h_PreferencesWindow,0x6f1,TCM_GETCURSEL,0,0) == 2))
+					{
+						CheckDlgButton(h_PreferencesWindow,0x3fd,BST_CHECKED);
+						
+						*ToggleAmbientSetting = IsDlgButtonChecked(h_PreferencesWindow,0x3f7);
+						*ToggleDiffuseSetting = IsDlgButtonChecked(h_PreferencesWindow,0x3f8);
+						*ToggleSpecularSetting = IsDlgButtonChecked(h_PreferencesWindow,0x3f9);
+						*ToggleTextureSetting = IsDlgButtonChecked(h_PreferencesWindow,0x3fa);
+						
+						CheckDlgButton(h_PreferencesWindow,0x3f7,BST_CHECKED);
+						EnableWindow(GetDlgItem(h_PreferencesWindow,0x3f7),0);
+						CheckDlgButton(h_PreferencesWindow,0x3f8,BST_CHECKED);
+						EnableWindow(GetDlgItem(h_PreferencesWindow,0x3f8),0);
+						CheckDlgButton(h_PreferencesWindow,0x3f9,BST_CHECKED);
+						EnableWindow(GetDlgItem(h_PreferencesWindow,0x3f9),0);
+						CheckDlgButton(h_PreferencesWindow,0x3fa,BST_CHECKED);
+						EnableWindow(GetDlgItem(h_PreferencesWindow,0x3fa),0);
+					}
 				}
 				else
 				{
 					*ToggleDebugShaderSetting = 0;
 					*DebugShaderTypeSetting = 0;
+					// if Preferences Window is open and Shaders tab is selected
+					if ((h_PreferencesWindow != (HWND)0x0) && (SendDlgItemMessageA(h_PreferencesWindow,0x6f1,TCM_GETCURSEL,0,0) == 2))
+					{
+						CheckDlgButton(h_PreferencesWindow,0x3fd,BST_UNCHECKED); // # of lights
+						CheckDlgButton(h_PreferencesWindow,0x3fe,BST_UNCHECKED); // # of passes
+						CheckDlgButton(h_PreferencesWindow,0x3ff,BST_UNCHECKED); // Texture Usage
+						
+						CheckDlgButton(h_PreferencesWindow,0x3f7,*ToggleAmbientSetting);
+						EnableWindow(GetDlgItem(h_PreferencesWindow,0x3f7),1);
+						CheckDlgButton(h_PreferencesWindow,0x3f8,*ToggleDiffuseSetting);
+						EnableWindow(GetDlgItem(h_PreferencesWindow,0x3f8),1);
+						CheckDlgButton(h_PreferencesWindow,0x3f9,*ToggleSpecularSetting);
+						EnableWindow(GetDlgItem(h_PreferencesWindow,0x3f9),1);
+						CheckDlgButton(h_PreferencesWindow,0x3fa,*ToggleTextureSetting);
+						EnableWindow(GetDlgItem(h_PreferencesWindow,0x3fa),1);
+					}
 				}
 			}
 			
