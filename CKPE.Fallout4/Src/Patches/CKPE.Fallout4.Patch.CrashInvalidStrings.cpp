@@ -8,6 +8,7 @@
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.RTTI.h>
 #include <CKPE.Common.Relocation.h>
+#include <CKPE.Common.LiteralFormat.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/T/TESForm.h>
 #include <Patches/CKPE.Fallout4.Patch.Console.h>
@@ -53,16 +54,6 @@ namespace CKPE
 				}
 			}
 
-			std::int32_t CrashInvalidStrings::GetSafeFormEditorIDSafe(const void* This, char* lpBuffer, std::uint32_t nBufferSize)
-			{
-				if (!lpBuffer || !nBufferSize)
-					return 0;
-
-				const auto* form = reinterpret_cast<const EditorAPI::Forms::TESForm*>(This);
-				const auto* editorId = form ? form->GetFormEditorID() : nullptr;
-				return _snprintf_s(lpBuffer, nBufferSize, _TRUNCATE, "%s", editorId ? editorId : "");
-			}
-
 			CrashInvalidStrings::CrashInvalidStrings() : Common::Patch()
 			{
 				SetName("Crash Invalid Strings");
@@ -99,8 +90,11 @@ namespace CKPE
 
 				CrashInvalidStringsLength	= reinterpret_cast<TCrashInvalidStringsLength*>(Relocation(EditorAPI::IDs::BGSLocalizedString::GetLength).WriteJump(&GetLocalizeStringLengthSafe));
 				CrashInvalidStringsGet		= reinterpret_cast<TCrashInvalidStringsGet*>(Relocation(EditorAPI::IDs::BGSLocalizedString::GetStr).WriteJump(&GetLocalizeStringSafe));
-				Relocation(EditorAPI::IDs::TESForm::GetSafeFormEditorID_A).WriteJump(&GetSafeFormEditorIDSafe);
-				Relocation(EditorAPI::IDs::TESForm::GetSafeFormEditorID_B).WriteJump(&GetSafeFormEditorIDSafe);
+				// GetSafeFormEditorID tail-jumps to sprintf_s with the editor ID as format
+				LiteralFormat::Redirect({
+					Relocation(EditorAPI::IDs::TESForm::GetSafeFormEditorID_A, 0x2B).Address(),
+					Relocation(EditorAPI::IDs::TESForm::GetSafeFormEditorID_B, 0x2B).Address() },
+					Relocation(EditorAPI::IDs::Functions::sprintf_s).Address());
 
 				return true;
 			}

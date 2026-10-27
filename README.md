@@ -76,7 +76,7 @@ For more information, please check the brief section in the [Wiki page](https://
 >After a fresh install or update, **ckpe_loader.exe** should be in the same folder as **CreationKit.exe**.
 
 >[!IMPORTANT]
->**Skyrim SE** and **Fallout 4** need the CKPE Address Library ([SSE](https://www.nexusmods.com/skyrimspecialedition/mods/71371) / [FO4](https://www.nexusmods.com/fallout4/mods/51165)) at `<Game>/CKPEBins/version-<CK-Version>.bin`. Vortex installs it automatically.
+>**Skyrim SE** and **Fallout 4** need CKPE's Address Library at `<Game>/CKPEBins/version-<CK-Version>.bin`, from the CKPE Nexus page ([SSE](https://www.nexusmods.com/skyrimspecialedition/mods/71371) / [FO4](https://www.nexusmods.com/fallout4/mods/51165)) or this repository's `Database/SSE/CKPEBins` / `Database/FO4/CKPEBins`. Vortex installs it automatically.
 
 ### Fresh Install
 

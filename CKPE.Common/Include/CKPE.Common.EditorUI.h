@@ -15,12 +15,11 @@ namespace CKPE
 	{
 		class CKPE_COMMON_API EditorUI
 		{
-			bool _UseDeferredDialogInsert{ false };
-			void* _DeferredListView { nullptr };
-			void* _DeferredComboBox{ nullptr };
-			std::uintptr_t _DeferredStringLength{ 0 };
-			bool _DeferredAllowResize{ false };
-			std::vector<std::pair<const char*, void*>>* _DeferredMenuItems{ nullptr };
+			struct DeferFrame;
+			std::vector<DeferFrame>* _DeferFrames{ nullptr };
+
+			[[nodiscard]] DeferFrame* GetDeferFrame() noexcept(true);
+			static void FlushDeferFrame(DeferFrame& Frame) noexcept(true);
 
 			EditorUI(const EditorUI&) = delete;
 			EditorUI& operator=(const EditorUI&) = delete;
@@ -57,6 +56,8 @@ namespace CKPE
 			constexpr static std::uint32_t UI_SSE_COMPILESCRIPT_DIALOG_LISTVIEW = 5401;
 			constexpr static std::uint32_t UI_FO4_COMPILESCRIPT_DIALOG_LISTVIEW = 6088;
 			constexpr static std::uint32_t UI_COMPILESCRIPT_DIALOG_FILTER = 52010;
+			constexpr static std::uint32_t UI_PREVIEW_CONTROL = 2175;
+			constexpr static std::uint32_t UI_GROUNDPLANE_CHECKBOX = 52011;
 
 			EditorUI() noexcept(true);
 
@@ -74,26 +75,6 @@ namespace CKPE
 				bool UseImage, int ItemIndex) noexcept(true);
 			[[nodiscard]] static int ListViewFindItemByString(void* ListViewHandle, const char* str, int start_idx = 0) noexcept(true);
 
-			[[nodiscard]] inline bool HasUseDeferredDialogInsert() const noexcept(true) { return _UseDeferredDialogInsert; }
-			[[nodiscard]] inline void* GetDeferredListView() const noexcept(true) { return _DeferredListView; }
-			[[nodiscard]] inline void* GetDeferredComboBox() const noexcept(true) { return _DeferredComboBox; }
-			[[nodiscard]] inline std::uintptr_t GetDeferredStringLength() const noexcept(true) { return _DeferredStringLength; }
-			[[nodiscard]] inline bool HasDeferredAllowResize() const noexcept(true) { return _DeferredAllowResize; }
-			[[nodiscard]] inline std::vector<std::pair<const char*, void*>>* GetDeferredMenuItems() noexcept(true) 
-			{ return _DeferredMenuItems; }
-			inline void SetUseDeferredDialogInsert(bool v) noexcept(true) { _UseDeferredDialogInsert = v; }
-			inline void SetDeferredListView(void* v) noexcept(true) { _DeferredListView = v; }
-			inline void SetDeferredComboBox(void* v) noexcept(true) { _DeferredComboBox = v; }
-			inline void SetDeferredStringLength(std::uintptr_t v) noexcept(true) { _DeferredStringLength = v; }
-			inline void SetDeferredAllowResize(bool v) noexcept(true) { _DeferredAllowResize = v; }
-
-			CKPE_PROPERTY(HasUseDeferredDialogInsert, SetUseDeferredDialogInsert) bool UseDeferredDialogInsert;
-			CKPE_PROPERTY(GetDeferredListView, SetDeferredListView) void* DeferredListView;
-			CKPE_PROPERTY(GetDeferredComboBox, SetDeferredComboBox) void* DeferredComboBox;
-			CKPE_PROPERTY(GetDeferredStringLength, SetDeferredStringLength) std::uintptr_t DeferredStringLength;
-			CKPE_PROPERTY(HasDeferredAllowResize, SetDeferredAllowResize) bool DeferredAllowResize;
-
-			void ResetUIDefer() noexcept(true);
 			void BeginUIDefer() noexcept(true);
 			void EndUIDefer() noexcept(true);
 
@@ -103,15 +84,27 @@ namespace CKPE
 
 			static void CopyTextToClipboard(void* Hwnd, const char* Text) noexcept(true);
 
-			using TCompileScriptsDlgProc = std::ptrdiff_t(*)(void*, std::uint32_t, std::uintptr_t, std::ptrdiff_t);
+			using TDialogProc = std::ptrdiff_t(*)(void*, std::uint32_t, std::uintptr_t, std::ptrdiff_t);
 
 			static std::ptrdiff_t CompileScriptsDialogProc(void* This, std::uint32_t Message,
 				std::uintptr_t wParam, std::ptrdiff_t lParam, std::uint32_t ListViewId,
-				TCompileScriptsDlgProc DefaultDlgProc,
+				TDialogProc DefaultDlgProc,
 				const std::function<void(void*)>& OnInitDialog = {},
 				const std::function<void(void*)>& OnSize = {},
 				const std::function<void(void*)>& OnCheckAllCheckedOut = {},
 				const std::function<void(void*)>& OnCompile = {}) noexcept(true);
+
+			struct GroundPlane
+			{
+				void* (*GetPreview)(void* Dialog, std::uint32_t ControlId);
+				bool (*IsShown)(void* Preview);
+				void (*SetShown)(void* Preview, bool Shown);
+			};
+
+			// 0 adds a CKPE-owned checkbox; a game checkbox ID is only kept in sync
+			static std::ptrdiff_t GroundPlaneDialogProc(void* This, std::uint32_t Message,
+				std::uintptr_t wParam, std::ptrdiff_t lParam, TDialogProc DefaultDlgProc,
+				const GroundPlane& Plane, std::uint32_t GameCheckboxId = 0) noexcept(true);
 		public:
 			struct CKPE_COMMON_API Hook
 			{
@@ -131,7 +124,6 @@ namespace CKPE
 					std::ptrdiff_t lParam) noexcept(true);
 				static std::ptrdiff_t DialogFuncOverride(void* hwndDlg, std::uint32_t uMsg, std::ptrdiff_t wParam, 
 					std::ptrdiff_t lParam) noexcept(true);
-				static void HKResetUIDefer() noexcept(true);
 				static void HKBeginUIDefer() noexcept(true);
 				static void HKEndUIDefer() noexcept(true);
 

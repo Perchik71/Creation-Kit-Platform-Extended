@@ -910,6 +910,8 @@ namespace CKPE
 					inline constexpr Common::ID raise_securityfailure{ 1632576 };
 					// 1.11.246.0 0x142D75C14 __scrt_fastfail
 					inline constexpr Common::ID scrt_fastfail{ 1560296 };
+					// 1.11.246.0 0x14000415B sprintf_s thunk
+					inline constexpr Common::ID sprintf_s{ 494648 };
 					// 1.11.246.0 0x141137B70 CSScript::PickScriptsToCompileDlg::DlgProc
 					inline constexpr Common::ID PapyrusCompileDialog_DlgProc{ 580037 };
 					// 1.11.246.0 0x141137F50 sub_141137F50
@@ -926,8 +928,8 @@ namespace CKPE
 					inline constexpr Common::ID BGSErrorDlg_OnInitDialog{ 532471 };
 					// 1.11.246.0 0x143BAA070 bPreviewShowLandPlane:PreviewMovement value byte
 					inline constexpr Common::ID bPreviewShowLandPlane{ 7994 };
-					// 1.11.246.0 0x14053AF30 ModelData::DlgProc
-					inline constexpr Common::ID ModelData_DlgProc{ 436240, 1690230 };
+					// 1.11.246.0 0x140356870 ModelData::DlgProc
+					inline constexpr Common::ID ModelData_DlgProc{ 262440, 1989482 };
 					// 1.11.246.0 0x140068377 DialogExtraPreviewControl::Get
 					inline constexpr Common::ID DialogExtraPreviewControl_Get{ 432191 };
 					// 1.11.246.0 0x140729A30 TESPreviewControl::ToggleGroundPlane

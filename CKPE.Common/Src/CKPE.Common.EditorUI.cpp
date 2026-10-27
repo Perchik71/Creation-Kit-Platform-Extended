@@ -4,6 +4,7 @@
 
 #include <windows.h>
 #include <commctrl.h>
+#include <richedit.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Common.AboutWindow.h>
 #include <CKPE.Common.MemoryManager.h>
@@ -36,9 +37,18 @@ namespace CKPE
 
 		EditorUI seditorUI;
 
+		struct EditorUI::DeferFrame
+		{
+			void* ListView{ nullptr };
+			void* ComboBox{ nullptr };
+			std::uintptr_t StringLength{ 0 };
+			bool AllowResize{ false };
+			std::vector<std::pair<const char*, void*>> Items;
+		};
+
 		EditorUI::EditorUI() noexcept(true)
 		{
-			_DeferredMenuItems = new std::vector<std::pair<const char*, void*>>;
+			_DeferFrames = new std::vector<DeferFrame>;
 			InitCommonControls();
 		}
 
@@ -150,14 +160,14 @@ namespace CKPE
 				item.iImage = I_IMAGECALLBACK;
 			}
 
-			if (seditorUI.UseDeferredDialogInsert)
+			if (auto frame = seditorUI.GetDeferFrame())
 			{
-				if (seditorUI.DeferredListView && (seditorUI.DeferredListView != ListViewHandle))
-					ErrorHandler::Trigger("Got handles to different list views? Reset probably wasn't called.");
+				if (frame->ListView && (frame->ListView != ListViewHandle))
+					ErrorHandler::Trigger("Got handles to different list views in one deferred window.");
 
-				if (!seditorUI.DeferredListView)
+				if (!frame->ListView)
 				{
-					seditorUI.DeferredListView = ListViewHandle;
+					frame->ListView = ListViewHandle;
 					SendMessage((HWND)ListViewHandle, WM_SETREDRAW, FALSE, 0);
 				}
 			}
@@ -190,36 +200,38 @@ namespace CKPE
 			return -1;
 		}
 
-		void EditorUI::ResetUIDefer() noexcept(true)
+		EditorUI::DeferFrame* EditorUI::GetDeferFrame() noexcept(true)
 		{
-			UseDeferredDialogInsert = false;
-			DeferredListView = nullptr;
-			DeferredComboBox = nullptr;
-			DeferredStringLength = 0;
-			DeferredAllowResize = false;
-			if (_DeferredMenuItems) _DeferredMenuItems->clear();
+			return _DeferFrames->empty() ? nullptr : &_DeferFrames->back();
 		}
 
+		// Windows nest when an iterator's predicate runs another deferred iterator
 		void EditorUI::BeginUIDefer() noexcept(true)
 		{
-			ResetUIDefer();
-			UseDeferredDialogInsert = true;
+			_DeferFrames->emplace_back();
 		}
 
 		void EditorUI::EndUIDefer() noexcept(true)
 		{
-			if (!UseDeferredDialogInsert)
+			if (_DeferFrames->empty())
 				return;
 
-			if (DeferredListView)
+			auto frame = std::move(_DeferFrames->back());
+			_DeferFrames->pop_back();
+			FlushDeferFrame(frame);
+		}
+
+		void EditorUI::FlushDeferFrame(DeferFrame& Frame) noexcept(true)
+		{
+			if (Frame.ListView)
 			{
-				SendMessage((HWND)DeferredListView, WM_SETREDRAW, TRUE, 0);
-				RedrawWindow((HWND)DeferredListView, nullptr, nullptr, RDW_ERASE | RDW_INVALIDATE | RDW_NOCHILDREN);
+				SendMessage((HWND)Frame.ListView, WM_SETREDRAW, TRUE, 0);
+				RedrawWindow((HWND)Frame.ListView, nullptr, nullptr, RDW_ERASE | RDW_INVALIDATE | RDW_NOCHILDREN);
 			}
 
-			if (_DeferredMenuItems && !_DeferredMenuItems->empty())
+			if (!Frame.Items.empty())
 			{
-				auto control = (const HWND)DeferredComboBox;
+				auto control = (const HWND)Frame.ComboBox;
 
 				// Sort alphabetically if requested to try and speed up inserts
 				int finalWidth = 0;
@@ -227,14 +239,14 @@ namespace CKPE
 
 				if ((style & CBS_SORT) == CBS_SORT)
 				{
-					std::sort(_DeferredMenuItems->begin(), _DeferredMenuItems->end(),
+					std::sort(Frame.Items.begin(), Frame.Items.end(),
 						[](const auto& a, const auto& b) -> bool
 						{
 							return _stricmp(a.first, b.first) < 0;
 						});
 				}
 
-				SendMessage(control, CB_INITSTORAGE, _DeferredMenuItems->size(), DeferredStringLength * sizeof(char));
+				SendMessage(control, CB_INITSTORAGE, Frame.Items.size(), Frame.StringLength * sizeof(char));
 
 				if (HDC hdc = GetDC(control); hdc)
 				{
@@ -258,7 +270,7 @@ namespace CKPE
 					}
 
 					// Insert everything all at once
-					for (auto& [display, value] : *_DeferredMenuItems)
+					for (auto& [display, value] : Frame.Items)
 					{
 						LRESULT index = SendMessageA(control, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(display));
 						int lineSize = 0;
@@ -270,15 +282,17 @@ namespace CKPE
 							lineSize += fontWidths[*c];
 
 						finalWidth = std::max(finalWidth, lineSize);
-						free(const_cast<char*>(display));
 					}
 
 					SuspendComboBoxUpdates(control, false);
 					ReleaseDC(control, hdc);
 				}
 
+				for (auto& item : Frame.Items)
+					free(const_cast<char*>(item.first));
+
 				// Resize to fit
-				if (DeferredAllowResize)
+				if (Frame.AllowResize)
 				{
 					LRESULT currentWidth = SendMessage(control, CB_GETDROPPEDWIDTH, 0, 0);
 
@@ -286,8 +300,6 @@ namespace CKPE
 						SendMessage(control, CB_SETDROPPEDWIDTH, finalWidth, 0);
 				}
 			}
-
-			ResetUIDefer();
 		}
 
 		void EditorUI::SuspendComboBoxUpdates(void* ComboHandle, bool Suspend) noexcept(true)
@@ -323,17 +335,17 @@ namespace CKPE
 			if (!DisplayText)
 				DisplayText = "NONE";
 
-			if (seditorUI.UseDeferredDialogInsert)
+			if (auto frame = seditorUI.GetDeferFrame())
 			{
-				if (seditorUI.DeferredComboBox && (seditorUI.DeferredComboBox != ComboBoxHandle))
-					ErrorHandler::Trigger("Got handles to different combo boxes? Reset probably wasn't called.");
+				if (frame->ComboBox && (frame->ComboBox != ComboBoxHandle))
+					ErrorHandler::Trigger("Got handles to different combo boxes in one deferred window.");
 
-				seditorUI.DeferredComboBox = ComboBoxHandle;
-				seditorUI.DeferredStringLength += strlen(DisplayText) + 1;
-				seditorUI.DeferredAllowResize = AllowResize;
+				frame->ComboBox = ComboBoxHandle;
+				frame->StringLength += strlen(DisplayText) + 1;
+				frame->AllowResize = AllowResize;
 
 				// A copy must be created since lifetime isn't guaranteed after this function returns
-				seditorUI.GetDeferredMenuItems()->emplace_back(strdup(DisplayText), Value);
+				frame->Items.emplace_back(strdup(DisplayText), Value);
 			}
 			else
 			{
@@ -606,7 +618,7 @@ namespace CKPE
 
 		std::ptrdiff_t EditorUI::CompileScriptsDialogProc(void* This, std::uint32_t Message,
 			std::uintptr_t wParam, std::ptrdiff_t lParam, std::uint32_t ListViewId,
-			TCompileScriptsDlgProc DefaultDlgProc,
+			TDialogProc DefaultDlgProc,
 			const std::function<void(void*)>& OnInitDialog,
 			const std::function<void(void*)>& OnSize,
 			const std::function<void(void*)>& OnCheckAllCheckedOut,
@@ -751,6 +763,66 @@ namespace CKPE
 			}
 
 			return DefaultDlgProc(This, Message, wParam, lParam);
+		}
+
+		static void SyncGroundPlaneCheck(HWND Dialog, std::uint32_t CheckboxId,
+			const EditorUI::GroundPlane& Plane) noexcept(true)
+		{
+			if (void* preview = Plane.GetPreview(Dialog, EditorUI::UI_PREVIEW_CONTROL))
+				CheckDlgButton(Dialog, CheckboxId, Plane.IsShown(preview) ? BST_CHECKED : BST_UNCHECKED);
+		}
+
+		std::ptrdiff_t EditorUI::GroundPlaneDialogProc(void* This, std::uint32_t Message,
+			std::uintptr_t wParam, std::ptrdiff_t lParam, TDialogProc DefaultDlgProc,
+			const GroundPlane& Plane, std::uint32_t GameCheckboxId) noexcept(true)
+		{
+			auto dialog = (HWND)This;
+			const bool owned = !GameCheckboxId;
+			const auto checkboxId = owned ? UI_GROUNDPLANE_CHECKBOX : GameCheckboxId;
+
+			if (owned && (Message == WM_COMMAND) && (LOWORD(wParam) == checkboxId) && (HIWORD(wParam) == BN_CLICKED))
+			{
+				if (void* preview = Plane.GetPreview(dialog, UI_PREVIEW_CONTROL))
+					Plane.SetShown(preview, IsDlgButtonChecked(dialog, checkboxId) == BST_CHECKED);
+				SyncGroundPlaneCheck(dialog, checkboxId, Plane);
+				return TRUE;
+			}
+
+			auto result = DefaultDlgProc(This, Message, wParam, lParam);
+
+			switch (Message)
+			{
+			case WM_INITDIALOG:
+			{
+				HWND preview = GetDlgItem(dialog, UI_PREVIEW_CONTROL);
+				HWND ok = GetDlgItem(dialog, IDOK);
+				if (owned && preview && ok)
+				{
+					RECT rcPreview{}, rcOk{};
+					GetWindowRect(preview, &rcPreview);
+					GetWindowRect(ok, &rcOk);
+					MapWindowPoints(HWND_DESKTOP, dialog, reinterpret_cast<LPPOINT>(&rcPreview), 2);
+					MapWindowPoints(HWND_DESKTOP, dialog, reinterpret_cast<LPPOINT>(&rcOk), 2);
+
+					HWND check = CreateWindowExA(0, WC_BUTTONA, "Ground Plane",
+						WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX,
+						rcPreview.left, rcOk.top, 110, rcOk.bottom - rcOk.top, dialog,
+						reinterpret_cast<HMENU>(static_cast<std::uintptr_t>(checkboxId)),
+						GetModuleHandleA(nullptr), nullptr);
+					if (check)
+						SendMessageA(check, WM_SETFONT, SendMessageA(dialog, WM_GETFONT, 0, 0), TRUE);
+				}
+				SyncGroundPlaneCheck(dialog, checkboxId, Plane);
+				break;
+			}
+			case WM_COMMAND:
+			case WM_NOTIFY:
+			case WM_KEYDOWN:
+				SyncGroundPlaneCheck(dialog, checkboxId, Plane);
+				break;
+			}
+
+			return result;
 		}
 
 		/////////////////////////////////////////
@@ -904,11 +976,6 @@ namespace CKPE
 			return SendMessageA((HWND)hWnd, Msg, wParam, lParam);
 		}
 
-		void EditorUI::Hook::HKResetUIDefer() noexcept(true)
-		{
-			seditorUI.ResetUIDefer();
-		}
-
 		void EditorUI::Hook::HKBeginUIDefer() noexcept(true)
 		{
 			seditorUI.BeginUIDefer();
@@ -923,6 +990,16 @@ namespace CKPE
 			std::ptrdiff_t lParam) noexcept(true)
 		{
 			DLGPROC proc = nullptr;
+
+			// RichEdit drops text past 32K chars; lift it before the CK fills it
+			if (uMsg == WM_INITDIALOG)
+				EnumChildWindows((HWND)hwndDlg, [](HWND Child, LPARAM) -> BOOL
+					{
+						char className[32]{};
+						if (GetClassNameA(Child, className, sizeof(className)) && !_strnicmp(className, "RichEdit", 8))
+							SendMessageA(Child, EM_EXLIMITTEXT, 0, 0x7FFFFFFF);
+						return TRUE;
+					}, 0);
 
 			ScopeCriticalSection lock{ DialogLock };
 			{

@@ -3,8 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <windows.h>
-#include <commctrl.h>
-#include <richedit.h>
 #include <cstring>
 #include <string>
 #include <EditorAPI/IDs.h>
@@ -12,12 +10,10 @@
 #include <CKPE.Utils.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.EditorUI.h>
 #include <CKPE.Common.Relocation.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <Patches/CKPE.Fallout4.Patch.Misc.h>
-
-#define UI_MODELDATA_PREVIEW_CONTROL		2175
-#define UI_MODELDATA_GROUNDPLANE_CHECKBOX	52011
 
 namespace CKPE
 {
@@ -30,14 +26,7 @@ namespace CKPE
 				std::string s_ArchiveOutput;
 
 				using TBSStringAppend = EditorAPI::BSString*(*)(EditorAPI::BSString*, const char*);
-				using TModelDataDlgProc = INT_PTR(CALLBACK*)(HWND, UINT, WPARAM, LPARAM);
-				using TGetPreviewControl = void*(*)(HWND, std::uint32_t);
-				using TToggleGroundPlane = void(*)(void*);
-
 				TBSStringAppend OldBSStringAppend = nullptr;
-				TModelDataDlgProc OldModelDataDlgProc = nullptr;
-				TGetPreviewControl GetPreviewControl = nullptr;
-				TToggleGroundPlane ToggleGroundPlane = nullptr;
 
 				EditorAPI::BSString* AppendArchiveOutput(EditorAPI::BSString* Str, const char* Chunk) noexcept(true)
 				{
@@ -55,7 +44,6 @@ namespace CKPE
 
 				BOOL SetErrorDlgRichEditText(HWND hRichEdit, LPCSTR lpString) noexcept(true)
 				{
-					SendMessageA(hRichEdit, EM_EXLIMITTEXT, 0, 0x7FFFFFFF);
 					if (!s_ArchiveOutput.empty() && lpString && lpString[0] != '\0' &&
 						std::strncmp(s_ArchiveOutput.c_str(), lpString, 64) == 0)
 					{
@@ -66,68 +54,35 @@ namespace CKPE
 					return SetWindowTextA(hRichEdit, lpString);
 				}
 
-				void SyncGroundPlaneCheck(HWND hDlg) noexcept(true)
+				Common::EditorUI::TDialogProc OldModelDataDlgProc = nullptr;
+				std::uintptr_t pointer_GetPreviewControl = 0;
+				std::uintptr_t pointer_ToggleGroundPlane = 0;
+
+				void* GetPreviewControl(void* Dialog, std::uint32_t ControlId) noexcept(true)
 				{
-					const auto valueAddr = EditorAPI::IDs::Functions::bPreviewShowLandPlane.Address();
-					if (HWND hCheck = GetDlgItem(hDlg, UI_MODELDATA_GROUNDPLANE_CHECKBOX); hCheck && valueAddr)
-					{
-						const bool showGround = *reinterpret_cast<const bool*>(valueAddr);
-						SendMessageA(hCheck, BM_SETCHECK, showGround ? BST_CHECKED : BST_UNCHECKED, 0);
-					}
+					return fast_call<void*>(pointer_GetPreviewControl, Dialog, ControlId);
 				}
 
-				INT_PTR CALLBACK HKModelDataDlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) noexcept(true)
+				bool IsGroundPlaneShown(void*) noexcept(true)
 				{
-					if (uMsg == WM_INITDIALOG)
-					{
-						const INT_PTR res = OldModelDataDlgProc(hDlg, uMsg, wParam, lParam);
+					return *reinterpret_cast<const bool*>(EditorAPI::IDs::Functions::bPreviewShowLandPlane.Address());
+				}
 
-						HWND hPreview = GetDlgItem(hDlg, UI_MODELDATA_PREVIEW_CONTROL);
-						HWND hOk = GetDlgItem(hDlg, IDOK);
-						if (hPreview && hOk && !GetDlgItem(hDlg, UI_MODELDATA_GROUNDPLANE_CHECKBOX))
-						{
-							RECT rcPreview{}, rcOk{};
-							GetWindowRect(hPreview, &rcPreview);
-							GetWindowRect(hOk, &rcOk);
-							MapWindowPoints(HWND_DESKTOP, hDlg, reinterpret_cast<LPPOINT>(&rcPreview), 2);
-							MapWindowPoints(HWND_DESKTOP, hDlg, reinterpret_cast<LPPOINT>(&rcOk), 2);
+				void SetGroundPlaneShown(void* Preview, bool Shown) noexcept(true)
+				{
+					if (IsGroundPlaneShown(Preview) == Shown)
+						return;
 
-							HWND hCheck = CreateWindowExA(0, WC_BUTTONA, "Ground Plane",
-								WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX,
-								rcPreview.left, rcOk.top, 110, rcOk.bottom - rcOk.top,
-								hDlg, reinterpret_cast<HMENU>(static_cast<std::uintptr_t>(UI_MODELDATA_GROUNDPLANE_CHECKBOX)),
-								GetModuleHandleA(nullptr), nullptr);
+					fast_call<void>(pointer_ToggleGroundPlane, Preview);
+					CKPE::vtbl_call<void>(0x28, Preview, 0.0f, false);
+				}
 
-							if (hCheck)
-							{
-								SendMessageA(hCheck, WM_SETFONT, SendMessageA(hDlg, WM_GETFONT, 0, 0), TRUE);
-								SyncGroundPlaneCheck(hDlg);
-							}
-						}
+				constexpr Common::EditorUI::GroundPlane Plane{ GetPreviewControl, IsGroundPlaneShown, SetGroundPlaneShown };
 
-						return res;
-					}
-
-					if (uMsg == WM_COMMAND && LOWORD(wParam) == UI_MODELDATA_GROUNDPLANE_CHECKBOX && HIWORD(wParam) == BN_CLICKED)
-					{
-						if (GetPreviewControl && ToggleGroundPlane)
-						{
-							if (void* preview = GetPreviewControl(hDlg, UI_MODELDATA_PREVIEW_CONTROL))
-							{
-								ToggleGroundPlane(preview);
-								CKPE::vtbl_call<void>(0x28, preview, 0.0f, false);
-							}
-						}
-						SyncGroundPlaneCheck(hDlg);
-						return TRUE;
-					}
-
-					const INT_PTR res = OldModelDataDlgProc(hDlg, uMsg, wParam, lParam);
-
-					if (uMsg == WM_NOTIFY || uMsg == WM_KEYDOWN)
-						SyncGroundPlaneCheck(hDlg);
-
-					return res;
+				std::ptrdiff_t HKModelDataDlgProc(void* Dialog, std::uint32_t Message,
+					std::uintptr_t wParam, std::ptrdiff_t lParam) noexcept(true)
+				{
+					return Common::EditorUI::GroundPlaneDialogProc(Dialog, Message, wParam, lParam, OldModelDataDlgProc, Plane);
 				}
 			}
 			Misc::Misc() : Common::Patch()
@@ -202,8 +157,8 @@ namespace CKPE
 				errDlgRel.WriteFill(NOP, 6);
 				errDlgRel.WriteCall(&SetErrorDlgRichEditText);
 
-				GetPreviewControl = Relocation<TGetPreviewControl>(EditorAPI::IDs::Functions::DialogExtraPreviewControl_Get).Get();
-				ToggleGroundPlane = Relocation<TToggleGroundPlane>(EditorAPI::IDs::Functions::TESPreviewControl_ToggleGroundPlane).Get();
+				pointer_GetPreviewControl = EditorAPI::IDs::Functions::DialogExtraPreviewControl_Get.Address();
+				pointer_ToggleGroundPlane = EditorAPI::IDs::Functions::TESPreviewControl_ToggleGroundPlane.Address();
 				*(std::uintptr_t*)&OldModelDataDlgProc =
 					Relocation(EditorAPI::IDs::Functions::ModelData_DlgProc).WriteJump(&HKModelDataDlgProc);
 
