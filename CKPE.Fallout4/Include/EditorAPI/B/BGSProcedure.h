@@ -14,6 +14,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		virtual ~IProcedure() = default;
 
+		constexpr static Common::ID VTABLE = IDs::VTABLE::IProcedure[0];
 	protected:
 		// Preserve the interface without inventing callable procedure signatures.
 		virtual void sub_008() = 0;
@@ -56,8 +57,9 @@ namespace CKPE::Fallout4::EditorAPI
 	protected:
 		virtual void sub_108() = 0;
 		virtual void sub_110() = 0;
-
 	public:
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureBase[0];
+
 		/* 0x008 */ std::uint8_t unk08[0x30];
 	};
 	static_assert(sizeof(BGSProcedureBase) == 0x38);

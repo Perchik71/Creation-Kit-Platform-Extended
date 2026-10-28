@@ -173,7 +173,6 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.DataWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.DisableAssertion.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.DontMatchForms.cpp" />
-    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.EnableGoInSelGame.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.EncounterZone.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ESLTip.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.Facegen.cpp" />
@@ -226,8 +225,6 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.SkipTopicInfoValidation.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.SkipUpdateCheck.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.SortCrashCombined.cpp" />
-    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.TESDataHandlerHook.cpp" />
-    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.TESFormHook.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.TESHook.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.UIDeffer.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.UIHotkeys.cpp" />
@@ -236,7 +233,9 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.WrongUpdateActorWnd.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\EditorAPI\B\BSTSingleton.h" />
     <ClInclude Include="Include\EditorAPI\Fallout4.h" />
+    <ClInclude Include="Include\EditorAPI\M\MemoryManager.h" />
     <ClInclude Include="Include\EditorAPI\N\NiTPointerList.h" />
     <ClInclude Include="Include\EditorAPI\B\bhkConstraintMotor.h" />
     <ClInclude Include="Include\EditorAPI\B\BShkbHkxDB.h" />
@@ -506,7 +505,6 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.DataWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.DisableAssertion.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.DontMatchForms.h" />
-    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.EnableGoInSelGame.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.EncounterZone.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ESLTip.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.Facegen.h" />
@@ -559,8 +557,6 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.SkipTopicInfoValidation.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.SkipUpdateCheck.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.SortCrashCombined.h" />
-    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.TESDataHandlerHook.h" />
-    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.TESFormHook.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.TESHook.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.UIDeffer.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.UIHotkeys.h" />

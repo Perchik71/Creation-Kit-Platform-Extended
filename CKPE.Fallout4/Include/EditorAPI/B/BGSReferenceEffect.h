@@ -25,6 +25,7 @@ namespace CKPE
 				public:
 					virtual ~BGSReferenceEffect() = default;
 
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSReferenceEffect[0];
 				public:
 					// CommonLibF4's Data (the constructor / InitializeData zero 28, 30 and 38)
 					BGSArtObject* artObject; // 28

@@ -36,6 +36,8 @@ namespace CKPE
 				public:
 					virtual ~BGSHeadPart() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftHeadPart;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSHeadPart[0];
 				public:
 					std::uint8_t flags; // 90 - REX::TEnumSet<Flag, std::uint8_t>
 					std::uint8_t unk91[0x3]; // 91

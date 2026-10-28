@@ -25,8 +25,9 @@ namespace CKPE
 			public:
 				virtual ~TESEnchantableForm() = default;
 
-				virtual std::uint16_t GetCastingType() const noexcept(true) { return 0; } // 21 - RVA 0x8C03F0, return *(unsigned __int16 *)(a1 + 16);
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESEnchantableForm[0];
 
+				virtual std::uint16_t GetCastingType() const noexcept(true) { return 0; } // 21 - RVA 0x8C03F0, return *(unsigned __int16 *)(a1 + 16);
 			public:
 				Forms::EnchantmentItem* formEnchanting; // 08
 				std::uint16_t castingType; // 10 - MagicSystem::CastingType

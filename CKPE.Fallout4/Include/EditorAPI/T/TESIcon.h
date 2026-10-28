@@ -19,6 +19,8 @@ namespace CKPE
 			{
 			public:
 				virtual ~TESIcon() = default;
+
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESIcon[0];
 			};
 			static_assert(sizeof(TESIcon) == 0x28);
 		}

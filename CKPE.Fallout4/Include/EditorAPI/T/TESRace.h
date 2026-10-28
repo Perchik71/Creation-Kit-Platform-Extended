@@ -120,6 +120,9 @@ namespace CKPE
 				public:
 					virtual ~TESRace() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftRace;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESRace[0];
+
 					virtual void UpdateRacePreview(HWND hDialogBox, bool ForceUpdate, void* Reference) noexcept(true) { return; } // 124
 
 				public:

@@ -25,8 +25,10 @@ namespace CKPE
 				public:
 					virtual ~BGSTalkingActivator() = default;
 
-					virtual bool GetReflectedByAutoWater() noexcept(true) { return false; } // 154 - RVA 0xC2E650, return 0;
+					constexpr static std::uint8_t TYPE_ID = ftTalkingActivator;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSTalkingActivator[0];
 
+					virtual bool GetReflectedByAutoWater() noexcept(true) { return false; } // 154 - RVA 0xC2E650, return 0;
 				public:
 					TESObjectREFR* tempRef; // 1E8
 					BGSVoiceType* voiceType; // 1F0

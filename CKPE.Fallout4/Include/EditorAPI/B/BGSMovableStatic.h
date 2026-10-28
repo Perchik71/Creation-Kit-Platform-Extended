@@ -34,6 +34,8 @@ namespace CKPE
 				public:
 					virtual ~BGSMovableStatic() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftMovableStatic;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMovableStatic[0];
 				public:
 					BGSSoundDescriptorForm* soundLoop; // 178
 					MOVABLE_STATIC_DATA data; // 180

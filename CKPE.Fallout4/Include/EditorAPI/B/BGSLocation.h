@@ -32,6 +32,8 @@ namespace CKPE
 				public:
 					virtual ~BGSLocation() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftLocation;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLocation[0];
 				public:
 					BGSLocation* parentLoc; // 60
 					TESFaction* unreportedCrimeFaction; // 68

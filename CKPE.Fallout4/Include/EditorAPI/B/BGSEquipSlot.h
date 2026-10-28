@@ -26,6 +26,8 @@ namespace CKPE
 				public:
 					virtual ~BGSEquipSlot() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftEquipSlot;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEquipSlot[0];
 				public:
 					BSTArray<void*> parentSlots; // 28 - BSTArray<BGSEquipSlot*>
 					std::uint32_t flags; // 40

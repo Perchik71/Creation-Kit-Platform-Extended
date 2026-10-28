@@ -15,6 +15,8 @@ namespace CKPE
 			class BSLightingShader : public BSShader
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShader[0];
+
 				struct RuntimeData
 				{
 					std::uint32_t Unk00;								// 00

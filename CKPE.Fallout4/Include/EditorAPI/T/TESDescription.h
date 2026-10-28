@@ -22,6 +22,8 @@ namespace CKPE
 			public:
 				virtual ~TESDescription() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESDescription[0];
+
 				[[nodiscard]] std::uint32_t GetDescriptionTextLength() const noexcept(true);
 				[[nodiscard]] const char* GetDescriptionText() const noexcept(true);
 

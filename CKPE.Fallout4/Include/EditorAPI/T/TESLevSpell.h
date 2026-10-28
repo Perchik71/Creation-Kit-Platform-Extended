@@ -23,6 +23,9 @@ namespace CKPE
 				{
 				public:
 					virtual ~TESLevSpell() = default;
+
+					constexpr static std::uint8_t TYPE_ID = ftLeveledSpell;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESLevSpell[0];
 				};
 				static_assert(sizeof(TESLevSpell) == 0xB8);
 			}

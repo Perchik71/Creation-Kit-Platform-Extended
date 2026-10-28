@@ -25,6 +25,7 @@ namespace CKPE
 			public:
 				virtual ~BGSSkinForm() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSkinForm[0];
 			public:
 				Forms::TESObjectARMO* formSkin; // 08
 				std::uint32_t skinControlID; // 10 - dialog control ID (IDC_SKIN, 1087 on construction)

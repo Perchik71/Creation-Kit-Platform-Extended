@@ -46,6 +46,8 @@ namespace CKPE
 				public:
 					virtual ~TESObjectARMA() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftArmorAddon;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectARMA[0];
 				public:
 					OBJ_ARMA data; // 50
 					std::uint32_t unk5C; // 5C

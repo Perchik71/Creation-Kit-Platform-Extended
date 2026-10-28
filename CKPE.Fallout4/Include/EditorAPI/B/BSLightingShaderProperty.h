@@ -15,6 +15,8 @@ namespace CKPE
 			class BSLightingShaderProperty : public BSShaderProperty
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShaderProperty[0];
+
 				NiAPI::NiColorA ProjectedUVParams;					// 70
 				NiAPI::NiColorA ProjectedUVColor;						// 80
 				RenderPassArray DepthMapRenderPassLists[3];			// 90

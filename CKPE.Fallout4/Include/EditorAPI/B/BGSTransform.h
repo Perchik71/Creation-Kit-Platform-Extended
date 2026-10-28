@@ -21,6 +21,7 @@ namespace CKPE
 				{
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftTransform;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSTransform[0];
 
 					virtual ~BGSTransform() = default;
 		

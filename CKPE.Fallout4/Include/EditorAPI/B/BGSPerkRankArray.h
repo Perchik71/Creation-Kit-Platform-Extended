@@ -22,6 +22,7 @@ namespace CKPE
 			public:
 				virtual ~BGSPerkRankArray() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPerkRankArray[0];
 			public:
 				PerkRankData* perks; // 08 - the CK has no perkCount member (size 0x10)
 			};

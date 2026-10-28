@@ -46,6 +46,8 @@ namespace CKPE
 				public:
 					virtual ~SpellItem() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftSpell;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::SpellItem[0];
 				public:
 					SpellItemData data; // 318
 				};

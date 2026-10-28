@@ -86,7 +86,7 @@ namespace CKPE
 				dwProgressLoadCurrent = reinterpret_cast<LPDWORD>(EditorAPI::IDs::Functions::data_3D5E5B8.Address());
 				dwProgressLoadMax = reinterpret_cast<LPDWORD>(EditorAPI::IDs::Functions::data_3D5E564.Address());
 
-				auto rel2 = Relocation(EditorAPI::IDs::Functions::TESDataHandler__LoadFileRecords, Offset{ 0x23C, 0x264 });
+				auto rel2 = Relocation(EditorAPI::IDs::TESDataHandler::LoadFileRecords, Offset{ 0x23C, 0x264 });
 				rel2.Write({ 0x48, 0x8D, 0x4D, 0x78 });
 
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
@@ -102,7 +102,7 @@ namespace CKPE
 					//
 					// The output of a message to the user, every time you load something,
 					// should only be in the form of an error, and postpone the load of something.
-					Relocation(EditorAPI::IDs::Functions::legacy_ProgressWindow_653593, 0x2F1).Write({ 0xE9, 0x2B, 0x02, 0x00, 0x00, 0x90 });
+					Relocation(EditorAPI::IDs::TESDataHandler::LoadFiles, 0x2F1).Write({ 0xE9, 0x2B, 0x02, 0x00, 0x00, 0x90 });
 				}
 				else
 				{
@@ -117,7 +117,7 @@ namespace CKPE
 					//
 					// The output of a message to the user, every time you load something,
 					// should only be in the form of an error, and postpone the load of something.
-					Relocation(EditorAPI::IDs::Functions::TESDataHandler__LoadFiles_2, 0x2EE).Write({ 0xE9, 0xFC, 0x01, 0x00, 0x00, 0x90 });
+					Relocation(EditorAPI::IDs::TESDataHandler::LoadFiles, 0x2EE).Write({ 0xE9, 0xFC, 0x01, 0x00, 0x00, 0x90 });
 				}
 
 				pointer_ProgressWindow_sub = Relocation(EditorAPI::IDs::Functions::MainWindow_SetStatusBarText).Address();

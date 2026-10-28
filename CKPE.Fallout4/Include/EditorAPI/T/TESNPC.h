@@ -49,7 +49,7 @@ namespace CKPE
 					virtual ~TESNPC() = default;
 
 					constexpr static std::uint8_t TYPE_ID = ftActor;
-
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESNPC[0];
 				public:
 					BGSAttachParentArray attachParents; // 2B0
 					std::uint8_t data[0x8]; // 2D0 - NPC_DATA (saved as an 8 byte record)

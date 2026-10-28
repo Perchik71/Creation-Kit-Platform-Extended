@@ -9,6 +9,7 @@
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/B/BSTSmartPointer.h>
 #include <EditorAPI/T/TESObjectREFRFwd.h>
+#include <EditorAPI/B/BSTSingleton.h>
 
 namespace CKPE
 {
@@ -324,11 +325,6 @@ namespace CKPE
 
 			// Empty helper base (no data).
 			class TESMagicTargetForm {};
-
-			// Empty helper base, singleton marker.
-			template<class T>
-			class BSTSingletonImplicit {};
-
 		}
 	}
 }

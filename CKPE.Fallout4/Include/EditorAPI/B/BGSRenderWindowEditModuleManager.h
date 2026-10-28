@@ -19,6 +19,8 @@ namespace CKPE
 			public:
 				virtual ~BGSRenderWindowEditModuleManager() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowEditModuleManager[0];
+
 				inline BGSRenderWindow* GetRenderWindow() { return _RenderWindow; }
 				inline BGSRenderWindowReferenceEditModule* GetReferenceEditModule() { return _ReferenceEditModule; }
 

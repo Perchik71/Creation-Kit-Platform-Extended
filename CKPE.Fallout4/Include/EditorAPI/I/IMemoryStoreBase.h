@@ -7,6 +7,8 @@
 #include <cstddef>
 #include <cstdint>
 
+#include <EditorAPI/IDs_VTABLE.h>
+
 namespace CKPE
 {
 	namespace Fallout4
@@ -21,26 +23,28 @@ namespace CKPE
 			class __declspec(novtable) IMemoryStoreBase
 			{
 			public:
-				virtual ~IMemoryStoreBase() = default;											// 00
-				virtual std::size_t Size(const void* a_mem) const = 0;							// 01
-				virtual void GetMemoryStats(MemoryStats* a_stats) = 0;							// 02
-				virtual void SetAllOptionDbg(const void* a_block, bool a_value) = 0;			// 03
-				virtual void SetStoreContextDbg(const void* a_block, bool a_value) = 0;			// 04
-				virtual bool IsStoreContextDbg(const void* a_block) = 0;						// 05
+				constexpr static Common::ID VTABLE = IDs::VTABLE::IMemoryStoreBase[0];
+
+				virtual ~IMemoryStoreBase() = default;														// 00
+				[[nodiscard]] virtual std::size_t Size(const void* a_mem) const { return 0; };				// 01
+				virtual void GetMemoryStats(MemoryStats* a_stats) {};										// 02
+				virtual void SetAllOptionDbg(const void* a_block, bool a_value) {};							// 03
+				virtual void SetStoreContextDbg(const void* a_block, bool a_value) {};						// 04
+				[[nodiscard]] virtual bool IsStoreContextDbg(const void* a_block) { return false; }			// 05
 			private:
-				virtual void Nullsub_06() = 0;													// 06
+				virtual void Nullsub_06() {};																// 06
 			public:
-				virtual void SetCheckPointDbg(const void* a_block, bool a_value) = 0;			// 07
-				virtual bool IsCheckPointDbg(const void* a_block) const = 0;					// 08
+				virtual void SetCheckPointDbg(const void* a_block, bool a_value) {};						// 07
+				[[nodiscard]] virtual bool IsCheckPointDbg(const void* a_block) const { return false; };	// 08
 			private:
-				virtual void Nullsub_09() = 0;													// 09
+				virtual void Nullsub_09() {};																// 09
 			public:
-				virtual void SetStackTraceDbg(const void* a_block, std::uint32_t a_trace) = 0;	// 0A
-				virtual bool IsStackTraceDbg(const void* a_block) const = 0;					// 0B
+				virtual void SetStackTraceDbg(const void* a_block, std::uint32_t a_trace) {}				// 0A
+				[[nodiscard]] virtual bool IsStackTraceDbg(const void* a_block) const { return false; }		// 0B
 			private:
-				virtual void Nullsub_0C() = 0;													// 0C
+				virtual void Nullsub_0C() {};																// 0C
 			public:
-				virtual bool ContainsBlockImpl(const void* a_block) const = 0;					// 0D
+				[[nodiscard]] virtual bool ContainsBlockImpl(const void* a_block) const { return false; }	// 0D
 			};
 			static_assert(sizeof(IMemoryStoreBase) == 0x8);
 		}

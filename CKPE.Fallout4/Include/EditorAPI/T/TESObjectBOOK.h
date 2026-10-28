@@ -46,6 +46,8 @@ namespace CKPE
 				public:
 					virtual ~TESObjectBOOK() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftBook;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectBOOK[0];
 				public:
 					std::uint8_t data[0x18]; // 1F0 - OBJ_BOOK
 					TESObjectSTAT* inventoryModel; // 208

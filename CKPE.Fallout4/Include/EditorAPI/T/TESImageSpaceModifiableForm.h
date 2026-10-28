@@ -25,6 +25,7 @@ namespace CKPE
 			public:
 				virtual ~TESImageSpaceModifiableForm() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESImageSpaceModifiableForm[0];
 			public:
 				Forms::TESImageSpaceModifier* formImageSpaceModifying; // 08
 			};

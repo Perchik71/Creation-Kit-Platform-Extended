@@ -26,6 +26,8 @@ namespace CKPE
 				public:
 					virtual ~BGSAcousticSpace() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftAcousticSpace;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAcousticSpace[0];
 				public:
 					BGSSoundDescriptorForm* loopingSound; // 90
 					TESRegion* soundRegion; // 98

@@ -34,6 +34,8 @@ namespace CKPE
 				public:
 					virtual ~BGSAddonNode() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftAddonNode;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAddonNode[0];
 				public:
 					std::uint32_t index; // E0
 					std::uint32_t unkE4; // E4

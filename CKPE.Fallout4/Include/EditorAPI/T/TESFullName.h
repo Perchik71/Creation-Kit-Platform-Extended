@@ -20,6 +20,8 @@ namespace CKPE
 			public:
 				virtual ~TESFullName() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESFullName[0];
+
 				[[nodiscard]] virtual std::uint32_t GetFullNameLength() const noexcept(true);
 				[[nodiscard]] virtual const char* GetFullName() const noexcept(true);
 

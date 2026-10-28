@@ -28,6 +28,8 @@ namespace CKPE
 			public:
 				virtual ~BSMultiBoundRoom() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSMultiBoundRoom[0];
+
 				[[nodiscard]] inline const NiAPI::NiTPointerList<BSPortal*>& GetPortals() const noexcept(true) { return _Portals; }
 				[[nodiscard]] inline const NiAPI::NiTPointerList<BSOcclusionShape*>& GetOccluders() const noexcept(true) { return _Occluders; }
 				[[nodiscard]] inline const NiAPI::NiTPointerList<NiAPI::NiPointer<BSMultiBound>>& GetJoinedMultiBounds() const noexcept(true) { return _JoinedMultiBounds; }

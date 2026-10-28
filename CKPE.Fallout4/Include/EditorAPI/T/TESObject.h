@@ -34,6 +34,9 @@ namespace CKPE
 				public:
 					virtual ~TESObject() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftReserved000;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObject[0];
+
 					virtual bool IsBoundAnimObject() noexcept(true) { return false; } // 124 - { return 0; }
 					virtual Forms::TESWaterForm* GetWaterType() const noexcept(true) { return nullptr; } // 125 - { return 0; }
 					virtual bool IsAutoCalc() const noexcept(true) { return false; } // 126 - { return 0; }

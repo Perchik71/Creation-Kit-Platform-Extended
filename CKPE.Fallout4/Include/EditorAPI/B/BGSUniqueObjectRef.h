@@ -14,12 +14,12 @@ namespace CKPE
 			class BGSUniqueObjectRef
 			{
 			public:
-				BGSUniqueObjectRef(T* Ref) : _Ref(Ref) { if (_Ref) _Ref->IncRefCount(); }
-				~BGSUniqueObjectRef() { if (_Ref) _Ref->DecRefCount(); }
+				BGSUniqueObjectRef(T* Ref) noexcept(true) : _Ref(Ref) { if (_Ref) _Ref->IncRefCount(); }
+				~BGSUniqueObjectRef() noexcept(true) { if (_Ref) _Ref->DecRefCount(); }
 
-				inline T* operator->() { return _Ref; }
-				inline T* Get() const { return _Ref; }
-				inline bool Empty() const { return !_Ref; }
+				inline T* operator->() noexcept(true) { return _Ref; }
+				inline T* Get() const noexcept(true) { return _Ref; }
+				inline bool Empty() const noexcept(true) { return !_Ref; }
 			private:
 				T* _Ref;
 			};

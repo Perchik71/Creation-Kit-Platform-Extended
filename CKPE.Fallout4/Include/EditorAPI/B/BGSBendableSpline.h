@@ -36,6 +36,8 @@ namespace CKPE
 				public:
 					virtual ~BGSBendableSpline() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftBendableSpline;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSBendableSpline[0];
 				public:
 					SplineData data; // 90
 					std::uint32_t unkAC; // AC

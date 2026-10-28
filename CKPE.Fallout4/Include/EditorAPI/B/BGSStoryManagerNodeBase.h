@@ -24,6 +24,9 @@ namespace CKPE
 				public:
 					virtual ~BGSStoryManagerNodeBase() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftReserved000;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSStoryManagerNodeBase[0];
+
 					virtual void SaveNodeData() noexcept(true) { return; } // 128
 					virtual void* GetConditions() noexcept(true) { return nullptr; } // 129 - RVA 0x87CFA0
 					[[nodiscard]] virtual bool CanCheckOutChildNodes() const noexcept(true) { return true; } // 130

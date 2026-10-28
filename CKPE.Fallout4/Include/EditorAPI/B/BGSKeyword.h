@@ -58,6 +58,7 @@ namespace CKPE
 					virtual ~BGSKeyword() = default;
 
 					constexpr static std::uint8_t TYPE_ID = ftKeyword;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSKeyword[0];
 
 					[[nodiscard]] inline const char* GetDisplayName() const noexcept(true) { return GetFullName(); }
 					[[nodiscard]] inline NiAPI::NiRGB GetColor() const noexcept(true) { return color; }

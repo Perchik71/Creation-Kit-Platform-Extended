@@ -6,6 +6,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/B/BSRenderPass.h>
 
@@ -57,6 +58,8 @@ namespace CKPE::Fallout4::EditorAPI
 
 		BSBatchRenderer() = delete;
 		virtual ~BSBatchRenderer();
+
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSBatchRenderer[0];
 
 		/* 0x008 */ BSTArray<PassGroup> renderPasses[13];
 		/* 0x140 */ std::byte _renderPassMaps[13][0x20];

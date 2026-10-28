@@ -25,6 +25,7 @@ namespace CKPE
 			public:
 				virtual ~BGSIdleCollection() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSIdleCollection[0];
 			public:
 				std::int8_t idleFlags; // 08
 				std::int8_t idleCount; // 09

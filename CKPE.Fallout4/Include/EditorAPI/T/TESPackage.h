@@ -61,6 +61,8 @@ namespace CKPE
 				public:
 					virtual ~TESPackage() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftPackage;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESPackage[0];
 				public:
 					PACKAGE_DATA data; // 28
 					std::uint32_t unk34; // 34

@@ -25,6 +25,8 @@ namespace CKPE
 				public:
 					virtual ~TESLevItem() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftLeveledItem;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESLevItem[0];
 				public:
 					BGSLocalizedString unkB8; // B8
 				};

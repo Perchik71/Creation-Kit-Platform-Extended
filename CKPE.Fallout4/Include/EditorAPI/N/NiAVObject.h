@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/N/NiTypes.h>
 #include <EditorAPI/N/NiTSimpleArray.h>
 #include <EditorAPI/N/NiTransform.h>
@@ -39,6 +40,8 @@ namespace CKPE
 					};
 				public:
 					virtual ~NiAVObject() = default;
+
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiAVObject[0];
 
 					/* 2A */ virtual void UpdateControllers(NiUpdateData& Data) noexcept(true);
 					/* 2B */ virtual void PerformOp(PerformOpFunc& Operation) noexcept(true);

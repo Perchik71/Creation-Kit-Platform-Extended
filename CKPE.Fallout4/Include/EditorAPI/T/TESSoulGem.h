@@ -22,6 +22,8 @@ namespace CKPE
 				public:
 					virtual ~TESSoulGem() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftSoulGem;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESSoulGem[0];
 				public:
 					TESSoulGem* linkedSoulGem; // 1E8
 					std::int8_t currentSoul; // 1F0

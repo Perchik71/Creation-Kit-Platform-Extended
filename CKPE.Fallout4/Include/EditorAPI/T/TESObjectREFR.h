@@ -44,6 +44,8 @@ namespace CKPE
 				{
 				public:
 					constexpr static uint8_t TYPE_ID = TESForm::FormType::ftReference;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectREFR[0];
+
 					enum SpecialFlagsForm 
 					{
 						// https://github.com/shadeMe/Construction-Set-Extender/blob/master/EditorAPI/TESObjectREFR.h
@@ -76,7 +78,6 @@ namespace CKPE
 					}
 				public:
 					virtual ~TESObjectREFR_base() = default;
-
 				private:
 					// Keep raw slots private; typed entry points below preserve their ABI.
 					/* 3E0 */ virtual void sub_3E0();

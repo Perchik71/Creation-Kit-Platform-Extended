@@ -19,6 +19,8 @@ namespace CKPE
 			public:
 				virtual ~TESWeightForm() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESWeightForm[0];
+
 				[[nodiscard]] inline float GetWeight() const noexcept(true) { return weight; }
 				inline void SetWeight(float a_value) noexcept(true) { weight = a_value; }
 

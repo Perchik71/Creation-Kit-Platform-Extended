@@ -55,6 +55,8 @@ namespace CKPE
 				public:
 					virtual ~TESAmmo() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftAmmo;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESAmmo[0];
 				public:
 					AMMO_DATA data; // 1E0
 					BGSLocalizedString shortDesc; // 1F8

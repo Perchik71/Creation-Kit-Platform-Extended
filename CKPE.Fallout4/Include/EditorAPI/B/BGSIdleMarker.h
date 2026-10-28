@@ -30,6 +30,8 @@ namespace CKPE
 				public:
 					virtual ~BGSIdleMarker() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftIdleMarker;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSIdleMarker[0];
 				public:
 					BGSKeyword* animArchType; // 108
 					BGSKeyword* flavorAnim; // 110

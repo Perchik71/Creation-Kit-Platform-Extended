@@ -37,6 +37,8 @@ namespace CKPE
 				public:
 					virtual ~TESClass() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftClass;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESClass[0];
 				public:
 					CLASS_DATA data; // A0
 				};

@@ -24,6 +24,8 @@ namespace CKPE
 			class BSDynamicTriShape : public BSTriShape
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSDynamicTriShape[0];
+
 				struct DynamicVertexBuffer
 				{
 					/* 0x00 */ BSGraphics::VertexBuffer* Buffer;

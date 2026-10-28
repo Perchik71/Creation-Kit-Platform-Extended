@@ -33,6 +33,8 @@ namespace CKPE
 			public:
 				virtual ~BSPortalGraph() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSPortalGraph[0];
+
 				[[nodiscard]] inline std::uint32_t GetCellFormID() const noexcept(true) { return _CellID; }
 			};
 			static_assert(sizeof(BSPortalGraph) == 0xC8);

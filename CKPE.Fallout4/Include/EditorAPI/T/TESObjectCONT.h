@@ -53,6 +53,8 @@ namespace CKPE
 				public:
 					virtual ~TESObjectCONT() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftContainer;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectCONT[0];
 				public:
 					CONT_DATA data; // 1E9
 					std::uint8_t unk1EA[0x6]; // 1EA

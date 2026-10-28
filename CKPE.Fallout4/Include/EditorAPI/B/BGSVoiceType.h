@@ -23,7 +23,8 @@ namespace CKPE
 				public:
 					virtual ~BGSVoiceType() = default;
 
-					constexpr static std::uint8_t TYPE_ID = ftVoice;
+					constexpr static std::uint8_t TYPE_ID = ftVoiceType;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSVoiceType[0];
 
 					enum Flags
 					{

@@ -6,6 +6,7 @@
 
 #include <CKPE.Common.Relocation.h>
 #include <EditorAPI/IDs.h>
+#include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/B/BSString.h>
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/B/BSTList.h>
@@ -58,6 +59,9 @@ namespace CKPE
 				Setting(const char* name, const Value& value);
 				Setting(const Setting& s);
 				virtual ~Setting();
+
+				constexpr static Common::ID VTABLE = IDs::VTABLE::Setting[0];
+
 				// 1.11.246.0: vtable RVA 0x2F9F068, 2 virtual functions (the SettingT<...> vtables share this body, so it is never true in the CK)
 				[[nodiscard]] virtual bool IsPrefSetting() const noexcept(true) { return false; } // 01 - RVA 0x25CCB70
 
@@ -125,6 +129,7 @@ namespace CKPE
 				[[nodiscard]] void* GetHandle() const noexcept(true) { return handle; }
 
 				virtual ~SettingCollection();
+				constexpr static Common::ID VTABLE = IDs::VTABLE::SettingCollection_Setting_[0];
 
 				virtual void Add(T* setting) = 0;									// 01
 				virtual void Remove(T* setting) = 0;								// 02
@@ -146,6 +151,8 @@ namespace CKPE
 			class SettingCollectionList : public SettingCollection<T>
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::SettingCollectionList_Setting_[0];
+
 				BSSimpleList<T> settings;		// 118
 
 				template <class Visitor>
@@ -173,6 +180,8 @@ namespace CKPE
 			class INISettingCollection : public SettingCollectionList<Setting>
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::INISettingCollection[0];
+
 				[[nodiscard]] static INISettingCollection* GetSingleton() noexcept(true)
 				{
 					static Common::Relocation<INISettingCollection**> singleton{ IDs::Setting::INISettingCollection::Singleton };
@@ -186,6 +195,8 @@ namespace CKPE
 			class INIPrefSettingCollection : public INISettingCollection
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::INIPrefSettingCollection[0];
+
 				[[nodiscard]] static INIPrefSettingCollection* GetSingleton() noexcept(true)
 				{
 					static Common::Relocation<INIPrefSettingCollection**> singleton{ IDs::Setting::INIPrefSettingCollection::Singleton };
@@ -199,6 +210,8 @@ namespace CKPE
 			class SettingCollectionMap : public SettingCollection<T>
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::SettingCollectionMap_Setting_[0];
+
 				struct Entry
 				{
 					/* 00 */ BSFixedString key;
@@ -268,6 +281,8 @@ namespace CKPE
 			class GameSettingCollection : public SettingCollectionMap<Setting>
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::GameSettingCollection[0];
+
 				// Opens the collection on Handle, reads the setting named Name and closes it again (0x14095C360).
 				virtual bool ReadNamedSetting(void* Handle, const char* Name) = 0;	// 0B
 

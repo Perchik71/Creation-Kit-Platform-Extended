@@ -27,6 +27,8 @@ namespace CKPE
 				{
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftLandspace;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectLAND[0];
+
 					constexpr static std::uint32_t PART_COUNT = 4;
 					// Carefully, CK displays supposedly 13 texture slots, but in fact only 12 are provided
 					constexpr static std::uint32_t MAX_TEXTURE_COUNT = 12;

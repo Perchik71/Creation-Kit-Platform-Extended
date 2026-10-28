@@ -10,6 +10,7 @@
 #include <windows.h>
 #include <commctrl.h>
 #include <CKPE.Common.h>
+#include <EditorAPI/IDs.h>
 #include <EditorAPI/T/TESFile.h>
 #include <EditorAPI/C/CheckInFormList.h>
 #include <EditorAPI/B/BSString.h>
@@ -87,11 +88,11 @@ namespace CKPE
 						ftActor,
 						ftLevelCharacter,
 						ftKey,
-						ftPotion,
+						ftAlchemy,
 						ftIdleMarker,
 						ftNote,
 						ftProjectile,
-						ftHazard052,
+						ftHazard,
 						ftBendableSpline,			// BNDS
 						ftSoulGem,
 						ftTerminal,
@@ -125,7 +126,7 @@ namespace CKPE
 						ftCombatStyle,
 						ftLoadScreen,
 						ftLeveledSpell,
-						ftUnknown086,				// ANIO
+						ftAnimationObject,			// ANIO
 						ftWater,
 						ftEffectShader,
 						ftReserved089,				// TOFT
@@ -140,11 +141,11 @@ namespace CKPE
 						ftActorValueInfo,
 						ftCameraShot,
 						ftCameraPath,
-						ftVoice,
-						ftMaterial,
+						ftVoiceType,
+						ftMaterialType,
 						ftImpactData,
 						ftImpactDataSet,
-						ftReserved105,				// ARMA
+						ftArmorAddon,				// ARMA
 						ftEncounterZone,
 						ftLocation,
 						ftMessage,
@@ -152,7 +153,7 @@ namespace CKPE
 						ftDefaultObjectManager,
 						ftDefaultObject,
 						ftLightingTemplate,
-						ftMusic,
+						ftMusicType,
 						ftFootstep,
 						ftFootstepSet,
 						ftStoryManagerBranchNode,
@@ -178,25 +179,25 @@ namespace CKPE
 						ftCollisionLayer,
 						ftColorForm,
 						ftReverbParameters,
-						ftReserved139,				// PKIN
+						ftPackIn,					// PKIN
 						ftReferenceGroup,
 						ftAimModel,
 						ftLayer,
 						ftConstructibleObject,
 						ftAttachmentMod,
 						ftMaterialSwap,
-						ftAimDownSightModel,
+						ftZoomData,
 						ftInstanceNamingRules,
 						ftSoundKeywordMapping,
 						ftReserved149,				// AECH
-						ftReserved150,				// SCCO
+						ftSceneCollection,			// SCCO
 						ftAttractionRule,
-						ftReserved152,				// SCSN
+						ftSoundCategorySnapshot,	// SCSN
 						ftSoundTagSet,
 						ftNavMeshObstacleCoverManager,
 						ftLensFlare,
 						ftReserved156,				// LSPR
-						ftReserved157,				// GDRY
+						ftGodRays,					// GDRY
 						ftObjectVisibilityManager,
 						ftMax
 					};
@@ -254,6 +255,9 @@ namespace CKPE
 					char pad27[0x1];												// 27-28
 				public:
 					virtual ~TESForm() = default;
+
+					constexpr static std::uint8_t TYPE_ID = ftReserved000;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESForm[0];
 
 					/* 0A8 */ virtual void InitializeData();
 					/* 0B0 */ virtual void ClearData();
@@ -393,6 +397,24 @@ namespace CKPE
 					[[nodiscard]] bool IsPlayer() const noexcept(true) { return _FormID == 0x00000007; }
 					[[nodiscard]] bool IsPlayerRef() const noexcept(true) { return _FormID == 0x00000014; }
 
+					[[nodiscard]] bool Is(FormType a_type) const noexcept(true) { return GetFormType() == a_type; }
+					
+					template <class... Args>
+					[[nodiscard]] bool Is(Args... a_args) const noexcept(true)  //
+						requires(std::same_as<Args, FormType> && ...)
+					{
+						return (Is(a_args) || ...);
+					}
+
+					template <class T>
+					[[nodiscard]] bool Is() const noexcept(true)  //
+						requires(std::derived_from<T, TESForm> &&
+								 !std::is_pointer_v<T> &&
+								 !std::is_reference_v<T>)
+					{
+						return Is(T::TYPE_ID);
+					}
+
 					[[nodiscard]] inline const BSModInfo* GetModInfo() const noexcept(true) { return _ModInfo; }
 					[[nodiscard]] inline BSTrackingData GetTrackingData() const noexcept(true) { return _TrackingData; }
 
@@ -404,12 +426,32 @@ namespace CKPE
 							(_FormType == FormType::ftCharacter); 
 					}
 
-					[[nodiscard]] ENUM_FORM_ID GetSaveFormType() const noexcept(true);
-					bool SetFormEditorID(const char* NewEditorID) noexcept(true);
+					[[nodiscard]] ENUM_FORM_ID GetSaveFormType() const noexcept(true)
+					{
+						static Common::Relocation<ENUM_FORM_ID*> data{ IDs::TESForm::EnumFormIDs };
+						return (data.Get())[_FormType];
+					}
 
-					inline static TESForm* (*FindFormByFormID)(std::uint32_t) = nullptr;
-					inline static bool (*SetFormEditorIDImpl)(TESForm* _This, const char* NewEditorID) = nullptr;
-					inline static ENUM_FORM_ID* EnumFormIDs = nullptr;
+					[[nodiscard]] bool SetFormEditorID(const char* NewEditorID) noexcept(true)
+					{
+						using func_t = decltype(&TESForm::SetFormEditorID);
+						static Common::Relocation<func_t> func{ IDs::TESForm::MakeEditorIDUnique };
+						return func(this, NewEditorID);
+					}
+
+					[[nodiscard]] TESFile* GetFile(std::int32_t a_index = -1) const noexcept(true)
+					{
+						using func_t = decltype(&TESForm::GetFile);
+						static Common::Relocation<func_t> func{ IDs::TESForm::GetFile };
+						return func(this, a_index);
+					}
+
+					[[nodiscard]] static TESForm* FindFormByFormID(std::uint32_t a_formId) noexcept(true)
+					{
+						using func_t = decltype(&TESForm::FindFormByFormID);
+						static Common::Relocation<func_t> func{ IDs::TESForm::GetFormByNumericID };
+						return func(a_formId);
+					}
 
 					CKPE_PROPERTY(HasModified, MarkAsChanged) bool Actived;
 					CKPE_PROPERTY(HasDeleted, MarkAsDeleted) bool Deleted;

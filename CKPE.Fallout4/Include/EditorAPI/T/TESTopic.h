@@ -23,6 +23,7 @@ namespace CKPE
 				{
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftTopic;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESTopic[0];
 
 					enum SubtypeT : std::uint8_t
 					{

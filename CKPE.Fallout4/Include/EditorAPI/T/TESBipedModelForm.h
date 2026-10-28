@@ -25,6 +25,7 @@ namespace CKPE
 			public:
 				virtual ~TESBipedModelForm() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESBipedModelForm[0];
 			public:
 				Forms::BGSModelMaterialSwap worldModel[2]; // 08 - sizeof 0x50 each (0x08, 0x58)
 				TESIcon inventoryIcon[2]; // A8 - sizeof 0x28 each (0xA8, 0xD0)

@@ -6,6 +6,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/N/NiPoint.h>
 
 namespace CKPE::Fallout4::EditorAPI
@@ -21,6 +22,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		virtual ~IAIWorldLocation() = default;
 
+		constexpr static Common::ID VTABLE = IDs::VTABLE::IAIWorldLocation[0];
 	protected:
 		virtual void sub_008() = 0;
 		virtual void sub_010() = 0;
@@ -55,6 +57,8 @@ namespace CKPE::Fallout4::EditorAPI
 	class BGSAIWorldLocationInteriorCell : public BGSAIWorldLocation
 	{
 	public:
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAIWorldLocationInteriorCell[0];
+
 		/* 0x008 */ Forms::TESObjectCELL* cell;
 		/* 0x010 */ NiAPI::NiPoint3 position;
 		/* 0x01C */ std::uint8_t pad1C[0x4];
@@ -65,6 +69,8 @@ namespace CKPE::Fallout4::EditorAPI
 	class BGSAIWorldLocationPointRadius : public BGSAIWorldLocation
 	{
 	public:
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAIWorldLocationPointRadius[0];
+
 		/* 0x008 */ NiAPI::NiPoint3 position;
 		/* 0x014 */ std::uint8_t pad14[0x4];
 		/* 0x018 */ Forms::TESObjectCELL* cell;
@@ -81,6 +87,8 @@ namespace CKPE::Fallout4::EditorAPI
 	class BGSAIWorldLocationRefRadius : public BGSAIWorldLocation
 	{
 	public:
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAIWorldLocationRefRadius[0];
+
 		/* 0x008 */ std::uint32_t reference;
 		/* 0x00C */ float radius;
 		/* 0x010 */ std::uint32_t unk10;
@@ -94,6 +102,8 @@ namespace CKPE::Fallout4::EditorAPI
 	class BGSAIWorldLocationPrimitive : public BGSAIWorldLocation
 	{
 	public:
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAIWorldLocationPrimitive[0];
+
 		/* 0x008 */ std::uint32_t reference;
 		/* 0x00C */ std::uint8_t unk0C[0xC];
 		/* 0x018 */ NiAPI::NiPoint3 position;

@@ -36,6 +36,8 @@ namespace CKPE
 				public:
 					virtual ~TESFurniture() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftFurniture;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESFurniture[0];
 				public:
 					BSTArray<void*> unk1E8; // 1E8 - element type not identified yet
 					TESModel unk200; // 200

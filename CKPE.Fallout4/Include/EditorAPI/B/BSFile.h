@@ -24,7 +24,7 @@ namespace CKPE
 				/*160*/ std::uint32_t	unk160;					// init to -1
 				/*164*/ std::uint32_t	unk164;
 				/*168*/ std::uint32_t	unk168;
-				/*16C*/ char		_FileName2[MAX_PATH];	// I don't know why, but this is once again the path to the file
+				/*16C*/ char		_FileName2[MAX_PATH];		// I don't know why, but this is once again the path to the file
 				/*270*/ std::uint64_t	unk270;
 				/*278*/ std::uint64_t	unk278;
 				/*280*/ std::uint64_t	_Pos2;
@@ -36,22 +36,24 @@ namespace CKPE
 				/*2A8*/ std::uint32_t	unk2A8;
 				/*2AC*/ std::uint32_t	unk2AC;
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSFile[0];
+
 				using NiAPI::NiFile::Seek;
 				virtual void Seek(std::int64_t offset, std::uint32_t mode) override;	// 07
-				virtual bool Reopen() noexcept(true);								// 09
-				virtual bool ReopenWithOpenData(void* openData) noexcept(true);		// 0A
-				virtual std::uint64_t RefreshFileSize() noexcept(true);				// 0B
+				virtual bool Reopen() noexcept(true);									// 09
+				virtual bool ReopenWithOpenData(void* openData) noexcept(true);			// 0A
+				virtual std::uint64_t RefreshFileSize() noexcept(true);					// 0B
 				virtual std::uint32_t ReadString(BSString& value,
-					std::uint64_t maxBytes) noexcept(true);							// 0C
+					std::uint64_t maxBytes) noexcept(true);								// 0C
 				virtual std::uint32_t ReadWideString(void* value,
-					std::uint64_t maxBytes) noexcept(true);							// 0D
+					std::uint64_t maxBytes) noexcept(true);								// 0D
 				virtual std::uint64_t ReadLine(char* buffer, std::uint64_t capacity,
 					std::uint16_t delimiter) noexcept(true);							// 0E
 				virtual std::uint64_t WriteString(const BSString& value,
-					bool includeTerminator) noexcept(true);							// 0F
+					bool includeTerminator) noexcept(true);								// 0F
 				virtual std::uint64_t WriteWideString(const void* value,
-					bool includeTerminator) noexcept(true);							// 10
-				[[nodiscard]] virtual bool Exists() noexcept(true);					// 11
+					bool includeTerminator) noexcept(true);								// 10
+				[[nodiscard]] virtual bool Exists() noexcept(true);						// 11
 
 				static BSFile* CreateInstance(const char* fileName, std::uint32_t mode, std::uint64_t bufferSize, 
 					bool isTextFile) noexcept(true);

@@ -47,6 +47,8 @@ namespace CKPE
 				public:
 					virtual ~TESObjectTREE() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftTree;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectTREE[0];
 				public:
 					OBJ_TREE data; // 118
 					BaseTreeData* baseData; // 148

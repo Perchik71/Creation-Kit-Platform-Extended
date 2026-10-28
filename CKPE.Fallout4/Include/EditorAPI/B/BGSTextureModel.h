@@ -19,6 +19,8 @@ namespace CKPE
 			{
 			public:
 				virtual ~BGSTextureModel() = default;
+
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSTextureModel[0];
 			};
 			static_assert(sizeof(BGSTextureModel) == 0x38);
 		}

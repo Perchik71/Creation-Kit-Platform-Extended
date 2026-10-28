@@ -25,6 +25,8 @@ namespace CKPE
 
 					virtual ~NiCamera() = default;
 
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiCamera[0];
+
 					[[nodiscard]] inline const WorldToCameraMatrix& GetWorldToCamera() const noexcept(true) { return _WorldToCamera; }
 					[[nodiscard]] inline const NiFrustum& GetFrustum() const noexcept(true) { return _Frustum; }
 					[[nodiscard]] inline const NiRect<float>& GetPort() const noexcept(true) { return _Port; }

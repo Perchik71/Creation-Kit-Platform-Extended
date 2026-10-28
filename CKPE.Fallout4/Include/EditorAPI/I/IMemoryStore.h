@@ -19,6 +19,8 @@ namespace CKPE
 			public:
 				virtual ~IMemoryStore() = default;																									// 00
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::IMemoryStore[0];
+
 				// add
 				virtual void* AllocateAlignImpl(std::size_t a_size, std::uint32_t a_alignment) = 0;													// 0E
 				virtual void  DeallocateAlignImpl(void*& a_block) = 0;																				// 0F

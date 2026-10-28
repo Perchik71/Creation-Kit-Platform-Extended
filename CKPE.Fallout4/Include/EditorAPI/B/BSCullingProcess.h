@@ -31,6 +31,8 @@ namespace CKPE
 					ForceMultiBoundsNoUpdate = 4,
 				};
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSCullingProcess[0];
+
 				// NiCullingProcess has GetRTTI at slot zero, not a destructor.
 				[[nodiscard]] inline NiAPI::NiRTTI* GetRTTI() const noexcept(true)
 				{

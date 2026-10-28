@@ -9,6 +9,8 @@
 #include <windows.h>
 #include <CKPE.Common.h>
 
+#include <EditorAPI/IDs_VTABLE.h>
+
 namespace CKPE
 {
 	namespace Fallout4
@@ -26,6 +28,8 @@ namespace CKPE
 				};
 
 				virtual ~BGSRenderWindowBorder() = default;
+
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowBorder[0];
 
 				[[nodiscard]] inline HWND GetWindowHandle() const noexcept(true) { return _WindowHandle; }
 				[[nodiscard]] inline bool IsVisible() const noexcept(true) { return _Visible; }

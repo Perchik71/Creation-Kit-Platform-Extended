@@ -296,6 +296,7 @@
 #include <EditorAPI/I/IngredientItem.h>
 
 #include <EditorAPI/M/MagicItem.h>
+#include <EditorAPI/M/MemoryManager.h>
 #include <EditorAPI/M/ModalDialog.h>
 #include <EditorAPI/M/ModelessDialog.h>
 

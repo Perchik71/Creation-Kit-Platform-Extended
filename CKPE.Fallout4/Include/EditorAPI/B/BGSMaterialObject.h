@@ -28,6 +28,8 @@ namespace CKPE
 				public:
 					virtual ~BGSMaterialObject() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftMaterialObject;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMaterialObject[0];
 				public:
 					BSTArray<void*> fileData; // B0 - BSTArray<FILE_DATA>
 					std::uint64_t unkC8; // C8

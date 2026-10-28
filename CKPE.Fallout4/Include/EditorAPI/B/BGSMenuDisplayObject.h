@@ -25,8 +25,9 @@ namespace CKPE
 			public:
 				virtual ~BGSMenuDisplayObject() = default;
 
-				virtual Forms::TESBoundObject* GetMenuDispObject() const noexcept(true) { return nullptr; } // 21 - RVA 0x899710, return (const char *)*((_QWORD *)this + 1);
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMenuDisplayObject[0];
 
+				virtual Forms::TESBoundObject* GetMenuDispObject() const noexcept(true) { return nullptr; } // 21 - RVA 0x899710, return (const char *)*((_QWORD *)this + 1);
 			public:
 				Forms::TESBoundObject* menuDispObject; // 08
 			};

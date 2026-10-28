@@ -93,7 +93,7 @@ namespace CKPE
 				Relocation(EditorAPI::IDs::Functions::sub_1FFF570).WriteJump(LogWarningUnknown1);
 				Relocation(EditorAPI::IDs::Functions::sub_1FFF610).WriteJump(LogWarningUnknown1);
 				Relocation(EditorAPI::IDs::Functions::sub_1FFF810).WriteJump(LogWarningUnknown1);
-				Relocation(EditorAPI::IDs::Functions::TESDataHandler__LoadFiles, Offset{ 0x7B3, 0x744 }).WriteCall(LogWarningUnknown2);
+				Relocation(EditorAPI::IDs::TESDataHandler::LoadFiles, Offset{ 0x7B3, 0x744 }).WriteCall(LogWarningUnknown2);
 				Relocation(EditorAPI::IDs::Functions::sub_1FFF470).WriteJump(LogAssert);
 
 				return true;

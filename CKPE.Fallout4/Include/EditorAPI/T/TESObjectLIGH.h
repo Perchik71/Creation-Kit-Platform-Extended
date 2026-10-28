@@ -72,6 +72,7 @@ namespace CKPE
 					virtual ~TESObjectLIGH() = default;
 
 					constexpr static std::uint8_t TYPE_ID = ftLight;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectLIGH[0];
 
 					[[nodiscard]] inline NiAPI::NiRGB GetSpecularColor() const noexcept(true) { return *reinterpret_cast<const NiAPI::NiRGB*>(&data.color); }
 

@@ -26,6 +26,8 @@ namespace CKPE
 				public:
 					virtual ~BGSTerminal() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftTerminal;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSTerminal[0];
 				public:
 					BSTArray<void*> bodyTextItems; // 2A0 - BSTArray<BodyTextItem>
 					BSTArray<void*> menuItems; // 2B8 - BSTArray<MenuItem>

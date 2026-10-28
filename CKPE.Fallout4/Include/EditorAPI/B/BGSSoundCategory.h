@@ -26,6 +26,8 @@ namespace CKPE
 				public:
 					virtual ~BGSSoundCategory() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftSoundCategory;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSoundCategory[0];
 				public:
 					BGSSoundCategory* parentCategory; // 48
 					BGSSoundCategory* sliderCategory; // 50

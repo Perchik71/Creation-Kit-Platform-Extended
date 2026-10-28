@@ -51,7 +51,7 @@ namespace CKPE
 				};
 				static_assert(sizeof(BGSExplosionData) == 0x70);
 
-				// 1.11.240.0: size 0x180, vtable RVA 0x3080520, 154 virtual functions
+				// 1.11.246.0: size 0x180, vtable RVA 0x3081520, 154 virtual functions
 				class BGSExplosion :
 					public TESBoundObject,               // 000
 					public TESFullName,                  // 090
@@ -63,6 +63,8 @@ namespace CKPE
 				public:
 					virtual ~BGSExplosion() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftExplosion;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSExplosion[0];
 				public:
 					BGSExplosionData data; // 110
 				};

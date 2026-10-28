@@ -20,6 +20,7 @@ namespace CKPE
 			public:
 				virtual ~TESAttackDamageForm() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESAttackDamageForm[0];
 			public:
 				std::uint16_t attackDamage; // 08 - edited through dialog item 1015
 				std::uint8_t pad0A[0x6]; // 0A

@@ -31,6 +31,9 @@ namespace CKPE
 				{
 				public:
 					virtual ~ScrollItem() = default;
+
+					constexpr static std::uint8_t TYPE_ID = ftScroll;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::ScrollItem[0];
 				};
 				static_assert(sizeof(ScrollItem) == 0x3D8);
 			}

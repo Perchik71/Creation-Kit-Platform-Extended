@@ -25,8 +25,9 @@ namespace CKPE
 			public:
 				virtual ~TESRaceForm() = default;
 
-				virtual bool SwitchRace(Forms::TESRace* pRace) noexcept(true) { return false; } // 21 - RVA 0x8F4EE0, *(_QWORD *)(a1 + 8) = a2;; return 1;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRaceForm[0];
 
+				virtual bool SwitchRace(Forms::TESRace* pRace) noexcept(true) { return false; } // 21 - RVA 0x8F4EE0, *(_QWORD *)(a1 + 8) = a2;; return 1;
 			public:
 				Forms::TESRace* formRace; // 08
 			};

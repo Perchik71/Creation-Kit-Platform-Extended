@@ -43,6 +43,8 @@ namespace CKPE
 				public:
 					virtual ~BGSAimModel() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftAimModel;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAimModel[0];
 				public:
 					BGSAimModelData aimModelData; // 28 - DNAM
 				};

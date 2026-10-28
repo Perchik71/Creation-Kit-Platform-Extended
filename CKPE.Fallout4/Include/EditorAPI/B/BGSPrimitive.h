@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/N/NiPointer.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/N/NiColor.h>
@@ -42,6 +43,7 @@ namespace CKPE
 				public:
 					virtual ~BGSPrimitive() = default;
 
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitive[0];
 				private:
 					/* 008 */ virtual void sub_008(); // Likely rebuilds editor geometry.
 				public:
@@ -66,6 +68,8 @@ namespace CKPE
 					static constexpr auto TYPE{ kPlane };
 
 					virtual ~BGSPrimitivePlane() = default;
+
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitivePlane[0];
 				private:
 					/* 030 */ virtual void sub_030(); // Likely creates a room.
 					/* 038 */ virtual void sub_038(); // Likely creates a portal.
@@ -78,6 +82,8 @@ namespace CKPE
 					static constexpr auto TYPE{ kBox };
 
 					virtual ~BGSPrimitiveBox() = default;
+
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitiveBox[0];
 				private:
 					/* 030 */ virtual void sub_030(); // Likely creates a room.
 				};
@@ -89,6 +95,8 @@ namespace CKPE
 					static constexpr auto TYPE{ kLine };
 
 					virtual ~BGSPrimitiveLine() = default;
+
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitiveLine[0];
 				};
 				static_assert(sizeof(BGSPrimitiveLine) == 0xA0);
 
@@ -98,6 +106,8 @@ namespace CKPE
 					static constexpr auto TYPE{ kSphere };
 
 					virtual ~BGSPrimitiveSphere() = default;
+
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitiveSphere[0];
 				};
 				static_assert(sizeof(BGSPrimitiveSphere) == 0xA0);
 
@@ -107,6 +117,8 @@ namespace CKPE
 					static constexpr auto TYPE{ kEllipsoid };
 
 					virtual ~BGSPrimitiveEllipsoid() = default;
+
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitiveEllipsoid[0];
 				};
 				static_assert(sizeof(BGSPrimitiveEllipsoid) == 0xA0);
 			}

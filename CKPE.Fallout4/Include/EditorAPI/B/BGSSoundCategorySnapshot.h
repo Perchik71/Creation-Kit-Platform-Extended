@@ -25,6 +25,8 @@ namespace CKPE
 				public:
 					virtual ~BGSSoundCategorySnapshot() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftSoundCategorySnapshot;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSoundCategorySnapshot[0];
 				public:
 					BSTHashMap<BGSSoundCategory*, float> categoryMult; // 28 - CNAM
 					std::int8_t priority; // 60

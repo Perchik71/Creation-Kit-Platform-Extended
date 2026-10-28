@@ -41,6 +41,8 @@ namespace CKPE
 				public:
 					virtual ~AlchemyItem() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftAlchemy;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::AlchemyItem[0];
 				public:
 					std::uint32_t unk3F8; // 3F8
 					std::uint32_t flags; // 3FC

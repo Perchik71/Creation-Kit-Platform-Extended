@@ -56,6 +56,8 @@ namespace CKPE
 				public:
 					virtual ~TESWeather() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftWeather;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESWeather[0];
 				public:
 					std::int32_t context; // 28 - REX::TEnumSet<SpellContext, std::int32_t>
 					std::uint8_t unk2C[0x4]; // 2C

@@ -42,6 +42,8 @@ namespace CKPE
 			public:
 				virtual ~TESLeveledList() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESLeveledList[0];
+
 				virtual std::int8_t GetChanceNone() const noexcept(true) { return 0; } // 21 - RVA 0x8DE600
 				virtual bool GetMultCalc() const noexcept(true) { return false; } // 22 - RVA 0x8DE670
 				virtual std::int32_t GetMaxLevelDifference() const noexcept(true) { return 0; } // 23 - RVA 0x8E2E00

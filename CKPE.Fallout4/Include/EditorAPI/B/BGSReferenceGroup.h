@@ -22,6 +22,7 @@ namespace CKPE
 				public:
 					virtual ~BGSReferenceGroup() = default;
 
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSReferenceGroup[0];
 				public:
 					std::uint64_t unk28; // 28
 					std::uint32_t unk30; // 30

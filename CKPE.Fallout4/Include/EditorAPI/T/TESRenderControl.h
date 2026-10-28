@@ -23,6 +23,9 @@ namespace CKPE
 			{
 			public:
 				/* 0x000 */ virtual ~TESRenderControl();
+
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRenderControl[0];
+
 				/* 0x008 */ virtual void AttachObject(NiAPI::NiAVObject* Object) noexcept(true);
 				/* 0x010 */ virtual void DetachObject(NiAPI::NiAVObject* Object) noexcept(true);
 

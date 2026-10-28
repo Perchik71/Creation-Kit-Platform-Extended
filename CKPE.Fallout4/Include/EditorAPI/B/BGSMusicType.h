@@ -25,6 +25,8 @@ namespace CKPE
 				public:
 					virtual ~BGSMusicType() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftMusicType;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMusicType[0];
 				};
 				static_assert(sizeof(BGSMusicType) == 0x78);
 				static_assert(offsetof(BGSMusicType, flags) == 0x30);

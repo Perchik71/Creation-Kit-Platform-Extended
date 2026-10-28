@@ -54,8 +54,9 @@ namespace CKPE
 			public:
 				virtual ~TESContainer() = default;
 
-				virtual void CollectInventoryItems(TESContainer* Inventory, std::uint16_t Level) const noexcept(true) { return; } // 21
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESContainer[0];
 
+				virtual void CollectInventoryItems(TESContainer* Inventory, std::uint16_t Level) const noexcept(true) { return; } // 21
 			public:
 				ContainerObject** containerObjects; // 08
 				std::uint32_t numContainerObjects; // 10

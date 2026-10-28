@@ -46,6 +46,7 @@ namespace CKPE
 			public:
 				virtual ~TESAIForm() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESAIForm[0];
 			public:
 				AIDATA_GAME aiData; // 08
 				BSSimpleList<Forms::TESPackage*> aiPackList; // 20 - CommonLibF4 PackageList (at 18 there)

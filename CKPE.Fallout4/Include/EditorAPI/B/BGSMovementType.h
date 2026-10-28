@@ -23,6 +23,8 @@ namespace CKPE
 				public:
 					virtual ~BGSMovementType() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftMovementType;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMovementType[0];
 				public:
 					BSFixedString unk28; // 28
 					std::uint8_t unk30[0x70]; // 30

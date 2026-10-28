@@ -26,6 +26,8 @@ namespace CKPE
 				public:
 					virtual ~TESEyes() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftEyes;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESEyes[0];
 				public:
 					std::int8_t flags; // 68
 					std::uint8_t unk69[0x7]; // 69

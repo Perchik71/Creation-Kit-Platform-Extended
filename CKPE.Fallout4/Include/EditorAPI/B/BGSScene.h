@@ -62,6 +62,8 @@ namespace CKPE
 				public:
 					virtual ~BGSScene() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftScene;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSScene[0];
 				public:
 					std::uint32_t unk30; // 30
 					std::uint32_t unk34; // 34

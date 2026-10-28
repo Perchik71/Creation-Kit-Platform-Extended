@@ -16,6 +16,9 @@ namespace CKPE
 			{
 			public:
 				/* 0x000 */ ~TESPreviewControl() override;
+
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESPreviewControl[0];
+
 				/* 0x010 */ void DetachObject(NiAPI::NiAVObject* Object) noexcept(true) override;
 
 			protected:

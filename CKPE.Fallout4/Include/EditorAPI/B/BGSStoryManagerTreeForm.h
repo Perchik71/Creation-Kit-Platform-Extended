@@ -22,6 +22,9 @@ namespace CKPE
 				public:
 					virtual ~BGSStoryManagerTreeForm() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftReserved000;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSStoryManagerTreeForm[0];
+
 					// Likely a tree lifecycle hook; inspected overrides are no-ops.
 					// All six native tree-form tables inherit this no-op.
 					virtual void sub_3E0() { return; } // 124 - RVA 0x87BFA0

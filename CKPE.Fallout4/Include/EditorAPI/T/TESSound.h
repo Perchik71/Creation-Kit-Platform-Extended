@@ -24,6 +24,8 @@ namespace CKPE
 				public:
 					virtual ~TESSound() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftSoundMarker;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESSound[0];
 				public:
 					BGSSoundDescriptorForm* descriptor; // 90
 					std::uint64_t unk98; // 98

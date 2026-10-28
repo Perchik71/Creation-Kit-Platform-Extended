@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/N/NiNode.h>
 #include <EditorAPI/N/NiColor.h>
@@ -18,6 +19,8 @@ namespace CKPE
 			{
 			public:
 				virtual ~BGSRenderOrthoGrid() = default;
+
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderOrthoGrid[0];
 
 				[[nodiscard]] inline NiAPI::NiNode* GetNode() const noexcept(true) { return _Node; }
 				[[nodiscard]] inline float GetSpacing() const noexcept(true) { return _Spacing; }

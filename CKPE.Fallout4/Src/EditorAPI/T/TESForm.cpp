@@ -537,16 +537,6 @@ namespace CKPE
 					TESFullName* fullname = (TESFullName*)_DYNAMIC_CAST(this, 0, "class TESForm", "class TESFullName");
 					return fullname ? fullname->GetFullName() : "";
 				}
-
-				TESForm::ENUM_FORM_ID TESForm::GetSaveFormType() const noexcept(true)
-				{
-					return EnumFormIDs[_FormType];
-				}
-
-				bool TESForm::SetFormEditorID(const char* NewEditorID) noexcept(true)
-				{
-					return SetFormEditorIDImpl ? SetFormEditorIDImpl(this, NewEditorID) : false;
-				}
 			}
 		}
 	}

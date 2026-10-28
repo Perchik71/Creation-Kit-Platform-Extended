@@ -22,6 +22,8 @@ namespace CKPE
 				public:
 					virtual ~BGSAction() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftAction;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAction[0];
 				public:
 					std::uint32_t index; // 60
 					std::uint32_t unk64; // 64

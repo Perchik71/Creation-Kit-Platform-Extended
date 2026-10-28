@@ -9,6 +9,8 @@
 #include <iterator>
 #include <functional>
 #include <type_traits>
+
+#include <EditorAPI/M/MemoryManager.h>
 #include <EditorAPI/C/CRC.h>
 
 namespace CKPE
@@ -22,6 +24,54 @@ namespace CKPE
 			{
 				First first;
 				Second second;
+			};
+
+			template <std::size_t S, std::size_t A>
+			class BSTScatterTableHeapAllocator
+			{
+			public:
+				using size_type = std::uint32_t;
+				using propagate_on_container_move_assignment = std::true_type;
+
+				BSTScatterTableHeapAllocator() = default;
+				BSTScatterTableHeapAllocator(const BSTScatterTableHeapAllocator&) = delete;
+
+				BSTScatterTableHeapAllocator(BSTScatterTableHeapAllocator&& a_rhs) noexcept(true) :
+					_entries(std::exchange(a_rhs._entries, nullptr))
+				{}
+
+				~BSTScatterTableHeapAllocator() = default;
+				BSTScatterTableHeapAllocator& operator=(const BSTScatterTableHeapAllocator&) = delete;
+
+				BSTScatterTableHeapAllocator& operator=(BSTScatterTableHeapAllocator&& a_rhs) noexcept(true)
+				{
+					if (this != std::addressof(a_rhs))
+					{
+						assert(_entries == nullptr);
+						_entries = std::exchange(a_rhs._entries, nullptr);
+					}
+
+					return *this;
+				}
+
+				[[nodiscard]] static constexpr size_type min_size() noexcept(true) { return 1u << 3; }
+
+				[[nodiscard]] void* allocate_bytes(std::size_t a_bytes)
+				{
+					assert(a_bytes % S == 0);
+					return malloc(a_bytes);
+				}
+
+				void deallocate_bytes(void* a_ptr) { free(a_ptr); }
+
+				[[nodiscard]] void* get_entries() const noexcept(true) { return _entries; }
+				void                set_entries(void* a_entries) noexcept(true) { _entries = static_cast<std::byte*>(a_entries); }
+
+			private:
+				// members
+				std::uint64_t _pad00{ 0 };
+				std::uint64_t _pad08{ 0 };
+				std::byte* _entries{ nullptr };
 			};
 
 			template <class Key, class T>
@@ -42,10 +92,7 @@ namespace CKPE
 				[[nodiscard]] static const key_type& unwrap_key(const value_type& Value) noexcept(true) { return Value; }
 			};
 
-			// Chained scatter table as laid out by the Creation Kit: 0x38 bytes (entries pointer at +30, modification count at +20). CommonLibF4's
-			// game table is 0x30 bytes (entries at +28); TableSize 0x30 selects that layout, but no Creation Kit table was found using it.
-			// The table lives in game memory: it can be queried and walked, but not grown or modified from here.
-			template <class Hash, class KeyEqual, class Traits, std::size_t TableSize = 0x38>
+			template <class Hash, class KeyEqual, class Traits, template <std::size_t, std::size_t> class Allocator, std::size_t TableSize = 0x38>
 			class BSTScatterTable
 			{
 			public:
@@ -53,6 +100,13 @@ namespace CKPE
 				using mapped_type = typename Traits::mapped_type;
 				using value_type = typename Traits::value_type;
 				using size_type = std::uint32_t;
+				using reference = value_type&;
+				using const_reference = const value_type&;
+				using pointer = value_type*;
+				using const_pointer = const value_type*;
+
+				static_assert(std::is_invocable_r_v<size_type, const Hash&, const key_type&>);
+				static_assert(std::is_invocable_r_v<bool, const KeyEqual&, const key_type&, const key_type&>);
 
 				struct entry_type
 				{
@@ -61,6 +115,8 @@ namespace CKPE
 
 					[[nodiscard]] bool has_value() const noexcept(true) { return next != nullptr; }
 				};
+
+				using allocator_type = Allocator<sizeof(entry_type), alignof(entry_type)>;
 
 				template <class U>
 				class iterator_base
@@ -111,10 +167,10 @@ namespace CKPE
 				[[nodiscard]] size_type size() const noexcept(true) { return _capacity - _free; }
 				[[nodiscard]] size_type capacity() const noexcept(true) { return _capacity; }
 
-				[[nodiscard]] iterator begin() noexcept(true) { return iterator(_entries, _entries + _capacity); }
-				[[nodiscard]] const_iterator begin() const noexcept(true) { return const_iterator(_entries, _entries + _capacity); }
-				[[nodiscard]] iterator end() noexcept(true) { return iterator(_entries + _capacity, _entries + _capacity); }
-				[[nodiscard]] const_iterator end() const noexcept(true) { return const_iterator(_entries + _capacity, _entries + _capacity); }
+				[[nodiscard]] iterator begin() noexcept(true) { return iterator(_allocator._entries, _allocator._entries + _capacity); }
+				[[nodiscard]] const_iterator begin() const noexcept(true) { return const_iterator(_allocator._entries, _allocator._entries + _capacity); }
+				[[nodiscard]] iterator end() noexcept(true) { return iterator(_allocator._entries + _capacity, _allocator._entries + _capacity); }
+				[[nodiscard]] const_iterator end() const noexcept(true) { return const_iterator(_allocator._entries + _capacity, _allocator._entries + _capacity); }
 
 				[[nodiscard]] iterator find(const key_type& Key) noexcept(true) { return do_find<iterator>(Key); }
 				[[nodiscard]] const_iterator find(const key_type& Key) const noexcept(true) { return do_find<const_iterator>(Key); }
@@ -124,11 +180,11 @@ namespace CKPE
 				template <class Iter>
 				[[nodiscard]] Iter do_find(const key_type& Key) const noexcept(true)
 				{
-					const auto last = _entries + _capacity;
-					if (!_entries || empty())
+					const auto last = _allocator._entries + _capacity;
+					if (!_allocator._entries || empty())
 						return Iter(last, last);
 
-					auto entry = _entries + (static_cast<size_type>(Hash()(Key)) & (_capacity - 1));
+					auto entry = _allocator._entries + (static_cast<size_type>(Hash()(Key)) & (_capacity - 1));
 					if (entry->has_value())
 					{
 						do
@@ -148,19 +204,18 @@ namespace CKPE
 				size_type _capacity{ 0 };				// 0C - total number of slots, a power of two
 				size_type _free{ 0 };					// 10 - number of free slots
 				size_type _good{ 0 };					// 14 - last free index
-				std::uintptr_t _sentinel{ 0 };			// 18 - end of chain marker (points at the bytes DE AD BE EF)
-				std::uint8_t _padAllocator[TableSize - 0x28]{};	// 20 - 16 bytes in the CK's 0x38 layout (modification count at 20, entries at 30), 8 in the game's 0x30 one
-				entry_type* _entries{ nullptr };		// TableSize - 8
+				std::uintptr_t _sentinel{ 0 };			// 18 - end of chain marker (points at the bytes DE AD BE EF)			
+				allocator_type _allocator;
 			};
 
 			template <class Key, class T, class Hash = BSCRC32<Key>, class KeyEq = std::equal_to<Key>>
-			using BSTHashMap = BSTScatterTable<Hash, KeyEq, BSTScatterTableTraits<Key, T>>;
+			using BSTHashMap = BSTScatterTable<Hash, KeyEq, BSTScatterTableTraits<Key, T>, BSTScatterTableHeapAllocator>;
 
 			template <class Key, class Hash = BSCRC32<Key>, class KeyEq = std::equal_to<Key>>
-			using BSTSet = BSTScatterTable<Hash, KeyEq, BSTSetTraits<Key>>;
+			using BSTSet = BSTScatterTable<Hash, KeyEq, BSTSetTraits<Key>, BSTScatterTableHeapAllocator>;
 
 			static_assert(sizeof(BSTHashMap<std::uint32_t, void*>) == 0x38);
-			static_assert(sizeof(BSTScatterTable<BSCRC32<std::uint32_t>, std::equal_to<std::uint32_t>, BSTScatterTableTraits<std::uint32_t, void*>, 0x30>) == 0x30);
+			static_assert(sizeof(BSTScatterTable<BSCRC32<std::uint32_t>, std::equal_to<std::uint32_t>, BSTScatterTableTraits<std::uint32_t, void*>, BSTScatterTableHeapAllocator>) == 0x38);
 		}
 	}
 }

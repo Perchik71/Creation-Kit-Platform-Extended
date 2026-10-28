@@ -28,6 +28,8 @@ namespace CKPE
 			class BSLight : public NiAPI::NiRefObject
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLight[0];
+
 				enum class Shape : std::uint32_t
 				{
 					None = 0,

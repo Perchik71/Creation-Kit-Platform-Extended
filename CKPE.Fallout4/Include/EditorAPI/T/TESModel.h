@@ -38,6 +38,8 @@ namespace CKPE
 			public:
 				virtual ~TESModel() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESModel[0];
+
 				virtual const char* GetModel() const noexcept(true) { return nullptr; } // 21 - RVA 0x35B020
 				virtual void SetModelFromDialogBox(HWND hDialogBox, std::uint32_t nCtrlID) noexcept(true) { return; } // 22 - RVA 0x8EAAB0
 				virtual void SetModel(const char* lpModel) noexcept(true) { return; } // 23 - RVA 0x8E93E0
@@ -46,7 +48,6 @@ namespace CKPE
 				virtual void OnModelChanged() { return; } // 26 - RVA 0x35B030
 
 				inline void sub_0D0() { OnModelChanged(); }
-
 			public:
 				BSFixedString modelName; // 08
 				BSResource::ID* textures; // 10

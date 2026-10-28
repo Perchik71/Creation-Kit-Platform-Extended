@@ -26,7 +26,13 @@ namespace CKPE
 				public:
 					virtual ~BGSMusicTrackFormWrapper() = default;
 
-				public:
+					constexpr static std::uint8_t TYPE_ID = ftMusicTrackFormWrapper;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMusicTrackFormWrapper[0];
+				
+					inline BGSMusicTrack* GetTrack() const noexcept(true) { return trackImpl; }
+
+					CKPE_READ_PROPERTY(GetTrack) BGSMusicTrack* Track;
+				private:
 					BGSMusicTrack* trackImpl; // 38
 				};
 				static_assert(sizeof(BGSMusicTrackFormWrapper) == 0x40);

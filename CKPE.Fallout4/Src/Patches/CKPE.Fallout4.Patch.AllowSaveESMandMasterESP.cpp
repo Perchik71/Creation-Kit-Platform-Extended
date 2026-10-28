@@ -115,7 +115,7 @@ namespace CKPE
 						// Disable: "File '%s' is a master file or is in use.\n\nPlease select another file to save to."
 						auto newFormat = "File '%s' is in use.\n\nPlease select another file to save to.";
 
-						Relocation(EditorAPI::IDs::Functions::TESDataHandler__Save, Offset{ 0x489, 0x55A }).WriteFill(NOP, 0xD);
+						Relocation(EditorAPI::IDs::TESDataHandler::Save, Offset{ 0x489, 0x55A }).WriteFill(NOP, 0xD);
 						Relocation(EditorAPI::IDs::Functions::aFileSIsAMaster).Write(newFormat, strlen(newFormat) + 1);
 						Relocation(EditorAPI::IDs::Functions::OpenPluginSaveDialog).WriteJump(&OpenPluginSaveDialog);
 					}

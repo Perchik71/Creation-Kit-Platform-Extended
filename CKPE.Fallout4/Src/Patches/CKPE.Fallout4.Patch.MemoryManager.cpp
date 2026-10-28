@@ -41,6 +41,34 @@ namespace CKPE
 					Common::MemoryManager::GetSingleton()->MemFree(memory);
 				}
 
+				static void* Reallocate(BSMemoryManager* manager, void* memory, std::size_t size, std::uint32_t alignment, bool aligned)
+				{
+					if (!memory)
+						return Allocate(manager, size, alignment, aligned);
+
+					if (!size)
+					{
+						Deallocate(manager, memory, aligned);
+						return nullptr;
+					}
+
+					auto oldSize = Size(manager, memory);
+					if (oldSize == size)
+						return memory;
+
+					auto newPtr = Allocate(manager, size, alignment, aligned);
+					if (!newPtr)
+					{
+						Deallocate(manager, memory, aligned);
+						return nullptr;
+					}
+
+					memcpy(newPtr, memory, std::min(size, oldSize));
+					Deallocate(manager, memory, aligned);
+
+					return newPtr;
+				}
+
 				static std::size_t Size(BSMemoryManager* manager, void* memory)
 				{
 					return Common::MemoryManager::GetSingleton()->MemSize(memory);
@@ -234,18 +262,19 @@ namespace CKPE
 				// Принудительный вылет с сообщением для пользователя.
 				CKPE_ASSERT_MSG(LowMemory(), "Not enough memory to run the program");
 
-				Relocation(EditorAPI::IDs::Functions::BSMemoryManager__Allocate).WriteJump(BSMemoryManager::Allocate);
-				Relocation(EditorAPI::IDs::Functions::BSMemoryManager__Deallocate).WriteJump(BSMemoryManager::Deallocate);
-				Relocation(EditorAPI::IDs::Functions::BSMemoryManager__Size).WriteJump(BSMemoryManager::Size);
-				Relocation(EditorAPI::IDs::Functions::ScrapHeap__Allocate).WriteJump(BSScrapHeap::Allocate);
-				Relocation(EditorAPI::IDs::Functions::ScrapHeap__Deallocate).WriteJump(BSScrapHeap::Deallocate);
+				Relocation(EditorAPI::IDs::MemoryManager::Allocate).WriteJump(BSMemoryManager::Allocate);
+				Relocation(EditorAPI::IDs::MemoryManager::Deallocate).WriteJump(BSMemoryManager::Deallocate);
+				Relocation(EditorAPI::IDs::MemoryManager::Reallocate).WriteJump(BSMemoryManager::Reallocate);
+				Relocation(EditorAPI::IDs::MemoryManager::Size).WriteJump(BSMemoryManager::Size);
+				Relocation(EditorAPI::IDs::ScrapHeap::Allocate).WriteJump(BSScrapHeap::Allocate);
+				Relocation(EditorAPI::IDs::ScrapHeap::Deallocate).WriteJump(BSScrapHeap::Deallocate);
 				Relocation(EditorAPI::IDs::bhkThreadMemorySource::Constructor).WriteJump(bhkThreadMemorySource::__ctor__);
 				Relocation(EditorAPI::IDs::Functions::NiBSScrapAdapter_AllocateFromBSScrap).WriteJump(NiBSScrapAdapter_AllocateFromBSScrap);
 
-				Relocation(EditorAPI::IDs::Functions::BSMemoryManager_InitDefaultHeap).Write(RET);
+				Relocation(EditorAPI::IDs::MemoryManager::InitDefaultHeap).Write(RET);
 				Relocation(EditorAPI::IDs::Functions::sub_1FFBDA0).Write(RET);
-				Relocation(EditorAPI::IDs::Functions::ScrapHeap__ScrapHeap).Write(RET);
-				Relocation(EditorAPI::IDs::Functions::ScrapHeap__ReleasePages).Write(RET);
+				Relocation(EditorAPI::IDs::ScrapHeap::ctor).Write(RET);
+				Relocation(EditorAPI::IDs::ScrapHeap::ReleasePages).Write(RET);
 
 				return true;
 			}

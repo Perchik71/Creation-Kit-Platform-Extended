@@ -51,6 +51,8 @@ namespace CKPE
 
 				virtual ~BSShaderMaterial() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSShaderMaterial[0];
+
 				inline BSShaderMaterial* Create() const noexcept(true) { return CKPE::vtbl_call<BSShaderMaterial*>(0x8, this); }
 				inline std::uint32_t GetType() const noexcept(true) { return CKPE::vtbl_call<std::uint32_t>(0x28, this); }
 				inline std::uint32_t GetFeature() const noexcept(true) { return GetType(); }

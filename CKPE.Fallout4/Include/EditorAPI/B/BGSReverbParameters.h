@@ -24,6 +24,8 @@ namespace CKPE
 				public:
 					virtual ~BGSReverbParameters() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftReverbParameters;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSReverbParameters[0];
 				public:
 					std::uint32_t unk30; // 30
 					std::uint32_t unk34; // 34

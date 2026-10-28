@@ -27,6 +27,8 @@ namespace CKPE
 				public:
 					virtual ~BGSMaterialType() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftMaterialType;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMaterialType[0];
 				public:
 					TESModel breakableFXModel; // 28
 					BGSMaterialType* parentType; // 60

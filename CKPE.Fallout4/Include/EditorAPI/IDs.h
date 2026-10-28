@@ -33,14 +33,11 @@ namespace CKPE
 					inline constexpr Common::ID BuildFormVCInfo{ 507415 };
 					// 0x1406F4B40 - check-in (1017) / undo check-out (1019) dialog procedure
 					inline constexpr Common::ID CheckInDialog{ 248766 };
-					// 0x140859540
-					inline constexpr Common::ID SaveForm{ 0, 1529554 };
-					// 0x140863A80
-					inline constexpr Common::ID LoadFiles{ 0, 1994158 };
-					// 0x1408675F0
-					inline constexpr Common::ID Save{ 0, 1386733 };
-					// 0x140868710
-					inline constexpr Common::ID LoadFileRecords{ 0, 1495600 };
+
+					inline constexpr Common::ID SaveForm{ 177482, 1529554 };
+					inline constexpr Common::ID LoadFiles{ 653593, 1994158 };
+					inline constexpr Common::ID Save{ 68391, 1386733 };
+					inline constexpr Common::ID LoadFileRecords{ 264710, 1495600 };
 					inline constexpr Common::ID AddForm{ 167748, 1522536 };
 					inline constexpr Common::ID RemoveForm{ 653538, 1993993 };
 				}
@@ -497,6 +494,16 @@ namespace CKPE
 					inline constexpr Common::ID Constructor{ 111839, 1639434 };
 				}
 
+				namespace TESForm
+				{
+					inline constexpr Common::ID GetFile{ 495107 };
+					inline constexpr Common::ID GetFormByNumericID{ 611970, 1519646 };
+					inline constexpr Common::ID GetSafeFormEditorID_A{ 81623 };
+					inline constexpr Common::ID GetSafeFormEditorID_B{ 489157 };
+					inline constexpr Common::ID MakeEditorIDUnique{ 655843, 1618628 };
+					inline constexpr Common::ID EnumFormIDs{ 1106870, 1618347 };
+				}
+
 				namespace BGSLayerDialog
 				{
 					inline constexpr Common::ID Constructor{ 635113, 1992398 };
@@ -521,6 +528,38 @@ namespace CKPE
 				{
 					inline constexpr Common::ID Create{ 498332 };
 				}
+
+				namespace MemoryManager
+				{
+					namespace AutoScrapBuffer
+					{
+						inline constexpr Common::ID ctor{ 707709, 1494736 };
+						inline constexpr Common::ID dtor{ 751485, 1662022 };
+					}
+
+					inline constexpr Common::ID InitDefaultHeap{ 394350 };
+					inline constexpr Common::ID Singleton{ 618899, 1625025 };	// 1793486 AE memory address
+					inline constexpr Common::ID Allocate{ 642906, 1670063 };
+					inline constexpr Common::ID Deallocate{ 570472, 1372464 };
+					inline constexpr Common::ID Reallocate{ 537295, 1684415 };
+					inline constexpr Common::ID Size{ 446435, 1704908 };
+					inline constexpr Common::ID GetThreadScrapHeap{ 679610, 1482136 };
+					inline constexpr Common::ID RegisterMemoryManager{ 608113, 1424959 };
+				}
+
+				namespace BGSLocalizedString
+				{
+					inline constexpr Common::ID GetLength{ 409166, 1382155 };
+					inline constexpr Common::ID GetStr{ 381562 };
+				}
+
+				namespace ScrapHeap
+				{
+					inline constexpr Common::ID ctor{ 525631, 1991938 };
+					inline constexpr Common::ID Allocate{ 5005, 1994738 };
+					inline constexpr Common::ID Deallocate{ 751586, 1994657 };
+					inline constexpr Common::ID ReleasePages{ 540140, 1499067 };
+				}				
 
 				namespace TESFormEdit
 				{
@@ -727,20 +766,10 @@ namespace CKPE
 					inline constexpr Common::ID SettingCollectionMap_Setting___Add{ 623367, 1892575 };
 					// 1.11.246.0 0x1406765B0 SortCallbacks_CompareItems
 					inline constexpr Common::ID SortCallbacks_CompareItems{ 643144, 1621905 };
-					// 1.11.246.0 0x140868710 TESDataHandler::LoadFileRecords
-					inline constexpr Common::ID TESDataHandler__LoadFileRecords{ 264710, 1495600 };
-					// 1.11.246.0 0x140863A80 TESDataHandler::LoadFiles
-					inline constexpr Common::ID TESDataHandler__LoadFiles{ 653593, 1994158 };
-					// 1.11.246.0 0x140863A80 TESDataHandler::LoadFiles
-					inline constexpr Common::ID TESDataHandler__LoadFiles_2{ 1994158 };
-					// 1.11.246.0 0x1408675F0 TESDataHandler::Save
-					inline constexpr Common::ID TESDataHandler__Save{ 68391, 1386733 };
 					// 1.11.246.0 0x1408805B0 TESFile::LoadTESInfo
 					inline constexpr Common::ID TESFile__LoadTESInfo{ 654208, 1514423 };
 					// 1.11.246.0 0x1408810C0 TESFile::WriteTESInfo
 					inline constexpr Common::ID TESFile__WriteTESInfo{ 532384 };
-					// 1.11.246.0 0x1408C31F0 TESForm::GetFormByNumericID
-					inline constexpr Common::ID TESForm__GetFormByNumericID{ 611970, 1519646 };
 					// 1.11.246.0 0x140AB6B70 TESNPC::PerformDialogBox
 					inline constexpr Common::ID TESNPC__PerformDialogBox{ 666248, 1989246 };
 					// 1.11.246.0 0x140D1AE20 TESObjectCELL::InitItemImpl
@@ -765,8 +794,6 @@ namespace CKPE
 					inline constexpr Common::ID data_3907280{ 773177, 1789956 };
 					// 1.11.246.0 0x143BAC818 off_143BAC818
 					inline constexpr Common::ID data_3BAC818{ 338206 };
-					// 1.11.246.0 0x143BAF440 unk_143BAF440
-					inline constexpr Common::ID data_3BAF440{ 1106870, 1618347 };
 					// 1.11.246.0 0x143D27D80 
 					inline constexpr Common::ID data_3D27D80{ 1591587 };
 					// 1.11.246.0 0x143D2F9B4 
@@ -851,8 +878,6 @@ namespace CKPE
 					inline constexpr Common::ID legacy_PreCombined_415101{ 415101 };
 					// no 1.11.246.0 equivalent (used by PreCombined)
 					inline constexpr Common::ID legacy_PreCombined_632758{ 632758 };
-					// no 1.11.246.0 equivalent (used by ProgressWindow)
-					inline constexpr Common::ID legacy_ProgressWindow_653593{ 653593 };
 					// no 1.11.246.0 equivalent (used by ReplaceBSPointerHandleAndManager)
 					inline constexpr Common::ID legacy_ReplaceBSPointerHandleAndManager_123735{ 123735 };
 					// no 1.11.246.0 equivalent (used by ReplaceBSPointerHandleAndManager)
@@ -885,10 +910,6 @@ namespace CKPE
 					inline constexpr Common::ID raise_securityfailure{ 1632576 };
 					// 1.11.246.0 0x142D75C14 __scrt_fastfail
 					inline constexpr Common::ID scrt_fastfail{ 1560296 };
-					// 1.11.246.0 0x1408CB980 TESForm::GetSafeFormEditorID (non-const)
-					inline constexpr Common::ID TESForm__GetSafeFormEditorID_A{ 81623 };
-					// 1.11.246.0 0x1408CB9C0 TESForm::GetSafeFormEditorID (const)
-					inline constexpr Common::ID TESForm__GetSafeFormEditorID_B{ 489157 };
 					// 1.11.246.0 0x141137B70 CSScript::PickScriptsToCompileDlg::DlgProc
 					inline constexpr Common::ID PapyrusCompileDialog_DlgProc{ 580037 };
 					// 1.11.246.0 0x141137F50 sub_141137F50
@@ -927,14 +948,8 @@ namespace CKPE
 					inline constexpr Common::ID sub_1A2BB60{ 1990426 };
 					// 1.11.246.0 0x141CC48D0 sub_141CC48D0
 					inline constexpr Common::ID sub_1CC48D0{ 660208, 1990223 };
-					// 1.11.246.0 0x141FFB440 sub_141FFB440
-					inline constexpr Common::ID BSMemoryManager__Size{ 446435, 1704908 };
 					// 1.11.246.0 0x141FFBDA0 sub_141FFBDA0
 					inline constexpr Common::ID sub_1FFBDA0{ 650953, 1356979 };
-					// 1.11.246.0 0x141FFC100 sub_141FFC100
-					inline constexpr Common::ID BSMemoryManager__Allocate{ 642906, 1670063 };
-					// 1.11.246.0 0x141FFC6B0 sub_141FFC6B0
-					inline constexpr Common::ID BSMemoryManager__Deallocate{ 570472, 1372464 };
 					// 1.11.246.0 0x141FFF220 sub_141FFF220
 					inline constexpr Common::ID sub_1FFF220{ 440122, 1515122 };
 					// 1.11.246.0 0x141FFF3E0 sub_141FFF3E0
@@ -951,14 +966,6 @@ namespace CKPE
 					inline constexpr Common::ID sub_1FFF750{ 635645, 1668403 };
 					// 1.11.246.0 0x141FFF810 sub_141FFF810
 					inline constexpr Common::ID sub_1FFF810{ 714644, 1618560 };
-					// 1.11.246.0 0x142004F00 sub_142004F00
-					inline constexpr Common::ID ScrapHeap__ScrapHeap{ 525631, 1991938 };
-					// 1.11.246.0 0x142005120 sub_142005120
-					inline constexpr Common::ID ScrapHeap__Allocate{ 5005, 1994738 };
-					// 1.11.246.0 0x1420057C0 sub_1420057C0
-					inline constexpr Common::ID ScrapHeap__Deallocate{ 751586, 1994657 };
-					// 1.11.246.0 0x142005AB0 sub_142005AB0
-					inline constexpr Common::ID ScrapHeap__ReleasePages{ 540140, 1499067 };
 					// 1.11.246.0 0x14201A140 sub_14201A140
 					inline constexpr Common::ID sub_201A140{ 1352498 };
 					// 1.11.246.0 0x14204C730 sub_14204C730
@@ -971,8 +978,6 @@ namespace CKPE
 					inline constexpr Common::ID BSStringCache__Ref__Ref{ 766110, 1340478 };
 					// 1.11.246.0 0x142429970 sub_142429970
 					inline constexpr Common::ID BSStringCache__Ref__set{ 766111, 1698047 };
-					// 1.11.246.0 0x142429C70 sub_142429C70
-					inline constexpr Common::ID sub_2429C70{ 409166, 1382155 };
 					// 1.11.246.0 0x14242A490 sub_14242A490
 					inline constexpr Common::ID sub_242A490{ 650803, 1852383 };
 					// 1.11.246.0 0x14242BA90 sub_14242BA90
@@ -1053,12 +1058,8 @@ namespace CKPE
 					inline constexpr Common::ID sub_347840{ 623435, 1989512 };
 					// 1.11.246.0 0x140359D00 sub_140359D00
 					inline constexpr Common::ID sub_359D00{ 370815 };
-					// 1.11.246.0 0x14039AA50 sub_14039AA50
-					inline constexpr Common::ID sub_39AA50{ 381562 };
 					// 1.11.246.0 0x14003E2B1 sub_14003E2B1
 					inline constexpr Common::ID sub_3E2B1{ 584687 };
-					// 1.11.246.0 0x14046CF50 sub_14046CF50
-					inline constexpr Common::ID BSMemoryManager_InitDefaultHeap{ 394350 };
 					// 1.11.246.0 0x140489830 sub_140489830
 					inline constexpr Common::ID sub_489830{ 632480, 1993061 };
 					// 1.11.246.0 0x14048D8D0 sub_14048D8D0
@@ -1211,8 +1212,6 @@ namespace CKPE
 					inline constexpr Common::ID sub_886930{ 300396, 1818942 };
 					// 1.11.246.0 0x1408BE210 sub_1408BE210
 					inline constexpr Common::ID sub_8BE210{ 243708, 1596835 };
-					// 1.11.246.0 0x1408C5050 sub_1408C5050
-					inline constexpr Common::ID TESForm_MakeEditorIDUnique{ 655843, 1618628 };
 					// 1.11.246.0 0x1408DA7B0 sub_1408DA7B0
 					inline constexpr Common::ID sub_8DA7B0{ 135014 };
 					// 1.11.246.0 0x14092F1E0 sub_14092F1E0

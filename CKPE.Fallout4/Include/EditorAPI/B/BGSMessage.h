@@ -30,6 +30,8 @@ namespace CKPE
 				public:
 					virtual ~BGSMessage() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftMessage;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMessage[0];
 				public:
 					BGSMenuIcon* icon; // 68
 					TESQuest* ownerQuest; // 70

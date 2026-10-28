@@ -25,6 +25,7 @@ namespace CKPE
 			public:
 				virtual ~BGSFeaturedItemMessage() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSFeaturedItemMessage[0];
 			public:
 				Forms::BGSMessage* featuredItemMessage; // 08
 			};

@@ -21,6 +21,9 @@ namespace CKPE
 				{
 				public:
 					virtual ~TESKey() = default;
+
+					constexpr static std::uint8_t TYPE_ID = ftKey;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESKey[0];
 				};
 				static_assert(sizeof(TESKey) == 0x1E8);
 			}

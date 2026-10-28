@@ -48,7 +48,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				const auto rel = Relocation(EditorAPI::IDs::Functions::TESDataHandler__LoadFiles, Offset{ 0x1E3, 0x1EA });
+				const auto rel = Relocation(EditorAPI::IDs::TESDataHandler::LoadFiles, Offset{ 0x1E3, 0x1EA });
 				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
 					rel.Write({ 0xE9, 0xDE, 0x00, 0x00, 0x00, 0x90 });
 				else

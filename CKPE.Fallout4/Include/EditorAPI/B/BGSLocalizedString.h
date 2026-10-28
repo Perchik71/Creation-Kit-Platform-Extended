@@ -6,6 +6,7 @@
 
 #include <cstdint>
 #include <cstddef>
+#include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/B/BSFixedString.h>
 
 namespace CKPE
@@ -20,6 +21,8 @@ namespace CKPE
 			class IBGSLocalizedString
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::IBGSLocalizedString[0];
+
 				virtual void release(bool free = false) noexcept(true);
 				[[nodiscard]] virtual std::uint64_t GetID() const noexcept(true);
 				virtual bool SetID(std::uint32_t id) noexcept(true);
@@ -32,6 +35,8 @@ namespace CKPE
 			class BGSLocalizedString : public IBGSLocalizedString
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLocalizedString[0];
+
 				[[nodiscard]] inline bool is_wide() const noexcept(true) { return _Str.is_wide(); }
 				[[nodiscard]] inline char* data() noexcept(true) { return const_cast<char*>(_Str.c_str()); }
 				[[nodiscard]] inline wchar_t* wdata() noexcept(true) { return const_cast<wchar_t*>(_Str.c_wstr()); }
@@ -49,6 +54,8 @@ namespace CKPE
 			class BGSLocalizedStringDL : public IBGSLocalizedString
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLocalizedStringDL[0];
+
 				[[nodiscard]] inline bool is_wide() const noexcept(true) { return _Str.is_wide(); }
 				[[nodiscard]] inline char* data() noexcept(true) { return const_cast<char*>(_Str.c_str()); }
 				[[nodiscard]] inline wchar_t* wdata() noexcept(true) { return const_cast<wchar_t*>(_Str.c_wstr()); }
@@ -66,7 +73,10 @@ namespace CKPE
 
 			// 0x10 5 functions
 			class BGSLocalizedStringIL : public BGSLocalizedString
-			{};
+			{
+			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLocalizedStringIL[0];
+			};
 			static_assert(sizeof(BGSLocalizedStringIL) == 0x10);
 		}
 	}

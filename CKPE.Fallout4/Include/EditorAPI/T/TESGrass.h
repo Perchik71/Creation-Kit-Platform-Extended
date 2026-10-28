@@ -44,6 +44,9 @@ namespace CKPE
 				public:
 					virtual ~TESGrass() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftGrass;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESGrass[0];
+
 					virtual std::int8_t GetDensity() const noexcept(true) { return 0; } // 154 - RVA 0xC49EE0, return *(unsigned __int8 *)(a1 + 200);
 					virtual bool SetDensity(std::int8_t nDensity) noexcept(true) { return false; } // 155 - RVA 0xC49840, if ( a2 > 0x64u ); return 0;; *(_BYTE *)(a1 + 200) = a2;; return 1;
 					virtual std::int8_t GetMinSlopeDegrees() const noexcept(true) { return 0; } // 156 - RVA 0xC49F70, return *(unsigned __int8 *)(a1 + 201);

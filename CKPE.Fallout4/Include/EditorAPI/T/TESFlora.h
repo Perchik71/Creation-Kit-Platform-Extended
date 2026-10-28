@@ -23,6 +23,9 @@ namespace CKPE
 				{
 				public:
 					virtual ~TESFlora() = default;
+
+					constexpr static std::uint8_t TYPE_ID = ftFlora;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESFlora[0];
 				};
 				static_assert(sizeof(TESFlora) == 0x208);
 			}

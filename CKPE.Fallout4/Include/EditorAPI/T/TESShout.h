@@ -30,6 +30,8 @@ namespace CKPE
 				public:
 					virtual ~TESShout() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftShout;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESShout[0];
 				public:
 					std::uint8_t variations[0x48]; // 88 - Variation
 				};

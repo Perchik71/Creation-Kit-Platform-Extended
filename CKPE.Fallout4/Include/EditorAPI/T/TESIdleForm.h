@@ -32,8 +32,10 @@ namespace CKPE
 				public:
 					virtual ~TESIdleForm() = default;
 
-					virtual void OpenIdleManager() noexcept(true) { return; } // 124
+					constexpr static std::uint8_t TYPE_ID = ftIdle;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESIdleForm[0];
 
+					virtual void OpenIdleManager() noexcept(true) { return; } // 124
 				public:
 					std::uint8_t unk28[0x18]; // 28
 					IDLE_DATA data; // 40

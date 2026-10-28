@@ -18,6 +18,8 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSShaderAccumulator : public NiAPI::NiAlphaAccumulator
 	{
 	public:
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSShaderAccumulator[0];
+
 		/* 30 */ virtual void FinishAccumulatingPreResolveDepth();
 		/* 31 */ virtual void FinishAccumulatingPostResolveDepth();
 

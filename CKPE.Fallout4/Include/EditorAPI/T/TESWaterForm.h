@@ -81,6 +81,8 @@ namespace CKPE
 				public:
 					virtual ~TESWaterForm() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftWater;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESWaterForm[0];
 				public:
 					bool needUpdate; // 40
 					std::uint8_t unk41[0x3]; // 41

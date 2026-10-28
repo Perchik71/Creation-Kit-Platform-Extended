@@ -22,8 +22,10 @@ namespace CKPE
 				public:
 					virtual ~BGSStoryManagerBranchNode() = default;
 
-					virtual std::uint32_t AcceptVisitor(void* Visitor) noexcept(true) { return 0; } // 135
+					constexpr static std::uint8_t TYPE_ID = ftStoryManagerBranchNode;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSStoryManagerBranchNode[0];
 
+					virtual std::uint32_t AcceptVisitor(void* Visitor) noexcept(true) { return 0; } // 135
 				public:
 					BSTArray<BGSStoryManagerNodeBase*> children; // 58
 				};

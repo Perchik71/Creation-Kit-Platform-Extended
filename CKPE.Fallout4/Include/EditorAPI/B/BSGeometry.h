@@ -52,6 +52,8 @@ namespace CKPE
 
 				virtual ~BSGeometry() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSGeometry[0];
+
 				/* 3C */ virtual void UpdatePropertyControllers(NiAPI::NiUpdateData& Data) noexcept(true);
 				/* 3D */ virtual BSGeometrySegmentData* GetSegmentData() noexcept(true);
 				/* 3E */ virtual void SetSegmentData(BSGeometrySegmentData* Data) noexcept(true);

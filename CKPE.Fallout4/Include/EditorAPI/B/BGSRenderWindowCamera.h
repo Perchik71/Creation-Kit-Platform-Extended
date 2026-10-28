@@ -5,6 +5,7 @@
 #pragma once
 
 #include <EditorAPI/IDs.h>
+#include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/N/NiNode.h>
 #include <EditorAPI/N/NiCamera.h>
 
@@ -52,6 +53,8 @@ namespace CKPE
 				};
 			public:
 				virtual ~BGSRenderWindowCamera() = default;
+
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowCamera[0];
 
 				[[nodiscard]] inline NiNode* GetNode() const noexcept(true) { return _Node; }
 				[[nodiscard]] inline NiCamera* GetCamera() const noexcept(true) { return _Camera; }

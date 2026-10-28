@@ -16,6 +16,8 @@ namespace CKPE
 			class BSPortalGraphEntry : public NiAPI::NiRefObject
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSPortalGraphEntry[0];
+
 				[[nodiscard]] inline class BSPortalGraph* GetPortalGraph() const noexcept(true) { return _PortalGraph; }
 				[[nodiscard]] inline bool HasVisibleUnboundSpace() const noexcept(true) { return _VisibleUnboundSpace; }
 				[[nodiscard]] inline bool IsAccumulationEnabled() const noexcept(true) { return _EnableAccumulation; }

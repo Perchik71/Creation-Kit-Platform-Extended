@@ -28,6 +28,8 @@ namespace CKPE
 			class BSShader : public NiAPI::NiRefObject, public BSReloadShaderI
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSShader[0];
+
 				struct RuntimeData
 				{
 					char VertexShaders[0x38];						// 000

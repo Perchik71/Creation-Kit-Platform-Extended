@@ -22,6 +22,8 @@ namespace CKPE
 				public:
 					virtual ~BGSInstanceNamingRules() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftInstanceNamingRules;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSInstanceNamingRules[0];
 				public:
 					std::uint32_t unk28; // 28
 					std::uint8_t unk2C[0xF4]; // 2C

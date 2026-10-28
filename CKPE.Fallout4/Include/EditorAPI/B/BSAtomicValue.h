@@ -17,38 +17,38 @@ namespace CKPE
 
 				using value_type = T;
 
-				constexpr BSTAtomicValue() noexcept = default;
+				constexpr BSTAtomicValue() noexcept(true) = default;
 
-				explicit constexpr BSTAtomicValue(T a_rhs) noexcept :
+				explicit constexpr BSTAtomicValue(T a_rhs) noexcept(true) :
 					_value(a_rhs)
 				{}
 
-				T operator++()
+				T operator++() noexcept(true)
 				{
 					std::atomic_ref value{ _value };
 					return ++value;
 				}
 
-				[[nodiscard]] T operator++(int)
+				[[nodiscard]] T operator++(int) noexcept(true)
 				{
 					std::atomic_ref value{ _value };
 					return value++;
 				}
 
-				T operator--()
+				T operator--() noexcept(true)
 				{
 					std::atomic_ref value{ _value };
 					return --value;
 				}
 
-				[[nodiscard]] T operator--(int)
+				[[nodiscard]] T operator--(int) noexcept(true)
 				{
 					std::atomic_ref value{ _value };
 					return value--;
 				}
 
-				[[nodiscard]] value_type& load_unchecked() noexcept { return _value; }
-				[[nodiscard]] const value_type& load_unchecked() const noexcept { return _value; }
+				[[nodiscard]] value_type& load_unchecked() noexcept(true) { return _value; }
+				[[nodiscard]] const value_type& load_unchecked() const noexcept(true) { return _value; }
 
 			private:
 				// members

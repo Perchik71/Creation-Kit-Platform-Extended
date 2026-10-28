@@ -36,6 +36,8 @@ namespace CKPE
 				public:
 					virtual ~BGSEncounterZone() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftEncounterZone;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEncounterZone[0];
 				public:
 					ENCOUNTER_ZONE_DATA data; // 28
 					std::uint64_t unk40; // 40

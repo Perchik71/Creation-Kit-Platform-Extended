@@ -24,6 +24,8 @@ namespace CKPE
 				public:
 					virtual ~BGSZoomData() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftZoomData;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSZoomData[0];
 				public:
 					std::uint32_t unk28; // 28
 					std::uint32_t unk2C; // 2C

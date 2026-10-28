@@ -68,6 +68,8 @@ namespace CKPE
 				public:
 					virtual ~BGSProjectile() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftProjectile;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProjectile[0];
 				public:
 					BGSProjectileData data; // F8
 					TESModel muzzleFlashModel; // 188

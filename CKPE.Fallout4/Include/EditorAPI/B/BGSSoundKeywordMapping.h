@@ -26,6 +26,8 @@ namespace CKPE
 				public:
 					virtual ~BGSSoundKeywordMapping() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftSoundKeywordMapping;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSoundKeywordMapping[0];
 				public:
 					BSTSet<BGSKeyword*> keywordSet; // 28 - KNAM, 0x38 byte table (capacity 34, entries 58, 16 byte entries)
 					BSTHashMap<std::uint32_t, BGSSoundDescriptorForm*> reverbDescMap; // 60 - PTRN, 0x38 byte table (capacity 6C, entries 90, 24 byte entries)

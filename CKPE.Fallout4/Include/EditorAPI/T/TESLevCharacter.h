@@ -25,6 +25,9 @@ namespace CKPE
 				{
 				public:
 					virtual ~TESLevCharacter() = default;
+					
+					constexpr static std::uint8_t TYPE_ID = ftLevelCharacter;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESLevCharacter[0];
 				};
 				static_assert(sizeof(TESLevCharacter) == 0x108);
 			}

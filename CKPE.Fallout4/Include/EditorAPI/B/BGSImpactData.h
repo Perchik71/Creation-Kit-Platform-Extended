@@ -62,6 +62,8 @@ namespace CKPE
 				public:
 					virtual ~BGSImpactData() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftImpactData;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSImpactData[0];
 				public:
 					IMPACT_DATA_DATA data; // 60
 					BGSTextureSet* decalTextureSet; // 78

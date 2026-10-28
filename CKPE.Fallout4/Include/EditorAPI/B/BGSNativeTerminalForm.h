@@ -25,6 +25,7 @@ namespace CKPE
 			public:
 				virtual ~BGSNativeTerminalForm() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSNativeTerminalForm[0];
 			public:
 				Forms::BGSTerminal* terminal; // 08
 			};

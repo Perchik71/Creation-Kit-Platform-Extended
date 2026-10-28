@@ -23,6 +23,7 @@ namespace CKPE
 			public:
 				virtual ~TESReactionForm() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESReactionForm[0];
 			public:
 				BSSimpleList<GROUP_REACTION*> reactionList; // 08
 				std::int8_t groupFormType; // 18

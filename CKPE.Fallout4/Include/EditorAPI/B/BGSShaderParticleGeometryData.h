@@ -26,6 +26,8 @@ namespace CKPE
 				public:
 					virtual ~BGSShaderParticleGeometryData() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftShaderParticleGeometryData;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSShaderParticleGeometryData[0];
 				public:
 					BSTArray<void*> data; // 28 - BSTArray<SETTING_VALUE>
 					TESTexture particleTexture; // 40

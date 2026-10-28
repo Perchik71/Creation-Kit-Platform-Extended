@@ -24,6 +24,8 @@ namespace CKPE
 				public:
 					virtual ~TESLoadScreen() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftLoadScreen;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESLoadScreen[0];
 				public:
 					std::uint8_t unk50[0x18]; // 50
 					std::uint64_t unk68; // 68

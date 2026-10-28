@@ -25,6 +25,8 @@ namespace CKPE
 				public:
 					virtual ~BGSRelationship() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftRelationship;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRelationship[0];
 				public:
 					TESNPC* npc1; // 28
 					TESNPC* npc2; // 30

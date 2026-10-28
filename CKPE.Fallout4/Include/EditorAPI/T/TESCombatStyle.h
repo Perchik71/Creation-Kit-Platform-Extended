@@ -105,6 +105,8 @@ namespace CKPE
 				public:
 					virtual ~TESCombatStyle() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftCombatStyle;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESCombatStyle[0];
 				public:
 					CombatStyleGeneralData generalData; // 28
 					CombatStyleMeleeData meleeData; // 58

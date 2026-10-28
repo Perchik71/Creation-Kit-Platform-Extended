@@ -35,6 +35,8 @@ namespace CKPE
 				public:
 					virtual ~BGSNote() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftNote;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSNote[0];
 				public:
 					BSFixedString programFile; // 140
 					std::uint64_t unk148; // 148

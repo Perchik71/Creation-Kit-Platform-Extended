@@ -21,6 +21,7 @@ namespace CKPE
 			public:
 				virtual ~BGSPropertySheet() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPropertySheet[0];
 			public:
 				BGSTypedFormValuePair::Array* properties; // 08 - heap allocated 24 byte array
 			};

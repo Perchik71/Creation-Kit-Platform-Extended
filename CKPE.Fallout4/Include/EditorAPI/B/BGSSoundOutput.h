@@ -28,6 +28,8 @@ namespace CKPE
 				public:
 					virtual ~BGSSoundOutput() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftSoundOutput;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSoundOutput[0];
 				public:
 					DynamicAttenuationCharacteristics* attenuation; // 30
 					SpeakerArrays* speakerOutputArrays; // 38

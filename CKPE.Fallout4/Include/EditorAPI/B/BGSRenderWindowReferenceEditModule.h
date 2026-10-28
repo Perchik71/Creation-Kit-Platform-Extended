@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstddef>
+#include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/N/NiPoint.h>
 
 namespace CKPE
@@ -18,6 +19,8 @@ namespace CKPE
 			{
 			public:
 				virtual ~BGSRenderWindowEditModule() = default;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowEditModule[0];
+
 				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
 				{
 					return offsetof(BGSRenderWindowEditModule, _Renderer) == 0x8 &&

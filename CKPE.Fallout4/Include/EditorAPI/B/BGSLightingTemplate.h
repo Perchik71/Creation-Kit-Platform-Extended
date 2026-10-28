@@ -64,6 +64,8 @@ namespace CKPE
 				public:
 					virtual ~BGSLightingTemplate() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftLightingTemplate;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLightingTemplate[0];
 				public:
 					BGSLightingTemplateData data; // 28 - INTERIOR_DATA
 					BGSGodRays* godRays; // B0

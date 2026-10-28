@@ -20,6 +20,8 @@ namespace CKPE
 			{
 			public:
 				virtual ~BGSSoundTagComponent() = default;
+
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSoundTagComponent[0];
 			};
 			static_assert(sizeof(BGSSoundTagComponent) == 0x8);
 		}

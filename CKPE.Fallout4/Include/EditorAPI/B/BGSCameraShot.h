@@ -47,6 +47,8 @@ namespace CKPE
 				public:
 					virtual ~BGSCameraShot() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftCameraShot;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSCameraShot[0];
 				public:
 					CAMERA_SHOT_DATA data; // 70
 					std::uint8_t conditions[0x8]; // B0 - TESCondition

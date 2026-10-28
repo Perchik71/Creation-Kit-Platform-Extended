@@ -46,6 +46,8 @@ namespace CKPE
 			class BSShaderTextureSet : public BSTextureSet
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSShaderTextureSet[0];
+
 				constexpr static std::uint32_t MAX = 10;
 				inline const char* At(std::uint32_t Index) const { return Textures[Index]; };
 				inline const char* operator[](std::uint32_t Index) const { return At(Index); };

@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <cstddef>
 #include <CKPE.Fallout4.VersionLists.h>
+#include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/N/NiColor.h>
 #include <EditorAPI/N/NiMatrix.h>
 #include <EditorAPI/N/NiPoint.h>
@@ -71,6 +72,8 @@ namespace CKPE
 					using Storage982 = NiWindowStorage982;
 
 					~NiWindow() = default;
+
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiWindow[0];
 				protected:
 					// Slot zero is not a destructor.
 					/* 00 */ virtual void Unk00();
@@ -129,6 +132,8 @@ namespace CKPE
 				class NiBinaryStream
 				{
 				public:
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiBinaryStream[0];
+
 					struct BufferInfo
 					{
 						/* 0x00 */ void* Buffer;
@@ -158,6 +163,8 @@ namespace CKPE
 				class NiFile : public NiBinaryStream 
 				{
 				public:
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiFile[0];
+
 					enum FileModes : std::uint32_t 
 					{
 						kFileMode_ReadOnly = 0,

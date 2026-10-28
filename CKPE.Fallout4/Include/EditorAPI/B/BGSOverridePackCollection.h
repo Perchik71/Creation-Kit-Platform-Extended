@@ -25,6 +25,7 @@ namespace CKPE
 			public:
 				virtual ~BGSOverridePackCollection() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSOverridePackCollection[0];
 			public:
 				Forms::BGSListForm* spectatorOverRidePackList; // 08
 				Forms::BGSListForm* observeCorpseOverRidePackList; // 10

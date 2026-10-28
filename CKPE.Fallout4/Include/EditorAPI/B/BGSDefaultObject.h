@@ -25,6 +25,8 @@ namespace CKPE
 				public:
 					virtual ~BGSDefaultObject() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftDefaultObject;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSDefaultObject[0];
 				public:
 					TESForm* form; // 28
 					std::uint8_t type[0x8]; // 30 - ENUM_FORM_ID

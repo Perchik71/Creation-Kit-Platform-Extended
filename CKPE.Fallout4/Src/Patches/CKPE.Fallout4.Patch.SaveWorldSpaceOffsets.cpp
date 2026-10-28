@@ -12,7 +12,7 @@
 #include <CKPE.Common.AddressLibrary.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/T/TESFile.h>
-#include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/T/TESWorldSpace.h>
 #include <EditorAPI/T/TESDataHandler.h>
 #include <EditorAPI/T/TESVersionControl.h>
 #include <Patches/CKPE.Fallout4.Patch.SaveWorldSpaceOffsets.h>
@@ -106,14 +106,14 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				*(std::uintptr_t*)&pSave = Relocation(EditorAPI::IDs::Functions::TESDataHandler__Save).WriteJump(&hk_Save);
+				*(std::uintptr_t*)&pSave = Relocation(EditorAPI::IDs::TESDataHandler::Save).WriteJump(&hk_Save);
 
 				return true;
 			}
 
 			void SaveWorldSpaceOffsets::UpdateOffsets() noexcept(true)
 			{
-				auto handler = EditorAPI::TESDataHandler::Singleton.Singleton;
+				auto handler = EditorAPI::TESDataHandler::GetSingleton();
 				if (!handler)
 					return;
 
@@ -145,7 +145,7 @@ namespace CKPE
 						batch = 1;
 						target = file;
 
-						auto& worlds = handler->arrWRLD;
+						auto& worlds = handler->GetFormArray<EditorAPI::Forms::TESWorldSpace>();
 						for (std::uint32_t i = 0; i < worlds.size(); i++)
 						{
 							auto world = worlds[i];
@@ -162,13 +162,13 @@ namespace CKPE
 						target = prev_target;
 					}
 					else
-						_CONSOLE("Save WorldSpace Offsets: the CK could not open \"%s\" for the offset update", file->GetFileName().c_str());
+						_CONSOLE("Save WorldSpace Offsets: the CK could not open \"%s\" for the offset update"sv, file->GetFileName().c_str());
 
 					vc.Close();
 				}
 				gate = prev_gate;
 
-				_CONSOLE("Save WorldSpace Offsets: %u worldspace(s) updated, %u failed in \"%s\"", updated, failed,
+				_CONSOLE("Save WorldSpace Offsets: %u worldspace(s) updated, %u failed in \"%s\""sv, updated, failed,
 					file->GetFileName().c_str());
 			}
 
@@ -179,7 +179,7 @@ namespace CKPE
 				WIN32_FILE_ATTRIBUTE_DATA before{}, after{};
 				std::string path;
 
-				auto data_handler = EditorAPI::TESDataHandler::Singleton.Singleton;
+				auto data_handler = EditorAPI::TESDataHandler::GetSingleton();
 				auto active = data_handler ? data_handler->ActiveMod : nullptr;
 				if (active)
 				{
@@ -194,7 +194,7 @@ namespace CKPE
 					if (GetFileStamp(path, after) && !SameStamp(before, after))
 						UpdateOffsets();
 					else
-						_CONSOLE("Save WorldSpace Offsets: \"%s\" was not changed by the save, skipped", active->GetFileName().c_str());
+						_CONSOLE("Save WorldSpace Offsets: \"%s\" was not changed by the save, skipped"sv, active->GetFileName().c_str());
 				}
 
 				return result;

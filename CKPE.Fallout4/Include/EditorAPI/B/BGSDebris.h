@@ -24,6 +24,8 @@ namespace CKPE
 				public:
 					virtual ~BGSDebris() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftDebris;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSDebris[0];
 				public:
 					BSSimpleList<void*> dataList; // 30 - BSSimpleList<BGSDebrisData*>
 				};

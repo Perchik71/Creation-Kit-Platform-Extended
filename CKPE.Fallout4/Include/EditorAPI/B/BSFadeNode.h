@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/N/NiNode.h>
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/B/BSShaderPropertyLightData.h>
@@ -20,6 +21,8 @@ namespace CKPE
 			class BSFadeNode : public NiAPI::NiNode
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSShaderMaterial[0];
+
 				struct FlattenedGeometryData
 				{
 					/* 0x00 */ NiAPI::NiBound Bound;

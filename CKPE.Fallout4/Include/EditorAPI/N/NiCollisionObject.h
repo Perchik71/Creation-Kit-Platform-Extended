@@ -21,6 +21,9 @@ namespace CKPE
 				{
 				public:
 					virtual ~NiCollisionObject() = default;
+
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiCollisionObject[0];
+
 					/* 2A */ virtual void SetTarget(NiAVObject* Target);
 					/* 2B */ virtual void UnkCollisionObject2B();
 					/* 2C */ virtual void UnkCollisionObject2C();

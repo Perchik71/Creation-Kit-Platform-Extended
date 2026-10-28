@@ -43,6 +43,8 @@ namespace CKPE
 				public:
 					virtual ~TESObjectSTAT() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftStatic;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectSTAT[0];
 				public:
 					std::uint8_t pad118[0x8]; // 118
 					TESObjectSTATData data; // 120

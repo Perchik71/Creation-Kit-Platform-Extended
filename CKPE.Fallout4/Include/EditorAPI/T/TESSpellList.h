@@ -22,6 +22,7 @@ namespace CKPE
 			public:
 				virtual ~TESSpellList() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESSpellList[0];
 			public:
 				SpellData* spellData; // 08 - TESSpellList::SpellData
 			};

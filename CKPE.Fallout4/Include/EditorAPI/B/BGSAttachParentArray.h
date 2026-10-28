@@ -25,6 +25,7 @@ namespace CKPE
 			public:
 				virtual ~BGSAttachParentArray() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAttachParentArray[0];
 			public:
 				Forms::BGSKeyword** array; // 08 - array of keyword pointers (8 byte elements; the game stores 16 bit keyword indices)
 				std::uint32_t size; // 10

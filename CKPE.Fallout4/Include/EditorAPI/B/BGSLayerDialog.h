@@ -31,6 +31,8 @@ namespace CKPE::Fallout4::EditorAPI
 		};
 		enum : std::uint16_t { kDialogResource = 468 };
 
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLayerDialog[0];
+
 		/* 0x000 */ virtual ~BGSLayerDialog();
 		/* 0x008 */ EventResult ReceiveEvent(TESObjectLoadedEvent* Event,
 			void* Dispatcher) override;

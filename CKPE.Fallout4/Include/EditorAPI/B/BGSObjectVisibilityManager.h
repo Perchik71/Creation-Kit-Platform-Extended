@@ -24,6 +24,8 @@ namespace CKPE
 				public:
 					virtual ~BGSObjectVisibilityManager() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftObjectVisibilityManager;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSObjectVisibilityManager[0];
 				public:
 					std::uint8_t unk28[0xC]; // 28
 					std::uint8_t unk34[0x8]; // 34

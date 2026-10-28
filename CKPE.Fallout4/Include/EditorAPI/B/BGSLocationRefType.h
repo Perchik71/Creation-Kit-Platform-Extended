@@ -21,6 +21,9 @@ namespace CKPE
 				{
 				public:
 					virtual ~BGSLocationRefType() = default;
+
+					constexpr static std::uint8_t TYPE_ID = ftLocationRefType;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLocationRefType[0];
 				};
 				static_assert(sizeof(BGSLocationRefType) == 0x60);
 			}

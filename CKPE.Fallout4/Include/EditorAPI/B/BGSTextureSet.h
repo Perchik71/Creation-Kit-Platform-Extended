@@ -29,6 +29,8 @@ namespace CKPE
 				public:
 					virtual ~BGSTextureSet() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftTextureSet;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSTextureSet[0];
 				public:
 					BSFixedString materialName; // A0
 					TESTexture textures[8]; // A8

@@ -25,6 +25,7 @@ namespace CKPE
 			public:
 				virtual ~BGSForcedLocRefType() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSForcedLocRefType[0];
 			public:
 				Forms::BGSLocationRefType* forcedType; // 08
 			};

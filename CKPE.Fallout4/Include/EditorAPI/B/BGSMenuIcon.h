@@ -23,6 +23,9 @@ namespace CKPE
 				{
 				public:
 					virtual ~BGSMenuIcon() = default;
+
+					constexpr static std::uint8_t TYPE_ID = ftMenuIcon;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMenuIcon[0];
 				};
 				static_assert(sizeof(BGSMenuIcon) == 0x50);
 			}

@@ -26,6 +26,8 @@ namespace CKPE
 				public:
 					virtual ~BGSArtObject() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftArt;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSArtObject[0];
 				public:
 					std::uint32_t unk100; // 100
 					std::uint32_t unk104; // 104

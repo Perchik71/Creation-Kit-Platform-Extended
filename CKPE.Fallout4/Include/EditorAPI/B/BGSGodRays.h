@@ -37,6 +37,8 @@ namespace CKPE
 				public:
 					virtual ~BGSGodRays() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftGodRays;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSGodRays[0];
 				public:
 					GodRaysData data; // 28
 					std::uint32_t unk64; // 64

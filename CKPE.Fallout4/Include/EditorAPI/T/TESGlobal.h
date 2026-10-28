@@ -22,6 +22,8 @@ namespace CKPE
 				public:
 					virtual ~TESGlobal() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftGlobal;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESGlobal[0];
 				public:
 					float value; // 28
 					std::uint32_t unk2C; // 2C

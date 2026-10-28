@@ -44,6 +44,8 @@ namespace CKPE
 				public:
 					virtual ~TESObjectACTI() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftActivator;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectACTI[0];
 				public:
 					BGSSoundDescriptorForm* soundLoop; // 160
 					BGSSoundDescriptorForm* soundActivate; // 168

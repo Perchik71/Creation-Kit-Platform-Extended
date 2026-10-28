@@ -24,6 +24,7 @@ namespace CKPE
 				public:
 					virtual ~BGSDialogueView() = default;
 
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSDialogueView[0];
 				public:
 					BSTArray<void*> unk28; // 28 - element type not identified yet
 					BSTArray<void*> unk40; // 40 - element type not identified yet

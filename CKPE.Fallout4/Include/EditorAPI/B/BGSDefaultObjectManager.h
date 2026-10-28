@@ -30,6 +30,8 @@ namespace CKPE
 					static_assert(sizeof(DefaultObjectData) == 0x8);
 
 					constexpr static std::size_t DEFAULT_OBJECT_COUNT = 396;
+					constexpr static std::uint8_t TYPE_ID = ftDefaultObjectManager;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSDialogueView[0];
 
 					virtual ~BGSDefaultObjectManager() = default;
 

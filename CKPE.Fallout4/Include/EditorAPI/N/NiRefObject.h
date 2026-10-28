@@ -9,6 +9,8 @@
 #include <cstdint>
 #include <cstddef>
 
+#include <EditorAPI/IDs_VTABLE.h>
+
 namespace CKPE
 {
 	namespace Fallout4
@@ -25,6 +27,8 @@ namespace CKPE
 				public:
 					NiRefObject() noexcept(true);
 					virtual ~NiRefObject() noexcept(true);
+
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiRefObject[0];
 
 					virtual void DeleteThis() noexcept(true);
 
@@ -48,6 +52,8 @@ namespace CKPE
 				public:
 					NiRefObject64() noexcept(true);
 					virtual ~NiRefObject64() noexcept(true);
+
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiRefObject[0];
 
 					virtual void DeleteThis() noexcept(true);
 

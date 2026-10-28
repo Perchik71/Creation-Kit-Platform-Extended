@@ -24,6 +24,8 @@ namespace CKPE
 				public:
 					virtual ~TESClimate() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftClimate;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESClimate[0];
 				public:
 					TESModel nightSky; // 28
 					std::uint8_t weatherList[0x18]; // 60 - TESWeatherList (WLST)

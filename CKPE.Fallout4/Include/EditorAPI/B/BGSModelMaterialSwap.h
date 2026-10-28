@@ -22,6 +22,8 @@ namespace CKPE
 				{
 				public:
 					virtual ~BGSModelMaterialSwap() = default;
+
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSModelMaterialSwap[0];
 				public:
 					[[nodiscard]] inline const char* GetModelPath() const noexcept(true) { return !modelName.empty() ? modelName.c_str() : nullptr; }
 					[[nodiscard]] inline BGSMaterialSwap* GetMaterialSwap() const noexcept(true) { return _MaterialSwap; }

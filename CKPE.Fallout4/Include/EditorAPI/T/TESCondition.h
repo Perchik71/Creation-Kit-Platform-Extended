@@ -19,6 +19,8 @@ namespace CKPE
 				public:
 					virtual ~TESCondition() = default;
 
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESCondition[0];
+
 					/* 0x008 */ void* head;
 				private:
 					/* 0x010 */ char pad10[0x8];

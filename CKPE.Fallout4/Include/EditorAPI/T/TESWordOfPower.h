@@ -25,6 +25,8 @@ namespace CKPE
 				public:
 					virtual ~TESWordOfPower() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftWordOfPower;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESWordOfPower[0];
 				public:
 					BGSLocalizedString translation; // 40
 				};

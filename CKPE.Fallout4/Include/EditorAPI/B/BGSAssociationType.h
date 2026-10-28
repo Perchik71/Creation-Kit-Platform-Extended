@@ -23,6 +23,8 @@ namespace CKPE
 				public:
 					virtual ~BGSAssociationType() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftAssociationType;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAssociationType[0];
 				public:
 					BSFixedString associationLabel[2][2]; // 28 - BSFixedStringCS
 					std::uint32_t flags; // 48 - REX::TEnumSet<Flags, std::uint32_t>

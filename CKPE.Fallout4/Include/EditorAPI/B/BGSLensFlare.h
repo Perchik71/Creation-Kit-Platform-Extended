@@ -22,6 +22,8 @@ namespace CKPE
 				public:
 					virtual ~BGSLensFlare() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftLensFlare;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLensFlare[0];
 				public:
 					std::uint8_t unk28[0x30]; // 28
 				};

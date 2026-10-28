@@ -22,6 +22,8 @@ namespace CKPE
 				public:
 					virtual ~TESFormIDListView() = default;
 
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESFormIDListView[0];
+
 					virtual void PopulateListView(HWND hListView, const char* Filter) const noexcept(true) { return; } // 124
 					virtual void PopulateAndSortListView(HWND hListView) const noexcept(true) { return; } // 125
 				};

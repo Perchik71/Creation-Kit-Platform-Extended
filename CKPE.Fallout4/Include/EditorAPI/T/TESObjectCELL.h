@@ -24,6 +24,8 @@ namespace CKPE
 				{
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftCell;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectCELL[0];
+
 					// 08
 					struct CellCoordinates { std::int32_t X, Y; };
 					// 8C

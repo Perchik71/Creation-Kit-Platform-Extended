@@ -143,6 +143,8 @@ namespace CKPE
 				public:
 					virtual ~TESObjectWEAP() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftWeapon;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectWEAP[0];
 				public:
 					TESObjectWEAPData weaponData; // 218 - TESObjectWEAP::Data (0x138, starts with a vptr)
 					void* firstPersonModel; // 350 - BGSModelMaterialSwap*

@@ -25,6 +25,8 @@ namespace CKPE
 				public:
 					virtual ~BGSFootstep() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftFootstep;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSFootstep[0];
 				public:
 					BSFixedString tagString; // 28
 					BGSImpactDataSet* impactSet; // 30

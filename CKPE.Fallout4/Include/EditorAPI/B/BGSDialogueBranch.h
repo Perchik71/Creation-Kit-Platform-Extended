@@ -27,6 +27,8 @@ namespace CKPE
 				public:
 					virtual ~BGSDialogueBranch() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftDialogue;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSDialogueBranch[0];
 				public:
 					std::uint32_t flags; // 28
 					std::uint32_t unk2C; // 2C

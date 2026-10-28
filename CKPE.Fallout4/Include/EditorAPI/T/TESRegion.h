@@ -29,6 +29,9 @@ namespace CKPE
 				public:
 					virtual ~TESRegion() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftRegion;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegion[0];
+
 					virtual TESRegion* CloneRegion(TESRegion* Target) const noexcept(true) { return nullptr; } // 124
 					virtual bool Validate() noexcept(true) { return false; } // 125
 

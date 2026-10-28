@@ -26,6 +26,7 @@ namespace CKPE
 			public:
 				virtual ~TESProduceForm() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESProduceForm[0];
 			public:
 				Forms::BGSSoundDescriptorForm* harvestSound; // 08
 				Forms::TESBoundObject* produceItem; // 10

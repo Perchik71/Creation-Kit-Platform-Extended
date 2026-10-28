@@ -25,6 +25,7 @@ namespace CKPE
 			public:
 				virtual ~BGSPickupPutdownSounds() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPickupPutdownSounds[0];
 			public:
 				Forms::BGSSoundDescriptorForm* pickupSound; // 08
 				Forms::BGSSoundDescriptorForm* putdownSound; // 10

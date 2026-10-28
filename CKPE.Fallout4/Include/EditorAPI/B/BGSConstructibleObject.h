@@ -34,6 +34,8 @@ namespace CKPE
 				public:
 					virtual ~BGSConstructibleObject() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftConstructibleObject;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSConstructibleObject[0];
 				public:
 					BGSTypedFormValuePair::Array* requiredItems; // 68
 					std::uint8_t unk70[0x18]; // 70

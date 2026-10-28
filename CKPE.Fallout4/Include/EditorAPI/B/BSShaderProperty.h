@@ -28,6 +28,8 @@ namespace CKPE
 			class BSShaderProperty : public NiAPI::NiShadeProperty
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSShaderProperty[0];
+
 				enum class EShaderPropertyFlag : std::uint64_t
 				{
 					Specular = 1ULL << 0,

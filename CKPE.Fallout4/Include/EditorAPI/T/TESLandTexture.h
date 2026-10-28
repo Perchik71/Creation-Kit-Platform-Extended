@@ -35,7 +35,7 @@ namespace CKPE
 					virtual ~TESLandTexture() = default;
 
 					constexpr static std::uint8_t TYPE_ID = ftLandTexture;
-
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESLandTexture[0];
 				public:
 					BGSTextureSet* textureSet; // 28
 					TEXTURE_HAVOK_DATA havokData; // 30

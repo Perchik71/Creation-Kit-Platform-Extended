@@ -49,6 +49,7 @@ namespace CKPE
 					virtual ~TESQuest() = default;
 
 					constexpr static std::uint8_t TYPE_ID = ftQuest;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESQuest[0];
 
 					virtual void* GetConditions() noexcept(true) { return nullptr; } // 128
 

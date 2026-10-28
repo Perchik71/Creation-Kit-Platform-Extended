@@ -37,11 +37,13 @@ namespace CKPE
 				public:
 					virtual ~Script() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftScript;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::Script[0];
+
 					[[nodiscard]] virtual bool CanCheckInReferencedForms(TESForm* Owner, const void* Forms) const noexcept(true) { return true; } // 124
 					virtual void BuildReferencedFormsCheckInMessage(TESForm* Owner, const void* Forms,
 						BSString& Message) const noexcept(true) { return; } // 125
 					virtual Script* OpenScriptEditor(HWND hParentWnd) noexcept(true) { return this; } // 126
-
 				public:
 					SCRIPT_HEADER header; // 28
 					std::uint32_t unk3C; // 3C

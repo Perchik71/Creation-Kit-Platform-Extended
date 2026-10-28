@@ -41,6 +41,11 @@ namespace CKPE
 				};
 			};
 
+			struct BGSHotloadCompletedEvent
+			{
+
+			};
+
 			struct MenuOpenCloseEvent
 			{
 				BSFixedString	menuName;

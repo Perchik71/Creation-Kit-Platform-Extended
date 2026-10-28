@@ -87,6 +87,8 @@ namespace CKPE
 				public:
 					virtual ~TESImageSpace() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftImageSpace;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESImageSpace[0];
 				public:
 					std::uint64_t unk28; // 28
 					std::uint32_t unk30; // 30

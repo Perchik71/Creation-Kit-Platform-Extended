@@ -18,6 +18,8 @@ namespace CKPE
 			class BSMultiBoundNode : public BSNiNode
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSMultiBoundNode[0];
+
 				/* 46 */ [[nodiscard]] virtual BSMultiBoundRoom* GetMultiBoundRoom() noexcept(true);
 				/* 47 */ [[nodiscard]] virtual bool IsPointWithin(const NiAPI::NiPoint3* Point) noexcept(true);
 				/* 48 */ [[nodiscard]] virtual std::uint32_t CheckMultiBound(const BSMultiBound* Bound) noexcept(true);

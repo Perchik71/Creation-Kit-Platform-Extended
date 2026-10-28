@@ -27,6 +27,8 @@ namespace CKPE
 				public:
 					virtual ~ActorValueInfo() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftActorValueInfo;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::ActorValueInfo[0];
 				public:
 					ActorValueInfo* dependentActorValues[15]; // 68
 					std::uint8_t derivationFunction[0x40]; // E0 - std::function<float(const ActorValueOwner*, const ActorValueInfo&)> (MSVC layout: 0x38 small-object storage + impl pointer)

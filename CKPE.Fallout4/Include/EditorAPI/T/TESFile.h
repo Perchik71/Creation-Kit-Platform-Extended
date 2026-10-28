@@ -125,7 +125,6 @@ namespace CKPE
 			private:
 				TESFile() = default;
 				~TESFile() = default;
-
 			public:
 				enum : std::uint32_t
 				{

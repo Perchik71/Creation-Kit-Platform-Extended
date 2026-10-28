@@ -20,6 +20,7 @@ namespace CKPE
 			public:
 				virtual ~TESHealthForm() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESHealthForm[0];
 			public:
 				std::uint32_t health; // 08 - edited through dialog item 1024
 				std::uint32_t pad0C; // 0C

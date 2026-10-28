@@ -25,6 +25,8 @@ namespace CKPE
 				public:
 					virtual ~TESObjectANIO() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftAnimationObject;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectANIO[0];
 				public:
 					BSFixedString unloadEventName; // 78
 				};

@@ -27,6 +27,8 @@ namespace CKPE
 				public:
 					virtual ~BGSSoundDescriptorForm() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftSoundDescriptorForm;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSoundDescriptorForm[0];
 				public:
 					BSFixedString unk30; // 30
 					BGSSoundDescriptor* impl; // 38 - CNAM, created from the sound descriptor type id through BSTCreateFactory

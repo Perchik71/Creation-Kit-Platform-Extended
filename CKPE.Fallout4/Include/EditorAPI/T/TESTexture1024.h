@@ -19,6 +19,8 @@ namespace CKPE
 			{
 			public:
 				virtual ~TESTexture1024() = default;
+
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESTexture1024[0];
 			};
 			static_assert(sizeof(TESTexture1024) == 0x28);
 		}

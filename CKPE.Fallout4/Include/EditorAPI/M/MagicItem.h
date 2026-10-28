@@ -32,6 +32,9 @@ namespace CKPE
 				public:
 					virtual ~MagicItem() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftReserved000;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::MagicItem[0];
+
 					virtual std::uint32_t GetSpellType() const noexcept(true) { return 0; } // 154 - RVA 0x2D783EC (_purecall)
 					virtual void SetCastingType(std::uint32_t nCastingType) noexcept(true) { return; } // 155 - RVA 0xE7C380
 					virtual std::uint32_t GetCastingType() const noexcept(true) { return 0; } // 156 - RVA 0x2D783EC (_purecall)

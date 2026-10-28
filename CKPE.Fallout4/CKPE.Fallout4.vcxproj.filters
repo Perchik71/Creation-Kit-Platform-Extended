@@ -71,9 +71,6 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixBadPictureInRender.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.EnableGoInSelGame.cpp">
-      <Filter>Patches</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.DontMatchForms.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -125,9 +122,6 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ESLTip.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.TESDataHandlerHook.cpp">
-      <Filter>Patches</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixLandspaceVNML.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -168,9 +162,6 @@
       <Filter>Patches</Filter>
     </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.RemoveUselessMessages.cpp">
-      <Filter>Patches</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.TESFormHook.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixVC.cpp">
@@ -858,9 +849,6 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixBadPictureInRender.h">
       <Filter>Patches</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.EnableGoInSelGame.h">
-      <Filter>Patches</Filter>
-    </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.DontMatchForms.h">
       <Filter>Patches</Filter>
     </ClInclude>
@@ -912,9 +900,6 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ESLTip.h">
       <Filter>Patches</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.TESDataHandlerHook.h">
-      <Filter>Patches</Filter>
-    </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixLandspaceVNML.h">
       <Filter>Patches</Filter>
     </ClInclude>
@@ -955,9 +940,6 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.RemoveUselessMessages.h">
-      <Filter>Patches</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.TESFormHook.h">
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixVC.h">
@@ -1934,6 +1916,12 @@
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\Fallout4.h">
       <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\M\MemoryManager.h">
+      <Filter>EditorAPI\M</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSTSingleton.h">
+      <Filter>EditorAPI\B</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

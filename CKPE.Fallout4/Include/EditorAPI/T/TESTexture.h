@@ -56,6 +56,8 @@ namespace CKPE
 			public:
 				virtual ~TESTexture() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESTexture[0];
+
 				virtual void SetTextureFromDialogBox(HWND hDialogBox, std::uint32_t CtrlID) noexcept(true);
 				[[nodiscard]] virtual std::uint32_t GetMaxAllowedSize() const noexcept(true);
 				virtual const char* GetAsNormalFile(BSString& a_out) const noexcept(true);

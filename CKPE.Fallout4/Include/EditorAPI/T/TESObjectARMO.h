@@ -86,6 +86,8 @@ namespace CKPE
 				public:
 					virtual ~TESObjectARMO() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftArmor;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectARMO[0];
 				public:
 					ArmorInstanceData armorData; // 318
 					BSTArray<ArmorAddon> modelArray; // 370

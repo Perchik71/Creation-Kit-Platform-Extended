@@ -28,6 +28,8 @@ namespace CKPE
 				public:
 					virtual ~BGSCameraPath() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftCameraPath;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSCameraPath[0];
 				public:
 					std::uint8_t unk28[0x18]; // 28
 					std::uint64_t unk40; // 40

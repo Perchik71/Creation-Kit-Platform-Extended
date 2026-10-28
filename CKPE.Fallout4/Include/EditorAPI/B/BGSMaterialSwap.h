@@ -21,6 +21,7 @@ namespace CKPE
 				{
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftMaterialSwap;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMaterialSwap[0];
 
 					class Object
 					{

@@ -8,6 +8,8 @@
 #include <cstdint>
 #include <windows.h>
 
+#include <EditorAPI/IDs_VTABLE.h>
+
 namespace CKPE::Fallout4::EditorAPI::Forms
 {
 	class TESPackage;
@@ -18,6 +20,7 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	public:
 		virtual ~TESPackageData() = default;
 
+		constexpr static Common::ID VTABLE = IDs::VTABLE::TESPackageData[0];
 	public:
 		// The base implementations (vtable 0x1430081A0) are no-ops, IsDifferent returns true and ProcessDialogMessage false.
 		virtual void CopyFrom(const TESPackageData* Source) = 0; // 01
@@ -40,6 +43,8 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class TESAmbushPackageData : public TESPackageData
 	{
 	public:
+		constexpr static Common::ID VTABLE = IDs::VTABLE::TESAmbushPackageData[0];
+
 		/* 0x008 */ void* unk08;
 	};
 	static_assert(sizeof(TESAmbushPackageData) == 0x10);
@@ -47,6 +52,8 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class TESDialoguePackageData : public TESPackageData
 	{
 	public:
+		constexpr static Common::ID VTABLE = IDs::VTABLE::TESDialoguePackageData[0];
+
 		/* 0x008 */ std::uint8_t unk08[0x28];
 	};
 	static_assert(sizeof(TESDialoguePackageData) == 0x30);
@@ -54,6 +61,8 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class TESEatPackageData : public TESPackageData
 	{
 	public:
+		constexpr static Common::ID VTABLE = IDs::VTABLE::TESEatPackageData[0];
+
 		/* 0x008 */ void* unk08;
 	};
 	static_assert(sizeof(TESEatPackageData) == 0x10);
@@ -61,6 +70,8 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class TESEscortPackageData : public TESPackageData
 	{
 	public:
+		constexpr static Common::ID VTABLE = IDs::VTABLE::TESEscortPackageData[0];
+
 		/* 0x008 */ std::uint8_t unk08[0x10];
 	};
 	static_assert(sizeof(TESEscortPackageData) == 0x18);
@@ -68,6 +79,8 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class TESFindPackageData : public TESPackageData
 	{
 	protected:
+		constexpr static Common::ID VTABLE = IDs::VTABLE::TESFindPackageData[0];
+
 		virtual void sub_048() = 0;
 
 	public:
@@ -78,6 +91,8 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class TESFollowPackageData : public TESPackageData
 	{
 	public:
+		constexpr static Common::ID VTABLE = IDs::VTABLE::TESFollowPackageData[0];
+
 		/* 0x008 */ std::uint8_t unk08[0x10];
 	};
 	static_assert(sizeof(TESFollowPackageData) == 0x18);
@@ -85,6 +100,8 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class TESPatrolPackageData : public TESPackageData
 	{
 	public:
+		constexpr static Common::ID VTABLE = IDs::VTABLE::TESPatrolPackageData[0];
+
 		/* 0x008 */ std::uint8_t unk08[0x8];
 	};
 	static_assert(sizeof(TESPatrolPackageData) == 0x10);
@@ -92,6 +109,8 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class TESUseItemPackageData : public TESPackageData
 	{
 	public:
+		constexpr static Common::ID VTABLE = IDs::VTABLE::TESUseItemPackageData[0];
+
 		/* 0x008 */ void* unk08;
 	};
 	static_assert(sizeof(TESUseItemPackageData) == 0x10);
@@ -99,6 +118,8 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class TESUseWeaponPackageData : public TESPackageData
 	{
 	public:
+		constexpr static Common::ID VTABLE = IDs::VTABLE::TESUseWeaponPackageData[0];
+
 		/* 0x008 */ std::uint8_t unk08[0x30];
 	};
 	static_assert(sizeof(TESUseWeaponPackageData) == 0x38);
@@ -135,6 +156,8 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		virtual void sub_118() = 0;
 
 	public:
+		constexpr static Common::ID VTABLE = IDs::VTABLE::TESCustomPackageData[0];
+
 		/* 0x008 */ std::uint8_t unk08[0x50];
 		/* 0x058 */ TESPackage* ownerPackage;
 	};

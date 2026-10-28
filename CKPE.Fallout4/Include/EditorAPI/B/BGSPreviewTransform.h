@@ -39,6 +39,8 @@ namespace CKPE
 				constexpr bool operator!=(const BGSPreviewTransform& Rhs) const noexcept(true) { return _Transform != Rhs._Transform; }
 
 				virtual ~BGSPreviewTransform() = default;
+
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPreviewTransform[0];
 			public:
 				[[nodiscard]] inline Forms::BGSTransform* GetTransform() const noexcept(true)
 				{

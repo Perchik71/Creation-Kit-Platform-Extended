@@ -23,6 +23,8 @@ namespace CKPE
 				public:
 					virtual ~BGSStoryManagerEventNode() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftStoryManagerEventNode;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSStoryManagerEventNode[0];
 				public:
 					/* 0x070 */ std::uint8_t unk70[0x18];
 					/* 0x088 */ const BGSRegisteredStoryEvent* event;

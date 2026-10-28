@@ -67,6 +67,8 @@ namespace CKPE
 				public:
 					virtual ~TESFaction() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftFaction;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESFaction[0];
 				public:
 					FACTION_DATA data; // 60
 					std::uint32_t pad64; // 64

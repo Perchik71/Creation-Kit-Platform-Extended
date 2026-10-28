@@ -54,6 +54,8 @@ namespace CKPE
 				public:
 					virtual ~TESImageSpaceModifier() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftImageSpaceModifier;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESImageSpaceModifier[0];
 				public:
 					ImageSpaceModifierData data; // 28
 					std::uint32_t unk124; // 124

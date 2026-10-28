@@ -22,7 +22,7 @@ namespace CKPE
 			{
 			public:
 				inline static std::uintptr_t RTTI;
-				inline static std::uintptr_t VTABLE;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ScrapHeap[0];
 
 				struct Block
 				{
@@ -62,16 +62,14 @@ namespace CKPE
 				void* Allocate(std::size_t a_size, std::size_t a_alignment) const noexcept(true)
 				{
 					using func_t = void* (*)(const ScrapHeap*, std::size_t, std::uint32_t);
-					static Common::Relocation<func_t> func{
-						IDs::Functions::ScrapHeap__Allocate };
+					static Common::Relocation<func_t> func{ IDs::ScrapHeap::Allocate };
 					return func(this, a_size, static_cast<std::uint32_t>(a_alignment));
 				}
 
 				void Deallocate(void* a_mem) const noexcept(true)
 				{
 					using func_t = void (*)(const ScrapHeap*, void*);
-					static Common::Relocation<func_t> func{
-						IDs::Functions::ScrapHeap__Deallocate };
+					static Common::Relocation<func_t> func{ IDs::ScrapHeap::Deallocate };
 					func(this, a_mem);
 				}
 

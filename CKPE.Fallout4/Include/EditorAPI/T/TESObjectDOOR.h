@@ -41,6 +41,8 @@ namespace CKPE
 				public:
 					virtual ~TESObjectDOOR() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftDoor;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectDOOR[0];
 				public:
 					std::uint8_t unk141[0x7]; // 141
 					BGSLocalizedString altOpenText; // 148 - by position (same member order and sizes as the game after the last base)

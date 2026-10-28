@@ -38,9 +38,10 @@ namespace CKPE
 					public TESCellUseList    // 030
 				{
 				public:
-					//constexpr static std::uint8_t TYPE_ID = ftVoice;			// need knows
-
 					struct TESBound { std::int16_t x, y, z; };
+
+					constexpr static std::uint8_t TYPE_ID = ftReserved000;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESBoundObject[0];
 
 					// CK 1.11.246.0: 154 virtuals, vtable RVA 0x30920B8.
 					virtual ~TESBoundObject() = default;

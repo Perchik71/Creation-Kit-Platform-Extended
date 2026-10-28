@@ -29,7 +29,6 @@
 #include <Patches/CKPE.Fallout4.Patch.DataWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.DisableAssertion.h>
 #include <Patches/CKPE.Fallout4.Patch.DontMatchForms.h>
-#include <Patches/CKPE.Fallout4.Patch.EnableGoInSelGame.h>
 #include <Patches/CKPE.Fallout4.Patch.EncounterZone.h>
 #include <Patches/CKPE.Fallout4.Patch.ESLTip.h>
 #include <Patches/CKPE.Fallout4.Patch.Facegen.h>
@@ -82,8 +81,6 @@
 #include <Patches/CKPE.Fallout4.Patch.SkipTopicInfoValidation.h>
 #include <Patches/CKPE.Fallout4.Patch.SkipUpdateCheck.h>
 #include <Patches/CKPE.Fallout4.Patch.SortCrashCombined.h>
-#include <Patches/CKPE.Fallout4.Patch.TESDataHandlerHook.h>
-#include <Patches/CKPE.Fallout4.Patch.TESFormHook.h>
 #include <Patches/CKPE.Fallout4.Patch.TESHook.h>
 #include <Patches/CKPE.Fallout4.Patch.UIDeffer.h>
 #include <Patches/CKPE.Fallout4.Patch.UIHotkeys.h>
@@ -108,7 +105,6 @@ namespace CKPE
 
 			auto vRTTI = rtti->Find("class ScrapHeap"sv);
 			EditorAPI::ScrapHeap::RTTI = (const std::uintptr_t)vRTTI;
-			EditorAPI::ScrapHeap::VTABLE = (const std::uintptr_t)vRTTI->VTableAddress + vRTTI->VTableOffset;
 		}
 
 		void Runner::RegisterPatches() noexcept(true)
@@ -136,7 +132,6 @@ namespace CKPE
 			mgr->Register(new Patch::DataWindow);
 			mgr->Register(new Patch::DisableAssertion);
 			mgr->Register(new Patch::DontMatchForms);
-			mgr->Register(new Patch::EnableGoInSelGame);
 			mgr->Register(new Patch::EncounterZone);
 			mgr->Register(new Patch::ESLTip);
 			mgr->Register(new Patch::Facegen);
@@ -188,8 +183,6 @@ namespace CKPE
 			mgr->Register(new Patch::SkipTopicInfoValidation);
 			mgr->Register(new Patch::SkipUpdateCheck);
 			mgr->Register(new Patch::SortCrashCombined);
-			mgr->Register(new Patch::TESDataHandlerHook);
-			mgr->Register(new Patch::TESFormHook);
 			mgr->Register(new Patch::TESHook);
 			mgr->Register(new Patch::UIDeffer);
 			mgr->Register(new Patch::UIHotkeys);

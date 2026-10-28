@@ -42,6 +42,9 @@ namespace CKPE
 				public:
 					virtual ~TESObjectMISC() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftMiscItem;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectMISC[0];
+
 					virtual void SaveImpl() noexcept(true) { return; } // 154
 					virtual void LoadImpl(TESFile* File, std::uint32_t ChunkID) noexcept(true) { return; } // 155
 

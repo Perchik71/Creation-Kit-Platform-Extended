@@ -28,6 +28,8 @@ namespace CKPE
 			public:
 				virtual ~BGSKeywordForm() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSKeywordForm[0];
+
 				[[nodiscard]] bool HasKeyword(const Forms::BGSKeyword* keyword,
 					const TBO_InstanceData* data) const noexcept(true) override;
 				void CollectAllKeywords(void* keywords,

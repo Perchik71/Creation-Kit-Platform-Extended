@@ -29,7 +29,7 @@ namespace CKPE
 				NiAPI::NiNode* unk_node1;									// 20 - constructor argument
 				void* unk28;												// 28 - constructor argument
 				class BSTempNodeManager* tempMgr;							// 30
-				class NiDirectionalLight* directionalLight;				// 38 - taken from the sky
+				class NiDirectionalLight* directionalLight;					// 38 - taken from the sky
 				class BSFogProperty* fogProperty;							// 40
 				Forms::TESObjectCELL::CellCoordinates gridCell[2];			// 48 - current grid (CommonLibF4: currentGrid), 50 - queued grid
 				Forms::TESObjectCELL* interiorCell;							// 58 - unload when it loads exterior
@@ -49,10 +49,10 @@ namespace CKPE
 				bool disablePercentageUpdate;								// C0
 				bool showLANDborders;										// C1
 				bool fadeWhenLoading;										// C2 - true on construction
-				bool forceUpdateMultiBoundExterior;						// C3
+				bool forceUpdateMultiBoundExterior;							// C3
 				bool collisionBoxes;										// C4
 				bool runningCellTests;										// C5
-				bool runningCellTests2;									// C6
+				bool runningCellTests2;										// C6
 				bool runningGraphicsTests;									// C7
 				bool runningCellListGraphicsTests;							// C8
 				bool runningSubmergedObjectTest;							// C9
@@ -73,6 +73,8 @@ namespace CKPE
 				void* loadedAreaBound;										// 130 - NiPointer<LoadedAreaBound>
 			public:
 				virtual ~TES();
+
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TES[0];
 
 				inline static ISingleton<Setting> Setting_ShowMarkers;
 

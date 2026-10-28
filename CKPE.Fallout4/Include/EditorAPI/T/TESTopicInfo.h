@@ -23,6 +23,7 @@ namespace CKPE
 				{
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftTopicInfo;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESTopicInfo[0];
 
 					virtual ~TESTopicInfo() = default;
 					// CK 1.11.246.0: 126 virtuals, vtable RVA 0x30537F0.

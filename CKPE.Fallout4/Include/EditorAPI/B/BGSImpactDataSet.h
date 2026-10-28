@@ -27,6 +27,8 @@ namespace CKPE
 				public:
 					virtual ~BGSImpactDataSet() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftImpactDataSet;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSImpactDataSet[0];
 				public:
 					// 0x38 byte table (capacity 3C, good 44, modification count 50, entries 60); ClearData walks 24 byte entries {material, impact data, next}
 					BSTHashMap<const BGSMaterialType*, BGSImpactData*> impactMap; // 30

@@ -12,6 +12,8 @@ namespace CKPE::Fallout4::EditorAPI
 	class CompressedArchiveFile : public ArchiveFile
 	{
 	public:
+		constexpr static Common::ID VTABLE = IDs::VTABLE::CompressedArchiveFile[0];
+
 		virtual ~CompressedArchiveFile() override;
 		virtual void Seek(std::ptrdiff_t numBytes) override;
 		virtual void Seek(std::int64_t offset, std::uint32_t mode) override;

@@ -77,6 +77,8 @@ namespace CKPE
 
 				virtual ~Sky();
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::Sky[0];
+
 				// The editor creates this singleton lazily when loading a worldspace.
 				[[nodiscard]] inline static Sky* GetSingleton() noexcept(true)
 				{

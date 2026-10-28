@@ -27,6 +27,8 @@ namespace CKPE
 				public:
 					virtual ~BGSCollisionLayer() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftCollisionLayer;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSCollisionLayer[0];
 				public:
 					std::uint32_t collisionIdx; // 50
 					std::uint8_t unk54[0xC]; // 54

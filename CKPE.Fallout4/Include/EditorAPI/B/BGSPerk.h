@@ -45,6 +45,8 @@ namespace CKPE
 				public:
 					virtual ~BGSPerk() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftPerk;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPerk[0];
 				public:
 					PerkData data; // 90
 					std::uint8_t pad95[0x3]; // 95

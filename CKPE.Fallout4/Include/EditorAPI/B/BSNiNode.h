@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/N/NiNode.h>
 
 namespace CKPE
@@ -13,7 +14,10 @@ namespace CKPE
 		namespace EditorAPI
 		{
 			class BSNiNode : public NiAPI::NiNode
-			{};
+			{
+			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSNiNode[0];
+			};
 			static_assert(sizeof(BSNiNode) == 0x140);
 		}
 	}

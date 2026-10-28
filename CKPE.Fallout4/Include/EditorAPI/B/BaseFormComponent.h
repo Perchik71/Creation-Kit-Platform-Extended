@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/C/CheckInFormList.h>
 #include <EditorAPI/B/BSTBTree.h>
 #include <EditorAPI/B/BSTHashMap.h>
@@ -30,6 +31,9 @@ namespace CKPE
 			{
 			public:
 				virtual ~BaseFormComponent() = default;
+
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BaseFormComponent[0];
+
 				[[nodiscard]] virtual std::uint32_t GetFormComponentType() const noexcept(true);
 				virtual void InitializeDataComponent();
 				virtual void ClearDataComponent();

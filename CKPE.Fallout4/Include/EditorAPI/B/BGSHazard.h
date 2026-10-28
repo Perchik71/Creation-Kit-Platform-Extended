@@ -53,6 +53,8 @@ namespace CKPE
 				public:
 					virtual ~BGSHazard() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftHazard;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSHazard[0];
 				public:
 					BGSHazardData data; // F8
 				};

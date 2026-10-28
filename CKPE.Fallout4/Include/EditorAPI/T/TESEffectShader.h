@@ -68,6 +68,8 @@ namespace CKPE
 				public:
 					virtual ~TESEffectShader() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftEffectShader;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESEffectShader[0];
 				public:
 					EffectShaderData data; // 60
 					TESTexture textureShaderTexture; // 108

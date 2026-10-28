@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <Windows.h>
 #include <CKPE.Common.h>
+#include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/B/BSSpinLock.h>
 
 namespace CKPE
@@ -22,6 +23,9 @@ namespace CKPE
 				{
 				public:
 					/* 0x000 */ virtual ~BaseDialog();
+
+					constexpr static Common::ID VTABLE = IDs::VTABLE::Dialog__BaseDialog[0];
+
 					/* 0x008 */ virtual bool PreprocessMessage(UINT Message, WPARAM wParam,
 						LPARAM lParam, std::int32_t* Result) noexcept(true);
 					/* 0x010 */ virtual std::int32_t DlgProc(UINT Message, WPARAM wParam,

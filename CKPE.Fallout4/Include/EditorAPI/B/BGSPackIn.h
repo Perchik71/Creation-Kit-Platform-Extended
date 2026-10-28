@@ -22,6 +22,8 @@ namespace CKPE
 				public:
 					virtual ~BGSPackIn() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftPackIn;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPackIn[0];
 				public:
 					std::uint64_t unk28; // 28
 					std::uint64_t unk30; // 30

@@ -14,6 +14,8 @@ namespace CKPE
 				public:
 					virtual ~TESChildCell();
 
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESChildCell[0];
+
 					// add
 					[[nodiscard]] virtual TESObjectCELL* GetSaveParentCell() noexcept(true) = 0;
 				};

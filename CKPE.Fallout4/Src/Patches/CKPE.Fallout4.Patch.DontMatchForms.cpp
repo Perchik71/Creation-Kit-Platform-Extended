@@ -50,7 +50,7 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(EditorAPI::IDs::Functions::TESDataHandler__LoadFileRecords, Offset{ 0x30C, 0x313 }).Write(JMP);
+				Relocation(EditorAPI::IDs::TESDataHandler::LoadFileRecords, Offset{ 0x30C, 0x313 }).Write(JMP);
 
 				return true;
 			}

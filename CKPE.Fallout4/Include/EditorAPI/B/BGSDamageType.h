@@ -26,6 +26,8 @@ namespace CKPE
 				public:
 					virtual ~BGSDamageType() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftDamageType;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSDamageType[0];
 				public:
 					ActorValueInfo* resistance; // 28
 					MagicItem* spell; // 30

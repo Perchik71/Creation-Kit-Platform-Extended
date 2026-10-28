@@ -21,6 +21,7 @@ namespace CKPE
 				{
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftLayer;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLayer[0];
 				private:
 					BGSLayer* _parent;
 					BSTArray<TESObjectREFR*> _items;

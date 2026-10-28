@@ -21,6 +21,7 @@ namespace CKPE
 			public:
 				virtual ~BGSMessageIcon() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMessageIcon[0];
 			public:
 				TESIcon icon; // 08
 			};

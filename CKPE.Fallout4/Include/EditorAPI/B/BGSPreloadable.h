@@ -19,6 +19,8 @@ namespace CKPE
 			{
 			public:
 				virtual ~BGSPreloadable() = default;
+
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPreloadable[0];
 			};
 			static_assert(sizeof(BGSPreloadable) == 0x8);
 		}

@@ -16,6 +16,8 @@ namespace CKPE
 			class BSTriShape : public BSGeometry
 			{
 			public:
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSTriShape[0];
+
 				[[nodiscard]] inline std::uint32_t GetTriangles() const noexcept(true) { return Triangles; }
 				[[nodiscard]] inline std::uint32_t GetVertices() const noexcept(true) { return Vertices; }
 			private:

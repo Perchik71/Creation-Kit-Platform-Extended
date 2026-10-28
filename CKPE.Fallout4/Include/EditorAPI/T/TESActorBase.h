@@ -49,6 +49,9 @@ namespace CKPE
 				public:
 					virtual ~TESActorBase() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftReserved000;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESActorBase[0];
+
 					virtual bool GetHasPLSpecTex() const noexcept(true) { return false; } // 154 - RVA 0xAB1160, return 0;
 					virtual TESCombatStyle* GetCombatStyle() noexcept(true) { return nullptr; } // 155 - RVA 0xAB1020, return 0;
 					virtual void SetCombatStyle(TESCombatStyle* pCombatStyle) noexcept(true) { return; } // 156 - RVA 0xAB2B80

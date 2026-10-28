@@ -19,6 +19,8 @@ namespace CKPE
 			public:
 				virtual ~TESValueForm() = default;
 
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESValueForm[0];
+
 				[[nodiscard]] inline std::uint32_t GetValue() const noexcept(true) { return value; }
 				inline void SetValue(std::uint32_t a_value) noexcept(true) { value = a_value; }
 

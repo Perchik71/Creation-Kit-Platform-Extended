@@ -26,6 +26,8 @@ namespace CKPE
 				public:
 					virtual ~BGSSoundTagSet() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftSoundTagSet;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSoundTagSet[0];
 				public:
 					BSTHashMap<BSFixedString, BGSSoundDescriptorForm*> soundTags; // 28 - TNAM
 					std::uint8_t unk60[0x80]; // 60

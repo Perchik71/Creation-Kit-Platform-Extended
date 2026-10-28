@@ -97,10 +97,10 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				CrashInvalidStringsLength	= reinterpret_cast<TCrashInvalidStringsLength*>(Relocation(EditorAPI::IDs::Functions::sub_2429C70).WriteJump(&GetLocalizeStringLengthSafe));
-				CrashInvalidStringsGet		= reinterpret_cast<TCrashInvalidStringsGet*>(Relocation(EditorAPI::IDs::Functions::sub_39AA50).WriteJump(&GetLocalizeStringSafe));
-				Relocation(EditorAPI::IDs::Functions::TESForm__GetSafeFormEditorID_A).WriteJump(&GetSafeFormEditorIDSafe);
-				Relocation(EditorAPI::IDs::Functions::TESForm__GetSafeFormEditorID_B).WriteJump(&GetSafeFormEditorIDSafe);
+				CrashInvalidStringsLength	= reinterpret_cast<TCrashInvalidStringsLength*>(Relocation(EditorAPI::IDs::BGSLocalizedString::GetLength).WriteJump(&GetLocalizeStringLengthSafe));
+				CrashInvalidStringsGet		= reinterpret_cast<TCrashInvalidStringsGet*>(Relocation(EditorAPI::IDs::BGSLocalizedString::GetStr).WriteJump(&GetLocalizeStringSafe));
+				Relocation(EditorAPI::IDs::TESForm::GetSafeFormEditorID_A).WriteJump(&GetSafeFormEditorIDSafe);
+				Relocation(EditorAPI::IDs::TESForm::GetSafeFormEditorID_B).WriteJump(&GetSafeFormEditorIDSafe);
 
 				return true;
 			}

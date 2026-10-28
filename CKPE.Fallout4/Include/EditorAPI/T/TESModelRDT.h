@@ -19,6 +19,8 @@ namespace CKPE
 			{
 			public:
 				virtual ~TESModelRDT() = default;
+
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESModelTri[0];
 			};
 			static_assert(sizeof(TESModelRDT) == 0x38);
 		}

@@ -26,6 +26,8 @@ namespace CKPE
 				public:
 					virtual ~BGSListForm() = default;
 
+					constexpr static std::uint8_t TYPE_ID = ftListForm;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSListForm[0];
 				public:
 					BSTArray<TESForm*> arrayOfForms; // 40
 				};
