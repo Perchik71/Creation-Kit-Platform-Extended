@@ -87,11 +87,6 @@ namespace CKPE
 					return CKPE::vtbl_call<TESFile*>(0x118, this);
 				}
 
-				TESForm::FormType TESForm::GetFormType() const noexcept(true)
-				{ 
-					return CKPE::vtbl_call<FormType>(0x120, this);
-				}
-
 				void TESForm::DebugInfo(char* lpBuffer, std::uint32_t nBufferSize) const noexcept(true)
 				{
 					CKPE::vtbl_call<void>(0x128, this, lpBuffer, nBufferSize);

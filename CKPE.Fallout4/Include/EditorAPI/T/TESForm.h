@@ -275,7 +275,7 @@ namespace CKPE
 					/* 108 */ virtual void FixupDuplicateForm(BSTHashMap<TESForm*, TESForm*>* CopyMap) noexcept(true);
 					/* 110 */ virtual void InitItemImpl() noexcept(true);
 					/* 118 */ [[nodiscard]] virtual TESFile* GetDescriptionOwnerFile() const noexcept(true);
-					/* 120 */ [[nodiscard]] virtual FormType GetFormType() const noexcept(true);
+					/* 120 */ [[nodiscard]] inline virtual FormType GetFormType() const noexcept(true) { return _FormType; }
 					/* 128 */ virtual void DebugInfo(char* lpBuffer, std::uint32_t nBufferSize) const noexcept(true);
 					/* 130 */ [[nodiscard]] virtual bool HasKnown() const noexcept(true);
 					/* 138 */ [[nodiscard]] virtual bool HasRandomAnim() const noexcept(true);
@@ -397,7 +397,7 @@ namespace CKPE
 					[[nodiscard]] bool IsPlayer() const noexcept(true) { return _FormID == 0x00000007; }
 					[[nodiscard]] bool IsPlayerRef() const noexcept(true) { return _FormID == 0x00000014; }
 
-					[[nodiscard]] bool Is(FormType a_type) const noexcept(true) { return GetFormType() == a_type; }
+					[[nodiscard]] bool Is(FormType a_type) const noexcept(true) { return _FormType == a_type; }
 					
 					template <class... Args>
 					[[nodiscard]] bool Is(Args... a_args) const noexcept(true)  //
@@ -412,7 +412,7 @@ namespace CKPE
 								 !std::is_pointer_v<T> &&
 								 !std::is_reference_v<T>)
 					{
-						return Is(T::TYPE_ID);
+						return Is(static_cast<FormType>(T::TYPE_ID));
 					}
 
 					[[nodiscard]] inline const BSModInfo* GetModInfo() const noexcept(true) { return _ModInfo; }

@@ -14,7 +14,7 @@ namespace CKPE
 		{
 			class PreVis : public Common::Patch
 			{
-				static void* sub(void* a1) noexcept(true);
+				static void* sub(std::uint32_t a_formid) noexcept(true);
 
 				PreVis(const PreVis&) = delete;
 				PreVis& operator=(const PreVis&) = delete;

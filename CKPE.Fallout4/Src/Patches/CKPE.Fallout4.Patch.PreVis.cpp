@@ -58,20 +58,14 @@ namespace CKPE
 				using namespace Common;
 
 				Relocation(EditorAPI::IDs::Functions::sub_48D8D0, Offset{ 0x2A1, 0x500 }).WriteCall(sub);
-				pointer_PreVisPatch_sub = Relocation(EditorAPI::IDs::Functions::TESForm__GetFormByNumericID).Address();
 
 				return true;
 			}
 
-			void* PreVis::sub(void* a1) noexcept(true)
+			void* PreVis::sub(std::uint32_t a_formid) noexcept(true)
 			{
-				EditorAPI::Forms::TESForm* Ret = fast_call<EditorAPI::Forms::TESForm*>
-					(pointer_PreVisPatch_sub, a1);
-
-				if (Ret && (Ret->Type != EditorAPI::Forms::TESObjectCELL::TYPE_ID))
-					return nullptr;
-
-				return Ret;
+				auto form = EditorAPI::Forms::TESForm::FindFormByFormID(a_formid);
+				return (!form || !form->Is<EditorAPI::Forms::TESObjectCELL>()) ? nullptr : form;
 			}
 		}
 	}
