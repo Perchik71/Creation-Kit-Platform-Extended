@@ -380,6 +380,9 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.RuntimeOptimization.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.PreviewGroundPlane.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.MiscMessages.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -916,6 +919,9 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.RuntimeOptimization.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.PreviewGroundPlane.h">
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.MiscMessages.h">

@@ -7,7 +7,7 @@
 
 namespace CKPE
 {
-	[[nodiscard]] static std::uintptr_t DetourCheckRel32AndReturnDestAddress(std::uintptr_t a_target) noexcept(true)
+	std::uintptr_t Detours::BranchTarget(std::uintptr_t a_target) noexcept(true)
 	{
 		auto target = reinterpret_cast<const std::uint8_t*>(a_target);
 		if ((target[0] == 0xE8) || (target[0] == 0xE9))
@@ -26,7 +26,7 @@ namespace CKPE
 	std::uintptr_t Detours::DetourJump(std::uintptr_t target, std::uintptr_t destination) noexcept(true)
 	{
 		if (!target) return 0;
-		auto destAddress = DetourCheckRel32AndReturnDestAddress(target);
+		auto destAddress = BranchTarget(target);
 		auto detourAddress = ::Detours::X64::DetourFunction(target, destination, ::Detours::X64Option::USE_REL32_JUMP);
 		return destAddress ? destAddress : detourAddress;
 	}
@@ -34,7 +34,7 @@ namespace CKPE
 	std::uintptr_t Detours::DetourCall(std::uintptr_t target, std::uintptr_t destination) noexcept(true)
 	{
 		if (!target) return 0;
-		auto destAddress = DetourCheckRel32AndReturnDestAddress(target);
+		auto destAddress = BranchTarget(target);
 		auto detourAddress = ::Detours::X64::DetourFunction(target, destination, ::Detours::X64Option::USE_REL32_CALL);
 		return destAddress ? destAddress : detourAddress;
 	}

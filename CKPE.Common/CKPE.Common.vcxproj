@@ -154,6 +154,7 @@
     <ClCompile Include="Src\CKPE.Common.Relocator.cpp" />
     <ClCompile Include="Src\CKPE.Common.RelocatorDB.cpp" />
     <ClCompile Include="Src\CKPE.Common.RTTI.cpp" />
+    <ClCompile Include="Src\CKPE.Common.LiteralFormat.cpp" />
     <ClCompile Include="Src\CKPE.Common.RuntimeOptimization.cpp" />
     <ClCompile Include="Src\CKPE.Common.SafeExit.cpp" />
     <ClCompile Include="Src\CKPE.Common.SettingCollection.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="Include\CKPE.Common.Relocator.h" />
     <ClInclude Include="Include\CKPE.Common.RelocatorDB.h" />
     <ClInclude Include="Include\CKPE.Common.RTTI.h" />
+    <ClInclude Include="Include\CKPE.Common.LiteralFormat.h" />
     <ClInclude Include="Include\CKPE.Common.RuntimeOptimization.h" />
     <ClInclude Include="Include\CKPE.Common.Include.h" />
     <ClInclude Include="Include\CKPE.Common.SafeExit.h" />

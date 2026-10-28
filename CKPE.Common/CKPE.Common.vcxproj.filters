@@ -5,6 +5,9 @@
     <ClCompile Include="Src\CKPE.Common.Interface.cpp">
       <Filter>API</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CKPE.Common.LiteralFormat.cpp">
+      <Filter>API</Filter>
+    </ClCompile>
     <ClCompile Include="Src\CKPE.Common.RuntimeOptimization.cpp">
       <Filter>API</Filter>
     </ClCompile>
@@ -196,6 +199,9 @@
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.Common.Include.h">
+      <Filter>API</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.LiteralFormat.h">
       <Filter>API</Filter>
     </ClInclude>
     <ClInclude Include="Include\CKPE.Common.RuntimeOptimization.h">

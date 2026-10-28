@@ -5,6 +5,7 @@
 #include <CKPE.Utils.h>
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
+#include <CKPE.Common.LiteralFormat.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
 #include <EditorAPI/T/TESForm.h>
 #include <Patches/CKPE.SkyrimSE.Patch.Console.h>
@@ -72,6 +73,17 @@ namespace CKPE
 				using namespace Common;
 
 				pointer_CrashInvalidStrings_sub1 = Relocation(ID(192607)).WriteJump(&GetLocalizeStringSafe);
+
+				// Editor IDs passed as the sprintf_s format; sites verified on 1.7.99 only
+				if (VersionLists::GetEditorVersion() == VersionLists::EDITOR_SKYRIM_SE_1_7_99_0)
+					LiteralFormat::Redirect({
+						Relocation(ID(173333), 0x128E).Address(), Relocation(ID(173333), 0x338D).Address(),
+						Relocation(ID(201988), 0xDC).Address(), Relocation(ID(201988), 0x143).Address(),
+						Relocation(ID(253023), 0x804).Address(),
+						Relocation(ID(552350), 0x362B).Address(), Relocation(ID(552350), 0x3E50).Address(),
+						Relocation(ID(552353), 0xE7C).Address(),
+						Relocation(ID(417849), 0x249).Address(), Relocation(ID(417849), 0x37E).Address() },
+						Relocation(ID(618376)).Address());
 
 				return true;
 			}

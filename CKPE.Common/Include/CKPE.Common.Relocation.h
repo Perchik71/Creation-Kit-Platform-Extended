@@ -169,6 +169,21 @@ namespace CKPE
 				return Detours::DetourCall(Address() + O, *(uintptr_t*)&a_dst);
 			}
 
+			template <class F>
+			[[nodiscard]] bool RedirectBranch(const std::uintptr_t a_expected, const F a_dst) const
+				requires(std::same_as<value_type, std::uintptr_t>)
+			{
+				const auto opcode = *reinterpret_cast<const std::uint8_t*>(Address());
+				if (((opcode != 0xE8) && (opcode != 0xE9)) || (Detours::BranchTarget(Address()) != a_expected))
+					return false;
+
+				if (opcode == 0xE8)
+					WriteCall(a_dst);
+				else
+					WriteJump(a_dst);
+				return true;
+			}
+
 			template <std::ptrdiff_t O = 0>
 			void WriteFill(const std::uint8_t a_value, const std::size_t a_count) const
 				requires(std::same_as<value_type, std::uintptr_t>)

@@ -16,6 +16,7 @@ namespace CKPE
 		Detours(const Detours&) = delete;
 		Detours& operator=(const Detours&) = delete;
 	public:
+		[[nodiscard]] static std::uintptr_t BranchTarget(std::uintptr_t target) noexcept(true);
 		static std::uintptr_t DetourJump(std::uintptr_t target, std::uintptr_t destination) noexcept(true);
 		static std::uintptr_t DetourCall(std::uintptr_t target, std::uintptr_t destination) noexcept(true);
 		static std::uintptr_t DetourVTable(std::uintptr_t target, std::uintptr_t detour, std::uint32_t index) noexcept(true);

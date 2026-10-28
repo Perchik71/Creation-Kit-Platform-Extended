@@ -18,7 +18,7 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			static Common::EditorUI::TCompileScriptsDlgProc OldPickScriptsToCompileDlgProc = nullptr;
+			static Common::EditorUI::TDialogProc OldPickScriptsToCompileDlgProc = nullptr;
 
 			static LRESULT HKPickScriptsToCompileDlgProc(void* This, UINT Message, WPARAM wParam,
 				LPARAM lParam) noexcept(true)

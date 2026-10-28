@@ -110,6 +110,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.NiCollisionObjectClonedWarning.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ObjectWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.PapyrusEditorLimit.h>
+#include <Patches/CKPE.SkyrimSE.Patch.PreviewGroundPlane.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ProgressWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ReEnableFog.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ReEnableLandShadows.h>
@@ -245,6 +246,7 @@ namespace CKPE
 			mgr->Register(new Patch::NiCollisionObjectClonedWarning);
 			mgr->Register(new Patch::ObjectWindow);
 			mgr->Register(new Patch::PapyrusEditorLimit);
+			mgr->Register(new Patch::PreviewGroundPlane);
 			mgr->Register(new Patch::ProgressWindow);
 			mgr->Register(new Patch::ReEnableFog);
 			mgr->Register(new Patch::ReEnableLandShadows);
