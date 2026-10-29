@@ -798,17 +798,7 @@ namespace CKPE
 				HWND ok = GetDlgItem(dialog, IDOK);
 				if (owned && preview && ok)
 				{
-					RECT rcPreview{}, rcOk{};
-					GetWindowRect(preview, &rcPreview);
-					GetWindowRect(ok, &rcOk);
-					MapWindowPoints(HWND_DESKTOP, dialog, reinterpret_cast<LPPOINT>(&rcPreview), 2);
-					MapWindowPoints(HWND_DESKTOP, dialog, reinterpret_cast<LPPOINT>(&rcOk), 2);
-
-					HWND check = CreateWindowExA(0, WC_BUTTONA, "Ground Plane",
-						WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX,
-						rcPreview.left, rcOk.top, 110, rcOk.bottom - rcOk.top, dialog,
-						reinterpret_cast<HMENU>(static_cast<std::uintptr_t>(checkboxId)),
-						GetModuleHandleA(nullptr), nullptr);
+					HWND check = GetDlgItem(dialog, checkboxId);
 					if (check)
 						SendMessageA(check, WM_SETFONT, SendMessageA(dialog, WM_GETFONT, 0, 0), TRUE);
 				}

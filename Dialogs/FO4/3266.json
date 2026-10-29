@@ -1,0 +1,25 @@
+{
+	"Style": ["DS_SETFONT", "DS_MODALFRAME", "DS_3DLOOK", "DS_CENTER", "WS_POPUPWINDOW", "WS_VISIBLE", "WS_DLGFRAME", "WS_MINIMIZEBOX"],
+	"Title": "Model Data",
+	"Width": 495,
+	"Height": 250,
+	"FontName": "Microsoft Sans Serif",
+	"FontSize": 8,
+	"FontWeight": 400,
+	"FontItalic": 0,
+	"Controls": [
+		{ "Type": "DEFPUSHBUTTON", "Title": "OK", "Id": 1, "x": 222, "y": 234, "Width": 50, "Height": 12 },
+		{ "Type": "PUSHBUTTON", "Title": "IMAGE", "Style": ["BS_OWNERDRAW", "BS_LEFT", "BS_RIGHT", "BS_TOP", "BS_BOTTOM", "0x00000F00"], "ExStyle": ["WS_EX_CLIENTEDGE", "WS_EX_STATICEDGE"], "Id": 2175, "x": 274, "y": 7, "Width": 215, "Height": 221 },
+		{ "Type": "CTEXT", "Title": "Model File Name", "x": 5, "y": 14, "Width": 260, "Height": 8 },
+		{ "Type": "EDITTEXT", "Style": ["ES_LEFT", "ES_AUTOHSCROLL"], "Id": 2421, "x": 5, "y": 29, "Width": 228, "Height": 12 },
+		{ "Type": "PUSHBUTTON", "Title": "Edit", "Id": 2420, "x": 239, "y": 28, "Width": 27, "Height": 14 },
+		{ "Type": "COMBOBOX", "Style": ["CBS_DROPDOWNLIST", "CBS_AUTOHSCROLL", "CBS_SORT", "WS_VSCROLL"], "Id": 5886, "x": 49, "y": 65, "Width": 167, "Height": 98 },
+		{ "Type": "LTEXT", "Title": "Material Swap", "x": 5, "y": 63, "Width": 30, "Height": 18 },
+		{ "Type": "LISTVIEW", "Title": "", "Style": ["WS_BORDER", "0x00000009"], "ExStyle": ["WS_EX_CLIENTEDGE"], "Id": 5885, "x": 5, "y": 100, "Width": 260, "Height": 129 },
+		{ "Type": "AUTOCHECKBUTTON", "Title": "Valid only", "Id": 5904, "x": 224, "y": 66, "Width": 42, "Height": 10 },
+		{ "Type": "EDITTEXT", "Style": ["ES_LEFT", "ES_AUTOHSCROLL"], "Id": 6207, "x": 222, "y": 47, "Width": 44, "Height": 13 },
+		{ "Type": "AUTOCHECKBUTTON", "Id": 52011, "Title": "Ground Plane", "x": 5, "y": 85, "Width": 100, "Height": 10 },
+		{ "Type": "AUTOCHECKBUTTON", "Title": "Color Remapping Index", "Style": ["BS_LEFT", "BS_RIGHT", "0x00000300"], "ExStyle": ["WS_EX_RIGHT"], "Id": 1007, "x": 5, "y": 50, "Width": 86, "Height": 10 },
+		{ "ClassName": "msctls_trackbar32", "Title": "", "Style": ["0x00000018"], "Id": 6208, "x": 100, "y": 47, "Width": 115, "Height": 14 }
+	]
+}

@@ -1,0 +1,20 @@
+{
+	"Style": [ "DS_SETFONT", "DS_MODALFRAME", "DS_3DLOOK", "DS_CENTER", "WS_POPUPWINDOW", "WS_VISIBLE", "WS_DLGFRAME", "WS_MINIMIZEBOX" ],
+	"Title": "Model Data",
+	"Width": 402,
+	"Height": 255,
+	"FontName": "Microsoft Sans Serif",
+	"FontSize": 8,
+	"FontWeight": 400,
+	"FontItalic": 0,
+	"Controls": [
+		{ "Type": "DEFPUSHBUTTON", "Title": "OK", "Id": 1, "x": 176, "y": 236, "Width": 50, "Height": 12 },
+		{ "Type": "LTEXT", "Title": "Alternate Textures", "x": 5, "y": 74, "Width": 60, "Height": 8 },
+		{ "Type": "CTEXT", "Title": "Model File Name", "x": 5, "y": 14, "Width": 166, "Height": 8 },
+		{ "Type": "EDITTEXT", "Style": ["ES_LEFT", "ES_AUTOHSCROLL", "ES_READONLY"], "Id": 2421, "x": 5, "y": 29, "Width": 133, "Height": 12 },
+		{ "Type": "PUSHBUTTON", "Title": "Edit", "Id": 2420, "x": 145, "y": 28, "Width": 27, "Height": 14 },
+		{ "Type": "AUTOCHECKBUTTON", "Id": 52011, "Title": "Ground Plane", "x": 5, "y": 54, "Width": 100, "Height": 10 },
+		{ "Type": "LISTVIEW", "Title": "", "Style": ["WS_BORDER", "0x00000009"], "ExStyle": ["WS_EX_CLIENTEDGE"], "Id": 2419, "x": 5, "y": 86, "Width": 166, "Height": 144 },
+		{ "Type": "PUSHBUTTON", "Title": "IMAGE", "Style": ["BS_OWNERDRAW", "BS_LEFT", "BS_RIGHT", "BS_TOP", "BS_BOTTOM", "0x00000F00"], "ExStyle": ["WS_EX_CLIENTEDGE", "WS_EX_STATICEDGE"], "Id": 2175, "x": 179, "y": 8, "Width": 218, "Height": 222 }
+	]
+}
