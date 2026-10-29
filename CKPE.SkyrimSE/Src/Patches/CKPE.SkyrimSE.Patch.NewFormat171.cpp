@@ -21,6 +21,13 @@ namespace CKPE
 
 			uintptr_t pointer_NewFormat171_data = 0;
 
+			struct UnknownDataLoaded
+			{
+				EditorAPI::Forms::TESForm** arrayForms;
+				uint64_t unk;
+				uint32_t total;
+			};
+
 			NewFormat171::NewFormat171() : Common::Patch()
 			{
 				SetName("New Format 1.71");
@@ -43,7 +50,7 @@ namespace CKPE
 
 			std::vector<std::string> NewFormat171::GetDependencies() const noexcept(true)
 			{
-				return { "Console", "TESDataHandler" };
+				return { "Console" };
 			}
 
 			bool NewFormat171::SupportsAddressLibrary() const noexcept(true)
@@ -66,7 +73,6 @@ namespace CKPE
 
 				// make the window title the same as in 1.6.1130
 				Relocation(ID(55337), 0x133).WriteCall(&sub);
-				pointer_NewFormat171_data = ID(143755).Address();
 
 				// Making changes, from 1.6.1130, it's amazing that Bethesda fixed where I used to rule, 
 				// I didn't have to look for a long time
@@ -87,10 +93,27 @@ namespace CKPE
 				strcat_s(dst, max_size, src);
 
 				// Checking for the current active plugin
-				auto active_plugin = EditorAPI::TESDataHandler::Singleton.Singleton->ActiveMod;
-				if (active_plugin && (*((uintptr_t*)pointer_NewFormat171_data)))
+				auto singleton = EditorAPI::TESDataHandler::GetSingleton();
+				if (!singleton) return;
+
+				Common::Relocation<UnknownDataLoaded**> dataLoaded(Common::ID(143755));
+				auto data = *dataLoaded;
+
+				auto active_plugin = singleton->ActiveMod;
+				if (!active_plugin) return;
+
+				if (!data || !data->total || !data->arrayForms)
+					strcat_s(dst, max_size, sNotEslCapable);
+				else
 				{
-					auto total = active_plugin->GetHeaderInfo().numRecords;
+					uint32_t total = 0;
+					for (size_t i = 0; i < data->total; i++)
+					{
+						const auto form = data->arrayForms[i];
+						if (form->GetFile(0) == active_plugin)
+							total++;
+					}
+
 					auto avail = 0xFFF - total;
 					if (avail >= 0xFFF)
 						strcat_s(dst, max_size, sNotEslCapable);

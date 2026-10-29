@@ -112,7 +112,7 @@ namespace CKPE
 
 			void SaveWorldSpaceOffsets::UpdateOffsets() noexcept(true)
 			{
-				auto handler = EditorAPI::TESDataHandler::Singleton.Singleton;
+				auto handler = EditorAPI::TESDataHandler::GetSingleton();
 				if (!handler)
 					return;
 
@@ -178,7 +178,7 @@ namespace CKPE
 				WIN32_FILE_ATTRIBUTE_DATA before{}, after{};
 				std::string path;
 
-				auto data_handler = EditorAPI::TESDataHandler::Singleton.Singleton;
+				auto data_handler = EditorAPI::TESDataHandler::GetSingleton();
 				auto active = data_handler ? data_handler->ActiveMod : nullptr;
 				if (active)
 				{

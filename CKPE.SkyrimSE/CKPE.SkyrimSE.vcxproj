@@ -265,7 +265,6 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.SkipTopicInfoValidation.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.SpellEnableCastingAndDeliveryAlways.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.StableSortForPerks.cpp" />
-    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.TESDataHandlerHook.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.TESModelTextureSwapCorrectlyLoad.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.TintSelectedObjects.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.TESParameters_CTDA.cpp" />
@@ -330,9 +329,11 @@
     <ClInclude Include="Include\EditorAPI\B\BSStringCache.h" />
     <ClInclude Include="Include\EditorAPI\B\BSSystemFile.h" />
     <ClInclude Include="Include\EditorAPI\B\BSTArray.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSTEvents.h" />
     <ClInclude Include="Include\EditorAPI\B\BSTextureSet.h" />
     <ClInclude Include="Include\EditorAPI\B\BSTList.h" />
     <ClInclude Include="Include\EditorAPI\B\BSTriShape.h" />
+    <ClInclude Include="Include\EditorAPI\B\BSTSingleton.h" />
     <ClInclude Include="Include\EditorAPI\B\BSTSmartPointer.h" />
     <ClInclude Include="Include\EditorAPI\D\DecalData.h" />
     <ClInclude Include="Include\EditorAPI\IDs.h" />
@@ -504,7 +505,6 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.SkipTopicInfoValidation.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.SpellEnableCastingAndDeliveryAlways.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.StableSortForPerks.h" />
-    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.TESDataHandlerHook.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.TESModelTextureSwapCorrectlyLoad.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.TintSelectedObjects.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.TESParameters_CTDA.h" />

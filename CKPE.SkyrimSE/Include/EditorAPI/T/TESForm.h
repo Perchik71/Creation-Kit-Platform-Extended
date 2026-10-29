@@ -338,7 +338,19 @@ namespace CKPE
 							(_FormType == FormType::ftCharacter); 
 					}
 
-					inline static TESForm* (*FindFormByFormID)(std::uint32_t);
+					[[nodiscard]] TESFile* GetFile(std::int32_t a_index = -1) const noexcept(true)
+					{
+						using func_t = decltype(&TESForm::GetFile);
+						static Common::Relocation<func_t> func{ IDs::TESForm::GetFile };
+						return func(this, a_index);
+					}
+
+					[[nodiscard]] static TESForm* FindFormByFormID(std::uint32_t a_formId) noexcept(true)
+					{
+						using func_t = decltype(&TESForm::FindFormByFormID);
+						static Common::Relocation<func_t> func{ IDs::TESForm::GetFormByNumericID };
+						return func(a_formId);
+					}
 
 					CKPE_READ_PROPERTY(IsModified) bool Active;
 					CKPE_READ_PROPERTY(GetFormID) std::uint32_t FormID;

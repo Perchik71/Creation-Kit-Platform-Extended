@@ -160,9 +160,6 @@ namespace CKPE
 			bool AlteredFormList::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
 			{
 				using namespace Common;
-
-				EditorAPI::Forms::TESForm::FindFormByFormID = 
-					decltype(EditorAPI::Forms::TESForm::FindFormByFormID)(ID(76804).Address());
 				
 				OldAlteredFormList_Create = decltype(&AlteredFormList_Create)(ID(569171).Address());
 				OldAlteredFormList_RemoveAllEntries = decltype(&AlteredFormList_RemoveAllEntries)(ID(600108).Address());

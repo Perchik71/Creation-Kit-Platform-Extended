@@ -35,14 +35,14 @@ namespace CKPE
 					static inline void release8(const char*& a_entry)
 					{
 						using func_t = decltype(Entry::release8);
-						Common::Relocation<func_t> func{ StringCache::StringPool_AnsiRelease };
+						Common::Relocation<func_t> func{ IDs::StringCache::StringPool_AnsiRelease };
 						func(a_entry);
 					}
 
 					static inline void release16(const wchar_t*& a_entry)
 					{
 						using func_t = decltype(Entry::release16);
-						Common::Relocation<func_t> func{ StringCache::StringPool_WideRelease };
+						Common::Relocation<func_t> func{ IDs::StringCache::StringPool_WideRelease };
 						func(a_entry);
 					}
 
@@ -116,7 +116,7 @@ namespace CKPE
 				static BucketTable* GetSingleton() noexcept(true)
 				{
 					using func_t = decltype(&BucketTable::GetSingleton);
-					Common::Relocation<func_t> func{ StringCache::BucketTable_Singleton };
+					Common::Relocation<func_t> func{ IDs::StringCache::BucketTable_Singleton };
 					return func();
 				}
 

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <CKPE.Singleton.h>
+#include <EditorAPI/IDs.h>
 #include <EditorAPI/N/NiTObjectArray.h>
 #include <EditorAPI/T/TESObjectREFR.h>
 #include <EditorAPI/T/TESObjectCELL.h>
@@ -16,6 +16,8 @@
 #include <EditorAPI/B/BGSFootstepSet.h>
 #include <EditorAPI/T/TESTopic.h>
 #include <EditorAPI/T/TESFile.h>
+#include <EditorAPI/B/BSTEvents.h>
+#include <EditorAPI/B/BSTSingleton.h>
 
 namespace CKPE
 {
@@ -27,7 +29,10 @@ namespace CKPE
 			using NiTPrimitiveArray = NiAPI::NiTObjectArray<_Ty>;
 			using TESFormArray = BSTArray<Forms::TESForm*>;
 
-			class TESDataHandler
+			class TESObjectList;
+			class TESDataHandler :
+				public BSTEventSource<BGSHotloadCompletedEvent>,
+				public BSTSingletonSDM<TESDataHandler>
 			{
 			public:
 				using TESFileList = BSSimpleList<TESFile>;
@@ -38,11 +43,10 @@ namespace CKPE
 					TESFileArray loadedMods;							// 10
 				};
 
-				using UnkArray = BSTArray<LPVOID>;
-			private:
-				UnkArray unk00;											// 00
-				char pad18[0x50];										// 18
 			public:
+				using UnkArray = BSTArray<LPVOID>;
+
+				TESObjectList* objectList;
 				TESFormArray arrNONE;											// 68 Form Type 0
 				TESFormArray arrTES4;											// 80 Form Type 1
 				TESFormArray arrGRUP;											// 98 Form Type 2
@@ -199,13 +203,23 @@ namespace CKPE
 				inline TESFile* GetActiveMod() const { return activePlugin; }
 				inline bool IsActiveMod() const { return activePlugin != nullptr; }
 
-				inline static ISingleton<bool> UserModdedSingleton;
-				inline static ISingleton<TESDataHandler> Singleton;
+				[[nodiscard]] static TESDataHandler* GetSingleton() noexcept(true)
+				{
+					static Common::Relocation<TESDataHandler**> singleton{ IDs::TESDataHandler::Instance };
+					return *singleton;
+				}
+
+				[[nodiscard]] static bool HasUserModded() noexcept(true)
+				{
+					static Common::Relocation<bool> userModded{ IDs::TESDataHandler::UserModded };
+					return userModded.Get();
+				}
 			public:
 				CKPE_READ_PROPERTY(GetMods) TESFileList* Mods;
 				CKPE_READ_PROPERTY(GetLoadedMods) const TESFileArray* LoadedMods;
 				CKPE_READ_PROPERTY(GetActiveMod) TESFile* ActiveMod;
 			};
+			static_assert(offsetof(TESDataHandler, arrNONE) == 0x68);
 		}
 	}
 }

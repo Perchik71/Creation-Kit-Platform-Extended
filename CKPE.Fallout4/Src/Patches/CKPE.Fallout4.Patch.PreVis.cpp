@@ -17,8 +17,6 @@ namespace CKPE
 	{
 		namespace Patch
 		{
-			std::uintptr_t pointer_PreVisPatch_sub = 0;
-
 			PreVis::PreVis() : Common::Patch()
 			{
 				SetName("PreVis");

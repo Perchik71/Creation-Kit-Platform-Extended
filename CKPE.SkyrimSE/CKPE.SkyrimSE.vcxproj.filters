@@ -254,9 +254,6 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.AlteredFormList.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.TESDataHandlerHook.cpp">
-      <Filter>Patches</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.SpellEnableCastingAndDeliveryAlways.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -795,9 +792,6 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.AlteredFormList.h">
       <Filter>Patches</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.TESDataHandlerHook.h">
-      <Filter>Patches</Filter>
-    </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.SpellEnableCastingAndDeliveryAlways.h">
       <Filter>Patches</Filter>
     </ClInclude>
@@ -1253,6 +1247,12 @@
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TextureAddressModes.h">
       <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSTSingleton.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSTEvents.h">
+      <Filter>EditorAPI\B</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

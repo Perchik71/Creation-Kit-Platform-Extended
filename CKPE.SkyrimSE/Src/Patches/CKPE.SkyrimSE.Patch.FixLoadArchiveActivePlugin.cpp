@@ -35,12 +35,12 @@ namespace CKPE
 
 			bool FixLoadArchiveActivePlugin::HasDependencies() const noexcept(true)
 			{
-				return true;
+				return false;
 			}
 
 			std::vector<std::string> FixLoadArchiveActivePlugin::GetDependencies() const noexcept(true)
 			{
-				return { "TESDataHandler" };
+				return {};
 			}
 
 			bool FixLoadArchiveActivePlugin::SupportsAddressLibrary() const noexcept(true)
@@ -79,12 +79,14 @@ namespace CKPE
 
 			const char* FixLoadArchiveActivePlugin::sub() noexcept(true)
 			{
-				return EditorAPI::TESDataHandler::Singleton->ActiveMod->GetFileName().c_str();
+				auto singleton = EditorAPI::TESDataHandler::GetSingleton();
+				if (!singleton || !singleton->ActiveMod) return nullptr;
+				return singleton->ActiveMod->GetFileName().c_str();
 			}
 
 			std::uint32_t FixLoadArchiveActivePlugin::sub2() noexcept(true)
 			{
-				return FixLoadArchiveActivePlugin_sub(EditorAPI::TESDataHandler::Singleton->ActiveMod);
+				return FixLoadArchiveActivePlugin_sub(EditorAPI::TESDataHandler::GetSingleton()->ActiveMod);
 			}
 		}
 	}

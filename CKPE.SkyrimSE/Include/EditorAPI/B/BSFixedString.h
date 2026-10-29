@@ -194,14 +194,14 @@ namespace CKPE
 					inline BSFixedString* ctor8(const char* a_data)
 					{
 						using func_t = decltype(&BSFixedString::ctor8);
-						Common::Relocation<func_t> func{ StringCache::FixedString_AnsiCreate };
+						Common::Relocation<func_t> func{ IDs::StringCache::FixedString_AnsiCreate };
 						return func(this, a_data);
 					}
 
 					inline BSFixedString* ctor16(const wchar_t* a_data)
 					{
 						using func_t = decltype(&BSFixedString::ctor16);
-						Common::Relocation<func_t> func{ StringCache::FixedString_WideCreate };
+						Common::Relocation<func_t> func{ IDs::StringCache::FixedString_WideCreate };
 						return func(this, a_data);
 					}
 

@@ -19,7 +19,6 @@
 #include <Patches/CKPE.SkyrimSE.Patch.AlteredFormList.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BGSPerkRankArray.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BNetConvertUnicodeString.h>
-//#include <Patches/CKPE.SkyrimSE.Patch.BNetUploadWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BrokenTerrainEditDlg.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BSArchiveManager.h>
 #include <Patches/CKPE.SkyrimSE.Patch.BSPointerHandleManager.h>
@@ -125,7 +124,6 @@
 #include <Patches/CKPE.SkyrimSE.Patch.SkipTopicInfoValidation.h>
 #include <Patches/CKPE.SkyrimSE.Patch.SpellEnableCastingAndDeliveryAlways.h>
 #include <Patches/CKPE.SkyrimSE.Patch.StableSortForPerks.h>
-#include <Patches/CKPE.SkyrimSE.Patch.TESDataHandlerHook.h>
 #include <Patches/CKPE.SkyrimSE.Patch.TESModelTextureSwapCorrectlyLoad.h>
 #include <Patches/CKPE.SkyrimSE.Patch.TintSelectedObjects.h>
 #include <Patches/CKPE.SkyrimSE.Patch.TESParameters_CTDA.h>
@@ -155,7 +153,6 @@ namespace CKPE
 			mgr->Register(new Patch::AlteredFormList);
 			mgr->Register(new Patch::BGSPerkRankArray);
 			mgr->Register(new Patch::BNetConvertUnicodeString);
-			//mgr->Register(new Patch::BNetUploadWindow);			unused
 			mgr->Register(new Patch::BrokenTerrainEditDlg);
 			mgr->Register(new Patch::BSArchiveManager);
 			mgr->Register(new Patch::BSPointerHandleManager);
@@ -260,7 +257,6 @@ namespace CKPE
 			mgr->Register(new Patch::SkipTopicInfoValidation);
 			mgr->Register(new Patch::SpellEnableCastingAndDeliveryAlways);
 			mgr->Register(new Patch::StableSortForPerks);
-			mgr->Register(new Patch::TESDataHandlerHook);
 			mgr->Register(new Patch::TESModelTextureSwapCorrectlyLoad);
 			mgr->Register(new Patch::TESParameters_CTDA);
 			mgr->Register(new Patch::TintSelectedObjects);

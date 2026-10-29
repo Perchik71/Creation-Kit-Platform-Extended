@@ -33,7 +33,7 @@ namespace CKPE
 					inline static void GenerateFromPathImpl(ID* a_id, const char* a_path)
 					{
 						using func_t = decltype(&ID::GenerateFromPathImpl);
-						Common::Relocation<func_t> func{ ID_GenerateFromPath };
+						Common::Relocation<func_t> func{ IDs::BSResource::ID::GenerateFromPath };
 						func(a_id, a_path);
 					}
 				public:
