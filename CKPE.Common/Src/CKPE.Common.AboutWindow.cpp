@@ -17,6 +17,8 @@ namespace CKPE
 		{
 			static uint32_t AppLogoWidth = 0;
 			static uint32_t AppLogoHeight = 0;
+			static uint32_t AppLogoX = 0;
+			static uint32_t AppLogoY = 0;
 			static Bitmap bm;
 
 			BITMAP bitmap{};
@@ -53,7 +55,10 @@ namespace CKPE
 					Monitor monitor = Screen::GetSingleton()->MonitorFromWindow((THandle)Hwnd);
 					CRECT wa = monitor.WorkAreaRect;
 
-					SetWindowPos(Hwnd, nullptr, 0, 0, AppLogoWidth, AppLogoHeight, SWP_NOMOVE | SWP_NOOWNERZORDER);
+					AppLogoX = wa.GetLeft() + (wa.GetWidth() / 2) - (AppLogoWidth / 2);
+					AppLogoY = wa.GetTop() + (wa.GetHeight() / 2) - (AppLogoHeight / 2);
+
+					SetWindowPos(Hwnd, nullptr, AppLogoX, AppLogoY, AppLogoWidth, AppLogoHeight, SWP_NOOWNERZORDER);
 					auto Rgn = CreateRoundRectRgn(0, 0, AppLogoWidth, AppLogoHeight, 30, 30);
 					SetWindowRgn(Hwnd, Rgn, TRUE);
 					DeleteObject(Rgn);
