@@ -104,6 +104,9 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.RenderWindow60FPS.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.PreviewRenderTargets.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.RenameCreationKitApp.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -874,6 +877,9 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.RenderWindow60FPS.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.PreviewRenderTargets.h">
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.SkipTopicInfoValidation.h">
