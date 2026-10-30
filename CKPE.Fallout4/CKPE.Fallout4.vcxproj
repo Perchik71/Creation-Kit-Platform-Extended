@@ -218,6 +218,7 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.RenameCreationKitApp.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.RenderWindow.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.RenderWindow60FPS.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.PreviewRenderTargets.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ReplaceBSPointerHandleAndManager.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ResponseIgnoreMax.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.ResponseWindow.cpp" />
@@ -550,6 +551,7 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.RenameCreationKitApp.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.RenderWindow.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.RenderWindow60FPS.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.PreviewRenderTargets.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ReplaceBSPointerHandleAndManager.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ResponseIgnoreMax.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.ResponseWindow.h" />
