@@ -19,6 +19,8 @@ namespace CKPE
 			{
 			public:
 				virtual ~TESModelRDT() = default;
+				/* 70 */ bool Perform(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* Result) override;
+				/* 80 */ void UpdateDataInDialogBox(HWND hDialogBox) const noexcept(true) override;
 
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TESModelTri[0];
 			};

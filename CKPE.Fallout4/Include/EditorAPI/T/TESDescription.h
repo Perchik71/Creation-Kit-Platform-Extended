@@ -21,6 +21,15 @@ namespace CKPE
 				BGSLocalizedStringDL descriptionText;
 			public:
 				virtual ~TESDescription() = default;
+				/* 10 */ void InitializeDataComponent() override;
+				/* 18 */ void ClearDataComponent() override;
+				/* 38 */ [[nodiscard]] bool IsComponentDifferent(const BaseFormComponent* Other) const noexcept(true) override;
+				/* 70 */ bool Perform(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* Result) override;
+				/* 78 */ [[nodiscard]] bool IsDialogBoxSuitable(HWND hDialogBox) const noexcept(true) override;
+				/* 80 */ void UpdateDataInDialogBox(HWND hDialogBox) const noexcept(true) override;
+				/* 88 */ void UpdateDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+				/* 90 */ void CleanupComponentDialogBox(HWND hDialogBox) noexcept(true) override;
+				/* 98 */ void CollectComponentResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TESDescription[0];
 

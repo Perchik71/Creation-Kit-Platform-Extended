@@ -19,6 +19,7 @@ namespace CKPE
 			{
 			public:
 				virtual ~TESModelTri() = default;
+				/* 70 */ bool Perform(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* Result) override;
 
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TESModelTri[0];
 			};
