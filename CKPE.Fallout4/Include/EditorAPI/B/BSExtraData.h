@@ -313,6 +313,7 @@ namespace CKPE
 				ExtraCellWaterType() : BSExtraData(TYPE) {}
 				ExtraCellWaterType(Forms::TESForm* Water) : BSExtraData(TYPE), _Water(Water) {}
 				virtual ~ExtraCellWaterType() = default;
+				/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 
 				[[nodiscard]] inline Forms::TESForm* GetWaterForm() const noexcept(true) { return _Water; }
 			};
@@ -330,6 +331,7 @@ namespace CKPE
 				ExtraStartingPosition(const NiAPI::NiPoint3A& Position, const NiAPI::NiPoint3A& Rotate) :
 					BSExtraData(TYPE), _position(Position), _rotate(Rotate) {}
 				virtual ~ExtraStartingPosition() = default;
+				/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 
 				[[nodiscard]] inline NiAPI::NiPoint3A GetPosition() const noexcept(true)
 				{
@@ -415,6 +417,7 @@ namespace CKPE
 				ExtraLightData(float Fov, float Fade, float EndDistanceCap, float ShadowDepthBias) : 
 					BSExtraData(TYPE), _fov(Fov), _fade(Fade), _endDistanceCap(EndDistanceCap), _shadowDepthBias(ShadowDepthBias) {}
 				virtual ~ExtraLightData() = default;
+				/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 
 				[[nodiscard]] inline float GetFov() const noexcept(true) { return _fov; }
 				inline void SetFov(float Fov) noexcept(true) { _fov = Fov; }
@@ -459,6 +462,7 @@ namespace CKPE
 				ExtraLinkedRef(Forms::BGSKeyword* Keyword, Forms::TESForm* Refr) :
 					BSExtraData(TYPE), _keyword(Keyword), _refr(Refr) {}
 				virtual ~ExtraLinkedRef() = default;
+				/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 
 				[[nodiscard]] Forms::BGSKeyword* GetKeyword() const noexcept(true) { return _keyword; }
 				[[nodiscard]] Forms::TESForm* GetRefr() const noexcept(true) { return _refr; }
@@ -502,6 +506,7 @@ namespace CKPE
 				ExtraRadius() : BSExtraData(TYPE) {}
 				ExtraRadius(float Radius) : BSExtraData(TYPE), _radius(Radius) {}
 				virtual ~ExtraRadius() = default;
+				/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 
 				[[nodiscard]] inline float Get() const noexcept(true) { return _radius; }
 				inline void Set(float Radius) noexcept(true) { _radius = Radius; }
@@ -523,6 +528,7 @@ namespace CKPE
 				ExtraEnableStateParent(std::int8_t Flags, const ObjectRefHandle& ObjRef) : 
 					BSExtraData(TYPE), _parent(ObjRef) { _flags.Flags = Flags; }
 				virtual ~ExtraEnableStateParent() = default;
+				/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 
 				[[nodiscard]] inline bool HasFlag(std::uint8_t f) const noexcept(true) { return _flags.Has(f); }
 				inline void SetFlag(std::uint8_t f) noexcept(true) { _flags.Set(f); }
@@ -539,6 +545,7 @@ namespace CKPE
 
 				ExtraPrimitive(BGSPrimitive* Primitive) : BSExtraData(TYPE), _Primitive(Primitive) {}
 				virtual ~ExtraPrimitive() = default;
+				/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 
 				[[nodiscard]] BGSPrimitive* Get() const noexcept(true) { return _Primitive; }
 			};
@@ -555,6 +562,7 @@ namespace CKPE
 				ExtraReferenceHandles(const ObjectRefHandle& OriginalRef, const ObjectRefHandle& ContainerRef) :
 					BSExtraData(TYPE), _OriginalRef(OriginalRef), _ContainerRef(ContainerRef) {}
 				virtual ~ExtraReferenceHandles() = default;
+				/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 
 				[[nodiscard]] ObjectRefHandle GetOriginalObjectRef() const noexcept(true) { return _OriginalRef; }
 				[[nodiscard]] ObjectRefHandle GetContainerObjectRef() const noexcept(true) { return _ContainerRef; }
@@ -570,6 +578,7 @@ namespace CKPE
 				ExtraMaterialSwap(Forms::BGSMaterialSwap* MaterialSwap) :
 					BSExtraData(TYPE), _Swap(MaterialSwap) {}
 				virtual ~ExtraMaterialSwap() = default;
+				/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 
 				[[nodiscard]] Forms::BGSMaterialSwap* GetForm() const noexcept(true) { return _Swap; }
 			};
@@ -586,6 +595,7 @@ namespace CKPE
 				ExtraUniqueID(std::uint16_t UniqueID, std::uint32_t BaseID) :
 					BSExtraData(TYPE), _uniqueID(UniqueID), _baseID(BaseID) {}
 				virtual ~ExtraUniqueID() = default;
+				/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 
 				[[nodiscard]] std::uint16_t GetUniqueID() const noexcept(true) { return _uniqueID; }
 				[[nodiscard]] std::uint32_t GetBaseID() const noexcept(true) { return _baseID; }
