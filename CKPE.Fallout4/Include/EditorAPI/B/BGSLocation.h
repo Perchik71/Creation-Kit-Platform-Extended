@@ -32,6 +32,21 @@ namespace CKPE
 				public:
 					virtual ~BGSLocation() = default;
 
+					/* 0A8 */ void InitializeData() override;
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0C0 */ void LoadPartial(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 210 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 278 */ void GetObjectWindowTreePath(BSString& Path) const noexcept(true) override;
+					/* 2A0 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
+					/* 2B0 */ void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true) override;
+					/* 2B8 */ void GetReferencedForms(BSTBTree<TESForm*>* OutForms) const noexcept(true) override;
+					/* 308 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult) noexcept(true) override;
+					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+
 					constexpr static std::uint8_t TYPE_ID = ftLocation;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLocation[0];
 				public:
@@ -47,7 +62,7 @@ namespace CKPE
 					BSTArray<void*> specialRefs; // 98 - BSTArray<SpecialRefData>
 					BSTArray<void*> uniqueNPCs; // B0 - BSTArray<UniqueNPCData>
 					BSTArray<void*> unkC8; // C8 - element type not identified yet
-					// Three BSTHashMap-like tables in the CK's 0x38 byte layout (capacity +0C, free +10, good +14, end of chain marker +18, entries +30); element types not identified.
+					// Three BSTHashMap-like tables in the CK's 0x38 byte layout (capacity +0C, free +10, good +14, end of chain marker +18, entries +30); element types not identified: Load, Save, CopyFrom and Compare never touch 0xC8 onwards; the constructor and its factory copy only clear them and install the table end-of-chain markers (E0 uses a different marker object than 148 and 180).
 					std::uint8_t hashMapE0[0x38]; // E0 - CK 0x38 byte layout, the entries pointer at +30 is 110
 					BSTArray<void*> unk118; // 118 - element type not identified yet
 					BSTArray<void*> unk130; // 130 - element type not identified yet

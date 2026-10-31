@@ -161,6 +161,40 @@ namespace CKPE
 					CKPE_READ_PROPERTY(GetWaterHeight) float WaterHeight;
 				public:
 					virtual ~TESObjectCELL() = default;
+
+					/* 0B0 */ void ClearData() override;
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 0D8 */ bool SavePlugin(TESFile* File) override;
+					/* 0E8 */ bool SaveForm(TESFile* File) override;
+					/* 0F0 */ [[nodiscard]] bool IsBeforeGroup(const TESGroupHeader* GroupRecord) const noexcept(true) override;
+					/* 0F8 */ [[nodiscard]] bool IsBeforeForm(TESForm* Rhs) const noexcept(true) override;
+					/* 100 */ TESForm* CreateDuplicateForm(bool bCreateEditorID, BSTHashMap<TESForm*, TESForm*>* CopyMap) override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 128 */ void DebugInfo(char* lpBuffer, std::uint32_t nBufferSize) const noexcept(true) override;
+					/* 1A0 */ void MarkAsChanged(bool bValue) noexcept(true) override;
+					/* 210 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 220 */ bool BelongsInGroup(TESGroupHeader* Group, bool bAllowParentGroups, bool bCurrentOnly) override;
+					/* 228 */ void CreateGroupData(TESGroupHeader* OutGroup, TESGroupHeader* ParentGroup) override;
+					/* 238 */ [[nodiscard]] const char* GetFormEditorID() const override;
+					/* 240 */ [[nodiscard]] bool IsParentForm() const noexcept(true) override;
+					/* 250 */ [[nodiscard]] bool IsFormTypeChild(FormType Type) const noexcept(true) override;
+					/* 270 */ [[nodiscard]] bool HasAlteredChildren() const noexcept(true) override;
+					/* 280 */ bool RemoveChildFormsFromList(CheckInFormList* Forms) noexcept(true) override;
+					/* 288 */ bool CanCheckOutChildren() noexcept(true) override;
+					/* 290 */ bool CheckOutChildren(TESBitArrayFile* UserFile, TESBitArrayFile* VersionFile) noexcept(true) override;
+					/* 298 */ bool MarkChildFormsAsDeleted(bool bValue, TESBitArrayFile* UserFile, TESBitArrayFile* VersionFile) noexcept(true) override;
+					/* 2A0 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
+					/* 2B0 */ void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true) override;
+					/* 2B8 */ void GetReferencedForms(BSTBTree<TESForm*>* OutForms) const noexcept(true) override;
+					/* 2D8 */ void PrepareForRevert() noexcept(true) override;
+					/* 308 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult) noexcept(true) override;
+					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
+					/* 370 */ void CollectRequiredFiles(BSTBTree<TESForm*>* VisitedForms, BSTBTree<BSFixedString>* RequiredFiles) noexcept(true) override;
 				};
 				static_assert(sizeof(TESObjectCELL) == 0x170);
 			}

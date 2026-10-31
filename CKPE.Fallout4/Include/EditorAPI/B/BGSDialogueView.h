@@ -24,6 +24,20 @@ namespace CKPE
 				public:
 					virtual ~BGSDialogueView() = default;
 
+					/* 0A8 */ void InitializeData() override;
+					/* 0B0 */ void ClearData() override;
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 198 */ void MarkAsDeleted(bool bValue) noexcept(true) override;
+					/* 210 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 2A0 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
+					/* 2E8 */ void OnFormIDsRemapped(BSTHashMap<std::uint32_t, std::uint32_t>* FormIDMap) noexcept(true) override;
+					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 3A8 */ [[nodiscard]] bool HasAvailableInGame() const noexcept(true) override;
+
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSDialogueView[0];
 				public:
 					BSTArray<void*> unk28; // 28 - element type not identified yet

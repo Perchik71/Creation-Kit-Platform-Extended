@@ -46,6 +46,18 @@ namespace CKPE
 					};
 	
 					virtual ~BGSMaterialSwap() = default;
+
+					/* 0B0 */ void ClearData() override;
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 210 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 278 */ void GetObjectWindowTreePath(BSString& Path) const noexcept(true) override;
+					/* 2E8 */ void OnFormIDsRemapped(BSTHashMap<std::uint32_t, std::uint32_t>* FormIDMap) noexcept(true) override;
+					/* 308 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult) noexcept(true) override;
+					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 			
 					[[nodiscard]] inline std::uint32_t GetMaxCount() const noexcept(true) { return _MaxCount; }
 					[[nodiscard]] inline std::uint32_t GetFreeCount() const noexcept(true) { return _Free; }

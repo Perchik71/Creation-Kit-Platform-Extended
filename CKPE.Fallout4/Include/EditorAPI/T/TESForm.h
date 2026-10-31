@@ -11,6 +11,7 @@
 #include <commctrl.h>
 #include <CKPE.Common.h>
 #include <EditorAPI/IDs.h>
+#include <CKPE.Common.Relocation.h>
 #include <EditorAPI/T/TESFile.h>
 #include <EditorAPI/C/CheckInFormList.h>
 #include <EditorAPI/B/BSString.h>

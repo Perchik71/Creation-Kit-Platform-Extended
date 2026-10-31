@@ -62,6 +62,33 @@ namespace CKPE
 				public:
 					virtual ~TESWorldSpace() = default;
 
+					/* 0A8 */ void InitializeData() override;
+					/* 0B0 */ void ClearData() override;
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0C0 */ void LoadPartial(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 0F0 */ [[nodiscard]] bool IsBeforeGroup(const TESGroupHeader* GroupRecord) const noexcept(true) override;
+					/* 0F8 */ [[nodiscard]] bool IsBeforeForm(TESForm* Rhs) const noexcept(true) override;
+					/* 100 */ TESForm* CreateDuplicateForm(bool bCreateEditorID, BSTHashMap<TESForm*, TESForm*>* CopyMap) override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 210 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 240 */ [[nodiscard]] bool IsParentForm() const noexcept(true) override;
+					/* 250 */ [[nodiscard]] bool IsFormTypeChild(FormType Type) const noexcept(true) override;
+					/* 270 */ [[nodiscard]] bool HasAlteredChildren() const noexcept(true) override;
+					/* 280 */ bool RemoveChildFormsFromList(CheckInFormList* Forms) noexcept(true) override;
+					/* 288 */ bool CanCheckOutChildren() noexcept(true) override;
+					/* 290 */ bool CheckOutChildren(TESBitArrayFile* UserFile, TESBitArrayFile* VersionFile) noexcept(true) override;
+					/* 298 */ bool MarkChildFormsAsDeleted(bool bValue, TESBitArrayFile* UserFile, TESBitArrayFile* VersionFile) noexcept(true) override;
+					/* 2A0 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
+					/* 2B0 */ void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true) override;
+					/* 2B8 */ void GetReferencedForms(BSTBTree<TESForm*>* OutForms) const noexcept(true) override;
+					/* 308 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult) noexcept(true) override;
+					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 370 */ void CollectRequiredFiles(BSTBTree<TESForm*>* VisitedForms, BSTBTree<BSFixedString>* RequiredFiles) noexcept(true) override;
+
 					constexpr static std::uint8_t TYPE_ID = ftWorldSpace;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESWorldSpace[0];
 				public:
@@ -81,10 +108,10 @@ namespace CKPE
 					std::int16_t fixedCenterY; // C0
 					std::uint8_t padC2[0x6]; // C2
 					std::uint64_t unkC8; // C8 - reference counted polymorphic object (count at +8, released by ClearData)
-					void* unkD0; // D0 - 56 byte heap hash table, freed by ClearData (destructor called on +8)
-					void* unkD8; // D8 - 56 byte heap hash table, freed by ClearData
-					std::uint64_t unkE0; // E0
-					std::uint64_t unkE8; // E8
+					void* unkD0; // D0 - 56 byte heap object holding a hash table at +8, destroyed by ClearData: 24 byte entries {32 bit key, reference counted object pointer (released through its count at +8), next}
+					void* unkD8; // D8 - 56 byte heap object holding a hash table at +8, destroyed by ClearData: 24 byte entries {trivially destructible key and value (16 bytes together), next}
+					std::uint64_t unkE0; // E0 - only cleared by the constructor
+					std::uint64_t unkE8; // E8 - only cleared by the constructor
 					TESWorldSpace* parentWorld; // F0
 					BGSLightingTemplate* lightingTemplate; // F8
 					TESWaterForm* worldWater; // 100
@@ -99,15 +126,15 @@ namespace CKPE
 					float defaultLandHeight; // 150
 					float defaultWaterHeight; // 154
 					float distantLODMult; // 158
-					std::uint32_t unk15C; // 15C
+					std::uint32_t unk15C; // 15C - not referenced by the constructor, InitializeData, ClearData, CopyFrom or Compare
 					BGSEncounterZone* encounterZone; // 160
 					BGSLocation* location; // 168
-					std::uint64_t unk170; // 170
+					std::uint64_t unk170; // 170 - only cleared by the constructor
 					TESTexture canopyShadowTexture; // 178
 					TESTexture waterEnvMap; // 1A0
 					TESTexture unk1C8; // 1C8
 					TESTexture unk1F0; // 1F0
-					// A second hash map in the CK's 0x38 byte layout (end of chain marker at 230, entries at 248); key and value types are not identified.
+					// A second hash map in the CK's 0x38 byte layout (end of chain marker at 230, entries at 248); key and value types are not identified: the constructor only clears it and installs the end-of-chain marker; ClearData, CopyFrom and Compare do not touch it.
 					std::uint8_t unk218[0x38]; // 218
 					BSTArray<void*> unk250; // 250 - element type not identified yet
 					std::uint8_t largeRefData[0x38]; // 268 - BGSLargeRefData (0x38 in the CK)

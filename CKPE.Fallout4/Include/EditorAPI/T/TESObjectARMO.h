@@ -86,6 +86,27 @@ namespace CKPE
 				public:
 					virtual ~TESObjectARMO() = default;
 
+					/* 0A8 */ void InitializeData() override;
+					/* 0B0 */ void ClearData() override;
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 118 */ [[nodiscard]] TESFile* GetDescriptionOwnerFile() const noexcept(true) override;
+					/* 210 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 278 */ void GetObjectWindowTreePath(BSString& Path) const noexcept(true) override;
+					/* 2A0 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
+					/* 2B0 */ void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true) override;
+					/* 2B8 */ void GetReferencedForms(BSTBTree<TESForm*>* OutForms) const noexcept(true) override;
+					/* 308 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult) noexcept(true) override;
+					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 338 */ void OnDialogFormSaved(HWND hDialogBox, TESForm* SavedForm) noexcept(true) override;
+					/* 3D8 */ [[nodiscard]] float GetDesirability() const noexcept(true) override;
+					/* 440 */ TBO_InstanceData* CreateInstanceData(const TBO_InstanceData* pData) const noexcept(true) override;
+					/* 448 */ const TBO_InstanceData* GetBaseInstanceData() const noexcept(true) override;
+
 					constexpr static std::uint8_t TYPE_ID = ftArmor;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectARMO[0];
 				public:
@@ -93,7 +114,11 @@ namespace CKPE
 					BSTArray<ArmorAddon> modelArray; // 370
 					TESObjectARMO* armorTemplate; // 388
 					BGSAttachParentArray attachParents; // 390
-					std::uint8_t unk3B0[0x10]; // 3B0
+					std::uint8_t unk3B0; // 3B0 - 0 on construction (same 16-byte member as TESObjectWEAP 3A0: bytes 0,1,1, then a null pointer at 3B8)
+					std::uint8_t unk3B1; // 3B1 - 1 on construction
+					std::uint8_t unk3B2; // 3B2 - 1 on construction
+					std::uint8_t pad3B3[0x5]; // 3B3
+					void* unk3B8; // 3B8 - null on construction
 				};
 				static_assert(sizeof(TESObjectARMO) == 0x3C0);
 			}
