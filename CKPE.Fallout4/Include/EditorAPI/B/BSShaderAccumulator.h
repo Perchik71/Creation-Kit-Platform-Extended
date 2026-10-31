@@ -18,6 +18,7 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSShaderAccumulator : public NiAPI::NiAlphaAccumulator
 	{
 	public:
+		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::BSShaderAccumulator[0];
 
 		/* 30 */ virtual void FinishAccumulatingPreResolveDepth();

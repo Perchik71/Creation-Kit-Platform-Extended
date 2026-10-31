@@ -61,6 +61,12 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkPackedNiTriStripsData : public NiAPI::NiObject
 	{
 	public:
+		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
+		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1D */ virtual bool RegisterStreamables(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1E */ virtual void SaveBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1F */ virtual bool IsEqual(NiAPI::NiObject* Object) noexcept(true) override;
 		/* 0x010 */ std::byte pad010[0x30];
 	};
 	static_assert(sizeof(hkPackedNiTriStripsData) == 0x40);

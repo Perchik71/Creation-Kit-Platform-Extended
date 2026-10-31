@@ -28,6 +28,15 @@ namespace CKPE
 			class BSShaderProperty : public NiAPI::NiShadeProperty
 			{
 			public:
+				/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
+				/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
+				/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+				/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
+				/* 1D */ virtual bool RegisterStreamables(NiAPI::NiStream& Stream) noexcept(true) override;
+				/* 1E */ virtual void SaveBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+				/* 1F */ virtual bool IsEqual(NiAPI::NiObject* Object) noexcept(true) override;
+				/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
+				/* 22 */ virtual void PostLinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BSShaderProperty[0];
 
 				enum class EShaderPropertyFlag : std::uint64_t
@@ -211,6 +220,15 @@ namespace CKPE
 			class BSWaterShaderProperty : public BSShaderProperty
 			{
 			public:
+				/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
+				/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
+				/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+				/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
+				/* 1D */ virtual bool RegisterStreamables(NiAPI::NiStream& Stream) noexcept(true) override;
+				/* 1E */ virtual void SaveBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+				/* 1F */ virtual bool IsEqual(NiAPI::NiObject* Object) noexcept(true) override;
+				/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
+				/* 22 */ virtual void PostLinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
 				std::uint32_t WaterFlags;							// 70
 				std::uint32_t Unk74;								// 74
 				char Unk78[0x30];									// 78
@@ -223,6 +241,15 @@ namespace CKPE
 			class BSSkyShaderProperty : public BSShaderProperty
 			{
 			public:
+				/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
+				/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
+				/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+				/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
+				/* 1D */ virtual bool RegisterStreamables(NiAPI::NiStream& Stream) noexcept(true) override;
+				/* 1E */ virtual void SaveBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+				/* 1F */ virtual bool IsEqual(NiAPI::NiObject* Object) noexcept(true) override;
+				/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
+				/* 22 */ virtual void PostLinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
 				NiAPI::NiColorA Unk70;								// 70
 				NiAPI::NiPointer<NiAPI::NiTexture> Textures[3];		// 80
 				BSFixedString Unk98;								// 98

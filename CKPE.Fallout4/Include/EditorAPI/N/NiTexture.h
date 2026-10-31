@@ -19,6 +19,8 @@ namespace CKPE
 				class NiTexture : public NiObject
 				{
 				public:
+					/* 02 */ virtual NiRTTI* GetRTTI() const noexcept(true) override;
+					/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
 					[[nodiscard]] inline BSFixedString GetFileNameFS() const noexcept(true) { return _FileName; }
 					[[nodiscard]] inline const char* GetFileName() const noexcept(true) { return _FileName; }
 					[[nodiscard]] inline NiTexture* GetPrev() const noexcept(true) { return _PrevTexture; }

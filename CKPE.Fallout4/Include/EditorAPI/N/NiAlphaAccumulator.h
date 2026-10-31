@@ -17,6 +17,12 @@ namespace CKPE::Fallout4::EditorAPI::NiAPI
 	class NiAccumulator : public NiObject
 	{
 	public:
+		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
+		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1D */ virtual bool RegisterStreamables(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1E */ virtual void SaveBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1F */ virtual bool IsEqual(NiAPI::NiObject* Object) noexcept(true) override;
 		NiAccumulator() = delete;
 
 		/* 2A */ virtual void StartAccumulating(const NiCamera* Camera);
@@ -35,6 +41,13 @@ namespace CKPE::Fallout4::EditorAPI::NiAPI
 	class NiBackToFrontAccumulator : public NiAccumulator
 	{
 	public:
+		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
+		/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
+		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1D */ virtual bool RegisterStreamables(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1E */ virtual void SaveBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1F */ virtual bool IsEqual(NiAPI::NiObject* Object) noexcept(true) override;
 		/* 0x018 */ std::byte _pad018[0x18];
 		/* 0x030 */ std::int32_t numItems;
 		/* 0x034 */ std::int32_t maxItems;
@@ -50,6 +63,13 @@ namespace CKPE::Fallout4::EditorAPI::NiAPI
 	class NiAlphaAccumulator : public NiBackToFrontAccumulator
 	{
 	public:
+		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
+		/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
+		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1D */ virtual bool RegisterStreamables(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1E */ virtual void SaveBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1F */ virtual bool IsEqual(NiAPI::NiObject* Object) noexcept(true) override;
 		/* 0x050 */ bool observeNoSortHint;
 		/* 0x051 */ bool sortByClosestPoint;
 		/* 0x052 */ bool interfaceSort;

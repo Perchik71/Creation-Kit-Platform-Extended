@@ -13,6 +13,13 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkShape : public bhkRefObject
 	{
 	public:
+		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
+		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1D */ virtual bool RegisterStreamables(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1E */ virtual void SaveBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1F */ virtual bool IsEqual(NiAPI::NiObject* Object) noexcept(true) override;
+		/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
 		/* 0x020 */ std::uint32_t Material;
 		/* 0x024 */ std::uint8_t pad024[0x4];
 
@@ -74,6 +81,13 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkListShape : public bhkShapeCollection
 	{
 	public:
+		/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
+		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1D */ virtual bool RegisterStreamables(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1E */ virtual void SaveBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
+		/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
 		/* 0x028 */ std::uint8_t unk028[0x8];
 	};
 	static_assert(sizeof(bhkListShape) == 0x30);
@@ -88,6 +102,14 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkCompressedMeshShape : public bhkShapeCollection
 	{
 	public:
+		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
+		/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
+		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1D */ virtual bool RegisterStreamables(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1E */ virtual void SaveBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1F */ virtual bool IsEqual(NiAPI::NiObject* Object) noexcept(true) override;
+		/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
 		/* 0x028 */ std::uint8_t unk028[0x8];
 	};
 	static_assert(sizeof(bhkCompressedMeshShape) == 0x30);
@@ -96,6 +118,12 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkCompressedMeshShapeData : public NiAPI::NiObject
 	{
 	public:
+		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
+		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1D */ virtual bool RegisterStreamables(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1E */ virtual void SaveBinary(NiAPI::NiStream& Stream) noexcept(true) override;
+		/* 1F */ virtual bool IsEqual(NiAPI::NiObject* Object) noexcept(true) override;
 		/* 0x010 */ std::uint8_t unk010[0x100];
 	};
 	static_assert(sizeof(bhkCompressedMeshShapeData) == 0x110);

@@ -28,6 +28,11 @@ namespace CKPE
 				{
 				public:
 					virtual ~BGSTextureSet() = default;
+					/* 15 */ virtual bhkNiCollisionObject* IsBhkNiCollisionObject() noexcept(true) override;
+					/* 16 */ virtual bhkBlendCollisionObject* IsBhkBlendCollisionObject() noexcept(true) override;
+					/* 17 */ virtual bhkRigidBody* IsBhkRigidBody() noexcept(true) override;
+					/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
+					/* 22 */ virtual void PostLinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
 
 					/* 0A8 */ void InitializeData() override;
 					/* 0B0 */ void ClearData() override;

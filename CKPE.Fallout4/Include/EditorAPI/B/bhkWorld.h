@@ -17,6 +17,8 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkWorld : public NiAPI::NiObject
 	{
 	public:
+		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
+		/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
 		/* 2A */ virtual bool Update(std::uint32_t UpdateFlags);
 		/* 2B */ virtual void Init(const hknpWorldCinfo& Info);
 
@@ -40,6 +42,8 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkMigrationWorld : public bhkRefObject
 	{
 	public:
+		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
+		/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
 		/* 38 */ virtual void UnkMigrationWorld38();
 		/* 39 */ virtual void UnkMigrationWorld39();
 

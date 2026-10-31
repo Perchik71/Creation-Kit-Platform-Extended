@@ -21,6 +21,15 @@ namespace CKPE
 			class BSFadeNode : public NiAPI::NiNode
 			{
 			public:
+				/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
+				/* 06 */ virtual BSFadeNode* IsFadeNode() noexcept(true) override;
+				/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
+				/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
+				/* 32 */ virtual void UpdateDownwardPass(NiAPI::NiUpdateData& Data, std::uint32_t Flags) noexcept(true) override;
+				/* 33 */ virtual void UpdateSelectedDownwardPass(NiAPI::NiUpdateData& Data, std::uint32_t Flags) noexcept(true) override;
+				/* 37 */ virtual void UpdateTransformAndBounds(NiAPI::NiUpdateData& Data) noexcept(true) override;
+				/* 3B */ virtual void OnVisible(NiAPI::NiCullingProcess& Culler) noexcept(true) override;
+				/* 44 */ virtual void UpdateUpwardPass(NiAPI::NiUpdateData& Data) noexcept(true) override;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BSShaderMaterial[0];
 
 				struct FlattenedGeometryData
