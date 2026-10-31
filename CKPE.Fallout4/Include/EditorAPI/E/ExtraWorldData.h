@@ -141,7 +141,8 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kWaterCurrentZoneData };
 		ExtraWaterCurrentZoneData() = delete;
 		/* 0x018 */ std::uint8_t unk18[0x0C];
-		/* 0x024 */ std::uint64_t unk24;
+		/* 0x024 */ std::uint32_t unk24;
+		/* 0x028 */ std::uint32_t unk28;
 		/* 0x02C */ std::uint32_t unk2C;
 		/* 0x030 */ std::uint64_t unk30;
 		/* 0x038 */ std::uint32_t unk38;
@@ -175,7 +176,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kLitWaterRefs };
 		ExtraLitWaterRefs() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x10];
+		/* 0x018 */ std::uint8_t unk18[0x10]; // a BSSimpleList {item, next}; the destructor clears it node by node
 	};
 	static_assert(sizeof(ExtraLitWaterRefs) == 0x28);
 	static_assert(offsetof(ExtraLitWaterRefs, unk18) == 0x18);

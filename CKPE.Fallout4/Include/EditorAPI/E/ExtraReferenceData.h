@@ -285,7 +285,8 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kAttachRefChildren };
 		ExtraAttachRefChildren() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x58];
+		/* 0x018 */ std::uint8_t unk18[0x48];
+		/* 0x060 */ std::uint8_t unk60[0x10]; // a BSSimpleList {item, next}, the only member the destructor releases
 	};
 	static_assert(sizeof(ExtraAttachRefChildren) == 0x70);
 	static_assert(offsetof(ExtraAttachRefChildren, unk18) == 0x18);

@@ -252,7 +252,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kIgnoredAttractKeywords };
 		ExtraIgnoredAttractKeywords() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x18];
+		/* 0x018 */ std::uint8_t unk18[0x18]; // a 0x18 byte BSTArray (buffer, capacity, size) of trivially destructible elements, freed by the destructor
 	};
 	static_assert(sizeof(ExtraIgnoredAttractKeywords) == 0x30);
 	static_assert(offsetof(ExtraIgnoredAttractKeywords, unk18) == 0x18);
@@ -375,8 +375,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kPromotedRef };
 		ExtraPromotedRef() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x10];
-		/* 0x028 */ std::uint8_t unk28[0x08];
+		/* 0x018 */ std::uint8_t unk18[0x18]; // a 0x18 byte BSTArray (buffer, capacity, size) of trivially destructible elements, freed by the destructor
 	};
 	static_assert(sizeof(ExtraPromotedRef) == 0x30);
 	static_assert(offsetof(ExtraPromotedRef, unk18) == 0x18);

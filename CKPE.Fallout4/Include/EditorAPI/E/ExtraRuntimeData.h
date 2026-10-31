@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/E/ExtraDataTypes.h>
+#include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/B/BSFixedString.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -241,7 +243,8 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kObjectInstance };
 		BGSObjectInstanceExtra() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x10];
+		/* 0x018 */ void* unk18; // pointer to a 0x10 byte heap object {buffer pointer, 32 bit count}; the destructor frees the buffer and the object
+		/* 0x020 */ std::uint64_t unk20;
 	};
 	static_assert(sizeof(BGSObjectInstanceExtra) == 0x28);
 	static_assert(offsetof(BGSObjectInstanceExtra, unk18) == 0x18);
@@ -380,10 +383,12 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kSavedDynamicIdles };
 		ExtraObjectSavedDynamicIdles() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x20];
+		/* 0x018 */ BSTArray<BSFixedString> idles; // destructor releases each 8-byte string, then frees the buffer
+		/* 0x030 */ BSFixedString unk30; // released by the destructor
 	};
 	static_assert(sizeof(ExtraObjectSavedDynamicIdles) == 0x38);
-	static_assert(offsetof(ExtraObjectSavedDynamicIdles, unk18) == 0x18);
+	static_assert(offsetof(ExtraObjectSavedDynamicIdles, idles) == 0x18);
+	static_assert(offsetof(ExtraObjectSavedDynamicIdles, unk30) == 0x30);
 
 	class ExtraObjectSavedUnrecoverableSubgraphs : public BSExtraData
 	{
