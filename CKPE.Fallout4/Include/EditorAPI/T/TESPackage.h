@@ -61,6 +61,27 @@ namespace CKPE
 				public:
 					virtual ~TESPackage() = default;
 
+					/* 0A8 */ void InitializeData() override;
+					/* 0B0 */ void ClearData() override;
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 210 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 278 */ void GetObjectWindowTreePath(BSString& Path) const noexcept(true) override;
+					/* 288 */ bool CanCheckOutChildren() noexcept(true) override;
+					/* 290 */ bool CheckOutChildren(TESBitArrayFile* UserFile, TESBitArrayFile* VersionFile) noexcept(true) override;
+					/* 2A0 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
+					/* 2A8 */ [[nodiscard]] bool CanCheckIn(const CheckInFormList* Forms) const noexcept(true) override;
+					/* 2B0 */ void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true) override;
+					/* 2F8 */ [[nodiscard]] bool HasRequiredEditorID() const noexcept(true) override;
+					/* 308 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult) noexcept(true) override;
+					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 338 */ void OnDialogFormSaved(HWND hDialogBox, TESForm* SavedForm) noexcept(true) override;
+					/* 3A0 */ [[nodiscard]] const char* GetObjectTypeName() const noexcept(true) override;
+
 					constexpr static std::uint8_t TYPE_ID = ftPackage;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESPackage[0];
 				public:

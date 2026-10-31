@@ -44,6 +44,17 @@ namespace CKPE
 				public:
 					virtual ~TESGrass() = default;
 
+					/* 0A8 */ void InitializeData() override;
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 210 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 308 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult) noexcept(true) override;
+					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
+					// Plus 3 virtual(s) beyond the base class vtable (157 slots, base 154), not named yet.
+
 					constexpr static std::uint8_t TYPE_ID = ftGrass;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESGrass[0];
 

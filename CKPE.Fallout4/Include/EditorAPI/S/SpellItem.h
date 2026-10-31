@@ -46,6 +46,17 @@ namespace CKPE
 				public:
 					virtual ~SpellItem() = default;
 
+					/* 0A8 */ void InitializeData() override;
+					/* 0B0 */ void ClearData() override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 278 */ void GetObjectWindowTreePath(BSString& Path) const noexcept(true) override;
+					/* 2A0 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
+					/* 2A8 */ [[nodiscard]] bool CanCheckIn(const CheckInFormList* Forms) const noexcept(true) override;
+					/* 2B0 */ void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true) override;
+					/* 308 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult) noexcept(true) override;
+					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+
 					constexpr static std::uint8_t TYPE_ID = ftSpell;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::SpellItem[0];
 				public:

@@ -35,6 +35,13 @@ namespace CKPE
 
 					virtual ~BGSDefaultObjectManager() = default;
 
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 2A0 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
+					/* 2A8 */ [[nodiscard]] bool CanCheckIn(const CheckInFormList* Forms) const noexcept(true) override;
+					/* 2B0 */ void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true) override;
+
 				public:
 					// Load stores form IDs here until InitItemImpl resolves them.
 					/* 0x028 */ TESForm* objects[DEFAULT_OBJECT_COUNT];

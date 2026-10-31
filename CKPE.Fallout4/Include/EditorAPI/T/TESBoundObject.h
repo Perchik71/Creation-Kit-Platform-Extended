@@ -45,6 +45,21 @@ namespace CKPE
 
 					// CK 1.11.246.0: 154 virtuals, vtable RVA 0x30920B8.
 					virtual ~TESBoundObject() = default;
+
+					/* 1B0 */ void SaveObjectBound() override;
+					/* 1B8 */ void LoadObjectBound(TESFile* pFile) override;
+					/* 1C0 */ void SavePreviewTransform() override;
+					/* 1C8 */ void LoadPreviewTransform(TESFile* pFile) override;
+					/* 1D0 */ [[nodiscard]] bool IsBoundObject() const noexcept(true) override;
+					/* 200 */ std::uint32_t GetRefCount() const noexcept(true) override;
+					/* 3B0 */ [[nodiscard]] BGSMod::Template::Items* GetObjectTemplate() const noexcept(true) override;
+					/* 3B8 */ [[nodiscard]] BGSPreviewTransform* GetPreviewTransform() const noexcept(true) override;
+					/* 3C0 */ [[nodiscard]] BGSSoundTagComponent* GetSoundTagComponent() const noexcept(true) override;
+					/* 400 */ void Clone3D(TESObjectREFR* pRequester, NiAPI::NiPointer<NiAPI::NiAVObject>* pObj3D, bool bBackground) noexcept(true) override;
+					/* 420 */ bool ReplaceModel() noexcept(true) override;
+					/* 428 */ std::uint32_t IncRef() noexcept(true) override;
+					/* 430 */ std::uint32_t DecRef() noexcept(true) override;
+					// Plus 18 virtual(s) beyond the base class vtable (154 slots, base 136), not named yet.
 					virtual TBO_InstanceData* CreateInstanceData(const TBO_InstanceData* pData) const noexcept(true) { return nullptr; } // 136 - RVA 0x436870
 					virtual const TBO_InstanceData* GetBaseInstanceData() const noexcept(true) { return nullptr; } // 137 - RVA 0x4368B0
 					virtual bool GetAttachedMarkersVisible(void* pObj3D) const noexcept(true) { return false; } // 138 - RVA 0xC5A210

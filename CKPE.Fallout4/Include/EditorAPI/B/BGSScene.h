@@ -26,6 +26,7 @@ namespace CKPE
 				class BGSSoundOutput;
 
 				class BGSSceneAction;
+					class BGSScene;
 
 				// 1.11.246.0: size 0x80, created per HNAM chunk (constructor 0x140A56D60); the game's BGSScenePhase is 0x18 bytes. The two
 				// condition lists are the start and completion conditions, in the game's order.
@@ -39,8 +40,8 @@ namespace CKPE
 					std::uint32_t unk20; // 20
 					std::uint32_t pad24; // 24
 					std::uint32_t unk28; // 28 - a global default
-					std::int32_t unk2C; // 2C - -1 on construction
-					std::uint64_t unk30; // 30
+					std::int32_t index; // 2C - -1 on construction; Load sets it to the scene's phases.size before appending
+					BGSScene* owner; // 30 - Load stores the scene here (the embedded phase gets it from the BGSScene constructor)
 					std::uint64_t unk38; // 38
 					std::int16_t unk40; // 40 - -1 on construction
 					std::int16_t unk42; // 42 - -1 on construction
@@ -62,6 +63,27 @@ namespace CKPE
 				public:
 					virtual ~BGSScene() = default;
 
+					/* 0B0 */ void ClearData() override;
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 0F0 */ [[nodiscard]] bool IsBeforeGroup(const TESGroupHeader* GroupRecord) const noexcept(true) override;
+					/* 0F8 */ [[nodiscard]] bool IsBeforeForm(TESForm* Rhs) const noexcept(true) override;
+					/* 100 */ TESForm* CreateDuplicateForm(bool bCreateEditorID, BSTHashMap<TESForm*, TESForm*>* CopyMap) override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 1A0 */ void MarkAsChanged(bool bValue) noexcept(true) override;
+					/* 210 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 220 */ bool BelongsInGroup(TESGroupHeader* Group, bool bAllowParentGroups, bool bCurrentOnly) override;
+					/* 228 */ void CreateGroupData(TESGroupHeader* OutGroup, TESGroupHeader* ParentGroup) override;
+					/* 288 */ bool CanCheckOutChildren() noexcept(true) override;
+					/* 298 */ bool MarkChildFormsAsDeleted(bool bValue, TESBitArrayFile* UserFile, TESBitArrayFile* VersionFile) noexcept(true) override;
+					/* 2A0 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
+					/* 2A8 */ [[nodiscard]] bool CanCheckIn(const CheckInFormList* Forms) const noexcept(true) override;
+					/* 2B0 */ void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true) override;
+					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 338 */ void OnDialogFormSaved(HWND hDialogBox, TESForm* SavedForm) noexcept(true) override;
+
 					constexpr static std::uint8_t TYPE_ID = ftScene;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSScene[0];
 				public:
@@ -77,10 +99,7 @@ namespace CKPE
 					std::uint32_t flags; // C0
 					std::uint32_t unkC4; // C4
 					std::uint8_t repeatConditions[0x18]; // C8 - TESCondition (0x18 in the CK)
-					std::uint8_t unkE0[0x2C]; // E0
-					std::uint32_t unk10C; // 10C
-					std::uint64_t unk110; // 110
-					std::uint8_t unk118[0x48]; // 118
+					BGSScenePhase phase; // E0 - constructed in place by the BGSScene constructor (0x80 bytes, index -1, owner = this)
 					// Embedded BGSSceneActionDialogue (0x160-0x1E7, vtable BGSSceneActionDialogue installed by the constructor). The CK scene action base
 					// is 0x30 bytes (the game's is 0x20); the dialogue members then follow CommonLibF4's BGSSceneActionDialogue (topic, loop times,
 					// head track targets, loop timer, keywords, output model) shifted by 0x170.
@@ -105,19 +124,22 @@ namespace CKPE
 					std::uint8_t unk1E2; // 1E2
 					std::uint8_t unk1E3[0x5]; // 1E3
 					BGSKeywordForm* keywordForm; // 1E8 - allocated in the constructor (KSIZ chunk)
-					std::uint16_t unk1F0; // 1F0
-					std::uint16_t unk1F2; // 1F2
-					std::uint32_t unk1F4; // 1F4
-					std::uint32_t unk1F8; // 1F8
-					std::uint32_t unk1FC; // 1FC
-					std::uint64_t unk200; // 200
-					std::uint64_t unk208; // 208
-					std::uint64_t unk210; // 210
-					std::uint64_t unk218; // 218
-					std::uint64_t unk220; // 220
-					std::uint16_t unk228; // 228
+					std::int16_t unk1F0; // 1F0 - -1 on construction
+					std::int16_t unk1F2; // 1F2 - -1 on construction
+					std::uint32_t unk1F4; // 1F4 - 3 on construction; 1F4-207 is one 0x14 byte block that CopyFrom copies and Compare tests
+					std::uint32_t unk1F8; // 1F8 - 3 on construction
+					std::uint32_t unk1FC; // 1FC - 3 on construction
+					std::uint32_t unk200; // 200 - 3 on construction
+					std::uint32_t unk204; // 204 - 0 on construction
+					void* unk208; // 208 - pointee holds a smart pointer at +0x48 that Compare reads, skipped when unk228 is set
+					void* unk210; // 210 - as 208, skipped when unk229 is set
+					std::uint64_t unk218; // 218 - null on construction
+					void* unk220; // 220 - reference counted object (count at +0), read by Compare
+					std::uint8_t unk228; // 228 - 0 on construction
+					std::uint8_t unk229; // 229
 					std::uint8_t unk22A[0x6]; // 22A
 				};
+				static_assert(offsetof(BGSScene, phase) == 0xE0);
 				static_assert(offsetof(BGSScene, dialogueActionVTable) == 0x160);
 				static_assert(offsetof(BGSScene, headTrackTargets) == 0x1A0);
 				static_assert(offsetof(BGSScene, keywordForm) == 0x1E8);

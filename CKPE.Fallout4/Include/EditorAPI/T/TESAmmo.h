@@ -55,6 +55,27 @@ namespace CKPE
 				public:
 					virtual ~TESAmmo() = default;
 
+					/* 0A8 */ void InitializeData() override;
+					/* 0B0 */ void ClearData() override;
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 140 */ [[nodiscard]] bool HasPlayable() const noexcept(true) override;
+					/* 210 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 2A0 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
+					/* 2B0 */ void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true) override;
+					/* 2B8 */ void GetReferencedForms(BSTBTree<TESForm*>* OutForms) const noexcept(true) override;
+					/* 308 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult) noexcept(true) override;
+					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
+					/* 3D0 */ [[nodiscard]] std::uint32_t GetFilledSlotsImpl() const noexcept(true) override;
+					/* 3D8 */ [[nodiscard]] float GetDesirability() const noexcept(true) override;
+					/* 400 */ void Clone3D(TESObjectREFR* pRequester, NiAPI::NiPointer<NiAPI::NiAVObject>* pObj3D, bool bBackground) noexcept(true) override;
+					/* 460 */ bool QSupportsCountPerInstance() const noexcept(true) override;
+					/* 4A8 */ void HandleRemoveItemFromContainer(TESObjectREFR* Reference) noexcept(true) override;
+
 					constexpr static std::uint8_t TYPE_ID = ftAmmo;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESAmmo[0];
 				public:

@@ -29,6 +29,17 @@ namespace CKPE
 				public:
 					virtual ~TESRegion() = default;
 
+					/* 0B0 */ void ClearData() override;
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 2A0 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
+					/* 2A8 */ [[nodiscard]] bool CanCheckIn(const CheckInFormList* Forms) const noexcept(true) override;
+					/* 2B0 */ void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true) override;
+					/* 2E0 */ bool Revert() noexcept(true) override;
+					/* 2E8 */ void OnFormIDsRemapped(BSTHashMap<std::uint32_t, std::uint32_t>* FormIDMap) noexcept(true) override;
+					// Plus 2 virtual(s) beyond the base class vtable (126 slots, base 124), not named yet.
+
 					constexpr static std::uint8_t TYPE_ID = ftRegion;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegion[0];
 

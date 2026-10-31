@@ -24,6 +24,15 @@ namespace CKPE
 				public:
 					virtual ~BGSStoryManagerNodeBase() = default;
 
+					/* 0A8 */ void InitializeData() override;
+					/* 0B0 */ void ClearData() override;
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 210 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					// Plus 7 virtual(s) beyond the base class vtable (135 slots, base 128), not named yet.
+
 					constexpr static std::uint8_t TYPE_ID = ftReserved000;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSStoryManagerNodeBase[0];
 

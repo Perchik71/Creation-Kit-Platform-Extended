@@ -24,6 +24,12 @@ namespace CKPE
 				public:
 					virtual ~TESFlora() = default;
 
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 210 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+
 					constexpr static std::uint8_t TYPE_ID = ftFlora;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESFlora[0];
 				};

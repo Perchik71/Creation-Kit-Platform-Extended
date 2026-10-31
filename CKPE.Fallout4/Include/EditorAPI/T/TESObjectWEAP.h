@@ -143,6 +143,31 @@ namespace CKPE
 				public:
 					virtual ~TESObjectWEAP() = default;
 
+					/* 0A8 */ void InitializeData() override;
+					/* 0B0 */ void ClearData() override;
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 118 */ [[nodiscard]] TESFile* GetDescriptionOwnerFile() const noexcept(true) override;
+					/* 140 */ [[nodiscard]] bool HasPlayable() const noexcept(true) override;
+					/* 210 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 278 */ void GetObjectWindowTreePath(BSString& Path) const noexcept(true) override;
+					/* 2A0 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
+					/* 2B0 */ void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true) override;
+					/* 2B8 */ void GetReferencedForms(BSTBTree<TESForm*>* OutForms) const noexcept(true) override;
+					/* 308 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult) noexcept(true) override;
+					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 338 */ void OnDialogFormSaved(HWND hDialogBox, TESForm* SavedForm) noexcept(true) override;
+					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
+					/* 3A0 */ [[nodiscard]] const char* GetObjectTypeName() const noexcept(true) override;
+					/* 3D0 */ [[nodiscard]] std::uint32_t GetFilledSlotsImpl() const noexcept(true) override;
+					/* 3D8 */ [[nodiscard]] float GetDesirability() const noexcept(true) override;
+					/* 440 */ TBO_InstanceData* CreateInstanceData(const TBO_InstanceData* pData) const noexcept(true) override;
+					/* 448 */ const TBO_InstanceData* GetBaseInstanceData() const noexcept(true) override;
+
 					constexpr static std::uint8_t TYPE_ID = ftWeapon;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectWEAP[0];
 				public:
@@ -153,10 +178,14 @@ namespace CKPE
 					BGSAttachParentArray attachParents; // 368
 					std::int32_t unk388; // 388 - 2 on InitializeData/ClearData
 					std::uint32_t unk38C; // 38C
-					std::uint64_t unk390; // 390
-					std::uint32_t unk398; // 398
+					std::uint64_t unk390; // 390 - only cleared by the constructor
+					std::uint32_t unk398; // 398 - only cleared by the constructor
 					std::uint32_t unk39C; // 39C
-					std::uint8_t unk3A0[0x10]; // 3A0
+					std::uint8_t unk3A0; // 3A0 - 0 on construction (16-byte member initialised by a small constructor: bytes 0,1,1, then a null pointer at 3A8)
+					std::uint8_t unk3A1; // 3A1 - 1 on construction
+					std::uint8_t unk3A2; // 3A2 - 1 on construction
+					std::uint8_t pad3A3[0x5]; // 3A3
+					void* unk3A8; // 3A8 - null on construction
 				};
 				static_assert(sizeof(TESObjectWEAP) == 0x3B0);
 			}

@@ -24,6 +24,10 @@ namespace CKPE
 				public:
 					virtual ~NavMeshObstacleCoverManager() = default;
 
+					/* 0B0 */ void ClearData() override;
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+
 				public:
 					std::uint8_t unk28[0xC]; // 28
 					std::uint8_t unk34[0x8]; // 34
