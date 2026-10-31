@@ -32,9 +32,9 @@ namespace CKPE
 							offsetof(NiTexture, _NextTexture) == 0x28 &&
 							offsetof(NiTexture, _RendererTexture) == 0x38;
 					}
+					// Returns null here; the BSTextureArray::Texture and MasterTexture overrides return this.
+					/* 2A */ [[nodiscard]] virtual void* IsBSTextureArray() noexcept(true);
 				private:
-					// Likely texture-array cast; the base returns null.
-					/* 0x150 */ virtual void sub_150();
 
 					BSFixedString _FileName;			// 10
 					std::uint32_t _Flags;			// 18

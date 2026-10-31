@@ -25,15 +25,18 @@ namespace CKPE
 				class TESRegion;
 			}
 
+			class Sky;
+
 			class SkyObject
 			{
 			public:
 				virtual ~SkyObject();
 				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
 				{ return offsetof(SkyObject, _Object) == 0x8; }
+				// Returns _Object, the node the sky object hangs under the sky root
+				/* 0x008 */ virtual NiAPI::NiNode* GetRoot();
+				/* 0x010 */ virtual void Update(Sky* Owner, float Delta);
 			protected:
-				/* 0x008 */ virtual void sub_008();
-				/* 0x010 */ virtual void sub_010();
 
 				/* 0x008 */ NiAPI::NiPointer<NiAPI::NiRefObject> _Object;
 			};
