@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstddef>
+#include <cstdint>
 #include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/N/NiPoint.h>
 
@@ -30,13 +31,15 @@ namespace CKPE
 				/* 0x008 */ virtual void sub_008();
 				/* 0x010 */ virtual void sub_010();
 				/* 0x018 */ virtual void sub_018();
-				/* 0x020 */ virtual void sub_020();
-				/* 0x028 */ virtual void sub_028();
-				/* 0x030 */ virtual void sub_030();
-				/* 0x038 */ virtual void sub_038();
-				/* 0x040 */ virtual void sub_040();
-				/* 0x048 */ virtual void sub_048();
-				/* 0x050 */ virtual void sub_050();
+public:
+				/* 0x020 */ virtual void HandleKey(std::uint8_t key); // shift (16) clears a flag, escape (27) cancels the current mode
+				/* 0x028 */ virtual bool MovePlusY(); // passes a 2048 unit offset along +Y to the helper on the renderer member at 0xC0, returns true
+				/* 0x030 */ virtual bool MoveMinusY(); // passes a 2048 unit offset along -Y to the helper on the renderer member at 0xC0, returns true
+				/* 0x038 */ virtual bool MoveMinusX(); // passes a 2048 unit offset along -X to the helper on the renderer member at 0xC0, returns true
+				/* 0x040 */ virtual bool MovePlusX(); // passes a 2048 unit offset along +X to the helper on the renderer member at 0xC0, returns true
+				/* 0x048 */ virtual bool MovePlusZ(); // passes a 2048 unit offset along +Z to the helper on the renderer member at 0xC0, returns true
+				/* 0x050 */ virtual bool MoveMinusZ(); // passes a 2048 unit offset along -Z to the helper on the renderer member at 0xC0, returns true
+private:
 				/* 0x058 */ virtual void sub_058();
 				/* 0x060 */ virtual void sub_060();
 				/* 0x068 */ virtual void sub_068();
@@ -94,7 +97,9 @@ namespace CKPE
 				/* 0x208 */ virtual void sub_208();
 				/* 0x210 */ virtual void sub_210();
 				/* 0x218 */ virtual void sub_218();
-				/* 0x220 */ virtual void sub_220();
+public:
+				/* 0x220 */ [[nodiscard]] virtual bool IsModeActive() const; // the mode value at 0x1C is greater than 2
+private:
 				/* 0x228 */ virtual void sub_228();
 				/* 0x230 */ virtual void sub_230();
 				/* 0x238 */ virtual void sub_238();
