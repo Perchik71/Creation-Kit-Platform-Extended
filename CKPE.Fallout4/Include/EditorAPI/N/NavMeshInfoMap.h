@@ -28,6 +28,16 @@ namespace CKPE
 				public:
 					virtual ~NavMeshInfoMap() = default;
 
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0C8 */ void LoadEdit(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 0F8 */ [[nodiscard]] bool IsBeforeForm(TESForm* Rhs) const noexcept(true) override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 1A0 */ void MarkAsChanged(bool bValue) noexcept(true) override;
+					/* 2A8 */ [[nodiscard]] bool CanCheckIn(const CheckInFormList* Forms) const noexcept(true) override;
+					/* 2E0 */ bool Revert() noexcept(true) override;
+					/* 2E8 */ void OnFormIDsRemapped(BSTHashMap<std::uint32_t, std::uint32_t>* FormIDMap) noexcept(true) override;
+
 				public:
 					std::uint8_t pad30[0x8]; // 30
 					std::uint8_t unk38[0x8]; // 38

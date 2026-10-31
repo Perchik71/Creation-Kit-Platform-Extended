@@ -34,6 +34,9 @@ namespace CKPE
 				public:
 					virtual ~TESObject() = default;
 
+					/* 1D8 */ [[nodiscard]] bool IsObject() const noexcept(true) override;
+					/* 200 */ std::uint32_t GetRefCount() const noexcept(true) override;
+
 					constexpr static std::uint8_t TYPE_ID = ftReserved000;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObject[0];
 

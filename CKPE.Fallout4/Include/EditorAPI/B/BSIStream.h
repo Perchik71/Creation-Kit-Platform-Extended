@@ -6,6 +6,7 @@
 
 #include <EditorAPI/B/BSResourceArchive2.h>
 #include <EditorAPI/N/NiPointer.h>
+#include <CKPE.Common.Relocation.h>
 
 namespace CKPE
 {
@@ -24,6 +25,15 @@ namespace CKPE
 					/* 0x018 */ BSFixedString fileName;
 				public:
 					virtual ~BSIStream();
+
+					// BSIStream::BSIStream: opens the resource and sets the BSIStream vtable.
+					// CK 1.11.246.0 0x14261D020.
+					inline BSIStream* Construct(const char* Name, std::uint32_t Flags, bool Unk) noexcept(true)
+					{
+						using func_t = decltype(&BSIStream::Construct);
+						static CKPE::Common::Relocation<func_t> func{ CKPE::Common::ID{ 774104, 1569121 } };
+						return func(this, Name, Flags, Unk);
+					}
 
 					inline void NewStream(BSResource::Archive2::OG_NG::ReaderStream* s) { Stream = s; }
 					[[nodiscard]] inline const BSResource::OG_NG::Stream* GetStream() const noexcept(true) { return Stream; }
@@ -51,6 +61,15 @@ namespace CKPE
 					/* 0x018 */ BSFixedString fileName;
 				public:
 					virtual ~BSIStream();
+
+					// BSIStream::BSIStream: opens the resource and sets the BSIStream vtable.
+					// CK 1.11.246.0 0x14261D020.
+					inline BSIStream* Construct(const char* Name, std::uint32_t Flags, bool Unk) noexcept(true)
+					{
+						using func_t = decltype(&BSIStream::Construct);
+						static CKPE::Common::Relocation<func_t> func{ CKPE::Common::ID{ 774104, 1569121 } };
+						return func(this, Name, Flags, Unk);
+					}
 
 					inline void NewStream(BSResource::Archive2::AE::ReaderStream* s) { Stream = s; }
 					[[nodiscard]] inline const BSResource::AE::Stream* GetStream() const noexcept(true) { return Stream; }

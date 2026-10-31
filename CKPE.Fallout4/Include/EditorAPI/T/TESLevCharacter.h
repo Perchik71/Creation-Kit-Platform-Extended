@@ -25,6 +25,15 @@ namespace CKPE
 				{
 				public:
 					virtual ~TESLevCharacter() = default;
+
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 210 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 308 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult) noexcept(true) override;
+					/* 408 */ void UnClone3D(void* pRequester) noexcept(true) override;
+					/* 480 */ void Clone3D(TESObjectREFR* pRequester, NiAPI::NiPointer<NiAPI::NiAVObject>* pObj3D) noexcept(true) override;
+					/* 4A0 */ void CollectVoiceTypes(BSSimpleList<BGSVoiceType*>* VoiceTypes) const noexcept(true) override;
 					
 					constexpr static std::uint8_t TYPE_ID = ftLevelCharacter;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESLevCharacter[0];

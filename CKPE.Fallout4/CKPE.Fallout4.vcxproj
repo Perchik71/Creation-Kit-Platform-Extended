@@ -396,6 +396,14 @@
     <ClInclude Include="Include\EditorAPI\B\BSEntryString.h" />
     <ClInclude Include="Include\EditorAPI\B\BSExtraData.h" />
     <ClInclude Include="Include\EditorAPI\B\BSFaceGenUtils.h" />
+    <ClInclude Include="Include\EditorAPI\C\CellViewWindow.h" />
+    <ClInclude Include="Include\EditorAPI\O\ObjectWindow.h" />
+    <ClInclude Include="Include\EditorAPI\P\ProgressWindow.h" />
+    <ClInclude Include="Include\EditorAPI\M\MainWindow.h" />
+    <ClInclude Include="Include\EditorAPI\U\UIControlPopulate.h" />
+    <ClInclude Include="Include\EditorAPI\D\DialogHelpers.h" />
+    <ClInclude Include="Include\EditorAPI\S\SortCallbacks.h" />
+    <ClInclude Include="Include\EditorAPI\R\RenderWindowManager.h" />
     <ClInclude Include="Include\EditorAPI\B\BSFadeNode.h" />
     <ClInclude Include="Include\EditorAPI\B\BSFile.h" />
     <ClInclude Include="Include\EditorAPI\B\BSFixedString.h" />
@@ -469,6 +477,10 @@
     <ClInclude Include="Include\EditorAPI\T\TESDescription.h" />
     <ClInclude Include="Include\EditorAPI\T\TESFile.h" />
     <ClInclude Include="Include\EditorAPI\T\TESRegionDataManager.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESRegionData.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESRegionObject.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESWeatherList.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESWaterObject.h" />
     <ClInclude Include="Include\EditorAPI\T\TESVersionControl.h" />
     <ClInclude Include="Include\EditorAPI\T\TESForm.h" />
     <ClInclude Include="Include\EditorAPI\T\TESFullName.h" />

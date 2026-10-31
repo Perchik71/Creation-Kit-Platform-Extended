@@ -49,6 +49,11 @@ namespace CKPE
 				public:
 					virtual ~TESActorBase() = default;
 
+					/* 3F0 */ bool IsAutoCalc() const noexcept(true) override;
+					/* 3F8 */ void SetAutoCalc(bool bAutoCalc) noexcept(true) override;
+					/* 498 */ void CollectInventoryItems(TESContainer* Inventory, std::uint16_t Level, const ContainerItemExtra* ExtraData) noexcept(true) override;
+					/* 4A0 */ void CollectVoiceTypes(BSSimpleList<BGSVoiceType*>* VoiceTypes) const noexcept(true) override;
+
 					constexpr static std::uint8_t TYPE_ID = ftReserved000;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESActorBase[0];
 

@@ -23,6 +23,16 @@ namespace CKPE
 				public:
 					virtual ~BGSStoryManagerEventNode() = default;
 
+					/* 0A8 */ void InitializeData() override;
+					/* 0B0 */ void ClearData() override;
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 210 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 238 */ [[nodiscard]] const char* GetFormEditorID() const override;
+					/* 308 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult) noexcept(true) override;
+					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+
 					constexpr static std::uint8_t TYPE_ID = ftStoryManagerEventNode;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSStoryManagerEventNode[0];
 				public:

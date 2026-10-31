@@ -8,6 +8,7 @@
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESModel.h>
 #include <EditorAPI/T/TESTexture.h>
+#include <EditorAPI/T/TESWeatherList.h>
 
 namespace CKPE
 {
@@ -24,12 +25,25 @@ namespace CKPE
 				public:
 					virtual ~TESClimate() = default;
 
+					/* 0A8 */ void InitializeData() override;
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 210 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 2A0 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
+					/* 2B0 */ void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true) override;
+					/* 2B8 */ void GetReferencedForms(BSTBTree<TESForm*>* OutForms) const noexcept(true) override;
+					/* 308 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult) noexcept(true) override;
+					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
+
 					constexpr static std::uint8_t TYPE_ID = ftClimate;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESClimate[0];
 				public:
 					TESModel nightSky; // 28
-					std::uint8_t weatherList[0x18]; // 60 - TESWeatherList (WLST)
-					std::uint8_t unk78[0x18]; // 78
+					TESWeatherList weatherList; // 60 - WLST
 					TESTexture skyObjects[2]; // 90 - FNAM/GNAM
 					std::uint8_t data[0x6]; // E0 - TNAM
 					std::uint16_t padE6; // E6

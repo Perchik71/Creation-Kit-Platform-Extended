@@ -32,6 +32,9 @@ namespace CKPE
 				public:
 					virtual ~ScrollItem() = default;
 
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+
 					constexpr static std::uint8_t TYPE_ID = ftScroll;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::ScrollItem[0];
 				};

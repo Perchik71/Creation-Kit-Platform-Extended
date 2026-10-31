@@ -47,6 +47,20 @@ namespace CKPE
 				public:
 					virtual ~TESObjectTREE() = default;
 
+					/* 0A8 */ void InitializeData() override;
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 210 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 308 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult) noexcept(true) override;
+					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 420 */ bool ReplaceModel() noexcept(true) override;
+					/* 4B0 */ void OnRemove3D(NiAPI::NiAVObject* Object3D) noexcept(true) override;
+					/* 4B8 */ void OnCheckModels() noexcept(true) override;
+					/* 4C0 */ void OnCopyReference() noexcept(true) override;
+					/* 4C8 */ void OnFinishScale() noexcept(true) override;
+
 					constexpr static std::uint8_t TYPE_ID = ftTree;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectTREE[0];
 				public:

@@ -68,6 +68,29 @@ namespace CKPE
 					};
 
 					virtual ~TESTopic() = default;
+
+					/* 0B8 */ void Load(TESFile* File) override;
+					/* 0D0 */ void Save(TESFile* File) override;
+					/* 0D8 */ bool SavePlugin(TESFile* File) override;
+					/* 0E8 */ bool SaveForm(TESFile* File) override;
+					/* 0F0 */ [[nodiscard]] bool IsBeforeGroup(const TESGroupHeader* GroupRecord) const noexcept(true) override;
+					/* 0F8 */ [[nodiscard]] bool IsBeforeForm(TESForm* Rhs) const noexcept(true) override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 1A0 */ void MarkAsChanged(bool bValue) noexcept(true) override;
+					/* 220 */ bool BelongsInGroup(TESGroupHeader* Group, bool bAllowParentGroups, bool bCurrentOnly) override;
+					/* 228 */ void CreateGroupData(TESGroupHeader* OutGroup, TESGroupHeader* ParentGroup) override;
+					/* 240 */ [[nodiscard]] bool IsParentForm() const noexcept(true) override;
+					/* 250 */ [[nodiscard]] bool IsFormTypeChild(FormType Type) const noexcept(true) override;
+					/* 270 */ [[nodiscard]] bool HasAlteredChildren() const noexcept(true) override;
+					/* 280 */ bool RemoveChildFormsFromList(CheckInFormList* Forms) noexcept(true) override;
+					/* 288 */ bool CanCheckOutChildren() noexcept(true) override;
+					/* 290 */ bool CheckOutChildren(TESBitArrayFile* UserFile, TESBitArrayFile* VersionFile) noexcept(true) override;
+					/* 298 */ bool MarkChildFormsAsDeleted(bool bValue, TESBitArrayFile* UserFile, TESBitArrayFile* VersionFile) noexcept(true) override;
+					/* 2A0 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
+					/* 2A8 */ [[nodiscard]] bool CanCheckIn(const CheckInFormList* Forms) const noexcept(true) override;
+					/* 2B0 */ void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true) override;
+					/* 340 */ void EditFormToWindow(HWND hParentWnd, bool bModalWindow, [[maybe_unused]] bool bReserved, std::int32_t nObjectTemplateRequest) noexcept(true) override;
+					/* 360 */ [[nodiscard]] bool HasRequiredUniqueEditorID() const noexcept(true) override;
 				public:
 					inline const char* GetTopicText() const { return _TopicText.c_str(); }
 					inline SubtypeT GetSubtype() const { return _Subtype; }

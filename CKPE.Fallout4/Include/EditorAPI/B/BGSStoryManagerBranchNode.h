@@ -22,6 +22,10 @@ namespace CKPE
 				public:
 					virtual ~BGSStoryManagerBranchNode() = default;
 
+					/* 0B0 */ void ClearData() override;
+					/* 110 */ void InitItemImpl() noexcept(true) override;
+					/* 298 */ bool MarkChildFormsAsDeleted(bool bValue, TESBitArrayFile* UserFile, TESBitArrayFile* VersionFile) noexcept(true) override;
+
 					constexpr static std::uint8_t TYPE_ID = ftStoryManagerBranchNode;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSStoryManagerBranchNode[0];
 

@@ -269,6 +269,13 @@ namespace CKPE
 				[[nodiscard]] SYSTEMTIME GetModifyTime() const noexcept(true);
 
 				inline static int (*LoadTESInfo)(TESFile*);
+				// The unhooked TESFile::LoadTESInfo. CK 1.11.246.0 0x1408805B0.
+				inline int LoadTESInfoImpl() noexcept(true)
+				{
+					using func_t = decltype(&TESFile::LoadTESInfoImpl);
+					static CKPE::Common::Relocation<func_t> func{ CKPE::Common::ID{ 654208, 1514423 } };
+					return func(this);
+				}
 				inline static __int64 (*WriteTESInfo)(TESFile*);
 				inline static bool AllowSaveESM;
 				inline static bool AllowMasterESP;
