@@ -192,7 +192,7 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		virtual void sub_048() = 0;
 		virtual void sub_050() = 0;
 		virtual void sub_058() = 0;
-		virtual void sub_060() = 0;
+		virtual void InitializeDataListColumns() = 0; // sets the list view columns Name, (blank), Value, Public
 		virtual void sub_068() = 0;
 		virtual void sub_070() = 0;
 		virtual void sub_078() = 0;
@@ -201,9 +201,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		virtual void sub_090() = 0;
 		virtual void sub_098() = 0;
 		virtual void sub_0A0() = 0;
-		virtual void sub_0A8() = 0;
+		virtual void PopulateTreeView() = 0; // clears the tree (TVM_DELETEITEM on the root) and fills it
 		virtual void sub_0B0() = 0;
-		virtual void sub_0B8() = 0;
+		virtual void InitializeDialogControls() = 0; // fills the combo box (control 5315) and the Description / Value columns (control 5307)
 		virtual void sub_0C0() = 0;
 		virtual void sub_0C8() = 0;
 		virtual void sub_0D0() = 0;
@@ -215,7 +215,7 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		virtual void sub_100() = 0;
 		virtual void sub_108() = 0;
 		virtual void sub_110() = 0;
-		virtual void sub_118() = 0;
+		virtual void GetDescriptionText() = 0; // prepends "Package Template (%08X) '%s', " when a template is set, then forwards to the embedded object
 
 	public:
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESCustomPackageData[0];
