@@ -40,13 +40,13 @@ public:
 				/* 0x048 */ virtual bool MovePlusZ(); // passes a 2048 unit offset along +Z to the helper on the renderer member at 0xC0, returns true
 				/* 0x050 */ virtual bool MoveMinusZ(); // passes a 2048 unit offset along -Z to the helper on the renderer member at 0xC0, returns true
 private:
-				/* 0x058 */ virtual void sub_058();
-				/* 0x060 */ virtual void sub_060();
-				/* 0x068 */ virtual void sub_068();
-				/* 0x070 */ virtual void sub_070();
-				/* 0x078 */ virtual void sub_078();
+				/* 0x058 */ virtual void OnLButtonDown(); // render window message handler (WM_* dispatched by the render window procedure), arguments not recovered
+				/* 0x060 */ virtual void OnLButtonUp(); // render window message handler (WM_* dispatched by the render window procedure), arguments not recovered
+				/* 0x068 */ virtual void OnLButtonDoubleClick(); // render window message handler (WM_* dispatched by the render window procedure), arguments not recovered
+				/* 0x070 */ virtual void OnRButtonDown(); // render window message handler (WM_* dispatched by the render window procedure), arguments not recovered
+				/* 0x078 */ virtual void OnRButtonUp(); // render window message handler (WM_* dispatched by the render window procedure), arguments not recovered
 				/* 0x080 */ virtual void sub_080();
-				/* 0x088 */ virtual void sub_088();
+				/* 0x088 */ virtual void OnMouseWheel(); // render window message handler (WM_* dispatched by the render window procedure), arguments not recovered
 				/* 0x090 */ virtual void sub_090();
 				/* 0x098 */ virtual void sub_098();
 				/* 0x0A0 */ virtual void sub_0A0();
