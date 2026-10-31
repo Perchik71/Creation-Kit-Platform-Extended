@@ -100,7 +100,7 @@ namespace CKPE
 				/* 0x018 */ virtual std::uint32_t ComputeCRC32(
 					std::uint32_t Seed, bool Combining) const;
 				// Likely default material; returns a shared material pointer.
-				/* 0x020 */ virtual void sub_020();
+				/* 0x020 */ virtual void GetDefault(); // returns the static default material; name by CommonLibF4 slot order and the body, signature not recovered
 				/* 0x028 */ virtual std::uint32_t GetTypeImpl() const;
 				/* 0x030 */ virtual std::uint32_t GetMaterialTypeImpl() const;
 				/* 0x038 */ virtual void ReceiveValuesFromRootMaterial(
@@ -111,7 +111,7 @@ namespace CKPE
 					const BSShaderMaterial* Material, std::uint64_t Differences,
 					char* Buffer, std::uint32_t BufferSize) const;
 				// Likely material viewer; formats UV and reference-count state.
-				/* 0x050 */ virtual void sub_050();
+				/* 0x050 */ virtual void GetDebugString(); // builds the "BSShaderMaterial: ... TCOffset ... TCScale" text; signature not recovered
 				/* 0x058 */ virtual void sub_058();
 
 				volatile std::uint32_t	_RefCount;				// 08
