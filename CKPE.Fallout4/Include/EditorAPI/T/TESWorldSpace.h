@@ -83,8 +83,8 @@ namespace CKPE
 					std::uint64_t unkC8; // C8 - reference counted polymorphic object (count at +8, released by ClearData)
 					void* unkD0; // D0 - 56 byte heap hash table, freed by ClearData (destructor called on +8)
 					void* unkD8; // D8 - 56 byte heap hash table, freed by ClearData
-					std::uint64_t unkE0; // E0
-					std::uint64_t unkE8; // E8
+					std::uint64_t unkE0; // E0 - only cleared by the constructor
+					std::uint64_t unkE8; // E8 - only cleared by the constructor
 					TESWorldSpace* parentWorld; // F0
 					BGSLightingTemplate* lightingTemplate; // F8
 					TESWaterForm* worldWater; // 100
@@ -102,7 +102,7 @@ namespace CKPE
 					std::uint32_t unk15C; // 15C
 					BGSEncounterZone* encounterZone; // 160
 					BGSLocation* location; // 168
-					std::uint64_t unk170; // 170
+					std::uint64_t unk170; // 170 - only cleared by the constructor
 					TESTexture canopyShadowTexture; // 178
 					TESTexture waterEnvMap; // 1A0
 					TESTexture unk1C8; // 1C8

@@ -63,9 +63,9 @@ namespace CKPE
 					std::uint64_t filter; // 78 - FLTR chunk (CK only), string
 					std::uint32_t unk80; // 80
 					std::uint32_t unk84; // 84
-					std::uint64_t unk88; // 88
-					std::uint64_t unk90; // 90
-					std::uint64_t unk98; // 98
+					std::uint64_t unk88; // 88 - only cleared by the constructor
+					std::uint64_t unk90; // 90 - only cleared by the constructor
+					std::uint64_t unk98; // 98 - reference counted object (the count is its first dword), compared by Compare when unkA0 or its twin is set
 					std::uint8_t unkA0; // A0
 					std::uint8_t unkA1[0x3]; // A1
 					QUEST_DATA data; // A4
@@ -80,13 +80,13 @@ namespace CKPE
 					BSTArray<TESTopic*> topics[6]; // 180 - the destructor loops over 6 arrays
 					BSTArray<BGSScene*> scenes; // 210 - by position like CommonLibF4's scenes
 					BSTArray<TESGlobal*>* textGlobal; // 228
-					std::uint64_t unk230; // 230 - cleared as one qword by the constructor and ClearData; by position CommonLibF4's totalRefsAliased / currentStage / alreadyRun
-					std::uint8_t unk238; // 238
+					Forms::TESForm* unk230; // 230 - GNAM chunk (its form id is saved); the form is told about the reference through TESForm::AddReference, compared by Compare, copied by CopyFrom
+					std::uint8_t unk238; // 238 - when set Save writes only the record header and flags the record
 					std::uint8_t unk239[0x7]; // 239
-					std::uint64_t unk240; // 240
+					std::uint64_t unk240; // 240 - only cleared by the constructor
 					BSTArray<void*> unk248; // 248 - element type not identified yet
-					std::uint64_t unk260; // 260
-					std::uint64_t unk268; // 268
+					std::uint64_t unk260; // 260 - only cleared by the constructor
+					std::uint64_t unk268; // 268 - only cleared by the constructor
 				};
 				static_assert(offsetof(TESQuest, stages) == 0xB0);
 				static_assert(offsetof(TESQuest, aliases) == 0x40);

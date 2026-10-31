@@ -10,6 +10,7 @@
 #include <EditorAPI/T/TESModel.h>
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/B/BSTList.h>
+#include <EditorAPI/B/BSString.h>
 #include <EditorAPI/B/BGSLightingTemplate.h>
 #include <EditorAPI/T/TESTexture1024.h>
 
@@ -85,13 +86,12 @@ namespace CKPE
 					float visibilityMult; // 12C4
 					BGSShaderParticleGeometryData* precipitationData; // 12C8
 					BGSReferenceEffect* referenceEffect; // 12D0
-					std::uint32_t unk12D8; // 12D8
+					std::uint32_t unk12D8; // 12D8 - only cleared by the constructor
 					std::uint32_t unk12DC; // 12DC
-					std::uint64_t unk12E0; // 12E0
-					std::uint32_t unk12E8; // 12E8
-					std::uint32_t unk12EC; // 12EC
+					BSString editorID; // 12E0 - assigned from the form's editor id at the end of Load (CK only)
 					BSTArray<void*> unk12F0; // 12F0 - element type not identified yet (CK only)
 				};
+				static_assert(offsetof(TESWeather, editorID) == 0x12E0);
 				static_assert(sizeof(TESWeather) == 0x1308);
 			}
 		}
