@@ -43,6 +43,11 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class TESAmbushPackageData : public TESPackageData
 	{
 	public:
+		/* 0x008 */ virtual void CopyFrom(const TESPackageData* Source) override;
+		/* 0x010 */ [[nodiscard]] virtual bool IsDifferent(const TESPackageData* Other) const override;
+		/* 0x020 */ virtual void Save() override;
+		/* 0x028 */ virtual bool ProcessDialogMessage(HWND hDialogBox, UINT uMsg, WPARAM wParam) override;
+	public:
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESAmbushPackageData[0];
 
 		/* 0x008 */ void* unk08;
@@ -51,6 +56,14 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 
 	class TESDialoguePackageData : public TESPackageData
 	{
+	public:
+		/* 0x008 */ virtual void CopyFrom(const TESPackageData* Source) override;
+		/* 0x010 */ [[nodiscard]] virtual bool IsDifferent(const TESPackageData* Other) const override;
+		/* 0x018 */ virtual void ResolveReferences(TESForm* Owner) override;
+		/* 0x020 */ virtual void Save() override;
+		/* 0x028 */ virtual bool ProcessDialogMessage(HWND hDialogBox, UINT uMsg, WPARAM wParam) override;
+		/* 0x030 */ virtual void UpdateDataInDialogBox(HWND hDialogBox) override;
+		/* 0x040 */ virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
 	public:
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESDialoguePackageData[0];
 
@@ -61,6 +74,11 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class TESEatPackageData : public TESPackageData
 	{
 	public:
+		/* 0x008 */ virtual void CopyFrom(const TESPackageData* Source) override;
+		/* 0x010 */ [[nodiscard]] virtual bool IsDifferent(const TESPackageData* Other) const override;
+		/* 0x020 */ virtual void Save() override;
+		/* 0x028 */ virtual bool ProcessDialogMessage(HWND hDialogBox, UINT uMsg, WPARAM wParam) override;
+	public:
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESEatPackageData[0];
 
 		/* 0x008 */ void* unk08;
@@ -70,6 +88,13 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class TESEscortPackageData : public TESPackageData
 	{
 	public:
+		/* 0x008 */ virtual void CopyFrom(const TESPackageData* Source) override;
+		/* 0x010 */ [[nodiscard]] virtual bool IsDifferent(const TESPackageData* Other) const override;
+		/* 0x020 */ virtual void Save() override;
+		/* 0x028 */ virtual bool ProcessDialogMessage(HWND hDialogBox, UINT uMsg, WPARAM wParam) override;
+		/* 0x030 */ virtual void UpdateDataInDialogBox(HWND hDialogBox) override;
+		/* 0x040 */ virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
+	public:
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESEscortPackageData[0];
 
 		/* 0x008 */ std::uint8_t unk08[0x10];
@@ -78,6 +103,10 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 
 	class TESFindPackageData : public TESPackageData
 	{
+	public:
+		/* 0x010 */ [[nodiscard]] virtual bool IsDifferent(const TESPackageData* Other) const override;
+		/* 0x020 */ virtual void Save() override;
+		/* 0x028 */ virtual bool ProcessDialogMessage(HWND hDialogBox, UINT uMsg, WPARAM wParam) override;
 	protected:
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESFindPackageData[0];
 
@@ -91,6 +120,13 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class TESFollowPackageData : public TESPackageData
 	{
 	public:
+		/* 0x008 */ virtual void CopyFrom(const TESPackageData* Source) override;
+		/* 0x010 */ [[nodiscard]] virtual bool IsDifferent(const TESPackageData* Other) const override;
+		/* 0x020 */ virtual void Save() override;
+		/* 0x028 */ virtual bool ProcessDialogMessage(HWND hDialogBox, UINT uMsg, WPARAM wParam) override;
+		/* 0x030 */ virtual void UpdateDataInDialogBox(HWND hDialogBox) override;
+		/* 0x040 */ virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
+	public:
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESFollowPackageData[0];
 
 		/* 0x008 */ std::uint8_t unk08[0x10];
@@ -99,6 +135,13 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 
 	class TESPatrolPackageData : public TESPackageData
 	{
+	public:
+		/* 0x008 */ virtual void CopyFrom(const TESPackageData* Source) override;
+		/* 0x010 */ [[nodiscard]] virtual bool IsDifferent(const TESPackageData* Other) const override;
+		/* 0x020 */ virtual void Save() override;
+		/* 0x028 */ virtual bool ProcessDialogMessage(HWND hDialogBox, UINT uMsg, WPARAM wParam) override;
+		/* 0x030 */ virtual void UpdateDataInDialogBox(HWND hDialogBox) override;
+		/* 0x040 */ virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
 	public:
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESPatrolPackageData[0];
 
@@ -109,6 +152,11 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class TESUseItemPackageData : public TESPackageData
 	{
 	public:
+		/* 0x008 */ virtual void CopyFrom(const TESPackageData* Source) override;
+		/* 0x010 */ [[nodiscard]] virtual bool IsDifferent(const TESPackageData* Other) const override;
+		/* 0x020 */ virtual void Save() override;
+		/* 0x028 */ virtual bool ProcessDialogMessage(HWND hDialogBox, UINT uMsg, WPARAM wParam) override;
+	public:
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESUseItemPackageData[0];
 
 		/* 0x008 */ void* unk08;
@@ -118,6 +166,14 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class TESUseWeaponPackageData : public TESPackageData
 	{
 	public:
+		/* 0x008 */ virtual void CopyFrom(const TESPackageData* Source) override;
+		/* 0x010 */ [[nodiscard]] virtual bool IsDifferent(const TESPackageData* Other) const override;
+		/* 0x018 */ virtual void ResolveReferences(TESForm* Owner) override;
+		/* 0x020 */ virtual void Save() override;
+		/* 0x028 */ virtual bool ProcessDialogMessage(HWND hDialogBox, UINT uMsg, WPARAM wParam) override;
+		/* 0x030 */ virtual void UpdateDataInDialogBox(HWND hDialogBox) override;
+		/* 0x040 */ virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
+	public:
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESUseWeaponPackageData[0];
 
 		/* 0x008 */ std::uint8_t unk08[0x30];
@@ -126,6 +182,12 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 
 	class TESCustomPackageData : public TESPackageData
 	{
+	public:
+		/* 0x008 */ virtual void CopyFrom(const TESPackageData* Source) override;
+		/* 0x010 */ [[nodiscard]] virtual bool IsDifferent(const TESPackageData* Other) const override;
+		/* 0x018 */ virtual void ResolveReferences(TESForm* Owner) override;
+		/* 0x020 */ virtual void Save() override;
+		/* 0x028 */ virtual bool ProcessDialogMessage(HWND hDialogBox, UINT uMsg, WPARAM wParam) override;
 	protected:
 		virtual void sub_048() = 0;
 		virtual void sub_050() = 0;
