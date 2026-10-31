@@ -161,14 +161,14 @@ namespace CKPE
 					BSGeometry* Geometry, std::uint32_t RenderMode,
 					BSShaderAccumulator* Accumulator);
 				// Likely shadow passes; the base returns no passes.
-				/* 0x170 */ virtual void sub_170();
+				/* 0x170 */ virtual void GetRenderPasses_ShadowMapOrMask(); // name by CommonLibF4 slot order, signature not recovered
 				// Likely local-map passes; the base returns no passes.
-				/* 0x178 */ virtual void sub_178();
+				/* 0x178 */ virtual void GetRenderPasses_LocalMap(); // name by CommonLibF4 slot order, signature not recovered
 				// Likely VATS mask passes; the base returns no passes.
-				/* 0x180 */ virtual void sub_180();
-				/* 0x188 */ virtual void sub_188();
+				/* 0x180 */ virtual void CreateVatsMaskRenderPass(); // name by CommonLibF4 slot order, signature not recovered
+				/* 0x188 */ virtual void GetNumberofPasses(); // name by CommonLibF4 slot order, signature not recovered
 				// Likely depth passes; the base returns no passes.
-				/* 0x190 */ virtual void sub_190();
+				/* 0x190 */ virtual void GetRenderDepthPass(); // name by CommonLibF4 slot order, signature not recovered
 				/* 0x198 */ virtual bool CanMergeImpl(
 					const BSShaderProperty* Property) const;
 				/* 0x1A0 */ virtual std::uint64_t GetDifferenceMaskImpl(
@@ -182,14 +182,14 @@ namespace CKPE
 				/* 0x1C8 */ virtual std::int32_t ForEachTextureImpl(
 					ForEachVisitor& Visitor);
 				/* 0x1D0 */ virtual std::int32_t GetShaderTypeImpl() const;
-				/* 0x1D8 */ virtual void sub_1D8();
-				/* 0x1E0 */ virtual void sub_1E0();
+				/* 0x1D8 */ virtual void ClearUnusedMaterialValues(); // name by CommonLibF4 slot order, signature not recovered
+				/* 0x1E0 */ virtual void ClarifyShader(); // name by CommonLibF4 slot order, signature not recovered
 				/* 0x1E8 */ virtual NiAPI::NiTexture* GetBaseTextureImpl() const;
-				/* 0x1F0 */ virtual void sub_1F0();
-				/* 0x1F8 */ virtual void sub_1F8();
-				/* 0x200 */ virtual void sub_200();
-				/* 0x208 */ virtual void sub_208();
-				/* 0x210 */ virtual void sub_210();
+				/* 0x1F0 */ virtual void GetWaterFogPassList(); // name by CommonLibF4 slot order, signature not recovered
+				/* 0x1F8 */ virtual void AcceptsEffectData(); // name by CommonLibF4 slot order, signature not recovered
+				/* 0x200 */ virtual void PrecacheTextures(); // name by CommonLibF4 slot order, signature not recovered
+				/* 0x208 */ virtual void DetermineUtilityShaderDecl(); // name by CommonLibF4 slot order, signature not recovered
+				/* 0x210 */ virtual void GetMaterialType(); // name by CommonLibF4 slot order, signature not recovered
 				/* 0x218 */ virtual void ClearRenderPassesImpl();
 
 				float												_Alpha;				// 28
