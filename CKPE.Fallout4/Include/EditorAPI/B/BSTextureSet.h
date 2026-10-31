@@ -23,7 +23,9 @@ namespace CKPE
 			protected:
 				/* 2A */ virtual const BSFixedString& GetTextureFilenameRef(std::uint32_t Index) const noexcept(true);
 				/* 2B */ virtual const char* GetTextureFilenameImpl(std::uint32_t Index) const noexcept(true);
-				/* 2C */ virtual void sub_160();
+				// Takes the texture from a prefetched resource entry when there is one, otherwise calls the overload below
+				/* 2C */ virtual void GetTexturePrefetchedImpl(const void* PrefetchedHandle, std::uint32_t Index,
+					NiAPI::NiPointer<NiAPI::NiTexture>& Texture, bool Unk1) const noexcept(true);
 				/* 2D */ virtual void GetTextureImpl(std::uint32_t Index,
 					NiAPI::NiPointer<NiAPI::NiTexture>& Texture, bool Unk1) const noexcept(true);
 				/* 2E */ virtual void SetTextureFilenameImpl(std::uint32_t Index,
