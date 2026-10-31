@@ -81,11 +81,11 @@ namespace CKPE
 				/* 0x020 */ virtual void SetupMaterialImpl(const BSShaderMaterial* Material);
 				/* 0x028 */ virtual void RestoreMaterialImpl(const BSShaderMaterial* Material);
 				// Likely secondary material setup; the base is a no-op.
-				/* 0x030 */ virtual void sub_030();
+				/* 0x030 */ virtual void SetupMaterialSecondary(); // name by CommonLibF4 slot order, signature not recovered
 				/* 0x038 */ virtual void SetupGeometryImpl(BSRenderPass* Pass);
 				/* 0x040 */ virtual void RestoreGeometryImpl(BSRenderPass* Pass);
 				// Likely technique name; formats edx into the r8/r9 buffer.
-				/* 0x048 */ virtual void sub_048();
+				/* 0x048 */ virtual void GetTechniqueName(); // name by CommonLibF4 slot order and the body (formats the technique id into a buffer), signature not recovered
 				/* 0x050 */ virtual void sub_050();
 				/* 0x058 */ virtual void sub_058();
 				/* 0x060 */ virtual void sub_060();
