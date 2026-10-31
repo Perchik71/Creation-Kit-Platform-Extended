@@ -113,8 +113,7 @@ namespace CKPE
 
 			bool PreviewGroundPlane::DoQuery() const noexcept(true)
 			{
-				// Offsets verified against 1.7.99 only
-				return VersionLists::GetEditorVersion() == VersionLists::EDITOR_SKYRIM_SE_1_7_99_0;
+				return VersionLists::GetEditorVersion() <= VersionLists::EDITOR_SKYRIM_SE_LAST;
 			}
 
 			bool PreviewGroundPlane::DoActive([[maybe_unused]] Common::RelocatorDB::PatchDB* db) noexcept(true)
