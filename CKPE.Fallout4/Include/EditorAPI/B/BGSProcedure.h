@@ -7,6 +7,8 @@
 #include <cstddef>
 #include <cstdint>
 
+#include <EditorAPI/IDs_VTABLE.h>
+
 namespace CKPE::Fallout4::EditorAPI
 {
 	class IProcedure
@@ -17,10 +19,10 @@ namespace CKPE::Fallout4::EditorAPI
 		constexpr static Common::ID VTABLE = IDs::VTABLE::IProcedure[0];
 	protected:
 		// Preserve the interface without inventing callable procedure signatures.
-		virtual void sub_008() = 0;
-		virtual void sub_010() = 0;
-		virtual void sub_018() = 0;
-		virtual void sub_020() = 0;
+		virtual void CopyFrom(const IProcedure* Source) = 0; // 01 - dynamic-casts the source to BGSProcedureBase and copies the parameter list
+		[[nodiscard]] virtual bool IsDifferent(const IProcedure* Other) const = 0; // 02 - true when the type, parameter count or parameters differ
+		virtual void Save() = 0; // 03 - writes the procedure chunk (type name from slot 32, then the parameters)
+		virtual void Load(void* File) = 0; // 04 - reads the procedure chunk
 		virtual void sub_028() = 0;
 		virtual void sub_030() = 0;
 		virtual void sub_038() = 0;
@@ -48,12 +50,17 @@ namespace CKPE::Fallout4::EditorAPI
 		virtual void sub_0E8() = 0;
 		virtual void sub_0F0() = 0;
 		virtual void sub_0F8() = 0;
-		virtual void sub_100() = 0;
+		[[nodiscard]] virtual const void* GetTypeName() const = 0; // 32 - pointer to the interned type name string, used by Save and IsDifferent
 	};
 	static_assert(sizeof(IProcedure) == 0x8);
 
 	class BGSProcedureBase : public IProcedure
 	{
+	public:
+		/* 0x008 */ void CopyFrom(const IProcedure* Source) override;
+		/* 0x010 */ [[nodiscard]] bool IsDifferent(const IProcedure* Other) const override;
+		/* 0x018 */ void Save() override;
+		/* 0x020 */ void Load(void* File) override;
 	protected:
 		virtual void sub_108() = 0;
 		virtual void sub_110() = 0;
