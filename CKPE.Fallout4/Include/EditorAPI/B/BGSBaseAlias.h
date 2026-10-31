@@ -97,6 +97,19 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSLocAlias : public BGSBaseAlias
 	{
 	public:
+		virtual void CopyFrom(const BGSBaseAlias* Source) override;
+		[[nodiscard]] virtual bool IsDifferent(const BGSBaseAlias* Other) const override;
+		virtual void Save() const override;
+		virtual bool Load(TESFile* File) override;
+		virtual void InitItem() override;
+		[[nodiscard]] virtual const BSFixedString& QType() const override;
+		virtual void RemoveReferencesToForm(TESForm* Form) override;
+		[[nodiscard]] virtual bool CanCheckIn(const CheckInFormList* Forms, TESForm* ReferencingForm) const override;
+		virtual void BuildCheckInDependencyMessage(const CheckInFormList* Forms, TESForm* ReferencingForm, BSString& Message) const override;
+		[[nodiscard]] virtual std::int32_t GetDialogTemplateID() const override;
+		[[nodiscard]] virtual BGSBaseAlias* Clone() const override;
+		virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
+	public:
 		enum class FillType : std::uint16_t
 		{
 			Conditions = 0,
@@ -124,6 +137,20 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSRefAlias : public BGSBaseAlias
 	{
 	public:
+		virtual void CopyFrom(const BGSBaseAlias* Source) override;
+		[[nodiscard]] virtual bool IsDifferent(const BGSBaseAlias* Other) const override;
+		virtual void Save() const override;
+		virtual bool Load(TESFile* File) override;
+		virtual void InitItem() override;
+		[[nodiscard]] virtual const BSFixedString& QType() const override;
+		virtual void RemoveReferencesToForm(TESForm* Form) override;
+		[[nodiscard]] virtual bool CanCheckIn(const CheckInFormList* Forms, TESForm* ReferencingForm) const override;
+		virtual void BuildCheckInDependencyMessage(const CheckInFormList* Forms, TESForm* ReferencingForm, BSString& Message) const override;
+		[[nodiscard]] virtual std::int32_t GetDialogTemplateID() const override;
+		[[nodiscard]] virtual BGSBaseAlias* Clone() const override;
+		virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
+		virtual void BuildFlagsText(BSString& Text) const override;
+	public:
 		enum class FillType : std::uint16_t
 		{
 			Conditions = 0,
@@ -146,6 +173,15 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 
 	class BGSRefCollectionAlias : public BGSRefAlias
 	{
+	public:
+		virtual void CopyFrom(const BGSBaseAlias* Source) override;
+		[[nodiscard]] virtual bool IsDifferent(const BGSBaseAlias* Other) const override;
+		virtual void Save() const override;
+		virtual bool Load(TESFile* File) override;
+		[[nodiscard]] virtual const BSFixedString& QType() const override;
+		[[nodiscard]] virtual std::int32_t GetDialogTemplateID() const override;
+		[[nodiscard]] virtual BGSBaseAlias* Clone() const override;
+		virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
 	public:
 		/* 0x098 */ std::uint8_t maxInitialCount;
 		/* 0x099 */ std::uint8_t pad99[0x7];

@@ -91,6 +91,19 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSQuestPerkEntry : public BGSPerkEntry
 	{
 	public:
+		[[nodiscard]] virtual std::uint32_t GetType() const override;
+		virtual void ResolveReferences(TESForm* Owner) override;
+		[[nodiscard]] virtual BGSPerkEntry* Clone() const override;
+		[[nodiscard]] virtual bool IsDifferent(const BGSPerkEntry* Other) const override;
+		virtual void Save() override;
+		virtual bool Load(TESFile* File) override;
+		virtual void UpdateDataInDialogBox(HWND hDialogBox) override;
+		virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
+		virtual void EnableDialogControls(HWND hDialogBox, bool bEnable) override;
+		[[nodiscard]] virtual bool CanCheckIn(const CheckInFormList* Forms) const override;
+		virtual void RemoveReferencesToForm(TESForm* Form) override;
+		virtual void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const override;
+	public:
 		/* 0x010 */ TESQuest* quest;
 		/* 0x018 */ std::uint16_t stage;
 		/* 0x01A */ std::uint8_t pad1A[0x6];
@@ -101,6 +114,18 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSAbilityPerkEntry : public BGSPerkEntry
 	{
 	public:
+		virtual void ResolveReferences(TESForm* Owner) override;
+		[[nodiscard]] virtual BGSPerkEntry* Clone() const override;
+		[[nodiscard]] virtual bool IsDifferent(const BGSPerkEntry* Other) const override;
+		virtual void Save() override;
+		virtual bool Load(TESFile* File) override;
+		virtual void UpdateDataInDialogBox(HWND hDialogBox) override;
+		virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
+		virtual void EnableDialogControls(HWND hDialogBox, bool bEnable) override;
+		[[nodiscard]] virtual bool CanCheckIn(const CheckInFormList* Forms) const override;
+		virtual void RemoveReferencesToForm(TESForm* Form) override;
+		virtual void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const override;
+	public:
 		/* 0x010 */ SpellItem* ability;
 	};
 	static_assert(sizeof(BGSAbilityPerkEntry) == 0x18);
@@ -108,6 +133,18 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 
 	class BGSEntryPointPerkEntry : public BGSPerkEntry
 	{
+	public:
+		virtual void ResolveReferences(TESForm* Owner) override;
+		[[nodiscard]] virtual BGSPerkEntry* Clone() const override;
+		[[nodiscard]] virtual bool IsDifferent(const BGSPerkEntry* Other) const override;
+		virtual void Save() override;
+		virtual bool Load(TESFile* File) override;
+		virtual void UpdateDataInDialogBox(HWND hDialogBox) override;
+		virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
+		virtual void EnableDialogControls(HWND hDialogBox, bool bEnable) override;
+		[[nodiscard]] virtual bool CanCheckIn(const CheckInFormList* Forms) const override;
+		virtual void RemoveReferencesToForm(TESForm* Form) override;
+		virtual void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const override;
 	public:
 		/* 0x010 */ BGSEntryPoint entryPoint;
 		/* 0x011 */ std::uint8_t function;
