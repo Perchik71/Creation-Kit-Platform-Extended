@@ -36,7 +36,6 @@ namespace CKPE
 
 					/* 1D8 */ [[nodiscard]] bool IsObject() const noexcept(true) override;
 					/* 200 */ std::uint32_t GetRefCount() const noexcept(true) override;
-					// Plus 12 virtual(s) beyond the base class vtable (136 slots, base 124), not named yet.
 
 					constexpr static std::uint8_t TYPE_ID = ftReserved000;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObject[0];

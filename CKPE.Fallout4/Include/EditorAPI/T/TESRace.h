@@ -138,7 +138,6 @@ namespace CKPE
 					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 					/* 3C0 */ [[nodiscard]] BGSSoundTagComponent* GetSoundTagComponent() const noexcept(true) override;
-					// Plus 1 virtual(s) beyond the base class vtable (125 slots, base 124), not named yet.
 
 					constexpr static std::uint8_t TYPE_ID = ftRace;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESRace[0];

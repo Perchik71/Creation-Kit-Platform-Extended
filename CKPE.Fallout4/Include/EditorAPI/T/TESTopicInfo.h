@@ -57,7 +57,6 @@ namespace CKPE
 					/* 338 */ void OnDialogFormSaved(HWND hDialogBox, TESForm* SavedForm) noexcept(true) override;
 					/* 360 */ [[nodiscard]] bool HasRequiredUniqueEditorID() const noexcept(true) override;
 					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
-					// Plus 2 virtual(s) beyond the base class vtable (126 slots, base 124), not named yet.
 					virtual bool CopyInfoDataTo(void* Context, TESTopicInfo* Target) const noexcept(true) { return false; } // 124
 					virtual bool CopyResponseDataTo(void* Context, TESTopicInfo* Target) const noexcept(true) { return false; } // 125
 				public:

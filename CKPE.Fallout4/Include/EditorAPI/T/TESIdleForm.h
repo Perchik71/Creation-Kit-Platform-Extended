@@ -54,7 +54,6 @@ namespace CKPE
 					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
-					// Plus 1 virtual(s) beyond the base class vtable (125 slots, base 124), not named yet.
 
 					constexpr static std::uint8_t TYPE_ID = ftIdle;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESIdleForm[0];

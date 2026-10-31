@@ -32,7 +32,6 @@ namespace CKPE
 					/* 2A0 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
 					/* 2A8 */ [[nodiscard]] bool CanCheckIn(const CheckInFormList* Forms) const noexcept(true) override;
 					/* 2B0 */ void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true) override;
-					// Plus 1 virtual(s) beyond the base class vtable (136 slots, base 135), not named yet.
 
 					virtual std::uint32_t AcceptVisitor(void* Visitor) noexcept(true) { return 0; } // 135
 

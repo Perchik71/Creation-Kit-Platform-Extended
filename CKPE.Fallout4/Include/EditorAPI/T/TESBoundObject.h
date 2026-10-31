@@ -59,7 +59,6 @@ namespace CKPE
 					/* 420 */ bool ReplaceModel() noexcept(true) override;
 					/* 428 */ std::uint32_t IncRef() noexcept(true) override;
 					/* 430 */ std::uint32_t DecRef() noexcept(true) override;
-					// Plus 18 virtual(s) beyond the base class vtable (154 slots, base 136), not named yet.
 					virtual TBO_InstanceData* CreateInstanceData(const TBO_InstanceData* pData) const noexcept(true) { return nullptr; } // 136 - RVA 0x436870
 					virtual const TBO_InstanceData* GetBaseInstanceData() const noexcept(true) { return nullptr; } // 137 - RVA 0x4368B0
 					virtual bool GetAttachedMarkersVisible(void* pObj3D) const noexcept(true) { return false; } // 138 - RVA 0xC5A210

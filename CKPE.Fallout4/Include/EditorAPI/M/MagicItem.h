@@ -47,7 +47,6 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 3F0 */ bool IsAutoCalc() const noexcept(true) override;
-					// Plus 6 virtual(s) beyond the base class vtable (160 slots, base 154), not named yet.
 
 					constexpr static std::uint8_t TYPE_ID = ftReserved000;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::MagicItem[0];

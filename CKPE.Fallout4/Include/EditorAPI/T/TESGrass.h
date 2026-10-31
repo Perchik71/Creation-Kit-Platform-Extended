@@ -53,7 +53,6 @@ namespace CKPE
 					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
-					// Plus 3 virtual(s) beyond the base class vtable (157 slots, base 154), not named yet.
 
 					constexpr static std::uint8_t TYPE_ID = ftGrass;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESGrass[0];

@@ -38,7 +38,6 @@ namespace CKPE
 					/* 2B0 */ void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true) override;
 					/* 2E0 */ bool Revert() noexcept(true) override;
 					/* 2E8 */ void OnFormIDsRemapped(BSTHashMap<std::uint32_t, std::uint32_t>* FormIDMap) noexcept(true) override;
-					// Plus 2 virtual(s) beyond the base class vtable (126 slots, base 124), not named yet.
 
 					constexpr static std::uint8_t TYPE_ID = ftRegion;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegion[0];

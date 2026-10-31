@@ -40,7 +40,6 @@ namespace CKPE
 					/* 468 */ void SetObjectVoiceType(BGSVoiceType* pVoiceType) noexcept(true) override;
 					/* 470 */ BGSVoiceType* GetObjectVoiceType() const noexcept(true) override;
 					/* 4A0 */ void CollectVoiceTypes(BSSimpleList<BGSVoiceType*>* VoiceTypes) const noexcept(true) override;
-					// Plus 1 virtual(s) beyond the base class vtable (155 slots, base 154), not named yet.
 
 					constexpr static std::uint8_t TYPE_ID = ftTalkingActivator;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSTalkingActivator[0];

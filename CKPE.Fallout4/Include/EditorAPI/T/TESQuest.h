@@ -81,7 +81,6 @@ namespace CKPE
 					/* 358 */ void InitializeListView(HWND hListView) const noexcept(true) override;
 					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 					/* 380 */ [[nodiscard]] std::int32_t GetSavedDialogTab(HWND hDialogBox) const noexcept(true) override;
-					// Plus 1 virtual(s) beyond the base class vtable (129 slots, base 128), not named yet.
 
 					constexpr static std::uint8_t TYPE_ID = ftQuest;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESQuest[0];
