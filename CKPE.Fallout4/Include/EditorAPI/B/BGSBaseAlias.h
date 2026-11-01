@@ -46,8 +46,10 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		[[nodiscard]] virtual const BSFixedString& QType() const = 0; // 06
 
 	protected:
-		virtual void sub_038() = 0; // 07 - location alias: tells the referenced forms to track the owner (virtual 75 of TESForm, one form without arguments)
-		virtual void sub_040() = 0; // 08 - location alias: registers the owner on the referenced forms
+		// Calls TESForm virtual 75 on every form the alias refers to, passing the owner
+		virtual void TrackOwnerOnReferencedForms(void* Owner) = 0; // 07
+		// Registers the owner on every form the alias refers to
+		virtual void RegisterOwnerOnReferencedForms(void* Owner) = 0; // 08
 
 	public:
 		virtual void RemoveReferencesToForm(TESForm* Form) = 0; // 09
@@ -57,22 +59,27 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		[[nodiscard]] virtual std::int32_t GetDialogTemplateID() const = 0; // 0C
 
 	protected:
-		virtual void sub_068() = 0; // 0D - formats a text for the alias list by column id
-		virtual void sub_070() = 0; // 0E - builds the alias summary text
+		// Formats the text of one column of the alias list (0 name, 1 id, 2 Y/N from the Optional flag, 3 type, 4 summary, 5 flags text) into Buffer
+		virtual std::int32_t GetListColumnText(void* Context, std::int32_t Column, char* Buffer, std::uint32_t MaxCount) = 0; // 0D
+		// Builds the alias summary text (for example "Forced: ...")
+		virtual void BuildSummaryText(void* Context, char* Buffer, std::uint32_t MaxCount) = 0; // 0E
 
 	public:
 		// Allocates a new alias of the same type and copies this one into it
 		[[nodiscard]] virtual BGSBaseAlias* Clone() const = 0; // 0F
 
 	protected:
-		virtual void sub_080() = 0; // 10 - fills the alias editor dialog (also takes a second argument)
+		// Fills the alias editor dialog
+		virtual std::int64_t InitializeDialogControls(HWND hDialogBox, void* Context) = 0; // 10
 
 	public:
 		virtual void UpdateDataFromDialogBox(HWND hDialogBox) = 0; // 11
 
 	protected:
-		virtual void sub_090() = 0; // 12 - releases the alias editor dialog data
-		virtual void sub_098() = 0; // 13 - alias editor dialog message handler (WM_COMMAND etc.)
+		// Releases the alias editor dialog data
+		virtual void ReleaseDialogData(void* Context) = 0; // 12
+		// Alias editor dialog message handler (WM_COMMAND etc.)
+		virtual bool HandleDialogMessage(HWND hDialogBox, std::uint32_t Message, std::uint64_t WParam, std::int64_t LParam) = 0; // 13
 
 	public:
 		// Appends the flag letters of the alias (R, S, ...) to the text
@@ -108,6 +115,13 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		virtual void BuildCheckInDependencyMessage(const CheckInFormList* Forms, TESForm* ReferencingForm, BSString& Message) const override;
 		[[nodiscard]] virtual std::int32_t GetDialogTemplateID() const override;
 		[[nodiscard]] virtual BGSBaseAlias* Clone() const override;
+		virtual void TrackOwnerOnReferencedForms(void* Owner) override;
+		virtual void RegisterOwnerOnReferencedForms(void* Owner) override;
+		virtual std::int32_t GetListColumnText(void* Context, std::int32_t Column, char* Buffer, std::uint32_t MaxCount) override;
+		virtual void BuildSummaryText(void* Context, char* Buffer, std::uint32_t MaxCount) override;
+		virtual std::int64_t InitializeDialogControls(HWND hDialogBox, void* Context) override;
+		virtual void ReleaseDialogData(void* Context) override;
+		virtual bool HandleDialogMessage(HWND hDialogBox, std::uint32_t Message, std::uint64_t WParam, std::int64_t LParam) override;
 		virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
 	public:
 		enum class FillType : std::uint16_t
@@ -148,6 +162,13 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		virtual void BuildCheckInDependencyMessage(const CheckInFormList* Forms, TESForm* ReferencingForm, BSString& Message) const override;
 		[[nodiscard]] virtual std::int32_t GetDialogTemplateID() const override;
 		[[nodiscard]] virtual BGSBaseAlias* Clone() const override;
+		virtual void TrackOwnerOnReferencedForms(void* Owner) override;
+		virtual void RegisterOwnerOnReferencedForms(void* Owner) override;
+		virtual std::int32_t GetListColumnText(void* Context, std::int32_t Column, char* Buffer, std::uint32_t MaxCount) override;
+		virtual void BuildSummaryText(void* Context, char* Buffer, std::uint32_t MaxCount) override;
+		virtual std::int64_t InitializeDialogControls(HWND hDialogBox, void* Context) override;
+		virtual void ReleaseDialogData(void* Context) override;
+		virtual bool HandleDialogMessage(HWND hDialogBox, std::uint32_t Message, std::uint64_t WParam, std::int64_t LParam) override;
 		virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
 		virtual void BuildFlagsText(BSString& Text) const override;
 	public:
