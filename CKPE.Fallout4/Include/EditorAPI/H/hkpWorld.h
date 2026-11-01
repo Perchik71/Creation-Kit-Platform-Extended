@@ -107,7 +107,8 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		virtual void sub_04();
 		virtual void sub_05();
-		virtual void sub_06();
+		// The motion state embedded in the object (the rigid body's at 0x170, the phantom's at 0xF0)
+		[[nodiscard]] virtual void* getMotionState(); // 0x30
 
 		/* 0x010 */ hkpWorld* m_world;
 		/* 0x018 */ std::uintptr_t m_userData;

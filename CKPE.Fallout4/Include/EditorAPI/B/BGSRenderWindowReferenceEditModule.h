@@ -84,7 +84,8 @@ private:
 				/* 0x170 */ virtual void sub_170();
 				/* 0x178 */ virtual void sub_178();
 				/* 0x180 */ virtual void sub_180();
-				/* 0x188 */ virtual void sub_188();
+				// Deletes the selected references; warns when some are hidden and refuses door and travel markers
+				/* 0x188 */ virtual void DeleteSelectedReferences();
 				/* 0x190 */ virtual void sub_190();
 				/* 0x198 */ virtual void sub_198();
 				/* 0x1A0 */ virtual void sub_1A0();

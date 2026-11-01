@@ -18,11 +18,11 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpAction : public hkReferencedObject
 	{
 	public:
-		virtual void sub_04();
-		virtual void sub_05();
-		virtual void sub_06();
-		virtual void sub_07();
-		virtual void sub_08();
+		virtual void applyAction(const void* StepInfo); // 0x20 - hkStepInfo
+		virtual void getEntities(void* EntitiesOut); // 0x28 - appends the entities to an hkArray<hkpEntity*>
+		virtual void getPhantoms(void* PhantomsOut); // 0x30 - default stub
+		virtual void entityRemovedCallback(hkpEntity* Entity); // 0x38
+		virtual hkpAction* clone(const void* NewEntities, const void* NewPhantoms) const; // 0x40
 
 		/* 0x010 */ hkpWorld* m_world;
 		/* 0x018 */ hkpSimulationIsland* m_island;
