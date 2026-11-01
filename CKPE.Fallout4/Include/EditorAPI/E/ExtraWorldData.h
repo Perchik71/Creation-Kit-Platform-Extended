@@ -101,7 +101,7 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kDistantData };
 		ExtraDistantData() = delete;
 		/* 0x018 */ std::uint64_t unk18;
-		/* 0x020 */ std::uint32_t unk20;
+		/* 0x020 */ float unk20; // 0.97f on construction
 		/* 0x024 */ std::uint8_t unk24[0x04];
 	};
 	static_assert(sizeof(ExtraDistantData) == 0x28);
@@ -399,7 +399,7 @@ namespace CKPE::Fallout4::EditorAPI
 		/* 0x040 */ std::uint32_t unk40;
 		/* 0x044 */ std::uint32_t unk44;
 		/* 0x048 */ std::uint32_t unk48;
-		/* 0x04C */ std::uint32_t unk4C;
+		/* 0x04C */ float unk4C; // 1.0f on construction
 	};
 	static_assert(sizeof(ExtraGroupConstraint) == 0x50);
 	static_assert(offsetof(ExtraGroupConstraint, unk18) == 0x18);
