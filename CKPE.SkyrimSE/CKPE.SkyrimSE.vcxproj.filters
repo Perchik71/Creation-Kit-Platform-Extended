@@ -1287,6 +1287,18 @@
     <ClInclude Include="Include\EditorAPI\T\TESLevCharacter.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESSound.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESShout.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESAmmo.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESFurniture.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESObjectLIGH.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>

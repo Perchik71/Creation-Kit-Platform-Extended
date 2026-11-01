@@ -407,6 +407,10 @@
     <ClInclude Include="Include\EditorAPI\T\TESLevItem.h" />
     <ClInclude Include="Include\EditorAPI\T\TESLevSpell.h" />
     <ClInclude Include="Include\EditorAPI\T\TESLevCharacter.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESSound.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESShout.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESAmmo.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESFurniture.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectLIGH.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectREFR.h" />
     <ClInclude Include="Include\EditorAPI\T\TESTexture.h" />
