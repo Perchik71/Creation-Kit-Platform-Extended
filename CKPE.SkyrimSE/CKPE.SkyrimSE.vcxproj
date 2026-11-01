@@ -496,6 +496,11 @@
     <ClInclude Include="Include\EditorAPI\T\TESImageSpace.h" />
     <ClInclude Include="Include\EditorAPI\T\TESQuest.h" />
     <ClInclude Include="Include\EditorAPI\T\TESWorldSpace.h" />
+    <ClInclude Include="Include\EditorAPI\B\BGSDialogueView.h" />
+    <ClInclude Include="Include\EditorAPI\B\BGSDualCastData.h" />
+    <ClInclude Include="Include\EditorAPI\T\Script.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESImageSpaceModifier.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESObjectSTAT.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectLIGH.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectREFR.h" />
     <ClInclude Include="Include\EditorAPI\T\TESTexture.h" />

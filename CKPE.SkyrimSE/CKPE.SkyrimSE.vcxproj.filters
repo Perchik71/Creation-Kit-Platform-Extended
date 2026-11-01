@@ -1554,6 +1554,21 @@
     <ClInclude Include="Include\EditorAPI\T\TESWorldSpace.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSDialogueView.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSDualCastData.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\Script.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESImageSpaceModifier.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESObjectSTAT.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESObjectLIGH.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
