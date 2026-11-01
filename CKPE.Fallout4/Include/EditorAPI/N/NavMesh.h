@@ -56,8 +56,8 @@ namespace CKPE
 				public:
 					std::uint32_t unk258; // 258
 					std::uint32_t unk25C; // 25C
-					BSTArray<void*> unk260; // 260 - element type not identified yet
-					BSTArray<void*> unk278; // 278 - element type not identified yet
+					BSTArray<std::uint16_t> unk260; // 260 - 2 byte elements (stride found in the indexing code)
+					BSTArray<std::uint16_t> unk278; // 278 - 2 byte elements (same array instantiation as unk260)
 				};
 				static_assert(sizeof(NavMesh) == 0x290);
 			}

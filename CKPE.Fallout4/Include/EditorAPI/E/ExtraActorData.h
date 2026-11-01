@@ -97,7 +97,7 @@ namespace CKPE::Fallout4::EditorAPI
 		/* 0x018 */ std::uint32_t unk18;
 		/* 0x01C */ std::uint8_t unk1C;
 		/* 0x01D */ std::uint8_t unk1D[0x03];
-		/* 0x020 */ BSTArray<std::byte> dismemberedLimbs; // BSTArray header (buffer, capacity, size); element type unrecovered
+		/* 0x020 */ BSTArray<std::uint64_t> dismemberedLimbs; // 8 byte elements (stride found in the indexing code)
 		/* 0x038 */ std::uint64_t unk38;
 		/* 0x040 */ std::uint64_t unk40;
 	};
@@ -196,7 +196,7 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kGuardedRefData };
 		ExtraGuardedRefData() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ BSTArray<std::byte> guardedRefData; // BSTArray header (buffer, capacity, size); element type unrecovered
+		/* 0x018 */ BSTArray<std::byte> guardedRefData; // 24 byte elements (stride found in the indexing code); element layout unrecovered
 	};
 	static_assert(sizeof(ExtraGuardedRefData) == 0x30);
 	static_assert(offsetof(ExtraGuardedRefData, guardedRefData) == 0x18);

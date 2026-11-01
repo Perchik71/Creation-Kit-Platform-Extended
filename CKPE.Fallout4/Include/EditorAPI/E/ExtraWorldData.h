@@ -5,6 +5,7 @@
 #pragma once
 
 #include <EditorAPI/E/ExtraDataTypes.h>
+#include <EditorAPI/B/BSTList.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -174,11 +175,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kWaterLightRefs };
 		ExtraWaterLightRefs() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
-		/* 0x020 */ std::uint64_t unk20;
+		/* 0x018 */ BSSimpleList<void*> waterLightRefs; // BSSimpleList {item, next}; CompareImpl matches the items of both lists as raw 8 byte values
 	};
 	static_assert(sizeof(ExtraWaterLightRefs) == 0x28);
-	static_assert(offsetof(ExtraWaterLightRefs, unk18) == 0x18);
+	static_assert(offsetof(ExtraWaterLightRefs, waterLightRefs) == 0x18);
 
 	class ExtraLitWaterRefs : public BSExtraData
 	{
@@ -186,10 +186,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kLitWaterRefs };
 		ExtraLitWaterRefs() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint8_t unk18[0x10]; // a BSSimpleList {item, next}; the destructor clears it node by node
+		/* 0x018 */ BSSimpleList<void*> litWaterRefs; // BSSimpleList {item, next}; CompareImpl matches the items of both lists as raw 8 byte values
 	};
 	static_assert(sizeof(ExtraLitWaterRefs) == 0x28);
-	static_assert(offsetof(ExtraLitWaterRefs, unk18) == 0x18);
+	static_assert(offsetof(ExtraLitWaterRefs, litWaterRefs) == 0x18);
 
 	class ExtraMultiBound : public BSExtraData
 	{
