@@ -40,10 +40,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kRagdollData };
 		ExtraRagDollData() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t ragDollData;
 	};
 	static_assert(sizeof(ExtraRagDollData) == 0x20);
-	static_assert(offsetof(ExtraRagDollData, unk18) == 0x18);
+	static_assert(offsetof(ExtraRagDollData, ragDollData) == 0x18);
 
 	class ExtraGlobal : public BSExtraData
 	{
@@ -51,10 +51,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kGlobal };
 		ExtraGlobal() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t global;
 	};
 	static_assert(sizeof(ExtraGlobal) == 0x20);
-	static_assert(offsetof(ExtraGlobal, unk18) == 0x18);
+	static_assert(offsetof(ExtraGlobal, global) == 0x18);
 
 	class ExtraRank : public BSExtraData
 	{
@@ -62,11 +62,11 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kRank };
 		ExtraRank() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint32_t unk18;
+		/* 0x018 */ std::uint32_t rank;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraRank) == 0x20);
-	static_assert(offsetof(ExtraRank, unk18) == 0x18);
+	static_assert(offsetof(ExtraRank, rank) == 0x18);
 
 	class ExtraTimeLeft : public BSExtraData
 	{
@@ -74,11 +74,11 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kTimeLeft };
 		ExtraTimeLeft() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ float unk18;
+		/* 0x018 */ float timeLeft;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraTimeLeft) == 0x20);
-	static_assert(offsetof(ExtraTimeLeft, unk18) == 0x18);
+	static_assert(offsetof(ExtraTimeLeft, timeLeft) == 0x18);
 
 	class ExtraCharge : public BSExtraData
 	{
@@ -98,11 +98,11 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kSeed };
 		ExtraSeed() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint8_t unk18;
+		/* 0x018 */ std::uint8_t seed;
 		/* 0x019 */ std::uint8_t unk19[0x07];
 	};
 	static_assert(sizeof(ExtraSeed) == 0x20);
-	static_assert(offsetof(ExtraSeed, unk18) == 0x18);
+	static_assert(offsetof(ExtraSeed, seed) == 0x18);
 
 	class ExtraEnchantment : public BSExtraData
 	{
@@ -110,13 +110,13 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kEnchantment };
 		ExtraEnchantment() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint16_t unk18;
-		/* 0x01A */ std::uint8_t unk1A;
+		/* 0x018 */ std::uint16_t charge;
+		/* 0x01A */ std::uint8_t removeOnUnequip;
 		/* 0x01B */ std::uint8_t unk1B[0x05];
-		/* 0x020 */ std::uint64_t unk20;
+		/* 0x020 */ std::uint64_t enchantment;
 	};
 	static_assert(sizeof(ExtraEnchantment) == 0x28);
-	static_assert(offsetof(ExtraEnchantment, unk18) == 0x18);
+	static_assert(offsetof(ExtraEnchantment, charge) == 0x18);
 
 	class ExtraSoul : public BSExtraData
 	{
@@ -124,11 +124,11 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kSoul };
 		ExtraSoul() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint8_t unk18;
+		/* 0x018 */ std::uint8_t soul;
 		/* 0x019 */ std::uint8_t unk19[0x07];
 	};
 	static_assert(sizeof(ExtraSoul) == 0x20);
-	static_assert(offsetof(ExtraSoul, unk18) == 0x18);
+	static_assert(offsetof(ExtraSoul, soul) == 0x18);
 
 	class ExtraPoison : public BSExtraData
 	{
@@ -176,10 +176,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kLockList };
 		ExtraLockList() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t lockList;
 	};
 	static_assert(sizeof(ExtraLockList) == 0x20);
-	static_assert(offsetof(ExtraLockList, unk18) == 0x18);
+	static_assert(offsetof(ExtraLockList, lockList) == 0x18);
 
 	class ExtraDroppedItemList : public BSExtraData
 	{
@@ -221,10 +221,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kLeveledItemBase };
 		ExtraLeveledItemBase() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t leveledItemBase;
 	};
 	static_assert(sizeof(ExtraLeveledItemBase) == 0x20);
-	static_assert(offsetof(ExtraLeveledItemBase, unk18) == 0x18);
+	static_assert(offsetof(ExtraLeveledItemBase, leveledItemBase) == 0x18);
 
 	class ExtraObjectBreakable : public BSExtraData
 	{
@@ -339,10 +339,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kSoundOutput };
 		ExtraSoundOutputOverride() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t soundOutputOverride;
 	};
 	static_assert(sizeof(ExtraSoundOutputOverride) == 0x20);
-	static_assert(offsetof(ExtraSoundOutputOverride, unk18) == 0x18);
+	static_assert(offsetof(ExtraSoundOutputOverride, soundOutputOverride) == 0x18);
 
 	class ExtraActivateLoopSound : public BSExtraData
 	{
@@ -384,10 +384,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kLastFinishedSequence };
 		ExtraLastFinishedSequence() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t lastFinishedSequence;
 	};
 	static_assert(sizeof(ExtraLastFinishedSequence) == 0x20);
-	static_assert(offsetof(ExtraLastFinishedSequence, unk18) == 0x18);
+	static_assert(offsetof(ExtraLastFinishedSequence, lastFinishedSequence) == 0x18);
 
 	class ExtraScriptedAnimDependence : public BSExtraData
 	{
@@ -437,10 +437,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kInputEnableLayer };
 		ExtraInputEnableLayer() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t inputEnableLayer;
 	};
 	static_assert(sizeof(ExtraInputEnableLayer) == 0x20);
-	static_assert(offsetof(ExtraInputEnableLayer, unk18) == 0x18);
+	static_assert(offsetof(ExtraInputEnableLayer, inputEnableLayer) == 0x18);
 
 	class ExtraDirectAtTarget : public BSExtraData
 	{
