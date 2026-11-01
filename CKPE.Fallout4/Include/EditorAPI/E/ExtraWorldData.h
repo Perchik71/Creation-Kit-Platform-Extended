@@ -111,10 +111,10 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kCellGrassData };
 		ExtraCellGrassData() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x18];
+		/* 0x018 */ BSTArray<std::byte> cellGrassData; // BSTArray header (buffer, capacity, size); element type unrecovered
 	};
 	static_assert(sizeof(ExtraCellGrassData) == 0x30);
-	static_assert(offsetof(ExtraCellGrassData, unk18) == 0x18);
+	static_assert(offsetof(ExtraCellGrassData, cellGrassData) == 0x18);
 
 	class ExtraCellWaterEnvMap : public BSExtraData
 	{
@@ -325,7 +325,7 @@ namespace CKPE::Fallout4::EditorAPI
 		ExtraCombinedRefs() = delete;
 		/* 0x018 */ std::uint8_t unk18[0x08];
 		/* 0x020 */ std::uint8_t unk20[0x30];
-		/* 0x050 */ std::uint8_t unk50[0x18];
+		/* 0x050 */ BSTArray<std::byte> combinedRefs; // BSTArray header (buffer, capacity, size); element type unrecovered
 	};
 	static_assert(sizeof(ExtraCombinedRefs) == 0x68);
 	static_assert(offsetof(ExtraCombinedRefs, unk18) == 0x18);
@@ -351,13 +351,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kReflectedRefs };
 		ExtraReflectedRefs() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
-		/* 0x020 */ std::uint8_t unk20[0x08];
-		/* 0x028 */ std::uint32_t unk28;
-		/* 0x02C */ std::uint8_t unk2C[0x04];
+		/* 0x018 */ BSTArray<std::uint32_t> reflectedRefs; // object reference handles: the array destructor is the one shared with every other handle array
 	};
 	static_assert(sizeof(ExtraReflectedRefs) == 0x30);
-	static_assert(offsetof(ExtraReflectedRefs, unk18) == 0x18);
+	static_assert(offsetof(ExtraReflectedRefs, reflectedRefs) == 0x18);
 
 	class ExtraReflectorRefs : public BSExtraData
 	{
@@ -365,13 +362,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kReflectorRefs };
 		ExtraReflectorRefs() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
-		/* 0x020 */ std::uint8_t unk20[0x08];
-		/* 0x028 */ std::uint32_t unk28;
-		/* 0x02C */ std::uint8_t unk2C[0x04];
+		/* 0x018 */ BSTArray<std::uint32_t> reflectorRefs; // object reference handles (same destructor as reflectedRefs)
 	};
 	static_assert(sizeof(ExtraReflectorRefs) == 0x30);
-	static_assert(offsetof(ExtraReflectorRefs, unk18) == 0x18);
+	static_assert(offsetof(ExtraReflectorRefs, reflectorRefs) == 0x18);
 
 	class ExtraBendableSplineParams : public BSExtraData
 	{

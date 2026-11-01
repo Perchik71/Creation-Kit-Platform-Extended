@@ -232,13 +232,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kObjectBreakable };
 		ExtraObjectBreakable() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
-		/* 0x020 */ std::uint8_t unk20[0x08];
-		/* 0x028 */ std::uint32_t unk28;
-		/* 0x02C */ std::uint8_t unk2C[0x04];
+		/* 0x018 */ BSTArray<std::byte> objectBreakable; // BSTArray header (buffer, capacity, size); element type unrecovered
 	};
 	static_assert(sizeof(ExtraObjectBreakable) == 0x30);
-	static_assert(offsetof(ExtraObjectBreakable, unk18) == 0x18);
+	static_assert(offsetof(ExtraObjectBreakable, objectBreakable) == 0x18);
 
 	class ExtraInstanceData : public BSExtraData
 	{
@@ -394,10 +391,10 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kScriptedAnimDependence };
 		ExtraScriptedAnimDependence() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x18];
+		/* 0x018 */ BSTArray<std::byte> scriptedAnimDependence; // BSTArray header (buffer, capacity, size); element type unrecovered
 	};
 	static_assert(sizeof(ExtraScriptedAnimDependence) == 0x30);
-	static_assert(offsetof(ExtraScriptedAnimDependence, unk18) == 0x18);
+	static_assert(offsetof(ExtraScriptedAnimDependence, scriptedAnimDependence) == 0x18);
 
 	class ExtraObjectSavedDynamicIdles : public BSExtraData
 	{

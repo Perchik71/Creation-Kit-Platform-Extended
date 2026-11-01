@@ -64,12 +64,12 @@ namespace CKPE
 					BSTArray<void*> unkC8; // C8 - element type not identified yet
 					// Three BSTHashMap-like tables in the CK's 0x38 byte layout (capacity +0C, free +10, good +14, end of chain marker +18, entries +30); element types not identified: Load, Save, CopyFrom and Compare never touch 0xC8 onwards; the constructor and its factory copy only clear them and install the table end-of-chain markers (E0 uses a different marker object than 148 and 180).
 					std::uint8_t hashMapE0[0x38]; // E0 - CK 0x38 byte layout, the entries pointer at +30 is 110
-					BSTArray<void*> unk118; // 118 - element type not identified yet
-					BSTArray<void*> unk130; // 130 - element type not identified yet
+					BSTArray<void*> specialRefs2; // 118 - same element type as specialRefs: the destructor of both is the same BSTArray<SpecialRefData> instantiation
+					BSTArray<void*> uniqueNPCs2; // 130 - same element type as uniqueNPCs: the destructor of both is the same BSTArray<UniqueNPCData> instantiation
 					std::uint8_t hashMap148[0x38]; // 148 - CK 0x38 byte layout, the entries pointer at +30 is 178
 					std::uint8_t hashMap180[0x38]; // 180 - CK 0x38 byte layout, the entries pointer at +30 is 1B0
 					std::uint64_t unk1B8; // 1B8
-					BSTArray<void*> unk1C0; // 1C0 - element type not identified yet
+					BSTArray<std::uint32_t> refHandles; // 1C0 - the destructor is the one shared with the other object reference handle arrays
 					std::uint32_t unk1D8; // 1D8
 					std::uint32_t unk1DC; // 1DC
 				};
