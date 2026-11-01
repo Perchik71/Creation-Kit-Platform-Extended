@@ -167,7 +167,14 @@ namespace CKPE
 					BGSSoundDescriptorForm* corpseCloseSound; // 4B0 - LNAM
 					BSFixedString bipedObjectNames[32]; // 4B8
 					ActorValueInfo* bipedObjectConditions[32]; // 5B8
-					BSTArray<void*> equipSlotArray; // 6B8 - BSTArray<EquipSlotData>
+					struct EquipSlotData
+					{
+						void* equipSlot; // 00 - BGSEquipSlot*
+						BSFixedString equipSlotNode; // 08
+					};
+					static_assert(sizeof(EquipSlotData) == 0x10);
+
+					BSTArray<EquipSlotData> equipSlotArray; // 6B8
 					std::uint32_t validEquipTypes; // 6D0 - VNAM
 					std::uint32_t pad6D4; // 6D4
 					TESObjectWEAP* unarmedWeapon; // 6D8 - by order between validEquipTypes and armorParentRace

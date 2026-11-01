@@ -23,12 +23,12 @@ namespace CKPE
 			class BSPortalGraph : public NiAPI::NiRefObject
 			{
 				char _pad[0x30];
-				BSTArray<void*> _unk40;
-				BSTArray<void*> _unk58;
+				BSTArray<NiAPI::NiPointer<NiAPI::NiRefObject>> _unk40; // ref counted elements (the destructor releases through the NiRefObject count and virtual delete)
+				BSTArray<NiAPI::NiPointer<NiAPI::NiRefObject>> _unk58;
 				NiAPI::NiPointer<NiAPI::NiNode> _PortalSharedNode;		// 70
 				BSTArray<NiAPI::NiPointer<NiAPI::NiAVObject>> unk78;    // 78
 				BSTArray<NiAPI::NiPointer<NiAPI::NiAVObject>> unk90;    // 90
-				BSTArray<void*> _unkA8;									// A8
+				BSTArray<NiAPI::NiPointer<NiAPI::NiRefObject>> _unkA8;									// A8
 				std::uint32_t _CellID;									// C0
 			public:
 				virtual ~BSPortalGraph() = default;

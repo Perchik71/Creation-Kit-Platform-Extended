@@ -63,7 +63,7 @@ namespace CKPE
 					std::uint8_t unk28[0x18]; // 28
 					IDLE_DATA data; // 40
 					std::uint16_t unk46; // 46
-					std::uint64_t unk48; // 48
+					std::uint64_t childIdles; // 48 - NiFormArray* in the game
 					TESIdleForm* parentIdle; // 50
 					TESIdleForm* prevIdle; // 58
 					BSFixedString behaviorGraphName; // 60

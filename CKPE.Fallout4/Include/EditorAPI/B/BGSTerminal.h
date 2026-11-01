@@ -9,6 +9,7 @@
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BGSLocalizedString.h>
 #include <EditorAPI/T/TESTexture.h>
+#include <EditorAPI/T/TESCondition.h>
 #include <EditorAPI/B/BSTArray.h>
 
 namespace CKPE
@@ -44,8 +45,30 @@ namespace CKPE
 					constexpr static std::uint8_t TYPE_ID = ftTerminal;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSTerminal[0];
 				public:
-					BSTArray<void*> bodyTextItems; // 2A0 - BSTArray<BodyTextItem>
-					BSTArray<void*> menuItems; // 2B8 - BSTArray<MenuItem>
+					// Body text entry (0x28 bytes, the array stride)
+					struct BodyTextItem
+					{
+						BGSLocalizedString itemText; // 00
+						TESCondition conditions; // 10
+					};
+					static_assert(sizeof(BodyTextItem) == 0x28);
+
+					BSTArray<BodyTextItem> bodyTextItems; // 2A0
+					// Menu entry (0x50 bytes, the array stride); member order as CommonLibF4's MenuItem with the CK's 0x10 byte BGSLocalizedString
+					struct MenuItem
+					{
+						BGSLocalizedString itemText; // 00
+						BGSLocalizedString responseText; // 10
+						void* selectionResult; // 20 - sub menu, display text, display image or holotape depending on the flags
+						TESCondition conditions; // 28 - TerminalItemCondition
+						std::uint16_t id; // 40 - 0xFFFF on construction
+						std::uint8_t flags; // 42
+						std::uint8_t pad43[0x5]; // 43
+						std::uint64_t unk48; // 48 - cleared on construction
+					};
+					static_assert(sizeof(MenuItem) == 0x50);
+
+					BSTArray<MenuItem> menuItems; // 2B8
 					BGSLocalizedString headerTextOverride; // 2D0
 					BGSLocalizedString welcomeText; // 2E0
 					std::uint64_t unk2F0; // 2F0

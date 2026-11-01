@@ -45,7 +45,7 @@ namespace CKPE
 					BSTArray<std::uint64_t> unk50; // 50 - copied by CopyFrom (8-byte elements)
 					BSTArray<std::uint64_t> unk68; // 68 - copied by CopyFrom (8-byte elements)
 					std::uint64_t unk80; // 80 - only cleared by the constructor
-					BSTArray<void*> unk88; // 88 - only constructed (element type not recoverable)
+					BSTArray<std::uint64_t> unk88; // 88 - 8 byte elements (stride found in the indexing code)
 					// Three hash tables in the CK 0x38 byte layout (end-of-chain marker object at +18, entries pointer at +30); the form functions only construct them,
 					// so the key and value types are not recoverable from this class.
 					std::uint8_t hashTableA0[0x38]; // A0 - marker at B8, entries at D0

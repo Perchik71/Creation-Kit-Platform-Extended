@@ -16,6 +16,7 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				struct BGSDebrisData;
 				// 1.11.240.0: size 0x40, vtable RVA 0x307FC28, 124 virtual functions
 				class BGSDebris :
 					public TESForm,         // 000
@@ -40,7 +41,7 @@ namespace CKPE
 					constexpr static std::uint8_t TYPE_ID = ftDebris;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSDebris[0];
 				public:
-					BSSimpleList<void*> dataList; // 30 - BSSimpleList<BGSDebrisData*>
+					BSSimpleList<BGSDebrisData*> dataList; // 30 - BSSimpleList<BGSDebrisData*>
 				};
 				static_assert(sizeof(BGSDebris) == 0x40);
 			}

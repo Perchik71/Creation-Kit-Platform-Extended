@@ -1861,7 +1861,7 @@ namespace CKPE::Fallout4::EditorAPI
 		/* 0x044 */ std::uint8_t pad044[0x4];
 		/* 0x048 */ void* m_nodeInfo;
 
-	private:
+	public:
 		/* 07 */ virtual void activate(const void* Context); // 0x38 - hkbContext
 		/* 08 */ virtual void update(const void* Context, float Timestep); // 0x40
 		/* 09 */ virtual void sub_hkbNode_09();
@@ -1870,11 +1870,14 @@ namespace CKPE::Fallout4::EditorAPI
 		/* 0C */ virtual void sub_hkbNode_0C();
 		/* 0D */ virtual void sub_hkbNode_0D();
 		/* 0E */ virtual void sub_hkbNode_0E();
-		/* 0F */ virtual void sub_hkbNode_0F();
-		/* 10 */ virtual void sub_hkbNode_10();
-		/* 11 */ virtual void sub_hkbNode_11();
+		// Allocates a copy of the node (constructed from this node)
+		/* 0F */ virtual hkbNode* cloneNode() const; // 0x78
+		// Allocates the node's internal state object (an hkReferencedObject)
+		/* 10 */ virtual void* createInternalState() const; // 0x80
+		// Copies the node's runtime state to / from an internal state object
+		/* 11 */ virtual void getInternalState(void* StateOut) const; // 0x88
 		/* 12 */ virtual void sub_hkbNode_12();
-		/* 13 */ virtual void sub_hkbNode_13();
+		/* 13 */ virtual void setInternalState(const void* State); // 0x98
 		/* 14 */ virtual void sub_hkbNode_14();
 		/* 15 */ virtual void sub_hkbNode_15();
 		/* 16 */ virtual void sub_hkbNode_16();

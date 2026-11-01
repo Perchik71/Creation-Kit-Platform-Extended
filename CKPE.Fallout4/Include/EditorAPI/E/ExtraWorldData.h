@@ -5,6 +5,7 @@
 #pragma once
 
 #include <EditorAPI/E/ExtraDataTypes.h>
+#include <EditorAPI/B/BSTList.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -100,7 +101,7 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kDistantData };
 		ExtraDistantData() = delete;
 		/* 0x018 */ std::uint64_t unk18;
-		/* 0x020 */ std::uint32_t unk20;
+		/* 0x020 */ float unk20; // 0.97f on construction
 		/* 0x024 */ std::uint8_t unk24[0x04];
 	};
 	static_assert(sizeof(ExtraDistantData) == 0x28);
@@ -111,10 +112,10 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kCellGrassData };
 		ExtraCellGrassData() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x18];
+		/* 0x018 */ BSTArray<std::byte> cellGrassData; // BSTArray header (buffer, capacity, size); element type unrecovered
 	};
 	static_assert(sizeof(ExtraCellGrassData) == 0x30);
-	static_assert(offsetof(ExtraCellGrassData, unk18) == 0x18);
+	static_assert(offsetof(ExtraCellGrassData, cellGrassData) == 0x18);
 
 	class ExtraCellWaterEnvMap : public BSExtraData
 	{
@@ -174,11 +175,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kWaterLightRefs };
 		ExtraWaterLightRefs() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
-		/* 0x020 */ std::uint64_t unk20;
+		/* 0x018 */ BSSimpleList<void*> waterLightRefs; // BSSimpleList {item, next}; CompareImpl matches the items of both lists as raw 8 byte values
 	};
 	static_assert(sizeof(ExtraWaterLightRefs) == 0x28);
-	static_assert(offsetof(ExtraWaterLightRefs, unk18) == 0x18);
+	static_assert(offsetof(ExtraWaterLightRefs, waterLightRefs) == 0x18);
 
 	class ExtraLitWaterRefs : public BSExtraData
 	{
@@ -186,10 +186,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kLitWaterRefs };
 		ExtraLitWaterRefs() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint8_t unk18[0x10]; // a BSSimpleList {item, next}; the destructor clears it node by node
+		/* 0x018 */ BSSimpleList<void*> litWaterRefs; // BSSimpleList {item, next}; CompareImpl matches the items of both lists as raw 8 byte values
 	};
 	static_assert(sizeof(ExtraLitWaterRefs) == 0x28);
-	static_assert(offsetof(ExtraLitWaterRefs, unk18) == 0x18);
+	static_assert(offsetof(ExtraLitWaterRefs, litWaterRefs) == 0x18);
 
 	class ExtraMultiBound : public BSExtraData
 	{
@@ -207,10 +207,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kMultiboundData };
 		ExtraMultiBoundData() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t multiBoundData;
 	};
 	static_assert(sizeof(ExtraMultiBoundData) == 0x20);
-	static_assert(offsetof(ExtraMultiBoundData, unk18) == 0x18);
+	static_assert(offsetof(ExtraMultiBoundData, multiBoundData) == 0x18);
 
 	class ExtraMultiBoundRef : public BSExtraData
 	{
@@ -218,10 +218,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kMultiboundRef };
 		ExtraMultiBoundRef() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t multiBoundRef;
 	};
 	static_assert(sizeof(ExtraMultiBoundRef) == 0x20);
-	static_assert(offsetof(ExtraMultiBoundRef, unk18) == 0x18);
+	static_assert(offsetof(ExtraMultiBoundRef, multiBoundRef) == 0x18);
 
 	class ExtraOcclusionShape : public BSExtraData
 	{
@@ -239,10 +239,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kOcclusionPlaneRefData };
 		ExtraOcclusionPlaneRefData() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t occlusionPlaneRefData;
 	};
 	static_assert(sizeof(ExtraOcclusionPlaneRefData) == 0x20);
-	static_assert(offsetof(ExtraOcclusionPlaneRefData, unk18) == 0x18);
+	static_assert(offsetof(ExtraOcclusionPlaneRefData, occlusionPlaneRefData) == 0x18);
 
 	class ExtraPortalRefData : public BSExtraData
 	{
@@ -250,10 +250,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kPortalRefData };
 		ExtraPortalRefData() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t portalRefData;
 	};
 	static_assert(sizeof(ExtraPortalRefData) == 0x20);
-	static_assert(offsetof(ExtraPortalRefData, unk18) == 0x18);
+	static_assert(offsetof(ExtraPortalRefData, portalRefData) == 0x18);
 
 	class ExtraPortal : public BSExtraData
 	{
@@ -281,10 +281,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kRoomRefData };
 		ExtraRoomRefData() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t roomRefData;
 	};
 	static_assert(sizeof(ExtraRoomRefData) == 0x20);
-	static_assert(offsetof(ExtraRoomRefData, unk18) == 0x18);
+	static_assert(offsetof(ExtraRoomRefData, roomRefData) == 0x18);
 
 	class ExtraNavMeshPortal : public BSExtraData
 	{
@@ -302,10 +302,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kCollisionData };
 		ExtraCollisionData() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t collisionData;
 	};
 	static_assert(sizeof(ExtraCollisionData) == 0x20);
-	static_assert(offsetof(ExtraCollisionData, unk18) == 0x18);
+	static_assert(offsetof(ExtraCollisionData, collisionData) == 0x18);
 
 	class ExtraPreVisRefs : public BSExtraData
 	{
@@ -325,7 +325,7 @@ namespace CKPE::Fallout4::EditorAPI
 		ExtraCombinedRefs() = delete;
 		/* 0x018 */ std::uint8_t unk18[0x08];
 		/* 0x020 */ std::uint8_t unk20[0x30];
-		/* 0x050 */ std::uint8_t unk50[0x18];
+		/* 0x050 */ BSTArray<std::byte> combinedRefs; // BSTArray header (buffer, capacity, size); element type unrecovered
 	};
 	static_assert(sizeof(ExtraCombinedRefs) == 0x68);
 	static_assert(offsetof(ExtraCombinedRefs, unk18) == 0x18);
@@ -351,13 +351,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kReflectedRefs };
 		ExtraReflectedRefs() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
-		/* 0x020 */ std::uint8_t unk20[0x08];
-		/* 0x028 */ std::uint32_t unk28;
-		/* 0x02C */ std::uint8_t unk2C[0x04];
+		/* 0x018 */ BSTArray<std::uint32_t> reflectedRefs; // object reference handles: the array destructor is the one shared with every other handle array
 	};
 	static_assert(sizeof(ExtraReflectedRefs) == 0x30);
-	static_assert(offsetof(ExtraReflectedRefs, unk18) == 0x18);
+	static_assert(offsetof(ExtraReflectedRefs, reflectedRefs) == 0x18);
 
 	class ExtraReflectorRefs : public BSExtraData
 	{
@@ -365,13 +362,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kReflectorRefs };
 		ExtraReflectorRefs() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
-		/* 0x020 */ std::uint8_t unk20[0x08];
-		/* 0x028 */ std::uint32_t unk28;
-		/* 0x02C */ std::uint8_t unk2C[0x04];
+		/* 0x018 */ BSTArray<std::uint32_t> reflectorRefs; // object reference handles (same destructor as reflectedRefs)
 	};
 	static_assert(sizeof(ExtraReflectorRefs) == 0x30);
-	static_assert(offsetof(ExtraReflectorRefs, unk18) == 0x18);
+	static_assert(offsetof(ExtraReflectorRefs, reflectorRefs) == 0x18);
 
 	class ExtraBendableSplineParams : public BSExtraData
 	{
@@ -379,16 +373,16 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kBendableSplineParams };
 		ExtraBendableSplineParams() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ float unk18;
-		/* 0x01C */ float unk1C;
-		/* 0x020 */ float unk20;
-		/* 0x024 */ float unk24;
-		/* 0x028 */ float unk28;
+		/* 0x018 */ float slack;
+		/* 0x01C */ float thickness;
+		/* 0x020 */ float halfExtentsX;
+		/* 0x024 */ float halfExtentsY;
+		/* 0x028 */ float halfExtentsZ;
 		/* 0x02C */ std::uint8_t unk2C;
 		/* 0x02D */ std::uint8_t unk2D[0x03];
 	};
 	static_assert(sizeof(ExtraBendableSplineParams) == 0x30);
-	static_assert(offsetof(ExtraBendableSplineParams, unk18) == 0x18);
+	static_assert(offsetof(ExtraBendableSplineParams, slack) == 0x18);
 
 	class ExtraGroupConstraint : public BSExtraData
 	{
@@ -405,7 +399,7 @@ namespace CKPE::Fallout4::EditorAPI
 		/* 0x040 */ std::uint32_t unk40;
 		/* 0x044 */ std::uint32_t unk44;
 		/* 0x048 */ std::uint32_t unk48;
-		/* 0x04C */ std::uint32_t unk4C;
+		/* 0x04C */ float unk4C; // 1.0f on construction
 	};
 	static_assert(sizeof(ExtraGroupConstraint) == 0x50);
 	static_assert(offsetof(ExtraGroupConstraint, unk18) == 0x18);
@@ -416,11 +410,11 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kAcousticParent };
 		ExtraAcousticParent() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint32_t unk18;
+		/* 0x018 */ std::uint32_t acousticParent;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraAcousticParent) == 0x20);
-	static_assert(offsetof(ExtraAcousticParent, unk18) == 0x18);
+	static_assert(offsetof(ExtraAcousticParent, acousticParent) == 0x18);
 
 	class ExtraProjectedDecalData : public BSExtraData
 	{
@@ -428,10 +422,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kProjectedDecalRef };
 		ExtraProjectedDecalData() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t projectedDecalData;
 	};
 	static_assert(sizeof(ExtraProjectedDecalData) == 0x20);
-	static_assert(offsetof(ExtraProjectedDecalData, unk18) == 0x18);
+	static_assert(offsetof(ExtraProjectedDecalData, projectedDecalData) == 0x18);
 
 	class ExtraDecalGroup : public BSExtraData
 	{

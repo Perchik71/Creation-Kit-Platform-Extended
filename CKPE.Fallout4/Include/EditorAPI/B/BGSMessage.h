@@ -18,6 +18,7 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				struct MESSAGEBOX_BUTTON;
 				class BGSMenuIcon;
 				class TESQuest;
 
@@ -49,7 +50,7 @@ namespace CKPE
 				public:
 					BGSMenuIcon* icon; // 68
 					TESQuest* ownerQuest; // 70
-					BSSimpleList<void*> buttonList; // 78 - BSSimpleList<MESSAGEBOX_BUTTON*>
+					BSSimpleList<MESSAGEBOX_BUTTON*> buttonList; // 78 - BSSimpleList<MESSAGEBOX_BUTTON*>
 					BSFixedString swfFile; // 88 - BSFixedStringCS
 					BGSLocalizedString shortName; // 90
 					std::uint32_t flags; // A0

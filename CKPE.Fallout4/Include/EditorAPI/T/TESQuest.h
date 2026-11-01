@@ -118,7 +118,7 @@ namespace CKPE
 					std::uint8_t unk238; // 238 - when set Save writes only the record header and flags the record
 					std::uint8_t unk239[0x7]; // 239
 					std::uint64_t unk240; // 240 - only cleared by the constructor
-					BSTArray<void*> unk248; // 248 - element type not identified yet
+					BSTArray<std::uint32_t> unk248; // 248 - 4 byte elements: the array destructor is the instantiation shared with the other 4 byte handle arrays
 					std::uint64_t unk260; // 260 - only cleared by the constructor
 					std::uint64_t unk268; // 268 - only cleared by the constructor
 				};

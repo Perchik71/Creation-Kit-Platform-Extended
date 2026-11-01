@@ -96,7 +96,7 @@ namespace CKPE
 					// the capacity/free/good counters at 74/78/7C, the modification count at 88 and the entries (24 bytes each) at 98. The position is
 					// CommonLibF4's cellMap (0x40) shifted by the TESTexture base (+0x28).
 					BSTHashMap<std::int32_t, TESObjectCELL*> cellMap; // 68
-					void* persistentCell; // A0 - TESObjectCELL*
+					TESObjectCELL* persistentCell; // A0 - TESObjectCELL*
 					void* terrainManager; // A8 - BGSTerrainManager*
 					TESClimate* climate; // B0
 					std::int8_t flags; // B8 - DATA
@@ -136,7 +136,7 @@ namespace CKPE
 					TESTexture unamTexture; // 1F0 - UNAM
 					// A second hash map in the CK's 0x38 byte layout (end of chain marker at 230, entries at 248); key and value types are not identified: the constructor only clears it and installs the end-of-chain marker; ClearData, CopyFrom and Compare do not touch it.
 					std::uint8_t unk218[0x38]; // 218
-					BSTArray<void*> unk250; // 250 - element type not identified yet
+					BSTArray<std::uint32_t> unk250; // 250 - 4 byte elements: the array destructor is the instantiation shared with the other 4 byte handle arrays
 					std::uint8_t largeRefData[0x38]; // 268 - BGSLargeRefData (0x38 in the CK)
 					std::uint32_t unk2A0; // 2A0
 					std::uint8_t lvlDataCellStartX; // 2A4

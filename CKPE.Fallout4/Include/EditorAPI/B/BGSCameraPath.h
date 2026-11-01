@@ -17,6 +17,7 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				class BGSCameraShot;
 				struct PATH_DATA
 				{
 					std::int8_t flags; // 00
@@ -58,7 +59,7 @@ namespace CKPE
 				public:
 					// Same member order as CommonLibF4's BGSCameraPath (conditions, shots, data, childPaths, parentPath, prevPath)
 					TESCondition conditions; // 28
-					BSSimpleList<void*> shots; // 40 - BGSCameraShot*
+					BSSimpleList<BGSCameraShot*> shots; // 40 - BGSCameraShot*
 					PATH_DATA data; // 50
 					std::uint8_t pad51[0x7]; // 51
 					void* childPaths; // 58 - NiFormArray*

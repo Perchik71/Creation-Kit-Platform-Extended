@@ -43,7 +43,7 @@ namespace CKPE
 					constexpr static std::uint8_t TYPE_ID = ftEquipSlot;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEquipSlot[0];
 				public:
-					BSTArray<void*> parentSlots; // 28 - BSTArray<BGSEquipSlot*>
+					BSTArray<BGSEquipSlot*> parentSlots; // 28 - BSTArray<BGSEquipSlot*>
 					std::uint32_t flags; // 40
 					std::uint32_t unk44; // 44
 					ActorValueInfo* conditionActorValue; // 48

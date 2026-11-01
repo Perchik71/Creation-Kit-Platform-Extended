@@ -68,13 +68,13 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kOwnership };
 		ExtraOwnership() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t owner;
 		/* 0x020 */ std::uint32_t unk20;
 		/* 0x024 */ std::uint8_t unk24;
 		/* 0x025 */ std::uint8_t unk25[0x03];
 	};
 	static_assert(sizeof(ExtraOwnership) == 0x28);
-	static_assert(offsetof(ExtraOwnership, unk18) == 0x18);
+	static_assert(offsetof(ExtraOwnership, owner) == 0x18);
 
 	class ExtraCount : public BSExtraData
 	{
@@ -147,13 +147,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kLocationRefType };
 		ExtraLocationRefType() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
-		/* 0x020 */ std::uint8_t unk20[0x08];
-		/* 0x028 */ std::uint32_t unk28;
-		/* 0x02C */ std::uint8_t unk2C[0x04];
+		/* 0x018 */ BSTArray<std::byte> locationRefType; // BSTArray header (buffer, capacity, size); element type unrecovered
 	};
 	static_assert(sizeof(ExtraLocationRefType) == 0x30);
-	static_assert(offsetof(ExtraLocationRefType, unk18) == 0x18);
+	static_assert(offsetof(ExtraLocationRefType, locationRefType) == 0x18);
 
 	class ExtraActivateRef : public BSExtraData
 	{
@@ -222,11 +219,11 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kOriginalReference };
 		ExtraOriginalReference() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint32_t unk18;
+		/* 0x018 */ std::uint32_t originalReference;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraOriginalReference) == 0x20);
-	static_assert(offsetof(ExtraOriginalReference, unk18) == 0x18);
+	static_assert(offsetof(ExtraOriginalReference, originalReference) == 0x18);
 
 	class ExtraReferenceGroup : public BSExtraData
 	{
@@ -288,11 +285,11 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kAttachRef };
 		ExtraAttachRef() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint32_t unk18;
+		/* 0x018 */ std::uint32_t attachRef;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraAttachRef) == 0x20);
-	static_assert(offsetof(ExtraAttachRef, unk18) == 0x18);
+	static_assert(offsetof(ExtraAttachRef, attachRef) == 0x18);
 
 	class ExtraAttachRefChildren : public BSExtraData
 	{
@@ -322,11 +319,11 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kForcedLandingMarker };
 		ExtraForcedLandingMarker() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint32_t unk18;
+		/* 0x018 */ std::uint32_t forcedLandingMarker;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraForcedLandingMarker) == 0x20);
-	static_assert(offsetof(ExtraForcedLandingMarker, unk18) == 0x18);
+	static_assert(offsetof(ExtraForcedLandingMarker, forcedLandingMarker) == 0x18);
 
 	class ExtraForcedTarget : public BSExtraData
 	{
@@ -334,11 +331,11 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kForcedTarget };
 		ExtraForcedTarget() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint32_t unk18;
+		/* 0x018 */ std::uint32_t forcedTarget;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraForcedTarget) == 0x20);
-	static_assert(offsetof(ExtraForcedTarget, unk18) == 0x18);
+	static_assert(offsetof(ExtraForcedTarget, forcedTarget) == 0x18);
 
 	class ExtraTeleportName : public BSExtraData
 	{
@@ -346,10 +343,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kTeleportName };
 		ExtraTeleportName() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t teleportName;
 	};
 	static_assert(sizeof(ExtraTeleportName) == 0x20);
-	static_assert(offsetof(ExtraTeleportName, unk18) == 0x18);
+	static_assert(offsetof(ExtraTeleportName, teleportName) == 0x18);
 
 	class ExtraRandomTeleportMarker : public BSExtraData
 	{
@@ -357,10 +354,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kTeleportMarker };
 		ExtraRandomTeleportMarker() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t randomTeleportMarker;
 	};
 	static_assert(sizeof(ExtraRandomTeleportMarker) == 0x20);
-	static_assert(offsetof(ExtraRandomTeleportMarker, unk18) == 0x18);
+	static_assert(offsetof(ExtraRandomTeleportMarker, randomTeleportMarker) == 0x18);
 
 	class ExtraRangedDistOverride : public BSExtraData
 	{
@@ -380,11 +377,11 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kScale };
 		ExtraScale() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ float unk18;
+		/* 0x018 */ float scale;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraScale) == 0x20);
-	static_assert(offsetof(ExtraScale, unk18) == 0x18);
+	static_assert(offsetof(ExtraScale, scale) == 0x18);
 
 	class ExtraCachedScale : public BSExtraData
 	{

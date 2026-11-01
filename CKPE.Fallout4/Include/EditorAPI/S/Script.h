@@ -16,6 +16,8 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				struct ScriptVariable;
+				struct SCRIPT_REFERENCED_OBJECT;
 				class TESQuest;
 
 				struct SCRIPT_HEADER
@@ -62,8 +64,8 @@ namespace CKPE
 					char* text; // 40
 					std::byte* data; // 48
 					TESQuest* parentQuest; // 50
-					BSSimpleList<void*> refObjects; // 58 - BSSimpleList<SCRIPT_REFERENCED_OBJECT*>
-					BSSimpleList<void*> variables; // 68 - BSSimpleList<ScriptVariable*>
+					BSSimpleList<SCRIPT_REFERENCED_OBJECT*> refObjects; // 58 - BSSimpleList<SCRIPT_REFERENCED_OBJECT*>
+					BSSimpleList<ScriptVariable*> variables; // 68 - BSSimpleList<ScriptVariable*>
 				};
 				static_assert(sizeof(Script) == 0x78);
 			}

@@ -179,7 +179,16 @@ namespace CKPE
 
 			public:
 				Forms::BGSMusicType* music; // 10 - resolved by ResolveFormIDs
-				BSTArray<void*> sounds; // 18 - element type not identified yet
+				// 12 byte entries written to the RDSA chunk as they are in memory (Save writes 12 bytes per entry); the form id is resolved in place by ResolveFormIDs
+				struct SoundEntry
+				{
+					std::uint32_t sound; // 00 - form id
+					std::uint32_t flags; // 04
+					float chance; // 08
+				};
+				static_assert(sizeof(SoundEntry) == 0xC);
+
+				BSTArray<SoundEntry> sounds; // 18
 			};
 			static_assert(sizeof(TESRegionDataSound) == 0x30);
 

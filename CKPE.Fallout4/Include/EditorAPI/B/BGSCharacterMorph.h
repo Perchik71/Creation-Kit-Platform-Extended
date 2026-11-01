@@ -170,7 +170,7 @@ namespace CKPE
 						BSFixedString maskTextureName; // 38
 						std::int32_t defaultIndex; // 40 - -1 on construction
 						std::uint32_t pad44; // 44
-						BSTArray<void*> colorValues; // 48 - the game's ColorValue is 0x18 bytes {BGSColorForm*, value, blend op, swatch id}
+						BSTArray<void*> colorValues; // 48 - 8 byte elements (the array stride, found in the indexing code): pointers to ColorValue objects (the game's ColorValue is 0x18 bytes {BGSColorForm*, value, blend op, swatch id})
 
 						virtual void AddReferencingForm(Forms::TESForm* ReferencingForm) override;
 						virtual void RemoveReferencingForm(Forms::TESForm* ReferencingForm) override;

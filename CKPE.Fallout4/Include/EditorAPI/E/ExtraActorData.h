@@ -84,10 +84,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kCombatStyle };
 		ExtraCombatStyle() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t combatStyle;
 	};
 	static_assert(sizeof(ExtraCombatStyle) == 0x20);
-	static_assert(offsetof(ExtraCombatStyle, unk18) == 0x18);
+	static_assert(offsetof(ExtraCombatStyle, combatStyle) == 0x18);
 
 	class ExtraDismemberedLimbs : public BSExtraData
 	{
@@ -97,10 +97,7 @@ namespace CKPE::Fallout4::EditorAPI
 		/* 0x018 */ std::uint32_t unk18;
 		/* 0x01C */ std::uint8_t unk1C;
 		/* 0x01D */ std::uint8_t unk1D[0x03];
-		/* 0x020 */ std::uint64_t unk20;
-		/* 0x028 */ std::uint8_t unk28[0x08];
-		/* 0x030 */ std::uint32_t unk30;
-		/* 0x034 */ std::uint8_t unk34[0x04];
+		/* 0x020 */ BSTArray<std::uint64_t> dismemberedLimbs; // 8 byte elements (stride found in the indexing code)
 		/* 0x038 */ std::uint64_t unk38;
 		/* 0x040 */ std::uint64_t unk40;
 	};
@@ -123,13 +120,13 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kActorFXPickNodes };
 		ExtraFXPickNodes() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x18];
-		/* 0x030 */ std::uint8_t unk30[0x18];
-		/* 0x048 */ std::uint8_t unk48[0x18];
-		/* 0x060 */ std::uint8_t unk60[0x18];
+		/* 0x018 */ BSTArray<std::byte> fxPickNodes0; // BSTArray header (buffer, capacity, size); element type unrecovered
+		/* 0x030 */ BSTArray<std::byte> fxPickNodes1; // BSTArray header (buffer, capacity, size); element type unrecovered
+		/* 0x048 */ BSTArray<std::byte> fxPickNodes2; // BSTArray header (buffer, capacity, size); element type unrecovered
+		/* 0x060 */ BSTArray<std::byte> fxPickNodes3; // BSTArray header (buffer, capacity, size); element type unrecovered
 	};
 	static_assert(sizeof(ExtraFXPickNodes) == 0x78);
-	static_assert(offsetof(ExtraFXPickNodes, unk18) == 0x18);
+	static_assert(offsetof(ExtraFXPickNodes, fxPickNodes0) == 0x18);
 
 	class ExtraFactionChanges : public BSExtraData
 	{
@@ -149,11 +146,11 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kFavorCost };
 		ExtraFavorCost() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ float unk18;
+		/* 0x018 */ float favorCost;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraFavorCost) == 0x20);
-	static_assert(offsetof(ExtraFavorCost, unk18) == 0x18);
+	static_assert(offsetof(ExtraFavorCost, favorCost) == 0x18);
 
 	class ExtraFollowerSwimBreadcrumbs : public BSExtraData
 	{
@@ -199,13 +196,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kGuardedRefData };
 		ExtraGuardedRefData() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
-		/* 0x020 */ std::uint8_t unk20[0x08];
-		/* 0x028 */ std::uint32_t unk28;
-		/* 0x02C */ std::uint8_t unk2C[0x04];
+		/* 0x018 */ BSTArray<std::byte> guardedRefData; // 24 byte elements (stride found in the indexing code); element layout unrecovered
 	};
 	static_assert(sizeof(ExtraGuardedRefData) == 0x30);
-	static_assert(offsetof(ExtraGuardedRefData, unk18) == 0x18);
+	static_assert(offsetof(ExtraGuardedRefData, guardedRefData) == 0x18);
 
 	class ExtraHasNoRumors : public BSExtraData
 	{
@@ -224,11 +218,11 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kHeadTrackingWeight };
 		ExtraHeadTrackingWeight() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ float unk18;
+		/* 0x018 */ float headTrackingWeight;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraHeadTrackingWeight) == 0x20);
-	static_assert(offsetof(ExtraHeadTrackingWeight, unk18) == 0x18);
+	static_assert(offsetof(ExtraHeadTrackingWeight, headTrackingWeight) == 0x18);
 
 	class ExtraHeadingTarget : public BSExtraData
 	{
@@ -247,21 +241,21 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kHorse };
 		ExtraHorse() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint32_t unk18;
+		/* 0x018 */ std::uint32_t horse;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraHorse) == 0x20);
-	static_assert(offsetof(ExtraHorse, unk18) == 0x18);
+	static_assert(offsetof(ExtraHorse, horse) == 0x18);
 
 	class ExtraIgnoredAttractKeywords : public BSExtraData
 	{
 	public:
 		static constexpr auto TYPE{ kIgnoredAttractKeywords };
 		ExtraIgnoredAttractKeywords() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x18]; // a 0x18 byte BSTArray (buffer, capacity, size) of trivially destructible elements, freed by the destructor
+		/* 0x018 */ BSTArray<std::byte> ignoredAttractKeywords; // BSTArray header (buffer, capacity, size); element type unrecovered
 	};
 	static_assert(sizeof(ExtraIgnoredAttractKeywords) == 0x30);
-	static_assert(offsetof(ExtraIgnoredAttractKeywords, unk18) == 0x18);
+	static_assert(offsetof(ExtraIgnoredAttractKeywords, ignoredAttractKeywords) == 0x18);
 
 	class ExtraIgnoredBySandbox : public BSExtraData
 	{
@@ -288,11 +282,11 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kLevCreaMod };
 		ExtraLevCreaModifier() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint32_t unk18;
+		/* 0x018 */ std::uint32_t levCreaModifier;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraLevCreaModifier) == 0x20);
-	static_assert(offsetof(ExtraLevCreaModifier, unk18) == 0x18);
+	static_assert(offsetof(ExtraLevCreaModifier, levCreaModifier) == 0x18);
 
 	class ExtraLeveledCreature : public BSExtraData
 	{
@@ -353,10 +347,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kPatrolRefData };
 		ExtraPatrolRefData() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t patrolRefData;
 	};
 	static_assert(sizeof(ExtraPatrolRefData) == 0x20);
-	static_assert(offsetof(ExtraPatrolRefData, unk18) == 0x18);
+	static_assert(offsetof(ExtraPatrolRefData, patrolRefData) == 0x18);
 
 	class ExtraPatrolRefInUseData : public BSExtraData
 	{
@@ -364,11 +358,11 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kPatrolRefInUseData };
 		ExtraPatrolRefInUseData() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint32_t unk18;
+		/* 0x018 */ std::uint32_t patrolRefInUseData;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraPatrolRefInUseData) == 0x20);
-	static_assert(offsetof(ExtraPatrolRefInUseData, unk18) == 0x18);
+	static_assert(offsetof(ExtraPatrolRefInUseData, patrolRefInUseData) == 0x18);
 
 	class ExtraPlayerCrimeList : public BSExtraData
 	{
@@ -385,10 +379,10 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kPromotedRef };
 		ExtraPromotedRef() = delete;
-		/* 0x018 */ std::uint8_t unk18[0x18]; // a 0x18 byte BSTArray (buffer, capacity, size) of trivially destructible elements, freed by the destructor
+		/* 0x018 */ BSTArray<std::byte> promotedRef; // BSTArray header (buffer, capacity, size); element type unrecovered
 	};
 	static_assert(sizeof(ExtraPromotedRef) == 0x30);
-	static_assert(offsetof(ExtraPromotedRef, unk18) == 0x18);
+	static_assert(offsetof(ExtraPromotedRef, promotedRef) == 0x18);
 
 	class ExtraRunOncePacks : public BSExtraData
 	{
@@ -416,10 +410,10 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kScene };
 		ExtraSceneData() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t sceneData;
 	};
 	static_assert(sizeof(ExtraSceneData) == 0x20);
-	static_assert(offsetof(ExtraSceneData, unk18) == 0x18);
+	static_assert(offsetof(ExtraSceneData, sceneData) == 0x18);
 
 	class ExtraSpawnContainer : public BSExtraData
 	{

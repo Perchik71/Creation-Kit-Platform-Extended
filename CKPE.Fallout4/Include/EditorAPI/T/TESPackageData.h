@@ -200,8 +200,10 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		virtual void sub_078() = 0;
 		virtual void sub_080() = 0;
 		virtual void sub_088() = 0;
-		virtual void sub_090() = 0;
-		virtual void sub_098() = 0;
+		// Handles a data type change request; refuses with "Can't change type." when the data is in use (arguments not recovered)
+		virtual void ChangeDataType() = 0;
+		// Fills the text of a list view item (LVN_GETDISPINFO) for the data list (arguments not recovered)
+		virtual void FillListItemText() = 0;
 		virtual void sub_0A0() = 0;
 		virtual void PopulateTreeView() = 0; // clears the tree (TVM_DELETEITEM on the root) and fills it
 		virtual void sub_0B0() = 0;

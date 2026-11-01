@@ -38,7 +38,7 @@ namespace CKPE
 					BSFixedString unk28; // 28
 					std::uint8_t unk30[0x70]; // 30
 					float floatHeight; // A0
-					std::uint32_t unkA4; // A4
+					float unkA4; // A4 - 0.1f on InitializeData
 				};
 				static_assert(sizeof(BGSMovementType) == 0xA8);
 			}

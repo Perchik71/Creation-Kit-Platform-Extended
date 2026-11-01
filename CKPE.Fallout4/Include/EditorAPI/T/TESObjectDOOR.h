@@ -69,7 +69,7 @@ namespace CKPE
 					std::int8_t flags; // 180 - by position (same member order and sizes as the game after the last base)
 					std::uint8_t unk181[0x7]; // 181
 					std::uint8_t unk188[0x10]; // 188
-					BSTArray<void*> randomTeleports; // 198 - BSTArray<TESForm*>, by position (same member order and sizes as the game after the last base)
+					BSTArray<TESForm*> randomTeleports; // 198 - BSTArray<TESForm*>, by position (same member order and sizes as the game after the last base)
 				};
 				static_assert(sizeof(TESObjectDOOR) == 0x1B0);
 			}
