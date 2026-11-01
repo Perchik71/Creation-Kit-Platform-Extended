@@ -380,6 +380,15 @@
     <ClInclude Include="Include\EditorAPI\T\TESObject.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectCELL.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectLAND.h" />
+    <ClInclude Include="Include\EditorAPI\B\BGSKeywordForm.h" />
+    <ClInclude Include="Include\EditorAPI\B\BGSPickupPutdownSounds.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESEyes.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESGlobal.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESKey.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESObjectANIO.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESObjectMISC.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESSoulGem.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESWordOfPower.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectLIGH.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectREFR.h" />
     <ClInclude Include="Include\EditorAPI\T\TESTexture.h" />
