@@ -12,7 +12,7 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
-			class BGSKeyword;
+			namespace Forms { class BGSKeyword; }
 
 			// 1.7.99.0: size 0x18, vtable RVA 0x3076BA8
 			class BGSKeywordForm : public BaseFormComponent
@@ -20,7 +20,7 @@ namespace CKPE
 			public:
 				virtual ~BGSKeywordForm() = default;
 
-				BGSKeyword** keywords;			// 08
+				Forms::BGSKeyword** keywords;			// 08
 				std::uint32_t numKeywords;		// 10
 				std::uint32_t pad14;			// 14
 			};
