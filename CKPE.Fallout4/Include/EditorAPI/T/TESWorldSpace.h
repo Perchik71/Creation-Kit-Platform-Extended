@@ -132,8 +132,8 @@ namespace CKPE
 					std::uint64_t unk170; // 170 - only cleared by the constructor
 					TESTexture canopyShadowTexture; // 178
 					TESTexture waterEnvMap; // 1A0
-					TESTexture unk1C8; // 1C8
-					TESTexture unk1F0; // 1F0
+					TESTexture tnamTexture; // 1C8 - TNAM
+					TESTexture unamTexture; // 1F0 - UNAM
 					// A second hash map in the CK's 0x38 byte layout (end of chain marker at 230, entries at 248); key and value types are not identified: the constructor only clears it and installs the end-of-chain marker; ClearData, CopyFrom and Compare do not touch it.
 					std::uint8_t unk218[0x38]; // 218
 					BSTArray<void*> unk250; // 250 - element type not identified yet

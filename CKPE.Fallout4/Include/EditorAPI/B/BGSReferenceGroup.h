@@ -6,6 +6,7 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/B/BSString.h>
 
 namespace CKPE
 {
@@ -33,17 +34,17 @@ namespace CKPE
 
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSReferenceGroup[0];
 				public:
-					std::uint64_t unk28; // 28
-					std::uint32_t unk30; // 30
-					std::uint32_t unk34; // 34
+					BSString name; // 28 - NNAM
 					std::uint32_t unk38; // 38
 					std::uint32_t unk3C; // 3C
-					std::uint64_t unk40; // 40
-					std::uint64_t unk48; // 48
+					TESForm* rnamForm; // 40 - RNAM (form id until InitItem resolves it)
+					TESForm* pnamForm; // 48 - PNAM (told about the reference through TESForm::AddReference, cleared by RemoveReferencesToForm)
 					std::uint32_t unk50; // 50
 					std::uint32_t unk54; // 54
 				};
 				static_assert(sizeof(BGSReferenceGroup) == 0x58);
+				static_assert(offsetof(BGSReferenceGroup, rnamForm) == 0x40);
+				static_assert(offsetof(BGSReferenceGroup, pnamForm) == 0x48);
 			}
 		}
 	}

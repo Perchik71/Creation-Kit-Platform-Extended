@@ -86,11 +86,11 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kCharge };
 		ExtraCharge() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ float unk18;
+		/* 0x018 */ float charge;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraCharge) == 0x20);
-	static_assert(offsetof(ExtraCharge, unk18) == 0x18);
+	static_assert(offsetof(ExtraCharge, charge) == 0x18);
 
 	class ExtraSeed : public BSExtraData
 	{
@@ -136,12 +136,12 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kPoison };
 		ExtraPoison() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint32_t unk18;
+		/* 0x018 */ std::uint32_t count;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
-		/* 0x020 */ std::uint64_t unk20;
+		/* 0x020 */ std::uint64_t poison;
 	};
 	static_assert(sizeof(ExtraPoison) == 0x28);
-	static_assert(offsetof(ExtraPoison, unk18) == 0x18);
+	static_assert(offsetof(ExtraPoison, count) == 0x18);
 
 	class ExtraCannotWear : public BSExtraData
 	{
@@ -209,11 +209,11 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kLevelItem };
 		ExtraLeveledItem() = delete;
-		/* 0x018 */ std::uint32_t unk18;
+		/* 0x018 */ std::uint32_t levItem;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraLeveledItem) == 0x20);
-	static_assert(offsetof(ExtraLeveledItem, unk18) == 0x18);
+	static_assert(offsetof(ExtraLeveledItem, levItem) == 0x18);
 
 	class ExtraLeveledItemBase : public BSExtraData
 	{

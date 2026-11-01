@@ -38,11 +38,11 @@ namespace CKPE::Fallout4::EditorAPI
 		static constexpr auto TYPE{ kAmmo };
 		ExtraAmmo() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
-		/* 0x018 */ std::uint32_t unk18;
+		/* 0x018 */ std::uint32_t count;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraAmmo) == 0x20);
-	static_assert(offsetof(ExtraAmmo, unk18) == 0x18);
+	static_assert(offsetof(ExtraAmmo, count) == 0x18);
 
 	class ExtraAnimGraphManager : public BSExtraData
 	{
@@ -136,12 +136,12 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kFactionChanges };
 		ExtraFactionChanges() = delete;
-		/* 0x018 */ std::uint8_t unk18;
+		/* 0x018 */ std::uint8_t removeCrimeFaction;
 		/* 0x019 */ std::uint8_t unk19[0x1F];
-		/* 0x038 */ std::uint64_t unk38;
+		/* 0x038 */ std::uint64_t crimeFaction;
 	};
 	static_assert(sizeof(ExtraFactionChanges) == 0x40);
-	static_assert(offsetof(ExtraFactionChanges, unk18) == 0x18);
+	static_assert(offsetof(ExtraFactionChanges, removeCrimeFaction) == 0x18);
 
 	class ExtraFavorCost : public BSExtraData
 	{
@@ -299,22 +299,22 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kLeveledCreature };
 		ExtraLeveledCreature() = delete;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t originalBase;
 		/* 0x020 */ std::uint8_t unk20[0x68];
 	};
 	static_assert(sizeof(ExtraLeveledCreature) == 0x88);
-	static_assert(offsetof(ExtraLeveledCreature, unk18) == 0x18);
+	static_assert(offsetof(ExtraLeveledCreature, originalBase) == 0x18);
 
 	class ExtraOutfitItem : public BSExtraData
 	{
 	public:
 		static constexpr auto TYPE{ kOutfitItem };
 		ExtraOutfitItem() = delete;
-		/* 0x018 */ std::uint32_t unk18;
+		/* 0x018 */ std::uint32_t outfit;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
 	static_assert(sizeof(ExtraOutfitItem) == 0x20);
-	static_assert(offsetof(ExtraOutfitItem, unk18) == 0x18);
+	static_assert(offsetof(ExtraOutfitItem, outfit) == 0x18);
 
 	class ExtraPackage : public BSExtraData
 	{

@@ -40,21 +40,27 @@ namespace CKPE
 
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSDialogueView[0];
 				public:
-					BSTArray<void*> unk28; // 28 - element type not identified yet
-					BSTArray<void*> unk40; // 40 - element type not identified yet
-					std::uint32_t unk58; // 58
-					std::uint32_t unk5C; // 5C
-					std::uint64_t unk60; // 60
+					BSTArray<TESForm*> branches; // 28 - BNAM, one form id each (the forms are told about the reference through TESForm::AddReference)
+					BSTArray<TESForm*> tnamForms; // 40 - TNAM, one form id each
+					std::uint32_t enam; // 58 - ENAM
+					std::uint32_t pad5C; // 5C
+					TESForm* quest; // 60 - QNAM (form id until resolved)
 					std::uint64_t unk68; // 68
 					std::uint32_t unk70; // 70
 					std::uint32_t unk74; // 74
-					std::uint16_t unk78; // 78
+					std::uint8_t dnam; // 78 - DNAM
+					std::uint8_t unk79; // 79
 					std::uint8_t unk7A[0x6]; // 7A
 					std::uint64_t unk80; // 80
 					std::uint64_t unk88; // 88
 					std::uint64_t unk90; // 90
 				};
 				static_assert(sizeof(BGSDialogueView) == 0x98);
+				static_assert(offsetof(BGSDialogueView, branches) == 0x28);
+				static_assert(offsetof(BGSDialogueView, tnamForms) == 0x40);
+				static_assert(offsetof(BGSDialogueView, enam) == 0x58);
+				static_assert(offsetof(BGSDialogueView, quest) == 0x60);
+				static_assert(offsetof(BGSDialogueView, dnam) == 0x78);
 			}
 		}
 	}

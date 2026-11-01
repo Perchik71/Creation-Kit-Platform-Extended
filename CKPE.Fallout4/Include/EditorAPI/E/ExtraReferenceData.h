@@ -243,10 +243,10 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kStartingWorldOrCell };
 		ExtraStartingWorldOrCell() = delete;
-		/* 0x018 */ std::uint64_t unk18;
+		/* 0x018 */ std::uint64_t startingWorldOrCell;
 	};
 	static_assert(sizeof(ExtraStartingWorldOrCell) == 0x20);
-	static_assert(offsetof(ExtraStartingWorldOrCell, unk18) == 0x18);
+	static_assert(offsetof(ExtraStartingWorldOrCell, startingWorldOrCell) == 0x18);
 
 	class ExtraMasterFileCell : public BSExtraData
 	{
