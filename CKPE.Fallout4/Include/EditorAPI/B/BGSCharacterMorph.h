@@ -121,8 +121,8 @@ namespace CKPE
 
 					private:
 						// CK-only editor slots; unproven contracts are not callable.
-						/* 008 */ virtual void sub_008();
-						/* 010 */ virtual void sub_010();
+						/* 008 */ virtual void GetDefaultValue(); // returns 0.0 (float) in the base; name by CommonLibF4 slot order and the body, signature not recovered
+						/* 010 */ virtual void InitItem(); // forwards the owner to the condition list at 18; name by CommonLibF4 slot order, argument not typed
 					public:
 						/* 018 */ virtual void CopyFrom(const Entry& source);
 						/* 020 */ [[nodiscard]] virtual bool Equals(const Entry& other) const;
@@ -132,8 +132,8 @@ namespace CKPE
 						/* 038 */ virtual void sub_038();
 						/* 040 */ virtual void sub_040();
 						/* 048 */ virtual void sub_048();
-						/* 050 */ virtual void sub_050();
-						/* 058 */ virtual void sub_058();
+						/* 050 */ virtual void Save(); // writes the TTET (name) and TTEB (value) chunks in the Mask, Palette and TextureSet entries; pure in the base
+						/* 058 */ virtual void Load(); // reads the TTET and TTEB chunks; pure in the base
 					public:
 						BGSLocalizedString name; // 08
 						std::uint8_t chargenConditions[0x18]; // 18 - TESCondition (0x18 bytes in the CK)

@@ -34,6 +34,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kLock };
 		ExtraLock() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ REFR_LOCK* Lock;
 	};
 	static_assert(sizeof(ExtraLock) == 0x20);
@@ -44,6 +45,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kTeleport };
 		ExtraTeleport() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ DoorTeleportData* TeleportData;
 	};
 	static_assert(sizeof(ExtraTeleport) == 0x20);
@@ -54,6 +56,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kMapMarker };
 		ExtraMapMarker() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ MapMarkerData* MarkerData;
 	};
 	static_assert(sizeof(ExtraMapMarker) == 0x20);
@@ -64,6 +67,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kOwnership };
 		ExtraOwnership() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint64_t unk18;
 		/* 0x020 */ std::uint32_t unk20;
 		/* 0x024 */ std::uint8_t unk24;
@@ -77,6 +81,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kCount };
 		ExtraCount() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint16_t Count;
 	};
 	static_assert(sizeof(ExtraCount) == 0x20);
@@ -87,6 +92,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kHealth };
 		ExtraHealth() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ float Health;
 	};
 	static_assert(sizeof(ExtraHealth) == 0x20);
@@ -107,6 +113,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kEncounterZone };
 		ExtraEncounterZone() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ Forms::TESForm* EncounterZone;
 	};
 	static_assert(sizeof(ExtraEncounterZone) == 0x20);
@@ -117,6 +124,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kEmittanceSource };
 		ExtraEmittanceSource() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ Forms::TESForm* EmittanceSource;
 	};
 	static_assert(sizeof(ExtraEmittanceSource) == 0x20);
@@ -127,6 +135,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kLocation };
 		ExtraLocation() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ Forms::TESForm* Location;
 	};
 	static_assert(sizeof(ExtraLocation) == 0x20);
@@ -137,6 +146,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kLocationRefType };
 		ExtraLocationRefType() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint64_t unk18;
 		/* 0x020 */ std::uint8_t unk20[0x08];
 		/* 0x028 */ std::uint32_t unk28;
@@ -150,6 +160,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kActivateRef };
 		ExtraActivateRef() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint8_t unk18;
 		/* 0x019 */ std::uint8_t unk19[0x07];
 		/* 0x020 */ std::uint64_t unk20;
@@ -210,6 +221,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kOriginalReference };
 		ExtraOriginalReference() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint32_t unk18;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
@@ -261,6 +273,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kAttachArrows3D };
 		ExtraAttachedArrows3D() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint64_t unk18;
 		/* 0x020 */ std::uint8_t unk20[0x08];
 		/* 0x028 */ std::uint32_t unk28;
@@ -274,6 +287,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kAttachRef };
 		ExtraAttachRef() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint32_t unk18;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
@@ -307,6 +321,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kForcedLandingMarker };
 		ExtraForcedLandingMarker() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint32_t unk18;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
@@ -318,6 +333,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kForcedTarget };
 		ExtraForcedTarget() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint32_t unk18;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
@@ -329,6 +345,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kTeleportName };
 		ExtraTeleportName() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint64_t unk18;
 	};
 	static_assert(sizeof(ExtraTeleportName) == 0x20);
@@ -339,6 +356,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kTeleportMarker };
 		ExtraRandomTeleportMarker() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint64_t unk18;
 	};
 	static_assert(sizeof(ExtraRandomTeleportMarker) == 0x20);
@@ -349,6 +367,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kRangeDistOverride };
 		ExtraRangedDistOverride() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ float unk18;
 		/* 0x01C */ float unk1C;
 	};
@@ -360,6 +379,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kScale };
 		ExtraScale() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ float unk18;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};

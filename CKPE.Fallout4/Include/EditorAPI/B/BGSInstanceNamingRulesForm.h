@@ -24,6 +24,8 @@ namespace CKPE
 			{
 			public:
 				virtual ~BGSInstanceNamingRulesForm() = default;
+				/* 08 */ [[nodiscard]] std::uint32_t GetFormComponentType() const noexcept(true) override;
+				/* 10 */ void InitializeDataComponent() override;
 
 			public:
 				Forms::BGSInstanceNamingRules* instanceNamingRules; // 08

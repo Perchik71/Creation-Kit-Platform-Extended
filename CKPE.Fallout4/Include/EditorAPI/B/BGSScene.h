@@ -9,6 +9,7 @@
 #include <EditorAPI/F/FormInterfaces.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BSFixedString.h>
+#include <EditorAPI/B/BSString.h>
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/B/BGSKeywordForm.h>
 
@@ -32,25 +33,26 @@ namespace CKPE
 				// condition lists are the start and completion conditions, in the game's order.
 				struct BGSScenePhase
 				{
-					std::uint64_t unk00; // 00
-					std::uint64_t unk08; // 08
-					std::uint16_t unk10; // 10
+					std::uint64_t unk00; // 00 - only cleared by the constructor
+					std::uint64_t unk08; // 08 - only cleared by the constructor
+					std::uint16_t unk10; // 10 - only cleared by the constructor
 					std::uint8_t pad12[0x6]; // 12
-					std::uint64_t unk18; // 18
-					std::uint32_t unk20; // 20
-					std::uint32_t pad24; // 24
-					std::uint32_t unk28; // 28 - a global default
+					BSString name; // 18 - NAM0 (set from a 256 byte buffer, cleared by the constructor)
+					std::uint32_t editorWidth; // 28 - WNAM (4 bytes), initialised from a global default
 					std::int32_t index; // 2C - -1 on construction; Load sets it to the scene's phases.size before appending
 					BGSScene* owner; // 30 - Load stores the scene here (the embedded phase gets it from the BGSScene constructor)
-					std::uint64_t unk38; // 38
-					std::int16_t unk40; // 40 - -1 on construction
-					std::int16_t unk42; // 42 - -1 on construction
+					std::uint64_t unk38; // 38 - only cleared by the constructor
+					std::int16_t scqsStage0; // 40 - SCQS, first word; -1 on construction
+					std::int16_t scqsStage1; // 42 - SCQS, second word; -1 on construction
 					std::uint8_t pad44[0x4]; // 44
 					std::uint8_t startConditions[0x18]; // 48 - TESCondition (0x18 bytes in the CK)
 					std::uint8_t completionConditions[0x18]; // 60 - TESCondition
-					std::uint16_t unk78; // 78
+					std::uint16_t flags; // 78 - FNAM (2 bytes)
 					std::uint8_t pad7A[0x6]; // 7A
 				};
+				static_assert(offsetof(BGSScenePhase, name) == 0x18);
+				static_assert(offsetof(BGSScenePhase, editorWidth) == 0x28);
+				static_assert(offsetof(BGSScenePhase, flags) == 0x78);
 				static_assert(offsetof(BGSScenePhase, startConditions) == 0x48);
 				static_assert(offsetof(BGSScenePhase, completionConditions) == 0x60);
 				static_assert(sizeof(BGSScenePhase) == 0x80);
@@ -119,18 +121,18 @@ namespace CKPE
 					BGSKeyword* animFaceArchType; // 1C0
 					BGSKeyword* subtypeKeyword; // 1C8
 					BGSSoundOutput* outputModel; // 1D0
-					BSFixedString unk1D8; // 1D8 - the game's pInputLayer slot is a string in the CK
-					std::uint16_t unk1E0; // 1E0
+					BSFixedString notes; // 1D8 - NNAM string
+					std::uint16_t xnam; // 1E0 - XNAM (2 bytes)
 					std::uint8_t unk1E2; // 1E2
 					std::uint8_t unk1E3[0x5]; // 1E3
 					BGSKeywordForm* keywordForm; // 1E8 - allocated in the constructor (KSIZ chunk)
-					std::int16_t unk1F0; // 1F0 - -1 on construction
-					std::int16_t unk1F2; // 1F2 - -1 on construction
-					std::uint32_t unk1F4; // 1F4 - 3 on construction; 1F4-207 is one 0x14 byte block that CopyFrom copies and Compare tests
-					std::uint32_t unk1F8; // 1F8 - 3 on construction
-					std::uint32_t unk1FC; // 1FC - 3 on construction
-					std::uint32_t unk200; // 200 - 3 on construction
-					std::uint32_t unk204; // 204 - 0 on construction
+					std::int16_t scqsStage0; // 1F0 - SCQS, first word; -1 on construction
+					std::int16_t scqsStage1; // 1F2 - SCQS, second word; -1 on construction
+					std::uint32_t vnam0; // 1F4 - VNAM (20 byte chunk; its first four dwords go to 1F4-200 and INAM supplies 204); 3 on construction. 1F4-207 is one block that CopyFrom copies and Compare tests
+					std::uint32_t vnam1; // 1F8 - VNAM, second dword; 3 on construction
+					std::uint32_t vnam2; // 1FC - VNAM, third dword; 3 on construction
+					std::uint32_t vnam3; // 200 - VNAM, fourth dword; 3 on construction
+					std::uint32_t inam; // 204 - INAM (4 bytes); 0 on construction
 					void* unk208; // 208 - pointee holds a smart pointer at +0x48 that Compare reads, skipped when unk228 is set
 					void* unk210; // 210 - as 208, skipped when unk229 is set
 					std::uint64_t unk218; // 218 - null on construction

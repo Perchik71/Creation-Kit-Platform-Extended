@@ -24,6 +24,8 @@ namespace CKPE
 			{
 			public:
 				virtual ~BGSNativeTerminalForm() = default;
+				/* 08 */ [[nodiscard]] std::uint32_t GetFormComponentType() const noexcept(true) override;
+				/* 10 */ void InitializeDataComponent() override;
 
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSNativeTerminalForm[0];
 			public:

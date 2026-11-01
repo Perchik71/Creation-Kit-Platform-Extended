@@ -42,38 +42,26 @@ namespace CKPE
 					std::uint32_t unk2C; // 2C
 					TESQuest* parentQuest; // 30 - QNAM
 					BSTArray<BGSScene*> scenes; // 38 - SNAM
-					BSTArray<std::uint64_t> unk50; // 50
-					BSTArray<std::uint64_t> unk68; // 68
-					std::uint64_t unk80; // 80
-					BSTArray<void*> unk88; // 88 - element type not identified yet
-					std::uint8_t unkA0[0xC]; // A0
-					std::uint8_t unkAC[0x8]; // AC
-					std::uint32_t unkB4; // B4
-					std::uint64_t unkB8; // B8
-					std::uint32_t unkC0; // C0
-					std::uint8_t unkC4[0xC]; // C4
-					std::uint64_t unkD0; // D0
-					std::uint8_t unkD8[0xC]; // D8
-					std::uint8_t unkE4[0x8]; // E4
-					std::uint32_t unkEC; // EC
-					std::uint64_t unkF0; // F0
-					std::uint32_t unkF8; // F8
-					std::uint8_t unkFC[0xC]; // FC
-					std::uint64_t unk108; // 108
-					std::uint64_t unk110; // 110
-					std::uint32_t unk118; // 118
-					std::uint8_t unk11C[0x10]; // 11C
-					std::uint8_t unk12C[0x8]; // 12C
-					std::uint32_t unk134; // 134
-					std::uint64_t unk138; // 138
-					std::uint32_t unk140; // 140
-					std::uint8_t unk144[0xC]; // 144
-					std::uint64_t unk150; // 150
+					BSTArray<std::uint64_t> unk50; // 50 - copied by CopyFrom (8-byte elements)
+					BSTArray<std::uint64_t> unk68; // 68 - copied by CopyFrom (8-byte elements)
+					std::uint64_t unk80; // 80 - only cleared by the constructor
+					BSTArray<void*> unk88; // 88 - only constructed (element type not recoverable)
+					// Three hash tables in the CK 0x38 byte layout (end-of-chain marker object at +18, entries pointer at +30); the form functions only construct them,
+					// so the key and value types are not recoverable from this class.
+					std::uint8_t hashTableA0[0x38]; // A0 - marker at B8, entries at D0
+					std::uint8_t hashTableD8[0x38]; // D8 - marker at F0, entries at 108
+					std::uint64_t unk110; // 110 - only cleared by the constructor
+					std::uint32_t unk118; // 118 - only cleared by the constructor
+					std::uint8_t pad11C[0x4]; // 11C
+					std::uint8_t hashTable120[0x38]; // 120 - marker at 138, entries at 150
 				};
 				static_assert(offsetof(BGSSceneCollection, parentQuest) == 0x30);
 				static_assert(offsetof(BGSSceneCollection, scenes) == 0x38);
 				static_assert(offsetof(BGSSceneCollection, unk50) == 0x50);
 				static_assert(offsetof(BGSSceneCollection, unk68) == 0x68);
+				static_assert(offsetof(BGSSceneCollection, hashTableA0) == 0xA0);
+				static_assert(offsetof(BGSSceneCollection, hashTableD8) == 0xD8);
+				static_assert(offsetof(BGSSceneCollection, hashTable120) == 0x120);
 				static_assert(sizeof(BGSSceneCollection) == 0x158);
 			}
 		}

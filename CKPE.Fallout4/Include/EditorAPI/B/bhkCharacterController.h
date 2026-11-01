@@ -115,6 +115,8 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkCharacterRigidBody : public NiAPI::NiObject
 	{
 	public:
+		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
+		/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
 		/* 0x010 */ hknpCharacterRigidBody* rigidBody;
 	};
 	static_assert(sizeof(bhkCharacterRigidBody) == 0x18);

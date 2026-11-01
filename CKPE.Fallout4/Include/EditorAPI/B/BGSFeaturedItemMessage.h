@@ -24,6 +24,15 @@ namespace CKPE
 			{
 			public:
 				virtual ~BGSFeaturedItemMessage() = default;
+				/* 10 */ void InitializeDataComponent() override;
+				/* 18 */ void ClearDataComponent() override;
+				/* 20 */ void InitComponent() override;
+				/* 38 */ [[nodiscard]] bool IsComponentDifferent(const BaseFormComponent* Other) const noexcept(true) override;
+				/* 40 */ void RemoveComponentReferencesToForm(Forms::TESForm* Form) noexcept(true) override;
+				/* 60 */ void BuildComponentCheckInDependencyMessage(const Forms::CheckInFormList* FormSet, BSString& Message) const noexcept(true) override;
+				/* 68 */ void GetComponentReferencedForms(BSTBTree<Forms::TESForm*>* OutForms) const noexcept(true) override;
+				/* 80 */ void UpdateDataInDialogBox(HWND hDialogBox) const noexcept(true) override;
+				/* 88 */ void UpdateDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSFeaturedItemMessage[0];
 			public:

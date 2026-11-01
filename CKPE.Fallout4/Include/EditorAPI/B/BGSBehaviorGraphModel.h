@@ -19,6 +19,7 @@ namespace CKPE
 			{
 			public:
 				virtual ~BGSBehaviorGraphModel() = default;
+				/* 70 */ bool Perform(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* Result) override;
 			};
 			static_assert(sizeof(BGSBehaviorGraphModel) == 0x38);
 		}

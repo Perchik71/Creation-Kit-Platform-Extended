@@ -15,6 +15,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kAction };
 		ExtraAction() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint8_t unk18;
 		/* 0x019 */ std::uint8_t unk19[0x07];
 		/* 0x020 */ std::uint64_t unk20;
@@ -38,6 +39,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kRagdollData };
 		ExtraRagDollData() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint64_t unk18;
 	};
 	static_assert(sizeof(ExtraRagDollData) == 0x20);
@@ -48,6 +50,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kGlobal };
 		ExtraGlobal() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint64_t unk18;
 	};
 	static_assert(sizeof(ExtraGlobal) == 0x20);
@@ -58,6 +61,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kRank };
 		ExtraRank() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint32_t unk18;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
@@ -69,6 +73,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kTimeLeft };
 		ExtraTimeLeft() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ float unk18;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
@@ -80,6 +85,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kCharge };
 		ExtraCharge() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ float unk18;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 	};
@@ -91,6 +97,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kSeed };
 		ExtraSeed() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint8_t unk18;
 		/* 0x019 */ std::uint8_t unk19[0x07];
 	};
@@ -102,6 +109,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kEnchantment };
 		ExtraEnchantment() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint16_t unk18;
 		/* 0x01A */ std::uint8_t unk1A;
 		/* 0x01B */ std::uint8_t unk1B[0x05];
@@ -115,6 +123,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kSoul };
 		ExtraSoul() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint8_t unk18;
 		/* 0x019 */ std::uint8_t unk19[0x07];
 	};
@@ -126,6 +135,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kPoison };
 		ExtraPoison() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint32_t unk18;
 		/* 0x01C */ std::uint8_t unk1C[0x04];
 		/* 0x020 */ std::uint64_t unk20;
@@ -165,6 +175,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kLockList };
 		ExtraLockList() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint64_t unk18;
 	};
 	static_assert(sizeof(ExtraLockList) == 0x20);
@@ -209,6 +220,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kLeveledItemBase };
 		ExtraLeveledItemBase() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint64_t unk18;
 	};
 	static_assert(sizeof(ExtraLeveledItemBase) == 0x20);
@@ -219,6 +231,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kObjectBreakable };
 		ExtraObjectBreakable() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint64_t unk18;
 		/* 0x020 */ std::uint8_t unk20[0x08];
 		/* 0x028 */ std::uint32_t unk28;
@@ -243,6 +256,8 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kObjectInstance };
 		BGSObjectInstanceExtra() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
+		/* 0x10 */ bool CompareForUI(const BSExtraData* rhs) const noexcept(true) override;
 		/* 0x018 */ void* unk18; // pointer to a 0x10 byte heap object {buffer pointer, 32 bit count}; the destructor frees the buffer and the object
 		/* 0x020 */ std::uint64_t unk20;
 	};
@@ -254,6 +269,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kAlphaCutoff };
 		ExtraAlphaCutoff() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint8_t unk18;
 		/* 0x019 */ std::uint8_t unk19;
 		/* 0x01A */ std::uint8_t unk1A[0x06];
@@ -288,6 +304,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kLinkColorPair };
 		ExtraLinkColorPair() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint32_t unk18;
 		/* 0x01C */ std::uint32_t unk1C;
 	};
@@ -299,6 +316,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kRadioData };
 		ExtraRadioData() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint64_t unk18;
 		/* 0x020 */ std::uint64_t unk20;
 	};
@@ -320,6 +338,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kSoundOutput };
 		ExtraSoundOutputOverride() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint64_t unk18;
 	};
 	static_assert(sizeof(ExtraSoundOutputOverride) == 0x20);
@@ -350,6 +369,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kCreatureAwakeSound };
 		ExtraCreatureAwakeSound() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint8_t unk18[0x0C];
 		/* 0x024 */ float unk24;
 		/* 0x028 */ std::uint32_t unk28;
@@ -363,6 +383,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kLastFinishedSequence };
 		ExtraLastFinishedSequence() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint64_t unk18;
 	};
 	static_assert(sizeof(ExtraLastFinishedSequence) == 0x20);
@@ -415,6 +436,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		static constexpr auto TYPE{ kInputEnableLayer };
 		ExtraInputEnableLayer() = delete;
+		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
 		/* 0x018 */ std::uint64_t unk18;
 	};
 	static_assert(sizeof(ExtraInputEnableLayer) == 0x20);

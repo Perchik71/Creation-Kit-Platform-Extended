@@ -14,6 +14,7 @@ namespace CKPE::Fallout4::EditorAPI
 	namespace Forms
 	{
 		class TESObjectCELL;
+		class TESForm;
 		class TESWorldSpace;
 	}
 
@@ -26,23 +27,23 @@ namespace CKPE::Fallout4::EditorAPI
 	protected:
 		virtual void sub_008() = 0;
 		virtual void sub_010() = 0;
-		virtual void sub_018() = 0;
-		virtual void sub_020() = 0;
-		virtual void sub_028() = 0;
+		[[nodiscard]] virtual bool IsSameLocation(const IAIWorldLocation* Other) const = 0; // 03 - compares the cell, then the world space
+		[[nodiscard]] virtual float GetDistanceToRef(const Forms::TESForm* Ref) const = 0; // 04 - 0 inside a cell location when the reference is in it, FLT_MAX otherwise
+		[[nodiscard]] virtual bool ContainsRef(const Forms::TESForm* Ref) const = 0; // 05
 		virtual void sub_030() = 0;
-		virtual void sub_038() = 0;
-		virtual void sub_040() = 0;
-		virtual void sub_048() = 0;
+		[[nodiscard]] virtual const NiAPI::NiPoint3* GetPosition() const = 0; // 07 - the interior cell location returns its position member
+		[[nodiscard]] virtual Forms::TESObjectCELL* GetCell() const = 0; // 08
+		[[nodiscard]] virtual Forms::TESWorldSpace* GetWorldSpace() const = 0; // 09 - null for the interior cell location
 		virtual void sub_050() = 0;
 		virtual void sub_058() = 0;
 		virtual void sub_060() = 0;
 		virtual void sub_068() = 0;
 		virtual void sub_070() = 0;
 		virtual void sub_078() = 0;
-		virtual void sub_080() = 0;
+		virtual bool CopyPosition(NiAPI::NiPoint3* Out) const = 0; // 16 - writes the location position
 		virtual void sub_088() = 0;
 		virtual void sub_090() = 0;
-		virtual void sub_098() = 0;
+		[[nodiscard]] virtual bool HasCellOrWorldSpace() const = 0; // 19 - true when GetWorldSpace or GetCell is non-null
 		virtual void sub_0A0() = 0;
 		virtual void sub_0A8() = 0;
 		virtual void sub_0B0() = 0;
