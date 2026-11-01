@@ -518,6 +518,7 @@
     <ClInclude Include="Include\EditorAPI\T\NavMesh.h" />
     <ClInclude Include="Include\EditorAPI\T\NavMeshInfoMap.h" />
     <ClInclude Include="Include\EditorAPI\T\TESFaction.h" />
+    <ClInclude Include="Include\EditorAPI\B\BGSProcedureClasses.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectLIGH.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectREFR.h" />
     <ClInclude Include="Include\EditorAPI\T\TESTexture.h" />
