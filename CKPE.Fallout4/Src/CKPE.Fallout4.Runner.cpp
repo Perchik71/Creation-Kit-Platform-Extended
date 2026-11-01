@@ -69,6 +69,7 @@
 #include <Patches/CKPE.Fallout4.Patch.PapyrusEditorLimit.h>
 #include <Patches/CKPE.Fallout4.Patch.PreCombined.h>
 #include <Patches/CKPE.Fallout4.Patch.PreVis.h>
+#include <Patches/CKPE.Fallout4.Patch.PreviewRenderTargets.h>
 #include <Patches/CKPE.Fallout4.Patch.ProgressWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.RemoveUselessMessages.h>
 #include <Patches/CKPE.Fallout4.Patch.RenameCreationKitApp.h>
@@ -176,6 +177,7 @@ namespace CKPE
 			mgr->Register(new Patch::RenameCreationKitApp);
 			mgr->Register(new Patch::RenderWindow);
 			mgr->Register(new Patch::RenderWindow60FPS);
+			mgr->Register(new Patch::PreviewRenderTargets);
 			mgr->Register(new Patch::ReplaceBSPointerHandleAndManager);
 			mgr->Register(new Patch::ResponseIgnoreMax);
 			mgr->Register(new Patch::ResponseWindow);
