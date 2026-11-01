@@ -9,6 +9,8 @@
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/B/BSTHashMap.h>
+#include <EditorAPI/B/BSString.h>
+#include <EditorAPI/C/CheckInFormList.h>
 #include <EditorAPI/N/NiPoint.h>
 
 namespace CKPE
@@ -20,6 +22,7 @@ namespace CKPE
 			namespace Forms
 			{
 				class BGSTextureSet;
+				class TESForm;
 			}
 
 			// Race face/body morph data of the Creation Kit (CommonLibF4 BGSCharacterMorph, with the CK's differences noted).
@@ -127,11 +130,12 @@ namespace CKPE
 						/* 018 */ virtual void CopyFrom(const Entry& source);
 						/* 020 */ [[nodiscard]] virtual bool Equals(const Entry& other) const;
 					private:
-						/* 028 */ virtual void sub_028();
-						/* 030 */ virtual void sub_030();
-						/* 038 */ virtual void sub_038();
-						/* 040 */ virtual void sub_040();
-						/* 048 */ virtual void sub_048();
+						// The check-in/reference contract of the entry (the conditions at 18 and, for the palette, its colour forms); no-ops in the mask and texture set
+						/* 028 */ virtual void AddReferencingForm(Forms::TESForm* ReferencingForm); // AddReference on the referenced forms
+						/* 030 */ virtual void RemoveReferencingForm(Forms::TESForm* ReferencingForm);
+						/* 038 */ virtual void RemoveReferencesToForm(Forms::TESForm* Form);
+						/* 040 */ [[nodiscard]] virtual bool CanCheckIn(Forms::TESForm* ReferencingForm, const Forms::CheckInFormList* CheckInForms) const;
+						/* 048 */ virtual void BuildCheckInDependencyMessage(Forms::TESForm* ReferencingForm, const Forms::CheckInFormList* CheckInForms, BSString& Message) const;
 						/* 050 */ virtual void Save(); // writes the TTET (name) and TTEB (value) chunks in the Mask, Palette and TextureSet entries; pure in the base
 						/* 058 */ virtual void Load(); // reads the TTET and TTEB chunks; pure in the base
 					public:
@@ -167,6 +171,12 @@ namespace CKPE
 						std::int32_t defaultIndex; // 40 - -1 on construction
 						std::uint32_t pad44; // 44
 						BSTArray<void*> colorValues; // 48 - the game's ColorValue is 0x18 bytes {BGSColorForm*, value, blend op, swatch id}
+
+						virtual void AddReferencingForm(Forms::TESForm* ReferencingForm) override;
+						virtual void RemoveReferencingForm(Forms::TESForm* ReferencingForm) override;
+						virtual void RemoveReferencesToForm(Forms::TESForm* Form) override;
+						[[nodiscard]] virtual bool CanCheckIn(Forms::TESForm* ReferencingForm, const Forms::CheckInFormList* CheckInForms) const override;
+						virtual void BuildCheckInDependencyMessage(Forms::TESForm* ReferencingForm, const Forms::CheckInFormList* CheckInForms, BSString& Message) const override;
 					};
 					static_assert(sizeof(Palette) == 0x60);
 

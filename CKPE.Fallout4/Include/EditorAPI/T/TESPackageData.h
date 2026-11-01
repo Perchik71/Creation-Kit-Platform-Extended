@@ -189,8 +189,10 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		/* 0x020 */ virtual void Save() override;
 		/* 0x028 */ virtual bool ProcessDialogMessage(HWND hDialogBox, UINT uMsg, WPARAM wParam) override;
 	protected:
-		virtual void sub_048() = 0;
-		virtual void sub_050() = 0;
+		// Attaches a 32 byte dialog state object to the dialog and initializes its controls
+		virtual void InitializeDialog(HWND hDialogBox) = 0;
+		// Frees the dialog state object attached by InitializeDialog
+		virtual void ReleaseDialogData(HWND hDialogBox) = 0;
 		virtual void sub_058() = 0;
 		virtual void InitializeDataListColumns() = 0; // sets the list view columns Name, (blank), Value, Public
 		virtual void sub_068() = 0;

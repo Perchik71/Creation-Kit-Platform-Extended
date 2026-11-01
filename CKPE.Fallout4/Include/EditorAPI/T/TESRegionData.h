@@ -131,10 +131,12 @@ namespace CKPE
 			{
 			public:
 				virtual bool HandleDialogMessage(HWND Dialog, std::uint32_t Message, std::uint64_t WParam, std::int64_t LParam); // 0F
-				virtual std::int64_t sub_080(HWND Dialog, std::int64_t Param); // 10 - fills the dialog list
+				// Fills a tree view (TVM_INSERTITEM) with one item per land texture of the data handler's region data list plus an
+				// "Everywhere" root, and places the grass objects of Objects under their texture (item handle of the root kept at 0x18)
+				virtual std::int64_t PopulateTextureTree(HWND TreeView, const void* Objects); // 10
 
 			public:
-				void* unk18; // 18
+				void* everywhereItem; // 18 - HTREEITEM of the "Everywhere" tree item, set by PopulateTextureTree
 			};
 			static_assert(sizeof(TESRegionDataGrassEditor) == 0x20);
 

@@ -25,15 +25,19 @@ namespace CKPE::Fallout4::EditorAPI
 	{
 	public:
 		virtual void sub_04();
-		virtual void sub_05();
-		virtual void sub_06();
-		virtual void sub_07();
+		// Box of the shape transformed by LocalToWorld (hkTransform) and grown by Tolerance, written to AabbOut (hkAabb)
+		virtual void getAabb(const void* LocalToWorld, float Tolerance, void* AabbOut) const;
+		// Ray cast against the shape. The hkBool result is returned through a hidden pointer (HkBoolResult), which is also returned
+		virtual char* castRay(char* HkBoolResult, const void* Input, void* Output) const;
+		// Default implementation: castRay, then hands the hit to the collector (hkpRayHitCollector)
+		virtual char* castRayWithCollector(char* HkBoolResult, const void* Input, const void* CdBody, void* Collector) const;
 		virtual void sub_08();
-		virtual void sub_09();
-		virtual void sub_0A();
-		virtual void sub_0B();
-		virtual void sub_0C();
-		virtual void sub_0D();
+		// Convex shape interface; stubs in the other shape types
+		virtual void getSupportingVertex(const void* Direction, void* VertexOut) const;
+		virtual void convertVertexIdsToVertices(const std::uint32_t* Ids, std::int32_t NumIds, void* VerticesOut) const;
+		virtual void getCentre(void* CentreOut) const;
+		[[nodiscard]] virtual std::int32_t getNumCollisionSpheres() const;
+		virtual std::int32_t getCollisionSpheres(void* SphereBuffer) const;
 		virtual void sub_0E();
 	};
 	static_assert(sizeof(hkpShapeBase) == 0x18);

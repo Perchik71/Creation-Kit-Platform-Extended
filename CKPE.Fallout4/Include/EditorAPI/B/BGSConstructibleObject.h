@@ -9,6 +9,7 @@
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/B/BGSPickupPutdownSounds.h>
 #include <EditorAPI/T/TESDescription.h>
+#include <EditorAPI/T/TESCondition.h>
 
 namespace CKPE
 {
@@ -18,6 +19,8 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				class BGSKeyword;
+
 				struct ConstructibleObjectData
 				{
 					std::uint16_t numConstructed; // 00
@@ -53,16 +56,20 @@ namespace CKPE
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSConstructibleObject[0];
 				public:
 					BGSTypedFormValuePair::Array* requiredItems; // 68
-					std::uint8_t unk70[0x18]; // 70
-					std::uint64_t unk88; // 88
-					std::uint64_t unk90; // 90
+					TESCondition conditions; // 70
+					TESForm* createdItem; // 88
+					BGSKeyword* benchKeyword; // 90
 					ConstructibleObjectData data; // 98
-					std::uint32_t unk9C; // 9C
-					std::uint64_t unkA0; // A0
-					std::uint32_t unkA8; // A8
-					std::uint32_t unkAC; // AC
+					std::uint32_t pad9C; // 9C
+					BGSKeyword** filterKeywords; // A0 - the game's recipe filter keyword array (pointer and count)
+					std::uint32_t filterKeywordCount; // A8
+					std::uint32_t padAC; // AC
 				};
 				static_assert(sizeof(BGSConstructibleObject) == 0xB0);
+				static_assert(offsetof(BGSConstructibleObject, conditions) == 0x70);
+				static_assert(offsetof(BGSConstructibleObject, createdItem) == 0x88);
+				static_assert(offsetof(BGSConstructibleObject, benchKeyword) == 0x90);
+				static_assert(offsetof(BGSConstructibleObject, filterKeywords) == 0xA0);
 			}
 		}
 	}

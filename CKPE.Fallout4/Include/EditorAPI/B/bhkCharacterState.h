@@ -36,8 +36,9 @@ namespace CKPE::Fallout4::EditorAPI
 
 	class bhkCharacterState : public hknpCharacterState
 	{
-	private:
-		/* 0x048 */ virtual void sub_048();
+	public:
+		// Steps the character state machine: reads and updates the character context (current/next state, flags, velocity)
+		/* 0x048 */ virtual void Update(void* Context);
 	};
 	static_assert(sizeof(bhkCharacterState) == 0x10);
 

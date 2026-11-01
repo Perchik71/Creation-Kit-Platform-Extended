@@ -1862,10 +1862,10 @@ namespace CKPE::Fallout4::EditorAPI
 		/* 0x048 */ void* m_nodeInfo;
 
 	private:
-		/* 07 */ virtual void sub_hkbNode_07();
-		/* 08 */ virtual void sub_hkbNode_08();
+		/* 07 */ virtual void activate(const void* Context); // 0x38 - hkbContext
+		/* 08 */ virtual void update(const void* Context, float Timestep); // 0x40
 		/* 09 */ virtual void sub_hkbNode_09();
-		/* 0A */ virtual void sub_hkbNode_0A();
+		/* 0A */ virtual void deactivate(const void* Context); // 0x50
 		/* 0B */ virtual void sub_hkbNode_0B();
 		/* 0C */ virtual void sub_hkbNode_0C();
 		/* 0D */ virtual void sub_hkbNode_0D();

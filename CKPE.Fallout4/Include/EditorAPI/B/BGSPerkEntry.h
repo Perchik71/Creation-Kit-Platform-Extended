@@ -36,8 +36,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		virtual ~BGSPerkEntry() = default;
 		[[nodiscard]] virtual std::uint32_t GetType() const = 0; // 04
 
-	protected:
-		virtual void sub_028() = 0; // 05 - no-op in the base, quest and ability entries
+	public:
+		// Frees the function data and resets the entry's data (no-op in the base, quest and ability entries)
+		virtual void Reset() = 0; // 05
 
 	public:
 		// Resolves the form ids read by Load into pointers through the owning perk (the quest entry looks the quest up and registers
@@ -54,8 +55,12 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	protected:
 		virtual void sub_060() = 0; // 0C
 		virtual void sub_068() = 0; // 0D
-		virtual void sub_070() = 0; // 0E - returns 0xFFFF in the base and quest entries
-		virtual void sub_078() = 0; // 0F
+
+	public:
+		// The function data's type, 0xFFFF when there is none (always in the base and quest entries)
+		[[nodiscard]] virtual std::uint32_t GetFunctionDataType() const = 0; // 0E
+		// Dialog procedure of the perk entry editor (notifications of the controls)
+		virtual bool HandleDialogMessage(HWND hDialogBox, std::uint32_t Message, std::uint64_t WParam, std::int64_t LParam) = 0; // 0F
 
 	public:
 		// Dialog box handling of the perk entry editor (the quest entry fills controls 2158 and 2446)
@@ -64,7 +69,10 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 
 	protected:
 		virtual void sub_090() = 0; // 12 - no-op in the quest entry
-		virtual void sub_098() = 0; // 13 - formats a value for the entry list according to a format id
+
+	public:
+		// Column text of the entry list: 0 index, 1 unsigned index, 2 "Entry Point", 3 entry point name, 4 function name; false when there is none
+		virtual bool GetListColumnText(std::int32_t Column, char* Buffer, std::uint32_t MaxCount) const = 0; // 13
 
 	public:
 		virtual void EnableDialogControls(HWND hDialogBox, bool bEnable) = 0; // 14
@@ -134,6 +142,7 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSEntryPointPerkEntry : public BGSPerkEntry
 	{
 	public:
+		virtual void Reset() override;
 		virtual void ResolveReferences(TESForm* Owner) override;
 		[[nodiscard]] virtual BGSPerkEntry* Clone() const override;
 		[[nodiscard]] virtual bool IsDifferent(const BGSPerkEntry* Other) const override;
@@ -141,6 +150,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		virtual bool Load(TESFile* File) override;
 		virtual void UpdateDataInDialogBox(HWND hDialogBox) override;
 		virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
+		[[nodiscard]] virtual std::uint32_t GetFunctionDataType() const override;
+		virtual bool HandleDialogMessage(HWND hDialogBox, std::uint32_t Message, std::uint64_t WParam, std::int64_t LParam) override;
+		virtual bool GetListColumnText(std::int32_t Column, char* Buffer, std::uint32_t MaxCount) const override;
 		virtual void EnableDialogControls(HWND hDialogBox, bool bEnable) override;
 		[[nodiscard]] virtual bool CanCheckIn(const CheckInFormList* Forms) const override;
 		virtual void RemoveReferencesToForm(TESForm* Form) override;

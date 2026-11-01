@@ -5,6 +5,7 @@
 #pragma once
 
 #include <EditorAPI/H/hkInfrastructure.h>
+#include <EditorAPI/B/BSFixedString.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -13,9 +14,11 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		/* 0x000 */ virtual ~BSAnimationDBData();
 
-	private:
-		/* 0x008 */ virtual void sub_008();
-		/* 0x010 */ virtual void sub_010();
+		// The type's registered name (a shared BSFixedString: "hkxDBData" / "ProjecthkxDBData")
+		/* 0x008 */ [[nodiscard]] virtual const BSFixedString& GetTypeName() const = 0;
+		// Loads the animation data from an opened resource stream (pointer to the stream smart pointer); false when it fails.
+		// hkxDBData keeps the loaded data and file size; ProjectDBData also looks up the project data after loading.
+		/* 0x010 */ virtual bool LoadFromStream(void* Unknown, void** Stream) = 0;
 	};
 	static_assert(sizeof(BSAnimationDBData) == 0x8);
 

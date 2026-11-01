@@ -17,7 +17,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		virtual ~IAIWorldLocationHandle() = default;
 
 	protected:
-		virtual void sub_008() = 0;
+		// PackageLocation: for type 0 looks the object up by its handle (0x18), for type 11 asks the package's IAITarget data
+		// (index at 0x18) for it; null for every other type
+		virtual void* ResolveReference(const void* Context) = 0;
 		virtual void sub_010() = 0;
 	};
 	static_assert(sizeof(IAIWorldLocationHandle) == 0x8);
