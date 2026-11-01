@@ -87,10 +87,11 @@ namespace CKPE
 				// Likely technique name; formats edx into the r8/r9 buffer.
 				/* 0x048 */ virtual void GetTechniqueName(); // name by CommonLibF4 slot order and the body (formats the technique id into a buffer), signature not recovered
 				/* 0x050 */ virtual void sub_050();
-				/* 0x058 */ virtual void sub_058();
-				/* 0x060 */ virtual void sub_060();
-				/* 0x068 */ virtual void sub_068();
-				/* 0x070 */ virtual void sub_070();
+				// Compile the shader of a technique from "<name>.fx" (entry VS/HS/DS/PS) and add it to the matching shader map of the BSShader; null when the file is missing
+				/* 0x058 */ virtual void* CreateVertexShader(std::uint32_t Technique);
+				/* 0x060 */ virtual void* CreateHullShader(std::uint32_t Technique);
+				/* 0x068 */ virtual void* CreateDomainShader(std::uint32_t Technique);
+				/* 0x070 */ virtual void* CreatePixelShader(std::uint32_t Technique);
 				/* 0x078 */ virtual void sub_078();
 				/* 0x080 */ virtual void sub_080();
 				/* 0x088 */ virtual void sub_088();

@@ -28,8 +28,10 @@ namespace CKPE
 						offsetof(BGSRenderWindowEditModule, _TempPosition) == 0x70;
 				}
 			private:
-				/* 0x008 */ virtual void sub_008();
-				/* 0x010 */ virtual void sub_010();
+				// Adds the reference editing items (Cut, Copy, Paste, Paste in place, Duplicate, group and static collection commands) to the context menu; a no-op in the base module, arguments not recovered
+				/* 0x008 */ virtual void BuildContextMenu();
+				// Registers the module's hotkey functions (HKFunc_*); the base implementation is RenderWindow_RegisterHotkeyFunctions
+				/* 0x010 */ virtual void RegisterHotkeyFunctions();
 				/* 0x018 */ virtual void sub_018();
 public:
 				/* 0x020 */ virtual void HandleKey(std::uint8_t key); // shift (16) clears a flag, escape (27) cancels the current mode
@@ -69,7 +71,8 @@ private:
 				/* 0x128 */ virtual void sub_128();
 				/* 0x130 */ virtual void sub_130();
 				/* 0x138 */ virtual void sub_138();
-				/* 0x140 */ virtual void sub_140();
+				// Sets the main window status bar text for the reference under the cursor ("Camera" or "<name> (<form id>)"); no-op in the base module
+				/* 0x140 */ virtual void UpdateStatusBarText();
 				/* 0x148 */ virtual void sub_148();
 				/* 0x150 */ virtual void sub_150();
 				/* 0x158 */ virtual void sub_158();

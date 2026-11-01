@@ -112,7 +112,8 @@ namespace CKPE
 					char* Buffer, std::uint32_t BufferSize) const;
 				// Likely material viewer; formats UV and reference-count state.
 				/* 0x050 */ virtual void GetDebugString(); // builds the "BSShaderMaterial: ... TCOffset ... TCScale" text; signature not recovered
-				/* 0x058 */ virtual void sub_058();
+				// Compares the material's values with Other (floats within 0.001); only the effect and water materials do it
+				/* 0x058 */ [[nodiscard]] virtual bool Equals(const BSShaderMaterial* Other) const;
 
 				volatile std::uint32_t	_RefCount;				// 08
 				NiAPI::NiPoint2			_TextCoordOffset[2];	// 0C

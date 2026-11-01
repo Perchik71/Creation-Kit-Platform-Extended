@@ -96,11 +96,13 @@ namespace CKPE
 						offsetof(BSLight, _Shape) == 0x180;
 				}
 			private:
-				// Likely viewer strings; emits the light's diagnostic labels.
-				/* 0x010 */ virtual void sub_010();
+				// Writes the light's properties (LODDimmer, Luminance, the flags and the shape name) to a property dump
+				/* 0x010 */ virtual void DumpProperties(void* Dump) const;
 				/* 0x018 */ virtual void SetSourceLight(NiAPI::NiLight* Light);
-				/* 0x020 */ virtual void sub_020();
-				/* 0x028 */ virtual void sub_028();
+				// False here; true in the BSShadow*Light classes
+				/* 0x020 */ [[nodiscard]] virtual bool IsShadowLight() const;
+				// Copies 64 bytes of transform data to Out: this+0x20 here (Index unused), the Index-th 0xF0 byte entry of the shadow light's array in BSShadowLight
+				/* 0x028 */ virtual void GetTransformData(std::uint32_t Index, void* Out) const;
 			};
 			static_assert(sizeof(BSLight) == 0x190);
 			static_assert(BSLight::VerifyLayout());

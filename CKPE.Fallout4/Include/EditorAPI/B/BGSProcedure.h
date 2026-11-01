@@ -35,9 +35,13 @@ namespace CKPE::Fallout4::EditorAPI
 		virtual void sub_070() = 0;
 		virtual void sub_078() = 0;
 		virtual void sub_080() = 0;
+		// BGSProcedureBase family: GetParamCount() - number of expected parameters (a constant per class); the BGSProcedureTree* classes use this slot differently
 		virtual void sub_088() = 0;
+		// BGSProcedureBase family: GetExpectedParamType(Index) - parameter type descriptor, asserts when Index >= GetParamCount()
 		virtual void sub_090() = 0;
+		// BGSProcedureBase family: GetExpectedParamName(Index) - parameter name
 		virtual void sub_098() = 0;
+		// BGSProcedureBase family: IsParamRequired(Index)
 		virtual void sub_0A0() = 0;
 		virtual void sub_0A8() = 0;
 		virtual void sub_0B0() = 0;

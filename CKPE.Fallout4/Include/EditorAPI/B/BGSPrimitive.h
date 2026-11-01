@@ -17,6 +17,10 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
+			class BSMultiBound;
+			class BSOcclusionShape;
+			class BSPortal;
+
 			namespace Forms
 			{
 				// RVA + 0x3894BB0
@@ -45,13 +49,14 @@ namespace CKPE
 
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitive[0];
 				private:
-					/* 008 */ virtual void sub_008(); // Likely rebuilds editor geometry.
+					// Creates the display geometry of the primitive (alpha property and shape/lines)
+					/* 008 */ virtual void BuildGeometry() = 0;
 				public:
 					/* 010 */ virtual void SetColor(const NiAPI::NiColorA& color);
 					/* 018 */ virtual void SetRadius(const NiAPI::NiPoint3& radius);
 					/* 020 */ [[nodiscard]] virtual bool IsPointInside(const NiAPI::NiPoint3& point);
-				private:
-					/* 028 */ virtual void sub_028(); // Likely creates a multibound.
+					// Allocates the BSMultiBound matching the primitive's shape (BSMultiBoundSphere, BSMultiBoundAABB or BSMultiBoundOBB); null for planes and lines
+					/* 028 */ [[nodiscard]] virtual BSMultiBound* CreateMultiBound();
 				public:
 					[[nodiscard]] inline std::uint32_t GetType() const noexcept(true) { return _Type; }
 					[[nodiscard]] inline NiAPI::NiPoint3 GetRadius() const noexcept(true) { return _Radius; }
@@ -70,9 +75,11 @@ namespace CKPE
 					virtual ~BGSPrimitivePlane() = default;
 
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitivePlane[0];
-				private:
-					/* 030 */ virtual void sub_030(); // Likely creates a room.
-					/* 038 */ virtual void sub_038(); // Likely creates a portal.
+				public:
+					// Allocates a BSOcclusionPlane
+					/* 030 */ [[nodiscard]] virtual BSOcclusionShape* CreateOcclusionShape();
+					// Allocates a BSPortal
+					/* 038 */ [[nodiscard]] virtual BSPortal* CreatePortal();
 				};
 				static_assert(sizeof(BGSPrimitivePlane) == 0xA0);
 
@@ -84,8 +91,9 @@ namespace CKPE
 					virtual ~BGSPrimitiveBox() = default;
 
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitiveBox[0];
-				private:
-					/* 030 */ virtual void sub_030(); // Likely creates a room.
+				public:
+					// Allocates a BSOcclusionBox
+					/* 030 */ [[nodiscard]] virtual BSOcclusionShape* CreateOcclusionShape();
 				};
 				static_assert(sizeof(BGSPrimitiveBox) == 0xA0);
 

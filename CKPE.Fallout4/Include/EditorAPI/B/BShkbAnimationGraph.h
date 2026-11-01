@@ -22,10 +22,12 @@ namespace CKPE::Fallout4::EditorAPI
 
 	private:
 		/* 0x010 */ virtual void sub_010();
-		/* 0x018 */ virtual void sub_018();
-		/* 0x020 */ virtual void sub_020();
 
 	public:
+		// Adds the ragdoll's bodies to the physics world (asserts when the world does not match); false when there is no world or ragdoll
+		/* 0x018 */ virtual bool AddRagdollToWorld();
+		// Removes the ragdoll from the physics world (asserts when it is not in it); false when there is no world or ragdoll
+		/* 0x020 */ virtual bool RemoveRagdollFromWorld();
 		/* 0x028 */ virtual void SetWorld(bhkWorld* world) noexcept(true);
 
 	private:
@@ -42,7 +44,12 @@ namespace CKPE::Fallout4::EditorAPI
 		/* 0x080 */ virtual void sub_080();
 		/* 0x088 */ virtual void sub_088();
 		/* 0x090 */ virtual void sub_090();
-		/* 0x098 */ virtual void sub_098();
+
+	public:
+		// True when the world is set and the ragdoll is in it
+		/* 0x098 */ virtual bool IsRagdollInWorld() const;
+
+	private:
 		/* 0x0A0 */ virtual void sub_0A0();
 		/* 0x0A8 */ virtual void sub_0A8();
 	};
