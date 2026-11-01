@@ -20,6 +20,7 @@
 #include <EditorAPI/B/TBO_InstanceData.h>
 #include <EditorAPI/B/BGSTypedFormValuePair.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/B/BSString.h>
 #include <EditorAPI/T/TESDescription.h>
 #include <EditorAPI/B/BGSInstanceNamingRulesForm.h>
 #include <EditorAPI/B/BGSAttachParentArray.h>
@@ -176,11 +177,9 @@ namespace CKPE
 					TESObjectWEAP* weaponTemplate; // 358
 					void* embeddedWeaponMod; // 360 - BGSMod::Attachment::Mod*
 					BGSAttachParentArray attachParents; // 368
-					std::int32_t unk388; // 388 - 2 on InitializeData/ClearData
+					std::int32_t unk388; // 388 - 2 on InitializeData/ClearData, saved (MASE chunk) when it is not 2
 					std::uint32_t unk38C; // 38C
-					std::uint64_t unk390; // 390 - only cleared by the constructor
-					std::uint32_t unk398; // 398 - only cleared by the constructor
-					std::uint32_t unk39C; // 39C
+					BSString filter; // 390 - FLTR chunk (editor filter string), shown in dialog control 1287
 					std::uint8_t unk3A0; // 3A0 - 0 on construction (16-byte member initialised by a small constructor: bytes 0,1,1, then a null pointer at 3A8)
 					std::uint8_t unk3A1; // 3A1 - 1 on construction
 					std::uint8_t unk3A2; // 3A2 - 1 on construction
@@ -188,6 +187,7 @@ namespace CKPE
 					void* unk3A8; // 3A8 - null on construction
 				};
 				static_assert(sizeof(TESObjectWEAP) == 0x3B0);
+				static_assert(offsetof(TESObjectWEAP, filter) == 0x390);
 			}
 		}
 	}
