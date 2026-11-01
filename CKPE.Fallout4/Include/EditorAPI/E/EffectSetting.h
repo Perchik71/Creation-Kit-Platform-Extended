@@ -112,7 +112,16 @@ namespace CKPE
 					void* filterValidationItem; // 78
 					EffectSettingData data; // 80
 					BSSimpleList<EffectSetting*> counterEffects; // 180 - BSSimpleList<EffectSetting*>
-					BSTArray<void*> effectSounds; // 190 - BSTArray<EffectSetting::SoundPair>
+					// 16 byte entries (the array stride, found in the indexing code); member order as CommonLibF4's SoundPair
+					struct SoundPair
+					{
+						std::int32_t id; // 00 - MagicSystem::SoundID
+						std::uint32_t pad04; // 04
+						void* sound; // 08 - BGSSoundDescriptorForm*
+					};
+					static_assert(sizeof(SoundPair) == 0x10);
+
+					BSTArray<SoundPair> effectSounds; // 190
 					BGSLocalizedString magicItemDescription; // 1A8
 					std::uint8_t unk1B8[0x18]; // 1B8
 					std::uint8_t unk1D0[0x10]; // 1D0

@@ -68,7 +68,18 @@ namespace CKPE
 					std::uint8_t unk271[0x3]; // 271
 					std::uint32_t furnFlags; // 274 - by position (same member order and sizes as the game after the last base)
 					TESForm* associatedForm; // 278 - by position (same member order and sizes as the game after the last base)
-					BSTArray<void*> markersArray; // 280 - BSTArray<BSFurnitureMarker>, by position (same member order and sizes as the game after the last base)
+					// 0x20 byte entries (the array stride, found in the indexing code); member order as CommonLibF4's BSFurnitureMarker
+					struct BSFurnitureMarker
+					{
+						NiAPI::NiPoint3 position; // 00
+						std::uint32_t pad0C; // 0C
+						void* actorMustHaveKeyword; // 10 - BGSKeyword*
+						float heading; // 18
+						std::uint32_t allowedAnimations; // 1C
+					};
+					static_assert(sizeof(BSFurnitureMarker) == 0x20);
+
+					BSTArray<BSFurnitureMarker> markersArray; // 280
 					std::uint16_t unk298; // 298
 					std::uint8_t unk29A; // 29A
 					std::uint8_t unk29B[0x5]; // 29B
