@@ -43,15 +43,15 @@ namespace CKPE
 
 					virtual ~TESObjectBOOK() = default;
 
-				/* 070 */ void InitializeData() noexcept(true) override;
-				/* 078 */ void ClearData() noexcept(true) override;
-				/* 080 */ bool Load(TESFile* File) noexcept(true) override;
-				/* 098 */ void Save() noexcept(true) override;
-				/* 1C8 */ void CopyFrom(TESForm* Source) noexcept(true) override;
-				/* 1D0 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
-				/* 2A0 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* Result) noexcept(true) override;
-				/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
-				/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 070 */ void InitializeData() noexcept(true) override;
+					/* 078 */ void ClearData() noexcept(true) override;
+					/* 080 */ bool Load(TESFile* File) noexcept(true) override;
+					/* 098 */ void Save() noexcept(true) override;
+					/* 1C8 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 1D0 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 2A0 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* Result) noexcept(true) override;
+					/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
 					std::uint8_t unk190[0x18];	// 190
 					void* unk1A8;				// 1A8 - set by the constructor

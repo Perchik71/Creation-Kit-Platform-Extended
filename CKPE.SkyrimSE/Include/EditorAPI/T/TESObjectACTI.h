@@ -33,18 +33,18 @@ namespace CKPE
 
 					virtual ~TESObjectACTI() = default;
 
-				/* 070 */ void InitializeData() noexcept(true) override;
-				/* 078 */ void ClearData() noexcept(true) override;
-				/* 080 */ bool Load(TESFile* File) noexcept(true) override;
-				/* 098 */ void Save() noexcept(true) override;
-				/* 1C8 */ void CopyFrom(TESForm* Source) noexcept(true) override;
-				/* 1D0 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
-				/* 248 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
-				/* 250 */ [[nodiscard]] bool CanCheckIn(const void* Forms) const noexcept(true) override;
-				/* 258 */ void BuildCheckInDependencyMessage(const void* Forms, void* Message) const noexcept(true) override;
-				/* 2A0 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* Result) noexcept(true) override;
-				/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
-				/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 070 */ void InitializeData() noexcept(true) override;
+					/* 078 */ void ClearData() noexcept(true) override;
+					/* 080 */ bool Load(TESFile* File) noexcept(true) override;
+					/* 098 */ void Save() noexcept(true) override;
+					/* 1C8 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 1D0 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 248 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
+					/* 250 */ [[nodiscard]] bool CanCheckIn(const void* Forms) const noexcept(true) override;
+					/* 258 */ void BuildCheckInDependencyMessage(const void* Forms, void* Message) const noexcept(true) override;
+					/* 2A0 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* Result) noexcept(true) override;
+					/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
 					std::uint8_t padE0[0x8];	// E0 - zeroed by InitializeData
 					void* unkE8;				// E8 - zeroed by InitializeData

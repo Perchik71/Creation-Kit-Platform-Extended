@@ -43,10 +43,10 @@ namespace CKPE
 
 					virtual ~TESAmmo() = default;
 
-				/* 080 */ bool Load(TESFile* File) noexcept(true) override;
-				/* 098 */ void Save() noexcept(true) override;
-				/* 1C8 */ void CopyFrom(TESForm* Source) noexcept(true) override;
-				/* 1D0 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 080 */ bool Load(TESFile* File) noexcept(true) override;
+					/* 098 */ void Save() noexcept(true) override;
+					/* 1C8 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 1D0 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
 				public:
 					std::uint8_t unk190[0x20];	// 190 - data, layout not resolved
 				};

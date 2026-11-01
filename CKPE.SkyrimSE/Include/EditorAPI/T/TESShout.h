@@ -31,15 +31,15 @@ namespace CKPE
 
 					virtual ~TESShout() = default;
 
-				/* 080 */ bool Load(TESFile* File) noexcept(true) override;
-				/* 098 */ void Save() noexcept(true) override;
-				/* 1C8 */ void CopyFrom(TESForm* Source) noexcept(true) override;
-				/* 1D0 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
-				/* 248 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
-				/* 250 */ [[nodiscard]] bool CanCheckIn(const void* Forms) const noexcept(true) override;
-				/* 258 */ void BuildCheckInDependencyMessage(const void* Forms, void* Message) const noexcept(true) override;
-				/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
-				/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 080 */ bool Load(TESFile* File) noexcept(true) override;
+					/* 098 */ void Save() noexcept(true) override;
+					/* 1C8 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 1D0 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 248 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
+					/* 250 */ [[nodiscard]] bool CanCheckIn(const void* Forms) const noexcept(true) override;
+					/* 258 */ void BuildCheckInDependencyMessage(const void* Forms, void* Message) const noexcept(true) override;
+					/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
 					std::uint8_t unk88[0x48];	// 88 - data (SNAM word entries), layout not resolved
 				};

@@ -28,13 +28,13 @@ namespace CKPE
 					virtual ~TESEyes() = default;
 
 					/* 070 */ void InitializeData() noexcept(true) override;
-				/* 080 */ bool Load(TESFile* File) noexcept(true) override;
-				/* 098 */ void Save() noexcept(true) override;
-				/* 1C8 */ void CopyFrom(TESForm* Source) noexcept(true) override;
-				/* 1D0 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
-				/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
-				/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
-				/* 2C8 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 080 */ bool Load(TESFile* File) noexcept(true) override;
+					/* 098 */ void Save() noexcept(true) override;
+					/* 1C8 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 1D0 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 2C8 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
 					std::uint8_t flags;			// 68 - DATA, 0 on construction
 					std::uint8_t pad69[7];		// 69
