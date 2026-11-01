@@ -20,6 +20,7 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				class TESRace;
 				class BGSTextureSet;
 				class BGSListForm;
 
@@ -72,7 +73,7 @@ namespace CKPE
 					BGSModelMaterialSwap bipedModel1stPerson[2]; // 1A0
 					BGSTextureSet* skinTextures[2]; // 240
 					BGSListForm* skinTextureSwapLists[2]; // 250
-					BSTArray<void*> additionalRaces; // 260 - BSTArray<TESRace*>
+					BSTArray<TESRace*> additionalRaces; // 260 - BSTArray<TESRace*>
 					BGSFootstepSet* footstepSet; // 278
 					BGSArtObject* artObject; // 280
 					std::uint64_t unk288; // 288

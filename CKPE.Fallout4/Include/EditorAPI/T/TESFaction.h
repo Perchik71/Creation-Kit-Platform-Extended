@@ -19,6 +19,7 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				struct RANK_DATA;
 				class TESCondition;
 
 				class BGSListForm;
@@ -101,7 +102,7 @@ namespace CKPE
 					TESCondition* vendorConditions; // C8
 					BGSListForm* vendorSellBuyList; // D0
 					TESObjectREFR* merchantContainer; // D8
-					BSSimpleList<void*> rankDataList; // E0 - BSSimpleList<RANK_DATA*>
+					BSSimpleList<RANK_DATA*> rankDataList; // E0 - BSSimpleList<RANK_DATA*>
 					std::uint64_t unkF0; // F0
 				};
 				static_assert(sizeof(TESFaction) == 0xF8);

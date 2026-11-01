@@ -48,7 +48,7 @@ namespace CKPE
 					std::uint32_t collisionIdx; // 50
 					std::uint8_t unk54[0xC]; // 54
 					BSFixedString name; // 60
-					BSTArray<void*> collidesWith; // 68 - BSTArray<BGSCollisionLayer*>
+					BSTArray<BGSCollisionLayer*> collidesWith; // 68 - BSTArray<BGSCollisionLayer*>
 				};
 				static_assert(sizeof(BGSCollisionLayer) == 0x80);
 			}

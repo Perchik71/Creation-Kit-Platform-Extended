@@ -16,6 +16,7 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				class TESGrass;
 				class BGSTextureSet;
 
 				class BGSMaterialType;
@@ -60,7 +61,7 @@ namespace CKPE
 					std::int8_t specularExponent; // 40
 					std::uint8_t unk41[0x3]; // 41
 					std::int32_t shaderTextureIndex; // 44
-					BSSimpleList<void*> textureGrassList; // 48 - BSSimpleList<TESGrass*>
+					BSSimpleList<TESGrass*> textureGrassList; // 48 - BSSimpleList<TESGrass*>
 					std::uint64_t unk58; // 58
 					std::uint64_t unk60; // 60
 					std::uint32_t unk68; // 68

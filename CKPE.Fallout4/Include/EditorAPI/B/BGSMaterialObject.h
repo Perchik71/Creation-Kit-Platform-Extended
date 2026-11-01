@@ -41,7 +41,16 @@ namespace CKPE
 					constexpr static std::uint8_t TYPE_ID = ftMaterialObject;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMaterialObject[0];
 				public:
-					BSTArray<void*> fileData; // B0 - BSTArray<FILE_DATA>
+					// DNAM file data entry (16 bytes, the array stride)
+					struct FILE_DATA
+					{
+						char* buffer; // 00
+						std::uint32_t bufferSize; // 08
+						std::uint32_t pad0C; // 0C
+					};
+					static_assert(sizeof(FILE_DATA) == 0x10);
+
+					BSTArray<FILE_DATA> fileData; // B0
 					std::uint64_t unkC8; // C8
 					std::uint64_t unkD0; // D0
 				};

@@ -59,7 +59,7 @@ namespace CKPE
 					std::uint8_t flags; // 90 - REX::TEnumSet<Flag, std::uint8_t>
 					std::uint8_t unk91[0x3]; // 91
 					std::int32_t type; // 94 - REX::TEnumSet<HeadPartType, std::int32_t>
-					BSTArray<void*> extraParts; // 98 - BSTArray<BGSHeadPart*>
+					BSTArray<BGSHeadPart*> extraParts; // 98 - BSTArray<BGSHeadPart*>
 					BGSTextureSet* textureSet; // B0
 					TESModel ChargenModel; // B8
 					TESModelTri morphs[3]; // F0

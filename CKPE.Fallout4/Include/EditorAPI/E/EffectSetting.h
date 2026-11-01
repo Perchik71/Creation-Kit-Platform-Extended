@@ -111,7 +111,7 @@ namespace CKPE
 					FilterValidationFunction_t* filterValidationFunction; // 70
 					void* filterValidationItem; // 78
 					EffectSettingData data; // 80
-					BSSimpleList<void*> counterEffects; // 180 - BSSimpleList<EffectSetting*>
+					BSSimpleList<EffectSetting*> counterEffects; // 180 - BSSimpleList<EffectSetting*>
 					BSTArray<void*> effectSounds; // 190 - BSTArray<EffectSetting::SoundPair>
 					BGSLocalizedString magicItemDescription; // 1A8
 					std::uint8_t unk1B8[0x18]; // 1B8

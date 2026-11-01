@@ -19,6 +19,7 @@ namespace CKPE
 		{
 			namespace Forms
 			{
+				class TESObjectACTI;
 				class TESImageSpace;
 
 				class BGSSoundDescriptorForm;
@@ -135,8 +136,8 @@ namespace CKPE
 					void* niNoiseTexture0; // 238 - NiPointer<NiTexture>
 					void* niNoiseTexture1; // 240 - NiPointer<NiTexture>
 					void* niNoiseTexture2; // 248 - NiPointer<NiTexture>
-					void* placeableAutoWater; // 250 - TESObjectACTI*
-					void* placeableLODWater; // 258 - TESObjectACTI*
+					TESObjectACTI* placeableAutoWater; // 250 - TESObjectACTI*
+					TESObjectACTI* placeableLODWater; // 258 - TESObjectACTI*
 					void* waterShaderMaterial; // 260 - BSWaterShaderMaterial*
 					bool resetNoiseTextures; // 268
 					std::uint8_t pad269[0x7]; // 269

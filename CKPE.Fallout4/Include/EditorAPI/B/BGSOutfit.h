@@ -39,7 +39,7 @@ namespace CKPE
 					constexpr static std::uint8_t TYPE_ID = ftOutfit;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSOutfit[0];
 				public:
-					BSTArray<void*> outfitItems; // 28 - BSTArray<TESForm*>
+					BSTArray<TESForm*> outfitItems; // 28 - BSTArray<TESForm*>
 				};
 				static_assert(sizeof(BGSOutfit) == 0x40);
 			}
