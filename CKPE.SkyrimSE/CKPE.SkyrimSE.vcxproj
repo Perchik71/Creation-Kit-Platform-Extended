@@ -424,6 +424,13 @@
     <ClInclude Include="Include\EditorAPI\T\TESObjectARMA.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectARMO.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectWEAP.h" />
+    <ClInclude Include="Include\EditorAPI\B\ActorValueOwner.h" />
+    <ClInclude Include="Include\EditorAPI\B\BGSOverridePackCollection.h" />
+    <ClInclude Include="Include\EditorAPI\B\BGSPerkRankArray.h" />
+    <ClInclude Include="Include\EditorAPI\B\TESActorBaseData.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESActorBase.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESNPC.h" />
+    <ClInclude Include="Include\EditorAPI\T\TESRace.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectLIGH.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectREFR.h" />
     <ClInclude Include="Include\EditorAPI\T\TESTexture.h" />
