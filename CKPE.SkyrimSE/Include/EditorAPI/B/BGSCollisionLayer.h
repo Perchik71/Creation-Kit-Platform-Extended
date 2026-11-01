@@ -39,9 +39,16 @@ namespace CKPE
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C8 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk50[0x30];	// 50 - data, layout not resolved
+					std::uint32_t bnam;	// 50 - BNAM
+					std::uint32_t fnam;	// 54 - FNAM
+					std::uint32_t gnam;	// 58 - GNAM
+					std::uint8_t pad5C[0x4];	// 5C
+					std::uint8_t mnam[0x20];	// 60 - MNAM
 				};
-				static_assert(offsetof(BGSCollisionLayer, unk50) == 0x50);
+				static_assert(offsetof(BGSCollisionLayer, bnam) == 0x50);
+				static_assert(offsetof(BGSCollisionLayer, fnam) == 0x54);
+				static_assert(offsetof(BGSCollisionLayer, gnam) == 0x58);
+				static_assert(offsetof(BGSCollisionLayer, mnam) == 0x60);
 				static_assert(sizeof(BGSCollisionLayer) == 0x80);
 			}
 		}

@@ -33,9 +33,13 @@ namespace CKPE
 					/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk28[0x40];	// 28 - data, layout not resolved
+					std::uint8_t mnam[0x8];	// 28 - MNAM
+					std::uint8_t sped[0x2C];	// 30 - SPED
+					std::uint8_t inam[0xC];	// 5C - INAM
 				};
-				static_assert(offsetof(BGSMovementType, unk28) == 0x28);
+				static_assert(offsetof(BGSMovementType, mnam) == 0x28);
+				static_assert(offsetof(BGSMovementType, sped) == 0x30);
+				static_assert(offsetof(BGSMovementType, inam) == 0x5C);
 				static_assert(sizeof(BGSMovementType) == 0x68);
 			}
 		}

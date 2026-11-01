@@ -43,9 +43,11 @@ namespace CKPE
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C8 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk68[0x158];	// 68 - data, layout not resolved
+					std::uint8_t pad68[0x128];	// 68
+					std::uint8_t dnam[0x30];	// 190 - DNAM
 				};
-				static_assert(offsetof(EffectSetting, unk68) == 0x68);
+				static_assert(offsetof(EffectSetting, pad68) == 0x68);
+				static_assert(offsetof(EffectSetting, dnam) == 0x190);
 				static_assert(sizeof(EffectSetting) == 0x1C0);
 			}
 		}

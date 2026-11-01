@@ -40,9 +40,15 @@ namespace CKPE
 					/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk48[0x20];	// 48 - data, layout not resolved
+					std::uint32_t fnam;	// 48 - FNAM
+					std::uint8_t pad4C[0x10];	// 4C
+					std::uint16_t vnam;	// 5C - VNAM
+					std::uint16_t unam;	// 5E - UNAM
+					std::uint8_t pad60[0x8];	// 60
 				};
-				static_assert(offsetof(BGSSoundCategory, unk48) == 0x48);
+				static_assert(offsetof(BGSSoundCategory, fnam) == 0x48);
+				static_assert(offsetof(BGSSoundCategory, vnam) == 0x5C);
+				static_assert(offsetof(BGSSoundCategory, unam) == 0x5E);
 				static_assert(sizeof(BGSSoundCategory) == 0x68);
 			}
 		}

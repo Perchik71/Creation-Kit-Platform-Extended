@@ -47,9 +47,14 @@ namespace CKPE
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C8 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unkB0[0xC0];	// B0 - data, layout not resolved
+					std::uint8_t padB0[0x88];	// B0
+					std::uint8_t unk138[0x30];	// 138 - NAM1/NAM2
+					std::uint32_t vnam;	// 168 - VNAM
+					std::uint8_t pad16C[0x4];	// 16C
 				};
-				static_assert(offsetof(BGSProjectile, unkB0) == 0xB0);
+				static_assert(offsetof(BGSProjectile, padB0) == 0xB0);
+				static_assert(offsetof(BGSProjectile, unk138) == 0x138);
+				static_assert(offsetof(BGSProjectile, vnam) == 0x168);
 				static_assert(sizeof(BGSProjectile) == 0x170);
 			}
 		}

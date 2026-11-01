@@ -34,9 +34,13 @@ namespace CKPE
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C8 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk28[0xC8];	// 28 - data, layout not resolved
+					std::uint8_t unk28[0x30];	// 28 - MODL/MODT
+					std::uint8_t wlst[0x80];	// 58 - WLST
+					std::uint8_t tnam[0x18];	// D8 - TNAM
 				};
 				static_assert(offsetof(TESClimate, unk28) == 0x28);
+				static_assert(offsetof(TESClimate, wlst) == 0x58);
+				static_assert(offsetof(TESClimate, tnam) == 0xD8);
 				static_assert(sizeof(TESClimate) == 0xF0);
 			}
 		}

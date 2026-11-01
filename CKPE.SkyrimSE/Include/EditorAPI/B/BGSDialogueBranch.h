@@ -38,9 +38,10 @@ namespace CKPE
 					/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk28[0x38];	// 28 - data, layout not resolved
+					std::uint32_t dnam;	// 28 - DNAM
+					std::uint8_t pad2C[0x34];	// 2C
 				};
-				static_assert(offsetof(BGSDialogueBranch, unk28) == 0x28);
+				static_assert(offsetof(BGSDialogueBranch, dnam) == 0x28);
 				static_assert(sizeof(BGSDialogueBranch) == 0x60);
 			}
 		}

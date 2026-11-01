@@ -35,9 +35,11 @@ namespace CKPE
 					/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk28[0x10];	// 28 - data, layout not resolved
+					std::uint8_t anam[0x8];	// 28 - ANAM
+					void* data;	// 30 - DATA
 				};
-				static_assert(offsetof(BGSFootstep, unk28) == 0x28);
+				static_assert(offsetof(BGSFootstep, anam) == 0x28);
+				static_assert(offsetof(BGSFootstep, data) == 0x30);
 				static_assert(sizeof(BGSFootstep) == 0x38);
 			}
 		}

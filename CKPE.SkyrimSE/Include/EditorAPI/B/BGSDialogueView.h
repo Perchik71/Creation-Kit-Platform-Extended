@@ -22,9 +22,18 @@ namespace CKPE
 				public:
 					virtual ~BGSDialogueView() = default;
 				public:
-					std::uint8_t unk28[0x70];	// 28 - data, layout not resolved
+					std::uint8_t pad28[0x30];	// 28
+					std::uint32_t enam;	// 58 - ENAM
+					std::uint8_t pad5C[0x4];	// 5C
+					void* qnam;	// 60 - QNAM
+					std::uint8_t pad68[0x10];	// 68
+					std::uint8_t dnam;	// 78 - DNAM
+					std::uint8_t pad79[0x1F];	// 79
 				};
-				static_assert(offsetof(BGSDialogueView, unk28) == 0x28);
+				static_assert(offsetof(BGSDialogueView, pad28) == 0x28);
+				static_assert(offsetof(BGSDialogueView, enam) == 0x58);
+				static_assert(offsetof(BGSDialogueView, qnam) == 0x60);
+				static_assert(offsetof(BGSDialogueView, dnam) == 0x78);
 				static_assert(sizeof(BGSDialogueView) == 0x98);
 			}
 		}

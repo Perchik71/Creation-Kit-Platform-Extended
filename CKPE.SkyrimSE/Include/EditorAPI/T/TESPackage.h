@@ -40,9 +40,17 @@ namespace CKPE
 					/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk28[0xE0];	// 28 - data, layout not resolved
+					std::uint8_t pkdt[0x58];	// 28 - PKDT
+					void* qnam;	// 80 - QNAM
+					std::uint8_t poba[0x20];	// 88 - POBA
+					std::uint8_t poea[0x20];	// A8 - POEA
+					std::uint8_t poca[0x40];	// C8 - POCA
 				};
-				static_assert(offsetof(TESPackage, unk28) == 0x28);
+				static_assert(offsetof(TESPackage, pkdt) == 0x28);
+				static_assert(offsetof(TESPackage, qnam) == 0x80);
+				static_assert(offsetof(TESPackage, poba) == 0x88);
+				static_assert(offsetof(TESPackage, poea) == 0xA8);
+				static_assert(offsetof(TESPackage, poca) == 0xC8);
 				static_assert(sizeof(TESPackage) == 0x108);
 			}
 		}

@@ -45,9 +45,15 @@ namespace CKPE
 					/* 2C8 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2E8 */ void InitializeListView(HWND hListView) const noexcept(true) override;
 				public:
-					std::uint8_t unk40[0x1D8];	// 40 - data, layout not resolved
+					std::uint8_t pad40[0x18];	// 40
+					std::uint32_t anam;	// 58 - ANAM
+					std::uint8_t pad5C[0x2C];	// 5C
+					std::uint32_t enam;	// 88 - ENAM
+					std::uint8_t pad8C[0x18C];	// 8C
 				};
-				static_assert(offsetof(TESQuest, unk40) == 0x40);
+				static_assert(offsetof(TESQuest, pad40) == 0x40);
+				static_assert(offsetof(TESQuest, anam) == 0x58);
+				static_assert(offsetof(TESQuest, enam) == 0x88);
 				static_assert(sizeof(TESQuest) == 0x218);
 			}
 		}

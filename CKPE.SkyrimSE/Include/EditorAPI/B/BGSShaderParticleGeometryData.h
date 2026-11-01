@@ -35,9 +35,11 @@ namespace CKPE
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C8 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk28[0x40];	// 28 - data, layout not resolved
+					std::uint8_t data[0x18];	// 28 - DATA
+					std::uint8_t icon[0x28];	// 40 - ICON
 				};
-				static_assert(offsetof(BGSShaderParticleGeometryData, unk28) == 0x28);
+				static_assert(offsetof(BGSShaderParticleGeometryData, data) == 0x28);
+				static_assert(offsetof(BGSShaderParticleGeometryData, icon) == 0x40);
 				static_assert(sizeof(BGSShaderParticleGeometryData) == 0x68);
 			}
 		}

@@ -39,9 +39,11 @@ namespace CKPE
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C8 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk30[0x10];	// 30 - data, layout not resolved
+					std::uint8_t pad30[0x8];	// 30
+					void* cnam;	// 38 - CNAM
 				};
-				static_assert(offsetof(BGSMusicTrackFormWrapper, unk30) == 0x30);
+				static_assert(offsetof(BGSMusicTrackFormWrapper, pad30) == 0x30);
+				static_assert(offsetof(BGSMusicTrackFormWrapper, cnam) == 0x38);
 				static_assert(sizeof(BGSMusicTrackFormWrapper) == 0x40);
 			}
 		}

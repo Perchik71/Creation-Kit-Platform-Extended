@@ -44,9 +44,15 @@ namespace CKPE
 					/* 2D8 */ void FillListViewItem(void* pDispInfo) const noexcept(true) override;
 					/* 2E8 */ void InitializeListView(HWND hListView) const noexcept(true) override;
 				public:
-					std::uint8_t unk90[0xD8];	// 90 - data, layout not resolved
+					std::uint8_t pad90[0xB8];	// 90
+					void* avsk;	// 148 - AVSK
+					std::uint8_t pad150[0x10];	// 150
+					std::uint32_t cnam;	// 160 - CNAM
+					std::uint8_t pad164[0x4];	// 164
 				};
-				static_assert(offsetof(ActorValueInfo, unk90) == 0x90);
+				static_assert(offsetof(ActorValueInfo, pad90) == 0x90);
+				static_assert(offsetof(ActorValueInfo, avsk) == 0x148);
+				static_assert(offsetof(ActorValueInfo, cnam) == 0x160);
 				static_assert(sizeof(ActorValueInfo) == 0x168);
 			}
 		}

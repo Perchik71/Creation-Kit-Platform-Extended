@@ -42,9 +42,31 @@ namespace CKPE
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C8 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk68[0x90];	// 68 - data, layout not resolved
+					void* jail;	// 68 - JAIL
+					void* wait;	// 70 - WAIT
+					void* stol;	// 78 - STOL
+					void* plcn;	// 80 - PLCN
+					void* crgr;	// 88 - CRGR
+					void* jout;	// 90 - JOUT
+					std::uint8_t crva[0x18];	// 98 - CRVA
+					std::uint8_t venv[0x10];	// B0 - VENV
+					void* plvd;	// C0 - PLVD
+					std::uint8_t padC8[0x8];	// C8
+					void* vend;	// D0 - VEND
+					void* venc;	// D8 - VENC
+					std::uint8_t padE0[0x18];	// E0
 				};
-				static_assert(offsetof(TESFaction, unk68) == 0x68);
+				static_assert(offsetof(TESFaction, jail) == 0x68);
+				static_assert(offsetof(TESFaction, wait) == 0x70);
+				static_assert(offsetof(TESFaction, stol) == 0x78);
+				static_assert(offsetof(TESFaction, plcn) == 0x80);
+				static_assert(offsetof(TESFaction, crgr) == 0x88);
+				static_assert(offsetof(TESFaction, jout) == 0x90);
+				static_assert(offsetof(TESFaction, crva) == 0x98);
+				static_assert(offsetof(TESFaction, venv) == 0xB0);
+				static_assert(offsetof(TESFaction, plvd) == 0xC0);
+				static_assert(offsetof(TESFaction, vend) == 0xD0);
+				static_assert(offsetof(TESFaction, venc) == 0xD8);
 				static_assert(sizeof(TESFaction) == 0xF8);
 			}
 		}

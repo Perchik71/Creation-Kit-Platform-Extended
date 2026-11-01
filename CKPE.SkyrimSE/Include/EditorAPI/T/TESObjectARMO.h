@@ -55,9 +55,12 @@ namespace CKPE
 					/* 1C8 */ void CopyFrom(TESForm* Source) noexcept(true) override;
 					/* 1D0 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
 				public:
-					std::uint8_t unk2C8[0x38];	// 2C8 - armor data, layout not resolved
+					std::uint8_t dnam[0x20];	// 2C8 - DNAM
+					void* tnam;	// 2E8 - TNAM
+					std::uint8_t pad2F0[0x10];	// 2F0
 				};
-				static_assert(offsetof(TESObjectARMO, unk2C8) == 0x2C8);
+				static_assert(offsetof(TESObjectARMO, dnam) == 0x2C8);
+				static_assert(offsetof(TESObjectARMO, tnam) == 0x2E8);
 				static_assert(sizeof(TESObjectARMO) == 0x300);
 			}
 		}

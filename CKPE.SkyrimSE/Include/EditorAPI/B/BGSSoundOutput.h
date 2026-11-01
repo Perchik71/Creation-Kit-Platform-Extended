@@ -36,9 +36,15 @@ namespace CKPE
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C8 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk30[0x18];	// 30 - data, layout not resolved
+					std::uint32_t nam1;	// 30 - NAM1
+					std::uint32_t mnam;	// 34 - MNAM
+					void* anam;	// 38 - ANAM
+					void* onam;	// 40 - ONAM
 				};
-				static_assert(offsetof(BGSSoundOutput, unk30) == 0x30);
+				static_assert(offsetof(BGSSoundOutput, nam1) == 0x30);
+				static_assert(offsetof(BGSSoundOutput, mnam) == 0x34);
+				static_assert(offsetof(BGSSoundOutput, anam) == 0x38);
+				static_assert(offsetof(BGSSoundOutput, onam) == 0x40);
 				static_assert(sizeof(BGSSoundOutput) == 0x48);
 			}
 		}

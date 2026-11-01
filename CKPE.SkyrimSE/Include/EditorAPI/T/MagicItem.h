@@ -26,9 +26,9 @@ namespace CKPE
 				public:
 					virtual ~MagicItem() = default;
 				public:
-					std::uint8_t unk80[0x1E8];	// 80 - magic item data, layout not resolved
+					std::uint8_t efid[0x1E8];	// 80 - EFID
 				};
-				static_assert(offsetof(MagicItem, unk80) == 0x80);
+				static_assert(offsetof(MagicItem, efid) == 0x80);
 				static_assert(sizeof(MagicItem) == 0x268);
 			}
 		}

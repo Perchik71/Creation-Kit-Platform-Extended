@@ -32,9 +32,18 @@ namespace CKPE
 					/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk28[0x28];	// 28 - data, layout not resolved
+					std::uint8_t mprt[0x8];	// 28 - MPRT
+					std::uint8_t fprt[0x8];	// 30 - FPRT
+					std::uint8_t mcht[0x8];	// 38 - MCHT
+					std::uint8_t fcht[0x8];	// 40 - FCHT
+					std::uint32_t data;	// 48 - DATA
+					std::uint8_t pad4C[0x4];	// 4C
 				};
-				static_assert(offsetof(BGSAssociationType, unk28) == 0x28);
+				static_assert(offsetof(BGSAssociationType, mprt) == 0x28);
+				static_assert(offsetof(BGSAssociationType, fprt) == 0x30);
+				static_assert(offsetof(BGSAssociationType, mcht) == 0x38);
+				static_assert(offsetof(BGSAssociationType, fcht) == 0x40);
+				static_assert(offsetof(BGSAssociationType, data) == 0x48);
 				static_assert(sizeof(BGSAssociationType) == 0x50);
 			}
 		}

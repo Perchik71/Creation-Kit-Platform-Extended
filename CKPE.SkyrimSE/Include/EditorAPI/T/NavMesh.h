@@ -43,9 +43,15 @@ namespace CKPE
 					/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk30[0x168];	// 30 - data, layout not resolved
+					std::uint8_t pad30[0x130];	// 30
+					std::uint8_t onam[0x18];	// 160 - ONAM
+					std::uint8_t pnam[0x18];	// 178 - PNAM
+					std::uint8_t nnam[0x8];	// 190 - NNAM
 				};
-				static_assert(offsetof(NavMesh, unk30) == 0x30);
+				static_assert(offsetof(NavMesh, pad30) == 0x30);
+				static_assert(offsetof(NavMesh, onam) == 0x160);
+				static_assert(offsetof(NavMesh, pnam) == 0x178);
+				static_assert(offsetof(NavMesh, nnam) == 0x190);
 				static_assert(sizeof(NavMesh) == 0x198);
 			}
 		}

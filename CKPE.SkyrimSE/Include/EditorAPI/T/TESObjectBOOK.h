@@ -56,7 +56,7 @@ namespace CKPE
 				public:
 					std::uint8_t unk190[0x18];	// 190
 					void* unk1A8;				// 1A8 - set by the constructor
-					void* unk1B0;				// 1B0 - zeroed by InitializeData
+					void* inam;				// 1B0 - INAM, zeroed by InitializeData
 					std::uint8_t unk1B8[0x28];	// 1B8
 				};
 				static_assert(offsetof(TESObjectBOOK, unk1A8) == 0x1A8);

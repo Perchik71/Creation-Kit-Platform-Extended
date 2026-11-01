@@ -38,9 +38,19 @@ namespace CKPE
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C8 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk28[0x278];	// 28 - data, layout not resolved
+					std::uint8_t pad28[0x1A0];	// 28
+					std::uint8_t icon[0x28];	// 1C8 - ICON
+					std::uint8_t ico2[0x28];	// 1F0 - ICO2
+					std::uint8_t nam7[0x28];	// 218 - NAM7
+					std::uint8_t nam8[0x28];	// 240 - NAM8
+					std::uint8_t nam9[0x38];	// 268 - NAM9
 				};
-				static_assert(offsetof(TESEffectShader, unk28) == 0x28);
+				static_assert(offsetof(TESEffectShader, pad28) == 0x28);
+				static_assert(offsetof(TESEffectShader, icon) == 0x1C8);
+				static_assert(offsetof(TESEffectShader, ico2) == 0x1F0);
+				static_assert(offsetof(TESEffectShader, nam7) == 0x218);
+				static_assert(offsetof(TESEffectShader, nam8) == 0x240);
+				static_assert(offsetof(TESEffectShader, nam9) == 0x268);
 				static_assert(sizeof(TESEffectShader) == 0x2A0);
 			}
 		}

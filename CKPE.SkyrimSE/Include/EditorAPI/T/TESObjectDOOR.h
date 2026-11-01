@@ -43,14 +43,14 @@ namespace CKPE
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
 					std::uint8_t padC8[8];		// C8
-					void* unkD0;				// D0 - zeroed by InitializeData (SNAM/ANAM/BNAM sound forms, order not resolved)
-					void* unkD8;				// D8 - zeroed by InitializeData
-					void* unkE0;				// E0 - zeroed by InitializeData
-					std::uint8_t flags;			// E8 - FNAM, zeroed by InitializeData
+					void* snam;					// D0 - SNAM, zeroed by InitializeData
+					void* anam;					// D8 - ANAM, zeroed by InitializeData
+					void* bnam;					// E0 - BNAM, zeroed by InitializeData
+					std::uint8_t fnam;			// E8 - FNAM, zeroed by InitializeData
 					std::uint8_t padE9[0x2F];	// E9
 				};
-				static_assert(offsetof(TESObjectDOOR, unkD0) == 0xD0);
-				static_assert(offsetof(TESObjectDOOR, flags) == 0xE8);
+				static_assert(offsetof(TESObjectDOOR, snam) == 0xD0);
+				static_assert(offsetof(TESObjectDOOR, fnam) == 0xE8);
 				static_assert(sizeof(TESObjectDOOR) == 0x118);
 			}
 		}

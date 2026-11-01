@@ -35,9 +35,19 @@ namespace CKPE
 					/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk28[0x80];	// 28 - data, layout not resolved
+					std::uint8_t csgd[0x28];	// 28 - CSGD
+					std::uint8_t csme[0x20];	// 50 - CSME
+					std::uint8_t cscr[0x10];	// 70 - CSCR
+					std::uint8_t cslr[0x4];	// 80 - CSLR
+					std::uint8_t csfl[0x20];	// 84 - CSFL
+					std::uint32_t data;	// A4 - DATA
 				};
-				static_assert(offsetof(TESCombatStyle, unk28) == 0x28);
+				static_assert(offsetof(TESCombatStyle, csgd) == 0x28);
+				static_assert(offsetof(TESCombatStyle, csme) == 0x50);
+				static_assert(offsetof(TESCombatStyle, cscr) == 0x70);
+				static_assert(offsetof(TESCombatStyle, cslr) == 0x80);
+				static_assert(offsetof(TESCombatStyle, csfl) == 0x84);
+				static_assert(offsetof(TESCombatStyle, data) == 0xA4);
 				static_assert(sizeof(TESCombatStyle) == 0xA8);
 			}
 		}

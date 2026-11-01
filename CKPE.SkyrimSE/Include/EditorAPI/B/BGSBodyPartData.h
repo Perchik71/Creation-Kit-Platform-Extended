@@ -42,9 +42,11 @@ namespace CKPE
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C8 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk60[0x18];	// 60 - data, layout not resolved
+					std::uint8_t pad60[0x10];	// 60
+					void* raga;	// 70 - RAGA
 				};
-				static_assert(offsetof(BGSBodyPartData, unk60) == 0x60);
+				static_assert(offsetof(BGSBodyPartData, pad60) == 0x60);
+				static_assert(offsetof(BGSBodyPartData, raga) == 0x70);
 				static_assert(sizeof(BGSBodyPartData) == 0x78);
 			}
 		}

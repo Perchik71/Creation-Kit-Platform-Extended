@@ -36,9 +36,9 @@ namespace CKPE
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C8 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk30[0x10];	// 30 - data, layout not resolved
+					std::uint8_t data[0x10];	// 30 - DATA
 				};
-				static_assert(offsetof(BGSReverbParameters, unk30) == 0x30);
+				static_assert(offsetof(BGSReverbParameters, data) == 0x30);
 				static_assert(sizeof(BGSReverbParameters) == 0x40);
 			}
 		}

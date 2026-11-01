@@ -24,9 +24,19 @@ namespace CKPE
 
 					virtual ~Script() = default;
 				public:
-					std::uint8_t unk28[0x50];	// 28 - data, layout not resolved
+					std::uint8_t schr[0x8];	// 28 - SCHR
+					std::uint32_t scda;	// 30 - SCDA
+					std::uint8_t pad34[0xC];	// 34
+					void* sctx;	// 40 - SCTX
+					void* scda_48;	// 48 - SCDA
+					void* qnam;	// 50 - QNAM
+					std::uint8_t pad58[0x20];	// 58
 				};
-				static_assert(offsetof(Script, unk28) == 0x28);
+				static_assert(offsetof(Script, schr) == 0x28);
+				static_assert(offsetof(Script, scda) == 0x30);
+				static_assert(offsetof(Script, sctx) == 0x40);
+				static_assert(offsetof(Script, scda_48) == 0x48);
+				static_assert(offsetof(Script, qnam) == 0x50);
 				static_assert(sizeof(Script) == 0x78);
 			}
 		}

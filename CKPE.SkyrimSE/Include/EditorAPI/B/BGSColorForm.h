@@ -36,9 +36,11 @@ namespace CKPE
 					/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk40[0x8];	// 40 - data, layout not resolved
+					std::uint32_t cnam;	// 40 - CNAM
+					std::uint32_t fnam;	// 44 - FNAM
 				};
-				static_assert(offsetof(BGSColorForm, unk40) == 0x40);
+				static_assert(offsetof(BGSColorForm, cnam) == 0x40);
+				static_assert(offsetof(BGSColorForm, fnam) == 0x44);
 				static_assert(sizeof(BGSColorForm) == 0x48);
 			}
 		}

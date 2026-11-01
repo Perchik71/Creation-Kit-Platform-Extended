@@ -38,9 +38,33 @@ namespace CKPE
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C8 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk28[0xBD8];	// 28 - data, layout not resolved
+					std::uint8_t pad28[0x500];	// 28
+					std::uint8_t rnam[0x20];	// 528 - RNAM
+					std::uint8_t qnam[0x20];	// 548 - QNAM
+					std::uint8_t pnam[0x200];	// 568 - PNAM
+					std::uint8_t jnam[0x200];	// 768 - JNAM
+					std::uint32_t nam1;	// 968 - NAM1
+					std::uint8_t data[0x14];	// 96C - DATA
+					std::uint8_t fnam[0x20];	// 980 - FNAM
+					std::uint8_t nam0[0x138];	// 9A0 - NAM0
+					std::uint32_t lnam;	// AD8 - LNAM
+					std::uint8_t padADC[0xA4];	// ADC
+					std::uint8_t unkB80[0x30];	// B80 - MODL/MODT
+					void* gnam;	// BB0 - GNAM
+					std::uint8_t padBB8[0x48];	// BB8
 				};
-				static_assert(offsetof(TESWeather, unk28) == 0x28);
+				static_assert(offsetof(TESWeather, pad28) == 0x28);
+				static_assert(offsetof(TESWeather, rnam) == 0x528);
+				static_assert(offsetof(TESWeather, qnam) == 0x548);
+				static_assert(offsetof(TESWeather, pnam) == 0x568);
+				static_assert(offsetof(TESWeather, jnam) == 0x768);
+				static_assert(offsetof(TESWeather, nam1) == 0x968);
+				static_assert(offsetof(TESWeather, data) == 0x96C);
+				static_assert(offsetof(TESWeather, fnam) == 0x980);
+				static_assert(offsetof(TESWeather, nam0) == 0x9A0);
+				static_assert(offsetof(TESWeather, lnam) == 0xAD8);
+				static_assert(offsetof(TESWeather, unkB80) == 0xB80);
+				static_assert(offsetof(TESWeather, gnam) == 0xBB0);
 				static_assert(sizeof(TESWeather) == 0xC00);
 			}
 		}

@@ -40,9 +40,11 @@ namespace CKPE
 					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 2C8 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 				public:
-					std::uint8_t unk50[0x18];	// 50 - data, layout not resolved
+					std::uint8_t pad50[0x10];	// 50
+					void* unk60;	// 60 - MOD2/NNAM/ONAM/RNAM/SNAM/XNAM
 				};
-				static_assert(offsetof(TESLoadScreen, unk50) == 0x50);
+				static_assert(offsetof(TESLoadScreen, pad50) == 0x50);
+				static_assert(offsetof(TESLoadScreen, unk60) == 0x60);
 				static_assert(sizeof(TESLoadScreen) == 0x68);
 			}
 		}

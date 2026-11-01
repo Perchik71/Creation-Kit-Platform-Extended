@@ -32,9 +32,10 @@ namespace CKPE
 					/* 258 */ void BuildCheckInDependencyMessage(const void* Forms, void* Message) const noexcept(true) override;
 					/* 288 */ void OnFormIDsRemapped(void* FormIDMap) noexcept(true) override;
 				public:
-					std::uint8_t unk28[0x38];	// 28 - data, layout not resolved
+					std::uint32_t rclr;	// 28 - RCLR
+					std::uint8_t pad2C[0x34];	// 2C
 				};
-				static_assert(offsetof(TESRegion, unk28) == 0x28);
+				static_assert(offsetof(TESRegion, rclr) == 0x28);
 				static_assert(sizeof(TESRegion) == 0x60);
 			}
 		}

@@ -51,11 +51,11 @@ namespace CKPE
 					std::uint8_t unkF0;			// F0
 					std::uint8_t unkF1;			// F1 - zeroed by InitializeData
 					std::uint8_t padF2[6];		// F2
-					void* unkF8;				// F8 - zeroed by InitializeData (SNAM / QNAM, order not resolved)
-					void* unk100;				// 100 - zeroed by InitializeData
+					void* snam;				// F8 - SNAM, zeroed by InitializeData
+					void* qnam;				// 100 - QNAM, zeroed by InitializeData
 					std::uint8_t unk108[0x10];	// 108
 				};
-				static_assert(offsetof(TESObjectCONT, unkF8) == 0xF8);
+				static_assert(offsetof(TESObjectCONT, snam) == 0xF8);
 				static_assert(sizeof(TESObjectCONT) == 0x118);
 			}
 		}
