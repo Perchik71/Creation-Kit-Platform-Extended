@@ -27,6 +27,7 @@ namespace CKPE
 					/* 080 */ bool Load(TESFile* File) noexcept(true) override;
 					/* 090 */ bool LoadEdit(TESFile* File) noexcept(true) override;
 					/* 098 */ void Save() noexcept(true) override;
+					/* 0E0 */ void InitItemImpl() noexcept(true) override;
 					/* 0C8 */ [[nodiscard]] bool IsBeforeForm(TESForm* Rhs) const noexcept(true) override;
 					/* 250 */ [[nodiscard]] bool CanCheckIn(const void* Forms) const noexcept(true) override;
 					/* 280 */ bool Revert() noexcept(true) override;

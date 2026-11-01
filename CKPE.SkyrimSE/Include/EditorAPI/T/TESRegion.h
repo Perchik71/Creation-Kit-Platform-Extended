@@ -27,6 +27,7 @@ namespace CKPE
 					/* 078 */ void ClearData() noexcept(true) override;
 					/* 080 */ bool Load(TESFile* File) noexcept(true) override;
 					/* 098 */ void Save() noexcept(true) override;
+					/* 0E0 */ void InitItemImpl() noexcept(true) override;
 					/* 248 */ void RemoveReferencesToForm(TESForm* Form) noexcept(true) override;
 					/* 250 */ [[nodiscard]] bool CanCheckIn(const void* Forms) const noexcept(true) override;
 					/* 258 */ void BuildCheckInDependencyMessage(const void* Forms, void* Message) const noexcept(true) override;

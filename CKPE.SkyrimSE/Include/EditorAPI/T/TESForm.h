@@ -233,9 +233,9 @@ namespace CKPE
 					/* 0B8 */ virtual bool SaveForm(TESFile* File) noexcept(true);
 					/* 0C0 */ [[nodiscard]] virtual bool IsBeforeGroup(const void* GroupRecord) const noexcept(true);
 					/* 0C8 */ [[nodiscard]] virtual bool IsBeforeForm(TESForm* Rhs) const noexcept(true);
-					/* 0D0 */ virtual void sub_0D0();
-					/* 0D8 */ virtual void sub_0D8();
-					/* 0E0 */ virtual void sub_0E0();
+					/* 0D0 */ virtual TESForm* CreateDuplicateForm(bool bCreateEditorID, void* CopyMap) noexcept(true);
+					/* 0D8 */ virtual void FixupDuplicateForm(void* CopyMap) noexcept(true);
+					/* 0E0 */ virtual void InitItemImpl() noexcept(true);
 					/* 0E8 */ [[nodiscard]] virtual TESFile* GetDescriptionOwnerFile() const noexcept(true);
 					/* 0F0 */ [[nodiscard]] virtual FormType GetFormType_orig() const noexcept(true);
 					/* 0F8 */ virtual void DebugInfo(char* Buffer, std::uint32_t BufferSize) const noexcept(true);

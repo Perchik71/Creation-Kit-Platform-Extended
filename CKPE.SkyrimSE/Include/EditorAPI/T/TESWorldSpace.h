@@ -33,6 +33,8 @@ namespace CKPE
 					/* 080 */ bool Load(TESFile* File) noexcept(true) override;
 					/* 088 */ bool LoadPartial(TESFile* File) noexcept(true) override;
 					/* 098 */ void Save() noexcept(true) override;
+					/* 0D0 */ TESForm* CreateDuplicateForm(bool bCreateEditorID, void* CopyMap) noexcept(true) override;
+					/* 0E0 */ void InitItemImpl() noexcept(true) override;
 					/* 0C0 */ [[nodiscard]] bool IsBeforeGroup(const void* GroupRecord) const noexcept(true) override;
 					/* 0C8 */ [[nodiscard]] bool IsBeforeForm(TESForm* Rhs) const noexcept(true) override;
 					/* 1C8 */ void CopyFrom(TESForm* Source) noexcept(true) override;

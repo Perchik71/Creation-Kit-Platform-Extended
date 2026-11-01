@@ -28,6 +28,7 @@ namespace CKPE
 
 					/* 080 */ bool Load(TESFile* File) noexcept(true) override;
 					/* 098 */ void Save() noexcept(true) override;
+					/* 0E0 */ void InitItemImpl() noexcept(true) override;
 					/* 1C8 */ void CopyFrom(TESForm* Source) noexcept(true) override;
 					/* 1D0 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
 					/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
