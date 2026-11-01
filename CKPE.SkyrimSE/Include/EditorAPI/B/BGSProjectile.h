@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <EditorAPI/B/BGSDestructibleObjectForm.h>
 #include <EditorAPI/B/BGSPreloadable.h>
 #include <EditorAPI/T/TESBoundObject.h>

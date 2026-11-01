@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <EditorAPI/T/TESObjectACTI.h>
 
 namespace CKPE

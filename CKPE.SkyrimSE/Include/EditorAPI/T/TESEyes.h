@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/T/TESTexture.h>

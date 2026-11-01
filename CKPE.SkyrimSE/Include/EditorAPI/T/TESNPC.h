@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <EditorAPI/T/TESActorBase.h>
 #include <EditorAPI/B/TESRaceForm.h>
 #include <EditorAPI/B/BGSOverridePackCollection.h>

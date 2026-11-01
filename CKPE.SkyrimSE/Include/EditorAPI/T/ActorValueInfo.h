@@ -1,0 +1,54 @@
+// Copyright © 2026 aka CKPE team. All rights reserved.
+// Contacts: <email:timencevaleksej@gmail.com>
+// License: https://www.gnu.org/licenses/lgpl-3.0.html
+
+#pragma once
+
+#include <cstddef>
+#include <EditorAPI/B/TESDescription.h>
+#include <EditorAPI/T/TESFormIDListView.h>
+#include <EditorAPI/T/TESFullName.h>
+#include <EditorAPI/T/TESIcon.h>
+
+namespace CKPE
+{
+	namespace SkyrimSE
+	{
+		namespace EditorAPI
+		{
+			namespace Forms
+			{
+				// 1.7.99.0: size 0x168, vtable RVA 0x303F890
+				class ActorValueInfo :
+					public TESFormIDListView,	// 00
+					public TESFullName,	// 28
+					public TESDescription,	// 40
+					public TESIcon	// 68
+				{
+				public:
+					constexpr static std::uint8_t TYPE_ID = ftActorValueInfo;
+
+					virtual ~ActorValueInfo() = default;
+
+					/* 078 */ void ClearData() noexcept(true) override;
+					/* 080 */ bool Load(TESFile* File) noexcept(true) override;
+					/* 098 */ void Save() noexcept(true) override;
+					/* 1C8 */ void CopyFrom(TESForm* Source) noexcept(true) override;
+					/* 1D0 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
+					/* 250 */ [[nodiscard]] bool CanCheckIn(const void* Forms) const noexcept(true) override;
+					/* 258 */ void BuildCheckInDependencyMessage(const void* Forms, void* Message) const noexcept(true) override;
+					/* 2A0 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* Result) noexcept(true) override;
+					/* 2B0 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 2C0 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 2C8 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
+					/* 2D8 */ void FillListViewItem(void* pDispInfo) const noexcept(true) override;
+					/* 2E8 */ void InitializeListView(HWND hListView) const noexcept(true) override;
+				public:
+					std::uint8_t unk90[0xD8];	// 90 - data, layout not resolved
+				};
+				static_assert(offsetof(ActorValueInfo, unk90) == 0x90);
+				static_assert(sizeof(ActorValueInfo) == 0x168);
+			}
+		}
+	}
+}

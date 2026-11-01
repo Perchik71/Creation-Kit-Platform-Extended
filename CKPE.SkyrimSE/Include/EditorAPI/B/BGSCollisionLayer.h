@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <EditorAPI/B/TESDescription.h>
 #include <EditorAPI/T/TESForm.h>
 

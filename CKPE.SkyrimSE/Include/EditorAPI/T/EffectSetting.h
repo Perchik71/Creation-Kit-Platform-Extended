@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <EditorAPI/B/BGSKeywordForm.h>
 #include <EditorAPI/B/BGSMenuDisplayObject.h>
 #include <EditorAPI/T/TESForm.h>
