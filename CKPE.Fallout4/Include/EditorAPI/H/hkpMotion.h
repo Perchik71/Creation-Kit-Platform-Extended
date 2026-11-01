@@ -15,32 +15,33 @@ namespace CKPE::Fallout4::EditorAPI
 	class alignas(16) hkpMotion : public hkReferencedObject
 	{
 	public:
-		virtual void sub_04();
-		virtual void sub_05();
-		virtual void sub_06();
-		virtual void sub_07();
-		virtual void sub_08();
-		virtual void sub_09();
-		virtual void sub_0A();
-		virtual void sub_0B();
-		virtual void sub_0C();
-		virtual void sub_0D();
-		virtual void sub_0E();
-		virtual void sub_0F();
-		virtual void sub_10();
-		virtual void sub_11();
-		virtual void sub_12();
-		virtual void sub_13();
-		virtual void sub_14();
-		virtual void sub_15();
-		virtual void sub_16();
-		virtual void sub_17();
-		virtual void sub_18();
-		virtual void sub_19();
-		virtual void sub_1A();
-		virtual void sub_1B();
-		virtual void sub_1C();
-		virtual void sub_1D();
+		// Simd arguments (hkSimdRealParameter, hkVector4) are passed by pointer; each overload pair is laid out in reverse declaration order
+		virtual void setMass(const void* Mass); // 0x20 - hkSimdRealParameter
+		virtual void setMass(float Mass); // 0x28
+		virtual void setMassInv(const void* MassInv); // 0x30 - hkSimdRealParameter
+		virtual void setMassInv(float MassInv); // 0x38 - writes the w lane of the inertia and inverse mass vector
+		virtual void getInertiaLocal(void* InertiaOut) const; // 0x40 - hkMatrix3
+		virtual void getInertiaWorld(void* InertiaOut) const; // 0x48
+		virtual void setInertiaLocal(const void* Inertia); // 0x50
+		virtual void setInertiaInvLocal(const void* InertiaInv); // 0x58
+		virtual void getInertiaInvLocal(void* InertiaInvOut) const; // 0x60
+		virtual void getInertiaInvWorld(void* InertiaInvOut) const; // 0x68
+		virtual void setCenterOfMassInLocal(const void* CenterOfMass); // 0x70
+		virtual void setPosition(const void* Position); // 0x78
+		virtual void setRotation(const void* Rotation); // 0x80 - hkQuaternion
+		virtual void setPositionAndRotation(const void* Position, const void* Rotation); // 0x88
+		virtual void setTransform(const void* Transform); // 0x90
+		virtual void setLinearVelocity(const void* Velocity); // 0x98
+		virtual void setAngularVelocity(const void* Velocity); // 0xA0
+		virtual void getProjectedPointVelocity(const void* Point, const void* Normal, float* VelocityOut, float* InvVirtualMassOut) const; // 0xA8
+		virtual void getProjectedPointVelocitySimd(const void* Point, const void* Normal, void* VelocityOut, void* InvVirtualMassOut) const; // 0xB0 - hkSimdReal outputs
+		virtual void applyLinearImpulse(const void* Impulse); // 0xB8
+		virtual void applyPointImpulse(const void* Impulse, const void* Point); // 0xC0
+		virtual void applyAngularImpulse(const void* Impulse); // 0xC8
+		virtual void applyForce(float DeltaTime, const void* Force, const void* Point); // 0xD0
+		virtual void applyForce(float DeltaTime, const void* Force); // 0xD8
+		virtual void applyTorque(float DeltaTime, const void* Torque); // 0xE0
+		virtual void getMotionStateAndVelocitiesAndDeactivationType(void* MotionOut) const; // 0xE8
 
 		/* 0x010 */ std::uint8_t m_type;
 		/* 0x011 */ std::uint8_t m_deactivationIntegrateCounter;

@@ -11,7 +11,7 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpAabbCastCollector
 	{
 	public:
-		virtual void sub_AabbCastCollector_00();
+		virtual void addBroadPhaseHandle(const void* Handle, std::int32_t CastIndex); // hkpBroadPhaseHandle, declared before the destructor
 		virtual ~hkpAabbCastCollector();
 		/* 0x008 */ std::uint8_t unk008[0x18];
 	};
@@ -21,14 +21,14 @@ namespace CKPE::Fallout4::EditorAPI
 	{
 	public:
 		virtual ~hkpBroadPhaseCastCollector();
-		virtual void sub_BroadPhaseCastCollector_01();
+		virtual void addBroadPhaseHandle(const void* Handle, std::int32_t CastIndex);
 	};
 	static_assert(sizeof(hkpBroadPhaseCastCollector) == 0x8);
 
 	class hkpRayHitCollector
 	{
 	public:
-		virtual void sub_RayHitCollector_00();
+		virtual void addRayHit(const void* CdBody, const void* HitInfo); // declared before the destructor; the closest collector keeps the hit with the smallest fraction
 		virtual ~hkpRayHitCollector();
 		/* 0x008 */ std::uint8_t unk008[8];
 	};
@@ -38,8 +38,8 @@ namespace CKPE::Fallout4::EditorAPI
 	{
 	public:
 		virtual ~hkpCdBodyPairCollector();
-		virtual void sub_CdBodyPairCollector_01();
-		virtual void sub_CdBodyPairCollector_02();
+		virtual void addCdBodyPair(const void* BodyA, const void* BodyB);
+		virtual void reset();
 		/* 0x008 */ std::uint8_t unk008[8];
 	};
 	static_assert(sizeof(hkpCdBodyPairCollector) == 0x10);
@@ -48,8 +48,8 @@ namespace CKPE::Fallout4::EditorAPI
 	{
 	public:
 		virtual ~hkpCdPointCollector();
-		virtual void sub_CdPointCollector_01();
-		virtual void sub_CdPointCollector_02();
+		virtual void addCdPoint(const void* Point); // hkpCdPoint; the closest collector keeps the point with the smallest distance
+		virtual void reset();
 		/* 0x008 */ std::uint8_t unk008[8];
 	};
 	static_assert(sizeof(hkpCdPointCollector) == 0x10);

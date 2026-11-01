@@ -130,15 +130,16 @@ namespace CKPE::Fallout4::EditorAPI
 		/* 0x028 */ hkArray<hkaAnnotationTrack> m_annotationTracks;
 
 	private:
-		/* 04 */ virtual void sub_hkaAnimation_04();
-		/* 05 */ virtual void sub_hkaAnimation_05();
-		/* 06 */ virtual void sub_hkaAnimation_06();
-		/* 07 */ virtual void sub_hkaAnimation_07();
+		// Wrapper that calls samplePartialTracks with the animation's own track counts
+		/* 04 */ virtual void sampleTracks(float Time, void* TransformTracksOut, float* FloatTracksOut, void* ChunkCache) const;
+		/* 05 */ virtual void samplePartialTracks(float Time, std::uint32_t NumTransformTracks, void* TransformTracksOut, std::uint32_t NumFloatTracks, float* FloatTracksOut, void* ChunkCache) const;
+		/* 06 */ virtual void sampleIndividualTransformTracks(); // arguments not recovered
+		/* 07 */ virtual void sampleIndividualFloatTracks(); // arguments not recovered
 		/* 08 */ virtual void sub_hkaAnimation_08();
-		/* 09 */ virtual void sub_hkaAnimation_09();
-		/* 0A */ virtual void sub_hkaAnimation_0A();
-		/* 0B */ virtual void sub_hkaAnimation_0B();
-		/* 0C */ virtual void sub_hkaAnimation_0C();
+		[[nodiscard]] virtual std::int32_t getNumOriginalFrames() const; /* 09 */
+		[[nodiscard]] virtual std::int32_t getNumDataChunks(std::uint32_t Frame, float Delta) const; /* 0A */
+		virtual void getDataChunk(std::uint32_t Frame, float Delta, std::int32_t ChunkIndex, void* ChunkOut) const; /* 0B - fills the data pointer and its size */
+		[[nodiscard]] virtual std::int32_t getMaxSizeOfCombinedDataChunks() const; /* 0C */
 		/* 0D */ virtual void sub_hkaAnimation_0D();
 		/* 0E */ virtual void sub_hkaAnimation_0E();
 		/* 0F */ virtual void sub_hkaAnimation_0F();

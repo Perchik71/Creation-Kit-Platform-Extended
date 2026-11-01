@@ -12,21 +12,23 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpConstraintData : public hkReferencedObject
 	{
 	public:
-		virtual void sub_04();
-		virtual void sub_05();
-		virtual void sub_06();
-		virtual void sub_07();
-		virtual void sub_08();
-		virtual void sub_09();
-		virtual void sub_0A();
-		virtual void sub_0B();
-		virtual void sub_0C();
-		virtual void sub_0D();
-		virtual void sub_0E();
-		virtual void sub_0F();
-		virtual void sub_10();
-		virtual void sub_11();
-		virtual void sub_12();
+		// hkpConstraintData::ConstraintType (BALL_AND_SOCKET 0, PRISMATIC 6, ...)
+		[[nodiscard]] virtual std::int32_t getType() const; // 0x20
+		virtual void getConstraintInfo(void* InfoOut) const; // 0x28 - hkpConstraintData::ConstraintInfo, walks the atoms
+		// hkBool results go through a hidden pointer, which is also returned
+		[[nodiscard]] virtual char* isValid(char* HkBoolResult) const; // 0x30
+		virtual void setMaximumLinearImpulse(float Impulse); // 0x38 - no-op in the base
+		virtual void setMaximumAngularImpulse(float Impulse); // 0x40 - no-op in the base
+		virtual void setBreachImpulse(float Impulse); // 0x48
+		[[nodiscard]] virtual float getMaximumLinearImpulse() const; // 0x50 - FLT_MAX in the base
+		[[nodiscard]] virtual float getMaximumAngularImpulse() const; // 0x58
+		[[nodiscard]] virtual float getBreachImpulse() const; // 0x60
+		virtual void setBodyToNotify(std::int32_t BodyIndex); // 0x68 - stores 1 << BodyIndex
+		[[nodiscard]] virtual std::uint8_t getNotifiedBodyIndex() const; // 0x70
+		virtual void setSolvingMethod(std::int32_t Method); // 0x78 - 0 stabilized, 1 old
+		virtual std::int32_t* setInertiaStabilizationFactor(std::int32_t* HkResult, float Factor); // 0x80 - clamped to 0..1
+		virtual std::int32_t* getInertiaStabilizationFactor(std::int32_t* HkResult, float* FactorOut) const; // 0x88
+		virtual std::int64_t getRuntimeInfo(bool WantRuntime, void* InfoOut) const; // 0x90 - hkpConstraintData::RuntimeInfo (size, number of solver results)
 		virtual void sub_13();
 		virtual void sub_14();
 		virtual void sub_15();
