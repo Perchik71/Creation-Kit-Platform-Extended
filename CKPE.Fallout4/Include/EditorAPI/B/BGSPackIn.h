@@ -6,6 +6,7 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/B/BSString.h>
 
 namespace CKPE
 {
@@ -40,10 +41,8 @@ namespace CKPE
 					constexpr static std::uint8_t TYPE_ID = ftPackIn;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPackIn[0];
 				public:
-					std::uint64_t unk28; // 28
-					std::uint64_t unk30; // 30
-					std::uint32_t unk38; // 38
-					std::uint32_t unk3C; // 3C
+					TESForm* storageCell; // 28 - CNAM; holds the form id after Load until InitItem resolves it ("Could not find storage cell")
+					BSString filter; // 30 - FLTR chunk (editor filter string)
 					std::uint32_t unk40; // 40
 					std::uint8_t unk44[0x10]; // 44
 					std::uint8_t unk54[0x8]; // 54
@@ -54,6 +53,9 @@ namespace CKPE
 					std::uint64_t unk78; // 78
 				};
 				static_assert(sizeof(BGSPackIn) == 0x80);
+				static_assert(offsetof(BGSPackIn, storageCell) == 0x28);
+				static_assert(offsetof(BGSPackIn, filter) == 0x30);
+				static_assert(offsetof(BGSPackIn, unk40) == 0x40);
 			}
 		}
 	}

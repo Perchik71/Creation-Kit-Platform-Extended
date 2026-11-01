@@ -6,6 +6,7 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/N/NiPoint.h>
 
 namespace CKPE
 {
@@ -40,15 +41,22 @@ namespace CKPE
 					constexpr static std::uint8_t TYPE_ID = ftZoomData;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSZoomData[0];
 				public:
-					std::uint32_t unk28; // 28
-					std::uint32_t unk2C; // 2C
-					std::uint32_t unk30; // 30
-					std::uint32_t unk34; // 34
-					std::uint32_t unk38; // 38
-					std::uint32_t unk3C; // 3C
+					// GNAM chunk (24 bytes); Save writes isModFormID from isMod
+					struct Data
+					{
+						float fovMult; // 00
+						std::uint32_t overlay; // 04
+						std::uint32_t isModFormID; // 08
+						NiAPI::NiPoint3 cameraOffset; // 0C
+					};
+					static_assert(sizeof(Data) == 0x18);
+
+					Data zoomData; // 28
 					TESImageSpaceModifier* isMod; // 40
 				};
 				static_assert(sizeof(BGSZoomData) == 0x48);
+				static_assert(offsetof(BGSZoomData, zoomData) == 0x28);
+				static_assert(offsetof(BGSZoomData, isMod) == 0x40);
 			}
 		}
 	}

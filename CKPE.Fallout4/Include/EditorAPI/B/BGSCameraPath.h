@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/T/TESCondition.h>
+#include <EditorAPI/B/BSTList.h>
 
 namespace CKPE
 {
@@ -54,16 +56,19 @@ namespace CKPE
 					constexpr static std::uint8_t TYPE_ID = ftCameraPath;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSCameraPath[0];
 				public:
-					std::uint8_t unk28[0x18]; // 28
-					std::uint64_t unk40; // 40
-					std::uint64_t unk48; // 48
+					// Same member order as CommonLibF4's BGSCameraPath (conditions, shots, data, childPaths, parentPath, prevPath)
+					TESCondition conditions; // 28
+					BSSimpleList<void*> shots; // 40 - BGSCameraShot*
 					PATH_DATA data; // 50
-					std::uint8_t unk51[0x7]; // 51
-					std::uint64_t unk58; // 58
-					std::uint64_t unk60; // 60
-					std::uint64_t unk68; // 68
+					std::uint8_t pad51[0x7]; // 51
+					void* childPaths; // 58 - NiFormArray*
+					BGSCameraPath* parentPath; // 60
+					BGSCameraPath* prevPath; // 68
 				};
 				static_assert(sizeof(BGSCameraPath) == 0x70);
+				static_assert(offsetof(BGSCameraPath, shots) == 0x40);
+				static_assert(offsetof(BGSCameraPath, data) == 0x50);
+				static_assert(offsetof(BGSCameraPath, parentPath) == 0x60);
 			}
 		}
 	}

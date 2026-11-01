@@ -47,13 +47,16 @@ private:
 				/* 0x068 */ virtual void OnLButtonDoubleClick(); // render window message handler (WM_* dispatched by the render window procedure), arguments not recovered
 				/* 0x070 */ virtual void OnRButtonDown(); // render window message handler (WM_* dispatched by the render window procedure), arguments not recovered
 				/* 0x078 */ virtual void OnRButtonUp(); // render window message handler (WM_* dispatched by the render window procedure), arguments not recovered
-				/* 0x080 */ virtual void sub_080();
+				/* 0x080 */ virtual void OnMouseMove(); // render window message handler, arguments not recovered (cursor wrapping through GetWindowRect/GetSystemMetrics)
 				/* 0x088 */ virtual void OnMouseWheel(); // render window message handler (WM_* dispatched by the render window procedure), arguments not recovered
-				/* 0x090 */ virtual void sub_090();
+				// True when any form of the list has a form type accepted by IsFormTypeAllowed; arguments: the list pointer
+				/* 0x090 */ virtual bool ContainsAllowedForm(const void* FormList);
 				/* 0x098 */ virtual void sub_098();
-				/* 0x0A0 */ virtual void sub_0A0();
+				// Whether forms of the type can be handled by the module (the reference module refuses a fixed set of form types)
+				/* 0x0A0 */ [[nodiscard]] virtual bool IsFormTypeAllowed(std::uint32_t FormType);
 				/* 0x0A8 */ virtual void sub_0A8();
-				/* 0x0B0 */ virtual void sub_0B0();
+				// Rounds the position to multiples of GridSize (relative to the reference's own axes when the snap flags ask for it)
+				/* 0x0B0 */ virtual void SnapPositionToGrid(float* Position, float GridSize, const void* ReferenceHandle);
 				/* 0x0B8 */ virtual void sub_0B8();
 				/* 0x0C0 */ virtual void sub_0C0();
 				/* 0x0C8 */ virtual void sub_0C8();

@@ -53,7 +53,7 @@ namespace CKPE
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSNote[0];
 				public:
 					BSFixedString programFile; // 140
-					std::uint64_t unk148; // 148
+					std::uint64_t noteFormID; // 148 - form id or pointer depending on type (the game's union of noteSound and noteFormID)
 					std::int8_t type; // 150
 					bool hasBeenRead; // 151
 					std::uint8_t unk152[0xE]; // 152
