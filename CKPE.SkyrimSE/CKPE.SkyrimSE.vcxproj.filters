@@ -1623,6 +1623,15 @@
     <ClInclude Include="Include\EditorAPI\B\BGSProcedureClasses.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSPackageDataClasses.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSPerkEntryClasses.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSAliasClasses.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESObjectLIGH.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
