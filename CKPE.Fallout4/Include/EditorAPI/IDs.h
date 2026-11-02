@@ -502,6 +502,13 @@ namespace CKPE
 					inline constexpr Common::ID GetSafeFormEditorID_B{ 489157 };
 					inline constexpr Common::ID MakeEditorIDUnique{ 655843, 1618628 };
 					inline constexpr Common::ID EnumFormIDs{ 1106870, 1618347 };
+					inline constexpr Common::ID BeginSaveRecord{ 511623 };
+					inline constexpr Common::ID EndSaveRecord{ 528796 };
+				}
+
+				namespace ContainerItemExtra
+				{
+					inline constexpr Common::ID CopyFrom{ 575769 };
 				}
 
 				namespace BGSLayerDialog

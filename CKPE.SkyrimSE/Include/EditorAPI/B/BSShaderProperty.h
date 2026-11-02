@@ -101,14 +101,14 @@ namespace CKPE
 				char _pad1[0x8];
 				RenderPassArray kDebugRenderPassList;
 				char _pad2[0x8];
-				class BSFadeNode* pFadeNode;
+				BSFadeNode* pFadeNode;
 				class BSEffectShaderData* pEffectData;
 				class BSShaderPropertyLightData* pLightData;
 				BSShaderMaterial* pMaterial;
 				char _pad4[0x8];
 
 				float GetAlpha() const;
-				class BSFadeNode* QFadeNode() const;
+				BSFadeNode* QFadeNode() const;
 				const RenderPassArray* QRenderPasses() const;
 				const RenderPassArray* QDebugRenderPasses() const;
 
