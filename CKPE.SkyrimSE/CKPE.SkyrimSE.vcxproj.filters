@@ -1680,7 +1680,9 @@
     <ClInclude Include="Include\EditorAPI\B\BSTEvents.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
-    <ClInclude Include="resource_version.h" />
+    <ClInclude Include="resource_version.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">
@@ -1704,7 +1706,11 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resources\FXAA_PS.cso" />
-    <None Include="..\Resources\FXAA_VS.cso" />
+    <None Include="..\Resources\FXAA_PS.cso">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="..\Resources\FXAA_VS.cso">
+      <Filter>Resources</Filter>
+    </None>
   </ItemGroup>
 </Project>
