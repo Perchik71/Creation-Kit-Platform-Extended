@@ -14,7 +14,6 @@ namespace CKPE
 			_Init(false), _hWindow(nullptr), _Enabled(true)
 		{
 			_PShaderEffectFXAA = std::make_unique<D3D11PixelShader>(D3D11ShaderEngine::Singleton.GetSingleton(), "PS_FXAA_D3D11ImagespaceAA");
-			_PShaderEffectTAA = std::make_unique<D3D11PixelShader>(D3D11ShaderEngine::Singleton.GetSingleton(), "PS_TAA_D3D11ImagespaceAA");
 			_PostFrame = std::make_unique<D3D11ShaderTexture>(D3D11ShaderEngine::Singleton.GetSingleton(), "PostFrame_D3D11ImagespaceAA");
 			_VShader = std::make_unique<D3D11VertexShader>(D3D11ShaderEngine::Singleton.GetSingleton(), "VS_D3D11ImagespaceAA");
 			_BackRes = std::make_unique<D3D11ShaderResourceView>(D3D11ShaderEngine::Singleton.GetSingleton(), "BackRes_D3D11ImagespaceAA");
@@ -36,22 +35,16 @@ namespace CKPE
 
 			_Init =
 				_PShaderEffectFXAA->LoadFromResource((HMODULE)inst, IDS_FXAA_PS) &&
-				_PShaderEffectTAA->LoadFromResource((HMODULE)inst, IDS_TAA_PS) &&
 				_VShader->LoadFromResource((HMODULE)inst, IDS_FXAA_VS) &&
-				//_PShader->CompileFromFile("ps_aa.hlsl", "ps_5_0", "main") && 
-				//_VShader->CompileFromFile("vs_aa.hlsl", "vs_5_0", "main") &&
 				_VShader->InitData(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP, {
 					{ -1.0f, 1.0f }, { 0.0f, 0.0f },	// point at top-left
 					{ 1.0f, 1.0f }, { 1.0f, 0.0f },		// point at top-right
 					{ -1.0f, -1.0f }, { 0.0f, 1.0f },	// point at bottom-left
 					{ 1.0f, -1.0f }, { 1.0f, 1.0f },	// point at bottom-right
 					}) && 
-					_PShaderEffectFXAA->Install() && _PShaderEffectTAA->Install() &&
-					_VShader->Install() && _BackSmp->Create(&DescSmp);
+					_PShaderEffectFXAA->Install() && _VShader->Install() && _BackSmp->Create(&DescSmp);
 			
 			_hWindow = hWindow;
-			_Data.jitter.x = std::max(0.0f, std::min(_READ_OPTION_FLOAT("Graphics", "fTAAJitter", 0.5f), 0.5f));
-			_Data.jitter.y = _Data.jitter.x;
 
 			return _Init;
 		}
@@ -68,14 +61,9 @@ namespace CKPE
 					return;
 
 				auto FrameDesc = _Frame->GetDesc();
-				if (!_PostFrame->Create(FrameDesc))
-					return;
 				
 				CD3D11_SHADER_RESOURCE_VIEW_DESC ResFrameDesc(D3D11_SRV_DIMENSION::D3D11_SRV_DIMENSION_TEXTURE2D, FrameDesc->Format);
 				CD3D11_RENDER_TARGET_VIEW_DESC RTVDesc(D3D11_RTV_DIMENSION::D3D11_RTV_DIMENSION_TEXTURE2D, FrameDesc->Format);
-
-				if (!_RTVFrame->Create(_PostFrame->Get(), &RTVDesc))
-					return;
 
 				auto This = const_cast<D3D11ImagespaceAA*>(this);
 				This->_Data.tilesize.x = 1.0f / FrameDesc->Width;
@@ -115,27 +103,12 @@ namespace CKPE
 					Eng->DeviceContext()->RSSetState(nullptr);
 					Eng->DeviceContext()->RSSetScissorRects(0, nullptr);
 
-					ComPtr<ID3D11RenderTargetView> OldRTV;
-					Eng->DeviceContext()->OMGetRenderTargets(1, OldRTV.GetAddressOf(), nullptr);
-					Eng->DeviceContext()->OMSetRenderTargets(1, _RTVFrame->GetAddressOf(), nullptr);
-
 					_BackRes->Create(_Frame->Get(), &ResFrameDesc);
 					_BackRes->Bind(CKPE_PIXEL_SHADER, 0);
 					_BackSmp->Bind(CKPE_PIXEL_SHADER, 0);
 					_DataBuffer->Bind(CKPE_PIXEL_SHADER, 0);
-
 					_VShader->Bind();
 					_PShaderEffectFXAA->Bind();
-
-					Eng->DeviceContext()->Draw(4, 0);
-					Eng->DeviceContext()->OMSetRenderTargets(1, OldRTV.GetAddressOf(), nullptr);
-
-					_BackRes->Unbind();
-					_BackRes->Create(_PostFrame->Get(), &ResFrameDesc);
-					
-					_BackRes->Bind(CKPE_PIXEL_SHADER, 0);
-					_PShaderEffectTAA->Bind();
-
 					Eng->DeviceContext()->Draw(4, 0);
 				}
 				catch (const std::exception& e)

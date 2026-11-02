@@ -5,7 +5,6 @@
 
 #define IDS_FXAA_PS                     101
 #define IDS_FXAA_VS                     102
-#define IDS_TAA_PS                      103
 
 // Next default values for new objects
 // 

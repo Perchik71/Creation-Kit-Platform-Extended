@@ -1254,6 +1254,7 @@
     <ClInclude Include="Include\EditorAPI\B\BSTEvents.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="resource_version.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">
@@ -1264,9 +1265,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\Shaders\TAA_PS.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
     <FxCompile Include="..\Shaders\FXAA_PS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
@@ -1278,5 +1276,9 @@
     <Text Include="build_version.txt">
       <Filter>Version</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\FXAA_PS.cso" />
+    <None Include="..\Resources\FXAA_VS.cso" />
   </ItemGroup>
 </Project>

@@ -515,6 +515,7 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.VersionControlMergeWorkaround.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.WeaponCriticalEffect.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="resource_version.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -536,12 +537,10 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="..\Shaders\TAA_PS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">5.0</ShaderModel>
-    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\FXAA_PS.cso" />
+    <None Include="..\Resources\FXAA_VS.cso" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

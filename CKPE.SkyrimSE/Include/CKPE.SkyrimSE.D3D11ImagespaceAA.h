@@ -17,7 +17,7 @@ namespace CKPE
 			struct Data
 			{
 				DirectX::XMFLOAT2 tilesize;
-				DirectX::XMFLOAT2 jitter;
+				DirectX::XMFLOAT2 temp;
 			};
 #pragma pack(pop)
 		public:
@@ -32,7 +32,6 @@ namespace CKPE
 			inline virtual void SetEnabled(bool Enabled) noexcept(true) { _Enabled = Enabled; }
 		private:
 			std::unique_ptr<D3D11PixelShader> _PShaderEffectFXAA;
-			std::unique_ptr<D3D11PixelShader> _PShaderEffectTAA;
 			std::unique_ptr<D3D11VertexShader> _VShader;
 			std::unique_ptr<D3D11ShaderResourceView> _BackRes;
 			std::unique_ptr<D3D11SamplerState> _BackSmp;
