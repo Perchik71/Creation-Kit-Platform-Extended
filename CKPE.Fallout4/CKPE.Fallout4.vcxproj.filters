@@ -227,6 +227,9 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.LayersWindow.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixBehaviorGraphAnimation.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixLayerRefCount.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -294,6 +297,9 @@
       <Filter>EditorAPI\N</Filter>
     </ClCompile>
     <ClCompile Include="Src\EditorAPI\N\NiMemoryManager.cpp">
+      <Filter>EditorAPI\N</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\N\NiControllerSequence.cpp">
       <Filter>EditorAPI\N</Filter>
     </ClCompile>
     <ClCompile Include="Src\EditorAPI\N\NiRefObject.cpp">
@@ -592,6 +598,12 @@
       <Filter>EditorAPI\O</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\N\NiTimeController.h">
+      <Filter>EditorAPI\N</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\N\NiControllerManager.h">
+      <Filter>EditorAPI\N</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\N\NiControllerSequence.h">
       <Filter>EditorAPI\N</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\N\NiAlphaAccumulator.h">
@@ -1003,6 +1015,9 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.LayersWindow.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixBehaviorGraphAnimation.h">
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixLayerRefCount.h">

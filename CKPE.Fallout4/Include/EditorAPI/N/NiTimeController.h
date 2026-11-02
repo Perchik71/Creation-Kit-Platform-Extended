@@ -47,6 +47,18 @@ namespace CKPE
 
 					[[nodiscard]] inline NiObjectNET* GetTarget() const noexcept(true) { return _Target; }
 					[[nodiscard]] inline NiTimeController* GetNext() const noexcept(true) { return _Next; }
+
+					// Bit 3 of the flags: the controller is updated by the scene update.
+					constexpr static std::uint16_t FLAG_ACTIVE = 0x8;
+					[[nodiscard]] inline std::uint16_t GetFlags() const noexcept(true) { return _Flags; }
+					[[nodiscard]] inline bool IsActive() const noexcept(true) { return (_Flags & FLAG_ACTIVE) != 0; }
+					inline void SetActive(bool Value) noexcept(true)
+					{
+						if (Value)
+							_Flags |= FLAG_ACTIVE;
+						else
+							_Flags &= static_cast<std::uint16_t>(~FLAG_ACTIVE);
+					}
 				private:
 					/* 0x10 */ std::uint16_t _Flags;
 					/* 0x12 */ std::uint16_t _pad12;

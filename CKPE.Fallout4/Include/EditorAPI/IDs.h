@@ -783,6 +783,12 @@ namespace CKPE
 					inline constexpr Common::ID TESObjectCELL__InitItemImpl{ 579610 };
 					// 1.11.246.0 0x140D7EB50 TESObjectREFR::Set3D
 					inline constexpr Common::ID TESObjectREFR__Set3D{ 531824 };
+					// 1.11.246.0 0x140DAA510 TESObjectREFR animation init (tesobjectrefr_animation.cpp): creates the behavior graph, falls back to InitNonNPCAnimation
+					inline constexpr Common::ID TESObjectREFR__InitAnimation{ 270607 };
+					// 1.11.246.0 0x140D805F0 TESObjectREFR::InitNonNPCAnimation
+					inline constexpr Common::ID TESObjectREFR__InitNonNPCAnimation{ 318991 };
+					// 1.11.246.0 0x14253DFC0 NiControllerSequence::Activate(priority, startOver, weight, easeIn, timeSyncSeq, transition)
+					inline constexpr Common::ID NiControllerSequence__Activate{ 198415, 1453127 };
 					// 1.11.246.0 0x140D6AE40 TESObjectREFR::vf3E0
 					inline constexpr Common::ID TESObjectREFR__vf3E0{ 580337 };
 					// 1.11.246.0 0x140DCB100 TESObjectREFR::vf698
