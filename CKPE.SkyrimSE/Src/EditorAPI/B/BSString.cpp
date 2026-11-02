@@ -38,7 +38,7 @@ namespace CKPE
 						{
 							if (Reserved(static_cast<std::uint16_t>(resLen)))
 							{
-								strncat(m_data, str, resLen);
+								strncat(m_data, str, resLen - m_dataLen);
 								m_data[resLen + 1] = '\0';
 							}
 						}
