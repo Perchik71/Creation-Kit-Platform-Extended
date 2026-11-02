@@ -107,7 +107,7 @@ namespace CKPE
 				return fAlpha;
 			}
 
-			class BSFadeNode* BSShaderProperty::QFadeNode() const
+			BSFadeNode* BSShaderProperty::QFadeNode() const
 			{
 				return pFadeNode;
 			}

@@ -7,6 +7,7 @@
 #include <CKPE.Common.h>
 #include <windows.h>
 #include <EditorAPI/N/NiNode.h>
+#include <EditorAPI/B/BGSRenderWindowEditModules.h>
 
 namespace CKPE
 {
@@ -14,12 +15,6 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
-			class BGSRenderWindowReferenceEditModule
-			{
-			public:
-				virtual ~BGSRenderWindowReferenceEditModule() = default;
-			};
-
 			// size 0x40
 			// func 2
 			template<typename _Ty>

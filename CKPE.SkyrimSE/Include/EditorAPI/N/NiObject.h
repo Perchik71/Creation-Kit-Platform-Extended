@@ -15,7 +15,9 @@ namespace CKPE
 		namespace EditorAPI
 		{
 			class BSDynamicTriShape;
-			class BSFadeNode;
+			namespace NiAPI { class NiNode; }
+			// BSFadeNode is the Gamebryo NiNode here (see B/BSFadeNode.h)
+			using BSFadeNode = NiAPI::NiNode;
 			class BSGeometry;
 			class bhkAttachmentCollisionObject;
 			class bhkBlendCollisionObject;
