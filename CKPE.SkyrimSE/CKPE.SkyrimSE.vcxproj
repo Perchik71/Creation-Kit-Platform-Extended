@@ -518,6 +518,9 @@
     <ClInclude Include="Include\EditorAPI\B\BGSPerkEntryClasses.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSAliasClasses.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSRenderWindowEditModules.h" />
+    <ClInclude Include="Include\EditorAPI\B\TESPackageDataClasses.h" />
+    <ClInclude Include="Include\EditorAPI\B\BGSSceneActionClasses.h" />
+    <ClInclude Include="Include\EditorAPI\B\BGSMusicTrackClasses.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectLIGH.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectREFR.h" />
     <ClInclude Include="Include\EditorAPI\T\TESTexture.h" />

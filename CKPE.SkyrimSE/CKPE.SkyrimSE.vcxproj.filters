@@ -1620,6 +1620,15 @@
     <ClInclude Include="Include\EditorAPI\B\BGSRenderWindowEditModules.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\TESPackageDataClasses.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSSceneActionClasses.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSMusicTrackClasses.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESObjectLIGH.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
