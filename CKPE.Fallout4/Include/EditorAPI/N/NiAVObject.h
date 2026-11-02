@@ -14,6 +14,7 @@
 #include <EditorAPI/N/NiPointer.h>
 #include <EditorAPI/N/NiCollisionObject.h>
 #include <EditorAPI/N/NiFlags.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE
 {
@@ -41,6 +42,7 @@ namespace CKPE
 				public:
 					virtual ~NiAVObject() = default;
 
+					constexpr static Common::ID RTTI = IDs::RTTI::NiAVObject;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::NiAVObject[0];
 
 					/* 2A */ virtual void UpdateControllers(NiUpdateData& Data) noexcept(true);

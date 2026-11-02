@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BGSImpactDataSet.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -19,6 +21,9 @@ namespace CKPE
 				class BGSMaterialType : public TESForm
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSMaterialType;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMaterialType[0];
+
 					constexpr static uint8_t TYPE_ID = ftMaterialType;
 
 					enum

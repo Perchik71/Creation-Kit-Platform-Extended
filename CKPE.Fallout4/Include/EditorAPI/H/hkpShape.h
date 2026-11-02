@@ -6,12 +6,17 @@
 
 #include <EditorAPI/H/hkBaseObject.h>
 #include <EditorAPI/H/hkBaseTypes.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class hkcdShape : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkcdShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdShape[0];
+
 		/* 0x010 */ std::uint8_t m_type;
 		/* 0x011 */ std::uint8_t m_dispatchType;
 		/* 0x012 */ std::uint8_t m_bitsPerKey;
@@ -24,6 +29,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpShapeBase : public hkcdShape
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpShapeBase;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpShapeBase[0];
+
 		virtual void sub_04();
 		// Box of the shape transformed by LocalToWorld (hkTransform) and grown by Tolerance, written to AabbOut (hkAabb)
 		virtual void getAabb(const void* LocalToWorld, float Tolerance, void* AabbOut) const;
@@ -45,6 +53,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpShape : public hkpShapeBase
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpShape[0];
+
 		virtual void sub_0F();
 		virtual void sub_10();
 		virtual void sub_11();
@@ -57,6 +68,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpShapeContainer
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpShapeContainer;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpShapeContainer[0];
+
 		virtual ~hkpShapeContainer();
 		virtual void sub_ShapeContainer_01();
 		virtual void sub_ShapeContainer_02();
@@ -70,17 +84,28 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpSingleShapeContainer : public hkpShapeContainer
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSingleShapeContainer;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSingleShapeContainer[0];
+
 		/* 0x008 */ const hkpShape* m_childShape;
 	};
 	static_assert(sizeof(hkpSingleShapeContainer) == 0x10);
 	static_assert(offsetof(hkpSingleShapeContainer, m_childShape) == 0x8);
 
-	class hkpSphereRepShape : public hkpShape {};
+	class hkpSphereRepShape : public hkpShape
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSphereRepShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSphereRepShape[0];
+	};
 	static_assert(sizeof(hkpSphereRepShape) == 0x20);
 
 	class hkpConvexShape : public hkpSphereRepShape
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpConvexShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpConvexShape[0];
+
 		virtual void sub_12();
 		virtual void sub_13();
 
@@ -93,6 +118,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpSphereShape : public hkpConvexShape
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSphereShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSphereShape[0];
+
 		/* 0x028 */ std::uint8_t unk028[0x10];
 	};
 	static_assert(sizeof(hkpSphereShape) == 0x38);
@@ -135,6 +163,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpConvexVerticesConnectivity : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpConvexVerticesConnectivity;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpConvexVerticesConnectivity[0];
+
 		virtual void sub_04();
 		/* 0x010 */ std::uint8_t unk010[0x20];
 	};
@@ -143,6 +174,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpConvexTransformShapeBase : public hkpConvexShape
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpConvexTransformShapeBase;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpConvexTransformShapeBase[0];
+
 		/* 0x028 */ hkpSingleShapeContainer m_childShape;
 		/* 0x038 */ std::int32_t m_childShapeSizeForSpu;
 		/* 0x03C */ std::uint8_t pad03C[4];
@@ -167,6 +201,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpShapeCollection : public hkpShape, public hkpShapeContainer
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpShapeCollection;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpShapeCollection[0];
+
 		virtual void sub_12();
 		virtual void sub_13();
 
@@ -180,6 +217,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpListShape : public hkpShapeCollection
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpListShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpListShape[0];
+
 		/* 0x030 */ std::uint8_t unk030[0x60];
 	};
 	static_assert(sizeof(hkpListShape) == 0x90);
@@ -187,6 +227,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpConvexListShape : public hkpConvexShape, public hkpShapeContainer
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpConvexListShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpConvexListShape[0];
+
 		/* 0x030 */ std::uint8_t unk030[0x50];
 	};
 	static_assert(sizeof(hkpConvexListShape) == 0x80);
@@ -194,6 +237,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpBvTreeShape : public hkpShape
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpBvTreeShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpBvTreeShape[0];
+
 		virtual void sub_12();
 		virtual void sub_13();
 		virtual void sub_14();
@@ -206,6 +252,9 @@ namespace CKPE::Fallout4::EditorAPI
 		public hkpShapeContainer
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpBvCompressedMeshShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpBvCompressedMeshShape[0];
+
 		/* 0x030 */ std::uint8_t unk030[0xE0];
 	};
 	static_assert(sizeof(hkpBvCompressedMeshShape) == 0x110);
@@ -214,6 +263,9 @@ namespace CKPE::Fallout4::EditorAPI
 		public hkpShapeContainer
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpStaticCompoundShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpStaticCompoundShape[0];
+
 		/* 0x030 */ std::uint8_t unk030[0x70];
 	};
 	static_assert(sizeof(hkpStaticCompoundShape) == 0xA0);
@@ -221,6 +273,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpCompressedMeshShape : public hkpShapeCollection
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpCompressedMeshShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpCompressedMeshShape[0];
+
 		/* 0x030 */ std::uint8_t unk030[0x100];
 	};
 	static_assert(sizeof(hkpCompressedMeshShape) == 0x130);
@@ -228,6 +283,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpMeshShape : public hkpShapeCollection
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpMeshShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpMeshShape[0];
+
 		virtual void sub_14();
 		/* 0x030 */ std::uint8_t unk030[0x50];
 
@@ -237,10 +295,16 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpStorageMeshShape : public hkpMeshShape
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpStorageMeshShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpStorageMeshShape[0];
+
 		/* 0x080 */ std::uint8_t unk080[0x10];
 		class SubpartStorage : public hkReferencedObject
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkpStorageMeshShape__SubpartStorage;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkpStorageMeshShape__SubpartStorage[0];
+
 			/* 0x010 */ std::uint8_t unk010[0x60];
 		};
 	};
@@ -250,6 +314,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpSimpleMeshShape : public hkpShapeCollection
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSimpleMeshShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSimpleMeshShape[0];
+
 		/* 0x030 */ std::uint8_t unk030[0x38];
 	};
 	static_assert(sizeof(hkpSimpleMeshShape) == 0x68);
@@ -257,6 +324,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpExtendedMeshShape : public hkpShapeCollection
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpExtendedMeshShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpExtendedMeshShape[0];
+
 		virtual void sub_14();
 		virtual void sub_15();
 		/* 0x030 */ std::uint8_t unk030[0x110];
@@ -266,15 +336,24 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpStorageExtendedMeshShape : public hkpExtendedMeshShape
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpStorageExtendedMeshShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpStorageExtendedMeshShape[0];
+
 		/* 0x140 */ std::uint8_t unk140[0x20];
 		class MeshSubpartStorage : public hkReferencedObject
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkpStorageExtendedMeshShape__MeshSubpartStorage;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkpStorageExtendedMeshShape__MeshSubpartStorage[0];
+
 			/* 0x010 */ std::uint8_t unk010[0x80];
 		};
 		class ShapeSubpartStorage : public hkReferencedObject
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkpStorageExtendedMeshShape__ShapeSubpartStorage;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkpStorageExtendedMeshShape__ShapeSubpartStorage[0];
+
 			/* 0x010 */ std::uint8_t unk010[0x30];
 		};
 	};
@@ -300,6 +379,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpSampledHeightFieldShape : public hkpHeightFieldShape
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSampledHeightFieldShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSampledHeightFieldShape[0];
+
 		virtual void sub_14();
 		virtual void sub_15();
 		virtual void sub_16();
@@ -310,6 +392,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpStorageSampledHeightFieldShape : public hkpSampledHeightFieldShape
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpStorageSampledHeightFieldShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpStorageSampledHeightFieldShape[0];
+
 		/* 0x090 */ std::uint8_t unk090[0x20];
 	};
 	static_assert(sizeof(hkpStorageSampledHeightFieldShape) == 0xB0);
@@ -317,6 +402,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpTriSampledHeightFieldCollection : public hkpShapeCollection
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpTriSampledHeightFieldCollection;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpTriSampledHeightFieldCollection[0];
+
 		/* 0x030 */ std::uint8_t unk030[0x30];
 	};
 	static_assert(sizeof(hkpTriSampledHeightFieldCollection) == 0x60);
@@ -331,6 +419,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpMoppCode : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpMoppCode;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpMoppCode[0];
+
 		/* 0x010 */ std::uint8_t unk010[0x30];
 	};
 	static_assert(sizeof(hkpMoppCode) == 0x40);
@@ -338,6 +429,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkMoppBvTreeShapeBase : public hkpBvTreeShape
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkMoppBvTreeShapeBase;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkMoppBvTreeShapeBase[0];
+
 		virtual void sub_15();
 		/* 0x028 */ std::uint8_t unk028[0x28];
 	};
@@ -346,6 +440,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpMoppBvTreeShape : public hkMoppBvTreeShapeBase
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpMoppBvTreeShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpMoppBvTreeShape[0];
+
 		/* 0x050 */ std::uint8_t unk050[0x20];
 	};
 	static_assert(sizeof(hkpMoppBvTreeShape) == 0x70);

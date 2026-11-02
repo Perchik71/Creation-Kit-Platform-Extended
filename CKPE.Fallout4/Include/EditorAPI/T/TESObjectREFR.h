@@ -16,6 +16,7 @@
 #include <EditorAPI/F/FormInterfaces.h>
 #include <EditorAPI/T/TESChildCell.h>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE
 {
@@ -44,6 +45,7 @@ namespace CKPE
 				{
 				public:
 					constexpr static uint8_t TYPE_ID = TESForm::FormType::ftReference;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectREFR;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectREFR[0];
 
 					enum SpecialFlagsForm 

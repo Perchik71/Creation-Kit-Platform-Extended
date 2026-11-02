@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESBoundObject.h>
 #include <EditorAPI/N/NiColor.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -49,6 +51,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftBendableSpline;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSBendableSpline;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSBendableSpline[0];
 				public:
 					SplineData data; // 90

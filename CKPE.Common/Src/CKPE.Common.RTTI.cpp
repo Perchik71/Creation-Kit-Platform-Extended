@@ -173,6 +173,14 @@ namespace CKPE
 			return nullptr;
 		}
 
+		void* RTTI::DynamicCast(const void* InPtr, long VfDelta, const void* SrcTypeDescriptor,
+			const void* TargetTypeDescriptor, bool isReference) noexcept(true)
+		{
+			if (!InPtr || !SrcTypeDescriptor || !TargetTypeDescriptor)
+				return nullptr;
+			return __RTDynamicCast((PVOID)InPtr, VfDelta, (PVOID)SrcTypeDescriptor, (PVOID)TargetTypeDescriptor, isReference);
+		}
+
 		void* RTTI::Cast(const void* InPtr, long VfDelta, const char* lpstrFromType, const char* lpstrTargetType,
 			bool isReference)
 		{

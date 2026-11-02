@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -19,6 +21,9 @@ namespace CKPE
 			class BGSBaseAlias
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSBaseAlias;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSBaseAlias[0];
+
 				virtual ~BGSBaseAlias() = default;
 
 				void* unk08;			// 08 - helper-constructed (string handle, empty on construction)
@@ -36,6 +41,9 @@ namespace CKPE
 			class BGSLocAlias : public BGSBaseAlias
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSLocAlias;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLocAlias[0];
+
 				void* unk28;			// 28 - 0 on construction
 				std::uint32_t alfa;		// 30 - ALFA, -1 on construction
 				std::uint32_t pad34;	// 34
@@ -55,6 +63,9 @@ namespace CKPE
 			class BGSRefAlias : public BGSBaseAlias
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRefAlias;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRefAlias[0];
+
 				std::uint8_t unk28[0x68];	// 28 - ref alias data (eight pointers from 40 are zeroed on construction), layout not resolved
 			};
 			static_assert(offsetof(BGSRefAlias, unk28) == 0x28);

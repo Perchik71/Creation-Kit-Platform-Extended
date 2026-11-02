@@ -6,6 +6,8 @@
 
 #include <EditorAPI/H/hkBaseObject.h>
 #include <EditorAPI/H/hkBaseTypes.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -73,6 +75,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaDefaultAnimatedReferenceFrame : public hkaAnimatedReferenceFrame
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaDefaultAnimatedReferenceFrame;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaDefaultAnimatedReferenceFrame[0];
+
 		/* 0x018 */ std::uint8_t pad018[0x8];
 		/* 0x020 */ hkVector4f m_up;
 		/* 0x030 */ hkVector4f m_forward;
@@ -90,6 +95,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaParameterizedReferenceFrame : public hkaDefaultAnimatedReferenceFrame
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaParameterizedReferenceFrame;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaParameterizedReferenceFrame[0];
+
 
 	private:
 		/* 07 */ virtual void sub_hkaParameterizedReferenceFrame_07();
@@ -100,6 +108,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaAngularReferenceFrame : public hkaParameterizedReferenceFrame
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaAngularReferenceFrame;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaAngularReferenceFrame[0];
+
 		/* 0x060 */ float m_topAngle;
 		/* 0x064 */ float m_radius;
 		/* 0x068 */ std::uint8_t pad068[0x8];
@@ -111,6 +122,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaAnimation : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaAnimation;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaAnimation[0];
+
 		enum class AnimationType : std::int32_t
 		{
 			HK_UNKNOWN_ANIMATION = 0,
@@ -160,6 +174,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaAnimationBinding : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaAnimationBinding;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaAnimationBinding[0];
+
 		enum class BlendHint : std::int32_t
 		{
 			NORMAL = 0,
@@ -186,6 +203,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaAnimationContainer : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaAnimationContainer;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaAnimationContainer[0];
+
 		/* 0x010 */ hkArray<hkaSkeleton*> m_skeletons;
 		/* 0x020 */ hkArray<hkaAnimation*> m_animations;
 		/* 0x030 */ hkArray<hkaAnimationBinding*> m_bindings;
@@ -202,6 +222,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaAnimationPreviewColorContainer : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaAnimationPreviewColorContainer;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaAnimationPreviewColorContainer[0];
+
 		/* 0x010 */ hkArray<std::uint32_t> m_previewColor;
 	};
 	static_assert(sizeof(hkaAnimationPreviewColorContainer) == 0x20);
@@ -242,6 +265,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaBoneAttachment : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaBoneAttachment;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaBoneAttachment[0];
+
 		/* 0x010 */ hkStringPtr m_originalSkeletonName;
 		/* 0x018 */ std::uint8_t pad018[0x8];
 		/* 0x020 */ hkMatrix4f m_boneFromAttachment;
@@ -260,6 +286,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaDirectionalReferenceFrame : public hkaParameterizedReferenceFrame
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaDirectionalReferenceFrame;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaDirectionalReferenceFrame[0];
+
 		/* 0x060 */ hkVector4f m_movementDir;
 	};
 	static_assert(sizeof(hkaDirectionalReferenceFrame) == 0x70);
@@ -268,6 +297,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaFootstepAnalysisInfo : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaFootstepAnalysisInfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaFootstepAnalysisInfo[0];
+
 		/* 0x010 */ hkArray<char> m_name;
 		/* 0x020 */ hkArray<char> m_nameStrike;
 		/* 0x030 */ hkArray<char> m_nameLift;
@@ -303,6 +335,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaFootstepAnalysisInfoContainer : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaFootstepAnalysisInfoContainer;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaFootstepAnalysisInfoContainer[0];
+
 		/* 0x010 */ hkArray<hkaFootstepAnalysisInfo*> m_previewInfo;
 	};
 	static_assert(sizeof(hkaFootstepAnalysisInfoContainer) == 0x20);
@@ -311,6 +346,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaInterleavedUncompressedAnimation : public hkaAnimation
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaInterleavedUncompressedAnimation;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaInterleavedUncompressedAnimation[0];
+
 		/* 0x038 */ hkArray<hkQsTransformf> m_transforms;
 		/* 0x048 */ hkArray<float> m_floats;
 	};
@@ -321,6 +359,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaLosslessCompressedAnimation : public hkaAnimation
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaLosslessCompressedAnimation;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaLosslessCompressedAnimation[0];
+
 		enum class LosslessTrackType : std::int32_t
 		{
 			TRACK_TYPE_CLEAR = 0,
@@ -357,6 +398,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaMeshBinding : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaMeshBinding;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaMeshBinding[0];
+
 		/* 0x010 */ hkxMesh* m_mesh;
 		/* 0x018 */ hkStringPtr m_originalSkeletonName;
 		/* 0x020 */ hkStringPtr m_name;
@@ -383,6 +427,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaParameterizedAnimationReferenceFrame : public hkaDefaultAnimatedReferenceFrame
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaParameterizedAnimationReferenceFrame;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaParameterizedAnimationReferenceFrame[0];
+
 		enum class ParameterType : std::int32_t
 		{
 			UNKNOWN = 0,
@@ -401,6 +448,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaPredictiveCompressedAnimation : public hkaAnimation
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaPredictiveCompressedAnimation;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaPredictiveCompressedAnimation[0];
+
 		enum class StorageClass : std::int32_t
 		{
 			STORAGE_STATIC = 0,
@@ -484,6 +534,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaQuantizedAnimation : public hkaAnimation
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaQuantizedAnimation;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaQuantizedAnimation[0];
+
 		/* 0x038 */ hkArray<std::uint8_t> m_data;
 		/* 0x048 */ std::uint32_t m_endian;
 		/* 0x04C */ std::uint8_t pad04C[0x4];
@@ -511,6 +564,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaReferencePoseAnimation : public hkaAnimation
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaReferencePoseAnimation;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaReferencePoseAnimation[0];
+
 		/* 0x038 */ hkaSkeleton* m_skeleton;
 	};
 	static_assert(sizeof(hkaReferencePoseAnimation) == 0x40);
@@ -519,6 +575,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaSkeleton : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaSkeleton;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaSkeleton[0];
+
 		/* 0x010 */ hkStringPtr m_name;
 		/* 0x018 */ hkArray<std::int16_t> m_parentIndices;
 		/* 0x028 */ hkArray<hkaBone> m_bones;
@@ -588,6 +647,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaSkeletonMapper : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaSkeletonMapper;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaSkeletonMapper[0];
+
 		enum class ConstraintSource : std::int32_t
 		{
 			NO_CONSTRAINTS = 0,
@@ -658,6 +720,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaSplineCompressedAnimation : public hkaAnimation
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaSplineCompressedAnimation;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaSplineCompressedAnimation[0];
+
 		/* 0x038 */ std::int32_t m_numFrames;
 		/* 0x03C */ std::int32_t m_numBlocks;
 		/* 0x040 */ std::int32_t m_maxFramesPerBlock;

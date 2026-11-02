@@ -10,6 +10,8 @@
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/T/TESTexture.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -99,6 +101,7 @@ namespace CKPE
 					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftWater;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESWaterForm;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESWaterForm[0];
 				public:
 					bool needUpdate; // 40

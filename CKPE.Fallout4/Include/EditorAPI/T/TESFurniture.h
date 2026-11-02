@@ -10,6 +10,8 @@
 #include <EditorAPI/T/TESModel.h>
 #include <EditorAPI/B/BGSAttachParentArray.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -58,6 +60,7 @@ namespace CKPE
 					/* 480 */ void Clone3D(TESObjectREFR* pRequester, NiAPI::NiPointer<NiAPI::NiAVObject>* pObj3D) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftFurniture;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESFurniture;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESFurniture[0];
 				public:
 					BSTArray<std::uint32_t> unk1E8; // 1E8 - 4-byte elements (Compare walks them as dwords), freed by ClearData, copied by CopyFrom; purpose not identified

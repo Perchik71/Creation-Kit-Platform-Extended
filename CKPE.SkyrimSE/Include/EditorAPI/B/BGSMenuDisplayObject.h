@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -16,6 +18,9 @@ namespace CKPE
 			class BGSMenuDisplayObject : public BaseFormComponent
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSMenuDisplayObject;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMenuDisplayObject[0];
+
 				virtual ~BGSMenuDisplayObject() = default;
 
 				void* unk08;	// 08

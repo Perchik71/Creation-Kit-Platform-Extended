@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/B/BGSModelMaterialSwap.h>
 #include <EditorAPI/B/BSFixedString.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -35,6 +37,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftAnimationObject;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectANIO;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectANIO[0];
 				public:
 					BSFixedString unloadEventName; // 78

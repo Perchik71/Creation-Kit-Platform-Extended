@@ -6,6 +6,8 @@
 
 #include <CKPE.Common.h>
 #include <EditorAPI/B/BGSRenderWindowReferenceEditModule.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -19,6 +21,7 @@ namespace CKPE
 			public:
 				virtual ~BGSRenderWindowEditModuleManager() = default;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowEditModuleManager;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowEditModuleManager[0];
 
 				inline BGSRenderWindow* GetRenderWindow() { return _RenderWindow; }

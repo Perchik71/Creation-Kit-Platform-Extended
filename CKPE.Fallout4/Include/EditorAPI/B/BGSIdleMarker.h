@@ -9,6 +9,8 @@
 #include <EditorAPI/B/BGSKeywordForm.h>
 #include <EditorAPI/T/TESModel.h>
 #include <EditorAPI/B/BGSIdleCollection.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -47,6 +49,7 @@ namespace CKPE
 					/* 480 */ void Clone3D(TESObjectREFR* pRequester, NiAPI::NiPointer<NiAPI::NiAVObject>* pObj3D) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftIdleMarker;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSIdleMarker;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSIdleMarker[0];
 				public:
 					BGSKeyword* animArchType; // 108

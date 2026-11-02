@@ -7,6 +7,8 @@
 #include <EditorAPI/B/BSResourceArchive2.h>
 #include <EditorAPI/N/NiPointer.h>
 #include <CKPE.Common.Relocation.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -24,6 +26,9 @@ namespace CKPE
 					/* 0x011 */ std::byte pad011[0x7];
 					/* 0x018 */ BSFixedString fileName;
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BSIStream;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BSIStream[0];
+
 					virtual ~BSIStream();
 
 					// BSIStream::BSIStream: opens the resource and sets the BSIStream vtable.
@@ -60,6 +65,9 @@ namespace CKPE
 					/* 0x011 */ std::byte pad011[0x7];
 					/* 0x018 */ BSFixedString fileName;
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BSIStream;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BSIStream[0];
+
 					virtual ~BSIStream();
 
 					// BSIStream::BSIStream: opens the resource and sets the BSIStream vtable.

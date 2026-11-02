@@ -5,6 +5,8 @@
 #include <EditorAPI/N/NiObject.h>
 #include <EditorAPI/N/NiTimeController.h>
 #include <EditorAPI/B/BSFixedString.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,9 @@ namespace CKPE
 				class NiExtraData : public NiObject
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiExtraData;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiExtraData[0];
+
 					virtual ~NiExtraData() = 0;
 					/* 02 */ virtual NiRTTI* GetRTTI() const noexcept(true) override;
 					/* 1B */ virtual void LoadBinary(NiStream& Stream) noexcept(true) override;
@@ -50,6 +55,9 @@ namespace CKPE
 				class NiObjectNET : public NiObject
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiObjectNET;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiObjectNET[0];
+
 					virtual ~NiObjectNET() = default;
 
 					[[nodiscard]] inline const char* GetName() const noexcept(true) { return _ObjectName; }

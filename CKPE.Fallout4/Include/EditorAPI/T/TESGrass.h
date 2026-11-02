@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESBoundObject.h>
 #include <EditorAPI/T/TESModel.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -55,6 +57,7 @@ namespace CKPE
 					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftGrass;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESGrass;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESGrass[0];
 
 					virtual std::int8_t GetDensity() const noexcept(true) { return 0; } // 154 - RVA 0xC49EE0, return *(unsigned __int8 *)(a1 + 200);

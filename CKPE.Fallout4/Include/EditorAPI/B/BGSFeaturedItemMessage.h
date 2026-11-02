@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -34,6 +36,7 @@ namespace CKPE
 				/* 80 */ void UpdateDataInDialogBox(HWND hDialogBox) const noexcept(true) override;
 				/* 88 */ void UpdateDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSFeaturedItemMessage;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSFeaturedItemMessage[0];
 			public:
 				Forms::BGSMessage* featuredItemMessage; // 08

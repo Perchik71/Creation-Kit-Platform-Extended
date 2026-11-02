@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <EditorAPI/N/NiObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -14,6 +16,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkSerializable : public NiAPI::NiObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkSerializable;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkSerializable[0];
+
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
 		/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
@@ -36,6 +41,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkRefObject : public bhkSerializable
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkRefObject;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkRefObject[0];
+
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
 		/* 31 */ virtual void SetReferencedObject(hkReferencedObject* Object);

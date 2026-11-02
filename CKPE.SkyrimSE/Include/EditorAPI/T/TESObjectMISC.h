@@ -15,6 +15,8 @@
 #include <EditorAPI/B/BGSMessageIcon.h>
 #include <EditorAPI/B/BGSPickupPutdownSounds.h>
 #include <EditorAPI/B/BGSKeywordForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -38,6 +40,9 @@ namespace CKPE
 					public BGSKeywordForm				// 150
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectMISC;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectMISC[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftMisc;
 
 					virtual ~TESObjectMISC() = default;

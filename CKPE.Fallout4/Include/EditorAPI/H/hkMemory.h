@@ -6,12 +6,17 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class hkMemoryAllocator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkMemoryAllocator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkMemoryAllocator[0];
+
 		class MemoryStatistics;
 		class ExtendedInterface;
 
@@ -37,6 +42,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkMemorySystem
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkMemorySystem;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkMemorySystem[0];
+
 		virtual ~hkMemorySystem();
 		virtual void Unk01();
 		virtual void Unk02();
@@ -64,6 +72,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkLifoAllocator : public hkMemoryAllocator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkLifoAllocator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkLifoAllocator[0];
+
 		/* 0x008 */ std::byte pad008[0x8];
 		/* 0x010 */ std::int32_t m_slabSize;
 		/* 0x014 */ std::uint32_t pad014;
@@ -79,6 +90,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkThreadMemory : public hkMemoryAllocator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkThreadMemory;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkThreadMemory[0];
+
 		virtual void hkThreadMemory_Unk0C();
 
 		/* 0x008 */ std::byte pad008[0x1B0];
@@ -99,21 +113,36 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkContainerHeapAllocator
 	{
 	public:
-		class Allocator : public hkMemoryAllocator {};
+		class Allocator : public hkMemoryAllocator
+		{
+		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkContainerHeapAllocator__Allocator;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkContainerHeapAllocator__Allocator[0];
+		};
 		static_assert(sizeof(Allocator) == 0x8);
 	};
 
 	class hkContainerTempAllocator
 	{
 	public:
-		class Allocator : public hkMemoryAllocator {};
+		class Allocator : public hkMemoryAllocator
+		{
+		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkContainerTempAllocator__Allocator;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkContainerTempAllocator__Allocator[0];
+		};
 		static_assert(sizeof(Allocator) == 0x8);
 	};
 
 	class hkContainerDebugAllocator
 	{
 	public:
-		class Allocator : public hkMemoryAllocator {};
+		class Allocator : public hkMemoryAllocator
+		{
+		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkContainerDebugAllocator__Allocator;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkContainerDebugAllocator__Allocator[0];
+		};
 		static_assert(sizeof(Allocator) == 0x8);
 	};
 

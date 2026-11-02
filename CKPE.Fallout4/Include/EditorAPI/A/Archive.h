@@ -8,6 +8,8 @@
 #include <Windows.h>
 #include <EditorAPI/B/BSFile.h>
 #include <EditorAPI/N/NiRefObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -38,6 +40,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class Archive : public BSFile, public NiAPI::NiRefObject, public BSArchive
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::Archive;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::Archive[0];
+
 		virtual ~Archive() noexcept(true) override;
 
 		/* 0x2F0 */ std::uint64_t unk2F0;

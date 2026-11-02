@@ -13,6 +13,8 @@
 #include <EditorAPI/T/TESTexture.h>
 #include <EditorAPI/B/BGSLocalizedString.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -31,6 +33,9 @@ namespace CKPE
 			class TESRegionData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionData[0];
+
 				virtual ~TESRegionData() = default; // 00
 
 				// Writes the RDAT chunk (type, flags and priority); the derived classes add their own chunks
@@ -72,6 +77,9 @@ namespace CKPE
 				public TESRegionData   // 00
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionDataMap;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionDataMap[0];
+
 				BGSLocalizedString mapName; // 10
 			};
 			static_assert(sizeof(TESRegionDataMap) == 0x20);
@@ -81,6 +89,9 @@ namespace CKPE
 				public TESRegionDataMap   // 00
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionDataMapEditor;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionDataMapEditor[0];
+
 				virtual bool HandleDialogMessage(HWND Dialog, std::uint32_t Message, std::uint64_t WParam, std::int64_t LParam); // 0D
 			};
 			static_assert(sizeof(TESRegionDataMapEditor) == 0x20);
@@ -90,6 +101,9 @@ namespace CKPE
 				public TESRegionData   // 00
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionDataLandscape;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionDataLandscape[0];
+
 				// Reads the ICON chunk into the texture; false when there is no chunk
 				virtual bool LoadChunk(const void* Chunk); // 0D
 				// Writes the texture's file name to Name
@@ -107,6 +121,9 @@ namespace CKPE
 				public TESRegionDataLandscape   // 00
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionDataLandscapeEditor;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionDataLandscapeEditor[0];
+
 				virtual bool HandleDialogMessage(HWND Dialog, std::uint32_t Message, std::uint64_t WParam, std::int64_t LParam); // 10
 			};
 			static_assert(sizeof(TESRegionDataLandscapeEditor) == 0x18);
@@ -116,6 +133,9 @@ namespace CKPE
 				public TESRegionData   // 00
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionDataGrass;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionDataGrass[0];
+
 				// Reads an RDGS chunk (grass type and land texture pairs); false when it is not one
 				virtual bool LoadChunk(const void* Chunk); // 0D
 				[[nodiscard]] virtual TESRegionGrassObjectList* GetGrassList() const; // 0E
@@ -130,6 +150,9 @@ namespace CKPE
 				public TESRegionDataGrass   // 00
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionDataGrassEditor;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionDataGrassEditor[0];
+
 				virtual bool HandleDialogMessage(HWND Dialog, std::uint32_t Message, std::uint64_t WParam, std::int64_t LParam); // 0F
 				// Fills a tree view (TVM_INSERTITEM) with one item per land texture of the data handler's region data list plus an
 				// "Everywhere" root, and places the grass objects of Objects under their texture (item handle of the root kept at 0x18)
@@ -145,6 +168,9 @@ namespace CKPE
 				public TESRegionData   // 00
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionDataObjects;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionDataObjects[0];
+
 				// Reads an RDOB chunk (24 byte records); false when it is not one
 				virtual bool LoadObjectsChunk(const void* Chunk); // 0D
 				// Reads an RDOT chunk (52 byte records, TESRegionObject); false when it is not one
@@ -165,6 +191,9 @@ namespace CKPE
 				public TESRegionDataObjects   // 00
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionDataObjectsEditor;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionDataObjectsEditor[0];
+
 				virtual bool HandleDialogMessage(HWND Dialog, std::uint32_t Message, std::uint64_t WParam, std::int64_t LParam); // 12
 			};
 			static_assert(sizeof(TESRegionDataObjectsEditor) == 0x20);
@@ -174,6 +203,9 @@ namespace CKPE
 				public TESRegionData   // 00
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionDataSound;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionDataSound[0];
+
 				// Reads an RDSA (sound list) or RDMO (music type) chunk
 				virtual bool LoadChunk(const void* Chunk); // 0D
 
@@ -197,6 +229,9 @@ namespace CKPE
 				public TESRegionDataSound   // 00
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionDataSoundEditor;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionDataSoundEditor[0];
+
 				virtual bool HandleDialogMessage(HWND Dialog, std::uint32_t Message, std::uint64_t WParam, std::int64_t LParam); // 0E
 			};
 			static_assert(sizeof(TESRegionDataSoundEditor) == 0x30);
@@ -206,6 +241,9 @@ namespace CKPE
 				public TESRegionData   // 00
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionDataWeather;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionDataWeather[0];
+
 				// Reads the weather list chunk; Region is only used in the warning logged when entries were dropped
 				virtual void LoadChunk(const void* Chunk, Forms::TESForm* Region); // 0D
 
@@ -220,6 +258,9 @@ namespace CKPE
 				public TESRegionDataWeather   // 00
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionDataWeatherEditor;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionDataWeatherEditor[0];
+
 				virtual bool HandleDialogMessage(HWND Dialog, std::uint32_t Message, std::uint64_t WParam, std::int64_t LParam); // 0E
 			};
 			static_assert(sizeof(TESRegionDataWeatherEditor) == 0x70);

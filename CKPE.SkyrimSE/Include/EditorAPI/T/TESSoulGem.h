@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <EditorAPI/T/TESObjectMISC.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -19,6 +21,9 @@ namespace CKPE
 				class TESSoulGem : public TESObjectMISC
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESSoulGem;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESSoulGem[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftSoulGem;
 
 					virtual ~TESSoulGem() = default;

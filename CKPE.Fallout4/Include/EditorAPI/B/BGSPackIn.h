@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/B/BSString.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -39,6 +41,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftPackIn;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSPackIn;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPackIn[0];
 				public:
 					TESForm* storageCell; // 28 - CNAM; holds the form id after Load until InitItem resolves it ("Could not find storage cell")

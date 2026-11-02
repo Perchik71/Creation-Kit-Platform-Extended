@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESFormIDListView.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,9 @@ namespace CKPE
 					public TESFormIDListView   // 000
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::GameSettingForm;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::GameSettingForm[0];
+
 					virtual ~GameSettingForm() = default;
 
 					/* 0B8 */ void Load(TESFile* File) override;

@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESObject.h>
 #include <EditorAPI/B/TESRaceForm.h>
 #include <EditorAPI/B/BGSBipedObjectForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -24,6 +26,9 @@ namespace CKPE
 					public BGSBipedObjectForm		// 40
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectARMA;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectARMA[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftARMA;
 
 					virtual ~TESObjectARMA() = default;

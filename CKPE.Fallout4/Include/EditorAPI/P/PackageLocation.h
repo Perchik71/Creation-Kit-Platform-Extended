@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI::Forms
 {
@@ -14,6 +16,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class IAIWorldLocationHandle
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::IAIWorldLocationHandle;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::IAIWorldLocationHandle[0];
+
 		virtual ~IAIWorldLocationHandle() = default;
 
 	protected:
@@ -27,6 +32,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class PackageLocation : public IAIWorldLocationHandle
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::PackageLocation;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::PackageLocation[0];
+
 		/* 0x008 */ std::uint8_t type;
 		/* 0x009 */ std::uint8_t pad09[0x3];
 		/* 0x00C */ std::uint32_t unk0C;

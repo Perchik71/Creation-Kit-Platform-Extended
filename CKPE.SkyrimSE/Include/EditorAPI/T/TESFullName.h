@@ -6,6 +6,8 @@
 
 #include <EditorAPI/B/BGSLocalizedString.h>
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -18,6 +20,9 @@ namespace CKPE
 			private:
 				BGSLocalizedString name;
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESFullName;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESFullName[0];
+
 				virtual ~TESFullName() = default;
 
 				inline std::uint32_t GetFullNameLength() const noexcept(true) { return name.length(); }

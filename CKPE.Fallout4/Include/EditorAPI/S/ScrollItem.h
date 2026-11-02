@@ -11,6 +11,8 @@
 #include <EditorAPI/B/BGSPickupPutdownSounds.h>
 #include <EditorAPI/T/TESWeightForm.h>
 #include <EditorAPI/T/TESValueForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -36,6 +38,7 @@ namespace CKPE
 					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftScroll;
+					constexpr static Common::ID RTTI = IDs::RTTI::ScrollItem;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::ScrollItem[0];
 				};
 				static_assert(sizeof(ScrollItem) == 0x3D8);

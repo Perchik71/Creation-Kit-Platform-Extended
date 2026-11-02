@@ -11,6 +11,8 @@
 #include <CKPE.Common.Relocation.h>
 #include <cstddef>
 #include <cstring>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -45,6 +47,9 @@ namespace CKPE::Fallout4::EditorAPI
 		public BSIntrusiveRefCounted
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSAnimationGraphManager;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSAnimationGraphManager[0];
+
 		// Native tagged-pointer view; the containing manager owns the reference.
 		class DependentManagerSmartPtr
 		{

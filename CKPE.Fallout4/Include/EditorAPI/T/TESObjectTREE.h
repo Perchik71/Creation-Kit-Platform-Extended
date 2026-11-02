@@ -9,6 +9,8 @@
 #include <EditorAPI/B/BGSModelMaterialSwap.h>
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/T/TESProduceForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -62,6 +64,7 @@ namespace CKPE
 					/* 4C8 */ void OnFinishScale() noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftTree;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectTREE;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectTREE[0];
 				public:
 					OBJ_TREE data; // 118

@@ -18,6 +18,8 @@
 #include <EditorAPI/B/BGSAttackDataForm.h>
 #include <EditorAPI/B/BGSPerkRankArray.h>
 #include <EditorAPI/B/BGSPropertySheet.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -55,6 +57,7 @@ namespace CKPE
 					/* 4A0 */ void CollectVoiceTypes(BSSimpleList<BGSVoiceType*>* VoiceTypes) const noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftReserved000;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESActorBase;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESActorBase[0];
 
 					virtual bool GetHasPLSpecTex() const noexcept(true) { return false; } // 154 - RVA 0xAB1160, return 0;

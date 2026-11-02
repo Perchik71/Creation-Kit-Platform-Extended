@@ -6,6 +6,8 @@
 
 #include <EditorAPI/B/BSShaderMaterial.h>
 #include <EditorAPI/N/NiColor.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -14,12 +16,19 @@ namespace CKPE
 		namespace EditorAPI
 		{
 			class BSLightingShaderMaterial : public BSLightingShaderMaterialBase
-			{};
+{
+			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLightingShaderMaterial;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShaderMaterial[0];
+			};
 			static_assert(sizeof(BSLightingShaderMaterial) == 0xC0);
 
 			class BSLightingShaderMaterialEnvmap : public BSLightingShaderMaterialBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLightingShaderMaterialEnvmap;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShaderMaterialEnvmap[0];
+
 				NiAPI::NiPointer<NiAPI::NiTexture> EnvironmentTexture;	// C0
 				NiAPI::NiPointer<NiAPI::NiTexture> EnvironmentMaskTexture;	// C8
 				float EnvironmentMapScale;							// D0
@@ -34,6 +43,9 @@ namespace CKPE
 			class BSLightingShaderMaterialGlowmap : public BSLightingShaderMaterialBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLightingShaderMaterialGlowmap;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShaderMaterialGlowmap[0];
+
 				NiAPI::NiPointer<NiAPI::NiTexture> GlowTexture;		// C0
 			};
 			static_assert(sizeof(BSLightingShaderMaterialGlowmap) == 0xC8);
@@ -42,6 +54,9 @@ namespace CKPE
 			class BSLightingShaderMaterialParallax : public BSLightingShaderMaterialBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLightingShaderMaterialParallax;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShaderMaterialParallax[0];
+
 				NiAPI::NiPointer<NiAPI::NiTexture> HeightTexture;		// C0
 			};
 			static_assert(sizeof(BSLightingShaderMaterialParallax) == 0xC8);
@@ -50,6 +65,9 @@ namespace CKPE
 			class BSLightingShaderMaterialParallaxOcc : public BSLightingShaderMaterialBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLightingShaderMaterialParallaxOcc;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShaderMaterialParallaxOcc[0];
+
 				NiAPI::NiPointer<NiAPI::NiTexture> HeightTexture;		// C0
 				float MaxPasses;									// C8
 				float Scale;										// CC
@@ -60,6 +78,9 @@ namespace CKPE
 			class BSLightingShaderMaterialDismemberment : public BSLightingShaderMaterialBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLightingShaderMaterialDismemberment;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShaderMaterialDismemberment[0];
+
 				NiAPI::NiPointer<NiAPI::NiTexture> DisplacementTexture;	// C0
 			};
 			static_assert(sizeof(BSLightingShaderMaterialDismemberment) == 0xC8);
@@ -68,6 +89,9 @@ namespace CKPE
 			class BSLightingShaderMaterialSkinTint : public BSLightingShaderMaterialBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLightingShaderMaterialSkinTint;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShaderMaterialSkinTint[0];
+
 				NiAPI::NiColorA TintColor;							// C0
 			};
 			static_assert(sizeof(BSLightingShaderMaterialSkinTint) == 0xD0);
@@ -76,6 +100,9 @@ namespace CKPE
 			class BSLightingShaderMaterialHairTint : public BSLightingShaderMaterialBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLightingShaderMaterialHairTint;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShaderMaterialHairTint[0];
+
 				NiAPI::NiColor TintColor;							// C0
 				std::uint32_t PadCC;								// CC
 			};
@@ -85,6 +112,9 @@ namespace CKPE
 			class BSLightingShaderMaterialSnow : public BSLightingShaderMaterialBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLightingShaderMaterialSnow;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShaderMaterialSnow[0];
+
 				NiAPI::NiColor SparkleColor;							// C0
 				float UnkCC;										// CC
 			};
@@ -94,6 +124,9 @@ namespace CKPE
 			class BSLightingShaderMaterialEye : public BSLightingShaderMaterialBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLightingShaderMaterialEye;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShaderMaterialEye[0];
+
 				NiAPI::NiPointer<NiAPI::NiTexture> EnvironmentTexture;	// C0
 				NiAPI::NiPointer<NiAPI::NiTexture> EnvironmentMaskTexture;	// C8
 				NiAPI::NiPoint3 EyeCenters[2];						// D0
@@ -107,6 +140,9 @@ namespace CKPE
 			class BSLightingShaderMaterialMultiLayerParallax : public BSLightingShaderMaterialBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLightingShaderMaterialMultiLayerParallax;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShaderMaterialMultiLayerParallax[0];
+
 				NiAPI::NiPointer<NiAPI::NiTexture> LayerTexture;		// C0
 				NiAPI::NiPointer<NiAPI::NiTexture> EnvironmentTexture;	// C8
 				NiAPI::NiPointer<NiAPI::NiTexture> EnvironmentMaskTexture;	// D0
@@ -123,6 +159,9 @@ namespace CKPE
 			class BSLightingShaderMaterialLODLandscape : public BSLightingShaderMaterialBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLightingShaderMaterialLODLandscape;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShaderMaterialLODLandscape[0];
+
 				NiAPI::NiPointer<NiAPI::NiTexture> Textures[3];		// C0
 				char UnkD8[0x18];									// D8
 			};
@@ -132,6 +171,9 @@ namespace CKPE
 			class BSLightingShaderMaterialLandscape : public BSLightingShaderMaterialBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLightingShaderMaterialLandscape;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShaderMaterialLandscape[0];
+
 				std::uint8_t UnkC0[3];								// C0
 				std::uint8_t PadC3;									// C3
 				float UnkC4[6][3];									// C4

@@ -6,6 +6,8 @@
 
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/N/NiRefObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -16,6 +18,7 @@ namespace CKPE
 			class BSPortalGraphEntry : public NiAPI::NiRefObject
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSPortalGraphEntry;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BSPortalGraphEntry[0];
 
 				[[nodiscard]] inline class BSPortalGraph* GetPortalGraph() const noexcept(true) { return _PortalGraph; }

@@ -8,6 +8,8 @@
 #include <windows.h>
 #include <EditorAPI/N/NiNode.h>
 #include <EditorAPI/B/BGSRenderWindowEditModules.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -38,6 +40,9 @@ namespace CKPE
 			class BGSRenderWindowBorder
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowBorder;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowBorder[0];
+
 				virtual ~BGSRenderWindowBorder() = default;
 
 				[[nodiscard]] inline HWND GetWindowHandle() const noexcept(true) { return _WindowHandle; }
@@ -49,18 +54,27 @@ namespace CKPE
 			class BSPortalGraphEntry
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSPortalGraphEntry;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSPortalGraphEntry[0];
+
 				virtual ~BSPortalGraphEntry() = default;
 			};
 
 			class BSCullingProcess
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSCullingProcess;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSCullingProcess[0];
+
 				virtual ~BSCullingProcess() = default;
 			};
 
 			class BGSRenderOrthoGrid
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderOrthoGrid;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderOrthoGrid[0];
+
 				virtual ~BGSRenderOrthoGrid() = default;
 			private:
 				char pad08[0x8];

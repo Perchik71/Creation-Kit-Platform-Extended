@@ -10,6 +10,8 @@
 #include <EditorAPI/T/TESBoundObject.h>
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/T/TESModel.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -28,6 +30,9 @@ namespace CKPE
 					public TESImageSpaceModifiableForm	// A0
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSHazard;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSHazard[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftHazard;
 
 					virtual ~BGSHazard() = default;

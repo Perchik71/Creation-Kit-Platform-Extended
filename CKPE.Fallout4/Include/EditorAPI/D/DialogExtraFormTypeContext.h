@@ -6,12 +6,17 @@
 
 #include <cstddef>
 #include <EditorAPI/B/BSExtraData.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class DialogExtraFormTypeContext : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::DialogExtraFormTypeContext;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::DialogExtraFormTypeContext[0];
+
 		enum : std::uint8_t { kDialogExtraType = 0x20 };
 		/* 0x000 */ virtual ~DialogExtraFormTypeContext();
 

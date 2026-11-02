@@ -8,6 +8,8 @@
 #include <cstdint>
 
 #include <EditorAPI/B/BSIMusicTrack.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -21,6 +23,9 @@ namespace CKPE
 			class BGSMusicTrack : public BSIMusicTrack
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSMusicTrack;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMusicTrack[0];
+
 				std::uint32_t unk08;	// 08
 				std::uint32_t pad0C;	// 0C
 				void* unk10;			// 10 - 0 on construction
@@ -33,6 +38,9 @@ namespace CKPE
 			class BGSMusicSilenceTrack : public BGSMusicTrack
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSMusicSilenceTrack;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMusicSilenceTrack[0];
+
 				std::uint32_t unk20;	// 20 - FLTV, 0 on construction
 				std::uint32_t pad24;	// 24
 				void* unk28;			// 28 - 0 on construction
@@ -44,6 +52,9 @@ namespace CKPE
 			class BGSMusicSingleTrack : public BGSMusicTrack
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSMusicSingleTrack;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMusicSingleTrack[0];
+
 				std::uint8_t unk20[0x40];	// 20
 				std::uint32_t unk60;		// 60 - 0 on construction
 				std::uint32_t unk64;		// 64 - 0 on construction
@@ -60,6 +71,9 @@ namespace CKPE
 			class BGSMusicPaletteTrack : public BGSMusicTrack
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSMusicPaletteTrack;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMusicPaletteTrack[0];
+
 				std::uint8_t unk20[0x54];	// 20
 				std::uint32_t unk74;		// 74 - 0 on construction
 				std::uint32_t unk78;		// 78 - 0 on construction

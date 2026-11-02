@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESBoundObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -40,6 +42,7 @@ namespace CKPE
 					/* 480 */ void Clone3D(TESObjectREFR* pRequester, NiAPI::NiPointer<NiAPI::NiAVObject>* pObj3D) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftSoundMarker;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESSound;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESSound[0];
 				public:
 					BGSSoundDescriptorForm* descriptor; // 90

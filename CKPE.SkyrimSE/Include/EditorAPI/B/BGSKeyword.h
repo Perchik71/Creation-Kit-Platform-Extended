@@ -7,6 +7,8 @@
 #include <EditorAPI/B/BGSLocalizedString.h>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/N/NiTypes.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,9 @@ namespace CKPE
 				{
 					NiAPI::NiRGB _Color;
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSKeyword;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSKeyword[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftKeyword;
 
 					virtual ~BGSKeyword() = default;

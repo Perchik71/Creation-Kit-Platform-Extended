@@ -7,12 +7,17 @@
 #include <EditorAPI/B/bhkPhysicsSystem.h>
 #include <EditorAPI/N/NiObjectNET.h>
 #include <cstddef>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class bhkPoseArray : public NiAPI::NiObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkPoseArray;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkPoseArray[0];
+
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
 		/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
@@ -23,7 +28,12 @@ namespace CKPE::Fallout4::EditorAPI
 	static_assert(sizeof(bhkPoseArray) == 0x30);
 	static_assert(offsetof(bhkPoseArray, unk010) == 0x10);
 
-	class bhkRagdollSystem : public bhkPhysicsSystem {};
+	class bhkRagdollSystem : public bhkPhysicsSystem
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkRagdollSystem;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkRagdollSystem[0];
+	};
 	static_assert(sizeof(bhkRagdollSystem) == 0x28);
 
 	class bhkRagdollTemplate : public NiAPI::NiExtraData
@@ -32,6 +42,9 @@ namespace CKPE::Fallout4::EditorAPI
 		/* 0x170 */ virtual void sub_170();
 
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkRagdollTemplate;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkRagdollTemplate[0];
+
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
 		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
@@ -46,6 +59,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkRagdollTemplateData : public NiAPI::NiObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkRagdollTemplateData;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkRagdollTemplateData[0];
+
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
 		/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;

@@ -6,6 +6,8 @@
 
 #include <EditorAPI/B/BGSMaterialSwap.h>
 #include <EditorAPI/T/TESModel.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -37,6 +39,7 @@ namespace CKPE
 					/* 98 */ void CollectComponentResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 					/* A0 */ void RemapCopiedComponent(BSTHashMap<Forms::TESForm*, Forms::TESForm*>* CopyMap, Forms::TESForm* Copy) noexcept(true) override;
 
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSModelMaterialSwap;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSModelMaterialSwap[0];
 				public:
 					[[nodiscard]] inline const char* GetModelPath() const noexcept(true) { return !modelName.empty() ? modelName.c_str() : nullptr; }

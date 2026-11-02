@@ -7,6 +7,8 @@
 #include <cstddef>
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/N/NiObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -19,6 +21,9 @@ namespace CKPE
 				class NiTexture : public NiObject
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiTexture;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiTexture[0];
+
 					/* 02 */ virtual NiRTTI* GetRTTI() const noexcept(true) override;
 					/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
 					[[nodiscard]] inline BSFixedString GetFileNameFS() const noexcept(true) { return _FileName; }

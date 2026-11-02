@@ -13,6 +13,7 @@
 #include <EditorAPI/B/BSTArray.h>
 #include <windows.h>
 #include <cstdint>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE
 {
@@ -32,6 +33,7 @@ namespace CKPE
 			public:
 				virtual ~BaseFormComponent() = default;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::BaseFormComponent;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BaseFormComponent[0];
 
 				[[nodiscard]] virtual std::uint32_t GetFormComponentType() const noexcept(true);

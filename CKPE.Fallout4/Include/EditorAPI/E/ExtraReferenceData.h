@@ -6,6 +6,8 @@
 
 #include <EditorAPI/E/ExtraDataTypes.h>
 #include <EditorAPI/T/TESFullName.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -32,6 +34,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraLock : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraLock;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraLock[0];
+
 		static constexpr auto TYPE{ kLock };
 		ExtraLock() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -43,6 +48,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraTeleport : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraTeleport;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraTeleport[0];
+
 		static constexpr auto TYPE{ kTeleport };
 		ExtraTeleport() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -54,6 +62,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraMapMarker : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraMapMarker;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraMapMarker[0];
+
 		static constexpr auto TYPE{ kMapMarker };
 		ExtraMapMarker() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -65,6 +76,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraOwnership : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraOwnership;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraOwnership[0];
+
 		static constexpr auto TYPE{ kOwnership };
 		ExtraOwnership() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -79,6 +93,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraCount : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraCount;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraCount[0];
+
 		static constexpr auto TYPE{ kCount };
 		ExtraCount() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -90,6 +107,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraHealth : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraHealth;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraHealth[0];
+
 		static constexpr auto TYPE{ kHealth };
 		ExtraHealth() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -101,6 +121,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraPersistentCell : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraPersistentCell;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraPersistentCell[0];
+
 		static constexpr auto TYPE{ kPersistentCell };
 		ExtraPersistentCell() = delete;
 		/* 0x018 */ Forms::TESForm* Cell;
@@ -111,6 +134,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraEncounterZone : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraEncounterZone;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraEncounterZone[0];
+
 		static constexpr auto TYPE{ kEncounterZone };
 		ExtraEncounterZone() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -122,6 +148,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraEmittanceSource : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraEmittanceSource;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraEmittanceSource[0];
+
 		static constexpr auto TYPE{ kEmittanceSource };
 		ExtraEmittanceSource() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -133,6 +162,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraLocation : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraLocation;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraLocation[0];
+
 		static constexpr auto TYPE{ kLocation };
 		ExtraLocation() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -144,6 +176,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraLocationRefType : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraLocationRefType;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraLocationRefType[0];
+
 		static constexpr auto TYPE{ kLocationRefType };
 		ExtraLocationRefType() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -155,6 +190,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraActivateRef : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraActivateRef;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraActivateRef[0];
+
 		static constexpr auto TYPE{ kActivateRef };
 		ExtraActivateRef() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -169,6 +207,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraActivateRefChildren : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraActivateRefChildren;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraActivateRefChildren[0];
+
 		static constexpr auto TYPE{ kActivateRefChildren };
 		ExtraActivateRefChildren() = delete;
 		/* 0x018 */ std::uint64_t unk18;
@@ -182,6 +223,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraEnableStateChildren : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraEnableStateChildren;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraEnableStateChildren[0];
+
 		static constexpr auto TYPE{ kEnableStateChildren };
 		ExtraEnableStateChildren() = delete;
 		/* 0x018 */ std::uint32_t unk18;
@@ -194,6 +238,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraEditorTestRadius : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraEditorTestRadius;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraEditorTestRadius[0];
+
 		static constexpr auto TYPE{ kEditorTestRadius };
 		ExtraEditorTestRadius() = delete;
 		/* 0x018 */ float unk18;
@@ -205,6 +252,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraEditorFlags : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraEditorFlags;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraEditorFlags[0];
+
 		static constexpr auto TYPE{ kEditorFlags };
 		ExtraEditorFlags() = delete;
 		/* 0x018 */ std::uint32_t unk18;
@@ -216,6 +266,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraOriginalReference : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraOriginalReference;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraOriginalReference[0];
+
 		static constexpr auto TYPE{ kOriginalReference };
 		ExtraOriginalReference() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -228,6 +281,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraReferenceGroup : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraReferenceGroup;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraReferenceGroup[0];
+
 		static constexpr auto TYPE{ kReferenceGroup };
 		ExtraReferenceGroup() = delete;
 		/* 0x018 */ std::uint64_t unk18;
@@ -238,6 +294,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraStartingWorldOrCell : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraStartingWorldOrCell;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraStartingWorldOrCell[0];
+
 		static constexpr auto TYPE{ kStartingWorldOrCell };
 		ExtraStartingWorldOrCell() = delete;
 		/* 0x018 */ std::uint64_t startingWorldOrCell;
@@ -248,6 +307,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraMasterFileCell : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraMasterFileCell;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraMasterFileCell[0];
+
 		static constexpr auto TYPE{ kMasterFileCell };
 		ExtraMasterFileCell() = delete;
 		/* 0x018 */ std::uint64_t unk18;
@@ -258,6 +320,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraMasterLocation : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraMasterLocation;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraMasterLocation[0];
+
 		static constexpr auto TYPE{ kMasterLocation };
 		ExtraMasterLocation() = delete;
 		/* 0x018 */ std::uint64_t unk18;
@@ -268,6 +333,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraAttachedArrows3D : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraAttachedArrows3D;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraAttachedArrows3D[0];
+
 		static constexpr auto TYPE{ kAttachArrows3D };
 		ExtraAttachedArrows3D() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -282,6 +350,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraAttachRef : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraAttachRef;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraAttachRef[0];
+
 		static constexpr auto TYPE{ kAttachRef };
 		ExtraAttachRef() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -294,6 +365,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraAttachRefChildren : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraAttachRefChildren;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraAttachRefChildren[0];
+
 		static constexpr auto TYPE{ kAttachRefChildren };
 		ExtraAttachRefChildren() = delete;
 		/* 0x018 */ std::uint8_t unk18[0x48];
@@ -305,6 +379,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraOpenCloseActivateRef : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraOpenCloseActivateRef;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraOpenCloseActivateRef[0];
+
 		static constexpr auto TYPE{ kOpenCloseActivateRef };
 		ExtraOpenCloseActivateRef() = delete;
 		/* 0x018 */ std::uint32_t unk18;
@@ -316,6 +393,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraForcedLandingMarker : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraForcedLandingMarker;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraForcedLandingMarker[0];
+
 		static constexpr auto TYPE{ kForcedLandingMarker };
 		ExtraForcedLandingMarker() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -328,6 +408,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraForcedTarget : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraForcedTarget;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraForcedTarget[0];
+
 		static constexpr auto TYPE{ kForcedTarget };
 		ExtraForcedTarget() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -340,6 +423,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraTeleportName : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraTeleportName;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraTeleportName[0];
+
 		static constexpr auto TYPE{ kTeleportName };
 		ExtraTeleportName() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -351,6 +437,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraRandomTeleportMarker : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraRandomTeleportMarker;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraRandomTeleportMarker[0];
+
 		static constexpr auto TYPE{ kTeleportMarker };
 		ExtraRandomTeleportMarker() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -362,6 +451,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraRangedDistOverride : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraRangedDistOverride;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraRangedDistOverride[0];
+
 		static constexpr auto TYPE{ kRangeDistOverride };
 		ExtraRangedDistOverride() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -374,6 +466,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraScale : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraScale;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraScale[0];
+
 		static constexpr auto TYPE{ kScale };
 		ExtraScale() = delete;
 		/* 0x08 */ bool CompareImpl(const BSExtraData& rhs) const noexcept(true) override;
@@ -386,6 +481,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraCachedScale : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraCachedScale;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraCachedScale[0];
+
 		static constexpr auto TYPE{ kCachedScale };
 		ExtraCachedScale() = delete;
 		/* 0x018 */ float unk18;
@@ -397,6 +495,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraObjectHealth : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraObjectHealth;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraObjectHealth[0];
+
 		static constexpr auto TYPE{ kObjectHealth };
 		ExtraObjectHealth() = delete;
 		/* 0x018 */ float unk18;
@@ -408,6 +509,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ExtraBadPosition : public BSExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ExtraBadPosition;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraBadPosition[0];
+
 		static constexpr auto TYPE{ kBadPosition };
 		ExtraBadPosition() = delete;
 	};

@@ -6,6 +6,8 @@
 
 #include <CKPE.Common.h>
 #include <EditorAPI/N/NiNode.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -28,6 +30,9 @@ namespace CKPE
 					NiPoint3 Position;
 				};
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowCamera;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowCamera[0];
+
 				enum ViewModeT : std::uint32_t
 				{
 					Perspective = 0,

@@ -10,6 +10,8 @@
 #include <EditorAPI/T/TESReactionForm.h>
 #include <EditorAPI/T/TESObjectREFR.h>
 #include <EditorAPI/B/BSTList.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -84,6 +86,7 @@ namespace CKPE
 					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftFaction;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESFaction;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESFaction[0];
 				public:
 					FACTION_DATA data; // 60

@@ -7,6 +7,8 @@
 #include <EditorAPI/N/NiAVObject.h>
 #include <EditorAPI/N/NiColor.h>
 #include <EditorAPI/N/NiPoint.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -26,6 +28,9 @@ namespace CKPE
 					float _Time;			// 0x15C
 					float _unk2[4];
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiLight;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiLight[0];
+
 					virtual ~NiLight() = default;
 					/* 02 */ virtual NiRTTI* GetRTTI() const noexcept(true) override;
 					/* 14 */ virtual NiLight* IsLight() noexcept(true) override;

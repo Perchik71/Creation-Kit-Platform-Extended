@@ -13,6 +13,8 @@
 #include <EditorAPI/B/BGSLocalizedString.h>
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/B/BSTList.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -89,6 +91,9 @@ namespace CKPE
 					public BGSKeywordForm         // 050
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::EffectSetting;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::EffectSetting[0];
+
 					virtual ~EffectSetting() = default;
 
 					/* 0B0 */ void ClearData() override;

@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESBoundObject.h>
 #include <EditorAPI/T/TESLeveledList.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -31,6 +33,7 @@ namespace CKPE
 					/* 308 */ bool PerformDialogBox(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* pResult) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftLeveledSpell;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESLevSpell;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESLevSpell[0];
 				};
 				static_assert(sizeof(TESLevSpell) == 0xB8);

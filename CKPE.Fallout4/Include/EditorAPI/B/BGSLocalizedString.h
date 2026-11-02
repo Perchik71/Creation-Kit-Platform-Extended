@@ -8,6 +8,7 @@
 #include <cstddef>
 #include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/B/BSFixedString.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE
 {
@@ -21,6 +22,7 @@ namespace CKPE
 			class IBGSLocalizedString
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::IBGSLocalizedString;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::IBGSLocalizedString[0];
 
 				virtual void release(bool free = false) noexcept(true);
@@ -35,6 +37,7 @@ namespace CKPE
 			class BGSLocalizedString : public IBGSLocalizedString
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSLocalizedString;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLocalizedString[0];
 
 				[[nodiscard]] inline bool is_wide() const noexcept(true) { return _Str.is_wide(); }
@@ -54,6 +57,7 @@ namespace CKPE
 			class BGSLocalizedStringDL : public IBGSLocalizedString
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSLocalizedStringDL;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLocalizedStringDL[0];
 
 				[[nodiscard]] inline bool is_wide() const noexcept(true) { return _Str.is_wide(); }
@@ -75,6 +79,7 @@ namespace CKPE
 			class BGSLocalizedStringIL : public BGSLocalizedString
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSLocalizedStringIL;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLocalizedStringIL[0];
 			};
 			static_assert(sizeof(BGSLocalizedStringIL) == 0x10);

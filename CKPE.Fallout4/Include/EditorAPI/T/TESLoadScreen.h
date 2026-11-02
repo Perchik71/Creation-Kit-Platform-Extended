@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESDescription.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -41,6 +43,7 @@ namespace CKPE
 					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftLoadScreen;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESLoadScreen;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESLoadScreen[0];
 				public:
 					std::uint8_t unk50[0x18]; // 50

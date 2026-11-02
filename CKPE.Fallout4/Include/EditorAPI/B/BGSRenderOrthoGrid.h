@@ -8,6 +8,7 @@
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/N/NiNode.h>
 #include <EditorAPI/N/NiColor.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE
 {
@@ -20,6 +21,7 @@ namespace CKPE
 			public:
 				virtual ~BGSRenderOrthoGrid() = default;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderOrthoGrid;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderOrthoGrid[0];
 
 				[[nodiscard]] inline NiAPI::NiNode* GetNode() const noexcept(true) { return _Node; }

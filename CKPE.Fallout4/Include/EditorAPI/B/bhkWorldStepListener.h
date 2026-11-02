@@ -5,12 +5,17 @@
 #pragma once
 
 #include <cstddef>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class bhkIWorldStepListener
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkIWorldStepListener;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkIWorldStepListener[0];
+
 		/* 00 */ virtual ~bhkIWorldStepListener();
 		/* 01 */ virtual void WorldStep_Unknown01();
 		/* 02 */ virtual void WorldStep_Unknown02();
@@ -30,6 +35,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkCharProxyManager : public bhkIWorldStepListener
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCharProxyManager;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCharProxyManager[0];
+
 		/* 0x010 */ std::byte unk010[0x68];
 	};
 	static_assert(sizeof(bhkCharProxyManager) == 0x78);
@@ -38,6 +46,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkCharRigidBodyManager : public bhkIWorldStepListener
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCharRigidBodyManager;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCharRigidBodyManager[0];
+
 		/* 0x010 */ std::byte unk010[0x68];
 	};
 	static_assert(sizeof(bhkCharRigidBodyManager) == 0x78);

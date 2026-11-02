@@ -5,6 +5,8 @@
 #pragma once
 
 #include <cstddef>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -19,6 +21,7 @@ namespace CKPE
 				public:
 					virtual ~TESCondition() = default;
 
+					constexpr static Common::ID RTTI = IDs::RTTI::TESCondition;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESCondition[0];
 
 					/* 0x008 */ void* head;

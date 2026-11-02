@@ -7,6 +7,8 @@
 #include <cstddef>
 #include <cstdint>
 #include <windows.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -22,6 +24,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSEntryPointFunctionData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointFunctionData;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointFunctionData[0];
+
 		enum class Type : std::uint32_t
 		{
 			OneValue = 1,
@@ -69,6 +74,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSEntryPointFunctionDataOneValue : public BGSEntryPointFunctionData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointFunctionDataOneValue;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointFunctionDataOneValue[0];
+
 		/* 0x018 */ float value;
 		/* 0x01C */ std::uint8_t pad1C[0x4];
 	};
@@ -78,6 +86,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSEntryPointFunctionDataTwoValue : public BGSEntryPointFunctionData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointFunctionDataTwoValue;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointFunctionDataTwoValue[0];
+
 		/* 0x018 */ float values[2];
 	};
 	static_assert(sizeof(BGSEntryPointFunctionDataTwoValue) == 0x20);
@@ -86,6 +97,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSEntryPointFunctionDataAVAndValue : public BGSEntryPointFunctionData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointFunctionDataAVAndValue;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointFunctionDataAVAndValue[0];
+
 		/* 0x018 */ ActorValueInfo* actorValue;
 		/* 0x020 */ float value;
 		/* 0x024 */ std::uint8_t pad24[0x4];
@@ -96,6 +110,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSEntryPointFunctionDataLeveledList : public BGSEntryPointFunctionData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointFunctionDataLeveledList;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointFunctionDataLeveledList[0];
+
 		/* 0x018 */ TESLevItem* leveledList;
 	};
 	static_assert(sizeof(BGSEntryPointFunctionDataLeveledList) == 0x20);
@@ -104,6 +121,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSEntryPointFunctionDataSpellItem : public BGSEntryPointFunctionData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointFunctionDataSpellItem;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointFunctionDataSpellItem[0];
+
 		/* 0x018 */ SpellItem* spell;
 	};
 	static_assert(sizeof(BGSEntryPointFunctionDataSpellItem) == 0x20);
@@ -112,6 +132,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSEntryPointFunctionDataBooleanGraphVariable : public BGSEntryPointFunctionData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointFunctionDataBooleanGraphVariable;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointFunctionDataBooleanGraphVariable[0];
+
 		/* 0x018 */ char* variableName;
 		/* 0x020 */ std::uint8_t unk20[0x8];
 	};
@@ -121,6 +144,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSEntryPointFunctionDataText : public BGSEntryPointFunctionData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointFunctionDataText;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointFunctionDataText[0];
+
 		/* 0x018 */ std::uint8_t unk18[0x10];
 	};
 	static_assert(sizeof(BGSEntryPointFunctionDataText) == 0x28);
@@ -128,6 +154,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSEntryPointFunctionDataActivateChoice : public BGSEntryPointFunctionData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointFunctionDataActivateChoice;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointFunctionDataActivateChoice[0];
+
 		/* 0x018 */ std::uint8_t unk18[0x10];
 		/* 0x028 */ SpellItem* spell;
 		/* 0x030 */ std::uint16_t flags;

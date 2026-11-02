@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -16,6 +18,9 @@ namespace CKPE
 			class BGSBipedObjectForm : public BaseFormComponent
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSBipedObjectForm;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSBipedObjectForm[0];
+
 				virtual ~BGSBipedObjectForm() = default;
 
 				std::uint32_t unk08;		// 08

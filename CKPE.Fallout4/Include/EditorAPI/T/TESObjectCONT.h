@@ -16,6 +16,8 @@
 #include <EditorAPI/B/BGSForcedLocRefType.h>
 #include <EditorAPI/B/BGSPropertySheet.h>
 #include <EditorAPI/B/BGSNativeTerminalForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -69,6 +71,7 @@ namespace CKPE
 					/* 498 */ void CollectInventoryItems(TESContainer* Inventory, std::uint16_t Level, const ContainerItemExtra* ExtraData) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftContainer;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectCONT;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectCONT[0];
 				public:
 					CONT_DATA data; // 1E9

@@ -10,6 +10,8 @@
 #include <EditorAPI/H/hkpCollisionFilter.h>
 #include <EditorAPI/H/hkpAction.h>
 #include <EditorAPI/H/hkReflectionTypes.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -105,6 +107,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpWorldObject : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpWorldObject;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpWorldObject[0];
+
 		virtual void sub_04();
 		virtual void sub_05();
 		// The motion state embedded in the object (the rigid body's at 0x170, the phantom's at 0xF0)
@@ -181,6 +186,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpRigidBody : public hkpEntity
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpRigidBody;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpRigidBody[0];
+
 		virtual void sub_08();
 	};
 	static_assert(sizeof(hkpRigidBody) == 0x2D0);
@@ -188,6 +196,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpPhantom : public hkpWorldObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpPhantom;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpPhantom[0];
+
 		virtual void sub_07();
 		virtual void sub_08();
 		virtual void sub_09();
@@ -224,6 +235,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpCachingShapePhantom : public hkpShapePhantom
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpCachingShapePhantom;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpCachingShapePhantom[0];
+
 		/* 0x1A0 */ std::uint8_t unk1A0[0x20];
 	};
 	static_assert(sizeof(hkpCachingShapePhantom) == 0x1C0);
@@ -231,6 +245,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpSimpleShapePhantom : public hkpShapePhantom
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSimpleShapePhantom;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSimpleShapePhantom[0];
+
 		/* 0x1A0 */ std::uint8_t unk1A0[0x20];
 	};
 	static_assert(sizeof(hkpSimpleShapePhantom) == 0x1C0);
@@ -238,6 +255,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpConstraintOwner : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpConstraintOwner;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpConstraintOwner[0];
+
 		virtual void sub_04();
 		virtual void sub_05();
 		virtual void sub_06();
@@ -249,6 +269,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpConstraintInstance : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpConstraintInstance;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpConstraintInstance[0];
+
 		virtual void sub_04();
 		virtual void sub_05();
 		virtual void sub_06();
@@ -277,6 +300,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpConstraintChainInstance : public hkpConstraintInstance
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpConstraintChainInstance;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpConstraintChainInstance[0];
+
 		/* 0x070 */ std::uint8_t unk070[0x20];
 	};
 	static_assert(sizeof(hkpConstraintChainInstance) == 0x90);
@@ -284,6 +310,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpSimulationIsland : public hkpConstraintOwner
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSimulationIsland;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSimulationIsland[0];
+
 		/* 0x020 */ std::uint8_t unk020[0x98];
 	};
 	static_assert(sizeof(hkpSimulationIsland) == 0xB8);
@@ -291,6 +320,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpWorld : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpWorld;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpWorld[0];
+
 		/* 0x010 */ std::uint8_t unk010[0x430];
 	};
 	static_assert(sizeof(hkpWorld) == 0x440);
@@ -372,6 +404,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpPhysicsSystem : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpPhysicsSystem;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpPhysicsSystem[0];
+
 		virtual void sub_04();
 		virtual void sub_05();
 		/* 0x010 */ hkArray<hkpRigidBody*> m_rigidBodies;
@@ -390,6 +425,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpPhysicsSystemWithContacts : public hkpPhysicsSystem
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpPhysicsSystemWithContacts;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpPhysicsSystemWithContacts[0];
+
 		/* 0x068 */ std::uint8_t unk068[0x10];
 	};
 	static_assert(sizeof(hkpPhysicsSystemWithContacts) == 0x78);
@@ -397,6 +435,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpPhysicsData : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpPhysicsData;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpPhysicsData[0];
+
 		/* 0x010 */ std::uint8_t unk010[0x18];
 	};
 	static_assert(sizeof(hkpPhysicsData) == 0x28);
@@ -404,6 +445,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpWorldExtension : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpWorldExtension;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpWorldExtension[0];
+
 		virtual void sub_04();
 		virtual void sub_05();
 		/* 0x010 */ std::uint8_t unk010[0x10];
@@ -422,6 +466,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpDefaultWorldMaintenanceMgr : public hkpWorldMaintenanceMgr
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpDefaultWorldMaintenanceMgr;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpDefaultWorldMaintenanceMgr[0];
+
 		/* 0x010 */ std::uint8_t unk010[8];
 	};
 	static_assert(sizeof(hkpDefaultWorldMaintenanceMgr) == 0x18);

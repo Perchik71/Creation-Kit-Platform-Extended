@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/T/TESIcon.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -16,6 +18,9 @@ namespace CKPE
 			{
 				TESIcon icon;
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSMessageIcon;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMessageIcon[0];
+
 				virtual ~BGSMessageIcon() = default;
 
 				[[nodiscard]] inline TESIcon& GetIcon() noexcept(true) { return icon; }

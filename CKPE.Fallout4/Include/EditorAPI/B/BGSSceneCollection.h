@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -36,6 +38,7 @@ namespace CKPE
 					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftSceneCollection;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSSceneCollection;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSceneCollection[0];
 				public:
 					std::uint32_t unk28; // 28

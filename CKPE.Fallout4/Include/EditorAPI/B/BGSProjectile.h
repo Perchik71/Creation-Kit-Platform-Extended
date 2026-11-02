@@ -10,6 +10,8 @@
 #include <EditorAPI/T/TESModel.h>
 #include <EditorAPI/B/BGSPreloadable.h>
 #include <EditorAPI/B/BGSDestructibleObjectForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -88,6 +90,7 @@ namespace CKPE
 					/* 408 */ void UnClone3D(void* pRequester) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftProjectile;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSProjectile;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProjectile[0];
 				public:
 					BGSProjectileData data; // F8

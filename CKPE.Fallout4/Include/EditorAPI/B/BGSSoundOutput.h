@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/F/FormInterfaces.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -43,6 +45,7 @@ namespace CKPE
 					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftSoundOutput;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSSoundOutput;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSoundOutput[0];
 				public:
 					DynamicAttenuationCharacteristics* attenuation; // 30

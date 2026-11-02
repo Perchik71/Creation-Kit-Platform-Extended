@@ -5,16 +5,26 @@
 #pragma once
 
 #include <EditorAPI/H/hkSceneGeometry.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class hkcdConvexCellsCollection :
-		public hkcdPlanarGeometryPrimitivesCollection28 {};
+		public hkcdPlanarGeometryPrimitivesCollection28
+		{
+		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkcdConvexCellsCollection;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdConvexCellsCollection[0];
+		};
 	static_assert(sizeof(hkcdConvexCellsCollection) == 0xD90);
 
 	class hkcdConvexCellsTree2D : public hkcdPlanarEntity
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkcdConvexCellsTree2D;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdConvexCellsTree2D[0];
+
 		/* 0x018 */ std::byte pad018[0x18];
 	};
 	static_assert(sizeof(hkcdConvexCellsTree2D) == 0x30);
@@ -22,6 +32,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkcdConvexCellsTree3D : public hkcdPlanarEntity
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkcdConvexCellsTree3D;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdConvexCellsTree3D[0];
+
 		/* 0x018 */ std::byte pad018[0x30];
 	};
 	static_assert(sizeof(hkcdConvexCellsTree3D) == 0x48);
@@ -32,23 +45,44 @@ namespace CKPE::Fallout4::EditorAPI
 		class ShapeInterface
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkcdGskBase__ShapeInterface;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdGskBase__ShapeInterface[0];
+
 			virtual ~ShapeInterface();
 			virtual void ShapeInterface_Unk01();
 		};
 		static_assert(sizeof(ShapeInterface) == 0x8);
 	};
 
-	class hkcdGsk_Vector4ShapeInterface : public hkcdGskBase::ShapeInterface {};
+	class hkcdGsk_Vector4ShapeInterface : public hkcdGskBase::ShapeInterface
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkcdGsk_Vector4ShapeInterface;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdGsk_Vector4ShapeInterface[0];
+	};
 	static_assert(sizeof(hkcdGsk_Vector4ShapeInterface) == 0x8);
 
 	class hkcdVertexGeometry : public hkcdPlanarEntity
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkcdVertexGeometry;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdVertexGeometry[0];
+
 		class VPolygonCollectionBase :
-			public hkcdPlanarGeometryPrimitivesCollection28 {};
+			public hkcdPlanarGeometryPrimitivesCollection28
+			{
+			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::hkcdVertexGeometry__VPolygonCollectionBase;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdVertexGeometry__VPolygonCollectionBase[0];
+			};
 		static_assert(sizeof(VPolygonCollectionBase) == 0xD90);
 
-		class VPolygonCollection : public VPolygonCollectionBase {};
+		class VPolygonCollection : public VPolygonCollectionBase
+		{
+		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkcdVertexGeometry__VPolygonCollection;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdVertexGeometry__VPolygonCollection[0];
+		};
 		static_assert(sizeof(VPolygonCollection) == 0xD90);
 
 		/* 0x018 */ std::byte pad018[0xDC8];

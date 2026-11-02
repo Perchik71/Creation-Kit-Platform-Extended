@@ -6,6 +6,8 @@
 
 #include <EditorAPI/B/BGSLocalizedString.h>
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -28,6 +30,7 @@ namespace CKPE
 				/* 88 */ void UpdateDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 				/* 90 */ void CleanupComponentDialogBox(HWND hDialogBox) noexcept(true) override;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::TESFullName;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TESFullName[0];
 
 				[[nodiscard]] virtual std::uint32_t GetFullNameLength() const noexcept(true);

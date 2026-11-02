@@ -3,6 +3,8 @@
 #pragma once
 
 #include "BSGeometry.h"
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -13,6 +15,9 @@ namespace CKPE
 			class BSTriShape : public BSGeometry
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSTriShape;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSTriShape[0];
+
 				virtual ~BSTriShape() = default;
 
 				std::uint16_t m_TriangleCount;

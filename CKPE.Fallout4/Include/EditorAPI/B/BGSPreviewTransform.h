@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -55,6 +57,7 @@ namespace CKPE
 				/* 90 */ void CleanupComponentDialogBox(HWND hDialogBox) noexcept(true) override;
 				/* 98 */ void CollectComponentResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSPreviewTransform;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPreviewTransform[0];
 			public:
 				[[nodiscard]] inline Forms::BGSTransform* GetTransform() const noexcept(true)

@@ -219,6 +219,9 @@
     <ClInclude Include="Include\CKPE.Common.RTTI.h">
       <Filter>API</Filter>
     </ClInclude>
+    <ClInclude Include="Include\CKPE.Common.RTTICast.h">
+      <Filter>API</Filter>
+    </ClInclude>
     <ClInclude Include="Include\CKPE.Common.UIBaseWindow.h">
       <Filter>UI</Filter>
     </ClInclude>

@@ -16,6 +16,8 @@
 #include <EditorAPI/B/BGSPickupPutdownSounds.h>
 #include <EditorAPI/B/BGSKeywordForm.h>
 #include <EditorAPI/B/BGSFeaturedItemMessage.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -57,6 +59,7 @@ namespace CKPE
 					/* 338 */ void OnDialogFormSaved(HWND hDialogBox, TESForm* SavedForm) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftMiscItem;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectMISC;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectMISC[0];
 
 					virtual void SaveImpl() noexcept(true) { return; } // 154

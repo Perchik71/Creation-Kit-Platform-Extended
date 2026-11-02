@@ -7,6 +7,8 @@
 #include <EditorAPI/B/BGSTypedFormValuePair.h>
 #include <cstdint>
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -55,6 +57,7 @@ namespace CKPE
 				/* 90 */ void CleanupComponentDialogBox(HWND hDialogBox) noexcept(true) override;
 				/* 98 */ void CollectComponentResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::TESLeveledList;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TESLeveledList[0];
 
 				virtual std::int8_t GetChanceNone() const noexcept(true) { return 0; } // 21 - RVA 0x8DE600

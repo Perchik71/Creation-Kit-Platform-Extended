@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/B/BSString.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -32,6 +34,7 @@ namespace CKPE
 					/* 2A8 */ [[nodiscard]] bool CanCheckIn(const CheckInFormList* Forms) const noexcept(true) override;
 					/* 2B0 */ void BuildCheckInDependencyMessage(const CheckInFormList* Forms, BSString& Message) const noexcept(true) override;
 
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSReferenceGroup;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSReferenceGroup[0];
 				public:
 					BSString name; // 28 - NNAM

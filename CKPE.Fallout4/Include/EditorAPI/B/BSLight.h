@@ -9,6 +9,8 @@
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/N/NiRefObject.h>
 #include <EditorAPI/N/NiPointer.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -28,6 +30,7 @@ namespace CKPE
 			class BSLight : public NiAPI::NiRefObject
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLight;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLight[0];
 
 				enum class Shape : std::uint32_t

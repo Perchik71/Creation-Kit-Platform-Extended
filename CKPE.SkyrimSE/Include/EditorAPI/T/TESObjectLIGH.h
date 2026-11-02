@@ -14,6 +14,8 @@
 #include <EditorAPI/B/BGSEquipType.h>
 #include <EditorAPI/T/TESBoundAnimObject.h>
 #include <EditorAPI/B/BGSSounds.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -36,6 +38,9 @@ namespace CKPE
 					public BGSEquipType
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectLIGH;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectLIGH[0];
+
 					enum class TES_LIGHT_FLAGS
 					{
 						kNone				= 0,

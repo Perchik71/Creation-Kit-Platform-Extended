@@ -5,6 +5,8 @@
 #include <EditorAPI/T/TESWaterForm.h>
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/B/BSTriShape.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -15,6 +17,9 @@ namespace CKPE
 			class TESWaterObject
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESWaterObject;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESWaterObject[0];
+
 				char _pad0[0x20];
 				BSTriShape* m_TriShape;
 				char _pad1[0x8];

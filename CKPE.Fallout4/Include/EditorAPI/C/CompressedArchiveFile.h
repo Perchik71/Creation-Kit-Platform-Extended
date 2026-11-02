@@ -6,12 +6,15 @@
 
 #include <cstddef>
 #include <EditorAPI/A/ArchiveFile.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class CompressedArchiveFile : public ArchiveFile
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::CompressedArchiveFile;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::CompressedArchiveFile[0];
 
 		virtual ~CompressedArchiveFile() override;

@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BSGeometry.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -19,6 +21,9 @@ namespace CKPE
 				std::uint16_t Triangles;	// 158
 				std::uint16_t Vertices;		// 15A
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLines;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLines[0];
+
 				[[nodiscard]] inline std::uint16_t GetTriangles() const noexcept(true) { return Triangles; }
 				[[nodiscard]] inline std::uint16_t GetVertices() const noexcept(true) { return Vertices; }
 			};

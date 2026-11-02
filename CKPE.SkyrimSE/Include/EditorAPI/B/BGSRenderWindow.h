@@ -14,6 +14,8 @@
 #include <EditorAPI/B/BGSRenderWindowCamera.h>
 #include <EditorAPI/B/BSPointerHandleManager.h>
 #include <EditorAPI/B/BSTriShape.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -26,6 +28,9 @@ namespace CKPE
 			class BGSRenderWindow
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindow;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindow[0];
+
 				virtual ~BGSRenderWindow() = default;
 				virtual void Refresh(const std::uint32_t& flag);		// flag always equal 2
 

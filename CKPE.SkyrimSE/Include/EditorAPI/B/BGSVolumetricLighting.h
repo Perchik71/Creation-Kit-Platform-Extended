@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,9 @@ namespace CKPE
 					public TESForm	// 00
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSVolumetricLighting;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSVolumetricLighting[0];
+
 					virtual ~BGSVolumetricLighting() = default;
 
 					/* 078 */ void ClearData() noexcept(true) override;

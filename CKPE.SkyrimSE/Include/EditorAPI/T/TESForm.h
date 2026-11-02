@@ -11,6 +11,8 @@
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/N/NiFlags.h>
 #include <EditorAPI/T/TESFile.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -29,6 +31,9 @@ namespace CKPE
 				class TESForm : public BaseFormComponent
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESForm;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESForm[0];
+
 					enum FormType : std::uint8_t
 					{
 						ftReserved000 = 0,				//	NONE

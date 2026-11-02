@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESModel.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -21,6 +23,7 @@ namespace CKPE
 				virtual ~TESModelTri() = default;
 				/* 70 */ bool Perform(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* Result) override;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::TESModelTri;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TESModelTri[0];
 			};
 			static_assert(sizeof(TESModelTri) == 0x38);

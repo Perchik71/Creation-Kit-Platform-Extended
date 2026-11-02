@@ -11,6 +11,8 @@
 #include <EditorAPI/B/BGSPropertySheet.h>
 #include <EditorAPI/B/BGSForcedLocRefType.h>
 #include <EditorAPI/F/FormInterfaces.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -63,6 +65,7 @@ namespace CKPE
 					/* 480 */ void Clone3D(TESObjectREFR* pRequester, NiAPI::NiPointer<NiAPI::NiAVObject>* pObj3D) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftStatic;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectSTAT;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectSTAT[0];
 				public:
 					std::uint8_t pad118[0x8]; // 118

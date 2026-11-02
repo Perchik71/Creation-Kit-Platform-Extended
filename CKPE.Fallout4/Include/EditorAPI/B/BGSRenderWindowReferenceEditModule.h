@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/N/NiPoint.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE
 {
@@ -20,6 +21,7 @@ namespace CKPE
 			{
 			public:
 				virtual ~BGSRenderWindowEditModule() = default;
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowEditModule;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowEditModule[0];
 
 				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
@@ -123,6 +125,9 @@ private:
 			class BGSRenderWindowReferenceEditModule : public BGSRenderWindowEditModule
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowReferenceEditModule;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowReferenceEditModule[0];
+
 				virtual ~BGSRenderWindowReferenceEditModule() = default;
 				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
 				{

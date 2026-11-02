@@ -6,6 +6,8 @@
 
 #include <EditorAPI/B/BSTriShape.h>
 #include <EditorAPI/B/BSSpinLock.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 struct ID3D11Buffer;
 
@@ -33,6 +35,7 @@ namespace CKPE
 				/* 1E */ virtual void SaveBinary(NiAPI::NiStream& Stream) noexcept(true) override;
 				/* 1F */ virtual bool IsEqual(NiAPI::NiObject* Object) noexcept(true) override;
 				/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
+				constexpr static Common::ID RTTI = IDs::RTTI::BSDynamicTriShape;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BSDynamicTriShape[0];
 
 				struct DynamicVertexBuffer

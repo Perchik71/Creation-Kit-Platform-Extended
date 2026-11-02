@@ -10,6 +10,8 @@
 #include <EditorAPI/B/BGSKeywordForm.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -48,6 +50,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftLocation;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSLocation;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLocation[0];
 				public:
 					BGSLocation* parentLoc; // 60

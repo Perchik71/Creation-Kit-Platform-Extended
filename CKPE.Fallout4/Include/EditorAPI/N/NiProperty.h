@@ -8,6 +8,8 @@
 
 #include <CKPE.Utils.h>
 #include <EditorAPI/N/NiObjectNET.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -92,6 +94,9 @@ namespace CKPE
 				class NiShadeProperty : public NiProperty
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiShadeProperty;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiShadeProperty[0];
+
 					[[nodiscard]] std::uint32_t GetType() const noexcept(true) override;
 				protected:
 					/* 2C */ virtual bool Unk2C(BSGeometry* Geometry) noexcept(true);
@@ -101,6 +106,9 @@ namespace CKPE
 				class NiAlphaProperty : public Templates::NiAlphaPropertyT<NiProperty>
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiAlphaProperty;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiAlphaProperty[0];
+
 					[[nodiscard]] std::uint32_t GetType() const noexcept(true) override;
 				};
 				static_assert(sizeof(NiAlphaProperty) == 0x30);

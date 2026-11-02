@@ -8,6 +8,8 @@
 #include <EditorAPI/B/TESImageSpaceModifiableForm.h>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESModel.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -24,6 +26,9 @@ namespace CKPE
 					public TESImageSpaceModifiableForm	// 58
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSCameraShot;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSCameraShot[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftCameraShot;
 
 					virtual ~BGSCameraShot() = default;

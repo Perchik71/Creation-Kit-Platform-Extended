@@ -6,6 +6,8 @@
 
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESObjectREFR.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -21,6 +23,7 @@ namespace CKPE
 				{
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftLayer;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSLayer;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLayer[0];
 				private:
 					BGSLayer* _parent;

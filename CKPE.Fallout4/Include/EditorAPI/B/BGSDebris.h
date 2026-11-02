@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/B/BGSPreloadable.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -39,6 +41,7 @@ namespace CKPE
 					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftDebris;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSDebris;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSDebris[0];
 				public:
 					BSSimpleList<BGSDebrisData*> dataList; // 30 - BSSimpleList<BGSDebrisData*>

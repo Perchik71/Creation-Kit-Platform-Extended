@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <EditorAPI/N/NiObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -30,6 +32,7 @@ namespace CKPE
 					/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
 					/* 29 */ virtual void GetAdditionalViewerStrings(void* Strings) noexcept(true) override;
 
+					constexpr static Common::ID RTTI = IDs::RTTI::NiCollisionObject;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::NiCollisionObject[0];
 
 					/* 2A */ virtual void SetTarget(NiAVObject* Target);

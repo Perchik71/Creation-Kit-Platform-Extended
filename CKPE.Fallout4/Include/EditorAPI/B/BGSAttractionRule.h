@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -30,6 +32,9 @@ namespace CKPE
 					public TESForm   // 000
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSAttractionRule;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAttractionRule[0];
+
 					virtual ~BGSAttractionRule() = default;
 
 					/* 0A8 */ void InitializeData() override;

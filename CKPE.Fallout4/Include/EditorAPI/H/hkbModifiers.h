@@ -7,6 +7,8 @@
 #include <EditorAPI/H/hkBaseObject.h>
 #include <EditorAPI/H/hkBaseTypes.h>
 #include <EditorAPI/H/hkbBehaviorGraph.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -86,6 +88,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbAlignBoneModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbAlignBoneModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbAlignBoneModifier[0];
+
 		enum class AlignModeABAM : std::int32_t
 		{
 			ALIGN_MODE_CHARACTER_WORLD_FROM_MODEL = 0,
@@ -130,6 +135,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbAttachmentModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbAttachmentModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbAttachmentModifier[0];
+
 		/* 0x058 */ hkbEventProperty m_sendToAttacherOnAttach;
 		/* 0x068 */ hkbEventProperty m_sendToAttacheeOnAttach;
 		/* 0x078 */ hkbEventProperty m_sendToAttacherOnDetach;
@@ -162,6 +170,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbAttributeModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbAttributeModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbAttributeModifier[0];
+
 		/* 0x058 */ hkArray<hkbAttributeModifierAssignment> m_assignments;
 	};
 	static_assert(sizeof(hkbAttributeModifier) == 0x68);
@@ -170,6 +181,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbCharacterControllerModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbCharacterControllerModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbCharacterControllerModifier[0];
+
 		enum class InitialVelocityCoordinates : std::int32_t
 		{
 			INITIAL_VELOCITY_IN_WORLD_COORDINATES = 0,
@@ -211,6 +225,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbCombineTransformsModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbCombineTransformsModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbCombineTransformsModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkVector4f m_translationOut;
 		/* 0x070 */ hkQuaternionf m_rotationOut;
@@ -237,6 +254,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbComputeDirectionModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbComputeDirectionModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbComputeDirectionModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkVector4f m_pointIn;
 		/* 0x070 */ hkVector4f m_pointOut;
@@ -267,6 +287,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbComputeRotationFromAxisAngleModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbComputeRotationFromAxisAngleModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbComputeRotationFromAxisAngleModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkQuaternionf m_rotationOut;
 		/* 0x070 */ hkVector4f m_axis;
@@ -281,6 +304,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbComputeRotationToTargetModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbComputeRotationToTargetModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbComputeRotationToTargetModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkQuaternionf m_rotationOut;
 		/* 0x070 */ hkVector4f m_targetPosition;
@@ -303,6 +329,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbComputeWorldFromModelModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbComputeWorldFromModelModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbComputeWorldFromModelModifier[0];
+
 		/* 0x058 */ std::int16_t m_poseMatchingRootBoneIndex;
 		/* 0x05A */ std::int16_t m_poseMatchingOtherBoneIndex;
 		/* 0x05C */ std::int16_t m_poseMatchingAnotherBoneIndex;
@@ -316,6 +345,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbDampingModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbDampingModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbDampingModifier[0];
+
 		/* 0x058 */ float m_kP;
 		/* 0x05C */ float m_kI;
 		/* 0x060 */ float m_kD;
@@ -350,6 +382,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbModifierWrapper : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbModifierWrapper;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbModifierWrapper[0];
+
 		/* 0x058 */ hkbModifier* m_modifier;
 	};
 	static_assert(sizeof(hkbModifierWrapper) == 0x60);
@@ -358,6 +393,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbDelayedModifier : public hkbModifierWrapper
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbDelayedModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbDelayedModifier[0];
+
 		/* 0x060 */ float m_delaySeconds;
 		/* 0x064 */ float m_durationSeconds;
 		/* 0x068 */ float m_secondsElapsed;
@@ -373,6 +411,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbDetectCloseToGroundModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbDetectCloseToGroundModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbDetectCloseToGroundModifier[0];
+
 		/* 0x058 */ hkbEventProperty m_closeToGroundEvent;
 		/* 0x068 */ float m_closeToGroundHeight;
 		/* 0x06C */ float m_raycastDistanceDown;
@@ -394,6 +435,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbEvaluateExpressionModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbEvaluateExpressionModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbEvaluateExpressionModifier[0];
+
 		/* 0x058 */ hkbExpressionDataArray* m_expressions;
 		/* 0x060 */ void* m_compiledExpressionSet;
 		/* 0x068 */ hkArray<void> m_internalExpressionsData;
@@ -406,6 +450,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbEvaluateHandleModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbEvaluateHandleModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbEvaluateHandleModifier[0];
+
 		enum class HandleChangeMode : std::int32_t
 		{
 			HANDLE_CHANGE_MODE_ABRUPT = 0,
@@ -445,6 +492,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbEventDrivenModifier : public hkbModifierWrapper
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbEventDrivenModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbEventDrivenModifier[0];
+
 		/* 0x060 */ std::int32_t m_activateEventId;
 		/* 0x064 */ std::int32_t m_deactivateEventId;
 		/* 0x068 */ hkBool m_activeByDefault;
@@ -460,6 +510,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbEventsFromRangeModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbEventsFromRangeModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbEventsFromRangeModifier[0];
+
 		/* 0x058 */ float m_inputValue;
 		/* 0x05C */ float m_lowerBound;
 		/* 0x060 */ hkbEventRangeDataArray* m_eventRanges;
@@ -474,6 +527,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbExtractRagdollPoseModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbExtractRagdollPoseModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbExtractRagdollPoseModifier[0];
+
 		/* 0x058 */ std::int16_t m_poseMatchingBone0;
 		/* 0x05A */ std::int16_t m_poseMatchingBone1;
 		/* 0x05C */ std::int16_t m_poseMatchingBone2;
@@ -489,6 +545,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbFootIkControlsModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbFootIkControlsModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbFootIkControlsModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkbFootIkControlData m_controlData;
 		/* 0x0B0 */ hkArray<hkbFootIkControlsModifierLeg> m_legs;
@@ -504,6 +563,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbFootIkModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbFootIkModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbFootIkModifier[0];
+
 		enum class AlignMode : std::int32_t
 		{
 			ALIGN_MODE_FORWARD_RIGHT = 0,
@@ -558,6 +620,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbGetHandleOnBoneModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbGetHandleOnBoneModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbGetHandleOnBoneModifier[0];
+
 		/* 0x058 */ hkbHandle* m_handleOut;
 		/* 0x060 */ hkStringPtr m_localFrameName;
 		/* 0x068 */ std::int16_t m_ragdollBoneIndex;
@@ -573,6 +638,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbGetUpModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbGetUpModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbGetUpModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkVector4f m_groundNormal;
 		/* 0x070 */ float m_duration;
@@ -600,6 +668,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbGetWorldFromModelModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbGetWorldFromModelModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbGetWorldFromModelModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkVector4f m_translationOut;
 		/* 0x070 */ hkQuaternionf m_rotationOut;
@@ -611,6 +682,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbGravityModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbGravityModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbGravityModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkVector4f m_initialVelocityInMS;
 		/* 0x070 */ float m_gravityConstant;
@@ -628,6 +702,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbHandIkControlsModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbHandIkControlsModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbHandIkControlsModifier[0];
+
 		/* 0x058 */ hkArray<hkbHandIkControlsModifierHand> m_hands;
 	};
 	static_assert(sizeof(hkbHandIkControlsModifier) == 0x68);
@@ -636,6 +713,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbHandIkModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbHandIkModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbHandIkModifier[0];
+
 		/* 0x058 */ hkArray<hkbHandIkModifierHand> m_hands;
 		/* 0x068 */ std::int8_t m_fadeInOutCurve;
 		/* 0x069 */ std::uint8_t pad069[0x7];
@@ -649,6 +729,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbJigglerModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbJigglerModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbJigglerModifier[0];
+
 		enum class JiggleCoordinates : std::int32_t
 		{
 			JIGGLE_IN_WORLD_COORDINATES = 0,
@@ -675,6 +758,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbKeyframeBonesModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbKeyframeBonesModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbKeyframeBonesModifier[0];
+
 		/* 0x058 */ hkArray<hkbKeyframeBonesModifierKeyframeInfo> m_keyframeInfo;
 		/* 0x068 */ hkbBoneIndexArray* m_keyframedBonesList;
 	};
@@ -685,6 +771,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbLookAtModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbLookAtModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbLookAtModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkVector4f m_targetWS;
 		/* 0x070 */ hkVector4f m_headForwardLS;
@@ -734,6 +823,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbMirrorModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbMirrorModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbMirrorModifier[0];
+
 		/* 0x058 */ hkBool m_isAdditive;
 		/* 0x059 */ std::uint8_t pad059[0x7];
 	};
@@ -743,6 +835,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbModifierList : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbModifierList;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbModifierList[0];
+
 		/* 0x058 */ hkArray<hkbModifier*> m_modifiers;
 	};
 	static_assert(sizeof(hkbModifierList) == 0x68);
@@ -751,6 +846,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbMoveBoneAttachmentModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbMoveBoneAttachmentModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbMoveBoneAttachmentModifier[0];
+
 		/* 0x058 */ std::int32_t m_activateEventId;
 		/* 0x05C */ std::uint8_t pad05C[0x4];
 		/* 0x060 */ hkStringPtr m_attachment;
@@ -764,6 +862,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbMoveCharacterModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbMoveCharacterModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbMoveCharacterModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkVector4f m_offsetPerSecondMS;
 		/* 0x070 */ float m_timeSinceLastModify;
@@ -776,6 +877,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbPoweredRagdollControlsModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbPoweredRagdollControlsModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbPoweredRagdollControlsModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkbPoweredRagdollControlData m_controlData;
 		/* 0x080 */ hkbBoneIndexArray* m_bones;
@@ -794,6 +898,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbRigidBodyRagdollControlsModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbRigidBodyRagdollControlsModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbRigidBodyRagdollControlsModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkbRigidBodyRagdollControlData m_controlData;
 		/* 0x0A0 */ hkbBoneIndexArray* m_bones;
@@ -808,6 +915,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbRotateCharacterModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbRotateCharacterModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbRotateCharacterModifier[0];
+
 		/* 0x058 */ float m_degreesPerSecond;
 		/* 0x05C */ float m_speedMultiplier;
 		/* 0x060 */ hkVector4f m_axisOfRotation;
@@ -823,6 +933,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbSenseHandleModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbSenseHandleModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbSenseHandleModifier[0];
+
 		enum class SensingMode : std::int32_t
 		{
 			SENSE_IN_NEARBY_RIGID_BODIES = 0,
@@ -882,6 +995,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbSequence : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbSequence;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbSequence[0];
+
 		/* 0x058 */ hkArray<hkbEventSequencedData*> m_eventSequencedData;
 		/* 0x068 */ hkArray<hkbRealVariableSequencedData*> m_realVariableSequencedData;
 		/* 0x078 */ hkArray<hkbBoolVariableSequencedData*> m_boolVariableSequencedData;
@@ -919,6 +1035,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbSetWorldFromModelModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbSetWorldFromModelModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbSetWorldFromModelModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkVector4f m_translation;
 		/* 0x070 */ hkQuaternionf m_rotation;
@@ -935,6 +1054,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbStateDependentModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbStateDependentModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbStateDependentModifier[0];
+
 		/* 0x058 */ hkBool m_applyModifierDuringTransition;
 		/* 0x059 */ std::uint8_t pad059[0x7];
 		/* 0x060 */ hkArray<std::int32_t> m_stateIds;
@@ -953,6 +1075,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbTimerModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbTimerModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbTimerModifier[0];
+
 		/* 0x058 */ float m_alarmTimeSeconds;
 		/* 0x05C */ std::uint8_t pad05C[0x4];
 		/* 0x060 */ hkbEventProperty m_alarmEvent;
@@ -967,6 +1092,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbTransformVectorModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbTransformVectorModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbTransformVectorModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkQuaternionf m_rotation;
 		/* 0x070 */ hkVector4f m_translation;
@@ -991,6 +1119,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbTwistModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbTwistModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbTwistModifier[0];
+
 		enum class SetAngleMethod : std::int32_t
 		{
 			LINEAR = 0,

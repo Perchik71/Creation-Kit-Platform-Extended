@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/B/BGSStoryManagerTreeForm.h>
 #include <EditorAPI/T/TESCondition.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -33,6 +35,7 @@ namespace CKPE
 					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftReserved000;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSStoryManagerNodeBase;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSStoryManagerNodeBase[0];
 
 					virtual void SaveNodeData() noexcept(true) { return; } // 128

@@ -9,6 +9,8 @@
 #include <EditorAPI/N/NiSourceTexture.h>
 #include <EditorAPI/B/BSShaderMaterial.h>
 #include <EditorAPI/T/TextureAddressModes.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -21,6 +23,9 @@ namespace CKPE
 			class BSEffectShaderMaterial : public BSShaderMaterial
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSEffectShaderMaterial;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSEffectShaderMaterial[0];
+
 				virtual ~BSEffectShaderMaterial() = default;
 
 				[[nodiscard]] Type GetType() const noexcept(true) override { return Type::kEffect; }

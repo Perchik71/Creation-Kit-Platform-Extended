@@ -8,6 +8,8 @@
 #include <EditorAPI/N/NiSkinInstance.h>
 #include <EditorAPI/N/NiAVObject.h>
 #include <EditorAPI/N/NiProperty.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -41,6 +43,9 @@ namespace CKPE
 			class BSGeometry : public NiAVObject
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSGeometry;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSGeometry[0];
+
 				virtual ~BSGeometry();
 				virtual class BSMultiIndexTriShape* IsMultiIndexTriShape();
 				virtual class BSSkinnedDecalTriShape* IsSkinnedDecalTriShape();

@@ -8,6 +8,7 @@
 #include <cstdint>
 
 #include <EditorAPI/IDs_VTABLE.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE
 {
@@ -23,6 +24,7 @@ namespace CKPE
 			class __declspec(novtable) IMemoryStoreBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::IMemoryStoreBase;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::IMemoryStoreBase[0];
 
 				virtual ~IMemoryStoreBase() = default;														// 00

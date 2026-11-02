@@ -7,6 +7,8 @@
 #include <CKPE.Utils.h>
 #include <EditorAPI/B/BSPortalGraphEntry.h>
 #include <EditorAPI/N/NiRTTI.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -31,6 +33,7 @@ namespace CKPE
 					ForceMultiBoundsNoUpdate = 4,
 				};
 
+				constexpr static Common::ID RTTI = IDs::RTTI::BSCullingProcess;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BSCullingProcess[0];
 
 				// NiCullingProcess has GetRTTI at slot zero, not a destructor.

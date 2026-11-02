@@ -7,6 +7,8 @@
 #include <EditorAPI/B/TESDescription.h>
 #include <EditorAPI/B/TESQualityForm.h>
 #include <EditorAPI/T/TESObjectMISC.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -23,6 +25,9 @@ namespace CKPE
 					public TESDescription	// 188
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSApparatus;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSApparatus[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftApparatus;
 
 					virtual ~BGSApparatus() = default;

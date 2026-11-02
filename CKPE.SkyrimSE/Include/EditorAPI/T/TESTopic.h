@@ -7,6 +7,8 @@
 #include <CKPE.Common.h>
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/T/TESTopicInfo.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -21,6 +23,9 @@ namespace CKPE
 				class TESTopic : public TESForm, public TESFullName
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESTopic;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESTopic[0];
+
 					constexpr static uint8_t TYPE_ID = ftTopic;
 
 				public:

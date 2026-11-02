@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/N/NiSourceTexture.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -16,6 +18,9 @@ namespace CKPE
 				public NiAPI::NiObject
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSTextureSet;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSTextureSet[0];
+
 				enum class Texture : std::uint32_t
 				{
 					kDiffuse = 0,

@@ -8,6 +8,8 @@
 #include <CKPE.Common.ID.h>
 #include <CKPE.Utils.h>
 #include <EditorAPI/N/NiAVObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -35,6 +37,7 @@ namespace CKPE
 					/* 35 */ virtual void UpdateWorldBound() noexcept(true) override;
 					/* 36 */ virtual void UpdateWorldData(NiUpdateData* Data) noexcept(true) override;
 
+					constexpr static Common::ID RTTI = IDs::RTTI::NiCamera;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::NiCamera[0];
 
 					[[nodiscard]] inline const WorldToCameraMatrix& GetWorldToCamera() const noexcept(true) { return _WorldToCamera; }

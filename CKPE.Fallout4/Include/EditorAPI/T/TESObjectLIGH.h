@@ -21,6 +21,8 @@
 #include <EditorAPI/T/TESTexture.h>
 #include <CKPE.Common.h>
 #include <EditorAPI/N/NiTypes.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -92,6 +94,7 @@ namespace CKPE
 					/* 480 */ void Clone3D(TESObjectREFR* pRequester, NiAPI::NiPointer<NiAPI::NiAVObject>* pObj3D) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftLight;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectLIGH;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectLIGH[0];
 
 					[[nodiscard]] inline NiAPI::NiRGB GetSpecularColor() const noexcept(true) { return *reinterpret_cast<const NiAPI::NiRGB*>(&data.color); }

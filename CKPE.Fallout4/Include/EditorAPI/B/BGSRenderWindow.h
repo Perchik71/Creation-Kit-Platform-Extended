@@ -21,6 +21,8 @@
 #include <EditorAPI/B/BGSRenderOrthoGrid.h>
 #include <EditorAPI/B/BSCullingProcess.h>
 #include <EditorAPI/S/Sky.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -40,6 +42,9 @@ namespace CKPE
 			class BGSRenderWindow
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindow;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindow[0];
+
 				typedef BGSPickHandler<Forms::TESObjectREFR, BGSRenderWindow, 0x30> PickHandlerT;
 
 				enum : std::uint8_t

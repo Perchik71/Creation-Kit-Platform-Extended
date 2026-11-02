@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -34,6 +36,7 @@ namespace CKPE
 					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftLensFlare;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSLensFlare;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLensFlare[0];
 				public:
 					std::uint8_t unk28[0x30]; // 28

@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/B/BSTHashMap.h>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -44,6 +46,7 @@ namespace CKPE
 					/* 360 */ [[nodiscard]] bool HasRequiredUniqueEditorID() const noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftSoundKeywordMapping;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSSoundKeywordMapping;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSoundKeywordMapping[0];
 				public:
 					BSTSet<BGSKeyword*> keywordSet; // 28 - KNAM, 0x38 byte table (capacity 34, entries 58, 16 byte entries)

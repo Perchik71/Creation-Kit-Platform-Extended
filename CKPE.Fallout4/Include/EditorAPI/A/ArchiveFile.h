@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <EditorAPI/B/BSFile.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -14,6 +16,7 @@ namespace CKPE::Fallout4::EditorAPI
 	class ArchiveFile : public BSFile
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ArchiveFile;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::ArchiveFile[0];
 
 		virtual ~ArchiveFile() override;

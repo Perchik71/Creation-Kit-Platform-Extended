@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESFormIDListView.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/N/NiInterpolator.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -66,6 +68,7 @@ namespace CKPE
 					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftImageSpaceModifier;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESImageSpaceModifier;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESImageSpaceModifier[0];
 				public:
 					ImageSpaceModifierData data; // 28

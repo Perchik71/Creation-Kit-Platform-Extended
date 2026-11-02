@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESModel.h>
 #include <EditorAPI/T/TESTexture.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -85,6 +87,7 @@ namespace CKPE
 					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftEffectShader;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESEffectShader;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESEffectShader[0];
 				public:
 					EffectShaderData data; // 60

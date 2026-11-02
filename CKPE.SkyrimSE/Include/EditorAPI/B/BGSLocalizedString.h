@@ -5,6 +5,8 @@
 #pragma once
 
 #include <cstdint>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -18,6 +20,9 @@ namespace CKPE
 			class IBGSLocalizedString
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::IBGSLocalizedString;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::IBGSLocalizedString[0];
+
 				virtual void release(bool free = false) noexcept(true);
 				virtual void unk08() const noexcept(true);					// tag ???
 				virtual void unk10() const noexcept(true);					// ^
@@ -29,6 +34,9 @@ namespace CKPE
 			class BGSLocalizedString : public IBGSLocalizedString
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSLocalizedString;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLocalizedString[0];
+
 				inline char* data() { return _Str; }
 			private:
 				// members
@@ -39,6 +47,9 @@ namespace CKPE
 			class BGSLocalizedStringDL : public IBGSLocalizedString
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSLocalizedStringDL;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLocalizedStringDL[0];
+
 				inline char* data() { return _Str; }
 			private:
 				// members
@@ -48,7 +59,11 @@ namespace CKPE
 
 			// 0x10 5 functions
 			class BGSLocalizedStringIL : public BGSLocalizedString
-			{};
+{
+			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSLocalizedStringIL;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLocalizedStringIL[0];
+			};
 		}
 	}
 }

@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -28,6 +30,7 @@ namespace CKPE
 					virtual ~BGSDialogueBranch() = default;
 
 					constexpr static std::uint8_t TYPE_ID = ftDialogue;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSDialogueBranch;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSDialogueBranch[0];
 				public:
 					std::uint32_t flags; // 28

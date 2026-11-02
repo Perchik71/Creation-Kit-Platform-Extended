@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESFormIDListView.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -38,6 +40,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 3A8 */ [[nodiscard]] bool HasAvailableInGame() const noexcept(true) override;
 
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSDialogueView;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSDialogueView[0];
 				public:
 					BSTArray<TESForm*> branches; // 28 - BNAM, one form id each (the forms are told about the reference through TESForm::AddReference)

@@ -6,6 +6,8 @@
 
 #include <EditorAPI/B/BaseFormComponent.h>
 #include <EditorAPI/B/BGSEquipSlot.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -18,6 +20,9 @@ namespace CKPE
 				// members
 				Forms::BGSEquipSlot* data;
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSEquipType;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEquipType[0];
+
 				enum class EQUIPPED_ITEM_TYPE
 				{
 					kSpell = 24,

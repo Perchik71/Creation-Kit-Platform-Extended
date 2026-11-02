@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/F/FormInterfaces.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -22,6 +24,9 @@ namespace CKPE
 					public BSTSingletonImplicit<NavMeshObstacleCoverManager>   // 028
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NavMeshObstacleCoverManager;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NavMeshObstacleCoverManager[0];
+
 					virtual ~NavMeshObstacleCoverManager() = default;
 
 					/* 0B0 */ void ClearData() override;

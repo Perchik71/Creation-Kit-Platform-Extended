@@ -10,6 +10,8 @@
 #include <CKPE.Common.Relocation.h>
 #include <EditorAPI/N/NiCollisionObject.h>
 #include <EditorAPI/B/bhkPhysicsSystem.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -20,6 +22,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkNiCollisionObject : public NiAPI::NiCollisionObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkNiCollisionObject;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkNiCollisionObject[0];
+
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		/* 15 */ virtual bhkNiCollisionObject* IsBhkNiCollisionObject() noexcept(true) override;
 		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
@@ -50,12 +55,20 @@ namespace CKPE::Fallout4::EditorAPI
 	static_assert(offsetof(bhkNiCollisionObject, flags) == 0x18);
 	static_assert(offsetof(bhkNiCollisionObject, body) == 0x20);
 
-	class bhkCollisionObject : public bhkNiCollisionObject {};
+	class bhkCollisionObject : public bhkNiCollisionObject
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCollisionObject;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCollisionObject[0];
+	};
 	static_assert(sizeof(bhkCollisionObject) == 0x28);
 
 	class bhkBlendCollisionObject : public bhkCollisionObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkBlendCollisionObject;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkBlendCollisionObject[0];
+
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		/* 16 */ virtual bhkBlendCollisionObject* IsBhkBlendCollisionObject() noexcept(true) override;
 		/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
@@ -69,10 +82,20 @@ namespace CKPE::Fallout4::EditorAPI
 	};
 	static_assert(sizeof(bhkBlendCollisionObject) == 0x48);
 
-	class bhkPCollisionObject : public bhkNiCollisionObject {};
+	class bhkPCollisionObject : public bhkNiCollisionObject
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkPCollisionObject;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkPCollisionObject[0];
+	};
 	static_assert(sizeof(bhkPCollisionObject) == 0x28);
 
-	class bhkSPCollisionObject : public bhkPCollisionObject {};
+	class bhkSPCollisionObject : public bhkPCollisionObject
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkSPCollisionObject;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkSPCollisionObject[0];
+	};
 	static_assert(sizeof(bhkSPCollisionObject) == 0x28);
 
 	class bhkNPCollisionObjectBase : public NiAPI::NiCollisionObject
@@ -89,6 +112,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkNPCollisionObject : public bhkNPCollisionObjectBase
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkNPCollisionObject;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkNPCollisionObject[0];
+
 		/* 2F */ virtual void CreateInstance(bhkWorld* World);
 		/* 30 */ virtual void AddToWorld(bhkWorld* World);
 		/* 31 */ virtual void RemoveFromWorld();
@@ -110,6 +136,11 @@ namespace CKPE::Fallout4::EditorAPI
 	static_assert(offsetof(bhkNPCollisionObject, system) == 0x20);
 	static_assert(offsetof(bhkNPCollisionObject, systemBodyIndex) == 0x28);
 
-	class bhkNPCollisionObjectUnlinked : public bhkNPCollisionObject {};
+	class bhkNPCollisionObjectUnlinked : public bhkNPCollisionObject
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkNPCollisionObjectUnlinked;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkNPCollisionObjectUnlinked[0];
+	};
 	static_assert(sizeof(bhkNPCollisionObjectUnlinked) == 0x30);
 }

@@ -7,12 +7,17 @@
 #include <cstddef>
 #include <cstdint>
 #include <EditorAPI/B/bhkRefObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class bhkWorldObject : public bhkRefObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkWorldObject;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkWorldObject[0];
+
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
 		/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
@@ -28,12 +33,20 @@ namespace CKPE::Fallout4::EditorAPI
 	};
 	static_assert(sizeof(bhkWorldObject) == 0x28);
 
-	class bhkEntity : public bhkWorldObject {};
+	class bhkEntity : public bhkWorldObject
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkEntity;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkEntity[0];
+	};
 	static_assert(sizeof(bhkEntity) == 0x28);
 
 	class bhkRigidBody : public bhkEntity
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkRigidBody;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkRigidBody[0];
+
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		/* 17 */ virtual bhkRigidBody* IsBhkRigidBody() noexcept(true) override;
 		/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
@@ -58,15 +71,35 @@ namespace CKPE::Fallout4::EditorAPI
 	};
 	static_assert(sizeof(bhkRigidBody) == 0x40);
 
-	class bhkPhantom : public bhkWorldObject {};
+	class bhkPhantom : public bhkWorldObject
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkPhantom;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkPhantom[0];
+	};
 	static_assert(sizeof(bhkPhantom) == 0x28);
 
-	class bhkAabbPhantom : public bhkPhantom {};
+	class bhkAabbPhantom : public bhkPhantom
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkAabbPhantom;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkAabbPhantom[0];
+	};
 	static_assert(sizeof(bhkAabbPhantom) == 0x28);
 
-	class bhkShapePhantom : public bhkPhantom {};
+	class bhkShapePhantom : public bhkPhantom
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkShapePhantom;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkShapePhantom[0];
+	};
 	static_assert(sizeof(bhkShapePhantom) == 0x28);
 
-	class bhkCachingShapePhantom : public bhkShapePhantom {};
+	class bhkCachingShapePhantom : public bhkShapePhantom
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCachingShapePhantom;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCachingShapePhantom[0];
+	};
 	static_assert(sizeof(bhkCachingShapePhantom) == 0x28);
 }
