@@ -7,6 +7,8 @@
 #include <cstddef>
 #include <EditorAPI/B/BSExtraData.h>
 #include <EditorAPI/T/TESPreviewControl.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -17,6 +19,9 @@ namespace CKPE
 			class DialogExtraPreviewControl : public BSExtraData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::DialogExtraPreviewControl;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::DialogExtraPreviewControl[0];
+
 				enum : std::uint8_t { kDialogExtraType = 0xE };
 
 				/* 0x000 */ virtual ~DialogExtraPreviewControl();

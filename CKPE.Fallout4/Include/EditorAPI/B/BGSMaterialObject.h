@@ -10,6 +10,8 @@
 #include <EditorAPI/F/FormInterfaces.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -39,6 +41,7 @@ namespace CKPE
 					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftMaterialObject;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSMaterialObject;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMaterialObject[0];
 				public:
 					// DNAM file data entry (16 bytes, the array stride)

@@ -8,6 +8,8 @@
 #include <EditorAPI/N/NiObjectNET.h>
 #include <EditorAPI/N/NiCollisionObject.h>
 #include <EditorAPI/N/NiFlags.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -49,6 +51,9 @@ namespace CKPE
 				class NiAVObject : public NiObjectNET
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiAVObject;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiAVObject[0];
+
 					enum class Flag : std::uint32_t
 					{
 						kNone = 0,

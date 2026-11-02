@@ -23,6 +23,8 @@
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BGSAttachParentArray.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -108,6 +110,7 @@ namespace CKPE
 					/* 448 */ const TBO_InstanceData* GetBaseInstanceData() const noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftArmor;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectARMO;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectARMO[0];
 				public:
 					ArmorInstanceData armorData; // 318

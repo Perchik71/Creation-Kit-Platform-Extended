@@ -4,6 +4,8 @@
 
 #include <EditorAPI/B/BSShaderMaterial.h>
 #include <EditorAPI/N/NiProperty.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,9 @@ namespace CKPE
 				static const char* UniqueFlagNames[15];
 				static const char* FlagNames[64];
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSShaderProperty;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSShaderProperty[0];
+
 				enum EShaderPropertyFlag
 				{
 					BSSP_SPECULAR = 0x0,

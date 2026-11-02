@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/N/NiObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,9 @@ namespace CKPE
 					// members
 					NiAVObject* sceneObject;
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiCollisionObject;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiCollisionObject[0];
+
 					virtual ~NiCollisionObject() = 0;
 
 					// add

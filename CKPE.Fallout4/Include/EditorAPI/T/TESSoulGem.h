@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESObjectMISC.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -34,6 +36,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftSoulGem;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESSoulGem;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESSoulGem[0];
 				public:
 					TESSoulGem* linkedSoulGem; // 1E8

@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -17,6 +19,9 @@ namespace CKPE
 				// members
 				float weight;
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESWeightForm;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESWeightForm[0];
+
 				virtual ~TESWeightForm() = default;
 
 				[[nodiscard]] inline float GetWeight() const noexcept(true) { return weight; }

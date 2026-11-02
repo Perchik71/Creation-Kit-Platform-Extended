@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <cstddef>
 #include <EditorAPI/N/NiRefObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -21,6 +23,9 @@ namespace CKPE
 				public NiAPI::NiRefObject   // 00
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESWaterObject;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESWaterObject[0];
+
 				std::uint8_t unk10[0x10]; // 10
 				NiAPI::NiRefObject* unk20; // 20 - reference counted, set by the constructor
 				NiAPI::NiRefObject* unk28; // 28 - reference counted
@@ -39,6 +44,9 @@ namespace CKPE
 				public NiAPI::NiRefObject   // 00
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESWaterReflections;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESWaterReflections[0];
+
 				std::uint8_t unk10; // 10
 				std::uint8_t pad11; // 11
 				std::uint16_t flags; // 12
@@ -60,6 +68,9 @@ namespace CKPE
 				public NiAPI::NiRefObject   // 00
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESWaterNormals;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESWaterNormals[0];
+
 				std::uint8_t unk10; // 10
 				std::uint8_t pad11[0x7]; // 11
 				void* owner; // 18 - second constructor argument

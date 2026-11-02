@@ -12,6 +12,8 @@
 #include <EditorAPI/N/NiCamera.h>
 #include <EditorAPI/N/NiPointer.h>
 #include <EditorAPI/N/NiTypes.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -24,6 +26,7 @@ namespace CKPE
 			public:
 				/* 0x000 */ virtual ~TESRenderControl();
 
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRenderControl;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRenderControl[0];
 
 				/* 0x008 */ virtual void AttachObject(NiAPI::NiAVObject* Object) noexcept(true);

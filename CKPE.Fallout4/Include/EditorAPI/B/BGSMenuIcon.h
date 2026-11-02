@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESIcon.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -30,6 +32,7 @@ namespace CKPE
 					/* 218 */ [[nodiscard]] std::int32_t Compare(TESForm* Rhs) const noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftMenuIcon;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSMenuIcon;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMenuIcon[0];
 				};
 				static_assert(sizeof(BGSMenuIcon) == 0x50);

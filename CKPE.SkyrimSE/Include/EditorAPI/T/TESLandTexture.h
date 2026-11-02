@@ -7,6 +7,8 @@
 #include <CKPE.Common.h>
 #include <EditorAPI/B/BSTList.h>
 #include <EditorAPI/B/BGSMaterialType.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -24,6 +26,9 @@ namespace CKPE
 				class TESLandTexture : public TESForm
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESLandTexture;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESLandTexture[0];
+
 					constexpr static uint8_t TYPE_ID = ftLandTexture;
 
 				public:

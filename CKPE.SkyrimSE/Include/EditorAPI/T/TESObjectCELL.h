@@ -12,6 +12,8 @@
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/B/BSSpinLock.h> 
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -30,6 +32,9 @@ namespace CKPE
 				class TESObjectCELL : public TESForm, public TESFullName
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectCELL;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectCELL[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftCell;
 					// 10
 					struct Item

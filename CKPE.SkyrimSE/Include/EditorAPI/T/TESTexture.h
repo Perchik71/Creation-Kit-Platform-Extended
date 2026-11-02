@@ -6,6 +6,8 @@
 #include <EditorAPI/N/NiTypes.h>
 #include <dxgi.h>
 #include <d3d11.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -16,6 +18,9 @@ namespace CKPE
 			class TESTexture : public BaseFormComponent
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESTexture;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESTexture[0];
+
 				class TEXTURE_RAWDATA
 				{
 					DXGI_FORMAT _Format{ DXGI_FORMAT_R8G8B8A8_UNORM };

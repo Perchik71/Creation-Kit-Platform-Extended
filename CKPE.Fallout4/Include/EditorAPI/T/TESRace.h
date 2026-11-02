@@ -26,6 +26,8 @@
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/B/BSTHashMap.h>
 #include <EditorAPI/B/BGSCharacterMorph.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -140,6 +142,7 @@ namespace CKPE
 					/* 3C0 */ [[nodiscard]] BGSSoundTagComponent* GetSoundTagComponent() const noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftRace;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESRace;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESRace[0];
 
 					virtual void UpdateRacePreview(HWND hDialogBox, bool ForceUpdate, void* Reference) noexcept(true) { return; } // 124

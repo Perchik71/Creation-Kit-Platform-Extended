@@ -3,6 +3,8 @@
 #pragma once
 
 #include <EditorAPI/N/NiTypes.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,9 @@ namespace CKPE
 				std::uint32_t _ReadWriteBytes;			// Until it's zero again, it doesn't read any
 				std::uint32_t _Size;
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSFile;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSFile[0];
+
 				virtual ~BSFile() = default;
 
 				[[nodiscard]] virtual bool Reopen();

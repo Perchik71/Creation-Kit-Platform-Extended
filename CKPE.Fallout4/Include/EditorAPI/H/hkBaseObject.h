@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -14,6 +16,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkBaseObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkBaseObject;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkBaseObject[0];
+
 		virtual ~hkBaseObject();
 		virtual void __first_virtual_table_function__();
 	};
@@ -22,6 +27,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkReferencedObject : public hkBaseObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkReferencedObject;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkReferencedObject[0];
+
 		virtual const hkClass* GetClassType() const;
 		virtual void DeleteThisReferencedObject() const;
 

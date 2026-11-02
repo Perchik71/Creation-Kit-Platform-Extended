@@ -4,6 +4,8 @@
 
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/N/NiPick.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -16,6 +18,9 @@ namespace CKPE
 			class BSShaderResourceManager
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSShaderResourceManager;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSShaderResourceManager[0];
+
 				bool FindIntersectionsTriShapeFastPath(NiPoint3& kOrigin, const NiPoint3& kDir, NiPick& kPick, 
 					class BSTriShape* pkTriShape);
 				bool FindIntersectionsTriShapeFastPathEx(NiPoint3& kOrigin, const NiPoint3& kDir, NiPick& kPick, 

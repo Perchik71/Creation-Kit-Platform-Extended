@@ -10,6 +10,8 @@
 #include <EditorAPI/N/NiTypes.h>
 #include <EditorAPI/N/NiTSimpleArray.h>
 #include <EditorAPI/IDs.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -79,6 +81,9 @@ namespace CKPE
 					std::uint32_t _Unk0C;				// Added in 1.6.XXXX
 					std::uint32_t _Flags;
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BSResource__StreamBase;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BSResource__StreamBase[0];
+
 					virtual ~StreamBase();
 					virtual ErrorCode Open() = 0;
 					virtual void Close() = 0;
@@ -96,6 +101,9 @@ namespace CKPE
 					std::uint32_t _filePos;
 					void* _Buffer;
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BSResource__Stream;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BSResource__Stream[0];
+
 					virtual ~Stream();
 					virtual void Clone() = 0;
 					virtual ErrorCode ReadBuffer(void* buffer, std::uint32_t size, std::uint32_t& read) const = 0;
@@ -111,6 +119,9 @@ namespace CKPE
 				{
 					std::uint32_t Unk08;
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BSResource__Location;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BSResource__Location[0];
+
 					virtual ~Location();
 				};
 				static_assert(sizeof(Location) == 0x10);
@@ -121,6 +132,9 @@ namespace CKPE
 					std::uint32_t Unk18;
 					std::uint32_t Unk1C;
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BSResource__LooseFileLocation;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BSResource__LooseFileLocation[0];
+
 					virtual ~LooseFileLocation();
 
 					[[nodiscard]] inline const char* GetFileName() const noexcept(true) { return _Path.c_str(); }
@@ -175,6 +189,9 @@ namespace CKPE
 				BSResource::Stream* _Stream;
 				void* _Unk28;
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSResourceNiBinaryStream;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSResourceNiBinaryStream[0];
+
 
 				inline const BSResource::Stream* GetStream() const noexcept(true) { return _Stream; }
 			};

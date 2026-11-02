@@ -23,6 +23,8 @@
 #include <concepts>
 #include <memory>
 #include <type_traits>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -43,6 +45,9 @@ namespace CKPE
 			class BSExtraData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSExtraData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSExtraData[0];
+
 				enum EXTRA_DATA_TYPE : std::uint8_t
 				{
 					kNone,						// BSExtraData
@@ -308,6 +313,9 @@ namespace CKPE
 			{
 				Forms::TESForm* _Water{ nullptr };  // TESWaterForm
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraCellWaterType;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraCellWaterType[0];
+
 				static constexpr auto TYPE{ kWaterType };
 
 				ExtraCellWaterType() : BSExtraData(TYPE) {}
@@ -325,6 +333,9 @@ namespace CKPE
 				NiAPI::NiPoint3 _rotate;		// 24
 				std::uint8_t _unk30[0x8]{};	// 30 - zeroed by CK creation
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraStartingPosition;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraStartingPosition[0];
+
 				static constexpr auto TYPE{ kStartingPosition };
 
 				ExtraStartingPosition() : BSExtraData(TYPE) {}
@@ -354,6 +365,9 @@ namespace CKPE
 				NiAPI::NiPointer<NiAPI::NiAVObject> _3D;	// BSFadeNode by RTTI
 				char unk[0x10];
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraEditorRef3DData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraEditorRef3DData[0];
+
 				static constexpr auto TYPE{ kEditorRef3DData };
 
 				ExtraEditorRef3DData(const NiAPI::NiPointer<NiAPI::NiAVObject>& Model3D) : BSExtraData(TYPE), _3D(Model3D) {}
@@ -369,6 +383,9 @@ namespace CKPE
 				NiAPI::NiPoint3 _Position;
 				NiAPI::NiPoint3 _OldPosition;
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraEditorRefMoveData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraEditorRefMoveData[0];
+
 				static constexpr auto TYPE{ kEditorRefMoveData };
 
 				ExtraEditorRefMoveData() : BSExtraData(TYPE) {}
@@ -391,6 +408,9 @@ namespace CKPE
 				NiAPI::NiPointer<BSLight> _Light;
 				float _WantDimmer{ 0.0f };
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraLight;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraLight[0];
+
 				static constexpr auto TYPE{ kLight };
 
 				ExtraLight() : BSExtraData(TYPE) {}
@@ -411,6 +431,9 @@ namespace CKPE
 				float _shadowDepthBias{ 0.0f };
 				std::uint64_t _unk{ 0 };
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraLightData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraLightData[0];
+
 				static constexpr auto TYPE{ kLightData };
 
 				ExtraLightData() : BSExtraData(TYPE) {}
@@ -439,6 +462,9 @@ namespace CKPE
 			{
 				Forms::BGSLayer* _Layer{ nullptr };
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraLayer;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraLayer[0];
+
 				static constexpr auto TYPE{ kLayer };	// B8
 
 				ExtraLayer() : BSExtraData(TYPE) {}
@@ -456,6 +482,9 @@ namespace CKPE
 				Forms::TESForm* _refr{ nullptr };
 				char _unk18[16];
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraLinkedRef;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraLinkedRef[0];
+
 				static constexpr auto TYPE{ kLinkedRef };
 
 				ExtraLinkedRef() : BSExtraData(TYPE) {}
@@ -472,6 +501,9 @@ namespace CKPE
 			class ExtraLinkedRefChildren : public BSExtraData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraLinkedRefChildren;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraLinkedRefChildren[0];
+
 				struct Children
 				{
 					Forms::BGSKeyword* Keyword;		// 00
@@ -501,6 +533,9 @@ namespace CKPE
 			{
 				float _radius{ 0.0f };
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraRadius;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraRadius[0];
+
 				static constexpr auto TYPE{ kRadius };
 
 				ExtraRadius() : BSExtraData(TYPE) {}
@@ -522,6 +557,9 @@ namespace CKPE
 				std::uint16_t pad12{ 0 };
 				ObjectRefHandle _parent;
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraEnableStateParent;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraEnableStateParent[0];
+
 				static constexpr auto TYPE{ kEnableStateParent };
 
 				ExtraEnableStateParent() : BSExtraData(TYPE) {}
@@ -541,6 +579,9 @@ namespace CKPE
 			{
 				BGSPrimitive* _Primitive{ nullptr };
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraPrimitive;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraPrimitive[0];
+
 				static constexpr auto TYPE{ kPrimitive };
 
 				ExtraPrimitive(BGSPrimitive* Primitive) : BSExtraData(TYPE), _Primitive(Primitive) {}
@@ -556,6 +597,9 @@ namespace CKPE
 				ObjectRefHandle _OriginalRef;
 				ObjectRefHandle _ContainerRef;
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraReferenceHandles;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraReferenceHandles[0];
+
 				static constexpr auto TYPE{ kReferenceHandle };
 
 				ExtraReferenceHandles() : BSExtraData(TYPE) {}
@@ -573,6 +617,9 @@ namespace CKPE
 			{
 				Forms::BGSMaterialSwap* _Swap{ nullptr };
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraMaterialSwap;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraMaterialSwap[0];
+
 				static constexpr auto TYPE{ kMaterialSwap };
 
 				ExtraMaterialSwap(Forms::BGSMaterialSwap* MaterialSwap) :
@@ -589,6 +636,9 @@ namespace CKPE
 				std::uint16_t _uniqueID{ 0 };
 				std::uint32_t _baseID{ 0 };
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraUniqueID;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraUniqueID[0];
+
 				static constexpr auto TYPE{ kUniqueID };
 
 				ExtraUniqueID() : BSExtraData(TYPE) {}
@@ -605,6 +655,9 @@ namespace CKPE
 			class ExtraPowerLinks : public BSExtraData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraPowerLinks;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraPowerLinks[0];
+
 				static constexpr auto TYPE{ kPowerLinks };
 
 				struct Element

@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/B/BaseFormComponent.h>
 #include <EditorAPI/B/BSTList.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -36,6 +38,7 @@ namespace CKPE
 				/* 90 */ void CleanupComponentDialogBox(HWND hDialogBox) noexcept(true) override;
 				/* 98 */ void CollectComponentResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::TESReactionForm;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TESReactionForm[0];
 			public:
 				BSSimpleList<GROUP_REACTION*> reactionList; // 08

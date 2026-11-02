@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/F/FormInterfaces.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -31,6 +33,7 @@ namespace CKPE
 
 					constexpr static std::size_t DEFAULT_OBJECT_COUNT = 396;
 					constexpr static std::uint8_t TYPE_ID = ftDefaultObjectManager;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSDialogueView;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSDialogueView[0];
 
 					virtual ~BGSDefaultObjectManager() = default;

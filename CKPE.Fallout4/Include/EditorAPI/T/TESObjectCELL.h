@@ -9,6 +9,8 @@
 #include <EditorAPI/T/TESObjectLAND.h>
 #include <EditorAPI/T/TESObjectREFR.h>
 #include <EditorAPI/T/TESFullName.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -24,6 +26,7 @@ namespace CKPE
 				{
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftCell;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectCELL;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectCELL[0];
 
 					// 08

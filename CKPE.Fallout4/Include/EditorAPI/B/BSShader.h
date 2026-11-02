@@ -7,6 +7,8 @@
 #include <CKPE.Fallout4.VersionLists.h>
 #include <CKPE.Utils.h>
 #include <EditorAPI/N/NiRefObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -28,6 +30,7 @@ namespace CKPE
 			class BSShader : public NiAPI::NiRefObject, public BSReloadShaderI
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSShader;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BSShader[0];
 
 				struct RuntimeData

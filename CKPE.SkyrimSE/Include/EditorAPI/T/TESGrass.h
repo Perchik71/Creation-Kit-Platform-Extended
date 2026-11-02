@@ -7,6 +7,8 @@
 #include <cstddef>
 #include <EditorAPI/T/TESBoundObject.h>
 #include <EditorAPI/T/TESModel.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -22,6 +24,9 @@ namespace CKPE
 					public TESModel	// 50
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESGrass;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESGrass[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftGrass;
 
 					virtual ~TESGrass() = default;

@@ -13,6 +13,8 @@
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/E/EffectSetting.h>
 #include <EditorAPI/E/EffectItem.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -49,6 +51,7 @@ namespace CKPE
 					/* 3F0 */ bool IsAutoCalc() const noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftReserved000;
+					constexpr static Common::ID RTTI = IDs::RTTI::MagicItem;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::MagicItem[0];
 
 					virtual std::uint32_t GetSpellType() const noexcept(true) { return 0; } // 154 - RVA 0x2D783EC (_purecall)

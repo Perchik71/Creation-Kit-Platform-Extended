@@ -9,6 +9,8 @@
 #include <EditorAPI/T/TESBoundObject.h>
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/B/BGSModelMaterialSwap.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -43,6 +45,7 @@ namespace CKPE
 					/* 400 */ void Clone3D(TESObjectREFR* pRequester, NiAPI::NiPointer<NiAPI::NiAVObject>* pObj3D, bool bBackground) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftStaticCollection;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSStaticCollection;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSStaticCollection[0];
 				public:
 					BSTHashMap<TESBoundObject*, void*>* dataMap; // F8 - table layout assumed to be the CK 0x38 byte one like every other CK table; value is BSSimpleList<BGSStaticCollection::REF_COL_DATA>*

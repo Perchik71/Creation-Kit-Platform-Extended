@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <EditorAPI/T/TESFormIDListView.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,9 @@ namespace CKPE
 					public TESFormIDListView	// 00
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSDialogueView;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSDialogueView[0];
+
 					virtual ~BGSDialogueView() = default;
 				public:
 					std::uint8_t pad28[0x30];	// 28

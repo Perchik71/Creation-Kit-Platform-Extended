@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESActorBase.h>
 #include <EditorAPI/B/TESRaceForm.h>
 #include <EditorAPI/B/BGSOverridePackCollection.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -24,6 +26,9 @@ namespace CKPE
 					public BGSOverridePackCollection	// 188
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESNPC;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESNPC[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftNPC;
 
 					virtual ~TESNPC() = default;

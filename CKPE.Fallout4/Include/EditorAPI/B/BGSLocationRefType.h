@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/B/BGSKeyword.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -23,6 +25,7 @@ namespace CKPE
 					virtual ~BGSLocationRefType() = default;
 
 					constexpr static std::uint8_t TYPE_ID = ftLocationRefType;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSLocationRefType;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLocationRefType[0];
 				};
 				static_assert(sizeof(BGSLocationRefType) == 0x60);

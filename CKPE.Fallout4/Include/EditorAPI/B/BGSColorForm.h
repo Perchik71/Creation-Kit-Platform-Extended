@@ -10,6 +10,8 @@
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/T/TESCondition.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -26,6 +28,9 @@ namespace CKPE
 				class BGSColorForm : public TESForm, public TESFullName
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSColorForm;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSColorForm[0];
+
 					static constexpr std::uint32_t FLAG_PLAYABLE		= (std::uint32_t)1 << 0;
 					static constexpr std::uint32_t FLAG_REMAPCOLOR		= (std::uint32_t)1 << 1;
 					static constexpr std::uint32_t FLAG_EXTENDED_LUT	= (std::uint32_t)1 << 2;

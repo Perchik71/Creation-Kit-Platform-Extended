@@ -4,6 +4,8 @@
 
 #include <windows.h>
 #include <EditorAPI/N/NiRefObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -17,6 +19,9 @@ namespace CKPE
 				class NiSkinInstance : public NiRefObject64
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiSkinInstance;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiSkinInstance[0];
+
 					class NiSkinData* m_spSkinData;
 					void* m_spSkinPartition;
 					char _pad0[0x28];

@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -36,6 +38,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftFootstepSet;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSFootstepSet;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSFootstepSet[0];
 				public:
 					std::uint8_t unk28[0x80]; // 28

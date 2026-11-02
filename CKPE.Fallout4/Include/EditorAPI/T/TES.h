@@ -12,6 +12,8 @@
 #include <EditorAPI/B/BSTList.h>
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/S/Sky.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -74,6 +76,7 @@ namespace CKPE
 			public:
 				virtual ~TES();
 
+				constexpr static Common::ID RTTI = IDs::RTTI::TES;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TES[0];
 
 				inline static ISingleton<Setting> Setting_ShowMarkers;

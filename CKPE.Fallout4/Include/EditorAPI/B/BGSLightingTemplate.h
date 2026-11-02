@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESFormIDListView.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -78,6 +80,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftLightingTemplate;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSLightingTemplate;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLightingTemplate[0];
 				public:
 					BGSLightingTemplateData data; // 28 - INTERIOR_DATA

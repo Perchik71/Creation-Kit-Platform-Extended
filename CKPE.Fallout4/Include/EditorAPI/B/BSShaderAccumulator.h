@@ -9,6 +9,8 @@
 #include <EditorAPI/N/NiColor.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/N/NiPointer.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -19,6 +21,7 @@ namespace CKPE::Fallout4::EditorAPI
 	{
 	public:
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
+		constexpr static Common::ID RTTI = IDs::RTTI::BSShaderAccumulator;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::BSShaderAccumulator[0];
 
 		/* 30 */ virtual void FinishAccumulatingPreResolveDepth();

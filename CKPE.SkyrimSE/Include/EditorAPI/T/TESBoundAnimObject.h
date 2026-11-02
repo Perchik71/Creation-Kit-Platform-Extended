@@ -1,6 +1,8 @@
 #pragma once
 
 #include <EditorAPI/T/TESBoundObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -13,6 +15,9 @@ namespace CKPE
 				class TESBoundAnimObject : public TESBoundObject
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESBoundAnimObject;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESBoundAnimObject[0];
+
 					virtual ~TESBoundAnimObject() = default;
 
 					// override (TESBoundObject)

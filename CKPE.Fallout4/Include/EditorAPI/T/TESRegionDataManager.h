@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESRegion.h>
 #include <EditorAPI/T/TESFile.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -33,6 +35,7 @@ namespace CKPE
 			public:
 				virtual ~TESRegionDataManager() = default;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionDataManager;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionDataManager[0];
 
 				// Returns the region being loaded (0x8BE40, a getter shared by several classes).
@@ -64,6 +67,7 @@ namespace CKPE
 			public:
 				virtual ~TESRegionDataManagerEditor() = default;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionDataManagerEditor;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionDataManagerEditor[0];
 			};
 			static_assert(sizeof(TESRegionDataManagerEditor) == 0x10);

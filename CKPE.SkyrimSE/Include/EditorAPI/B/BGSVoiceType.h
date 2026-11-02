@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -19,6 +21,9 @@ namespace CKPE
 				class BGSVoiceType : public TESForm
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSVoiceType;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSVoiceType[0];
+
 					enum Gender
 					{
 						Male = 0,

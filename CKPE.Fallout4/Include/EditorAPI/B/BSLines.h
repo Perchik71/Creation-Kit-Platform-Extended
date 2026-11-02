@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BSGeometry.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -21,6 +23,7 @@ namespace CKPE
 				/* 13 */ virtual BSLines* IsLinesGeom() noexcept(true) override;
 				/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
 				/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLines;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLines[0];
 
 				[[nodiscard]] inline std::uint16_t GetTriangles() const noexcept(true) { return Triangles; }

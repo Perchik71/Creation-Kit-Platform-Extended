@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/N/NiFlags.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -32,6 +34,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftVoiceType;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSVoiceType;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSVoiceType[0];
 
 					enum Flags

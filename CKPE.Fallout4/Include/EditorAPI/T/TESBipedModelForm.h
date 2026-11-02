@@ -11,6 +11,8 @@
 #include <EditorAPI/T/TESIcon.h>
 #include <EditorAPI/B/BGSMessageIcon.h>
 #include <EditorAPI/T/TESModelRDT.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -38,6 +40,7 @@ namespace CKPE
 				/* 90 */ void CleanupComponentDialogBox(HWND hDialogBox) noexcept(true) override;
 				/* 98 */ void CollectComponentResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::TESBipedModelForm;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TESBipedModelForm[0];
 			public:
 				Forms::BGSModelMaterialSwap worldModel[2]; // 08 - sizeof 0x50 each (0x08, 0x58)

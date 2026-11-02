@@ -21,6 +21,8 @@
 #include <EditorAPI/B/BGSMod.h>
 #include <EditorAPI/B/BGSSoundTagComponent.h>
 #include <EditorAPI/B/BGSPreviewTransform.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -258,6 +260,7 @@ namespace CKPE
 					virtual ~TESForm() = default;
 
 					constexpr static std::uint8_t TYPE_ID = ftReserved000;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESForm;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESForm[0];
 
 					/* 0A8 */ virtual void InitializeData();

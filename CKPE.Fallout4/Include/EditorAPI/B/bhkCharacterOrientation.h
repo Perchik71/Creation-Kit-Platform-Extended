@@ -5,12 +5,17 @@
 #pragma once
 
 #include <cstddef>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class bhkICharOrientationController
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkICharOrientationController;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkICharOrientationController[0];
+
 		/* 00 */ virtual ~bhkICharOrientationController();
 		/* 01 */ virtual void Orientation_Unknown01() = 0;
 		/* 02 */ virtual void Orientation_Unknown02() = 0;
@@ -32,6 +37,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkBipedOrientationController : public bhkICharOrientationController
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkBipedOrientationController;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkBipedOrientationController[0];
+
 		/* 0x008 */ std::byte pad008[0x8];
 	};
 	static_assert(sizeof(bhkBipedOrientationController) == 0x10);

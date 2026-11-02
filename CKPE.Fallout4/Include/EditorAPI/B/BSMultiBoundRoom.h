@@ -7,6 +7,8 @@
 #include <EditorAPI/B/BSMultiBoundNode.h>
 #include <EditorAPI/N/NiTPointerList.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -39,6 +41,7 @@ namespace CKPE
 				/* 35 */ virtual void UpdateWorldBound() noexcept(true) override;
 				/* 3B */ virtual void OnVisible(NiAPI::NiCullingProcess& Culler) noexcept(true) override;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::BSMultiBoundRoom;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BSMultiBoundRoom[0];
 
 				[[nodiscard]] inline const NiAPI::NiTPointerList<BSPortal*>& GetPortals() const noexcept(true) { return _Portals; }

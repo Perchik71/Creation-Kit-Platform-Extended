@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BSShaderProperty.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -15,6 +17,9 @@ namespace CKPE
 			class BSEffectShaderProperty : public BSShaderProperty
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSEffectShaderProperty;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSEffectShaderProperty[0];
+
 				/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 				/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
 				/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;

@@ -10,6 +10,8 @@
 #include <EditorAPI/T/TESDescription.h>
 #include <EditorAPI/T/TESTexture.h>
 #include <EditorAPI/B/BGSPropertySheet.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -47,6 +49,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftClass;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESClass;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESClass[0];
 				public:
 					CLASS_DATA data; // A0

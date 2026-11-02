@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -27,6 +29,7 @@ namespace CKPE
 				/* 88 */ void UpdateDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 				/* 90 */ void CleanupComponentDialogBox(HWND hDialogBox) noexcept(true) override;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::TESValueForm;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TESValueForm[0];
 
 				[[nodiscard]] inline std::uint32_t GetValue() const noexcept(true) { return value; }

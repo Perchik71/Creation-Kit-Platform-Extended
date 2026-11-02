@@ -11,6 +11,8 @@
 #include <EditorAPI/N/NiMatrix.h>
 #include <EditorAPI/N/NiObject.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -25,6 +27,9 @@ namespace CKPE
 				class BoneData : public NiAPI::NiObject
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BSSkin__BoneData;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BSSkin__BoneData[0];
+
 					// 50
 					struct BoneTransforms
 					{
@@ -46,6 +51,9 @@ namespace CKPE
 				class Instance : public NiAPI::NiObject
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BSSkin__Instance;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BSSkin__Instance[0];
+
 					[[nodiscard]] inline NiAPI::NiNode* GetBonesAt(std::uint32_t Index) const noexcept(true) { return Bones[Index]; }
 					[[nodiscard]] inline std::uint32_t GetBonesCount() const noexcept(true) { return Bones.size(); }
 					[[nodiscard]] inline NiAPI::NiTransform* GetTransformAt(std::uint32_t Index) const noexcept(true)

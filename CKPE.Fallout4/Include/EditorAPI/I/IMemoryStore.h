@@ -6,6 +6,7 @@
 
 #include <cstdint>
 #include <EditorAPI/I/IMemoryStoreBase.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE
 {
@@ -19,6 +20,7 @@ namespace CKPE
 			public:
 				virtual ~IMemoryStore() = default;																									// 00
 
+				constexpr static Common::ID RTTI = IDs::RTTI::IMemoryStore;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::IMemoryStore[0];
 
 				// add

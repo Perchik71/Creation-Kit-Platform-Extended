@@ -7,12 +7,17 @@
 #include <EditorAPI/B/BSShader.h>
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/I/ImageSpaceEffect.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class BSImagespaceShader : public BSShader
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSImagespaceShader;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSImagespaceShader[0];
+
 		struct RuntimeData
 		{
 			/* 0x000 */ ImageSpaceEffect effect;

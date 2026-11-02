@@ -13,6 +13,8 @@
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/B/BGSPerkEntry.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -62,6 +64,7 @@ namespace CKPE
 					/* 338 */ void OnDialogFormSaved(HWND hDialogBox, TESForm* SavedForm) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftPerk;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSPerk;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPerk[0];
 				public:
 					PerkData data; // 90

@@ -10,6 +10,8 @@
 #include <EditorAPI/B/BSTriShape.h>
 #include <EditorAPI/B/BSFadeNode.h>
 #include <EditorAPI/B/BSLines.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -22,6 +24,9 @@ namespace CKPE
 				class BGSPrimitive
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSPrimitive;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitive[0];
+
 					enum : std::uint32_t
 					{
 						kNone = 0,
@@ -54,6 +59,9 @@ namespace CKPE
 				class BGSPrimitivePlane : public BGSPrimitive
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSPrimitivePlane;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitivePlane[0];
+
 					static constexpr auto TYPE{ kPlane };
 
 					virtual ~BGSPrimitivePlane() = default;
@@ -63,6 +71,9 @@ namespace CKPE
 				class BGSPrimitiveBox : public BGSPrimitive
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSPrimitiveBox;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitiveBox[0];
+
 					static constexpr auto TYPE{ kBox };
 
 					virtual ~BGSPrimitiveBox() = default;
@@ -72,6 +83,9 @@ namespace CKPE
 				class BGSPrimitiveLine : public BGSPrimitive
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSPrimitiveLine;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitiveLine[0];
+
 					static constexpr auto TYPE{ kLine };
 
 					virtual ~BGSPrimitiveLine() = default;
@@ -81,6 +95,9 @@ namespace CKPE
 				class BGSPrimitiveSphere : public BGSPrimitive
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSPrimitiveSphere;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitiveSphere[0];
+
 					static constexpr auto TYPE{ kSphere };
 
 					virtual ~BGSPrimitiveSphere() = default;

@@ -6,6 +6,8 @@
 
 #include <EditorAPI/B/BaseFormComponent.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -27,6 +29,9 @@ namespace CKPE
 					class Items : public BaseFormComponent
 					{
 					public:
+						constexpr static Common::ID RTTI = IDs::RTTI::BGSMod__Template__Items;
+						constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMod__Template__Items[0];
+
 						/* 0x008 */ BSTArray<void*> items;
 					};
 					static_assert(sizeof(Items) == 0x20);

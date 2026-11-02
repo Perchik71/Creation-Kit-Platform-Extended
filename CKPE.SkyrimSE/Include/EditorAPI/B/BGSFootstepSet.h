@@ -6,6 +6,8 @@
 
 #include <EditorAPI/B/BGSImpactDataSet.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -19,6 +21,9 @@ namespace CKPE
 				class BGSFootstep : public TESForm
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSFootstep;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSFootstep[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftFootstep;
 
 					virtual ~BGSFootstep() = default;
@@ -38,6 +43,9 @@ namespace CKPE
 				class BGSFootstepSet : public TESForm
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSFootstepSet;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSFootstepSet[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftFootstepSet;
 
 					virtual ~BGSFootstepSet() = default;

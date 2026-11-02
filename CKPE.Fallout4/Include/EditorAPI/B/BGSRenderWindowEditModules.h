@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BGSRenderWindowReferenceEditModule.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -17,6 +19,7 @@ namespace CKPE
 			class BGSRenderWindowPrimitiveEditModule : public BGSRenderWindowEditModule
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowPrimitiveEditModule;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowPrimitiveEditModule[0];
 
 				virtual ~BGSRenderWindowPrimitiveEditModule() = default;
@@ -32,6 +35,7 @@ namespace CKPE
 			class BGSRenderWindowNavMeshEditModule : public BGSRenderWindowEditModule
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowNavMeshEditModule;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowNavMeshEditModule[0];
 
 				virtual ~BGSRenderWindowNavMeshEditModule() = default;
@@ -53,6 +57,7 @@ namespace CKPE
 			class BGSRenderWindowLandscapeEditModule : public BGSRenderWindowEditModule
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowLandscapeEditModule;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowLandscapeEditModule[0];
 
 				virtual ~BGSRenderWindowLandscapeEditModule() = default;

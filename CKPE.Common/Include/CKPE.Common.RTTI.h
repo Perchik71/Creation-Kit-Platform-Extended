@@ -133,6 +133,9 @@ namespace CKPE
 			virtual const Info* Find(const std::uintptr_t address, bool error_if_no_found = true) const noexcept(true);
 			virtual void* Cast(const void* InPtr, long VfDelta,
 				const char* lpstrFromType, const char* lpstrTargetType, bool isReference = false);
+			// The same, but with type descriptors (see CKPE.Common.RTTICast.h)
+			static void* DynamicCast(const void* InPtr, long VfDelta,
+				const void* SrcTypeDescriptor, const void* TargetTypeDescriptor, bool isReference = false) noexcept(true);
 		};
 	}
 

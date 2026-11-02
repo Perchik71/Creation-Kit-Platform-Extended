@@ -11,6 +11,8 @@
 #include <EditorAPI/C/CheckInFormList.h>
 #include <EditorAPI/B/BGSEntryPoint.h>
 #include <EditorAPI/B/BGSEntryPointFunctionData.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -32,6 +34,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		virtual void sub_010() = 0;
 
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSPerkEntry;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPerkEntry[0];
+
 		// The editor destructor is slot 3, not slot 0 as in the game.
 		virtual ~BGSPerkEntry() = default;
 		[[nodiscard]] virtual std::uint32_t GetType() const = 0; // 04
@@ -99,6 +104,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSQuestPerkEntry : public BGSPerkEntry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSQuestPerkEntry;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSQuestPerkEntry[0];
+
 		[[nodiscard]] virtual std::uint32_t GetType() const override;
 		virtual void ResolveReferences(TESForm* Owner) override;
 		[[nodiscard]] virtual BGSPerkEntry* Clone() const override;
@@ -122,6 +130,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSAbilityPerkEntry : public BGSPerkEntry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSAbilityPerkEntry;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAbilityPerkEntry[0];
+
 		virtual void ResolveReferences(TESForm* Owner) override;
 		[[nodiscard]] virtual BGSPerkEntry* Clone() const override;
 		[[nodiscard]] virtual bool IsDifferent(const BGSPerkEntry* Other) const override;
@@ -142,6 +153,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSEntryPointPerkEntry : public BGSPerkEntry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointPerkEntry;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointPerkEntry[0];
+
 		virtual void Reset() override;
 		virtual void ResolveReferences(TESForm* Owner) override;
 		[[nodiscard]] virtual BGSPerkEntry* Clone() const override;

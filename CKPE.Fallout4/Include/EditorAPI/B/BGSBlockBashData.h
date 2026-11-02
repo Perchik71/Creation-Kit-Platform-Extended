@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -24,6 +26,9 @@ namespace CKPE
 				public BaseFormComponent   // 000
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSBlockBashData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSBlockBashData[0];
+
 				virtual ~BGSBlockBashData() = default;
 				/* 10 */ void InitializeDataComponent() override;
 				/* 18 */ void ClearDataComponent() override;

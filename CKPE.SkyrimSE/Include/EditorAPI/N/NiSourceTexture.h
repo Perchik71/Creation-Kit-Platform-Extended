@@ -3,6 +3,8 @@
 #pragma once
 
 #include <EditorAPI/N/NiTexture.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -15,6 +17,9 @@ namespace CKPE
 				class NiSourceTexture : public NiTexture
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiSourceTexture;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiSourceTexture[0];
+
 					NiSourceTexture() = default;
 					virtual ~NiSourceTexture() = default;
 				};

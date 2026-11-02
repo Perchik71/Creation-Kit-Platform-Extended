@@ -7,6 +7,8 @@
 #include <CKPE.Utils.h>
 #include <EditorAPI/N/NiRTTI.h>
 #include <EditorAPI/N/NiRefObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -48,6 +50,7 @@ namespace CKPE
 					public NiRefObject
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiObject;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::NiObject[0];
 
 					/* 02 */ virtual NiRTTI* GetRTTI() const noexcept(true);

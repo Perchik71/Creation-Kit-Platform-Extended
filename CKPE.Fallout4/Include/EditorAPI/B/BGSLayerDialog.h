@@ -9,6 +9,8 @@
 #include <commctrl.h>
 #include <EditorAPI/B/BSTEvents.h>
 #include <EditorAPI/T/TreeListControl.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -31,6 +33,7 @@ namespace CKPE::Fallout4::EditorAPI
 		};
 		enum : std::uint16_t { kDialogResource = 468 };
 
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSLayerDialog;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLayerDialog[0];
 
 		/* 0x000 */ virtual ~BGSLayerDialog();

@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -16,6 +18,9 @@ namespace CKPE
 			class BGSAttackDataForm : public BaseFormComponent
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSAttackDataForm;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAttackDataForm[0];
+
 				virtual ~BGSAttackDataForm() = default;
 
 				void* unk08;	// 08

@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/B/BGSLocalizedString.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -23,6 +25,9 @@ namespace CKPE
 					public TESFullName	// 28
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESWordOfPower;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESWordOfPower[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftWordOfPower;
 
 					virtual ~TESWordOfPower() = default;

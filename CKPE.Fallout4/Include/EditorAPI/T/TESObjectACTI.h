@@ -15,6 +15,7 @@
 #include <EditorAPI/B/BGSForcedLocRefType.h>
 #include <EditorAPI/B/BGSNativeTerminalForm.h>
 #include <EditorAPI/B/BGSLocalizedString.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE
 {
@@ -66,6 +67,7 @@ namespace CKPE
 					/* 3E8 */ Forms::TESWaterForm* GetWaterType() const noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftActivator;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectACTI;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectACTI[0];
 				public:
 					BGSSoundDescriptorForm* soundLoop; // 160

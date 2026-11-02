@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/B/BGSStoryManagerNodeBase.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -27,6 +29,7 @@ namespace CKPE
 					/* 298 */ bool MarkChildFormsAsDeleted(bool bValue, TESBitArrayFile* UserFile, TESBitArrayFile* VersionFile) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftStoryManagerBranchNode;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSStoryManagerBranchNode;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSStoryManagerBranchNode[0];
 
 					virtual std::uint32_t AcceptVisitor(void* Visitor) noexcept(true) { return 0; } // 135

@@ -7,6 +7,8 @@
 #include <CKPE.Common.h>
 #include <windows.h>
 #include <cstdint>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -17,6 +19,9 @@ namespace CKPE
 			class BaseFormComponent
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BaseFormComponent;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BaseFormComponent[0];
+
 				virtual ~BaseFormComponent() = default;
 
 				virtual void InitializeDataComponent();

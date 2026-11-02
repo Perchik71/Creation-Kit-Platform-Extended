@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESObjectSTAT.h>
 #include <EditorAPI/B/BGSDestructibleObjectForm.h>
 #include <EditorAPI/B/BGSKeywordForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -49,6 +51,7 @@ namespace CKPE
 					/* 338 */ void OnDialogFormSaved(HWND hDialogBox, TESForm* SavedForm) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftMovableStatic;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSMovableStatic;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMovableStatic[0];
 				public:
 					BGSSoundDescriptorForm* soundLoop; // 178

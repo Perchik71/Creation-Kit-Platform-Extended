@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -17,6 +19,9 @@ namespace CKPE
 			class TESActorBaseData : public BaseFormComponent
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESActorBaseData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESActorBaseData[0];
+
 				virtual ~TESActorBaseData() = default;
 
 				std::uint32_t unk08;		// 08 - 0 on construction

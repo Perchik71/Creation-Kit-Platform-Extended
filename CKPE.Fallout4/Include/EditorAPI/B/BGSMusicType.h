@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/F/FormInterfaces.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -40,6 +42,7 @@ namespace CKPE
 					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftMusicType;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSMusicType;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMusicType[0];
 				};
 				static_assert(sizeof(BGSMusicType) == 0x78);

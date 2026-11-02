@@ -10,6 +10,8 @@
 #include <EditorAPI/B/BGSPickupPutdownSounds.h>
 #include <EditorAPI/T/TESDescription.h>
 #include <EditorAPI/T/TESCondition.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -53,6 +55,7 @@ namespace CKPE
 					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftConstructibleObject;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSConstructibleObject;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSConstructibleObject[0];
 				public:
 					BGSTypedFormValuePair::Array* requiredItems; // 68

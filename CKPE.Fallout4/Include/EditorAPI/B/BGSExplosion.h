@@ -12,6 +12,8 @@
 #include <EditorAPI/B/BGSPreloadable.h>
 #include <EditorAPI/T/TESImageSpaceModifiableForm.h>
 #include <EditorAPI/N/NiPoint.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -81,6 +83,7 @@ namespace CKPE
 					/* 408 */ void UnClone3D(void* pRequester) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftExplosion;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSExplosion;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSExplosion[0];
 				public:
 					BGSExplosionData data; // 110

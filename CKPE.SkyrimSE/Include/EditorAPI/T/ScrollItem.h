@@ -10,6 +10,8 @@
 #include <EditorAPI/T/TESModelTextureSwap.h>
 #include <EditorAPI/T/TESValueForm.h>
 #include <EditorAPI/T/TESWeightForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -29,6 +31,9 @@ namespace CKPE
 					public TESValueForm	// 358
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::ScrollItem;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::ScrollItem[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftScrollItem;
 
 					virtual ~ScrollItem() = default;

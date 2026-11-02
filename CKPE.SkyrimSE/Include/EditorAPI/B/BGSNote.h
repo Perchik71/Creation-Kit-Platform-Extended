@@ -10,6 +10,8 @@
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/T/TESIcon.h>
 #include <EditorAPI/T/TESModel.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -28,6 +30,9 @@ namespace CKPE
 					public BGSPickupPutdownSounds	// C0
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSNote;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSNote[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftNote;
 
 					virtual ~BGSNote() = default;

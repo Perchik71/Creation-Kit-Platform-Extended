@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/F/FormInterfaces.h>
 #include <EditorAPI/B/BSFixedString.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -46,6 +48,7 @@ namespace CKPE
 					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftSoundDescriptorForm;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSSoundDescriptorForm;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSoundDescriptorForm[0];
 				public:
 					BSFixedString unk30; // 30

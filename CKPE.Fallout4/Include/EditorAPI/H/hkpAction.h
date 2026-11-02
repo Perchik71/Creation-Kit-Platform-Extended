@@ -7,6 +7,8 @@
 #include <EditorAPI/H/hkBaseObject.h>
 #include <EditorAPI/H/hkBaseTypes.h>
 #include <EditorAPI/H/hkpCollisionFilter.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -18,6 +20,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpAction : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpAction;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpAction[0];
+
 		virtual void applyAction(const void* StepInfo); // 0x20 - hkStepInfo
 		virtual void getEntities(void* EntitiesOut); // 0x28 - appends the entities to an hkArray<hkpEntity*>
 		virtual void getPhantoms(void* PhantomsOut); // 0x30 - default stub
@@ -36,6 +41,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpUnaryAction : public hkpAction
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpUnaryAction;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpUnaryAction[0];
+
 		/* 0x030 */ hkpEntity* m_entity;
 	};
 	static_assert(sizeof(hkpUnaryAction) == 0x38);
@@ -44,6 +52,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpBinaryAction : public hkpAction
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpBinaryAction;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpBinaryAction[0];
+
 		/* 0x030 */ hkpEntity* m_entityA;
 		/* 0x038 */ hkpEntity* m_entityB;
 	};
@@ -53,6 +64,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpAngularDashpotAction : public hkpBinaryAction
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpAngularDashpotAction;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpAngularDashpotAction[0];
+
 		/* 0x040 */ std::uint8_t unk040[0x20];
 	};
 	static_assert(sizeof(hkpAngularDashpotAction) == 0x60);
@@ -60,6 +74,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpDashpotAction : public hkpBinaryAction
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpDashpotAction;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpDashpotAction[0];
+
 		/* 0x040 */ std::uint8_t unk040[0x40];
 	};
 	static_assert(sizeof(hkpDashpotAction) == 0x80);
@@ -67,6 +84,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpSpringAction : public hkpBinaryAction
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSpringAction;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSpringAction[0];
+
 		/* 0x040 */ std::uint8_t unk040[0x40];
 	};
 	static_assert(sizeof(hkpSpringAction) == 0x80);
@@ -74,6 +94,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpMotorAction : public hkpUnaryAction
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpMotorAction;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpMotorAction[0];
+
 		/* 0x038 */ std::uint8_t unk038[0x28];
 	};
 	static_assert(sizeof(hkpMotorAction) == 0x60);
@@ -81,6 +104,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpMouseSpringAction : public hkpUnaryAction
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpMouseSpringAction;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpMouseSpringAction[0];
+
 		/* 0x038 */ std::uint8_t unk038[0x58];
 	};
 	static_assert(sizeof(hkpMouseSpringAction) == 0x90);
@@ -88,6 +114,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpConstraintChainInstanceAction : public hkpAction
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpConstraintChainInstanceAction;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpConstraintChainInstanceAction[0];
+
 		/* 0x030 */ hkpConstraintChainInstance* m_constraintInstance;
 	};
 	static_assert(sizeof(hkpConstraintChainInstanceAction) == 0x38);
@@ -97,6 +126,9 @@ namespace CKPE::Fallout4::EditorAPI
 		public hkpEntityActivationListener, public hkpUnaryAction
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpStickyContactAction;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpStickyContactAction[0];
+
 		/* 0x048 */ std::uint8_t unk048[0x38];
 	};
 	static_assert(sizeof(hkpStickyContactAction) == 0x80);

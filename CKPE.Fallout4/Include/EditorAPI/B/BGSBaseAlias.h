@@ -10,6 +10,8 @@
 #include <EditorAPI/B/BSString.h>
 #include <EditorAPI/C/CheckInFormList.h>
 #include <EditorAPI/B/BSFixedString.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -27,6 +29,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSBaseAlias
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSBaseAlias;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSBaseAlias[0];
+
 		enum Flag : std::uint32_t
 		{
 			Optional = 1u << 1,
@@ -104,6 +109,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSLocAlias : public BGSBaseAlias
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSLocAlias;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLocAlias[0];
+
 		virtual void CopyFrom(const BGSBaseAlias* Source) override;
 		[[nodiscard]] virtual bool IsDifferent(const BGSBaseAlias* Other) const override;
 		virtual void Save() const override;
@@ -151,6 +159,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSRefAlias : public BGSBaseAlias
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSRefAlias;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRefAlias[0];
+
 		virtual void CopyFrom(const BGSBaseAlias* Source) override;
 		[[nodiscard]] virtual bool IsDifferent(const BGSBaseAlias* Other) const override;
 		virtual void Save() const override;
@@ -195,6 +206,9 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	class BGSRefCollectionAlias : public BGSRefAlias
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSRefCollectionAlias;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRefCollectionAlias[0];
+
 		virtual void CopyFrom(const BGSBaseAlias* Source) override;
 		[[nodiscard]] virtual bool IsDifferent(const BGSBaseAlias* Other) const override;
 		virtual void Save() const override;

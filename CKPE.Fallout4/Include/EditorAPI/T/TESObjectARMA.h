@@ -11,6 +11,8 @@
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/B/BGSModelMaterialSwap.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -64,6 +66,7 @@ namespace CKPE
 					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftArmorAddon;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectARMA;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectARMA[0];
 				public:
 					OBJ_ARMA data; // 50

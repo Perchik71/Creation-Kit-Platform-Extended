@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -19,6 +21,9 @@ namespace CKPE
 			class TESPackageData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESPackageData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESPackageData[0];
+
 				virtual ~TESPackageData() = default;
 			};
 			static_assert(sizeof(TESPackageData) == 0x08);
@@ -27,6 +32,9 @@ namespace CKPE
 			class TESAmbushPackageData : public TESPackageData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESAmbushPackageData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESAmbushPackageData[0];
+
 				void* unk08;	// 08 - PLD2 location data, 0 on construction
 			};
 			static_assert(sizeof(TESAmbushPackageData) == 0x10);
@@ -35,6 +43,9 @@ namespace CKPE
 			class TESCustomPackageData : public TESPackageData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESCustomPackageData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESCustomPackageData[0];
+
 				std::uint8_t unk08[0x10];	// 08
 				std::uint32_t unk18;		// 18
 				std::uint32_t pad1C;		// 1C
@@ -55,6 +66,9 @@ namespace CKPE
 			class TESDialoguePackageData : public TESPackageData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESDialoguePackageData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESDialoguePackageData[0];
+
 				float unk08;			// 08 - 1120403456 (100.0f) on construction
 				std::uint32_t unk0C;	// 0C
 				std::uint32_t unk10;	// 10 - 0 on construction
@@ -75,6 +89,9 @@ namespace CKPE
 			class TESEatPackageData : public TESPackageData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESEatPackageData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESEatPackageData[0];
+
 				void* unk08;	// 08
 			};
 			static_assert(sizeof(TESEatPackageData) == 0x10);
@@ -83,6 +100,9 @@ namespace CKPE
 			class TESEscortPackageData : public TESPackageData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESEscortPackageData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESEscortPackageData[0];
+
 				void* unk08;			// 08 - PLD2, 0 on construction
 				std::uint32_t unk10;	// 10 - 200 on construction
 				std::uint32_t pad14;	// 14
@@ -94,6 +114,9 @@ namespace CKPE
 			class TESFollowPackageData : public TESPackageData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESFollowPackageData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESFollowPackageData[0];
+
 				void* unk08;			// 08 - PLD2, 0 on construction
 				std::uint32_t unk10;	// 10 - 0 on construction
 				std::uint32_t pad14;	// 14
@@ -104,6 +127,9 @@ namespace CKPE
 			class TESPatrolPackageData : public TESPackageData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESPatrolPackageData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESPatrolPackageData[0];
+
 				void* unk08;	// 08
 			};
 			static_assert(sizeof(TESPatrolPackageData) == 0x10);
@@ -112,6 +138,9 @@ namespace CKPE
 			class TESUseItemPackageData : public TESPackageData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESUseItemPackageData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESUseItemPackageData[0];
+
 				void* unk08;	// 08
 			};
 			static_assert(sizeof(TESUseItemPackageData) == 0x10);
@@ -120,6 +149,9 @@ namespace CKPE
 			class TESUseWeaponPackageData : public TESPackageData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESUseWeaponPackageData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESUseWeaponPackageData[0];
+
 				std::uint16_t unk08;	// 08
 				std::uint16_t unk0A;	// 0A
 				std::uint32_t unk0C;	// 0C

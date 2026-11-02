@@ -24,6 +24,8 @@
 #include <EditorAPI/T/TESDescription.h>
 #include <EditorAPI/B/BGSInstanceNamingRulesForm.h>
 #include <EditorAPI/B/BGSAttachParentArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -170,6 +172,7 @@ namespace CKPE
 					/* 448 */ const TBO_InstanceData* GetBaseInstanceData() const noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftWeapon;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectWEAP;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectWEAP[0];
 				public:
 					TESObjectWEAPData weaponData; // 218 - TESObjectWEAP::Data (0x138, starts with a vptr)

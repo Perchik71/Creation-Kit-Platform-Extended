@@ -1,5 +1,8 @@
 #pragma once
 
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
+
 namespace CKPE
 {
 	namespace Fallout4
@@ -14,6 +17,7 @@ namespace CKPE
 				public:
 					virtual ~TESChildCell();
 
+					constexpr static Common::ID RTTI = IDs::RTTI::TESChildCell;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESChildCell[0];
 
 					// add

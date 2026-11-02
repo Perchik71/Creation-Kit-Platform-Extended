@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -16,6 +18,9 @@ namespace CKPE
 			class BGSOverridePackCollection : public BaseFormComponent
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSOverridePackCollection;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSOverridePackCollection[0];
+
 				virtual ~BGSOverridePackCollection() = default;
 
 				void* unk08;	// 08

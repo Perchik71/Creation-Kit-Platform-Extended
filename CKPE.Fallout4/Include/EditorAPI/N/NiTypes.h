@@ -13,6 +13,7 @@
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/N/NiTransform.h>
 #include <EditorAPI/B/BSSystemFile.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE
 {
@@ -73,6 +74,7 @@ namespace CKPE
 
 					~NiWindow() = default;
 
+					constexpr static Common::ID RTTI = IDs::RTTI::NiWindow;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::NiWindow[0];
 				protected:
 					// Slot zero is not a destructor.
@@ -132,6 +134,7 @@ namespace CKPE
 				class NiBinaryStream
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiBinaryStream;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::NiBinaryStream[0];
 
 					struct BufferInfo
@@ -163,6 +166,7 @@ namespace CKPE
 				class NiFile : public NiBinaryStream 
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiFile;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::NiFile[0];
 
 					enum FileModes : std::uint32_t 

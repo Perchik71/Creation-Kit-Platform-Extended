@@ -7,6 +7,8 @@
 #include <cstddef>
 #include <cstdint>
 #include <EditorAPI/B/bhkRefObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -17,6 +19,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkWorld : public NiAPI::NiObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkWorld;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkWorld[0];
+
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
 		/* 2A */ virtual bool Update(std::uint32_t UpdateFlags);
@@ -42,6 +47,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkMigrationWorld : public bhkRefObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkMigrationWorld;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkMigrationWorld[0];
+
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
 		/* 38 */ virtual void UnkMigrationWorld38();

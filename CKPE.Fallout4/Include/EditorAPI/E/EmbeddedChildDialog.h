@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BaseModelessDialog.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -17,6 +19,9 @@ namespace CKPE
 				class EmbeddedChildDialog : public BaseModelessDialog
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::Dialog__EmbeddedChildDialog;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::Dialog__EmbeddedChildDialog[0];
+
 					/* 0x000 */ ~EmbeddedChildDialog() override;
 					/* 0x010 */ std::int32_t DlgProc(UINT Message, WPARAM wParam,
 						LPARAM lParam) noexcept(true) override;

@@ -12,6 +12,8 @@
 #include <EditorAPI/B/BSString.h>
 #include <EditorAPI/C/CheckInFormList.h>
 #include <EditorAPI/N/NiPoint.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -120,6 +122,9 @@ namespace CKPE
 					class Entry
 					{
 					public:
+						constexpr static Common::ID RTTI = IDs::RTTI::BGSCharacterTint__Template__Entry;
+						constexpr static Common::ID VTABLE = IDs::VTABLE::BGSCharacterTint__Template__Entry[0];
+
 						virtual ~Entry() = default;
 
 					private:
@@ -156,6 +161,9 @@ namespace CKPE
 						public Entry   // 00
 					{
 					public:
+						constexpr static Common::ID RTTI = IDs::RTTI::BGSCharacterTint__Template__Mask;
+						constexpr static Common::ID VTABLE = IDs::VTABLE::BGSCharacterTint__Template__Mask[0];
+
 						BSFixedString maskTexture; // 38
 						std::int32_t blendOp; // 40 - 0 on construction
 						std::uint32_t pad44; // 44
@@ -167,6 +175,9 @@ namespace CKPE
 						public Entry   // 00
 					{
 					public:
+						constexpr static Common::ID RTTI = IDs::RTTI::BGSCharacterTint__Template__Palette;
+						constexpr static Common::ID VTABLE = IDs::VTABLE::BGSCharacterTint__Template__Palette[0];
+
 						BSFixedString maskTextureName; // 38
 						std::int32_t defaultIndex; // 40 - -1 on construction
 						std::uint32_t pad44; // 44
@@ -185,6 +196,9 @@ namespace CKPE
 						public Entry   // 00
 					{
 					public:
+						constexpr static Common::ID RTTI = IDs::RTTI::BGSCharacterTint__Template__TextureSet;
+						constexpr static Common::ID VTABLE = IDs::VTABLE::BGSCharacterTint__Template__TextureSet[0];
+
 						BSFixedString unk38; // 38
 						BSFixedString unk40; // 40
 						BSFixedString unk48; // 48

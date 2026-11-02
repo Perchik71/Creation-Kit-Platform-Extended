@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/H/hkpShape.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -21,6 +23,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpMoppDefaultAssembler : public hkpMoppAssembler
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpMoppDefaultAssembler;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpMoppDefaultAssembler[0];
+
 		/* 0x010 */ std::uint8_t unk010[0x90];
 	};
 	static_assert(sizeof(hkpMoppDefaultAssembler) == 0xA0);
@@ -41,6 +46,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpMoppShapeMediator : public hkpMoppMediator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpMoppShapeMediator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpMoppShapeMediator[0];
+
 		/* 0x010 */ std::uint8_t unk010[0x10];
 	};
 	static_assert(sizeof(hkpMoppShapeMediator) == 0x20);
@@ -48,6 +56,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpMoppCachedShapeMediator : public hkpMoppMediator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpMoppCachedShapeMediator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpMoppCachedShapeMediator[0];
+
 		/* 0x010 */ std::uint8_t unk010[0x20];
 	};
 	static_assert(sizeof(hkpMoppCachedShapeMediator) == 0x30);
@@ -70,6 +81,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpMoppDefaultSplitter : public hkpMoppSplitter
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpMoppDefaultSplitter;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpMoppDefaultSplitter[0];
+
 		/* 0x010 */ std::uint8_t unk010[0x68];
 	};
 	static_assert(sizeof(hkpMoppDefaultSplitter) == 0x78);
@@ -77,6 +91,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpMoppCodeGenerator : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpMoppCodeGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpMoppCodeGenerator[0];
+
 		/* 0x010 */ std::uint8_t unk010[0x20];
 	};
 	static_assert(sizeof(hkpMoppCodeGenerator) == 0x30);
@@ -84,6 +101,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpMoppCostFunction : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpMoppCostFunction;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpMoppCostFunction[0];
+
 		/* 0x010 */ std::uint8_t unk010[0x18];
 	};
 	static_assert(sizeof(hkpMoppCostFunction) == 0x28);

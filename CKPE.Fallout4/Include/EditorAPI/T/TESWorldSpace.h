@@ -11,6 +11,8 @@
 #include <EditorAPI/T/TESTexture.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -90,6 +92,7 @@ namespace CKPE
 					/* 370 */ void CollectRequiredFiles(BSTBTree<TESForm*>* VisitedForms, BSTBTree<BSFixedString>* RequiredFiles) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftWorldSpace;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESWorldSpace;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESWorldSpace[0];
 				public:
 					// BSTHashMap<std::int32_t, TESObjectCELL*> in the CK's 0x38 byte table layout: the constructor puts the end of chain marker at 80,

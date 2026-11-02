@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/T/TESTexture.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -15,6 +17,9 @@ namespace CKPE
 			class TESIcon : public TESTexture
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESIcon;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESIcon[0];
+
 				virtual ~TESIcon() = default;
 
 				// override

@@ -8,6 +8,8 @@
 #include <EditorAPI/B/BaseFormComponent.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -69,6 +71,7 @@ namespace CKPE
 				/* 90 */ void CleanupComponentDialogBox(HWND hDialogBox) noexcept(true) override;
 				/* 98 */ void CollectComponentResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::TESActorBaseData;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TESActorBaseData[0];
 
 				virtual void CopyFromTemplateForms() noexcept(true) { return; } // 21 - RVA 0x8ADD30

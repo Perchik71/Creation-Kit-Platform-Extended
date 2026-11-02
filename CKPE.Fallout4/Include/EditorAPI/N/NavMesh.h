@@ -10,6 +10,8 @@
 #include <EditorAPI/F/FormInterfaces.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -26,6 +28,9 @@ namespace CKPE
 					public BSNavmesh      // 030
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NavMesh;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NavMesh[0];
+
 					virtual ~NavMesh() = default;
 
 					/* 0B0 */ void ClearData() override;

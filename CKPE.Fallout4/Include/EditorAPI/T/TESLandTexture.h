@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/B/BSTList.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -52,6 +54,7 @@ namespace CKPE
 					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftLandTexture;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESLandTexture;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESLandTexture[0];
 				public:
 					BGSTextureSet* textureSet; // 28

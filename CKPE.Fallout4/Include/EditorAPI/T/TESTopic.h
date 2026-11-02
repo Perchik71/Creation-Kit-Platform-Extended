@@ -7,6 +7,8 @@
 #include <CKPE.Common.h>
 #include <EditorAPI/N/NiTSimpleArray.h>
 #include <EditorAPI/T/TESTopicInfo.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -23,6 +25,7 @@ namespace CKPE
 				{
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftTopic;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESTopic;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESTopic[0];
 
 					enum SubtypeT : std::uint8_t

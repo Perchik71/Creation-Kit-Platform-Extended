@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -39,6 +41,7 @@ namespace CKPE
 					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSReferenceEffect;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSReferenceEffect[0];
 				public:
 					// CommonLibF4's Data (the constructor / InitializeData zero 28, 30 and 38)

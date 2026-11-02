@@ -6,6 +6,8 @@
 #include <EditorAPI/D/DecalData.h>
 
 #include <array>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -32,6 +34,9 @@ namespace CKPE
 					DecalData* decalData;
 					TEnumSet<Flag, std::uint32_t> flags;
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSTextureSet;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSTextureSet[0];
+
 					virtual ~BGSTextureSet() = default;
 
 					TESTexture& GetTextureAt(BSTextureSet::Texture a_type) noexcept(true) { return textures[std::to_underlying(a_type)]; }

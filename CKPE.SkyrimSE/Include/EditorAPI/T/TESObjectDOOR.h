@@ -10,6 +10,8 @@
 #include <EditorAPI/T/TESModelTextureSwap.h>
 #include <EditorAPI/B/BGSDestructibleObjectForm.h>
 #include <EditorAPI/B/BGSOpenCloseForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -28,6 +30,9 @@ namespace CKPE
 					public BGSOpenCloseForm				// C0
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectDOOR;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectDOOR[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftDoor;
 
 					virtual ~TESObjectDOOR() = default;

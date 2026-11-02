@@ -8,6 +8,7 @@
 #include <cstdint>
 
 #include <EditorAPI/IDs_VTABLE.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -16,6 +17,7 @@ namespace CKPE::Fallout4::EditorAPI
 	public:
 		virtual ~IProcedure() = default;
 
+		constexpr static Common::ID RTTI = IDs::RTTI::IProcedure;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::IProcedure[0];
 	protected:
 		// Preserve the interface without inventing callable procedure signatures.
@@ -69,6 +71,7 @@ namespace CKPE::Fallout4::EditorAPI
 		virtual void sub_108() = 0;
 		virtual void sub_110() = 0;
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureBase;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureBase[0];
 
 		/* 0x008 */ std::uint8_t unk08[0x30];

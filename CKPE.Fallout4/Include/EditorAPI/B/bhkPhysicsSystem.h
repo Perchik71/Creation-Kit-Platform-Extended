@@ -7,6 +7,8 @@
 #include <cstddef>
 #include <cstdint>
 #include <EditorAPI/N/NiObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -16,6 +18,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkPhysicsSystem : public NiAPI::NiObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkPhysicsSystem;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkPhysicsSystem[0];
+
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
 		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;

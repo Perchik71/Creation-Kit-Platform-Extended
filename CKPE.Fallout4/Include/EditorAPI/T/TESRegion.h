@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/B/BSTList.h>
 #include <EditorAPI/N/NiColor.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -40,6 +42,7 @@ namespace CKPE
 					/* 2E8 */ void OnFormIDsRemapped(BSTHashMap<std::uint32_t, std::uint32_t>* FormIDMap) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftRegion;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESRegion;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegion[0];
 
 					virtual TESRegion* CloneRegion(TESRegion* Target) const noexcept(true) { return nullptr; } // 124

@@ -6,6 +6,8 @@
 
 #include <EditorAPI/N/NiAVObject.h>
 #include <EditorAPI/N/NiTObjectArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -19,6 +21,9 @@ namespace CKPE
 				{
 					NiTObjectArray<NiAVObject*> _array_objs;
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiNode;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiNode[0];
+
 					virtual ~NiNode() = default;
 				};
 				static_assert(sizeof(NiNode) == 0x128);

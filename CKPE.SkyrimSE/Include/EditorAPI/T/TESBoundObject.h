@@ -2,6 +2,8 @@
 
 #include <EditorAPI/T/TESObject.h>
 #include <EditorAPI/B/BSTList.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -36,6 +38,9 @@ namespace CKPE
 				class TESBoundObject : public TESObject, public TESCellUseList
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESBoundObject;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESBoundObject[0];
+
 					struct BOUND_DATA  // OBND
 					{
 						// members

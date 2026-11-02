@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <EditorAPI/T/MagicItem.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,9 @@ namespace CKPE
 					public MagicItem	// 00
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::EnchantmentItem;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::EnchantmentItem[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftEnchantment;
 
 					virtual ~EnchantmentItem() = default;

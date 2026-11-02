@@ -6,6 +6,8 @@
 
 #include <EditorAPI/N/NiObject.h>
 #include <EditorAPI/N/NiPointer.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -21,6 +23,9 @@ namespace CKPE
 				class NiTimeController : public NiObject
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiTimeController;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiTimeController[0];
+
 					/* 02 */ virtual NiRTTI* GetRTTI() const noexcept(true) override;
 					/* 1B */ virtual void LoadBinary(NiStream& Stream) noexcept(true) override;
 					/* 1C */ virtual void LinkObject(NiStream& Stream) noexcept(true) override;

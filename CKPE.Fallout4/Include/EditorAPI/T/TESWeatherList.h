@@ -8,6 +8,8 @@
 #include <cstddef>
 #include <Windows.h>
 #include <EditorAPI/B/BSTList.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -21,6 +23,9 @@ namespace CKPE
 			class TESWeatherList
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESWeatherList;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESWeatherList[0];
+
 				// Dialog message handler: Id is the control id, Result the output of a handled message
 				virtual bool HandleDialogMessage(HWND Dialog, std::int32_t Message, std::uint16_t Id, std::int64_t Param, std::uint64_t* Result); // 00
 				// Checks that the dialog has the four controls of the component

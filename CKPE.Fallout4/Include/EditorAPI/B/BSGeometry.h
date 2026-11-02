@@ -10,6 +10,8 @@
 #include <EditorAPI/B/BSSkin.h>
 #include <EditorAPI/B/BSGraphics.h>
 #include <EditorAPI/B/BSShaderProperty.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -71,6 +73,7 @@ namespace CKPE
 				/* 38 */ virtual void UpdateTransforms(NiAPI::NiUpdateData& Data) noexcept(true) override;
 				/* 3B */ virtual void OnVisible(NiAPI::NiCullingProcess& Culler) noexcept(true) override;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::BSGeometry;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BSGeometry[0];
 
 				/* 3C */ virtual void UpdatePropertyControllers(NiAPI::NiUpdateData& Data) noexcept(true);

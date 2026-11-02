@@ -5,6 +5,8 @@
 #include <EditorAPI/B/BSSpinLock.h>
 #include <EditorAPI/B/BSGraphicsTypes.h>
 #include <EditorAPI/B/BSTriShape.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -15,6 +17,9 @@ namespace CKPE
 			class BSDynamicTriShape : public BSTriShape
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSDynamicTriShape;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSDynamicTriShape[0];
+
 				virtual ~BSDynamicTriShape() = default;
 
 				void* pDynamicData;

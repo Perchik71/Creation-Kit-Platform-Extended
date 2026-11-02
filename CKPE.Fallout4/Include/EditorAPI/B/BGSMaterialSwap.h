@@ -6,6 +6,8 @@
 
 #include <EditorAPI/B/BSString.h>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -21,6 +23,7 @@ namespace CKPE
 				{
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftMaterialSwap;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSMaterialSwap;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMaterialSwap[0];
 
 					class Object

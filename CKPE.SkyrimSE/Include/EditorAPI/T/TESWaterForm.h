@@ -3,6 +3,8 @@
 #include <EditorAPI/N/NiTypes.h>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESFullName.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -15,6 +17,9 @@ namespace CKPE
 				class TESWaterForm : public TESForm, public TESFullName
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESWaterForm;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESWaterForm[0];
+
 					virtual ~TESWaterForm() = default;
 
 					inline std::uint32_t GetDamagePerSecond() const { return _DamagePerSecond; }

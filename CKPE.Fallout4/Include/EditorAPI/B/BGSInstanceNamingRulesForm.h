@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -23,6 +25,9 @@ namespace CKPE
 				public BaseFormComponent   // 000
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSInstanceNamingRulesForm;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSInstanceNamingRulesForm[0];
+
 				virtual ~BGSInstanceNamingRulesForm() = default;
 				/* 08 */ [[nodiscard]] std::uint32_t GetFormComponentType() const noexcept(true) override;
 				/* 10 */ void InitializeDataComponent() override;

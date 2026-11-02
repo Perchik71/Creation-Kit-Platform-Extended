@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/F/FormInterfaces.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -30,6 +32,7 @@ namespace CKPE
 					/* 110 */ void InitItemImpl() noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftObjectVisibilityManager;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSObjectVisibilityManager;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSObjectVisibilityManager[0];
 				public:
 					std::uint8_t unk28[0xC]; // 28

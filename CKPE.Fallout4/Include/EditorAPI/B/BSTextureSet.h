@@ -10,6 +10,8 @@
 #include <EditorAPI/N/NiPointer.h>
 #include <EditorAPI/N/NiTexture.h>
 #include <EditorAPI/B/BSFixedString.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -48,6 +50,7 @@ namespace CKPE
 			class BSShaderTextureSet : public BSTextureSet
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSShaderTextureSet;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BSShaderTextureSet[0];
 
 				constexpr static std::uint32_t MAX = 10;

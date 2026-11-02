@@ -7,6 +7,8 @@
 #include <cstddef>
 #include <EditorAPI/N/NiTypes.h>
 #include <EditorAPI/B/BSString.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -36,6 +38,7 @@ namespace CKPE
 				/*2A8*/ std::uint32_t	unk2A8;
 				/*2AC*/ std::uint32_t	unk2AC;
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSFile;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BSFile[0];
 
 				using NiAPI::NiFile::Seek;

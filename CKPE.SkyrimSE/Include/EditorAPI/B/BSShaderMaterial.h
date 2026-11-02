@@ -8,6 +8,8 @@
 #include <EditorAPI/N/NiPoint.h>
 
 #include <array>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,9 @@ namespace CKPE
 			class BSShaderMaterial : public BSIntrusiveRefCounted
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSShaderMaterial;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSShaderMaterial[0];
+
 				enum class Feature
 				{
 					kNone = static_cast<std::underlying_type_t<Feature>>(-1),

@@ -6,12 +6,17 @@
 
 #include <EditorAPI/H/hkBaseObject.h>
 #include <EditorAPI/H/hkBaseTypes.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class hkpConstraintData : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpConstraintData;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpConstraintData[0];
+
 		// hkpConstraintData::ConstraintType (BALL_AND_SOCKET 0, PRISMATIC 6, ...)
 		[[nodiscard]] virtual std::int32_t getType() const; // 0x20
 		virtual void getConstraintInfo(void* InfoOut) const; // 0x28 - hkpConstraintData::ConstraintInfo, walks the atoms
@@ -43,6 +48,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpConstraintMotor : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpConstraintMotor;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpConstraintMotor[0];
+
 		/* 0x020 */ [[nodiscard]] virtual hkpConstraintMotor* Clone() const;
 		/* 0x010 */ std::int8_t m_type;
 		/* 0x011 */ std::uint8_t pad011[7];
@@ -53,6 +61,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpLimitedForceConstraintMotor : public hkpConstraintMotor
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpLimitedForceConstraintMotor;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpLimitedForceConstraintMotor[0];
+
 		/* 0x018 */ float m_minForce;
 		/* 0x01C */ float m_maxForce;
 	};
@@ -62,6 +73,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpPositionConstraintMotor : public hkpLimitedForceConstraintMotor
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpPositionConstraintMotor;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpPositionConstraintMotor[0];
+
 		/* 0x020 */ float m_tau;
 		/* 0x024 */ float m_damping;
 		/* 0x028 */ float m_proportionalRecoveryVelocity;
@@ -73,6 +87,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpVelocityConstraintMotor : public hkpLimitedForceConstraintMotor
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpVelocityConstraintMotor;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpVelocityConstraintMotor[0];
+
 		/* 0x020 */ float m_tau;
 		/* 0x024 */ float m_velocityTarget;
 		/* 0x028 */ hkBool m_useVelocityTargetFromConstraintTargets;
@@ -84,6 +101,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpSpringDamperConstraintMotor : public hkpLimitedForceConstraintMotor
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSpringDamperConstraintMotor;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSpringDamperConstraintMotor[0];
+
 		/* 0x020 */ float m_springConstant;
 		/* 0x024 */ float m_springDamping;
 	};
@@ -93,6 +113,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpCallbackConstraintMotor : public hkpLimitedForceConstraintMotor
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpCallbackConstraintMotor;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpCallbackConstraintMotor[0];
+
 		/* 0x020 */ std::uint8_t unk020[0x28];
 	};
 	static_assert(sizeof(hkpCallbackConstraintMotor) == 0x48);
@@ -107,6 +130,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpWrappedConstraintData : public hkpConstraintData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpWrappedConstraintData;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpWrappedConstraintData[0];
+
 		virtual void sub_18();
 		virtual void sub_19();
 		virtual void sub_1A();
@@ -117,6 +143,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpBreakableConstraintData : public hkpWrappedConstraintData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpBreakableConstraintData;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpBreakableConstraintData[0];
+
 		/* 0x020 */ std::uint8_t unk020[0x30];
 	};
 	static_assert(sizeof(hkpBreakableConstraintData) == 0x50);
@@ -124,6 +153,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpMalleableConstraintData : public hkpWrappedConstraintData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpMalleableConstraintData;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpMalleableConstraintData[0];
+
 		/* 0x020 */ std::uint8_t unk020[0x30];
 	};
 	static_assert(sizeof(hkpMalleableConstraintData) == 0x50);
@@ -138,6 +170,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpBallSocketChainData : public hkpConstraintChainData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpBallSocketChainData;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpBallSocketChainData[0];
+
 		/* 0x018 */ std::uint8_t unk018[0x58];
 	};
 	static_assert(sizeof(hkpBallSocketChainData) == 0x70);
@@ -166,6 +201,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpGenericConstraintData : public hkpConstraintData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpGenericConstraintData;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpGenericConstraintData[0];
+
 		/* 0x018 */ std::uint8_t unk018[0x78];
 	};
 	static_assert(sizeof(hkpGenericConstraintData) == 0x90);
@@ -257,6 +295,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpSimpleContactConstraintData : public hkpConstraintData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSimpleContactConstraintData;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSimpleContactConstraintData[0];
+
 		virtual void sub_18();
 		virtual void sub_19();
 		/* 0x018 */ std::uint8_t unk018[0x38];
@@ -304,6 +345,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpLinearParametricCurve : public hkpParametricCurve
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpLinearParametricCurve;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpLinearParametricCurve[0];
+
 		/* 0x010 */ std::uint8_t unk010[0x40];
 	};
 	static_assert(sizeof(hkpLinearParametricCurve) == 0x50);

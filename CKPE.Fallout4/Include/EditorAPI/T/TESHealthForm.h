@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -28,6 +30,7 @@ namespace CKPE
 				/* 88 */ void UpdateDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 				/* 90 */ void CleanupComponentDialogBox(HWND hDialogBox) noexcept(true) override;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::TESHealthForm;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TESHealthForm[0];
 			public:
 				std::uint32_t health; // 08 - edited through dialog item 1024

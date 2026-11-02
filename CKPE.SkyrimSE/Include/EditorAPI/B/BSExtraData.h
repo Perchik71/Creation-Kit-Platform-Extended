@@ -12,6 +12,8 @@
 #include <EditorAPI/N/NiAVObject.h>
 #include <EditorAPI/B/BSLock.h>
 #include <algorithm>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -23,6 +25,9 @@ namespace CKPE
 			{
 				BSExtraData* _next{ nullptr };
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSExtraData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSExtraData[0];
+
 				enum : std::uint8_t
 				{
 					kNone,                     // 0x00
@@ -241,6 +246,9 @@ namespace CKPE
 			{
 				BSExtraData* _head{ nullptr };
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BaseExtraList;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BaseExtraList[0];
+
 				virtual ~BaseExtraList() = default;
 
 				[[nodiscard]] BSExtraData* GetByType(std::uint8_t Type) const noexcept(true)
@@ -349,6 +357,9 @@ namespace CKPE
 				NiAPI::NiPointer<NiAPI::NiAVObject> _3D;	// BSFadeNode by RTTI
 				char unk[0x8];
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraEditorRef3DData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraEditorRef3DData[0];
+
 				static constexpr auto TYPE{ kEditorRef3DData };
 
 				ExtraEditorRef3DData() : BSExtraData() {}
@@ -369,6 +380,9 @@ namespace CKPE
 				NiAPI::NiPoint3 _Position;
 				NiAPI::NiPoint3 _OldPosition;
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraEditorRefMoveData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraEditorRefMoveData[0];
+
 				static constexpr auto TYPE{ kEditorRefMoveData };
 
 				ExtraEditorRefMoveData() : BSExtraData() {}
@@ -395,6 +409,9 @@ namespace CKPE
 			{
 				BGSPrimitive* _Primitive{ nullptr };
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraPrimitive;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraPrimitive[0];
+
 				static constexpr auto TYPE{ kPrimitive };
 
 				ExtraPrimitive(BGSPrimitive* Primitive) : BSExtraData(), _Primitive(Primitive) {}
@@ -414,6 +431,9 @@ namespace CKPE
 			{
 				BSOcclusionPlane* _OcclusionShape{ nullptr };
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraOcclusionShape;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraOcclusionShape[0];
+
 				static constexpr auto TYPE{ kOcclusionShape };
 
 				ExtraOcclusionShape(BSOcclusionPlane* OcclusionShape) : BSExtraData(), _OcclusionShape(OcclusionShape) {}
@@ -433,6 +453,9 @@ namespace CKPE
 			{
 				BGSLocationRefType* _LocationRefType{ nullptr };
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraLocationRefType;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraLocationRefType[0];
+
 				static constexpr auto TYPE{ kLocationRefType };
 
 				ExtraLocationRefType(BGSLocationRefType* LocationRefType) : BSExtraData(), _LocationRefType(LocationRefType) {}
@@ -464,6 +487,9 @@ namespace CKPE
 					} Topic;
 				} *Data{ nullptr };
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ExtraPatrolRefData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ExtraPatrolRefData[0];
+
 				static constexpr auto TYPE{ kPatrolRefData };
 
 				ExtraPatrolRefData() : BSExtraData() {}
