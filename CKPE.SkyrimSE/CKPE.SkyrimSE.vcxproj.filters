@@ -1629,6 +1629,9 @@
     <ClInclude Include="Include\EditorAPI\B\BGSMusicTrackClasses.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSMiscClasses.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESObjectLIGH.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>

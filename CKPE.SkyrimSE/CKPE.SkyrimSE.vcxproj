@@ -521,6 +521,7 @@
     <ClInclude Include="Include\EditorAPI\B\TESPackageDataClasses.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSSceneActionClasses.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSMusicTrackClasses.h" />
+    <ClInclude Include="Include\EditorAPI\B\BGSMiscClasses.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectLIGH.h" />
     <ClInclude Include="Include\EditorAPI\T\TESObjectREFR.h" />
     <ClInclude Include="Include\EditorAPI\T\TESTexture.h" />
