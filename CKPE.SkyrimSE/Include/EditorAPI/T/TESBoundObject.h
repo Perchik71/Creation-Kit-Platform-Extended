@@ -29,10 +29,9 @@ namespace CKPE
 
 				struct TESCellUseList
 				{
-					char pad0[8];
 					BSSimpleList<TESObjectCell> cells;
 				};
-				static_assert(sizeof(TESCellUseList) == 0x18);
+				static_assert(sizeof(TESCellUseList) == 0x10);
 
 				class TESBoundObject : public TESObject, public TESCellUseList
 				{

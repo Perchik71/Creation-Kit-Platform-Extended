@@ -36,8 +36,11 @@ namespace CKPE
 					virtual std::uint32_t IncRef() noexcept(true);											// 70 - { return 0; }
 					virtual std::uint32_t DecRef() noexcept(true);											// 71 - { return 0; }
 					virtual NiAPI::NiAVObject* LoadGraphics(TESObjectREFR* a_ref) noexcept(true);			// 72
+				public:
+					void* unk28;	// 28 - 0 on construction (the CK TESObject is 0x30 bytes)
 				};
-				static_assert(sizeof(TESObject) == 0x28);
+				static_assert(offsetof(TESObject, unk28) == 0x28);
+				static_assert(sizeof(TESObject) == 0x30);
 			}
 		}
 	}

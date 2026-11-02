@@ -440,6 +440,22 @@ namespace CKPE
 						return func(this, NewEditorID);
 					}
 
+					// tesform.cpp:2471. Builds the 24 byte record header (flags, form ID, version control info, EDID) in the global record buffer.
+					void BeginSaveRecord() noexcept(true)
+					{
+						using func_t = void (*)(TESForm*);
+						static Common::Relocation<func_t> func{ IDs::TESForm::BeginSaveRecord };
+						func(this);
+					}
+
+					// tesform.cpp:2531. Patches the record data size (buffer size - 24).
+					void EndSaveRecord() noexcept(true)
+					{
+						using func_t = void (*)(TESForm*);
+						static Common::Relocation<func_t> func{ IDs::TESForm::EndSaveRecord };
+						func(this);
+					}
+
 					[[nodiscard]] TESFile* GetFile(std::int32_t a_index = -1) const noexcept(true)
 					{
 						using func_t = decltype(&TESForm::GetFile);

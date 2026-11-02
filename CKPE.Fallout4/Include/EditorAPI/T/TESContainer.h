@@ -8,6 +8,8 @@
 #include <EditorAPI/B/BaseFormComponent.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs.h>
+#include <CKPE.Common.Relocation.h>
 
 namespace CKPE
 {
@@ -33,6 +35,14 @@ namespace CKPE
 				std::int32_t unk18;				// 18 - -1 on construction
 				std::uint32_t pad1C;			// 1C
 				void* unk20;					// 20 - owned polymorphic object (deleted through its virtual destructor, cloned on copy)
+
+				// Copy constructor body: copies the fields and clones the owned object; a null source is ignored.
+				void CopyFrom(const ContainerItemExtra* Source) noexcept(true)
+				{
+					using func_t = void (*)(ContainerItemExtra*, const ContainerItemExtra*);
+					static Common::Relocation<func_t> func{ IDs::ContainerItemExtra::CopyFrom };
+					func(this, Source);
+				}
 			};
 			static_assert(sizeof(ContainerItemExtra) == 0x28);
 
