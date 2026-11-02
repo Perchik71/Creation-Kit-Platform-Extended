@@ -31,6 +31,7 @@ namespace CKPE
 			*/
 			class BSString
 			{
+				BSString& AppendRaw(const char* str, std::uint16_t len) noexcept(true);
 			public:
 				enum EResult : std::uint16_t
 				{

@@ -21,6 +21,35 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
+			BSString& BSString::AppendRaw(const char* str, std::uint16_t len) noexcept(true)
+			{
+				if (str)
+				{
+					constexpr auto limit = std::numeric_limits<std::uint16_t>::max() - 1;
+
+					auto lenSrc = len > 0 ? static_cast<std::size_t>(len) : strlen(str);
+					if (lenSrc && (m_dataLen < limit))
+					{
+						auto resLen = lenSrc + m_dataLen;
+						if (resLen >= limit)
+							resLen = limit;
+
+						if (m_dataLen)
+						{
+							if (Reserved(static_cast<std::uint16_t>(resLen)))
+							{
+								strncat(m_data, str, resLen);
+								m_data[resLen + 1] = '\0';
+							}
+						}
+						else
+							Set(str, static_cast<std::uint16_t>(resLen));
+					}
+				}
+
+				return *this;
+			}
+
 			BSString::BSString() noexcept(true) :
 				m_data(nullptr), m_dataLen(0), m_bufLen(0)
 			{}
@@ -214,94 +243,25 @@ namespace CKPE
 
 			BSString& BSString::Append(const char* str) noexcept(true)
 			{
-				if (str) {
-					std::uint16_t dwLen = (std::uint16_t)strlen(str);
-					if (dwLen) {
-						if (m_dataLen) {
-							if (Reserved(m_dataLen + dwLen + 1))
-								strcat(m_data, str);
-						}
-						else
-							Set(str);
-					}
-				}
-
-				return *this;
+				return AppendRaw(str, str ? static_cast<std::uint16_t>(strlen(str)) : 0);
 			}
 
 			BSString& BSString::Append(const char* str, std::uint16_t len) noexcept(true)
 			{
-				if (str)
-				{
-					std::uint16_t dwLen = (std::uint16_t)strlen(str);
-					if (dwLen)
-					{
-						if (m_dataLen)
-						{
-							if (dwLen <= len)
-							{
-								if (Reserved(m_dataLen + dwLen + 1))
-									strcat(m_data, str);
-							}
-							else
-							{
-								if (Reserved(m_dataLen + len + 1))
-									strncat(m_data, str, len);
-							}
-						}
-						else
-							Set(str, len);
-					}
-				}
-
-				return *this;
+				return AppendRaw(str, len);
 			}
 
 			BSString& BSString::Append(const BSString& string) noexcept(true)
 			{
 				if (!string.IsEmpty())
-				{
-					std::uint16_t dwLen = (std::uint16_t)string.m_dataLen;
-					if (dwLen)
-					{
-						if (m_dataLen)
-						{
-							if (Reserved(m_dataLen + dwLen + 1))
-								strcat(m_data, string.m_data);
-						}
-						else
-							Set(string.m_data);
-					}
-				}
-
+					(void)AppendRaw(string.c_str(), string.Length());
 				return *this;
 			}
 
 			BSString& BSString::Append(const BSString& string, std::uint16_t len) noexcept(true)
 			{
 				if (!string.IsEmpty())
-				{
-					std::uint16_t dwLen = (std::uint16_t)string.m_dataLen;
-					if (dwLen)
-					{
-						if (m_dataLen)
-						{
-							if (dwLen <= len)
-							{
-								if (Reserved(m_dataLen + dwLen + 1))
-									strcat(m_data, string.m_data);
-							}
-							else
-							{
-								if (Reserved(m_dataLen + len + 1))
-									strncat(m_data, string.m_data, len);
-							}
-						}
-						else
-							Set(string.m_data, len);
-					}
-				}
-
+					(void)AppendRaw(string.c_str(), len);
 				return *this;
 			}
 
