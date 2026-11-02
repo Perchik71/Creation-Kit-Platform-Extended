@@ -444,7 +444,6 @@
     <ClInclude Include="Include\EditorAPI\B\BGSDebris.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSDialogueBranch.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSEncounterZone.h" />
-    <ClInclude Include="Include\EditorAPI\B\BGSFootstep.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSHeadPart.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSListForm.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSLocation.h" />
@@ -506,14 +505,10 @@
     <ClInclude Include="Include\EditorAPI\B\BGSMusicTrackFormWrapper.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSMusicType.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSReverbParameters.h" />
-    <ClInclude Include="Include\EditorAPI\B\BGSSoundCategory.h" />
-    <ClInclude Include="Include\EditorAPI\B\BGSSoundOutput.h" />
     <ClInclude Include="Include\EditorAPI\B\BGSVolumetricLighting.h" />
     <ClInclude Include="Include\EditorAPI\B\BSIMusicTrack.h" />
     <ClInclude Include="Include\EditorAPI\B\BSIMusicType.h" />
     <ClInclude Include="Include\EditorAPI\B\BSIReverbType.h" />
-    <ClInclude Include="Include\EditorAPI\B\BSISoundCategory.h" />
-    <ClInclude Include="Include\EditorAPI\B\BSISoundOutputModel.h" />
     <ClInclude Include="Include\EditorAPI\B\TESReactionForm.h" />
     <ClInclude Include="Include\EditorAPI\T\NavMesh.h" />
     <ClInclude Include="Include\EditorAPI\T\NavMeshInfoMap.h" />

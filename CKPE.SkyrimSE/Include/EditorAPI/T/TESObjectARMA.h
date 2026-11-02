@@ -18,15 +18,8 @@ namespace CKPE
 			namespace Forms
 			{
 				// 1.7.99.0: size 0x1C8, vtable RVA 0x30FBE88
-				// The CK TESObject occupies 0x30 bytes; TESObject here is 0x28, so the remaining 8 bytes are modelled as a base.
-				struct TESObjectARMAPad28
-				{
-					std::uint8_t pad28[8];	// 28
-				};
-
 				class TESObjectARMA :
 					public TESObject,				// 00
-					public TESObjectARMAPad28,		// 28
 					public TESRaceForm,				// 30
 					public BGSBipedObjectForm		// 40
 				{

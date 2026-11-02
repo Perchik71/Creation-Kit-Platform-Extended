@@ -1398,9 +1398,6 @@
     <ClInclude Include="Include\EditorAPI\B\BGSEncounterZone.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSFootstep.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSHeadPart.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
@@ -1584,12 +1581,6 @@
     <ClInclude Include="Include\EditorAPI\B\BGSReverbParameters.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSSoundCategory.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSSoundOutput.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSVolumetricLighting.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
@@ -1600,12 +1591,6 @@
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BSIReverbType.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BSISoundCategory.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BSISoundOutputModel.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\TESReactionForm.h">

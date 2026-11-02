@@ -227,7 +227,7 @@ namespace CKPE
 					/* 088 */ virtual bool LoadPartial(TESFile* File) noexcept(true);
 					/* 090 */ virtual bool LoadEdit(TESFile* File) noexcept(true);
 					/* 098 */ virtual void Save() noexcept(true);
-					/* 0A0 */ virtual void sub_0A0();
+					/* 0A0 */ virtual void OnPluginSaved(TESFile* File) noexcept(true);
 					/* 0A8 */ virtual bool SavePlugin(TESFile* File) noexcept(true);
 					/* 0B0 */ virtual bool LoadPlugin(TESFile* File) noexcept(true);
 					/* 0B8 */ virtual bool SaveForm(TESFile* File) noexcept(true);
@@ -303,12 +303,12 @@ namespace CKPE
 					/* 2E0 */ [[nodiscard]] virtual std::int32_t CompareListViewItems(const TESForm* Rhs, LPARAM nSortColumn) const noexcept(true);
 					/* 2E8 */ virtual void InitializeListView(HWND hListView) const noexcept(true);
 					/* 2F0 */ [[nodiscard]] virtual bool HasRequiredUniqueEditorID() const noexcept(true);
-					/* 2F8 */ virtual void sub_2F8();
+					/* 2F8 */ virtual void CollectAdditionalResourceFiles(void* Files) noexcept(true);
 					/* 300 */ virtual bool WriteWidthTabToSettingFile([[maybe_unused]] std::int64_t nUnk, std::int32_t nWidth) noexcept(true);
 					/* 308 */ [[nodiscard]] virtual std::int32_t ReadWidthTabFromSettingFile() const noexcept(true);
 					/* 310 */ virtual void SetNewFormID(std::uint32_t NewIndex, bool Unk = true) noexcept(true);
-					/* 318 */ virtual void sub_318();
-					/* 320 */ virtual void sub_320();
+					/* 318 */ [[nodiscard]] virtual const char* GetObjectTypeName() const noexcept(true);
+					/* 320 */ [[nodiscard]] virtual bool HasAvailableInGame() const noexcept(true);
 					/* 328 */ virtual void sub_328();
 
 					[[nodiscard]] inline std::uint32_t GetFormID() const noexcept(true) { return _FormID; }
