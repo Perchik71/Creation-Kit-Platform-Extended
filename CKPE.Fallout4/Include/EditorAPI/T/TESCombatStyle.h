@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -117,6 +119,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftCombatStyle;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESCombatStyle;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESCombatStyle[0];
 				public:
 					CombatStyleGeneralData generalData; // 28

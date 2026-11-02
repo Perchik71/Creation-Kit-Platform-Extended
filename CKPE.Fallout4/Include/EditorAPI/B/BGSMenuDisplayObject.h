@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -38,6 +40,7 @@ namespace CKPE
 				/* 90 */ void CleanupComponentDialogBox(HWND hDialogBox) noexcept(true) override;
 				/* 98 */ void CollectComponentResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSMenuDisplayObject;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMenuDisplayObject[0];
 
 				virtual Forms::TESBoundObject* GetMenuDispObject() const noexcept(true) { return nullptr; } // 21 - RVA 0x899710, return (const char *)*((_QWORD *)this + 1);

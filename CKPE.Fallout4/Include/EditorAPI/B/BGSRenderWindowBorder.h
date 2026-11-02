@@ -10,6 +10,7 @@
 #include <CKPE.Common.h>
 
 #include <EditorAPI/IDs_VTABLE.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE
 {
@@ -29,6 +30,7 @@ namespace CKPE
 
 				virtual ~BGSRenderWindowBorder() = default;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowBorder;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowBorder[0];
 
 				[[nodiscard]] inline HWND GetWindowHandle() const noexcept(true) { return _WindowHandle; }

@@ -11,6 +11,8 @@
 #include <EditorAPI/B/BGSDestructibleObjectForm.h>
 #include <EditorAPI/B/BGSOpenCloseForm.h>
 #include <EditorAPI/B/BGSKeywordForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -30,6 +32,9 @@ namespace CKPE
 					public BGSKeywordForm				// C8
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectACTI;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectACTI[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftActivator;
 
 					virtual ~TESObjectACTI() = default;

@@ -9,6 +9,8 @@
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/T/TESDescription.h>
 #include <EditorAPI/B/BGSLocalizedString.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -38,6 +40,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftActorValueInfo;
+					constexpr static Common::ID RTTI = IDs::RTTI::ActorValueInfo;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::ActorValueInfo[0];
 				public:
 					ActorValueInfo* dependentActorValues[15]; // 68

@@ -10,6 +10,7 @@
 #include <cstddef>
 
 #include <EditorAPI/IDs_VTABLE.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE
 {
@@ -28,6 +29,7 @@ namespace CKPE
 					NiRefObject() noexcept(true);
 					virtual ~NiRefObject() noexcept(true);
 
+					constexpr static Common::ID RTTI = IDs::RTTI::NiRefObject;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::NiRefObject[0];
 
 					virtual void DeleteThis() noexcept(true);
@@ -53,6 +55,7 @@ namespace CKPE
 					NiRefObject64() noexcept(true);
 					virtual ~NiRefObject64() noexcept(true);
 
+					constexpr static Common::ID RTTI = IDs::RTTI::NiRefObject;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::NiRefObject[0];
 
 					virtual void DeleteThis() noexcept(true);

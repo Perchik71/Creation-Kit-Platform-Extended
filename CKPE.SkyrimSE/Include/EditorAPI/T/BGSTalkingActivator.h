@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <EditorAPI/T/TESObjectACTI.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,9 @@ namespace CKPE
 					public TESObjectACTI
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSTalkingActivator;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSTalkingActivator[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftTalkingActivator;
 
 					virtual ~BGSTalkingActivator() = default;

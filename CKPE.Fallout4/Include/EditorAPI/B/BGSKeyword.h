@@ -9,6 +9,8 @@
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/N/NiTypes.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -70,6 +72,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftKeyword;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSKeyword;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSKeyword[0];
 
 					[[nodiscard]] inline const char* GetDisplayName() const noexcept(true) { return GetFullName(); }

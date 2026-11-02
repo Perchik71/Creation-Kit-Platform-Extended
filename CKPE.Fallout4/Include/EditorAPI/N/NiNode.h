@@ -7,6 +7,8 @@
 #include <EditorAPI/N/NiAVObject.h>
 #include <EditorAPI/N/NiTObjectArray.h>
 #include <EditorAPI/B/BSAtomicValue.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -22,6 +24,9 @@ namespace CKPE
 					BSTAtomicValue<std::uint32_t> _dirtyState;			// 0x138
 					float _meshLODFadeAmount;							// 0x13C
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiNode;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiNode[0];
+
 					virtual ~NiNode() = default;
 
 					/* 3C */ virtual void AttachChild(NiAVObject* Child, bool FirstAvailable) noexcept(true);

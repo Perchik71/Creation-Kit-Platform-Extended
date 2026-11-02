@@ -15,6 +15,8 @@
 #include <EditorAPI/B/BGSLocalizedString.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -58,6 +60,7 @@ namespace CKPE
 					/* 480 */ void Clone3D(TESObjectREFR* pRequester, NiAPI::NiPointer<NiAPI::NiAVObject>* pObj3D) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftDoor;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectDOOR;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectDOOR[0];
 				public:
 					std::uint8_t unk141[0x7]; // 141

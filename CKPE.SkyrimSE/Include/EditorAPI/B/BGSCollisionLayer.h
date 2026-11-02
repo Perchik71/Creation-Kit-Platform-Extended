@@ -7,6 +7,8 @@
 #include <cstddef>
 #include <EditorAPI/B/TESDescription.h>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -22,6 +24,9 @@ namespace CKPE
 					public TESDescription	// 28
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSCollisionLayer;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSCollisionLayer[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftCollisionLayer;
 
 					virtual ~BGSCollisionLayer() = default;

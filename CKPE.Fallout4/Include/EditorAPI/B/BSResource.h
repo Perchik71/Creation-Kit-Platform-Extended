@@ -9,6 +9,8 @@
 #include <EditorAPI/N/NiTypes.h>
 #include <EditorAPI/N/NiFlags.h>
 #include <EditorAPI/N/NiPointer.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -354,6 +356,9 @@ namespace CKPE
 					/* 0x028 */ BSResource::EResultError _lastError;
 					/* 0x02C */ std::uint32_t pad02C;
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BSResourceNiBinaryStream;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BSResourceNiBinaryStream[0];
+
 					virtual ~BSResourceNiBinaryStream() override;
 					[[nodiscard]] virtual bool IsOpen() override;
 					virtual void Seek(std::ptrdiff_t numBytes) override;
@@ -386,6 +391,9 @@ namespace CKPE
 					/* 0x028 */ BSResource::EResultError _lastError;
 					/* 0x02C */ std::uint32_t pad02C;
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BSResourceNiBinaryStream;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BSResourceNiBinaryStream[0];
+
 					virtual ~BSResourceNiBinaryStream() override;
 					[[nodiscard]] virtual bool IsOpen() override;
 					virtual void Seek(std::ptrdiff_t numBytes) override;

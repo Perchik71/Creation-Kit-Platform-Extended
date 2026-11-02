@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <EditorAPI/T/TESBoundObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,9 @@ namespace CKPE
 					public TESBoundObject	// 00
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSDualCastData;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSDualCastData[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftDualCastData;
 
 					virtual ~BGSDualCastData() = default;

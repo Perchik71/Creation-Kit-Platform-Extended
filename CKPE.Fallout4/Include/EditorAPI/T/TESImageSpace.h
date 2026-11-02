@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESFormIDListView.h>
 #include <EditorAPI/T/TESTexture.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -98,6 +100,7 @@ namespace CKPE
 					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftImageSpace;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESImageSpace;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESImageSpace[0];
 				public:
 					std::uint64_t unk28; // 28

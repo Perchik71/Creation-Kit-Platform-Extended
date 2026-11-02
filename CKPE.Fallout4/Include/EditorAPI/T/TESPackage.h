@@ -10,6 +10,8 @@
 #include <EditorAPI/T/TESPackageData.h>
 #include <EditorAPI/T/TESCondition.h>
 #include <EditorAPI/P/PackageLocation.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -83,6 +85,7 @@ namespace CKPE
 					/* 3A0 */ [[nodiscard]] const char* GetObjectTypeName() const noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftPackage;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESPackage;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESPackage[0];
 				public:
 					PACKAGE_DATA data; // 28

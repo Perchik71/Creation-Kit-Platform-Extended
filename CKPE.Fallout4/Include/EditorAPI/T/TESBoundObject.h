@@ -13,6 +13,8 @@
 #include <EditorAPI/B/BGSPreviewTransform.h>
 #include <EditorAPI/B/BGSSoundTagComponent.h>
 #include <EditorAPI/T/TESObjectREFRFwd.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -41,6 +43,7 @@ namespace CKPE
 					struct TESBound { std::int16_t x, y, z; };
 
 					constexpr static std::uint8_t TYPE_ID = ftReserved000;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESBoundObject;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESBoundObject[0];
 
 					// CK 1.11.246.0: 154 virtuals, vtable RVA 0x30920B8.
@@ -104,7 +107,11 @@ namespace CKPE
 				// 0x90
 				class TESBoundAnimObject :
 					public TESBoundObject   // 000
-				{};
+{
+				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESBoundAnimObject;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESBoundAnimObject[0];
+				};
 				static_assert(sizeof(TESBoundAnimObject) == 0x90);
 
 				// 0x90

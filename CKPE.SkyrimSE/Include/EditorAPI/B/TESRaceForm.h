@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -16,6 +18,9 @@ namespace CKPE
 			class TESRaceForm : public BaseFormComponent
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRaceForm;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRaceForm[0];
+
 				virtual ~TESRaceForm() = default;
 
 				void* unk08;	// 08

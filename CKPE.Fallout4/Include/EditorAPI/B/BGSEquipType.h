@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -23,6 +25,9 @@ namespace CKPE
 				public BaseFormComponent   // 000
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSEquipType;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEquipType[0];
+
 				virtual ~BGSEquipType() = default;
 				/* 10 */ void InitializeDataComponent() override;
 				/* 18 */ void ClearDataComponent() override;

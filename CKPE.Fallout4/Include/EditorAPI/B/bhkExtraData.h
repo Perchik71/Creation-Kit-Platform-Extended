@@ -6,12 +6,17 @@
 
 #include <cstdint>
 #include <EditorAPI/N/NiObjectNET.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class bhkExtraData : public NiAPI::NiExtraData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkExtraData;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkExtraData[0];
+
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
 		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;

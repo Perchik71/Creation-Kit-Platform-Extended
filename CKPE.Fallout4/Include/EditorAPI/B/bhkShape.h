@@ -7,12 +7,17 @@
 #include <EditorAPI/B/bhkRefObject.h>
 #include <cstddef>
 #include <cstdint>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class bhkShape : public bhkRefObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkShape[0];
+
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
 		/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
@@ -38,41 +43,100 @@ namespace CKPE::Fallout4::EditorAPI
 	static_assert(sizeof(bhkShape) == 0x28);
 	static_assert(offsetof(bhkShape, Material) == 0x20);
 
-	class bhkSphereRepShape : public bhkShape {};
+	class bhkSphereRepShape : public bhkShape
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkSphereRepShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkSphereRepShape[0];
+	};
 	static_assert(sizeof(bhkSphereRepShape) == 0x28);
 
-	class bhkConvexShape : public bhkSphereRepShape {};
+	class bhkConvexShape : public bhkSphereRepShape
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkConvexShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkConvexShape[0];
+	};
 	static_assert(sizeof(bhkConvexShape) == 0x28);
 
-	class bhkBoxShape : public bhkConvexShape {};
+	class bhkBoxShape : public bhkConvexShape
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkBoxShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkBoxShape[0];
+	};
 	static_assert(sizeof(bhkBoxShape) == 0x28);
 
-	class bhkSphereShape : public bhkConvexShape {};
+	class bhkSphereShape : public bhkConvexShape
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkSphereShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkSphereShape[0];
+	};
 	static_assert(sizeof(bhkSphereShape) == 0x28);
 
-	class bhkCapsuleShape : public bhkConvexShape {};
+	class bhkCapsuleShape : public bhkConvexShape
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCapsuleShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCapsuleShape[0];
+	};
 	static_assert(sizeof(bhkCapsuleShape) == 0x28);
 
-	class bhkCylinderShape : public bhkConvexShape {};
+	class bhkCylinderShape : public bhkConvexShape
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCylinderShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCylinderShape[0];
+	};
 	static_assert(sizeof(bhkCylinderShape) == 0x28);
 
-	class bhkTriangleShape : public bhkConvexShape {};
+	class bhkTriangleShape : public bhkConvexShape
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkTriangleShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkTriangleShape[0];
+	};
 	static_assert(sizeof(bhkTriangleShape) == 0x28);
 
-	class bhkConvexVerticesShape : public bhkConvexShape {};
+	class bhkConvexVerticesShape : public bhkConvexShape
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkConvexVerticesShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkConvexVerticesShape[0];
+	};
 	static_assert(sizeof(bhkConvexVerticesShape) == 0x28);
 
-	class bhkConvexTransformShape : public bhkConvexShape {};
+	class bhkConvexTransformShape : public bhkConvexShape
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkConvexTransformShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkConvexTransformShape[0];
+	};
 	static_assert(sizeof(bhkConvexTransformShape) == 0x28);
 
-	class bhkConvexTranslateShape : public bhkConvexShape {};
+	class bhkConvexTranslateShape : public bhkConvexShape
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkConvexTranslateShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkConvexTranslateShape[0];
+	};
 	static_assert(sizeof(bhkConvexTranslateShape) == 0x28);
 
-	class bhkTransformShape : public bhkShape {};
+	class bhkTransformShape : public bhkShape
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkTransformShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkTransformShape[0];
+	};
 	static_assert(sizeof(bhkTransformShape) == 0x28);
 
 	class bhkShapeCollection : public bhkShape
 	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkShapeCollection;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkShapeCollection[0];
+
 	private:
 		/* 3F */ virtual void UnkShapeCollection3F() noexcept(true);
 	};
@@ -81,6 +145,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkListShape : public bhkShapeCollection
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkListShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkListShape[0];
+
 		/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
 		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
 		/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
@@ -93,15 +160,28 @@ namespace CKPE::Fallout4::EditorAPI
 	static_assert(sizeof(bhkListShape) == 0x30);
 	static_assert(offsetof(bhkListShape, unk028) == 0x28);
 
-	class bhkBvTreeShape : public bhkShape {};
+	class bhkBvTreeShape : public bhkShape
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkBvTreeShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkBvTreeShape[0];
+	};
 	static_assert(sizeof(bhkBvTreeShape) == 0x28);
 
-	class bhkMoppBvTreeShape : public bhkBvTreeShape {};
+	class bhkMoppBvTreeShape : public bhkBvTreeShape
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkMoppBvTreeShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkMoppBvTreeShape[0];
+	};
 	static_assert(sizeof(bhkMoppBvTreeShape) == 0x28);
 
 	class bhkCompressedMeshShape : public bhkShapeCollection
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCompressedMeshShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCompressedMeshShape[0];
+
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
 		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
@@ -118,6 +198,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkCompressedMeshShapeData : public NiAPI::NiObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCompressedMeshShapeData;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCompressedMeshShapeData[0];
+
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		/* 1B */ virtual void LoadBinary(NiAPI::NiStream& Stream) noexcept(true) override;
 		/* 1C */ virtual void LinkObject(NiAPI::NiStream& Stream) noexcept(true) override;
@@ -129,15 +212,35 @@ namespace CKPE::Fallout4::EditorAPI
 	static_assert(sizeof(bhkCompressedMeshShapeData) == 0x110);
 	static_assert(offsetof(bhkCompressedMeshShapeData, unk010) == 0x10);
 
-	class bhkNiTriStripsShape : public bhkShapeCollection {};
+	class bhkNiTriStripsShape : public bhkShapeCollection
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkNiTriStripsShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkNiTriStripsShape[0];
+	};
 	static_assert(sizeof(bhkNiTriStripsShape) == 0x28);
 
-	class bhkPackedNiTriStripsShape : public bhkShapeCollection {};
+	class bhkPackedNiTriStripsShape : public bhkShapeCollection
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkPackedNiTriStripsShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkPackedNiTriStripsShape[0];
+	};
 	static_assert(sizeof(bhkPackedNiTriStripsShape) == 0x28);
 
-	class bhkHeightFieldShape : public bhkShape {};
+	class bhkHeightFieldShape : public bhkShape
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkHeightFieldShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkHeightFieldShape[0];
+	};
 	static_assert(sizeof(bhkHeightFieldShape) == 0x28);
 
-	class bhkPlaneShape : public bhkHeightFieldShape {};
+	class bhkPlaneShape : public bhkHeightFieldShape
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkPlaneShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkPlaneShape[0];
+	};
 	static_assert(sizeof(bhkPlaneShape) == 0x28);
 }

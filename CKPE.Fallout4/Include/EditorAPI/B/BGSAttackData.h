@@ -9,6 +9,8 @@
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/B/BSTHashMap.h>
 #include <EditorAPI/N/NiRefObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -41,6 +43,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BGSAttackData : public NiAPI::NiRefObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSAttackData;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAttackData[0];
+
 		/* 0x010 */ BSFixedString event;
 		/* 0x018 */ AttackData data;
 		/* 0x050 */ Forms::BGSEquipSlot* weaponEquipSlot;
@@ -55,6 +60,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BGSAttackDataMap : public NiAPI::NiRefObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BGSAttackDataMap;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAttackDataMap[0];
+
 		/* 0x010 */ BSTHashMap<BSFixedString, BGSAttackData*> attackDataMap;
 		/* 0x048 */ Forms::TESRace* defaultDataRace;
 	};

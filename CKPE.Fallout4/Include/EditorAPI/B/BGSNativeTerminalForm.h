@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -27,6 +29,7 @@ namespace CKPE
 				/* 08 */ [[nodiscard]] std::uint32_t GetFormComponentType() const noexcept(true) override;
 				/* 10 */ void InitializeDataComponent() override;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSNativeTerminalForm;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSNativeTerminalForm[0];
 			public:
 				Forms::BGSTerminal* terminal; // 08

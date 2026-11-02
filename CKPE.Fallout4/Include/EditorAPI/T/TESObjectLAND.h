@@ -13,6 +13,8 @@
 #include <EditorAPI/T/TESLandTexture.h>
 #include <EditorAPI/T/TESChildCell.h>
 #include <array>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -27,6 +29,7 @@ namespace CKPE
 				{
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftLandspace;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectLAND;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectLAND[0];
 
 					constexpr static std::uint32_t PART_COUNT = 4;

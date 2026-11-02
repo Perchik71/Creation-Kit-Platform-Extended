@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESBoundObject.h>
 #include <EditorAPI/B/BGSKeywordForm.h>
 #include <EditorAPI/B/BGSModelMaterialSwap.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -34,6 +36,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftArt;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSArtObject;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSArtObject[0];
 				public:
 					std::uint32_t unk100; // 100

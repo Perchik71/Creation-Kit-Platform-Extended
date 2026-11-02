@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/T/TESForm.h>
 #include <CKPE.Float16.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -37,6 +39,9 @@ namespace CKPE
 					float _unk_v[2];					// sets 1.0
 					char _pad28[0x18];
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BSISoundCategory;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BSISoundCategory[0];
+
 					virtual ~BSISoundCategory() = default;
 
 					[[nodiscard]] inline bool HasMuteWhenSubmerged() const noexcept(true) 
@@ -61,6 +66,9 @@ namespace CKPE
 				class BGSSoundCategory : public TESForm, public TESFullName, public BSISoundCategory
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSSoundCategory;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSoundCategory[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftSoundCategory;
 
 					virtual ~BGSSoundCategory() = default;
@@ -70,6 +78,9 @@ namespace CKPE
 				class BSISoundOutputModel
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BSISoundOutputModel;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BSISoundOutputModel[0];
+
 					virtual ~BSISoundOutputModel() = default;
 
 					// In RTTI: BGSSoundOutput::DynamicAttenuationCharacteristics but use only in class BSISoundOutputModel.
@@ -149,6 +160,9 @@ namespace CKPE
 				class BGSSoundOutput : public TESForm, public BSISoundOutputModel
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSSoundOutput;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSoundOutput[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftSoundOutput;
 
 					virtual ~BGSSoundOutput() = default;
@@ -160,8 +174,13 @@ namespace CKPE
 				class BGSStandardSoundDef
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSStandardSoundDef;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSStandardSoundDef[0];
+
 					struct SoundPlaybackCharacteristics
 					{
+						constexpr static Common::ID RTTI = IDs::RTTI::BGSStandardSoundDef__SoundPlaybackCharacteristics;
+						constexpr static Common::ID VTABLE = IDs::VTABLE::BGSStandardSoundDef__SoundPlaybackCharacteristics[0];
 						virtual ~SoundPlaybackCharacteristics() = default;
 
 						char pad08[0x10];
@@ -194,6 +213,9 @@ namespace CKPE
 					std::int64_t _unk;
 					BGSStandardSoundDef* _sound;
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BSISoundDescriptor;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BSISoundDescriptor[0];
+
 					virtual ~BSISoundDescriptor() = default;
 
 					[[nodiscard]] inline BGSStandardSoundDef* GetSound() const noexcept(true) { return _sound; }
@@ -209,6 +231,9 @@ namespace CKPE
 				class BGSSoundDescriptorForm : public TESForm, public BSISoundDescriptor
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSSoundDescriptorForm;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSoundDescriptorForm[0];
+
 					constexpr static uint8_t TYPE_ID = ftSoundDescriptor;
 				public:
 					virtual ~BGSSoundDescriptorForm() = default;

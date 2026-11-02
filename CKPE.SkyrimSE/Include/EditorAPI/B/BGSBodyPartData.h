@@ -8,6 +8,8 @@
 #include <EditorAPI/B/BGSPreloadable.h>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESModel.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -24,6 +26,9 @@ namespace CKPE
 					public BGSPreloadable	// 58
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSBodyPartData;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSBodyPartData[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftBodyPartData;
 
 					virtual ~BGSBodyPartData() = default;

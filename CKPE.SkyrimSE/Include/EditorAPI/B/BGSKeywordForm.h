@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -19,6 +21,9 @@ namespace CKPE
 			class BGSKeywordForm : public BaseFormComponent
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSKeywordForm;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSKeywordForm[0];
+
 				virtual ~BGSKeywordForm() = default;
 
 				Forms::BGSKeyword** keywords;			// 08

@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESModel.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -18,6 +20,9 @@ namespace CKPE
 				public TESModel   // 000
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSBehaviorGraphModel;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSBehaviorGraphModel[0];
+
 				virtual ~BGSBehaviorGraphModel() = default;
 				/* 70 */ bool Perform(HWND hDialogBox, UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT* Result) override;
 			};

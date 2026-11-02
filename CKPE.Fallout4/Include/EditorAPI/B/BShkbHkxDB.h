@@ -6,12 +6,17 @@
 
 #include <EditorAPI/H/hkInfrastructure.h>
 #include <EditorAPI/B/BSFixedString.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class BSAnimationDBData
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSAnimationDBData;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSAnimationDBData[0];
+
 		/* 0x000 */ virtual ~BSAnimationDBData();
 
 		// The type's registered name (a shared BSFixedString: "hkxDBData" / "ProjecthkxDBData")
@@ -30,6 +35,9 @@ namespace CKPE::Fallout4::EditorAPI
 		class hkxDBData : public hkLoader, public BSAnimationDBData
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::BShkbHkxDB__hkxDBData;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::BShkbHkxDB__hkxDBData[0];
+
 			/* 0x060 */ [[nodiscard]] virtual ProjectDBData* AsProjectDBData() noexcept(true);
 
 			/* 0x028 */ void* loadedData;
@@ -44,6 +52,9 @@ namespace CKPE::Fallout4::EditorAPI
 		class ProjectDBData : public hkxDBData
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::BShkbHkxDB__ProjectDBData;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::BShkbHkxDB__ProjectDBData[0];
+
 			/* 0x038 */ std::byte unk038[0x190];
 		};
 		static_assert(sizeof(ProjectDBData) == 0x1C8);

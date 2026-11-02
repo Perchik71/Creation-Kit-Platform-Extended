@@ -9,12 +9,17 @@
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/H/hkBaseObject.h>
 #include <EditorAPI/H/hkpCollisionFilter.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class hknpCollisionFilter : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hknpCollisionFilter;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hknpCollisionFilter[0];
+
 		/* 04 */ virtual void UnkNPCollisionFilter04();
 		/* 05 */ virtual void UnkNPCollisionFilter05();
 		/* 06 */ virtual void UnkNPCollisionFilter06();
@@ -28,6 +33,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkCollisionFilter : public hknpCollisionFilter
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCollisionFilter;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCollisionFilter[0];
+
 		/* 0x018 */ std::uint8_t unk018[0x188];
 		/* 0x1A0 */ std::uint64_t layerMasks[64];
 		/* 0x3A0 */ std::uint64_t layerFlagMasks[2];
@@ -44,6 +52,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkMigrationCollisionFilter : public hkpCollisionFilter
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkMigrationCollisionFilter;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkMigrationCollisionFilter[0];
+
 		/* 0x048 */ std::uint8_t unk048[0x190];
 		/* 0x1D8 */ std::uint64_t layerMasks[64];
 		/* 0x3D8 */ std::uint8_t unk3D8[0x210];

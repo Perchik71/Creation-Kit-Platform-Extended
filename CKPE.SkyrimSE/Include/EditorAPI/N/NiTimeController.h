@@ -7,6 +7,8 @@
 #include <CKPE.EnumSet.h>
 #include <EditorAPI/N/NiObject.h>
 #include <EditorAPI/N/NiPointer.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -61,6 +63,9 @@ namespace CKPE
 					NiObjectNET* target;
 					NiPointer<NiTimeController> next;
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiTimeController;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiTimeController[0];
+
 					virtual ~NiTimeController() = default;
 
 					// add

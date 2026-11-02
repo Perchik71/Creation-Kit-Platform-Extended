@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <EditorAPI/T/TESBoundAnimObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,9 @@ namespace CKPE
 					public TESBoundAnimObject
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESSound;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESSound[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftSound;
 
 					virtual ~TESSound() = default;

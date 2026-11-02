@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/B/BGSKeyword.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -23,6 +25,7 @@ namespace CKPE
 					virtual ~BGSAction() = default;
 
 					constexpr static std::uint8_t TYPE_ID = ftAction;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSAction;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAction[0];
 				public:
 					std::uint32_t index; // 60

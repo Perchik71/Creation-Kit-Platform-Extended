@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESObjectREFRFwd.h>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESActorValue.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -38,6 +40,7 @@ namespace CKPE
 					/* 200 */ std::uint32_t GetRefCount() const noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftReserved000;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObject;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObject[0];
 
 					virtual bool IsBoundAnimObject() noexcept(true) { return false; } // 124 - { return 0; }

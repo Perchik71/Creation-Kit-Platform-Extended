@@ -6,6 +6,8 @@
 
 #include <EditorAPI/H/hkpWorld.h>
 #include <EditorAPI/H/hkpCollisionCollector.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -34,6 +36,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpBoxBoxAgent : public hkpIterativeLinearCastAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpBoxBoxAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpBoxBoxAgent[0];
+
 		/* 0x018 */ std::uint8_t unk018[0x48];
 	};
 	static_assert(sizeof(hkpBoxBoxAgent) == 0x60);
@@ -41,6 +46,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpBvAgent : public hkpCollisionAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpBvAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpBvAgent[0];
+
 		/* 0x018 */ std::uint8_t unk018[0x10];
 	};
 	static_assert(sizeof(hkpBvAgent) == 0x28);
@@ -48,35 +56,62 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpBvTreeAgent : public hkpCollisionAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpBvTreeAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpBvTreeAgent[0];
+
 		/* 0x018 */ std::uint8_t unk018[0x38];
 		class LinearCastAabbCastCollector : public hkpAabbCastCollector
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkpBvTreeAgent__LinearCastAabbCastCollector;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkpBvTreeAgent__LinearCastAabbCastCollector[0];
+
 			/* 0x020 */ std::uint8_t unk020[0x30];
 		};
 	};
 	static_assert(sizeof(hkpBvTreeAgent) == 0x50);
 	static_assert(sizeof(hkpBvTreeAgent::LinearCastAabbCastCollector) == 0x50);
 
-	class hkpBvCompressedMeshAgent : public hkpBvTreeAgent {};
+	class hkpBvCompressedMeshAgent : public hkpBvTreeAgent
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpBvCompressedMeshAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpBvCompressedMeshAgent[0];
+	};
 	static_assert(sizeof(hkpBvCompressedMeshAgent) == 0x50);
 
 	class hkpBvTreeStreamAgent : public hkpCollisionAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpBvTreeStreamAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpBvTreeStreamAgent[0];
+
 		/* 0x018 */ std::uint8_t unk018[0x38];
 	};
 	static_assert(sizeof(hkpBvTreeStreamAgent) == 0x50);
 
-	class hkpMoppAgent : public hkpBvTreeAgent {};
+	class hkpMoppAgent : public hkpBvTreeAgent
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpMoppAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpMoppAgent[0];
+	};
 	static_assert(sizeof(hkpMoppAgent) == 0x50);
 
-	class hkpStaticCompoundAgent : public hkpBvTreeAgent {};
+	class hkpStaticCompoundAgent : public hkpBvTreeAgent
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpStaticCompoundAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpStaticCompoundAgent[0];
+	};
 	static_assert(sizeof(hkpStaticCompoundAgent) == 0x50);
 
 	class hkpCapsuleCapsuleAgent : public hkpIterativeLinearCastAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpCapsuleCapsuleAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpCapsuleCapsuleAgent[0];
+
 		/* 0x018 */ std::uint8_t unk018[8];
 	};
 	static_assert(sizeof(hkpCapsuleCapsuleAgent) == 0x20);
@@ -84,6 +119,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpCapsuleTriangleAgent : public hkpIterativeLinearCastAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpCapsuleTriangleAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpCapsuleTriangleAgent[0];
+
 		/* 0x018 */ std::uint8_t unk018[0x20];
 	};
 	static_assert(sizeof(hkpCapsuleTriangleAgent) == 0x38);
@@ -91,6 +129,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpGskBaseAgent : public hkpIterativeLinearCastAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpGskBaseAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpGskBaseAgent[0];
+
 		/* 0x018 */ std::uint8_t unk018[0x28];
 	};
 	static_assert(sizeof(hkpGskBaseAgent) == 0x40);
@@ -98,16 +139,27 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpGskfAgent : public hkpGskBaseAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpGskfAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpGskfAgent[0];
+
 		/* 0x040 */ std::uint8_t unk040[0x50];
 	};
 	static_assert(sizeof(hkpGskfAgent) == 0x90);
 
-	class hkpPredGskfAgent : public hkpGskfAgent {};
+	class hkpPredGskfAgent : public hkpGskfAgent
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpPredGskfAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpPredGskfAgent[0];
+	};
 	static_assert(sizeof(hkpPredGskfAgent) == 0x90);
 
 	class hkpConvexListAgent : public hkpPredGskfAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpConvexListAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpConvexListAgent[0];
+
 		/* 0x090 */ std::uint8_t unk090[0x10];
 	};
 	static_assert(sizeof(hkpConvexListAgent) == 0xA0);
@@ -115,6 +167,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpListAgent : public hkpCollisionAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpListAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpListAgent[0];
+
 		/* 0x018 */ std::uint8_t unk018[0x18];
 	};
 	static_assert(sizeof(hkpListAgent) == 0x30);
@@ -122,6 +177,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpMultiSphereAgent : public hkpCollisionAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpMultiSphereAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpMultiSphereAgent[0];
+
 		/* 0x018 */ std::uint8_t unk018[0x50];
 	};
 	static_assert(sizeof(hkpMultiSphereAgent) == 0x68);
@@ -129,16 +187,27 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpMultiSphereTriangleAgent : public hkpIterativeLinearCastAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpMultiSphereTriangleAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpMultiSphereTriangleAgent[0];
+
 		/* 0x018 */ std::uint8_t unk018[0x20];
 	};
 	static_assert(sizeof(hkpMultiSphereTriangleAgent) == 0x38);
 
-	class hkpNullAgent : public hkpCollisionAgent {};
+	class hkpNullAgent : public hkpCollisionAgent
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpNullAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpNullAgent[0];
+	};
 	static_assert(sizeof(hkpNullAgent) == 0x18);
 
 	class hkpPhantomAgent : public hkpCollisionAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpPhantomAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpPhantomAgent[0];
+
 		/* 0x018 */ std::uint8_t unk018[0x28];
 	};
 	static_assert(sizeof(hkpPhantomAgent) == 0x40);
@@ -146,6 +215,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpShapeCollectionAgent : public hkpCollisionAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpShapeCollectionAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpShapeCollectionAgent[0];
+
 		/* 0x018 */ std::uint8_t unk018[0x50];
 	};
 	static_assert(sizeof(hkpShapeCollectionAgent) == 0x68);
@@ -153,6 +225,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpSphereBoxAgent : public hkpIterativeLinearCastAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSphereBoxAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSphereBoxAgent[0];
+
 		/* 0x018 */ std::uint8_t unk018[8];
 	};
 	static_assert(sizeof(hkpSphereBoxAgent) == 0x20);
@@ -160,6 +235,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpSphereCapsuleAgent : public hkpIterativeLinearCastAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSphereCapsuleAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSphereCapsuleAgent[0];
+
 		/* 0x018 */ std::uint8_t unk018[8];
 	};
 	static_assert(sizeof(hkpSphereCapsuleAgent) == 0x20);
@@ -167,6 +245,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpSphereSphereAgent : public hkpIterativeLinearCastAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSphereSphereAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSphereSphereAgent[0];
+
 		/* 0x018 */ std::uint8_t unk018[8];
 	};
 	static_assert(sizeof(hkpSphereSphereAgent) == 0x20);
@@ -174,6 +255,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpSphereTriangleAgent : public hkpIterativeLinearCastAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSphereTriangleAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSphereTriangleAgent[0];
+
 		/* 0x018 */ std::uint8_t unk018[0x18];
 	};
 	static_assert(sizeof(hkpSphereTriangleAgent) == 0x30);
@@ -181,6 +265,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpTransformAgent : public hkpCollisionAgent
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpTransformAgent;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpTransformAgent[0];
+
 		/* 0x018 */ std::uint8_t unk018[8];
 	};
 	static_assert(sizeof(hkpTransformAgent) == 0x20);
@@ -227,12 +314,18 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpSimpleConstraintContactMgr : public hkpDynamicsContactMgr
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSimpleConstraintContactMgr;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSimpleConstraintContactMgr[0];
+
 		virtual void sub_14();
 		/* 0x020 */ std::uint8_t unk020[0xD0];
 
 		class Factory : public hkpContactMgrFactory
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkpSimpleConstraintContactMgr__Factory;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSimpleConstraintContactMgr__Factory[0];
+
 			/* 0x010 */ std::uint8_t unk010[8];
 		};
 	};
@@ -242,23 +335,37 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpReportContactMgr : public hkpDynamicsContactMgr
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpReportContactMgr;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpReportContactMgr[0];
+
 		/* 0x020 */ std::uint8_t unk020[0x18];
 
 		class Factory : public hkpContactMgrFactory
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkpReportContactMgr__Factory;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkpReportContactMgr__Factory[0];
+
 			/* 0x010 */ std::uint8_t unk010[8];
 		};
 	};
 	static_assert(sizeof(hkpReportContactMgr) == 0x38);
 	static_assert(sizeof(hkpReportContactMgr::Factory) == 0x18);
 
-	class hkpNullContactMgr : public hkpContactMgr {};
+	class hkpNullContactMgr : public hkpContactMgr
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpNullContactMgr;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpNullContactMgr[0];
+	};
 	static_assert(sizeof(hkpNullContactMgr) == 0x18);
 
 	class hkpNullContactMgrFactory : public hkpContactMgrFactory
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpNullContactMgrFactory;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpNullContactMgrFactory[0];
+
 		/* 0x010 */ std::uint8_t unk010[0x18];
 	};
 	static_assert(sizeof(hkpNullContactMgrFactory) == 0x28);
@@ -266,6 +373,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpMapPointsToSubShapeContactMgr : public hkpContactMgr
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpMapPointsToSubShapeContactMgr;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpMapPointsToSubShapeContactMgr[0];
+
 		/* 0x018 */ std::uint8_t unk018[0x10];
 	};
 	static_assert(sizeof(hkpMapPointsToSubShapeContactMgr) == 0x28);
@@ -273,6 +383,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpCollisionDispatcher : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpCollisionDispatcher;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpCollisionDispatcher[0];
+
 		/* 0x010 */ std::uint8_t unk010[0x2A70];
 	};
 	static_assert(sizeof(hkpCollisionDispatcher) == 0x2A80);
@@ -280,6 +393,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpBroadPhase : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpBroadPhase;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpBroadPhase[0];
+
 		virtual void getPenetrations(const void* BodyA, const void* BodyB, const void* Input, void* Collector); // 0x20 - hkpCdBodyPairCollector
 		virtual void getClosestPoints(const void* BodyA, const void* BodyB, const void* Input, void* Collector); // 0x28 - hkpCdPointCollector
 		virtual void linearCast(const void* BodyA, const void* BodyB, const void* Input, void* Collector, void* StartCollector); // 0x30 - shared by the hkpIterativeLinearCastAgent family
@@ -316,6 +432,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpSimulation : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSimulation;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSimulation[0];
+
 		virtual void getPenetrations(const void* BodyA, const void* BodyB, const void* Input, void* Collector); // 0x20 - hkpCdBodyPairCollector
 		virtual void getClosestPoints(const void* BodyA, const void* BodyB, const void* Input, void* Collector); // 0x28 - hkpCdPointCollector
 		virtual void linearCast(const void* BodyA, const void* BodyB, const void* Input, void* Collector, void* StartCollector); // 0x30 - shared by the hkpIterativeLinearCastAgent family
@@ -342,6 +461,9 @@ namespace CKPE::Fallout4::EditorAPI
 		public hkpWorldPostSimulationListener
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpBroadPhaseBorder;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpBroadPhaseBorder[0];
+
 		virtual void sub_04();
 		virtual void sub_05();
 		/* 0x028 */ std::uint8_t unk028[0x50];
@@ -352,6 +474,9 @@ namespace CKPE::Fallout4::EditorAPI
 		public hkpConstraintListener
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpCollisionCallbackUtil;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpCollisionCallbackUtil[0];
+
 		/* 0x028 */ std::uint8_t unk028[0x50];
 	};
 	static_assert(sizeof(hkpCollisionCallbackUtil) == 0x78);
@@ -360,6 +485,9 @@ namespace CKPE::Fallout4::EditorAPI
 		public hkpWorldPostSimulationListener
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpEndOfStepCallbackUtil;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpEndOfStepCallbackUtil[0];
+
 		/* 0x018 */ std::uint8_t unk018[0x38];
 	};
 	static_assert(sizeof(hkpEndOfStepCallbackUtil) == 0x50);
@@ -367,6 +495,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpVehicleFrictionDescription : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpVehicleFrictionDescription;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpVehicleFrictionDescription[0];
+
 		/* 0x010 */ std::uint8_t unk010[0xD0];
 	};
 	static_assert(sizeof(hkpVehicleFrictionDescription) == 0xE0);
@@ -374,6 +505,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpStickContactParam : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpStickContactParam;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpStickContactParam[0];
+
 		/* 0x010 */ std::uint8_t unk010[0x18];
 	};
 	static_assert(sizeof(hkpStickContactParam) == 0x28);
@@ -381,6 +515,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpSerializedAgentNnEntry : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSerializedAgentNnEntry;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSerializedAgentNnEntry[0];
+
 		/* 0x010 */ std::uint8_t unk010[0x180];
 	};
 	static_assert(sizeof(hkpSerializedAgentNnEntry) == 0x190);

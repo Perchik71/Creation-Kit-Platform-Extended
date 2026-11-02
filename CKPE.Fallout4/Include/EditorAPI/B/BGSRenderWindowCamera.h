@@ -8,6 +8,7 @@
 #include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/N/NiNode.h>
 #include <EditorAPI/N/NiCamera.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE
 {
@@ -54,6 +55,7 @@ namespace CKPE
 			public:
 				virtual ~BGSRenderWindowCamera() = default;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowCamera;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowCamera[0];
 
 				[[nodiscard]] inline NiNode* GetNode() const noexcept(true) { return _Node; }

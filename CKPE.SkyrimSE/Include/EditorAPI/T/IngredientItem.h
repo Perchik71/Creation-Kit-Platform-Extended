@@ -13,6 +13,8 @@
 #include <EditorAPI/T/TESModelTextureSwap.h>
 #include <EditorAPI/T/TESValueForm.h>
 #include <EditorAPI/T/TESWeightForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -34,6 +36,9 @@ namespace CKPE
 					public TESValueForm	// 320
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::IngredientItem;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::IngredientItem[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftIngredient;
 
 					virtual ~IngredientItem() = default;

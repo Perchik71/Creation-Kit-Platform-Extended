@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESBoundObject.h>
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/B/BGSKeywordForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -24,6 +26,9 @@ namespace CKPE
 					public BGSKeywordForm		// 68
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::MagicItem;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::MagicItem[0];
+
 					virtual ~MagicItem() = default;
 				public:
 					std::uint8_t efid[0x1E8];	// 80 - EFID

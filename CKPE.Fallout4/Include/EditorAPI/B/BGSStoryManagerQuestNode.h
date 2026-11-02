@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/B/BGSStoryManagerNodeBase.h>
 #include <EditorAPI/B/BSTHashMap.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -22,6 +24,9 @@ namespace CKPE
 					public BGSStoryManagerNodeBase   // 000
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSStoryManagerQuestNode;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSStoryManagerQuestNode[0];
+
 					virtual ~BGSStoryManagerQuestNode() = default;
 
 					/* 0B0 */ void ClearData() override;

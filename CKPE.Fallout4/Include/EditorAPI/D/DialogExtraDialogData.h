@@ -7,6 +7,8 @@
 #include <cstddef>
 #include <EditorAPI/B/BSExtraData.h>
 #include <EditorAPI/B/BaseDialog.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -17,6 +19,9 @@ namespace CKPE
 			class DialogExtraDialogData : public BSExtraData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::DialogExtraDialogData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::DialogExtraDialogData[0];
+
 				enum : std::uint8_t { kDialogExtraType = 0x10 };
 
 				/* 0x000 */ virtual ~DialogExtraDialogData();

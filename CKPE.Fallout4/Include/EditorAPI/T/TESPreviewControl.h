@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/T/TESRenderControl.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -17,6 +19,7 @@ namespace CKPE
 			public:
 				/* 0x000 */ ~TESPreviewControl() override;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::TESPreviewControl;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TESPreviewControl[0];
 
 				/* 0x010 */ void DetachObject(NiAPI::NiAVObject* Object) noexcept(true) override;

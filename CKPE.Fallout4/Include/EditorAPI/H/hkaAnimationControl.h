@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/H/hkaAnimation.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -15,6 +17,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaAnimationControl : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaAnimationControl;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaAnimationControl[0];
+
 		/* 04 */ virtual void Update(float StepDelta) = 0;
 		/* 05 */ virtual void GetFutureTime(float StepDelta, float& LocalTimeOut,
 			std::int32_t& LoopsOut) const = 0;
@@ -55,6 +60,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkaDefaultAnimationControl : public hkaAnimationControl
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkaDefaultAnimationControl;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkaDefaultAnimationControl[0];
+
 		/* 0x058 */ float m_masterWeight;
 		/* 0x05C */ float m_playbackSpeed;
 		/* 0x060 */ std::uint8_t pad060[0x3C];

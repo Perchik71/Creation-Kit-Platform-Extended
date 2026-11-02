@@ -6,6 +6,8 @@
 
 #include <EditorAPI/H/hkBaseObject.h>
 #include <CKPE.Utils.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -45,6 +47,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkCharacterStateOnGround : public bhkCharacterState
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCharacterStateOnGround;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCharacterStateOnGround[0];
+
 		/* 0x010 */ std::byte unk010[0x8];
 	};
 	static_assert(sizeof(bhkCharacterStateOnGround) == 0x18);
@@ -53,23 +58,51 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkCharacterStateInAir : public bhkCharacterState
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCharacterStateInAir;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCharacterStateInAir[0];
+
 		/* 0x010 */ std::byte unk010[0x8];
 	};
 	static_assert(sizeof(bhkCharacterStateInAir) == 0x18);
 	static_assert(offsetof(bhkCharacterStateInAir, unk010) == 0x10);
 
-	class bhkCharacterStateJumping : public bhkCharacterState {};
+	class bhkCharacterStateJumping : public bhkCharacterState
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCharacterStateJumping;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCharacterStateJumping[0];
+	};
 	static_assert(sizeof(bhkCharacterStateJumping) == 0x10);
 
-	class bhkCharacterStateClimbing : public bhkCharacterState {};
+	class bhkCharacterStateClimbing : public bhkCharacterState
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCharacterStateClimbing;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCharacterStateClimbing[0];
+	};
 	static_assert(sizeof(bhkCharacterStateClimbing) == 0x10);
 
-	class bhkCharacterStateFlying : public bhkCharacterState {};
+	class bhkCharacterStateFlying : public bhkCharacterState
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCharacterStateFlying;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCharacterStateFlying[0];
+	};
 	static_assert(sizeof(bhkCharacterStateFlying) == 0x10);
 
-	class bhkCharacterStateSwimming : public bhkCharacterState {};
+	class bhkCharacterStateSwimming : public bhkCharacterState
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCharacterStateSwimming;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCharacterStateSwimming[0];
+	};
 	static_assert(sizeof(bhkCharacterStateSwimming) == 0x10);
 
-	class bhkCharacterStateFloating : public bhkCharacterState {};
+	class bhkCharacterStateFloating : public bhkCharacterState
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCharacterStateFloating;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCharacterStateFloating[0];
+	};
 	static_assert(sizeof(bhkCharacterStateFloating) == 0x10);
 }

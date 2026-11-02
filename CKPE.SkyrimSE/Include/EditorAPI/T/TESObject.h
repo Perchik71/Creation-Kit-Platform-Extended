@@ -2,6 +2,8 @@
 
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/N/NiAVObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -16,6 +18,9 @@ namespace CKPE
 				class TESObject : public TESForm
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObject;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObject[0];
+
 					virtual ~TESObject() = default;
 
 					// override (TESForm)

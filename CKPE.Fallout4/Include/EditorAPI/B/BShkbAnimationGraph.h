@@ -9,6 +9,8 @@
 #include <EditorAPI/B/BShkbHkxDB.h>
 #include <EditorAPI/H/hkbBehaviorGraph.h>
 #include <EditorAPI/T/TESObjectREFRFwd.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -17,6 +19,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSIRagdollDriver
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSIRagdollDriver;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSIRagdollDriver[0];
+
 		/* 0x000 */ virtual ~BSIRagdollDriver();
 		/* 0x008 */ [[nodiscard]] virtual bool HasRagdoll() const noexcept(true);
 
@@ -65,6 +70,9 @@ namespace CKPE::Fallout4::EditorAPI
 		public BSTEventSource<BSTransformDeltaEvent>
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BShkbAnimationGraph;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BShkbAnimationGraph[0];
+
 		/* 0x1C8 */ hkbCharacter character;
 		/* 0x2A0 */ std::byte unk2A0[0xD0];
 		/* 0x370 */ BShkbHkxDB::ProjectDBData* projectDBData;

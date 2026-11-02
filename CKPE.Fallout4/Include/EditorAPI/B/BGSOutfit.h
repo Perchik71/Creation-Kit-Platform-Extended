@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -37,6 +39,7 @@ namespace CKPE
 					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftOutfit;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSOutfit;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSOutfit[0];
 				public:
 					BSTArray<TESForm*> outfitItems; // 28 - BSTArray<TESForm*>

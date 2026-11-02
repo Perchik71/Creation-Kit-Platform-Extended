@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESObjectMISC.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -23,6 +25,7 @@ namespace CKPE
 					virtual ~TESKey() = default;
 
 					constexpr static std::uint8_t TYPE_ID = ftKey;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESKey;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESKey[0];
 				};
 				static_assert(sizeof(TESKey) == 0x1E8);

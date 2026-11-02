@@ -10,6 +10,8 @@
 #include <EditorAPI/T/TESTexture.h>
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -39,6 +41,7 @@ namespace CKPE
 					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftShaderParticleGeometryData;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSShaderParticleGeometryData;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSShaderParticleGeometryData[0];
 				public:
 					BSTArray<void*> data; // 28 - BSTArray<SETTING_VALUE>

@@ -11,6 +11,8 @@
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/B/BSTHashMap.h>
 #include <EditorAPI/B/BSReadWriteLock.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -26,6 +28,9 @@ namespace CKPE
 					public BSNavmeshInfoMap   // 028
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NavMeshInfoMap;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NavMeshInfoMap[0];
+
 					virtual ~NavMeshInfoMap() = default;
 
 					/* 0B8 */ void Load(TESFile* File) override;

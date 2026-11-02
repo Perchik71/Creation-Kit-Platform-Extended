@@ -7,6 +7,8 @@
 #include <cstddef>
 #include <cstdint>
 #include <EditorAPI/N/NiRefObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,9 @@ namespace CKPE
 			class BGSAttackData : public NiAPI::NiRefObject
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSAttackData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAttackData[0];
+
 				std::uint8_t unk10[0x40];	// 10 - layout not resolved
 			};
 			static_assert(sizeof(BGSAttackData) == 0x50);
@@ -28,6 +33,9 @@ namespace CKPE
 			class BGSLOSData : public NiAPI::NiRefObject
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSLOSData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSLOSData[0];
+
 				void* unk10;			// 10 - 0 on construction
 				void* unk18;			// 18 - 0 on construction
 				std::uint32_t unk20;	// 20 - 0 on construction

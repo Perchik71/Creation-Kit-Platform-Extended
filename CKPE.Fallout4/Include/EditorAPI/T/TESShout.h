@@ -10,6 +10,8 @@
 #include <EditorAPI/B/BGSMenuDisplayObject.h>
 #include <EditorAPI/B/BGSEquipType.h>
 #include <EditorAPI/T/TESDescription.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -43,6 +45,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftShout;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESShout;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESShout[0];
 				public:
 					std::uint8_t variations[0x48]; // 88 - Variation

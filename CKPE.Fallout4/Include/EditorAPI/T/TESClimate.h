@@ -9,6 +9,8 @@
 #include <EditorAPI/T/TESModel.h>
 #include <EditorAPI/T/TESTexture.h>
 #include <EditorAPI/T/TESWeatherList.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -40,6 +42,7 @@ namespace CKPE
 					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftClimate;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESClimate;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESClimate[0];
 				public:
 					TESModel nightSky; // 28

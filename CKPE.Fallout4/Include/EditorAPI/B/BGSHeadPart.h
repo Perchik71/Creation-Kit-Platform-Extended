@@ -12,6 +12,8 @@
 #include <EditorAPI/T/TESModel.h>
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/T/TESModelTri.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -54,6 +56,7 @@ namespace CKPE
 					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftHeadPart;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSHeadPart;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSHeadPart[0];
 				public:
 					std::uint8_t flags; // 90 - REX::TEnumSet<Flag, std::uint8_t>

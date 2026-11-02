@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -19,6 +21,9 @@ namespace CKPE
 			class BGSSceneAction
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSSceneAction;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSceneAction[0];
+
 				virtual ~BGSSceneAction() = default;
 
 				std::uint8_t unk08[0x10];	// 08
@@ -37,6 +42,9 @@ namespace CKPE
 			class BGSSceneActionDialogue : public BGSSceneAction
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSSceneActionDialogue;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSceneActionDialogue[0];
+
 				void* unk30;				// 30 - 0 on construction
 				std::uint32_t htid;			// 38 - HTID, -1 on construction
 				float unk3C;				// 3C - 10.0 on construction
@@ -52,6 +60,9 @@ namespace CKPE
 			class BGSSceneActionTimer : public BGSSceneAction
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSSceneActionTimer;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSceneActionTimer[0];
+
 				std::uint32_t unk30;		// 30 - 0 on construction
 				std::uint32_t pad34;		// 34
 				std::uint8_t unk38[0x8];	// 38

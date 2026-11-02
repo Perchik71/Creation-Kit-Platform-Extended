@@ -9,12 +9,17 @@
 #include <windows.h>
 #include <EditorAPI/H/hkMemory.h>
 #include <EditorAPI/I/IMemoryHeap.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class bhkThreadMemorySource : public hkMemoryAllocator, public IMemoryHeap
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkThreadMemorySource;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkThreadMemorySource[0];
+
 		/* 0x010 */ CRITICAL_SECTION criticalSection;
 		/* 0x038 */ std::uint8_t unk038[0x48];
 		/* 0x080 */ void* reservedAddress;
@@ -45,6 +50,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkMemorySystem : public hkMemorySystem
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkMemorySystem;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkMemorySystem[0];
+
 		/* 15 */ virtual void UnkMemorySystem15();
 
 		/* 0x008 */ std::uint8_t unk008[0x8];

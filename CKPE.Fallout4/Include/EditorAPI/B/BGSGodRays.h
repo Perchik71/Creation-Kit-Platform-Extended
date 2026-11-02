@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/N/NiColor.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -47,6 +49,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftGodRays;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSGodRays;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSGodRays[0];
 				public:
 					GodRaysData data; // 28

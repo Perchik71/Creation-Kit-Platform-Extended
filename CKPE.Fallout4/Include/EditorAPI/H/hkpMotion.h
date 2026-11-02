@@ -7,6 +7,8 @@
 #include <EditorAPI/H/hkBaseObject.h>
 #include <EditorAPI/H/hkBaseTypes.h>
 #include <EditorAPI/H/hkReflectionTypes.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -64,21 +66,44 @@ namespace CKPE::Fallout4::EditorAPI
 	static_assert(offsetof(hkpMotion, m_linearVelocity) == 0xE0);
 	static_assert(offsetof(hkpMotion, m_savedMotion) == 0x128);
 
-	class hkpSphereMotion : public hkpMotion {};
+	class hkpSphereMotion : public hkpMotion
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpSphereMotion;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpSphereMotion[0];
+	};
 	static_assert(sizeof(hkpSphereMotion) == 0x140);
 
-	class hkpBoxMotion : public hkpMotion {};
+	class hkpBoxMotion : public hkpMotion
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpBoxMotion;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpBoxMotion[0];
+	};
 	static_assert(sizeof(hkpBoxMotion) == 0x140);
 
-	class hkpThinBoxMotion : public hkpBoxMotion {};
+	class hkpThinBoxMotion : public hkpBoxMotion
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpThinBoxMotion;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpThinBoxMotion[0];
+	};
 	static_assert(sizeof(hkpThinBoxMotion) == 0x140);
 
-	class hkpCharacterMotion : public hkpMotion {};
+	class hkpCharacterMotion : public hkpMotion
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpCharacterMotion;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpCharacterMotion[0];
+	};
 	static_assert(sizeof(hkpCharacterMotion) == 0x140);
 
 	class hkpKeyframedRigidMotion : public hkpMotion
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpKeyframedRigidMotion;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpKeyframedRigidMotion[0];
+
 		virtual void sub_1E();
 		virtual void sub_1F();
 	};
@@ -87,10 +112,18 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkpFixedRigidMotion : public hkpKeyframedRigidMotion
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpFixedRigidMotion;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpFixedRigidMotion[0];
+
 		virtual void sub_20();
 	};
 	static_assert(sizeof(hkpFixedRigidMotion) == 0x140);
 
-	class hkpMaxSizeMotion : public hkpKeyframedRigidMotion {};
+	class hkpMaxSizeMotion : public hkpKeyframedRigidMotion
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkpMaxSizeMotion;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkpMaxSizeMotion[0];
+	};
 	static_assert(sizeof(hkpMaxSizeMotion) == 0x140);
 }

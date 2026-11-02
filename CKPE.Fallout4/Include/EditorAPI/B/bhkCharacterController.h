@@ -9,6 +9,8 @@
 #include <EditorAPI/B/bhkCharacterOrientation.h>
 #include <EditorAPI/H/hkBaseTypes.h>
 #include <EditorAPI/N/NiObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -39,6 +41,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkCharProxyControllerCinfo : public bhkCharacterControllerCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCharProxyControllerCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCharProxyControllerCinfo[0];
+
 		/* 0x0A0 */ std::byte unk0A0[0xB0];
 	};
 	static_assert(sizeof(bhkCharProxyControllerCinfo) == 0x150);
@@ -47,6 +52,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkCharRigidBodyControllerCinfo : public bhkCharacterControllerCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCharRigidBodyControllerCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCharRigidBodyControllerCinfo[0];
+
 		/* 0x0A0 */ std::byte unk0A0[0xA0];
 	};
 	static_assert(sizeof(bhkCharRigidBodyControllerCinfo) == 0x140);
@@ -115,6 +123,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkCharacterRigidBody : public NiAPI::NiObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCharacterRigidBody;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCharacterRigidBody[0];
+
 		/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 		/* 20 */ virtual void GetViewerStringsArray(void* Strings) noexcept(true) override;
 		/* 0x010 */ hknpCharacterRigidBody* rigidBody;
@@ -174,6 +185,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class bhkCharRigidBodyController : public bhkCharacterController
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkCharRigidBodyController;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkCharRigidBodyController[0];
+
 		// The secondary hknpCharacterRigidBodyListener remains opaque.
 		/* 0x460 */ std::byte unk460[0x10];
 		/* 0x470 */ bhkCharacterRigidBody characterRigidBody;

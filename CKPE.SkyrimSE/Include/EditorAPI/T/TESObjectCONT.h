@@ -12,6 +12,8 @@
 #include <EditorAPI/T/TESWeightForm.h>
 #include <EditorAPI/B/BGSDestructibleObjectForm.h>
 #include <EditorAPI/B/BGSOpenCloseForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -32,6 +34,9 @@ namespace CKPE
 					public BGSOpenCloseForm				// E8
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectCONT;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectCONT[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftContainer;
 
 					virtual ~TESObjectCONT() = default;

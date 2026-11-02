@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESObjectACTI.h>
 #include <EditorAPI/T/TESObjectREFR.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -42,6 +44,7 @@ namespace CKPE
 					/* 4A0 */ void CollectVoiceTypes(BSSimpleList<BGSVoiceType*>* VoiceTypes) const noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftTalkingActivator;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSTalkingActivator;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSTalkingActivator[0];
 
 					virtual bool GetReflectedByAutoWater() noexcept(true) { return false; } // 154 - RVA 0xC2E650, return 0;

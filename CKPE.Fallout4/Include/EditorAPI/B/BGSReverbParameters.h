@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/F/FormInterfaces.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -36,6 +38,7 @@ namespace CKPE
 					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftReverbParameters;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSReverbParameters;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSReverbParameters[0];
 				public:
 					// DATA chunk (14 bytes); Load clamps decayTime to 100-20000 and hfReference to 20-20000

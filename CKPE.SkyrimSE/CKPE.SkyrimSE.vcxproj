@@ -337,6 +337,8 @@
     <ClInclude Include="Include\EditorAPI\B\BSTSmartPointer.h" />
     <ClInclude Include="Include\EditorAPI\D\DecalData.h" />
     <ClInclude Include="Include\EditorAPI\IDs.h" />
+    <ClInclude Include="Include\EditorAPI\IDs_RTTI.h" />
+    <ClInclude Include="Include\EditorAPI\IDs_VTABLE.h" />
     <ClInclude Include="Include\EditorAPI\N\NiAVObject.h" />
     <ClInclude Include="Include\EditorAPI\N\NiCollisionObject.h" />
     <ClInclude Include="Include\EditorAPI\N\NiCollisionUtils.h" />

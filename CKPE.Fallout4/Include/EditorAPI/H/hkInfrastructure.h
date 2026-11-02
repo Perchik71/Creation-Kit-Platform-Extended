@@ -7,6 +7,8 @@
 #include <EditorAPI/H/hkMemory.h>
 #include <EditorAPI/H/hkReflectionTypes.h>
 #include <cstdio>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -164,6 +166,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkConstraintCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkConstraintCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkConstraintCinfo[0];
+
 		virtual ~hkConstraintCinfo();
 		virtual void hkConstraintCinfo_Unk01();
 		virtual void hkConstraintCinfo_Unk02();
@@ -177,6 +182,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkBallAndSocketConstraintCinfo : public hkConstraintCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkBallAndSocketConstraintCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkBallAndSocketConstraintCinfo[0];
+
 	};
 	static_assert(sizeof(hkBallAndSocketConstraintCinfo) == 0x28);
 
@@ -190,6 +198,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkBallSocketChainCinfo : public hkConstraintChainCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkBallSocketChainCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkBallSocketChainCinfo[0];
+
 		/* 0x038 */ std::byte pad038[0x10];
 	};
 	static_assert(sizeof(hkBallSocketChainCinfo) == 0x48);
@@ -197,6 +208,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkPackfileWriter : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkPackfileWriter;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkPackfileWriter[0];
+
 		class AddObjectListener : public hkReferencedObject
 		{
 		public:
@@ -219,6 +233,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkBinaryPackfileWriter : public hkPackfileWriter
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkBinaryPackfileWriter;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkBinaryPackfileWriter[0];
+
 		/* 0x138 */ std::byte pad138[0x8];
 	};
 	static_assert(sizeof(hkBinaryPackfileWriter) == 0x140);
@@ -233,6 +250,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkBinaryTagfileReader : public hkTagfileReader
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkBinaryTagfileReader;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkBinaryTagfileReader[0];
+
 	};
 	static_assert(sizeof(hkBinaryTagfileReader) == 0x10);
 
@@ -252,6 +272,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkBinaryTagfileWriter : public hkTagfileWriter
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkBinaryTagfileWriter;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkBinaryTagfileWriter[0];
+
 	};
 	static_assert(sizeof(hkBinaryTagfileWriter) == 0x10);
 
@@ -279,6 +302,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkBlockStreamCommandWriter : public hkSecondaryCommandDispatcher
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkBlockStreamCommandWriter;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkBlockStreamCommandWriter[0];
+
 		/* 0x010 */ std::byte pad010[0x28];
 	};
 	static_assert(sizeof(hkBlockStreamCommandWriter) == 0x38);
@@ -286,21 +312,33 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkBreakableConstraintCinfo : public hkConstraintCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkBreakableConstraintCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkBreakableConstraintCinfo[0];
+
 	};
 	static_assert(sizeof(hkBreakableConstraintCinfo) == 0x28);
 
 	class hkSocket : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkSocket;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkSocket[0];
+
 		class ReaderAdapter : public hkStreamReader
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkSocket__ReaderAdapter;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkSocket__ReaderAdapter[0];
+
 			/* 0x010 */ std::byte pad010[0x8];
 		};
 		static_assert(sizeof(ReaderAdapter) == 0x18);
 		class WriterAdapter : public hkStreamWriter
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkSocket__WriterAdapter;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkSocket__WriterAdapter[0];
+
 			/* 0x010 */ std::byte pad010[0x8];
 		};
 		static_assert(sizeof(WriterAdapter) == 0x18);
@@ -321,6 +359,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkBsdSocket : public hkSocket
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkBsdSocket;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkBsdSocket[0];
+
 		/* 0x040 */ std::byte pad040[0x8];
 	};
 	static_assert(sizeof(hkBsdSocket) == 0x48);
@@ -328,6 +369,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkBufferedStreamReader : public hkSeekableStreamReader
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkBufferedStreamReader;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkBufferedStreamReader[0];
+
 		/* 0x010 */ std::byte pad010[0x28];
 	};
 	static_assert(sizeof(hkBufferedStreamReader) == 0x38);
@@ -355,6 +399,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkCommandRouter : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkCommandRouter;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkCommandRouter[0];
+
 		/* 0x010 */ std::byte pad010[0x18];
 	};
 	static_assert(sizeof(hkCommandRouter) == 0x28);
@@ -362,6 +409,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDataRefCounted
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDataRefCounted;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDataRefCounted[0];
+
 		virtual ~hkDataRefCounted();
 		/* 0x008 */ std::byte pad008[0x8];
 	};
@@ -414,6 +464,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDataArrayNative : public hkDataArrayImpl
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDataArrayNative;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDataArrayNative[0];
+
 		/* 0x010 */ std::byte pad010[0x40];
 	};
 	static_assert(sizeof(hkDataArrayNative) == 0x50);
@@ -439,6 +492,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDataClassDict : public hkDataClassImpl
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDataClassDict;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDataClassDict[0];
+
 		/* 0x010 */ std::byte pad010[0x50];
 	};
 	static_assert(sizeof(hkDataClassDict) == 0x60);
@@ -446,6 +502,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDataClassNative : public hkDataClassImpl
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDataClassNative;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDataClassNative[0];
+
 		/* 0x010 */ std::byte pad010[0x10];
 	};
 	static_assert(sizeof(hkDataClassNative) == 0x20);
@@ -489,6 +548,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDataObjectDict : public hkDataObjectImpl
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDataObjectDict;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDataObjectDict[0];
+
 		/* 0x010 */ std::byte pad010[0x20];
 	};
 	static_assert(sizeof(hkDataObjectDict) == 0x30);
@@ -496,6 +558,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDataObjectNative : public hkDataObjectImpl
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDataObjectNative;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDataObjectNative[0];
+
 		/* 0x010 */ std::byte pad010[0x20];
 	};
 	static_assert(sizeof(hkDataObjectNative) == 0x30);
@@ -530,6 +595,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDataWorldDict : public hkDataWorld
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDataWorldDict;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDataWorldDict[0];
+
 		/* 0x010 */ std::byte pad010[0x110];
 	};
 	static_assert(sizeof(hkDataWorldDict) == 0x120);
@@ -537,6 +605,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDataWorldNative : public hkDataWorld
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDataWorldNative;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDataWorldNative[0];
+
 		virtual void hkDataWorldNative_Unk19();
 		/* 0x010 */ std::byte pad010[0x158];
 	};
@@ -545,12 +616,18 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDebugCommandProcessor : public hkSecondaryCommandDispatcher
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDebugCommandProcessor;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDebugCommandProcessor[0];
+
 	};
 	static_assert(sizeof(hkDebugCommandProcessor) == 0x10);
 
 	class hkDebugDisplay : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDebugDisplay;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDebugDisplay[0];
+
 		/* 0x010 */ std::byte pad010[0x18];
 	};
 	static_assert(sizeof(hkDebugDisplay) == 0x28);
@@ -558,6 +635,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDebugDisplayHandler
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDebugDisplayHandler;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDebugDisplayHandler[0];
+
 		virtual ~hkDebugDisplayHandler();
 		virtual void hkDebugDisplayHandler_Unk01();
 		virtual void hkDebugDisplayHandler_Unk02();
@@ -601,12 +681,18 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDefaultBuiltinTypeRegistry : public hkBuiltinTypeRegistry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDefaultBuiltinTypeRegistry;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDefaultBuiltinTypeRegistry[0];
+
 	};
 	static_assert(sizeof(hkDefaultBuiltinTypeRegistry) == 0x10);
 
 	class hkDynamicClassNameRegistry : public hkClassNameRegistry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDynamicClassNameRegistry;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDynamicClassNameRegistry[0];
+
 		virtual void hkDynamicClassNameRegistry_Unk07();
 		virtual void hkDynamicClassNameRegistry_Unk08();
 		virtual void hkDynamicClassNameRegistry_Unk09();
@@ -619,6 +705,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDefaultClassNameRegistry : public hkDynamicClassNameRegistry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDefaultClassNameRegistry;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDefaultClassNameRegistry[0];
+
 		/* 0x030 */ std::byte pad030[0x8];
 	};
 	static_assert(sizeof(hkDefaultClassNameRegistry) == 0x38);
@@ -626,6 +715,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkVersionPatchManager : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkVersionPatchManager;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkVersionPatchManager[0];
+
 		class ClassWrapper : public hkReferencedObject
 		{
 		public:
@@ -639,6 +731,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDefaultClassWrapper : public hkVersionPatchManager::ClassWrapper
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDefaultClassWrapper;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDefaultClassWrapper[0];
+
 		/* 0x010 */ std::byte pad010[0x8];
 	};
 	static_assert(sizeof(hkDefaultClassWrapper) == 0x18);
@@ -660,6 +755,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDefaultError : public hkError
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDefaultError;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDefaultError[0];
+
 		virtual void hkDefaultError_Unk0C();
 		/* 0x010 */ std::byte pad010[0x38];
 	};
@@ -676,6 +774,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDefaultImage : public hkImage
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDefaultImage;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDefaultImage[0];
+
 		/* 0x010 */ std::byte pad010[0x28];
 	};
 	static_assert(sizeof(hkDefaultImage) == 0x38);
@@ -683,6 +784,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDisplayGeometry : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDisplayGeometry;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDisplayGeometry[0];
+
 		virtual void hkDisplayGeometry_Unk04();
 		virtual void hkDisplayGeometry_Unk05();
 		/* 0x010 */ std::byte pad010[0x60];
@@ -692,6 +796,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDisplayAABB : public hkDisplayGeometry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDisplayAABB;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDisplayAABB[0];
+
 		/* 0x070 */ std::byte pad070[0x20];
 	};
 	static_assert(sizeof(hkDisplayAABB) == 0x90);
@@ -699,6 +806,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDisplayBox : public hkDisplayGeometry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDisplayBox;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDisplayBox[0];
+
 		/* 0x070 */ std::byte pad070[0x10];
 	};
 	static_assert(sizeof(hkDisplayBox) == 0x80);
@@ -706,6 +816,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDisplayCapsule : public hkDisplayGeometry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDisplayCapsule;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDisplayCapsule[0];
+
 		/* 0x070 */ std::byte pad070[0x30];
 	};
 	static_assert(sizeof(hkDisplayCapsule) == 0xA0);
@@ -713,6 +826,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDisplayCone : public hkDisplayGeometry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDisplayCone;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDisplayCone[0];
+
 		/* 0x070 */ std::byte pad070[0x30];
 	};
 	static_assert(sizeof(hkDisplayCone) == 0xA0);
@@ -720,12 +836,18 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDisplayConvex : public hkDisplayGeometry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDisplayConvex;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDisplayConvex[0];
+
 	};
 	static_assert(sizeof(hkDisplayConvex) == 0x70);
 
 	class hkDisplayCylinder : public hkDisplayGeometry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDisplayCylinder;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDisplayCylinder[0];
+
 		/* 0x070 */ std::byte pad070[0x30];
 	};
 	static_assert(sizeof(hkDisplayCylinder) == 0xA0);
@@ -742,6 +864,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDisplayMesh : public hkDisplayGeometry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDisplayMesh;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDisplayMesh[0];
+
 		/* 0x070 */ std::byte pad070[0x20];
 	};
 	static_assert(sizeof(hkDisplayMesh) == 0x90);
@@ -749,6 +874,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDisplayPlane : public hkDisplayGeometry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDisplayPlane;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDisplayPlane[0];
+
 		/* 0x070 */ std::byte pad070[0x40];
 	};
 	static_assert(sizeof(hkDisplayPlane) == 0xB0);
@@ -756,6 +884,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDisplaySemiCircle : public hkDisplayGeometry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDisplaySemiCircle;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDisplaySemiCircle[0];
+
 		/* 0x070 */ std::byte pad070[0x40];
 	};
 	static_assert(sizeof(hkDisplaySemiCircle) == 0xB0);
@@ -763,6 +894,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkIArchive : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkIArchive;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkIArchive[0];
+
 		/* 0x010 */ std::byte pad010[0x10];
 	};
 	static_assert(sizeof(hkIArchive) == 0x20);
@@ -770,12 +904,18 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDisplaySerializeIStream : public hkIArchive
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDisplaySerializeIStream;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDisplaySerializeIStream[0];
+
 	};
 	static_assert(sizeof(hkDisplaySerializeIStream) == 0x20);
 
 	class hkOArchive : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkOArchive;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkOArchive[0];
+
 		/* 0x010 */ std::byte pad010[0x10];
 	};
 	static_assert(sizeof(hkOArchive) == 0x20);
@@ -783,12 +923,18 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDisplaySerializeOStream : public hkOArchive
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDisplaySerializeOStream;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDisplaySerializeOStream[0];
+
 	};
 	static_assert(sizeof(hkDisplaySerializeOStream) == 0x20);
 
 	class hkDisplaySphere : public hkDisplayGeometry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDisplaySphere;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDisplaySphere[0];
+
 		/* 0x070 */ std::byte pad070[0x20];
 	};
 	static_assert(sizeof(hkDisplaySphere) == 0x90);
@@ -796,6 +942,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDisplayTaperedCapsule : public hkDisplayGeometry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDisplayTaperedCapsule;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDisplayTaperedCapsule[0];
+
 		/* 0x070 */ std::byte pad070[0x30];
 	};
 	static_assert(sizeof(hkDisplayTaperedCapsule) == 0xA0);
@@ -803,6 +952,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDisplayWireframe : public hkDisplayGeometry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDisplayWireframe;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDisplayWireframe[0];
+
 		/* 0x070 */ std::byte pad070[0x10];
 	};
 	static_assert(sizeof(hkDisplayWireframe) == 0x80);
@@ -810,6 +962,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDrawUtil : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDrawUtil;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDrawUtil[0];
+
 		/* 0x010 */ std::byte pad010[0x8];
 	};
 	static_assert(sizeof(hkDrawUtil) == 0x18);
@@ -817,6 +972,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkDummySingleton : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDummySingleton;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDummySingleton[0];
+
 		virtual void hkDummySingleton_Unk04();
 	};
 	static_assert(sizeof(hkDummySingleton) == 0x10);
@@ -824,6 +982,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkErrStream : public hkOstream
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkErrStream;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkErrStream[0];
+
 	};
 	static_assert(sizeof(hkErrStream) == 0x18);
 
@@ -852,6 +1013,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkFixedBlockStreamAllocator : public hkBlockStreamAllocator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkFixedBlockStreamAllocator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkFixedBlockStreamAllocator[0];
+
 		/* 0x010 */ std::byte pad010[0x60];
 	};
 	static_assert(sizeof(hkFixedBlockStreamAllocator) == 0x70);
@@ -859,12 +1023,18 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkGenericConstraintCinfo : public hkConstraintCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkGenericConstraintCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkGenericConstraintCinfo[0];
+
 	};
 	static_assert(sizeof(hkGenericConstraintCinfo) == 0x28);
 
 	class hkFixedConstraintCinfo : public hkGenericConstraintCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkFixedConstraintCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkFixedConstraintCinfo[0];
+
 		/* 0x028 */ std::byte pad028[0x10];
 	};
 	static_assert(sizeof(hkFixedConstraintCinfo) == 0x38);
@@ -872,12 +1042,18 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkForwardingDisplayGeometryBuilder : public hkDisplayGeometryBuilder
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkForwardingDisplayGeometryBuilder;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkForwardingDisplayGeometryBuilder[0];
+
 	};
 	static_assert(sizeof(hkForwardingDisplayGeometryBuilder) == 0x10);
 
 	class hkHardwareInfo : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkHardwareInfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkHardwareInfo[0];
+
 		/* 0x010 */ std::byte pad010[0x8];
 	};
 	static_assert(sizeof(hkHardwareInfo) == 0x18);
@@ -885,18 +1061,27 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkHingeConstraintCinfo : public hkConstraintCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkHingeConstraintCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkHingeConstraintCinfo[0];
+
 	};
 	static_assert(sizeof(hkHingeConstraintCinfo) == 0x28);
 
 	class hkHingeLimitsConstraintCinfo : public hkConstraintCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkHingeLimitsConstraintCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkHingeLimitsConstraintCinfo[0];
+
 	};
 	static_assert(sizeof(hkHingeLimitsConstraintCinfo) == 0x28);
 
 	class hkIstream : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkIstream;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkIstream[0];
+
 		/* 0x010 */ std::byte pad010[0x8];
 	};
 	static_assert(sizeof(hkIstream) == 0x18);
@@ -904,12 +1089,18 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkLimitedHingeConstraintCinfo : public hkConstraintCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkLimitedHingeConstraintCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkLimitedHingeConstraintCinfo[0];
+
 	};
 	static_assert(sizeof(hkLimitedHingeConstraintCinfo) == 0x28);
 
 	class hkLoader : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkLoader;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkLoader[0];
+
 		virtual void hkLoader_Unk04();
 		virtual void hkLoader_Unk05();
 		virtual void hkLoader_Unk06();
@@ -932,12 +1123,18 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkMalleableConstraintCinfo : public hkConstraintCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkMalleableConstraintCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkMalleableConstraintCinfo[0];
+
 	};
 	static_assert(sizeof(hkMalleableConstraintCinfo) == 0x28);
 
 	class hkMallocAllocator : public hkMemoryAllocator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkMallocAllocator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkMallocAllocator[0];
+
 		/* 0x008 */ std::byte pad008[0x10];
 	};
 	static_assert(sizeof(hkMallocAllocator) == 0x18);
@@ -945,6 +1142,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkMemoryStreamReader : public hkSeekableStreamReader
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkMemoryStreamReader;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkMemoryStreamReader[0];
+
 		/* 0x010 */ const std::byte* m_buffer;
 		/* 0x018 */ std::int32_t m_position;
 		/* 0x01C */ std::int32_t m_size;
@@ -961,6 +1161,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkMemoryTrackStreamReader : public hkStreamReader
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkMemoryTrackStreamReader;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkMemoryTrackStreamReader[0];
+
 		/* 0x010 */ std::byte pad010[0x18];
 	};
 	static_assert(sizeof(hkMemoryTrackStreamReader) == 0x28);
@@ -968,6 +1171,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkObjectCopier : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkObjectCopier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkObjectCopier[0];
+
 		virtual void hkObjectCopier_Unk04();
 		virtual void hkObjectCopier_Unk05();
 		virtual void hkObjectCopier_Unk06();
@@ -989,6 +1195,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkObjectResource : public hkResource
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkObjectResource;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkObjectResource[0];
+
 		virtual void hkObjectResource_Unk09();
 		/* 0x010 */ std::byte pad010[0x20];
 	};
@@ -1005,6 +1214,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkOffsetOnlyStreamWriter : public hkStreamWriter
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkOffsetOnlyStreamWriter;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkOffsetOnlyStreamWriter[0];
+
 		/* 0x010 */ std::byte pad010[0x8];
 	};
 	static_assert(sizeof(hkOffsetOnlyStreamWriter) == 0x18);
@@ -1012,6 +1224,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkPackfileData : public hkResource
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkPackfileData;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkPackfileData[0];
+
 		/* 0x010 */ std::byte pad010[0x98];
 	};
 	static_assert(sizeof(hkPackfileData) == 0xA8);
@@ -1019,6 +1234,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkParserBuffer : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkParserBuffer;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkParserBuffer[0];
+
 		/* 0x010 */ std::byte pad010[0x30];
 	};
 	static_assert(sizeof(hkParserBuffer) == 0x40);
@@ -1026,9 +1244,15 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkPlatformObjectWriter : public hkObjectWriter
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkPlatformObjectWriter;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkPlatformObjectWriter[0];
+
 		class Cache : public hkReferencedObject
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkPlatformObjectWriter__Cache;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkPlatformObjectWriter__Cache[0];
+
 			/* 0x010 */ std::byte pad010[0x30];
 		};
 		static_assert(sizeof(Cache) == 0x40);
@@ -1039,18 +1263,27 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkPointToPathConstraintCinfo : public hkConstraintCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkPointToPathConstraintCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkPointToPathConstraintCinfo[0];
+
 	};
 	static_assert(sizeof(hkPointToPathConstraintCinfo) == 0x28);
 
 	class hkPrismaticConstraintCinfo : public hkConstraintCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkPrismaticConstraintCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkPrismaticConstraintCinfo[0];
+
 	};
 	static_assert(sizeof(hkPrismaticConstraintCinfo) == 0x28);
 
 	class hkProcess
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkProcess;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkProcess[0];
+
 		virtual ~hkProcess();
 		virtual void hkProcess_Unk01();
 		virtual void hkProcess_Unk02();
@@ -1066,6 +1299,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkProcessContext
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkProcessContext;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkProcessContext[0];
+
 		virtual ~hkProcessContext();
 		virtual void hkProcessContext_Unk01();
 		virtual void hkProcessContext_Unk02();
@@ -1076,6 +1312,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkProcessFactory : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkProcessFactory;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkProcessFactory[0];
+
 		/* 0x010 */ std::byte pad010[0x20];
 	};
 	static_assert(sizeof(hkProcessFactory) == 0x30);
@@ -1083,6 +1322,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkProcessHandler
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkProcessHandler;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkProcessHandler[0];
+
 		virtual ~hkProcessHandler();
 		virtual void hkProcessHandler_Unk01();
 		virtual void hkProcessHandler_Unk02();
@@ -1098,6 +1340,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkPruneRedundantMaterialRegistry : public hkDefaultMeshMaterialRegistry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkPruneRedundantMaterialRegistry;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkPruneRedundantMaterialRegistry[0];
+
 		/* 0x020 */ std::byte pad020[0x10];
 	};
 	static_assert(sizeof(hkPruneRedundantMaterialRegistry) == 0x30);
@@ -1105,18 +1350,27 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkRagdollConstraintCinfo : public hkConstraintCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkRagdollConstraintCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkRagdollConstraintCinfo[0];
+
 	};
 	static_assert(sizeof(hkRagdollConstraintCinfo) == 0x28);
 
 	class hkRagdollLimitsConstraintCinfo : public hkConstraintCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkRagdollLimitsConstraintCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkRagdollLimitsConstraintCinfo[0];
+
 	};
 	static_assert(sizeof(hkRagdollLimitsConstraintCinfo) == 0x28);
 
 	class hkReferencedObjectLock : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkReferencedObjectLock;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkReferencedObjectLock[0];
+
 		/* 0x010 */ std::byte pad010[0x40];
 	};
 	static_assert(sizeof(hkReferencedObjectLock) == 0x50);
@@ -1124,6 +1378,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkRemoteObjectClientSideListener
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkRemoteObjectClientSideListener;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkRemoteObjectClientSideListener[0];
+
 		virtual ~hkRemoteObjectClientSideListener();
 		virtual void hkRemoteObjectClientSideListener_Unk01();
 		/* 0x008 */ std::byte pad008[0x8];
@@ -1133,6 +1390,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkRemoteObjectServerSideListener
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkRemoteObjectServerSideListener;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkRemoteObjectServerSideListener[0];
+
 		virtual ~hkRemoteObjectServerSideListener();
 		virtual void hkRemoteObjectServerSideListener_Unk01();
 	};
@@ -1141,6 +1401,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkReplayStreamReader : public hkStreamReader
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkReplayStreamReader;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkReplayStreamReader[0];
+
 		/* 0x010 */ std::byte pad010[0x20];
 	};
 	static_assert(sizeof(hkReplayStreamReader) == 0x30);
@@ -1148,6 +1411,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkSerializeDeprecated : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkSerializeDeprecated;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkSerializeDeprecated[0];
+
 		virtual void hkSerializeDeprecated_Unk04();
 		virtual void hkSerializeDeprecated_Unk05();
 		virtual void hkSerializeDeprecated_Unk06();
@@ -1160,6 +1426,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkSlot
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkSlot;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkSlot[0];
+
 		virtual ~hkSlot();
 		virtual void hkSlot_Unk01();
 		/* 0x008 */ std::byte pad008[0x10];
@@ -1169,6 +1438,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkSolverAllocator : public hkMemoryAllocator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkSolverAllocator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkSolverAllocator[0];
+
 		/* 0x008 */ std::byte pad008[0x460];
 	};
 	static_assert(sizeof(hkSolverAllocator) == 0x468);
@@ -1176,6 +1448,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkStackTracer
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkStackTracer;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkStackTracer[0];
+
 		virtual ~hkStackTracer();
 	};
 	static_assert(sizeof(hkStackTracer) == 0x8);
@@ -1183,6 +1458,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkStaticClassNameRegistry : public hkClassNameRegistry
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkStaticClassNameRegistry;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkStaticClassNameRegistry[0];
+
 		/* 0x010 */ std::byte pad010[0x18];
 	};
 	static_assert(sizeof(hkStaticClassNameRegistry) == 0x28);
@@ -1190,6 +1468,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkStdioStreamReader : public hkSeekableStreamReader
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkStdioStreamReader;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkStdioStreamReader[0];
+
 		/* 0x010 */ std::FILE* m_file;
 		/* 0x018 */ hkBool m_isOk;
 		/* 0x019 */ std::byte pad019[0x7];
@@ -1201,12 +1482,18 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkStiffSpringConstraintCinfo : public hkConstraintCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkStiffSpringConstraintCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkStiffSpringConstraintCinfo[0];
+
 	};
 	static_assert(sizeof(hkStiffSpringConstraintCinfo) == 0x28);
 
 	class hkSubStreamWriter : public hkStreamWriter
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkSubStreamWriter;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkSubStreamWriter[0];
+
 		/* 0x010 */ std::byte pad010[0x10];
 	};
 	static_assert(sizeof(hkSubStreamWriter) == 0x20);
@@ -1238,6 +1525,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkTraceStream : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTraceStream;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTraceStream[0];
+
 		/* 0x010 */ std::byte pad010[0x20];
 	};
 	static_assert(sizeof(hkTraceStream) == 0x30);
@@ -1253,36 +1543,54 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkTrackerArrayLayoutHandler : public hkTrackerLayoutHandler
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTrackerArrayLayoutHandler;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTrackerArrayLayoutHandler[0];
+
 	};
 	static_assert(sizeof(hkTrackerArrayLayoutHandler) == 0x10);
 
 	class hkTrackerEnumLayoutHandler : public hkTrackerLayoutHandler
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTrackerEnumLayoutHandler;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTrackerEnumLayoutHandler[0];
+
 	};
 	static_assert(sizeof(hkTrackerEnumLayoutHandler) == 0x10);
 
 	class hkTrackerFlagsLayoutHandler : public hkTrackerLayoutHandler
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTrackerFlagsLayoutHandler;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTrackerFlagsLayoutHandler[0];
+
 	};
 	static_assert(sizeof(hkTrackerFlagsLayoutHandler) == 0x10);
 
 	class hkTrackerJobQueueDynamicDataLayoutHandler : public hkTrackerLayoutHandler
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTrackerJobQueueDynamicDataLayoutHandler;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTrackerJobQueueDynamicDataLayoutHandler[0];
+
 	};
 	static_assert(sizeof(hkTrackerJobQueueDynamicDataLayoutHandler) == 0x10);
 
 	class hkTrackerJobQueueLayoutHandler : public hkTrackerLayoutHandler
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTrackerJobQueueLayoutHandler;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTrackerJobQueueLayoutHandler[0];
+
 	};
 	static_assert(sizeof(hkTrackerJobQueueLayoutHandler) == 0x10);
 
 	class hkTrackerLayoutCalculator : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTrackerLayoutCalculator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTrackerLayoutCalculator[0];
+
 		/* 0x010 */ std::byte pad010[0x50];
 	};
 	static_assert(sizeof(hkTrackerLayoutCalculator) == 0x60);
@@ -1290,30 +1598,45 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkTrackerPadSpuLayoutHandler : public hkTrackerLayoutHandler
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTrackerPadSpuLayoutHandler;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTrackerPadSpuLayoutHandler[0];
+
 	};
 	static_assert(sizeof(hkTrackerPadSpuLayoutHandler) == 0x10);
 
 	class hkTrackerPointerMapLayoutHandler : public hkTrackerLayoutHandler
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTrackerPointerMapLayoutHandler;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTrackerPointerMapLayoutHandler[0];
+
 	};
 	static_assert(sizeof(hkTrackerPointerMapLayoutHandler) == 0x10);
 
 	class hkTrackerQueueLayoutHandler : public hkTrackerLayoutHandler
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTrackerQueueLayoutHandler;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTrackerQueueLayoutHandler[0];
+
 	};
 	static_assert(sizeof(hkTrackerQueueLayoutHandler) == 0x10);
 
 	class hkTrackerRefPtrLayoutHandler : public hkTrackerLayoutHandler
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTrackerRefPtrLayoutHandler;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTrackerRefPtrLayoutHandler[0];
+
 	};
 	static_assert(sizeof(hkTrackerRefPtrLayoutHandler) == 0x10);
 
 	class hkTrackerScanSnapshot : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTrackerScanSnapshot;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTrackerScanSnapshot[0];
+
 		/* 0x010 */ std::byte pad010[0x148];
 	};
 	static_assert(sizeof(hkTrackerScanSnapshot) == 0x158);
@@ -1321,24 +1644,36 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkTrackerSetLayoutHandler : public hkTrackerLayoutHandler
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTrackerSetLayoutHandler;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTrackerSetLayoutHandler[0];
+
 	};
 	static_assert(sizeof(hkTrackerSetLayoutHandler) == 0x10);
 
 	class hkTrackerStringMapLayoutHandler : public hkTrackerLayoutHandler
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTrackerStringMapLayoutHandler;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTrackerStringMapLayoutHandler[0];
+
 	};
 	static_assert(sizeof(hkTrackerStringMapLayoutHandler) == 0x10);
 
 	class hkTrackerStringPtrLayoutHandler : public hkTrackerLayoutHandler
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTrackerStringPtrLayoutHandler;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTrackerStringPtrLayoutHandler[0];
+
 	};
 	static_assert(sizeof(hkTrackerStringPtrLayoutHandler) == 0x10);
 
 	class hkTrackerTypeLayout : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTrackerTypeLayout;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTrackerTypeLayout[0];
+
 		/* 0x010 */ std::byte pad010[0x30];
 	};
 	static_assert(sizeof(hkTrackerTypeLayout) == 0x40);
@@ -1346,6 +1681,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkTrackerTypeTreeCache : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTrackerTypeTreeCache;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTrackerTypeTreeCache[0];
+
 		/* 0x010 */ std::byte pad010[0x160];
 	};
 	static_assert(sizeof(hkTrackerTypeTreeCache) == 0x170);
@@ -1353,6 +1691,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkTypeInfoRegistry : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTypeInfoRegistry;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTypeInfoRegistry[0];
+
 		virtual void hkTypeInfoRegistry_Unk04();
 		virtual void hkTypeInfoRegistry_Unk05();
 		virtual void hkTypeInfoRegistry_Unk06();
@@ -1365,6 +1706,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkTypeManager : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkTypeManager;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkTypeManager[0];
+
 		/* 0x010 */ std::byte pad010[0xF0];
 	};
 	static_assert(sizeof(hkTypeManager) == 0x100);
@@ -1372,6 +1716,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkUuidPseudoRandomGenerator : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkUuidPseudoRandomGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkUuidPseudoRandomGenerator[0];
+
 		/* 0x010 */ std::byte pad010[0x10];
 	};
 	static_assert(sizeof(hkUuidPseudoRandomGenerator) == 0x20);
@@ -1379,6 +1726,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkVdbCommandWriter : public hkStreamWriter
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkVdbCommandWriter;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkVdbCommandWriter[0];
+
 		/* 0x010 */ std::byte pad010[0x20];
 	};
 	static_assert(sizeof(hkVdbCommandWriter) == 0x30);
@@ -1386,6 +1736,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkVisualDebugger : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkVisualDebugger;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkVisualDebugger[0];
+
 		virtual void hkVisualDebugger_Unk04();
 		virtual void hkVisualDebugger_Unk05();
 		/* 0x010 */ std::byte pad010[0xC8];
@@ -1395,6 +1748,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkVtableClassRegistry : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkVtableClassRegistry;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkVtableClassRegistry[0];
+
 		virtual void hkVtableClassRegistry_Unk04();
 		virtual void hkVtableClassRegistry_Unk05();
 		virtual void hkVtableClassRegistry_Unk06();
@@ -1406,18 +1762,27 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkWheelConstraintCinfo : public hkConstraintCinfo
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkWheelConstraintCinfo;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkWheelConstraintCinfo[0];
+
 	};
 	static_assert(sizeof(hkWheelConstraintCinfo) == 0x28);
 
 	class hkWin32FileSystem : public hkFileSystem
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkWin32FileSystem;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkWin32FileSystem[0];
+
 	};
 	static_assert(sizeof(hkWin32FileSystem) == 0x10);
 
 	class hkWin32StreamWriter : public hkStreamWriter
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkWin32StreamWriter;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkWin32StreamWriter[0];
+
 		/* 0x010 */ void* m_handle;
 	};
 	static_assert(sizeof(hkWin32StreamWriter) == 0x18);
@@ -1426,6 +1791,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkXmlLexAnalyzer : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkXmlLexAnalyzer;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkXmlLexAnalyzer[0];
+
 		/* 0x010 */ std::byte pad010[0x48];
 	};
 	static_assert(sizeof(hkXmlLexAnalyzer) == 0x58);
@@ -1433,6 +1801,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkXmlParser : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkXmlParser;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkXmlParser[0];
+
 		class Node : public hkReferencedObject
 		{
 		public:
@@ -1442,18 +1813,27 @@ namespace CKPE::Fallout4::EditorAPI
 		class Characters : public Node
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkXmlParser__Characters;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkXmlParser__Characters[0];
+
 			/* 0x018 */ std::byte pad018[0x8];
 		};
 		static_assert(sizeof(Characters) == 0x20);
 		class EndElement : public Node
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkXmlParser__EndElement;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkXmlParser__EndElement[0];
+
 			/* 0x018 */ std::byte pad018[0x8];
 		};
 		static_assert(sizeof(EndElement) == 0x20);
 		class StartElement : public Node
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkXmlParser__StartElement;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkXmlParser__StartElement[0];
+
 			/* 0x018 */ std::byte pad018[0x18];
 		};
 		static_assert(sizeof(StartElement) == 0x30);
@@ -1467,6 +1847,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkXmlStreamParser : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkXmlStreamParser;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkXmlStreamParser[0];
+
 		/* 0x010 */ std::byte pad010[0xA8];
 	};
 	static_assert(sizeof(hkXmlStreamParser) == 0xB8);
@@ -1474,28 +1857,47 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkXmlTagfileReader : public hkTagfileReader
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkXmlTagfileReader;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkXmlTagfileReader[0];
+
 	};
 	static_assert(sizeof(hkXmlTagfileReader) == 0x10);
 
 	class hkXmlTagfileWriter : public hkTagfileWriter
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkXmlTagfileWriter;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkXmlTagfileWriter[0];
+
 	};
 	static_assert(sizeof(hkXmlTagfileWriter) == 0x10);
 
 	class hkMemoryTrackStreamWriter : public hkStreamWriter
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkMemoryTrackStreamWriter;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkMemoryTrackStreamWriter[0];
+
 		virtual void hkMemoryTrackStreamWriter_Unk0B();
 
 		/* 0x010 */ std::byte pad010[0x10];
 	};
 	static_assert(sizeof(hkMemoryTrackStreamWriter) == 0x20);
 
-	class hkMemorySnapshotProcess : public hkReferencedObject, public hkProcess {};
+	class hkMemorySnapshotProcess : public hkReferencedObject, public hkProcess
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkMemorySnapshotProcess;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkMemorySnapshotProcess[0];
+	};
 	static_assert(sizeof(hkMemorySnapshotProcess) == 0x40);
 
-	class hkDummyMemoryTrackerImpl : public hkMemoryTracker {};
+	class hkDummyMemoryTrackerImpl : public hkMemoryTracker
+	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkDummyMemoryTrackerImpl;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkDummyMemoryTrackerImpl[0];
+	};
 	static_assert(sizeof(hkDummyMemoryTrackerImpl) == 0x8);
 
 }

@@ -7,6 +7,8 @@
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/N/NiRefObject.h>
 #include <EditorAPI/N/NiPointer.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -33,6 +35,7 @@ namespace CKPE
 			public:
 				virtual ~BSPortalGraph() = default;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::BSPortalGraph;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BSPortalGraph[0];
 
 				[[nodiscard]] inline std::uint32_t GetCellFormID() const noexcept(true) { return _CellID; }

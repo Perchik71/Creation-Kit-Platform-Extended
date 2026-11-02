@@ -17,6 +17,8 @@
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BGSCharacterMorph.h>
 #include <EditorAPI/B/BSTHashMap.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -77,6 +79,7 @@ namespace CKPE
 					/* 490 */ void UpdatePreview(HWND hDialogBox, bool ForceUpdate) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftActor;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESNPC;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESNPC[0];
 				public:
 					BGSAttachParentArray attachParents; // 2B0

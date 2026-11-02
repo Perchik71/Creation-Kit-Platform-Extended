@@ -8,6 +8,8 @@
 #include <EditorAPI/N/NiTypes.h>
 #include <EditorAPI/B/BGSSounds.h>
 #include <EditorAPI/T/TESModel.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -25,6 +27,9 @@ namespace CKPE
 					public TESModel
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSImpactData;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSImpactData[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftImpactData;
 
 					enum OrientationT : std::uint32_t

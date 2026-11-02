@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BSShader.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -15,6 +17,7 @@ namespace CKPE
 			class BSLightingShader : public BSShader
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLightingShader;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShader[0];
 
 				struct RuntimeData

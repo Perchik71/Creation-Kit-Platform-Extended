@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BGSStoryManagerTreeForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -18,6 +20,9 @@ namespace CKPE
 				class BGSStoryManagerNodeBase : public BGSStoryManagerTreeForm
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSStoryManagerNodeBase;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSStoryManagerNodeBase[0];
+
 					virtual ~BGSStoryManagerNodeBase() = default;
 				public:
 					std::uint8_t unk28[0x18];	// 28

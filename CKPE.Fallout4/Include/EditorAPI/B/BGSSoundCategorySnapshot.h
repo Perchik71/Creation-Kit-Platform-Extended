@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/B/BSTHashMap.h>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -40,6 +42,7 @@ namespace CKPE
 					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftSoundCategorySnapshot;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSSoundCategorySnapshot;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSSoundCategorySnapshot[0];
 				public:
 					BSTHashMap<BGSSoundCategory*, float> categoryMult; // 28 - CNAM

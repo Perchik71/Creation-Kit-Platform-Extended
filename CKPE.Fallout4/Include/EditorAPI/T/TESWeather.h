@@ -13,6 +13,8 @@
 #include <EditorAPI/B/BSString.h>
 #include <EditorAPI/B/BGSLightingTemplate.h>
 #include <EditorAPI/T/TESTexture1024.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -74,6 +76,7 @@ namespace CKPE
 					/* 368 */ void CollectAdditionalResourceFiles(BSTArray<BSFixedString>& Files) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftWeather;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESWeather;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESWeather[0];
 				public:
 					std::int32_t context; // 28 - REX::TEnumSet<SpellContext, std::int32_t>

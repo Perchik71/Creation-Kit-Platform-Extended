@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -22,6 +24,7 @@ namespace CKPE
 				public:
 					virtual ~TESFormIDListView() = default;
 
+					constexpr static Common::ID RTTI = IDs::RTTI::TESFormIDListView;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESFormIDListView[0];
 
 					virtual void PopulateListView(HWND hListView, const char* Filter) const noexcept(true) { return; } // 124

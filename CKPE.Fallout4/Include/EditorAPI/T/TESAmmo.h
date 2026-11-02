@@ -18,6 +18,8 @@
 #include <EditorAPI/T/TESWeightForm.h>
 #include <EditorAPI/B/BGSLocalizedString.h>
 #include <EditorAPI/T/TESModel.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -77,6 +79,7 @@ namespace CKPE
 					/* 4A8 */ void HandleRemoveItemFromContainer(TESObjectREFR* Reference) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftAmmo;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESAmmo;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESAmmo[0];
 				public:
 					AMMO_DATA data; // 1E0

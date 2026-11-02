@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -16,6 +18,9 @@ namespace CKPE
 			class BGSIdleCollection : public BaseFormComponent
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSIdleCollection;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSIdleCollection[0];
+
 				virtual ~BGSIdleCollection() = default;
 
 				std::uint8_t unk08;		// 08

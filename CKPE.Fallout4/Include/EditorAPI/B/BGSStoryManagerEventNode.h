@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/B/BGSStoryManagerBranchNode.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -34,6 +36,7 @@ namespace CKPE
 					/* 318 */ void WriteDataToDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftStoryManagerEventNode;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSStoryManagerEventNode;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSStoryManagerEventNode[0];
 				public:
 					/* 0x070 */ std::uint8_t unk70[0x18];

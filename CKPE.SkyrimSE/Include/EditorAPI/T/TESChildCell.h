@@ -1,5 +1,8 @@
 #pragma once
 
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
+
 namespace CKPE
 {
 	namespace SkyrimSE
@@ -12,6 +15,9 @@ namespace CKPE
 				class TESChildCell
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESChildCell;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESChildCell[0];
+
 					virtual ~TESChildCell();
 
 					// add

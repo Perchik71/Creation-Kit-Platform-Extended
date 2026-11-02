@@ -7,12 +7,17 @@
 #include <cstddef>
 #include <EditorAPI/D/DialogExtraLocalCopy.h>
 #include <EditorAPI/O/ObjectRefHandle.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class DialogExtraLocalReferenceCopy : public DialogExtraLocalCopy
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::DialogExtraLocalReferenceCopy;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::DialogExtraLocalReferenceCopy[0];
+
 		/* 0x000 */ virtual ~DialogExtraLocalReferenceCopy();
 		/* 0x018 */ [[nodiscard]] Forms::TESForm* GetForm() override;
 

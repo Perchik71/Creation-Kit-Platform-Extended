@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESTexture.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,7 @@ namespace CKPE
 			public:
 				virtual ~TESTexture1024() = default;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::TESTexture1024;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TESTexture1024[0];
 			};
 			static_assert(sizeof(TESTexture1024) == 0x28);

@@ -16,6 +16,8 @@
 #include <EditorAPI/B/BGSKeywordForm.h>
 #include <EditorAPI/B/BGSAttackDataForm.h>
 #include <EditorAPI/B/BGSPerkRankArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -41,6 +43,9 @@ namespace CKPE
 					public BGSPerkRankArray				// 168
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESActorBase;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESActorBase[0];
+
 					virtual ~TESActorBase() = default;
 				};
 				static_assert(sizeof(TESActorBase) == 0x178);

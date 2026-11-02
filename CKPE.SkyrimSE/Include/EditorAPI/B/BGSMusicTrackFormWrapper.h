@@ -7,6 +7,8 @@
 #include <cstddef>
 #include <EditorAPI/B/BSIMusicTrack.h>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -22,6 +24,9 @@ namespace CKPE
 					public BSIMusicTrack	// 28
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSMusicTrackFormWrapper;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSMusicTrackFormWrapper[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftMusicTrack;
 
 					virtual ~BGSMusicTrackFormWrapper() = default;

@@ -7,6 +7,8 @@
 #include <EditorAPI/B/BGSIdleCollection.h>
 #include <EditorAPI/T/TESBoundObject.h>
 #include <EditorAPI/T/TESModel.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -23,6 +25,9 @@ namespace CKPE
 					public BGSIdleCollection	// 80
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSIdleMarker;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSIdleMarker[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftIdleMarker;
 
 					virtual ~BGSIdleMarker() = default;

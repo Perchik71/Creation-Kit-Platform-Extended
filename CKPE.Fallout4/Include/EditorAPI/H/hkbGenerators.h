@@ -8,6 +8,8 @@
 #include <EditorAPI/H/hkBaseTypes.h>
 #include <EditorAPI/H/hkReflectionTypes.h>
 #include <EditorAPI/H/hkbBehaviorGraph.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -53,6 +55,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbAnimatedSkeletonGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbAnimatedSkeletonGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbAnimatedSkeletonGenerator[0];
+
 		/* 0x088 */ void* m_animatedSkeleton;
 	};
 	static_assert(sizeof(hkbAnimatedSkeletonGenerator) == 0x90);
@@ -61,6 +66,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbBehaviorGraph : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbBehaviorGraph;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbBehaviorGraph[0];
+
 		enum class VariableMode : std::int32_t
 		{
 			VARIABLE_MODE_DISCARD_WHEN_INACTIVE = 0,
@@ -143,6 +151,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbBehaviorReferenceGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbBehaviorReferenceGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbBehaviorReferenceGenerator[0];
+
 		/* 0x088 */ hkStringPtr m_behaviorName;
 		/* 0x090 */ void* m_behavior;
 	};
@@ -153,6 +164,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbBlenderGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbBlenderGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbBlenderGenerator[0];
+
 		enum class BlenderFlags : std::int32_t
 		{
 			FLAG_SYNC = 1,
@@ -205,6 +219,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbTransitionEffect : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbTransitionEffect;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbTransitionEffect[0];
+
 		enum class SelfTransitionMode : std::int32_t
 		{
 			SELF_TRANSITION_MODE_CONTINUE_IF_CYCLIC_BLEND_IF_ACYCLIC = 0,
@@ -247,6 +264,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbBlendingTransitionEffect : public hkbTransitionEffect
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbBlendingTransitionEffect;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbBlendingTransitionEffect[0];
+
 		enum class FlagBits : std::int32_t
 		{
 			FLAG_NONE = 0,
@@ -316,6 +336,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbClipGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbClipGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbClipGenerator[0];
+
 		enum class PlaybackMode : std::int32_t
 		{
 			MODE_SINGLE_PLAY = 0,
@@ -399,6 +422,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbDockingGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbDockingGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbDockingGenerator[0];
+
 		enum class BlendType : std::int32_t
 		{
 			BLEND_TYPE_BLEND_IN = 0,
@@ -446,6 +472,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbExtrapolatingTransitionEffect : public hkbBlendingTransitionEffect
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbExtrapolatingTransitionEffect;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbExtrapolatingTransitionEffect[0];
+
 		/* 0x140 */ hkbGeneratorSyncInfo m_fromGeneratorSyncInfo;
 		/* 0x1E8 */ hkbGeneratorPartitionInfo m_fromGeneratorPartitionInfo;
 		/* 0x210 */ hkQsTransformf m_worldFromModel;
@@ -475,6 +504,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbGeneratorTransitionEffect : public hkbTransitionEffect
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbGeneratorTransitionEffect;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbGeneratorTransitionEffect[0];
+
 		enum class ToGeneratorState : std::int32_t
 		{
 			STATE_INACTIVE = 0,
@@ -536,6 +568,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbHoldFromBlendingTransitionEffect : public hkbBlendingTransitionEffect
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbHoldFromBlendingTransitionEffect;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbHoldFromBlendingTransitionEffect[0];
+
 		/* 0x140 */ void* m_heldFromPose;
 		/* 0x148 */ std::int32_t m_heldFromPoseSize;
 		/* 0x14C */ std::uint8_t pad14C[0x4];
@@ -552,6 +587,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbLayerGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbLayerGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbLayerGenerator[0];
+
 		enum class LayerFlagBits : std::int32_t
 		{
 			FLAG_SYNC = 1,
@@ -576,6 +614,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbManualSelectorGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbManualSelectorGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbManualSelectorGenerator[0];
+
 		/* 0x088 */ hkArray<hkbGenerator*> m_generators;
 		/* 0x098 */ std::int16_t m_selectedGeneratorIndex;
 		/* 0x09A */ std::uint8_t pad09A[0x6];
@@ -601,6 +642,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbManualSelectorTransitionEffect : public hkbTransitionEffect
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbManualSelectorTransitionEffect;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbManualSelectorTransitionEffect[0];
+
 		/* 0x0A8 */ hkArray<hkbTransitionEffect*> m_transitionEffects;
 		/* 0x0B8 */ std::uint8_t m_selectedIndex;
 		/* 0x0B9 */ std::uint8_t pad0B9[0x7];
@@ -623,6 +667,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbModifierGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbModifierGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbModifierGenerator[0];
+
 		/* 0x088 */ hkbModifier* m_modifier;
 		/* 0x090 */ hkbGenerator* m_generator;
 	};
@@ -633,6 +680,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbProceduralBlenderGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbProceduralBlenderGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbProceduralBlenderGenerator[0];
+
 		/* 0x088 */ void* m_blender;
 
 	private:
@@ -647,6 +697,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbParametricMotionGenerator : public hkbProceduralBlenderGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbParametricMotionGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbParametricMotionGenerator[0];
+
 		enum class MotionSpaceType : std::int32_t
 		{
 			MST_UNKNOWN = 0,
@@ -676,6 +729,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbPinBonesGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbPinBonesGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbPinBonesGenerator[0];
+
 		/* 0x088 */ hkbGenerator* m_referenceFrameGenerator;
 		/* 0x090 */ hkbGenerator* m_pinnedGenerator;
 		/* 0x098 */ hkbBoneIndexArray* m_boneIndices;
@@ -691,6 +747,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbPoseMatchingGenerator : public hkbBlenderGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbPoseMatchingGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbPoseMatchingGenerator[0];
+
 		enum class Mode : std::int32_t
 		{
 			MODE_MATCH = 0,
@@ -741,6 +800,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbRadialSelectorGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbRadialSelectorGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbRadialSelectorGenerator[0];
+
 		/* 0x088 */ hkArray<hkbRadialSelectorGeneratorGeneratorPair> m_generatorPairs;
 		/* 0x098 */ float m_angle;
 		/* 0x09C */ float m_radius;
@@ -764,6 +826,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbReferencePoseGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbReferencePoseGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbReferencePoseGenerator[0];
+
 		/* 0x088 */ void* m_skeleton;
 	};
 	static_assert(sizeof(hkbReferencePoseGenerator) == 0x90);
@@ -772,6 +837,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbScriptGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbScriptGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbScriptGenerator[0];
+
 		/* 0x088 */ hkbGenerator* m_child;
 		/* 0x090 */ hkStringPtr m_onActivateScript;
 		/* 0x098 */ hkStringPtr m_onPreUpdateScript;
@@ -802,6 +870,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkbStateMachine : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkbStateMachine;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkbStateMachine[0];
+
 		using EventPropertyArray = hkbStateMachineEventPropertyArray;
 		using StateInfo = hkbStateMachineStateInfo;
 		using TransitionInfoArray = hkbStateMachineTransitionInfoArray;

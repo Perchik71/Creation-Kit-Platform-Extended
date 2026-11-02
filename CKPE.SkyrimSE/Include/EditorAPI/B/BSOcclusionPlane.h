@@ -6,6 +6,8 @@
 
 #include <EditorAPI/N/NiObject.h>
 #include <EditorAPI/N/NiTransform.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -21,6 +23,9 @@ namespace CKPE
 				NiAPI::NiPoint2 _Bounds;
 				char unk50[0xC8];
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSOcclusionShape;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSOcclusionShape[0];
+
 				virtual ~BSOcclusionShape() = default;
 
 				[[nodiscard]] inline const NiAPI::NiPoint3& GetPosition() const noexcept(true) { return _Position; }

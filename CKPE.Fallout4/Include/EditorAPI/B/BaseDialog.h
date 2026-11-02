@@ -10,6 +10,7 @@
 #include <CKPE.Common.h>
 #include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/B/BSSpinLock.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE
 {
@@ -24,6 +25,7 @@ namespace CKPE
 				public:
 					/* 0x000 */ virtual ~BaseDialog();
 
+					constexpr static Common::ID RTTI = IDs::RTTI::Dialog__BaseDialog;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::Dialog__BaseDialog[0];
 
 					/* 0x008 */ virtual bool PreprocessMessage(UINT Message, WPARAM wParam,

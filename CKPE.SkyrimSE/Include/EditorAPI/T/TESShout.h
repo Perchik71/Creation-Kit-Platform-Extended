@@ -10,6 +10,8 @@
 #include <EditorAPI/B/BGSMenuDisplayObject.h>
 #include <EditorAPI/B/BGSEquipType.h>
 #include <EditorAPI/B/TESDescription.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -28,6 +30,9 @@ namespace CKPE
 					public TESDescription			// 60
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESShout;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESShout[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftShout;
 
 					virtual ~TESShout() = default;

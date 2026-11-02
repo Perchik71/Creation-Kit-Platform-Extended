@@ -8,6 +8,8 @@
 #include <EditorAPI/B/BSString.h>
 #include <EditorAPI/B/BGSLocalizedString.h>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -23,6 +25,9 @@ namespace CKPE
 				class TESTopicInfo : public TESForm
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESTopicInfo;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESTopicInfo[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftTopicInfo;
 
 					enum : std::uint16_t

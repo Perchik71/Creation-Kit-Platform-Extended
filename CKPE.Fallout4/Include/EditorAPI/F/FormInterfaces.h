@@ -10,6 +10,8 @@
 #include <EditorAPI/B/BSTSmartPointer.h>
 #include <EditorAPI/T/TESObjectREFRFwd.h>
 #include <EditorAPI/B/BSTSingleton.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -42,6 +44,9 @@ namespace CKPE
 			class IKeywordFormBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::IKeywordFormBase;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::IKeywordFormBase[0];
+
 				virtual ~IKeywordFormBase() = default;
 				[[nodiscard]] virtual bool HasKeyword(const Forms::BGSKeyword* keyword,
 					const TBO_InstanceData* data) const noexcept(true) = 0; // 008
@@ -55,6 +60,9 @@ namespace CKPE
 			class ActorValueOwner
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::ActorValueOwner;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::ActorValueOwner[0];
+
 				virtual ~ActorValueOwner() = default;
 				[[nodiscard]] virtual float GetActorValue(const Forms::ActorValueInfo&) const noexcept(true) { return 0.0f; } // 008
 				[[nodiscard]] virtual float GetPermanentActorValue(const Forms::ActorValueInfo&) const noexcept(true) { return 0.0f; } // 010
@@ -73,6 +81,9 @@ namespace CKPE
 			class BGSOpenCloseForm
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSOpenCloseForm;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSOpenCloseForm[0];
+
 				virtual ~BGSOpenCloseForm() = default;
 				virtual void HandleOpenStart(Forms::TESObjectREFR*, Forms::TESObjectREFR*, bool) noexcept(true) { return; } // 008
 				virtual void HandleCloseStart(Forms::TESObjectREFR*, Forms::TESObjectREFR*, bool) noexcept(true) { return; } // 010
@@ -85,6 +96,9 @@ namespace CKPE
 			class BSIAudioEffectChain
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSIAudioEffectChain;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSIAudioEffectChain[0];
+
 				virtual ~BSIAudioEffectChain() = default;
 				[[nodiscard]] virtual std::uint32_t QEffectCount() const noexcept(true) = 0; // 008
 				[[nodiscard]] virtual const char* GetDebugID() const noexcept(true) = 0; // 010
@@ -96,6 +110,9 @@ namespace CKPE
 			class BSIMusicTrack
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSIMusicTrack;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSIMusicTrack[0];
+
 				enum class MusicStatus : std::int32_t;
 
 				virtual ~BSIMusicTrack() = default;
@@ -118,6 +135,9 @@ namespace CKPE
 			class BSIMusicType
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSIMusicType;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSIMusicType[0];
+
 				// CK adds GetDebugID after the destructor, unlike the game.
 				virtual void DoUpdate() noexcept(true) = 0; // 000
 				virtual void DoPlay() noexcept(true) = 0; // 008
@@ -169,6 +189,9 @@ namespace CKPE
 			class BSISoundCategory
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSISoundCategory;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSISoundCategory[0];
+
 				virtual ~BSISoundCategory() = default;
 				[[nodiscard]] virtual bool Matches(BSISoundCategory* category, bool exclusive) const noexcept(true) = 0; // 008
 				[[nodiscard]] virtual float GetCategoryVolume() const noexcept(true) = 0; // 010
@@ -192,6 +215,9 @@ namespace CKPE
 			class BSISoundDescriptor
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSISoundDescriptor;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSISoundDescriptor[0];
+
 				struct Resolution;
 				struct ExtraResolutionData;
 
@@ -210,6 +236,9 @@ namespace CKPE
 			class BSISoundOutputModel
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSISoundOutputModel;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSISoundOutputModel[0];
+
 				struct BSIAttenuationCharacteristics;
 
 				virtual ~BSISoundOutputModel() = default;
@@ -236,6 +265,9 @@ namespace CKPE
 			class BSMaterialObject
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSMaterialObject;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSMaterialObject[0];
+
 				virtual ~BSMaterialObject() = default;
 				virtual void EnsureLoaded() noexcept(true) { return; } // 008
 
@@ -247,6 +279,9 @@ namespace CKPE
 			class BSNavmesh
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSNavmesh;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSNavmesh[0];
+
 				virtual ~BSNavmesh() = default;
 				[[nodiscard]] virtual std::uint32_t QNavmeshID() const noexcept(true) = 0; // 008
 
@@ -258,6 +293,9 @@ namespace CKPE
 			class BSNavmeshInfoMap
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSNavmeshInfoMap;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSNavmeshInfoMap[0];
+
 				struct IVisitor;
 
 				virtual ~BSNavmeshInfoMap() = default;
@@ -275,6 +313,9 @@ namespace CKPE
 			class IAnimationGraphManagerHolder
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::IAnimationGraphManagerHolder;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::IAnimationGraphManagerHolder[0];
+
 				virtual ~IAnimationGraphManagerHolder() = default;
 				virtual bool NotifyAnimationGraphImpl(const BSFixedString& eventName) noexcept(true) = 0; // 008
 				virtual void EventSuccessfullyProcessed() noexcept(true) { return; } // 010

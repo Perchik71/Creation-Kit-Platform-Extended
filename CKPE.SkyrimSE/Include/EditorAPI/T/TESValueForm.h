@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -17,6 +19,9 @@ namespace CKPE
 				// members
 				std::uint32_t value;
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESValueForm;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESValueForm[0];
+
 				virtual ~TESValueForm() = default;
 
 				[[nodiscard]] inline std::uint32_t GetValue() const noexcept(true) { return value; }

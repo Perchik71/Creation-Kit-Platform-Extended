@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/N/NiLight.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -21,6 +23,9 @@ namespace CKPE
 					float _QuadraticAttenuation;	// 0x178
 					float _Unk[5];
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiPointLight;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiPointLight[0];
+
 					virtual ~NiPointLight() = default;
 					/* 02 */ virtual NiRTTI* GetRTTI() const noexcept(true) override;
 					/* 1A */ virtual NiObject* CreateClone(NiCloningProcess& Process) noexcept(true) override;

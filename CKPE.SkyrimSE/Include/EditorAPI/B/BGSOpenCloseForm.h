@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -16,6 +18,9 @@ namespace CKPE
 			class BGSOpenCloseForm : public BaseFormComponent
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSOpenCloseForm;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSOpenCloseForm[0];
+
 				virtual ~BGSOpenCloseForm() = default;
 			};
 			static_assert(sizeof(BGSOpenCloseForm) == 0x08);

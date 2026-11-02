@@ -13,6 +13,8 @@
 #include <EditorAPI/T/TESIcon.h>
 #include <EditorAPI/T/TESModelTextureSwap.h>
 #include <EditorAPI/T/TESWeightForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -34,6 +36,9 @@ namespace CKPE
 					public BGSPickupPutdownSounds	// 338
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::AlchemyItem;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::AlchemyItem[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftPotion;
 
 					virtual ~AlchemyItem() = default;

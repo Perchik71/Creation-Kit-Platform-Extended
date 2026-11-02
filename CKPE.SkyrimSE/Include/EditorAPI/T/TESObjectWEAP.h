@@ -21,6 +21,8 @@
 #include <EditorAPI/B/BGSBlockBashData.h>
 #include <EditorAPI/B/BGSKeywordForm.h>
 #include <EditorAPI/B/TESDescription.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -50,6 +52,9 @@ namespace CKPE
 					public TESDescription				// 1C0
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESObjectWEAP;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESObjectWEAP[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftWeapon;
 
 					virtual ~TESObjectWEAP() = default;

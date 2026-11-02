@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,9 @@ namespace CKPE
 					public TESForm	// 00
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESClimate;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESClimate[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftClimate;
 
 					virtual ~TESClimate() = default;

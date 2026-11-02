@@ -13,6 +13,8 @@
 #include <EditorAPI/B/BSTHashMap.h>
 #include <EditorAPI/B/BGSBaseAlias.h>
 #include <EditorAPI/T/TESCondition.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -83,6 +85,7 @@ namespace CKPE
 					/* 380 */ [[nodiscard]] std::int32_t GetSavedDialogTab(HWND hDialogBox) const noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftQuest;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESQuest;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESQuest[0];
 
 					virtual void* GetConditions() noexcept(true) { return nullptr; } // 128

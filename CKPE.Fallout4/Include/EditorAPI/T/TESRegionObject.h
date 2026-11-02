@@ -9,6 +9,8 @@
 #include <EditorAPI/B/BSTList.h>
 #include <EditorAPI/B/BSString.h>
 #include <EditorAPI/C/CheckInFormList.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -29,6 +31,9 @@ namespace CKPE
 			class TESRegionObjectBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionObjectBase;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionObjectBase[0];
+
 				virtual ~TESRegionObjectBase() = default; // 00
 
 			protected:
@@ -50,6 +55,9 @@ namespace CKPE
 			class TESRegionGrassObjectList
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionGrassObjectList;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionGrassObjectList[0];
+
 				virtual ~TESRegionGrassObjectList() = default; // 00
 
 			public:
@@ -64,6 +72,9 @@ namespace CKPE
 			class TESRegionObjectList
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionObjectList;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionObjectList[0];
+
 				virtual ~TESRegionObjectList() = default; // 00
 
 			public:
@@ -79,6 +90,9 @@ namespace CKPE
 				public TESRegionObjectBase   // 00
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionGrassObject;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionGrassObject[0];
+
 				virtual ~TESRegionGrassObject() = default; // 00
 
 				[[nodiscard]] virtual Forms::TESForm* GetTexture() const; // 06
@@ -99,6 +113,9 @@ namespace CKPE
 				public TESRegionObjectBase   // 00
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionObject;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionObject[0];
+
 				virtual ~TESRegionObject() = default; // 00
 
 			public:
@@ -130,6 +147,9 @@ namespace CKPE
 			class TESRegionNoiseFunction
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESRegionNoiseFunction;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRegionNoiseFunction[0];
+
 				virtual ~TESRegionNoiseFunction() = default; // 00
 
 			public:

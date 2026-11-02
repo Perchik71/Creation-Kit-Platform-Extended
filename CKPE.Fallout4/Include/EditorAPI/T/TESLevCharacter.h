@@ -8,6 +8,8 @@
 #include <EditorAPI/T/TESBoundObject.h>
 #include <EditorAPI/T/TESLeveledList.h>
 #include <EditorAPI/B/BGSModelMaterialSwap.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -36,6 +38,7 @@ namespace CKPE
 					/* 4A0 */ void CollectVoiceTypes(BSSimpleList<BGSVoiceType*>* VoiceTypes) const noexcept(true) override;
 					
 					constexpr static std::uint8_t TYPE_ID = ftLevelCharacter;
+					constexpr static Common::ID RTTI = IDs::RTTI::TESLevCharacter;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::TESLevCharacter[0];
 				};
 				static_assert(sizeof(TESLevCharacter) == 0x108);

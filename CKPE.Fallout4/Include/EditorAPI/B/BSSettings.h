@@ -11,6 +11,7 @@
 #include <EditorAPI/B/BSFixedString.h>
 #include <EditorAPI/B/BSTList.h>
 #include <EditorAPI/B/BSTBTree.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE
 {
@@ -60,6 +61,7 @@ namespace CKPE
 				Setting(const Setting& s);
 				virtual ~Setting();
 
+				constexpr static Common::ID RTTI = IDs::RTTI::Setting;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::Setting[0];
 
 				// 1.11.246.0: vtable RVA 0x2F9F068, 2 virtual functions (the SettingT<...> vtables share this body, so it is never true in the CK)
@@ -129,6 +131,7 @@ namespace CKPE
 				[[nodiscard]] void* GetHandle() const noexcept(true) { return handle; }
 
 				virtual ~SettingCollection();
+				constexpr static Common::ID RTTI = IDs::RTTI::SettingCollection_Setting_;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::SettingCollection_Setting_[0];
 
 				virtual void Add(T* setting) = 0;									// 01
@@ -151,6 +154,7 @@ namespace CKPE
 			class SettingCollectionList : public SettingCollection<T>
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::SettingCollectionList_Setting_;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::SettingCollectionList_Setting_[0];
 
 				BSSimpleList<T> settings;		// 118
@@ -180,6 +184,7 @@ namespace CKPE
 			class INISettingCollection : public SettingCollectionList<Setting>
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::INISettingCollection;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::INISettingCollection[0];
 
 				[[nodiscard]] static INISettingCollection* GetSingleton() noexcept(true)
@@ -195,6 +200,7 @@ namespace CKPE
 			class INIPrefSettingCollection : public INISettingCollection
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::INIPrefSettingCollection;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::INIPrefSettingCollection[0];
 
 				[[nodiscard]] static INIPrefSettingCollection* GetSingleton() noexcept(true)
@@ -210,6 +216,7 @@ namespace CKPE
 			class SettingCollectionMap : public SettingCollection<T>
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::SettingCollectionMap_Setting_;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::SettingCollectionMap_Setting_[0];
 
 				struct Entry
@@ -281,6 +288,7 @@ namespace CKPE
 			class GameSettingCollection : public SettingCollectionMap<Setting>
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::GameSettingCollection;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::GameSettingCollection[0];
 
 				// Opens the collection on Handle, reads the setting named Name and closes it again (0x14095C360).

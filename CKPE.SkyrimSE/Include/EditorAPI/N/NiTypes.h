@@ -10,6 +10,8 @@
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/N/NiTransform.h>
 #include <EditorAPI/N/NiRefObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -22,12 +24,18 @@ namespace CKPE
 				class NiCamera
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiCamera;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiCamera[0];
+
 					virtual ~NiCamera();
 				};
 
 				class NiWindow
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiWindow;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiWindow[0];
+
 					virtual ~NiWindow();
 				};
 
@@ -40,6 +48,9 @@ namespace CKPE
 					void* _lpfnReadFunc;
 					void* _lpfnWriteFunc;
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiBinaryStream;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiBinaryStream[0];
+
 					virtual ~NiBinaryStream();
 			
 					[[nodiscard]] virtual bool IsOpen() = 0;
@@ -53,6 +64,9 @@ namespace CKPE
 				class NiFile : public NiBinaryStream 
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiFile;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiFile[0];
+
 					enum FileModes {
 						kFileMode_ReadOnly = 0,
 						kFileMode_WriteOnly = 1,

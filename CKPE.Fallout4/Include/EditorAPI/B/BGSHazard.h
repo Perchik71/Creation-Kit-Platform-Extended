@@ -10,6 +10,8 @@
 #include <EditorAPI/T/TESModel.h>
 #include <EditorAPI/B/BGSPreloadable.h>
 #include <EditorAPI/T/TESImageSpaceModifiableForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -69,6 +71,7 @@ namespace CKPE
 					/* 330 */ void CleanupDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftHazard;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSHazard;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSHazard[0];
 				public:
 					BGSHazardData data; // F8

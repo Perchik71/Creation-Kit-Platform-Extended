@@ -9,6 +9,8 @@
 #include <EditorAPI/F/FormInterfaces.h>
 #include <EditorAPI/N/NiPoint.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -24,6 +26,9 @@ namespace CKPE
 					public BSIAudioEffectChain   // 028
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSAudioEffectChain;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAudioEffectChain[0];
+
 					virtual ~BGSAudioEffectChain() = default;
 
 					/* 0B0 */ void ClearData() override;

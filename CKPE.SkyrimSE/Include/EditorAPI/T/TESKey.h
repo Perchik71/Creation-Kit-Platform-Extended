@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/T/TESObjectMISC.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -18,6 +20,9 @@ namespace CKPE
 				class TESKey : public TESObjectMISC
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESKey;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESKey[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftKey;
 
 					virtual ~TESKey() = default;

@@ -9,6 +9,7 @@
 #include <windows.h>
 
 #include <EditorAPI/IDs_VTABLE.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE::Fallout4::EditorAPI::Forms
 {
@@ -20,6 +21,7 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 	public:
 		virtual ~TESPackageData() = default;
 
+		constexpr static Common::ID RTTI = IDs::RTTI::TESPackageData;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESPackageData[0];
 	public:
 		// The base implementations (vtable 0x1430081A0) are no-ops, IsDifferent returns true and ProcessDialogMessage false.
@@ -48,6 +50,7 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		/* 0x020 */ virtual void Save() override;
 		/* 0x028 */ virtual bool ProcessDialogMessage(HWND hDialogBox, UINT uMsg, WPARAM wParam) override;
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::TESAmbushPackageData;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESAmbushPackageData[0];
 
 		/* 0x008 */ void* unk08;
@@ -65,6 +68,7 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		/* 0x030 */ virtual void UpdateDataInDialogBox(HWND hDialogBox) override;
 		/* 0x040 */ virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::TESDialoguePackageData;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESDialoguePackageData[0];
 
 		/* 0x008 */ std::uint8_t unk08[0x28];
@@ -79,6 +83,7 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		/* 0x020 */ virtual void Save() override;
 		/* 0x028 */ virtual bool ProcessDialogMessage(HWND hDialogBox, UINT uMsg, WPARAM wParam) override;
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::TESEatPackageData;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESEatPackageData[0];
 
 		/* 0x008 */ void* unk08;
@@ -95,6 +100,7 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		/* 0x030 */ virtual void UpdateDataInDialogBox(HWND hDialogBox) override;
 		/* 0x040 */ virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::TESEscortPackageData;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESEscortPackageData[0];
 
 		/* 0x008 */ std::uint8_t unk08[0x10];
@@ -108,6 +114,7 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		/* 0x020 */ virtual void Save() override;
 		/* 0x028 */ virtual bool ProcessDialogMessage(HWND hDialogBox, UINT uMsg, WPARAM wParam) override;
 	protected:
+		constexpr static Common::ID RTTI = IDs::RTTI::TESFindPackageData;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESFindPackageData[0];
 
 		virtual void sub_048() = 0;
@@ -127,6 +134,7 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		/* 0x030 */ virtual void UpdateDataInDialogBox(HWND hDialogBox) override;
 		/* 0x040 */ virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::TESFollowPackageData;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESFollowPackageData[0];
 
 		/* 0x008 */ std::uint8_t unk08[0x10];
@@ -143,6 +151,7 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		/* 0x030 */ virtual void UpdateDataInDialogBox(HWND hDialogBox) override;
 		/* 0x040 */ virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::TESPatrolPackageData;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESPatrolPackageData[0];
 
 		/* 0x008 */ std::uint8_t unk08[0x8];
@@ -157,6 +166,7 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		/* 0x020 */ virtual void Save() override;
 		/* 0x028 */ virtual bool ProcessDialogMessage(HWND hDialogBox, UINT uMsg, WPARAM wParam) override;
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::TESUseItemPackageData;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESUseItemPackageData[0];
 
 		/* 0x008 */ void* unk08;
@@ -174,6 +184,7 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		/* 0x030 */ virtual void UpdateDataInDialogBox(HWND hDialogBox) override;
 		/* 0x040 */ virtual void UpdateDataFromDialogBox(HWND hDialogBox) override;
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::TESUseWeaponPackageData;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESUseWeaponPackageData[0];
 
 		/* 0x008 */ std::uint8_t unk08[0x30];
@@ -222,6 +233,7 @@ namespace CKPE::Fallout4::EditorAPI::Forms
 		virtual void GetDescriptionText() = 0; // prepends "Package Template (%08X) '%s', " when a template is set, then forwards to the embedded object
 
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::TESCustomPackageData;
 		constexpr static Common::ID VTABLE = IDs::VTABLE::TESCustomPackageData[0];
 
 		/* 0x008 */ std::uint8_t unk08[0x50];

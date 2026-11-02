@@ -6,6 +6,7 @@
 
 #include <EditorAPI/IDs_VTABLE.h>
 #include <EditorAPI/N/NiNode.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE
 {
@@ -18,6 +19,7 @@ namespace CKPE
 			public:
 				/* 02 */ virtual NiAPI::NiRTTI* GetRTTI() const noexcept(true) override;
 				/* 1A */ virtual NiAPI::NiObject* CreateClone(NiAPI::NiCloningProcess& Process) noexcept(true) override;
+				constexpr static Common::ID RTTI = IDs::RTTI::BSNiNode;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BSNiNode[0];
 			};
 			static_assert(sizeof(BSNiNode) == 0x140);

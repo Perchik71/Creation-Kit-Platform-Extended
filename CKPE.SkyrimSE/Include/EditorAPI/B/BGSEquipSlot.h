@@ -6,6 +6,8 @@
 
 #include <CKPE.EnumSet.h>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -18,6 +20,9 @@ namespace CKPE
 				class BGSEquipSlot : public TESForm
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSEquipSlot;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEquipSlot[0];
+
 					enum class Flag
 					{
 						kNone = 0,

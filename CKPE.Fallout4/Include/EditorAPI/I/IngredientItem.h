@@ -13,6 +13,8 @@
 #include <EditorAPI/B/BGSDestructibleObjectForm.h>
 #include <EditorAPI/B/BGSPickupPutdownSounds.h>
 #include <EditorAPI/T/TESValueForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -34,6 +36,9 @@ namespace CKPE
 					public TESValueForm                // 390
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::IngredientItem;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::IngredientItem[0];
+
 					virtual ~IngredientItem() = default;
 
 					/* 0A8 */ void InitializeData() override;

@@ -9,6 +9,8 @@
 #include <EditorAPI/B/BGSEquipType.h>
 #include <EditorAPI/B/BGSMenuDisplayObject.h>
 #include <EditorAPI/T/TESDescription.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -58,6 +60,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftSpell;
+					constexpr static Common::ID RTTI = IDs::RTTI::SpellItem;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::SpellItem[0];
 				public:
 					SpellItemData data; // 318

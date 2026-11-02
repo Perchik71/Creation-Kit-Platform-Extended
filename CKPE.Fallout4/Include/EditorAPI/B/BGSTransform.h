@@ -6,6 +6,8 @@
 
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/N/NiTypes.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -21,6 +23,7 @@ namespace CKPE
 				{
 				public:
 					constexpr static std::uint8_t TYPE_ID = ftTransform;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSTransform;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSTransform[0];
 
 					virtual ~BGSTransform() = default;

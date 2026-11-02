@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/T/TESModel.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,9 @@ namespace CKPE
 			class TESModelTextureSwap : public TESModel
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESModelTextureSwap;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESModelTextureSwap[0];
+
 				struct AlternateTexture
 				{
 					Forms::BGSTextureSet*	textureSet;

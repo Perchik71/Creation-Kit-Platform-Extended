@@ -16,6 +16,8 @@
 #include <EditorAPI/B/BGSPickupPutdownSounds.h>
 #include <EditorAPI/B/TESDescription.h>
 #include <EditorAPI/B/BGSKeywordForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -40,6 +42,9 @@ namespace CKPE
 					public BGSKeywordForm				// 178
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESAmmo;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESAmmo[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftAmmo;
 
 					virtual ~TESAmmo() = default;

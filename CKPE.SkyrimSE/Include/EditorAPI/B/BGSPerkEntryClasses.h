@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -19,6 +21,9 @@ namespace CKPE
 			class BGSPerkEntry
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSPerkEntry;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPerkEntry[0];
+
 				virtual ~BGSPerkEntry() = default;
 
 				std::uint8_t unk08;		// 08 - 0 on construction
@@ -32,6 +37,9 @@ namespace CKPE
 			class BGSAbilityPerkEntry : public BGSPerkEntry
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSAbilityPerkEntry;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAbilityPerkEntry[0];
+
 				void* unk10;	// 10 - 0 on construction (PRKF / DATA)
 			};
 			static_assert(sizeof(BGSAbilityPerkEntry) == 0x18);
@@ -40,6 +48,9 @@ namespace CKPE
 			class BGSQuestPerkEntry : public BGSPerkEntry
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSQuestPerkEntry;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSQuestPerkEntry[0];
+
 				void* unk10;			// 10 - 0 on construction
 				std::uint16_t unk18;	// 18 - 0 on construction
 				std::uint8_t pad1A[6];	// 1A
@@ -50,6 +61,9 @@ namespace CKPE
 			class BGSEntryPointPerkEntry : public BGSPerkEntry
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointPerkEntry;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointPerkEntry[0];
+
 				std::uint8_t unk10;		// 10 - 0 on construction
 				std::uint8_t unk11;		// 11 - 0 on construction
 				std::uint8_t unk12;		// 12 - 0 on construction
@@ -67,6 +81,9 @@ namespace CKPE
 			class BGSEntryPointFunctionData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointFunctionData;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointFunctionData[0];
+
 				virtual ~BGSEntryPointFunctionData() = default;
 			};
 			static_assert(sizeof(BGSEntryPointFunctionData) == 0x08);
@@ -75,6 +92,9 @@ namespace CKPE
 			class BGSEntryPointFunctionDataOneValue : public BGSEntryPointFunctionData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointFunctionDataOneValue;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointFunctionDataOneValue[0];
+
 				std::uint32_t unk08;	// 08 - 0 on construction
 				std::uint32_t pad0C;	// 0C
 			};
@@ -84,6 +104,9 @@ namespace CKPE
 			class BGSEntryPointFunctionDataTwoValue : public BGSEntryPointFunctionData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointFunctionDataTwoValue;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointFunctionDataTwoValue[0];
+
 				std::uint32_t unk08;	// 08 - 0 on construction
 				std::uint32_t unk0C;	// 0C - 0 on construction
 			};
@@ -93,6 +116,9 @@ namespace CKPE
 			class BGSEntryPointFunctionDataLeveledList : public BGSEntryPointFunctionData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointFunctionDataLeveledList;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointFunctionDataLeveledList[0];
+
 				void* unk08;	// 08 - 0 on construction
 			};
 			static_assert(sizeof(BGSEntryPointFunctionDataLeveledList) == 0x10);
@@ -101,6 +127,9 @@ namespace CKPE
 			class BGSEntryPointFunctionDataSpellItem : public BGSEntryPointFunctionData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointFunctionDataSpellItem;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointFunctionDataSpellItem[0];
+
 				void* unk08;	// 08 - 0 on construction
 			};
 			static_assert(sizeof(BGSEntryPointFunctionDataSpellItem) == 0x10);
@@ -109,6 +138,9 @@ namespace CKPE
 			class BGSEntryPointFunctionDataText : public BGSEntryPointFunctionData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointFunctionDataText;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointFunctionDataText[0];
+
 				void* unk08[2];	// 08 - helper-constructed string object
 			};
 			static_assert(sizeof(BGSEntryPointFunctionDataText) == 0x18);
@@ -117,6 +149,9 @@ namespace CKPE
 			class BGSEntryPointFunctionDataBooleanGraphVariable : public BGSEntryPointFunctionData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointFunctionDataBooleanGraphVariable;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointFunctionDataBooleanGraphVariable[0];
+
 				void* unk08[2];	// 08 - helper-constructed string object
 			};
 			static_assert(sizeof(BGSEntryPointFunctionDataBooleanGraphVariable) == 0x18);
@@ -125,6 +160,9 @@ namespace CKPE
 			class BGSEntryPointFunctionDataActivateChoice : public BGSEntryPointFunctionData
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSEntryPointFunctionDataActivateChoice;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSEntryPointFunctionDataActivateChoice[0];
+
 				void* unk08[2];			// 08 - helper-constructed string object
 				void* unk18;			// 18 - set from the constructor argument
 				void* unk20;			// 20 - 0 on construction

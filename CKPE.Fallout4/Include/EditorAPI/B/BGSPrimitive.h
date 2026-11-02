@@ -10,6 +10,7 @@
 #include <EditorAPI/N/NiColor.h>
 #include <EditorAPI/B/BSTriShape.h>
 #include <EditorAPI/B/BSLines.h>
+#include <EditorAPI/IDs_RTTI.h>
 
 namespace CKPE
 {
@@ -47,6 +48,7 @@ namespace CKPE
 				public:
 					virtual ~BGSPrimitive() = default;
 
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSPrimitive;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitive[0];
 				private:
 					// Creates the display geometry of the primitive (alpha property and shape/lines)
@@ -74,6 +76,7 @@ namespace CKPE
 
 					virtual ~BGSPrimitivePlane() = default;
 
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSPrimitivePlane;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitivePlane[0];
 				public:
 					// Allocates a BSOcclusionPlane
@@ -90,6 +93,7 @@ namespace CKPE
 
 					virtual ~BGSPrimitiveBox() = default;
 
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSPrimitiveBox;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitiveBox[0];
 				public:
 					// Allocates a BSOcclusionBox
@@ -104,6 +108,7 @@ namespace CKPE
 
 					virtual ~BGSPrimitiveLine() = default;
 
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSPrimitiveLine;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitiveLine[0];
 				};
 				static_assert(sizeof(BGSPrimitiveLine) == 0xA0);
@@ -115,6 +120,7 @@ namespace CKPE
 
 					virtual ~BGSPrimitiveSphere() = default;
 
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSPrimitiveSphere;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitiveSphere[0];
 				};
 				static_assert(sizeof(BGSPrimitiveSphere) == 0xA0);
@@ -126,6 +132,7 @@ namespace CKPE
 
 					virtual ~BGSPrimitiveEllipsoid() = default;
 
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSPrimitiveEllipsoid;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSPrimitiveEllipsoid[0];
 				};
 				static_assert(sizeof(BGSPrimitiveEllipsoid) == 0xA0);

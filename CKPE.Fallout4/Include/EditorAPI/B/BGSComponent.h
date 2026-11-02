@@ -9,6 +9,8 @@
 #include <EditorAPI/T/TESFullName.h>
 #include <EditorAPI/T/TESValueForm.h>
 #include <EditorAPI/B/BGSCraftingUseSound.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -29,6 +31,9 @@ namespace CKPE
 					public BGSCraftingUseSound   // 0B8
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSComponent;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSComponent[0];
+
 					virtual ~BGSComponent() = default;
 
 					/* 0A8 */ void InitializeData() override;

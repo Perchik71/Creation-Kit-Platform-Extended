@@ -6,6 +6,8 @@
 
 #include <EditorAPI/B/BSShaderMaterial.h>
 #include <EditorAPI/N/NiColor.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -16,6 +18,9 @@ namespace CKPE
 			class BSEffectShaderMaterial : public BSShaderMaterial
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSEffectShaderMaterial;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSEffectShaderMaterial[0];
+
 				float FalloffStartAngle;								// 38
 				float FalloffStopAngle;								// 3C
 				float FalloffStartOpacity;							// 40

@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -16,6 +18,8 @@ namespace CKPE
 			// Interface of the package procedures: only the vtable pointer; the virtuals are not resolved.
 			struct IProcedure
 			{
+				constexpr static Common::ID RTTI = IDs::RTTI::IProcedure;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::IProcedure[0];
 				void* vftable;	// 00
 			};
 			static_assert(sizeof(IProcedure) == 0x08);
@@ -24,6 +28,9 @@ namespace CKPE
 			class BGSProcedureBase : public IProcedure
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureBase;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureBase[0];
+
 				std::uint8_t unk08[0x20];	// 08 - helper-constructed object
 				std::uint32_t unk28;		// 28 - 0 on construction
 				std::uint32_t pad2C;		// 2C
@@ -39,6 +46,9 @@ namespace CKPE
 			class BGSProcedureAcquire : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureAcquire;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureAcquire[0];
+
 			};
 			static_assert(sizeof(BGSProcedureAcquire) == 0x38);
 
@@ -46,6 +56,9 @@ namespace CKPE
 			class BGSProcedureActivate : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureActivate;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureActivate[0];
+
 			};
 			static_assert(sizeof(BGSProcedureActivate) == 0x38);
 
@@ -53,6 +66,9 @@ namespace CKPE
 			class BGSProcedureDialogue : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureDialogue;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureDialogue[0];
+
 			};
 			static_assert(sizeof(BGSProcedureDialogue) == 0x38);
 
@@ -60,6 +76,9 @@ namespace CKPE
 			class BGSProcedureDialogueActivate : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureDialogueActivate;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureDialogueActivate[0];
+
 			};
 			static_assert(sizeof(BGSProcedureDialogueActivate) == 0x38);
 
@@ -67,6 +86,9 @@ namespace CKPE
 			class BGSProcedureDone : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureDone;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureDone[0];
+
 			};
 			static_assert(sizeof(BGSProcedureDone) == 0x38);
 
@@ -74,6 +96,9 @@ namespace CKPE
 			class BGSProcedureEat : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureEat;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureEat[0];
+
 			};
 			static_assert(sizeof(BGSProcedureEat) == 0x38);
 
@@ -81,6 +106,9 @@ namespace CKPE
 			class BGSProcedureEscort : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureEscort;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureEscort[0];
+
 			};
 			static_assert(sizeof(BGSProcedureEscort) == 0x38);
 
@@ -88,6 +116,9 @@ namespace CKPE
 			class BGSProcedureFind : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureFind;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureFind[0];
+
 			};
 			static_assert(sizeof(BGSProcedureFind) == 0x38);
 
@@ -95,6 +126,9 @@ namespace CKPE
 			class BGSProcedureFlee : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureFlee;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureFlee[0];
+
 			};
 			static_assert(sizeof(BGSProcedureFlee) == 0x38);
 
@@ -102,6 +136,9 @@ namespace CKPE
 			class BGSProcedureFlightGrab : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureFlightGrab;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureFlightGrab[0];
+
 			};
 			static_assert(sizeof(BGSProcedureFlightGrab) == 0x38);
 
@@ -109,6 +146,9 @@ namespace CKPE
 			class BGSProcedureFollow : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureFollow;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureFollow[0];
+
 			};
 			static_assert(sizeof(BGSProcedureFollow) == 0x38);
 
@@ -116,6 +156,9 @@ namespace CKPE
 			class BGSProcedureForceGreet : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureForceGreet;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureForceGreet[0];
+
 			};
 			static_assert(sizeof(BGSProcedureForceGreet) == 0x38);
 
@@ -123,6 +166,9 @@ namespace CKPE
 			class BGSProcedureGuard : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureGuard;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureGuard[0];
+
 			};
 			static_assert(sizeof(BGSProcedureGuard) == 0x38);
 
@@ -130,6 +176,9 @@ namespace CKPE
 			class BGSProcedureHoldPosition : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureHoldPosition;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureHoldPosition[0];
+
 			};
 			static_assert(sizeof(BGSProcedureHoldPosition) == 0x38);
 
@@ -137,6 +186,9 @@ namespace CKPE
 			class BGSProcedureHover : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureHover;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureHover[0];
+
 			};
 			static_assert(sizeof(BGSProcedureHover) == 0x38);
 
@@ -144,6 +196,9 @@ namespace CKPE
 			class BGSProcedureKeepAnEyeOn : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureKeepAnEyeOn;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureKeepAnEyeOn[0];
+
 			};
 			static_assert(sizeof(BGSProcedureKeepAnEyeOn) == 0x38);
 
@@ -151,6 +206,9 @@ namespace CKPE
 			class BGSProcedureLock : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureLock;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureLock[0];
+
 			};
 			static_assert(sizeof(BGSProcedureLock) == 0x38);
 
@@ -158,6 +216,9 @@ namespace CKPE
 			class BGSProcedureOrbit : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureOrbit;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureOrbit[0];
+
 			};
 			static_assert(sizeof(BGSProcedureOrbit) == 0x38);
 
@@ -165,6 +226,9 @@ namespace CKPE
 			class BGSProcedurePatrol : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedurePatrol;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedurePatrol[0];
+
 			};
 			static_assert(sizeof(BGSProcedurePatrol) == 0x38);
 
@@ -172,6 +236,9 @@ namespace CKPE
 			class BGSProcedurePursue : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedurePursue;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedurePursue[0];
+
 			};
 			static_assert(sizeof(BGSProcedurePursue) == 0x38);
 
@@ -179,6 +246,9 @@ namespace CKPE
 			class BGSProcedureSandbox : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureSandbox;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureSandbox[0];
+
 			};
 			static_assert(sizeof(BGSProcedureSandbox) == 0x38);
 
@@ -186,6 +256,9 @@ namespace CKPE
 			class BGSProcedureSay : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureSay;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureSay[0];
+
 			};
 			static_assert(sizeof(BGSProcedureSay) == 0x38);
 
@@ -193,6 +266,9 @@ namespace CKPE
 			class BGSProcedureShout : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureShout;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureShout[0];
+
 			};
 			static_assert(sizeof(BGSProcedureShout) == 0x38);
 
@@ -200,6 +276,9 @@ namespace CKPE
 			class BGSProcedureSit : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureSit;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureSit[0];
+
 			};
 			static_assert(sizeof(BGSProcedureSit) == 0x38);
 
@@ -207,6 +286,9 @@ namespace CKPE
 			class BGSProcedureSleep : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureSleep;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureSleep[0];
+
 			};
 			static_assert(sizeof(BGSProcedureSleep) == 0x38);
 
@@ -214,6 +296,9 @@ namespace CKPE
 			class BGSProcedureTravel : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureTravel;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureTravel[0];
+
 			};
 			static_assert(sizeof(BGSProcedureTravel) == 0x38);
 
@@ -221,6 +306,9 @@ namespace CKPE
 			class BGSProcedureUnlock : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureUnlock;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureUnlock[0];
+
 			};
 			static_assert(sizeof(BGSProcedureUnlock) == 0x38);
 
@@ -228,6 +316,9 @@ namespace CKPE
 			class BGSProcedureUseIdleMarker : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureUseIdleMarker;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureUseIdleMarker[0];
+
 			};
 			static_assert(sizeof(BGSProcedureUseIdleMarker) == 0x38);
 
@@ -235,6 +326,9 @@ namespace CKPE
 			class BGSProcedureUseMagic : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureUseMagic;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureUseMagic[0];
+
 			};
 			static_assert(sizeof(BGSProcedureUseMagic) == 0x38);
 
@@ -242,6 +336,9 @@ namespace CKPE
 			class BGSProcedureUseWeapon : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureUseWeapon;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureUseWeapon[0];
+
 			};
 			static_assert(sizeof(BGSProcedureUseWeapon) == 0x38);
 
@@ -249,6 +346,9 @@ namespace CKPE
 			class BGSProcedureWait : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureWait;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureWait[0];
+
 			};
 			static_assert(sizeof(BGSProcedureWait) == 0x38);
 
@@ -256,6 +356,9 @@ namespace CKPE
 			class BGSProcedureWander : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureWander;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureWander[0];
+
 			};
 			static_assert(sizeof(BGSProcedureWander) == 0x38);
 
@@ -263,6 +366,9 @@ namespace CKPE
 			class BGSProcedureFollowTo : public BGSProcedureBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSProcedureFollowTo;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSProcedureFollowTo[0];
+
 				std::uint8_t unk38[0x8];	// 38 - byte @38 is zeroed on construction
 			};
 			static_assert(sizeof(BGSProcedureFollowTo) == 0x40);

@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <EditorAPI/B/BaseFormComponent.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -18,6 +20,9 @@ namespace CKPE
 			class TESDescription : public BaseFormComponent
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESDescription;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESDescription[0];
+
 				virtual ~TESDescription() = default;
 
 				std::uint32_t unk08;		// 08 - 1138 on construction

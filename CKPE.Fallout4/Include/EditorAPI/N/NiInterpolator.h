@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/N/NiColor.h>
 #include <EditorAPI/N/NiObject.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -29,6 +31,9 @@ namespace CKPE
 				class NiInterpolator : public NiObject
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiInterpolator;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiInterpolator[0];
+
 					/* 02 */ virtual NiRTTI* GetRTTI() const noexcept(true) override;
 					/* 1B */ virtual void LoadBinary(NiStream& Stream) noexcept(true) override;
 					/* 1C */ virtual void LinkObject(NiStream& Stream) noexcept(true) override;
@@ -73,6 +78,9 @@ namespace CKPE
 				class NiKeyBasedInterpolator : public NiInterpolator
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiKeyBasedInterpolator;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiKeyBasedInterpolator[0];
+
 					/* 02 */ virtual NiRTTI* GetRTTI() const noexcept(true) override;
 					/* 1B */ virtual void LoadBinary(NiStream& Stream) noexcept(true) override;
 					/* 1C */ virtual void LinkObject(NiStream& Stream) noexcept(true) override;
@@ -95,6 +103,9 @@ namespace CKPE
 				class NiFloatInterpolator : public NiKeyBasedInterpolator
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiFloatInterpolator;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiFloatInterpolator[0];
+
 					/* 02 */ virtual NiRTTI* GetRTTI() const noexcept(true) override;
 					/* 1A */ virtual NiObject* CreateClone(NiCloningProcess& Process) noexcept(true) override;
 					/* 1B */ virtual void LoadBinary(NiStream& Stream) noexcept(true) override;
@@ -119,6 +130,9 @@ namespace CKPE
 				class NiColorInterpolator : public NiKeyBasedInterpolator
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::NiColorInterpolator;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::NiColorInterpolator[0];
+
 					/* 02 */ virtual NiRTTI* GetRTTI() const noexcept(true) override;
 					/* 1A */ virtual NiObject* CreateClone(NiCloningProcess& Process) noexcept(true) override;
 					/* 1B */ virtual void LoadBinary(NiStream& Stream) noexcept(true) override;

@@ -6,6 +6,8 @@
 
 #include <EditorAPI/B/BSShaderProperty.h>
 #include <EditorAPI/N/NiColor.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -21,6 +23,9 @@ namespace CKPE
 			private:
 				char _pad88[0x68];					// 88 (texture sets, material colours, ...)
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLightingShaderProperty;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShaderProperty[0];
+
 				// Emissive colour (per-geometry "PropertyColor" pixel shader constant = emissiveColor * emissiveMultiple).
 				// The pointer references a private 12 byte colour only when BSSP_FLAG_OWN_EMIT (0x16) is set, otherwise it
 				// can point to a shared default, so never write through it; swap the pointer instead.

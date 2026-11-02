@@ -6,6 +6,8 @@
 
 #include <EditorAPI/B/BGSImpactData.h>
 #include <EditorAPI/N/NiTMap.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -22,6 +24,9 @@ namespace CKPE
 				class BGSImpactDataSet : public TESForm
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSImpactDataSet;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSImpactDataSet[0];
+
 					constexpr static uint8_t TYPE_ID = ftImpactDataSet;
 
 					typedef NiAPI::NiTMap<BGSMaterialType*, BGSImpactData*> SetT;

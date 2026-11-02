@@ -217,6 +217,7 @@
     <ClInclude Include="Include\CKPE.Common.Relocator.h" />
     <ClInclude Include="Include\CKPE.Common.RelocatorDB.h" />
     <ClInclude Include="Include\CKPE.Common.RTTI.h" />
+    <ClInclude Include="Include\CKPE.Common.RTTICast.h" />
     <ClInclude Include="Include\CKPE.Common.LiteralFormat.h" />
     <ClInclude Include="Include\CKPE.Common.RuntimeOptimization.h" />
     <ClInclude Include="Include\CKPE.Common.Include.h" />

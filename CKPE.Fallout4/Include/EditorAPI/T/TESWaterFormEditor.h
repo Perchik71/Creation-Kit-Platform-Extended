@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <EditorAPI/E/EmbeddedChildDialog.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -20,6 +22,9 @@ namespace CKPE::Fallout4::EditorAPI
 		class WaterPropertiesTab : public Dialog::EmbeddedChildDialog
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::TESWaterFormEditor__WaterPropertiesTab;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::TESWaterFormEditor__WaterPropertiesTab[0];
+
 			/* 0x000 */ ~WaterPropertiesTab() override;
 			/* 0x010 */ std::int32_t DlgProc(UINT Message, WPARAM wParam,
 				LPARAM lParam) noexcept(true) override;
@@ -41,6 +46,9 @@ namespace CKPE::Fallout4::EditorAPI
 		class FogProperties : public WaterPropertiesTab
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::TESWaterFormEditor__FogProperties;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::TESWaterFormEditor__FogProperties[0];
+
 			enum ControlID : std::uint32_t
 			{
 				kMaxDepth = 2430,
@@ -62,6 +70,9 @@ namespace CKPE::Fallout4::EditorAPI
 		class NoiseProperties : public WaterPropertiesTab
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::TESWaterFormEditor__NoiseProperties;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::TESWaterFormEditor__NoiseProperties[0];
+
 			/* 0x000 */ ~NoiseProperties() override;
 			/* 0x010 */ std::int32_t DlgProc(UINT Message, WPARAM wParam,
 				LPARAM lParam) noexcept(true) override;
@@ -76,6 +87,9 @@ namespace CKPE::Fallout4::EditorAPI
 		class PhysicalProperties : public WaterPropertiesTab
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::TESWaterFormEditor__PhysicalProperties;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::TESWaterFormEditor__PhysicalProperties[0];
+
 			/* 0x000 */ ~PhysicalProperties() override;
 			/* 0x010 */ std::int32_t DlgProc(UINT Message, WPARAM wParam,
 				LPARAM lParam) noexcept(true) override;
@@ -88,6 +102,9 @@ namespace CKPE::Fallout4::EditorAPI
 		class SiltProperties : public WaterPropertiesTab
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::TESWaterFormEditor__SiltProperties;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::TESWaterFormEditor__SiltProperties[0];
+
 			/* 0x000 */ ~SiltProperties() override;
 		};
 		static_assert(sizeof(SiltProperties) == 0xF0);
@@ -95,6 +112,9 @@ namespace CKPE::Fallout4::EditorAPI
 		class SpecularProperties : public WaterPropertiesTab
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::TESWaterFormEditor__SpecularProperties;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::TESWaterFormEditor__SpecularProperties[0];
+
 			/* 0x000 */ ~SpecularProperties() override;
 		};
 		static_assert(sizeof(SpecularProperties) == 0xF0);

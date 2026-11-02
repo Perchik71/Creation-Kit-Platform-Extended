@@ -7,6 +7,8 @@
 #include <cstddef>
 #include <cstdint>
 #include <EditorAPI/N/NiTObjectArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -18,6 +20,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class ImageSpaceEffect
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::ImageSpaceEffect;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::ImageSpaceEffect[0];
+
 		struct EffectDesc;
 		struct EffectInput;
 

@@ -6,6 +6,8 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -21,6 +23,9 @@ namespace CKPE
 			class BGSRenderWindowEditModule
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowEditModule;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowEditModule[0];
+
 				virtual ~BGSRenderWindowEditModule() = default;
 
 				BGSRenderWindow* renderWindow;	// 08 - constructor argument
@@ -38,6 +43,9 @@ namespace CKPE
 			class BGSRenderWindowLandscapeEditModule : public BGSRenderWindowEditModule
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowLandscapeEditModule;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowLandscapeEditModule[0];
+
 				std::uint8_t unk48[0x78];	// 48
 				void* unkC0;				// C0 - window handle (DestroyWindow in the destructor)
 				void* unkC8;				// C8 - set by the virtual at 70
@@ -52,6 +60,9 @@ namespace CKPE
 			class BGSRenderWindowNavMeshEditModule : public BGSRenderWindowEditModule
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowNavMeshEditModule;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowNavMeshEditModule[0];
+
 				std::uint8_t unk48[0x2D8];	// 48 - layout not resolved
 			};
 			static_assert(sizeof(BGSRenderWindowNavMeshEditModule) == 0x320);
@@ -60,6 +71,9 @@ namespace CKPE
 			class BGSRenderWindowPrimitiveEditModule : public BGSRenderWindowEditModule
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowPrimitiveEditModule;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowPrimitiveEditModule[0];
+
 				std::uint8_t unk48[0x78];	// 48
 				std::uint32_t unkC0;		// C0
 				std::uint32_t unkC4;		// C4
@@ -73,6 +87,9 @@ namespace CKPE
 			class BGSRenderWindowReferenceEditModule : public BGSRenderWindowEditModule
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowReferenceEditModule;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowReferenceEditModule[0];
+
 				std::uint8_t unk48[0xB8];	// 48 - layout not resolved
 			};
 			static_assert(sizeof(BGSRenderWindowReferenceEditModule) == 0x100);
@@ -81,6 +98,9 @@ namespace CKPE
 			class BGSRenderWindowGizmo
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowGizmo;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowGizmo[0];
+
 				virtual ~BGSRenderWindowGizmo() = default;
 
 				void* unk08;				// 08 - helper-constructed (reference handle)
@@ -96,16 +116,36 @@ namespace CKPE
 			static_assert(sizeof(BGSRenderWindowGizmo) == 0xA0);
 
 			// vtable RVA 0x301E850
-			class BGSRenderWindowPrimitiveGizmo : public BGSRenderWindowGizmo {};
+			class BGSRenderWindowPrimitiveGizmo : public BGSRenderWindowGizmo
+			{
+			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowPrimitiveGizmo;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowPrimitiveGizmo[0];
+			};
 			static_assert(sizeof(BGSRenderWindowPrimitiveGizmo) == 0xA0);
 			// vtable RVA 0x3021180
-			class BGSRenderWindowRotationGizmo : public BGSRenderWindowGizmo {};
+			class BGSRenderWindowRotationGizmo : public BGSRenderWindowGizmo
+			{
+			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowRotationGizmo;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowRotationGizmo[0];
+			};
 			static_assert(sizeof(BGSRenderWindowRotationGizmo) == 0xA0);
 			// vtable RVA 0x3021230
-			class BGSRenderWindowScaleGizmo : public BGSRenderWindowGizmo {};
+			class BGSRenderWindowScaleGizmo : public BGSRenderWindowGizmo
+			{
+			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowScaleGizmo;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowScaleGizmo[0];
+			};
 			static_assert(sizeof(BGSRenderWindowScaleGizmo) == 0xA0);
 			// vtable RVA 0x30212E0
-			class BGSRenderWindowTranslationGizmo : public BGSRenderWindowGizmo {};
+			class BGSRenderWindowTranslationGizmo : public BGSRenderWindowGizmo
+			{
+			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BGSRenderWindowTranslationGizmo;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BGSRenderWindowTranslationGizmo[0];
+			};
 			static_assert(sizeof(BGSRenderWindowTranslationGizmo) == 0xA0);
 		}
 	}

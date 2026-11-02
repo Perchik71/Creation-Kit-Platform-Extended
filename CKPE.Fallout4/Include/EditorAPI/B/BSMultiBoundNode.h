@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/B/BSNiNode.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -31,6 +33,7 @@ namespace CKPE
 				/* 35 */ virtual void UpdateWorldBound() noexcept(true) override;
 				/* 3B */ virtual void OnVisible(NiAPI::NiCullingProcess& Culler) noexcept(true) override;
 				/* 44 */ virtual void UpdateUpwardPass(NiAPI::NiUpdateData& Data) noexcept(true) override;
+				constexpr static Common::ID RTTI = IDs::RTTI::BSMultiBoundNode;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BSMultiBoundNode[0];
 
 				/* 46 */ [[nodiscard]] virtual BSMultiBoundRoom* GetMultiBoundRoom() noexcept(true);

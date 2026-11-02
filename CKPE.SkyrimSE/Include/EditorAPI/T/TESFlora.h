@@ -6,6 +6,8 @@
 
 #include <EditorAPI/T/TESObjectACTI.h>
 #include <EditorAPI/B/TESProduceForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -21,6 +23,9 @@ namespace CKPE
 					public TESProduceForm	// 138
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESFlora;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESFlora[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftFlora;
 
 					virtual ~TESFlora() = default;

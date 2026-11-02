@@ -6,6 +6,8 @@
 
 #include <EditorAPI/B/BaseFormComponent.h>
 #include <EditorAPI/B/BSFixedString.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -20,6 +22,9 @@ namespace CKPE
 				BSFixedString model;
 				std::uint32_t model_unk10[8];
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::TESModel;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::TESModel[0];
+
 				virtual ~TESModel() = default;
 
 				// add

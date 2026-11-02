@@ -8,6 +8,8 @@
 #include <EditorAPI/H/hkBaseTypes.h>
 
 #include <EditorAPI/H/hkReflectionTypes.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -305,6 +307,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkcdDynamicAabbTree : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkcdDynamicAabbTree;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdDynamicAabbTree[0];
+
 		/* 0x010 */ hkBool m_shouldDeleteTree;
 		/* 0x011 */ std::byte pad011[0x7];
 		/* 0x018 */ hkcdDynamicTreeDefaultTree48Storage* m_treePtr;
@@ -594,6 +599,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkcdPlanarCsgOperand : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkcdPlanarCsgOperand;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdPlanarCsgOperand[0];
+
 		/* 0x010 */ hkcdPlanarGeometry* m_geometry;
 		/* 0x018 */ hkcdPlanarGeometry* m_danglingGeometry;
 		/* 0x020 */ hkcdPlanarSolid* m_solid;
@@ -625,6 +633,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkcdPlanarEntity : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkcdPlanarEntity;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdPlanarEntity[0];
+
 		virtual void hkcdPlanarEntity_Unk04();
 		/* 0x010 */ void* m_debugger;
 	};
@@ -634,8 +645,16 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkcdPlanarGeometry : public hkcdPlanarEntity
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkcdPlanarGeometry;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdPlanarGeometry[0];
+
 		class VertexStorage :
-			public hkReferencedObject, public hkArray<hkVector4d> {};
+			public hkReferencedObject, public hkArray<hkVector4d>
+			{
+			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::hkcdPlanarGeometry__VertexStorage;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdPlanarGeometry__VertexStorage[0];
+			};
 		static_assert(sizeof(VertexStorage) == 0x20);
 
 		/* 0x018 */ hkcdPlanarGeometryPlanesCollection* m_planes;
@@ -650,6 +669,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkcdPlanarGeometryPlanesCollection : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkcdPlanarGeometryPlanesCollection;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdPlanarGeometryPlanesCollection[0];
+
 		/* 0x010 */ hkVector4 m_offsetAndScale;
 		/* 0x020 */ hkArray<hkcdPlanarGeometryPrimitivesPlane> m_planes;
 		/* 0x030 */ void* m_cache;
@@ -679,6 +701,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkcdPlanarGeometryPolygonCollection : public hkcdPlanarGeometryPrimitivesCollection28
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkcdPlanarGeometryPolygonCollection;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdPlanarGeometryPolygonCollection[0];
+
 	};
 	static_assert(sizeof(hkcdPlanarGeometryPolygonCollection) == 0xD90);
 
@@ -706,11 +731,17 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkcdPlanarSolid : public hkcdPlanarEntity
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkcdPlanarSolid;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdPlanarSolid[0];
+
 		using NodeStorage = hkcdPlanarSolidNodeStorage;
 
 		class ArrayMgr : public hkcdPlanarGeometryPrimitivesCollection28
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkcdPlanarSolid__ArrayMgr;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdPlanarSolid__ArrayMgr[0];
+
 			/* 0xD90 */ std::byte padD90[0x18];
 		};
 		static_assert(sizeof(ArrayMgr) == 0xDA8);
@@ -766,9 +797,15 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkcdSimdTree : public hkBaseObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkcdSimdTree;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdSimdTree[0];
+
 		class BuildContext
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkcdSimdTree__BuildContext;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdSimdTree__BuildContext[0];
+
 			virtual ~BuildContext();
 			virtual void BuildContext_Unk01();
 
@@ -779,6 +816,9 @@ namespace CKPE::Fallout4::EditorAPI
 		class LeafCollector
 		{
 		public:
+			constexpr static Common::ID RTTI = IDs::RTTI::hkcdSimdTree__LeafCollector;
+			constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdSimdTree__LeafCollector[0];
+
 			virtual ~LeafCollector();
 			virtual void LeafCollector_Unk01();
 		};
@@ -790,6 +830,9 @@ namespace CKPE::Fallout4::EditorAPI
 			class IRunnable
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::hkcdSimdTree__IParallelBuild__IRunnable;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdSimdTree__IParallelBuild__IRunnable[0];
+
 				virtual ~IRunnable();
 				virtual void IRunnable_Unk01();
 			};
@@ -813,6 +856,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkcdStaticAabbTree : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkcdStaticAabbTree;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkcdStaticAabbTree[0];
+
 		/* 0x010 */ hkBool m_shouldDeleteTree;
 		/* 0x011 */ std::byte pad011[0x7];
 		/* 0x018 */ hkcdStaticTreeDefaultTreeStorage6* m_treePtr;
@@ -1130,6 +1176,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxAnimatedFloat : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxAnimatedFloat;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxAnimatedFloat[0];
+
 		/* 0x010 */ hkArray<float> m_floats;
 		/* 0x020 */ std::uint8_t m_hint;
 		/* 0x021 */ std::byte pad021[0x7];
@@ -1141,6 +1190,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxAnimatedMatrix : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxAnimatedMatrix;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxAnimatedMatrix[0];
+
 		/* 0x010 */ hkArray<float> m_matrices;
 		/* 0x020 */ std::uint8_t m_hint;
 		/* 0x021 */ std::byte pad021[0x7];
@@ -1152,6 +1204,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxAnimatedQuaternion : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxAnimatedQuaternion;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxAnimatedQuaternion[0];
+
 		/* 0x010 */ hkArray<float> m_quaternions;
 	};
 	static_assert(sizeof(hkxAnimatedQuaternion) == 0x20);
@@ -1160,6 +1215,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxAnimatedVector : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxAnimatedVector;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxAnimatedVector[0];
+
 		/* 0x010 */ hkArray<float> m_vectors;
 		/* 0x020 */ std::uint8_t m_hint;
 		/* 0x021 */ std::byte pad021[0x7];
@@ -1191,6 +1249,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxAttributeHolder : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxAttributeHolder;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxAttributeHolder[0];
+
 		/* 0x010 */ hkArray<hkxAttributeGroup> m_attributeGroups;
 	};
 	static_assert(sizeof(hkxAttributeHolder) == 0x20);
@@ -1199,6 +1260,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxBlob : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxBlob;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxBlob[0];
+
 		/* 0x010 */ hkArray<std::uint8_t> m_data;
 	};
 	static_assert(sizeof(hkxBlob) == 0x20);
@@ -1207,6 +1271,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxBlobMeshShape : public hkMeshShape
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxBlobMeshShape;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxBlobMeshShape[0];
+
 		/* 0x010 */ hkxBlob m_blob;
 		/* 0x030 */ hkStringPtr m_name;
 	};
@@ -1217,6 +1284,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxCamera : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxCamera;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxCamera[0];
+
 		/* 0x010 */ hkVector4 m_from;
 		/* 0x020 */ hkVector4 m_focus;
 		/* 0x030 */ hkVector4 m_up;
@@ -1238,6 +1308,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxEdgeSelectionChannel : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxEdgeSelectionChannel;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxEdgeSelectionChannel[0];
+
 		/* 0x010 */ hkArray<std::int32_t> m_selectedEdges;
 	};
 	static_assert(sizeof(hkxEdgeSelectionChannel) == 0x20);
@@ -1246,6 +1319,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxEnum : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxEnum;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxEnum[0];
+
 		/* 0x010 */ hkArray<hkxEnumItem> m_items;
 	};
 	static_assert(sizeof(hkxEnum) == 0x20);
@@ -1265,6 +1341,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxEnvironment : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxEnvironment;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxEnvironment[0];
+
 		/* 0x010 */ hkArray<hkxEnvironmentVariable> m_variables;
 	};
 	static_assert(sizeof(hkxEnvironment) == 0x20);
@@ -1283,6 +1362,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxIndexBuffer : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxIndexBuffer;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxIndexBuffer[0];
+
 		/* 0x010 */ std::int8_t m_indexType;
 		/* 0x011 */ std::byte pad011[0x7];
 		/* 0x018 */ hkArray<std::uint16_t> m_indices16;
@@ -1300,6 +1382,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxLight : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxLight;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxLight[0];
+
 		/* 0x010 */ std::int8_t m_type;
 		/* 0x011 */ std::byte pad011[0xF];
 		/* 0x020 */ hkVector4 m_position;
@@ -1331,6 +1416,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxMaterial : public hkxAttributeHolder
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxMaterial;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxMaterial[0];
+
 		/* 0x020 */ hkStringPtr m_name;
 		/* 0x028 */ hkArray<hkxMaterialTextureStage> m_stages;
 		/* 0x038 */ std::byte pad038[0x8];
@@ -1374,6 +1462,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxMaterialEffect : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxMaterialEffect;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxMaterialEffect[0];
+
 		/* 0x010 */ hkStringPtr m_name;
 		/* 0x018 */ std::uint8_t m_type;
 		/* 0x019 */ std::byte pad019[0x7];
@@ -1397,6 +1488,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxMaterialShader : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxMaterialShader;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxMaterialShader[0];
+
 		/* 0x010 */ hkStringPtr m_name;
 		/* 0x018 */ std::uint8_t m_type;
 		/* 0x019 */ std::byte pad019[0x7];
@@ -1416,6 +1510,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxMaterialShaderSet : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxMaterialShaderSet;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxMaterialShaderSet[0];
+
 		/* 0x010 */ hkArray<hkxMaterialShader*> m_shaders;
 	};
 	static_assert(sizeof(hkxMaterialShaderSet) == 0x20);
@@ -1446,6 +1543,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxMesh : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxMesh;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxMesh[0];
+
 		using UserChannelInfo = hkxMeshUserChannelInfo;
 
 		/* 0x010 */ hkArray<hkxMeshSection*> m_sections;
@@ -1458,6 +1558,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxMeshSection : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxMeshSection;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxMeshSection[0];
+
 		/* 0x010 */ hkxVertexBuffer* m_vertexBuffer;
 		/* 0x018 */ hkArray<hkxIndexBuffer*> m_indexBuffers;
 		/* 0x028 */ hkxMaterial* m_material;
@@ -1478,6 +1581,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxNode : public hkxAttributeHolder
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxNode;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxNode[0];
+
 		/* 0x020 */ hkStringPtr m_name;
 		/* 0x028 */ hkReferencedObject* m_object;
 		/* 0x030 */ hkArray<hkMatrix4> m_keyFrames;
@@ -1514,6 +1620,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxNodeSelectionSet : public hkxAttributeHolder
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxNodeSelectionSet;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxNodeSelectionSet[0];
+
 		/* 0x020 */ hkArray<hkxNode*> m_selectedNodes;
 		/* 0x030 */ hkStringPtr m_name;
 	};
@@ -1524,6 +1633,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxScene : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxScene;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxScene[0];
+
 		/* 0x010 */ hkStringPtr m_modeller;
 		/* 0x018 */ hkStringPtr m_asset;
 		/* 0x020 */ float m_sceneLength;
@@ -1560,6 +1672,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxSkinBinding : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxSkinBinding;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxSkinBinding[0];
+
 		/* 0x010 */ hkxMesh* m_mesh;
 		/* 0x018 */ hkArray<hkStringPtr> m_nodeNames;
 		/* 0x028 */ hkArray<hkMatrix4> m_bindPose;
@@ -1575,6 +1690,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxSparselyAnimatedBool : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxSparselyAnimatedBool;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxSparselyAnimatedBool[0];
+
 		/* 0x010 */ hkArray<hkBool> m_bools;
 		/* 0x020 */ hkArray<float> m_times;
 	};
@@ -1585,6 +1703,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxSparselyAnimatedInt : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxSparselyAnimatedInt;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxSparselyAnimatedInt[0];
+
 		/* 0x010 */ hkArray<std::int32_t> m_ints;
 		/* 0x020 */ hkArray<float> m_times;
 	};
@@ -1595,6 +1716,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxSparselyAnimatedEnum : public hkxSparselyAnimatedInt
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxSparselyAnimatedEnum;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxSparselyAnimatedEnum[0];
+
 		/* 0x030 */ hkxEnum* m_enum;
 	};
 	static_assert(sizeof(hkxSparselyAnimatedEnum) == 0x38);
@@ -1603,6 +1727,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxSparselyAnimatedString : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxSparselyAnimatedString;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxSparselyAnimatedString[0];
+
 		/* 0x010 */ hkArray<hkStringPtr> m_strings;
 		/* 0x020 */ hkArray<float> m_times;
 	};
@@ -1613,6 +1740,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxSpline : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxSpline;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxSpline[0];
+
 		/* 0x010 */ hkArray<hkxSplineControlPoint> m_controlPoints;
 		/* 0x020 */ hkBool m_isClosed;
 		/* 0x021 */ std::byte pad021[0x7];
@@ -1641,6 +1771,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxTextureFile : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxTextureFile;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxTextureFile[0];
+
 		/* 0x010 */ hkStringPtr m_filename;
 		/* 0x018 */ hkStringPtr m_name;
 		/* 0x020 */ hkStringPtr m_originalFilename;
@@ -1653,6 +1786,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxTextureInplace : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxTextureInplace;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxTextureInplace[0];
+
 		/* 0x010 */ char m_fileType[4];
 		/* 0x014 */ std::byte pad014[0x4];
 		/* 0x018 */ hkArray<std::uint8_t> m_data;
@@ -1668,6 +1804,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxTriangleSelectionChannel : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxTriangleSelectionChannel;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxTriangleSelectionChannel[0];
+
 		/* 0x010 */ hkArray<std::int32_t> m_selectedTriangles;
 	};
 	static_assert(sizeof(hkxTriangleSelectionChannel) == 0x20);
@@ -1712,6 +1851,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxVertexBuffer : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxVertexBuffer;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxVertexBuffer[0];
+
 		/* 0x010 */ hkxVertexBufferVertexData m_data;
 		/* 0x078 */ hkxVertexDescription m_desc;
 	};
@@ -1722,6 +1864,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxVertexAnimation : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxVertexAnimation;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxVertexAnimation[0];
+
 		/* 0x010 */ float m_time;
 		/* 0x014 */ std::byte pad014[0x4];
 		/* 0x018 */ hkxVertexBuffer m_vertData;
@@ -1768,6 +1913,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxVertexFloatDataChannel : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxVertexFloatDataChannel;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxVertexFloatDataChannel[0];
+
 		/* 0x010 */ hkArray<float> m_perVertexFloats;
 		/* 0x020 */ std::uint8_t m_dimensions;
 		/* 0x021 */ std::byte pad021[0x7];
@@ -1779,6 +1927,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxVertexIntDataChannel : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxVertexIntDataChannel;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxVertexIntDataChannel[0];
+
 		/* 0x010 */ hkArray<std::int32_t> m_perVertexInts;
 	};
 	static_assert(sizeof(hkxVertexIntDataChannel) == 0x20);
@@ -1787,6 +1938,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxVertexSelectionChannel : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxVertexSelectionChannel;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxVertexSelectionChannel[0];
+
 		/* 0x010 */ hkArray<std::int32_t> m_selectedVertices;
 	};
 	static_assert(sizeof(hkxVertexSelectionChannel) == 0x20);
@@ -1795,6 +1949,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class hkxVertexVectorDataChannel : public hkReferencedObject
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::hkxVertexVectorDataChannel;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::hkxVertexVectorDataChannel[0];
+
 		/* 0x010 */ hkArray<float> m_perVertexVectors;
 	};
 	static_assert(sizeof(hkxVertexVectorDataChannel) == 0x20);

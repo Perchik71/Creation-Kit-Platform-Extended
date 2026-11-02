@@ -11,6 +11,8 @@
 #include <EditorAPI/N/NiTexture.h>
 #include <EditorAPI/B/BSTextureSet.h>
 #include <EditorAPI/B/BSLock.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -51,6 +53,7 @@ namespace CKPE
 
 				virtual ~BSShaderMaterial() = default;
 
+				constexpr static Common::ID RTTI = IDs::RTTI::BSShaderMaterial;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::BSShaderMaterial[0];
 
 				inline BSShaderMaterial* Create() const noexcept(true) { return CKPE::vtbl_call<BSShaderMaterial*>(0x8, this); }
@@ -129,6 +132,9 @@ namespace CKPE
 			class BSLightingShaderMaterialBase : public BSShaderMaterial
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLightingShaderMaterialBase;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShaderMaterialBase[0];
+
 				virtual ~BSLightingShaderMaterialBase() = default;
 
 				inline bool IsLightingShaderMaterialEnvmap() const noexcept(true) { return CKPE::vtbl_call<BSLightingShaderMaterialBase*>(0x60, this) != nullptr; }
@@ -221,6 +227,9 @@ namespace CKPE
 			class BSLightingShaderMaterialFace : public BSLightingShaderMaterialBase
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::BSLightingShaderMaterialFace;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::BSLightingShaderMaterialFace[0];
+
 				inline NiAPI::NiPointer<NiAPI::NiTexture> GetBaseDiffuse() const { return _BaseDiffuse; }
 				inline NiAPI::NiPointer<NiAPI::NiTexture> GetWrinkleTexture() const { return _BaseDiffuse; }
 				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)

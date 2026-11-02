@@ -12,6 +12,8 @@
 #include <EditorAPI/B/BSString.h>
 #include <EditorAPI/B/BSTArray.h>
 #include <EditorAPI/B/BGSKeywordForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -87,6 +89,7 @@ namespace CKPE
 					/* 338 */ void OnDialogFormSaved(HWND hDialogBox, TESForm* SavedForm) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftScene;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSScene;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSScene[0];
 				public:
 					std::uint32_t unk30; // 30

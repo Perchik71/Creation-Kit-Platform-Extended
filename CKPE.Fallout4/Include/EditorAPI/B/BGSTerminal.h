@@ -11,6 +11,8 @@
 #include <EditorAPI/T/TESTexture.h>
 #include <EditorAPI/T/TESCondition.h>
 #include <EditorAPI/B/BSTArray.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -43,6 +45,7 @@ namespace CKPE
 					/* 338 */ void OnDialogFormSaved(HWND hDialogBox, TESForm* SavedForm) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftTerminal;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSTerminal;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSTerminal[0];
 				public:
 					// Body text entry (0x28 bytes, the array stride)

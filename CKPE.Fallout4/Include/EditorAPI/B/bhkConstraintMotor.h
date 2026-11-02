@@ -5,11 +5,17 @@
 #pragma once
 
 #include <EditorAPI/H/hkpConstraintData.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
 	class bhkPositionConstraintMotor : public hkpPositionConstraintMotor
 	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkPositionConstraintMotor;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkPositionConstraintMotor[0];
+
 	private:
 		/* 0x028 */ virtual const void* GetRTTI() const; // NiObject interface embedded after the Havok virtuals: returns the NiRTTI of the class
 		/* 0x030 */ virtual void* IsNodeConst(); // NiObject cast helper, null here
@@ -41,6 +47,10 @@ namespace CKPE::Fallout4::EditorAPI
 
 	class bhkVelocityConstraintMotor : public hkpVelocityConstraintMotor
 	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkVelocityConstraintMotor;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkVelocityConstraintMotor[0];
+
 	private:
 		/* 0x028 */ virtual const void* GetRTTI() const; // NiObject interface embedded after the Havok virtuals: returns the NiRTTI of the class
 		/* 0x030 */ virtual void* IsNodeConst(); // NiObject cast helper, null here
@@ -72,6 +82,10 @@ namespace CKPE::Fallout4::EditorAPI
 
 	class bhkSpringDamperConstraintMotor : public hkpSpringDamperConstraintMotor
 	{
+	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::bhkSpringDamperConstraintMotor;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::bhkSpringDamperConstraintMotor[0];
+
 	private:
 		/* 0x028 */ virtual const void* GetRTTI() const; // NiObject interface embedded after the Havok virtuals: returns the NiRTTI of the class
 		/* 0x030 */ virtual void* IsNodeConst(); // NiObject cast helper, null here

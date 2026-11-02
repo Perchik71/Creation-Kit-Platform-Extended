@@ -7,6 +7,8 @@
 #include <EditorAPI/H/hkBaseObject.h>
 #include <EditorAPI/H/hkBaseTypes.h>
 #include <EditorAPI/H/hkbBehaviorGraph.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE::Fallout4::EditorAPI
 {
@@ -58,6 +60,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSAlignBoneModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSAlignBoneModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSAlignBoneModifier[0];
+
 		enum class CONTEXT : std::int32_t
 		{
 			None = 0,
@@ -103,6 +108,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSAssignVariablesModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSAssignVariablesModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSAssignVariablesModifier[0];
+
 		/* 0x058 */ float m_floatVariable1;
 		/* 0x05C */ float m_floatValue1;
 		/* 0x060 */ float m_floatVariable2;
@@ -205,6 +213,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSBehaviorGraphSwapGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSBehaviorGraphSwapGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSBehaviorGraphSwapGenerator[0];
+
 		/* 0x088 */ std::uint8_t pad088[0x8];
 		/* 0x090 */ hkbGenerator* m_pDefaultGenerator;
 		/* 0x098 */ std::uint8_t pad098[0x8];
@@ -215,6 +226,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSBoneSwitchGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSBoneSwitchGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSBoneSwitchGenerator[0];
+
 		/* 0x088 */ std::uint8_t pad088[0x8];
 		/* 0x090 */ hkbGenerator* m_pDefaultGenerator;
 		/* 0x098 */ hkArray<BSBoneSwitchGeneratorBoneData*> m_ChildrenA;
@@ -227,6 +241,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSBoneSwitchGeneratorBoneData : public hkbBindable
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSBoneSwitchGeneratorBoneData;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSBoneSwitchGeneratorBoneData[0];
+
 		/* 0x030 */ hkbGenerator* m_pGenerator;
 		/* 0x038 */ hkbBoneWeightArray* m_spBoneWeight;
 	};
@@ -237,6 +254,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSComputeAddBoneAnimModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSComputeAddBoneAnimModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSComputeAddBoneAnimModifier[0];
+
 		/* 0x058 */ std::int16_t m_boneIndex;
 		/* 0x05A */ std::uint8_t pad05A[0x6];
 		/* 0x060 */ hkVector4f m_translationLSOut;
@@ -255,6 +275,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSCyclicBlendTransitionGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSCyclicBlendTransitionGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSCyclicBlendTransitionGenerator[0];
+
 		enum class CurrentBlendMode : std::int32_t
 		{
 			MODE_INACTIVE = -1,
@@ -299,6 +322,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSDecomposeVectorModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSDecomposeVectorModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSDecomposeVectorModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkVector4f m_vector;
 		/* 0x070 */ float m_x;
@@ -316,6 +342,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSDirectAtCapturePoseModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSDirectAtCapturePoseModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSDirectAtCapturePoseModifier[0];
+
 		/* 0x058 */ std::int32_t m_capturePoseEventId;
 		/* 0x05C */ hkBool m_capturePoseOnActivate;
 		/* 0x05D */ hkBool m_capturePose;
@@ -329,6 +358,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSDirectAtModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSDirectAtModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSDirectAtModifier[0];
+
 		enum class TARGET : std::int32_t
 		{
 			AppSupplied = 0,
@@ -450,6 +482,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSDistTriggerModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSDistTriggerModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSDistTriggerModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkVector4f m_targetPosition;
 		/* 0x070 */ float m_distance;
@@ -466,6 +501,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSEventEveryNEventsModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSEventEveryNEventsModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSEventEveryNEventsModifier[0];
+
 		/* 0x058 */ hkbEventProperty m_eventToCheckFor;
 		/* 0x068 */ hkbEventProperty m_eventToSend;
 		/* 0x078 */ std::int8_t m_numberOfEventsBeforeSend;
@@ -488,6 +526,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSEventOnDeactivateModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSEventOnDeactivateModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSEventOnDeactivateModifier[0];
+
 		/* 0x058 */ hkbEventProperty m_event;
 	};
 	static_assert(sizeof(BSEventOnDeactivateModifier) == 0x68);
@@ -496,6 +537,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSEventOnFalseToTrueModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSEventOnFalseToTrueModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSEventOnFalseToTrueModifier[0];
+
 		/* 0x058 */ hkBool m_bEnableEvent1;
 		/* 0x059 */ hkBool m_bVariableToTest1;
 		/* 0x05A */ std::uint8_t pad05A[0x6];
@@ -530,6 +574,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSGetTimeStepModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSGetTimeStepModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSGetTimeStepModifier[0];
+
 		/* 0x058 */ float m_timeStep;
 		/* 0x05C */ std::uint8_t pad05C[0x4];
 	};
@@ -547,6 +594,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSIStateManagerModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSIStateManagerModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSIStateManagerModifier[0];
+
 		using BSIStateManagerStateListener = BSIStateManagerModifierBSIStateManagerStateListener;
 		/* 0x058 */ std::int32_t m_iStateVar;
 		/* 0x05C */ std::uint8_t pad05C[0x4];
@@ -561,6 +611,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSInterpValueModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSInterpValueModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSInterpValueModifier[0];
+
 		/* 0x058 */ float m_source;
 		/* 0x05C */ float m_target;
 		/* 0x060 */ float m_result;
@@ -578,6 +631,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSIsActiveModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSIsActiveModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSIsActiveModifier[0];
+
 		/* 0x058 */ hkBool m_bIsActive0;
 		/* 0x059 */ hkBool m_bInvertActive0;
 		/* 0x05A */ hkBool m_bIsActive1;
@@ -605,6 +661,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSLimbCycleModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSLimbCycleModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSLimbCycleModifier[0];
+
 		/* 0x058 */ hkbBoneIndexArray* m_limbBoneIndexA;
 		/* 0x060 */ hkbEventProperty m_EventCycleLeft;
 		/* 0x070 */ hkbEventProperty m_EventCycleRight;
@@ -624,6 +683,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSLimbIKModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSLimbIKModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSLimbIKModifier[0];
+
 		/* 0x058 */ float m_limitAngleDegrees;
 		/* 0x05C */ float m_currentAngle;
 		/* 0x060 */ std::int16_t m_startBoneIndex;
@@ -649,6 +711,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSLookAtCapturePoseModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSLookAtCapturePoseModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSLookAtCapturePoseModifier[0];
+
 		/* 0x058 */ std::int32_t m_capturePoseEventId;
 		/* 0x05C */ hkBool m_capturePoseOnActivate;
 		/* 0x05D */ hkBool m_capturePose;
@@ -754,6 +819,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSLookAtModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSLookAtModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSLookAtModifier[0];
+
 		enum class TARGET : std::int32_t
 		{
 			Default = 0,
@@ -859,6 +927,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSModifyOnceModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSModifyOnceModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSModifyOnceModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkbModifier* m_pOnActivateModifier;
 		/* 0x068 */ std::uint8_t pad068[0x8];
@@ -872,6 +943,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSOffsetAnimationGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSOffsetAnimationGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSOffsetAnimationGenerator[0];
+
 		/* 0x088 */ std::uint8_t pad088[0x8];
 		/* 0x090 */ hkbGenerator* m_pDefaultGenerator;
 		/* 0x098 */ std::uint8_t pad098[0x8];
@@ -904,6 +978,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSPassByTargetTriggerModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSPassByTargetTriggerModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSPassByTargetTriggerModifier[0];
+
 		/* 0x058 */ std::uint8_t pad058[0x8];
 		/* 0x060 */ hkVector4f m_targetPosition;
 		/* 0x070 */ float m_radius;
@@ -923,6 +1000,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSRagdollContactListenerModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSRagdollContactListenerModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSRagdollContactListenerModifier[0];
+
 		/* 0x058 */ hkbEventProperty m_contactEvent;
 		/* 0x068 */ hkbBoneIndexArray* m_bones;
 		/* 0x070 */ hkBool m_throwEvent;
@@ -936,6 +1016,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSRandomAlarmModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSRandomAlarmModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSRandomAlarmModifier[0];
+
 		/* 0x058 */ float m_alarmTimeSecondsMin;
 		/* 0x05C */ float m_alarmTimeSecondsMax;
 		/* 0x060 */ hkbEventProperty m_alarmEvent;
@@ -953,6 +1036,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSRetargetBodyBlend : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSRetargetBodyBlend;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSRetargetBodyBlend[0];
+
 		/* 0x088 */ std::uint8_t pad088[0x8];
 		/* 0x090 */ hkbGenerator* m_pDefaultGenerator;
 		/* 0x098 */ std::uint8_t pad098[0x8];
@@ -982,6 +1068,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSReverseSpineTwistModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSReverseSpineTwistModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSReverseSpineTwistModifier[0];
+
 		/* 0x058 */ hkBool m_isAdditive;
 		/* 0x059 */ std::uint8_t pad059[0x1];
 		/* 0x05A */ std::int16_t m_COMIndex;
@@ -1030,6 +1119,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSRootTwistModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSRootTwistModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSRootTwistModifier[0];
+
 		enum class SetTwistMethod : std::int32_t
 		{
 			ANGLE_DEGREES = 0,
@@ -1049,6 +1141,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSSpeedSamplerModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSSpeedSamplerModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSSpeedSamplerModifier[0];
+
 		/* 0x058 */ std::int32_t m_state;
 		/* 0x05C */ float m_direction;
 		/* 0x060 */ float m_goalSpeed;
@@ -1063,6 +1158,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSTimerModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSTimerModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSTimerModifier[0];
+
 		/* 0x058 */ float m_alarmTimeSeconds;
 		/* 0x05C */ std::uint8_t pad05C[0x4];
 		/* 0x060 */ hkbEventProperty m_alarmEvent;
@@ -1079,6 +1177,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSTweenerModifier : public hkbModifier
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSTweenerModifier;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSTweenerModifier[0];
+
 		/* 0x058 */ hkBool m_tweenPosition;
 		/* 0x059 */ hkBool m_tweenRotation;
 		/* 0x05A */ hkBool m_useTweenDuration;
@@ -1106,6 +1207,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSiStateTaggingGenerator : public hkbGenerator
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSiStateTaggingGenerator;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSiStateTaggingGenerator[0];
+
 		/* 0x088 */ std::uint8_t pad088[0x8];
 		/* 0x090 */ hkbGenerator* m_pDefaultGenerator;
 		/* 0x098 */ std::int32_t m_iStateToSetAs;
@@ -1119,6 +1223,9 @@ namespace CKPE::Fallout4::EditorAPI
 	class BSiStateTaggingStateListener : public hkbStateListener
 	{
 	public:
+		constexpr static Common::ID RTTI = IDs::RTTI::BSiStateTaggingStateListener;
+		constexpr static Common::ID VTABLE = IDs::VTABLE::BSiStateTaggingStateListener[0];
+
 		/* 0x010 */ std::int32_t m_iStateToSetAs;
 		/* 0x014 */ std::int32_t m_iPriority;
 	};

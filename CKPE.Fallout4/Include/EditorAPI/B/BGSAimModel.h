@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -53,6 +55,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftAimModel;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSAimModel;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSAimModel[0];
 				public:
 					BGSAimModelData aimModelData; // 28 - DNAM

@@ -8,6 +8,8 @@
 #include <EditorAPI/B/BSTHashMap.h>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/B/BGSPreloadable.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -41,6 +43,7 @@ namespace CKPE
 					/* 328 */ void ReadDataFromDialogBox(HWND hDialogBox) noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftImpactDataSet;
+					constexpr static Common::ID RTTI = IDs::RTTI::BGSImpactDataSet;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::BGSImpactDataSet[0];
 				public:
 					// 0x38 byte table (capacity 3C, good 44, modification count 50, entries 60); ClearData walks 24 byte entries {material, impact data, next}

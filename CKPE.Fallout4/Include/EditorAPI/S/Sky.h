@@ -11,6 +11,8 @@
 #include <EditorAPI/N/NiNode.h>
 #include <EditorAPI/N/NiColor.h>
 #include <EditorAPI/N/NiFlags.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -30,6 +32,9 @@ namespace CKPE
 			class SkyObject
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::SkyObject;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::SkyObject[0];
+
 				virtual ~SkyObject();
 				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
 				{ return offsetof(SkyObject, _Object) == 0x8; }
@@ -46,6 +51,9 @@ namespace CKPE
 			class Clouds : public SkyObject
 			{
 			public:
+				constexpr static Common::ID RTTI = IDs::RTTI::Clouds;
+				constexpr static Common::ID VTABLE = IDs::VTABLE::Clouds[0];
+
 				virtual ~Clouds();
 
 				[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
@@ -80,6 +88,7 @@ namespace CKPE
 
 				virtual ~Sky();
 
+				constexpr static Common::ID RTTI = IDs::RTTI::Sky;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::Sky[0];
 
 				// The editor creates this singleton lazily when loading a worldspace.

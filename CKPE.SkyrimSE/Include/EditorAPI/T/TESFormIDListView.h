@@ -5,6 +5,8 @@
 #pragma once
 
 #include <EditorAPI/T/TESForm.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -18,6 +20,9 @@ namespace CKPE
 				class TESFormIDListView : public TESForm
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESFormIDListView;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESFormIDListView[0];
+
 					virtual ~TESFormIDListView() = default;
 				};
 				static_assert(sizeof(TESFormIDListView) == 0x28);

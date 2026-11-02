@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/B/BSTList.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -52,6 +54,7 @@ namespace CKPE
 					/* 3A0 */ [[nodiscard]] const char* GetObjectTypeName() const noexcept(true) override;
 
 					constexpr static std::uint8_t TYPE_ID = ftScript;
+					constexpr static Common::ID RTTI = IDs::RTTI::Script;
 					constexpr static Common::ID VTABLE = IDs::VTABLE::Script[0];
 
 					[[nodiscard]] virtual bool CanCheckInReferencedForms(TESForm* Owner, const void* Forms) const noexcept(true) { return true; } // 124

@@ -8,6 +8,8 @@
 #include <EditorAPI/B/TESReactionForm.h>
 #include <EditorAPI/T/TESForm.h>
 #include <EditorAPI/T/TESFullName.h>
+#include <EditorAPI/IDs_RTTI.h>
+#include <EditorAPI/IDs_VTABLE.h>
 
 namespace CKPE
 {
@@ -24,6 +26,9 @@ namespace CKPE
 					public TESReactionForm	// 40
 				{
 				public:
+					constexpr static Common::ID RTTI = IDs::RTTI::TESFaction;
+					constexpr static Common::ID VTABLE = IDs::VTABLE::TESFaction[0];
+
 					constexpr static std::uint8_t TYPE_ID = ftFaction;
 
 					virtual ~TESFaction() = default;
