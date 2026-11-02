@@ -31,7 +31,6 @@ namespace CKPE
 			*/
 			class BSString
 			{
-				BSString& AppendRaw(const char* str, std::uint16_t len) noexcept(true);
 			public:
 				enum EResult : std::uint16_t
 				{
@@ -163,6 +162,12 @@ namespace CKPE
 				inline bool operator!=(const char* string) const noexcept(true) { return Compare(string); }
 				inline bool operator!=(const std::string& string) const noexcept(true) { return Compare(string); }
 				inline bool operator!=(const BSString& string) const noexcept(true) { return Compare(string); }
+			private:
+				// The length (+08) saturates at 0xFFFF, which then means "use strlen" (as in the game's BSString).
+				// The buffer size (+0A) saturates at 0xFFFF as well, the real size is then the allocation size.
+				[[nodiscard]] std::size_t GetLength() const noexcept(true);
+				[[nodiscard]] std::size_t GetCapacity() const noexcept(true);
+				BSString& AppendRaw(const char* str, std::size_t len) noexcept(true);
 			private:
 				char* m_data;		// 00
 				std::uint16_t	m_dataLen;	// 08

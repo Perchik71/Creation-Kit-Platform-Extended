@@ -9,6 +9,7 @@
 #include <EditorAPI/B/BSString.h>
 #include <EditorAPI/N/NiMemoryManager.h>
 
+#include <algorithm>
 #include <cstdarg>
 #include <sstream>
 #include <iomanip>
@@ -21,31 +22,69 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
-			BSString& BSString::AppendRaw(const char* str, std::uint16_t len) noexcept(true)
+			std::size_t BSString::GetLength() const noexcept(true)
 			{
-				if (str)
+				if (!m_data)
+					return 0;
+				return (m_dataLen == 0xFFFF) ? strlen(m_data) : m_dataLen;
+			}
+
+			std::size_t BSString::GetCapacity() const noexcept(true)
+			{
+				if (!m_data)
+					return 0;
+				return (m_bufLen == 0xFFFF) ? NiAPI::NiMemoryManager::Size(nullptr, m_data) : m_bufLen;
+			}
+
+			// Appends len characters of str. Unlike the 16-bit fields, the result may be longer than 64K (the
+			// game allocates the full size but clamps the recorded sizes), so everything is done in size_t.
+			// The buffer grows geometrically, so repeated appends do not allocate and copy every time.
+			BSString& BSString::AppendRaw(const char* str, std::size_t len) noexcept(true)
+			{
+				constexpr std::size_t MAX_LEN = 0x4000000;	// 64 MB, only a guard against runaway growth
+				constexpr std::size_t MIN_CAP = 32;
+
+				if (!str || !len)
+					return *this;
+
+				const std::size_t cur = GetLength();
+				if (cur >= MAX_LEN)
+					return *this;
+				if (len > MAX_LEN - cur)
+					len = MAX_LEN - cur;
+
+				const std::size_t total = cur + len;
+
+				// The source may point into our own buffer, which can move below: keep its offset.
+				const bool own = m_data && (str >= m_data) && (str < m_data + cur);
+				const std::size_t off = own ? static_cast<std::size_t>(str - m_data) : 0;
+
+				const std::size_t cap = GetCapacity();
+				if (cap <= total)
 				{
-					constexpr auto limit = std::numeric_limits<std::uint16_t>::max() - 1;
+					std::size_t newCap = std::max<std::size_t>(std::max<std::size_t>(total + 1, cap * 2), MIN_CAP);
+					newCap = std::min<std::size_t>(newCap, MAX_LEN + 1);
 
-					auto lenSrc = len > 0 ? static_cast<std::size_t>(len) : strlen(str);
-					if (lenSrc && (m_dataLen < limit))
-					{
-						auto resLen = lenSrc + m_dataLen;
-						if (resLen >= limit)
-							resLen = limit;
+					auto newData = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, newCap, 4);
+					if (!newData)
+						return *this;
 
-						if (m_dataLen)
-						{
-							if (Reserved(static_cast<std::uint16_t>(resLen)))
-							{
-								strncat(m_data, str, resLen - m_dataLen);
-								m_data[resLen + 1] = '\0';
-							}
-						}
-						else
-							Set(str, static_cast<std::uint16_t>(resLen));
-					}
+					if (cur)
+						memcpy(newData, m_data, cur);
+					if (m_data)
+						NiAPI::NiMemoryManager::Free(nullptr, (void*)m_data);
+
+					m_data = newData;
+					m_bufLen = static_cast<std::uint16_t>(std::min<std::size_t>(
+						std::max<std::size_t>(NiAPI::NiMemoryManager::Size(nullptr, newData), newCap), 0xFFFF));
 				}
+
+				if (own)
+					str = m_data + off;
+
+				memcpy(m_data + cur, str, len);
+				m_data[total] = 0;
+				m_dataLen = static_cast<std::uint16_t>(std::min<std::size_t>(total, 0xFFFF));
 
 				return *this;
 			}
@@ -109,7 +148,7 @@ namespace CKPE
 
 				std::uint16_t wNeedLen, wNeedBuf;
 
-				wNeedLen = (string) ? (std::uint16_t)strlen(string) : 0;
+				wNeedLen = (string) ? (std::uint16_t)std::min<std::size_t>(strlen(string), 0xFFFE) : 0;
 				if (size && (wNeedLen > size))
 					wNeedLen = size;
 
@@ -127,7 +166,7 @@ namespace CKPE
 						if (m_data)
 							NiAPI::NiMemoryManager::Free(nullptr, (void*)m_data);
 
-						std::uint16_t wRealBuf = (std::uint16_t)NiAPI::NiMemoryManager::Size(nullptr, newData);
+						std::uint16_t wRealBuf = (std::uint16_t)std::min<std::size_t>(NiAPI::NiMemoryManager::Size(nullptr, newData), 0xFFFF);
 
 						m_data = newData;
 						m_bufLen = wRealBuf > wNeedBuf ? wRealBuf : wNeedBuf;
@@ -186,26 +225,9 @@ namespace CKPE
 
 			BSString& BSString::Format(const char* format, ...) noexcept(true)
 			{
-				Clear();
-
 				va_list va;
 				va_start(va, format);
-				auto size = _vsnprintf(nullptr, 0, format, va);
-				if (size) {
-					m_bufLen = size + 1;
-					m_dataLen = size;
-					m_data = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, m_bufLen);
-					if (!m_data) 
-					{
-						m_bufLen = 0;
-						m_dataLen = 0;
-					}
-					else
-					{
-						vsprintf(m_data, format, va);
-						m_data[size] = 0;
-					}
-				}
+				FormatVa(format, va);
 				va_end(va);
 
 				return *this;
@@ -213,20 +235,24 @@ namespace CKPE
 
 			BSString& BSString::FormatVa(const char* format, va_list ap) noexcept(true)
 			{
-				auto size = _vsnprintf(nullptr, 0, format, ap);
-				if (size) {
-					m_bufLen = size + 1;
-					m_dataLen = size;
-					m_data = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, m_bufLen);
-					if (!m_data)
+				Clear();
+
+				va_list apCopy;
+				va_copy(apCopy, ap);
+				const int size = _vsnprintf(nullptr, 0, format, apCopy);
+				va_end(apCopy);
+
+				if (size > 0)
+				{
+					// The length and the buffer size are 16-bit, the same limit as the game's (the result is cut).
+					const std::uint16_t len = static_cast<std::uint16_t>(std::min<std::size_t>(size, 0xFFFE));
+					m_data = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, static_cast<std::size_t>(len) + 1);
+					if (m_data)
 					{
-						m_bufLen = 0;
-						m_dataLen = 0;
-					}
-					else 
-					{
-						vsprintf(m_data, format, ap);
-						m_data[size] = 0;
+						_vsnprintf(m_data, static_cast<std::size_t>(len) + 1, format, ap);
+						m_data[len] = 0;
+						m_bufLen = len + 1;
+						m_dataLen = len;
 					}
 				}
 
@@ -243,25 +269,27 @@ namespace CKPE
 
 			BSString& BSString::Append(const char* str) noexcept(true)
 			{
-				return AppendRaw(str, str ? static_cast<std::uint16_t>(strlen(str)) : 0);
+				return str ? AppendRaw(str, strlen(str)) : *this;
 			}
 
 			BSString& BSString::Append(const char* str, std::uint16_t len) noexcept(true)
 			{
-				return AppendRaw(str, len);
+				if (!str)
+					return *this;
+				return AppendRaw(str, len ? strnlen(str, len) : strlen(str));
 			}
 
 			BSString& BSString::Append(const BSString& string) noexcept(true)
 			{
 				if (!string.IsEmpty())
-					(void)AppendRaw(string.c_str(), string.Length());
+					(void)AppendRaw(string.c_str(), string.GetLength());
 				return *this;
 			}
 
 			BSString& BSString::Append(const BSString& string, std::uint16_t len) noexcept(true)
 			{
 				if (!string.IsEmpty())
-					(void)AppendRaw(string.c_str(), len);
+					(void)AppendRaw(string.c_str(), len ? std::min<std::size_t>(string.GetLength(), len) : string.GetLength());
 				return *this;
 			}
 
@@ -324,13 +352,13 @@ namespace CKPE
 					return *this;
 
 				if (!start) {
-					if (len >= m_dataLen)
+					if (len >= GetLength())
 						Clear();
 					else
 						return Assign(m_data, len);
 				}
 				else {
-					if (len >= m_dataLen)
+					if (len >= GetLength())
 						return Assign(m_data, 0, start);
 					else
 						return Assign(m_data, 0, start).Append(m_data + (start + len));
@@ -360,7 +388,7 @@ namespace CKPE
 			std::uint16_t BSString::FindLastOf(const char* chs, std::uint16_t offset) const noexcept(true)
 			{
 				std::uint16_t Ret = Reverse().FindFirstOf(chs, offset);
-				return Ret == srNone ? srNone : m_dataLen - Ret;
+				return Ret == srNone ? srNone : static_cast<std::uint16_t>(GetLength() - Ret);
 			}
 
 			std::uint16_t BSString::FindFirstOf(const char* chs, std::uint16_t offset) const noexcept(true)
