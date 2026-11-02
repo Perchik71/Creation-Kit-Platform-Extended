@@ -9,6 +9,7 @@
 #include <EditorAPI/B/BSString.h>
 #include <EditorAPI/N/NiMemoryManager.h>
 
+#include <algorithm>
 #include <cstdarg>
 #include <sstream>
 #include <iomanip>
@@ -70,6 +71,55 @@ namespace CKPE
 				m_data = newData;
 				m_bufLen = newSize;
 				m_dataLen = newLen;
+
+				return true;
+			}
+
+			bool BSString::AppendRaw(const char* str, std::size_t len) noexcept(true)
+			{
+				// The length and the buffer size are 16-bit, so everything is computed in size_t
+				// and clamped, otherwise the allocation is truncated while the copy is not.
+				constexpr std::size_t MAX_LEN = 0xFFFE;
+
+				if (!str || !len)
+					return true;
+
+				std::size_t cur = std::min<std::size_t>(m_dataLen, MAX_LEN);
+				if (cur >= MAX_LEN)
+					return false;
+				if (len > MAX_LEN - cur)
+					len = MAX_LEN - cur;
+
+				// The source may point into our own buffer, which Reserved may move.
+				const bool own = cur && str >= m_data && str < m_data + m_bufLen;
+				const std::size_t off = own ? (std::size_t)(str - m_data) : 0;
+
+				if (!cur)
+					return Set(str, (std::uint16_t)len);
+
+				const std::size_t total = cur + len;
+				if (m_bufLen <= total)
+				{
+					// Grow geometrically (the buffer length is its capacity, as in the game's own append),
+					// so that repeated appends are amortised instead of reallocating every time.
+					const std::size_t cap = std::max<std::size_t>(total + 1, std::min<std::size_t>(std::size_t(m_bufLen) * 2, 0xFFFF));
+					auto newData = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, cap, 4);
+					if (!newData)
+						return false;
+
+					memcpy(newData, m_data, cur);
+					NiAPI::NiMemoryManager::Free(nullptr, (void*)m_data);
+
+					m_data = newData;
+					m_bufLen = (std::uint16_t)std::min<std::size_t>(std::max<std::size_t>(NiAPI::NiMemoryManager::Size(nullptr, newData), cap), 0xFFFF);
+				}
+
+				if (own)
+					str = m_data + off;
+
+				memcpy(m_data + cur, str, len);
+				m_data[total] = 0;
+				m_dataLen = (std::uint16_t)total;
 
 				return true;
 			}
@@ -214,17 +264,8 @@ namespace CKPE
 
 			BSString& BSString::Append(const char* str) noexcept(true)
 			{
-				if (str) {
-					std::uint16_t dwLen = (std::uint16_t)strlen(str);
-					if (dwLen) {
-						if (m_dataLen) {
-							if (Reserved(m_dataLen + dwLen + 1))
-								strcat(m_data, str);
-						}
-						else
-							Set(str);
-					}
-				}
+				if (str)
+					AppendRaw(str, strlen(str));
 
 				return *this;
 			}
@@ -232,27 +273,7 @@ namespace CKPE
 			BSString& BSString::Append(const char* str, std::uint16_t len) noexcept(true)
 			{
 				if (str)
-				{
-					std::uint16_t dwLen = (std::uint16_t)strlen(str);
-					if (dwLen)
-					{
-						if (m_dataLen)
-						{
-							if (dwLen <= len)
-							{
-								if (Reserved(m_dataLen + dwLen + 1))
-									strcat(m_data, str);
-							}
-							else
-							{
-								if (Reserved(m_dataLen + len + 1))
-									strncat(m_data, str, len);
-							}
-						}
-						else
-							Set(str, len);
-					}
-				}
+					AppendRaw(str, strnlen(str, len));
 
 				return *this;
 			}
@@ -260,19 +281,7 @@ namespace CKPE
 			BSString& BSString::Append(const BSString& string) noexcept(true)
 			{
 				if (!string.IsEmpty())
-				{
-					std::uint16_t dwLen = (std::uint16_t)string.m_dataLen;
-					if (dwLen)
-					{
-						if (m_dataLen)
-						{
-							if (Reserved(m_dataLen + dwLen + 1))
-								strcat(m_data, string.m_data);
-						}
-						else
-							Set(string.m_data);
-					}
-				}
+					AppendRaw(string.m_data, string.m_dataLen);
 
 				return *this;
 			}
@@ -280,27 +289,7 @@ namespace CKPE
 			BSString& BSString::Append(const BSString& string, std::uint16_t len) noexcept(true)
 			{
 				if (!string.IsEmpty())
-				{
-					std::uint16_t dwLen = (std::uint16_t)string.m_dataLen;
-					if (dwLen)
-					{
-						if (m_dataLen)
-						{
-							if (dwLen <= len)
-							{
-								if (Reserved(m_dataLen + dwLen + 1))
-									strcat(m_data, string.m_data);
-							}
-							else
-							{
-								if (Reserved(m_dataLen + len + 1))
-									strncat(m_data, string.m_data, len);
-							}
-						}
-						else
-							Set(string.m_data, len);
-					}
-				}
+					AppendRaw(string.m_data, std::min<std::size_t>(string.m_dataLen, len));
 
 				return *this;
 			}

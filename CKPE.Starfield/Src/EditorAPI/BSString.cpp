@@ -9,6 +9,7 @@
 #include <EditorAPI/BSString.h>
 #include <EditorAPI/NiAPI/NiMemoryManager.h>
 
+#include <algorithm>
 #include <cstdarg>
 #include <sstream>
 #include <iomanip>
@@ -93,6 +94,67 @@ namespace CKPE
 					m_bufLen = newSize;
 					m_dataLen = newLen;
 				}
+
+				return true;
+			}
+
+			bool BSString::AppendRaw(const char* str, std::size_t len) noexcept(true)
+			{
+				// The length and the buffer size are 16-bit, so everything is computed in size_t
+				// and clamped, otherwise the allocation is truncated while the copy is not.
+				constexpr std::size_t MAX_LEN = 0xFFFE;
+
+				if (!str || !len)
+					return true;
+
+				std::size_t cur = std::min<std::size_t>(m_dataLen, MAX_LEN);
+				if (cur >= MAX_LEN)
+					return false;
+				if (len > MAX_LEN - cur)
+					len = MAX_LEN - cur;
+
+				// The source may point into our own buffer, which Reserved may move.
+				const bool own = cur && str >= const_cast<char*>(Get()) && str < const_cast<char*>(Get()) + std::max<std::size_t>(m_bufLen, 12);
+				const std::size_t off = own ? (std::size_t)(str - const_cast<char*>(Get())) : 0;
+
+				if (!cur)
+					return Set(str, (std::uint16_t)len);
+
+				const std::size_t total = cur + len;
+				if (m_bufLen <= total)
+				{
+					if (total < 12)
+					{
+						// Still fits the inline buffer
+						if (!Reserved((std::uint16_t)total))
+							return false;
+					}
+					else
+					{
+						// Grow geometrically (the buffer length is its capacity), so that repeated
+						// appends are amortised instead of reallocating every time.
+						const std::size_t cap = std::max<std::size_t>(total + 1, std::min<std::size_t>(std::size_t(m_bufLen) * 2, 0xFFFF));
+						auto newData = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, cap, 4);
+						if (!newData)
+							return false;
+
+						// Copy before the union is overwritten, the data may be inline
+						memcpy(newData, Get(), cur);
+						if (m_bufLen > 12)
+							NiAPI::NiMemoryManager::Free(nullptr, (void*)val.dinamic.m_data);
+
+						val.dinamic.m_data = newData;
+						val.dinamic.pad08 = 0;
+						m_bufLen = (std::uint16_t)std::min<std::size_t>(std::max<std::size_t>(NiAPI::NiMemoryManager::Size(nullptr, newData), cap), 0xFFFF);
+					}
+				}
+
+				if (own)
+					str = const_cast<char*>(Get()) + off;
+
+				memcpy(const_cast<char*>(Get()) + cur, str, len);
+				const_cast<char*>(Get())[total] = 0;
+				m_dataLen = (std::uint16_t)total;
 
 				return true;
 			}
@@ -276,20 +338,8 @@ namespace CKPE
 
 			BSString& BSString::Append(const char* str) noexcept(true)
 			{
-				if (str) 
-				{
-					std::uint16_t dwLen = (std::uint16_t)strlen(str);
-					if (dwLen) 
-					{
-						if (m_dataLen) 
-						{
-							if (Reserved(m_dataLen + dwLen + 1))
-								strcat(const_cast<char*>(Get()), str);
-						}
-						else
-							Set(str);
-					}
-				}
+				if (str)
+					AppendRaw(str, strlen(str));
 
 				return *this;
 			}
@@ -297,27 +347,7 @@ namespace CKPE
 			BSString& BSString::Append(const char* str, std::uint16_t len) noexcept(true)
 			{
 				if (str)
-				{
-					std::uint16_t dwLen = (std::uint16_t)strlen(str);
-					if (dwLen)
-					{
-						if (m_dataLen)
-						{
-							if (dwLen <= len)
-							{
-								if (Reserved(m_dataLen + dwLen + 1))
-									strcat(const_cast<char*>(Get()), str);
-							}
-							else
-							{
-								if (Reserved(m_dataLen + len + 1))
-									strncat(const_cast<char*>(Get()), str, len);
-							}
-						}
-						else
-							Set(str, len);
-					}
-				}
+					AppendRaw(str, strnlen(str, len));
 
 				return *this;
 			}
@@ -325,19 +355,7 @@ namespace CKPE
 			BSString& BSString::Append(const BSString& string) noexcept(true)
 			{
 				if (!string.IsEmpty())
-				{
-					std::uint16_t dwLen = (std::uint16_t)string.m_dataLen;
-					if (dwLen)
-					{
-						if (m_dataLen)
-						{
-							if (Reserved(m_dataLen + dwLen + 1))
-								strcat(const_cast<char*>(Get()), string.Get());
-						}
-						else
-							Set(string.Get());
-					}
-				}
+					AppendRaw(string.Get(), string.m_dataLen);
 
 				return *this;
 			}
@@ -345,27 +363,7 @@ namespace CKPE
 			BSString& BSString::Append(const BSString& string, std::uint16_t len) noexcept(true)
 			{
 				if (!string.IsEmpty())
-				{
-					std::uint16_t dwLen = (std::uint16_t)string.m_dataLen;
-					if (dwLen)
-					{
-						if (m_dataLen)
-						{
-							if (dwLen <= len)
-							{
-								if (Reserved(m_dataLen + dwLen + 1))
-									strcat(const_cast<char*>(Get()), string.Get());
-							}
-							else
-							{
-								if (Reserved(m_dataLen + len + 1))
-									strncat(const_cast<char*>(Get()), string.Get(), len);
-							}
-						}
-						else
-							Set(string.Get(), len);
-					}
-				}
+					AppendRaw(string.Get(), std::min<std::size_t>(string.m_dataLen, len));
 
 				return *this;
 			}

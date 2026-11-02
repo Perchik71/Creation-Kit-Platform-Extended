@@ -164,6 +164,8 @@ namespace CKPE
 				inline bool operator!=(const std::string& string) const noexcept(true) { return Compare(string); }
 				inline bool operator!=(const BSString& string) const noexcept(true) { return Compare(string); }
 			private:
+				bool AppendRaw(const char* str, std::size_t len) noexcept(true);
+			private:
 				char* m_data;		// 00
 				std::uint16_t	m_dataLen;	// 08
 				std::uint16_t	m_bufLen;	// 0A
