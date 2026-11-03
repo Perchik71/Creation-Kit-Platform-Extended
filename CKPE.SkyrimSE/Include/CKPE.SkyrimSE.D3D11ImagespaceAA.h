@@ -24,7 +24,7 @@ namespace CKPE
 			D3D11ImagespaceAA();
 
 			virtual bool Install(HWND hWindow);
-			virtual void Draw(IDXGISwapChain* SwapChain) const;
+			virtual void Draw(IDXGISwapChain* a_swapChain, UINT a_width, UINT a_height) const;
 
 			inline virtual bool IsInit() const noexcept(true) { return _Init; }
 			inline virtual bool IsEnabled() const noexcept(true) { return _Enabled; }

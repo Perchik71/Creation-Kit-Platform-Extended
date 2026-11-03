@@ -49,14 +49,17 @@ namespace CKPE
 			return _Init;
 		}
 
-		void D3D11ImagespaceAA::Draw(IDXGISwapChain* SwapChain) const
+		void D3D11ImagespaceAA::Draw(IDXGISwapChain* a_swapChain, UINT a_width, UINT a_height) const
 		{
-			if (!_Init || !_Enabled) return;
-
+			if (!_Init || !_Enabled || !a_swapChain) return;
+			
 			ComPtr<ID3D11Texture2D> Back;
-			SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)Back.GetAddressOf());
+			a_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)Back.GetAddressOf());
 			if (Back)
 			{
+				DXGI_SWAP_CHAIN_DESC swapChainDesc;
+				a_swapChain->GetDesc(std::addressof(swapChainDesc));
+
 				if (!_Frame->Create(Back.Get(), D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET))
 					return;
 
@@ -66,8 +69,8 @@ namespace CKPE
 				CD3D11_RENDER_TARGET_VIEW_DESC RTVDesc(D3D11_RTV_DIMENSION::D3D11_RTV_DIMENSION_TEXTURE2D, FrameDesc->Format);
 
 				auto This = const_cast<D3D11ImagespaceAA*>(this);
-				This->_Data.tilesize.x = 1.0f / FrameDesc->Width;
-				This->_Data.tilesize.y = 1.0f / FrameDesc->Height;
+				This->_Data.tilesize.x = 1.0f / a_width;//FrameDesc->Width;
+				This->_Data.tilesize.y = 1.0f / a_height;//FrameDesc->Height;
 
 				if (!_DataBuffer->Create(reinterpret_cast<const void*>(&(This->_Data)), sizeof(D3D11ImagespaceAA::Data),
 						D3D11_BIND_CONSTANT_BUFFER, D3D11_USAGE_DYNAMIC, D3D11_CPU_ACCESS_WRITE))
@@ -78,7 +81,7 @@ namespace CKPE
 				try 
 				{
 					RECT ClientRect;
-					GetClientRect(_hWindow, &ClientRect);
+					GetClientRect(swapChainDesc.OutputWindow, std::addressof(ClientRect));
 
 					// Setup viewport
 					D3D11_VIEWPORT vp;

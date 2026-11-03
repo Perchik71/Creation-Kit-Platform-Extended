@@ -16,6 +16,7 @@
 #include <CKPE.SkyrimSE.VersionLists.h>
 #include <EditorAPI/B/BGSRenderWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.RenderWindow.h>
+#include <EditorAPI/IDs.h>
 
 namespace CKPE
 {
@@ -30,6 +31,28 @@ namespace CKPE
 
 			static float StepInRender = 15.f;
 			static bool HideMainImguiWnd = true;
+
+			static bool GetRenderTargetSize(ID3D11RenderTargetView* a_rtv, UINT& a_width, UINT& a_height) noexcept
+			{
+				Microsoft::WRL::ComPtr<ID3D11Resource> resource;
+				a_rtv->GetResource(&resource);
+				if (!resource)
+					return false;
+
+				Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
+				auto hr = resource->QueryInterface(__uuidof(ID3D11Texture2D), reinterpret_cast<void**>(texture.GetAddressOf()));
+				if (FAILED(hr) || !texture) {
+					return false;
+				}
+
+				D3D11_TEXTURE2D_DESC desc;
+				texture->GetDesc(std::addressof(desc));
+
+				a_width = desc.Width;
+				a_height = desc.Height;
+
+				return true;
+			}
 
 			RenderWindow::RenderWindow() : Common::PatchBaseWindow()
 			{
@@ -74,9 +97,10 @@ namespace CKPE
 				StepInRender = _READ_OPTION_FLOAT("Graphics", "fStepInRender", 15.f);
 				StepInRender = std::min(std::max(StepInRender, 15.f), 100.f);
 
-				*(std::uintptr_t*)&_oldWndProc = Relocation(ID(287695)).WriteJump(&HKWndProc);
+				*(std::uintptr_t*)&_oldWndProc = Relocation(EditorAPI::IDs::BGSRenderWindow::WndProc).WriteJump(&HKWndProc);
 				Relocation(ID(28820), Offset{ 0xD1, 0xE8 }).WriteJump(&RenderWindow::setFlagLoadCell);
-				EditorAPI::BGSRenderWindow::Singleton = Offset{ 0x3ADDA38, 0x398ED28, 0x39D7F38, 0x3ABAE78 }.Address();
+				EditorAPI::BGSRenderWindow::Singleton = EditorAPI::IDs::BGSRenderWindow::Singleton.Address();
+
 				auto rel = Relocation(ID{ 488551, 1016974 }, Offset{ 0xF1, 0x1B2 }).Address();
 				SafeWrite::WriteNop(rel, 0xB);
 				Detours::DetourCall(rel, (std::uintptr_t)&DrawFrameEx);
@@ -228,28 +252,25 @@ namespace CKPE
 
 				if (pointer_d3d11DeviceContext && gGlobAddrDeviceContext)
 				{
+					Microsoft::WRL::ComPtr<ID3D11RenderTargetView> pRenderTargetView;
+					Microsoft::WRL::ComPtr<ID3D11DepthStencilView> pDepthStencilView;
+					pointer_d3d11DeviceContext->OMGetRenderTargets(1, pRenderTargetView.GetAddressOf(), pDepthStencilView.GetAddressOf());
+
+					UINT width, height;
+					GetRenderTargetSize(pRenderTargetView.Get(), width, height);
+
+					Root->_ImagespaceAA->Draw(This, width, height);
+
 					auto RenderTarget = (ID3D11RenderTargetView**)(gGlobAddrDeviceContext + 0x88);
 					auto RenderTarget2 = (ID3D11RenderTargetView**)(gGlobAddrDeviceContext + 0xA48);	// Used by gizmo enabled
 					if (RenderTarget && RenderTarget2)
 					{
-						Microsoft::WRL::ComPtr<ID3D11RenderTargetView> pRenderTargetView;
-						Microsoft::WRL::ComPtr<ID3D11DepthStencilView> pDepthStencilView;
-						pointer_d3d11DeviceContext->OMGetRenderTargets(1, pRenderTargetView.GetAddressOf(),
-							pDepthStencilView.GetAddressOf());
-
-						if (pRenderTargetView.Get() == *RenderTarget2)
-						{
-							pointer_d3d11DeviceContext->OMSetRenderTargets(1, RenderTarget, nullptr);
-							Root->_ImagespaceAA->Draw(This);
-							ImGuiDrawInfo();
-							pointer_d3d11DeviceContext->OMSetRenderTargets(1, RenderTarget2, pDepthStencilView.Get());
-						}
-						else if (pRenderTargetView.Get() == *RenderTarget)
-						{
-							Root->_ImagespaceAA->Draw(This);
-							ImGuiDrawInfo();
-						}
+						pointer_d3d11DeviceContext->OMSetRenderTargets(1, RenderTarget, nullptr);
+						ImGuiDrawInfo();
+						pointer_d3d11DeviceContext->OMSetRenderTargets(1, RenderTarget2, pDepthStencilView.Get());
 					}
+					else
+						ImGuiDrawInfo();
 				}
 
 				// PRESENT

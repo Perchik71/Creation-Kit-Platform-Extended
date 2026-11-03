@@ -40,6 +40,12 @@ namespace CKPE
 					inline constexpr Common::ID GetFile{ 569205 };
 					inline constexpr Common::ID GetFormByNumericID{ 76804 };
 				}
+
+				namespace BGSRenderWindow
+				{
+					inline constexpr Common::ID Singleton{ 78593 };
+					inline constexpr Common::ID WndProc{ 287695 };
+				}
 			}
 		}
 	}

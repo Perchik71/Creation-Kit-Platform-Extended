@@ -169,7 +169,7 @@ namespace CKPE
 				[[nodiscard]] std::size_t GetCapacity() const noexcept(true);
 				BSString& AppendRaw(const char* str, std::size_t len) noexcept(true);
 			private:
-				char* m_data;		// 00
+				char* m_data;				// 00
 				std::uint16_t	m_dataLen;	// 08
 				std::uint16_t	m_bufLen;	// 0A
 				std::uint32_t	pad0C;		// 0C
