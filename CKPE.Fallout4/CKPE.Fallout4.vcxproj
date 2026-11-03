@@ -146,6 +146,7 @@
     <ClCompile Include="Src\EditorAPI\B\BSString.cpp" />
     <ClCompile Include="Src\EditorAPI\B\BSStringCache.cpp" />
     <ClCompile Include="Src\EditorAPI\N\NiColor.cpp" />
+    <ClCompile Include="Src\EditorAPI\N\NiControllerSequence.cpp" />
     <ClCompile Include="Src\EditorAPI\N\NiMemoryManager.cpp" />
     <ClCompile Include="Src\EditorAPI\N\NiRefObject.cpp" />
     <ClCompile Include="Src\EditorAPI\O\ObjectRefHandle.cpp" />
@@ -184,6 +185,7 @@
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixCrashNoRootMat.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixCrashSpellEaxDur.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixDeleteTintToRace.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixBehaviorGraphAnimation.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixLayerRefCount.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixInfiniteLoopPapyrusCompile.cpp" />
     <ClCompile Include="Src\Patches\CKPE.Fallout4.Patch.FixLandspaceVNML.cpp" />
@@ -296,6 +298,8 @@
     <ClInclude Include="Include\EditorAPI\P\PackageLocation.h" />
     <ClInclude Include="Include\EditorAPI\O\ObjectWindowInsertData.h" />
     <ClInclude Include="Include\EditorAPI\N\NiTimeController.h" />
+    <ClInclude Include="Include\EditorAPI\N\NiControllerManager.h" />
+    <ClInclude Include="Include\EditorAPI\N\NiControllerSequence.h" />
     <ClInclude Include="Include\EditorAPI\N\NiAlphaAccumulator.h" />
     <ClInclude Include="Include\EditorAPI\I\ImageSpaceManager.h" />
     <ClInclude Include="Include\EditorAPI\I\ImageSpaceEffects.h" />
@@ -529,6 +533,7 @@
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixCrashNoRootMat.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixCrashSpellEaxDur.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixDeleteTintToRace.h" />
+    <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixBehaviorGraphAnimation.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixLayerRefCount.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixInfiniteLoopPapyrusCompile.h" />
     <ClInclude Include="Include\Patches\CKPE.Fallout4.Patch.FixLandspaceVNML.h" />
