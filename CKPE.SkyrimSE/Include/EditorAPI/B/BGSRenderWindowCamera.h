@@ -6,6 +6,8 @@
 
 #include <CKPE.Common.h>
 #include <EditorAPI/N/NiNode.h>
+#include <EditorAPI/N/NiCamera.h>
+#include <EditorAPI/IDs.h>
 #include <EditorAPI/IDs_RTTI.h>
 #include <EditorAPI/IDs_VTABLE.h>
 
@@ -64,12 +66,25 @@ namespace CKPE
 				virtual ~BGSRenderWindowCamera() = default;
 
 				[[nodiscard]] inline NiNode* GetNode() const noexcept(true) { return _Node; }
+				[[nodiscard]] inline NiCamera* GetNiCamera() const noexcept(true) { return _Camera; }
+				[[nodiscard]] inline BGSRenderWindow* GetRenderWindow() const noexcept(true) { return _RenderWindow; }
 				[[nodiscard]] inline NiMatrix3 GetRotate() const noexcept(true) { return _Node->GetLocalTransform().m_Rotate; }
 				[[nodiscard]] inline NiPoint3 GetPosition() const noexcept(true) { return _Node->GetLocalTransform().m_Translate; }
 				[[nodiscard]] inline ViewModeT GetViewMode() const noexcept(true) { return _ViewMode; }
 				[[nodiscard]] inline const char* GetViewModeByStr() const noexcept(true) { return _ViewMode == Perspective ? "perspective" : "orthographic"; }
 				[[nodiscard]] inline CameraModeT GetCameraMode() const noexcept(true) { return _CameraMode; }
 				[[nodiscard]] inline const char* GetCameraModeByStr() const noexcept(true) { return CameraModeS[(int)_CameraMode]; }
+
+				// Stores the view mode only, the saved frustums and the NiCamera are not touched
+				inline void SetViewModeRaw(ViewModeT mode) noexcept(true) { _ViewMode = mode; }
+				// Game switch: stores the live frustum for the current mode and applies the one saved for the new mode
+				// (does nothing if the mode is already set)
+				inline BGSRenderWindowCamera* SetViewMode(ViewModeT mode) noexcept(true)
+				{
+					using func_t = decltype(&BGSRenderWindowCamera::SetViewMode);
+					Common::Relocation<func_t> func{ IDs::BGSRenderWindowCamera::SetViewMode };
+					return func(this, mode);
+				}
 
 				CKPE_READ_PROPERTY(GetNode) NiNode* Node;
 				CKPE_READ_PROPERTY(GetRotate) NiMatrix3 Rotate;

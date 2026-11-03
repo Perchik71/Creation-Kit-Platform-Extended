@@ -41,10 +41,18 @@ namespace CKPE
 					inline constexpr Common::ID GetFormByNumericID{ 76804 };
 				}
 
+				namespace BGSRenderWindowCamera
+				{
+					inline constexpr Common::ID Ctor{ 253786 };
+					inline constexpr Common::ID SetViewMode{ 343459 };
+				}
+
 				namespace BGSRenderWindow
 				{
 					inline constexpr Common::ID Singleton{ 78593 };
 					inline constexpr Common::ID WndProc{ 287695 };
+					inline constexpr Common::ID UpdateTitle{ 65157 };
+					inline constexpr Common::ID HKFunc_ToggleOrthographicPerspective{ 336765 };
 				}
 			}
 		}
