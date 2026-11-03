@@ -94,6 +94,14 @@ namespace CKPE
 				[[nodiscard]] inline BGSRenderWindowEditModuleManager<BGSRenderWindow>* GetEditModuleManager() const noexcept(true) { return _EditModuleManager; }
 				[[nodiscard]] inline BGSRenderWindowBorder* GetBorder() const noexcept(true) { return _Border; }
 				[[nodiscard]] inline BGSRenderWindowCamera* GetCamera() const noexcept(true) { return _Camera; }
+
+				// Sets the window text: "<cell> [<camera mode>, <view mode>] - M#: ..."
+				inline std::int32_t UpdateTitle() noexcept(true)
+				{
+					using func_t = decltype(&BGSRenderWindow::UpdateTitle);
+					Common::Relocation<func_t> func{ IDs::BGSRenderWindow::UpdateTitle };
+					return func(this);
+				}
 				[[nodiscard]] inline BGSRenderOrthoGrid* GetOrthoGrid() const noexcept(true) { return _OrthoGrid; }
 				[[nodiscard]] inline BGSPickHandler<Forms::TESObjectREFR, BGSRenderWindow>* GetPickHandler() const noexcept(true) { return _PickHandler; }
 				

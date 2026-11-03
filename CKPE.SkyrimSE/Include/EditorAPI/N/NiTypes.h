@@ -21,14 +21,7 @@ namespace CKPE
 		{
 			namespace NiAPI
 			{
-				class NiCamera
-				{
-				public:
-					constexpr static Common::ID RTTI = IDs::RTTI::NiCamera;
-					constexpr static Common::ID VTABLE = IDs::VTABLE::NiCamera[0];
-
-					virtual ~NiCamera();
-				};
+				class NiCamera;
 
 				class NiWindow
 				{
@@ -121,6 +114,14 @@ namespace CKPE
 					float	m_fFar;		// 14
 					bool	m_bOrtho;	// 18
 				};
+				static_assert(offsetof(NiFrustum, m_fLeft) == 0x00);
+				static_assert(offsetof(NiFrustum, m_fRight) == 0x04);
+				static_assert(offsetof(NiFrustum, m_fTop) == 0x08);
+				static_assert(offsetof(NiFrustum, m_fBottom) == 0x0C);
+				static_assert(offsetof(NiFrustum, m_fNear) == 0x10);
+				static_assert(offsetof(NiFrustum, m_fFar) == 0x14);
+				static_assert(offsetof(NiFrustum, m_bOrtho) == 0x18);
+				static_assert(sizeof(NiFrustum) == 0x1C);
 
 				// 10
 				class NiQuaternion 

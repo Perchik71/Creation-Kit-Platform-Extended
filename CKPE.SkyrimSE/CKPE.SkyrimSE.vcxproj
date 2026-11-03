@@ -364,6 +364,7 @@
     <ClInclude Include="Include\EditorAPI\N\NiTObjectArray.h" />
     <ClInclude Include="Include\EditorAPI\N\NiTransform.h" />
     <ClInclude Include="Include\EditorAPI\N\NiTSimpleArray.h" />
+    <ClInclude Include="Include\EditorAPI\N\NiCamera.h" />
     <ClInclude Include="Include\EditorAPI\N\NiTypes.h" />
     <ClInclude Include="Include\EditorAPI\Skyrim.h" />
     <ClInclude Include="Include\EditorAPI\T\TESBoundAnimObject.h" />

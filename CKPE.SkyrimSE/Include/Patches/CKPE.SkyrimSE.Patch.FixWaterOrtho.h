@@ -10,6 +10,17 @@ namespace CKPE
 {
 	namespace SkyrimSE
 	{
+		namespace EditorAPI
+		{
+			class BGSRenderWindow;
+			class BGSRenderWindowCamera;
+			namespace NiAPI
+			{
+				class NiCamera;
+				class NiFrustum;
+			}
+		}
+
 		namespace Patch
 		{
 			class FixWaterOrtho : public Common::Patch
@@ -28,7 +39,10 @@ namespace CKPE
 				virtual std::vector<std::string> GetDependencies() const noexcept(true);
 				bool SupportsAddressLibrary() const noexcept(true) override;
 
-				static void sub(std::uintptr_t a1, bool a2) noexcept(true);
+				static void InitOrthoFrustum(EditorAPI::NiAPI::NiFrustum* a1, bool a2) noexcept(true);
+				static void RestorePerspective(EditorAPI::NiAPI::NiCamera* a1, const EditorAPI::NiAPI::NiFrustum* a2) noexcept(true);
+				static EditorAPI::BGSRenderWindowCamera* SetViewModeAndUpdateTitle(EditorAPI::BGSRenderWindowCamera* a1, std::uint32_t a2) noexcept(true);
+				static void ResizeRenderWindow(EditorAPI::BGSRenderWindow* a1, std::int32_t a2, std::int32_t a3) noexcept(true);
 			};
 		}
 	}
