@@ -126,8 +126,8 @@ namespace CKPE
 
 				const bool patched =
 					Relocation(ID(273740), 0x5E5).RedirectBranch(pointer_ShowGroundPlane, &InitGroundPlane) &&
-					Relocation(ID(97959), 0x7DC).RedirectBranch(pointer_ShowGroundPlane, &ShowGroundPlane) &&
-					Relocation(ID(97959), 0x7EA).RedirectBranch(pointer_HideGroundPlane, &HideGroundPlane) &&
+					Relocation(ID(97959), Offset{ 0x7BD, 0x7DC }).RedirectBranch(pointer_ShowGroundPlane, &ShowGroundPlane) &&
+					Relocation(ID(97959), Offset{ 0x7CB, 0x7EA }).RedirectBranch(pointer_HideGroundPlane, &HideGroundPlane) &&
 					Relocation(ID(203738), 0x98C).RedirectBranch(pointer_ShowGroundPlane, &ShowGroundPlane) &&
 					Relocation(ID(203738), 0x99B).RedirectBranch(pointer_HideGroundPlane, &HideGroundPlane);
 				if (!patched)
