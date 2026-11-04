@@ -8,4 +8,5 @@
 - [SSE] Apply AA for preview window's.
 - [SSE] Saves OFST for plugins.
 - [SSE] Fixed the Render Window after leaving the orthographic view: the near clip stayed at 1000, resizing in ortho needed two presses of the toggle, and the title kept the old view mode.
+- [SSE] Fixed the crash and corrupted plugin when saving a door with entries in "Randomly Teleports to these Interiors / Worldspaces only" (#59).
 - [FO4] Fixed behavior graph for animation fire or another thing, now animation works with hk enabled.

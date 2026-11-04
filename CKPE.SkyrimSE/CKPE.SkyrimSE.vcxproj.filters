@@ -101,6 +101,9 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixDialogueBranch.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixDoorRandomTeleportSave.cpp">
+      <Filter>Patches</Filter>
+    </ClCompile>
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixFileInUse.cpp">
       <Filter>Patches</Filter>
     </ClCompile>
@@ -634,6 +637,9 @@
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixDialogueBranch.h">
+      <Filter>Patches</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixDoorRandomTeleportSave.h">
       <Filter>Patches</Filter>
     </ClInclude>
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixFileInUse.h">

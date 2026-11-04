@@ -206,6 +206,7 @@
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixCrashTabControl.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixDataDlgWithPluginTXT.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixDialogueBranch.cpp" />
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixDoorRandomTeleportSave.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixFileInUse.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixFormIDsInLoadFile.cpp" />
     <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.FixIconsScriptProp.cpp" />
@@ -591,6 +592,7 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixCrashTabControl.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixDataDlgWithPluginTXT.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixDialogueBranch.h" />
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixDoorRandomTeleportSave.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixFileInUse.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixFormIDsInLoadFile.h" />
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.FixIconsScriptProp.h" />
