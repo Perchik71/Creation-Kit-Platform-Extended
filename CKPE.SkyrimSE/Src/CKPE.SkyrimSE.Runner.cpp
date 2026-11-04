@@ -64,6 +64,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.FixCrashTabControl.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixDataDlgWithPluginTXT.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixDialogueBranch.h>
+#include <Patches/CKPE.SkyrimSE.Patch.FixDoorRandomTeleportSave.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixFileInUse.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixFormIDsInLoadFile.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixIconsScriptProp.h>
@@ -198,6 +199,7 @@ namespace CKPE
 			mgr->Register(new Patch::FixCrashTabControl);
 			mgr->Register(new Patch::FixDataDlgWithPluginTXT);
 			mgr->Register(new Patch::FixDialogueBranch);
+			mgr->Register(new Patch::FixDoorRandomTeleportSave);
 			mgr->Register(new Patch::FixFileInUse);
 			mgr->Register(new Patch::FixFormIDsInLoadFile);
 			mgr->Register(new Patch::FixIconsScriptProp);

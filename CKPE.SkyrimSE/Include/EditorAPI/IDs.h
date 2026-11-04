@@ -41,6 +41,11 @@ namespace CKPE
 					inline constexpr Common::ID GetFormByNumericID{ 76804 };
 				}
 
+				namespace TESObjectDOOR
+				{
+					inline constexpr Common::ID Save{ 341948 };
+				}
+
 				namespace BGSRenderWindowCamera
 				{
 					inline constexpr Common::ID Ctor{ 253786 };
