@@ -26,7 +26,7 @@ namespace CKPE
 			static std::function<TUIHotkeysSub2> UIHotkeysSub2;
 			static std::function<TUIHotkeysSub3> UIHotkeysSub3;
 			
-			uint64_t* PreferencesWindowAddr = 0;
+			HWND* PreferencesWindowAddr = 0;
 			
 			byte* ToggleDebugShaderSetting = 0;
 			uint32_t* DebugShaderTypeSetting = 0;
@@ -150,7 +150,7 @@ namespace CKPE
 				UIHotkeysSub2 = Relocation<TUIHotkeysSub2>(ID(604959)).Get();
 				UIHotkeysSub3 = Relocation<TUIHotkeysSub3>(ID{ 619686, 974159 }).Get();
 				
-				PreferencesWindowAddr = (uintptr_t*)ID(470553).Address();
+				PreferencesWindowAddr = (HWND*)ID(470553).Address();
 				
 				ToggleDebugShaderSetting = (byte*)ID(486220).Address();
 				DebugShaderTypeSetting   = (uint32_t*)ID(340720).Address();
@@ -204,7 +204,7 @@ namespace CKPE
 			
 			void UIHotkeys::ToggleDebugShader()
 			{
-				HWND h_PreferencesWindow = (HWND)*PreferencesWindowAddr;
+				HWND h_PreferencesWindow = *PreferencesWindowAddr;
 				if (*ToggleDebugShaderSetting == 0)
 				{
 					*ToggleDebugShaderSetting = 1;
