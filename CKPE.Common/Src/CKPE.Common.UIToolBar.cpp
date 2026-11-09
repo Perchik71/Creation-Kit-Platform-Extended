@@ -102,19 +102,45 @@ namespace CKPE
 					{
 						CRECT rc_temp = *pRect;
 
-						ImageList_Draw(hImageList, nIndex, (HDC)canvas.Handle, rc_temp.Left + ((rc_temp.Width - 16) >> 1),
-							rc_temp.Top + ((rc_temp.Height - 16) >> 1), ILD_NORMAL | ILD_TRANSPARENT);
+						std::int32_t w, h;
+						ImageList_GetIconSize(hImageList, std::addressof(w), std::addressof(h));
+						ImageList_Draw(hImageList, nIndex, (HDC)canvas.Handle, rc_temp.Left + ((rc_temp.Width - w) >> 1),
+							rc_temp.Top + ((rc_temp.Height - h) >> 1), ILD_NORMAL | ILD_TRANSPARENT);
 					}
 				}
 
 				CKPE_COMMON_API void Initialize(HWND hWindow) noexcept(true)
 				{
 					SendMessageA(hWindow, CCM_SETVERSION, (WPARAM)6, 0);
-					SendMessageA(hWindow, TB_SETSTYLE, 0, TBSTYLE_FLAT | CCS_TOP | TBSTYLE_TOOLTIPS |
+
+					auto style = SendMessageA(hWindow, TB_GETSTYLE, 0, 0);
+					std::uint32_t place = CCS_TOP;
+					if ((style & CCS_VERT) == CCS_VERT)
+					{
+						if ((style & CCS_BOTTOM) == CCS_TOP)
+							place = CCS_LEFT;
+						else
+							place = CCS_RIGHT;
+					}
+					else
+					{
+						if ((style & CCS_BOTTOM) == CCS_BOTTOM)
+							place = CCS_BOTTOM;
+					}
+
+					bool noresize = (style & CCS_NORESIZE) == CCS_NORESIZE;
+					if (noresize)
+						place |= CCS_NORESIZE;
+					if ((style & TBSTYLE_WRAPABLE) == TBSTYLE_WRAPABLE)
+						place |= TBSTYLE_WRAPABLE;
+
+					SendMessageA(hWindow, TB_SETSTYLE, 0, TBSTYLE_FLAT | place | TBSTYLE_TOOLTIPS |
 						//wrapable style doesn't work with separators
 						//use nodivider to remove the two stupid pixel lines on top of the toolbar
 						CCS_ADJUSTABLE | CCS_NODIVIDER | TBSTYLE_ALTDRAG); // | TBSTYLE_WRAPABLE);// );
-					SendMessageA(hWindow, TB_SETBUTTONSIZE, 0, MAKELPARAM(21, 25));
+					
+					if (!noresize)
+						SendMessageA(hWindow, TB_SETBUTTONSIZE, 0, MAKELPARAM(21, 25));
 
 					TBMETRICS metrics = { 0 };
 					metrics.cbSize = sizeof(TBMETRICS);
@@ -123,8 +149,6 @@ namespace CKPE
 					// Dialogs are designed for 0 spacing
 					metrics.cxButtonSpacing = 0;
 					SendMessageA(hWindow, TB_SETMETRICS, 0, (LPARAM)&metrics);
-
-					SendMessageA(hWindow, TB_AUTOSIZE, 0, 0);
 				}
 
 				CKPE_COMMON_API LRESULT OnCustomDraw(HWND hWindow, LPNMTBCUSTOMDRAW lpToolBar) noexcept(true)

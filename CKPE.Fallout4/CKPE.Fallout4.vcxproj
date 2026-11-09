@@ -754,32 +754,13 @@
     <ClInclude Include="Include\EditorAPI\T\TESWeather.h" />
     <ClInclude Include="Include\EditorAPI\T\TESWordOfPower.h" />
     <ClInclude Include="Include\EditorAPI\T\TESWorldSpace.h" />
-    <ClInclude Include="resource_version.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
     <ResourceCompile Include="resource_version.rc" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\Shaders\FXAA_PS.hlsl">
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="..\Shaders\FXAA_VS.hlsl">
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release-NoAVX2|x64'">Vertex</ShaderType>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="build_version.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Resources\FXAA_PS.cso" />
-    <None Include="..\Resources\FXAA_VS.cso" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

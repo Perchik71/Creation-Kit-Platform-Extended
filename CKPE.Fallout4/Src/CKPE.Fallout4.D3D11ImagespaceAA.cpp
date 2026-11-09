@@ -2,7 +2,7 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
-#include "resource.h"
+#include "..\CKPE.Common\resource.h"
 #include <CKPE.Common.Interface.h>
 #include <CKPE.Fallout4.D3D11ImagespaceAA.h>
 
@@ -30,8 +30,7 @@ namespace CKPE
 				return true;
 
 			CD3D11_SAMPLER_DESC DescSmp(D3D11_DEFAULT);
-
-			auto inst = GetModuleHandleA("CKPE.Fallout4.dll");
+			auto inst = (HMODULE)Common::Interface::GetSingleton()->GetInstanceDLL();
 
 			_Init =
 				_PShaderEffectFXAA->LoadFromResource((HMODULE)inst, IDS_FXAA_PS) &&

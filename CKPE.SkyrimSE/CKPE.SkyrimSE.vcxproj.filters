@@ -454,9 +454,6 @@
     <Filter Include="EditorAPI">
       <UniqueIdentifier>{756a1126-b758-4597-9975-5e703fe6b336}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shaders">
-      <UniqueIdentifier>{960c5197-1bf1-4fcc-bcfc-69dc3522533f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resources">
       <UniqueIdentifier>{f4bf1e3e-2191-4200-bfed-3af28f577ac8}</UniqueIdentifier>
     </Filter>
@@ -1695,9 +1692,6 @@
     <ClInclude Include="Include\EditorAPI\B\BSTEvents.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
-    <ClInclude Include="resource_version.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">
@@ -1708,24 +1702,13 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\Shaders\FXAA_PS.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Shaders\FXAA_VS.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="build_version.txt">
       <Filter>Version</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resources\FXAA_PS.cso">
+    <Image Include="..\Resources\toolbar_sh.png">
       <Filter>Resources</Filter>
-    </None>
-    <None Include="..\Resources\FXAA_VS.cso">
-      <Filter>Resources</Filter>
-    </None>
+    </Image>
   </ItemGroup>
 </Project>

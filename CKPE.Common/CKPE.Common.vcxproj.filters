@@ -190,6 +190,9 @@
     <Filter Include="Version">
       <UniqueIdentifier>{fa3f8619-5e8e-4310-9b15-934db6924ddd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{030a00c8-2104-465f-b0af-b97e53837317}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\CKPE.Common.Interface.h">
@@ -455,5 +458,13 @@
     <Text Include="build_version.txt">
       <Filter>Version</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Shaders\FXAA_PS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Shaders\FXAA_VS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

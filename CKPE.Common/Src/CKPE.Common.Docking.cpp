@@ -288,7 +288,16 @@ namespace CKPE
 				if (!_stricmp(className, TOOLBARCLASSNAMEA) || !_stricmp(className, REBARCLASSNAMEA))
 				{
 					GetWindowRect(hwnd, std::addressof(childRect));
-					usable->top = std::max(usable->top, childRect.bottom);
+					auto style = GetWindowLongA(hwnd, GWL_STYLE);
+					if ((style & CCS_VERT) == CCS_VERT)
+					{
+						if ((style & CCS_BOTTOM) == CCS_TOP)
+							usable->left = std::max(usable->left, childRect.right);
+						else
+							usable->right -= childRect.right - childRect.left;
+					}
+					else
+						usable->top = std::max(usable->top, childRect.bottom);
 				}
 				else if (!_stricmp(className, STATUSCLASSNAMEA))
 				{

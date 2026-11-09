@@ -17,7 +17,6 @@
 #define IDB_BITMAP9                     114
 #define IDS_FXAA_PS                     115
 #define IDS_FXAA_VS                     116
-#define IDS_TAA_PS                      117
 #define IDST_ANTIALIASING_TIPS          118
 #define IDI_CKPEICON                    119
 #define IDD_CRASHDIALOG                 120

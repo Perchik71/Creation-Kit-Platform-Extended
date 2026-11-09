@@ -334,9 +334,6 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{4682d2f7-f109-41f2-80a2-ad05770b361b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shaders">
-      <UniqueIdentifier>{a278e88f-1f5d-4467-9cdc-0ced26acbd65}</UniqueIdentifier>
-    </Filter>
     <Filter Include="_depend">
       <UniqueIdentifier>{1217bd2b-09ee-4fd9-add7-5811c91c0cf4}</UniqueIdentifier>
     </Filter>
@@ -1977,9 +1974,6 @@
     <ClInclude Include="Include\EditorAPI\B\BSTSingleton.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
-    <ClInclude Include="resource_version.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">
@@ -1990,24 +1984,8 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\Shaders\FXAA_VS.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Shaders\FXAA_PS.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="build_version.txt">
       <Filter>Version</Filter>
     </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Resources\FXAA_PS.cso">
-      <Filter>Resources</Filter>
-    </None>
-    <None Include="..\Resources\FXAA_VS.cso">
-      <Filter>Resources</Filter>
-    </None>
   </ItemGroup>
 </Project>

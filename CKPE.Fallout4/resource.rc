@@ -2,7 +2,7 @@
 //
 #pragma code_page(65001)
 
-#include "resource_version.h"
+#include "resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
@@ -44,16 +44,6 @@ BEGIN
 END
 
 #endif    // APSTUDIO_INVOKED
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// SHADER
-//
-
-IDS_FXAA_PS             SHADER                  "..\\Resources\\FXAA_PS.cso"
-
-IDS_FXAA_VS             SHADER                  "..\\Resources\\FXAA_VS.cso"
 
 #endif    // Русский (Россия) resources
 /////////////////////////////////////////////////////////////////////////////
