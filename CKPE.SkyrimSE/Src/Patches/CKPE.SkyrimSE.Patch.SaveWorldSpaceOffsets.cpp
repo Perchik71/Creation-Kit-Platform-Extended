@@ -93,7 +93,7 @@ namespace CKPE
 
 			std::vector<std::string> SaveWorldSpaceOffsets::GetDependencies() const noexcept(true)
 			{
-				return { "Console", "TESDataHandler" };
+				return { "Console" };
 			}
 
 			bool SaveWorldSpaceOffsets::DoQuery() const noexcept(true)
