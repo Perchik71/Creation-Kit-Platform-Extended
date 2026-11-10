@@ -262,14 +262,14 @@ namespace CKPE
 				// Принудительный вылет с сообщением для пользователя.
 				CKPE_ASSERT_MSG(LowMemory(), "Not enough memory to run the program");
 
-				Relocation(EditorAPI::IDs::MemoryManager::Allocate).WriteJump(BSMemoryManager::Allocate);
-				Relocation(EditorAPI::IDs::MemoryManager::Deallocate).WriteJump(BSMemoryManager::Deallocate);
-				Relocation(EditorAPI::IDs::MemoryManager::Reallocate).WriteJump(BSMemoryManager::Reallocate);
-				Relocation(EditorAPI::IDs::MemoryManager::Size).WriteJump(BSMemoryManager::Size);
-				Relocation(EditorAPI::IDs::ScrapHeap::Allocate).WriteJump(BSScrapHeap::Allocate);
-				Relocation(EditorAPI::IDs::ScrapHeap::Deallocate).WriteJump(BSScrapHeap::Deallocate);
-				Relocation(EditorAPI::IDs::bhkThreadMemorySource::Constructor).WriteJump(bhkThreadMemorySource::__ctor__);
-				Relocation(EditorAPI::IDs::Functions::NiBSScrapAdapter_AllocateFromBSScrap).WriteJump(NiBSScrapAdapter_AllocateFromBSScrap);
+				Relocation(EditorAPI::IDs::MemoryManager::Allocate).WriteJump(&BSMemoryManager::Allocate);
+				Relocation(EditorAPI::IDs::MemoryManager::Deallocate).WriteJump(&BSMemoryManager::Deallocate);
+				Relocation(EditorAPI::IDs::MemoryManager::Reallocate).WriteJump(&BSMemoryManager::Reallocate);
+				Relocation(EditorAPI::IDs::MemoryManager::Size).WriteJump(&BSMemoryManager::Size);
+				Relocation(EditorAPI::IDs::ScrapHeap::Allocate).WriteJump(&BSScrapHeap::Allocate);
+				Relocation(EditorAPI::IDs::ScrapHeap::Deallocate).WriteJump(&BSScrapHeap::Deallocate);
+				Relocation(EditorAPI::IDs::bhkThreadMemorySource::Constructor).WriteJump(&bhkThreadMemorySource::__ctor__);
+				Relocation(EditorAPI::IDs::Functions::NiBSScrapAdapter_AllocateFromBSScrap).WriteJump(&NiBSScrapAdapter_AllocateFromBSScrap);
 
 				Relocation(EditorAPI::IDs::MemoryManager::InitDefaultHeap).Write(RET);
 				Relocation(EditorAPI::IDs::Functions::sub_1FFBDA0).Write(RET);

@@ -288,6 +288,90 @@ namespace CKPE
 		ImageList_RemoveAll((HIMAGELIST)m_hHandle);
 	}
 
+	bool ImageList::InitFromFile(const std::wstring& fname) noexcept(true)
+	{
+		if (!PathUtils::FileExists(fname.c_str()))
+			return false;
+
+		Bitmap bm;
+		if (!bm.LoadFromFile(fname))
+			return false;
+
+		BITMAP bmInfo;
+		GetObjectA((HBITMAP)bm.Handle, sizeof(BITMAP), (LPSTR)std::addressof(bmInfo));
+		if ((bmInfo.bmBitsPixel != 24) && (bmInfo.bmBitsPixel != 32))
+			return false;
+
+		auto non_transparent = bmInfo.bmBitsPixel == 24;
+		ReCreateImgList(bmInfo.bmHeight, bmInfo.bmHeight, false, non_transparent ? ilct24Bit : ilct32Bit);
+		return (non_transparent ? Add((THandle)bm.Handle) : Add((THandle)bm.Handle, (TColor)0)) != -1;
+	}
+
+	bool ImageList::InitFromFile(const std::wstring& fname, TColor cmask) noexcept(true)
+	{
+		if (!PathUtils::FileExists(fname.c_str()))
+			return false;
+
+		Bitmap bm;
+		if (!bm.LoadFromFile(fname))
+			return false;
+
+		BITMAP bmInfo;
+		GetObjectA((HBITMAP)bm.Handle, sizeof(BITMAP), (LPSTR)std::addressof(bmInfo));
+		if ((bmInfo.bmBitsPixel != 8) && (bmInfo.bmBitsPixel != 24))
+			return false;
+
+		ReCreateImgList(bmInfo.bmHeight, bmInfo.bmHeight, true, bmInfo.bmBitsPixel == 24 ? ilct24Bit : ilct8Bit);
+		return Add(bm.Handle, cmask) != -1;
+	}
+
+	bool ImageList::InitFromResource(THandle hinst, std::uint32_t dwResId, const wchar_t* name) noexcept(true)
+	{
+		Bitmap bm;
+		if (!name)
+		{
+			if (!bm.LoadFromResource(hinst, dwResId))
+				return false;
+		}
+		else
+		{
+			if (!bm.LoadFromResource(hinst, dwResId, name))
+				return false;
+		}
+
+		BITMAP bmInfo;
+		GetObjectA((HBITMAP)bm.Handle, sizeof(BITMAP), (LPSTR)std::addressof(bmInfo));
+		if ((bmInfo.bmBitsPixel != 24) && (bmInfo.bmBitsPixel != 32))
+			return false;
+
+		auto non_transparent = bmInfo.bmBitsPixel == 24;
+		ReCreateImgList(bmInfo.bmHeight, bmInfo.bmHeight, false, non_transparent ? ilct24Bit : ilct32Bit);
+		return (non_transparent ? Add((THandle)bm.Handle) : Add((THandle)bm.Handle, (TColor)0)) != -1;
+	}
+
+	bool ImageList::InitFromResource(THandle hinst, std::uint32_t dwResId, const wchar_t* name, TColor cmask) noexcept(true)
+	{
+		Bitmap bm;
+		if (!name)
+		{
+			if (!bm.LoadFromResource(hinst, dwResId))
+				return false;
+		}
+		else
+		{
+			if (!bm.LoadFromResource(hinst, dwResId, name))
+				return false;
+		}
+
+		BITMAP bmInfo;
+		GetObjectA((HBITMAP)bm.Handle, sizeof(BITMAP), (LPSTR)std::addressof(bmInfo));
+		if ((bmInfo.bmBitsPixel != 8) && (bmInfo.bmBitsPixel != 24))
+			return false;
+
+		ReCreateImgList(bmInfo.bmHeight, bmInfo.bmHeight, true, bmInfo.bmBitsPixel == 24 ? ilct24Bit : ilct8Bit);
+		return Add(bm.Handle, cmask) != -1;
+	}
+
 	ImageList::ImageList() noexcept(true) : m_hHandle(nullptr), m_nSizeX(0), m_nSizeY(0),
 		m_eColorType(ilct32Bit), m_bMasked(false)
 	{}

@@ -1,10 +1,7 @@
-// Copyright © 2023-2025 aka CKPE team. All rights reserved.
-// Contacts: <email:timencevaleksej@gmail.com>
-// License: https://www.gnu.org/licenses/lgpl-3.0.html
-
 #pragma once
 
-#include <EditorAPI/N/NiMemoryManager.h>
+#include <EditorAPI/N/NiTDefaultAllocator.h>
+#include <EditorAPI/N/NiTMapBase.h>
 
 namespace CKPE
 {
@@ -14,80 +11,43 @@ namespace CKPE
 		{
 			namespace NiAPI
 			{
-				template<typename KeyT, typename ValueT>
-				class NiTMap
+				template <class Key, class T>
+				class NiTMap : public NiTMapBase<NiTDefaultAllocator<NiTMapItem<Key, T>>, Key, T>
 				{
+				private:
+					using Base = NiTMapBase<NiTDefaultAllocator<NiTMapItem<Key, T>>, Key, T>;
+
 				public:
-					struct _Pair
+					using key_type = typename Base::key_type;
+					using mapped_type = typename Base::mapped_type;
+					using value_type = typename Base::value_type;
+					using size_type = typename Base::size_type;
+
+					NiTMap(std::uint32_t a_hashSize = 37) :
+						Base(a_hashSize)
+					{}
+
+					~NiTMap() override  // 00
+					{}
+				protected:
+					using Base::_allocator;
+
+					// override (NiTMapBase)
+					value_type* malloc_value() override  // 05
 					{
-						KeyT key;
-						ValueT value;
-					};
-
-					struct _Node : _Pair
-					{
-						_Node* next;
-
-						void Remove(_Node* pred) noexcept(true)
-						{
-							_Node* pNext = next;
-
-							// become the next entry and return my item
-							if (pNext)
-							{
-								((_Pair*)this)->key = pNext->key;
-								((_Pair*)this)->value = pNext->value;
-								next = pNext->next;
-								NiAPI::NiMemoryManager::Free(nullptr, pNext);
-							}
-							// tail?
-							else
-							{
-								((_Pair*)this)->key = nullptr;
-								((_Pair*)this)->value = nullptr;
-								next = nullptr;
-
-								// has precedessor, so tail != head
-								if (pred)
-								{
-									pred->next = nullptr;
-									NiAPI::NiMemoryManager::Free(nullptr, this);
-								}
-							}
-						}
-					};
-
-					inline _Node* Head() const noexcept(true) { return const_cast<_Node*>(&m_listHead); }
-					inline _Node* Tail() const noexcept(true)
-					{
-						_Node* node = const_cast<_Node*>(&m_listHead);
-
-						if (node)
-							while (node->next) node = node->next;
-
-						return node;
+						return static_cast<value_type*>(_allocator.Allocate());
 					}
 
-					class Iterator {
-						_Node* m_cur;
-					public:
-						Iterator() noexcept(true) : m_cur(nullptr) {}
-						Iterator(_Node* node) noexcept(true) : m_cur(node) { }
-						inline Iterator operator++() noexcept(true) { if (!End()) m_cur = m_cur->next; return *this; }
-						inline bool End() noexcept(true) { return m_cur == nullptr; }
-						inline const _Pair* operator->() noexcept(true) { return Get(); }
-						inline const _Pair* operator*() noexcept(true) { return Get(); }
-						inline const Iterator& operator=(const Iterator& rhs) noexcept(true) {
-							m_cur = rhs.m_cur;
-							return *this;
+					void free_value(value_type* a_value) override  // 06
+					{
+						if (a_value)
+						{
+							a_value->~value_type();
+							_allocator.Deallocate(a_value);
 						}
-						inline _Pair* Get() noexcept(true) { return (m_cur) ? (_Pair*)m_cur : nullptr; }
-					};
-
-					inline const Iterator Begin() const noexcept(true) { return Iterator(Head()); }
-				private:
-					_Node m_listHead;	// 00
+					}
 				};
+				static_assert(sizeof(NiTMap<void*, void*>) == 0x20);
 			}
 		}
 	}

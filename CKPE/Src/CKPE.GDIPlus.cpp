@@ -86,7 +86,9 @@ namespace CKPE
 			return 0;
 		else
 		{
-			pBmp->GetHBITMAP(0, &Result);
+			// Passing a transparent background (Color(0,0,0,0)) forces an alpha channel 
+			// to be preserved if the HBITMAP format supports it.
+			pBmp->GetHBITMAP(Gdiplus::Color(0, 0, 0, 0), &Result);
 			delete pBmp;
 		}
 
@@ -205,7 +207,9 @@ namespace CKPE
 			return 0;
 		else
 		{
-			pBmp->GetHBITMAP(0, &Result);
+			// Passing a transparent background (Color(0,0,0,0)) forces an alpha channel 
+			// to be preserved if the HBITMAP format supports it.
+			pBmp->GetHBITMAP(Gdiplus::Color(0, 0, 0, 0), &Result);
 			delete pBmp;
 		}
 

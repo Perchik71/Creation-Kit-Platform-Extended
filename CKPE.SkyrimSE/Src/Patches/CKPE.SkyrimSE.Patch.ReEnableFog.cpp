@@ -5,7 +5,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/N/NiMemoryManager.h>
+#include <EditorAPI/M/MemoryManager.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ReEnableFog.h>
 
 namespace CKPE
@@ -112,11 +112,11 @@ namespace CKPE
 				{
 					if (!qword_145A11B28)
 						// Fake BSFadeNode
-						qword_145A11B28 = (std::uintptr_t)EditorAPI::NiAPI::NiMemoryManager::Alloc(nullptr, 4096, 8);
+						qword_145A11B28 = (std::uintptr_t)EditorAPI::MemoryManager::GetSingleton().Allocate(4096, 8, true);
 
 					if (!qword_145A11B38)
 						// Fake SceneGraph
-						qword_145A11B38 = (std::uintptr_t)EditorAPI::NiAPI::NiMemoryManager::Alloc(nullptr, 4096, 8);
+						qword_145A11B38 = (std::uintptr_t)EditorAPI::MemoryManager::GetSingleton().Allocate(4096, 8, true);
 
 					((void(__fastcall*)())pointer_ReEnableFog_sub4)();
 				}

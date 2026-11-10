@@ -419,9 +419,6 @@
     <ClCompile Include="Src\EditorAPI\N\NiCollisionUtils.cpp">
       <Filter>EditorAPI\N</Filter>
     </ClCompile>
-    <ClCompile Include="Src\EditorAPI\N\NiMemoryManager.cpp">
-      <Filter>EditorAPI\N</Filter>
-    </ClCompile>
     <ClCompile Include="Src\EditorAPI\N\NiObjectNET.cpp">
       <Filter>EditorAPI\N</Filter>
     </ClCompile>
@@ -441,6 +438,9 @@
       <Filter>EditorAPI\T</Filter>
     </ClCompile>
     <ClCompile Include="Src\EditorAPI\N\NiColor.cpp">
+      <Filter>EditorAPI\N</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\N\NiTCollection.cpp">
       <Filter>EditorAPI\N</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1691,6 +1691,39 @@
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BSTEvents.h">
       <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSSettings.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSTBTree.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\I\IMemoryStore.h">
+      <Filter>EditorAPI\I</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\I\IMemoryStoreBase.h">
+      <Filter>EditorAPI\I</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\I\IMemoryHeap.h">
+      <Filter>EditorAPI\I</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\S\ScrapHeap.h">
+      <Filter>EditorAPI\S</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\M\MemoryManager.h">
+      <Filter>EditorAPI\M</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\N\NiTMapBase.h">
+      <Filter>EditorAPI\N</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\N\NiTDefaultAllocator.h">
+      <Filter>EditorAPI\N</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\N\NiTCollection.h">
+      <Filter>EditorAPI\N</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\N\NiAllocator.h">
+      <Filter>EditorAPI\N</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

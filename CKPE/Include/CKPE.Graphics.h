@@ -67,6 +67,7 @@ namespace CKPE
 		virtual bool LoadFromStream(Stream& stream) noexcept(true);
 		virtual bool SaveToStream(Stream& stream) const noexcept(true);
 		virtual void Assign(const Bitmap& bitmap) noexcept(true);
+	//	virtual 
 
 		Bitmap& operator=(const Bitmap& bitmap) noexcept(true);
 	public:
@@ -340,6 +341,8 @@ namespace CKPE
 		virtual void TextRect(CRECT& area, const std::wstring& text, std::uint32_t flags, std::uint32_t len = 0) const noexcept(true);
 		virtual void TextInput(std::int32_t x, std::int32_t y, const std::string& text) noexcept(true);
 		virtual void TextInput(std::int32_t x, std::int32_t y, const std::wstring& text) noexcept(true);
+		virtual void DrawImage(std::int32_t x, std::int32_t y, Bitmap& bm) noexcept(true);
+		virtual void DrawImage(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, Bitmap& bm) noexcept(true);
 	public:
 		virtual void ToFileBitmap(const std::wstring& fname) noexcept(true);
 	public:

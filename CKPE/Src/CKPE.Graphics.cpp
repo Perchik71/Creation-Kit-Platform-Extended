@@ -1139,6 +1139,68 @@ namespace CKPE
 			::TextOutW((HDC)m_hDC, x, y, text.c_str(), (int)text.length());
 	}
 
+	void Canvas::DrawImage(std::int32_t x, std::int32_t y, Bitmap& bm) noexcept(true)
+	{
+		if (bm.Empty())
+			return;
+
+		BITMAP bmInfo;
+		GetObjectA((HBITMAP)bm.Handle, sizeof(BITMAP), (LPSTR)std::addressof(bmInfo));
+
+		HDC hdcMem = CreateCompatibleDC((HDC)m_hDC);
+		if (!hdcMem) return;
+
+		HBITMAP hOldBitmap = (HBITMAP)SelectObject(hdcMem, (HBITMAP)bm.Handle);
+
+		if (bmInfo.bmBitsPixel == 32)
+		{
+			BLENDFUNCTION bf{};
+			bf.BlendOp				= AC_SRC_OVER;
+			bf.BlendFlags			= 0;
+			bf.SourceConstantAlpha	= 255;				// Use 255 to rely purely on per-pixel alpha
+			bf.AlphaFormat			= AC_SRC_ALPHA;     // Enable 32-bit per-pixel alpha
+
+			AlphaBlend((HDC)m_hDC, x, y, bmInfo.bmWidth, bmInfo.bmHeight, hdcMem,
+				0, 0, bmInfo.bmWidth, bmInfo.bmHeight, bf);			
+		}
+		else
+			BitBlt((HDC)m_hDC, x, y, bmInfo.bmWidth, bmInfo.bmHeight, hdcMem,
+				0, 0, SRCCOPY);
+
+		SelectObject(hdcMem, hOldBitmap);
+		DeleteDC(hdcMem);
+	}
+
+	void Canvas::DrawImage(std::int32_t x, std::int32_t y, std::int32_t w, std::int32_t h, Bitmap& bm) noexcept(true)
+	{
+		if (bm.Empty())
+			return;
+
+		BITMAP bmInfo;
+		GetObjectA((HBITMAP)bm.Handle, sizeof(BITMAP), (LPSTR)std::addressof(bmInfo));
+
+		HDC hdcMem = CreateCompatibleDC((HDC)m_hDC);
+		if (!hdcMem) return;
+
+		HBITMAP hOldBitmap = (HBITMAP)SelectObject(hdcMem, (HBITMAP)bm.Handle);
+
+		if (bmInfo.bmBitsPixel == 32)
+		{
+			BLENDFUNCTION bf{};
+			bf.BlendOp				= AC_SRC_OVER;
+			bf.BlendFlags			= 0;
+			bf.SourceConstantAlpha	= 255;				// Use 255 to rely purely on per-pixel alpha
+			bf.AlphaFormat			= AC_SRC_ALPHA;		// Enable 32-bit per-pixel alpha
+
+			AlphaBlend((HDC)m_hDC, x, y, w, h, hdcMem, 0, 0, bmInfo.bmWidth, bmInfo.bmHeight, bf);
+		}
+		else
+			StretchBlt((HDC)m_hDC, x, y, w, h, hdcMem, 0, 0, bmInfo.bmWidth, bmInfo.bmHeight, SRCCOPY);
+
+		SelectObject(hdcMem, hOldBitmap);
+		DeleteDC(hdcMem);
+	}
+
 	void Canvas::DoChange(ObjectGUI* sender, Canvas* canvas) noexcept(true)
 	{
 		if (sender->ObjectType == 3)

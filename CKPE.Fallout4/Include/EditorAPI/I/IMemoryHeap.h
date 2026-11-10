@@ -21,10 +21,10 @@ namespace CKPE
 				virtual ~IMemoryHeap() = default;
 
 				// override (IMemoryStoreBase)
-				virtual bool	ContainsBlockImpl(const void* a_block) const override { return BlockInHeap(a_block); }								// 0D
+				virtual bool			ContainsBlockImpl(const void* a_block) const override { return BlockInHeap(a_block); }								// 0D
 				// override (IMemoryStore)
-				virtual void* AllocateAlignImpl(std::size_t a_size, std::uint32_t a_alignment) override { return Allocate(a_size, a_alignment); }	// 0E
-				virtual void	DeallocateAlignImpl(void*& a_block) override { Deallocate(a_block, 0); }											// 0F
+				virtual void*			AllocateAlignImpl(std::size_t a_size, std::uint32_t a_alignment) override { return Allocate(a_size, a_alignment); }	// 0E
+				virtual void			DeallocateAlignImpl(void*& a_block) override { Deallocate(a_block, 0); }											// 0F
 
 				// add
 				virtual const char*		GetName() const = 0;													// 11

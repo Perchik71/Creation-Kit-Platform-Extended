@@ -69,6 +69,10 @@ namespace CKPE
 			const wchar_t* name, std::uint32_t dwResMaskId = 0) noexcept(true);
 		virtual bool Remove(std::int32_t idx) noexcept(true);
 		virtual void Clear() noexcept(true);
+		[[nodiscard]] virtual bool InitFromFile(const std::wstring& fname) noexcept(true);
+		[[nodiscard]] virtual bool InitFromFile(const std::wstring& fname, TColor cmask) noexcept(true);
+		[[nodiscard]] virtual bool InitFromResource(THandle hinst, std::uint32_t dwResId, const wchar_t* name) noexcept(true);
+		[[nodiscard]] virtual bool InitFromResource(THandle hinst, std::uint32_t dwResId, const wchar_t* name, TColor cmask) noexcept(true);
 	public:
 		ImageList() noexcept(true);
 		ImageList(std::int32_t nSizeX, std::int32_t nSizeY);

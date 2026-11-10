@@ -98,14 +98,36 @@ namespace CKPE
 					}
 
 					CKPE_COMMON_API void DrawButton_Icon(Canvas& canvas, LPCRECT pRect, HIMAGELIST hImageList, 
-						std::int32_t nIndex) noexcept(true)
+						std::int32_t nIndex, std::int32_t nState) noexcept(true)
 					{
 						CRECT rc_temp = *pRect;
 
+						std::uint32_t additional = 0;
+						if (nState == 1)
+							additional = ILD_FOCUS;
+						else if (nState == 2)
+							additional = ILD_SELECTED;
+
 						std::int32_t w, h;
 						ImageList_GetIconSize(hImageList, std::addressof(w), std::addressof(h));
-						ImageList_Draw(hImageList, nIndex, (HDC)canvas.Handle, rc_temp.Left + ((rc_temp.Width - w) >> 1),
-							rc_temp.Top + ((rc_temp.Height - h) >> 1), ILD_NORMAL | ILD_TRANSPARENT);
+						
+						IMAGEINFO info;
+						if (ImageList_GetImageInfo(hImageList, nIndex, &info))
+						{
+							HBITMAP hBmp = info.hbmImage;
+
+							BITMAP bmInfo;
+							GetObjectA(hBmp, sizeof(BITMAP), (LPSTR)std::addressof(bmInfo));
+
+							if (bmInfo.bmBitsPixel == 32)
+							{
+								Bitmap bm(hBmp);
+								canvas.DrawImage(rc_temp.Left + ((rc_temp.Width - w) >> 1), rc_temp.Top + ((rc_temp.Height - h) >> 1), bm);
+							}
+							else
+								ImageList_DrawEx(hImageList, nIndex, (HDC)canvas.Handle, rc_temp.Left + ((rc_temp.Width - w) >> 1),
+									rc_temp.Top + ((rc_temp.Height - h) >> 1), w, h, CLR_NONE, CLR_DEFAULT, ILD_TRANSPARENT | additional);
+						}
 					}
 				}
 

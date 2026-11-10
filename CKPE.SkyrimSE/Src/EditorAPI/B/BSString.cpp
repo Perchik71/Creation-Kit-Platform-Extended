@@ -7,7 +7,7 @@
 #include <CKPE.StringUtils.h>
 
 #include <EditorAPI/B/BSString.h>
-#include <EditorAPI/N/NiMemoryManager.h>
+#include <CKPE.Common.MemoryManager.h>
 
 #include <algorithm>
 #include <cstdarg>
@@ -22,6 +22,24 @@ namespace CKPE
 	{
 		namespace EditorAPI
 		{
+			namespace BSStringAllocator
+			{
+				inline static void* Alloc(std::size_t dwSize, std::size_t dwAlignment) noexcept(true)
+				{
+					return Common::MemoryManager::GetSingleton()->MemAlloc(dwSize, dwAlignment, dwAlignment != 0);
+				}
+
+				inline static void Free(void* lpPointer) noexcept(true)
+				{
+					Common::MemoryManager::GetSingleton()->MemFree(lpPointer);
+				}
+
+				inline static std::size_t Size(void* lpPointer) noexcept(true)
+				{
+					return Common::MemoryManager::GetSingleton()->MemSize(lpPointer);
+				}
+			}
+
 			std::size_t BSString::GetLength() const noexcept(true)
 			{
 				if (!m_data)
@@ -33,7 +51,7 @@ namespace CKPE
 			{
 				if (!m_data)
 					return 0;
-				return (m_bufLen == 0xFFFF) ? NiAPI::NiMemoryManager::Size(nullptr, m_data) : m_bufLen;
+				return (m_bufLen == 0xFFFF) ? BSStringAllocator::Size(m_data) : m_bufLen;
 			}
 
 			// Appends len characters of str. Unlike the 16-bit fields, the result may be longer than 64K (the
@@ -65,18 +83,18 @@ namespace CKPE
 					std::size_t newCap = std::max<std::size_t>(std::max<std::size_t>(total + 1, cap * 2), MIN_CAP);
 					newCap = std::min<std::size_t>(newCap, MAX_LEN + 1);
 
-					auto newData = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, newCap, 4);
+					auto newData = (char*)BSStringAllocator::Alloc(newCap, 4);
 					if (!newData)
 						return *this;
 
 					if (cur)
 						memcpy(newData, m_data, cur);
 					if (m_data)
-						NiAPI::NiMemoryManager::Free(nullptr, (void*)m_data);
+						BSStringAllocator::Free((void*)m_data);
 
 					m_data = newData;
 					m_bufLen = static_cast<std::uint16_t>(std::min<std::size_t>(
-						std::max<std::size_t>(NiAPI::NiMemoryManager::Size(nullptr, newData), newCap), 0xFFFF));
+						std::max<std::size_t>(BSStringAllocator::Size(newData), newCap), 0xFFFF));
 				}
 
 				if (own)
@@ -122,14 +140,15 @@ namespace CKPE
 			{
 				std::uint16_t newLen = size;
 				std::uint16_t newSize = newLen + 1;
-				auto newData = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, newSize);
+
+				auto newData = (char*)BSStringAllocator::Alloc(newSize, 4);
 				if (!newData)
 					return false;
 
 				if (m_bufLen)
 				{
 					strncpy(newData, m_data, newLen);
-					NiAPI::NiMemoryManager::Free(nullptr, (void*)m_data);
+					BSStringAllocator::Free((void*)m_data);
 					newData[newLen] = 0;
 				}
 				else
@@ -153,20 +172,19 @@ namespace CKPE
 					wNeedLen = size;
 
 				wNeedBuf = wNeedLen + 1;
-
 				if (wNeedBuf > m_bufLen) 
 				{
 					if (!wNeedLen)
 						goto __dealloc;
 					else {
-						char* newData = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, wNeedBuf, 4);
+						char* newData = (char*)BSStringAllocator::Alloc(wNeedBuf, 4);
 						memcpy(newData, string, wNeedLen);
 						newData[wNeedLen] = 0;
 
 						if (m_data)
-							NiAPI::NiMemoryManager::Free(nullptr, (void*)m_data);
+							BSStringAllocator::Free((void*)m_data);
 
-						std::uint16_t wRealBuf = (std::uint16_t)std::min<std::size_t>(NiAPI::NiMemoryManager::Size(nullptr, newData), 0xFFFF);
+						std::uint16_t wRealBuf = (std::uint16_t)std::min<std::size_t>(BSStringAllocator::Size(newData), 0xFFFF);
 
 						m_data = newData;
 						m_bufLen = wRealBuf > wNeedBuf ? wRealBuf : wNeedBuf;
@@ -180,7 +198,7 @@ namespace CKPE
 					__dealloc:
 						if (m_data)
 						{
-							NiAPI::NiMemoryManager::Free(nullptr, (void*)m_data);
+							BSStringAllocator::Free((void*)m_data);
 
 							m_data = nullptr;
 							m_bufLen = 0;
@@ -207,7 +225,7 @@ namespace CKPE
 			{
 				if (m_data) 
 				{
-					NiAPI::NiMemoryManager::Free(nullptr, (void*)m_data);
+					BSStringAllocator::Free((void*)m_data);
 					m_data = nullptr;
 					m_dataLen = 0;
 					m_bufLen = 0;
@@ -246,7 +264,7 @@ namespace CKPE
 				{
 					// The length and the buffer size are 16-bit, the same limit as the game's (the result is cut).
 					const std::uint16_t len = static_cast<std::uint16_t>(std::min<std::size_t>(size, 0xFFFE));
-					m_data = (char*)NiAPI::NiMemoryManager::Alloc(nullptr, static_cast<std::size_t>(len) + 1);
+					m_data = (char*)BSStringAllocator::Alloc(static_cast<std::size_t>(len) + 1, 4);
 					if (m_data)
 					{
 						_vsnprintf(m_data, static_cast<std::size_t>(len) + 1, format, ap);

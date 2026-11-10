@@ -8,7 +8,7 @@
 #include <memory.h>
 #include <iterator>
 #include <CKPE.Exception.h>
-#include <EditorAPI/N/NiMemoryManager.h>
+#include <EditorAPI/M/MemoryManager.h>
 
 namespace CKPE
 {
@@ -48,7 +48,7 @@ namespace CKPE
 			private:
 				void Deallocate() 
 				{
-					NiAPI::NiMemoryManager::Free(nullptr, (void*)m_Buffer);
+					MemoryManager::GetSingleton().Deallocate((void*)m_Buffer, true);
 					m_Buffer = nullptr;
 					m_AllocSize = 0;
 					m_Size = 0;
@@ -56,7 +56,7 @@ namespace CKPE
 
 				bool Allocate(size_type numEntries) 
 				{
-					m_Buffer = (_Ty*)NiAPI::NiMemoryManager::Alloc(nullptr, sizeof(_Ty) * numEntries);
+					m_Buffer = (_Ty*)MemoryManager::GetSingleton().Allocate(sizeof(_Ty) * numEntries, 8, true);
 					if (!m_Buffer) return false;
 
 					for (size_type i = 0; i < numEntries; i++)
@@ -73,15 +73,17 @@ namespace CKPE
 					if (!m_Buffer || m_Size == m_AllocSize)
 						return false;
 
+					auto& memMgr = MemoryManager::GetSingleton();
+
 					try
 					{
 						size_type newSize = m_Size;
 						_Ty* oldArray = m_Buffer;
-						_Ty* newArray = (_Ty*)NiAPI::NiMemoryManager::Alloc(nullptr, sizeof(_Ty) * newSize);	// Allocate new block
+						_Ty* newArray = (_Ty*)memMgr.Allocate(sizeof(_Ty) * newSize, 8, true);					// Allocate new block
 						memmove_s(newArray, sizeof(_Ty) * newSize, m_Buffer, sizeof(_Ty) * newSize);			// Move the old block
 						m_Buffer = newArray;
 						m_AllocSize = m_Size;
-						NiAPI::NiMemoryManager::Free(nullptr, (void*)oldArray);									// Free the old block
+						memMgr.Deallocate((void*)oldArray, true);												// Free the old block
 						return true;
 					}
 					catch (...) 
@@ -94,9 +96,11 @@ namespace CKPE
 
 				bool Grow(size_type numEntries)
 				{
+					auto& memMgr = MemoryManager::GetSingleton();
+
 					if (!m_Buffer)
 					{
-						m_Buffer = (_Ty*)NiAPI::NiMemoryManager::Alloc(nullptr, sizeof(_Ty) * numEntries);
+						m_Buffer = (_Ty*)memMgr.Allocate(sizeof(_Ty) * numEntries, 8, true);
 						m_Size = 0;
 						m_AllocSize = numEntries;
 						return true;
@@ -107,14 +111,14 @@ namespace CKPE
 						size_type oldSize = m_AllocSize;
 						size_type newSize = oldSize + numEntries;
 						_Ty* oldArray = m_Buffer;
-						_Ty* newArray = (_Ty*)NiAPI::NiMemoryManager::Alloc(nullptr, sizeof(_Ty) * newSize);	// Allocate new block
+						_Ty* newArray = (_Ty*)memMgr.Allocate(sizeof(_Ty) * newSize, 8, true);					// Allocate new block
 						if (oldArray)
 							memmove_s(newArray, sizeof(_Ty) * newSize, m_Buffer, sizeof(_Ty) * m_AllocSize);	// Move the old block
 						m_Buffer = newArray;
 						m_AllocSize = newSize;
 
 						if (oldArray)
-							NiAPI::NiMemoryManager::Free(nullptr, (void*)oldArray);	// Free the old block
+							memMgr.Deallocate((void*)oldArray, true);					// Free the old block
 
 						for (size_type i = oldSize; i < newSize; i++)					// Allocate the rest of the free blocks
 							new (&m_Buffer[i]) _Ty;
@@ -186,6 +190,8 @@ namespace CKPE
 						return true;
 					}
 
+					auto& memMgr = MemoryManager::GetSingleton();
+
 					if (num < m_AllocSize)
 					{
 						// Delete the truncated entries
@@ -193,14 +199,14 @@ namespace CKPE
 							(&m_Buffer[i])->~value_type();
 					}
 
-					_Ty* newBlock = (_Ty*)NiAPI::NiMemoryManager::Alloc(nullptr, sizeof(_Ty) * num);	// Create a new block
+					_Ty* newBlock = (_Ty*)memMgr.Allocate(sizeof(_Ty) * num, 8, true);					// Create a new block
 					memmove_s(newBlock, sizeof(_Ty) * num, m_Buffer, sizeof(_Ty) * num);				// Move the old memory to the new block
 					if (num > m_AllocSize)																// Fill in new remaining entries
 					{
 						for (size_type i = m_AllocSize; i < num; i++)
 							new (&m_Buffer[i]) _Ty;
 					}
-					NiAPI::NiMemoryManager::Free(nullptr, m_Buffer);									// Free the old block
+					memMgr.Deallocate(m_Buffer, true);													// Free the old block
 					m_Buffer = newBlock;																// Assign the new block
 					m_AllocSize = num;																	// Capacity is now the number of total entries in the block
 					m_Size = std::min(m_AllocSize, m_Size);												// Count stays the same, or is truncated to capacity

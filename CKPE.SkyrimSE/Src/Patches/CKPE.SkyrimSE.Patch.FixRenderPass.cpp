@@ -6,7 +6,7 @@
 #include <CKPE.Application.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
-#include <EditorAPI/N/NiMemoryManager.h>
+#include <EditorAPI/M/MemoryManager.h>
 #include <Patches/CKPE.SkyrimSE.Patch.FixRenderPass.h>
 
 namespace CKPE
@@ -140,7 +140,7 @@ namespace CKPE
 				std::uint32_t PassEnum, std::uint8_t NumLights, void** SceneLights)
 			{
 				std::uint32_t size = 0xC8;
-				void* data = EditorAPI::NiAPI::NiMemoryManager::Alloc(nullptr, size, 8);
+				void* data = EditorAPI::MemoryManager::GetSingleton().Allocate(size, 8, true);
 				memset(data, 0, size);
 
 				auto pass = reinterpret_cast<BSRenderPass*>(data);
@@ -155,7 +155,7 @@ namespace CKPE
 
 			void FixRenderPass::DeallocatePass(void* Pass)
 			{
-				EditorAPI::NiAPI::NiMemoryManager::Free(nullptr, Pass);
+				EditorAPI::MemoryManager::GetSingleton().Deallocate(Pass, true);
 			}
 		}
 	}

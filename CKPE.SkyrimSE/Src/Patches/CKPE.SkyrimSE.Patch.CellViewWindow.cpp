@@ -10,7 +10,7 @@
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
 #include <EditorAPI/B/BSString.h>
-#include <EditorAPI/N/NiMemoryManager.h>
+#include <EditorAPI/M/MemoryManager.h>
 #include <EditorAPI/B/BGSRenderWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.MainWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CellViewWindow.h>
@@ -254,9 +254,10 @@ namespace CKPE
 			{
 				if (Message == WM_INITDIALOG)
 				{
-					str_CellViewWindow_Filter = (char*)EditorAPI::NiAPI::NiMemoryManager::Alloc(nullptr, UI_CELL_VIEW_FILTER_CELL);
+					auto& memMgr = EditorAPI::MemoryManager::GetSingleton();
+					str_CellViewWindow_Filter = (char*)memMgr.Allocate(UI_CELL_VIEW_FILTER_CELL, 8, true);
 					CKPE_ASSERT_MSG(str_CellViewWindow_Filter, "Failed to allocate memory for the cells filter");
-					str_CellViewWindow_FilterUser = (char*)EditorAPI::NiAPI::NiMemoryManager::Alloc(nullptr, UI_CELL_VIEW_FILTER_CELL);
+					str_CellViewWindow_FilterUser = (char*)memMgr.Allocate(UI_CELL_VIEW_FILTER_CELL, 8, true);
 					CKPE_ASSERT_MSG(str_CellViewWindow_FilterUser, "Failed to allocate memory for the text of the custom filter");
 
 					auto __This = CellViewWindow::Singleton.GetSingleton();
