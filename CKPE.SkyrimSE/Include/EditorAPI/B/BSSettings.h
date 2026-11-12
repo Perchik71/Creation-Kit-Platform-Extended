@@ -239,7 +239,7 @@ namespace CKPE
 
 				[[nodiscard]] T* GetSetting(const char* name) const noexcept(true)
 				{
-					BSAutoFixedString key(name);
+					BSFixedString key(name);
 					const auto address = reinterpret_cast<std::uintptr_t>(key.c_str());
 					auto node = reinterpret_cast<const Node*>(settings.root);
 					while (node)

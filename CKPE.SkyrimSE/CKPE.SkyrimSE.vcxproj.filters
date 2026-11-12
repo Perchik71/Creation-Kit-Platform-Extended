@@ -404,6 +404,9 @@
     <ClCompile Include="Src\EditorAPI\B\BSReadWriteLock.cpp">
       <Filter>EditorAPI\B</Filter>
     </ClCompile>
+    <ClCompile Include="Src\EditorAPI\B\BSSettings.cpp">
+      <Filter>EditorAPI\B</Filter>
+    </ClCompile>
     <ClCompile Include="Src\EditorAPI\B\BSShaderProperty.cpp">
       <Filter>EditorAPI\B</Filter>
     </ClCompile>
@@ -419,6 +422,9 @@
     <ClCompile Include="Src\EditorAPI\N\NiCollisionUtils.cpp">
       <Filter>EditorAPI\N</Filter>
     </ClCompile>
+    <ClCompile Include="Src\EditorAPI\N\NiColor.cpp">
+      <Filter>EditorAPI\N</Filter>
+    </ClCompile>
     <ClCompile Include="Src\EditorAPI\N\NiObjectNET.cpp">
       <Filter>EditorAPI\N</Filter>
     </ClCompile>
@@ -426,6 +432,9 @@
       <Filter>EditorAPI\N</Filter>
     </ClCompile>
     <ClCompile Include="Src\EditorAPI\N\NiRTTI.cpp">
+      <Filter>EditorAPI\N</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\EditorAPI\N\NiTCollection.cpp">
       <Filter>EditorAPI\N</Filter>
     </ClCompile>
     <ClCompile Include="Src\EditorAPI\T\TESDialogSpell.cpp">
@@ -437,11 +446,8 @@
     <ClCompile Include="Src\EditorAPI\T\TESForm.cpp">
       <Filter>EditorAPI\T</Filter>
     </ClCompile>
-    <ClCompile Include="Src\EditorAPI\N\NiColor.cpp">
-      <Filter>EditorAPI\N</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\EditorAPI\N\NiTCollection.cpp">
-      <Filter>EditorAPI\N</Filter>
+    <ClCompile Include="Src\Patches\CKPE.SkyrimSE.Patch.ShowHideWindow.cpp">
+      <Filter>Patches</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -930,13 +936,100 @@
     <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.CrashInvalidStrings.h">
       <Filter>Patches</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\D\DecalData.h">
+      <Filter>EditorAPI\D</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\IDs.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\IDs_RTTI.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\IDs_VTABLE.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\Skyrim.h">
+      <Filter>EditorAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\A\ActorValueInfo.h">
+      <Filter>EditorAPI\A</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\A\ActorValueOwner.h">
+      <Filter>EditorAPI\A</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\A\AlchemyItem.h">
+      <Filter>EditorAPI\A</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BaseFormComponent.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSAcousticSpace.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSAction.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSAddonNode.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSAliasClasses.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSApparatus.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSArtObject.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSAssociationType.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSAttackDataForm.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSBipedObjectForm.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSBlockBashData.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSBodyPartData.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSCameraPath.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSCameraShot.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSClasses.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSCollisionLayer.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSColorForm.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSConstructibleObject.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSDebris.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSDestructibleObjectForm.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSDialogueBranch.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSDialogueView.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSDualCastData.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSEncounterZone.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSEquipSlot.h">
@@ -945,7 +1038,22 @@
     <ClInclude Include="Include\EditorAPI\B\BGSEquipType.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSExplosion.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSFootstepSet.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSHazard.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSHeadPart.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSIdleCollection.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSIdleMarker.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSImpactData.h">
@@ -957,22 +1065,109 @@
     <ClInclude Include="Include\EditorAPI\B\BGSKeyword.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSKeywordForm.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSLensFlare.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSLightingTemplate.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSListForm.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSLocalizedString.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSLocation.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSLocationRefType.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSMaterialObject.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSMaterialType.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSMenuDisplayObject.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSMenuIcon.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSMessage.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSMessageIcon.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSMiscClasses.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSMovementType.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSMusicTrackClasses.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSMusicTrackFormWrapper.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSMusicType.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSNote.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSOpenCloseForm.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSOutfit.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSOverridePackCollection.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSPackageDataClasses.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSPerk.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSPerkEntryClasses.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSPerkRankArray.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSPickHandler.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSPickupPutdownSounds.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSPreloadable.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSPrimitive.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSProcedureClasses.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSProjectile.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSRagdoll.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSReferenceEffect.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSRelationship.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSRenderWindow.h">
@@ -981,13 +1176,55 @@
     <ClInclude Include="Include\EditorAPI\B\BGSRenderWindowCamera.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSRenderWindowEditModules.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSReverbParameters.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSScene.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSSceneActionClasses.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSShaderParticleGeometryData.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSSkinForm.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSSounds.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSStaticCollection.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSStoryManagerBranchNode.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSStoryManagerEventNode.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSStoryManagerNodeBase.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSStoryManagerQuestNode.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSStoryManagerTreeForm.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSTalkingActivator.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSTextureSet.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BGSVoiceType.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BGSVolumetricLighting.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BSDynamicTriShape.h">
@@ -1023,6 +1260,21 @@
     <ClInclude Include="Include\EditorAPI\B\BSHandleRefObject.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSIMusicTrack.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSIMusicType.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSIntrusiveRefCounted.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSIReverbType.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSLightingShaderProperty.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BSLines.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
@@ -1038,16 +1290,16 @@
     <ClInclude Include="Include\EditorAPI\B\BSReadWriteLock.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSRenderPass.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BSResources.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSSettings.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BSShaderMaterial.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BSLightingShaderProperty.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BSRenderPass.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BSShaderProperty.h">
@@ -1071,6 +1323,12 @@
     <ClInclude Include="Include\EditorAPI\B\BSTArray.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSTBTree.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSTEvents.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\B\BSTextureSet.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
@@ -1080,10 +1338,49 @@
     <ClInclude Include="Include\EditorAPI\B\BSTriShape.h">
       <Filter>EditorAPI\B</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\D\DecalData.h">
-      <Filter>EditorAPI\D</Filter>
+    <ClInclude Include="Include\EditorAPI\B\BSTSingleton.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\B\BSTSmartPointer.h">
+      <Filter>EditorAPI\B</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\E\EffectSetting.h">
+      <Filter>EditorAPI\E</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\E\EnchantmentItem.h">
+      <Filter>EditorAPI\E</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\I\IMemoryHeap.h">
+      <Filter>EditorAPI\I</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\I\IMemoryStore.h">
+      <Filter>EditorAPI\I</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\I\IMemoryStoreBase.h">
+      <Filter>EditorAPI\I</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\I\IngredientItem.h">
+      <Filter>EditorAPI\I</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\M\MagicItem.h">
+      <Filter>EditorAPI\M</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\M\MemoryManager.h">
+      <Filter>EditorAPI\M</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\N\NavMesh.h">
+      <Filter>EditorAPI\N</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\N\NavMeshInfoMap.h">
+      <Filter>EditorAPI\N</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\N\NiAllocator.h">
+      <Filter>EditorAPI\N</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\N\NiAVObject.h">
+      <Filter>EditorAPI\N</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\N\NiCamera.h">
       <Filter>EditorAPI\N</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\N\NiCollisionObject.h">
@@ -1140,6 +1437,12 @@
     <ClInclude Include="Include\EditorAPI\N\NiTArray.h">
       <Filter>EditorAPI\N</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\N\NiTCollection.h">
+      <Filter>EditorAPI\N</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\N\NiTDefaultAllocator.h">
+      <Filter>EditorAPI\N</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\N\NiTexture.h">
       <Filter>EditorAPI\N</Filter>
     </ClInclude>
@@ -1147,6 +1450,9 @@
       <Filter>EditorAPI\N</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\N\NiTMap.h">
+      <Filter>EditorAPI\N</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\N\NiTMapBase.h">
       <Filter>EditorAPI\N</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\N\NiTObjectArray.h">
@@ -1158,11 +1464,38 @@
     <ClInclude Include="Include\EditorAPI\N\NiTSimpleArray.h">
       <Filter>EditorAPI\N</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\N\NiCamera.h">
-      <Filter>EditorAPI\N</Filter>
-    </ClInclude>
     <ClInclude Include="Include\EditorAPI\N\NiTypes.h">
       <Filter>EditorAPI\N</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\S\ScrapHeap.h">
+      <Filter>EditorAPI\S</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\S\Script.h">
+      <Filter>EditorAPI\S</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\S\ScrollItem.h">
+      <Filter>EditorAPI\S</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\S\SpellItem.h">
+      <Filter>EditorAPI\S</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESActorBase.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESActorBaseData.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESAIForm.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESAmmo.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESAttackDamageForm.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESBipedModelForm.h">
+      <Filter>EditorAPI\T</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESBoundAnimObject.h">
       <Filter>EditorAPI\T</Filter>
@@ -1173,286 +1506,7 @@
     <ClInclude Include="Include\EditorAPI\T\TESChildCell.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESDataHandler.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESDialogSpell.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESFile.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESVersionControl.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESForm.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESFullName.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESIcon.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESLandTexture.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESModel.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESModelTextureSwap.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESObject.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESObjectCELL.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESObjectLAND.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSKeywordForm.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSPickupPutdownSounds.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESEyes.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESGlobal.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESKey.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESObjectANIO.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESObjectMISC.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESSoulGem.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESWordOfPower.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSOpenCloseForm.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\TESDescription.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESClass.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESObjectBOOK.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESObjectDOOR.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSMenuDisplayObject.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\TESRaceForm.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\TESContainer.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\TESProduceForm.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\TESLeveledList.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESObjectACTI.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\BGSTalkingActivator.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESFlora.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESObjectCONT.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESObjectTREE.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESLevItem.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESLevSpell.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESLevCharacter.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESSound.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESShout.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESAmmo.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESFurniture.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSAttackDataForm.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSBipedObjectForm.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSBlockBashData.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSPreloadable.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSSkinForm.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\TESAIForm.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\TESAttackDamageForm.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\TESBipedModelForm.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\TESEnchantableForm.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\TESSpellList.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESObjectARMA.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESObjectARMO.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESObjectWEAP.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\ActorValueOwner.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSOverridePackCollection.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSPerkRankArray.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\TESActorBaseData.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESActorBase.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESNPC.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESRace.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSAcousticSpace.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSAction.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSAddonNode.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSArtObject.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSAssociationType.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSBodyPartData.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSCameraPath.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSCollisionLayer.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSColorForm.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSConstructibleObject.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSDebris.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSDialogueBranch.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSEncounterZone.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSHeadPart.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSListForm.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSLocation.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSMenuIcon.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSMessage.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSMovementType.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSNote.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSOutfit.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSPerk.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSProjectile.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSRagdoll.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSReferenceEffect.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSRelationship.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSScene.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSShaderParticleGeometryData.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSStaticCollection.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\EffectSetting.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESClimate.h">
@@ -1461,187 +1515,184 @@
     <ClInclude Include="Include\EditorAPI\T\TESCombatStyle.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESContainer.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESDataHandler.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESDescription.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESDialogSpell.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESEffectShader.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESGrass.h">
+    <ClInclude Include="Include\EditorAPI\T\TESEnchantableForm.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESIdleForm.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESLoadScreen.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESPackage.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESRegion.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESWeather.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSApparatus.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSCameraShot.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSExplosion.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSHazard.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSIdleCollection.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSIdleMarker.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSLightingTemplate.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSStoryManagerBranchNode.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSStoryManagerEventNode.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSStoryManagerNodeBase.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSStoryManagerQuestNode.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSStoryManagerTreeForm.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\TESImageSpaceModifiableForm.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\TESQualityForm.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\ActorValueInfo.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\AlchemyItem.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\EnchantmentItem.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\IngredientItem.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\MagicItem.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\ScrollItem.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\SpellItem.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESFormIDListView.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESImageSpace.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESQuest.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESWorldSpace.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSDialogueView.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSDualCastData.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\Script.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESImageSpaceModifier.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\TESObjectSTAT.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSLensFlare.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSMaterialObject.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSMusicTrackFormWrapper.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSMusicType.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSReverbParameters.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSVolumetricLighting.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BSIMusicTrack.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BSIMusicType.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BSIReverbType.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\TESReactionForm.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\NavMesh.h">
-      <Filter>EditorAPI\T</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\T\NavMeshInfoMap.h">
+    <ClInclude Include="Include\EditorAPI\T\TESEyes.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESFaction.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSProcedureClasses.h">
-      <Filter>EditorAPI\B</Filter>
+    <ClInclude Include="Include\EditorAPI\T\TESFile.h">
+      <Filter>EditorAPI\T</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSPackageDataClasses.h">
-      <Filter>EditorAPI\B</Filter>
+    <ClInclude Include="Include\EditorAPI\T\TESFlora.h">
+      <Filter>EditorAPI\T</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSPerkEntryClasses.h">
-      <Filter>EditorAPI\B</Filter>
+    <ClInclude Include="Include\EditorAPI\T\TESForm.h">
+      <Filter>EditorAPI\T</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSAliasClasses.h">
-      <Filter>EditorAPI\B</Filter>
+    <ClInclude Include="Include\EditorAPI\T\TESFormIDListView.h">
+      <Filter>EditorAPI\T</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSRenderWindowEditModules.h">
-      <Filter>EditorAPI\B</Filter>
+    <ClInclude Include="Include\EditorAPI\T\TESFullName.h">
+      <Filter>EditorAPI\T</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\TESPackageDataClasses.h">
-      <Filter>EditorAPI\B</Filter>
+    <ClInclude Include="Include\EditorAPI\T\TESFurniture.h">
+      <Filter>EditorAPI\T</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSSceneActionClasses.h">
-      <Filter>EditorAPI\B</Filter>
+    <ClInclude Include="Include\EditorAPI\T\TESGlobal.h">
+      <Filter>EditorAPI\T</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSMusicTrackClasses.h">
-      <Filter>EditorAPI\B</Filter>
+    <ClInclude Include="Include\EditorAPI\T\TESGrass.h">
+      <Filter>EditorAPI\T</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BGSMiscClasses.h">
-      <Filter>EditorAPI\B</Filter>
+    <ClInclude Include="Include\EditorAPI\T\TESIcon.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESIdleForm.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESImageSpace.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESImageSpaceModifiableForm.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESImageSpaceModifier.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESKey.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESLandTexture.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESLevCharacter.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESLeveledList.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESLevItem.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESLevSpell.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESLoadScreen.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESModel.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESModelTextureSwap.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESNPC.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESObject.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESObjectACTI.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESObjectANIO.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESObjectARMA.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESObjectARMO.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESObjectBOOK.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESObjectCELL.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESObjectCONT.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESObjectDOOR.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESObjectLAND.h">
+      <Filter>EditorAPI\T</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESObjectLIGH.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESObjectMISC.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESObjectREFR.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESObjectSTAT.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESObjectTREE.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESObjectWEAP.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESPackage.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESPackageDataClasses.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESProduceForm.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESQualityForm.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESQuest.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESRace.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESRaceForm.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESReactionForm.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESRegion.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESShout.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESSoulGem.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESSound.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESSpellList.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESTexture.h">
@@ -1656,74 +1707,32 @@
     <ClInclude Include="Include\EditorAPI\T\TESValueForm.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESVersionControl.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESWater.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESWaterForm.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EditorAPI\T\TESWeather.h">
+      <Filter>EditorAPI\T</Filter>
+    </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TESWeightForm.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\IDs.h">
-      <Filter>EditorAPI</Filter>
+    <ClInclude Include="Include\EditorAPI\T\TESWordOfPower.h">
+      <Filter>EditorAPI\T</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\IDs_RTTI.h">
-      <Filter>EditorAPI</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\IDs_VTABLE.h">
-      <Filter>EditorAPI</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\Skyrim.h">
-      <Filter>EditorAPI</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BSIntrusiveRefCounted.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BSTSmartPointer.h">
-      <Filter>EditorAPI\B</Filter>
+    <ClInclude Include="Include\EditorAPI\T\TESWorldSpace.h">
+      <Filter>EditorAPI\T</Filter>
     </ClInclude>
     <ClInclude Include="Include\EditorAPI\T\TextureAddressModes.h">
       <Filter>EditorAPI\T</Filter>
     </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BSTSingleton.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BSTEvents.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BSSettings.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\B\BSTBTree.h">
-      <Filter>EditorAPI\B</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\I\IMemoryStore.h">
-      <Filter>EditorAPI\I</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\I\IMemoryStoreBase.h">
-      <Filter>EditorAPI\I</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\I\IMemoryHeap.h">
-      <Filter>EditorAPI\I</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\S\ScrapHeap.h">
-      <Filter>EditorAPI\S</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\M\MemoryManager.h">
-      <Filter>EditorAPI\M</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\N\NiTMapBase.h">
-      <Filter>EditorAPI\N</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\N\NiTDefaultAllocator.h">
-      <Filter>EditorAPI\N</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\N\NiTCollection.h">
-      <Filter>EditorAPI\N</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\EditorAPI\N\NiAllocator.h">
-      <Filter>EditorAPI\N</Filter>
+    <ClInclude Include="Include\Patches\CKPE.SkyrimSE.Patch.ShowHideWindow.h">
+      <Filter>Patches</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

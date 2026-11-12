@@ -180,6 +180,13 @@ namespace CKPE
 				{
 					if (Message == WM_KEYDOWN)
 					{
+						//ImGui::I
+
+						//ImGui::SetAllocatorFunctions()
+					//	ImGui::CreateContext
+						//ImGui::SetCurrentContext()
+						
+
 						if (!Keyboard::IsAltPressed() && !Keyboard::IsControlPressed() && Keyboard::IsShiftPressed())
 						{
 							switch (wParam)
@@ -259,18 +266,20 @@ namespace CKPE
 					UINT width, height;
 					GetRenderTargetSize(pRenderTargetView.Get(), width, height);
 
-					Root->_ImagespaceAA->Draw(This, width, height);
-
 					auto RenderTarget = (ID3D11RenderTargetView**)(gGlobAddrDeviceContext + 0x88);
 					auto RenderTarget2 = (ID3D11RenderTargetView**)(gGlobAddrDeviceContext + 0xA48);	// Used by gizmo enabled
 					if (RenderTarget && RenderTarget2)
 					{
 						pointer_d3d11DeviceContext->OMSetRenderTargets(1, RenderTarget, nullptr);
+						Root->_ImagespaceAA->Draw(This, width, height);
 						ImGuiDrawInfo();
 						pointer_d3d11DeviceContext->OMSetRenderTargets(1, RenderTarget2, pDepthStencilView.Get());
 					}
 					else
+					{
+						Root->_ImagespaceAA->Draw(This, width, height);
 						ImGuiDrawInfo();
+					}
 				}
 
 				// PRESENT

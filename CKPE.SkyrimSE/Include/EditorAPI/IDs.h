@@ -57,6 +57,21 @@ namespace CKPE
 					inline constexpr Common::ID Singleton{ 78593 };
 					inline constexpr Common::ID WndProc{ 287695 };
 					inline constexpr Common::ID UpdateTitle{ 65157 };
+
+					inline constexpr Common::ID ToggleMarkersVisibilty{ 24417 };
+					inline constexpr Common::ID ToggleLightMarkersVisibilty{ 606351 };
+					inline constexpr Common::ID ToggleSoundMarkersVisibilty{ 284244 };
+					inline constexpr Common::ID CellUpdateTerrainVisibilty{ 295569 };
+					inline constexpr Common::ID CellUpdateWaterVisibilty{ 375705 };
+					inline constexpr Common::ID CellUpdateStaticsVisibilty{ 114896 };
+					inline constexpr Common::ID CellUpdateActorsVisibilty{ 193562 };
+					inline constexpr Common::ID CellUpdateDynamicVisibilty{ 295571 };
+					inline constexpr Common::ID CellUpdateDecalsVisibilty{ 203513 };
+					inline constexpr Common::ID CellUpdateMultiboundsVisibilty{ 15501 };
+					inline constexpr Common::ID CellUpdateOcclusionPlanesVisibilty{ 295573 };
+					inline constexpr Common::ID CellUpdatePortalsAndRoomsVisibilty{ 92762 };
+					inline constexpr Common::ID CellUpdateCollisionObjectsVisibilty{ 174195 };
+
 					inline constexpr Common::ID HKFunc_ToggleOrthographicPerspective{ 336765 };
 				}
 
@@ -130,6 +145,8 @@ namespace CKPE
 
 				namespace BGSRenderShowHideDlg
 				{
+					inline constexpr Common::ID Hwnd{ 287568 };
+					inline constexpr Common::ID WndProc{ 203241 };
 					inline constexpr Common::ID RefreshChecks{ 289812 };
 
 					namespace Settings

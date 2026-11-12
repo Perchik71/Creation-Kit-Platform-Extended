@@ -18,7 +18,6 @@
 #include <CKPE.Common.RTTI.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
 #include <EditorAPI/B/BSString.h>
-//#include <EditorAPI/B/>
 #include <EditorAPI/T/TESObjectREFR.h>
 #include <EditorAPI/B/BSPointerHandleManager.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ObjectWindow.h>
@@ -27,15 +26,13 @@
 #include <Patches/CKPE.SkyrimSE.Patch.ReEnableFog.h>
 #include <Patches/CKPE.SkyrimSE.Patch.CellViewWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.MainWindow.h>
+#include <Patches/CKPE.SkyrimSE.Patch.ShowHideWindow.h>
 #include "../CKPE.Common/resource.h"
-#include "resource.h"
 
 #include <chrono>
 #include <thread>
 #include <commdlg.h>
 #include <commctrl.h>
-
-#include <d3d12.h>
 
 namespace CKPE
 {
@@ -220,189 +217,6 @@ namespace CKPE
 				}
 			}
 
-			namespace Additional
-			{
-				class CKPE_ToolbarShowHide :
-					public ISingleton<CKPE_ToolbarShowHide>
-				{
-					HWND hWnd{ nullptr };
-					HWND hParentWnd{ nullptr };
-					ImageList imageList{};
-				public:
-					enum class Command
-					{
-						kMarkers				 = 0x9C5E, //= 0x10000,
-						kLightMarkers,
-						kSoundMarkers,
-						kMultiboundMarkers,
-						kOcclusionMarkers,
-						kPortalAndRoomMarkers,
-						kCollisionMarkers,
-						kTerrain,
-						kWater,
-						kStatics,
-						kActors,
-						kDynamics,
-						kDecals
-					};
-
-					CKPE_ToolbarShowHide(HWND a_parentWnd) :
-						ISingleton<CKPE_ToolbarShowHide>(this)
-					{
-						if (!a_parentWnd)
-							return;
-
-						auto inst = GetModuleHandleA("CKPE.SkyrimSE.dll");
-
-						(void)imageList.InitFromResource((THandle)inst, IDB_TOOLBAR_SHOWHIDE, L"PNG");
-
-						// Инициализация общих элементов управления
-						INITCOMMONCONTROLSEX icex{};
-						icex.dwSize = sizeof(icex);
-						icex.dwICC = ICC_BAR_CLASSES;
-						InitCommonControlsEx(&icex);
-
-						// Создание панели инструментов
-						hWnd = CreateWindowExA(
-							0,
-							TOOLBARCLASSNAMEA,
-							nullptr,	
-							// стили (TBSTYLE_WRAPABLE для правой стороны)
-							WS_CHILD | CCS_RIGHT | CCS_ADJUSTABLE | CCS_NORESIZE | TBSTYLE_TOOLTIPS | TBSTYLE_WRAPABLE,
-							0, 0, 0, 0,
-							a_parentWnd,
-							nullptr,
-							GetModuleHandleA(nullptr), nullptr);
-
-						if (!hWnd)
-							return;
-
-						hParentWnd = a_parentWnd;
-
-						// Добавление кнопок
-						static std::array<TBBUTTON, 15> tbButtons
-						{ {
-							{ -1, -1,																TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_SEP,	{}, 0L, 0 },
-							{ MAKELONG(0, 0),  std::to_underlying(Command::kMarkers),				TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-							{ MAKELONG(0, 1),  std::to_underlying(Command::kLightMarkers),			TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-							{ MAKELONG(0, 2),  std::to_underlying(Command::kSoundMarkers),			TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-							{ MAKELONG(0, 3),  std::to_underlying(Command::kMultiboundMarkers),		TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-							{ MAKELONG(0, 4),  std::to_underlying(Command::kOcclusionMarkers),		TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-							{ MAKELONG(0, 5),  std::to_underlying(Command::kPortalAndRoomMarkers),	TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-							{ MAKELONG(0, 6),  std::to_underlying(Command::kCollisionMarkers),		TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-							{ -1, -1,																TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_SEP,	{}, 0L, 0 },
-							{ MAKELONG(0, 7),  std::to_underlying(Command::kTerrain),				TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-							{ MAKELONG(0, 8),  std::to_underlying(Command::kWater),					TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-							{ MAKELONG(0, 9),  std::to_underlying(Command::kStatics),				TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-							{ MAKELONG(0, 10), std::to_underlying(Command::kActors),				TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-							{ MAKELONG(0, 11), std::to_underlying(Command::kDynamics),				TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-							{ MAKELONG(0, 12), std::to_underlying(Command::kDecals),				TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-						} };
-
-						// Создаём список изображений (иконок)
-						SendMessageA(hWnd, TB_SETIMAGELIST, (WPARAM)0, (LPARAM)imageList.Handle);
-						SendMessageA(hWnd, TB_LOADIMAGES, (WPARAM)TRUE, (LPARAM)imageList.Handle);
-
-						// Добавление кнопок
-						SendMessageA(hWnd, TB_BUTTONSTRUCTSIZE, static_cast<WPARAM>(sizeof(TBBUTTON)), 0);
-						SendMessageA(hWnd, TB_ADDBUTTONS, static_cast<WPARAM>(tbButtons.size()), reinterpret_cast<LPARAM>(tbButtons.data()));
-					}
-
-					~CKPE_ToolbarShowHide()
-					{
-						if (hWnd)
-						{
-							DestroyWindow(hWnd);
-							hWnd = nullptr;
-						}
-
-						hParentWnd = nullptr;
-					}
-
-					void NewSize(std::int32_t a_w, std::int32_t a_h) const noexcept
-					{
-						constexpr std::uint32_t maxWidth = 40;
-						auto margin_y = MainWindow::Singleton->Toolbar.Height;
-						auto margin_b = MainWindow::Singleton->Statusbar.Height;
-
-						// Вычисляем позицию справа:
-						int x = a_w - maxWidth;
-						if (x < 0) x = 0;
-
-						SetWindowPos(hWnd, nullptr, x, margin_y - 1, maxWidth, a_h - (margin_y + margin_b - 1), SWP_NOACTIVATE);
-					}
-
-					bool ProcessHandlerFromParentWindow(UINT a_message, WPARAM a_wParam, LPARAM a_lParam, LRESULT& a_result) noexcept
-					{
-						if (a_message == WM_SIZE)
-							NewSize(LOWORD(a_lParam), HIWORD(a_lParam));
-						else if (a_message == WM_NOTIFY)
-						{
-							LPNMHDR pnmh = (LPNMHDR)a_lParam;
-
-							if (pnmh->code == TTN_GETDISPINFO)
-							{
-								LPNMTTDISPINFOA pttdi = (LPNMTTDISPINFOA)a_lParam;
-
-								static std::array<std::string_view, 13> tbTooltips
-								{ {
-									"Markers"sv,
-									"Light Markers"sv,
-									"Sound Markers"sv,
-									"Multibounds"sv,
-									"Occlusion Planes"sv,
-									"Portals and Rooms"sv,
-									"Collision Objects"sv,
-									"Terrain"sv,
-									"Water"sv,
-									"Statics"sv,
-									"Actors"sv,
-									"Dynamics"sv,
-									"Decals"sv,
-								} };
-
-								constexpr auto minId = std::to_underlying(Command::kMarkers);
-								constexpr auto maxId = std::to_underlying(Command::kDecals);
-
-								if ((pnmh->idFrom >= minId) && (pnmh->idFrom <= maxId))
-								{
-									auto tbId = pnmh->idFrom - minId;
-									pttdi->lpszText = const_cast<char*>(tbTooltips[tbId].data());
-
-									a_result = 0;
-									return true;
-								}
-
-							}
-						}
-
-						return false;
-					}
-
-					void Update() const noexcept
-					{
-						RECT rc;
-						if (GetClientRect(hParentWnd, std::addressof(rc)))
-						{
-							NewSize(rc.right, rc.bottom);
-							ShowWindow(hWnd, TRUE);
-						}
-					}
-				};
-
-				std::unique_ptr<CKPE_ToolbarShowHide> g_toolbarShowHide{};
-			}
-
-			std::uintptr_t ShowHideRefreshChecksOrig;
-
-			static void ShowHideRefreshChecks() noexcept(true)
-			{
-				if (ShowHideRefreshChecksOrig)
-					fast_call<void>(ShowHideRefreshChecksOrig);
-
-				
-			}
-
 			void MainWindow::DoOpenFormByIdHandler(std::uint32_t id) noexcept(true)
 			{
 				MainWindow::Singleton->Perform(WM_COMMAND, Common::EditorUI::UI_EDITOR_OPENFORMBYID, id);
@@ -456,8 +270,7 @@ namespace CKPE
 				//pointer_MainWindow_sub2 = ID(96447).Address();
 				//pointer_MainWindow_sub3 = ID(656290).Address();
 
-				Common::LogWindow::GetSingleton()->OnOpenFormById = DoOpenFormByIdHandler;			
-				ShowHideRefreshChecksOrig = Relocation(EditorAPI::IDs::BGSRenderShowHideDlg::RefreshChecks).WriteJump(&HKWndProc);
+				Common::LogWindow::GetSingleton()->OnOpenFormById = DoOpenFormByIdHandler;		
 
 				return true;
 			}
@@ -516,6 +329,9 @@ namespace CKPE
 						auto MenuItem = ViewMenu.GetItemByPos(2);
 						MenuItem.Checked = TRUE;
 
+						
+
+
 						// Fix display text hotkey toggle sound marker
 						ViewMenu.GetItem(40677).SetText("Sound Marker\tCtrl-N");
 
@@ -524,25 +340,27 @@ namespace CKPE
 							// Getting additional child Windows		
 							MainWindow::Singleton->FindToolWindow();
 
-							if (Additional::g_toolbarShowHide)
-								Additional::g_toolbarShowHide->Update();
+							if (ShowHideWindow::IsInitToolbarCKPE())
+							{
+								ShowHideWindow::UpdateSizesToolbarCKPE();
+								ShowHideWindow::ShowHideRefreshChecks();
+							}
 
 							// Update sizes
 							Common::Interface::GetSingleton()->GetDockingManager()->UpdateSizeWindowIfAnchor(
 								reinterpret_cast<std::uintptr_t>(hWnd));
 							}, Hwnd).detach();
 
-						Additional::g_toolbarShowHide = std::make_unique<Additional::CKPE_ToolbarShowHide>(Hwnd);
+						ShowHideWindow::InitToolbarCKPE(Hwnd);
 						
 						return status;
 					}
 				}
 				break;
 				default:
-					if (Additional::g_toolbarShowHide)
 					{
-						LRESULT result;
-						if (Additional::g_toolbarShowHide->ProcessHandlerFromParentWindow(Message, wParam, lParam, result))
+						LRESULT result{};
+						if (ShowHideWindow::ProcessHandlerFromParentWindow(Message, wParam, lParam, result))
 							return result;
 					}
 

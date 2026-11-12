@@ -123,6 +123,7 @@
 #include <Patches/CKPE.SkyrimSE.Patch.RuntimeOptimization.h>
 #include <Patches/CKPE.SkyrimSE.Patch.ShowReloadShadersAlways.h>
 #include <Patches/CKPE.SkyrimSE.Patch.SkipTopicInfoValidation.h>
+#include <Patches/CKPE.SkyrimSE.Patch.ShowHideWindow.h>
 #include <Patches/CKPE.SkyrimSE.Patch.SpellEnableCastingAndDeliveryAlways.h>
 #include <Patches/CKPE.SkyrimSE.Patch.StableSortForPerks.h>
 #include <Patches/CKPE.SkyrimSE.Patch.TESModelTextureSwapCorrectlyLoad.h>
@@ -257,8 +258,9 @@ namespace CKPE
 			mgr->Register(new Patch::ResponseIgnoreMax);
 			mgr->Register(new Patch::ShowReloadShadersAlways);
 			mgr->Register(new Patch::SkipTopicInfoValidation);
+			mgr->Register(new Patch::ShowHideWindow);
 			mgr->Register(new Patch::SpellEnableCastingAndDeliveryAlways);
-			mgr->Register(new Patch::StableSortForPerks);
+			mgr->Register(new Patch::StableSortForPerks);			
 			mgr->Register(new Patch::TESModelTextureSwapCorrectlyLoad);
 			mgr->Register(new Patch::TESParameters_CTDA);
 			mgr->Register(new Patch::TintSelectedObjects);
