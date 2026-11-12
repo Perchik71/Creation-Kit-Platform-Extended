@@ -195,6 +195,12 @@ namespace CKPE
 						inline constexpr Common::ID Constructor{ 609187, 1569538 };
 						inline constexpr Common::ID DataConstructor{ 795275, 1423453 };
 						inline constexpr Common::ID InitializeD3D{ 530343 };
+						// 1.11.246.0 0x147A68B40 Default render-thread state pointer
+						inline constexpr Common::ID DefaultThreadState{ 535088 };
+						// 1.11.246.0 0x142B6F5A0 InvalidateCachedState
+						inline constexpr Common::ID InvalidateCachedState{ 0, 1688997 };
+						// 1.11.246.0 0x142B4E8D0 UpdateViewport
+						inline constexpr Common::ID UpdateViewport{ 0, 1691816 };
 					}
 					namespace State
 					{
@@ -218,6 +224,10 @@ namespace CKPE
 						inline constexpr Common::ID AcquireRenderTarget{ 346853, 1621383 };
 						inline constexpr Common::ID ReleaseRenderTarget{ 795522, 1389607 };
 						inline constexpr Common::ID CreateRenderTargets{ 800387, 1690631 };
+						// 1.11.246.0 0x142B73940 ReleaseRenderTargets
+						inline constexpr Common::ID ReleaseRenderTargets{ 795529, 1990588 };
+						// 1.11.246.0 0x143C72390 Render-target creation callback pointer
+						inline constexpr Common::ID CreationCallback{ 0, 1351308 };
 						inline constexpr Common::ID GetRenderTargetName{ 800388, 1397815 };
 						inline constexpr Common::ID GetDepthStencilName{ 800390, 1667564 };
 						inline constexpr Common::ID GetCubeMapName{ 250682, 1669423 };
@@ -394,6 +404,8 @@ namespace CKPE
 					inline constexpr Common::ID AttachObject{ 490202 };
 					inline constexpr Common::ID DetachObject{ 528228 };
 					inline constexpr Common::ID ResizeViewport{ 581043 };
+					// 1.11.246.0 0x14072FA00 RenderFrame
+					inline constexpr Common::ID RenderFrame{ 565634 };
 				}
 
 				namespace TESPreviewControl
