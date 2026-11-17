@@ -23,16 +23,6 @@ namespace CKPE
 					return instance.Get();
 				}
 
-				bool RenderTargetManager::IsCreating() const noexcept(true)
-				{
-					return Common::RelocateMember<bool>(this, CreatingOffset);
-				}
-
-				void RenderTargetManager::SetCreating(bool creating) noexcept(true)
-				{
-					Common::RelocateMember<bool>(this, CreatingOffset) = creating;
-				}
-
 				void RenderTargetManager::CreateRenderTarget(RENDER_TARGET target,
 					const RenderTargetProperties* properties,
 					RenderTargetCreationMode mode) noexcept(true)
@@ -86,6 +76,16 @@ namespace CKPE
 					function(this, target);
 				}
 
+				void RenderTargetManager::SaveRenderTarget(RENDER_TARGET target,
+					const char* fileName, std::int32_t format, bool flag) noexcept(true)
+				{
+					using Function = void(*)(RenderTargetManager*, RENDER_TARGET, const char*,
+						std::int32_t, bool);
+					static Common::Relocation<Function> function{
+						EditorAPI::IDs::Functions::BSGraphics__RenderTargetManager__SaveRenderTarget };
+					function(this, target, fileName, format, flag);
+				}
+
 				void RenderTargetManager::ReleaseRenderTargets() noexcept(true)
 				{
 					using Function = void(*)(RenderTargetManager*);
@@ -99,7 +99,10 @@ namespace CKPE
 					using Function = void(*)();
 					static Common::Relocation<Function> function{
 						EditorAPI::IDs::BSGraphics::RenderTargetManager::CreateRenderTargets };
+					auto& creating = Common::RelocateMember<bool>(this, CreatingOffset);
+					creating = true;
 					function();
+					creating = false;
 				}
 			}
 		}

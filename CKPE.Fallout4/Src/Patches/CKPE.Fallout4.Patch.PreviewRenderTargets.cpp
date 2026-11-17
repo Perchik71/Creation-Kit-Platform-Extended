@@ -100,9 +100,7 @@ namespace CKPE
 					context->deviceContext->Flush();
 					SetStateExtents(extent, extent);
 
-					manager->SetCreating(true);
-					Graphics::RenderTargetManager::CreateRenderTargets();
-					manager->SetCreating(false);
+					manager->CreateRenderTargets();
 
 					framebuffer.rtView = window->swapChainRenderTarget.rtView;
 					framebuffer.srView = window->swapChainRenderTarget.srView;
@@ -157,15 +155,6 @@ namespace CKPE
 					PreviewFrame frame(extent);
 					originalRenderFrame(control);
 				}
-
-				// 1.10.162 calls bodies directly; later builds go through E9 thunks.
-				bool Reaches(std::uintptr_t target, const Common::ID& body) noexcept(true)
-				{
-					const auto address = body.Address();
-					return target && ((target == address) ||
-						((*reinterpret_cast<const std::uint8_t*>(target) == 0xE9) &&
-						(Detours::BranchTarget(target) == address)));
-				}
 			}
 
 			PreviewRenderTargets::PreviewRenderTargets() : Common::Patch()
@@ -218,12 +207,10 @@ namespace CKPE
 				const Relocation end(IDs::TESRenderControl::RenderFrame, Offset{ 0x1FD, 0x1FB });
 				const auto frameTarget = reinterpret_cast<const std::uintptr_t*>(
 					vtable.Address())[TESRenderControl::RENDER_VFUNC_INDEX];
-				const auto beginTarget = Detours::BranchTarget(begin.Address());
-				const auto endTarget = Detours::BranchTarget(end.Address());
-				if (!begin.IsBranchTo(beginTarget) || !end.IsBranchTo(endTarget) ||
-					!Reaches(frameTarget, IDs::TESRenderControl::RenderFrame) ||
-					!Reaches(beginTarget, IDs::BSGraphics::Renderer::BeginFrame) ||
-					!Reaches(endTarget, IDs::BSGraphics::Renderer::EndFrame))
+				const auto beginTarget = begin.BranchTargetTo(IDs::BSGraphics::Renderer::BeginFrame);
+				const auto endTarget = end.BranchTargetTo(IDs::BSGraphics::Renderer::EndFrame);
+				if (!beginTarget || !endTarget || (Detours::ResolveThunk(frameTarget) !=
+					IDs::TESRenderControl::RenderFrame.Address()))
 					return false;
 
 				originalRenderFrame = reinterpret_cast<RenderFrame>(frameTarget);

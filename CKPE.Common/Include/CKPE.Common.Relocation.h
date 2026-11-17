@@ -172,8 +172,17 @@ namespace CKPE
 			[[nodiscard]] bool IsBranchTo(const std::uintptr_t a_expected) const
 				requires(std::same_as<value_type, std::uintptr_t>)
 			{
-				const auto opcode = *reinterpret_cast<const std::uint8_t*>(Address());
-				return ((opcode == 0xE8) || (opcode == 0xE9)) && (Detours::BranchTarget(Address()) == a_expected);
+				return IsRel32Branch() && (Detours::BranchTarget(Address()) == a_expected);
+			}
+
+			// Accepts a direct branch or one through an E9 thunk; 0 on mismatch.
+			[[nodiscard]] std::uintptr_t BranchTargetTo(const ID& a_body) const
+				requires(std::same_as<value_type, std::uintptr_t>)
+			{
+				if (!IsRel32Branch())
+					return 0;
+				const auto target = Detours::BranchTarget(Address());
+				return (Detours::ResolveThunk(target) == a_body.Address()) ? target : 0;
 			}
 
 			template <class F>
@@ -212,6 +221,12 @@ namespace CKPE
 			}
 
 		private:
+			[[nodiscard]] bool IsRel32Branch() const noexcept(true)
+			{
+				const auto opcode = *reinterpret_cast<const std::uint8_t*>(Address());
+				return (opcode == 0xE8) || (opcode == 0xE9);
+			}
+
 			[[nodiscard]] static std::uintptr_t Base() noexcept(true)
 			{
 				return Application::GetSingleton()->GetBase();

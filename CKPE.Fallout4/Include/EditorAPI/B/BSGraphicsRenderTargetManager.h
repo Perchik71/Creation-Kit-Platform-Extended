@@ -14,19 +14,12 @@ namespace CKPE
 		{
 			namespace BSGraphics
 			{
-				// renderTargetData is shared; later arrays are the 1.10.982.3+ layout.
+				// Only renderTargetData shares one layout across every supported build.
 				struct RenderTargetManager
 				{
 					/* 0x000 */ RenderTargetProperties renderTargetData[100];
-					/* 0xC80 */ DepthStencilTargetProperties depthStencilTargetData[12];
-					/* 0xDD0 */ CubeMapRenderTargetProperties cubeMapRenderTargetData[1];
-					/* 0xDF4 */ std::int32_t renderTargetID[100];
-					/* 0xF84 */ std::int32_t depthStencilTargetID[12];
-					/* 0xFB4 */ std::int32_t cubeMapRenderTargetID[1];
 
 					[[nodiscard]] static RenderTargetManager* GetSingleton() noexcept(true);
-					[[nodiscard]] bool IsCreating() const noexcept(true);
-					void SetCreating(bool creating) noexcept(true);
 					// Creation requires the engine's render-target creation phase.
 					void CreateRenderTarget(RENDER_TARGET target,
 						const RenderTargetProperties* properties,
@@ -37,19 +30,16 @@ namespace CKPE
 					void CreateCubeMapRenderTarget(CUBEMAP_RENDER_TARGET target,
 						const CubeMapRenderTargetProperties* properties,
 						RenderTargetCreationMode mode) noexcept(true);
-					// Logical IDs must be translated through renderTargetID after acquire.
 					void AcquireRenderTarget(RENDER_TARGET target) noexcept(true);
 					void ReleaseRenderTarget(RENDER_TARGET target) noexcept(true);
+					// Asserts unless the target is acquired.
+					void SaveRenderTarget(RENDER_TARGET target, const char* fileName,
+						std::int32_t format, bool flag) noexcept(true);
 					// Releases every shared target except the swap-chain framebuffer.
 					void ReleaseRenderTargets() noexcept(true);
-					// Sized from State's back-buffer extent; needs the creation phase.
-					static void CreateRenderTargets() noexcept(true);
+					// Sized from State's back-buffer extent.
+					void CreateRenderTargets() noexcept(true);
 				};
-				static_assert(offsetof(RenderTargetManager, depthStencilTargetData) == 0xC80);
-				static_assert(offsetof(RenderTargetManager, cubeMapRenderTargetData) == 0xDD0);
-				static_assert(offsetof(RenderTargetManager, renderTargetID) == 0xDF4);
-				static_assert(offsetof(RenderTargetManager, depthStencilTargetID) == 0xF84);
-				static_assert(offsetof(RenderTargetManager, cubeMapRenderTargetID) == 0xFB4);
 			}
 		}
 	}

@@ -16,6 +16,7 @@
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/B/BGSRenderWindow.h>
 #include <EditorAPI/B/BSGraphicsRenderer.h>
+#include <EditorAPI/B/BSGraphicsState.h>
 #include <Patches/CKPE.Fallout4.Patch.MainWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.RenderWindow.h>
 
@@ -254,9 +255,7 @@ namespace CKPE
 
 				va_end(ap);
 
-				// The stats live in the per-thread renderer state:
-				// { ..., +0x2FF0 current group, +0x2FF8 [9] x { calls, polys, 8 bytes } } (the same layout in all
-				// builds). The "%u main draw calls, ..." formatter reads group 2 / the sum of them
+				// The "%u main draw calls, ..." formatter reads group 2 / the sum of the per-thread groups
 				// (CK 1.10.162.0 sub_14045EBB0, 1.10.982.3 sub_1405533C0, 1.11.137.0 sub_14056C730, 1.11.240.0 sub_14056EB90).
 				EditorAPI::BGSRenderWindow::DrawInfo::GroupsValid = false;
 				if (ShowRenderStatsGroups)
@@ -264,12 +263,11 @@ namespace CKPE
 					auto context = EditorAPI::BSGraphics::GetRendererThreadContext();
 					if (context && context->state)
 					{
-						auto stats = reinterpret_cast<std::uintptr_t>(context->state);
 						for (std::uint32_t i = 0; i < EditorAPI::BGSRenderWindow::DrawInfo::GroupCount; i++)
 						{
-							auto entry = (std::uint32_t*)(stats + 0x2FF8 + i * 0x10);
-							EditorAPI::BGSRenderWindow::DrawInfo::GroupDrawCalls[i] = entry[0];
-							EditorAPI::BGSRenderWindow::DrawInfo::GroupPolys[i] = entry[1];
+							const auto& group = context->state->drawGroupStats[i];
+							EditorAPI::BGSRenderWindow::DrawInfo::GroupDrawCalls[i] = group.drawCalls;
+							EditorAPI::BGSRenderWindow::DrawInfo::GroupPolys[i] = group.polys;
 						}
 						EditorAPI::BGSRenderWindow::DrawInfo::GroupsValid = true;
 					}
