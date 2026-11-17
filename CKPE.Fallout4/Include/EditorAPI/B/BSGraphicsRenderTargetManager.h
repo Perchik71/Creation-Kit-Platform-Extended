@@ -41,6 +41,10 @@ namespace CKPE
 					// Logical IDs must be translated through renderTargetID after acquire.
 					void AcquireRenderTarget(RENDER_TARGET target) noexcept(true);
 					void ReleaseRenderTarget(RENDER_TARGET target) noexcept(true);
+					// Releases every shared target except the swap-chain framebuffer.
+					void ReleaseRenderTargets() noexcept(true);
+					// Sized from State's back-buffer extent; needs the creation phase.
+					static void CreateRenderTargets() noexcept(true);
 				};
 				static_assert(sizeof(RenderTargetManager) == 0xFBC);
 				static_assert(offsetof(RenderTargetManager, depthStencilTargetData) == 0xC80);

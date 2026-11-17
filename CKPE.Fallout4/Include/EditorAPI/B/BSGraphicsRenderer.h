@@ -17,6 +17,7 @@ namespace CKPE
 			namespace BSGraphics
 			{
 				struct RendererShadowState;
+				struct RendererThreadState;
 
 				struct RendererWindow
 				{
@@ -93,12 +94,28 @@ namespace CKPE
 					[[nodiscard]] static Renderer* GetSingleton() noexcept(true);
 					// Adapter information was appended in CK 1.11.137.
 					[[nodiscard]] const AdapterInfo* GetAdapterInfo() const noexcept(true);
+					// Zero width and height take the bound target's dimensions.
+					void UpdateViewport(RendererShadowState* state, std::uint32_t width,
+						std::uint32_t height, bool unk) noexcept(true);
 				};
 				static_assert(sizeof(Renderer) == 0x25E0);
 				static_assert(offsetof(Renderer, data) == 0x10);
 
+				// Slot pair in the CK's static TLS block; 1.10.162 verifies only state.
+				struct RendererThreadContext
+				{
+					/* 0x000 */ ID3D11DeviceContext* deviceContext;
+					/* 0x008 */ RendererThreadState* state;
+
+					// Threads without their own state share the engine's default one.
+					[[nodiscard]] RendererThreadState* GetState() const noexcept(true);
+				};
+				static_assert(offsetof(RendererThreadContext, state) == 0x8);
+
 				[[nodiscard]] RendererData* GetRendererData() noexcept(true);
 				[[nodiscard]] RendererWindow* GetCurrentRendererWindow() noexcept(true);
+				// Returns null on builds without a verified TLS layout.
+				[[nodiscard]] RendererThreadContext* GetRendererThreadContext() noexcept(true);
 			}
 		}
 	}

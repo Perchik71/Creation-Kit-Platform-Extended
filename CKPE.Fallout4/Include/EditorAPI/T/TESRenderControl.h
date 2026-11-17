@@ -28,6 +28,7 @@ namespace CKPE
 
 				constexpr static Common::ID RTTI = IDs::RTTI::TESRenderControl;
 				constexpr static Common::ID VTABLE = IDs::VTABLE::TESRenderControl[0];
+				constexpr static std::size_t RENDER_VFUNC_INDEX = 0x030 / sizeof(void*);
 
 				/* 0x008 */ virtual void AttachObject(NiAPI::NiAVObject* Object) noexcept(true);
 				/* 0x010 */ virtual void DetachObject(NiAPI::NiAVObject* Object) noexcept(true);
@@ -37,7 +38,7 @@ namespace CKPE
 				/* 0x018 */ virtual void Unk_018() noexcept(true);
 				/* 0x020 */ virtual void ResizeViewport() noexcept(true);
 				/* 0x028 */ virtual void Unk_028() noexcept(true);
-				/* 0x030 */ virtual void Unk_030() noexcept(true);
+				/* 0x030 */ virtual void Render() noexcept(true);
 				/* 0x038 */ virtual void Unk_038() noexcept(true);
 				/* 0x040 */ virtual void Unk_040() noexcept(true);
 				/* 0x048 */ virtual void Unk_048() noexcept(true);

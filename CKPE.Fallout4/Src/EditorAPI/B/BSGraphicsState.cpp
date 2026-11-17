@@ -15,6 +15,14 @@ namespace CKPE
 		{
 			namespace BSGraphics
 			{
+				void RendererShadowState::InvalidateCachedState() noexcept(true)
+				{
+					using Function = void(*)(RendererShadowState*);
+					static Common::Relocation<Function> function{
+						EditorAPI::IDs::BSGraphics::RendererShadowState::InvalidateCachedState };
+					function(this);
+				}
+
 				State* State::GetSingleton() noexcept(true)
 				{
 					if (VersionLists::GetEditorVersion() ==

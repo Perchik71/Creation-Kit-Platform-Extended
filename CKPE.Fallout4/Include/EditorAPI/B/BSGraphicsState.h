@@ -62,10 +62,20 @@ namespace CKPE
 					/* 0x6C0 */ NiAPI::NiPoint3A previousPosAdjust;
 					/* 0x6D0 */ ViewData cameraData;
 					/* 0x8E0 */ std::byte _pad8E0[0x30];
+
+					void InvalidateCachedState() noexcept(true);
 				};
 				static_assert(sizeof(RendererShadowState) == 0x910);
 				static_assert(offsetof(RendererShadowState, viewPort) == 0x90);
 				static_assert(offsetof(RendererShadowState, cameraData) == 0x6D0);
+
+				// Only the verified fields of the engine's per-thread state are modeled.
+				struct RendererThreadState
+				{
+					/* 0x0000 */ std::byte _pad0000[0x1B70];
+					/* 0x1B70 */ RendererShadowState shadowStates[2];
+				};
+				static_assert(offsetof(RendererThreadState, shadowStates) == 0x1B70);
 
 				// CK 1.10.982.3+ layout; 1.10.162 shifts the temporal-AA fields.
 				struct alignas(0x10) State

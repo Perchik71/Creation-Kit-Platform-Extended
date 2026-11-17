@@ -78,6 +78,22 @@ namespace CKPE
 						EditorAPI::IDs::BSGraphics::RenderTargetManager::ReleaseRenderTarget };
 					function(this, target);
 				}
+
+				void RenderTargetManager::ReleaseRenderTargets() noexcept(true)
+				{
+					using Function = void(*)(RenderTargetManager*);
+					static Common::Relocation<Function> function{
+						EditorAPI::IDs::BSGraphics::RenderTargetManager::ReleaseRenderTargets };
+					function(this);
+				}
+
+				void RenderTargetManager::CreateRenderTargets() noexcept(true)
+				{
+					using Function = void(*)();
+					static Common::Relocation<Function> function{
+						EditorAPI::IDs::BSGraphics::RenderTargetManager::CreateRenderTargets };
+					function();
+				}
 			}
 		}
 	}
