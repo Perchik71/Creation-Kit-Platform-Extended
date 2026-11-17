@@ -16,6 +16,8 @@ namespace CKPE
 		{
 			namespace BSGraphics
 			{
+				constexpr Common::Offset ThreadContextOffset{ 0x2FC8, 0x39A8 };
+
 				Renderer* Renderer::GetSingleton() noexcept(true)
 				{
 					static Common::Relocation<Renderer*> instance{ EditorAPI::IDs::BSGraphics::Renderer::Instance };
@@ -65,28 +67,13 @@ namespace CKPE
 
 				RendererThreadContext* GetRendererThreadContext() noexcept(true)
 				{
-					std::uintptr_t offset = 0;
-					switch (VersionLists::GetEditorVersion())
-					{
-					case VersionLists::EDITOR_FALLOUT_C4_1_10_162_0:
-						offset = 0x2FC8;
-						break;
-					case VersionLists::EDITOR_FALLOUT_C4_1_10_982_3:
-					case VersionLists::EDITOR_FALLOUT_C4_1_11_137_0:
-					case VersionLists::EDITOR_FALLOUT_C4_1_11_240_0:
-					case VersionLists::EDITOR_FALLOUT_C4_1_11_246_0:
-						offset = 0x39A8;
-						break;
-					default:
-						return nullptr;
-					}
-
 					static Common::Relocation<std::uint32_t*> index{
 						EditorAPI::IDs::Functions::data_8017B70 };
 					const auto tls = reinterpret_cast<std::uintptr_t*>(__readgsqword(0x58));
 					if (!tls || !tls[*index])
 						return nullptr;
-					return reinterpret_cast<RendererThreadContext*>(tls[*index] + offset);
+					return &Common::RelocateMember<RendererThreadContext>(
+						reinterpret_cast<void*>(tls[*index]), ThreadContextOffset);
 				}
 			}
 		}

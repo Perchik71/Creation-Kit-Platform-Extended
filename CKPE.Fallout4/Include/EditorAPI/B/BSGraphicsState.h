@@ -77,7 +77,7 @@ namespace CKPE
 				};
 				static_assert(offsetof(RendererThreadState, shadowStates) == 0x1B70);
 
-				// CK 1.10.982.3+ layout; 1.10.162 shifts the temporal-AA fields.
+				// Members from taaState on are the 1.10.982.3+ layout; 1.10.162 differs.
 				struct alignas(0x10) State
 				{
 					/* 0x000 */ std::uint32_t currentFrame;
@@ -103,7 +103,6 @@ namespace CKPE
 					/* 0x160 */ CameraStateData cameraState;
 					/* 0x3B0 */ std::byte _pad3B0[0x10];
 
-					// Returns null on 1.10.162 rather than exposing the wrong layout.
 					[[nodiscard]] static State* GetSingleton() noexcept(true);
 					void UpdateTemporalData() noexcept(true);
 					void SetCamera(const NiAPI::NiCamera* camera, bool useJitter,

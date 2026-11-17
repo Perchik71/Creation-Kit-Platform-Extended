@@ -100,9 +100,9 @@ namespace CKPE
 					context->deviceContext->Flush();
 					SetStateExtents(extent, extent);
 
-					manager->creating = true;
+					manager->SetCreating(true);
 					Graphics::RenderTargetManager::CreateRenderTargets();
-					manager->creating = false;
+					manager->SetCreating(false);
 
 					framebuffer.rtView = window->swapChainRenderTarget.rtView;
 					framebuffer.srView = window->swapChainRenderTarget.srView;
@@ -158,11 +158,13 @@ namespace CKPE
 					originalRenderFrame(control);
 				}
 
-				// Call sites and vtables reach their bodies through E9 thunks.
-				bool IsThunkTo(std::uintptr_t thunk, const Common::ID& body) noexcept(true)
+				// 1.10.162 calls bodies directly; later builds go through E9 thunks.
+				bool Reaches(std::uintptr_t target, const Common::ID& body) noexcept(true)
 				{
-					return thunk && (*reinterpret_cast<const std::uint8_t*>(thunk) == 0xE9) &&
-						(Detours::BranchTarget(thunk) == body.Address());
+					const auto address = body.Address();
+					return target && ((target == address) ||
+						((*reinterpret_cast<const std::uint8_t*>(target) == 0xE9) &&
+						(Detours::BranchTarget(target) == address)));
 				}
 			}
 
@@ -195,6 +197,7 @@ namespace CKPE
 			{
 				switch (VersionLists::GetEditorVersion())
 				{
+				case VersionLists::EDITOR_FALLOUT_C4_1_10_162_0:
 				case VersionLists::EDITOR_FALLOUT_C4_1_10_982_3:
 				case VersionLists::EDITOR_FALLOUT_C4_1_11_137_0:
 				case VersionLists::EDITOR_FALLOUT_C4_1_11_246_0:
@@ -211,23 +214,23 @@ namespace CKPE
 				namespace IDs = EditorAPI::IDs;
 
 				const Relocation vtable(EditorAPI::TESPreviewControl::VTABLE);
-				const Relocation begin(IDs::TESRenderControl::RenderFrame, 0xF3);
-				const Relocation end(IDs::TESRenderControl::RenderFrame, 0x1FB);
-				const auto frameThunk = reinterpret_cast<const std::uintptr_t*>(
+				const Relocation begin(IDs::TESRenderControl::RenderFrame, Offset{ 0xEC, 0xF3 });
+				const Relocation end(IDs::TESRenderControl::RenderFrame, Offset{ 0x1FD, 0x1FB });
+				const auto frameTarget = reinterpret_cast<const std::uintptr_t*>(
 					vtable.Address())[TESRenderControl::RENDER_VFUNC_INDEX];
-				const auto beginThunk = Detours::BranchTarget(begin.Address());
-				const auto endThunk = Detours::BranchTarget(end.Address());
-				if (!begin.IsBranchTo(beginThunk) || !end.IsBranchTo(endThunk) ||
-					!IsThunkTo(frameThunk, IDs::TESRenderControl::RenderFrame) ||
-					!IsThunkTo(beginThunk, IDs::BSGraphics::Renderer::BeginFrame) ||
-					!IsThunkTo(endThunk, IDs::BSGraphics::Renderer::EndFrame))
+				const auto beginTarget = Detours::BranchTarget(begin.Address());
+				const auto endTarget = Detours::BranchTarget(end.Address());
+				if (!begin.IsBranchTo(beginTarget) || !end.IsBranchTo(endTarget) ||
+					!Reaches(frameTarget, IDs::TESRenderControl::RenderFrame) ||
+					!Reaches(beginTarget, IDs::BSGraphics::Renderer::BeginFrame) ||
+					!Reaches(endTarget, IDs::BSGraphics::Renderer::EndFrame))
 					return false;
 
-				originalRenderFrame = reinterpret_cast<RenderFrame>(frameThunk);
-				originalBeginFrame = reinterpret_cast<BeginFrame>(beginThunk);
-				originalEndFrame = reinterpret_cast<EndFrame>(endThunk);
-				if (!begin.RedirectBranch(beginThunk, &PreviewBeginFrame) ||
-					!end.RedirectBranch(endThunk, &PreviewEndFrame))
+				originalRenderFrame = reinterpret_cast<RenderFrame>(frameTarget);
+				originalBeginFrame = reinterpret_cast<BeginFrame>(beginTarget);
+				originalEndFrame = reinterpret_cast<EndFrame>(endTarget);
+				if (!begin.RedirectBranch(beginTarget, &PreviewBeginFrame) ||
+					!end.RedirectBranch(endTarget, &PreviewEndFrame))
 					return false;
 				vtable.WriteVFunc(TESRenderControl::RENDER_VFUNC_INDEX, &RenderPreview);
 				return true;

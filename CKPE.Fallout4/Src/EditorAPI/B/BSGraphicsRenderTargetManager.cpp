@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Common.Relocation.h>
-#include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/B/BSGraphicsRenderTargetManager.h>
 #include <EditorAPI/IDs.h>
 
@@ -15,15 +14,23 @@ namespace CKPE
 		{
 			namespace BSGraphics
 			{
+				constexpr Common::Offset CreatingOffset{ 0xF88, 0xFB8 };
+
 				RenderTargetManager* RenderTargetManager::GetSingleton() noexcept(true)
 				{
-					if (VersionLists::GetEditorVersion() ==
-						VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-						return nullptr;
-
 					static Common::Relocation<RenderTargetManager*> instance{
 						EditorAPI::IDs::BSGraphics::RenderTargetManager::Instance };
 					return instance.Get();
+				}
+
+				bool RenderTargetManager::IsCreating() const noexcept(true)
+				{
+					return Common::RelocateMember<bool>(this, CreatingOffset);
+				}
+
+				void RenderTargetManager::SetCreating(bool creating) noexcept(true)
+				{
+					Common::RelocateMember<bool>(this, CreatingOffset) = creating;
 				}
 
 				void RenderTargetManager::CreateRenderTarget(RENDER_TARGET target,

@@ -101,7 +101,7 @@ namespace CKPE
 				static_assert(sizeof(Renderer) == 0x25E0);
 				static_assert(offsetof(Renderer, data) == 0x10);
 
-				// Slot pair in the CK's static TLS block; 1.10.162 verifies only state.
+				// Slot pair in the CK's static TLS block.
 				struct RendererThreadContext
 				{
 					/* 0x000 */ ID3D11DeviceContext* deviceContext;
@@ -114,7 +114,7 @@ namespace CKPE
 
 				[[nodiscard]] RendererData* GetRendererData() noexcept(true);
 				[[nodiscard]] RendererWindow* GetCurrentRendererWindow() noexcept(true);
-				// Returns null on builds without a verified TLS layout.
+				// Returns null before the calling thread's TLS block exists.
 				[[nodiscard]] RendererThreadContext* GetRendererThreadContext() noexcept(true);
 			}
 		}

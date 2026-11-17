@@ -14,7 +14,7 @@ namespace CKPE
 		{
 			namespace BSGraphics
 			{
-				// Only the verified prefix of the CK 1.10.982.3+ object is modeled.
+				// renderTargetData is shared; later arrays are the 1.10.982.3+ layout.
 				struct RenderTargetManager
 				{
 					/* 0x000 */ RenderTargetProperties renderTargetData[100];
@@ -23,11 +23,10 @@ namespace CKPE
 					/* 0xDF4 */ std::int32_t renderTargetID[100];
 					/* 0xF84 */ std::int32_t depthStencilTargetID[12];
 					/* 0xFB4 */ std::int32_t cubeMapRenderTargetID[1];
-					/* 0xFB8 */ bool creating;
-					/* 0xFB9 */ std::byte _padFB9[3];
 
-					// Returns null on 1.10.162 rather than exposing the wrong layout.
 					[[nodiscard]] static RenderTargetManager* GetSingleton() noexcept(true);
+					[[nodiscard]] bool IsCreating() const noexcept(true);
+					void SetCreating(bool creating) noexcept(true);
 					// Creation requires the engine's render-target creation phase.
 					void CreateRenderTarget(RENDER_TARGET target,
 						const RenderTargetProperties* properties,
@@ -46,13 +45,11 @@ namespace CKPE
 					// Sized from State's back-buffer extent; needs the creation phase.
 					static void CreateRenderTargets() noexcept(true);
 				};
-				static_assert(sizeof(RenderTargetManager) == 0xFBC);
 				static_assert(offsetof(RenderTargetManager, depthStencilTargetData) == 0xC80);
 				static_assert(offsetof(RenderTargetManager, cubeMapRenderTargetData) == 0xDD0);
 				static_assert(offsetof(RenderTargetManager, renderTargetID) == 0xDF4);
 				static_assert(offsetof(RenderTargetManager, depthStencilTargetID) == 0xF84);
 				static_assert(offsetof(RenderTargetManager, cubeMapRenderTargetID) == 0xFB4);
-				static_assert(offsetof(RenderTargetManager, creating) == 0xFB8);
 			}
 		}
 	}

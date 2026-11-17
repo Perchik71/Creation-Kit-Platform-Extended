@@ -198,11 +198,11 @@ namespace CKPE
 						inline constexpr Common::ID DefaultThreadState{ 535088 };
 						inline constexpr Common::ID BeginFrame{ 794944, 1989812 };
 						inline constexpr Common::ID EndFrame{ 570159, 1989813 };
-						inline constexpr Common::ID UpdateViewport{ 0, 1691816 };
+						inline constexpr Common::ID UpdateViewport{ 794934, 1691816 };
 					}
 					namespace RendererShadowState
 					{
-						inline constexpr Common::ID InvalidateCachedState{ 0, 1688997 };
+						inline constexpr Common::ID InvalidateCachedState{ 6069, 1688997 };
 					}
 					namespace State
 					{
