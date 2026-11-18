@@ -3,7 +3,6 @@
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
 #include <CKPE.Common.Relocation.h>
-#include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/B/BSGraphicsState.h>
 #include <EditorAPI/IDs.h>
 
@@ -15,14 +14,31 @@ namespace CKPE
 		{
 			namespace BSGraphics
 			{
+				constexpr Common::Offset TAAStateOffset{ 0xA8, 0xAC };
+				constexpr Common::Offset TAADisableCounterOffset{ 0xAC, 0xB0 };
+
+				void RendererShadowState::InvalidateCachedState() noexcept(true)
+				{
+					using Function = void(*)(RendererShadowState*);
+					static Common::Relocation<Function> function{
+						EditorAPI::IDs::BSGraphics::RendererShadowState::InvalidateCachedState };
+					function(this);
+				}
+
 				State* State::GetSingleton() noexcept(true)
 				{
-					if (VersionLists::GetEditorVersion() ==
-						VersionLists::EDITOR_FALLOUT_C4_1_10_162_0)
-						return nullptr;
-
 					static Common::Relocation<State*> instance{ EditorAPI::IDs::BSGraphics::State::Instance };
 					return instance.Get();
+				}
+
+				std::uint32_t State::GetTAAState() const noexcept(true)
+				{
+					return Common::RelocateMember<std::uint32_t>(this, TAAStateOffset);
+				}
+
+				std::uint32_t State::GetTAADisableCounter() const noexcept(true)
+				{
+					return Common::RelocateMember<std::uint32_t>(this, TAADisableCounterOffset);
 				}
 
 				void State::UpdateTemporalData() noexcept(true)

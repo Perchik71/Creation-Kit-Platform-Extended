@@ -5,6 +5,7 @@
 - [FO4] Remove TAA, optimized FXAA. For more quality pics.
 - [FO4] Added hide/show ground plane in Model Window preview.
 - [FO4] Fixed behavior graph for animation fire or another thing, now animation works with hk enabled.
+- [FO4] Fixed pixelated previews when the Render Window is smaller than the preview.
 - [SSE] Fixed AA when active gizmo mode.
 - [SSE] Fixed toggled Markers in Show/Hide window.
 

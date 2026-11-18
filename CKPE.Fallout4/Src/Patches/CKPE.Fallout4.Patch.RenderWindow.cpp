@@ -15,6 +15,8 @@
 #include <CKPE.Common.EditorUI.h>
 #include <CKPE.Fallout4.VersionLists.h>
 #include <EditorAPI/B/BGSRenderWindow.h>
+#include <EditorAPI/B/BSGraphicsRenderer.h>
+#include <EditorAPI/B/BSGraphicsState.h>
 #include <Patches/CKPE.Fallout4.Patch.MainWindow.h>
 #include <Patches/CKPE.Fallout4.Patch.RenderWindow.h>
 
@@ -108,7 +110,7 @@ namespace CKPE
 				EditorAPI::BGSRenderWindow::Settings::Movement::CameraPanValueSingleton = Common::Relocation<EditorAPI::Setting*>(EditorAPI::IDs::BGSRenderWindow::Movement::CameraPan).Get();
 				EditorAPI::BGSRenderWindow::Settings::Movement::LandspaceMultValueSingleton = Common::Relocation<EditorAPI::Setting*>(EditorAPI::IDs::BGSRenderWindow::Movement::LandspaceMult).Get();
 
-				const auto rel1 = Common::Relocation(EditorAPI::IDs::Functions::BSGraphics_EndFrame, Common::Offset{ 0xC5, 0x1E2 });
+				const auto rel1 = Common::Relocation(EditorAPI::IDs::BSGraphics::Renderer::EndFrame, Common::Offset{ 0xC5, 0x1E2 });
 
 				if (VersionLists::GetEditorVersion() < VersionLists::EDITOR_FALLOUT_C4_1_10_943_1)
 					rel1.WriteFill(Common::NOP, 0x4B);
@@ -253,48 +255,21 @@ namespace CKPE
 
 				va_end(ap);
 
-				// The stats live in the per-thread renderer state: *(TLS[index] + statsOffset) ->
-				// { ..., +0x2FF0 current group, +0x2FF8 [9] x { calls, polys, 8 bytes } } (the same layout in all
-				// builds). The "%u main draw calls, ..." formatter reads group 2 / the sum of them
+				// The "%u main draw calls, ..." formatter reads group 2 / the sum of the per-thread groups
 				// (CK 1.10.162.0 sub_14045EBB0, 1.10.982.3 sub_1405533C0, 1.11.137.0 sub_14056C730, 1.11.240.0 sub_14056EB90).
-				// index is the dword the PE TLS directory points to (AddressOfIndex), statsOffset is where the
-				// pointer to the stats sits in the TLS block.
 				EditorAPI::BGSRenderWindow::DrawInfo::GroupsValid = false;
 				if (ShowRenderStatsGroups)
 				{
-					std::uintptr_t statsOffset = 0;
-					switch (VersionLists::GetEditorVersion())
+					auto context = EditorAPI::BSGraphics::GetRendererThreadContext();
+					if (context && context->state)
 					{
-					case VersionLists::EDITOR_FALLOUT_C4_1_10_162_0:
-						statsOffset = 0x2FD0;
-						break;
-					case VersionLists::EDITOR_FALLOUT_C4_1_10_982_3:
-					case VersionLists::EDITOR_FALLOUT_C4_1_11_137_0:
-					case VersionLists::EDITOR_FALLOUT_C4_1_11_240_0:
-						statsOffset = 0x39B0;
-						break;
-					default:
-						break;
-					}
-
-					auto tls = (std::uintptr_t*)__readgsqword(0x58);
-					if (statsOffset && tls)
-					{
-						auto index = *Common::Relocation<std::uint32_t*>(EditorAPI::IDs::Functions::data_8017B70).Get();
-						if (tls[index])
+						for (std::uint32_t i = 0; i < EditorAPI::BGSRenderWindow::DrawInfo::GroupCount; i++)
 						{
-							auto stats = *(std::uintptr_t*)(tls[index] + statsOffset);
-							if (stats)
-							{
-								for (std::uint32_t i = 0; i < EditorAPI::BGSRenderWindow::DrawInfo::GroupCount; i++)
-								{
-									auto entry = (std::uint32_t*)(stats + 0x2FF8 + i * 0x10);
-									EditorAPI::BGSRenderWindow::DrawInfo::GroupDrawCalls[i] = entry[0];
-									EditorAPI::BGSRenderWindow::DrawInfo::GroupPolys[i] = entry[1];
-								}
-								EditorAPI::BGSRenderWindow::DrawInfo::GroupsValid = true;
-							}
+							const auto& group = context->state->drawGroupStats[i];
+							EditorAPI::BGSRenderWindow::DrawInfo::GroupDrawCalls[i] = group.drawCalls;
+							EditorAPI::BGSRenderWindow::DrawInfo::GroupPolys[i] = group.polys;
 						}
+						EditorAPI::BGSRenderWindow::DrawInfo::GroupsValid = true;
 					}
 				}
 			}

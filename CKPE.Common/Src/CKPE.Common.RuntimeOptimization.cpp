@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <Zydis/Zydis.h>
 #include <CKPE.Segment.h>
+#include <CKPE.Detours.h>
 #include <CKPE.Application.h>
 #include <CKPE.Exception.h>
 #include <CKPE.SafeWrite.h>
@@ -226,7 +227,7 @@ namespace CKPE
 								// Determine where the E&C trampoline jumps to, then remove it. 
 								// Each function is processed separately so thread safety is not an issue when patching. 
 								// The 0xE9 opcode never changes.
-								std::uintptr_t real = destination + (std::uintptr_t)(*(std::int32_t*)(destination + 1)) + 5;
+								std::uintptr_t real = Detours::ResolveThunk(destination);
 
 								std::int32_t disp = (std::int32_t)(real - ip) - 5;
 #if 0

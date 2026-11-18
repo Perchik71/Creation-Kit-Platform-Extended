@@ -23,6 +23,13 @@ namespace CKPE
 		return 0;
 	}
 
+	std::uintptr_t Detours::ResolveThunk(std::uintptr_t a_target) noexcept(true)
+	{
+		if (!a_target || (*reinterpret_cast<const std::uint8_t*>(a_target) != 0xE9))
+			return a_target;
+		return BranchTarget(a_target);
+	}
+
 	std::uintptr_t Detours::DetourJump(std::uintptr_t target, std::uintptr_t destination) noexcept(true)
 	{
 		if (!target) return 0;

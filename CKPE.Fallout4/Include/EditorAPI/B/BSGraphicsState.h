@@ -62,12 +62,33 @@ namespace CKPE
 					/* 0x6C0 */ NiAPI::NiPoint3A previousPosAdjust;
 					/* 0x6D0 */ ViewData cameraData;
 					/* 0x8E0 */ std::byte _pad8E0[0x30];
+
+					void InvalidateCachedState() noexcept(true);
 				};
 				static_assert(sizeof(RendererShadowState) == 0x910);
 				static_assert(offsetof(RendererShadowState, viewPort) == 0x90);
 				static_assert(offsetof(RendererShadowState, cameraData) == 0x6D0);
 
-				// CK 1.10.982.3+ layout; 1.10.162 shifts the temporal-AA fields.
+				struct DrawGroupStats
+				{
+					/* 0x000 */ std::uint32_t drawCalls;
+					/* 0x004 */ std::uint32_t polys;
+					/* 0x008 */ std::byte _pad008[8];
+				};
+				static_assert(sizeof(DrawGroupStats) == 0x10);
+
+				// Only the verified fields of the engine's per-thread state are modeled.
+				struct RendererThreadState
+				{
+					/* 0x0000 */ std::byte _pad0000[0x1B70];
+					/* 0x1B70 */ RendererShadowState shadowStates[2];
+					/* 0x2D90 */ std::byte _pad2D90[0x268];
+					/* 0x2FF8 */ DrawGroupStats drawGroupStats[9];
+				};
+				static_assert(offsetof(RendererThreadState, shadowStates) == 0x1B70);
+				static_assert(offsetof(RendererThreadState, drawGroupStats) == 0x2FF8);
+
+				// CK 1.10.982+ layout; fields that move on 1.10.162 are accessor-only.
 				struct alignas(0x10) State
 				{
 					/* 0x000 */ std::uint32_t currentFrame;
@@ -85,25 +106,36 @@ namespace CKPE
 					/* 0x09C */ std::uint32_t frameID;
 					/* 0x0A0 */ bool insideFrame;
 					/* 0x0A1 */ std::byte _pad0A1[0xB];
+				private:
 					/* 0x0AC */ std::uint32_t taaState;
 					/* 0x0B0 */ std::uint32_t taaDisableCounter;
+				public:
 					/* 0x0B4 */ std::byte _pad0B4[0x8C];
 					/* 0x140 */ BSTArray<CameraStateData> cameraDataCache;
 					/* 0x158 */ std::byte _pad158[8];
 					/* 0x160 */ CameraStateData cameraState;
 					/* 0x3B0 */ std::byte _pad3B0[0x10];
 
-					// Returns null on 1.10.162 rather than exposing the wrong layout.
 					[[nodiscard]] static State* GetSingleton() noexcept(true);
+					[[nodiscard]] std::uint32_t GetTAAState() const noexcept(true);
+					[[nodiscard]] std::uint32_t GetTAADisableCounter() const noexcept(true);
 					void UpdateTemporalData() noexcept(true);
 					void SetCamera(const NiAPI::NiCamera* camera, bool useJitter,
 						float minDepth, float maxDepth) noexcept(true);
+
+					[[nodiscard]] static constexpr bool VerifyLayout() noexcept(true)
+					{
+						return offsetof(State, taaState) == 0xAC &&
+							offsetof(State, taaDisableCounter) == 0xB0;
+					}
 				};
 				static_assert(sizeof(State) == 0x3C0);
+				static_assert(offsetof(State, backBufferWidth) == 0x78);
 				static_assert(offsetof(State, frameCount) == 0x98);
-				static_assert(offsetof(State, taaState) == 0xAC);
+				static_assert(offsetof(State, insideFrame) == 0xA0);
 				static_assert(offsetof(State, cameraDataCache) == 0x140);
 				static_assert(offsetof(State, cameraState) == 0x160);
+				static_assert(State::VerifyLayout());
 			}
 		}
 	}

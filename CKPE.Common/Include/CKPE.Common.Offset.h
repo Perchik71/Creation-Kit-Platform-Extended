@@ -62,5 +62,14 @@ namespace CKPE
 				return m_offsets[index];
 			}
 		};
+
+		// Field whose offset differs per runtime; constness follows a_self.
+		template <class T, class This>
+		[[nodiscard]] auto& RelocateMember(This* a_self, const Offset& a_offset) noexcept(true)
+		{
+			using Member = std::conditional_t<std::is_const_v<This>, const T, T>;
+			return *reinterpret_cast<Member*>(
+				reinterpret_cast<std::uintptr_t>(a_self) + a_offset.Value());
+		}
 	}
 }
