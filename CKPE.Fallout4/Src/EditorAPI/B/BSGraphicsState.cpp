@@ -14,6 +14,9 @@ namespace CKPE
 		{
 			namespace BSGraphics
 			{
+				constexpr Common::Offset TAAStateOffset{ 0xA8, 0xAC };
+				constexpr Common::Offset TAADisableCounterOffset{ 0xAC, 0xB0 };
+
 				void RendererShadowState::InvalidateCachedState() noexcept(true)
 				{
 					using Function = void(*)(RendererShadowState*);
@@ -26,6 +29,16 @@ namespace CKPE
 				{
 					static Common::Relocation<State*> instance{ EditorAPI::IDs::BSGraphics::State::Instance };
 					return instance.Get();
+				}
+
+				std::uint32_t State::GetTAAState() const noexcept(true)
+				{
+					return Common::RelocateMember<std::uint32_t>(this, TAAStateOffset);
+				}
+
+				std::uint32_t State::GetTAADisableCounter() const noexcept(true)
+				{
+					return Common::RelocateMember<std::uint32_t>(this, TAADisableCounterOffset);
 				}
 
 				void State::UpdateTemporalData() noexcept(true)
