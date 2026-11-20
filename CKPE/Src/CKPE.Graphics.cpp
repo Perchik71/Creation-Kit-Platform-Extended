@@ -284,6 +284,19 @@ namespace CKPE
 		DoChange();
 	}
 
+	void Bitmap::Resize(std::int32_t newWidth, std::int32_t newHeight) noexcept(true)
+	{
+		if (!Empty())
+		{
+			auto res = GDIPlus::ResizeImage(m_fHandle, newWidth, newHeight);
+			if (res)
+			{
+				Assign(res);
+				DeleteObject((HBITMAP)res);
+			}
+		}
+	}
+
 	Bitmap& Bitmap::operator=(const Bitmap& bitmap) noexcept(true)
 	{
 		Assign(bitmap);

@@ -15,8 +15,13 @@
 #include <commdlg.h>
 #include <commctrl.h>
 
+#include <thread>
+#include <chrono>
+
 namespace CKPE
 {
+	using namespace std::literals;
+
 	namespace SkyrimSE
 	{
 		namespace Patch
@@ -132,9 +137,10 @@ namespace CKPE
 					SendMessageA(hWnd, TB_SETSTATE, (WPARAM)std::to_underlying(a_cmd), (LPARAM)oldState);
 				}
 
-				void NewSize(std::int32_t a_w, std::int32_t a_h) const noexcept(true)
+				void DoChandeSize(std::int32_t a_w, std::int32_t a_h) const noexcept(true)
 				{
 					constexpr std::uint32_t maxWidth = 40;
+
 					auto margin_y = MainWindow::Singleton->Toolbar.Height;
 					auto margin_b = MainWindow::Singleton->Statusbar.Height;
 
@@ -145,13 +151,25 @@ namespace CKPE
 					SetWindowPos(hWnd, nullptr, x, margin_y - 1, maxWidth, a_h - (margin_y + margin_b - 1), SWP_NOACTIVATE);
 				}
 
+				void ChandeSize(std::int32_t a_w, std::int32_t a_h) const noexcept(true)
+				{
+					if (IsZoomed(hParentWnd))
+					{
+						std::thread([](const ToolbarShowHide* a_sender, std::int32_t a_w, std::int32_t a_h) {
+								a_sender->DoChandeSize(a_w, a_h);
+							}, this, a_w, a_h).detach();
+					}
+					else
+						DoChandeSize(a_w, a_h);
+				}
+
 				void Update() const noexcept(true)
 				{
 					RECT rc;
 					if (GetClientRect(hParentWnd, std::addressof(rc)))
 					{
-						NewSize(rc.right, rc.bottom);
-						ShowWindow(hWnd, TRUE);
+						ChandeSize(rc.right, rc.bottom);
+						ShowWindow(hWnd, SW_NORMAL);
 					}
 				}
 
@@ -208,7 +226,7 @@ namespace CKPE
 				bool ProcessHandlerFromParentWindow(UINT a_message, WPARAM a_wParam, LPARAM a_lParam, LRESULT& a_result) noexcept(true)
 				{
 					if (a_message == WM_SIZE)
-						NewSize(LOWORD(a_lParam), HIWORD(a_lParam));
+						ChandeSize(LOWORD(a_lParam), HIWORD(a_lParam));
 					else if (a_message == WM_NOTIFY)
 					{
 						LPNMHDR pnmh = (LPNMHDR)a_lParam;

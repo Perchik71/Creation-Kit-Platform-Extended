@@ -603,6 +603,10 @@ namespace CKPE
 							((MINMAXINFO*)lParam)->ptMaxSize.y = (WorkArea.bottom - WorkArea.top);
 							((MINMAXINFO*)lParam)->ptMaxPosition.x = WorkArea.left;
 							((MINMAXINFO*)lParam)->ptMaxPosition.y = WorkArea.top;
+
+							// Fixed broken docking if the window is reduced below an acceptable level
+							((MINMAXINFO*)lParam)->ptMinTrackSize.x = 800;
+							((MINMAXINFO*)lParam)->ptMinTrackSize.y = 600;
 						}
 						break;
 						}

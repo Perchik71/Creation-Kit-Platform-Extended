@@ -7,7 +7,10 @@
 - [FO4] Fixed behavior graph for animation fire or another thing, now animation works with hk enabled.
 - [FO4] Fixed pixelated previews when the Render Window is smaller than the preview.
 - [SSE] Fixed AA when active gizmo mode.
+- [SSE] Fixed saves OFST patch, no applied due to the introduction of important patches inside the EditorAPI.
 - [SSE] Fixed toggled Markers in Show/Hide window.
+- [SSE] Fixed invalid matrix perspective if the render window was attached at startup.
+- [SSE/FO4] Fixed broken docking if the window is reduced below an acceptable level.
 
 ## SSE 0.6 b821
 - [SSE] Remove TAA, optimized FXAA. For more quality pics.

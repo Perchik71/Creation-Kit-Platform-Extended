@@ -288,7 +288,7 @@ namespace CKPE
 		ImageList_RemoveAll((HIMAGELIST)m_hHandle);
 	}
 
-	bool ImageList::InitFromFile(const std::wstring& fname) noexcept(true)
+	bool ImageList::InitFromFile(const std::wstring& fname, std::int32_t width, std::int32_t height) noexcept(true)
 	{
 		if (!PathUtils::FileExists(fname.c_str()))
 			return false;
@@ -298,16 +298,26 @@ namespace CKPE
 			return false;
 
 		BITMAP bmInfo;
-		GetObjectA((HBITMAP)bm.Handle, sizeof(BITMAP), (LPSTR)std::addressof(bmInfo));
+		if (!GetObjectA((HBITMAP)bm.Handle, sizeof(BITMAP), (LPSTR)std::addressof(bmInfo)))
+			return false;
+
 		if ((bmInfo.bmBitsPixel != 24) && (bmInfo.bmBitsPixel != 32))
 			return false;
 
 		auto non_transparent = bmInfo.bmBitsPixel == 24;
-		ReCreateImgList(bmInfo.bmHeight, bmInfo.bmHeight, false, non_transparent ? ilct24Bit : ilct32Bit);
+
+		if ((width > 0) || (height > 0))
+		{
+			bm.Resize(width, height);
+			ReCreateImgList(width, height, false, non_transparent ? ilct24Bit : ilct32Bit);
+		}
+		else
+			ReCreateImgList(bmInfo.bmHeight, bmInfo.bmHeight, false, non_transparent ? ilct24Bit : ilct32Bit);
+
 		return (non_transparent ? Add((THandle)bm.Handle) : Add((THandle)bm.Handle, (TColor)0)) != -1;
 	}
 
-	bool ImageList::InitFromFile(const std::wstring& fname, TColor cmask) noexcept(true)
+	bool ImageList::InitFromFile(const std::wstring& fname, TColor cmask, std::int32_t width, std::int32_t height) noexcept(true)
 	{
 		if (!PathUtils::FileExists(fname.c_str()))
 			return false;
@@ -317,15 +327,25 @@ namespace CKPE
 			return false;
 
 		BITMAP bmInfo;
-		GetObjectA((HBITMAP)bm.Handle, sizeof(BITMAP), (LPSTR)std::addressof(bmInfo));
+		if (!GetObjectA((HBITMAP)bm.Handle, sizeof(BITMAP), (LPSTR)std::addressof(bmInfo)))
+			return false;
+
 		if ((bmInfo.bmBitsPixel != 8) && (bmInfo.bmBitsPixel != 24))
 			return false;
 
-		ReCreateImgList(bmInfo.bmHeight, bmInfo.bmHeight, true, bmInfo.bmBitsPixel == 24 ? ilct24Bit : ilct8Bit);
+		if ((width > 0) || (height > 0))
+		{
+			bm.Resize(width, height);
+			ReCreateImgList(width, height, false, bmInfo.bmBitsPixel == 24 ? ilct24Bit : ilct32Bit);
+		}
+		else
+			ReCreateImgList(bmInfo.bmHeight, bmInfo.bmHeight, true, bmInfo.bmBitsPixel == 24 ? ilct24Bit : ilct8Bit);
+
 		return Add(bm.Handle, cmask) != -1;
 	}
 
-	bool ImageList::InitFromResource(THandle hinst, std::uint32_t dwResId, const wchar_t* name) noexcept(true)
+	bool ImageList::InitFromResource(THandle hinst, std::uint32_t dwResId, const wchar_t* name,
+		std::int32_t width, std::int32_t height) noexcept(true)
 	{
 		Bitmap bm;
 		if (!name)
@@ -340,16 +360,27 @@ namespace CKPE
 		}
 
 		BITMAP bmInfo;
-		GetObjectA((HBITMAP)bm.Handle, sizeof(BITMAP), (LPSTR)std::addressof(bmInfo));
+		if (!GetObjectA((HBITMAP)bm.Handle, sizeof(BITMAP), (LPSTR)std::addressof(bmInfo)))
+			return false;
+
 		if ((bmInfo.bmBitsPixel != 24) && (bmInfo.bmBitsPixel != 32))
 			return false;
 
 		auto non_transparent = bmInfo.bmBitsPixel == 24;
-		ReCreateImgList(bmInfo.bmHeight, bmInfo.bmHeight, false, non_transparent ? ilct24Bit : ilct32Bit);
+
+		if ((width > 0) || (height > 0))
+		{
+			bm.Resize(width, height);
+			ReCreateImgList(width, height, false, non_transparent ? ilct24Bit : ilct32Bit);
+		}
+		else
+			ReCreateImgList(bmInfo.bmHeight, bmInfo.bmHeight, false, non_transparent ? ilct24Bit : ilct32Bit);
+
 		return (non_transparent ? Add((THandle)bm.Handle) : Add((THandle)bm.Handle, (TColor)0)) != -1;
 	}
 
-	bool ImageList::InitFromResource(THandle hinst, std::uint32_t dwResId, const wchar_t* name, TColor cmask) noexcept(true)
+	bool ImageList::InitFromResource(THandle hinst, std::uint32_t dwResId, const wchar_t* name, TColor cmask, 
+		std::int32_t width, std::int32_t height) noexcept(true)
 	{
 		Bitmap bm;
 		if (!name)
@@ -364,11 +395,20 @@ namespace CKPE
 		}
 
 		BITMAP bmInfo;
-		GetObjectA((HBITMAP)bm.Handle, sizeof(BITMAP), (LPSTR)std::addressof(bmInfo));
+		if (!GetObjectA((HBITMAP)bm.Handle, sizeof(BITMAP), (LPSTR)std::addressof(bmInfo)))
+			return false;
+
 		if ((bmInfo.bmBitsPixel != 8) && (bmInfo.bmBitsPixel != 24))
 			return false;
 
-		ReCreateImgList(bmInfo.bmHeight, bmInfo.bmHeight, true, bmInfo.bmBitsPixel == 24 ? ilct24Bit : ilct8Bit);
+		if ((width > 0) || (height > 0))
+		{
+			bm.Resize(width, height);
+			ReCreateImgList(width, height, false, bmInfo.bmBitsPixel == 24 ? ilct24Bit : ilct32Bit);
+		}
+		else
+			ReCreateImgList(bmInfo.bmHeight, bmInfo.bmHeight, true, bmInfo.bmBitsPixel == 24 ? ilct24Bit : ilct8Bit);
+
 		return Add(bm.Handle, cmask) != -1;
 	}
 

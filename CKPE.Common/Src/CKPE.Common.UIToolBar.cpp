@@ -2,6 +2,7 @@
 // Contacts: <email:timencevaleksej@gmail.com>
 // License: https://www.gnu.org/licenses/lgpl-3.0.html
 
+#include <CKPE.GDIPlus.h>
 #include <CKPE.Common.UIBaseWindow.h>
 #include <CKPE.Common.UIVarCommon.h>
 #include <CKPE.Common.UIToolBar.h>
@@ -41,60 +42,88 @@ namespace CKPE
 
 					CKPE_COMMON_API void DrawButton_Hot(Canvas& canvas, LPCRECT pRect) noexcept(true)
 					{
-						CRECT rc_temp = *pRect;
-						rc_temp.Inflate(0, -2);
+						auto renderer = GDIPlusRenderer::DrawBegin(canvas.Handle, pRect);
+						if (renderer)
+						{
+							auto color = GetThemeSysColor(ThemeColor::ThemeColor_Default);
 
-						canvas.Fill(rc_temp, GetThemeSysColor(ThemeColor::ThemeColor_Button_Hot_Gradient_End));
+							auto colorBodyStart = GetThemeSysColor(ThemeColor::ThemeColor_Button_Hot_Gradient_Start);
+							auto colorBodyEnd = GetThemeSysColor(ThemeColor::ThemeColor_Button_Hot_Gradient_End);
+							auto colorHighlighterStart = GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_Start);
+							auto colorHighlighterEnd = GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_End);
+							auto alpha = static_cast<std::uint8_t>(160);
+
+							GDIPlusRenderer::SetClearColor(renderer, GET_R_VALUE(color), GET_G_VALUE(color), GET_B_VALUE(color), 255);
+							GDIPlusRenderer::Clear(renderer);
+
+							auto w = pRect->right - pRect->left;
+							auto h = pRect->bottom - pRect->top;
+							auto r = w > 24 ? 4 : 2;
+							auto sw = w > 24 ? 2 : 1;
+							auto sh = h > 24 ? 2 : 1;
+
+							RECT rc{ sw, sh, w - (sw << 1), h - (sh << 1) };
+
+							GDIPlusRendererHelpers::DrawRoundedSquare(renderer, (LPRECT)std::addressof(rc), r,
+								colorBodyStart, colorBodyEnd,				// тело: верх/низ градиента
+								{ 0, 0, 0, alpha },							// тёмное кольцо внутри
+								color,										// цвет фона — тот же, что в Clear!
+								colorHighlighterEnd,						// внешняя подсветка сверху (светлее фона)
+								GDIPlusColor(colorHighlighterStart) / 2,	// внешняя подсветка снизу (темнее фона)
+								1, 1);
+
+							GDIPlusRenderer::DrawEnd(renderer);
+						}
 					}
 
-					CKPE_COMMON_API void DrawButton_Checked(Canvas& canvas, LPCRECT pRect) noexcept(true)
+					CKPE_COMMON_API void DrawButton_Checked(Canvas& canvas, LPCRECT pRect, bool bDisabled) noexcept(true)
 					{
-						CRECT rc_temp = *pRect;
-						rc_temp.Inflate(0, -2);
+						auto renderer = GDIPlusRenderer::DrawBegin(canvas.Handle, pRect);
+						if (renderer)
+						{
+							auto color = GetThemeSysColor(ThemeColor::ThemeColor_Default);
 
-						CRECT rc_temp_v[2];
+							auto colorBodyStart			= GetThemeSysColor(ThemeColor::ThemeColor_Button_Pressed_Gradient_Start);
+							auto colorBodyEnd			= GetThemeSysColor(ThemeColor::ThemeColor_Button_Pressed_Gradient_End);
+							auto colorHighlighterStart	= GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_Start);
+							auto colorHighlighterEnd	= GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_End);
+							auto alpha					= static_cast<std::uint8_t>(160);
 
-						rc_temp_v[0] = rc_temp;
-						rc_temp_v[0].Inflate(-1, -1);
-						rc_temp_v[1] = rc_temp_v[0];
-						rc_temp_v[1].Inflate(-1, -1);
+							if (bDisabled)
+							{
+								colorBodyStart			= GetThemeSysColor(ThemeColor::ThemeColor_Button_Disabled_Gradient_Start);
+								colorBodyEnd			= GetThemeSysColor(ThemeColor::ThemeColor_Button_Disabled_Gradient_End);
+								colorHighlighterStart	= GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_Start);
+								colorHighlighterEnd		= GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Gradient_End);
+								alpha					= static_cast<std::uint8_t>(120);
+							}
 
-						canvas.Fill(rc_temp, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Pressed));
-						canvas.Fill(rc_temp_v[0], GetThemeSysColor(ThemeColor::ThemeColor_Divider_Color));
-						canvas.GradientFill(rc_temp_v[1], GetThemeSysColor(ThemeColor::ThemeColor_Button_Pressed_Gradient_Start),
-							GetThemeSysColor(ThemeColor::ThemeColor_Button_Pressed_Gradient_End), gdVert);
-						canvas.Pen.Color = GetThemeSysColor(ThemeColor::ThemeColor_Button_Pressed_Divider);
-						canvas.MoveTo(rc_temp_v[1].Left, rc_temp_v[1].Top);
-						canvas.LineTo(rc_temp_v[1].Right, rc_temp_v[1].Top);
+							GDIPlusRenderer::SetClearColor(renderer, GET_R_VALUE(color), GET_G_VALUE(color), GET_B_VALUE(color), 255);
+							GDIPlusRenderer::Clear(renderer);
+
+							auto w  = pRect->right - pRect->left;
+							auto h  = pRect->bottom - pRect->top;
+							auto r  = w > 24 ? 4 : 2;
+							auto sw = w > 24 ? 2 : 1;
+							auto sh = h > 24 ? 2 : 1;
+
+							RECT rc{ sw, sh, w - (sw << 1), h - (sh << 1)};
+
+							GDIPlusRendererHelpers::DrawRoundedSquare(renderer, (LPRECT)std::addressof(rc), r,
+								colorBodyStart, colorBodyEnd,				// тело: верх/низ градиента
+								{ 0, 0, 0, alpha },							// тёмное кольцо внутри
+								color,										// цвет фона — тот же, что в Clear!
+								GDIPlusColor(colorHighlighterStart) / 2,	// внешняя подсветка сверху (темнее фона)
+								colorHighlighterEnd,						// внешняя подсветка снизу (светлее фона)
+								1, 1);  
+
+							GDIPlusRenderer::DrawEnd(renderer);
+						}
 					}
 
 					CKPE_COMMON_API void DrawButton_Pressed(Canvas& canvas, LPCRECT pRect) noexcept(true)
 					{
-						CRECT rc_temp = *pRect;
-						rc_temp.Inflate(0, -2);
-
-						CRECT rc_temp_v[2];
-
-						rc_temp_v[0] = rc_temp;
-						rc_temp_v[0].Inflate(-1, -1);
-						rc_temp_v[1] = rc_temp_v[0];
-						rc_temp_v[1].Inflate(-1, -1);
-
-						canvas.Fill(rc_temp, GetThemeSysColor(ThemeColor::ThemeColor_Divider_Highlighter_Pressed));
-						canvas.Fill(rc_temp_v[0], GetThemeSysColor(ThemeColor::ThemeColor_Divider_Color));
-						canvas.GradientFill(rc_temp_v[1], GetThemeSysColor(ThemeColor::ThemeColor_Button_Pressed_Gradient_Start),
-							GetThemeSysColor(ThemeColor::ThemeColor_Button_Pressed_Gradient_End), gdVert);
-						canvas.Pen.Color = GetThemeSysColor(ThemeColor::ThemeColor_Button_Pressed_Divider);
-						canvas.MoveTo(rc_temp_v[1].Left, rc_temp_v[1].Top);
-						canvas.LineTo(rc_temp_v[1].Right, rc_temp_v[1].Top);
-					}
-
-					CKPE_COMMON_API void DrawButton_Disabled(Canvas& canvas, LPCRECT pRect) noexcept(true)
-					{
-						CRECT rc_temp = *pRect;
-						rc_temp.Inflate(0, -2);
-
-						canvas.Fill(rc_temp, GetThemeSysColor(ThemeColor::ThemeColor_Default));
+						DrawButton_Checked(canvas, pRect, true);
 					}
 
 					CKPE_COMMON_API void DrawButton_Icon(Canvas& canvas, LPCRECT pRect, HIMAGELIST hImageList, 
@@ -194,19 +223,23 @@ namespace CKPE
 								break;
 						}
 
-						if ((lpToolBar->nmcd.uItemState & CDIS_CHECKED) == CDIS_CHECKED)
-							Render::DrawButton_Checked(Canvas, &lpToolBar->nmcd.rc);
-						else if ((lpToolBar->nmcd.uItemState & CDIS_HOT) == CDIS_HOT)
-							Render::DrawButton_Hot(Canvas, &lpToolBar->nmcd.rc);
-						else if ((lpToolBar->nmcd.uItemState & CDIS_SELECTED) == CDIS_SELECTED)
-							Render::DrawButton_Pressed(Canvas, &lpToolBar->nmcd.rc);
-						else if (((lpToolBar->nmcd.uItemState & CDIS_DISABLED) == CDIS_DISABLED) ||
-							((lpToolBar->nmcd.uItemState & CDIS_GRAYED) == CDIS_GRAYED))
-							Render::DrawButton_Disabled(Canvas, &lpToolBar->nmcd.rc);
-						else
-							Render::DrawButton_Normal(Canvas, &lpToolBar->nmcd.rc);
+						bool disabled = ((lpToolBar->nmcd.uItemState & CDIS_DISABLED) == CDIS_DISABLED) ||
+							((lpToolBar->nmcd.uItemState & CDIS_GRAYED) == CDIS_GRAYED);
+						
+						auto style = SendMessageA(hWndTB, TB_GETSTYLE, 0, 0);
+						RECT rc = (style & CCS_VERT) == CCS_VERT ? lpToolBar->nmcd.rc : 
+							RECT{ lpToolBar->nmcd.rc.left, lpToolBar->nmcd.rc.top + 2, lpToolBar->nmcd.rc.right, lpToolBar->nmcd.rc.bottom - 2 };
 
-						Render::DrawButton_Icon(Canvas, &lpToolBar->nmcd.rc, hImageList, tbButton.iBitmap);
+						if ((lpToolBar->nmcd.uItemState & CDIS_CHECKED) == CDIS_CHECKED)
+							Render::DrawButton_Checked(Canvas, std::addressof(rc), disabled);
+						else if ((lpToolBar->nmcd.uItemState & CDIS_HOT) == CDIS_HOT)
+							Render::DrawButton_Hot(Canvas, std::addressof(rc));
+						else if ((lpToolBar->nmcd.uItemState & CDIS_SELECTED) == CDIS_SELECTED)
+							Render::DrawButton_Pressed(Canvas, std::addressof(rc));
+						else
+							Render::DrawButton_Normal(Canvas, std::addressof(rc));
+
+						Render::DrawButton_Icon(Canvas, std::addressof(rc), hImageList, tbButton.iBitmap);
 
 						return CDRF_SKIPDEFAULT;
 					}
@@ -215,6 +248,7 @@ namespace CKPE
 						CUIToolWindow Toolbar = lpToolBar->nmcd.hdr.hwndFrom;
 						auto Rect = Toolbar.ClientRect();
 						Render::DrawBackground(Canvas, (LPCRECT)&Rect);
+
 						return CDRF_NOTIFYITEMDRAW;
 					}
 					default:

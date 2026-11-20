@@ -329,16 +329,15 @@ namespace CKPE
 						auto MenuItem = ViewMenu.GetItemByPos(2);
 						MenuItem.Checked = TRUE;
 
-						
-
-
 						// Fix display text hotkey toggle sound marker
 						ViewMenu.GetItem(40677).SetText("Sound Marker\tCtrl-N");
 
 						std::thread([](HWND hWnd) {
-							std::this_thread::sleep_for(250ms);
+							std::this_thread::sleep_for(350ms);
+							
+							auto mwin = MainWindow::Singleton.GetSingleton();
 							// Getting additional child Windows		
-							MainWindow::Singleton->FindToolWindow();
+							mwin->FindToolWindow();
 
 							if (ShowHideWindow::IsInitToolbarCKPE())
 							{
@@ -592,6 +591,10 @@ namespace CKPE
 							((MINMAXINFO*)lParam)->ptMaxSize.y = (WorkArea.bottom - WorkArea.top);
 							((MINMAXINFO*)lParam)->ptMaxPosition.x = WorkArea.left;
 							((MINMAXINFO*)lParam)->ptMaxPosition.y = WorkArea.top;
+
+							// Fixed broken docking if the window is reduced below an acceptable level
+							((MINMAXINFO*)lParam)->ptMinTrackSize.x = 800;
+							((MINMAXINFO*)lParam)->ptMinTrackSize.y = 600;
 						}
 						break;
 						}

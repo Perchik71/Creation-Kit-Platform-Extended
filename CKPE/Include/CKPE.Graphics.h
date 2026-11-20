@@ -22,6 +22,24 @@ namespace CKPE
 	typedef void* THandle;
 	typedef std::uint32_t TColor;
 
+	namespace
+	{
+		constexpr std::uint8_t GET_R_VALUE(TColor color) noexcept(true)
+		{
+			return static_cast<uint8_t>((color >> 16) & 0xFF);
+		}
+
+		constexpr std::uint8_t GET_G_VALUE(TColor color) noexcept(true)
+		{
+			return static_cast<uint8_t>((color >> 8) & 0xFF);
+		}
+
+		constexpr std::uint8_t GET_B_VALUE(TColor color) noexcept(true)
+		{
+			return static_cast<uint8_t>(color & 0xFF);
+		}
+	}
+
 	class CKPE_API ObjectGUI
 	{
 	public:
@@ -67,7 +85,7 @@ namespace CKPE
 		virtual bool LoadFromStream(Stream& stream) noexcept(true);
 		virtual bool SaveToStream(Stream& stream) const noexcept(true);
 		virtual void Assign(const Bitmap& bitmap) noexcept(true);
-	//	virtual 
+		virtual void Resize(std::int32_t newWidth, std::int32_t newHeight) noexcept(true);
 
 		Bitmap& operator=(const Bitmap& bitmap) noexcept(true);
 	public:

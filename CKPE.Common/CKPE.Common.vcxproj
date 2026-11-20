@@ -279,6 +279,7 @@
     <Image Include="..\Resources\navmesh.bmp" />
     <Image Include="..\Resources\scripts.bmp" />
     <Image Include="..\Resources\storymanager.bmp" />
+    <Image Include="..\Resources\toolbar.bmp" />
     <Image Include="..\Resources\types.bmp" />
     <Image Include="..\Resources\uncheck.bmp" />
     <Image Include="..\Resources\uncheck_darktheme.bmp" />

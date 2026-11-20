@@ -205,7 +205,7 @@ namespace CKPE
 				if (ret)
 				{
 					SendMessageA(ret, TB_SETIMAGELIST, 0, (LPARAM)hImageList);
-					SendMessageA(ret, TB_SETBITMAPSIZE, 0, MAKELPARAM(16, 16));
+					SendMessageA(ret, TB_SETBITMAPSIZE, 0, MAKELPARAM(22, 22));
 					ShowWindow(ret, SW_SHOWNORMAL);
 					SetWindowPos(ret, nullptr, 0, 24, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 

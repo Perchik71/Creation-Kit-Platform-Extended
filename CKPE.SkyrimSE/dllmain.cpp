@@ -12,6 +12,8 @@
 #include <CKPE.SkyrimSE.Runner.h>
 #include "resource_version2.h"
 
+#define _CKPE_TEST_SSE_FROM_DEBUGER 0
+
 extern "C"
 {
 	__declspec(dllexport) CKPEGameLibraryData CKPEGameLibrary_Data =
@@ -55,6 +57,11 @@ extern "C"
 			CKPE::SkyrimSE::VersionLists::GetRuntimeIndex());
 		interface->CmdLineHandler();
 		auto runner = CKPE::SkyrimSE::Runner::GetSingleton();
+
+#if _CKPE_TEST_SSE_FROM_DEBUGER
+		MessageBoxA(0, "Debug Stop", "Debug", MB_ICONINFORMATION);
+#endif
+
 		return runner->Install();
 	}
 };

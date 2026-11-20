@@ -453,6 +453,9 @@
     <Image Include="..\Resources\aboutwnd_2.png">
       <Filter>Resources</Filter>
     </Image>
+    <Image Include="..\Resources\toolbar.bmp">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="build_version.txt">

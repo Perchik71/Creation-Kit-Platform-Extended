@@ -180,13 +180,6 @@ namespace CKPE
 				{
 					if (Message == WM_KEYDOWN)
 					{
-						//ImGui::I
-
-						//ImGui::SetAllocatorFunctions()
-					//	ImGui::CreateContext
-						//ImGui::SetCurrentContext()
-						
-
 						if (!Keyboard::IsAltPressed() && !Keyboard::IsControlPressed() && Keyboard::IsShiftPressed())
 						{
 							switch (wParam)
@@ -289,7 +282,12 @@ namespace CKPE
 
 			void RenderWindow::setFlagLoadCell() noexcept(true)
 			{
-				RenderWindow::Singleton->_BlockInputMessage = false;
+				auto renderWnd = RenderWindow::Singleton.GetSingleton();
+				renderWnd->_BlockInputMessage = false;
+
+				// Fixed invalid matrix perspective
+				auto rc = renderWnd->WindowRect();
+				SetWindowPos(renderWnd->Handle, nullptr, 0, 0, rc.Width, rc.Height, SWP_NOMOVE);
 			}
 
 			void RenderWindow::ImGuiDrawInfo() noexcept(true)
