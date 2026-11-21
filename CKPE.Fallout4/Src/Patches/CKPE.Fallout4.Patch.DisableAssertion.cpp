@@ -58,9 +58,7 @@ namespace CKPE
 				// Remove assertion message boxes
 				//
 				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_1FFF3E0, 0x50).Address(), 5);
-				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_1FFF470, 0x46).Address(), 5);
 				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_1FFF4F0, 0x37).Address(), 5);
-				text.WriteNop(Relocation(EditorAPI::IDs::Functions::sub_1FFF570, 0x44).Address(), 5);
 
 				return true;
 			}

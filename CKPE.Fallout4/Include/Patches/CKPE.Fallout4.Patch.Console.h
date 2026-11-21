@@ -71,7 +71,6 @@ namespace CKPE
 				static void LogWarning(MsgType Type, const char* Format, ...) noexcept(true);
 				static void LogWarningVa(MsgType Type, const char* Format, va_list& Va) noexcept(true);
 				static void LogWarningUnknown1(const char* Format, ...) noexcept(true);
-				static void LogWarningUnknown2(__int64 Unused, const char* Format, ...) noexcept(true);
 				static void LogAssert(const char* File, int Line, const char* Message, ...) noexcept(true);
 				[[nodiscard]] bool SupportsAddressLibrary() const noexcept(true) override { return true; }
 			};

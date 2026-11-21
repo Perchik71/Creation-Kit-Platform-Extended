@@ -397,6 +397,16 @@ namespace CKPE
 					inline constexpr Common::ID Show{ 0, 1855063 };
 				}
 
+				namespace Console
+				{
+					inline constexpr Common::ID LogAssert{ 509260, 1687367 };
+					inline constexpr Common::ID LogWarningVa{ 440122, 1515122 };
+					inline constexpr Common::ID LogWarningUnknown1_1{ 635645, 1668403 };
+					inline constexpr Common::ID LogWarningUnknown1_2{ 433174, 2009876 };
+					inline constexpr Common::ID LogWarningUnknown1_3{ 751443, 1618957 };
+					inline constexpr Common::ID LogWarningUnknown1_4{ 714644, 1618560 };
+				}
+
 				namespace TESRenderControl
 				{
 					inline constexpr Common::ID Constructor{ 531711 };
@@ -975,22 +985,10 @@ namespace CKPE
 					inline constexpr Common::ID sub_1CC48D0{ 660208, 1990223 };
 					// 1.11.246.0 0x141FFBDA0 sub_141FFBDA0
 					inline constexpr Common::ID sub_1FFBDA0{ 650953, 1356979 };
-					// 1.11.246.0 0x141FFF220 sub_141FFF220
-					inline constexpr Common::ID sub_1FFF220{ 440122, 1515122 };
 					// 1.11.246.0 0x141FFF3E0 sub_141FFF3E0
 					inline constexpr Common::ID sub_1FFF3E0{ 724238, 1542517 };
-					// 1.11.246.0 0x141FFF470 sub_141FFF470
-					inline constexpr Common::ID sub_1FFF470{ 509260, 1687367 };
 					// 1.11.246.0 0x141FFF4F0 sub_141FFF4F0
 					inline constexpr Common::ID sub_1FFF4F0{ 705489, 1718922 };
-					// 1.11.246.0 0x141FFF570 sub_141FFF570
-					inline constexpr Common::ID sub_1FFF570{ 433174, 2009876 };
-					// 1.11.246.0 0x141FFF610 sub_141FFF610
-					inline constexpr Common::ID sub_1FFF610{ 751443, 1618957 };
-					// 1.11.246.0 0x141FFF750 sub_141FFF750
-					inline constexpr Common::ID sub_1FFF750{ 635645, 1668403 };
-					// 1.11.246.0 0x141FFF810 sub_141FFF810
-					inline constexpr Common::ID sub_1FFF810{ 714644, 1618560 };
 					// 1.11.246.0 0x14201A140 sub_14201A140
 					inline constexpr Common::ID sub_201A140{ 1352498 };
 					// 1.11.246.0 0x14204C730 sub_14204C730

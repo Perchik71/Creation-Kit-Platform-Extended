@@ -88,13 +88,15 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				Relocation(EditorAPI::IDs::Functions::sub_1FFF220).WriteJump(LogWarningVa);
-				Relocation(EditorAPI::IDs::Functions::sub_1FFF750).WriteJump(LogWarningUnknown1);
-				Relocation(EditorAPI::IDs::Functions::sub_1FFF570).WriteJump(LogWarningUnknown1);
-				Relocation(EditorAPI::IDs::Functions::sub_1FFF610).WriteJump(LogWarningUnknown1);
-				Relocation(EditorAPI::IDs::Functions::sub_1FFF810).WriteJump(LogWarningUnknown1);
-				Relocation(EditorAPI::IDs::TESDataHandler::LoadFiles, Offset{ 0x7B3, 0x744 }).WriteCall(LogWarningUnknown2);
-				Relocation(EditorAPI::IDs::Functions::sub_1FFF470).WriteJump(LogAssert);
+				
+				//inline constexpr Common::ID LogWarningUnknown2{ 0, 1855063 };
+
+				Relocation(EditorAPI::IDs::Console::LogWarningVa).WriteJump(LogWarningVa);
+				Relocation(EditorAPI::IDs::Console::LogWarningUnknown1_1).WriteJump(LogWarningUnknown1);
+				Relocation(EditorAPI::IDs::Console::LogWarningUnknown1_2).WriteJump(LogWarningUnknown1);
+				Relocation(EditorAPI::IDs::Console::LogWarningUnknown1_3).WriteJump(LogWarningUnknown1);
+				Relocation(EditorAPI::IDs::Console::LogWarningUnknown1_4).WriteJump(LogWarningUnknown1);
+				Relocation(EditorAPI::IDs::Console::LogAssert).WriteJump(LogAssert);
 
 				return true;
 			}
@@ -129,14 +131,6 @@ namespace CKPE
 			}
 
 			void Console::LogWarningUnknown1(const char* Format, ...) noexcept(true)
-			{
-				va_list va;
-				va_start(va, Format);
-				LogVa(Format, va);
-				va_end(va);
-			}
-
-			void Console::LogWarningUnknown2(__int64 Unused, const char* Format, ...) noexcept(true)
 			{
 				va_list va;
 				va_start(va, Format);
