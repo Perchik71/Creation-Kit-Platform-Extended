@@ -368,7 +368,7 @@ jobs:
             --prerelease \
             --latest=false
         elif [ "${{ inputs.release_type }}" = "release" ]; then
-          gh release create release dist/*.zip \
+          gh release create release_${SHORT_SHA} dist/*.zip \
             --repo "${GITHUB_REPOSITORY}" \
             --target "${GITHUB_SHA}" \
             --title "Release (${SHORT_SHA})" \
