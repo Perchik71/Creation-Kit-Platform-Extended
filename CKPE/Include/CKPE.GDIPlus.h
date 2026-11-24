@@ -83,8 +83,8 @@ namespace CKPE
 		static void OutlineRoundedRect(THandle hRenderer, LPCRECT lpRect, std::int32_t radius, const GDIPlusColor& color, float fWidth = 1.0f) noexcept(true);
 		static void DrawRoundedRectShadow(THandle hRenderer, LPCRECT lpRect, std::int32_t radius, const GDIPlusColor& color, std::int32_t blur,
 			std::int32_t offsetX, std::int32_t offsetY) noexcept(true);
-		static void DrawImage(THandle hRenderer, THandle hBitmap, LPCRECT lpRect) noexcept(true);
-		static void DrawImage(THandle hRenderer, THandle hBitmap, std::int32_t x, std::int32_t y, std::int32_t cx, std::int32_t cy) noexcept(true);
+		static void DrawImage(THandle hRenderer, THandle hBitmap, LPCRECT lpRect, float fAlpha = 1.f) noexcept(true);
+		static void DrawImage(THandle hRenderer, THandle hBitmap, std::int32_t x, std::int32_t y, std::int32_t cx, std::int32_t cy, float fAlpha = 1.f) noexcept(true);
 	};
 
 	class CKPE_API GDIPlusRendererHelpers

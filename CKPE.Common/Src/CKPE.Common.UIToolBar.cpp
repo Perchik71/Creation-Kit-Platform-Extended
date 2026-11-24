@@ -114,7 +114,7 @@ namespace CKPE
 					}
 
 					CKPE_COMMON_API void DrawButton_Icon(THandle hRenderer, LPCRECT pRect, HIMAGELIST hImageList,
-						std::int32_t nIndex, std::int32_t nState) noexcept(true)
+						std::int32_t nIndex, bool bDisabled, std::int32_t nState) noexcept(true)
 					{
 						CRECT rc_temp = *pRect;
 
@@ -123,6 +123,9 @@ namespace CKPE
 							additional = ILD_FOCUS;
 						else if (nState == 2)
 							additional = ILD_SELECTED;
+
+						if (bDisabled)
+							additional |= ILD_BLEND25;
 
 						IMAGEINFO imageListInfo;
 						if (!ImageList_GetImageInfo(hImageList, nIndex, std::addressof(imageListInfo)))
@@ -138,7 +141,7 @@ namespace CKPE
 
 						if (bmInfo.bmBitsPixel == 32)
 						{
-							auto hIcon = ImageList_GetIcon(hImageList, nIndex, ILD_TRANSPARENT | additional);
+							auto hIcon = ImageList_GetIcon(hImageList, nIndex, ILD_TRANSPARENT);
 							if (!hIcon)
 								return;
 
@@ -147,7 +150,7 @@ namespace CKPE
 								return;
 
 							GDIPlusRenderer::DrawImage(hRenderer, iconInfo.hbmColor, ((rc_temp.Width - w) >> 1),
-								((rc_temp.Height - h) >> 1), w, h);
+								((rc_temp.Height - h) >> 1), w, h, bDisabled ? .5f : 1.f);
 
 							if (iconInfo.hbmColor)
 							{
@@ -248,7 +251,7 @@ namespace CKPE
 							else
 								Render::DrawButton_Normal(renderer);
 
-							Render::DrawButton_Icon(renderer, std::addressof(rc), hImageList, tbButton.iBitmap);
+							Render::DrawButton_Icon(renderer, std::addressof(rc), hImageList, tbButton.iBitmap, disabled);
 
 							GDIPlusRenderer::DrawEnd(renderer);
 						}

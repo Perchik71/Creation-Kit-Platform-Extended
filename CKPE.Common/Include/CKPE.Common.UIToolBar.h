@@ -25,7 +25,7 @@ namespace CKPE
 					CKPE_COMMON_API void DrawButton_Checked(THandle hRenderer, LPCRECT pRect, bool bDisabled) noexcept(true);
 					CKPE_COMMON_API void DrawButton_Pressed(THandle hRenderer, LPCRECT pRect) noexcept(true);
 					CKPE_COMMON_API void DrawButton_Icon(THandle hRenderer, LPCRECT pRect, HIMAGELIST hImageList,
-						std::int32_t nIndex, std::int32_t nState = 0) noexcept(true);
+						std::int32_t nIndex, bool bDisabled = false, std::int32_t nState = 0) noexcept(true);
 				}
 
 				CKPE_COMMON_API void Initialize(HWND hWindow) noexcept(true);

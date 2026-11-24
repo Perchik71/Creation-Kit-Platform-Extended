@@ -694,15 +694,15 @@ namespace CKPE
 		delete body;
 	}
 
-	void GDIPlusRenderer::DrawImage(THandle hRenderer, THandle hBitmap, LPCRECT lpRect) noexcept(true)
+	void GDIPlusRenderer::DrawImage(THandle hRenderer, THandle hBitmap, LPCRECT lpRect, float fAlpha) noexcept(true)
 	{
 		if (!lpRect)
 			return;
 
-		DrawImage(hRenderer, hBitmap, lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top);
+		DrawImage(hRenderer, hBitmap, lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top, fAlpha);
 	}
 
-	void GDIPlusRenderer::DrawImage(THandle hRenderer, THandle hBitmap, std::int32_t x, std::int32_t y, std::int32_t cx, std::int32_t cy) noexcept(true)
+	void GDIPlusRenderer::DrawImage(THandle hRenderer, THandle hBitmap, std::int32_t x, std::int32_t y, std::int32_t cx, std::int32_t cy, float fAlpha) noexcept(true)
 	{
 		auto handle = AsHandle(hRenderer);
 		if (!handle || !handle->g || !hBitmap)
@@ -764,7 +764,27 @@ namespace CKPE
 
 		auto oldMode = handle->g->GetInterpolationMode();
 		handle->g->SetInterpolationMode(InterpolationModeHighQualityBicubic);
-		handle->g->DrawImage(bmp, x, y, cx, cy);
+
+		if (fAlpha < .999f)
+		{
+			// Цветовая матрица: альфа умножается на 0.5 => прозрачность 50%
+			Gdiplus::ColorMatrix alphaMatrix = {
+				1.0f, 0.0f, 0.0f, 0.0f,   0.0f,
+				0.0f, 1.0f, 0.0f, 0.0f,   0.0f,
+				0.0f, 0.0f, 1.0f, 0.0f,   0.0f,
+				0.0f, 0.0f, 0.0f, fAlpha, 0.0f,
+				0.0f, 0.0f, 0.0f, 0.0f,   1.0f
+			};
+
+			Gdiplus::ImageAttributes attrs;
+			attrs.SetColorMatrix(&alphaMatrix);
+			Rect destRect(x, y, cx, cy);
+			
+			handle->g->DrawImage(bmp, destRect, 0, 0, bmInfo.bmWidth, bmInfo.bmHeight, UnitPixel, &attrs);
+		}
+		else
+			handle->g->DrawImage(bmp, x, y, cx, cy);
+		
 		handle->g->SetInterpolationMode(oldMode);
 
 		delete bmp;
