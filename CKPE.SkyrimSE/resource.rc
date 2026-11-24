@@ -52,6 +52,7 @@ END
 //
 
 IDB_TOOLBAR_SHOWHIDE    PNG                     "..\\Resources\\toolbar_sh.png"
+IDB_TOOLBAR_SHOWHIDE_WT PNG                     "..\\Resources\\toolbar_sh_white.png"
 
 #endif    // Русский (Россия) resources
 /////////////////////////////////////////////////////////////////////////////

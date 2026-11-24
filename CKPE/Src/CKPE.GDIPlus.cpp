@@ -16,22 +16,31 @@
 #include <CKPE.Stream.h>
 #include <CKPE.PathUtils.h>
 
-#include <format>
+#include <atomic>
 
 namespace CKPE
 {
+	static std::atomic_uint32_t _sgdi_refcount{ 0 };
 	static GDIPlus _sgdiplus;
-	static Gdiplus::GdiplusStartupInput	_sgdiplusStartupInput;
 	static ULONG_PTR _sgdiplusToken;
 
 	GDIPlus::GDIPlus() noexcept(true)
 	{
-		Gdiplus::GdiplusStartup(&_sgdiplusToken, &_sgdiplusStartupInput, nullptr);
+		if (!_sgdi_refcount.fetch_add(1))
+		{
+			Gdiplus::GdiplusStartupInput input;
+			input.GdiplusVersion = 1;
+			input.DebugEventCallback = nullptr;
+			input.SuppressBackgroundThread = FALSE;
+			if (Status::Ok != Gdiplus::GdiplusStartup(&_sgdiplusToken, &input, nullptr))
+				_sgdi_refcount.fetch_sub(1);
+		}
 	}
 
 	GDIPlus::~GDIPlus() noexcept(true)
 	{
-		Gdiplus::GdiplusShutdown(_sgdiplusToken);
+		if (_sgdi_refcount.fetch_sub(1) == 1)
+			Gdiplus::GdiplusShutdown(_sgdiplusToken);
 	}
 
 	THandle GDIPlus::LoadImageFromFile(const std::wstring& fname) noexcept(true)
@@ -253,42 +262,6 @@ namespace CKPE
 		return Result;
 	}
 
-	//// ---------- Скруглённый прямоугольник ----------
-	//GraphicsPath* MakeRoundedRect(const RectF& r, REAL rad)
-	//{
-	//	GraphicsPath* p = new GraphicsPath();
-	//	REAL d = rad * 2;
-	//	p->AddArc(r.X, r.Y, d, d, 180, 90);
-	//	p->AddArc(r.X + r.Width - d, r.Y, d, d, 270, 90);
-	//	p->AddArc(r.X + r.Width - d, r.Y + r.Height - d, d, d, 0, 90);
-	//	p->AddArc(r.X, r.Y + r.Height - d, d, d, 90, 90);
-	//	p->CloseFigure();
-	//	return p;
-	//}
-
-	//// ---------- Тень: несколько полупрозрачных слоёв со сдвигом ----------
-	//void DrawShadow(Graphics& g, GraphicsPath* body, REAL blur, REAL dx, REAL dy)
-	//{
-	//	const int layers = 6;
-	//	for (int i = layers; i >= 1; --i)
-	//	{
-	//		REAL grow = blur * i / layers;          // насколько расширяем тень
-	//		GraphicsPath* s = body->Clone();
-	//		Matrix m;
-	//		// расширяем контур и сдвигаем вниз-вправо
-	//		m.Translate(dx * i / layers, dy * i / layers);
-	//		s->Transform(&m);
-	//		GraphicsPath* wider = MakeRoundedRect(
-	//			RectF(s->GetBounds().X - grow, s->GetBounds().Y - grow,
-	//				s->GetBounds().Width + grow * 2,
-	//				s->GetBounds().Height + grow * 2), 14);
-	//		SolidBrush b(Color(28 * i / layers, 0, 0, 0)); // альфа ~28..2
-	//		g.FillPath(&b, wider);
-	//		delete wider;
-	//		delete s;
-	//	}
-	//}
-
 	GDIPlus* GDIPlus::GetSingleton() noexcept(true)
 	{
 		return &_sgdiplus;
@@ -361,7 +334,7 @@ namespace CKPE
 
 		constexpr std::uint8_t GET_R_VALUE(TColor color) noexcept(true)
 		{
-			return static_cast<uint8_t>((color >> 16) & 0xFF);
+			return static_cast<uint8_t>(color & 0xFF);
 		}
 
 		constexpr std::uint8_t GET_G_VALUE(TColor color) noexcept(true)
@@ -371,7 +344,7 @@ namespace CKPE
 
 		constexpr std::uint8_t GET_B_VALUE(TColor color) noexcept(true)
 		{
-			return static_cast<uint8_t>(color & 0xFF);
+			return static_cast<uint8_t>((color >> 16) & 0xFF);
 		}
 	}
 
@@ -446,7 +419,7 @@ namespace CKPE
 		return *this;
 	}
 
-	THandle GDIPlusRenderer::DrawBegin(THandle hSrcDC, LPCRECT lpSrcRect) noexcept(true)
+	THandle GDIPlusRenderer::DrawBegin(THandle hSrcDC, LPCRECT lpSrcRect, bool bCopyBackFrame) noexcept(true)
 	{
 		auto handle = new GDIPlusRendererHandle;
 		if (!handle)
@@ -477,8 +450,13 @@ namespace CKPE
 			delete handle;
 			return nullptr;
 		}
-
 		handle->oldSelectBitmap = SelectObject(handle->compatible, handle->compatibleBitmap);
+
+		if (bCopyBackFrame)
+			// Скопировать задний буффер
+			BitBlt(handle->compatible, 0, 0, handle->GetSrcWidth(), handle->GetSrcHeight(),
+				handle->src, handle->srcRect.left, handle->srcRect.top, SRCCOPY);
+
 		handle->g = new Gdiplus::Graphics(handle->compatible);
 		if (!handle->g)
 		{
@@ -501,6 +479,24 @@ namespace CKPE
 			handle->compatible, 0, 0, SRCCOPY);
 
 		delete handle;
+	}
+
+	THandle GDIPlusRenderer::GetSrcDC(THandle hRenderer) noexcept(true)
+	{
+		auto handle = AsHandle(hRenderer);
+		if (!handle)
+			return nullptr;
+
+		return handle->src;
+	}
+
+	THandle GDIPlusRenderer::GetCompatibleDC(THandle hRenderer) noexcept(true)
+	{
+		auto handle = AsHandle(hRenderer);
+		if (!handle)
+			return nullptr;
+
+		return handle->compatible;
 	}
 
 	void GDIPlusRenderer::SetClearColor(THandle hRenderer, std::uint8_t r, std::uint8_t g, std::uint8_t b, std::uint8_t a) noexcept(true)
@@ -698,6 +694,82 @@ namespace CKPE
 		delete body;
 	}
 
+	void GDIPlusRenderer::DrawImage(THandle hRenderer, THandle hBitmap, LPCRECT lpRect) noexcept(true)
+	{
+		if (!lpRect)
+			return;
+
+		DrawImage(hRenderer, hBitmap, lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top);
+	}
+
+	void GDIPlusRenderer::DrawImage(THandle hRenderer, THandle hBitmap, std::int32_t x, std::int32_t y, std::int32_t cx, std::int32_t cy) noexcept(true)
+	{
+		auto handle = AsHandle(hRenderer);
+		if (!handle || !handle->g || !hBitmap)
+			return;
+
+		BITMAP bmInfo{};
+		if (!GetObjectA(hBitmap, sizeof(bmInfo), (LPSTR)std::addressof(bmInfo)))
+			return;
+
+		Gdiplus::Bitmap* bmp = nullptr;
+
+		if (bmInfo.bmBitsPixel == 32)
+		{
+			auto BitmapFromAlphaHBITMAP = [](HBITMAP hBitmap) -> Gdiplus::Bitmap*
+				{
+					BITMAP bm{};
+					if (!GetObjectA(hBitmap, sizeof(bm), (LPSTR)std::addressof(bm)))
+						return nullptr;
+
+					BITMAPINFOHEADER bi = { sizeof(bi) };
+					bi.biWidth = bm.bmWidth;
+					bi.biHeight = -bm.bmHeight;   // top-down
+					bi.biPlanes = 1;
+					bi.biBitCount = 32;
+					bi.biCompression = BI_RGB;
+
+					std::vector<BYTE> buf(static_cast<std::size_t>(bm.bmWidth) * bm.bmHeight * 4);
+
+					HDC hdc = GetDC(nullptr);
+					int lines = GetDIBits(hdc, hBitmap, 0, bm.bmHeight, buf.data(), (BITMAPINFO*)std::addressof(bi), DIB_RGB_COLORS);
+					ReleaseDC(nullptr, hdc);
+
+					if (lines != bm.bmHeight)
+						return nullptr;
+
+					auto* pBitmap = new Gdiplus::Bitmap(bm.bmWidth, bm.bmHeight, PixelFormat32bppPARGB);
+					Rect rc(0, 0, bm.bmWidth, bm.bmHeight);
+					Gdiplus::BitmapData bd;
+					if (pBitmap->LockBits(&rc, Gdiplus::ImageLockModeWrite, PixelFormat32bppPARGB, &bd) == Status::Ok)
+					{
+						BYTE* src = buf.data();
+						for (int y = 0; y < bm.bmHeight; ++y)
+						{
+							memcpy((BYTE*)bd.Scan0 + y * bd.Stride, src, size_t(bm.bmWidth) * 4);
+							src += size_t(bm.bmWidth) * 4;
+						}
+						pBitmap->UnlockBits(&bd);
+					}
+					return pBitmap;
+				};
+
+			bmp = BitmapFromAlphaHBITMAP((HBITMAP)hBitmap);
+		}
+		else
+			bmp = new Gdiplus::Bitmap((HBITMAP)hBitmap, nullptr);
+
+		if (!bmp)
+			return;
+
+		auto oldMode = handle->g->GetInterpolationMode();
+		handle->g->SetInterpolationMode(InterpolationModeHighQualityBicubic);
+		handle->g->DrawImage(bmp, x, y, cx, cy);
+		handle->g->SetInterpolationMode(oldMode);
+
+		delete bmp;
+	}
+
 	void GDIPlusRendererHelpers::DrawRoundedSquare(THandle hRenderer, LPCRECT lpRect,
 		std::int32_t radius,
 		const GDIPlusColor& bodyGradientTop,
@@ -746,35 +818,5 @@ namespace CKPE
 				GDIPlusRenderer::OutlineRoundedRect(hRenderer, std::addressof(rc), radius, c, 1.f);
 			}
 		}
-
-
-		//GDIPlusRenderer::FillRoundedRectGradient(hRenderer, lpRect, radius, frameGradientTop, frameGradientBottom);
-		//RECT rcInner{ lpRect->left + inset, lpRect->top + inset, lpRect->right - inset, lpRect->bottom - inset };
-
-		//// Подсветка нижней кромки: сначала заливаем цветом подсветки,
-		//// затем градиент с подъеденным низом оставляет 1px светлой полоски
-		//GDIPlusRenderer::FillRoundedRect(hRenderer, std::addressof(rcInner), radius, innerHighlight);
-
-		//RECT rcGrad = rcInner;
-		//rcGrad.bottom -= 1;
-		//GDIPlusRenderer::FillRoundedRectGradient(hRenderer, std::addressof(rcGrad), radius, innerGradientTop, innerGradientBottom);
-
-		//// Внутренняя тень: слои обводки с убывающей альфой от кромки вглубь — сильнее у края, мягко тает
-		//if ((innerShadowDepth > 0) && innerShadow.a)
-		//{
-		//	for (std::int32_t i = innerShadowDepth; i >= 1; --i)
-		//	{
-		//		RECT rc{ 
-		//			rcInner.left + i - 1,	rcInner.top + i - 1,
-		//			rcInner.right - i + 1,	rcInner.bottom - i + 1 };
-
-		//		GDIPlusColor c = innerShadow;
-		//		c.a = (std::uint8_t)((std::uint32_t)innerShadow.a * i / innerShadowDepth);
-		//		GDIPlusRenderer::OutlineRoundedRect(hRenderer, std::addressof(rc), radius, c, 1.0f);
-		//	}
-		//}
-
-		//// Внешняя окантовка
-		//GDIPlusRenderer::OutlineRoundedRect(hRenderer, lpRect, radius, frameOutline, 1.0f);
 	}
 }

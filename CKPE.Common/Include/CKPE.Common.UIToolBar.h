@@ -20,11 +20,11 @@ namespace CKPE
 				namespace Render
 				{
 					CKPE_COMMON_API void DrawBackground(Canvas& canvas, LPCRECT pRect) noexcept(true);
-					CKPE_COMMON_API void DrawButton_Normal(Canvas& canvas, LPCRECT pRect) noexcept(true);
-					CKPE_COMMON_API void DrawButton_Hot(Canvas& canvas, LPCRECT pRect) noexcept(true);
-					CKPE_COMMON_API void DrawButton_Checked(Canvas& canvas, LPCRECT pRect, bool bDisabled) noexcept(true);
-					CKPE_COMMON_API void DrawButton_Pressed(Canvas& canvas, LPCRECT pRect) noexcept(true);
-					CKPE_COMMON_API void DrawButton_Icon(Canvas& canvas, LPCRECT pRect, HIMAGELIST hImageList, 
+					CKPE_COMMON_API void DrawButton_Normal(THandle hRenderer) noexcept(true);
+					CKPE_COMMON_API void DrawButton_Hot(THandle hRenderer, LPCRECT pRect) noexcept(true);
+					CKPE_COMMON_API void DrawButton_Checked(THandle hRenderer, LPCRECT pRect, bool bDisabled) noexcept(true);
+					CKPE_COMMON_API void DrawButton_Pressed(THandle hRenderer, LPCRECT pRect) noexcept(true);
+					CKPE_COMMON_API void DrawButton_Icon(THandle hRenderer, LPCRECT pRect, HIMAGELIST hImageList,
 						std::int32_t nIndex, std::int32_t nState = 0) noexcept(true);
 				}
 

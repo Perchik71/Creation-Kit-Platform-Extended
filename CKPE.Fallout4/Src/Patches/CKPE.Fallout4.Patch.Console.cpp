@@ -88,9 +88,6 @@ namespace CKPE
 			{
 				using namespace Common;
 
-				
-				//inline constexpr Common::ID LogWarningUnknown2{ 0, 1855063 };
-
 				Relocation(EditorAPI::IDs::Console::LogWarningVa).WriteJump(LogWarningVa);
 				Relocation(EditorAPI::IDs::Console::LogWarningUnknown1_1).WriteJump(LogWarningUnknown1);
 				Relocation(EditorAPI::IDs::Console::LogWarningUnknown1_2).WriteJump(LogWarningUnknown1);

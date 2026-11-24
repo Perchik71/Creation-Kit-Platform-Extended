@@ -1752,5 +1752,8 @@
     <Image Include="..\Resources\toolbar_sh.png">
       <Filter>Resources</Filter>
     </Image>
+    <Image Include="..\Resources\toolbar_sh_white.png">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -4,7 +4,9 @@
 
 #include <windows.h>
 #include <CKPE.Utils.h>
+#include <CKPE.Graphics.h>
 #include <CKPE.Application.h>
+#include <CKPE.Common.UIVarCommon.h>
 #include <CKPE.Common.Interface.h>
 #include <CKPE.SkyrimSE.VersionLists.h>
 #include <Patches/CKPE.SkyrimSE.Patch.MainWindow.h>
@@ -59,8 +61,22 @@ namespace CKPE
 						return;
 
 					auto inst = GetModuleHandleA("CKPE.SkyrimSE.dll");
+					bool darkThemeDetected = false;
 
-					(void)imageList.InitFromResource((THandle)inst, IDB_TOOLBAR_SHOWHIDE, L"PNG");
+					auto ResolveDarkColor = [](std::uint32_t color)
+						{
+							auto c =
+								static_cast<std::uint32_t>(GET_R_VALUE(color)) +
+								static_cast<std::uint32_t>(GET_G_VALUE(color)) +
+								static_cast<std::uint32_t>(GET_B_VALUE(color));
+
+							c /= 3;
+							return c <= 127;
+						};
+
+					darkThemeDetected = ResolveDarkColor(Common::UI::IsDarkTheme() ?
+						Common::UI::Comctl32GetSysColor(COLOR_BTNFACE) : GetSysColor(COLOR_BTNFACE));
+					(void)imageList.InitFromResource((THandle)inst, darkThemeDetected ? IDB_TOOLBAR_SHOWHIDE : IDB_TOOLBAR_SHOWHIDE_WT, L"PNG");
 
 					// Инициализация общих элементов управления
 					INITCOMMONCONTROLSEX icex{};
@@ -88,26 +104,27 @@ namespace CKPE
 					// Добавление кнопок
 					static std::array<TBBUTTON, 15> tbButtons
 					{ {
-						{ -1, -1,																TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_SEP,	{}, 0L, 0 },
-						{ MAKELONG(0, 0),  std::to_underlying(Command::kMarkers),				TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-						{ MAKELONG(0, 1),  std::to_underlying(Command::kLightMarkers),			TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-						{ MAKELONG(0, 2),  std::to_underlying(Command::kSoundMarkers),			TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-						{ MAKELONG(0, 3),  std::to_underlying(Command::kMultiboundMarkers),		TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-						{ MAKELONG(0, 4),  std::to_underlying(Command::kOcclusionMarkers),		TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-						{ MAKELONG(0, 5),  std::to_underlying(Command::kPortalAndRoomMarkers),	TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-						{ MAKELONG(0, 6),  std::to_underlying(Command::kCollisionMarkers),		TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-						{ -1, -1,																TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_SEP,	{}, 0L, 0 },
-						{ MAKELONG(0, 7),  std::to_underlying(Command::kTerrain),				TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-						{ MAKELONG(0, 8),  std::to_underlying(Command::kWater),					TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-						{ MAKELONG(0, 9),  std::to_underlying(Command::kStatics),				TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-						{ MAKELONG(0, 10), std::to_underlying(Command::kActors),				TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-						{ MAKELONG(0, 11), std::to_underlying(Command::kDynamics),				TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
-						{ MAKELONG(0, 12), std::to_underlying(Command::kDecals),				TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
+						{ 0,  0,													TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_SEP,	{}, 0L, 0 },
+						{ 0,  std::to_underlying(Command::kMarkers),				TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
+						{ 1,  std::to_underlying(Command::kLightMarkers),			TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
+						{ 2,  std::to_underlying(Command::kSoundMarkers),			TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
+						{ 3,  std::to_underlying(Command::kMultiboundMarkers),		TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
+						{ 4,  std::to_underlying(Command::kOcclusionMarkers),		TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
+						{ 5,  std::to_underlying(Command::kPortalAndRoomMarkers),	TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
+						{ 6,  std::to_underlying(Command::kCollisionMarkers),		TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
+						{ 0,  0,													TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_SEP,	{}, 0L, 0 },
+						{ 7,  std::to_underlying(Command::kTerrain),				TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
+						{ 8,  std::to_underlying(Command::kWater),					TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
+						{ 9,  std::to_underlying(Command::kStatics),				TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
+						{ 10, std::to_underlying(Command::kActors),					TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
+						{ 11, std::to_underlying(Command::kDynamics),				TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
+						{ 12, std::to_underlying(Command::kDecals),					TBSTATE_ENABLED, TBSTYLE_AUTOSIZE | TBSTYLE_CHECK,	{}, 0L, 0 },
 					} };
 
 					// Создаём список изображений (иконок)
 					SendMessageA(hWnd, TB_SETIMAGELIST, (WPARAM)0, (LPARAM)imageList.Handle);
 					SendMessageA(hWnd, TB_LOADIMAGES, (WPARAM)TRUE, (LPARAM)imageList.Handle);
+					SendMessageA(hWnd, TB_SETBITMAPSIZE, 0, MAKELPARAM(34, 34));
 
 					// Добавление кнопок
 					SendMessageA(hWnd, TB_BUTTONSTRUCTSIZE, static_cast<WPARAM>(sizeof(TBBUTTON)), 0);

@@ -4,6 +4,7 @@
 //
 
 #define IDB_TOOLBAR_SHOWHIDE            101
+#define IDB_TOOLBAR_SHOWHIDE_WT         102
 
 // Next default values for new objects
 // 

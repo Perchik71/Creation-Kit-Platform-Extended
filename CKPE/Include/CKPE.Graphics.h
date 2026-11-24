@@ -26,7 +26,7 @@ namespace CKPE
 	{
 		constexpr std::uint8_t GET_R_VALUE(TColor color) noexcept(true)
 		{
-			return static_cast<uint8_t>((color >> 16) & 0xFF);
+			return static_cast<uint8_t>(color & 0xFF);
 		}
 
 		constexpr std::uint8_t GET_G_VALUE(TColor color) noexcept(true)
@@ -36,7 +36,7 @@ namespace CKPE
 
 		constexpr std::uint8_t GET_B_VALUE(TColor color) noexcept(true)
 		{
-			return static_cast<uint8_t>(color & 0xFF);
+			return static_cast<uint8_t>((color >> 16) & 0xFF);
 		}
 	}
 

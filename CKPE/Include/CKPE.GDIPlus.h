@@ -67,8 +67,10 @@ namespace CKPE
 		GDIPlusRenderer() noexcept(true) = default;
 		virtual ~GDIPlusRenderer() noexcept(true) = default;
 
-		static THandle DrawBegin(THandle hSrcDC, LPCRECT lpSrcRect = nullptr) noexcept(true);
+		static THandle DrawBegin(THandle hSrcDC, LPCRECT lpSrcRect = nullptr, bool bCopyBackFrame = false) noexcept(true);
 		static void DrawEnd(THandle hRenderer) noexcept(true);
+		static THandle GetSrcDC(THandle hRenderer) noexcept(true);
+		static THandle GetCompatibleDC(THandle hRenderer) noexcept(true);
 
 		static void SetClearColor(THandle hRenderer, std::uint8_t r, std::uint8_t g, std::uint8_t b, std::uint8_t a) noexcept(true);
 
@@ -81,6 +83,8 @@ namespace CKPE
 		static void OutlineRoundedRect(THandle hRenderer, LPCRECT lpRect, std::int32_t radius, const GDIPlusColor& color, float fWidth = 1.0f) noexcept(true);
 		static void DrawRoundedRectShadow(THandle hRenderer, LPCRECT lpRect, std::int32_t radius, const GDIPlusColor& color, std::int32_t blur,
 			std::int32_t offsetX, std::int32_t offsetY) noexcept(true);
+		static void DrawImage(THandle hRenderer, THandle hBitmap, LPCRECT lpRect) noexcept(true);
+		static void DrawImage(THandle hRenderer, THandle hBitmap, std::int32_t x, std::int32_t y, std::int32_t cx, std::int32_t cy) noexcept(true);
 	};
 
 	class CKPE_API GDIPlusRendererHelpers
