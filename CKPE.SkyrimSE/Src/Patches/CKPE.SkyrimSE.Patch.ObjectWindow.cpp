@@ -117,6 +117,10 @@ namespace CKPE
 				lpObjWnd->Controls.TreeList.UnlockUpdate();
 
 				lpObjWnd->Controls.EditFilter.Repaint();
+				lpObjWnd->Controls.ItemList.Repaint();
+				lpObjWnd->Controls.TreeList.Repaint();
+
+				lpObjWnd->ObjectWindow.Refresh();
 			}
 
 			ObjectWindow::ObjectWindow() : Common::PatchBaseWindow()
@@ -226,9 +230,9 @@ namespace CKPE
 
 					// Erase Icon and SysMenu
 					if (!ObjectWindows.size())
-						lpObjWnd->ObjectWindow.Style = WS_OVERLAPPED | WS_CAPTION | WS_THICKFRAME;
+						lpObjWnd->ObjectWindow.Style = WS_OVERLAPPED | WS_CAPTION | WS_THICKFRAME | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
 					else
-						lpObjWnd->ObjectWindow.Style = WS_OVERLAPPED | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_SYSMENU;
+						lpObjWnd->ObjectWindow.Style = WS_OVERLAPPED | WS_CAPTION | WS_THICKFRAME | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_MINIMIZEBOX | WS_SYSMENU;
 
 					ObjectWindows.emplace(Hwnd, lpObjWnd);
 

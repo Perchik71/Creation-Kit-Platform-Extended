@@ -144,6 +144,46 @@ namespace CKPE
 
 			void CellViewWindow::ResizeWnd(std::uint32_t width, std::uint32_t height) noexcept(true)
 			{
+				Common::UI::CUIDeferWindowScope defer;
+
+				defer.Add(std::addressof(m_CellListView));
+				defer.Add(std::addressof(m_WorldSpaceComboBox));
+				defer.Add(std::addressof(m_WorldSpaceLabel));
+				defer.Add(std::addressof(m_FilterCellEdit));
+				defer.Add(std::addressof(m_FilterCellLabel));
+				defer.Add(std::addressof(m_XLabel));
+				defer.Add(std::addressof(m_YLabel));
+				defer.Add(std::addressof(m_XEdit));
+				defer.Add(std::addressof(m_YEdit));
+				defer.Add(std::addressof(m_GoButton));
+				defer.Add(std::addressof(m_LoadedAtTop));
+				defer.Add(std::addressof(m_ActiveCellsOnly));
+				defer.Add(std::addressof(m_ObjectListView));
+				defer.Add(std::addressof(m_IdEdit));
+				defer.Add(std::addressof(m_SelectedObjectLabel));
+				defer.Add(std::addressof(m_VisibleObjectsOnly));
+				defer.Add(std::addressof(m_SelectObjectsOnly));
+				defer.Add(std::addressof(m_ActiveObjectsOnly));
+
+				m_CellListView.LockUpdate();
+				m_WorldSpaceComboBox.LockUpdate();
+				m_WorldSpaceLabel.LockUpdate();
+				m_FilterCellEdit.LockUpdate();
+				m_FilterCellLabel.LockUpdate();
+				m_XLabel.LockUpdate();
+				m_YLabel.LockUpdate();
+				m_XEdit.LockUpdate();
+				m_YEdit.LockUpdate();
+				m_GoButton.LockUpdate();
+				m_LoadedAtTop.LockUpdate();
+				m_ActiveCellsOnly.LockUpdate();
+				m_ObjectListView.LockUpdate();
+				m_IdEdit.LockUpdate();
+				m_SelectedObjectLabel.LockUpdate();
+				m_VisibleObjectsOnly.LockUpdate();
+				m_SelectObjectsOnly.LockUpdate();
+				m_ActiveObjectsOnly.LockUpdate();
+
 				std::uint32_t uHalf = (width - 12) >> 1;
 				CKPE::CRECT Bounds;
 
@@ -234,6 +274,48 @@ namespace CKPE
 				Bounds.Left += 100;
 				Bounds.Width = 160;
 				m_ActiveObjectsOnly.BoundsRect = Bounds;
+
+				m_ActiveObjectsOnly.UnlockUpdate();
+				m_SelectObjectsOnly.UnlockUpdate();
+				m_VisibleObjectsOnly.UnlockUpdate();
+				m_SelectedObjectLabel.UnlockUpdate();
+				m_IdEdit.UnlockUpdate();
+				m_ObjectListView.UnlockUpdate();
+				m_ActiveCellsOnly.UnlockUpdate();
+				m_LoadedAtTop.UnlockUpdate();
+				m_GoButton.UnlockUpdate();
+				m_YEdit.UnlockUpdate();
+				m_XEdit.UnlockUpdate();
+				m_YLabel.UnlockUpdate();
+				m_XLabel.UnlockUpdate();
+				m_FilterCellLabel.UnlockUpdate();
+				m_FilterCellEdit.UnlockUpdate();
+				m_WorldSpaceLabel.UnlockUpdate();
+				m_WorldSpaceComboBox.UnlockUpdate();
+				m_CellListView.UnlockUpdate();
+
+				// Диалог содержит стили: WS_CLIPSIBLINGS | WS_CLIPCHILDREN...
+
+				m_ActiveObjectsOnly.Repaint();
+				m_SelectObjectsOnly.Repaint();
+				m_VisibleObjectsOnly.Repaint();
+				m_SelectedObjectLabel.Repaint();
+				m_IdEdit.Repaint();
+				m_ObjectListView.Repaint();
+				m_ActiveCellsOnly.Repaint();
+				m_LoadedAtTop.Repaint();
+				m_GoButton.Repaint();
+				m_YEdit.Repaint();
+				m_XEdit.Repaint();
+				m_YLabel.Repaint();
+				m_XLabel.Repaint();
+				m_FilterCellLabel.Repaint();
+				m_FilterCellEdit.Repaint();
+				m_WorldSpaceLabel.Repaint();
+				m_WorldSpaceComboBox.Repaint();
+				m_CellListView.Repaint();
+
+				Refresh();
 			}
 
 			void CellViewWindow::UpdateCellList() const noexcept(true)
@@ -291,12 +373,12 @@ namespace CKPE
 					ListView_SetExtendedListViewStyleEx(__This->m_ObjectListView.Handle,
 						LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
 
+					//__This->Style = WS_OVERLAPPED | WS_CAPTION | WS_THICKFRAME;
+
 					SendMessage(__This->m_SelectObjectsOnly.Handle, BM_SETCHECK, BST_UNCHECKED, 0);
 					SendMessage(__This->m_VisibleObjectsOnly.Handle, BM_SETCHECK, BST_UNCHECKED, 0);
 					SetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_VISIBLE_OBJECT_ONLY, reinterpret_cast<HANDLE>(false));
 					SetPropA(Hwnd, Common::EditorUI::UI_USER_DATA_SELECT_OBJECT_ONLY, reinterpret_cast<HANDLE>(false));
-
-					__This->Style = WS_OVERLAPPED | WS_CAPTION | WS_THICKFRAME;
 
 #if 1
 					Common::Interface::GetSingleton()->GetDockingManager()->AddWindow((std::uintptr_t)Hwnd);
