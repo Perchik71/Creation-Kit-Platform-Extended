@@ -85,6 +85,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <CallingConvention>StdCall</CallingConvention>
       <WholeProgramOptimization>true</WholeProgramOptimization>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -111,6 +112,7 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <CallingConvention>StdCall</CallingConvention>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <SubSystem>

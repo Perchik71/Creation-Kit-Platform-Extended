@@ -76,6 +76,7 @@
       <StructMemberAlignment>Default</StructMemberAlignment>
       <UseFullPaths>false</UseFullPaths>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -112,6 +113,7 @@
       <StructMemberAlignment>Default</StructMemberAlignment>
       <UseFullPaths>false</UseFullPaths>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

@@ -75,6 +75,7 @@
       <DisableSpecificWarnings>26478;26819;4996;4244;4005;6387;6031;26495</DisableSpecificWarnings>
       <UseFullPaths>false</UseFullPaths>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -112,6 +113,7 @@
       <DisableSpecificWarnings>26478;26819;4996;4244;4005;6387;6031;26495</DisableSpecificWarnings>
       <UseFullPaths>false</UseFullPaths>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

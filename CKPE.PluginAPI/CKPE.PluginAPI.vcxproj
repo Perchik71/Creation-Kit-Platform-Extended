@@ -137,6 +137,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <CallingConvention>StdCall</CallingConvention>
       <DisableSpecificWarnings>26444;6386;28619;28183;28182;26495;6054</DisableSpecificWarnings>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -168,6 +169,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <CallingConvention>StdCall</CallingConvention>
       <DisableSpecificWarnings>26444;6386;28619;28183;28182;26495</DisableSpecificWarnings>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
