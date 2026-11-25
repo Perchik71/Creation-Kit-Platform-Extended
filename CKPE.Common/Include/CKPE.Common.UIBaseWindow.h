@@ -30,14 +30,30 @@ namespace CKPE
 			class CKPE_COMMON_API CUIMainWindow;
 			class CKPE_COMMON_API CUIToolWindow;
 
+			class CKPE_COMMON_API CUIDeferWindowScope
+			{
+				HDWP m_hDwp{ nullptr };
+				void* m_wnds{ nullptr };
+			public:
+				CUIDeferWindowScope();
+				~CUIDeferWindowScope();
+
+				[[nodiscard]] bool Has(CUIBaseWindow* wnd) const noexcept(true);
+				bool Add(CUIBaseWindow* wnd) noexcept(true);
+				[[nodiscard]] bool GetBoundRect(CUIBaseWindow* wnd, CRECT* rc) noexcept(true);
+			};
+
 			class CKPE_COMMON_API CUIBaseWindow
 			{
 			private:
+				CUIDeferWindowScope* m_Defer{ nullptr };
 				bool m_LockUpdate{ false };
 				HDC m_hDC{ nullptr };
 			protected:
 				HWND m_hWnd{ nullptr };
 			public:
+				friend class CUIDeferWindowScope;
+
 				[[nodiscard]] inline HWND GetHandle() const noexcept(true) { return m_hWnd; }
 				[[nodiscard]] WindowState_t GetWindowState() const noexcept(true);
 				void SetWindowState(const WindowState_t state) noexcept(true);
@@ -69,6 +85,7 @@ namespace CKPE
 			public:
 				[[nodiscard]] bool Is() const noexcept(true);
 				[[nodiscard]] bool IsWindowMaximized() const noexcept(true);
+				[[nodiscard]] inline bool HasDeferUpdate() const noexcept(true) { return m_Defer != nullptr; }
 				[[nodiscard]] CRECT WindowRect() const noexcept(true);
 				[[nodiscard]] CRECT ClientRect() const noexcept(true);
 				[[nodiscard]] std::uint32_t DpiForWindow() const noexcept(true);

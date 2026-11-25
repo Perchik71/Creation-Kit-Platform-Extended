@@ -19,6 +19,71 @@ namespace CKPE
 		{
 			static std::map<HWND, CRECT> SafeSize;
 
+			// CUIDeferWindowScope
+
+			CUIDeferWindowScope::CUIDeferWindowScope() :
+				m_wnds(new std::map<CUIBaseWindow*, CRECT>)
+			{}
+
+			CUIDeferWindowScope::~CUIDeferWindowScope()
+			{
+				auto& wnds = *reinterpret_cast<std::map<CUIBaseWindow*, CRECT>*>(m_wnds);
+				if (!wnds.size())
+					return;
+
+				m_hDwp = BeginDeferWindowPos(static_cast<std::int32_t>(wnds.size()));
+				if (m_hDwp)
+				{
+					for (auto& wnd : wnds)
+					{
+						auto& rc = wnd.second;
+						auto hDwp = DeferWindowPos(m_hDwp, wnd.first->Handle, nullptr, rc.Left, rc.Top, rc.Width, rc.Height,
+							SWP_NOZORDER | (wnd.first->m_LockUpdate ? SWP_NOREDRAW : 0));
+						if (!hDwp) break;
+						m_hDwp = hDwp;
+					}
+
+					EndDeferWindowPos(m_hDwp);
+
+					for (auto& wnd : wnds)
+						wnd.first->m_Defer = nullptr;
+				}
+
+				delete m_wnds;
+			}
+
+			bool CUIDeferWindowScope::Has(CUIBaseWindow* wnd) const noexcept(true)
+			{
+				auto& wnds = *reinterpret_cast<std::map<CUIBaseWindow*, CRECT>*>(m_wnds);
+				return wnds.contains(wnd);
+			}
+
+			bool CUIDeferWindowScope::Add(CUIBaseWindow* wnd) noexcept(true)
+			{
+				if (!m_hDwp || !wnd || !wnd->m_hWnd || Has(wnd))
+					return false;
+
+				auto& wnds = *reinterpret_cast<std::map<CUIBaseWindow*, CRECT>*>(m_wnds);
+
+				wnd->m_Defer = this;
+				wnds.try_emplace(wnd, wnd->BoundsRect);
+
+				return true;
+			}
+
+			bool CUIDeferWindowScope::GetBoundRect(CUIBaseWindow* wnd, CRECT* rc) noexcept(true)
+			{
+				if (!m_hDwp || !wnd || !wnd->m_hWnd || !Has(wnd))
+					return false;
+
+				auto& wnds = *reinterpret_cast<std::map<CUIBaseWindow*, CRECT>*>(m_wnds);
+
+				auto it = wnds.find(wnd);
+				rc = std::addressof(it->second);
+
+				return true;
+			}
+
 			// CUIBaseWindow
 
 			bool CUIBaseWindow::IsWindowMaximized() const noexcept(true)
@@ -56,6 +121,18 @@ namespace CKPE
 
 			void CUIBaseWindow::Move(const std::int32_t x, const std::int32_t y, const bool topmost) noexcept(true)
 			{
+				if (m_Defer)
+				{
+					CRECT* rc{};
+					m_Defer->Add(this);
+					if (m_Defer->GetBoundRect(this, rc) && rc)
+					{
+						rc->SetLeft(x);
+						rc->SetTop(y);
+					}
+					return;
+				}
+
 				SetWindowPos(m_hWnd, nullptr, x, y, 0, 0, SWP_NOOWNERZORDER | SWP_NOSIZE | ((topmost) ? 0 : SWP_NOZORDER));
 			}
 
@@ -107,6 +184,18 @@ namespace CKPE
 
 			void CUIBaseWindow::SetSize(const std::int32_t cx, const std::int32_t cy, const bool topmost) noexcept(true)
 			{
+				if (m_Defer)
+				{
+					CRECT* rc{};
+					m_Defer->Add(this);
+					if (m_Defer->GetBoundRect(this, rc) && rc)
+					{
+						rc->SetWidth(cx);
+						rc->SetHeight(cy);
+					}
+					return;
+				}
+	
 				CRECT r = BoundsRect;
 				SetWindowPos(m_hWnd, nullptr, 0, 0, cx + r.Left, cy + r.Top, SWP_NOOWNERZORDER | SWP_NOMOVE | ((topmost) ? 0 : SWP_NOZORDER | SWP_FRAMECHANGED));
 			}
@@ -416,6 +505,15 @@ namespace CKPE
 
 			void CUIBaseWindow::SetBoundsRect(const CRECT &bounds) noexcept(true)
 			{
+				if (m_Defer)
+				{
+					CRECT* rc{};
+					m_Defer->Add(this);
+					if (m_Defer->GetBoundRect(this, rc) && rc)
+						*rc = bounds;
+					return;
+				}
+
 				MoveWindow(m_hWnd, bounds.Left, bounds.Top, bounds.Width, bounds.Height, true);
 			}
 
