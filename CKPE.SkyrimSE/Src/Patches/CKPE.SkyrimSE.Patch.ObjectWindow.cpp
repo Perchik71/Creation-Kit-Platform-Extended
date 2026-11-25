@@ -39,6 +39,13 @@ namespace CKPE
 				lpObjWnd->Controls.EditFilter.LockUpdate();
 				lpObjWnd->Controls.Spliter.LockUpdate();
 
+				Common::UI::CUIDeferWindowScope defer;
+
+				defer.Add(std::addressof(lpObjWnd->Controls.TreeList));
+				defer.Add(std::addressof(lpObjWnd->Controls.ItemList));
+				defer.Add(std::addressof(lpObjWnd->Controls.EditFilter));
+				defer.Add(std::addressof(lpObjWnd->Controls.Spliter));
+
 				auto WndRect = lpObjWnd->ObjectWindow.ClientRect();
 
 				LONG w_tree = lpObjWnd->Controls.TreeList.Width;
@@ -74,6 +81,13 @@ namespace CKPE
 				lpObjWnd->Controls.ItemList.LockUpdate();
 				lpObjWnd->Controls.EditFilter.LockUpdate();
 				lpObjWnd->Controls.Spliter.LockUpdate();
+
+				Common::UI::CUIDeferWindowScope defer;
+
+				defer.Add(std::addressof(lpObjWnd->Controls.TreeList));
+				defer.Add(std::addressof(lpObjWnd->Controls.ItemList));
+				defer.Add(std::addressof(lpObjWnd->Controls.EditFilter));
+				defer.Add(std::addressof(lpObjWnd->Controls.Spliter));
 
 				lpObjWnd->Controls.Spliter.Width = 2;
 
