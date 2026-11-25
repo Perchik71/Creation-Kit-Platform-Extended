@@ -219,8 +219,8 @@ namespace CKPE
 					{
 					case CDDS_ITEMPREPAINT:
 					{
-						HWND hWndTB = lpToolBar->nmcd.hdr.hwndFrom;
-						HIMAGELIST hImageList = (HIMAGELIST)SendMessageA(hWndTB, TB_GETIMAGELIST, 0, 0);
+						auto hWndTB = lpToolBar->nmcd.hdr.hwndFrom;
+						auto hImageList = (HIMAGELIST)SendMessageA(hWndTB, TB_GETIMAGELIST, 0, 0);
 
 						TBBUTTON tbButton = { 0 };
 						LRESULT nCount = SendMessageA(hWndTB, TB_BUTTONCOUNT, 0, 0);
@@ -261,14 +261,11 @@ namespace CKPE
 					case CDDS_PREPAINT:
 					{
 						RECT rc;
-						// Рисуем только ту область, которую нужно
-						if (GetClipBox((HDC)Canvas.Handle, std::addressof(rc)) != NULLREGION)
-						{
-							// Немного увеличим чтобы не видно было артефакта
-							rc.bottom	+= 1;
+						auto hWndTB = lpToolBar->nmcd.hdr.hwndFrom;
 
+						// Необходима вся область, так как вызывает множественные "артефакты"
+						if (GetClientRect(hWndTB, std::addressof(rc)))
 							Render::DrawBackground(Canvas, (LPCRECT)std::addressof(rc));
-						}
 
 						return CDRF_NOTIFYITEMDRAW;
 					}
