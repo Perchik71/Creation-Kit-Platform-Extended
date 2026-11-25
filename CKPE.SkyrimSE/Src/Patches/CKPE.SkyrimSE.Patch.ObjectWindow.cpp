@@ -71,6 +71,9 @@ namespace CKPE
 				lpObjWnd->Controls.TreeList.LockUpdate();
 				lpObjWnd->Controls.ItemList.LockUpdate();
 				lpObjWnd->Controls.EditFilter.LockUpdate();
+				lpObjWnd->Controls.Spliter.LockUpdate();
+
+				lpObjWnd->Controls.Spliter.Width = 2;
 
 				auto WndRect = lpObjWnd->ObjectWindow.ClientRect();
 
@@ -92,6 +95,7 @@ namespace CKPE
 				InvalidateRect(handle, &r, TRUE);
 				UpdateWindow(handle);
 
+				lpObjWnd->Controls.Spliter.UnlockUpdate();
 				lpObjWnd->Controls.EditFilter.UnlockUpdate();
 				lpObjWnd->Controls.ItemList.UnlockUpdate();
 				lpObjWnd->Controls.TreeList.UnlockUpdate();
